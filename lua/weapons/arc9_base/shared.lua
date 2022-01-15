@@ -32,7 +32,7 @@ SWEP.Credits = {}
 --     Contact = "https://steamcommunity.com/id/ArcticWinterZzZ/",
 -- }
 
-SWEP.Description = [[]]
+SWEP.Description = [[Description Unavailable.]]
 -- Multi-line strings are possible with the double square brackets.]]
 
 SWEP.UseHands = true -- Same as weapon_base

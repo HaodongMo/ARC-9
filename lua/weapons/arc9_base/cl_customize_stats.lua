@@ -12,6 +12,7 @@ function SWEP:CreateHUD_Stats()
     --     title = "Recoil",
     --     stat = "Recoil",
     --     unit = "%",
+    --     fifty = 5, # value for "50%" point on stat bar, logistic from then on
     --     func = function() return 0 end,
     --     cond = function() return true end
     --     conv = function(a) return a * 100 end
@@ -21,6 +22,7 @@ function SWEP:CreateHUD_Stats()
         {
             title = "Recoil",
             unit = "%",
+            fifty = 75,
             conv = function(a)
                 local recoilup = self:GetValue("RecoilUp")
                 local recoilside = self:GetValue("RecoilSide")
@@ -45,11 +47,13 @@ function SWEP:CreateHUD_Stats()
         {
             title = "Cyclic ROF",
             stat = "RPM",
+            fifty = 600,
             unit = "RPM"
         },
         {
             title = "Noise",
             stat = "ShootVolume",
+            fifty = 100,
             unit = "dB",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
@@ -58,11 +62,30 @@ function SWEP:CreateHUD_Stats()
         {
             title = "Precision",
             stat = "Spread",
+            fifty = 5,
             unit = "MoA",
             conv = function(a) return math.Round(a * 360 * 60 / 10, 1) end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end
+        },
+        {
+            title = "Aim Time",
+            stat = "AimDownSightsTime",
+            fifty = 0.3,
+            unit = "s"
+        },
+        {
+            title = "Sprint To Fire Time",
+            stat = "SprintToFireTime",
+            fifty = 0.3,
+            unit = "s"
+        },
+        {
+            title = "Penetration",
+            stat = "Penetration",
+            fifty = 4,
+            unit = "mm"
         },
         {
             title = "Ammo Type",
@@ -72,6 +95,7 @@ function SWEP:CreateHUD_Stats()
         {
             title = "Capacity",
             stat = "ClipSize",
+            fifty = 20,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end,
@@ -84,21 +108,6 @@ function SWEP:CreateHUD_Stats()
 
                 return a
             end
-        },
-        {
-            title = "Aim Time",
-            stat = "AimDownSightsTime",
-            unit = "s"
-        },
-        {
-            title = "Sprint To Fire Time",
-            stat = "SprintToFireTime",
-            unit = "s"
-        },
-        {
-            title = "Penetration",
-            stat = "Penetration",
-            unit = "mm"
         },
         {
             title = "Fire Modes",
@@ -148,7 +157,7 @@ function SWEP:CreateHUD_Stats()
         if stat.cond and stat.cond() then continue end
 
         local newbtn = tp:Add("DPanel")
-        newbtn:SetSize(ScreenScale(150), ScreenScale(26))
+        newbtn:SetSize(ScreenScale(150), ScreenScale(27))
         newbtn:Dock(TOP)
         newbtn.stats = stat
         newbtn.Paint = function(self2, w, h)
@@ -193,6 +202,8 @@ function SWEP:CreateHUD_Stats()
                 major = self2.stats.conv(major)
             end
 
+            local oldmajor = major
+
             major = tostring(major)
 
             surface.SetFont("ARC9_12")
@@ -207,6 +218,42 @@ function SWEP:CreateHUD_Stats()
             surface.SetTextPos(w - tw_p, ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p, 0), ScreenScale(12), w, true)
+
+            if self2.stats.fifty and isnumber(oldmajor) then
+                local mapped = -(1 / ((oldmajor / self2.stats.fifty) + 1)) + 1
+
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawRect(ScreenScale(1), ScreenScale(12 + 1), ScreenScale(1), ScreenScale(13))
+
+                surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                surface.DrawRect(0, ScreenScale(12), ScreenScale(1), ScreenScale(13))
+
+                local shortw = w - ScreenScale(1)
+
+                local barw = mapped * shortw
+
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawRect(shortw - barw + ScreenScale(1), ScreenScale(12 + 1), barw, ScreenScale(13))
+
+                surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                surface.DrawRect(shortw - barw, ScreenScale(12), barw, ScreenScale(13))
+
+                local screenx, screeny = self2:LocalToScreen(shortw - barw, ScreenScale(12 + 1))
+
+                render.SetScissorRect(screenx, screeny, screenx + barw, screeny + ScreenScale(12), true)
+
+                surface.SetFont("ARC9_8")
+                surface.SetTextPos(w - tw_u, ScreenScale(16))
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawText(self2.stats.unit)
+
+                surface.SetFont("ARC9_12")
+                surface.SetTextPos(w - tw_p, ScreenScale(12))
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p, 0), ScreenScale(12), w, true)
+
+                render.SetScissorRect(0, 0, 0, 0, false)
+            end
         end
     end
 end
