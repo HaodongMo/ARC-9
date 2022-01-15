@@ -1,0 +1,8 @@
+L("FIREMODE_AUTO", "Full Auto")
+L("FIREMODE_SEMI", "Semi Auto")
+L("FIREMODE_PUMP", "Pump-Action")
+L("FIREMODE_LEVER", "Lever-Action")
+L("FIREMODE_BOLT", "Bolt-Action")
+L("FIREMODE_MANUAL", "Manual")
+L("FIREMODE_BURST", " Round Burst")
+L("FIREMODE_SPUTTER", "Sputter")
