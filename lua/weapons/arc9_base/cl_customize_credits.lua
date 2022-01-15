@@ -38,12 +38,12 @@ function SWEP:CreateHUD_Credits()
             local tw = surface.GetTextSize(self2.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw + ScreenScale(1), ScreenScale(2 + 1))
+            surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(2 + 1))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
             surface.DrawText(self2.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw, ScreenScale(2))
+            surface.SetTextPos(w - tw - ScreenScale(2), ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(self2.title)
 
@@ -53,14 +53,14 @@ function SWEP:CreateHUD_Credits()
             tw_p = surface.GetTextSize(major)
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p, ScreenScale(12))
+            surface.SetTextPos(w - tw_p - ScreenScale(1), ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p + ScreenScale(1), ScreenScale(1)), ScreenScale(12 + 1), w)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(1), ScreenScale(1)), ScreenScale(12 + 1), w)
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p, ScreenScale(12))
+            surface.SetTextPos(w - tw_p - ScreenScale(2), ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p, 0), ScreenScale(12), w, true)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12), w, true)
         end
     end
 end

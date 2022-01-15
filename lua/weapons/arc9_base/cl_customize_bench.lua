@@ -286,11 +286,11 @@ function SWEP:CreateHUD_Bench()
 
         render.SetScissorRect(r_1_x, r_1_y, r_1_x + s, r_1_y + s, false)
 
-        surface.SetFont("ARC9_12")
-        local range_1_txtw = surface.GetTextSize(range_1_txt)
+        surface.SetFont("ARC9_10")
+        -- local range_1_txtw = surface.GetTextSize(range_1_txt)
 
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.SetTextPos((s - range_1_txtw) / 2, h - (ScreenScale(12)) - (ScreenScale(1)))
+        surface.SetTextPos(ScreenScale(2), h - ScreenScale(16))
         surface.DrawText(range_1_txt)
 
         surface.SetMaterial(bullseye)
@@ -311,11 +311,18 @@ function SWEP:CreateHUD_Bench()
 
         render.SetScissorRect(r_1_x, r_1_y, r_1_x + s, r_1_y + s, false)
 
-        surface.SetFont("ARC9_12")
+        surface.SetFont("ARC9_10")
         local range_3_txtw = surface.GetTextSize(range_3_txt)
 
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.SetTextPos(s + (s - range_3_txtw) / 2, h - (ScreenScale(12)) - (ScreenScale(1)))
+        surface.SetTextPos(w - range_3_txtw - ScreenScale(2), h - ScreenScale(16))
         surface.DrawText(range_3_txt)
+
+        local txt_corner = "MECHANICAL PRECISION TEST"
+        surface.SetFont("ARC9_6")
+        local tw = surface.GetTextSize(txt_corner)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos((w - tw) / 2, h - ScreenScale(8))
+        surface.DrawText(txt_corner)
     end
 end

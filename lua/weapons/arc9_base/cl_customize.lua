@@ -94,6 +94,12 @@ SWEP.CustomizeTab = 0
 
 SWEP.CustomizeButtons = {
     {
+        title = "Hide",
+        func = function(self2)
+            self2:ClearTabPanel()
+        end
+    },
+    {
         title = "Stats",
         func = function(self2)
             self2:CreateHUD_Stats()
@@ -117,12 +123,6 @@ SWEP.CustomizeButtons = {
             self2:CreateHUD_Credits()
         end
     },
-    {
-        title = "Hide",
-        func = function(self2)
-            self2:ClearTabPanel()
-        end
-    }
 }
 
 SWEP.TabPanel = nil
