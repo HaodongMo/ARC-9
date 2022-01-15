@@ -38,5 +38,5 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
 end
 
 function SWEP:RangeUnitize(range)
-    return tostring(math.Round(range)) .. " HU"
+    return tostring(math.Round(range * ARC9.HUToM)) .. " M"
 end

@@ -1,6 +1,9 @@
 local function PaintScrollBar(panel, w, h)
+    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+    surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
+
     surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(2), h)
+    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
 end
 
 function SWEP:CreateHUD_Credits()

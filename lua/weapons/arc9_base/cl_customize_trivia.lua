@@ -1,6 +1,9 @@
 local function PaintScrollBar(panel, w, h)
+    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+    surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
+
     surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(2), h)
+    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
 end
 
 function SWEP:CreateHUD_Trivia()
@@ -32,12 +35,12 @@ function SWEP:CreateHUD_Trivia()
         local tw = surface.GetTextSize(self2.title)
 
         surface.SetFont("ARC9_8")
-        surface.SetTextPos(w - tw + ScreenScale(1), ScreenScale(2 + 1))
+        surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(2 + 1))
         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
         surface.DrawText(self2.title)
 
         surface.SetFont("ARC9_8")
-        surface.SetTextPos(w - tw, ScreenScale(2))
+        surface.SetTextPos(w - tw - ScreenScale(2), ScreenScale(2))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.DrawText(self2.title)
     end
@@ -45,7 +48,7 @@ function SWEP:CreateHUD_Trivia()
     local multiline = {}
     local desc = self.Description
 
-    multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(2)), "ARC9_10")
+    multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(4)), "ARC9_10")
 
     for i, text in pairs(multiline) do
         local desc_line = vgui.Create("DPanel", tp)
@@ -57,12 +60,12 @@ function SWEP:CreateHUD_Trivia()
 
             surface.SetFont("ARC9_10")
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            surface.SetTextPos(w - tw + ScreenScale(1), ScreenScale(1))
+            surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(1))
             surface.DrawText(text)
 
             surface.SetFont("ARC9_10")
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos(w - tw, 0)
+            surface.SetTextPos(w - tw - ScreenScale(2), 0)
             surface.DrawText(text)
         end
     end
@@ -80,12 +83,12 @@ function SWEP:CreateHUD_Trivia()
             local tw = surface.GetTextSize(self2.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw + ScreenScale(1), ScreenScale(2 + 1))
+            surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(2 + 1))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
             surface.DrawText(self2.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw, ScreenScale(2))
+            surface.SetTextPos(w - tw - ScreenScale(2), ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(self2.title)
 
@@ -95,14 +98,14 @@ function SWEP:CreateHUD_Trivia()
             tw_p = surface.GetTextSize(major)
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p, ScreenScale(12))
+            surface.SetTextPos(w - tw_p - ScreenScale(1), ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p + ScreenScale(1), ScreenScale(1)), ScreenScale(12 + 1), w)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(1), ScreenScale(1)), ScreenScale(12 + 1), w)
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p, ScreenScale(12))
+            surface.SetTextPos(w - tw_p - ScreenScale(2), ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p, 0), ScreenScale(12), w, true)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12), w, true)
         end
     end
 end

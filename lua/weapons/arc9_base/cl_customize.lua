@@ -108,7 +108,7 @@ SWEP.CustomizeButtons = {
     {
         title = "Bench",
         func = function(self2)
-            self2:ClearTabPanel()
+            self2:CreateHUD_Bench()
         end
     },
     {
@@ -132,6 +132,9 @@ function SWEP:ClearTabPanel()
         self.TabPanel:Remove()
         self.TabPanel = nil
     end
+end
+
+function SWEP:RefreshCustomizeMenu()
 end
 
 function SWEP:CreateCustomizeHUD()
@@ -226,20 +229,11 @@ function SWEP:CreateHUD_RHP()
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.DrawText(self.Class)
 
-        -- spacer
-        local spacer = "---------------------------------------"
-        surface.SetFont("ARC9_12")
-        local tw3 = surface.GetTextSize(spacer)
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawRect(w - ScreenScale(356 - 1), ScreenScale(42 + 1), ScreenScale(343), ScreenScale(1))
 
-        surface.SetFont("ARC9_12")
-        surface.SetTextPos(w - tw3 - ScreenScale(10) + ScreenScale(1), ScreenScale(37 + 1))
-        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        surface.DrawText(spacer)
-
-        surface.SetFont("ARC9_12")
-        surface.SetTextPos(w - tw3 - ScreenScale(10), ScreenScale(37))
-        surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.DrawText(spacer)
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawRect(w - ScreenScale(356), ScreenScale(42), ScreenScale(343), ScreenScale(1))
     end
 
     for i, btn in pairs(self.CustomizeButtons) do
@@ -270,8 +264,13 @@ function SWEP:CreateHUD_RHP()
                 noshade = true
             end
 
+            if noshade then
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawRect(ScreenScale(1), ScreenScale(1), w, h)
+            end
+
             surface.SetDrawColor(col1)
-            surface.DrawRect(0, 0, w, h)
+            surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
 
             surface.SetFont("ARC9_8")
             local tw = surface.GetTextSize(self2.title)

@@ -1,6 +1,9 @@
 local function PaintScrollBar(panel, w, h)
+    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+    surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
+
     surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(2), h)
+    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
 end
 
 function SWEP:CreateHUD_Stats()
@@ -51,6 +54,15 @@ function SWEP:CreateHUD_Stats()
             unit = "RPM"
         },
         {
+            title = "Burst Delay",
+            stat = "PostBurstDelay",
+            fifty = 0.1,
+            unit = "s",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or self:GetValue("PostBurstDelay") <= 0
+            end
+        },
+        {
             title = "Noise",
             stat = "ShootVolume",
             fifty = 100,
@@ -70,10 +82,23 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
+            title = "Muzzle Velocity",
+            stat = "PhysBulletMuzzleVelocity",
+            fifty = 500,
+            unit = "m/s",
+            conv = function(a) return math.Round(a * ARC9.HUToM) end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
             title = "Aim Time",
             stat = "AimDownSightsTime",
             fifty = 0.3,
-            unit = "s"
+            unit = "s",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
         },
         {
             title = "Sprint To Fire Time",
@@ -82,9 +107,35 @@ function SWEP:CreateHUD_Stats()
             unit = "s"
         },
         {
+            title = "Sway",
+            stat = "Sway",
+            fifty = 95,
+            unit = "%",
+            conv = function(a) return math.Round(a * 25, 0) end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
+            title = "Free Aim Radius",
+            stat = "FreeAimRadius",
+            fifty = 20,
+            unit = "°",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
+            title = "Movement Speed",
+            stat = "SpeedMult",
+            fifty = 95,
+            unit = "%",
+            conv = function(a) return math.Round(a * 100, 0) end,
+        },
+        {
             title = "Penetration",
             stat = "Penetration",
-            fifty = 4,
+            fifty = 50,
             unit = "mm"
         },
         {
@@ -108,6 +159,15 @@ function SWEP:CreateHUD_Stats()
 
                 return a
             end
+        },
+        {
+            title = "Supply Limit",
+            stat = "SupplyLimit",
+            fifty = 3,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end,
+            unit = ""
         },
         {
             title = "Fire Modes",
@@ -166,12 +226,12 @@ function SWEP:CreateHUD_Stats()
             local tw = surface.GetTextSize(self2.stats.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw + ScreenScale(1), ScreenScale(2 + 1))
+            surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(2 + 1))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
             surface.DrawText(self2.stats.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw, ScreenScale(2))
+            surface.SetTextPos(w - tw - ScreenScale(2), ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(self2.stats.title)
 
@@ -182,12 +242,12 @@ function SWEP:CreateHUD_Stats()
                 tw_u = surface.GetTextSize(self2.stats.unit)
 
                 surface.SetFont("ARC9_8")
-                surface.SetTextPos(w - tw_u + ScreenScale(1), ScreenScale(16 + 1))
+                surface.SetTextPos(w - tw_u - ScreenScale(2) + ScreenScale(1), ScreenScale(16 + 1))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(self2.stats.unit)
 
                 surface.SetFont("ARC9_8")
-                surface.SetTextPos(w - tw_u, ScreenScale(16))
+                surface.SetTextPos(w - tw_u - ScreenScale(2), ScreenScale(16))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(self2.stats.unit)
             end
@@ -210,14 +270,14 @@ function SWEP:CreateHUD_Stats()
             tw_p = surface.GetTextSize(major) + tw_u
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p + ScreenScale(1), ScreenScale(12 + 1))
+            surface.SetTextPos(w - tw_p - ScreenScale(2), ScreenScale(12 + 1))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p + ScreenScale(1), 0), ScreenScale(12 + 1), w)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12 + 1), w)
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p, ScreenScale(12))
+            surface.SetTextPos(w - tw_p - ScreenScale(3), ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p, 0), ScreenScale(12), w, true)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(3), 0), ScreenScale(12), w, true)
 
             if self2.stats.fifty and isnumber(oldmajor) then
                 local mapped = -(1 / ((oldmajor / self2.stats.fifty) + 1)) + 1
@@ -243,14 +303,14 @@ function SWEP:CreateHUD_Stats()
                 render.SetScissorRect(screenx, screeny, screenx + barw, screeny + ScreenScale(12), true)
 
                 surface.SetFont("ARC9_8")
-                surface.SetTextPos(w - tw_u, ScreenScale(16))
+                surface.SetTextPos(w - tw_u - ScreenScale(2), ScreenScale(16))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(self2.stats.unit)
 
                 surface.SetFont("ARC9_12")
-                surface.SetTextPos(w - tw_p, ScreenScale(12))
+                surface.SetTextPos(w - tw_p - ScreenScale(2), ScreenScale(12))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p, 0), ScreenScale(12), w, true)
+                self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12), w, true)
 
                 render.SetScissorRect(0, 0, 0, 0, false)
             end

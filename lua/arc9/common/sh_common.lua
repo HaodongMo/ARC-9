@@ -73,3 +73,5 @@ ARC9.RHIKBones = {
     "ValveBiped.Bip01_R_Finger01",
     "ValveBiped.Bip01_R_Finger02"
 }
+
+ARC9.HUToM = 0.0254

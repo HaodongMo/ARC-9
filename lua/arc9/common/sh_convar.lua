@@ -196,7 +196,7 @@ local clientmenus_ti = {
 
 hook.Add("PopulateToolMenu", "ARC9_MenuOptions", function()
     for smenu, data in pairs(clientmenus_ti) do
-        spawnmenu.AddToolMenuOption("Options", "STALKER+ Weapons", "ARC9_" .. tostring(smenu), data.text, "", "", data.func)
+        spawnmenu.AddToolMenuOption("Options", "ARC-9", "ARC9_" .. tostring(smenu), data.text, "", "", data.func)
     end
 end)
 
