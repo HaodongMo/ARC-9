@@ -18,9 +18,10 @@ hook.Add("HUDShouldDraw", "ARC9_HideHUD", function(name)
 end)
 
 ARC9.Colors = {
-    bg = Color(51, 26, 0),
-    fg = Color(255, 153, 51),
-    hi = Color(255, 230, 204),
+    bg = Color(119, 119, 60),
+    fg = Color(220, 220, 188),
+    hi = Color(238, 238, 221),
+    shadow = Color(17, 17, 9),
     pos = Color(255, 102, 0),
     neg = Color(0, 153, 255)
 }

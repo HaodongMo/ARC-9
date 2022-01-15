@@ -4,13 +4,14 @@ local sizes_to_make = {
     10,
     12,
     16,
+    24,
     32
 }
 
 local unscaled_sizes_to_make = {
 }
 
-local font = "Exo"
+local font = "HD44780A00 5x8"
 
 local function generatefonts()
 
@@ -29,7 +30,7 @@ local function generatefonts()
             size = ScreenScale(i),
             weight = 500,
             antialias = true,
-            blursize = 6,
+            blursize = ScreenScale(i * 0.2),
             extended = true,
         } )
 

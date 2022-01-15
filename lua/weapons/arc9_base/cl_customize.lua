@@ -1,4 +1,6 @@
-local function multlinetext(text, maxw, font)
+local mat_grad = Material("arc9/gradient.png")
+
+function SWEP:MultiLineText(text, maxw, font)
     local content = {}
     local tline = ""
     local x = 0
@@ -31,12 +33,6 @@ local function multlinetext(text, maxw, font)
     return content
 end
 
-local function PaintScrollBar(panel, w, h)
-    local ss = ScreenScale(2)
-    local s = ss * 2
-    draw.RoundedBox(ss * 1, (w - s) / 2, 0, s, h, col_fg)
-end
-
 // span: panel that hosts the rotating text
 // txt: the text to draw
 // x: where to start the crop
@@ -44,7 +40,7 @@ end
 // tx, ty: where to draw the text
 // maxw: maximum width
 // only: don't advance text
-local function DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
+function SWEP:DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
     local tw, th = surface.GetTextSize(txt)
 
     span.TextRot = span.TextRot or {}
@@ -94,13 +90,56 @@ end
 SWEP.CustomizeHUD = nil
 SWEP.CustomizeBoxes = nil
 
-function SWEP:RefreshCustomizeMenu()
+SWEP.CustomizeTab = 0
+
+SWEP.CustomizeButtons = {
+    {
+        title = "Stats",
+        func = function(self2)
+            self2:CreateHUD_Stats()
+        end
+    },
+    {
+        title = "Trivia",
+        func = function(self2)
+            self2:CreateHUD_Trivia()
+        end
+    },
+    {
+        title = "Bench",
+        func = function(self2)
+            self2:ClearTabPanel()
+        end
+    },
+    {
+        title = "Credits",
+        func = function(self2)
+            self2:CreateHUD_Credits()
+        end
+    },
+    {
+        title = "Hide",
+        func = function(self2)
+            self2:ClearTabPanel()
+        end
+    }
+}
+
+SWEP.TabPanel = nil
+
+function SWEP:ClearTabPanel()
+    if self.TabPanel then
+        self.TabPanel:Remove()
+        self.TabPanel = nil
+    end
 end
 
 function SWEP:CreateCustomizeHUD()
     local bg = vgui.Create("DPanel")
 
     self.CustomizeHUD = bg
+
+    gui.EnableScreenClicker(true)
 
     bg:SetPos(0, 0)
     bg:SetSize(ScrW(), ScrH())
@@ -115,7 +154,7 @@ function SWEP:CreateCustomizeHUD()
         end
     end
 
-    self:CreateHUD_Stats()
+    self:CreateHUD_RHP()
 end
 
 function SWEP:RemoveCustomizeHUD()
@@ -139,4 +178,121 @@ function SWEP:DrawCustomizeHUD()
     end
 
     lastcustomize = self:GetCustomize()
+end
+
+function SWEP:CreateHUD_RHP()
+    local bg = self.CustomizeHUD
+
+    local gr_h = ScrH()
+    local gr_w = gr_h
+
+    local gradient = vgui.Create("DPanel", bg)
+    gradient:SetPos(ScrW() - gr_w, 0)
+    gradient:SetSize(gr_w, gr_h)
+    gradient.Paint = function(self2, w, h)
+        surface.SetMaterial(mat_grad)
+        surface.SetDrawColor(0, 0, 0, 250)
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+
+    local nameplate = vgui.Create("DPanel", bg)
+    nameplate:SetPos(0, ScreenScale(8))
+    nameplate:SetSize(ScrW(), ScreenScale(64))
+    nameplate.Paint = function(self2, w, h)
+        surface.SetFont("ARC9_24")
+        local tw = surface.GetTextSize(self.PrintName)
+
+        surface.SetFont("ARC9_24")
+        surface.SetTextPos(w - tw - ScreenScale(8) + ScreenScale(1), ScreenScale(1))
+        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawText(self.PrintName)
+
+        surface.SetFont("ARC9_24")
+        surface.SetTextPos(w - tw - ScreenScale(8), 0)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.DrawText(self.PrintName)
+
+        -- class
+        surface.SetFont("ARC9_12")
+        local tw2 = surface.GetTextSize(self.Class)
+
+        surface.SetFont("ARC9_12")
+        surface.SetTextPos(w - tw2 - ScreenScale(10) + ScreenScale(1), ScreenScale(26 + 1))
+        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawText(self.Class)
+
+        surface.SetFont("ARC9_12")
+        surface.SetTextPos(w - tw2 - ScreenScale(10), ScreenScale(26))
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.DrawText(self.Class)
+
+        -- spacer
+        local spacer = "---------------------------------------"
+        surface.SetFont("ARC9_12")
+        local tw3 = surface.GetTextSize(spacer)
+
+        surface.SetFont("ARC9_12")
+        surface.SetTextPos(w - tw3 - ScreenScale(10) + ScreenScale(1), ScreenScale(37 + 1))
+        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawText(spacer)
+
+        surface.SetFont("ARC9_12")
+        surface.SetTextPos(w - tw3 - ScreenScale(10), ScreenScale(37))
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.DrawText(spacer)
+    end
+
+    for i, btn in pairs(self.CustomizeButtons) do
+        local newbtn = vgui.Create("DButton", bg)
+        newbtn:SetPos(ScrW() - ScreenScale(6) - (ScreenScale(70) * i), ScreenScale(58))
+        newbtn:SetSize(ScreenScale(64), ScreenScale(12))
+        newbtn.title = btn.title
+        newbtn.page = i - 1
+        newbtn.func = btn.func
+        newbtn:SetText("")
+        newbtn.Paint = function(self2, w, h)
+            local col1 = Color(0, 0, 0, 0)
+            local col2 = ARC9.GetHUDColor("fg")
+
+            local noshade = false
+
+            if self.CustomizeTab == self2.page then
+                col1 = ARC9.GetHUDColor("fg")
+                col2 = ARC9.GetHUDColor("shadow")
+
+                noshade = true
+            end
+
+            if self2:IsHovered() then
+                col1 = ARC9.GetHUDColor("hi")
+                col2 = ARC9.GetHUDColor("shadow")
+
+                noshade = true
+            end
+
+            surface.SetDrawColor(col1)
+            surface.DrawRect(0, 0, w, h)
+
+            surface.SetFont("ARC9_8")
+            local tw = surface.GetTextSize(self2.title)
+
+            if !noshade then
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.SetTextPos((w - tw) / 2 + ScreenScale(1), ScreenScale(1 + 1))
+                surface.DrawText(self2.title)
+            end
+
+            surface.SetFont("ARC9_8")
+            surface.SetTextColor(col2)
+            surface.SetTextPos((w - tw) / 2, ScreenScale(1))
+            surface.DrawText(self2.title)
+        end
+        newbtn.DoClick = function(self2)
+            self.CustomizeTab = self2.page
+            self2.func(self)
+        end
+    end
+
+    self.CustomizeButtons[self.CustomizeTab + 1].func(self)
 end

@@ -17,7 +17,7 @@ SWEP.TrueName = nil
 -- You could also have it be a generic name, like "Assault Rifle" vs. "AK-47".
 -- TrueName should be something that improves the cross-compatibility of weapon naming.
 
-SWEP.Class = ARC9.CLASS_OTHER -- Refer to ARC9/common/sh_enums.lua.
+SWEP.Class = "Unclassified Weapon"
 SWEP.Trivia = {} -- Optional. Any stats you like can be added.
 -- SWEP.Trivia = {
 --     Manufacturer = "Arctic Armament International",
@@ -26,6 +26,12 @@ SWEP.Trivia = {} -- Optional. Any stats you like can be added.
 --     Country = "UK-Australia-China",
 --     Year = 2021
 -- }
+SWEP.Credits = {}
+-- SWEP.Credits = {
+--     Author = "Arctic",
+--     Contact = "https://steamcommunity.com/id/ArcticWinterZzZ/",
+-- }
+
 SWEP.Description = [[]]
 -- Multi-line strings are possible with the double square brackets.]]
 
@@ -307,6 +313,16 @@ SWEP.SpeedMultShooting = 1
 SWEP.SpeedMultMelee = 0.75
 SWEP.SpeedMultCrouch = 1
 SWEP.SpeedMultBlindFire = 1
+
+-------------------------- MELEE
+
+SWEP.Bash = true
+SWEP.PrimaryBash = false
+
+SWEP.BashDamage = 50
+SWEP.BashLungeRange = 64
+SWEP.PreBashTime = 0.5
+SWEP.PostBashTime = 0.5
 
 -------------------------- MALFUNCTIONS
 
