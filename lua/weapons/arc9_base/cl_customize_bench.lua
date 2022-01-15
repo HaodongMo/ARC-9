@@ -74,6 +74,8 @@ function SWEP:CreateHUD_Bench()
     ranger:SetPos(0, 0)
     ranger:SetSize(ScreenScale(200), ScreenScale(100))
     ranger.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
         surface.SetDrawColor(ARC9.GetHUDColor("bg", 50))
         surface.DrawRect(0, 0, w, h)
 
@@ -141,7 +143,7 @@ function SWEP:CreateHUD_Bench()
 
                 local dmg = self:GetDamageAtRange(range)
 
-                local txt_dmg1 = tostring(math.Round(dmg)) .. " DMG"
+                local txt_dmg1 = tostring(math.Round(dmg)) .. " DAMAGE"
 
                 if self:GetValue("Num") > 1 then
                     txt_dmg1 = math.Round(dmg * self:GetValue("Num")) .. "-" .. txt_dmg1
@@ -170,7 +172,7 @@ function SWEP:CreateHUD_Bench()
 
 
         if draw_rangetext then
-            local txt_dmg1 = tostring(math.Round(dmg_max)) .. " DMG"
+            local txt_dmg1 = tostring(math.Round(dmg_max)) .. " DAMAGE"
 
             if self:GetValue("Num") > 1 then
                 txt_dmg1 = math.Round(dmg_max * self:GetValue("Num")) .. "-" .. txt_dmg1
@@ -190,7 +192,7 @@ function SWEP:CreateHUD_Bench()
             surface.SetTextPos((w / 3) - txt_range1_w - (ScreenScale(2)), ScreenScale(1 + 8))
             surface.DrawText(txt_range1)
 
-            local txt_dmg2 = tostring(math.Round(dmg_min)) .. " DMG"
+            local txt_dmg2 = tostring(math.Round(dmg_min)) .. " DAMAGE"
 
             if self:GetValue("Num") > 1 then
                 txt_dmg2 = math.Round(dmg_min * self:GetValue("Num")) .. "-" .. txt_dmg2
@@ -208,6 +210,13 @@ function SWEP:CreateHUD_Bench()
             surface.SetTextPos(2 * (w / 3) + (ScreenScale(2)), ScreenScale(1 + 8))
             surface.DrawText(txt_range2)
         end
+
+        local txt_corner = "TERMINAL BALLISTICS PERFORMANCE EVALUATION"
+        surface.SetFont("ARC9_6")
+        local tw = surface.GetTextSize(txt_corner)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos((w - tw) / 2, h - ScreenScale(8))
+        surface.DrawText(txt_corner)
     end
 
     local range_3 = math.max(math.Round(self:GetValue("RangeMax") / 25) * 25, 50) --self.Range * self:GetBuff_Mult("Mult_Range")
@@ -227,6 +236,8 @@ function SWEP:CreateHUD_Bench()
         rollallhits(self, range_3, range_1)
     end
     ballisticchart.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
         local col = ARC9.GetHUDColor("bg", 50)
         if self2:IsHovered() then
             col = ARC9.GetHUDColor("hi", 50)
@@ -278,10 +289,6 @@ function SWEP:CreateHUD_Bench()
         surface.SetFont("ARC9_12")
         local range_1_txtw = surface.GetTextSize(range_1_txt)
 
-        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        surface.SetTextPos(((s - range_1_txtw) / 2) + ScreenScale(1), h - ScreenScale(12))
-        surface.DrawText(range_1_txt)
-
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.SetTextPos((s - range_1_txtw) / 2, h - (ScreenScale(12)) - (ScreenScale(1)))
         surface.DrawText(range_1_txt)
@@ -306,10 +313,6 @@ function SWEP:CreateHUD_Bench()
 
         surface.SetFont("ARC9_12")
         local range_3_txtw = surface.GetTextSize(range_3_txt)
-
-        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        surface.SetTextPos((s + (s - range_3_txtw) / 2) + ScreenScale(1), h - ScreenScale(12))
-        surface.DrawText(range_3_txt)
 
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.SetTextPos(s + (s - range_3_txtw) / 2, h - (ScreenScale(12)) - (ScreenScale(1)))

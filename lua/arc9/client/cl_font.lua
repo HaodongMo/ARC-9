@@ -1,4 +1,5 @@
 local sizes_to_make = {
+    4,
     6,
     8,
     10,
