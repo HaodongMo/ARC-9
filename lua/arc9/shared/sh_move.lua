@@ -26,7 +26,7 @@ hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)
 function ARC9.StartCommand(ply, cmd)
     local wpn = ply:GetActiveWeapon()
 
-    if !wpn.ARC9 then return end
+    if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
 
     local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
     local recrise = ARC9.RecoilRise

@@ -76,7 +76,7 @@ function SWEP:GetViewModelBob(pos, ang)
         self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 1)
     end
 
-    d = d * Lerp(self:GetSightAmount(), 1, 0.1)
+    d = d * Lerp(self:GetSightAmount(), 1, 0.5)
     mag = d * 2
     step = 10
 

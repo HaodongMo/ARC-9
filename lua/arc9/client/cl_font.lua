@@ -10,7 +10,7 @@ local sizes_to_make = {
 local unscaled_sizes_to_make = {
 }
 
-local font = "HD44780A00 5x8"
+local font = "Exo"
 
 local function generatefonts()
 

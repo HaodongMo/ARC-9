@@ -12,7 +12,7 @@ function SWEP:BuildMultiSight()
 
     for i, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
-        local atttbl = ARC9.GetAttTable(slottbl.Installed)
+        local atttbl = self:GetFinalAttTable(slottbl.Installed)
 
         if atttbl.Sights then
             for _, sight in pairs(atttbl.Sights) do

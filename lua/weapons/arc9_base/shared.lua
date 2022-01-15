@@ -52,7 +52,7 @@ SWEP.SaveBase = nil -- set to a weapon class to make this weapon share saves wit
 
 -- Using MirrorVMWM will use viewmodel parameters for the world model.
 
-SWEP.DefaultBodygroups = {}
+SWEP.DefaultBodygroups = ""
 -- {
 --     {
 --         ind = 0,
@@ -60,7 +60,7 @@ SWEP.DefaultBodygroups = {}
 --     }
 -- }
 
-SWEP.DefaultWMBodygroups = {}
+SWEP.DefaultWMBodygroups = ""
 
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0

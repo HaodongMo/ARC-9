@@ -17,7 +17,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     oldang:Set(ang)
 
-    local cor_val = 0.75
+    local cor_val = 0.1
 
     local offsetpos = Vector(0, 0, 0)
     local offsetang = Angle(0, 0, 0)
@@ -97,20 +97,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     if curvedcustomizedelta > 0 then
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, self:GetProcessedValue("CustomizePos"))
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, self:GetProcessedValue("CustomizeAng"))
-
-        extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
-        extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))
-
-        extra_offsetang.p = self.MenuRotation.p
-        extra_offsetang.y = self.MenuRotation.y
-
-        -- extra_offsetpos = extra_offsetpos + (Vector(-24, 0, 0) * (math.cos(math.rad(self.MenuRotation.p)) - 1) / -2)
-        -- extra_offsetpos = extra_offsetpos + (Vector(0, 0, -24) * (math.cos(math.rad(self.MenuRotation.r)) - 1) / -2)
-        extra_offsetpos = extra_offsetpos + Vector(0.5, 0, 0) * self.MenuPan.x
-        extra_offsetpos = extra_offsetpos + Vector(0, 0, -0.5) * self.MenuPan.y
-        extra_offsetpos = extra_offsetpos + Vector(0, -1.5, 0) * self.MenuPan.z
-
-        extra_offsetpos = LerpVector(1 - curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
     end
 
     if game.SinglePlayer() or IsFirstTimePredicted() then

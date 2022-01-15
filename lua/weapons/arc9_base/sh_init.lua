@@ -21,6 +21,8 @@ function SWEP:Deploy()
     self:SetAnimLockTime(0)
     self:SetLastMeleeTime(0)
     self:SetRecoilAmount(0)
+    self:SetRecoilUp(0)
+    self:SetRecoilSide(0)
     self:SetPrimedAttack(false)
     self:SetReloading(false)
 
