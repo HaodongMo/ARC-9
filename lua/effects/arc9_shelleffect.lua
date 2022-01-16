@@ -59,7 +59,7 @@ function EFFECT:Init(data)
     if !IsValid(ent) then self:Remove() return end
     if !mdl or !IsValid(mdl) then self:Remove() return end
     if !mdl:GetAttachment(att) then self:Remove() return end
-    if !typetbl then return end
+    if !typetbl then self:Remove() return end
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
 

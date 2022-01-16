@@ -32,7 +32,7 @@ end
 function SWEP:GetSubSlotList()
     local atts = {}
 
-    for _, i in pairs(self.Attachments or {}) do
+    for _, i in ipairs(self.Attachments or {}) do
         table.Add(atts, self:AttTreeToList(i))
     end
 

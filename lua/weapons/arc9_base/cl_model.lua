@@ -16,8 +16,9 @@ function SWEP:GetAttPos(slottbl, wm, idle)
         parentmdl:SetAngles(Angle(0, 0, 0))
         parentmdl:SetNoDraw(true)
 
-        local anim = self:TranslateSequence("idle")
-        local seq = parentmdl:LookupSequence(anim)
+        local anim = self:TranslateAnimation("idle")
+        local ae = self:GetAnimationEntry(anim)
+        local seq = parentmdl:LookupSequence(self:RandomChoice(ae.Source))
 
         parentmdl:ResetSequence(seq)
         parentmdl:SetPoseParameter("sights", 1)

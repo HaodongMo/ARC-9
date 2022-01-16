@@ -11,6 +11,8 @@ function SWEP:EnterSights()
 
     self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
 
+    self:SetShouldHoldType()
+
     if CLIENT then
         self:BuildMultiSight()
     elseif game.SinglePlayer() then
@@ -23,6 +25,8 @@ function SWEP:ExitSights()
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitSightsSound")), 100, 75)
 
     self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+
+    self:SetShouldHoldType()
 end
 
 SWEP.LastPressedETime = 0

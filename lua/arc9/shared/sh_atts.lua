@@ -102,8 +102,7 @@ function ARC9.GetMaxAtts()
     return GetConVar("ARC9_maxatts"):GetInt()
 end
 
-if CLIENT then
-
+if CLIENT then 
 concommand.Add("ARC9_reloadatts", function()
     if !LocalPlayer():IsSuperAdmin() then return end
 

@@ -132,3 +132,22 @@ Only terminology that may cause confusion is laid out. Any terms that are standa
  - VM: View Model.
  - WM: World Model.
  - BG: Bodygroup.
+
+ ## List of Conditions
+Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS time when crouching.
+
+ - **True**: Enabled when TrueNames is active.
+ - **Silenced**: Enabled when a silencer is installed.
+ - **MidAir**: Enabled when in mid-air.
+ - **Crouch**: Enabled when crouching.
+ - **First, FirstShot**: Enabled on the first shot.
+ - **Last, LastShot, Empty**: Enabled on the last shot of a magazine.
+ - **EvenShot**: Enabled on even shots.
+ - **OddShot**: Enabled on odd shots.
+ - **EvenReload**: Enabled on even reloads.
+ - **OddReload**: Enabled on odd reloads.
+ - **Sights**: Enabled when sighted.
+ - **HipFire**: Enabled when not sighted.
+ - **Shooting**: Enabled when constantly shooting.
+ - **Recoil**: Scales with bursts.
+ - **Move**: Enabled when moving.

@@ -11,7 +11,9 @@ function SWEP:SwitchFiremode()
         fm = 1
     end
 
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("FiremodeSound")), 75, 100, 1, CHAN_ITEM)
+    if IsFirstTimePredicted() then
+        self:EmitSound(self:RandomChoice(self:GetProcessedValue("FiremodeSound")), 75, 100, 1, CHAN_ITEM)
+    end
 
     self:SetFiremode(fm)
 

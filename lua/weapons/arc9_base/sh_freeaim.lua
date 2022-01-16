@@ -10,6 +10,8 @@ function SWEP:ThinkFreeAim()
     diff.p = math.NormalizeAngle(diff.p)
     diff.y = math.NormalizeAngle(diff.y)
 
+    diff = diff * 0.25
+
     freeaimang.p = math.Clamp(math.NormalizeAngle(freeaimang.p) + math.NormalizeAngle(diff.p), -max, max)
     freeaimang.y = math.Clamp(math.NormalizeAngle(freeaimang.y) + math.NormalizeAngle(diff.y), -max, max)
 

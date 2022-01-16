@@ -23,6 +23,33 @@ function SWEP:CreateHUD_Stats()
 
     local stats = {
         {
+            title = "Firepower",
+            unit = "DMG",
+            fifty = 50,
+            conv = function(a)
+                local dv = self:GetValue("DamageMax")
+
+                dv = math.Round(dv, 0)
+
+                return dv
+            end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
+            title = "Range",
+            unit = "M",
+            fifty = 500,
+            stat = "RangeMax",
+            conv = function(a)
+                return a * ARC9.HUToM
+            end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
             title = "Recoil",
             unit = "%",
             fifty = 75,

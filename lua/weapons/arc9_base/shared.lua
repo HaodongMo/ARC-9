@@ -50,6 +50,8 @@ SWEP.WorldModelOffset = nil
 --     scale = 1
 -- }
 
+SWEP.ViewModelFOV = 60
+
 -------------------------- SAVING
 
 SWEP.SaveBase = nil -- set to a weapon class to make this weapon share saves with it.
@@ -292,7 +294,7 @@ SWEP.SpreadAddRecoil = 0 -- Applied per unit of recoil.
 SWEP.FreeAimRadius = 10 -- In degrees, how much this gun can free aim in hip fire.
 SWEP.Sway = 1 -- How much the gun sways.
 
-SWEP.FreeAimMultSights = 0.25
+SWEP.FreeAimRadiusMultSights = 0.25
 
 SWEP.SwayMultSights = 0.5
 
@@ -487,9 +489,9 @@ SWEP.IronSights = {
     CrosshairInSights = false,
 }
 
-SWEP.SightMidpoint = { -- Where the gun should be at the middle of it's irons
-    Pos = Vector(0, 15, -4),
-    Ang = Angle(0, 0, -45),
+SWEP.SightMidPoint = { -- Where the gun should be at the middle of it's irons
+    Pos = Vector(-1, 15, -4),
+    Ang = Angle(0, 0, -35),
 }
 
 SWEP.HasSights = true
@@ -507,8 +509,8 @@ SWEP.SprintPos = nil
 SWEP.SprintAng = nil
 
 SWEP.SprintMidPoint = {
-    pos = Vector(4, 10, 2),
-    ang = Angle(0, -10, -45)
+    Pos = Vector(4, 2, -4),
+    Ang = Angle(0, 5, -15)
 }
 
 -- Position for customizing
@@ -518,7 +520,7 @@ SWEP.CustomizePos = Vector(20, 32, 4)
 SWEP.InBipodPos = Vector(-8, 0, -4)
 SWEP.InBipodMult = Vector(2, 1, 1)
 
--------------------------- HoldTypeS
+-------------------------- HoldTypes
 
 SWEP.HoldType = "shotgun"
 SWEP.HoldTypeSprint = "passive"
@@ -571,31 +573,22 @@ SWEP.AttachmentBodygroups = {
 -- Activate attachment elements by default.
 SWEP.DefaultElements = {}
 
--- Allows for the attachment of models and stuff, like SCK.
--- You can use SCK to get the positions and angles for this.
--- Not recommended to be used.
 SWEP.AttachmentElements = {
-    -- ["name"] = {
-    --     VM = {
-    --         model = "",
-    --         color = Color(255, 255, 255),
-    --         skin = 0,
-    --         bodygroups = "",
-    --         scale = Vector(1, 1 ,1),
-    --         bone = "",
-    --         pos = Vector(0, 0, 0),
-    --         ang = Angle(0, 0, 0),
+    -- ["bg_name"] = {
+    --     Bodygroups = {
+    --         {1, 1}
     --     },
-    --     WM = {
-    --         model = "",
-    --         color = Color(255, 255, 255),
-    --         skin = 0,
-    --         bodygroups = "",
-    --         scale = Vector(1, 1 ,1),
-    --         bone = "",
-    --         pos = Vector(0, 0, 0),
-    --         ang = Angle(0, 0, 0),
+    --     Bonemods = {
+    --         ["body"] = {
+    --             Pos = Vector(0, 0, 0),
+    --             Ang = Angle(0, 0, 0),
+    --             Scale = 1,
+    --         }
+    --     },
+    --     PoseParameters = {
+    --         ["blople"] = 0.5
     --     }
+    --     -- Other attachment parameters work here
     -- }
 }
 
@@ -623,6 +616,7 @@ SWEP.RejectAttachments = {
 SWEP.Attachments = {
 --     [1] = {
 --         PrintName = "",
+--         DefaultName = "No Attachment",
 --         DefaultIcon = Material(""),
 --         InstalledElements = {""}, // list of elements to activate when something is installed here
 --         UnInstalledElements = {""},
@@ -636,6 +630,7 @@ SWEP.Attachments = {
 --         Bone = "",
 --         Pos = Vector(0, 0, 0),
 --         Ang = Angle(0, 0, 0),
+--         Icon_Offset = Vector(0, 0, 0),
 --         KeepBaseIrons = false,
 --         ExtraSightDistance = 0,
 --         Installed = nil,

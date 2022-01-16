@@ -137,6 +137,8 @@ end
 function SWEP:RefreshCustomizeMenu()
 end
 
+local mat_circle = Material("arc9/circle.png", "mips smooth")
+
 function SWEP:CreateCustomizeHUD()
     local bg = vgui.Create("DPanel")
 
@@ -155,8 +157,138 @@ function SWEP:CreateCustomizeHUD()
             self:Remove()
             gui.EnableScreenClicker(false)
         end
+
+        local bumpy = {}
+
+        local function isinaabb(x, y, slot)
+            local mousex, mousey = input.GetCursorPos()
+
+            surface.SetFont("ARC9_8")
+            local tw = surface.GetTextSize(slot.PrintName or "SLOT")
+
+            local s = ScreenScale(8)
+
+            if mousex >= x and mousex <= x + s + tw and mousey >= y and mousey <= y + s then
+                return true
+            else
+                return false
+            end
+        end
+
+        for _, slot in pairs(self:GetSubSlotList()) do
+            local attpos = self:GetAttPos(slot)
+
+            cam.Start3D(nil, nil, self.ViewModelFOV)
+            local toscreen = attpos:ToScreen()
+            cam.End3D()
+
+            local x, y = toscreen.x, toscreen.y
+
+            local s = ScreenScale(8)
+
+            -- local push = s
+
+            -- for _, bump in pairs(bumpy) do
+            --     if x == bump.x and y == bump.y then
+            --         x = x + push
+            --     elseif math.Distance(x, y, bump.x, bump.y) < push then
+            --         local dx = bump.x - x
+            --         local dy = bump.y - y
+
+            --         local mag = math.sqrt(math.pow(dx, 2), math.pow(dy, 2))
+
+            --         dx = dx / mag
+            --         dy = dy / mag
+
+            --         dx = dx * push
+            --         dy = dy * push
+
+            --         x = x + dx
+            --         y = y + dy
+            --     end
+            -- end
+
+            x = x + (slot.Icon_Offset or Vector(0, 0, 0)).x
+            y = y + (slot.Icon_Offset or Vector(0, 0, 0)).y
+
+            local hoveredslot = false
+
+            local dist = 0
+
+            local mousex, mousey = input.GetCursorPos()
+
+            if isinaabb(x, y, slot) then
+                hoveredslot = true
+                dist = math.Distance(x, y, mousex, mousey)
+                for _, bump in pairs(bumpy) do
+                    if isinaabb(bump.x, bump.y, bump.slot) then
+                        local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
+
+                        if d2 < dist then
+                            hoveredslot = false
+                            break
+                        end
+                    end
+                end
+            end
+
+            table.insert(bumpy, {x = x, y = y, slot = slot})
+
+            -- if self2:IsHovered() then
+            -- end
+
+            local col = ARC9.GetHUDColor("fg")
+
+            if hoveredslot then
+                col = ARC9.GetHUDColor("hi")
+            end
+
+            surface.SetMaterial(mat_circle)
+
+            local atttxt = slot.DefaultName or "No Attachment"
+
+            if slot.Installed then
+                local atttbl = self:GetFinalAttTable(slot)
+                atttxt = atttbl.PrintName or ""
+                surface.SetMaterial(atttbl.Icon or mat_circle)
+            end
+
+            surface.SetDrawColor(col)
+            surface.DrawTexturedRect(x, y, s, s)
+
+            surface.SetFont("ARC9_8")
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(x + s + ScreenScale(3), y - (s / 2) + ScreenScale(1))
+            surface.DrawText(slot.PrintName or "SLOT")
+
+            surface.SetFont("ARC9_8")
+            surface.SetTextColor(col)
+            surface.SetTextPos(x + s + ScreenScale(2), y - (s / 2))
+            surface.DrawText(slot.PrintName or "SLOT")
+
+            surface.SetFont("ARC9_6")
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(x + s + ScreenScale(3), y + (s / 2) + ScreenScale(1))
+            surface.DrawText(atttxt)
+
+            surface.SetFont("ARC9_6")
+            surface.SetTextColor(col)
+            surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
+            surface.DrawText(atttxt)
+
+            if hoveredslot and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
+                if input.IsMouseDown(MOUSE_LEFT) then
+                    self.BottomBarMode = 1
+                    self.BottomBarAddress = slot.Address
+                    self:CreateHUD_Bottom()
+                elseif input.IsMouseDown(MOUSE_RIGHT) then
+                    self:Detach(slot.Address)
+                end
+            end
+        end
     end
 
+    self:CreateHUD_Bottom()
     self:CreateHUD_RHP()
 end
 
@@ -290,6 +422,10 @@ function SWEP:CreateHUD_RHP()
         newbtn.DoClick = function(self2)
             self.CustomizeTab = self2.page
             self2.func(self)
+        end
+        newbtn.DoRightClick = function(self2)
+            self.CustomizeTab = 0
+            self:ClearTabPanel()
         end
     end
 

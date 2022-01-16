@@ -100,6 +100,10 @@ end
 function SWEP:GetProcessedValue(val, base)
     local stat = self:GetValue(val, base)
 
+    if GetConVar("arc9_truenames"):GetBool() then
+        stat = self:GetValue(val, stat, "True")
+    end
+
     if self:GetValue("Silencer") then
         stat = self:GetValue(val, stat, "Silenced")
     end

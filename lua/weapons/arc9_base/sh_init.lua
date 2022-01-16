@@ -53,6 +53,9 @@ function SWEP:Deploy()
         self:SetTimer(0.25, function()
             self:SendWeapon()
         end)
+    else
+        self:DoBodygroups(true)
+        self:DoBodygroups(false)
     end
 
     self:SetShouldHoldType()
@@ -145,7 +148,7 @@ function SWEP:SetShouldHoldType()
         return
     end
 
-    if self:GetSightAmount() > 0 then
+    if self:GetInSights() then
         if self:GetValue("HoldTypeSights") then
             self:SetHoldType(self:GetValue("HoldTypeSights"))
 
