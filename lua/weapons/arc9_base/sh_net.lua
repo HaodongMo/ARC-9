@@ -72,6 +72,7 @@ function SWEP:ReceiveWeapon()
     self:BuildSubAttachments(tbl)
 
     if CLIENT then
+        self:InvalidateCache()
         self:SetupModel(true)
         self:SetupModel(false)
         self:RefreshCustomizeMenu()
