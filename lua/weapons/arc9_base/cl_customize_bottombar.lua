@@ -1,3 +1,11 @@
+local function PaintScrollBar(panel, w, h)
+    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+    surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
+
+    surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
+end
+
 SWEP.BottomBar = nil
 
 -- 0: Preset
@@ -17,6 +25,8 @@ function SWEP:CreateHUD_Bottom()
     local bg = self.CustomizeHUD
 
     self:ClearBottomBar()
+
+    self.AttInfoBarAtt = nil
 
     local bp = vgui.Create("DPanel", bg)
     bp:SetSize(ScrW(), ScreenScale(62))
@@ -108,7 +118,12 @@ function SWEP:CreateHUD_Bottom()
                 end
             end
             attbtn.Paint = function(self2, w, h)
+                if !IsValid(self) then return end
+
                 local slot = self:LocateSlotFromAddress(self2.address)
+
+                if !slot then return end
+
                 local attached = slot.Installed == self2.att
 
                 local col1 = ARC9.GetHUDColor("fg")
@@ -175,12 +190,14 @@ function SWEP:CreateHUD_AttInfo()
 
     self:ClearAttInfoBar()
 
+    local atttbl = ARC9.GetAttTable(self.AttInfoBarAtt)
+
+    if !atttbl then return end
+
     local bp = vgui.Create("DPanel", bg)
     bp:SetSize(ScrW() / 3, ScrH() - ScreenScale(64 + ScreenScale(4)))
     bp:SetPos(ScreenScale(4), ScreenScale(4))
     bp.Paint = function(self2, w, h)
-        local atttbl = ARC9.GetAttTable(self.AttInfoBarAtt)
-
         local title = atttbl.PrintName
 
         surface.SetFont("ARC9_24")
@@ -201,4 +218,55 @@ function SWEP:CreateHUD_AttInfo()
     end
 
     self.AttInfoBar = bp
+
+    local tp = vgui.Create("DScrollPanel", bp)
+    tp:SetSize(bp:GetWide(), bp:GetTall() - ScreenScale(28) - ScreenScale(50))
+    tp:SetPos(0, ScreenScale(28))
+
+    local scroll_preset = tp:GetVBar()
+    scroll_preset.Paint = function() end
+    scroll_preset.btnUp.Paint = function(span, w, h)
+    end
+    scroll_preset.btnDown.Paint = function(span, w, h)
+    end
+    scroll_preset.btnGrip.Paint = PaintScrollBar
+
+    local newbtn = tp:Add("DPanel")
+    newbtn:SetSize(ScreenScale(400), ScreenScale(11))
+    newbtn:Dock(TOP)
+    newbtn.title = "Description"
+    newbtn.Paint = function(self2, w, h)
+        -- title
+        surface.SetFont("ARC9_8")
+        surface.SetTextPos(ScreenScale(3), ScreenScale(2 + 1))
+        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawText(self2.title)
+
+        surface.SetFont("ARC9_8")
+        surface.SetTextPos(ScreenScale(2), ScreenScale(2))
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.DrawText(self2.title)
+    end
+
+    local multiline = {}
+    local desc = atttbl.Description
+
+    multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(4)), "ARC9_10")
+
+    for i, text in pairs(multiline) do
+        local desc_line = vgui.Create("DPanel", tp)
+        desc_line:SetSize(tp:GetWide(), ScreenScale(11))
+        desc_line:Dock(TOP)
+        desc_line.Paint = function(self2, w, h)
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(ScreenScale(3), ScreenScale(1))
+            surface.DrawText(text)
+
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextPos(ScreenScale(2), 0)
+            surface.DrawText(text)
+        end
+    end
 end

@@ -43,11 +43,11 @@ local shadow = Material("arc9/shadow.png", "mips smooth")
 local matRefract = Material("pp/arc9/refract_rt")
 local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
 
-local pp_cc_tab = {
-    [ "$pp_colour_brightness" ] = -0.15,
-    [ "$pp_colour_contrast" ] = 1,
-    [ "$pp_colour_colour" ] = 1,
-}
+-- local pp_cc_tab = {
+--     [ "$pp_colour_brightness" ] = -0.15,
+--     [ "$pp_colour_contrast" ] = 1,
+--     [ "$pp_colour_colour" ] = 1,
+-- }
 
 function SWEP:DoRTScopeEffects()
     if !render.SupportsPixelShaders_2_0() then return end
