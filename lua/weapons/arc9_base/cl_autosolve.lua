@@ -19,6 +19,7 @@ function SWEP:BuildMultiSight()
                 local s = self:GenerateAutoSight(sight, slottbl)
                 s.atttbl = atttbl
                 s.ExtraSightDistance = slottbl.ExtraSightDistance or 0
+                s.OriginalSightTable = sight
                 table.insert(self.MultiSightTable, s)
             end
 

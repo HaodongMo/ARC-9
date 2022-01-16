@@ -136,3 +136,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     return pos, ang
 end
+
+function SWEP:GetViewModelFOV()
+    return self.ViewModelFOV
+end

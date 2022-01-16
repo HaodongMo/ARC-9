@@ -15,6 +15,8 @@ function SWEP:PreDrawViewModel()
 
     if GetConVar("ARC9_benchgun"):GetBool() then
         cam.Start3D()
+    else
+        cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
     end
     cam.IgnoreZ(true)
 end
@@ -22,6 +24,8 @@ end
 function SWEP:PostDrawViewModel()
     cam.IgnoreZ(false)
     if GetConVar("ARC9_benchgun"):GetBool() then
+        cam.End3D()
+    else
         cam.End3D()
     end
 end

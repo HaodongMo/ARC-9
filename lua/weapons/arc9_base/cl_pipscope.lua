@@ -1,4 +1,4 @@
-local rtmat = GetRenderTarget("ARC9_pipscope", 512, 512, false)
+local rtmat = GetRenderTarget("arc9_pipscope", 512, 512, false)
 
 local rtsize = 512
 
@@ -10,7 +10,7 @@ function SWEP:DoRT(fov)
         y = 0,
         w = rtsize,
         h = rtsize,
-        angles = self:GetOwner():EyeAngles(),
+        angles = self:GetShootDir(),
         origin = self:GetOwner():GetShootPos(),
         drawviewmodel = false,
         fov = fov,
@@ -25,14 +25,18 @@ function SWEP:DoRT(fov)
     render.PopRenderTarget()
 end
 
-local rtsurf = Material("effects/ARC9_rt")
-local shadow = Material("ARC9/shadow.png", "smooth")
+local rtsurf = Material("effects/arc9_rt")
+local shadow = Material("arc9/shadow.png", "mips smooth")
 
 function SWEP:DoRTScope(model, atttbl)
     local pos = model:GetPos()
-    local ang = model:GetAngles()
+    local ang = EyeAngles()
 
-    pos = pos + ang:Forward() * 12000
+    local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
+
+    pos = pos + (sightpos.x * ang:Right())
+    pos = pos + (sightpos.y * ang:Forward())
+    pos = pos + (sightpos.z * -ang:Up())
 
     local screenpos = pos:ToScreen()
 
@@ -76,7 +80,7 @@ function SWEP:DoRTScope(model, atttbl)
 
     model:SetSubMaterial()
 
-    model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/ARC9_rt")
+    model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9_rt")
 end
 
 function SWEP:DoCheapScope(fov)
@@ -84,7 +88,7 @@ function SWEP:DoCheapScope(fov)
     local scrh = ScrH()
 
     scrw = scrw
-    scrh = scrh * 9 / 16
+    scrh = scrh * scrh / scrw
 
     local s = (self:GetOwner():GetFOV() / self:GetMagnification() / fov) * 1.40
 
@@ -93,6 +97,13 @@ function SWEP:DoCheapScope(fov)
 
     scrx = scrx + 8
     scry = scry + 8
+
+    local pos = self:GetOwner():GetShootPos() + (self:GetShootDir():Forward() * 12000)
+
+    local screenpos = pos:ToScreen()
+
+    scrx = scrx - (screenpos.x - (ScrW() / 2)) * s / 1.4
+    scry = scry - (screenpos.y - (ScrH() / 2)) * s / 1.4
 
     ARC9:DrawPhysBullets()
 
