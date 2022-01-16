@@ -93,6 +93,7 @@ function SWEP:CreateHUD_Bottom()
 
             local attbtn = vgui.Create("DButton", scroll)
             attbtn:SetSize(ScreenScale(48), ScreenScale(48))
+            attbtn:DockMargin(ScreenScale(2), 0, 0, 0)
             attbtn:Dock(LEFT)
             attbtn:SetText("")
             attbtn.att = att
@@ -132,20 +133,6 @@ function SWEP:CreateHUD_Bottom()
                     col1 = ARC9.GetHUDColor("neg")
                 end
 
-                if !hasbg then
-                    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-
-                    for i = 0, ScreenScale(1) do
-                        surface.DrawOutlinedRect(0 + i + ScreenScale(1), 0 + i + ScreenScale(1), w - (i * 2) - ScreenScale(1), h - (i * 2) - ScreenScale(1))
-                    end
-
-                    surface.SetDrawColor(col1)
-
-                    for i = 0, ScreenScale(1) do
-                        surface.DrawOutlinedRect(0 + i, 0 + i, w - (i * 2) - ScreenScale(1), h - (i * 2) - ScreenScale(1))
-                    end
-                end
-
                 local icon = atttbl.Icon
 
                 surface.SetDrawColor(col1)
@@ -153,16 +140,30 @@ function SWEP:CreateHUD_Bottom()
                 surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
 
                 if !hasbg then
+                    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+
+                    for i = 0, ScreenScale(1) do
+                        surface.DrawOutlinedRect(0 + i + ScreenScale(1), 0 + i + ScreenScale(1), w - (i * 2) - ScreenScale(1), h - (i * 2) - ScreenScale(1))
+                    end
+
                     surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                     surface.SetTextPos(ScreenScale(14), ScreenScale(1))
                     surface.SetFont("ARC9_10")
-                    self:DrawTextRot(self2, atttbl.CompactName or atttbl.PrintName or atttbl.ShortName, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(48), true)
+                    self:DrawTextRot(self2, atttbl.CompactName or atttbl.PrintName or atttbl.ShortName, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
                 end
 
                 surface.SetTextColor(col1)
                 surface.SetTextPos(ScreenScale(13), 0)
                 surface.SetFont("ARC9_10")
-                self:DrawTextRot(self2, atttbl.CompactName or atttbl.PrintName or atttbl.ShortName, 0, 0, ScreenScale(2), 0, ScreenScale(48), false)
+                self:DrawTextRot(self2, atttbl.CompactName or atttbl.PrintName or atttbl.ShortName, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+
+                if !hasbg then
+                    surface.SetDrawColor(col1)
+
+                    for i = 0, ScreenScale(1) do
+                        surface.DrawOutlinedRect(0 + i, 0 + i, w - (i * 2) - ScreenScale(1), h - (i * 2) - ScreenScale(1))
+                    end
+                end
             end
         end
     end

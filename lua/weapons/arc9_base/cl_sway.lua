@@ -123,7 +123,9 @@ function SWEP:GetMidAirBob(pos, ang)
 
     d = d * Lerp(self:GetSightAmount(), 1, 0.1)
 
-    ang:RotateAroundAxis(ang:Right(), -v * d * 8 * math.sin(CurTime() * 0.15))
+    -- ang:RotateAroundAxis(ang:Right(), -v * d * 8 * math.sin(CurTime() * 0.15))
+
+    pos = pos + ang:Up() * -v * d * 2 * math.sin(CurTime() * 0.15)
 
     return pos, ang
 end

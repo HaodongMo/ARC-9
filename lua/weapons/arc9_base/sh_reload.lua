@@ -104,7 +104,7 @@ function SWEP:RestoreClip(amt)
 
     self:SetClip1(math.min(math.min(self:Clip1() + amt, self:GetCapacity()), reserve))
 
-    reserve = reserve - self:GetCapacity()
+    reserve = reserve - self:Clip1()
 
     self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
 

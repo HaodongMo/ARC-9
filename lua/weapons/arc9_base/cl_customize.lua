@@ -276,8 +276,8 @@ function SWEP:CreateCustomizeHUD()
             surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
             surface.DrawText(atttxt)
 
-            if hoveredslot and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
-                if input.IsMouseDown(MOUSE_LEFT) then
+            if hoveredslot then
+                if input.IsMouseDown(MOUSE_LEFT) and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
                     self.BottomBarMode = 1
                     self.BottomBarAddress = slot.Address
                     self:CreateHUD_Bottom()
