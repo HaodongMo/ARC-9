@@ -138,5 +138,8 @@ function SWEP:GetViewModelPosition(pos, ang)
 end
 
 function SWEP:GetViewModelFOV()
-    return self.ViewModelFOV
+    -- return 75
+    -- return 60 * self:GetSmoothedFOVMag()
+    -- return 150
+    return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.sqrt(self:GetSmoothedFOVMag())
 end

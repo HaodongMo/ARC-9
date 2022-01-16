@@ -17,9 +17,16 @@ function SWEP:BuildMultiSight()
         if atttbl.Sights then
             for _, sight in pairs(atttbl.Sights) do
                 local s = self:GenerateAutoSight(sight, slottbl)
+
+                if sight.Disassociate then
+                    s.Disassociate = true
+                end
+
                 s.atttbl = atttbl
                 s.ExtraSightDistance = slottbl.ExtraSightDistance or 0
                 s.OriginalSightTable = sight
+                s.slotbl = slottbl
+
                 table.insert(self.MultiSightTable, s)
             end
 
@@ -107,7 +114,18 @@ end
 
 function SWEP:GetMagnification()
     local sight = self:GetSight()
-    return sight.Magnification or 1
+
+    local target = sight.Magnification or 1
+
+    if GetConVar("arc9_cheapscopes"):GetBool() and !sight.Disassociate then
+        local atttbl = self:GetSight().atttbl
+
+        if atttbl and atttbl.RTScopeFOV then
+            target = (self:GetOwner():GetFOV() / atttbl.RTScopeFOV) / 2.5
+        end
+    end
+
+    return target
 end
 
 function SWEP:AdjustMouseSensitivity()
@@ -118,7 +136,7 @@ function SWEP:AdjustMouseSensitivity()
 
     local sight = self:GetSight()
 
-    if sight.atttbl and sight.atttbl.RTScope then
+    if sight.atttbl and sight.atttbl.RTScope and !sight.Disassociate then
         mag = mag + (fov / sight.atttbl.RTScopeFOV)
     end
 

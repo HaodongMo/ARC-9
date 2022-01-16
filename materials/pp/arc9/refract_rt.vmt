@@ -1,0 +1,22 @@
+"g_refract"
+{
+ 	"$refractamount" 	"1.7"
+ 	"$bluramount" 	"0"
+	"$nocull" 		1
+	"$ignorez"	1
+	"$model" 1
+	$scale "[1 1]"
+	"$normalmap" "pp/arc9/lense_rt_nrm"
+
+	"$fbtexture" "arc9_pipscope"
+	
+	"Refract_DX80"
+	{
+		"$fallbackmaterial" "null"
+	}
+
+	"Refract_DX60"
+	{
+		"$fallbackmaterial" "null"
+	}
+}

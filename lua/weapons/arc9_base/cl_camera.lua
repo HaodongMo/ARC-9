@@ -13,17 +13,23 @@ function SWEP:CalcView(ply, pos, ang, fov)
         ang.r = ang.r + (math.sin(CurTime() * 70.151) * rec * 0.25)
     end
 
+    fov = fov / self:GetSmoothedFOVMag()
+
+    return pos, ang, fov
+end
+
+function SWEP:GetSmoothedFOVMag()
     local mag = 1
 
     if self:GetSightAmount() > 0 then
-        mag = Lerp(self:GetSightAmount(), 1, self:GetMagnification())
+        local target = self:GetMagnification()
+
+        mag = Lerp(self:GetSightAmount(), 1, target)
     end
 
     local diff = math.abs(self.SmoothedMagnification - mag)
 
     self.SmoothedMagnification = math.Approach(self.SmoothedMagnification, mag, FrameTime() * diff * 10)
 
-    fov = fov / self.SmoothedMagnification
-
-    return pos, ang, fov
+    return self.SmoothedMagnification
 end

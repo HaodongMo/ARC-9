@@ -50,7 +50,7 @@ SWEP.WorldModelOffset = nil
 --     scale = 1
 -- }
 
-SWEP.ViewModelFOV = 80
+SWEP.DesiredViewModelFOV = 75
 
 -------------------------- SAVING
 

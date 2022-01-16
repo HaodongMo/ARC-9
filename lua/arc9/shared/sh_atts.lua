@@ -60,7 +60,7 @@ end
 
 ARC9.LoadAtts()
 
-function ARC9.GetAttTable(name) 
+function ARC9.GetAttTable(name)
     local shortname = name
     if isnumber(shortname) then
         shortname = ARC9.Attachments_Index[name]

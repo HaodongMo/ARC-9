@@ -13,10 +13,12 @@ function SWEP:PreDrawViewModel()
     self:DoBodygroups(false)
     self:GetVM():SetPoseParameter("sights", self:GetSightAmount())
 
+    self.ViewModelFOV = self:GetViewModelFOV()
+
     if GetConVar("ARC9_benchgun"):GetBool() then
         cam.Start3D()
-    else
-        cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
+    -- else
+    --     cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
     end
     cam.IgnoreZ(true)
 end
@@ -25,8 +27,8 @@ function SWEP:PostDrawViewModel()
     cam.IgnoreZ(false)
     if GetConVar("ARC9_benchgun"):GetBool() then
         cam.End3D()
-    else
-        cam.End3D()
+    -- else
+    --     cam.End3D()
     end
 end
 
@@ -58,7 +60,7 @@ function SWEP:DrawCustomModel(wm)
 
     for _, model in pairs(mdl) do
         local slottbl = model.slottbl
-        -- local atttbl = model.atttbl
+        local atttbl = self:GetFinalAttTable(slottbl)
 
         local apos, aang = self:GetAttPos(slottbl, wm)
 
@@ -67,12 +69,12 @@ function SWEP:DrawCustomModel(wm)
         model:SetRenderOrigin(apos)
         model:SetRenderAngles(aang)
 
-        if !wm and model.atttbl.HoloSight then
-            self:DoHolosight(model, model.atttbl)
+        if !wm and atttbl.HoloSight then
+            self:DoHolosight(model, atttbl)
         end
 
-        if !wm and model.atttbl.RTScope then
-            self:DoRTScope(model, model.atttbl)
+        if !wm and atttbl.RTScope then
+            self:DoRTScope(model, atttbl)
         end
 
         if !model.NoDraw then

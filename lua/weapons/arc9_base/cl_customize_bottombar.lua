@@ -60,11 +60,11 @@ function SWEP:CreateHUD_Bottom()
     scroll:SetSize(ScrW(), ScreenScale(48))
 
     if self.BottomBarMode == 1 then
-        local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
+        local slottbl = self:LocateSlotFromAddress(self.BottomBarAddress)
 
-        if !slot then return end
+        if !slottbl then return end
 
-        local atts = ARC9.GetAttsForCats(slot.Category or "")
+        local atts = ARC9.GetAttsForCats(slottbl.Category or "")
 
         table.sort(atts, function(a, b)
             a = a or ""
@@ -97,19 +97,19 @@ function SWEP:CreateHUD_Bottom()
             attbtn:Dock(LEFT)
             attbtn:SetText("")
             attbtn.att = att
-            attbtn.slot = slot
-            attbtn.address = slot.Address
+            attbtn.address = slottbl.Address
             attbtn.OnMousePressed = function(self2, kc)
                 if kc == MOUSE_LEFT then
-                    self:Attach(self2.slot.Address, self2.att)
-                    self.CustomizeSelectAddr = self2.slot.Address
+                    self:Attach(self2.address, self2.att)
+                    self.CustomizeSelectAddr = self2.address
                 elseif kc == MOUSE_RIGHT then
-                    self:Detach(self2.slot.Address)
-                    self.CustomizeSelectAddr = self2.slot.Address
+                    self:Detach(self2.address)
+                    self.CustomizeSelectAddr = self2.address
                 end
             end
             attbtn.Paint = function(self2, w, h)
-                local attached = self2.slot.Installed == self2.att
+                local slot = self:LocateSlotFromAddress(self2.address)
+                local attached = slot.Installed == self2.att
 
                 local col1 = ARC9.GetHUDColor("fg")
 
@@ -127,7 +127,12 @@ function SWEP:CreateHUD_Bottom()
                     hasbg = true
                 end
 
-                local canattach = self:CanAttach(self2.slot.Address, self2.att, self2.slot)
+                if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
+                    self.AttInfoBarAtt = self2.att
+                    self:CreateHUD_AttInfo()
+                end
+
+                local canattach = self:CanAttach(slot.Address, self2.att, slot)
 
                 if !canattach then
                     col1 = ARC9.GetHUDColor("neg")
@@ -140,12 +145,6 @@ function SWEP:CreateHUD_Bottom()
                 surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
 
                 if !hasbg then
-                    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-
-                    for i = 0, ScreenScale(1) do
-                        surface.DrawOutlinedRect(0 + i + ScreenScale(1), 0 + i + ScreenScale(1), w - (i * 2) - ScreenScale(1), h - (i * 2) - ScreenScale(1))
-                    end
-
                     surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                     surface.SetTextPos(ScreenScale(14), ScreenScale(1))
                     surface.SetFont("ARC9_10")
@@ -156,15 +155,50 @@ function SWEP:CreateHUD_Bottom()
                 surface.SetTextPos(ScreenScale(13), 0)
                 surface.SetFont("ARC9_10")
                 self:DrawTextRot(self2, atttbl.CompactName or atttbl.PrintName or atttbl.ShortName, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
-
-                if !hasbg then
-                    surface.SetDrawColor(col1)
-
-                    for i = 0, ScreenScale(1) do
-                        surface.DrawOutlinedRect(0 + i, 0 + i, w - (i * 2) - ScreenScale(1), h - (i * 2) - ScreenScale(1))
-                    end
-                end
             end
         end
     end
+end
+
+SWEP.AttInfoBar = nil
+SWEP.AttInfoBarAtt = nil
+
+function SWEP:ClearAttInfoBar()
+    if self.AttInfoBar then
+        self.AttInfoBar:Remove()
+        self.AttInfoBar = nil
+    end
+end
+
+function SWEP:CreateHUD_AttInfo()
+    local bg = self.CustomizeHUD
+
+    self:ClearAttInfoBar()
+
+    local bp = vgui.Create("DPanel", bg)
+    bp:SetSize(ScrW() / 3, ScrH() - ScreenScale(64 + ScreenScale(4)))
+    bp:SetPos(ScreenScale(4), ScreenScale(4))
+    bp.Paint = function(self2, w, h)
+        local atttbl = ARC9.GetAttTable(self.AttInfoBarAtt)
+
+        local title = atttbl.PrintName
+
+        surface.SetFont("ARC9_24")
+        surface.SetTextPos(0, 0)
+        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+        self:DrawTextRot(self2, title, 0, 0, ScreenScale(1), ScreenScale(1), w, false)
+
+        surface.SetFont("ARC9_24")
+        surface.SetTextPos(0, 0)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        self:DrawTextRot(self2, title, 0, 0, 0, 0, w, true)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawRect(ScreenScale(1), ScreenScale(27), w - ScreenScale(1), ScreenScale(1))
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawRect(0, ScreenScale(26), w - ScreenScale(1), ScreenScale(1))
+    end
+
+    self.AttInfoBar = bp
 end
