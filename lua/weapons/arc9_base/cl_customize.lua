@@ -208,8 +208,8 @@ function SWEP:CreateCustomizeHUD()
             --     end
             -- end
 
-            x = x + (slot.Icon_Offset or Vector(0, 0, 0)).x * ScreenScale(1)
-            y = y + (slot.Icon_Offset or Vector(0, 0, 0)).y * ScreenScale(1)
+            x = x - (slot.Icon_Offset or Vector(0, 0, 0)).x * ScreenScale(1)
+            y = y - (slot.Icon_Offset or Vector(0, 0, 0)).y * ScreenScale(1)
 
             local hoveredslot = false
 

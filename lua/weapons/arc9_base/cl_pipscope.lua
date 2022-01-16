@@ -35,7 +35,7 @@ function SWEP:DoRTScope(model, atttbl)
     local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
 
     pos = pos + (sightpos.x * ang:Right())
-    pos = pos + (sightpos.y * ang:Forward())
+    -- pos = pos + (sightpos.y * ang:Forward())
     pos = pos + (sightpos.z * -ang:Up())
 
     local screenpos = pos:ToScreen()
