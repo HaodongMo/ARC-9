@@ -37,6 +37,13 @@ function SWEP:CreateHUD_Bottom()
 
         if self.BottomBarMode == 1 then
             local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
+
+            if !slot then
+                self.BottomBarMode = 0
+                self:CreateHUD_Bottom()
+                return
+            end
+
             bartxt = slot.PrintName or "Attachments"
         end
 
