@@ -331,18 +331,14 @@ function SWEP:CreateCustomizeHUD()
         end
 
         if !anyhovered then
-            if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown then
+            if (input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown) or (input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown) then
                 dragging = true
                 lastmousex, lastmousey = input.GetCursorPos()
-            end
-
-            if input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
-                dragging_r = true
             end
         end
 
         if dragging then
-            if !input.IsMouseDown(MOUSE_LEFT) then
+            if !input.IsMouseDown(MOUSE_LEFT) and !input.IsMouseDown(MOUSE_RIGHT) then
                 dragging = false
             else
                 local mousex, mousey = input.GetCursorPos()
@@ -355,20 +351,6 @@ function SWEP:CreateCustomizeHUD()
 
                 self.CustomizePanX = math.Clamp(self.CustomizePanX, -32, 32)
                 self.CustomizePanY = math.Clamp(self.CustomizePanY, -32, 32)
-            end
-        end
-
-        if dragging_r then
-            if !input.IsMouseDown(MOUSE_RIGHT) then
-                dragging_r = false
-            else
-                local mousex, mousey = input.GetCursorPos()
-
-                local dy = mousey - lastmousey
-
-                self.CustomizeZoom = self.CustomizeZoom + (dy / ScreenScale(8))
-
-                self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -32, 32)
             end
         end
 
