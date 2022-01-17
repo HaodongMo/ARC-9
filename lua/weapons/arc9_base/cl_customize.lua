@@ -388,7 +388,7 @@ function SWEP:CreateHUD_RHP()
 
     for i, btn in pairs(self.CustomizeButtons) do
         local newbtn = vgui.Create("DButton", bg)
-        newbtn:SetPos(ScrW() - ScreenScale(6) - (ScreenScale(70) * i), ScreenScale(58))
+        newbtn:SetPos(ScrW() - ScreenScale(6) - (ScreenScale(69) * i), ScreenScale(58))
         newbtn:SetSize(ScreenScale(64), ScreenScale(12))
         newbtn.title = btn.title
         newbtn.page = i - 1

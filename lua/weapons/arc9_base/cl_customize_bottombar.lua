@@ -145,10 +145,17 @@ function SWEP:CreateHUD_Bottom()
                     surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
                     surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
 
-                    surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                    if self2:IsHovered() then
+                        surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+                    else
+                        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                    end
                     surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
 
                     hasbg = true
+                else
+                    surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+                    surface.DrawRect(0, 0, w, h)
                 end
 
                 if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
@@ -163,6 +170,12 @@ function SWEP:CreateHUD_Bottom()
                 end
 
                 local icon = atttbl.Icon
+
+                if !hasbg then
+                    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                    surface.SetMaterial(icon)
+                    surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
+                end
 
                 surface.SetDrawColor(col1)
                 surface.SetMaterial(icon)
@@ -204,8 +217,8 @@ function SWEP:CreateHUD_AttInfo()
     if !atttbl then return end
 
     local bp = vgui.Create("DPanel", bg)
-    bp:SetSize(ScrW() / 3, ScrH() - ScreenScale(64 + ScreenScale(4)))
-    bp:SetPos(ScreenScale(4), ScreenScale(4))
+    bp:SetSize(ScrW() / 3, ScrH() - ScreenScale(64 + 24))
+    bp:SetPos(ScreenScale(4), ScreenScale(24))
     bp.Paint = function(self2, w, h)
         local title = atttbl.PrintName
 
@@ -229,8 +242,12 @@ function SWEP:CreateHUD_AttInfo()
     self.AttInfoBar = bp
 
     local tp = vgui.Create("DScrollPanel", bp)
-    tp:SetSize(bp:GetWide(), bp:GetTall() - ScreenScale(28) - ScreenScale(50))
-    tp:SetPos(0, ScreenScale(28))
+    tp:SetSize(ScreenScale(150), bp:GetTall() - ScreenScale(28 + 6))
+    tp:SetPos(ScreenScale(4), ScreenScale(28 + 4))
+    tp.Paint = function(self2, w, h)
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow", 240))
+        surface.DrawRect(0, 0, w, h)
+    end
 
     local scroll_preset = tp:GetVBar()
     scroll_preset.Paint = function() end
@@ -241,17 +258,17 @@ function SWEP:CreateHUD_AttInfo()
     scroll_preset.btnGrip.Paint = PaintScrollBar
 
     local newbtn = tp:Add("DPanel")
-    newbtn:SetSize(ScreenScale(400), ScreenScale(11))
+    newbtn:SetSize(ScreenScale(400), ScreenScale(9))
     newbtn:Dock(TOP)
     newbtn.title = "Description"
     newbtn.Paint = function(self2, w, h)
         -- title
-        surface.SetFont("ARC9_8")
+        surface.SetFont("ARC9_6")
         surface.SetTextPos(ScreenScale(3), ScreenScale(2 + 1))
         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
         surface.DrawText(self2.title)
 
-        surface.SetFont("ARC9_8")
+        surface.SetFont("ARC9_6")
         surface.SetTextPos(ScreenScale(2), ScreenScale(2))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.DrawText(self2.title)
@@ -260,19 +277,19 @@ function SWEP:CreateHUD_AttInfo()
     local multiline = {}
     local desc = atttbl.Description
 
-    multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(4)), "ARC9_10")
+    multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(3.5)), "ARC9_8")
 
     for i, text in pairs(multiline) do
         local desc_line = vgui.Create("DPanel", tp)
-        desc_line:SetSize(tp:GetWide(), ScreenScale(11))
+        desc_line:SetSize(tp:GetWide(), ScreenScale(9))
         desc_line:Dock(TOP)
         desc_line.Paint = function(self2, w, h)
-            surface.SetFont("ARC9_10")
+            surface.SetFont("ARC9_8")
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
             surface.SetTextPos(ScreenScale(3), ScreenScale(1))
             surface.DrawText(text)
 
-            surface.SetFont("ARC9_10")
+            surface.SetFont("ARC9_8")
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetTextPos(ScreenScale(2), 0)
             surface.DrawText(text)
@@ -283,7 +300,7 @@ function SWEP:CreateHUD_AttInfo()
 
     if table.Count(pros) > 0 then
         local pro_label = vgui.Create("DPanel", tp)
-        pro_label:SetSize(tp:GetWide(), ScreenScale(14))
+        pro_label:SetSize(tp:GetWide(), ScreenScale(11))
         pro_label:Dock(TOP)
         pro_label.text = "Advantages"
         pro_label.Paint = function(self2, w, h)
@@ -296,12 +313,6 @@ function SWEP:CreateHUD_AttInfo()
             surface.SetTextColor(ARC9.GetHUDColor("pos"))
             surface.SetTextPos(ScreenScale(2), 0)
             surface.DrawText(self2.text)
-
-            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-            surface.DrawRect(ScreenScale(1), ScreenScale(10 + 1), w - ScreenScale(1), ScreenScale(1))
-
-            surface.SetDrawColor(ARC9.GetHUDColor("pos"))
-            surface.DrawRect(0, ScreenScale(10), w - ScreenScale(1), ScreenScale(1))
         end
 
         for _, stat in pairs(pros) do
@@ -310,22 +321,25 @@ function SWEP:CreateHUD_AttInfo()
             pro_stat:Dock(TOP)
             pro_stat.text = stat
             pro_stat.Paint = function(self2, w, h)
+                surface.SetDrawColor(ARC9.GetHUDColor("pos", 15))
+                surface.DrawRect(0, 0, w, h)
+
                 surface.SetFont("ARC9_8")
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.SetTextPos(ScreenScale(3), ScreenScale(1))
-                surface.DrawText(self2.text)
+                self:DrawTextRot(self2, self2.text, 0, 0, ScreenScale(3), ScreenScale(1), w, false)
 
                 surface.SetFont("ARC9_8")
                 surface.SetTextColor(ARC9.GetHUDColor("pos"))
                 surface.SetTextPos(ScreenScale(2), 0)
-                surface.DrawText(self2.text)
+                self:DrawTextRot(self2, self2.text, 0, 0, ScreenScale(2), 0, w, true)
             end
         end
     end
 
     if table.Count(cons) > 0 then
         local con_label = vgui.Create("DPanel", tp)
-        con_label:SetSize(tp:GetWide(), ScreenScale(14))
+        con_label:SetSize(tp:GetWide(), ScreenScale(11))
         con_label:Dock(TOP)
         con_label.text = "Disadvantages"
         con_label.Paint = function(self2, w, h)
@@ -338,12 +352,6 @@ function SWEP:CreateHUD_AttInfo()
             surface.SetTextColor(ARC9.GetHUDColor("neg"))
             surface.SetTextPos(ScreenScale(2), 0)
             surface.DrawText(self2.text)
-
-            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-            surface.DrawRect(ScreenScale(1), ScreenScale(10 + 1), w - ScreenScale(1), ScreenScale(1))
-
-            surface.SetDrawColor(ARC9.GetHUDColor("neg"))
-            surface.DrawRect(0, ScreenScale(10), w - ScreenScale(1), ScreenScale(1))
         end
 
         for _, stat in pairs(cons) do
@@ -352,15 +360,18 @@ function SWEP:CreateHUD_AttInfo()
             con_stat:Dock(TOP)
             con_stat.text = stat
             con_stat.Paint = function(self2, w, h)
+                surface.SetDrawColor(ARC9.GetHUDColor("neg", 15))
+                surface.DrawRect(0, 0, w, h)
+
                 surface.SetFont("ARC9_8")
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.SetTextPos(ScreenScale(3), ScreenScale(1))
-                surface.DrawText(self2.text)
+                self:DrawTextRot(self2, self2.text, 0, 0, ScreenScale(3), ScreenScale(1), w, false)
 
                 surface.SetFont("ARC9_8")
                 surface.SetTextColor(ARC9.GetHUDColor("neg"))
                 surface.SetTextPos(ScreenScale(2), 0)
-                surface.DrawText(self2.text)
+                self:DrawTextRot(self2, self2.text, 0, 0, ScreenScale(2), 0, w, true)
             end
         end
     end

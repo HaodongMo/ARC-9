@@ -228,8 +228,10 @@ function SWEP:CreateHUD_Stats()
     }
 
     local tp = vgui.Create("DScrollPanel", bg)
-    tp:SetSize(ScreenScale(150), ScrH() - ScreenScale(76 + 64))
+    tp:SetSize(ScreenScale(150), ScrH() - ScreenScale(76 + 4))
     tp:SetPos(ScrW() - ScreenScale(150 + 12), ScreenScale(76))
+    tp.Paint = function(self2, w, h)
+    end
 
     local scroll_preset = tp:GetVBar()
     scroll_preset.Paint = function() end
