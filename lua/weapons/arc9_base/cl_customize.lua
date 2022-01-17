@@ -94,7 +94,7 @@ SWEP.CustomizeTab = 1
 
 SWEP.CustomizeButtons = {
     {
-        title = "Hide",
+        title = "Inspect",
         func = function(self2)
             self2:ClearTabPanel()
         end
@@ -148,6 +148,20 @@ end
 
 local mat_circle = Material("arc9/circle.png", "mips smooth")
 
+local lastlmbdown = false
+local lastrmbdown = false
+
+local lastmousex = 0
+local lastmousey = 0
+
+local dragging = false
+local dragging_r = false
+
+SWEP.CustomizePanX = 0
+SWEP.CustomizePanY = 0
+
+SWEP.CustomizeZoom = 0
+
 function SWEP:CreateCustomizeHUD()
     local bg = vgui.Create("DPanel")
 
@@ -169,141 +183,194 @@ function SWEP:CreateCustomizeHUD()
 
         local bumpy = {}
 
-        local function isinaabb(x, y, slot)
+        local anyhovered = false
+
+        local function isinaabb(x, y)
             local mousex, mousey = input.GetCursorPos()
 
-            surface.SetFont("ARC9_8")
-            local tw = surface.GetTextSize(slot.PrintName or "SLOT")
+            local s = ScreenScale(16)
+            local sw = ScreenScale(48)
 
-            local s = ScreenScale(8)
-
-            if mousex >= x and mousex <= x + s + tw and mousey >= y and mousey <= y + s then
+            if mousex >= x - (s / 2) and mousex <= x + sw and mousey >= y - (s / 2) and mousey <= y + (s / 2) then
                 return true
             else
                 return false
             end
         end
 
-        if self.CustomizeTab != 1 then return end
+        if self.CustomizeTab == 1 then
 
-        cam.Start3D(nil, nil, self.ViewModelFOV)
+            cam.Start3D(nil, nil, self:GetViewModelFOV() * 1.2)
 
-        for _, slot in pairs(self:GetSubSlotList()) do
-            if self:GetSlotBlocked(slot) then continue end
-            local attpos = self:GetAttPos(slot)
+            for _, slot in pairs(self:GetSubSlotList()) do
+                if self:GetSlotBlocked(slot) then continue end
+                local attpos = self:GetAttPos(slot)
 
-            local toscreen = attpos:ToScreen()
+                local toscreen = attpos:ToScreen()
 
-            cam.Start2D()
+                cam.Start2D()
 
-            local x, y = toscreen.x, toscreen.y
+                local x, y = toscreen.x, toscreen.y
 
-            local s = ScreenScale(8)
+                local s = ScreenScale(8)
 
-            -- local push = s
+                -- local push = s
 
-            -- for _, bump in pairs(bumpy) do
-            --     if x == bump.x and y == bump.y then
-            --         x = x + push
-            --     elseif math.Distance(x, y, bump.x, bump.y) < push then
-            --         local dx = bump.x - x
-            --         local dy = bump.y - y
+                -- for _, bump in pairs(bumpy) do
+                --     if x == bump.x and y == bump.y then
+                --         x = x + push
+                --     elseif math.Distance(x, y, bump.x, bump.y) < push then
+                --         local dx = bump.x - x
+                --         local dy = bump.y - y
 
-            --         local mag = math.sqrt(math.pow(dx, 2), math.pow(dy, 2))
+                --         local mag = math.sqrt(math.pow(dx, 2), math.pow(dy, 2))
 
-            --         dx = dx / mag
-            --         dy = dy / mag
+                --         dx = dx / mag
+                --         dy = dy / mag
 
-            --         dx = dx * push
-            --         dy = dy * push
+                --         dx = dx * push
+                --         dy = dy * push
 
-            --         x = x + dx
-            --         y = y + dy
-            --     end
-            -- end
+                --         x = x + dx
+                --         y = y + dy
+                --     end
+                -- end
 
-            x = x - (slot.Icon_Offset or Vector(0, 0, 0)).x * ScreenScale(1)
-            y = y - (slot.Icon_Offset or Vector(0, 0, 0)).y * ScreenScale(1)
+                x = x - (slot.Icon_Offset or Vector(0, 0, 0)).x * ScreenScale(1)
+                y = y - (slot.Icon_Offset or Vector(0, 0, 0)).y * ScreenScale(1)
 
-            local hoveredslot = false
+                local hoveredslot = false
 
-            local dist = 0
+                local dist = 0
 
-            local mousex, mousey = input.GetCursorPos()
+                local mousex, mousey = input.GetCursorPos()
 
-            if isinaabb(x, y, slot) then
-                hoveredslot = true
-                dist = math.Distance(x, y, mousex, mousey)
-                for _, bump in pairs(bumpy) do
-                    if isinaabb(bump.x, bump.y, bump.slot) then
-                        local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
+                if isinaabb(x, y) then
+                    hoveredslot = true
+                    dist = math.Distance(x, y, mousex, mousey)
+                    for _, bump in pairs(bumpy) do
+                        if isinaabb(bump.x, bump.y) then
+                            local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
 
-                        if d2 < dist then
-                            hoveredslot = false
-                            break
+                            if d2 < dist then
+                                hoveredslot = false
+                                break
+                            end
                         end
                     end
                 end
-            end
 
-            table.insert(bumpy, {x = x, y = y, slot = slot})
+                table.insert(bumpy, {x = x, y = y, slot = slot})
 
-            -- if self2:IsHovered() then
-            -- end
+                -- if self2:IsHovered() then
+                -- end
 
-            local col = ARC9.GetHUDColor("fg")
+                local col = ARC9.GetHUDColor("fg")
 
-            if hoveredslot then
-                col = ARC9.GetHUDColor("hi")
-            end
-
-            surface.SetMaterial(mat_circle)
-
-            local atttxt = slot.DefaultName or "No Attachment"
-
-            if slot.Installed then
-                local atttbl = self:GetFinalAttTable(slot)
-                atttxt = atttbl.PrintName or ""
-                surface.SetMaterial(atttbl.Icon or mat_circle)
-            end
-
-            surface.SetDrawColor(col)
-            surface.DrawTexturedRect(x, y, s, s)
-
-            surface.SetFont("ARC9_8")
-            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            surface.SetTextPos(x + s + ScreenScale(3), y - (s / 2) + ScreenScale(1))
-            surface.DrawText(slot.PrintName or "SLOT")
-
-            surface.SetFont("ARC9_8")
-            surface.SetTextColor(col)
-            surface.SetTextPos(x + s + ScreenScale(2), y - (s / 2))
-            surface.DrawText(slot.PrintName or "SLOT")
-
-            surface.SetFont("ARC9_6")
-            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            surface.SetTextPos(x + s + ScreenScale(3), y + (s / 2) + ScreenScale(1))
-            surface.DrawText(atttxt)
-
-            surface.SetFont("ARC9_6")
-            surface.SetTextColor(col)
-            surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
-            surface.DrawText(atttxt)
-
-            if hoveredslot then
-                if input.IsMouseDown(MOUSE_LEFT) and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
-                    self.BottomBarMode = 1
-                    self.BottomBarAddress = slot.Address
-                    self:CreateHUD_Bottom()
-                elseif input.IsMouseDown(MOUSE_RIGHT) then
-                    self:Detach(slot.Address)
+                if hoveredslot then
+                    col = ARC9.GetHUDColor("hi")
                 end
+
+                surface.SetMaterial(mat_circle)
+
+                local atttxt = slot.DefaultName or "No Attachment"
+
+                if slot.Installed then
+                    local atttbl = self:GetFinalAttTable(slot)
+                    atttxt = atttbl.PrintName or ""
+                    surface.SetMaterial(atttbl.Icon or mat_circle)
+                end
+
+                surface.SetDrawColor(col)
+                surface.DrawTexturedRect(x, y, s, s)
+
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.SetTextPos(x + s + ScreenScale(3), y - (s / 2) + ScreenScale(1))
+                surface.DrawText(slot.PrintName or "SLOT")
+
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(col)
+                surface.SetTextPos(x + s + ScreenScale(2), y - (s / 2))
+                surface.DrawText(slot.PrintName or "SLOT")
+
+                surface.SetFont("ARC9_6")
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.SetTextPos(x + s + ScreenScale(3), y + (s / 2) + ScreenScale(1))
+                surface.DrawText(atttxt)
+
+                surface.SetFont("ARC9_6")
+                surface.SetTextColor(col)
+                surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
+                surface.DrawText(atttxt)
+
+                if hoveredslot then
+                    anyhovered = true
+                    if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
+                        self.BottomBarMode = 1
+                        self.BottomBarAddress = slot.Address
+                        self:CreateHUD_Bottom()
+
+                        self.CustomizePanX = 0
+                        self.CustomizePanY = 0
+                    elseif input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
+                        self:Detach(slot.Address)
+                    end
+                end
+
+                cam.End2D()
             end
 
-            cam.End2D()
+            cam.End3D()
+
         end
 
-        cam.End3D()
+        if !anyhovered then
+            if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown then
+                dragging = true
+                lastmousex, lastmousey = input.GetCursorPos()
+            end
+
+            if input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
+                dragging_r = true
+            end
+        end
+
+        if dragging then
+            if !input.IsMouseDown(MOUSE_LEFT) then
+                dragging = false
+            else
+                local mousex, mousey = input.GetCursorPos()
+
+                local dx = mousex - lastmousex
+                local dy = mousey - lastmousey
+
+                self.CustomizePanX = self.CustomizePanX + (dx / ScreenScale(32))
+                self.CustomizePanY = self.CustomizePanY + (dy / ScreenScale(32))
+
+                self.CustomizePanX = math.Clamp(self.CustomizePanX, -10, 10)
+                self.CustomizePanY = math.Clamp(self.CustomizePanY, -10, 10)
+            end
+        end
+
+        if dragging_r then
+            if !input.IsMouseDown(MOUSE_RIGHT) then
+                dragging_r = false
+            else
+                local mousex, mousey = input.GetCursorPos()
+
+                local dy = mousey - lastmousey
+
+                self.CustomizeZoom = self.CustomizeZoom + (dy / ScreenScale(16))
+
+                self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -15, 15)
+            end
+        end
+
+        lastmousex, lastmousey = input.GetCursorPos()
+
+        lastlmbdown = input.IsMouseDown(MOUSE_LEFT)
+        lastrmbdown = input.IsMouseDown(MOUSE_RIGHT)
     end
 
     self:CreateHUD_Bottom()

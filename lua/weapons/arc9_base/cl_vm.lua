@@ -95,8 +95,27 @@ function SWEP:GetViewModelPosition(pos, ang)
     self.SwayScale = Lerp(sightdelta, 1, 0.1)
 
     if curvedcustomizedelta > 0 then
-        offsetpos = LerpVector(curvedcustomizedelta, offsetpos, self:GetProcessedValue("CustomizePos"))
-        offsetang = LerpAngle(curvedcustomizedelta, offsetang, self:GetProcessedValue("CustomizeAng"))
+        local cpos = self:GetProcessedValue("CustomizePos")
+        local cang = self:GetProcessedValue("CustomizeAng")
+
+        if self.BottomBarAddress then
+            local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
+
+            if slot then
+                local apos = self:GetAttPos(slot, false, true)
+
+                cpos = cpos + cang:Up() * (apos.x - cpos.x)
+                -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
+                cpos = cpos + cang:Forward() * (apos.z + cpos.z)
+            end
+        end
+
+        cpos = cpos + cang:Up() * self.CustomizePanX
+        cpos = cpos + cang:Forward() * self.CustomizePanY
+        cpos = cpos + Vector(0, 1, 0) * self.CustomizeZoom
+
+        offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
+        offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
 
         extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
         extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))

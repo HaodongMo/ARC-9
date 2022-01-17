@@ -241,6 +241,51 @@ function SWEP:CreateHUD_AttInfo()
 
     self.AttInfoBar = bp
 
+    local close = vgui.Create("DButton", bp)
+    close:SetPos(ScreenScale(160), ScreenScale(34))
+    close:SetSize(ScreenScale(48), ScreenScale(12))
+    close:SetText("")
+    close.title = "Hide"
+    close.DoClick = function(self2)
+        self:ClearAttInfoBar()
+    end
+    close.Paint = function(self2, w, h)
+        local col1 = Color(0, 0, 0, 0)
+        local col2 = ARC9.GetHUDColor("fg")
+
+        local noshade = false
+
+        if self2:IsHovered() then
+            col1 = ARC9.GetHUDColor("hi")
+            col2 = ARC9.GetHUDColor("shadow")
+
+            noshade = true
+        end
+
+        if noshade then
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.DrawRect(ScreenScale(1), ScreenScale(1), w, h)
+        end
+
+        surface.SetDrawColor(col1)
+        surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
+
+        surface.SetFont("ARC9_8")
+        local tw = surface.GetTextSize(self2.title)
+
+        if !noshade then
+            surface.SetFont("ARC9_8")
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos((w - tw) / 2 + ScreenScale(1), ScreenScale(1 + 1))
+            surface.DrawText(self2.title)
+        end
+
+        surface.SetFont("ARC9_8")
+        surface.SetTextColor(col2)
+        surface.SetTextPos((w - tw) / 2, ScreenScale(1))
+        surface.DrawText(self2.title)
+    end
+
     local tp = vgui.Create("DScrollPanel", bp)
     tp:SetSize(ScreenScale(150), bp:GetTall() - ScreenScale(28 + 6))
     tp:SetPos(ScreenScale(4), ScreenScale(28 + 4))
