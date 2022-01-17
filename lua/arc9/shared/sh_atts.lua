@@ -51,11 +51,11 @@ function ARC9.LoadAtts()
             attent.AttToGive = shortname
             attent.Category =  ATT.MenuCategory or "ARC-9 - Attachments"
 
-            print("Registering entity for " .. shortname)
-
             scripted_ents.Register(attent, "ARC9_att_" .. shortname)
         end
     end
+
+    print("ARC9 Registered " .. tostring(ARC9.Attachments_Count) .. " Attachments.")
 
     ARC9.Attachments_Bits = math.min(math.ceil(math.log(ARC9.Attachments_Count + 1, 2)), 32)
 end

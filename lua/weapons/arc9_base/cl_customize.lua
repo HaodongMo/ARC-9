@@ -175,6 +175,11 @@ function SWEP:CreateCustomizeHUD()
         if !IsValid(self) then return end
         -- self:SavePreset()
     end
+    bg.OnMouseWheeled = function(self2, sd)
+        self.CustomizeZoom = self.CustomizeZoom - (sd * 2)
+
+        self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -32, 32)
+    end
     bg.Paint = function(self2, w, h)
         if !IsValid(self) then
             self:Remove()
@@ -348,8 +353,8 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizePanX = self.CustomizePanX + (dx / ScreenScale(32))
                 self.CustomizePanY = self.CustomizePanY + (dy / ScreenScale(32))
 
-                self.CustomizePanX = math.Clamp(self.CustomizePanX, -10, 10)
-                self.CustomizePanY = math.Clamp(self.CustomizePanY, -10, 10)
+                self.CustomizePanX = math.Clamp(self.CustomizePanX, -32, 32)
+                self.CustomizePanY = math.Clamp(self.CustomizePanY, -32, 32)
             end
         end
 
@@ -361,9 +366,9 @@ function SWEP:CreateCustomizeHUD()
 
                 local dy = mousey - lastmousey
 
-                self.CustomizeZoom = self.CustomizeZoom + (dy / ScreenScale(16))
+                self.CustomizeZoom = self.CustomizeZoom + (dy / ScreenScale(8))
 
-                self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -15, 15)
+                self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -32, 32)
             end
         end
 

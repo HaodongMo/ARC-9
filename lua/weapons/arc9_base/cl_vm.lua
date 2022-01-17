@@ -73,7 +73,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     local curvedcustomizedelta = self:Curve(self.CustomizeDelta)
 
     -- local sprintdelta = self:Curve(self:GetSprintDelta())
-    local sprintdelta = self:Curve(self:GetSprintDelta())
+    local sprintdelta = self:Curve(self:GetSprintDelta()) - curvedcustomizedelta
 
     if sprintdelta > 0 then
         offsetpos = LerpVector(sprintdelta, offsetpos, self:GetProcessedValue("SprintPos") or self:GetProcessedValue("HolsterPos"))
@@ -98,6 +98,9 @@ function SWEP:GetViewModelPosition(pos, ang)
         local cpos = self:GetProcessedValue("CustomizePos")
         local cang = self:GetProcessedValue("CustomizeAng")
 
+        extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
+        extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))
+
         if self.BottomBarAddress then
             local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
 
@@ -116,9 +119,6 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
-
-        extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
-        extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))
     end
 
     if game.SinglePlayer() or IsFirstTimePredicted() then
