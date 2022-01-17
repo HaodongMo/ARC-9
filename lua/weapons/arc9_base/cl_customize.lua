@@ -180,11 +180,16 @@ function SWEP:CreateCustomizeHUD()
 
         self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -32, 32)
     end
+    bg:SetMouseInputEnabled(true)
     bg.Paint = function(self2, w, h)
         if !IsValid(self) then
             self:Remove()
             gui.EnableScreenClicker(false)
         end
+
+        surface.SetMaterial(mat_grad)
+        surface.SetDrawColor(0, 0, 0, 250)
+        surface.DrawTexturedRect(w - h, 0, h, h)
 
         local bumpy = {}
 
@@ -246,23 +251,27 @@ function SWEP:CreateCustomizeHUD()
 
                 local hoveredslot = false
 
-                local dist = 0
+                if bg:IsHovered() then
 
-                local mousex, mousey = input.GetCursorPos()
+                    local dist = 0
 
-                if isinaabb(x, y) then
-                    hoveredslot = true
-                    dist = math.Distance(x, y, mousex, mousey)
-                    for _, bump in pairs(bumpy) do
-                        if isinaabb(bump.x, bump.y) then
-                            local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
+                    local mousex, mousey = input.GetCursorPos()
 
-                            if d2 < dist then
-                                hoveredslot = false
-                                break
+                    if isinaabb(x, y) then
+                        hoveredslot = true
+                        dist = math.Distance(x, y, mousex, mousey)
+                        for _, bump in pairs(bumpy) do
+                            if isinaabb(bump.x, bump.y) then
+                                local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
+
+                                if d2 < dist then
+                                    hoveredslot = false
+                                    break
+                                end
                             end
                         end
                     end
+
                 end
 
                 table.insert(bumpy, {x = x, y = y, slot = slot})
@@ -360,8 +369,11 @@ function SWEP:CreateCustomizeHUD()
         lastrmbdown = input.IsMouseDown(MOUSE_RIGHT)
     end
 
-    self:CreateHUD_Bottom()
     self:CreateHUD_RHP()
+
+    bg:MoveToFront()
+
+    self:CreateHUD_Bottom()
 end
 
 function SWEP:RemoveCustomizeHUD()
@@ -393,18 +405,10 @@ function SWEP:CreateHUD_RHP()
     local gr_h = ScrH()
     local gr_w = gr_h
 
-    local gradient = vgui.Create("DPanel", bg)
-    gradient:SetPos(ScrW() - gr_w, 0)
-    gradient:SetSize(gr_w, gr_h)
-    gradient.Paint = function(self2, w, h)
-        surface.SetMaterial(mat_grad)
-        surface.SetDrawColor(0, 0, 0, 250)
-        surface.DrawTexturedRect(0, 0, w, h)
-    end
-
     local nameplate = vgui.Create("DPanel", bg)
     nameplate:SetPos(0, ScreenScale(8))
     nameplate:SetSize(ScrW(), ScreenScale(64))
+    nameplate:MoveToBack()
     nameplate.Paint = function(self2, w, h)
         surface.SetFont("ARC9_24")
         local tw = surface.GetTextSize(self.PrintName)
