@@ -138,7 +138,7 @@ function SWEP:CreateHUD_Stats()
             stat = "Sway",
             fifty = 95,
             unit = "%",
-            conv = function(a) return math.Round(a * 25, 0) end,
+            conv = function(a) return math.Round(a * 60, 0) end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end

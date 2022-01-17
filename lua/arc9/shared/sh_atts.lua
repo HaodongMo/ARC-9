@@ -5,6 +5,8 @@ ARC9.Attachments_Count = 0
 
 ARC9.Attachments_Bits = 16
 
+local defaulticon = Material("arc9/arccw_bird.png", "mips smooth")
+
 function ARC9.LoadAtts()
     ARC9.Attachments_Count = 0
     ARC9.Attachments = {}
@@ -42,12 +44,12 @@ function ARC9.LoadAtts()
         if GetConVar("ARC9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
             local attent = {}
             attent.Base = "ARC9_att"
-            attent.Icon = ATT.Icon
+            attent.Icon = ATT.Icon or defaulticon
             attent.PrintName = ATT.PrintName or shortname
             attent.Spawnable = true
             attent.AdminOnly = ATT.AdminOnly or false
             attent.AttToGive = shortname
-            attent.Category = "STALKER+ - Attachments"
+            attent.Category =  ATT.MenuCategory or "ARC-9 - Attachments"
 
             print("Registering entity for " .. shortname)
 

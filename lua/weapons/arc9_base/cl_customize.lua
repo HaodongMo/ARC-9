@@ -175,12 +175,14 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
+        cam.Start3D(nil, nil, self.ViewModelFOV)
+
         for _, slot in pairs(self:GetSubSlotList()) do
             local attpos = self:GetAttPos(slot)
 
-            cam.Start3D(nil, nil, self.ViewModelFOV)
             local toscreen = attpos:ToScreen()
-            cam.End3D()
+
+            cam.Start2D()
 
             local x, y = toscreen.x, toscreen.y
 
@@ -285,7 +287,11 @@ function SWEP:CreateCustomizeHUD()
                     self:Detach(slot.Address)
                 end
             end
+
+            cam.End2D()
         end
+
+        cam.End3D()
     end
 
     self:CreateHUD_Bottom()

@@ -3,6 +3,7 @@ ATT.CompactName = "RDSx1"
 ATT.Icon = Material("")
 ATT.Description = [[Collimated red dot optic sight.]]
 ATT.SortOrder = 0
+ATT.MenuCategory = "ARC-9 - Attachments"
 
 ATT.AdminOnly = false
 ATT.Free = false
@@ -58,6 +59,8 @@ ATT.RTScopeFOV = 2.5
 ATT.RTScopeRes = 512
 ATT.RTScopeSurface = Material("effects/ARC9_rt")
 ATT.RTScopeReticle = Material("")
+ATT.RTScopeShadowIntensity = 1.5
+ATT.RTScopeNoPP = false
 
 ATT.Attachments = {
     {

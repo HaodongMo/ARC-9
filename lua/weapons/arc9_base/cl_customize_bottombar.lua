@@ -74,6 +74,13 @@ function SWEP:CreateHUD_Bottom()
 
         if !slottbl then return end
 
+        if slottbl.Installed then
+            self.AttInfoBarAtt = slottbl.Installed
+            self:CreateHUD_AttInfo()
+        else
+            self:ClearAttInfoBar()
+        end
+
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
 
         table.sort(atts, function(a, b)

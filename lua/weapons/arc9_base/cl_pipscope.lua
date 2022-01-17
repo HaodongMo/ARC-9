@@ -52,6 +52,8 @@ local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Mater
 function SWEP:DoRTScopeEffects()
     if !render.SupportsPixelShaders_2_0() then return end
 
+    if ((self:GetSight() or {}).atttbl or {}).RTScopeNoPP then return end
+
     local refractratio = 0.15
     local refractamount = (-0.6 + 1 / 30) * refractratio
 
@@ -92,8 +94,10 @@ function SWEP:DoRTScope(model, atttbl)
 
     local screenpos = pos:ToScreen()
 
-    local sh_x = (screenpos.x - (ScrW() / 2)) + (rtsize / 2)
-    local sh_y = (screenpos.y - (ScrH() / 2)) + (rtsize / 2)
+    local shadow_intensity = atttbl.RTScopeShadowIntensity or 1.5
+
+    local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity) + (rtsize / 2)
+    local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity) + (rtsize / 2)
 
     local sh_s = math.floor(rtsize * 1)
 
@@ -106,7 +110,7 @@ function SWEP:DoRTScope(model, atttbl)
 
     if self:ShouldDoScope() then
 
-        surface.SetDrawColor(255, 255, 255)
+        surface.SetDrawColor(atttbl.RTScopeColor or Color(255, 255, 255))
         surface.SetMaterial(atttbl.RTScopeReticle)
         surface.DrawTexturedRect(0, 0, rtsize, rtsize)
 
