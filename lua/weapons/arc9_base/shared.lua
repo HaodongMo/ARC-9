@@ -71,7 +71,6 @@ SWEP.DefaultBodygroups = ""
 SWEP.DefaultWMBodygroups = ""
 
 SWEP.DefaultSkin = 0
-SWEP.DefaultWMSkin = 0
 
 -------------------------- DAMAGE PROFILE
 
@@ -200,7 +199,6 @@ SWEP.Firemodes = {
 SWEP.AutoBurst = false -- Hold fire to keep firing bursts
 SWEP.PostBurstDelay = 0
 SWEP.RunAwayBurst = false -- Burst will keep firing until all of the burst has been expended.
-SWEP.NonResetBurst = false -- Annoying behaviour where you have to shoot ALL THREE BULLETS of a burst before it resets. Supposedly realistic for the M16.
 
 SWEP.Akimbo = false
 
@@ -379,8 +377,6 @@ SWEP.NPCWeight = 100 -- How likely it is for an NPC to get this weapon as oppose
 
 SWEP.Bipod = false -- This weapon comes with a bipod.
 -- When bipod is deployed, the gun does not experience recoil.
-SWEP.BipodSpreadPenalty = 0
-SWEP.BipodSpreadMult = 0.25
 
 -------------------------- SOUNDS
 

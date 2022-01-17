@@ -144,5 +144,5 @@ function SWEP:GetViewModelFOV()
     -- return 75
     -- return 60 * self:GetSmoothedFOVMag()
     -- return 150
-    return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1 / 4)
+    return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)
 end

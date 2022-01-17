@@ -78,7 +78,8 @@ function SWEP:CreateHUD_Stats()
             title = "Cyclic ROF",
             stat = "RPM",
             fifty = 600,
-            unit = "RPM"
+            unit = "RPM",
+            conv = function(a) return math.Round(a / 50, 0) * 50 end,
         },
         {
             title = "Burst Delay",

@@ -14,6 +14,7 @@ function SWEP:DoBodygroups(wm)
 
     if !IsValid(mdl) then return end
 
+    mdl:SetSkin(self.DefaultSkin)
     mdl:SetBodyGroups(dbg or "")
 
     local eles = self:GetElements()
@@ -25,6 +26,10 @@ function SWEP:DoBodygroups(wm)
 
         for _, j in pairs(ele.Bodygroups or {}) do
             mdl:SetBodygroup(j[1], j[2])
+        end
+
+        if ele.Skin then
+            mdl:SetSkin(ele.Skin)
         end
     end
 

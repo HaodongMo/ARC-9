@@ -19,6 +19,8 @@ function SWEP:ClearBottomBar()
         self.BottomBar:Remove()
         self.BottomBar = nil
     end
+
+    self:ClearAttInfoBar()
 end
 
 function SWEP:CreateHUD_Bottom()
@@ -274,6 +276,92 @@ function SWEP:CreateHUD_AttInfo()
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetTextPos(ScreenScale(2), 0)
             surface.DrawText(text)
+        end
+    end
+
+    local pros, cons = ARC9.GetProsAndCons(atttbl)
+
+    if table.Count(pros) > 0 then
+        local pro_label = vgui.Create("DPanel", tp)
+        pro_label:SetSize(tp:GetWide(), ScreenScale(14))
+        pro_label:Dock(TOP)
+        pro_label.text = "Advantages"
+        pro_label.Paint = function(self2, w, h)
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(ScreenScale(3), ScreenScale(1))
+            surface.DrawText(self2.text)
+
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(ARC9.GetHUDColor("pos"))
+            surface.SetTextPos(ScreenScale(2), 0)
+            surface.DrawText(self2.text)
+
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.DrawRect(ScreenScale(1), ScreenScale(10 + 1), w - ScreenScale(1), ScreenScale(1))
+
+            surface.SetDrawColor(ARC9.GetHUDColor("pos"))
+            surface.DrawRect(0, ScreenScale(10), w - ScreenScale(1), ScreenScale(1))
+        end
+
+        for _, stat in pairs(pros) do
+            local pro_stat = vgui.Create("DPanel", tp)
+            pro_stat:SetSize(tp:GetWide(), ScreenScale(9))
+            pro_stat:Dock(TOP)
+            pro_stat.text = stat
+            pro_stat.Paint = function(self2, w, h)
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.SetTextPos(ScreenScale(3), ScreenScale(1))
+                surface.DrawText(self2.text)
+
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(ARC9.GetHUDColor("pos"))
+                surface.SetTextPos(ScreenScale(2), 0)
+                surface.DrawText(self2.text)
+            end
+        end
+    end
+
+    if table.Count(cons) > 0 then
+        local con_label = vgui.Create("DPanel", tp)
+        con_label:SetSize(tp:GetWide(), ScreenScale(14))
+        con_label:Dock(TOP)
+        con_label.text = "Disadvantages"
+        con_label.Paint = function(self2, w, h)
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(ScreenScale(3), ScreenScale(1))
+            surface.DrawText(self2.text)
+
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(ARC9.GetHUDColor("neg"))
+            surface.SetTextPos(ScreenScale(2), 0)
+            surface.DrawText(self2.text)
+
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.DrawRect(ScreenScale(1), ScreenScale(10 + 1), w - ScreenScale(1), ScreenScale(1))
+
+            surface.SetDrawColor(ARC9.GetHUDColor("neg"))
+            surface.DrawRect(0, ScreenScale(10), w - ScreenScale(1), ScreenScale(1))
+        end
+
+        for _, stat in pairs(cons) do
+            local con_stat = vgui.Create("DPanel", tp)
+            con_stat:SetSize(tp:GetWide(), ScreenScale(9))
+            con_stat:Dock(TOP)
+            con_stat.text = stat
+            con_stat.Paint = function(self2, w, h)
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.SetTextPos(ScreenScale(3), ScreenScale(1))
+                surface.DrawText(self2.text)
+
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(ARC9.GetHUDColor("neg"))
+                surface.SetTextPos(ScreenScale(2), 0)
+                surface.DrawText(self2.text)
+            end
         end
     end
 end

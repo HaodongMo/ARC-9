@@ -2,6 +2,8 @@ ATT.PrintName = "Konstantin Red Dot"
 ATT.CompactName = "RDSx1"
 ATT.Icon = Material("")
 ATT.Description = [[Collimated red dot optic sight.]]
+ATT.Pros = {}
+ATT.Cons = {}
 ATT.SortOrder = 0
 ATT.MenuCategory = "ARC-9 - Attachments"
 

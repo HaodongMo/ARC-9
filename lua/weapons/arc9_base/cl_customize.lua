@@ -90,13 +90,20 @@ end
 SWEP.CustomizeHUD = nil
 SWEP.CustomizeBoxes = nil
 
-SWEP.CustomizeTab = 0
+SWEP.CustomizeTab = 1
 
 SWEP.CustomizeButtons = {
     {
         title = "Hide",
         func = function(self2)
             self2:ClearTabPanel()
+        end
+    },
+    {
+        title = "Customize",
+        func = function(self2)
+            self2:ClearTabPanel()
+            self2:CreateHUD_Bottom()
         end
     },
     {
@@ -132,6 +139,8 @@ function SWEP:ClearTabPanel()
         self.TabPanel:Remove()
         self.TabPanel = nil
     end
+
+    self:ClearBottomBar()
 end
 
 function SWEP:RefreshCustomizeMenu()
@@ -175,9 +184,12 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
+        if self.CustomizeTab != 1 then return end
+
         cam.Start3D(nil, nil, self.ViewModelFOV)
 
         for _, slot in pairs(self:GetSubSlotList()) do
+            if self:GetSlotBlocked(slot) then continue end
             local attpos = self:GetAttPos(slot)
 
             local toscreen = attpos:ToScreen()
@@ -368,10 +380,10 @@ function SWEP:CreateHUD_RHP()
         surface.DrawText(self.Class)
 
         surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-        surface.DrawRect(w - ScreenScale(356 - 1), ScreenScale(42 + 1), ScreenScale(343), ScreenScale(1))
+        surface.DrawRect(w - ScreenScale(420 - 1), ScreenScale(42 + 1), ScreenScale(407), ScreenScale(1))
 
         surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-        surface.DrawRect(w - ScreenScale(356), ScreenScale(42), ScreenScale(343), ScreenScale(1))
+        surface.DrawRect(w - ScreenScale(420), ScreenScale(42), ScreenScale(407), ScreenScale(1))
     end
 
     for i, btn in pairs(self.CustomizeButtons) do

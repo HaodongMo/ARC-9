@@ -100,6 +100,8 @@ function SWEP:BuildSubAttachments(tbl)
     end
 
     self:BuildAttachmentAddresses()
+
+    self:PruneAttachments()
 end
 
 function SWEP:ValidateInventoryForNewTree(tree)
@@ -123,4 +125,12 @@ function SWEP:ValidateInventoryForNewTree(tree)
 end
 
 function SWEP:PruneAttachments()
+    for _, slot in pairs(self:GetSubSlotList()) do
+        if !slot.Installed then continue end
+
+        if !self:CanAttach(slot.Address, slot.Installed, slot) then
+            slot.Installed = false
+            slot.SubAttachments = nil
+        end
+    end
 end
