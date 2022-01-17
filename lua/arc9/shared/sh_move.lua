@@ -69,6 +69,21 @@ function ARC9.StartCommand(ply, cmd)
         -- wpn:SetFreeAimAngle(wpn:GetFreeAimAngle() - Angle(aim_kick_v, aim_kick_h, 0))
     end
 
+    if wpn:GetSightAmount() > 0 then
+        local swayspeed = 1
+        local swayamt = wpn:GetFreeSwayAmount()
+        local swayang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
+
+        swayang = swayang * wpn:GetSightAmount() * swayamt
+
+        local eyeang = cmd:GetViewAngles()
+
+        eyeang.p = eyeang.p + (swayang.p * FrameTime())
+        eyeang.y = eyeang.y + (swayang.y * FrameTime())
+
+        cmd:SetViewAngles(eyeang)
+    end
+
     recrise = ARC9.RecoilRise
 
     local recreset = recrise * FrameTime() * 3.5 * wpn:GetProcessedValue("RecoilAutoControl")

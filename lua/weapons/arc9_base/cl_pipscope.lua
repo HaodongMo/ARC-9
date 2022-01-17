@@ -143,8 +143,6 @@ function SWEP:DoRTScope(model, atttbl)
     model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9_rt")
 end
 
-local hascostscoped = false
-
 function SWEP:DoCheapScope(fov)
     if !self:ShouldDoScope() then
         render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
@@ -160,20 +158,15 @@ function SWEP:DoCheapScope(fov)
     scrw = scrw
     scrh = scrh * scrh / scrw
 
-    local s = 4
+    local atttbl = self:GetSight().atttbl or {}
+
+    local s = 2 / atttbl.ScopeScreenRatio
 
     local scrx = (ScrW() - scrw * s) / 2
     local scry = (ScrH() - scrh * s) / 2
 
     scrx = scrx + 8
     scry = scry + 8
-
-    local pos = self:GetOwner():GetShootPos() + (self:GetShootDir():Forward() * 12000)
-
-    local screenpos = pos:ToScreen()
-
-    scrx = scrx - (screenpos.x - (ScrW() / 2)) * s / 1.4
-    scry = scry - (screenpos.y - (ScrH() / 2)) * s / 1.4
 
     ARC9:DrawPhysBullets()
 

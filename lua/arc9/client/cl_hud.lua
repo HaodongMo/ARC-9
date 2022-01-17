@@ -22,8 +22,8 @@ ARC9.Colors = {
     fg = Color(220, 220, 188),
     hi = Color(238, 238, 221),
     shadow = Color(17, 17, 9),
-    pos = Color(255, 102, 0),
-    neg = Color(0, 153, 255)
+    neg = Color(255, 102, 0),
+    pos = Color(0, 153, 255)
 }
 
 function ARC9.GetHUDColor(part, alpha)
