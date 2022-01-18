@@ -50,6 +50,23 @@ function SWEP:GetAttPos(slottbl, wm, idle)
         bang = bonemat:GetAngles()
     end
 
+    if slottbl.OriginalAddress then
+        local eles = self:GetElements()
+
+        for i, k in pairs(eles) do
+            local ele = self.AttachmentElements[i]
+
+            if !ele then continue end
+
+            local mods = ele.AttPosMods or {}
+
+            if mods[slottbl.OriginalAddress] then
+                offset_pos = mods[slottbl.OriginalAddress].Pos or offset_pos
+                offset_ang = mods[slottbl.OriginalAddress].Ang or offset_ang
+            end
+        end
+    end
+
     local apos, aang
 
     apos = bpos + bang:Forward() * offset_pos.x

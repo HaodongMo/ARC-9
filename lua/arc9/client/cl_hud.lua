@@ -20,7 +20,7 @@ end)
 ARC9.Colors = {
     bg = Color(66, 66, 61),
     fg = Color(220, 220, 188),
-    hi = Color(238, 238, 221),
+    hi = Color(255, 255, 255),
     shadow = Color(17, 17, 9),
     neg = Color(200, 50, 50),
     pos = Color(50, 200, 50)

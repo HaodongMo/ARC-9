@@ -82,6 +82,7 @@ end
 
 function SWEP:BuildSubAttachments(tbl)
     for i, k in pairs(self.Attachments) do
+        k.OriginalAddress = i
         k.SubAttachments = {}
     end
 

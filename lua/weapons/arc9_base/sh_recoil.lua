@@ -43,13 +43,11 @@ function SWEP:ApplyRecoil()
 
     seed = seed + shot
 
-    if self:GetProcessedValue("RecoilLookupTable") then
-        local recoilpattern = self:PatternWithRunOff(self:GetProcessedValue("RecoilLookupTable"), self:GetProcessedValue("RecoilLookupTableOverrun") or self:GetProcessedValue("RecoilLookupTable"), shot)
-        recoilup = recoilpattern.y or 1
-        recoilside = recoilpattern.x or 0
-    else
-        local dir = 0
+    local dir = 0
 
+    if self:GetProcessedValue("RecoilLookupTable") then
+        dir = self:PatternWithRunOff(self:GetProcessedValue("RecoilLookupTable"), self:GetProcessedValue("RecoilLookupTableOverrun") or self:GetProcessedValue("RecoilLookupTable"), shot)
+    else
         if self.RecoilPatternCache[shot] then
             dir = self.RecoilPatternCache[shot]
         else
@@ -57,36 +55,39 @@ function SWEP:ApplyRecoil()
             if self.RecoilPatternCache[shot - 1] then
                 dir = self.RecoilPatternCache[shot - 1]
                 math.randomseed(seed)
-                dir = dir + math.Rand(-2.5, 2.5)
+                local drift = self:GetValue("RecoilPatternDrift")
+                dir = dir + math.Rand(-drift, drift)
                 math.randomseed(CurTime() + self:EntIndex())
                 self.RecoilPatternCache[shot] = dir
             else
                 dir = 0
             end
         end
-
-        dir = dir - 90
-
-        dir = math.rad(dir)
-
-        recoilup = math.sin(dir)
-        recoilside = math.cos(dir)
-
-        local randomrecoilup = util.SharedRandom("arc9_recoil_up_r", -1, 1)
-        local randomrecoilside = util.SharedRandom("arc9_recoil_side_r", -1, 1)
-
-        recoilup = recoilup * self:GetProcessedValue("RecoilUp")
-        recoilside = recoilside * self:GetProcessedValue("RecoilSide")
-
-        randomrecoilup = randomrecoilup * self:GetProcessedValue("RecoilRandomUp")
-        randomrecoilside = randomrecoilside * self:GetProcessedValue("RecoilRandomSide")
-
-        recoilup = recoilup + randomrecoilup
-        recoilside = recoilside + randomrecoilside
-
-        recoilup = recoilup * self:GetProcessedValue("Recoil")
-        recoilside = recoilside * self:GetProcessedValue("Recoil")
     end
+
+    dir = self:RunHook("Hook_ModifyRecoilDir", dir) or dir
+
+    dir = dir - 90
+
+    dir = math.rad(dir)
+
+    recoilup = math.sin(dir)
+    recoilside = math.cos(dir)
+
+    local randomrecoilup = util.SharedRandom("arc9_recoil_up_r", -1, 1)
+    local randomrecoilside = util.SharedRandom("arc9_recoil_side_r", -1, 1)
+
+    recoilup = recoilup * self:GetProcessedValue("RecoilUp")
+    recoilside = recoilside * self:GetProcessedValue("RecoilSide")
+
+    randomrecoilup = randomrecoilup * self:GetProcessedValue("RecoilRandomUp")
+    randomrecoilside = randomrecoilside * self:GetProcessedValue("RecoilRandomSide")
+
+    recoilup = recoilup + randomrecoilup
+    recoilside = recoilside + randomrecoilside
+
+    recoilup = recoilup * self:GetProcessedValue("Recoil")
+    recoilside = recoilside * self:GetProcessedValue("Recoil")
 
     self:SetRecoilUp(recoilup)
     self:SetRecoilSide(recoilside)

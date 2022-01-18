@@ -199,9 +199,9 @@ function SWEP:CreateCustomizeHUD()
             local mousex, mousey = input.GetCursorPos()
 
             local s = ScreenScale(16)
-            local sw = ScreenScale(48)
+            local sw = ScreenScale(32)
 
-            if mousex >= x - (s / 2) and mousex <= x + sw and mousey >= y - (s / 2) and mousey <= y + (s / 2) then
+            if mousex >= x - sw and mousex <= x + sw and mousey >= y - (s / 2) and mousey <= y + (s / 2) then
                 return true
             else
                 return false
@@ -215,6 +215,12 @@ function SWEP:CreateCustomizeHUD()
             for _, slot in pairs(self:GetSubSlotList()) do
                 if self:GetSlotBlocked(slot) then continue end
                 local attpos = self:GetAttPos(slot)
+
+                local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
+
+                attpos = attpos + EyeAngles():Right() * -icon_offset.x
+                attpos = attpos + EyeAngles():Up() * icon_offset.y
+                attpos = attpos + EyeAngles():Forward() * icon_offset.z
 
                 local toscreen = attpos:ToScreen()
 
@@ -245,9 +251,6 @@ function SWEP:CreateCustomizeHUD()
                 --         y = y + dy
                 --     end
                 -- end
-
-                x = x - (slot.Icon_Offset or Vector(0, 0, 0)).x * ScreenScale(1)
-                y = y - (slot.Icon_Offset or Vector(0, 0, 0)).y * ScreenScale(1)
 
                 local hoveredslot = false
 
@@ -286,37 +289,41 @@ function SWEP:CreateCustomizeHUD()
                 end
 
                 surface.SetMaterial(mat_circle)
-
-                local atttxt = slot.DefaultName or "No Attachment"
-
-                if slot.Installed then
-                    local atttbl = self:GetFinalAttTable(slot)
-                    atttxt = atttbl.PrintName or ""
-                    surface.SetMaterial(atttbl.Icon or mat_circle)
-                end
-
                 surface.SetDrawColor(col)
                 surface.DrawTexturedRect(x, y, s, s)
 
-                surface.SetFont("ARC9_8")
-                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                surface.SetTextPos(x + s + ScreenScale(3), y - (s / 2) + ScreenScale(1))
-                surface.DrawText(slot.PrintName or "SLOT")
+                local atttxt = slot.PrintName or "SLOT"
 
-                surface.SetFont("ARC9_8")
-                surface.SetTextColor(col)
-                surface.SetTextPos(x + s + ScreenScale(2), y - (s / 2))
-                surface.DrawText(slot.PrintName or "SLOT")
+                if slot.Installed then
+                    local atttbl = self:GetFinalAttTable(slot)
+                    atttxt = atttbl.CompactName or atttbl.PrintName or ""
+                    surface.SetMaterial(atttbl.Icon)
+                    surface.SetDrawColor(col)
+                    surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                end
+
+                surface.SetFont("ARC9_6")
+                local tw = surface.GetTextSize(atttxt)
 
                 surface.SetFont("ARC9_6")
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                surface.SetTextPos(x + s + ScreenScale(3), y + (s / 2) + ScreenScale(1))
+                surface.SetTextPos(x + (s / 2) - (tw / 2), y + s + ScreenScale(1))
                 surface.DrawText(atttxt)
 
                 surface.SetFont("ARC9_6")
                 surface.SetTextColor(col)
-                surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
+                surface.SetTextPos(x + (s / 2) - (tw / 2), y + s)
                 surface.DrawText(atttxt)
+
+                -- surface.SetFont("ARC9_6")
+                -- surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                -- surface.SetTextPos(x + s + ScreenScale(3), y + (s / 2) + ScreenScale(1))
+                -- surface.DrawText(atttxt)
+
+                -- surface.SetFont("ARC9_6")
+                -- surface.SetTextColor(col)
+                -- surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
+                -- surface.DrawText(atttxt)
 
                 if hoveredslot then
                     anyhovered = true

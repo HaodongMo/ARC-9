@@ -23,6 +23,7 @@ ARC9.AutoStatsMains = {
     ["RPM"] = {"Fire Rate", false},
     ["PostBurstDelay"] = {"Burst Delay", true},
     ["Recoil"] = {"Recoil", true},
+    ["RecoilPatternDrift"] = {"Recoil Drift", true},
     ["RecoilUp"] = {"Vertical Recoil", true},
     ["RecoilSide"] = {"Horizontal Recoil", true},
     ["RecoilRandomUp"] = {"Vertical Recoil Spread", true},
@@ -37,12 +38,12 @@ ARC9.AutoStatsMains = {
     ["Sway"] = {"Sway", true},
     ["AimDownSightsTime"] = {"Aim Down Sights Time", true},
     ["SprintToFireTime"] = {"Sprint To Fire Time", true},
-    ["ReloadTimeMult"] = {"Reload Time", true},
-    ["DeployTimeMult"] = {"Draw Time", true},
-    ["CycleTimeMult"] = {"Cycle Time", true},
-    ["FixTimeMult"] = {"Unjam Time", true},
-    ["OverheatTimeMult"] = {"Overheat Fix Time", true},
-    ["SpeedMult"] = {"Movement Speed", false},
+    ["ReloadTime"] = {"Reload Time", true},
+    ["DeployTime"] = {"Draw Time", true},
+    ["CycleTime"] = {"Cycle Time", true},
+    ["FixTime"] = {"Unjam Time", true},
+    ["OverheatTime"] = {"Overheat Fix Time", true},
+    ["Speed"] = {"Movement Speed", false},
     ["BashDamage"] = {"Melee Damage", false},
     ["BashLungeRange"] = {"Melee Range", false},
     ["HeatCapacity"] = {"Heat Capacity", false},
@@ -68,7 +69,7 @@ ARC9.AutoStatsMains = {
 }
 
 ARC9.AutoStatsOperations = {
-    ["Mult"] = function(a)
+    ["Mult"] = function(a, weapon, stat)
         local neg = false
         if a > 1 then
             a = (a - 1) * 100
@@ -83,7 +84,7 @@ ARC9.AutoStatsOperations = {
             return "+" .. tostring(a) .. "% ", "", false
         end
     end,
-    ["Add"] = function(a)
+    ["Add"] = function(a, weapon, stat)
         local neg = false
         if a < 0 then
             neg = true
@@ -96,7 +97,7 @@ ARC9.AutoStatsOperations = {
             return "+" .. tostring(a) .. " ", "", false
         end
     end,
-    ["Override"] = function(a)
+    ["Override"] = function(a, weapon, stat)
         if isbool(a) then
             if a then
                 return "Enable ", "", a
@@ -105,7 +106,7 @@ ARC9.AutoStatsOperations = {
             end
         end
 
-        return tostring(a) .. " ", "", a < 0
+        return tostring(a) .. " ", "", a <= (weapon[stat] or 0)
     end
 }
 
@@ -130,7 +131,7 @@ ARC9.AutoStatsConditions = {
     ["Move"] = "While Moving"
 }
 
-function ARC9.GetProsAndCons(atttbl)
+function ARC9.GetProsAndCons(atttbl, weapon)
     local pros = table.Copy(atttbl.Pros or {})
     local cons = table.Copy(atttbl.Cons or {})
 
@@ -165,7 +166,7 @@ function ARC9.GetProsAndCons(atttbl)
 
         for op, func in pairs(ARC9.AutoStatsOperations) do
             if string.StartWith(stat, op) then
-                local pre, post, isneg = func(value)
+                local pre, post, isneg = func(value, weapon, asmain)
                 autostat = pre .. autostat .. post
                 neg = isneg
                 foundop = true
@@ -177,7 +178,7 @@ function ARC9.GetProsAndCons(atttbl)
         if !foundop then
             autostat = tostring(value) .. " " .. autostat
 
-            if isnumber(value) then neg = value < 0 else neg = value end
+            if isnumber(value) then neg = value <= (weapon[asmain] or 0) else neg = value end
         else
             stat = string.sub(stat, string.len(asop) + 1, string.len(stat))
         end

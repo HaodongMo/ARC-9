@@ -101,7 +101,7 @@ function SWEP:CreateHUD_Bottom()
             order_b = atttbl_b.SortOrder or order_b
 
             if order_a == order_b then
-                return (atttbl_a.PrintName or "") < (atttbl_b.PrintName or "")
+                return (atttbl_a.CompactName or atttbl_a.PrintName or "") < (atttbl_b.CompactName or atttbl_b.PrintName or "")
             end
 
             return order_a < order_b
@@ -117,6 +117,7 @@ function SWEP:CreateHUD_Bottom()
             attbtn:SetText("")
             attbtn.att = att
             attbtn.address = slottbl.Address
+            attbtn.slottbl = slottbl
             attbtn.OnMousePressed = function(self2, kc)
                 if kc == MOUSE_LEFT then
                     self:Attach(self2.address, self2.att)
@@ -132,6 +133,13 @@ function SWEP:CreateHUD_Bottom()
                 local slot = self:LocateSlotFromAddress(self2.address)
 
                 if !slot then return end
+                if slot.Category != self2.slottbl.Category then
+                    self:ClearAttInfoBar()
+                    self:ClearBottomBar()
+                    self.BottomBarAddress = nil
+                    self.AttInfoBarAtt = nil
+                    return
+                end
 
                 local attached = slot.Installed == self2.att
 
@@ -210,9 +218,9 @@ end
 function SWEP:CreateHUD_AttInfo()
     local bg = self.CustomizeHUD
 
-    self:ClearAttInfoBar()
-
     local atttbl = ARC9.GetAttTable(self.AttInfoBarAtt)
+
+    self:ClearAttInfoBar()
 
     if !atttbl then return end
 
@@ -222,15 +230,15 @@ function SWEP:CreateHUD_AttInfo()
     bp.Paint = function(self2, w, h)
         local title = atttbl.PrintName
 
-        surface.SetFont("ARC9_24")
+        surface.SetFont("ARC9_16")
         surface.SetTextPos(0, 0)
         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        self:DrawTextRot(self2, title, 0, 0, ScreenScale(1), ScreenScale(1), w, false)
+        self:DrawTextRot(self2, title, 0, 0, ScreenScale(1), ScreenScale(8 + 1), w, false)
 
-        surface.SetFont("ARC9_24")
+        surface.SetFont("ARC9_16")
         surface.SetTextPos(0, 0)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        self:DrawTextRot(self2, title, 0, 0, 0, 0, w, true)
+        self:DrawTextRot(self2, title, 0, 0, 0, ScreenScale(8), w, true)
 
         surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
         surface.DrawRect(ScreenScale(1), ScreenScale(27), w - ScreenScale(1), ScreenScale(1))
@@ -341,7 +349,7 @@ function SWEP:CreateHUD_AttInfo()
         end
     end
 
-    local pros, cons = ARC9.GetProsAndCons(atttbl)
+    local pros, cons = ARC9.GetProsAndCons(atttbl, self)
 
     if table.Count(pros) > 0 then
         local pro_label = vgui.Create("DPanel", tp)

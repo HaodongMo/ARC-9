@@ -38,6 +38,8 @@ function SWEP:Reload()
         anim = "reload_start"
     end
 
+    anim = self:RunHook("Hook_SelectReloadAnimation", anim) or anim
+
     local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true, true)
 
     self:GetOwner():DoAnimationEvent(self:GetProcessedValue("AnimReload"))

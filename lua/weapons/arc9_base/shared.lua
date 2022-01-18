@@ -209,11 +209,11 @@ SWEP.Akimbo = false
 
 SWEP.RecoilSeed = nil -- Leave blank to use weapon class name as recoil seed.
 -- Should be a number.
+SWEP.RecoilPatternDrift = 12 -- Higher values = more extreme recoil patterns.
 SWEP.RecoilLookupTable = nil -- Use to set specific values for predictible recoil. If it runs out, it'll just use Recoil Seed.
 -- SWEP.RecoilLookupTable = {
 --     {
---         x = -1,
---         y = 1
+--          dir = 15
 --     }
 -- }
 SWEP.RecoilLookupTableOverrun = nil -- Repeatedly take values from this table if we run out in the main table
@@ -299,17 +299,19 @@ SWEP.SwayMultSights = 0.5
 SWEP.AimDownSightsTime = 0.25 -- How long it takes to go from hip fire to aiming down sights.
 SWEP.SprintToFireTime = 0.25 -- How long it takes to go from sprinting to being able to fire.
 
-SWEP.ReloadTimeMult = 1
-SWEP.DeployTimeMult = 1
-SWEP.CycleTimeMult = 1
-SWEP.FixTimeMult = 1
-SWEP.OverheatTimeMult = 1
+SWEP.ReloadTime = 1
+SWEP.DeployTime = 1
+SWEP.CycleTime = 1
+SWEP.FixTime = 1
+SWEP.OverheatTime = 1
 
 SWEP.ShootWhileSprint = false
 
+SWEP.Speed = 1
+
 SWEP.SpeedMult = 1
 SWEP.SpeedMultSights = 0.75
-SWEP.SpeedMultShooting = 1
+SWEP.SpeedMultShooting = 0.9
 SWEP.SpeedMultMelee = 0.75
 SWEP.SpeedMultCrouch = 1
 SWEP.SpeedMultBlindFire = 1
@@ -347,6 +349,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 
 -- SWEP.Hook_Draw = function(self, vm) end # Called when the weapon is drawn. Call functions here to modify the viewmodel, such as drawing RT screens onto the gun.
 -- SWEP.Hook_HUDPaint = function(self) end
+-- SWEP.Hook_ModifyRecoilDir = function(self, dir) return dir end # direction of recoil in degrees, 0 = up
 -- SWEP.HookP_ModifyFiremode = function(self, firemode) return firemode end
 -- SWEP.HookP_ModifyBullet = function(self, bullet) return end # bullet = phys bullet table, modify in place, does not accept return
 -- SWEP.HookP_BlockFire = function(self) return block end # return true to block firing
