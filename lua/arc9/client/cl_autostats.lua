@@ -107,6 +107,9 @@ ARC9.AutoStatsOperations = {
         end
 
         return tostring(a) .. " ", "", a <= (weapon[stat] or 0)
+    end,
+    ["Hook"] = function(a, weapon, stat)
+        return "", "", false
     end
 }
 
@@ -174,6 +177,8 @@ function ARC9.GetProsAndCons(atttbl, weapon)
                 break
             end
         end
+
+        if asop == "Hook" then continue end
 
         if !foundop then
             autostat = tostring(value) .. " " .. autostat
