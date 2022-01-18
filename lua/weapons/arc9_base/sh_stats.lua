@@ -11,6 +11,7 @@ function SWEP:InvalidateCache()
     self.HookCache = {}
     self.AffectorsCache = nil
     self.ElementsCache = nil
+    self.RecoilPatternCache = {}
 
     self:SetBaseSettings()
 end

@@ -59,4 +59,14 @@ function ARC9.Regen(full)
     end
 end
 
-hook.Add( "OnScreenSizeChanged", "ARC9.Regen", function() ARC9.Regen(true) end)
+local lastscrw = ScrW()
+local lastscrh = ScrH()
+
+hook.Add( "Think", "ARC9.Regen", function()
+    if lastscrw != ScrW() or lastscrh != ScrH() then
+        ARC9.Regen(true)
+    end
+
+    lastscrw = ScrW()
+    lastscrh = ScrH()
+end)

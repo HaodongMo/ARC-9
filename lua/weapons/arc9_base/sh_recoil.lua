@@ -12,6 +12,8 @@ function SWEP:ThinkRecoil()
     self:SetRecoilSide(self:GetRecoilSide() - (FrameTime() * self:GetRecoilSide() * self:GetProcessedValue("RecoilDissipationRate")))
 end
 
+SWEP.RecoilPatternCache = {}
+
 function SWEP:ApplyRecoil()
     local rec = self:GetRecoilAmount()
 
@@ -25,7 +27,7 @@ function SWEP:ApplyRecoil()
     local recoilside = 0
 
     local seed = self:GetProcessedValue("RecoilSeed") or self:GetClass()
-    local shot = math.floor(self:GetRecoilAmount())
+    local shot = math.floor(self:GetRecoilAmount()) + 1
 
     if isstring(seed) then
         local numseed = 0
@@ -46,9 +48,29 @@ function SWEP:ApplyRecoil()
         recoilup = recoilpattern.y or 1
         recoilside = recoilpattern.x or 0
     else
-        math.randomseed(seed)
-        recoilup = math.random(-1.5, 0.5)
-        recoilside = math.random(-1.25, 0.75)
+        local dir = 0
+
+        if self.RecoilPatternCache[shot] then
+            dir = self.RecoilPatternCache[shot]
+        else
+            self.RecoilPatternCache[1] = 0
+            if self.RecoilPatternCache[shot - 1] then
+                dir = self.RecoilPatternCache[shot - 1]
+                math.randomseed(seed)
+                dir = dir + math.Rand(-2.5, 2.5)
+                math.randomseed(CurTime() + self:EntIndex())
+                self.RecoilPatternCache[shot] = dir
+            else
+                dir = 0
+            end
+        end
+
+        dir = dir - 90
+
+        dir = math.rad(dir)
+
+        recoilup = math.sin(dir)
+        recoilside = math.cos(dir)
 
         local randomrecoilup = util.SharedRandom("arc9_recoil_up_r", -1, 1)
         local randomrecoilside = util.SharedRandom("arc9_recoil_side_r", -1, 1)
