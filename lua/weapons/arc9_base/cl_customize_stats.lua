@@ -292,6 +292,10 @@ function SWEP:CreateHUD_Stats()
                 major = self2.stats.conv(major)
             end
 
+            if isnumber(major) then
+                major = math.Round(major, 2)
+            end
+
             local oldmajor = major
 
             major = tostring(major)
