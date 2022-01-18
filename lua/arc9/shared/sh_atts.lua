@@ -101,29 +101,30 @@ function ARC9.GetAttsForCats(cats)
 end
 
 function ARC9.GetMaxAtts()
-    return GetConVar("ARC9_maxatts"):GetInt()
+    return GetConVar("arc9_maxatts"):GetInt()
 end
 
-if CLIENT then 
-concommand.Add("ARC9_reloadatts", function()
+if CLIENT then
+
+concommand.Add("arc9_reloadatts", function()
     if !LocalPlayer():IsSuperAdmin() then return end
 
-    net.Start("ARC9_reloadatts")
+    net.Start("arc9_reloadatts")
     net.SendToServer()
 end)
 
-net.Receive("ARC9_reloadatts", function(len, ply)
+net.Receive("arc9_reloadatts", function(len, ply)
     ARC9.LoadAtts()
 end)
 
 elseif SERVER then
 
-net.Receive("ARC9_reloadatts", function(len, ply)
+net.Receive("arc9_reloadatts", function(len, ply)
     if !ply:IsSuperAdmin() then return end
 
     ARC9.LoadAtts()
 
-    net.Start("ARC9_reloadatts")
+    net.Start("arc9_reloadatts")
     net.Broadcast()
 end)
 
