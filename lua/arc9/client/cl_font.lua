@@ -1,3 +1,11 @@
+local font_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_font")
+
+function ARC9:GetFont()
+    local f = font_cvar and font_cvar:GetString()
+    if !f or f == "" then f = ARC9:GetPhrase("font") or "Exo Regular" end
+    return f
+end
+
 local sizes_to_make = {
     4,
     6,
@@ -12,7 +20,7 @@ local sizes_to_make = {
 local unscaled_sizes_to_make = {
 }
 
-local font = "Exo Regular"
+local font = ARC9:GetFont()
 
 local function generatefonts()
 
@@ -70,3 +78,8 @@ hook.Add( "Think", "ARC9.Regen", function()
     lastscrw = ScrW()
     lastscrh = ScrH()
 end)
+
+cvars.AddChangeCallback("arc9_font", function(cvar, old, new)
+    font = ARC9:GetFont()
+    generatefonts()
+end, "reload_fonts")

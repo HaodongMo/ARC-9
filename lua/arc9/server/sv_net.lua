@@ -1,9 +1,10 @@
-util.AddNetworkString("ARC9_togglecustomize")
-util.AddNetworkString("ARC9_networkweapon")
-util.AddNetworkString("ARC9_sendattinv")
-util.AddNetworkString("ARC9_sendbullet")
+util.AddNetworkString("arc9_togglecustomize")
+util.AddNetworkString("arc9_networkweapon")
+util.AddNetworkString("arc9_sendattinv")
+util.AddNetworkString("arc9_sendbullet")
+util.AddNetworkString("arc9_reloadatts")
 
-net.Receive("ARC9_togglecustomize", function(len, ply)
+net.Receive("arc9_togglecustomize", function(len, ply)
     local bf = net.ReadBool()
 
     local wpn = ply:GetActiveWeapon()
@@ -13,7 +14,7 @@ net.Receive("ARC9_togglecustomize", function(len, ply)
     wpn:ToggleCustomize(bf)
 end)
 
-net.Receive("ARC9_networkweapon", function(len, ply)
+net.Receive("arc9_networkweapon", function(len, ply)
     local wpn = net.ReadEntity()
 
     if !wpn.ARC9 then return end

@@ -41,7 +41,7 @@ function ARC9.LoadAtts()
         ARC9.Attachments[shortname] = ATT
         ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
 
-        if GetConVar("ARC9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
+        if GetConVar("arc9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
             local attent = {}
             attent.Base = "ARC9_att"
             attent.Icon = ATT.Icon or defaulticon
@@ -101,29 +101,30 @@ function ARC9.GetAttsForCats(cats)
 end
 
 function ARC9.GetMaxAtts()
-    return GetConVar("ARC9_maxatts"):GetInt()
+    return GetConVar("arc9_maxatts"):GetInt()
 end
 
-if CLIENT then 
-concommand.Add("ARC9_reloadatts", function()
+if CLIENT then
+
+concommand.Add("arc9_reloadatts", function()
     if !LocalPlayer():IsSuperAdmin() then return end
 
-    net.Start("ARC9_reloadatts")
+    net.Start("arc9_reloadatts")
     net.SendToServer()
 end)
 
-net.Receive("ARC9_reloadatts", function(len, ply)
+net.Receive("arc9_reloadatts", function(len, ply)
     ARC9.LoadAtts()
 end)
 
 elseif SERVER then
 
-net.Receive("ARC9_reloadatts", function(len, ply)
+net.Receive("arc9_reloadatts", function(len, ply)
     if !ply:IsSuperAdmin() then return end
 
     ARC9.LoadAtts()
 
-    net.Start("ARC9_reloadatts")
+    net.Start("arc9_reloadatts")
     net.Broadcast()
 end)
 

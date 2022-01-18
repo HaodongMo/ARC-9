@@ -150,7 +150,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
 
         for main, tbl in pairs(ARC9.AutoStatsMains) do
             if string.len(main) > maxlen and string.StartWith(stat, main) then
-                autostat = tbl[1]
+                autostat = ARC9:GetPhrase("autostat." .. main) or tbl[1]
                 negisgood = tbl[2]
                 asmain = main
                 canautostat = true

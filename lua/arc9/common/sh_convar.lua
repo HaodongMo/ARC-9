@@ -3,7 +3,34 @@
 local conVars = {
     {
         name = "truenames",
+        default = "2",
+        client = true,
+        min = 0,
+        max = 2,
+    },
+    {
+        name = "truenames_default",
         default = "0",
+        replicated = true,
+        min = 0,
+        max = 1,
+    },
+    {
+        name = "truenames_enforced",
+        default = "0",
+        replicated = true,
+        min = 0,
+        max = 1,
+    },
+    {
+        name = "language",
+        default = "",
+        client = true,
+    },
+    {
+        name = "font",
+        default = "",
+        client = true,
     },
     {
         name = "maxatts",
@@ -126,7 +153,7 @@ for _, var in pairs(conVars) do
         if var.replicated then
             flags = flags + FCVAR_REPLICATED
         end
-        CreateConVar(convar_name, var.default, flags)
+        CreateConVar(convar_name, var.default, flags, var.helptext, var.min, var.max)
     end
 end
 
@@ -135,15 +162,15 @@ if CLIENT then
 local function menu_client_ti(panel)
     panel:AddControl("checkbox", {
         label = "Reload Automatically",
-        command = "ARC9_autoreload"
+        command = "arc9_autoreload"
     })
     panel:AddControl("checkbox", {
         label = "Auto-Save Weapon",
-        command = "ARC9_autosave"
+        command = "arc9_autosave"
     })
     panel:AddControl("checkbox", {
         label = "Compensate Sensitivity",
-        command = "ARC9_compensate_sens"
+        command = "arc9_compensate_sens"
     })
 end
 
@@ -162,7 +189,7 @@ local function menu_server_ti(panel)
     })
     panel:AddControl("checkbox", {
         label = "Generate Attachment Entities",
-        command = "ARC9_generateattentities"
+        command = "arc9_generateattentities"
     })
     panel:AddControl("checkbox", {
         label = "Enable Penetration",
