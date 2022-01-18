@@ -41,7 +41,7 @@ function ARC9.LoadAtts()
         ARC9.Attachments[shortname] = ATT
         ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
 
-        if GetConVar("ARC9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
+        if GetConVar("arc9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
             local attent = {}
             attent.Base = "ARC9_att"
             attent.Icon = ATT.Icon or defaulticon

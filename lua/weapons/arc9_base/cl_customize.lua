@@ -296,7 +296,8 @@ function SWEP:CreateCustomizeHUD()
 
                 if slot.Installed then
                     local atttbl = self:GetFinalAttTable(slot)
-                    atttxt = atttbl.CompactName or atttbl.PrintName or ""
+                    atttxt = ARC9:GetPhraseForAtt(slot.Installed, "CompactName")
+                    atttxt = atttxt or ARC9:GetPhraseForAtt(slot.Installed, "PrintName") or ""
                     surface.SetMaterial(atttbl.Icon)
                     surface.SetDrawColor(col)
                     surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))

@@ -189,17 +189,19 @@ function SWEP:CreateHUD_Bottom()
                 surface.SetMaterial(icon)
                 surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
 
+                local name = ARC9:GetPhraseForAtt(self2.att, "CompactName") or ARC9:GetPhraseForAtt(self2.att, "PrintName") or ARC9:GetPhraseForAtt(self2.att, "ShortName") or ""
+
                 if !hasbg then
                     surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                     surface.SetTextPos(ScreenScale(14), ScreenScale(1))
                     surface.SetFont("ARC9_10")
-                    self:DrawTextRot(self2, atttbl.CompactName or atttbl.PrintName or atttbl.ShortName, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+                    self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
                 end
 
                 surface.SetTextColor(col1)
                 surface.SetTextPos(ScreenScale(13), 0)
                 surface.SetFont("ARC9_10")
-                self:DrawTextRot(self2, atttbl.CompactName or atttbl.PrintName or atttbl.ShortName, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+                self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
             end
         end
     end
@@ -227,18 +229,18 @@ function SWEP:CreateHUD_AttInfo()
     local bp = vgui.Create("DPanel", bg)
     bp:SetSize(ScrW() / 3, ScrH() - ScreenScale(64 + 24))
     bp:SetPos(ScreenScale(4), ScreenScale(24))
+    bp.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName")
     bp.Paint = function(self2, w, h)
-        local title = atttbl.PrintName
 
         surface.SetFont("ARC9_16")
         surface.SetTextPos(0, 0)
         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        self:DrawTextRot(self2, title, 0, 0, ScreenScale(1), ScreenScale(8 + 1), w, false)
+        self:DrawTextRot(self2, self2.title, 0, 0, ScreenScale(1), ScreenScale(8 + 1), w, false)
 
         surface.SetFont("ARC9_16")
         surface.SetTextPos(0, 0)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        self:DrawTextRot(self2, title, 0, 0, 0, ScreenScale(8), w, true)
+        self:DrawTextRot(self2, self2.title, 0, 0, 0, ScreenScale(8), w, true)
 
         surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
         surface.DrawRect(ScreenScale(1), ScreenScale(27), w - ScreenScale(1), ScreenScale(1))
@@ -328,7 +330,7 @@ function SWEP:CreateHUD_AttInfo()
     end
 
     local multiline = {}
-    local desc = atttbl.Description
+    local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "Description") or atttbl.Description
 
     multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(3.5)), "ARC9_8")
 
