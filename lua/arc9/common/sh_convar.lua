@@ -28,6 +28,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "font",
+        default = "",
+        client = true,
+    },
+    {
         name = "maxatts",
         default = "100",
     },

@@ -1,7 +1,7 @@
 ARC9.PhraseTable = ARC9.PhraseTable or {}
 ARC9.STPTable = ARC9.STPTable or {}
 
-local lang_cvar = CLIENT and GetConVar("arc9_language")
+local lang_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_language")
 
 function ARC9:GetLanguage()
     local l = lang_cvar and lang_cvar:GetString()
@@ -53,7 +53,7 @@ function ARC9:GetPhraseForAtt(att, phrase, format)
     if tn then
         local p = ARC9:GetPhrase(att .. "." .. phrase .. ".true")
         if p then return p end
-        if atttbl[phrase .. "_True"] then return atttbl[phrase .. "_True"] end
+        if atttbl[phrase .. "_TrueName"] then return atttbl[phrase .. "_TrueName"] end
     end
 
     local p = ARC9:GetPhrase(att .. "." .. phrase)
@@ -101,3 +101,8 @@ function ARC9:LoadLanguage()
 end
 
 ARC9:LoadLanguage()
+
+cvars.AddChangeCallback("arc9_language", function(cvar, old, new)
+    ARC9:LoadLanguage()
+    if CLIENT then ARC9.Regen(true) end
+end, "reload_langs")
