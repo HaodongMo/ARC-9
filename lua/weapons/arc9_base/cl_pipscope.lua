@@ -54,8 +54,9 @@ function SWEP:DoRTScopeEffects()
 
     if ((self:GetSight() or {}).atttbl or {}).RTScopeNoPP then return end
 
-    local refractratio = 0.15
-    local refractamount = (-0.6 + 1 / 30) * refractratio
+    local refractamount = 0.1
+
+    render.UpdateRefractTexture()
 
     matRefract:SetFloat( "$refractamount", refractamount )
     pp_ca_base:SetTexture("$basetexture", rtmat)

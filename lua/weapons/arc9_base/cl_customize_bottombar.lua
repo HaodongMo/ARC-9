@@ -34,6 +34,11 @@ function SWEP:CreateHUD_Bottom()
     bp:SetSize(ScrW(), ScreenScale(62))
     bp:SetPos(0, ScrH() - ScreenScale(62))
     bp.Paint = function(self2, w, h)
+        if !IsValid(self) then
+            self:Remove()
+            gui.EnableScreenClicker(false)
+        end
+
         surface.SetDrawColor(ARC9.GetHUDColor("bg", 50))
         surface.DrawRect(0, 0, w, h)
 
@@ -67,9 +72,82 @@ function SWEP:CreateHUD_Bottom()
 
     self.BottomBar = bp
 
+    if self.BottomBarMode == 1 then
+        local close = vgui.Create("DButton", bp)
+        close:SetPos(ScreenScale(140), 0)
+        close:SetSize(ScreenScale(48), ScreenScale(9))
+        close:SetText("")
+        close.title = "Deselect"
+        close.DoClick = function(self2)
+            self.BottomBarAddress = nil
+            self.BottomBarMode = 0
+            self:CreateHUD_Bottom()
+        end
+        close.Paint = function(self2, w, h)
+            local col1 = Color(0, 0, 0, 0)
+            local col2 = ARC9.GetHUDColor("fg")
+
+            local noshade = false
+
+            if self2:IsHovered() then
+                col1 = ARC9.GetHUDColor("hi")
+                col2 = ARC9.GetHUDColor("shadow")
+
+                noshade = true
+            end
+
+            if noshade then
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawRect(ScreenScale(1), ScreenScale(1), w, h)
+            end
+
+            surface.SetDrawColor(col1)
+            surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
+
+            surface.SetFont("ARC9_8")
+            local tw = surface.GetTextSize(self2.title)
+
+            if !noshade then
+                surface.SetFont("ARC9_8")
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.SetTextPos((w - tw) / 2 + ScreenScale(1), ScreenScale(1 + 1))
+                surface.DrawText(self2.title)
+            end
+
+            surface.SetFont("ARC9_8")
+            surface.SetTextColor(col2)
+            surface.SetTextPos((w - tw) / 2, ScreenScale(1))
+            surface.DrawText(self2.title)
+        end
+    end
+
     local scroll = vgui.Create("DHorizontalScroller", bp)
+    -- scroll:Dock(FILL)
     scroll:SetPos(0, ScreenScale(12))
     scroll:SetSize(ScrW(), ScreenScale(48))
+    scroll:SetOverlap(-4)
+    scroll:MoveToFront()
+
+    scroll.btnLeft:SetPos(0, scroll:GetTall() - ScreenScale(12))
+    scroll.btnLeft:SetSize(ScreenScale(12), ScreenScale(12))
+    function scroll.btnLeft:Paint( w, h )
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
+    end
+
+    scroll.btnRight:SetPos(scroll:GetWide() - ScreenScale(12), scroll:GetTall() - ScreenScale(12))
+    scroll.btnRight:SetSize(ScreenScale(12), ScreenScale(12))
+    function scroll.btnRight:Paint( w, h )
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+        surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
+    end
+
 
     if self.BottomBarMode == 1 then
         local slottbl = self:LocateSlotFromAddress(self.BottomBarAddress)
@@ -118,6 +196,7 @@ function SWEP:CreateHUD_Bottom()
             attbtn.att = att
             attbtn.address = slottbl.Address
             attbtn.slottbl = slottbl
+            scroll:AddPanel(attbtn)
             attbtn.OnMousePressed = function(self2, kc)
                 if kc == MOUSE_LEFT then
                     self:Attach(self2.address, self2.att)
@@ -219,6 +298,8 @@ function SWEP:CreateHUD_Bottom()
                 self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
             end
         end
+    else
+        self:CreateHUD_Presets(scroll)
     end
 end
 
@@ -246,6 +327,10 @@ function SWEP:CreateHUD_AttInfo()
     bp:SetPos(ScreenScale(4), ScreenScale(24))
     bp.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName")
     bp.Paint = function(self2, w, h)
+        if !IsValid(self) then
+            self:Remove()
+            gui.EnableScreenClicker(false)
+        end
 
         surface.SetFont("ARC9_16")
         surface.SetTextPos(0, 0)
