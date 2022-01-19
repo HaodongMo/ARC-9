@@ -176,6 +176,7 @@ SWEP.TriggerDelay = 0 -- Set to > 0 to play the "trigger" animation before shoot
 SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.
 SWEP.DropMagazineSounds = {} -- Table of sounds a dropped magazine should play.
 SWEP.DropMagazineAmount = 1 -- Amount of mags to drop.
+SWEP.DropMagazineTime = 0.25
 
 -------------------------- FIREMODES
 

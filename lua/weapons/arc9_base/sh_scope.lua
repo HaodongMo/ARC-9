@@ -25,8 +25,6 @@ function SWEP:ExitSights()
     self:SetShouldHoldType()
 end
 
-SWEP.LastPressedETime = 0
-
 function SWEP:ThinkSights()
     if self:GetSafe() then return end
 
@@ -55,7 +53,7 @@ function SWEP:ThinkSights()
     end
 
     if sighted then
-        if self:GetOwner():KeyPressed(IN_USE) then
+        if self:GetOwner():KeyPressed(IN_USE) and IsFirstTimePredicted() then
             if CurTime() - self:GetLastPressedETime() < 0.33 then
                 self:SwitchMultiSight()
                 self:SetLastPressedETime(0)

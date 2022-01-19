@@ -54,7 +54,9 @@ function SWEP:Reload()
 
     if SERVER then
         if self:Clip1() == 0 then
-            self:DropMagazine()
+            self:SetTimer(self:GetProcessedValue("DropMagazineTime"), function()
+                self:DropMagazine()
+            end)
         end
     end
 
