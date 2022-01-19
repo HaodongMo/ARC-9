@@ -210,7 +210,7 @@ function SWEP:CreateCustomizeHUD()
 
         if self.CustomizeTab == 1 then
 
-            cam.Start3D(nil, nil, self:GetViewModelFOV() * 1.2)
+            cam.Start3D(nil, nil, self:GetViewModelFOV())
 
             for _, slot in pairs(self:GetSubSlotList()) do
                 if self:GetSlotBlocked(slot) then continue end
