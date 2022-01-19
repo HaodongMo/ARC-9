@@ -1,9 +1,12 @@
+SWEP.FinishFiremodeAnimTime = 0
+
 function SWEP:SwitchFiremode()
+    if self:StillWaiting() then return end
     if #self:GetValue("Firemodes") == 0 then return end
 
     local fm = self:GetFiremode()
 
-    local anim = "firemode" .. tostring(fm)
+    local anim = "firemode_" .. tostring(fm)
 
     fm = fm + 1
 
@@ -20,21 +23,21 @@ function SWEP:SwitchFiremode()
     self:InvalidateCache()
 
     if self:HasAnimation(anim) then
-        local t = self:PlayAnimation(anim)
+        local t = self:PlayAnimation(anim, 1, false, true)
 
-        local vm = self:GetVM()
-        vm:SetPoseParameter("firemode", 0)
-
-        self:SetTimer(t, function()
-            self:SetFiremodePose()
-        end)
+        self:SetFinishFiremodeAnimTime(CurTime() + t)
+        -- self:SetFiremodePose()
     end
 end
 
 function SWEP:SetFiremodePose()
     local vm = self:GetVM()
 
-    vm:SetPoseParameter("firemode", self:GetFiremode())
+    if self:GetFinishFiremodeAnimTime() <= CurTime() then
+        vm:SetPoseParameter("firemode", self:GetFiremode())
+    else
+        vm:SetPoseParameter("firemode", 1)
+    end
 end
 
 function SWEP:GetCurrentFiremode()
@@ -66,7 +69,9 @@ function SWEP:ThinkFiremodes()
         self:ToggleSafety()
     end
 
-    if self:GetOwner():KeyPressed(IN_RELOAD) and self:GetOwner():KeyDown(IN_USE) then
+    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_RELOAD) and self:GetOwner():KeyDown(IN_USE) then
         self:SwitchFiremode()
     end
+
+    self:SetFiremodePose()
 end

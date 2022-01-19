@@ -51,6 +51,8 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
         self:SetNextIdle(math.huge)
     end
 
+    self:SetFinishFiremodeAnimTime(CurTime())
+
     return time
 end
 

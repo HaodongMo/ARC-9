@@ -247,5 +247,9 @@ function SWEP:GetValue(val, base, condition, amount)
 
     stat = self:RunHook(val .. "Hook" .. condition, stat) or stat
 
+    if istable(stat) then
+        stat.BaseClass = nil
+    end
+
     return stat
 end

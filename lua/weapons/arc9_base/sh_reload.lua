@@ -53,7 +53,9 @@ function SWEP:Reload()
     end
 
     if SERVER then
-        self:DropMagazine()
+        if self:Clip1() == 0 then
+            self:DropMagazine()
+        end
     end
 
     self:SetLoadedRounds(self:Clip1())

@@ -41,6 +41,7 @@ function ENT:PhysicsCollide(colData, collider)
     if colData.DeltaTime < 0.5 then return end
 
     local tbl = self.ImpactSounds
+    tbl.BaseClass = nil
 
     local snd = ""
 
