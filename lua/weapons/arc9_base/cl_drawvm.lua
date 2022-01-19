@@ -30,6 +30,19 @@ function SWEP:PostDrawViewModel()
     -- else
     --     cam.End3D()
     end
+
+    cam.Start3D()
+    for _, model in pairs(self.VModel) do
+        local slottbl = model.slottbl
+        local atttbl = self:GetFinalAttTable(slottbl)
+
+        if atttbl.HoloSight then
+            cam.IgnoreZ(true)
+            self:DoHolosight(model, atttbl)
+            cam.IgnoreZ(false)
+        end
+    end
+    cam.End3D()
 end
 
 function SWEP:ViewModelDrawn()
@@ -69,9 +82,9 @@ function SWEP:DrawCustomModel(wm)
         model:SetRenderOrigin(apos)
         model:SetRenderAngles(aang)
 
-        if !wm and atttbl.HoloSight then
-            self:DoHolosight(model, atttbl)
-        end
+        -- if !wm and atttbl.HoloSight then
+        --     self:DoHolosight(model, atttbl)
+        -- end
 
         if !wm and atttbl.RTScope then
             self:DoRTScope(model, atttbl)
