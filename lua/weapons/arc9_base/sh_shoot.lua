@@ -134,11 +134,13 @@ function SWEP:PrimaryAttack()
             bullettbl.Color = Color(0, 0, 0)
         end
 
+        bullettbl.Size = self:GetProcessedValue("TracerSize")
+
         if IsFirstTimePredicted() then
             if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
                 for i = 1, self:GetProcessedValue("Num") do
                     dir = dir + (spread * AngleRand() / 3.6)
-                    ARC9:ShootPhysBullet(self, self:GetOwner():GetShootPos(), dir:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
+                    ARC9:ShootPhysBullet(self, self:GetShootPos(), dir:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
                 end
             else
                 self:GetOwner():LagCompensation(true)
@@ -150,7 +152,7 @@ function SWEP:PrimaryAttack()
                     Tracer = tr,
                     Num = self:GetProcessedValue("Num"),
                     Dir = dir:Forward(),
-                    Src = self:GetOwner():GetShootPos(),
+                    Src = self:GetShootPos(),
                     Spread = Vector(spread, spread, spread),
                     IgnoreEntity = self:GetOwner():GetVehicle(),
                     Callback = function(att, btr, dmg)
@@ -191,7 +193,8 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
         dmg = dmg,
         range = range,
         penleft = penleft,
-        alreadypenned = alreadypenned
+        alreadypenned = alreadypenned,
+        dmgv = dmgv
     })
 
     local bodydamage = self:GetProcessedValue("BodyDamageMults")
@@ -218,6 +221,20 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
     if self:GetOwner():IsNPC() and !GetConVar("ARC9_npc_equality"):GetBool() then
         dmgv = dmgv * 0.25
     end
+
+    local ap = self:GetProcessedValue("ArmorPiercing")
+
+    ap = math.min(ap, 1)
+
+    local apdmg = DamageInfo()
+    apdmg:SetDamage(dmgv * ap)
+    apdmg:SetDamageType(DMG_DIRECT)
+    apdmg:SetInflictor(dmg:GetInflictor())
+    apdmg:SetAttacker(dmg:GetAttacker())
+
+    tr.Entity:TakeDamageInfo(apdmg)
+
+    dmgv = dmgv * (1 - ap)
 
     dmg:SetDamage(dmgv)
 
@@ -263,6 +280,15 @@ function SWEP:GetDamageAtRange(range)
     dmgv = math.ceil(dmgv)
 
     return dmgv
+end
+
+function SWEP:GetShootPos()
+    local pos = self:GetOwner():EyePos()
+    local ang = self:GetShootDir()
+
+    pos = pos + (ang:Up() * -6)
+
+    return pos
 end
 
 function SWEP:GetShootDir()

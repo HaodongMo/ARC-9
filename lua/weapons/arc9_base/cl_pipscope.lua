@@ -17,7 +17,7 @@ function SWEP:DoRT(fov)
         w = rtsize,
         h = rtsize,
         angles = self:GetShootDir(),
-        origin = self:GetOwner():GetShootPos(),
+        origin = self:GetShootPos(),
         drawviewmodel = false,
         fov = fov,
     }

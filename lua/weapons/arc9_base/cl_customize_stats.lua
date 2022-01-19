@@ -167,6 +167,13 @@ function SWEP:CreateHUD_Stats()
             unit = "mm"
         },
         {
+            title = "Armor Piercing",
+            stat = "ArmorPiercing",
+            fifty = 25,
+            unit = "%",
+            conv = function(a) return math.Round(a * 100, 0) end,
+        },
+        {
             title = "Ammo Type",
             stat = "Ammo",
             conv = function(a) return language.GetPhrase(a .. "_ammo") end

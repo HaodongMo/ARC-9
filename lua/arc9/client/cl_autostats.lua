@@ -188,6 +188,8 @@ function ARC9.GetProsAndCons(atttbl, weapon)
             stat = string.sub(stat, string.len(asop) + 1, string.len(stat))
         end
 
+        if stat == "_Priority" then continue end
+
         if string.len(stat) > 0 then
             for cond, postfix in pairs(ARC9.AutoStatsConditions) do
                 if string.StartWith(stat, cond) then

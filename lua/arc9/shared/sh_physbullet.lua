@@ -101,6 +101,7 @@ net.Receive("ARC9_sendbullet", function(len, ply)
         Weapon = weapon,
         Color = weapon:GetProcessedValue("TracerColor"),
         Fancy = weapon:GetProcessedValue("FancyBullets"),
+        Size = weapon:GetProcessedValue("TracerSize"),
         Invisible = false
     }
 
@@ -365,6 +366,8 @@ function ARC9.DrawPhysBullets()
         size = size * math.log(EyePos():DistToSqr(i.Pos) - math.pow(256, 2))
 
         size = math.Clamp(size, 0, math.huge)
+
+        size = size * i.Size
 
         -- local delta = (EyePos():DistToSqr(i.Pos) / math.pow(20000, 2))
 
