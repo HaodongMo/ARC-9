@@ -13,11 +13,7 @@ function SWEP:EnterSights()
 
     self:SetShouldHoldType()
 
-    if CLIENT then
-        self:BuildMultiSight()
-    elseif game.SinglePlayer() then
-        self:CallOnClient("BuildMultiSight")
-    end
+    self:BuildMultiSight()
 end
 
 function SWEP:ExitSights()
@@ -58,13 +54,13 @@ function SWEP:ThinkSights()
         self:EnterSights()
     end
 
-    if self:GetOwner():KeyPressed(IN_USE) then
-        if IsFirstTimePredicted() or game.SinglePlayer() then
-            if CurTime() - self.LastPressedETime < 0.33 then
+    if sighted then
+        if self:GetOwner():KeyPressed(IN_USE) then
+            if CurTime() - self:GetLastPressedETime() < 0.33 then
                 self:SwitchMultiSight()
-                self.LastPressedETime = 0
+                self:SetLastPressedETime(0)
             else
-                self.LastPressedETime = CurTime()
+                self:SetLastPressedETime(CurTime())
             end
         end
     end

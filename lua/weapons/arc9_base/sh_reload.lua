@@ -81,7 +81,7 @@ function SWEP:DropMagazine()
                 mag:SetPos(self:GetOwner():EyePos() - (self:GetOwner():EyeAngles():Up() * 8))
                 mag:SetAngles(self:GetOwner():EyeAngles())
                 mag.Model = self:GetProcessedValue("DropMagazineModel")
-                mag.ImpactType = self:GetProcessedValue("DropMagazineImpact")
+                mag.ImpactSounds = self:GetProcessedValue("DropMagazineSounds")
                 mag:SetOwner(self:GetOwner())
                 mag:Spawn()
 

@@ -761,6 +761,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 11, "SightAmount")
     self:NetworkVar("Float", 12, "HeatAmount")
     self:NetworkVar("Float", 13, "BlindFireAmount")
+    self:NetworkVar("Float", 14, "LastPressedETime")
 
     self:NetworkVar("Int", 0, "BurstCount")
     self:NetworkVar("Int", 1, "NthShot")

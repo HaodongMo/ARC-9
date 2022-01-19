@@ -5,7 +5,11 @@ function SWEP:SanityCheck()
 end
 
 function SWEP:GetWM()
-    return self.WModel[1]
+    if self.WModel then
+        return self.WModel[1]
+    else
+        return NULL
+    end
 end
 
 function SWEP:GetVM()
