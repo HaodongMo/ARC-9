@@ -126,11 +126,19 @@ function SWEP:PrimaryAttack()
     if self:GetProcessedValue("ShootEnt") then
         self:ShootRocket()
     else
+        local shouldtracer = self:ShouldTracer()
+
+        local bullettbl = {}
+
+        if !shouldtracer then
+            bullettbl.Color = Color(0, 0, 0)
+        end
+
         if IsFirstTimePredicted() then
             if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
                 for i = 1, self:GetProcessedValue("Num") do
                     dir = dir + (spread * AngleRand() / 3.6)
-                    ARC9:ShootPhysBullet(self, self:GetOwner():GetShootPos(), dir:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"))
+                    ARC9:ShootPhysBullet(self, self:GetOwner():GetShootPos(), dir:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
                 end
             else
                 self:GetOwner():LagCompensation(true)
@@ -220,6 +228,16 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
     end
 
     self:Penetrate(tr, range, penleft, alreadypenned)
+end
+
+function SWEP:ShouldTracer()
+    local shouldtracer = self:GetNthShot() % self:GetProcessedValue("TracerNum") == 0
+
+    if self:Clip1() <= self:GetProcessedValue("TracerFinalMag") then
+        shouldtracer = true
+    end
+
+    return shouldtracer
 end
 
 function SWEP:GetDamageAtRange(range)

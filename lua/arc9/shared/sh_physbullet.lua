@@ -100,8 +100,13 @@ net.Receive("ARC9_sendbullet", function(len, ply)
         Gravity = grav,
         Weapon = weapon,
         Color = weapon:GetProcessedValue("TracerColor"),
-        Fancy = weapon:GetProcessedValue("FancyBullets")
+        Fancy = weapon:GetProcessedValue("FancyBullets"),
+        Invisible = false
     }
+
+    if !weapon:ShouldTracer() then
+        bullet.Invisible = true
+    end
 
     if bit.band( util.PointContents( pos ), CONTENTS_WATER ) == CONTENTS_WATER then
         bullet.Underwater = true
@@ -346,12 +351,13 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
     end
 end
 
-local head = Material("particle/particle_glow_04")
-local tracer = Material("effects/tracer_middle")
+local head = Material("particle/fire")
+local tracer = Material("effects/laser1")
 
 function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in pairs(ARC9.PhysBullets) do
+        if i.Invisible then continue end
         if i.Travelled <= (i.Vel:Length() * 0.1) then continue end
 
         local size = 1

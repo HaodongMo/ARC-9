@@ -25,7 +25,8 @@ function SWEP:DoBodygroups(wm)
         if !ele then continue end
 
         for _, j in pairs(ele.Bodygroups or {}) do
-            mdl:SetBodygroup(j[1], j[2])
+            if !istable(j) then continue end
+            mdl:SetBodygroup(j[1] or 0, j[2] or 0)
         end
 
         if ele.Skin then

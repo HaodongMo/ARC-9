@@ -140,7 +140,7 @@ function SWEP:GetSight()
     if GetConVar("developer"):GetBool() then
         self:BuildMultiSight()
     end
-    return self.MultiSightTable[self:GetMultiSight()] or self.IronSights
+    return self.MultiSightTable[self:GetMultiSight()] or self:GetValue("IronSights")
 end
 
 function SWEP:GetRTScopeFOV()
