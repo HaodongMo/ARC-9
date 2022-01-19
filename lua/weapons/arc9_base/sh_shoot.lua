@@ -127,7 +127,7 @@ function SWEP:PrimaryAttack()
         self:ShootRocket()
     else
         if IsFirstTimePredicted() then
-            if GetConVar("ARC9_bullet_physics"):GetBool() then
+            if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
                 for i = 1, self:GetProcessedValue("Num") do
                     dir = dir + (spread * AngleRand() / 3.6)
                     ARC9:ShootPhysBullet(self, self:GetOwner():GetShootPos(), dir:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"))

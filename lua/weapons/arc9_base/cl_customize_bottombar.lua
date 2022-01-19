@@ -133,12 +133,27 @@ function SWEP:CreateHUD_Bottom()
                 local slot = self:LocateSlotFromAddress(self2.address)
 
                 if !slot then return end
-                if slot.Address != self2.address then
-                    self:ClearAttInfoBar()
-                    self:ClearBottomBar()
-                    self.BottomBarAddress = nil
-                    self.AttInfoBarAtt = nil
-                    return
+                    if slot != self2.slottbl then
+                    local c1 = slot.Category
+                    local c2 = self2.slottbl.Category
+
+                    if istable(c1) then
+                        c1 = table.concat(c1, " ")
+                    end
+
+                    if istable(c2) then
+                        c2 = table.concat(c2, " ")
+                    end
+
+                    if c1 != c2 then
+                        self:ClearAttInfoBar()
+                        self:ClearBottomBar()
+                        self.BottomBarAddress = nil
+                        self.AttInfoBarAtt = nil
+                        return
+                    end
+
+                    self2.slottbl = slot
                 end
 
                 local attached = slot.Installed == self2.att

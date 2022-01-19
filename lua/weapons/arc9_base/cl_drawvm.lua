@@ -11,6 +11,7 @@ function SWEP:PreDrawViewModel()
     end
 
     self:DoBodygroups(false)
+    -- self:SetFiremodePose()
     self:GetVM():SetPoseParameter("sights", self:GetSightAmount())
 
     self.ViewModelFOV = self:GetViewModelFOV()

@@ -32,8 +32,10 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
 
     time = time * mult
 
+    local tmult = mult * (vm:SequenceDuration(seq) / time)
+
     vm:SendViewModelMatchingSequence(seq)
-    vm:SetPlaybackRate(1 / mult)
+    vm:SetPlaybackRate(1 / tmult)
 
     if animation.EventTable then
         self:PlaySoundTable(animation.EventTable, 1 / mult)

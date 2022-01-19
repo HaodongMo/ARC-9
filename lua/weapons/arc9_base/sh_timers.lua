@@ -59,7 +59,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
     local owner = self:GetOwner()
 
     start = start or 0
-    mult  = 1 / (mult or 1)
+    mult = 1 / (mult or 1)
 
     for _, v in pairs(soundtable) do
         local ttime
@@ -71,9 +71,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
         if ttime < 0 then continue end
         if !(IsValid(self) and IsValid(owner)) then continue end
 
-        local playtime = ttime
-
-        self:SetTimer(playtime, function()
+        self:SetTimer(ttime, function()
             self:EmitSound(self:RandomChoice(v.s or ""), v.v or 75, v.p or 100, 1, v.c or CHAN_AUTO)
         end)
     end

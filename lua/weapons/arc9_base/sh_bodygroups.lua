@@ -14,8 +14,6 @@ function SWEP:DoBodygroups(wm)
 
     if !IsValid(mdl) then return end
 
-    self:SetFiremodePose()
-
     mdl:SetSkin(self.DefaultSkin)
     mdl:SetBodyGroups(dbg or "")
 

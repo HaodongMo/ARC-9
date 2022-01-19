@@ -253,7 +253,6 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     })
                 end
                 bullet.Dead = true
-                return
             elseif SERVER then
                 bullet.Damaged[eid] = true
                 bullet.Dead = true
