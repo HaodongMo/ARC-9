@@ -6,6 +6,7 @@ function ARC9:SendBullet(bullet, attacker)
     net.WriteVector(bullet.Pos)
     net.WriteAngle(bullet.Vel:Angle())
     net.WriteFloat(bullet.Vel:Length())
+    net.WriteFloat(bullet.Travelled)
     net.WriteFloat(bullet.Drag)
     net.WriteFloat(bullet.Gravity)
     net.WriteEntity(bullet.Weapon)
@@ -77,6 +78,7 @@ net.Receive("ARC9_sendbullet", function(len, ply)
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
     local vel = net.ReadFloat()
+    local trav = net.ReadFloat()
     local drag = net.ReadFloat()
     local grav = net.ReadFloat()
     local weapon = net.ReadEntity()
@@ -89,7 +91,7 @@ net.Receive("ARC9_sendbullet", function(len, ply)
     local bullet = {
         Pos = pos,
         Vel = ang:Forward() * vel,
-        Travelled = 0,
+        Travelled = trav or 0,
         StartTime = CurTime(),
         Imaginary = false,
         Underwater = false,
@@ -365,7 +367,7 @@ function ARC9.DrawPhysBullets()
 
         local size = 1
 
-        size = size * math.log(EyePos():DistToSqr(pos) - math.pow(256, 2))
+        size = size * math.log(EyePos():DistToSqr(pos) - math.pow(512, 2))
 
         size = math.Clamp(size, 0, math.huge)
 
@@ -394,7 +396,7 @@ function ARC9.DrawPhysBullets()
 
         local vec = LerpVector(d, fromvec, speedvec)
 
-        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, 512)), size * 0.75, 0, 1, col)
+        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled))), size * 0.75, 0, 1, col)
 
         -- cam.End3D()
     end
