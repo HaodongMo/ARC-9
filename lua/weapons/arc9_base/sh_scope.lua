@@ -142,3 +142,39 @@ function SWEP:GetSight()
     end
     return self.MultiSightTable[self:GetMultiSight()] or self.IronSights
 end
+
+function SWEP:GetRTScopeFOV()
+    local sights = self:GetSight() or {}
+
+    local atttbl = sights.atttbl
+
+    local scrolllevel = sights.ScrollLevel or 0
+
+    if atttbl.RTScopeAdjustable then
+        return Lerp(scrolllevel / atttbl.RTScopeAdjustmentLevels, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
+    else
+        return atttbl.RTScopeFOV
+    end
+end
+
+function SWEP:Scroll(amt)
+    local sights = self:GetSight() or {}
+
+    local atttbl = sights.atttbl
+
+    if !atttbl then return end
+    if !atttbl.RTScopeAdjustable then return end
+    if !atttbl.RTScopeFOVMax then return end
+    if !atttbl.RTScopeFOVMin then return end
+
+    local scrolllevel = sights.ScrollLevel or 0
+    local old = scrolllevel
+
+    sights.ScrollLevel = scrolllevel + amt
+
+    sights.ScrollLevel = math.Clamp(sights.ScrollLevel, 0, atttbl.RTScopeAdjustmentLevels)
+
+    if old != sights.ScrollLevel then
+        self:EmitSound(atttbl.ZoomSound or "arc9/useatt.wav", 75, math.Rand(95, 105), 1, CHAN_ITEM)
+    end
+end

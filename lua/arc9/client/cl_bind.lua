@@ -22,4 +22,16 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
             return true
         end
     end
+
+    if wpn:GetInSights() then
+        if bind == "invnext" then
+            wpn:Scroll(1)
+
+            return true
+        elseif bind == "invprev" then
+            wpn:Scroll(-1)
+
+            return true
+        end
+    end
 end)

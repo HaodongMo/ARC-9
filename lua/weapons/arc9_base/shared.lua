@@ -405,7 +405,7 @@ SWEP.DistantShootSound = nil
 
 SWEP.DryFireSound = ""
 
-SWEP.FiremodeSound = ""
+SWEP.FiremodeSound = "arc9/firemode.wav"
 
 SWEP.EnterSightsSound = ""
 SWEP.ExitSightsSound = ""
@@ -627,6 +627,7 @@ SWEP.Attachments = {
 --         // same but for exclusion.
 --         Integral = false, // cannot be removed
 --         Category = "", // single or {"list", "of", "values"}
+--         InstallSound = "",
 --         Bone = "",
 --         Pos = Vector(0, 0, 0),
 --         Ang = Angle(0, 0, 0),

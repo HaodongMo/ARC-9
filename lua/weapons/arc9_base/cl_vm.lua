@@ -160,8 +160,12 @@ function SWEP:GetViewModelPosition(pos, ang)
 end
 
 function SWEP:GetViewModelFOV()
-    -- return 75
+    if self:GetSightAmount() > 0 then
+        return Lerp(self:GetSightAmount(), self:GetProcessedValue("DesiredViewModelFOV"), 75)
+    end
+
+    return self:GetProcessedValue("DesiredViewModelFOV")
     -- return 60 * self:GetSmoothedFOVMag()
     -- return 150
-    return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)
+    -- return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)
 end

@@ -6,6 +6,10 @@ function SWEP:Attach(addr, att, silent)
     slottbl.Installed = att
     slottbl.ToggleNum = 1
 
+    if !silent then
+        self:EmitSound(slottbl.InstallSound or "arc9/install.wav")
+    end
+
     self:PostModify()
 
     return true
@@ -17,6 +21,10 @@ function SWEP:Detach(addr, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
 
     slottbl.Installed = nil
+
+    if !silent then
+        self:EmitSound(slottbl.UninstallSound or "arc9/uninstall.wav")
+    end
 
     self:PostModify()
 

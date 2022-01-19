@@ -50,8 +50,8 @@ function SWEP:GetMagnification()
     if GetConVar("arc9_cheapscopes"):GetBool() and !sight.Disassociate then
         local atttbl = self:GetSight().atttbl
 
-        if atttbl and atttbl.RTScopeFOV then
-            target = (self:GetOwner():GetFOV() / atttbl.RTScopeFOV) / 2.5
+        if atttbl and atttbl.RTScope then
+            target = (self:GetOwner():GetFOV() / self:GetRTScopeFOV()) / 2.5
         end
     end
 
@@ -67,7 +67,7 @@ function SWEP:AdjustMouseSensitivity()
     local sight = self:GetSight()
 
     if sight.atttbl and sight.atttbl.RTScope and !sight.Disassociate then
-        mag = mag + (fov / sight.atttbl.RTScopeFOV)
+        mag = mag + (fov / self:GetRTScopeFOV())
     end
 
     if mag > 0 then

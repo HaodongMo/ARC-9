@@ -8,7 +8,7 @@ hook.Add("PreRender", "ARC9_PreRender", function()
     local sight = wpn:GetSight()
 
     if sight.atttbl and sight.atttbl.RTScope and wpn:GetSightAmount() > 0 then
-        wpn:DoRT(sight.atttbl.RTScopeFOV)
+        wpn:DoRT(wpn:GetRTScopeFOV())
     end
 end)
 
@@ -22,6 +22,6 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     local sight = wpn:GetSight()
 
     if sight.atttbl and sight.atttbl.RTScope and wpn:GetSightAmount() > 0 then
-        wpn:DoCheapScope(sight.atttbl.RTScopeFOV)
+        wpn:DoCheapScope(wpn:GetRTScopeFOV())
     end
 end)
