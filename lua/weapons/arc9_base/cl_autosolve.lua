@@ -141,6 +141,6 @@ function SWEP:AdjustMouseSensitivity()
     end
 
     if mag > 0 then
-        return 1 / mag
+        return 1 / Lerp(self:GetSightAmount(), 1, mag)
     end
 end
