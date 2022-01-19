@@ -59,7 +59,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
     local owner = self:GetOwner()
 
     start = start or 0
-    mult = 1 / (mult or 1)
+    mult = mult
 
     for _, v in pairs(soundtable) do
         local ttime

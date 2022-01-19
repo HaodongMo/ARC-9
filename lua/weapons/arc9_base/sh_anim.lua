@@ -30,32 +30,30 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
 
     mult = mult * (animation.Mult or 1)
 
-    time = time * mult
-
-    local tmult = mult * (vm:SequenceDuration(seq) / time)
+    local tmult = (vm:SequenceDuration(seq) / time) / mult
 
     vm:SendViewModelMatchingSequence(seq)
-    vm:SetPlaybackRate(1 / tmult)
+    vm:SetPlaybackRate(tmult)
 
     if animation.EventTable then
-        self:PlaySoundTable(animation.EventTable, 1 / mult)
+        self:PlaySoundTable(animation.EventTable, mult)
     end
 
     if lock then
-        self:SetAnimLockTime(CurTime() + time)
+        self:SetAnimLockTime(CurTime() + (time * mult))
     else
         self:SetAnimLockTime(CurTime())
     end
 
     if doidle then
-        self:SetNextIdle(CurTime() + time)
+        self:SetNextIdle(CurTime() + (time * mult))
     else
         self:SetNextIdle(math.huge)
     end
 
     self:SetFinishFiremodeAnimTime(CurTime())
 
-    return time
+    return time * mult
 end
 
 function SWEP:IdleAtEndOfAnimation()
