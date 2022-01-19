@@ -50,8 +50,6 @@ SWEP.WorldModelOffset = nil
 --     scale = 1
 -- }
 
-SWEP.DesiredViewModelFOV = 75
-
 -------------------------- SAVING
 
 SWEP.SaveBase = nil -- set to a weapon class to make this weapon share saves with it.
@@ -88,7 +86,7 @@ SWEP.Num = 1 -- Number of bullets to shoot
 SWEP.Penetration = 5 -- Units of wood that can be penetrated by this gun.
 
 SWEP.RicochetAngleMax = 45 // maximum angle at which a ricochet can occur. Between 1 and 90. Angle of 0 is impossible but would theoretically always ricochet.
-SWEP.RicochetChance = 1 // if the angle is right, what is the chance that a ricochet can occur?
+SWEP.RicochetChance = 0.5 // if the angle is right, what is the chance that a ricochet can occur?
 
 SWEP.DamageType = DMG_BULLET -- The damage type of the gun.
 -- DMG_BLAST will create explosive effects and create AOE damage.

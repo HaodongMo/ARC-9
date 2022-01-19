@@ -50,6 +50,8 @@ function SWEP:ToggleCustomize(on)
 
     self:SetShouldHoldType()
 
+    self:SetInSights(false)
+
     if !self:GetCustomize() then
         self:Inspect(true)
     end

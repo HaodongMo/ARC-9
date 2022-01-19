@@ -231,6 +231,8 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
 end
 
 function SWEP:ShouldTracer()
+    if self:GetProcessedValue("TracerNum") <= 0 then return false end
+
     local shouldtracer = self:GetNthShot() % self:GetProcessedValue("TracerNum") == 0
 
     if self:Clip1() <= self:GetProcessedValue("TracerFinalMag") then

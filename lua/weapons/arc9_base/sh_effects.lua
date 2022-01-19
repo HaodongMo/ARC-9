@@ -60,13 +60,13 @@ function SWEP:GetMuzzleDevice(wm)
         muzz = self:GetWM()
     end
 
-    -- if model then
-    --     for i, k in pairs(model) do
-    --         if k.IsMuzzleDevice then
-    --             return k
-    --         end
-    --     end
-    -- end
+    if model then
+        for i, k in pairs(model) do
+            if k.IsMuzzleDevice then
+                return k
+            end
+        end
+    end
 
     return muzz
 end

@@ -5,6 +5,7 @@ end
 function SWEP:EnterSights()
     if self:GetSprintAmount() > 0 then return end
     if !self:GetProcessedValue("HasSights") then return end
+    if self:GetCustomize() then return end
 
     self:SetInSights(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)

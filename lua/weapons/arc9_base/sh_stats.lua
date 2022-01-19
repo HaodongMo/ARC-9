@@ -79,10 +79,15 @@ function SWEP:GetAllAffectors()
 
     table.insert(aff, self:GetTable())
 
-    local sight = self:GetSight()
+    if !ARC9.Overrun then
+        ARC9.Overrun = true
+        local sight = self:GetSight()
 
-    if sight.OriginalSightTable then
-        table.insert(aff, sight.OriginalSightTable)
+        if sight.OriginalSightTable then
+            table.insert(aff, sight.OriginalSightTable)
+        end
+
+        ARC9.Overrun = false
     end
 
     for _, slot in pairs(self:GetSubSlotList()) do
