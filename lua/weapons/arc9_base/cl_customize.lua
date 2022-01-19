@@ -254,27 +254,23 @@ function SWEP:CreateCustomizeHUD()
 
                 local hoveredslot = false
 
-                if bg:IsHovered() then
+                local dist = 0
 
-                    local dist = 0
+                local mousex, mousey = input.GetCursorPos()
 
-                    local mousex, mousey = input.GetCursorPos()
+                if isinaabb(x, y) then
+                    hoveredslot = true
+                    dist = math.Distance(x, y, mousex, mousey)
+                    for _, bump in pairs(bumpy) do
+                        if isinaabb(bump.x, bump.y) then
+                            local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
 
-                    if isinaabb(x, y) then
-                        hoveredslot = true
-                        dist = math.Distance(x, y, mousex, mousey)
-                        for _, bump in pairs(bumpy) do
-                            if isinaabb(bump.x, bump.y) then
-                                local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
-
-                                if d2 < dist then
-                                    hoveredslot = false
-                                    break
-                                end
+                            if d2 < dist then
+                                hoveredslot = false
+                                break
                             end
                         end
                     end
-
                 end
 
                 table.insert(bumpy, {x = x, y = y, slot = slot})

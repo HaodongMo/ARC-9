@@ -3,6 +3,8 @@ function SWEP:Attach(addr, att, silent)
 
     local slottbl = self:LocateSlotFromAddress(addr)
 
+    if slottbl.Installed == att then return end
+
     slottbl.Installed = att
     slottbl.ToggleNum = 1
 

@@ -143,6 +143,8 @@ function SWEP:DoRTScope(model, atttbl)
     model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9_rt")
 end
 
+local hascostscoped = false
+
 function SWEP:DoCheapScope(fov)
     if !self:ShouldDoScope() then
         render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
@@ -150,6 +152,11 @@ function SWEP:DoCheapScope(fov)
         render.PopRenderTarget()
 
         return
+    end
+
+    if !hascostscoped then
+        self:DoRT(fov)
+        hascostscoped = true
     end
 
     local scrw = ScrW()

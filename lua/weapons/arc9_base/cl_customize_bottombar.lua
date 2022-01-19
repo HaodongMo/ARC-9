@@ -133,7 +133,7 @@ function SWEP:CreateHUD_Bottom()
                 local slot = self:LocateSlotFromAddress(self2.address)
 
                 if !slot then return end
-                if slot.Category != self2.slottbl.Category then
+                if slot.Address != self2.address then
                     self:ClearAttInfoBar()
                     self:ClearBottomBar()
                     self.BottomBarAddress = nil
