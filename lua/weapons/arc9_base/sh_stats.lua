@@ -79,6 +79,12 @@ function SWEP:GetAllAffectors()
 
     table.insert(aff, self:GetTable())
 
+    local sight = self:GetSight()
+
+    if sight.OriginalSightTable then
+        table.insert(aff, sight.OriginalSightTable)
+    end
+
     for _, slot in pairs(self:GetSubSlotList()) do
         local atttbl = self:GetFinalAttTable(slot)
 

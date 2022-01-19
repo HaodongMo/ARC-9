@@ -59,14 +59,92 @@ function SWEP:ThinkSights()
     end
 
     if self:GetOwner():KeyPressed(IN_USE) then
-        if CurTime() - self.LastPressedETime < 0.33 then
-            if game.SinglePlayer() then
-                self:CallOnClient("SwitchMultiSight")
-            elseif CLIENT then
+        if IsFirstTimePredicted() or game.SinglePlayer() then
+            if CurTime() - self.LastPressedETime < 0.33 then
                 self:SwitchMultiSight()
+                self.LastPressedETime = 0
+            else
+                self.LastPressedETime = CurTime()
             end
-        else
-            self.LastPressedETime = CurTime()
         end
     end
+end
+
+SWEP.MultiSightTable = {
+    -- {
+    --     Pos = Vector(0, 0, 0),
+    --     Ang = Angle(0, 0, 0)
+    -- }
+}
+
+function SWEP:BuildMultiSight()
+    self.MultiSightTable = {}
+
+    local keepbaseirons = true
+
+    for i, slottbl in ipairs(self:GetSubSlotList()) do
+        if !slottbl.Installed then continue end
+        local atttbl = self:GetFinalAttTable(slottbl)
+
+        if atttbl.Sights then
+            for _, sight in pairs(atttbl.Sights) do
+                local s = {}
+
+                if CLIENT then
+                    s = self:GenerateAutoSight(sight, slottbl)
+                end
+
+                if sight.Disassociate then
+                    s.Disassociate = true
+                end
+
+                s.atttbl = atttbl
+                s.ExtraSightDistance = slottbl.ExtraSightDistance or 0
+                s.OriginalSightTable = sight
+                s.slotbl = slottbl
+
+                table.insert(self.MultiSightTable, s)
+            end
+
+            if !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
+                keepbaseirons = false
+            end
+        end
+    end
+
+    if keepbaseirons then
+        local tbl = {}
+        table.Add(tbl, self.BaseSights)
+        table.Add(self.MultiSightTable, self.BaseSights)
+        self.MultiSightTable = tbl
+    end
+
+    if self:GetMultiSight() > #self.MultiSightTable then
+        self:SetMultiSight(1)
+    end
+end
+
+function SWEP:SwitchMultiSight()
+    local old_msi = self:GetMultiSight()
+    msi = old_msi
+    msi = msi + 1
+
+    if msi > #self.MultiSightTable then
+        msi = 1
+    end
+
+    self:SetMultiSight(msi)
+
+    self:InvalidateCache()
+
+    if msi != old_msi then
+        // eh put some code in here
+    end
+end
+
+function SWEP:GetSight()
+    if GetConVar("developer"):GetBool() then
+        self:BuildMultiSight()
+    end
+    return self.MultiSightTable[self:GetMultiSight()] or self.IronSights
 end

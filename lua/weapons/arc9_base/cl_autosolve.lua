@@ -1,53 +1,3 @@
-SWEP.MultiSightTable = {
-    -- {
-    --     Pos = Vector(0, 0, 0),
-    --     Ang = Angle(0, 0, 0)
-    -- }
-}
-
-function SWEP:BuildMultiSight()
-    self.MultiSightTable = {}
-
-    local keepbaseirons = true
-
-    for i, slottbl in ipairs(self:GetSubSlotList()) do
-        if !slottbl.Installed then continue end
-        local atttbl = self:GetFinalAttTable(slottbl)
-
-        if atttbl.Sights then
-            for _, sight in pairs(atttbl.Sights) do
-                local s = self:GenerateAutoSight(sight, slottbl)
-
-                if sight.Disassociate then
-                    s.Disassociate = true
-                end
-
-                s.atttbl = atttbl
-                s.ExtraSightDistance = slottbl.ExtraSightDistance or 0
-                s.OriginalSightTable = sight
-                s.slotbl = slottbl
-
-                table.insert(self.MultiSightTable, s)
-            end
-
-            if !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
-                keepbaseirons = false
-            end
-        end
-    end
-
-    if keepbaseirons then
-        local tbl = {}
-        table.Add(tbl, self.BaseSights)
-        table.Add(self.MultiSightTable, self.BaseSights)
-        self.MultiSightTable = tbl
-    end
-
-    if self.MultiSightIndex > #self.MultiSightTable then
-        self.MultiSightIndex = 1
-    end
-end
-
 function SWEP:GenerateAutoSight(sight, slottbl)
     local pos, ang = self:GetAttPos(slottbl, false, true)
 
@@ -80,13 +30,6 @@ end
 
 SWEP.MultiSightIndex = 1
 
-function SWEP:GetSight()
-    if GetConVar("developer"):GetBool() then
-        self:BuildMultiSight()
-    end
-    return self.MultiSightTable[self.MultiSightIndex] or self.IronSights
-end
-
 function SWEP:GetSightPositions()
     local s = self:GetSight()
     return s.Pos, s.Ang
@@ -97,19 +40,6 @@ function SWEP:GetExtraSightPositions()
     local se = s.ExtraPos or Vector(0, 0, 0)
     se.y = se.y - (s.ExtraSightDistance or 0)
     return se, s.ExtraAng or Angle(0, 0, 0)
-end
-
-function SWEP:SwitchMultiSight()
-    local old_msi = self.MultiSightIndex
-    self.MultiSightIndex = self.MultiSightIndex + 1
-
-    if self.MultiSightIndex > #self.MultiSightTable then
-        self.MultiSightIndex = 1
-    end
-
-    if self.MultiSightIndex != old_msi then
-        // eh put some code in here
-    end
 end
 
 function SWEP:GetMagnification()

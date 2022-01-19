@@ -3,7 +3,7 @@ function SWEP:SwitchFiremode()
 
     local fm = self:GetFiremode()
 
-    self:PlayAnimation("firemode" .. tostring(fm))
+    local anim = "firemode" .. tostring(fm)
 
     fm = fm + 1
 
@@ -18,6 +18,23 @@ function SWEP:SwitchFiremode()
     self:SetFiremode(fm)
 
     self:InvalidateCache()
+
+    if self:HasAnimation(anim) then
+        local t = self:PlayAnimation(anim)
+
+        local vm = self:GetVM()
+        vm:SetPoseParameter("firemode", 0)
+
+        self:SetTimer(t, function()
+            self:SetFiremodePose()
+        end)
+    end
+end
+
+function SWEP:SetFiremodePose()
+    local vm = self:GetVM()
+
+    vm:SetPoseParameter("firemode", self:GetFiremode())
 end
 
 function SWEP:GetCurrentFiremode()
