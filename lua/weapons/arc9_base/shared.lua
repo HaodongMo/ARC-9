@@ -349,6 +349,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 
 -- SWEP.Hook_Draw = function(self, vm) end # Called when the weapon is drawn. Call functions here to modify the viewmodel, such as drawing RT screens onto the gun.
 -- SWEP.Hook_HUDPaint = function(self) end
+-- SWEP.Hook_RTScopeReticle = function(self, {rtsize = num, rtmat = Material})
 -- SWEP.Hook_ModifyRecoilDir = function(self, dir) return dir end # direction of recoil in degrees, 0 = up
 -- SWEP.HookP_ModifyFiremode = function(self, firemode) return firemode end
 -- SWEP.HookP_ModifyBullet = function(self, bullet) return end # bullet = phys bullet table, modify in place, does not accept return

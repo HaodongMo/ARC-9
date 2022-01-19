@@ -56,8 +56,6 @@ function SWEP:DoRTScopeEffects()
 
     local refractamount = 0.1
 
-    render.UpdateRefractTexture()
-
     matRefract:SetFloat( "$refractamount", refractamount )
     pp_ca_base:SetTexture("$basetexture", rtmat)
     pp_ca_r:SetTexture("$basetexture", rtmat)
@@ -79,8 +77,9 @@ function SWEP:DoRTScopeEffects()
     -- Sharpen
     -- DrawSharpen(-0.5, 5) -- dont work for some reason
 
-    render.SetMaterial(matRefract)
-    render.DrawScreenQuad()
+    -- render.UpdateRefractTexture()
+    -- render.SetMaterial(matRefract)
+    -- render.DrawScreenQuad()
 end
 
 function SWEP:DoRTScope(model, atttbl)
@@ -115,9 +114,13 @@ function SWEP:DoRTScope(model, atttbl)
         surface.SetMaterial(atttbl.RTScopeReticle)
         surface.DrawTexturedRect(0, 0, rtsize, rtsize)
 
-        surface.SetDrawColor(0, 0, 0)
-        surface.SetMaterial(shadow)
-        surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
+        self:RunHook("Hook_RTScopeReticle", {rtmat = rtmat, rtsize = rtsize})
+
+        if !atttbl.NoShadow then
+            surface.SetDrawColor(0, 0, 0)
+            surface.SetMaterial(shadow)
+            surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
+        end
 
         if !screenpos.visible then
             surface.DrawRect(0, 0, rtsize, rtsize)

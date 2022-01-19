@@ -286,7 +286,7 @@ function SWEP:GetShootPos()
     local pos = self:GetOwner():EyePos()
     local ang = self:GetShootDir()
 
-    pos = pos + (ang:Up() * -6)
+    pos = pos + (ang:Up() * -1)
 
     return pos
 end

@@ -64,6 +64,7 @@ ATT.RTScopeReticle = Material("")
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTScopeNoPP = false
 
+ATT.NoShadow = false
 ATT.ScopeScreenRatio = 1.4 // Needed for Cheap Scopes
 
 ATT.Attachments = {

@@ -359,19 +359,23 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in pairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        if i.Travelled <= (i.Vel:Length() * 0.1) then continue end
+        if i.Travelled <= 512 then continue end
+
+        local pos = i.Pos
 
         local size = 1
 
-        size = size * math.log(EyePos():DistToSqr(i.Pos) - math.pow(256, 2))
+        size = size * math.log(EyePos():DistToSqr(pos) - math.pow(256, 2))
 
         size = math.Clamp(size, 0, math.huge)
 
+        local headsize = size
+
+        local delta = (EyePos():DistToSqr(pos) / math.pow(10000, 2))
+
+        headsize = math.pow(headsize, Lerp(delta, 0, 2))
+
         size = size * i.Size
-
-        -- local delta = (EyePos():DistToSqr(i.Pos) / math.pow(20000, 2))
-
-        -- size = math.pow(size, Lerp(delta, 1, 2))
 
         -- cam.Start3D()
 
@@ -379,10 +383,18 @@ function ARC9.DrawPhysBullets()
         -- local col = Color(255, 225, 200)
 
         render.SetMaterial(head)
-        render.DrawSprite(i.Pos, size, size, col)
+        render.DrawSprite(pos, headsize, headsize, col)
 
         render.SetMaterial(tracer)
-        render.DrawBeam(i.Pos, i.Pos - i.Vel:GetNormalized() * math.min(i.Vel:Length() * 0.5, 2048), size * 0.75, 0, 1, col)
+
+        local fromvec = (i.Weapon:GetTracerOrigin() - pos):GetNormalized()
+        local speedvec = -i.Vel:GetNormalized()
+
+        local d = math.min(i.Travelled / 1024, 1)
+
+        local vec = LerpVector(d, fromvec, speedvec)
+
+        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, 512)), size * 0.75, 0, 1, col)
 
         -- cam.End3D()
     end
