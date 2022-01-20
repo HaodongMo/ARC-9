@@ -334,6 +334,7 @@ function SWEP:CreateCustomizeHUD()
 
                         self.CustomizePanX = 0
                         self.CustomizePanY = 0
+                        self.CustomizePitch = 0
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
                         self:Detach(slot.Address)
                     end
