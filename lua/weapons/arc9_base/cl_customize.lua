@@ -300,6 +300,16 @@ function SWEP:CreateCustomizeHUD()
                     surface.SetMaterial(atttbl.Icon)
                     surface.SetDrawColor(col)
                     surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                else
+                    if slot.DefaultCompactName then
+                        atttxt = ARC9:UseTrueNames() and slot.DefaultCompactName_TrueName or slot.DefaultCompactName
+                        atttxt = atttxt or slot.DefaultName_TrueName or slot.DefaultName or ""
+                    end
+                    if slot.DefaultIcon then
+                        surface.SetMaterial(slot.DefaultIcon)
+                        surface.SetDrawColor(col)
+                        surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                    end
                 end
 
                 surface.SetFont("ARC9_6")
