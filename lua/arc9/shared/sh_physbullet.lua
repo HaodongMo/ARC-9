@@ -355,7 +355,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 end
 
 local head = Material("particle/fire")
-local tracer = Material("effects/laser1")
+local tracer = Material("arc9/tracer.png", "additive")
 
 function ARC9.DrawPhysBullets()
     cam.Start3D()
