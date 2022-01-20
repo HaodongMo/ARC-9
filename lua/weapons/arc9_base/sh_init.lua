@@ -53,9 +53,6 @@ function SWEP:Deploy()
         self:SetTimer(0.25, function()
             self:SendWeapon()
         end)
-    else
-        self:DoBodygroups(true)
-        self:DoBodygroups(false)
     end
 
     self:SetShouldHoldType()
