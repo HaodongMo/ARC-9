@@ -351,7 +351,8 @@ function SWEP:CreateCustomizeHUD()
             if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown then
                 dragging = true
                 lastmousex, lastmousey = input.GetCursorPos()
-            elseif input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
+            end
+            if input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
                 dragging_r = true
                 lastmousex, lastmousey = input.GetCursorPos()
             end
@@ -374,7 +375,7 @@ function SWEP:CreateCustomizeHUD()
             end
         elseif dragging_r then
             if !input.IsMouseDown(MOUSE_RIGHT) then
-                dragging = false
+                dragging_r = false
             else
                 local mousex, mousey = input.GetCursorPos()
 
@@ -385,6 +386,12 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
 
             end
+        elseif self:GetOwner():KeyDown(IN_RELOAD) then
+            self.CustomizePanX = Lerp(0.1, self.CustomizePanX, 0)
+            self.CustomizePanY = Lerp(0.1, self.CustomizePanY, 0)
+            self.CustomizePitch = Lerp(0.1, self.CustomizePitch, 0)
+            self.CustomizeYaw = Lerp(0.1, self.CustomizeYaw, 0)
+            self.CustomizeZoom = Lerp(0.1, self.CustomizeZoom, 0)
         end
 
         lastmousex, lastmousey = input.GetCursorPos()
