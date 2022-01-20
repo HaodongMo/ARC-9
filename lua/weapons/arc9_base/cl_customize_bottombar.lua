@@ -91,10 +91,12 @@ function SWEP:ClearBottomBar()
 end
 
 local function enterfolder(self, scroll, slottbl, fname)
-    if fname == nil then
-        table.remove(self.BottomBarPath)
-    else
-        table.insert(self.BottomBarPath, fname)
+    if fname != true then
+        if fname == nil then
+            table.remove(self.BottomBarPath)
+        else
+            table.insert(self.BottomBarPath, fname)
+        end
     end
 
     local folders = self.BottomBarFolders
@@ -364,11 +366,7 @@ function SWEP:CreateHUD_Bottom()
             self:ClearAttInfoBar()
         end
 
-        self.BottomBarFolder = {}
-
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
-        self.BottomBarFolders = ARC9.GetFoldersForAtts(atts)
-        self.BottomBarPath = {}
 
         table.sort(atts, function(a, b)
             a = a or ""
@@ -392,9 +390,10 @@ function SWEP:CreateHUD_Bottom()
             return order_a < order_b
         end)
 
+        self.BottomBarFolders = ARC9.GetFoldersForAtts(atts)
         self.BottomBarAtts = atts
 
-        enterfolder(self, scroll, slottbl, fname)
+        enterfolder(self, scroll, slottbl, true)
     else
         self:CreateHUD_Presets(scroll)
     end

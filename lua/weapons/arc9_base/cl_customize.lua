@@ -342,6 +342,9 @@ function SWEP:CreateCustomizeHUD()
                     if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
                         self.BottomBarMode = 1
                         self.BottomBarAddress = slot.Address
+                        self.BottomBarPath = {}
+                        self.BottomBarFolders = {}
+                        self.BottomBarAtts = {}
                         self:CreateHUD_Bottom()
 
                         self.CustomizePanX = 0
