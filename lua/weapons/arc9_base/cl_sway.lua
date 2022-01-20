@@ -65,6 +65,8 @@ function SWEP:GetViewModelBob(pos, ang)
     local step = 10
     local mag = 1
 
+    if self:GetCustomize() then return pos, ang end
+
     local v = self:GetOwner():GetVelocity():Length()
     v = math.Clamp(v, 0, 350)
     self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, FrameTime() * 10000)
