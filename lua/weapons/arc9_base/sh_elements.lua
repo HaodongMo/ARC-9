@@ -39,3 +39,8 @@ function SWEP:GetElements()
 
     return eles2
 end
+
+function SWEP:HasElement(ele)
+    if !self.ElementsCache then self:GetElements() end
+    return self.ElementsCache[ele] == true
+end
