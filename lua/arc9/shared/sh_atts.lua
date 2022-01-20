@@ -100,6 +100,28 @@ function ARC9.GetAttsForCats(cats)
     return atts
 end
 
+function ARC9.GetFoldersForAtts(atts)
+
+    local folders = {}
+    for i, k in pairs(atts) do
+        local atttbl = ARC9.Attachments[k]
+        if !atttbl then continue end
+        if !atttbl.Folder then
+            folders[atttbl.ShortName] = true
+        else
+            local names = string.Explode("/", atttbl.Folder)
+            local cur = folders
+            for _, v in ipairs(names) do
+                cur[v] = cur[v] or {}
+                cur = cur[v]
+            end
+            cur[atttbl.ShortName] = true
+        end
+    end
+
+    return folders
+end
+
 function ARC9.GetMaxAtts()
     return GetConVar("arc9_maxatts"):GetInt()
 end

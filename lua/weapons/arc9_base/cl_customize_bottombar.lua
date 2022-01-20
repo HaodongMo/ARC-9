@@ -6,6 +6,69 @@ local function PaintScrollBar(panel, w, h)
     surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
 end
 
+local scrolleles = {}
+
+local foldericon = Material("arc9/folder.png", "mips smooth")
+local backicon = Material("arc9/back.png", "mips smooth")
+
+local function iconbutton(self, scroll, name, icon)
+    local btn = vgui.Create("DButton", scroll)
+    btn:SetSize(ScreenScale(48), ScreenScale(48))
+    btn:DockMargin(ScreenScale(2), 0, 0, 0)
+    btn:Dock(LEFT)
+    btn:SetText("")
+    scroll:AddPanel(btn)
+    table.insert(scrolleles, btn)
+    btn.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+        local col1 = ARC9.GetHUDColor("fg")
+
+        local hasbg = false
+
+        if self2:IsHovered() then
+            col1 = ARC9.GetHUDColor("shadow")
+
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+
+            if self2:IsHovered() then
+                surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            else
+                surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+            end
+            surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
+
+            hasbg = true
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+            surface.DrawRect(0, 0, w, h)
+        end
+
+        if !hasbg then
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.SetMaterial(icon)
+            surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
+        end
+
+        surface.SetDrawColor(col1)
+        surface.SetMaterial(icon)
+        surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+
+        if !hasbg then
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(ScreenScale(14), ScreenScale(1))
+            surface.SetFont("ARC9_10")
+            self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+        end
+
+        surface.SetTextColor(col1)
+        surface.SetTextPos(ScreenScale(13), 0)
+        surface.SetFont("ARC9_10")
+        self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+    end
+    return btn
+end
+
 SWEP.BottomBar = nil
 
 -- 0: Preset
@@ -14,6 +77,10 @@ SWEP.BottomBarMode = 0
 
 SWEP.BottomBarAddress = 0
 
+SWEP.BottomBarFolders = {}
+SWEP.BottomBarPath = {}
+SWEP.BottomBarAtts = {}
+
 function SWEP:ClearBottomBar()
     if self.BottomBar then
         self.BottomBar:Remove()
@@ -21,6 +88,189 @@ function SWEP:ClearBottomBar()
     end
 
     self:ClearAttInfoBar()
+end
+
+local function enterfolder(self, scroll, slottbl, fname)
+    if fname == nil then
+        table.remove(self.BottomBarPath)
+    else
+        table.insert(self.BottomBarPath, fname)
+    end
+
+    local folders = self.BottomBarFolders
+    for _, v in ipairs(self.BottomBarPath) do
+        folders = folders[v]
+    end
+
+    for _, p in pairs(scrolleles) do
+        p:Remove()
+    end
+
+    if #self.BottomBarPath > 0 then
+        local backbtn = iconbutton(self, scroll, ARC9:GetPhrase("folder.back") or "BACK", backicon)
+        backbtn.OnMousePressed = function(self2, kc)
+            if kc == MOUSE_LEFT then
+                enterfolder(self, scroll, slottbl, nil)
+            end
+        end
+    else
+        local deselbtn = iconbutton(self, scroll, ARC9:GetPhrase("folder.deselect") or "DESELECT", backicon)
+        deselbtn.OnMousePressed = function(self2, kc)
+            if kc == MOUSE_LEFT then
+                self.BottomBarAddress = nil
+                self.BottomBarMode = 0
+                self:CreateHUD_Bottom()
+            end
+        end
+    end
+
+    for folder, children in SortedPairs(folders) do
+
+        if isbool(children) then continue end
+
+        local folderbtn = iconbutton(self, scroll, ARC9:GetPhrase("folder." .. folder) or folder, foldericon)
+        folderbtn.folder = folder
+        local count = table.Count(children)
+        if count > 99 then count = "99+" end
+        folderbtn.count = tostring(count)
+        folderbtn.OnMousePressed = function(self2, kc)
+            if kc == MOUSE_LEFT then
+                enterfolder(self, scroll, slottbl, self2.folder)
+            end
+        end
+        local oldp = folderbtn.Paint
+        folderbtn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
+            oldp(self2, w, h)
+
+            surface.SetFont("ARC9_10")
+            local txtw, txth = surface.GetTextSize(self2.count)
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            self:DrawTextRot(self2, self2.count, 0, 0, w - ScreenScale(2) - txtw, h - ScreenScale(4) - txth / 2, ScreenScale(46), true)
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            self:DrawTextRot(self2, self2.count, 0, 0, w - ScreenScale(3) - txtw, h - ScreenScale(5) - txth / 2, ScreenScale(46), true)
+
+        end
+    end
+
+    local strpath = string.Implode("/", self.BottomBarPath)
+
+    for _, att in pairs(self.BottomBarAtts) do
+        local atttbl = ARC9.GetAttTable(att)
+
+        if (!atttbl.Folder and #self.BottomBarPath > 0) or (atttbl.Folder and atttbl.Folder != strpath) then continue end
+
+        local attbtn = vgui.Create("DButton", scroll)
+        attbtn:SetSize(ScreenScale(48), ScreenScale(48))
+        attbtn:DockMargin(ScreenScale(2), 0, 0, 0)
+        attbtn:Dock(LEFT)
+        attbtn:SetText("")
+        attbtn.att = att
+        attbtn.address = slottbl.Address
+        attbtn.slottbl = slottbl
+        scroll:AddPanel(attbtn)
+        table.insert(scrolleles, attbtn)
+        attbtn.OnMousePressed = function(self2, kc)
+            if kc == MOUSE_LEFT then
+                self:Attach(self2.address, self2.att)
+                self.CustomizeSelectAddr = self2.address
+            elseif kc == MOUSE_RIGHT then
+                self:Detach(self2.address)
+                self.CustomizeSelectAddr = self2.address
+            end
+        end
+        attbtn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
+
+            local slot = self:LocateSlotFromAddress(self2.address)
+
+            if !slot then return end
+                if slot != self2.slottbl then
+                local c1 = slot.Category
+                local c2 = self2.slottbl.Category
+
+                if istable(c1) then
+                    c1 = table.concat(c1, " ")
+                end
+
+                if istable(c2) then
+                    c2 = table.concat(c2, " ")
+                end
+
+                if c1 != c2 then
+                    self:ClearAttInfoBar()
+                    self:ClearBottomBar()
+                    self.BottomBarAddress = nil
+                    self.AttInfoBarAtt = nil
+                    return
+                end
+
+                self2.slottbl = slot
+            end
+
+            local attached = slot.Installed == self2.att
+
+            local col1 = ARC9.GetHUDColor("fg")
+
+            local hasbg = false
+
+            if self2:IsHovered() or attached then
+                col1 = ARC9.GetHUDColor("shadow")
+
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+
+                if self2:IsHovered() then
+                    surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+                else
+                    surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                end
+                surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
+
+                hasbg = true
+            else
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+                surface.DrawRect(0, 0, w, h)
+            end
+
+            if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
+                self.AttInfoBarAtt = self2.att
+                self:CreateHUD_AttInfo()
+            end
+
+            local canattach = self:CanAttach(slot.Address, self2.att, slot)
+
+            if !canattach then
+                col1 = ARC9.GetHUDColor("neg")
+            end
+
+            local icon = atttbl.Icon
+
+            if !hasbg then
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                surface.SetMaterial(icon)
+                surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
+            end
+
+            surface.SetDrawColor(col1)
+            surface.SetMaterial(icon)
+            surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+
+            local name = ARC9:GetPhraseForAtt(self2.att, "CompactName") or ARC9:GetPhraseForAtt(self2.att, "PrintName") or ARC9:GetPhraseForAtt(self2.att, "ShortName") or ""
+
+            if !hasbg then
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.SetTextPos(ScreenScale(14), ScreenScale(1))
+                surface.SetFont("ARC9_10")
+                self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+            end
+
+            surface.SetTextColor(col1)
+            surface.SetTextPos(ScreenScale(13), 0)
+            surface.SetFont("ARC9_10")
+            self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+        end
+    end
 end
 
 function SWEP:CreateHUD_Bottom()
@@ -62,6 +312,7 @@ function SWEP:CreateHUD_Bottom()
             end
 
             bartxt = slot.PrintName or "Attachments"
+            if #self.BottomBarPath > 0 then bartxt = bartxt .. "/" .. string.Implode("/", self.BottomBarPath) end
         end
 
         surface.SetFont("ARC9_8")
@@ -72,60 +323,12 @@ function SWEP:CreateHUD_Bottom()
 
     self.BottomBar = bp
 
-    if self.BottomBarMode == 1 then
-        local close = vgui.Create("DButton", bp)
-        close:SetPos(ScreenScale(140), 0)
-        close:SetSize(ScreenScale(48), ScreenScale(9))
-        close:SetText("")
-        close.title = "Deselect"
-        close.DoClick = function(self2)
-            self.BottomBarAddress = nil
-            self.BottomBarMode = 0
-            self:CreateHUD_Bottom()
-        end
-        close.Paint = function(self2, w, h)
-            local col1 = Color(0, 0, 0, 0)
-            local col2 = ARC9.GetHUDColor("fg")
-
-            local noshade = false
-
-            if self2:IsHovered() then
-                col1 = ARC9.GetHUDColor("hi")
-                col2 = ARC9.GetHUDColor("shadow")
-
-                noshade = true
-            end
-
-            if noshade then
-                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-                surface.DrawRect(ScreenScale(1), ScreenScale(1), w, h)
-            end
-
-            surface.SetDrawColor(col1)
-            surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
-
-            surface.SetFont("ARC9_8")
-            local tw = surface.GetTextSize(self2.title)
-
-            if !noshade then
-                surface.SetFont("ARC9_8")
-                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                surface.SetTextPos((w - tw) / 2 + ScreenScale(1), ScreenScale(1 + 1))
-                surface.DrawText(self2.title)
-            end
-
-            surface.SetFont("ARC9_8")
-            surface.SetTextColor(col2)
-            surface.SetTextPos((w - tw) / 2, ScreenScale(1))
-            surface.DrawText(self2.title)
-        end
-    end
-
+    scrolleles = {}
     local scroll = vgui.Create("DHorizontalScroller", bp)
     -- scroll:Dock(FILL)
     scroll:SetPos(0, ScreenScale(12))
     scroll:SetSize(ScrW(), ScreenScale(48))
-    scroll:SetOverlap(-4)
+    scroll:SetOverlap(-ScreenScale(3)) -- If this is too small, the right side will be cut out. idk why and idk how to fix it elegantly so here you go
     scroll:MoveToFront()
 
     scroll.btnLeft:SetPos(0, scroll:GetTall() - ScreenScale(12))
@@ -161,7 +364,11 @@ function SWEP:CreateHUD_Bottom()
             self:ClearAttInfoBar()
         end
 
+        self.BottomBarFolder = {}
+
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
+        self.BottomBarFolders = ARC9.GetFoldersForAtts(atts)
+        self.BottomBarPath = {}
 
         table.sort(atts, function(a, b)
             a = a or ""
@@ -185,119 +392,9 @@ function SWEP:CreateHUD_Bottom()
             return order_a < order_b
         end)
 
-        for _, att in pairs(atts) do
-            local atttbl = ARC9.GetAttTable(att)
+        self.BottomBarAtts = atts
 
-            local attbtn = vgui.Create("DButton", scroll)
-            attbtn:SetSize(ScreenScale(48), ScreenScale(48))
-            attbtn:DockMargin(ScreenScale(2), 0, 0, 0)
-            attbtn:Dock(LEFT)
-            attbtn:SetText("")
-            attbtn.att = att
-            attbtn.address = slottbl.Address
-            attbtn.slottbl = slottbl
-            scroll:AddPanel(attbtn)
-            attbtn.OnMousePressed = function(self2, kc)
-                if kc == MOUSE_LEFT then
-                    self:Attach(self2.address, self2.att)
-                    self.CustomizeSelectAddr = self2.address
-                elseif kc == MOUSE_RIGHT then
-                    self:Detach(self2.address)
-                    self.CustomizeSelectAddr = self2.address
-                end
-            end
-            attbtn.Paint = function(self2, w, h)
-                if !IsValid(self) then return end
-
-                local slot = self:LocateSlotFromAddress(self2.address)
-
-                if !slot then return end
-                    if slot != self2.slottbl then
-                    local c1 = slot.Category
-                    local c2 = self2.slottbl.Category
-
-                    if istable(c1) then
-                        c1 = table.concat(c1, " ")
-                    end
-
-                    if istable(c2) then
-                        c2 = table.concat(c2, " ")
-                    end
-
-                    if c1 != c2 then
-                        self:ClearAttInfoBar()
-                        self:ClearBottomBar()
-                        self.BottomBarAddress = nil
-                        self.AttInfoBarAtt = nil
-                        return
-                    end
-
-                    self2.slottbl = slot
-                end
-
-                local attached = slot.Installed == self2.att
-
-                local col1 = ARC9.GetHUDColor("fg")
-
-                local hasbg = false
-
-                if self2:IsHovered() or attached then
-                    col1 = ARC9.GetHUDColor("shadow")
-
-                    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-                    surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
-
-                    if self2:IsHovered() then
-                        surface.SetDrawColor(ARC9.GetHUDColor("hi"))
-                    else
-                        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-                    end
-                    surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
-
-                    hasbg = true
-                else
-                    surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
-                    surface.DrawRect(0, 0, w, h)
-                end
-
-                if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
-                    self.AttInfoBarAtt = self2.att
-                    self:CreateHUD_AttInfo()
-                end
-
-                local canattach = self:CanAttach(slot.Address, self2.att, slot)
-
-                if !canattach then
-                    col1 = ARC9.GetHUDColor("neg")
-                end
-
-                local icon = atttbl.Icon
-
-                if !hasbg then
-                    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-                    surface.SetMaterial(icon)
-                    surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
-                end
-
-                surface.SetDrawColor(col1)
-                surface.SetMaterial(icon)
-                surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
-
-                local name = ARC9:GetPhraseForAtt(self2.att, "CompactName") or ARC9:GetPhraseForAtt(self2.att, "PrintName") or ARC9:GetPhraseForAtt(self2.att, "ShortName") or ""
-
-                if !hasbg then
-                    surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                    surface.SetTextPos(ScreenScale(14), ScreenScale(1))
-                    surface.SetFont("ARC9_10")
-                    self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
-                end
-
-                surface.SetTextColor(col1)
-                surface.SetTextPos(ScreenScale(13), 0)
-                surface.SetFont("ARC9_10")
-                self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
-            end
-        end
+        enterfolder(self, scroll, slottbl, fname)
     else
         self:CreateHUD_Presets(scroll)
     end
