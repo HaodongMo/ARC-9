@@ -285,6 +285,8 @@ function SWEP:CreateCustomizeHUD()
 
                 if hoveredslot then
                     col = ARC9.GetHUDColor("hi")
+                elseif self.BottomBarAddress == slot.Address then
+                    col = ARC9.GetHUDColor("sel")
                 end
 
                 surface.SetMaterial(mat_circle)
