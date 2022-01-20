@@ -186,7 +186,7 @@ function SWEP:CreateCustomizeHUD()
     bg:SetMouseInputEnabled(true)
     bg.Paint = function(self2, w, h)
         if !IsValid(self) then
-            self:Remove()
+            self2:Remove()
             gui.EnableScreenClicker(false)
         end
 
