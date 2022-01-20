@@ -120,7 +120,7 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Silenced")
     end
 
-    if !self:GetOwner():OnGround() then
+    if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
         stat = self:GetValue(val, stat, "MidAir")
     end
 

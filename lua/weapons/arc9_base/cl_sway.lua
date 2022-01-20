@@ -72,7 +72,7 @@ function SWEP:GetViewModelBob(pos, ang)
     self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, FrameTime() * 10000)
     local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
 
-    if self:GetOwner():OnGround() then
+    if self:GetOwner():OnGround() and self:GetOwner():GetMoveType() != MOVETYPE_NOCLIP then
         self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, FrameTime() / 1)
     else
         self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 1)
