@@ -355,7 +355,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 end
 
 local head = Material("particle/fire")
-local tracer = Material("arc9/tracer.png", "additive")
+local tracer = Material("arc9/tracer")
 
 function ARC9.DrawPhysBullets()
     cam.Start3D()
@@ -373,7 +373,7 @@ function ARC9.DrawPhysBullets()
 
         local headsize = size
 
-        local delta = (EyePos():DistToSqr(pos) / math.pow(10000, 2))
+        local delta = (EyePos():DistToSqr(pos) / math.pow(20000, 2))
 
         headsize = math.pow(headsize, Lerp(delta, 0, 2))
 
@@ -396,7 +396,7 @@ function ARC9.DrawPhysBullets()
 
         local vec = LerpVector(d, fromvec, speedvec)
 
-        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled))), size * 0.75, 0, 1, col)
+        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled))), size * 0.75, 1, 0, col)
 
         -- cam.End3D()
     end

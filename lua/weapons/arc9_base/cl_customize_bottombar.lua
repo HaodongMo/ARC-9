@@ -35,7 +35,7 @@ function SWEP:CreateHUD_Bottom()
     bp:SetPos(0, ScrH() - ScreenScale(62))
     bp.Paint = function(self2, w, h)
         if !IsValid(self) then
-            self:Remove()
+            self2:Remove()
             gui.EnableScreenClicker(false)
         end
 
@@ -328,7 +328,7 @@ function SWEP:CreateHUD_AttInfo()
     bp.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName")
     bp.Paint = function(self2, w, h)
         if !IsValid(self) then
-            self:Remove()
+            self2:Remove()
             gui.EnableScreenClicker(false)
         end
 
