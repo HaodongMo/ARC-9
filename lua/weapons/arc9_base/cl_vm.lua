@@ -137,7 +137,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Up(), offsetang.p)
     ang:RotateAroundAxis(oldang:Right(), offsetang.y)
     ang:RotateAroundAxis(oldang:Forward(), offsetang.r)
-
     pos = pos + (oldang:Right() * extra_offsetpos[1])
     pos = pos + (oldang:Forward() * extra_offsetpos[2])
     pos = pos + (oldang:Up() * extra_offsetpos[3])
@@ -145,6 +144,9 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Up(), extra_offsetang[1])
     ang:RotateAroundAxis(oldang:Right(), extra_offsetang[2])
     ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
+
+    ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
+    ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
 
     pos, ang = self:GetViewModelBob(pos, ang)
     pos, ang = self:GetMidAirBob(pos, ang)
