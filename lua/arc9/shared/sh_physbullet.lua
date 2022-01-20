@@ -371,13 +371,11 @@ function ARC9.DrawPhysBullets()
 
         size = math.Clamp(size, 0, math.huge)
 
+        size = size * i.Size
+
         local headsize = size
 
-        local delta = (EyePos():DistToSqr(pos) / math.pow(20000, 2))
-
-        headsize = math.pow(headsize, Lerp(delta, 0, 2))
-
-        size = size * i.Size
+        headsize = headsize * math.min(EyePos():DistToSqr(pos) / math.pow(5000, 2), 2.5)
 
         -- cam.Start3D()
 

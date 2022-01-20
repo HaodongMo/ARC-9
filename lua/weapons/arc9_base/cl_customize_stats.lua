@@ -202,6 +202,7 @@ function SWEP:CreateHUD_Stats()
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end,
+            conv = function(a) return math.Round(a, 0) end,
             unit = ""
         },
         {

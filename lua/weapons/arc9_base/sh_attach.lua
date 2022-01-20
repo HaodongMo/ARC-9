@@ -22,6 +22,8 @@ function SWEP:Detach(addr, silent)
 
     local slottbl = self:LocateSlotFromAddress(addr)
 
+    if !slottbl.Installed then return end
+
     slottbl.Installed = nil
 
     if !silent then
