@@ -39,7 +39,7 @@ end
 local function ARC9_LoadFile(filename)
     ATT = {}
     include(filename)
-    print(filename)
+
     if SERVER then
         AddCSLuaFile(filename)
     end
