@@ -72,7 +72,7 @@ function SWEP:DoNightScopeEffects(atttbl)
         surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), (rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), rtsize * 2, rtsize * 2, math.Rand(0, 360))
         cam.End2D()
 
-        DrawBloom(0, 0.5, 4, 1, 1, 1, 1, 1, 1)
+        DrawBloom(0, 1, 10, 1, 1, 1, 1, 1, 1)
     end
 
     if atttbl.RTScopeNightVisionCC then
