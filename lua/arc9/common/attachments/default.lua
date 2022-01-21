@@ -40,9 +40,12 @@ ATT.FlashlightColor = Color(255, 255, 255)
 ATT.FlashlightMaterial = Material("")
 ATT.FlashlightDistance = 1024
 ATT.FlashlightFOV = 70
+ATT.FlashlightAttachment = 0
 
 ATT.Laser = false
+ATT.LaserStrength = 1
 ATT.LaserColor = Color(255, 0, 0)
+ATT.LaserAttachment = 0
 
 -- Allows a custom sight position to be defined
 
@@ -54,7 +57,7 @@ ATT.Sights = {
 }
 
 ATT.HoloSight = false
-ATT.HoloSightReticle = Material("")
+ATT.HoloSightReticle = ""
 ATT.HoloSightSize = 32
 ATT.HoloSightColor = Color(255, 255, 255)
 
