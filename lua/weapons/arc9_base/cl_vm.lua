@@ -165,10 +165,10 @@ function SWEP:GetViewModelPosition(pos, ang)
 end
 
 function SWEP:GetViewModelFOV()
-    local target = self:GetOwner():GetFOV()
+    local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
 
     if self:GetSightAmount() > 0 then
-        return Lerp(self:GetSightAmount(), target, 75)
+        return Lerp(self:GetSightAmount(), target, 75 + GetConVar("arc9_fov"):GetInt())
     end
 
     return target
