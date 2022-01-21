@@ -196,8 +196,9 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             bullet.Dead = true
         end
     else
-        if attacker:IsPlayer() then
+        if attacker:IsPlayer() and !attacker.ARC9_LAGCOMP then
             attacker:LagCompensation(true)
+            attacker.ARC9_LAGCOMP = true
         end
 
         local tr = util.TraceLine({
@@ -209,6 +210,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
         if attacker:IsPlayer() then
             attacker:LagCompensation(false)
+            attacker.ARC9_LAGCOMP = false
         end
 
         if SERVER then
@@ -237,7 +239,8 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             -- if we're the client, we'll get the bullet back when it exits.
 
             if attacker:IsPlayer() then
-                attacker:LagCompensation(true)
+                attacker:LagCompensation(true) -- Sometimes this line is called before the first lag compensation finishes, somehow.
+                attacker.ARC9_LAGCOMP = true
             end
 
             if SERVER then
@@ -283,6 +286,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
             if attacker:IsPlayer() then
                 attacker:LagCompensation(false)
+                attacker.ARC9_LAGCOMP = false
             end
         else
             -- bullet did not impact anything
