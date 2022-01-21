@@ -91,8 +91,8 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 subatts[i].Pos = pos
                 subatts[i].Ang = att_ang + subatts[i].Ang
                 subatts[i].Ang:Normalize()
-                subatts[i].ExtraSightDistance = parenttbl.ExtraSightDistance
                 subatts[i].Installed = tbl.SubAttachments[i].Installed
+                subatts[i].ExtraSightDistance = subatts[i].ExtraSightDistance
                 subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
             end
         end
