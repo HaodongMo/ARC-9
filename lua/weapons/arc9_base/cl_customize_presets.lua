@@ -78,6 +78,7 @@ function SWEP:CreateHUD_Presets(scroll)
         end
         btn.DoClick = function(self2)
             self:LoadPreset(preset)
+            surface.PlaySound("arc9/preset_install.ogg")
         end
         btn.DoRightClick = function(self2)
             self:DeletePreset(preset)

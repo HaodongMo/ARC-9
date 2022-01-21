@@ -62,7 +62,10 @@ function SWEP:LoadPreset(filename)
 
     for i, k in pairs(self.Attachments) do
         local slottbl = tbl[i]
-        if !slottbl.Installed then continue end
+        if !slottbl.Installed then
+            k.Installed = nil
+            continue
+        end
         self.Attachments[i].Installed = slottbl.Installed
         self.Attachments[i].ToggleNum = slottbl.ToggleNum
         self.Attachments[i].SubAttachments = slottbl.SubAttachments
