@@ -104,6 +104,8 @@ SWEP.LastViewModelVerticalVelocity = 0
 -- SWEP.ViewModelLanding = 0
 
 function SWEP:GetMidAirBob(pos, ang)
+    if self:GetCustomize() then return pos, ang end
+
     local v = -self:GetOwner():GetVelocity().z / 200
 
     v = math.Clamp(v, -1, 1)
@@ -136,6 +138,8 @@ SWEP.ViewModelInertiaX = 0
 SWEP.ViewModelInertiaY = 0
 
 function SWEP:GetViewModelLeftRight(pos, ang)
+    if self:GetCustomize() then return pos, ang end
+
     local v = self:GetOwner():GetVelocity()
     local d = Lerp(self:GetSightDelta(), 1, 0)
 

@@ -285,6 +285,8 @@ function SWEP:CreateCustomizeHUD()
 
                 if hoveredslot then
                     col = ARC9.GetHUDColor("hi")
+                elseif self.BottomBarAddress == slot.Address then
+                    col = ARC9.GetHUDColor("sel")
                 end
 
                 surface.SetMaterial(mat_circle)
@@ -300,6 +302,16 @@ function SWEP:CreateCustomizeHUD()
                     surface.SetMaterial(atttbl.Icon)
                     surface.SetDrawColor(col)
                     surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                else
+                    if slot.DefaultCompactName then
+                        atttxt = ARC9:UseTrueNames() and slot.DefaultCompactName_TrueName or slot.DefaultCompactName
+                        atttxt = atttxt or slot.DefaultName_TrueName or slot.DefaultName or ""
+                    end
+                    if slot.DefaultIcon then
+                        surface.SetMaterial(slot.DefaultIcon)
+                        surface.SetDrawColor(col)
+                        surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                    end
                 end
 
                 surface.SetFont("ARC9_6")
@@ -330,6 +342,9 @@ function SWEP:CreateCustomizeHUD()
                     if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
                         self.BottomBarMode = 1
                         self.BottomBarAddress = slot.Address
+                        self.BottomBarPath = {}
+                        self.BottomBarFolders = {}
+                        self.BottomBarAtts = {}
                         self:CreateHUD_Bottom()
 
                         self.CustomizePanX = 0

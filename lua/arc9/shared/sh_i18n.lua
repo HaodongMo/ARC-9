@@ -102,7 +102,30 @@ end
 
 ARC9:LoadLanguage()
 
-cvars.AddChangeCallback("arc9_language", function(cvar, old, new)
-    ARC9:LoadLanguage()
-    if CLIENT then ARC9.Regen(true) end
-end, "reload_langs")
+
+if CLIENT then
+
+    concommand.Add("arc9_reloadlangs", function()
+        if !LocalPlayer():IsSuperAdmin() then return end
+
+        net.Start("arc9_reloadlangs")
+        net.SendToServer()
+    end)
+
+    net.Receive("arc9_reloadlangs", function(len, ply)
+        ARC9:LoadLanguage()
+        ARC9.Regen(true)
+    end)
+
+elseif SERVER then
+
+    net.Receive("arc9_reloadlangs", function(len, ply)
+        if !ply:IsSuperAdmin() then return end
+
+        ARC9:LoadLanguage()
+
+        net.Start("arc9_reloadlangs")
+        net.Broadcast()
+    end)
+
+end
