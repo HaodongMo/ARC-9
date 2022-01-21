@@ -1,6 +1,4 @@
 function SWEP:TranslateAnimation(seq)
-    seq = self:RunHook("Hook_TranslateAnimation", seq) or seq
-
     if self:GetSightAmount() > 0 and self:HasAnimation(seq .. "_iron") then
         seq = seq .. "_iron"
     end
@@ -12,6 +10,8 @@ function SWEP:TranslateAnimation(seq)
     if (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
         seq = seq .. "_empty"
     end
+
+    seq = self:RunHook("Hook_TranslateAnimation", seq) or seq
 
     if istable(seq) then
         seq["BaseClass"] = nil
