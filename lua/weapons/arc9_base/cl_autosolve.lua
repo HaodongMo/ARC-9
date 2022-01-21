@@ -23,7 +23,9 @@ function SWEP:GenerateAutoSight(sight, slottbl)
     return {
         Pos = s_pos,
         Ang = Angle(0, 0, 0),
+        -- ExtraPos = Vector(0, pos.y + self.IronSights.Pos.y, 0),
         Magnification = sight.Magnification or 1,
+        ExtraSightDistance = slottbl.ExtraSightDistance
         -- ExtraAng = ang
     }
 end

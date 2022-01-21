@@ -48,6 +48,7 @@ end
 
 function SWEP:ViewModelDrawn()
     self:DrawCustomModel(false)
+    self:DrawLasers(false)
     -- self:DrawLasers()
 end
 

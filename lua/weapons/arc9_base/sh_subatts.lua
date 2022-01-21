@@ -64,14 +64,35 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
 
             for i, k in ipairs(tbl.SubAttachments) do
                 subatts[i].Bone = parenttbl.Bone
+                local att_pos = parenttbl.Pos
+                local att_ang = parenttbl.Ang
 
-                local pos, _ = LocalToWorld(subatts[i].Pos or Vector(0, 0, 0), subatts[i].Ang or Angle(0, 0, 0), parenttbl.Pos, parenttbl.Ang)
+                local og_addr = parenttbl.OriginalAddress
+
+                if og_addr then
+                    local eles = self:GetElements()
+
+                    for i2, _ in pairs(eles) do
+                        local ele = self.AttachmentElements[i2]
+
+                        if !ele then continue end
+
+                        local mods = ele.AttPosMods or {}
+
+                        if mods[og_addr] then
+                            att_pos = mods[og_addr].Pos or att_pos
+                            att_ang = mods[og_addr].Ang or att_ang
+                        end
+                    end
+                end
+
+                local pos, _ = LocalToWorld(subatts[i].Pos or Vector(0, 0, 0), subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
 
                 subatts[i].Pos = pos
-                subatts[i].Ang = subatts[i].Ang + parenttbl.Ang
+                subatts[i].Ang = att_ang + subatts[i].Ang
                 subatts[i].Ang:Normalize()
-                subatts[i].ExtraSightDistance = parenttbl.ExtraSightDistance
                 subatts[i].Installed = tbl.SubAttachments[i].Installed
+                subatts[i].ExtraSightDistance = subatts[i].ExtraSightDistance
                 subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
             end
         end

@@ -94,7 +94,6 @@ function SWEP:BuildMultiSight()
                 end
 
                 s.atttbl = atttbl
-                s.ExtraSightDistance = slottbl.ExtraSightDistance or 0
                 s.OriginalSightTable = sight
                 s.slotbl = slottbl
 

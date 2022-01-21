@@ -632,6 +632,7 @@ SWEP.Attachments = {
 --         Bone = "",
 --         Pos = Vector(0, 0, 0),
 --         Ang = Angle(0, 0, 0),
+--         Scale = 1,
 --         Icon_Offset = Vector(0, 0, 0),
 --         KeepBaseIrons = false,
 --         ExtraSightDistance = 0,
