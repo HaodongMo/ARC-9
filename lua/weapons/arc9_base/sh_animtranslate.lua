@@ -5,6 +5,10 @@ function SWEP:TranslateAnimation(seq)
         seq = seq .. "_iron"
     end
 
+    if self:GetSprintAmount() > 0 and self:HasAnimation(seq .. "_sprint") then
+        seq = seq .. "_sprint"
+    end
+
     if (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
         seq = seq .. "_empty"
     end
