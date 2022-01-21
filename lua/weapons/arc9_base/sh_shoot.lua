@@ -150,7 +150,7 @@ function SWEP:PrimaryAttack()
                 end
             else
                 self:GetOwner():LagCompensation(true)
-                local tr = self:GetProcessedValue("TracerNum")
+                -- local tr = self:GetProcessedValue("TracerNum")
 
                 self:GetOwner():FireBullets({
                     Damage = self:GetProcessedValue("Damage_Max"),

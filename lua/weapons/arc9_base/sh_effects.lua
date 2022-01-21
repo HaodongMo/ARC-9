@@ -6,7 +6,11 @@ function SWEP:DoEffects()
     data:SetEntity(self)
     data:SetAttachment(muzz_qca)
 
-    util.Effect( "ARC9_muzzleeffect", data )
+    local muzzle = "ARC9_muzzleeffect"
+
+    muzzle = self:GetProcessedValue("MuzzleEffect") or muzzle
+
+    util.Effect( muzzle, data )
 end
 
 function SWEP:GetQCAMuzzle()
