@@ -77,6 +77,21 @@ ATT.RTScopeDrawFunc = function(swep, rtsize) end
 
 ATT.ScopeScreenRatio = 1.4 -- Needed for Cheap Scopes
 
+ATT.RTScopeNightVision = true
+ATT.RTScopeNightVisionMonochrome = true
+ATT.RTScopeNightVisionCC = {
+    ["$pp_colour_addr"] = -255,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = -255,
+    ["$pp_colour_brightness"] = 0,
+    ["$pp_colour_contrast"] = 4,
+    ["$pp_colour_colour"] = 1,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0
+}
+ATT.RTScopeNightVisionFunc = function(swep, rtsize) end
+
 ATT.Attachments = {
     {
         PrintName = "",

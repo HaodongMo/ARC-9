@@ -8,7 +8,7 @@ function SWEP:ShouldDoScope()
     return true
 end
 
-function SWEP:DoRT(fov)
+function SWEP:DoRT(fov, atttbl)
     if ARC9.OverDraw then return end
 
     local rt = {
@@ -32,6 +32,10 @@ function SWEP:DoRT(fov)
         render.Clear(0, 0, 0, 255, true, true)
     end
 
+    if atttbl.RTScopeNightVision then
+        self:DoNightScopeEffects(atttbl)
+    end
+
     self:DoRTScopeEffects()
 
     render.PopRenderTarget()
@@ -43,11 +47,30 @@ local shadow = Material("arc9/shadow.png", "mips smooth")
 local matRefract = Material("pp/arc9/refract_rt")
 local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
 
--- local pp_cc_tab = {
---     [ "$pp_colour_brightness" ] = -0.15,
---     [ "$pp_colour_contrast" ] = 1,
---     [ "$pp_colour_colour" ] = 1,
--- }
+
+function SWEP:DoNightScopeEffects(atttbl)
+    if atttbl.RTScopeNightVisionMonochrome then
+        DrawColorModify({
+            ["$pp_colour_addr"] = 0,
+            ["$pp_colour_addg"] = 0,
+            ["$pp_colour_addb"] = 0,
+            ["$pp_colour_brightness"] = 0,
+            ["$pp_colour_contrast"] = 1,
+            ["$pp_colour_colour"] = 0,
+            ["$pp_colour_mulr"] = 0,
+            ["$pp_colour_mulg"] = 0,
+            ["$pp_colour_mulb"] = 0
+        })
+    end
+
+    if atttbl.RTScopeNightVisionCC then
+        DrawColorModify(atttbl.RTScopeNightVisionCC)
+    end
+
+    if atttbl.RTScopeNightVisionFunc then
+        atttbl.RTScopeNightVisionFunc(self)
+    end
+end
 
 function SWEP:DoRTScopeEffects()
     if !render.SupportsPixelShaders_2_0() then return end
@@ -151,7 +174,7 @@ end
 
 local hascostscoped = false
 
-function SWEP:DoCheapScope(fov)
+function SWEP:DoCheapScope(fov, atttbl)
     if !self:ShouldDoScope() then
         render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
         render.Clear(0, 0, 0, 255, true, true)
@@ -161,7 +184,7 @@ function SWEP:DoCheapScope(fov)
     end
 
     if !hascostscoped then
-        self:DoRT(fov)
+        self:DoRT(fov, atttbl)
         hascostscoped = true
     end
 
@@ -170,8 +193,6 @@ function SWEP:DoCheapScope(fov)
 
     scrw = scrw
     scrh = scrh * scrh / scrw
-
-    local atttbl = self:GetSight().atttbl or {}
 
     local s = 2 / atttbl.ScopeScreenRatio
 
@@ -191,6 +212,10 @@ function SWEP:DoCheapScope(fov)
     render.DrawTextureToScreenRect(screen, scrx, scry, scrw * s, scrh * s)
     -- render.DrawTextureToScreenRect(ITexture tex, number x, number y, number width, number height)
     -- cam.End2D()
+
+    if atttbl.RTScopeNightVision then
+        self:DoNightScopeEffects(atttbl)
+    end
 
     self:DoRTScopeEffects()
 
