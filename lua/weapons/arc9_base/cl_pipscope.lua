@@ -114,7 +114,9 @@ function SWEP:DoRTScope(model, atttbl)
         surface.SetMaterial(atttbl.RTScopeReticle)
         surface.DrawTexturedRect(0, 0, rtsize, rtsize)
 
-        self:RunHook("Hook_RTScopeReticle", {rtmat = rtmat, rtsize = rtsize})
+        if atttbl.RTScopeDrawFunc then
+            atttbl.RTScopeDrawFunc(self, rtsize)
+        end
 
         if !atttbl.RTScopeNoShadowNoShadow then
             surface.SetDrawColor(0, 0, 0)

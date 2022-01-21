@@ -33,6 +33,8 @@ ATT.ToggleStats = {
 }
 -- max of 256 togglestats
 
+ATT.DrawFunc = function(swep, model, wm) end
+
 ATT.MuzzleDevice = false -- set to true if you want to use this to emit particles
 
 ATT.Flashlight = false
@@ -70,6 +72,9 @@ ATT.RTScopeReticle = Material("")
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
+-- Lets you draw more things on to the reticle
+ATT.RTScopeDrawFunc = function(swep, rtsize) end
+
 ATT.ScopeScreenRatio = 1.4 -- Needed for Cheap Scopes
 
 ATT.Attachments = {
