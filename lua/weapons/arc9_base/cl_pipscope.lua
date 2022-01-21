@@ -47,6 +47,7 @@ local shadow = Material("arc9/shadow.png", "mips smooth")
 local matRefract = Material("pp/arc9/refract_rt")
 local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
 
+local noise = Material("arc9/nvnoise")
 
 function SWEP:DoNightScopeEffects(atttbl)
     if atttbl.RTScopeNightVisionMonochrome then
@@ -61,6 +62,17 @@ function SWEP:DoNightScopeEffects(atttbl)
             ["$pp_colour_mulg"] = 0,
             ["$pp_colour_mulb"] = 0
         })
+    end
+
+    if !atttbl.RTScopeNightVisionNoPP then
+        cam.Start2D()
+        surface.SetMaterial(noise)
+        surface.SetDrawColor(255, 255, 255, 50)
+        surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), (rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), rtsize, rtsize, math.Rand(0, 360))
+        surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), (rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), rtsize * 2, rtsize * 2, math.Rand(0, 360))
+        cam.End2D()
+
+        DrawBloom(0, 0.5, 4, 1, 1, 1, 1, 1, 1)
     end
 
     if atttbl.RTScopeNightVisionCC then
