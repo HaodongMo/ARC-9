@@ -42,6 +42,11 @@ local conVars = {
         client = true
     },
     {
+        name = "fov",
+        default = "0",
+        client = true
+    },
+    {
         name = "bodydamagecancel",
         default = "1",
         replicated = true

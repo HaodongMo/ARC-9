@@ -18,6 +18,10 @@ function SWEP:Reload()
         return
     end
 
+    if self:GetCustomize() then
+        return
+    end
+
     if self:StillWaiting() then return end
     if self:GetCapacity() <= 0 then return end
     if self:Clip1() >= self:GetCapacity() then return end
