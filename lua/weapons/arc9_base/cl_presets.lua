@@ -40,11 +40,15 @@ end
 function SWEP:DeletePreset(filename)
     if LocalPlayer() != self:GetOwner() then return end
 
-    filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename .. ".txt"
+    filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename
 
-    if !file.Exists(filename, "DATA") then return end
+    if !file.Exists(filename .. ".txt", "DATA") then
+        file.Delete(filename .. ".txt")
+    end
 
-    file.Delete(filename)
+    if !file.Exists(filename .. ".png", "DATA") then
+        file.Delete(filename .. ".png")
+    end
 end
 
 function SWEP:LoadPreset(filename)
