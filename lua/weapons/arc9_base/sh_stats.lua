@@ -12,6 +12,7 @@ function SWEP:InvalidateCache()
     self.AffectorsCache = nil
     self.ElementsCache = nil
     self.RecoilPatternCache = {}
+    self.ScrollLevels = {}
 
     self:SetBaseSettings()
 end

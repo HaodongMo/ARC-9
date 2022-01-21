@@ -38,7 +38,7 @@ local conVars = {
     },
     {
         name = "autosave",
-        default = "0",
+        default = "1",
         client = true
     },
     {

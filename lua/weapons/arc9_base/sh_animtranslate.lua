@@ -11,7 +11,11 @@ function SWEP:TranslateAnimation(seq)
         seq = seq .. "_empty"
     end
 
-    seq = self:RunHook("Hook_TranslateAnimation", seq) or seq
+    local traq = self:RunHook("Hook_TranslateAnimation", seq) or seq
+
+    if self:HasAnimation(traq) then
+        seq = traq
+    end
 
     if istable(seq) then
         seq["BaseClass"] = nil

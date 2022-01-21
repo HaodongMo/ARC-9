@@ -40,4 +40,15 @@ function SWEP:Think()
     if self:GetNextIdle() < CurTime() then
         self:Idle()
     end
+
+    if CLIENT then
+        if !self.LoadedPreset then
+            self.LoadedPreset = true
+
+            if GetConVar("arc9_autosave"):GetBool() then
+                self:LoadPreset()
+                self:DoDeployAnimation()
+            end
+        end
+    end
 end

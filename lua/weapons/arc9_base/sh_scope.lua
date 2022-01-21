@@ -98,6 +98,10 @@ function SWEP:BuildMultiSight()
                 s.slotbl = slottbl
 
                 table.insert(self.MultiSightTable, s)
+
+                if self.ScrollLevels[#self.MultiSightTable] then
+                    s.ScrollLevel = self.ScrollLevels[#self.MultiSightTable]
+                end
             end
 
             if !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
@@ -157,6 +161,8 @@ function SWEP:GetRTScopeFOV()
     end
 end
 
+SWEP.ScrollLevels = {}
+
 function SWEP:Scroll(amt)
     local sights = self:GetSight() or {}
 
@@ -173,6 +179,8 @@ function SWEP:Scroll(amt)
     sights.ScrollLevel = scrolllevel + amt
 
     sights.ScrollLevel = math.Clamp(sights.ScrollLevel, 0, atttbl.RTScopeAdjustmentLevels)
+
+    self.ScrollLevels[self:GetMultiSight()] = sights.ScrollLevel
 
     if old != sights.ScrollLevel then
         self:EmitSound(atttbl.ZoomSound or "arc9/useatt.wav", 75, math.Rand(95, 105), 1, CHAN_ITEM)

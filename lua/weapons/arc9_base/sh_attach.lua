@@ -42,6 +42,7 @@ function SWEP:PostModify()
         self:SendWeapon()
         self:SetupModel(true)
         self:SetupModel(false)
+        self:SavePreset()
     end
 end
 

@@ -114,6 +114,7 @@ function SWEP:ClientInitialize()
 
     self:BuildAttachmentAddresses()
     self:SetBaseSettings()
+    self:LoadPreset("autosave")
 
     self:InitTimers()
 end
