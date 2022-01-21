@@ -24,7 +24,7 @@ local function ARC9_LoadAtt(attachment)
 
     if GetConVar("arc9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
         local attent = {}
-        attent.Base = "ARC9_att"
+        attent.Base = "arc9_att"
         attent.Icon = ATT.Icon or defaulticon
         attent.PrintName = ATT.PrintName or shortname
         attent.Spawnable = true
@@ -32,7 +32,7 @@ local function ARC9_LoadAtt(attachment)
         attent.AttToGive = shortname
         attent.Category =  ATT.MenuCategory or "ARC-9 - Attachments"
 
-        scripted_ents.Register(attent, "ARC9_att_" .. shortname)
+        scripted_ents.Register(attent, "arc9_att_" .. shortname)
     end
 end
 
