@@ -7,51 +7,78 @@ ARC9.Attachments_Bits = 16
 
 local defaulticon = Material("arc9/arccw_bird.png", "mips smooth")
 
+local attachments_path = "ARC9/common/attachments/"
+
+local function ARC9_LoadAtt(attachment)
+
+    local s = string.Explode("/", attachment)
+    local shortname = string.sub(s[#s], 1, -5)
+
+    ARC9.Attachments_Count = ARC9.Attachments_Count + 1
+
+    ATT.ShortName = shortname
+    ATT.ID = ARC9.Attachments_Count
+
+    ARC9.Attachments[shortname] = ATT
+    ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
+
+    if GetConVar("arc9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
+        local attent = {}
+        attent.Base = "ARC9_att"
+        attent.Icon = ATT.Icon or defaulticon
+        attent.PrintName = ATT.PrintName or shortname
+        attent.Spawnable = true
+        attent.AdminOnly = ATT.AdminOnly or false
+        attent.AttToGive = shortname
+        attent.Category =  ATT.MenuCategory or "ARC-9 - Attachments"
+
+        scripted_ents.Register(attent, "ARC9_att_" .. shortname)
+    end
+end
+
+local function ARC9_LoadFile(filename)
+    ATT = {}
+    include(filename)
+    print(filename)
+    if SERVER then
+        AddCSLuaFile(filename)
+    end
+    if ATT.Ignore then return end
+
+    ARC9_LoadAtt(filename)
+
+end
+
+
+local function ARC9_LoadFolder(folder)
+    folder = folder and (attachments_path .. folder .. "/") or attachments_path
+    for k, v in pairs(file.Find(folder .. "*", "LUA")) do
+
+        if !pcall(function() ARC9_LoadFile(folder .. v) end) then
+            print("!!!! Attachment " .. v .. " has errors!")
+
+            local s = string.Explode("/", folder .. v)
+            local shortname = string.sub(s[#s], 1, -5)
+            ARC9.Attachments[shortname] = {
+                PrintName = shortname or "ERROR",
+                Description = "This attachment failed to load!\nIts file path is: " .. v
+            }
+        end
+
+    end
+end
+
 function ARC9.LoadAtts()
     ARC9.Attachments_Count = 0
     ARC9.Attachments = {}
     ARC9.Attachments_Index = {}
 
-    local searchdir = "ARC9/common/attachments/"
 
-    local files = file.Find(searchdir .. "/*.lua", "LUA")
-
-    for _, filename in pairs(files) do
-        AddCSLuaFile(searchdir .. filename)
-    end
-
-    files = file.Find(searchdir .. "/*.lua", "LUA")
-
-    for _, filename in pairs(files) do
-        if filename == "default.lua" then continue end
-
-        ATT = {}
-
-        local shortname = string.sub(filename, 1, -5)
-
-        include(searchdir .. filename)
-
-        if ATT.Ignore then continue end
-
-        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
-
-        ATT.ShortName = shortname
-        ATT.ID = ARC9.Attachments_Count
-
-        ARC9.Attachments[shortname] = ATT
-        ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
-
-        if GetConVar("arc9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
-            local attent = {}
-            attent.Base = "ARC9_att"
-            attent.Icon = ATT.Icon or defaulticon
-            attent.PrintName = ATT.PrintName or shortname
-            attent.Spawnable = true
-            attent.AdminOnly = ATT.AdminOnly or false
-            attent.AttToGive = shortname
-            attent.Category =  ATT.MenuCategory or "ARC-9 - Attachments"
-
-            scripted_ents.Register(attent, "ARC9_att_" .. shortname)
+    ARC9_LoadFolder()
+    local _, folders = file.Find(attachments_path .. "/*", "LUA")
+    if folders then
+        for _, folder in pairs(folders) do
+            ARC9_LoadFolder(folder)
         end
     end
 
