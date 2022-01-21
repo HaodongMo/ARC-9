@@ -7,6 +7,10 @@ function SWEP:GetPresets()
 
     local files = file.Find(path, "DATA")
 
+    for i, k in pairs(files) do
+        files[i] = string.sub(k, 1, string.len(k) - 4)
+    end
+
     return files
 end
 
@@ -31,6 +35,16 @@ function SWEP:WriteAttachmentTree(tree)
     else
         return {}
     end
+end
+
+function SWEP:DeletePreset(filename)
+    if LocalPlayer() != self:GetOwner() then return end
+
+    filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename .. ".txt"
+
+    if !file.Exists(filename, "DATA") then return end
+
+    file.Delete(filename)
 end
 
 function SWEP:LoadPreset(filename)
@@ -63,7 +77,7 @@ end
 local ratio = ScrW() / ScrH()
 local pr_h = 256
 local pr_w = 256 * ratio
-local cammat = GetRenderTarget("arc9_presetcam", pr_w, pr_h, false)
+local cammat = GetRenderTarget("arc9_cammat", pr_w, pr_h, false)
 
 SWEP.PresetCapture = nil
 
@@ -88,24 +102,17 @@ function SWEP:SavePreset(presetname)
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
     file.Write(filename .. ".txt", str)
 
-    self.PresetCapture = filename
-
-    -- if presetname != "autosave" then
-    -- end
-
-    self:DoPresetCapture()
+    if presetname != "autosave" then
+        self:DoPresetCapture(filename)
+    end
 end
 
-function SWEP:DoPresetCapture()
-    if !self.PresetCapture then return end
-
-    local filename = self.PresetCapture
-
-    self.PresetCapture = nil
-
+function SWEP:DoPresetCapture(filename)
     render.PushRenderTarget(cammat)
 
-    render.Clear(0, 0, 0, 255, true, true)
+    render.SetColorMaterial()
+    render.DrawScreenQuad()
+    render.Clear(0, 0, 0, 0, true, true)
 
     local ref = 64
 
@@ -122,17 +129,21 @@ function SWEP:DoPresetCapture()
     render.SetStencilReferenceValue(ref)
 
     render.SetWriteDepthToDestAlpha(false)
+    render.OverrideAlphaWriteEnable(true, true)
 
-    cam.Start3D(nil, nil, 120)
+    ARC9.PresetCam = true
+
+    cam.Start3D()
+
+    render.ClearDepth()
+
+    render.SuppressEngineLighting(true)
     self:GetVM():DrawModel()
+    render.SuppressEngineLighting(false)
+
     cam.End3D()
 
-    render.SetStencilPassOperation(STENCIL_KEEP)
-    render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
-    render.SetStencilReferenceValue(0)
-
-    render.SetColorMaterial()
-    render.DrawScreenQuad()
+    ARC9.PresetCam = false
 
     render.SetStencilEnable(false)
 

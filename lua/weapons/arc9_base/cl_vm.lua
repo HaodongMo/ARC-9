@@ -4,18 +4,16 @@ SWEP.ViewModelPos = Vector(0, 0, 0)
 SWEP.ViewModelAng = Angle(0, 0, 0)
 
 function SWEP:GetViewModelPosition(pos, ang)
+    local oldang = Angle(0, 0, 0)
+
+    oldang:Set(ang)
+
     if GetConVar("ARC9_benchgun"):GetBool() then
         return Vector(0, 0, 0), Angle(0, 0, 0)
     end
 
     -- pos = Vector(0, 0, 0)
     -- ang = Angle(0, 0, 0)
-
-    local oldang = Angle(0, 0, 0)
-
-    local up, forward, right = oldang:Up(), oldang:Forward(), oldang:Right()
-
-    oldang:Set(ang)
 
     local cor_val = 0.75
 
@@ -137,6 +135,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Up(), offsetang.p)
     ang:RotateAroundAxis(oldang:Right(), offsetang.y)
     ang:RotateAroundAxis(oldang:Forward(), offsetang.r)
+
     pos = pos + (oldang:Right() * extra_offsetpos[1])
     pos = pos + (oldang:Forward() * extra_offsetpos[2])
     pos = pos + (oldang:Up() * extra_offsetpos[3])

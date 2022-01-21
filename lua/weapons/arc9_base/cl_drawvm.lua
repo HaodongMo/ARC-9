@@ -1,4 +1,5 @@
 function SWEP:PreDrawViewModel()
+    if ARC9.PresetCam then return end
     self:DoRHIK()
 
     if self:GetCustomize() then
@@ -11,6 +12,7 @@ function SWEP:PreDrawViewModel()
     end
 
     self:DoBodygroups(false)
+
     -- self:SetFiremodePose()
     self:GetVM():SetPoseParameter("sights", self:GetSightAmount())
 
@@ -21,11 +23,15 @@ function SWEP:PreDrawViewModel()
     else
         cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
     end
+
     cam.IgnoreZ(true)
 end
 
 function SWEP:PostDrawViewModel()
+    if ARC9.PresetCam then return end
+
     cam.IgnoreZ(false)
+
     if GetConVar("ARC9_benchgun"):GetBool() then
         cam.End3D()
     else
@@ -88,12 +94,14 @@ function SWEP:DrawCustomModel(wm)
         --     self:DoHolosight(model, atttbl)
         -- end
 
-        if atttbl.DrawFunc then
-            atttbl.DrawFunc(self, model, wm)
-        end
+        if !ARC9.PresetCam then
+            if atttbl.DrawFunc then
+                atttbl.DrawFunc(self, model, wm)
+            end
 
-        if !wm and atttbl.RTScope then
-            self:DoRTScope(model, atttbl)
+            if !wm and atttbl.RTScope then
+                self:DoRTScope(model, atttbl)
+            end
         end
 
         if !model.NoDraw then
