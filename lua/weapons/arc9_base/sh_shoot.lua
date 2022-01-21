@@ -134,6 +134,12 @@ function SWEP:PrimaryAttack()
             bullettbl.Color = Color(0, 0, 0)
         end
 
+        local tr = 0
+
+        if shouldtracer then
+            tr = 1
+        end
+
         bullettbl.Size = self:GetProcessedValue("TracerSize")
 
         if IsFirstTimePredicted() then
@@ -150,6 +156,7 @@ function SWEP:PrimaryAttack()
                     Damage = self:GetProcessedValue("Damage_Max"),
                     Force = 8,
                     Tracer = tr,
+                    TracerName = self:GetProcessedValue("TracerEffect"),
                     Num = self:GetProcessedValue("Num"),
                     Dir = dir:Forward(),
                     Src = self:GetShootPos(),
