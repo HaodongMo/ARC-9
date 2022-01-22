@@ -121,7 +121,7 @@ function SWEP:DoRHIK()
 
     if lhik_model then
         lhik_model:SetupBones()
-        for _, bone in pairs(ARC9.LHIKBones) do
+        for _, bone in pairs(ARC9.LHIKHandBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = lhik_model:LookupBone(bone)
 
@@ -187,7 +187,9 @@ function SWEP:DoRHIK()
     -- get one today!
     -- right
 
-    if self:GetValue("RHIK") and false then
+    local enable_ik = false
+
+    if self:GetValue("RHIK") and enable_ik then
         local rupperarm_dir = (rupperarm_position - rupperarm_matrix:GetTranslation())
         rupperarm_matrix:SetAngles(rupperarm_dir:Angle())
         local rupperarm_norm = (rupperarm_position-rarm_start)
@@ -222,7 +224,7 @@ function SWEP:DoRHIK()
     -- brought to you by: https://rubberduckdebugging.com/
     -- get one today!
     -- left
-    if self:GetValue("LHIK") and false then
+    if self:GetValue("LHIK") and enable_ik then
         local lupperarm_dir = (lupperarm_position - lupperarm_matrix:GetTranslation())
         lupperarm_matrix:SetAngles(lupperarm_dir:Angle())
         local lupperarm_norm = (lupperarm_position-larm_start)
