@@ -67,7 +67,6 @@ ATT.RTScope = true
 ATT.RTScopeSubmatIndex = 1
 ATT.RTScopeFOV = 2.5
 ATT.RTScopeRes = 512
-ATT.RTScopeSurface = Material("effects/ARC9_rt")
 ATT.RTScopeReticle = Material("")
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTScopeNoPP = false
@@ -90,7 +89,7 @@ ATT.RTScopeNightVisionCC = {
     ["$pp_colour_mulg"] = 0,
     ["$pp_colour_mulb"] = 0
 }
-ATT.RTScopeNightVisionFunc = function(swep, rtsize) end
+ATT.RTScopeNightVisionFunc = function(swep) end
 
 ATT.Attachments = {
     {
