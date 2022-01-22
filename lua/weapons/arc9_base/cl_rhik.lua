@@ -23,70 +23,72 @@ function SWEP:DoRHIK()
     local iket = self:GetIKTime()
     local iklt = math.Clamp((CurTime() - self:GetIKTimeLineStart()) / iket, 0, 1)
 
-    if self:GetProcessedValue("LHIK") then
-        local next_stage_index
+    if iktl then
+        if self:GetProcessedValue("LHIK") then
+            local next_stage_index
 
-        for i, k in pairs(iktl) do
-            if !k or !k.t then continue end
-            if k.t > iklt then
-                next_stage_index = i
-                break
+            for i, k in pairs(iktl) do
+                if !k or !k.t then continue end
+                if k.t > iklt then
+                    next_stage_index = i
+                    break
+                end
             end
-        end
 
-        if next_stage_index then
-            if next_stage_index == 1 then
-                -- we are on the first stage.
-                stage = {t = 0, lhik = 0}
-                next_stage = iktl[next_stage_index]
+            if next_stage_index then
+                if next_stage_index == 1 then
+                    -- we are on the first stage.
+                    stage = {t = 0, lhik = 0}
+                    next_stage = iktl[next_stage_index]
+                else
+                    stage = iktl[next_stage_index - 1]
+                    next_stage = iktl[next_stage_index]
+                end
             else
-                stage = iktl[next_stage_index - 1]
-                next_stage = iktl[next_stage_index]
+                stage = iktl[#iktl]
+                next_stage = {t = iket, lhik = iktl[#iktl].lhik}
             end
-        else
-            stage = iktl[#iktl]
-            next_stage = {t = iket, lhik = iktl[#iktl].lhik}
+
+            local local_time = iklt
+
+            local delta_time = next_stage.t - stage.t
+            delta_time = (local_time - stage.t) / delta_time
+
+            lh_delta = qerp(delta_time, stage.lhik, next_stage.lhik)
         end
 
-        local local_time = iklt
+        if self:GetProcessedValue("RHIK") then
+            local next_stage_index
 
-        local delta_time = next_stage.t - stage.t
-        delta_time = (local_time - stage.t) / delta_time
-
-        lh_delta = qerp(delta_time, stage.lhik, next_stage.lhik)
-    end
-
-    if self:GetProcessedValue("RHIK") then
-        local next_stage_index
-
-        for i, k in pairs(iktl) do
-            if !k or !k.t then continue end
-            if k.t > iklt then
-                next_stage_index = i
-                break
+            for i, k in pairs(iktl) do
+                if !k or !k.t then continue end
+                if k.t > iklt then
+                    next_stage_index = i
+                    break
+                end
             end
-        end
 
-        if next_stage_index then
-            if next_stage_index == 1 then
-                -- we are on the first stage.
-                stage = {t = 0, lhik = 0}
-                next_stage = iktl[next_stage_index]
+            if next_stage_index then
+                if next_stage_index == 1 then
+                    -- we are on the first stage.
+                    stage = {t = 0, lhik = 0}
+                    next_stage = iktl[next_stage_index]
+                else
+                    stage = iktl[next_stage_index - 1]
+                    next_stage = iktl[next_stage_index]
+                end
             else
-                stage = iktl[next_stage_index - 1]
-                next_stage = iktl[next_stage_index]
+                stage = iktl[#iktl]
+                next_stage = {t = iket, lhik = iktl[#iktl].rhik}
             end
-        else
-            stage = iktl[#iktl]
-            next_stage = {t = iket, lhik = iktl[#iktl].rhik}
+
+            local local_time = iklt
+
+            local delta_time = next_stage.t - stage.t
+            delta_time = (local_time - stage.t) / delta_time
+
+            lh_delta = qerp(delta_time, stage.rhik, next_stage.rhik)
         end
-
-        local local_time = iklt
-
-        local delta_time = next_stage.t - stage.t
-        delta_time = (local_time - stage.t) / delta_time
-
-        lh_delta = qerp(delta_time, stage.rhik, next_stage.rhik)
     end
 
     local rhik_model = self.RHIKModel
@@ -150,15 +152,18 @@ function SWEP:DoRHIK()
     local larm_start, lhand_end = lupperarm_matrix:GetTranslation(), lhand_matrix:GetTranslation()
 
     local rupperarm_length, rarm_length = vm:BoneLength(rupperarm), vm:BoneLength(rforearm)
-    -- if rupperarm_length > 15 or rarm_length > 15 or rupperarm_length < 5 or rarm_length < 5 then
-    --     rupperarm_length = 8
-    --     rarm_length = 8
-    -- end
+    if rupperarm_length > 15 or rarm_length > 15 or rupperarm_length < 5 or rarm_length < 5 then
+        rupperarm_length = 8
+        rarm_length = 8
+    end
     local lupperarm_length, larm_length = vm:BoneLength(lupperarm), vm:BoneLength(lforearm)
-    -- if lupperarm_length > 15 or larm_length > 15 or lupperarm_length < 5 or larm_length < 5 then
-    --     lupperarm_length = 8
-    --     larm_length = 8
-    -- end
+    if lupperarm_length > 15 or larm_length > 15 or lupperarm_length < 5 or larm_length < 5 then
+        lupperarm_length = 8
+        larm_length = 8
+    end
+
+    -- lupperarm_length = lupperarm_length + 2
+    -- larm_length = larm_length + 2
 
     rupperarm_matrix, rhand_matrix = vm:GetBoneMatrix(rupperarm), vm:GetBoneMatrix(rhand)
     lupperarm_matrix, lhand_matrix = vm:GetBoneMatrix(lupperarm), vm:GetBoneMatrix(lhand)
@@ -182,7 +187,7 @@ function SWEP:DoRHIK()
     -- get one today!
     -- right
 
-    if self:GetValue("RHIK") then
+    if self:GetValue("RHIK") and false then
         local rupperarm_dir = (rupperarm_position - rupperarm_matrix:GetTranslation())
         rupperarm_matrix:SetAngles(rupperarm_dir:Angle())
         local rupperarm_norm = (rupperarm_position-rarm_start)
@@ -217,16 +222,16 @@ function SWEP:DoRHIK()
     -- brought to you by: https://rubberduckdebugging.com/
     -- get one today!
     -- left
-    if self:GetValue("LHIK") then
+    if self:GetValue("LHIK") and false then
         local lupperarm_dir = (lupperarm_position - lupperarm_matrix:GetTranslation())
         lupperarm_matrix:SetAngles(lupperarm_dir:Angle())
         local lupperarm_norm = (lupperarm_position-larm_start)
         lupperarm_norm:Normalize()
-        lupperarm_matrix:SetTranslation(larm_start - lupperarm_norm * 4)
+        lupperarm_matrix:SetTranslation(larm_start - (lupperarm_norm * 0))
 
         local lforearm_norm = (lforearm_position-lforearm_matrix:GetTranslation())
         lforearm_norm:Normalize()
-        lforearm_matrix:SetTranslation(lupperarm_position + lforearm_norm * 2)
+        lforearm_matrix:SetTranslation(lupperarm_position + (lforearm_norm * 0))
         local lforearm_dir = lhand_end - lupperarm_position
         lforearm_matrix:SetAngles(lforearm_dir:Angle())
 
@@ -238,6 +243,7 @@ function SWEP:DoRHIK()
             local lulna_matrix = vm:GetBoneMatrix(lulna)
 
             local lwrist_angle = (lwrist_matrix:GetTranslation() - lupperarm_position):Angle()
+            lwrist_matrix:SetTranslation(lwrist_matrix:GetTranslation())
             lwrist_matrix:SetAngles(lwrist_angle)
             vm:SetBoneMatrix(lwrist, lwrist_matrix)
 

@@ -69,7 +69,6 @@ ARC9.PresetPath = "ARC9_presets/"
 ARC9.OverDraw = false
 
 ARC9.LHIKHandBones = {
-    "ValveBiped.Bip01_L_Forearm",
     "ValveBiped.Bip01_L_Wrist",
     "ValveBiped.Bip01_L_Ulna",
     "ValveBiped.Bip01_L_Hand",
@@ -91,7 +90,6 @@ ARC9.LHIKHandBones = {
 }
 
 ARC9.RHIKHandBones = {
-    "ValveBiped.Bip01_R_Forearm",
     "ValveBiped.Bip01_R_Wrist",
     "ValveBiped.Bip01_R_Ulna",
     "ValveBiped.Bip01_R_Hand",

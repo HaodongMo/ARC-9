@@ -666,7 +666,7 @@ SWEP.Animations = {
     --     RareSourceChance = 0.01, -- chance that rare source will play
     --     Time = 0.5, -- overrides the duration of the sequence
     --     Mult = 1, -- multiplies time
-    --     IKTimeline = {
+    --     IKTimeLine = { -- t is in fraction of animation
     --         {
     --             t = 0.1,
     --             lhik = 0,

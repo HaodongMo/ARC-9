@@ -73,6 +73,8 @@ function SWEP:GetAttPos(slottbl, wm, idle)
     apos = apos + bang:Right() * offset_pos.y
     apos = apos + bang:Up() * offset_pos.z
 
+    offset_ang = offset_ang + (atttbl.ModelAngleOffset or Angle(0, 0, 0))
+
     aang = Angle()
     aang:Set(bang)
 
