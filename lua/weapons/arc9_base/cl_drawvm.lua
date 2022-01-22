@@ -3,7 +3,7 @@ function SWEP:PreDrawViewModel()
     self:DoRHIK()
 
     if self:GetCustomize() then
-        DrawBokehDOF( 10, 1, 0.1 )
+        if GetConVar("arc9_cust_blur"):GetBool() then DrawBokehDOF( 10, 1, 0.1 ) end
 
         cam.Start2D()
             surface.SetDrawColor(0, 0, 0, 150)

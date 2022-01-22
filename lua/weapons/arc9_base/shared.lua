@@ -85,12 +85,13 @@ SWEP.Num = 1 -- Number of bullets to shoot
 
 SWEP.Penetration = 5 -- Units of wood that can be penetrated by this gun.
 
-SWEP.RicochetAngleMax = 45 // maximum angle at which a ricochet can occur. Between 1 and 90. Angle of 0 is impossible but would theoretically always ricochet.
-SWEP.RicochetChance = 0.5 // if the angle is right, what is the chance that a ricochet can occur?
+SWEP.RicochetAngleMax = 45 -- Maximum angle at which a ricochet can occur. Between 1 and 90. Angle of 0 is impossible but would theoretically always ricochet.
+SWEP.RicochetChance = 0.5 -- If the angle is right, what is the chance that a ricochet can occur?
 
 SWEP.DamageType = DMG_BULLET -- The damage type of the gun.
 -- DMG_BLAST will create explosive effects and create AOE damage.
 -- DMG_BURN will ignite the target.
+-- DMG_AIRBOAT will damage Combine Hunter-Choppers.
 
 SWEP.ArmorPiercing = 0 -- Between 0-1. A proportion of damage that is done as direct damage, ignoring protection.
 
@@ -145,13 +146,13 @@ SWEP.Ammo = "pistol" -- What ammo type this gun uses.
 
 SWEP.ChamberSize = 1 -- The amount of rounds this gun can chamber.
 SWEP.ClipSize = 25 -- Self-explanatory.
-SWEP.SupplyLimit = 5 -- Amount of magazines of ammo this gun can take from an ArcCW-A2 supply crate.
+SWEP.SupplyLimit = 5 -- Amount of magazines of ammo this gun can take from an ARC-9 supply crate.
 SWEP.SecondarySupplyLimit = 2 -- Amount of reserve UBGL magazines you can take.
 
 SWEP.ForceDefaultClip = nil -- Set to force a default amount of ammo this gun can have. Otherwise, this is controlled by console variables.
 
-SWEP.AmmoPerShot = 1
-SWEP.InfiniteAmmo = false -- Weapon reloads for free
+SWEP.AmmoPerShot = 1 -- Ammo to use per shot
+SWEP.InfiniteAmmo = false -- Weapon does not take from reserve ammo
 SWEP.BottomlessClip = false -- Weapon never has to reload
 
 SWEP.ShotgunReload = false -- Weapon reloads like shotgun. Uses insert_1, insert_2, etc animations instead.
@@ -181,18 +182,18 @@ SWEP.DropMagazineTime = 0.25
 
 SWEP.RPM = 750
 
-// Works different to ArcCW
+-- Works different to ArcCW
 
-// -1: Automatic
-// 0: Safe. Don't use this for safety.
-// 1: Semi.
-// 2: Two-round burst.
-// 3: Three-round burst.
-// n: n-round burst.
+-- -1: Automatic
+-- 0: Safe. Don't use this for safety.
+-- 1: Semi.
+-- 2: Two-round burst.
+-- 3: Three-round burst.
+-- n: n-round burst.
 SWEP.Firemodes = {
     {
         Mode = 1,
-        // add other attachment modifiers
+        -- add other attachment modifiers
     }
 }
 
@@ -619,15 +620,15 @@ SWEP.Attachments = {
 --         PrintName = "",
 --         DefaultName = "No Attachment",
 --         DefaultIcon = Material(""),
---         InstalledElements = {""}, // list of elements to activate when something is installed here
+--         InstalledElements = {""}, -- list of elements to activate when something is installed here
 --         UnInstalledElements = {""},
---         RequireElements = {}, // {{a and b}, or {c and d and e}, or f}
---         // list of "strings" or {"lists", "of", "strings"}.
---         // one of these must all be enabled for this to be valid.
+--         RequireElements = {}, -- {{a and b}, or {c and d and e}, or f}
+--         -- list of "strings" or {"lists", "of", "strings"}.
+--         -- one of these must all be enabled for this to be valid.
 --         ExcludeElements = {},
---         // same but for exclusion.
---         Integral = false, // cannot be removed
---         Category = "", // single or {"list", "of", "values"}
+--         -- same but for exclusion.
+--         Integral = false, -- cannot be removed
+--         Category = "", -- single or {"list", "of", "values"}
 --         InstallSound = "",
 --         Bone = "",
 --         Pos = Vector(0, 0, 0),

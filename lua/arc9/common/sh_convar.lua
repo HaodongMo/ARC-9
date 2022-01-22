@@ -143,6 +143,10 @@ local conVars = {
     {
         name = "freeaim",
         default = "1"
+    },
+    {
+        name = "cust_blur",
+        default = "1"
     }
 }
 
@@ -176,6 +180,10 @@ local function menu_client_ti(panel)
     panel:AddControl("checkbox", {
         label = "Compensate Sensitivity",
         command = "arc9_compensate_sens"
+    })
+    panel:AddControl("checkbox", {
+        label = "Customization Blur",
+        command = "arc9_cust_blur"
     })
 end
 
