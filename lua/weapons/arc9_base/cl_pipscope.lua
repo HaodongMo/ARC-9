@@ -153,7 +153,7 @@ function SWEP:DoRTScope(model, atttbl)
             atttbl.RTScopeDrawFunc(self, rtsize)
         end
 
-        if !atttbl.RTScopeNoShadowNoShadow then
+        if !atttbl.RTScopeNoShadow then
             surface.SetDrawColor(0, 0, 0)
             surface.SetMaterial(shadow)
             surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)

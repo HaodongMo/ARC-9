@@ -42,11 +42,11 @@ function SWEP:DeletePreset(filename)
 
     filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename
 
-    if !file.Exists(filename .. ".txt", "DATA") then
+    if file.Exists(filename .. ".txt", "DATA") then
         file.Delete(filename .. ".txt")
     end
 
-    if !file.Exists(filename .. ".png", "DATA") then
+    if file.Exists(filename .. ".png", "DATA") then
         file.Delete(filename .. ".png")
     end
 end

@@ -637,7 +637,7 @@ SWEP.Attachments = {
 --         KeepBaseIrons = false,
 --         ExtraSightDistance = 0,
 --         Installed = nil,
---         MergeSlots = {},
+--         MergeSlots = {}, // merge this slot with another
 --         SubAttachments = {
 --             {
 --                 Installed = nil,
