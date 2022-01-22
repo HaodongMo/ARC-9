@@ -1,5 +1,6 @@
 function SWEP:PreDrawViewModel()
     if ARC9.PresetCam then return end
+
     self:DoRHIK()
 
     if self:GetCustomize() then

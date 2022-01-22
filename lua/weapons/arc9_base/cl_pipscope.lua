@@ -206,7 +206,7 @@ function SWEP:DoCheapScope(fov, atttbl)
     scrw = scrw
     scrh = scrh * scrh / scrw
 
-    local s = 2 / atttbl.ScopeScreenRatio
+    local s = 2 / (atttbl.ScopeScreenRatio or 0.5)
 
     local scrx = (ScrW() - scrw * s) / 2
     local scry = (ScrH() - scrh * s) / 2

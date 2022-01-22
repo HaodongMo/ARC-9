@@ -26,13 +26,17 @@ end
 function SWEP:EnterSprint()
     self:SetShouldHoldType()
 
-    self:PlayAnimation("enter_sprint", self:GetProcessedValue("SprintToFireTime"))
+    if !self:StillWaiting() then
+        self:PlayAnimation("enter_sprint", self:GetProcessedValue("SprintToFireTime"))
+    end
 end
 
 function SWEP:ExitSprint()
     self:SetShouldHoldType()
 
-    self:PlayAnimation("exit_sprint", self:GetProcessedValue("SprintToFireTime"))
+    if !self:StillWaiting() then
+        self:PlayAnimation("exit_sprint", self:GetProcessedValue("SprintToFireTime"))
+    end
 end
 
 SWEP.LastWasSprinting = false

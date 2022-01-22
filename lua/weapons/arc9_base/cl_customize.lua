@@ -288,6 +288,8 @@ function SWEP:CreateCustomizeHUD()
                     col = ARC9.GetHUDColor("hi")
                 elseif self.BottomBarAddress == slot.Address then
                     col = ARC9.GetHUDColor("sel")
+                elseif slot.Installed then
+                    col = ARC9.GetHUDColor("occupied")
                 end
 
                 surface.SetMaterial(mat_circle)
