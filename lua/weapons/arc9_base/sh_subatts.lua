@@ -125,8 +125,6 @@ function SWEP:BuildSubAttachments(tbl)
     self:BuildAttachmentAddresses()
     self:BuildMergeSlots(self.Attachments)
 
-    PrintTable(self.Attachments)
-
     self:PruneAttachments()
 end
 
