@@ -279,6 +279,8 @@ function SWEP:CreateCustomizeHUD()
 
                 table.insert(bumpy, {x = x, y = y, slot = slot})
 
+                local ms_slot = self:GetFilledMergeSlot(slot.Address)
+
                 -- if self2:IsHovered() then
                 -- end
 
@@ -286,7 +288,7 @@ function SWEP:CreateCustomizeHUD()
 
                 if hoveredslot then
                     col = ARC9.GetHUDColor("hi")
-                elseif self.BottomBarAddress == slot.Address then
+                elseif self.BottomBarAddress == ms_slot.Address then
                     col = ARC9.GetHUDColor("sel")
                 elseif slot.Installed then
                     col = ARC9.GetHUDColor("occupied")
@@ -296,22 +298,22 @@ function SWEP:CreateCustomizeHUD()
                 surface.SetDrawColor(col)
                 surface.DrawTexturedRect(x, y, s, s)
 
-                local atttxt = slot.PrintName or "SLOT"
+                local atttxt = ms_slot.PrintName or "SLOT"
 
-                if slot.Installed then
-                    local atttbl = self:GetFinalAttTable(slot)
-                    atttxt = ARC9:GetPhraseForAtt(slot.Installed, "CompactName")
-                    atttxt = atttxt or ARC9:GetPhraseForAtt(slot.Installed, "PrintName") or ""
+                if ms_slot.Installed then
+                    local atttbl = self:GetFinalAttTable(ms_slot)
+                    atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
+                    atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
                     surface.SetMaterial(atttbl.Icon)
                     surface.SetDrawColor(col)
                     surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
                 else
-                    if slot.DefaultCompactName then
-                        atttxt = ARC9:UseTrueNames() and slot.DefaultCompactName_TrueName or slot.DefaultCompactName
-                        atttxt = atttxt or slot.DefaultName_TrueName or slot.DefaultName or ""
+                    if ms_slot.DefaultCompactName then
+                        atttxt = ARC9:UseTrueNames() and ms_slot.DefaultCompactName_TrueName or ms_slot.DefaultCompactName
+                        atttxt = atttxt or ms_slot.DefaultName_TrueName or ms_slot.DefaultName or ""
                     end
-                    if slot.DefaultIcon then
-                        surface.SetMaterial(slot.DefaultIcon)
+                    if ms_slot.DefaultIcon then
+                        surface.SetMaterial(ms_slot.DefaultIcon)
                         surface.SetDrawColor(col)
                         surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
                     end

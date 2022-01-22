@@ -44,9 +44,29 @@ function SWEP:DetachAllFromSubSlot(addr, silent)
 
     if slottbl.MergeSlotAddresses then
         for _, addr2 in pairs(slottbl.MergeSlotAddresses) do
-            self:Detach(addr2, true)
+            self:Detach(addr2, silent)
         end
     end
+end
+
+function SWEP:GetFilledMergeSlot(addr)
+    local slottbl = self:LocateSlotFromAddress(addr)
+
+    if slottbl.Installed then
+        return slottbl
+    end
+
+    if slottbl.MergeSlots then
+        for _, merge_addr in pairs(slottbl.MergeSlotAddresses) do
+            local mergeslot = self:LocateSlotFromAddress(merge_addr)
+
+            if mergeslot.Installed then
+                return mergeslot
+            end
+        end
+    end
+
+    return slottbl
 end
 
 function SWEP:PostModify()
