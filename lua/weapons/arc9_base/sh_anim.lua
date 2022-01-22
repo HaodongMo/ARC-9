@@ -39,6 +39,12 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
         self:PlaySoundTable(animation.EventTable, mult)
     end
 
+    if animation.IKTimeLine then
+        self:SetIKAnimation(anim)
+        self:SetIKTimeLineStart(CurTime())
+        self:SetIKTime(time * mult)
+    end
+
     if lock then
         self:SetAnimLockTime(CurTime() + (time * mult))
     else

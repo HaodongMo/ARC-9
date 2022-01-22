@@ -105,3 +105,9 @@ ATT.Attachments = {
         KeepBaseIrons = false,
     }
 }
+
+ATT.LHIK = false
+ATT.LHIK_Priority = 0
+
+ATT.RHIK = false
+ATT.RHIK_Priority = 0

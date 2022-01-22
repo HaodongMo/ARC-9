@@ -24,9 +24,91 @@ ARC9.PenTable = {
     [MAT_WARPSHIELD]  = 1,
 }
 
+ArcCW.ShellSoundsTable = {
+    "weapons/arc9/casings/casing_556_1.wav",
+    "weapons/arc9/casings/casing_556_2.wav",
+    "weapons/arc9/casings/casing_556_3.wav",
+    "weapons/arc9/casings/casing_556_4.wav",
+    "weapons/arc9/casings/casing_308_1.wav",
+    "weapons/arc9/casings/casing_308_2.wav",
+    "weapons/arc9/casings/casing_308_3.wav",
+    "weapons/arc9/casings/casing_308_4.wav"
+}
+
+ArcCW.PistolShellSoundsTable = {
+    "weapons/arc9/casings/casing_9mm_1.wav",
+    "weapons/arc9/casings/casing_9mm_2.wav",
+    "weapons/arc9/casings/casing_9mm_3.wav",
+    "weapons/arc9/casings/casing_9mm_4.wav"
+}
+
+ArcCW.TinyShellSoundsTable = {
+    "weapons/arc9/casings/casing_22_1.wav",
+    "weapons/arc9/casings/casing_22_2.wav",
+    "weapons/arc9/casings/casing_22_3.wav",
+    "weapons/arc9/casings/casing_22_4.wav"
+}
+
+ArcCW.ShotgunShellSoundsTable = {
+    "weapons/arc9/casings/casing_12ga_1.wav",
+    "weapons/arc9/casings/casing_12ga_2.wav",
+    "weapons/arc9/casings/casing_12ga_3.wav",
+    "weapons/arc9/casings/casing_12ga_4.wav"
+}
+
+ArcCW.RicochetSounds = {
+    "weapons/arc9/ricochet01.wav",
+    "weapons/arc9/ricochet02.wav",
+    "weapons/arc9/ricochet03.wav",
+    "weapons/arc9/ricochet04.wav",
+    "weapons/arc9/ricochet05.wav"
+ }
+
 ARC9.PresetPath = "ARC9_presets/"
 
 ARC9.OverDraw = false
+
+ARC9.LHIKHandBones = {
+    "ValveBiped.Bip01_L_Wrist",
+    "ValveBiped.Bip01_L_Ulna",
+    "ValveBiped.Bip01_L_Hand",
+    "ValveBiped.Bip01_L_Finger4",
+    "ValveBiped.Bip01_L_Finger41",
+    "ValveBiped.Bip01_L_Finger42",
+    "ValveBiped.Bip01_L_Finger3",
+    "ValveBiped.Bip01_L_Finger31",
+    "ValveBiped.Bip01_L_Finger32",
+    "ValveBiped.Bip01_L_Finger2",
+    "ValveBiped.Bip01_L_Finger21",
+    "ValveBiped.Bip01_L_Finger22",
+    "ValveBiped.Bip01_L_Finger1",
+    "ValveBiped.Bip01_L_Finger11",
+    "ValveBiped.Bip01_L_Finger12",
+    "ValveBiped.Bip01_L_Finger0",
+    "ValveBiped.Bip01_L_Finger01",
+    "ValveBiped.Bip01_L_Finger02"
+}
+
+ARC9.RHIKHandBones = {
+    "ValveBiped.Bip01_R_Wrist",
+    "ValveBiped.Bip01_R_Ulna",
+    "ValveBiped.Bip01_R_Hand",
+    "ValveBiped.Bip01_R_Finger4",
+    "ValveBiped.Bip01_R_Finger41",
+    "ValveBiped.Bip01_R_Finger42",
+    "ValveBiped.Bip01_R_Finger3",
+    "ValveBiped.Bip01_R_Finger31",
+    "ValveBiped.Bip01_R_Finger32",
+    "ValveBiped.Bip01_R_Finger2",
+    "ValveBiped.Bip01_R_Finger21",
+    "ValveBiped.Bip01_R_Finger22",
+    "ValveBiped.Bip01_R_Finger1",
+    "ValveBiped.Bip01_R_Finger11",
+    "ValveBiped.Bip01_R_Finger12",
+    "ValveBiped.Bip01_R_Finger0",
+    "ValveBiped.Bip01_R_Finger01",
+    "ValveBiped.Bip01_R_Finger02"
+}
 
 ARC9.LHIKBones = {
     "ValveBiped.Bip01_L_UpperArm",

@@ -443,7 +443,7 @@ SWEP.ShellScale = Vector(1, 1, 1)
 SWEP.ShellPhysBox = Vector(0.5, 0.5, 2)
 
 SWEP.ShellPitch = 100 -- for shell sounds
-SWEP.ShellSounds = ArcCW.ShellSoundsTable
+SWEP.ShellSounds = ARC9.ShellSoundsTable
 
 SWEP.ShellCorrectPos = Vector(0, 0, 0)
 SWEP.ShellCorrectAng = Angle(0, 0, 0)
@@ -666,26 +666,16 @@ SWEP.Animations = {
     --     RareSourceChance = 0.01, -- chance that rare source will play
     --     Time = 0.5, -- overrides the duration of the sequence
     --     Mult = 1, -- multiplies time
-    --     LHIK = false,
-    --     LHIKTimeline = {
+    --     IKTimeline = {
     --         {
     --             t = 0.1,
-    --             ik = 0
+    --             lhik = 0,
+    --             rhik = 0
     --         },
     --         {
     --             t = 0.9,
-    --             ik = 1
-    --         }
-    --     },
-    --     RHIK = false,
-    --     RHIKTimeline = {
-    --         {
-    --             t = 0.1,
-    --             ik = 0
-    --         },
-    --         {
-    --             t = 0.9,
-    --             ik = 1
+    --             lhik = 1
+    --             rhik = 0
     --         }
     --     },
     --     EventTable = {
@@ -768,6 +758,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 13, "BlindFireAmount")
     self:NetworkVar("Float", 14, "LastPressedETime")
     self:NetworkVar("Float", 15, "FinishFiremodeAnimTime")
+    self:NetworkVar("Float", 16, "IKTimeLineStart")
+    self:NetworkVar("Float", 17, "IKTime")
 
     self:NetworkVar("Int", 0, "BurstCount")
     self:NetworkVar("Int", 1, "NthShot")
@@ -793,6 +785,8 @@ function SWEP:SetupDataTables()
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
     self:NetworkVar("Angle", 1, "LastAimAngle")
+
+    self:NetworkVar("String", 0, "IKAnimation")
 
     self:SetMultiSight(1)
     self:SetFiremode(1)

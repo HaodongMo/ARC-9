@@ -1,8 +1,6 @@
 function SWEP:PreDrawViewModel()
     if ARC9.PresetCam then return end
 
-    self:DoRHIK()
-
     if self:GetCustomize() then
         if GetConVar("arc9_cust_blur"):GetBool() then DrawBokehDOF( 10, 1, 0.1 ) end
 
@@ -19,11 +17,11 @@ function SWEP:PreDrawViewModel()
 
     self.ViewModelFOV = self:GetViewModelFOV()
 
-    if GetConVar("ARC9_benchgun"):GetBool() then
-        cam.Start3D()
-    else
-        cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
-    end
+    -- if GetConVar("ARC9_benchgun"):GetBool() then
+    --     cam.Start3D()
+    -- else
+    --     cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
+    -- end
 
     cam.IgnoreZ(true)
 end
@@ -33,11 +31,11 @@ function SWEP:PostDrawViewModel()
 
     cam.IgnoreZ(false)
 
-    if GetConVar("ARC9_benchgun"):GetBool() then
-        cam.End3D()
-    else
-        cam.End3D()
-    end
+    -- if GetConVar("ARC9_benchgun"):GetBool() then
+    --     cam.End3D()
+    -- else
+    --     cam.End3D()
+    -- end
 
     cam.Start3D(nil, nil, self:GetViewModelFOV())
     for _, model in pairs(self.VModel) do
@@ -55,6 +53,7 @@ end
 
 function SWEP:ViewModelDrawn()
     self:DrawCustomModel(false)
+    self:DoRHIK()
     self:DrawLasers(false)
     -- self:DrawLasers()
 end

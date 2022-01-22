@@ -1,15 +1,143 @@
+local function qerp(delta, a, b)
+    local qdelta = -(delta ^ 2) + (delta * 2)
 
+    qdelta = math.Clamp(qdelta, 0, 1)
+
+    return Lerp(qdelta, a, b)
+end
 
 function SWEP:DoRHIK()
-    local vm = self:GetOwner():GetHands()
-    -- local vm = self:GetVM()
+    -- local vm = self:GetOwner():GetHands()
+    local vm = self:GetVM()
 
     if !IsValid(vm) then return end
     if !self.UseHands then return end
 
     vm:SetupBones()
 
-    local delta = self:Curve(self.CustomizeDelta)
+    local cdelta = self:Curve(self.CustomizeDelta)
+    local lh_delta = 1
+    local rh_delta = 1
+
+    local iktl = (self.Animations[self:GetIKAnimation() or ""] or {}).IKTimeLine
+    local iket = self:GetIKTime()
+    local iklt = math.Clamp((CurTime() - self:GetIKTimeLineStart()) / iket, 0, 1)
+
+    if self:GetProcessedValue("LHIK") then
+        local next_stage_index
+
+        for i, k in pairs(iktl) do
+            if !k or !k.t then continue end
+            if k.t > iklt then
+                next_stage_index = i
+                break
+            end
+        end
+
+        if next_stage_index then
+            if next_stage_index == 1 then
+                -- we are on the first stage.
+                stage = {t = 0, lhik = 0}
+                next_stage = iktl[next_stage_index]
+            else
+                stage = iktl[next_stage_index - 1]
+                next_stage = iktl[next_stage_index]
+            end
+        else
+            stage = iktl[#iktl]
+            next_stage = {t = iket, lhik = iktl[#iktl].lhik}
+        end
+
+        local local_time = iklt
+
+        local delta_time = next_stage.t - stage.t
+        delta_time = (local_time - stage.t) / delta_time
+
+        lh_delta = qerp(delta_time, stage.lhik, next_stage.lhik)
+    end
+
+    if self:GetProcessedValue("RHIK") then
+        local next_stage_index
+
+        for i, k in pairs(iktl) do
+            if !k or !k.t then continue end
+            if k.t > iklt then
+                next_stage_index = i
+                break
+            end
+        end
+
+        if next_stage_index then
+            if next_stage_index == 1 then
+                -- we are on the first stage.
+                stage = {t = 0, lhik = 0}
+                next_stage = iktl[next_stage_index]
+            else
+                stage = iktl[next_stage_index - 1]
+                next_stage = iktl[next_stage_index]
+            end
+        else
+            stage = iktl[#iktl]
+            next_stage = {t = iket, lhik = iktl[#iktl].rhik}
+        end
+
+        local local_time = iklt
+
+        local delta_time = next_stage.t - stage.t
+        delta_time = (local_time - stage.t) / delta_time
+
+        lh_delta = qerp(delta_time, stage.rhik, next_stage.rhik)
+    end
+
+    local rhik_model = self.RHIKModel
+
+    if rhik_model then
+        rhik_model:SetupBones()
+        for _, bone in pairs(ARC9.RHIKHandBones) do
+            local vm_bone = vm:LookupBone(bone)
+            local target_bone = rhik_model:LookupBone(bone)
+
+            if !vm_bone or !target_bone then continue end
+
+            local vm_bone_matrix = vm:GetBoneMatrix(vm_bone)
+            local target_bone_matrix = rhik_model:GetBoneMatrix(target_bone)
+
+            local lerped_pos = LerpVector(rh_delta, vm_bone_matrix:GetTranslation(), target_bone_matrix:GetTranslation())
+            local lerped_ang = LerpAngle(rh_delta, vm_bone_matrix:GetAngles(), target_bone_matrix:GetAngles())
+
+            local newtransform = Matrix()
+            newtransform:SetTranslation(lerped_pos)
+            newtransform:SetAngles(lerped_ang)
+
+            local matrix = Matrix(newtransform)
+
+            vm:SetBoneMatrix(vm_bone, matrix)
+        end
+    end
+
+    local lhik_model = self.LHIKModel
+
+    if lhik_model then
+        lhik_model:SetupBones()
+        for _, bone in pairs(ARC9.LHIKBones) do
+            local vm_bone = vm:LookupBone(bone)
+            local target_bone = lhik_model:LookupBone(bone)
+
+            if !vm_bone or !target_bone then continue end
+
+            local vm_bone_matrix = vm:GetBoneMatrix(vm_bone)
+            local target_bone_matrix = lhik_model:GetBoneMatrix(target_bone)
+
+            local lerped_pos = LerpVector(lh_delta, vm_bone_matrix:GetTranslation(), target_bone_matrix:GetTranslation())
+            local lerped_ang = LerpAngle(lh_delta, vm_bone_matrix:GetAngles(), target_bone_matrix:GetAngles())
+
+            local newtransform = Matrix()
+            newtransform:SetTranslation(lerped_pos)
+            newtransform:SetAngles(lerped_ang)
+
+            vm:SetBoneMatrix(vm_bone, newtransform)
+        end
+    end
 
     local rupperarm, rforearm, rulna, rwrist, rhand = vm:LookupBone("ValveBiped.Bip01_R_UpperArm"), vm:LookupBone("ValveBiped.Bip01_R_Forearm"), vm:LookupBone("ValveBiped.Bip01_R_Ulna"), vm:LookupBone("ValveBiped.Bip01_R_Wrist"), vm:LookupBone("ValveBiped.Bip01_R_Hand")
     local lupperarm, lforearm, lulna, lwrist, lhand = vm:LookupBone("ValveBiped.Bip01_L_UpperArm"), vm:LookupBone("ValveBiped.Bip01_L_Forearm"), vm:LookupBone("ValveBiped.Bip01_L_Ulna"), vm:LookupBone("ValveBiped.Bip01_L_Wrist"), vm:LookupBone("ValveBiped.Bip01_L_Hand")
@@ -54,7 +182,7 @@ function SWEP:DoRHIK()
     -- get one today!
     -- right
 
-    if self:GetProcessedValue("RHIK") then
+    if self:GetValue("RHIK") then
         local rupperarm_dir = (rupperarm_position - rupperarm_matrix:GetTranslation())
         rupperarm_matrix:SetAngles(rupperarm_dir:Angle())
         local rupperarm_norm = (rupperarm_position-rarm_start)
@@ -89,7 +217,7 @@ function SWEP:DoRHIK()
     -- brought to you by: https://rubberduckdebugging.com/
     -- get one today!
     -- left
-    if self:GetProcessedValue("LHIK") then
+    if self:GetValue("LHIK") then
         local lupperarm_dir = (lupperarm_position - lupperarm_matrix:GetTranslation())
         lupperarm_matrix:SetAngles(lupperarm_dir:Angle())
         local lupperarm_norm = (lupperarm_position-larm_start)
@@ -121,44 +249,46 @@ function SWEP:DoRHIK()
         end
     end
 
-    for _, bone in ipairs(ARC9.LHIKBones) do
-        local vmbone = vm:LookupBone(bone)
+    if cdelta > 0 then
+        for _, bone in ipairs(ARC9.LHIKBones) do
+            local vmbone = vm:LookupBone(bone)
 
-        if !vmbone then continue end -- Happens when spectating someone prolly
+            if !vmbone then continue end -- Happens when spectating someone prolly
 
-        local vmtransform = vm:GetBoneMatrix(vmbone)
+            local vmtransform = vm:GetBoneMatrix(vmbone)
 
-        if !vmtransform then continue end -- something very bad has happened
+            if !vmtransform then continue end -- something very bad has happened
 
-        local vm_pos = vmtransform:GetTranslation()
-        local vm_ang = vmtransform:GetAngles()
+            local vm_pos = vmtransform:GetTranslation()
+            local vm_ang = vmtransform:GetAngles()
 
-        local newtransform = Matrix()
+            local newtransform = Matrix()
 
-        newtransform:SetTranslation(LerpVector(delta, vm_pos, vm_pos - (EyeAngles():Up() * 128) - (EyeAngles():Forward() * 128)))
-        newtransform:SetAngles(vm_ang)
+            newtransform:SetTranslation(LerpVector(cdelta, vm_pos, vm_pos - (EyeAngles():Up() * 128) - (EyeAngles():Forward() * 128)))
+            newtransform:SetAngles(vm_ang)
 
-        vm:SetBoneMatrix(vmbone, newtransform)
-    end
+            vm:SetBoneMatrix(vmbone, newtransform)
+        end
 
-    for _, bone in ipairs(ARC9.RHIKBones) do
-        local vmbone = vm:LookupBone(bone)
+        for _, bone in ipairs(ARC9.RHIKBones) do
+            local vmbone = vm:LookupBone(bone)
 
-        if !vmbone then continue end -- Happens when spectating someone prolly
+            if !vmbone then continue end -- Happens when spectating someone prolly
 
-        local vmtransform = vm:GetBoneMatrix(vmbone)
+            local vmtransform = vm:GetBoneMatrix(vmbone)
 
-        if !vmtransform then continue end -- something very bad has happened
+            if !vmtransform then continue end -- something very bad has happened
 
-        local vm_pos = vmtransform:GetTranslation()
-        local vm_ang = vmtransform:GetAngles()
+            local vm_pos = vmtransform:GetTranslation()
+            local vm_ang = vmtransform:GetAngles()
 
-        local newtransform = Matrix()
+            local newtransform = Matrix()
 
-        newtransform:SetTranslation(LerpVector(delta, vm_pos, vm_pos - (EyeAngles():Up() * 128) - (EyeAngles():Forward() * 128)))
-        newtransform:SetAngles(vm_ang)
+            newtransform:SetTranslation(LerpVector(cdelta, vm_pos, vm_pos - (EyeAngles():Up() * 128) - (EyeAngles():Forward() * 128)))
+            newtransform:SetAngles(vm_ang)
 
-        vm:SetBoneMatrix(vmbone, newtransform)
+            vm:SetBoneMatrix(vmbone, newtransform)
+        end
     end
 end
 

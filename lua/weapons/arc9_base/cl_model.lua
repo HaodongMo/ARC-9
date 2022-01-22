@@ -130,6 +130,11 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl)
     return csmodel
 end
 
+SWEP.LHIKModel = nil
+SWEP.LHIK_Priority = -1
+SWEP.RHIKModel = nil
+SWEP.RHIK_Priority = -1
+
 function SWEP:SetupModel(wm)
     self:KillModel()
 
@@ -137,6 +142,10 @@ function SWEP:SetupModel(wm)
 
     if !wm then
         self.VModel = {}
+        self.LHIKModel = nil
+        self.LHIK_Priority = -1
+        self.RHIKModel = nil
+        self.RHIK_Priority = -1
     else
         self.WModel = {}
 
@@ -190,6 +199,25 @@ function SWEP:SetupModel(wm)
             slottbl.WModel = csmodel
         else
             slottbl.VModel = csmodel
+        end
+
+        if !wm then
+            if atttbl.LHIK or atttbl.RHIK then
+                local proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl)
+                proxmodel.NoDraw = true
+
+                if atttbl.LHIK then
+                    if (atttbl.LHIK_Priority or 0) > self.LHIK_Priority then
+                        self.LHIK_Priority = atttbl.LHIK_Priority or 0
+                        self.LHIKModel = proxmodel
+                    end
+                elseif atttbl.RHIK then
+                    if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
+                        self.RHIK_Priority = atttbl.RHIK_Priority or 0
+                        self.RHIKModel = proxmodel
+                    end
+                end
+            end
         end
     end
 
