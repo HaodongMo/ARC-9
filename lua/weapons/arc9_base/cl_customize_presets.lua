@@ -11,6 +11,8 @@ function SWEP:CreateHUD_Presets(scroll)
     plusbtn.DoClick = function(self2)
         self:SavePreset(os.date("%y%m%d%H%M%S", os.time()))
         self:CreateHUD_Bottom()
+        surface.PlaySound("arc9/shutter.ogg")
+        timer.Simple( 0.5, function() if IsValid(self:GetOwner()) then self:GetOwner():ScreenFade( SCREENFADE.IN, color_white, 0.75, 0 ) end end )
     end
     plusbtn.Paint = function(self2, w, h)
         local col1 = ARC9.GetHUDColor("fg")
