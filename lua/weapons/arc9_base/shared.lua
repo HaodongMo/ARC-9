@@ -390,14 +390,14 @@ SWEP.ShootVolume = 125
 SWEP.ShootPitch = 100
 SWEP.ShootPitchVariation = 0.05
 
-SWEP.FirstShootSound = nil
+SWEP.ShootSoundFirst = nil
 SWEP.ShootSound = ""
-SWEP.FirstShootSoundSilenced = nil
 SWEP.ShootSoundSilenced = ""
-SWEP.FirstShootSoundIndoor = nil
+SWEP.ShootSoundSilencedFirst = ""
 SWEP.ShootSoundIndoor = nil
-SWEP.FirstShootSoundSilencedIndoor = nil
+SWEP.ShootSoundIndoorFirst = nil
 SWEP.ShootSoundSilencedIndoor = nil
+SWEP.ShootSoundSilencedIndoorFirst = nil
 SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil
 

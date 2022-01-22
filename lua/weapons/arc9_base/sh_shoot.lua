@@ -100,9 +100,13 @@ function SWEP:PrimaryAttack()
     local pvar = self:GetProcessedValue("ShootPitchVariation")
     local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
 
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("ShootSound")) or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON)
+    local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
 
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or "", 149, self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
+    self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON)
+
+    local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
+
+    self:EmitSound(dss, 149, self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
 
     local delay = 60 / self:GetProcessedValue("RPM")
 

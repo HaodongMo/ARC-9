@@ -137,7 +137,16 @@ function SWEP:GetProcessedValue(val, base)
     end
 
     if self:GetValue("Silencer") then
-        stat = self:GetValue(val, stat, "Silenced")
+        if self:GetBurstCount() == 0 then
+            stat = self:GetValue(val, stat, "SilencedFirstShot")
+            stat = self:GetValue(val, stat, "SilencedFirst")
+        elseif self:Clip1() == 0 then
+            stat = self:GetValue(val, stat, "SilencedEmpty")
+            stat = self:GetValue(val, stat, "SilencedLastShot")
+            stat = self:GetValue(val, stat, "SilencedLast")
+        else
+            stat = self:GetValue(val, stat, "Silenced")
+        end
     end
 
     if self:GetNthShot() % 2 == 0 then
