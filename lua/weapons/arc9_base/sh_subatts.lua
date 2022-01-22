@@ -93,6 +93,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 subatts[i].Ang:Normalize()
                 subatts[i].Installed = tbl.SubAttachments[i].Installed
                 subatts[i].ExtraSightDistance = subatts[i].ExtraSightDistance
+                subatts[i].MergeSlots = subatts[i].MergeSlots
                 subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
             end
         end
@@ -122,6 +123,9 @@ function SWEP:BuildSubAttachments(tbl)
     end
 
     self:BuildAttachmentAddresses()
+    self:BuildMergeSlots(self.Attachments)
+
+    PrintTable(self.Attachments)
 
     self:PruneAttachments()
 end

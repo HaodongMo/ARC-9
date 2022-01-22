@@ -3,6 +3,8 @@ function SWEP:Attach(addr, att, silent)
 
     local slottbl = self:LocateSlotFromAddress(addr)
 
+    self:DetachAllFromSubSlot(addr, true)
+
     if slottbl.Installed == att then return end
 
     slottbl.Installed = att
@@ -33,6 +35,18 @@ function SWEP:Detach(addr, silent)
     self:PostModify()
 
     return true
+end
+
+function SWEP:DetachAllFromSubSlot(addr, silent)
+    local slottbl = self:LocateSlotFromAddress(addr)
+
+    self:Detach(addr, silent)
+
+    if slottbl.MergeSlotAddresses then
+        for _, addr2 in pairs(slottbl.MergeSlotAddresses) do
+            self:Detach(addr2, true)
+        end
+    end
 end
 
 function SWEP:PostModify()

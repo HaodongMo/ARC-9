@@ -158,7 +158,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     local strpath = string.Implode("/", self.BottomBarPath)
 
     for _, att in pairs(self.BottomBarAtts) do
-        local atttbl = ARC9.GetAttTable(att)
+        local atttbl = ARC9.GetAttTable(att.att)
 
         if (!atttbl.Folder and #self.BottomBarPath > 0) or (atttbl.Folder and atttbl.Folder != strpath) then continue end
 
@@ -167,24 +167,25 @@ local function enterfolder(self, scroll, slottbl, fname)
         attbtn:DockMargin(ScreenScale(2), 0, 0, 0)
         attbtn:Dock(LEFT)
         attbtn:SetText("")
-        attbtn.att = att
+        attbtn.att = att.att
+        attbtn.attslot = att.slot
         attbtn.address = slottbl.Address
-        attbtn.slottbl = slottbl
+        attbtn.slottbl = self:LocateSlotFromAddress(att.slot)
         scroll:AddPanel(attbtn)
         table.insert(scrolleles, attbtn)
         attbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
-                self:Attach(self2.address, self2.att)
+                self:Attach(self2.attslot, self2.att)
                 self.CustomizeSelectAddr = self2.address
             elseif kc == MOUSE_RIGHT then
-                self:Detach(self2.address)
+                self:DetachAllFromSubSlot(self2.address)
                 self.CustomizeSelectAddr = self2.address
             end
         end
         attbtn.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
-            local slot = self:LocateSlotFromAddress(self2.address)
+            local slot = self:LocateSlotFromAddress(self2.attslot)
 
             if !slot then return end
                 if slot != self2.slottbl then
@@ -367,10 +368,32 @@ function SWEP:CreateHUD_Bottom()
         end
 
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
+        local atts_slots = {}
 
-        table.sort(atts, function(a, b)
-            a = a or ""
-            b = b or ""
+        for _, att in pairs(atts) do
+            table.insert(atts_slots, {
+                att = att,
+                slot = self.BottomBarAddress
+            })
+        end
+
+        if slottbl.MergeSlotAddresses then
+            for _, addr in pairs(slottbl.MergeSlotAddresses) do
+                local slottbl2 = self:LocateSlotFromAddress(addr)
+
+                local atts2 = ARC9.GetAttsForCats(slottbl2.Category or "")
+                for _, att in pairs(atts2) do
+                    table.insert(atts_slots, {
+                        att = att,
+                        slot = addr
+                    })
+                end
+            end
+        end
+
+        table.sort(atts_slots, function(a, b)
+            a = a.att or ""
+            b = b.att or ""
 
             if a == "" or b == "" then return true end
 
@@ -391,7 +414,7 @@ function SWEP:CreateHUD_Bottom()
         end)
 
         self.BottomBarFolders = ARC9.GetFoldersForAtts(atts)
-        self.BottomBarAtts = atts
+        self.BottomBarAtts = atts_slots
 
         enterfolder(self, scroll, slottbl, true)
     else

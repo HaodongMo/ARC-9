@@ -217,6 +217,7 @@ function SWEP:CreateCustomizeHUD()
 
             for _, slot in pairs(self:GetSubSlotList()) do
                 if self:GetSlotBlocked(slot) then continue end
+                if slot.Hidden then continue end
                 local attpos = self:GetAttPos(slot)
 
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
@@ -351,7 +352,7 @@ function SWEP:CreateCustomizeHUD()
                         self.CustomizePanY = 0
                         self.CustomizePitch = 0
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
-                        self:Detach(slot.Address)
+                        self:DetachAllFromSubSlot(slot.Address)
                     end
                 end
 

@@ -71,7 +71,7 @@ function ARC9.GetAttTable(name)
     if ARC9.Attachments[shortname] then
         return ARC9.Attachments[shortname]
     else
-        assert(false, "!!!! ARC9 tried to access invalid attachment " .. (shortname or "NIL") .. "!!!")
+        print("!!!! ARC9 tried to access invalid attachment " .. (shortname or "NIL") .. "!!!")
         return {}
     end
 end

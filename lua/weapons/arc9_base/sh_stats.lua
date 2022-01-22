@@ -117,10 +117,6 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "True")
     end
 
-    if self:GetValue("Silencer") then
-        stat = self:GetValue(val, stat, "Silenced")
-    end
-
     if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
         stat = self:GetValue(val, stat, "MidAir")
     end
@@ -138,6 +134,10 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Empty")
         stat = self:GetValue(val, stat, "LastShot")
         stat = self:GetValue(val, stat, "Last")
+    end
+
+    if self:GetValue("Silencer") then
+        stat = self:GetValue(val, stat, "Silenced")
     end
 
     if self:GetNthShot() % 2 == 0 then
