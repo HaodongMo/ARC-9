@@ -17,11 +17,9 @@ function SWEP:PreDrawViewModel()
 
     self.ViewModelFOV = self:GetViewModelFOV()
 
-    -- if GetConVar("ARC9_benchgun"):GetBool() then
-    --     cam.Start3D()
-    -- else
-    --     cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
-    -- end
+    if !GetConVar("ARC9_benchgun"):GetBool() then
+        cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 512)
+    end
 
     cam.IgnoreZ(true)
 end
@@ -31,11 +29,9 @@ function SWEP:PostDrawViewModel()
 
     cam.IgnoreZ(false)
 
-    -- if GetConVar("ARC9_benchgun"):GetBool() then
-    --     cam.End3D()
-    -- else
-    --     cam.End3D()
-    -- end
+    if !GetConVar("ARC9_benchgun"):GetBool() then
+        cam.End3D()
+    end
 
     cam.Start3D(nil, nil, self:GetViewModelFOV())
     for _, model in pairs(self.VModel) do
