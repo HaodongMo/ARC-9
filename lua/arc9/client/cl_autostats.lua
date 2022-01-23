@@ -1,75 +1,89 @@
+local hutom = function(i) return math.Round(i * ARC9.HUToM) .. ARC9:GetPhrase("unit.meter") end
+local hutoms = function(i) return math.Round(i * ARC9.HUToM) .. ARC9:GetPhrase("unit.meterpersecond") end
+local degtomoa = function(i) return math.Round(i / ARC9.MOAToAcc, 2) .. ARC9:GetPhrase("unit.moa") end
+
+-- [AutoStatName] = {unit, lower_is_better}
+-- unit can be:
+--   false - as is (e.g. 30 round capacity)
+--   string - suffix (e.g. +1 chamber size)
+--   true - true percentage (e.g. 80% move speed)
+--   function - return a string to use as the value
 ARC9.AutoStatsMains = {
-    ["DamageMax"] = {"Close Range Damage", false},
-    ["DamageMin"] = {"Long Range Damage", false},
-    ["DamageRand"] = {"Damage Variance", true},
-    ["RangeMin"] = {"Minimum Damage Range", false},
-    ["RangeMax"] = {"Maximum Range", false},
-    ["Num"] = {"Projectile Count", false},
-    ["Penetration"] = {"Material Penetration", false},
-    ["RicochetAngleMax"] = {"Ricochet Angle", false},
-    ["RicochetChance"] = {"Ricochet Chance", false},
-    ["ArmorPiercing"] = {"Armor Piercing", false},
-    ["EntityMuzzleVelocity"] = {"Projectile Muzzle Velocity", false},
-    ["PhysBulletMuzzleVelocity"] = {"Muzzle Velocity", false},
-    ["PhysBulletDrag"] = {"Bullet Drag", true},
-    ["PhysBulletGravity"] = {"Bullet Drop", true},
-    ["ChamberSize"] = {"Chamber Load Count", false},
-    ["ClipSize"] = {"Magazine Capacity", false},
-    ["SupplyLimit"] = {"Reserve Magazines", false},
-    ["SecondarySupplyLimit"] = {"Reserve Secondary Ammo", false},
-    ["AmmoPerShot"] = {"Ammo Per Shot", true},
-    ["ManualActionChamber"] = {"Shots Per Cycle", false},
-    ["TriggerDelay"] = {"Trigger Delay Rime", true},
-    ["RPM"] = {"Fire Rate", false},
-    ["PostBurstDelay"] = {"Burst Delay", true},
-    ["Recoil"] = {"Recoil", true},
-    ["RecoilPatternDrift"] = {"Recoil Drift", true},
-    ["RecoilUp"] = {"Vertical Recoil", true},
-    ["RecoilSide"] = {"Horizontal Recoil", true},
-    ["RecoilRandomUp"] = {"Vertical Recoil Spread", true},
-    ["RecoilRandomSide"] = {"Horizontal Recoil Spread", true},
-    ["RecoilDissipationRate"] = {"Recoil Dissipation Rate", true},
-    ["RecoilResetTime"] = {"Recoil Reset Time", true},
-    ["RecoilAutoControl"] = {"Recoil Control", false},
-    ["RecoilKick"] = {"Felt Recoil", true},
-    ["Spread"] = {"Spread", true},
-    ["PelletSpread"] = {"Clump Spread", true},
-    ["FreeAimRadius"] = {"Free Aim Radius", true},
-    ["Sway"] = {"Sway", true},
-    ["AimDownSightsTime"] = {"Aim Down Sights Time", true},
-    ["SprintToFireTime"] = {"Sprint To Fire Time", true},
-    ["ReloadTime"] = {"Reload Time", true},
-    ["DeployTime"] = {"Draw Time", true},
-    ["CycleTime"] = {"Cycle Time", true},
-    ["FixTime"] = {"Unjam Time", true},
-    ["OverheatTime"] = {"Overheat Fix Time", true},
-    ["Speed"] = {"Movement Speed", false},
-    ["BashDamage"] = {"Melee Damage", false},
-    ["BashLungeRange"] = {"Melee Range", false},
-    ["HeatCapacity"] = {"Heat Capacity", false},
-    ["HeatDissipation"] = {"Heat Dissipation", false},
-    ["MalfunctionMeanShotsToFail"] = {"Mean Shots Between Failures", false},
-    ["ShootVolume"] = {"Report Volume", true},
-    ["AlwaysPhysBullet"] = {"Always Physical Bullets", false},
-    ["NeverPhysBullet"] = {"Non-Physical Bullets", true},
-    ["InfiniteAmmo"] = {"Infinite Ammunition", false},
-    ["BottomlessClip"] = {"Bottomless Magazine", false},
-    ["ShotgunReload"] = {"Individual Reloading", false},
-    ["HybridReload"] = {"Hybrid Individual Reloading", false},
-    ["ManualAction"] = {"Manual Action", true},
-    ["CanFireUnderwater"] = {"Underwater Shooting", false},
-    ["AutoReload"] = {"Idle Reloading", false},
-    ["AutoBurst"] = {"Automatic Burst Fire", false},
-    ["RunAwayBurst"] = {"Runaway Burst", false},
-    ["ShootWhileSprint"] = {"Shoot While Sprinting", false},
-    ["Bash"] = {"Melee Attacks", false},
-    ["Overheat"] = {"Overheating", true},
-    ["Malfunction"] = {"Jamming", true},
-    ["Bipod"] = {"Bipod", false},
+    ["DamageMax"] = {false, false},
+    ["DamageMin"] = {false, false},
+    ["DamageRand"] = {true, true},
+    ["RangeMin"] = {hutom, false},
+    ["RangeMax"] = {hutom, false},
+    ["Num"] = {false, false},
+    ["Penetration"] = {"HU", false},
+    ["RicochetAngleMax"] = {"°", false},
+    ["RicochetChance"] = {true, false},
+    ["ArmorPiercing"] = {false, false},
+    ["EntityMuzzleVelocity"] = {hutoms, false},
+    ["PhysBulletMuzzleVelocity"] = {hutoms, false},
+    ["PhysBulletDrag"] = {true, true},
+    ["PhysBulletGravity"] = {true, true},
+    ["ChamberSize"] = {false, false},
+    ["ClipSize"] = {false, false},
+    ["SupplyLimit"] = {false, false},
+    ["SecondarySupplyLimit"] = {false, false},
+    ["AmmoPerShot"] = {false, true},
+    ["ManualActionChamber"] = {false, false},
+    ["TriggerDelay"] = {"s", true},
+    ["RPM"] = {"RPM", false},
+    ["PostBurstDelay"] = {"s", true},
+    ["Recoil"] = {false, true},
+    ["RecoilPatternDrift"] = {false, true},
+    ["RecoilUp"] = {false, true},
+    ["RecoilSide"] = {false, true},
+    ["RecoilRandomUp"] = {false, true},
+    ["RecoilRandomSide"] = {false, true},
+    ["RecoilDissipationRate"] = {false, true},
+    ["RecoilResetTime"] = {"s", true},
+    ["RecoilAutoControl"] = {false, false},
+    ["RecoilKick"] = {false, true},
+    ["Spread"] = {degtomoa, true},
+    ["PelletSpread"] = {degtomoa, true},
+    ["FreeAimRadius"] = {"°", true},
+    ["Sway"] = {false, true},
+    ["AimDownSightsTime"] = {"s", true},
+    ["SprintToFireTime"] = {"s", true},
+    ["ReloadTime"] = {true, true},
+    ["DeployTime"] = {true, true},
+    ["CycleTime"] = {true, true},
+    ["FixTime"] = {true, true},
+    ["OverheatTime"] = {true, true},
+    ["Speed"] = {true, false},
+    ["BashDamage"] = {false, false},
+    ["BashLungeRange"] = {"HU", false},
+    ["HeatCapacity"] = {false, false},
+    ["HeatDissipation"] = {false, false},
+    ["MalfunctionMeanShotsToFail"] = {false, false},
+    ["ShootVolume"] = {"dB", true},
+    ["AlwaysPhysBullet"] = {false, false},
+    ["NeverPhysBullet"] = {false, true},
+    ["InfiniteAmmo"] = {false, false},
+    ["BottomlessClip"] = {false, false},
+    ["ShotgunReload"] = {false, false},
+    ["HybridReload"] = {false, false},
+    ["ManualAction"] = {false, true},
+    ["CanFireUnderwater"] = {false, false},
+    ["AutoReload"] = {false, false},
+    ["AutoBurst"] = {false, false},
+    ["RunAwayBurst"] = {false, false},
+    ["ShootWhileSprint"] = {false, false},
+    ["Bash"] = {false, false},
+    ["Overheat"] = {false, true},
+    ["Malfunction"] = {false, true},
+    ["Bipod"] = {false, false},
 }
 
 ARC9.AutoStatsOperations = {
-    ["Mult"] = function(a, weapon, stat)
+    ["Mult"] = function(a, weapon, stat, unit)
+        if unit == true then
+            return "×" .. math.Round(a * 100, 2) .. "% ", "", a < 1
+        end
+
         local neg = false
         if a > 1 then
             a = (a - 1) * 100
@@ -77,6 +91,7 @@ ARC9.AutoStatsOperations = {
             a = (a - 1) * -100
             neg = true
         end
+        a = math.Round(a, 2)
 
         if neg then
             return "-" .. tostring(a) .. "% ", "", true
@@ -84,29 +99,51 @@ ARC9.AutoStatsOperations = {
             return "+" .. tostring(a) .. "% ", "", false
         end
     end,
-    ["Add"] = function(a, weapon, stat)
+    ["Add"] = function(a, weapon, stat, unit)
         local neg = false
         if a < 0 then
             neg = true
             a = a * -1
         end
 
-        if neg then
-            return "-" .. tostring(a) .. " ", "", true
+        local str
+        if unit == true then
+            str = math.Round(a * 100, 2) .. "%"
+        elseif isstring(unit) then
+            str = tostring(a) .. unit
+        elseif isfunction(unit) then
+            str = unit(a)
         else
-            return "+" .. tostring(a) .. " ", "", false
+            str = tostring(a)
+        end
+
+        if neg then
+            return "-" .. str .. " ", "", true
+        else
+            return "+" .. str .. " ", "", false
         end
     end,
-    ["Override"] = function(a, weapon, stat)
+    ["Override"] = function(a, weapon, stat, unit)
         if isbool(a) then
             if a then
-                return "Enable ", "", a
+                return ARC9:GetPhrase("autostat.enable.pre") or "", ARC9:GetPhrase("autostat.enable.post") or "", a
             else
-                return "Disable ", "", a
+                return ARC9:GetPhrase("autostat.disable.pre") or "", ARC9:GetPhrase("autostat.disable.post") or "", a
             end
         end
 
-        return tostring(a) .. " ", "", a <= (weapon[stat] or 0)
+        local str
+        if unit == true then
+            str = math.Round(a * 100, 2) .. "%"
+        elseif isstring(unit) then
+            str = tostring(a) .. unit
+        elseif isfunction(unit) then
+            str = unit(a)
+        else
+            str = tostring(a)
+        end
+
+        return str .. " ", "", a <= (weapon[stat] or 0)
     end,
     ["Hook"] = function(a, weapon, stat)
         return "", "", false
@@ -143,6 +180,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         local autostat = ""
         local canautostat = false
         local neg = false
+        local unit = false
         local negisgood = false
         local asmain = ""
 
@@ -150,7 +188,8 @@ function ARC9.GetProsAndCons(atttbl, weapon)
 
         for main, tbl in pairs(ARC9.AutoStatsMains) do
             if string.len(main) > maxlen and string.StartWith(stat, main) then
-                autostat = ARC9:GetPhrase("autostat." .. main) or tbl[1]
+                autostat = ARC9:GetPhrase("autostat." .. main) or main
+                unit = tbl[1]
                 negisgood = tbl[2]
                 asmain = main
                 canautostat = true
@@ -169,7 +208,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
 
         for op, func in pairs(ARC9.AutoStatsOperations) do
             if string.StartWith(stat, op) then
-                local pre, post, isneg = func(value, weapon, asmain)
+                local pre, post, isneg = func(value, weapon, asmain, unit)
                 autostat = pre .. autostat .. post
                 neg = isneg
                 foundop = true
@@ -193,7 +232,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         if string.len(stat) > 0 then
             for cond, postfix in pairs(ARC9.AutoStatsConditions) do
                 if string.StartWith(stat, cond) then
-                    autostat = autostat .. " " .. postfix
+                    autostat = ARC9:GetPhrase("autostat.secondary." .. string.lower(cond), {autostat})
                     break
                 end
             end
