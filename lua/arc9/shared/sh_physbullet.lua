@@ -170,6 +170,7 @@ net.Receive("ARC9_sendbullet", function(len, ply)
     if modelindex > 0 then
         local mdl = ARC9.PhysBulletModels[modelindex]
         bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
+        bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
     end
 
     table.insert(ARC9.PhysBullets, bullet)
@@ -335,10 +336,26 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     })
                 end
                 if IsValid(bullet.ClientModel) then
-                    bullet.ClientModel:SetPos(bullet.Pos)
-                    bullet.ClientModel:SetAngles(bullet.Vel:Angle())
-                    bullet.ClientModel:SetParent(tr.Entity)
-                    SafeRemoveEntityDelayed(bullet.ClientModel, weapon:GetProcessedValue("PhysBulletModelStick") or 0)
+                    local t = weapon:GetProcessedValue("PhysBulletModelStick") or 0
+                    if t > 0 then
+                        local bone = tr.Entity:TranslatePhysBoneToBone(tr.PhysicsBone) or tr.Entity:GetHitBoxBone(tr.HitBox, tr.Entity:GetHitboxSet())
+                        if bone then
+                            local matrix = tr.Entity:GetBoneMatrix(bone)
+                            local pos = matrix:GetTranslation()
+                            local ang = matrix:GetAngles()
+                            bullet.ClientModel:FollowBone(tr.Entity, bone)
+                            local n_pos, n_ang = WorldToLocal(tr.HitPos, tr.Normal:Angle(), pos, ang)
+                            bullet.ClientModel:SetLocalPos(n_pos)
+                            bullet.ClientModel:SetLocalAngles(n_ang)
+                            debugoverlay.Cross(pos, 8, 5, Color(255, 0, 255), true)
+                        else
+                            bullet.ClientModel:SetPos(bullet.Pos)
+                            bullet.ClientModel:SetAngles(bullet.Vel:Angle())
+                            bullet.ClientModel:SetParent(tr.Entity)
+                        end
+                        debugoverlay.Cross(bullet.ClientModel:GetPos(), 8, 5, color_white, true)
+                    end
+                    SafeRemoveEntityDelayed(bullet.ClientModel, t)
                 end
                 bullet.Dead = true
             elseif SERVER then
@@ -450,7 +467,7 @@ function ARC9.DrawPhysBullets()
             if IsValid(i.ClientModel) then
                 i.ClientModel:SetPos(pos)
                 i.ClientModel:SetAngles(i.Vel:Angle())
-                i.ClientModel:DrawModel()
+                --i.ClientModel:DrawModel()
             end
             continue
         end
