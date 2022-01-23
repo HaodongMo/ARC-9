@@ -1,6 +1,43 @@
 ARC9.PhysBullets = {
 }
 
+ARC9.PhysBulletModels = ARC9.PhysBulletModels or {}
+ARC9.PhysBulletModelsLookup = ARC9.PhysBulletModelsLookup or {}
+
+if SERVER then
+    util.AddNetworkString("arc9_physbulletmodels")
+
+    net.Receive("arc9_physbulletmodels", function(len, ply)
+        if !ply.ARC9_HASPHYSBULLETMODELS then
+            ARC9:SendPhysBulletModels(ply)
+            ply.ARC9_HASPHYSBULLETMODELS = true
+        end
+    end)
+end
+
+function ARC9:RegisterPhysBulletModel(model)
+    model = string.lower(model)
+    if #ARC9.PhysBulletModels >= 255 then return -1 end
+    if ARC9.PhysBulletModelsLookup[model] then return ARC9.PhysBulletModelsLookup[model] end
+    local index = table.insert(ARC9.PhysBulletModels, model)
+    ARC9.PhysBulletModelsLookup[model] = index
+    return index
+end
+
+function ARC9:SendPhysBulletModels(ply)
+    net.Start("arc9_physbulletmodels")
+    net.WriteUInt(#ARC9.PhysBulletModels, 8)
+    for i, v in ipairs(ARC9.PhysBulletModels) do
+        net.WriteString(v)
+    end
+
+    if ply then
+        net.Send(ply)
+    else
+        net.Broadcast()
+    end
+end
+
 function ARC9:SendBullet(bullet, attacker)
     net.Start("ARC9_sendbullet", true)
     net.WriteVector(bullet.Pos)
@@ -10,6 +47,7 @@ function ARC9:SendBullet(bullet, attacker)
     net.WriteFloat(bullet.Drag)
     net.WriteFloat(bullet.Gravity)
     net.WriteEntity(bullet.Weapon)
+    net.WriteUInt(bullet.ModelIndex or 0, 8)
 
     if attacker and attacker:IsValid() and attacker:IsPlayer() and !game.SinglePlayer() then
         net.SendOmit(attacker)
@@ -34,6 +72,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Imaginary = false,
         Underwater = false,
         Weapon = wep,
+        ModelIndex = ARC9.PhysBulletModelsLookup[wep:GetProcessedValue("PhysBulletModel")] or 0,
         Attacker = wep:GetOwner(),
         Filter = {wep:GetOwner()},
         Damaged = {},
@@ -82,6 +121,7 @@ net.Receive("ARC9_sendbullet", function(len, ply)
     local drag = net.ReadFloat()
     local grav = net.ReadFloat()
     local weapon = net.ReadEntity()
+    local modelindex = net.ReadUInt(8)
     local ent = nil
 
     if game.SinglePlayer() then
@@ -101,9 +141,11 @@ net.Receive("ARC9_sendbullet", function(len, ply)
         Attacker = ent,
         Gravity = grav,
         Weapon = weapon,
+        ModelIndex = modelindex,
         Color = weapon:GetProcessedValue("TracerColor"),
         Fancy = weapon:GetProcessedValue("FancyBullets"),
         Size = weapon:GetProcessedValue("TracerSize"),
+        Filter = {ent},
         Invisible = false
     }
 
@@ -115,7 +157,26 @@ net.Receive("ARC9_sendbullet", function(len, ply)
         bullet.Underwater = true
     end
 
+    if modelindex > 0 then
+        local mdl = ARC9.PhysBulletModels[modelindex]
+        bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
+    end
+
     table.insert(ARC9.PhysBullets, bullet)
+end)
+
+net.Receive("arc9_physbulletmodels", function()
+    ARC9.PhysBulletModels = {}
+    local count = net.ReadUInt(8)
+    for i = 1, count do
+        ARC9.PhysBulletModels[i] = net.ReadString()
+        ARC9.PhysBulletModelsLookup[ARC9.PhysBulletModels[i]] = i
+    end
+end)
+
+hook.Add("InitPostEntity", "ARC9_RetrievePhysBulletModels", function()
+    net.Start("arc9_physbulletmodels")
+    net.SendToServer()
 end)
 
 end
@@ -263,6 +324,12 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                         IgnoreEntity = bullet.Attacker
                     })
                 end
+                if IsValid(bullet.ClientModel) then
+                    bullet.ClientModel:SetPos(bullet.Pos)
+                    bullet.ClientModel:SetAngles(bullet.Vel:Angle())
+                    bullet.ClientModel:SetParent(tr.Entity)
+                    SafeRemoveEntityDelayed(bullet.ClientModel, weapon:GetProcessedValue("PhysBulletModelStick") or 0)
+                end
                 bullet.Dead = true
             elseif SERVER then
                 bullet.Damaged[eid] = true
@@ -365,9 +432,18 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in pairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        if i.Travelled <= 512 then continue end
+        if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
 
         local pos = i.Pos
+
+        if i.ModelIndex != 0 then
+            if IsValid(i.ClientModel) then
+                i.ClientModel:SetPos(pos)
+                i.ClientModel:SetAngles(i.Vel:Angle())
+                i.ClientModel:DrawModel()
+            end
+            continue
+        end
 
         local size = 1
 
