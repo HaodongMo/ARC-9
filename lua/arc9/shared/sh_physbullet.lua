@@ -103,7 +103,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
     if !game.SinglePlayer() then
         local owner = wep:GetOwner()
-        if owner:IsPlayer() and SERVER then
+        if owner:IsPlayer() and SERVER and !owner:IsListenServerHost() then
             local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
             local timestep = engine.TickInterval()
 
