@@ -28,6 +28,12 @@ function SWEP:DoRT(fov, atttbl)
         ARC9.OverDraw = true
         render.RenderView(rt)
         ARC9.OverDraw = false
+
+        cam.Start3D(nil, nil, fov, 0, 0, rtsize, rtsize)
+            cam.IgnoreZ(true)
+            self:DrawLasers(false, true)
+            cam.IgnoreZ(false)
+        cam.End3D()
     else
         render.Clear(0, 0, 0, 255, true, true)
     end
@@ -224,6 +230,12 @@ function SWEP:DoCheapScope(fov, atttbl)
     render.DrawTextureToScreenRect(screen, scrx, scry, scrw * s, scrh * s)
     -- render.DrawTextureToScreenRect(ITexture tex, number x, number y, number width, number height)
     -- cam.End2D()
+
+    cam.Start3D(nil, nil, fov, 0, 0, rtsize, rtsize)
+        cam.IgnoreZ(true)
+        self:DrawLasers(false, true)
+        cam.IgnoreZ(false)
+    cam.End3D()
 
     if atttbl.RTScopeNightVision then
         self:DoNightScopeEffects(atttbl)

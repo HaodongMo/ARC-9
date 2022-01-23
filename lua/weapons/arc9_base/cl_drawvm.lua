@@ -48,10 +48,10 @@ function SWEP:PostDrawViewModel()
 end
 
 function SWEP:ViewModelDrawn()
+    -- self:DrawLasers(false)
     self:DrawCustomModel(false)
     self:DoRHIK()
     self:DrawLasers(false)
-    -- self:DrawLasers()
 end
 
 function SWEP:DrawCustomModel(wm)
