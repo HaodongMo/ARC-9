@@ -339,8 +339,8 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     local t = weapon:GetProcessedValue("PhysBulletModelStick") or 0
                     if t > 0 then
                         local bone = tr.Entity:TranslatePhysBoneToBone(tr.PhysicsBone) or tr.Entity:GetHitBoxBone(tr.HitBox, tr.Entity:GetHitboxSet())
-                        if bone then
-                            local matrix = tr.Entity:GetBoneMatrix(bone)
+                        local matrix = tr.Entity:GetBoneMatrix(bone or 0)
+                        if bone and matrix then
                             local pos = matrix:GetTranslation()
                             local ang = matrix:GetAngles()
                             bullet.ClientModel:FollowBone(tr.Entity, bone)
