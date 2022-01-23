@@ -1,5 +1,4 @@
-ARC9.PhysBullets = {
-}
+ARC9.PhysBullets = {}
 
 ARC9.PhysBulletModels = ARC9.PhysBulletModels or {}
 ARC9.PhysBulletModelsLookup = ARC9.PhysBulletModelsLookup or {}
@@ -13,6 +12,20 @@ if SERVER then
             ply.ARC9_HASPHYSBULLETMODELS = true
         end
     end)
+
+    function ARC9:SendPhysBulletModels(ply)
+        net.Start("arc9_physbulletmodels")
+        net.WriteUInt(#ARC9.PhysBulletModels, 8)
+        for i, v in ipairs(ARC9.PhysBulletModels) do
+            net.WriteString(v)
+        end
+
+        if ply then
+            net.Send(ply)
+        else
+            net.Broadcast()
+        end
+    end
 end
 
 function ARC9:RegisterPhysBulletModel(model)
@@ -22,20 +35,6 @@ function ARC9:RegisterPhysBulletModel(model)
     local index = table.insert(ARC9.PhysBulletModels, model)
     ARC9.PhysBulletModelsLookup[model] = index
     return index
-end
-
-function ARC9:SendPhysBulletModels(ply)
-    net.Start("arc9_physbulletmodels")
-    net.WriteUInt(#ARC9.PhysBulletModels, 8)
-    for i, v in ipairs(ARC9.PhysBulletModels) do
-        net.WriteString(v)
-    end
-
-    if ply then
-        net.Send(ply)
-    else
-        net.Broadcast()
-    end
 end
 
 function ARC9:SendBullet(bullet, attacker)
@@ -62,12 +61,12 @@ end
 function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
     local physmdl = wep:GetProcessedValue("PhysBulletModel")
-    local mdlindex = ARC9.PhysBulletModelsLookup[physmdl]
+    local mdlindex = ARC9.PhysBulletModelsLookup[physmdl] or 0
 
-    if physmdl and !mdlindex then
+    if physmdl and mdlindex == 0 then
         print("\nARC9 encountered unregistered PhysBulletModel '" .. physmdl .. "'!\nWe will register and refresh this model for all clients, but this is network-intensive!\n\nPlease tell the addon developer to register the model in a shared lua file like so: ARC9:RegisterPhysBulletModel(\"" .. physmdl .. "\")")
         mdlindex = ARC9:RegisterPhysBulletModel(physmdl)
-        ARC9:SendPhysBulletModels()
+        if SERVER then ARC9:SendPhysBulletModels() end
     end
 
     tbl = tbl or {}
@@ -87,6 +86,9 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Filter = {wep:GetOwner()},
         Damaged = {},
         Dead = false,
+        Color = wep:GetProcessedValue("TracerColor"),
+        Fancy = wep:GetProcessedValue("FancyBullets"),
+        Size = wep:GetProcessedValue("TracerSize"),
     }
 
     for i, k in pairs(tbl) do
@@ -112,6 +114,12 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
                 latency = latency - 1
             end
         end
+
+        if CLIENT and mdlindex > 0 then
+            local mdl = ARC9.PhysBulletModels[mdlindex]
+            bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
+            bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
+        end
     end
 
     if SERVER then
@@ -123,7 +131,7 @@ end
 
 if CLIENT then
 
-net.Receive("ARC9_sendbullet", function(len, ply)
+net.Receive("arc9_sendbullet", function(len, ply)
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
     local vel = net.ReadFloat()
@@ -347,13 +355,11 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                             local n_pos, n_ang = WorldToLocal(tr.HitPos, tr.Normal:Angle(), pos, ang)
                             bullet.ClientModel:SetLocalPos(n_pos)
                             bullet.ClientModel:SetLocalAngles(n_ang)
-                            debugoverlay.Cross(pos, 8, 5, Color(255, 0, 255), true)
                         else
                             bullet.ClientModel:SetPos(bullet.Pos)
                             bullet.ClientModel:SetAngles(bullet.Vel:Angle())
                             bullet.ClientModel:SetParent(tr.Entity)
                         end
-                        debugoverlay.Cross(bullet.ClientModel:GetPos(), 8, 5, color_white, true)
                     end
                     SafeRemoveEntityDelayed(bullet.ClientModel, t)
                 end
