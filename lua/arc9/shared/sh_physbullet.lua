@@ -1,5 +1,41 @@
-ARC9.PhysBullets = {
-}
+ARC9.PhysBullets = {}
+
+ARC9.PhysBulletModels = ARC9.PhysBulletModels or {}
+ARC9.PhysBulletModelsLookup = ARC9.PhysBulletModelsLookup or {}
+
+if SERVER then
+    util.AddNetworkString("arc9_physbulletmodels")
+
+    net.Receive("arc9_physbulletmodels", function(len, ply)
+        if !ply.ARC9_HASPHYSBULLETMODELS then
+            ARC9:SendPhysBulletModels(ply)
+            ply.ARC9_HASPHYSBULLETMODELS = true
+        end
+    end)
+
+    function ARC9:SendPhysBulletModels(ply)
+        net.Start("arc9_physbulletmodels")
+        net.WriteUInt(#ARC9.PhysBulletModels, 8)
+        for i, v in ipairs(ARC9.PhysBulletModels) do
+            net.WriteString(v)
+        end
+
+        if ply then
+            net.Send(ply)
+        else
+            net.Broadcast()
+        end
+    end
+end
+
+function ARC9:RegisterPhysBulletModel(model)
+    model = string.lower(model)
+    if #ARC9.PhysBulletModels >= 255 then return -1 end
+    if ARC9.PhysBulletModelsLookup[model] then return ARC9.PhysBulletModelsLookup[model] end
+    local index = table.insert(ARC9.PhysBulletModels, model)
+    ARC9.PhysBulletModelsLookup[model] = index
+    return index
+end
 
 function ARC9:SendBullet(bullet, attacker)
     net.Start("ARC9_sendbullet", true)
@@ -10,6 +46,7 @@ function ARC9:SendBullet(bullet, attacker)
     net.WriteFloat(bullet.Drag)
     net.WriteFloat(bullet.Gravity)
     net.WriteEntity(bullet.Weapon)
+    net.WriteUInt(bullet.ModelIndex or 0, 8)
 
     if attacker and attacker:IsValid() and attacker:IsPlayer() and !game.SinglePlayer() then
         net.SendOmit(attacker)
@@ -22,6 +59,16 @@ function ARC9:SendBullet(bullet, attacker)
 end
 
 function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
+
+    local physmdl = wep:GetProcessedValue("PhysBulletModel")
+    local mdlindex = ARC9.PhysBulletModelsLookup[physmdl] or 0
+
+    if physmdl and mdlindex == 0 then
+        print("\nARC9 encountered unregistered PhysBulletModel '" .. physmdl .. "'!\nWe will register and refresh this model for all clients, but this is network-intensive!\n\nPlease tell the addon developer to register the model in a shared lua file like so: ARC9:RegisterPhysBulletModel(\"" .. physmdl .. "\")")
+        mdlindex = ARC9:RegisterPhysBulletModel(physmdl)
+        if SERVER then ARC9:SendPhysBulletModels() end
+    end
+
     tbl = tbl or {}
     local bullet = {
         Penleft = wep:GetProcessedValue("Penetration"),
@@ -34,10 +81,14 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Imaginary = false,
         Underwater = false,
         Weapon = wep,
+        ModelIndex = mdlindex,
         Attacker = wep:GetOwner(),
         Filter = {wep:GetOwner()},
         Damaged = {},
         Dead = false,
+        Color = wep:GetProcessedValue("TracerColor"),
+        Fancy = wep:GetProcessedValue("FancyBullets"),
+        Size = wep:GetProcessedValue("TracerSize"),
     }
 
     for i, k in pairs(tbl) do
@@ -52,16 +103,22 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
     if !game.SinglePlayer() then
         local owner = wep:GetOwner()
-        if owner:IsPlayer() and SERVER then
+        if owner:IsPlayer() and SERVER and !owner:IsListenServerHost() then
             local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
             local timestep = engine.TickInterval()
 
-            latency = math.max(latency, 300) // can't let people cheat TOO hard
+            latency = math.min(latency, 200) // can't let people cheat TOO hard
 
             while latency > 0 do
                 ARC9:ProgressPhysBullet(bullet, timestep)
                 latency = latency - 1
             end
+        end
+
+        if CLIENT and mdlindex > 0 then
+            local mdl = ARC9.PhysBulletModels[mdlindex]
+            bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
+            bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
         end
     end
 
@@ -74,7 +131,7 @@ end
 
 if CLIENT then
 
-net.Receive("ARC9_sendbullet", function(len, ply)
+net.Receive("arc9_sendbullet", function(len, ply)
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
     local vel = net.ReadFloat()
@@ -82,6 +139,7 @@ net.Receive("ARC9_sendbullet", function(len, ply)
     local drag = net.ReadFloat()
     local grav = net.ReadFloat()
     local weapon = net.ReadEntity()
+    local modelindex = net.ReadUInt(8)
     local ent = nil
 
     if game.SinglePlayer() then
@@ -101,9 +159,11 @@ net.Receive("ARC9_sendbullet", function(len, ply)
         Attacker = ent,
         Gravity = grav,
         Weapon = weapon,
+        ModelIndex = modelindex,
         Color = weapon:GetProcessedValue("TracerColor"),
         Fancy = weapon:GetProcessedValue("FancyBullets"),
         Size = weapon:GetProcessedValue("TracerSize"),
+        Filter = {ent},
         Invisible = false
     }
 
@@ -115,7 +175,27 @@ net.Receive("ARC9_sendbullet", function(len, ply)
         bullet.Underwater = true
     end
 
+    if modelindex > 0 then
+        local mdl = ARC9.PhysBulletModels[modelindex]
+        bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
+        bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
+    end
+
     table.insert(ARC9.PhysBullets, bullet)
+end)
+
+net.Receive("arc9_physbulletmodels", function()
+    ARC9.PhysBulletModels = {}
+    local count = net.ReadUInt(8)
+    for i = 1, count do
+        ARC9.PhysBulletModels[i] = net.ReadString()
+        ARC9.PhysBulletModelsLookup[ARC9.PhysBulletModels[i]] = i
+    end
+end)
+
+hook.Add("InitPostEntity", "ARC9_RetrievePhysBulletModels", function()
+    net.Start("arc9_physbulletmodels")
+    net.SendToServer()
 end)
 
 end
@@ -263,6 +343,26 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                         IgnoreEntity = bullet.Attacker
                     })
                 end
+                if IsValid(bullet.ClientModel) then
+                    local t = weapon:GetProcessedValue("PhysBulletModelStick") or 0
+                    if t > 0 then
+                        local bone = tr.Entity:TranslatePhysBoneToBone(tr.PhysicsBone) or tr.Entity:GetHitBoxBone(tr.HitBox, tr.Entity:GetHitboxSet())
+                        local matrix = tr.Entity:GetBoneMatrix(bone or 0)
+                        if bone and matrix then
+                            local pos = matrix:GetTranslation()
+                            local ang = matrix:GetAngles()
+                            bullet.ClientModel:FollowBone(tr.Entity, bone)
+                            local n_pos, n_ang = WorldToLocal(tr.HitPos, tr.Normal:Angle(), pos, ang)
+                            bullet.ClientModel:SetLocalPos(n_pos)
+                            bullet.ClientModel:SetLocalAngles(n_ang)
+                        else
+                            bullet.ClientModel:SetPos(bullet.Pos)
+                            bullet.ClientModel:SetAngles(bullet.Vel:Angle())
+                            bullet.ClientModel:SetParent(tr.Entity)
+                        end
+                    end
+                    SafeRemoveEntityDelayed(bullet.ClientModel, t)
+                end
                 bullet.Dead = true
             elseif SERVER then
                 bullet.Damaged[eid] = true
@@ -365,9 +465,18 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in pairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        if i.Travelled <= 512 then continue end
+        if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
 
         local pos = i.Pos
+
+        if i.ModelIndex != 0 then
+            if IsValid(i.ClientModel) then
+                i.ClientModel:SetPos(pos)
+                i.ClientModel:SetAngles(i.Vel:Angle())
+                --i.ClientModel:DrawModel()
+            end
+            continue
+        end
 
         local size = 1
 

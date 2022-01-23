@@ -132,6 +132,11 @@ SWEP.PhysBulletDontInheritPlayerVelocity = false -- Set to true to disable "Brow
 SWEP.FancyBullets = false -- set to true to allow for multicolor mags and crap
 -- Each bullet runs HookP_ModifyBullet, within which modifications can be made
 
+-- Make the physical bullet use a model instead of the tracer effect.
+-- You MUST register the model beforehand in a SHARED context (such as the SWEP file) like so: ARC9:RegisterPhysBulletModel("models/weapons/w_missile.mdl")
+SWEP.PhysBulletModel = nil
+SWEP.PhysBulletModelStick = nil -- The amount of time a physbullet model will stick on impact.
+
 -------------------------- TRACERS
 
 SWEP.TracerNum = 1 -- Tracer every X
