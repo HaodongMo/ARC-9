@@ -60,6 +60,16 @@ function ARC9:SendBullet(bullet, attacker)
 end
 
 function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
+
+    local physmdl = wep:GetProcessedValue("PhysBulletModel")
+    local mdlindex = ARC9.PhysBulletModelsLookup[physmdl]
+
+    if physmdl and !mdlindex then
+        print("\nARC9 encountered unregistered PhysBulletModel '" .. physmdl .. "'!\nWe will register and refresh this model for all clients, but this is network-intensive!\n\nPlease tell the addon developer to register the model in a shared lua file like so: ARC9:RegisterPhysBulletModel(\"" .. physmdl .. "\")")
+        mdlindex = ARC9:RegisterPhysBulletModel(physmdl)
+        ARC9:SendPhysBulletModels()
+    end
+
     tbl = tbl or {}
     local bullet = {
         Penleft = wep:GetProcessedValue("Penetration"),
@@ -72,7 +82,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Imaginary = false,
         Underwater = false,
         Weapon = wep,
-        ModelIndex = ARC9.PhysBulletModelsLookup[wep:GetProcessedValue("PhysBulletModel")] or 0,
+        ModelIndex = mdlindex,
         Attacker = wep:GetOwner(),
         Filter = {wep:GetOwner()},
         Damaged = {},
