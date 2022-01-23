@@ -107,7 +107,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
             local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
             local timestep = engine.TickInterval()
 
-            latency = math.max(latency, 300) // can't let people cheat TOO hard
+            latency = math.min(latency, 200) // can't let people cheat TOO hard
 
             while latency > 0 do
                 ARC9:ProgressPhysBullet(bullet, timestep)
