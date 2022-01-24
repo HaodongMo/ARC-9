@@ -165,10 +165,8 @@ function SWEP:GetSlotBlocked(slottbl)
                 if !eles[ele] then ok = false break end
             end
 
-            if ok then return true end
+            if !ok then return true end
         end
-
-        return true
     end
 
     return false
