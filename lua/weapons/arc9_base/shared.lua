@@ -440,11 +440,11 @@ SWEP.ImpactDecal = nil
 SWEP.ShellEffect = nil -- Override the ARC9 shell eject effect for your own.
 
 SWEP.ShellModel = "models/shells/shell_556.mdl"
-SWEP.ShellMaterial = nil
+SWEP.ShellMaterial = nil -- string
 
 SWEP.EjectDelay = 0
 
-SWEP.ShellScale = Vector(1, 1, 1)
+SWEP.ShellScale = 1
 SWEP.ShellPhysBox = Vector(0.5, 0.5, 2)
 
 SWEP.ShellPitch = 100 -- for shell sounds

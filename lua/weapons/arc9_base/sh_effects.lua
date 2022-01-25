@@ -30,7 +30,6 @@ function SWEP:DoEject()
 
     local data = EffectData()
     data:SetEntity(self)
-    data:SetFlags(2)
     data:SetAttachment(eject_qca)
 
     util.Effect("ARC9_shelleffect", data)

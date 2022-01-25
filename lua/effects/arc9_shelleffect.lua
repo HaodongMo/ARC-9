@@ -40,11 +40,6 @@ function EFFECT:Init(data)
 
     local att = data:GetAttachment()
     local ent = data:GetEntity()
-    local type = data:GetFlags()
-
-    self.Type = type or self.Type
-
-    local typetbl = self.TypeSettings[self.Type]
 
     if !IsValid(ent) then self:Remove() return end
     if !IsValid(ent:GetOwner()) then self:Remove() return end
@@ -59,7 +54,6 @@ function EFFECT:Init(data)
     if !IsValid(ent) then self:Remove() return end
     if !mdl or !IsValid(mdl) then self:Remove() return end
     if !mdl:GetAttachment(att) then self:Remove() return end
-    if !typetbl then self:Remove() return end
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
 
@@ -69,16 +63,26 @@ function EFFECT:Init(data)
     -- ang:RotateAroundAxis(ang:Up(), (ent.ShellRotateAngle or Angle(0, 0, 0))[2])
     -- ang:RotateAroundAxis(ang:Forward(), (ent.ShellRotateAngle or Angle(0, 0, 0))[3])
 
+    local model = ent:GetProcessedValue("ShellModel")
+    local mat = ent:GetProcessedValue("ShellMaterial")
+    local scale = ent:GetProcessedValue("ShellScale")
+    local physbox = ent:GetProcessedValue("ShellPhysBox")
+    local pitch = ent:GetProcessedValue("ShellPitch")
+    local sounds = ent:GetProcessedValue("ShellSounds")
+
     local dir = ang:Forward()
 
     ang:RotateAroundAxis(ang:Forward(), 90)
     ang:RotateAroundAxis(ang:Up(), 0)
 
     self:SetPos(origin)
-    self:SetModel(typetbl.Model)
+    self:SetModel(model or "")
+    self:SetMaterial(mat or "")
     self:DrawShadow(true)
     self:SetAngles(ang)
-    self:SetModelScale(typetbl.Scale or 1)
+    self:SetModelScale(scale or 1)
+
+    self.ShellPitch = pitch
 
     -- if !LocalPlayer():ShouldDrawLocalPlayer() and ent:GetOwner() == LocalPlayer() then
     --     self:SetNoDraw(true)
@@ -86,16 +90,15 @@ function EFFECT:Init(data)
 
     -- table.insert(ent.EjectedShells, self)
 
-    self.Sounds = typetbl.Sounds
+    self.Sounds = sounds or ARC9.ShellSoundsTable
 
-    local s = typetbl.Scale or 1
-
-    local pb_vert = 2 * s
-    local pb_hor = 0.25 * s
+    local pb_z = physbox.z
+    local pb_y = physbox.y
+    local pb_x = physbox.x
 
     local mag = 150
 
-    self:PhysicsInitBox(Vector(-pb_vert,-pb_hor,-pb_hor), Vector(pb_vert,pb_hor,pb_hor))
+    self:PhysicsInitBox(Vector(-pb_z,-pb_y,-pb_x), Vector(pb_z,pb_x,pb_y))
 
     self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 
@@ -145,7 +148,7 @@ end
 function EFFECT:PhysicsCollide()
     if self.AlreadyPlayedSound then return end
 
-    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 65, 100, 1)
+    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 65, self.ShellPitch, 1)
 
     self.AlreadyPlayedSound = true
 end

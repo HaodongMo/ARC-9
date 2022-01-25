@@ -95,7 +95,7 @@ function SWEP:DoRHIK()
 
     if rhik_model then
         rhik_model:SetupBones()
-        for _, bone in pairs(ARC9.RHIKHandBones) do
+        for _, bone in pairs(ARC9.RHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = rhik_model:LookupBone(bone)
 
@@ -121,7 +121,7 @@ function SWEP:DoRHIK()
 
     if lhik_model then
         lhik_model:SetupBones()
-        for _, bone in pairs(ARC9.LHIKHandBones) do
+        for _, bone in pairs(ARC9.LHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = lhik_model:LookupBone(bone)
 

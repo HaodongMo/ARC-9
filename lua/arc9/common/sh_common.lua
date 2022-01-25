@@ -24,7 +24,7 @@ ARC9.PenTable = {
     [MAT_WARPSHIELD]  = 1,
 }
 
-ArcCW.ShellSoundsTable = {
+ARC9.ShellSoundsTable = {
     "weapons/arc9/casings/casing_556_1.wav",
     "weapons/arc9/casings/casing_556_2.wav",
     "weapons/arc9/casings/casing_556_3.wav",
@@ -35,28 +35,28 @@ ArcCW.ShellSoundsTable = {
     "weapons/arc9/casings/casing_308_4.wav"
 }
 
-ArcCW.PistolShellSoundsTable = {
+ARC9.PistolShellSoundsTable = {
     "weapons/arc9/casings/casing_9mm_1.wav",
     "weapons/arc9/casings/casing_9mm_2.wav",
     "weapons/arc9/casings/casing_9mm_3.wav",
     "weapons/arc9/casings/casing_9mm_4.wav"
 }
 
-ArcCW.TinyShellSoundsTable = {
+ARC9.TinyShellSoundsTable = {
     "weapons/arc9/casings/casing_22_1.wav",
     "weapons/arc9/casings/casing_22_2.wav",
     "weapons/arc9/casings/casing_22_3.wav",
     "weapons/arc9/casings/casing_22_4.wav"
 }
 
-ArcCW.ShotgunShellSoundsTable = {
+ARC9.ShotgunShellSoundsTable = {
     "weapons/arc9/casings/casing_12ga_1.wav",
     "weapons/arc9/casings/casing_12ga_2.wav",
     "weapons/arc9/casings/casing_12ga_3.wav",
     "weapons/arc9/casings/casing_12ga_4.wav"
 }
 
-ArcCW.RicochetSounds = {
+ARC9.RicochetSounds = {
     "weapons/arc9/ricochet01.wav",
     "weapons/arc9/ricochet02.wav",
     "weapons/arc9/ricochet03.wav",
