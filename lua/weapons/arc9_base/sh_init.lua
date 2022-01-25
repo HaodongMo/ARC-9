@@ -7,6 +7,10 @@ function SWEP:DoDeployAnimation()
     end
 end
 
+function SWEP:OnReloaded()
+    self:InvalidateCache()
+end
+
 function SWEP:Deploy()
     if self:GetOwner():IsNPC() then
         return
