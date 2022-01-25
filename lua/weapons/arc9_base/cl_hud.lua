@@ -3,6 +3,13 @@ function SWEP:ShouldDrawCrosshair()
 end
 
 function SWEP:DoDrawCrosshair(x, y)
+
+    if self:GetOwner():IsAdmin() and GetConVar("developer"):GetInt() >= 2 and self:GetInSights() then
+        surface.SetDrawColor(255, 0, 0, 150)
+        surface.DrawLine(ScrW() / 2, 0, ScrW() / 2, ScrH())
+        surface.DrawLine(0, ScrH() / 2, ScrW(), ScrH() / 2)
+    end
+
     return true
 end
 
