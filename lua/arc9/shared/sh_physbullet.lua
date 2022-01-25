@@ -89,6 +89,8 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Color = wep:GetProcessedValue("TracerColor"),
         Fancy = wep:GetProcessedValue("FancyBullets"),
         Size = wep:GetProcessedValue("TracerSize"),
+        Guidance = wep:GetProcessedValue("BulletGuidance"),
+        GuidanceAmount = wep:GetProcessedValue("BulletGuidanceAmount"),
     }
 
     for i, k in pairs(tbl) do
@@ -164,6 +166,8 @@ net.Receive("arc9_sendbullet", function(len, ply)
         Fancy = weapon:GetProcessedValue("FancyBullets"),
         Size = weapon:GetProcessedValue("TracerSize"),
         Filter = {ent},
+        Guidance = weapon:GetProcessedValue("BulletGuidance"),
+        GuidanceAmount = weapon:GetProcessedValue("BulletGuidanceAmount"),
         Invisible = false
     }
 
@@ -230,13 +234,15 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
     local oldpos = bullet.Pos
     local oldvel = bullet.Vel
-    local dir = bullet.Vel:GetNormalized()
-    local spd = bullet.Vel:Length() * timestep
-    local drag = bullet.Drag * spd * spd * (1 / 150000)
-    local gravity = timestep * GetConVar("ARC9_bullet_gravity"):GetFloat() * (bullet.Gravity or 1) * 600
 
     local attacker = bullet.Attacker
     local weapon = bullet.Weapon
+
+    local dir = bullet.Vel:GetNormalized()
+    local spd = bullet.Vel:Length() * timestep
+
+    local drag = bullet.Drag * spd * spd * (1 / 150000)
+    local gravity = timestep * GetConVar("ARC9_bullet_gravity"):GetFloat() * (bullet.Gravity or 1) * 600
 
     -- if !IsValid(attacker) then
     --     bullet.Dead = true
@@ -444,6 +450,14 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                 end
             end
         end
+    end
+
+    if bullet.Guidance and attacker then
+        local tgt_point = attacker:EyePos() + (attacker:EyeAngles():Forward() * 35000)
+
+        local tgt_dir = (tgt_point - oldpos):GetNormalized()
+
+        bullet.Vel = bullet.Vel + (tgt_dir * timestep * (bullet.GuidanceAmount or 15000))
     end
 
     local MaxDimensions = 16384 * 4

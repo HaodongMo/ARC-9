@@ -76,6 +76,9 @@ ARC9.AutoStatsMains = {
     ["Overheat"] = {false, true},
     ["Malfunction"] = {false, true},
     ["Bipod"] = {false, false},
+    ["NoFlash"] = {false, true},
+    ["BulletGuidance"] = {false, true},
+    ["BulletGuidanceAmount"] = {false, false}
 }
 
 ARC9.AutoStatsOperations = {
