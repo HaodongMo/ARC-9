@@ -398,11 +398,11 @@ SWEP.ShootPitchVariation = 0.05
 SWEP.FirstShootSound = nil
 SWEP.ShootSound = ""
 SWEP.ShootSoundSilenced = ""
-SWEP.FirstShootSoundSilenced = ""
+SWEP.FirstShootSoundSilenced = nil
 SWEP.FirstDistantShootSound = nil
 SWEP.DistantShootSound = ""
-SWEP.DistantShootSoundSilenced = ""
-SWEP.FirstDistantShootSoundSilenced = ""
+SWEP.DistantShootSoundSilenced = nil
+SWEP.FirstDistantShootSoundSilenced = nil
 SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil
 
