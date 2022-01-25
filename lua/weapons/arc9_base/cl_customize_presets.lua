@@ -95,6 +95,7 @@ function SWEP:CreateHUD_Presets(scroll)
 
         btn.DoRightClick = function(self2)
             self:DeletePreset(preset)
+            surface.PlaySound("arc9/preset_delete.ogg")
             self:CreateHUD_Bottom()
         end
 
