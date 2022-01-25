@@ -769,6 +769,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 15, "FinishFiremodeAnimTime")
     self:NetworkVar("Float", 16, "IKTimeLineStart")
     self:NetworkVar("Float", 17, "IKTime")
+    self:NetworkVar("Float", 18, "Holster_Time")
 
     self:NetworkVar("Int", 0, "BurstCount")
     self:NetworkVar("Int", 1, "NthShot")
@@ -796,6 +797,9 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Angle", 1, "LastAimAngle")
 
     self:NetworkVar("String", 0, "IKAnimation")
+
+    self:NetworkVar("Entity", 0, "Holster_Entity")
+
 
     self:SetMultiSight(1)
     self:SetFiremode(1)

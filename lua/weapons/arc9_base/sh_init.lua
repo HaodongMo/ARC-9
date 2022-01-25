@@ -33,6 +33,9 @@ function SWEP:Deploy()
     self:SetBlindFire(false)
     self:SetBlindFireLeft(false)
 
+    self:SetHolster_Entity(NULL)
+    self:SetHolster_Time(0)
+
     self:SetFreeAimAngle(Angle(0, 0, 0))
     self:SetLastAimAngle(Angle(0, 0, 0))
 
@@ -69,28 +72,50 @@ function SWEP:GiveDefaultAmmo()
     self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * 2, self:GetValue("Ammo"))
 end
 
-function SWEP:Holster()
+function SWEP:Holster(wep)
+    -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
+    if game.SinglePlayer() and CLIENT then return end
+    
     if self:GetOwner():IsNPC() then
         return
     end
-
-    self:KillTimers()
-    self:GetOwner():SetFOV(0, 0.1)
 
     if self:GetReloading() then
         self:SetReady(false)
     end
 
-    -- if CLIENT then
-    --     self:RemoveCustomizeHUD()
-    -- end
+    if self:GetHolster_Time() > CurTime() then return false end
 
-    -- if CLIENT then
-    --     RunConsoleCommand("pp_bokeh", "0")
-    -- end
+    if (self:GetHolster_Time() != 0 and self:GetHolster_Time() <= CurTime()) or !IsValid(wep) then
+        -- Do the final holster request
+        -- Picking up props try to switch to NULL, by the way
+        self:SetHolster_Time(0)
+        self:SetHolster_Entity(NULL)
 
-    return true
+        self:KillTimers()
+        self:GetOwner():SetFOV(0, 0.1)
+        return true
+    else
+        -- Prepare the holster and set up the timer
+        local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1), true, false)
+        self:SetHolster_Time(CurTime() + animation)
+        self:SetHolster_Entity(wep)
+
+    end
 end
+
+hook.Add("StartCommand", "ARC9_Holster", function(ply, ucmd)
+    local wep = ply:GetActiveWeapon()
+
+    if IsValid(wep) and wep.ARC9 then
+        if wep:GetHolster_Time() != 0 and wep:GetHolster_Time() <= CurTime() then
+            if IsValid(wep:GetHolster_Entity()) then
+                wep:SetHolster_Time(-math.huge) -- Pretty much force it to work
+                ucmd:SelectWeapon(wep:GetHolster_Entity()) -- Call the final holster request
+            end
+        end
+    end
+end)
 
 function SWEP:Initialize()
     self:SetShouldHoldType()

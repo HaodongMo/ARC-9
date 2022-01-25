@@ -14,6 +14,7 @@ function SWEP:StillWaiting()
     if self:GetNextSecondaryFire() > CurTime() then return true end
     if self:GetAnimLockTime() > CurTime() then return true end
     if self:GetPrimedAttack() then return true end
+    if self:GetHolster_Time() > 0 then return true end
 
     return false
 end
