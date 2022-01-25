@@ -102,9 +102,33 @@ function SWEP:PrimaryAttack()
 
     local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
 
+    if self:GetProcessedValue("Silencer") then
+        ss = self:RandomChoice(self:GetProcessedValue("ShootSoundSilenced")) or ss
+
+        if self:GetBurstCount() == 0 then
+            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSoundSilenced")) or ss
+        end
+    else
+        if self:GetBurstCount() == 0 then
+            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSound")) or ss
+        end
+    end
+
     self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON)
 
     local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
+
+    if self:GetProcessedValue("Silencer") then
+        dss = self:RandomChoice(self:GetProcessedValue("DistantShootSoundSilenced")) or dss
+
+        if self:GetBurstCount() == 0 then
+            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSoundSilenced")) or dss
+        end
+    else
+        if self:GetBurstCount() == 0 then
+            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSound")) or dss
+        end
+    end
 
     self:EmitSound(dss, 149, self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
 
