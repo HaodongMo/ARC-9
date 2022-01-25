@@ -157,3 +157,4 @@ ARC9.RHIKBones = {
 }
 
 ARC9.HUToM = 0.0254
+ARC9.MOAToAcc = 10 / 360 / 60
