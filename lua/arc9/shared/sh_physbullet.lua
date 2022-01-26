@@ -101,10 +101,8 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         bullet.Underwater = true
     end
     
-    if bullet.Fancy then
-        wep:RunHook("HookP_ModifyNewBullet", bullet)
-        if bullet.Dead then return end
-    end
+    wep:RunHook("HookP_ModifyNewBullet", bullet)
+    if bullet.Dead then return end
 
     table.insert(ARC9.PhysBullets, bullet)
 
