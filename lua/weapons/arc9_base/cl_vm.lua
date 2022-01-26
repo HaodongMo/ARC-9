@@ -113,7 +113,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         cpos = cpos + cang:Up() * self.CustomizePanX
         cpos = cpos + cang:Forward() * self.CustomizePanY
-        cpos = cpos + Vector(0, 1, 0) * self.CustomizeZoom
+        cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom+24)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
@@ -145,6 +145,14 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
 
     self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
+    -- this needs to be better
+    -- its more like proof of concept
+    -- probably this can be better if it based on selected slot offset not random numbers
+    pos = pos + (ang:Right() *math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
+    pos = pos + (ang:Forward() *math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
+
+    pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
+    pos = pos + (ang:Forward() * 15) * curvedcustomizedelta ^ 2
 
     ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
 

@@ -402,7 +402,7 @@ function SWEP:CreateCustomizeHUD()
                 local dx = mousex - lastmousex
                 local dy = mousey - lastmousey
 
-                self.CustomizePitch = self.CustomizePitch - (dx / ScreenScale(4))
+                self.CustomizePitch = self.CustomizePitch - (dx / ScreenScale(4))*3
                 self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
 
             end
