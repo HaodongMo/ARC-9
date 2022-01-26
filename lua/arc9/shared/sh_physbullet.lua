@@ -100,6 +100,11 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
     if bit.band( util.PointContents( pos ), CONTENTS_WATER ) == CONTENTS_WATER then
         bullet.Underwater = true
     end
+    
+    if bullet.Fancy then
+        wep:RunHook("HookP_ModifyNewBullet", bullet)
+        if bullet.Dead then return end
+    end
 
     table.insert(ARC9.PhysBullets, bullet)
 
