@@ -366,6 +366,8 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookP_ModifyNewBullet = function(self, bullet) return end # bullet = phys bullet table, modify in place, does not accept return
 -- SWEP.HookP_BlockFire = function(self) return block end # return true to block firing
 -- SWEP.Hook_ModifyBodygroups = function(self, data) return end # data = {model = Model, elements = {"table" = true, "of" = true, "elements" = true}}
+-- SWEP.HookP_ModifyBulletPoseParam = function(self, pp) return pp end
+-- SWEP.HookP_ModifyFiremodePoseParam = function(self, pp) return pp end
 
 -------------------------- BLIND FIRE
 

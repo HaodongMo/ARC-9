@@ -33,8 +33,12 @@ end
 function SWEP:SetFiremodePose()
     local vm = self:GetVM()
 
+    local pp = self:GetFiremode()
+
+    pp = self:RunHook("HookP_ModifyFiremodePoseParam", pp) or pp
+
     if self:GetFinishFiremodeAnimTime() <= CurTime() then
-        vm:SetPoseParameter("firemode", self:GetFiremode())
+        vm:SetPoseParameter("firemode", pp)
     else
         vm:SetPoseParameter("firemode", 1)
     end

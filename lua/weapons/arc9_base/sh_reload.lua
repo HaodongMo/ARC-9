@@ -178,3 +178,13 @@ function SWEP:ThinkReload()
         self:EndReload()
     end
 end
+
+function SWEP:DoBulletPose()
+    local pp = self:Clip1()
+
+    local vm = self:GetVM()
+
+    pp = self:RunHook("HookP_ModifyBulletPoseParam", pp) or pp
+
+    vm:SetPoseParameter("bullets", pp)
+end
