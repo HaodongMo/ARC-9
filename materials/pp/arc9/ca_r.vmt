@@ -1,7 +1,7 @@
 "UnlitGeneric"
 {
 	"$basetexture" "_rt_FullFrameFB"
-	"$basetexturetransform" "center .5 .5 scale 1 0.988 rotate 0 translate 0 0"
+	"$basetexturetransform" "center .5 .5 scale 1 0.99 rotate 0 translate 0 0"
 	"$color2" "[1 0 0]"
 	"$ignorez" "1"
 	"$additive" "1"

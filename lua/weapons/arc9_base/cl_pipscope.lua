@@ -1,6 +1,30 @@
-local rtmat = GetRenderTarget("arc9_pipscope", 512, 512, false)
+local rtsize = 1024 -- better use scrh()
 
-local rtsize = 512
+local rtmat = GetRenderTarget("arc9_pipscope2", rtsize, rtsize, false)
+
+
+matproxy.Add({
+    name = "arc9_scope_alpha", 
+    init = function(self, mat, values)
+        self.ResultTo = values.resultvar
+    end,
+    bind = function(self, mat, ent)
+        local ply = LocalPlayer() -- we re on client, right?
+		if IsValid(ply) then
+			local weapon = ply:GetActiveWeapon()
+
+			if IsValid(weapon) and weapon.ARC9 then
+                local amt = 1 - weapon:GetSightAmount()/3
+
+                if render.GetHDREnabled() and amt < 0.07 then
+                    render.SetToneMappingScaleLinear(Vector(1,1,1)) -- hdr fix
+                end
+
+                mat:SetVector(self.ResultTo, Vector(amt,amt,amt))
+            end
+        end
+   end 
+})
 
 function SWEP:ShouldDoScope()
     if self:GetSight().Disassociate then return false end
@@ -10,15 +34,25 @@ end
 
 function SWEP:DoRT(fov, atttbl)
     if ARC9.OverDraw then return end
+    
+    local rtpos = self.LastViewModelPos
+    rtpos = rtpos - self.LastViewModelAng:Right() * self.ViewModelPos.x
+    rtpos = rtpos - self.LastViewModelAng:Forward() * (self.ViewModelPos.y - (self:GetSight().atttbl.ScopeLength or 20))
+    rtpos = rtpos - self.LastViewModelAng:Up() * self.ViewModelPos.z
+
+    local rtang = self.LastViewModelAng
 
     local rt = {
         x = 0,
         y = 0,
         w = rtsize,
         h = rtsize,
-        angles = self:GetShootDir(),
-        origin = self:GetShootPos(),
-        drawviewmodel = false,
+        angles = rtang,
+        origin = rtpos,
+        drawviewmodel = false,  -- for some reason, turning it on makes everything black. 
+                                -- gun render in scope is fine rn (except fov, maybe copy it from arccw).  
+                                -- also i found out that if comment out 2d stuff (shadow and reticle), everything becomes as it should be. might be some problem with cam2d.
+                                -- if you can fix it it will be very cool
         fov = fov,
     }
 
@@ -47,11 +81,22 @@ function SWEP:DoRT(fov, atttbl)
     render.PopRenderTarget()
 end
 
-local rtsurf = Material("effects/arc9_rt")
+local rtsurf = Material("effects/arc9/rt")
 local shadow = Material("arc9/shadow.png", "mips smooth")
 
-local matRefract = Material("pp/arc9/refract_rt")
 local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
+
+local pp_cc_tab = {
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = 0,
+    ["$pp_colour_brightness"] = 0.03,
+    ["$pp_colour_contrast"] = 0.92,
+    ["$pp_colour_colour"] = 1.1,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0
+}
 
 local noise = Material("arc9/nvnoise")
 
@@ -92,19 +137,12 @@ end
 
 function SWEP:DoRTScopeEffects()
     if !render.SupportsPixelShaders_2_0() then return end
-
     if ((self:GetSight() or {}).atttbl or {}).RTScopeNoPP then return end
 
-    local refractamount = 0.1
-
-    matRefract:SetFloat( "$refractamount", refractamount )
-    pp_ca_base:SetTexture("$basetexture", rtmat)
     pp_ca_r:SetTexture("$basetexture", rtmat)
     pp_ca_g:SetTexture("$basetexture", rtmat)
     pp_ca_b:SetTexture("$basetexture", rtmat)
 
-    render.SetMaterial( pp_ca_base )
-    render.DrawScreenQuad()
     render.SetMaterial( pp_ca_r )
     render.DrawScreenQuad()
     render.SetMaterial( pp_ca_g )
@@ -113,14 +151,11 @@ function SWEP:DoRTScopeEffects()
     render.DrawScreenQuad()
 
     -- Color modify
-    -- DrawColorModify( pp_cc_tab )
+    DrawColorModify( pp_cc_tab )
 
     -- Sharpen
-    -- DrawSharpen(-0.5, 5) -- dont work for some reason
+    -- DrawSharpen(0.05, 12) -- dont work for some reason
 
-    -- render.UpdateRefractTexture()
-    -- render.SetMaterial(matRefract)
-    -- render.DrawScreenQuad()
 end
 
 function SWEP:DoRTScope(model, atttbl)
@@ -135,15 +170,16 @@ function SWEP:DoRTScope(model, atttbl)
 
     local screenpos = pos:ToScreen()
 
-    local shadow_intensity = atttbl.RTScopeShadowIntensity or 1.5
+    local shadow_intensity = atttbl.RTScopeShadowIntensity or 30
 
-    local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity) + (rtsize / 2)
-    local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity) + (rtsize / 2)
+    local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
+    local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
 
-    local sh_s = math.floor(rtsize * 1)
+    local sh_s = math.floor(rtsize*1.3)
 
-    sh_x = sh_x - (sh_s / 2)
-    sh_y = sh_y - (sh_s / 2)
+    sh_x = sh_x - ((sh_s-rtsize)/2)
+    sh_y = sh_y - ((sh_s-rtsize)/2)
+
 
     render.PushRenderTarget(rtmat)
 
@@ -151,7 +187,7 @@ function SWEP:DoRTScope(model, atttbl)
 
     if self:ShouldDoScope() then
 
-        surface.SetDrawColor(atttbl.RTScopeColor or Color(255, 255, 255))
+        surface.SetDrawColor(atttbl.RTScopeColor or color_white)
         surface.SetMaterial(atttbl.RTScopeReticle)
         surface.DrawTexturedRect(0, 0, rtsize, rtsize)
 
@@ -168,10 +204,10 @@ function SWEP:DoRTScope(model, atttbl)
         if !screenpos.visible then
             surface.DrawRect(0, 0, rtsize, rtsize)
         else
-            surface.DrawRect(sh_x - rtsize, sh_y - rtsize, rtsize * 4, rtsize)
-            surface.DrawRect(sh_x - rtsize, sh_y - rtsize, rtsize, rtsize * 4)
-            surface.DrawRect(sh_x + sh_s, sh_y - rtsize, rtsize, rtsize * 4)
-            surface.DrawRect(sh_x - rtsize, sh_y + sh_s, rtsize * 4, rtsize)
+            surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
+            surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
+            surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
+            surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
         end
 
     end
@@ -187,7 +223,13 @@ function SWEP:DoRTScope(model, atttbl)
 
     model:SetSubMaterial()
 
-    model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9_rt")
+    model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
+    
+    -- if atttbl.RTScopeUseSubmatReticle then        gross
+    --     atttbl.RTScopeReticle:SetInt("$flags", bit.bor(32768, 2097152))
+    --     atttbl.RTScopeReticle:SetVector("$color2", Vector(atttbl.RTScopeColor or color_white))
+    --     model:SetSubMaterial(atttbl.RTScopeReticleSubmatIndex, "!"..atttbl.RTScopeReticle:GetName())
+    -- end
 end
 
 local hascostscoped = false
