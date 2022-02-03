@@ -424,7 +424,7 @@ function SWEP:CreateCustomizeHUD()
 
     bg:MoveToFront()
 
-    self:CreateHUD_Bottom()
+    -- self:CreateHUD_Bottom()
 end
 
 function SWEP:RemoveCustomizeHUD()

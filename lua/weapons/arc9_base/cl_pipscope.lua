@@ -4,17 +4,17 @@ local rtmat = GetRenderTarget("arc9_pipscope2", rtsize, rtsize, false)
 
 
 matproxy.Add({
-    name = "arc9_scope_alpha", 
+    name = "arc9_scope_alpha",
     init = function(self, mat, values)
         self.ResultTo = values.resultvar
     end,
     bind = function(self, mat, ent)
         local ply = LocalPlayer() -- we re on client, right?
-		if IsValid(ply) then
-			local weapon = ply:GetActiveWeapon()
+        if IsValid(ply) then
+            local weapon = ply:GetActiveWeapon()
 
-			if IsValid(weapon) and weapon.ARC9 then
-                local amt = 1 - weapon:GetSightAmount()/3
+            if IsValid(weapon) and weapon.ARC9 then
+                local amt = 1 - weapon:GetSightAmount() / 3
 
                 if render.GetHDREnabled() and amt < 0.07 then
                     render.SetToneMappingScaleLinear(Vector(1,1,1)) -- hdr fix
@@ -23,7 +23,7 @@ matproxy.Add({
                 mat:SetVector(self.ResultTo, Vector(amt,amt,amt))
             end
         end
-   end 
+   end
 })
 
 function SWEP:ShouldDoScope()
@@ -34,7 +34,7 @@ end
 
 function SWEP:DoRT(fov, atttbl)
     if ARC9.OverDraw then return end
-    
+
     local rtpos = self.LastViewModelPos
     rtpos = rtpos - self.LastViewModelAng:Right() * self.ViewModelPos.x
     rtpos = rtpos - self.LastViewModelAng:Forward() * (self.ViewModelPos.y - (self:GetSight().atttbl.ScopeLength or 20))
@@ -175,10 +175,10 @@ function SWEP:DoRTScope(model, atttbl)
     local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
     local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
 
-    local sh_s = math.floor(rtsize*1.3)
+    local sh_s = math.floor(rtsize * 1.3)
 
-    sh_x = sh_x - ((sh_s-rtsize)/2)
-    sh_y = sh_y - ((sh_s-rtsize)/2)
+    sh_x = sh_x - ((sh_s-rtsize) / 2)
+    sh_y = sh_y - ((sh_s-rtsize) / 2)
 
 
     render.PushRenderTarget(rtmat)
@@ -224,7 +224,7 @@ function SWEP:DoRTScope(model, atttbl)
     model:SetSubMaterial()
 
     model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
-    
+
     -- if atttbl.RTScopeUseSubmatReticle then        gross
     --     atttbl.RTScopeReticle:SetInt("$flags", bit.bor(32768, 2097152))
     --     atttbl.RTScopeReticle:SetVector("$color2", Vector(atttbl.RTScopeColor or color_white))
