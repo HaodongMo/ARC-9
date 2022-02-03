@@ -6,6 +6,8 @@ local function qerp(delta, a, b)
     return Lerp(qdelta, a, b)
 end
 
+local lhik_ts_delta = 0
+
 function SWEP:DoRHIK()
     -- local vm = self:GetOwner():GetHands()
     local vm = self:GetVM()
@@ -15,9 +17,19 @@ function SWEP:DoRHIK()
 
     vm:SetupBones()
 
-    local cdelta = self:Curve(self.CustomizeDelta)
     local lh_delta = 1
     local rh_delta = 1
+
+    lhik_ts_delta = self:GetTraversalSprintAmount()
+
+    local hide_lh_d = 0
+    local hide_rh_d = 0
+
+    hide_lh_d = math.max(lhik_ts_delta, self.CustomizeDelta)
+    hide_rh_d = self.CustomizeDelta
+
+    hide_lh_d = math.ease.InCubic(hide_lh_d)
+    hide_rh_d = math.ease.InCubic(hide_rh_d)
 
     local iktl = (self.Animations[self:GetIKAnimation() or ""] or {}).IKTimeLine
     local iket = self:GetIKTime()
@@ -261,7 +273,7 @@ function SWEP:DoRHIK()
         end
     end
 
-    if cdelta > 0 then
+    if hide_lh_d > 0 then
         for _, bone in ipairs(ARC9.LHIKBones) do
             local vmbone = vm:LookupBone(bone)
 
@@ -276,12 +288,14 @@ function SWEP:DoRHIK()
 
             local newtransform = Matrix()
 
-            newtransform:SetTranslation(LerpVector(cdelta, vm_pos, vm_pos - (EyeAngles():Up() * 128) - (EyeAngles():Forward() * 128)))
+            newtransform:SetTranslation(LerpVector(hide_lh_d, vm_pos, vm_pos - (EyeAngles():Up() * 48) - (EyeAngles():Forward() * 16)))
             newtransform:SetAngles(vm_ang)
 
             vm:SetBoneMatrix(vmbone, newtransform)
         end
+    end
 
+    if hide_rh_d > 0 then
         for _, bone in ipairs(ARC9.RHIKBones) do
             local vmbone = vm:LookupBone(bone)
 
@@ -296,7 +310,7 @@ function SWEP:DoRHIK()
 
             local newtransform = Matrix()
 
-            newtransform:SetTranslation(LerpVector(cdelta, vm_pos, vm_pos - (EyeAngles():Up() * 128) - (EyeAngles():Forward() * 128)))
+            newtransform:SetTranslation(LerpVector(hide_rh_d, vm_pos, vm_pos - (EyeAngles():Up() * 48) - (EyeAngles():Forward() * 16)))
             newtransform:SetAngles(vm_ang)
 
             vm:SetBoneMatrix(vmbone, newtransform)

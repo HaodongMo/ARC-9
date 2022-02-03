@@ -150,10 +150,6 @@ function SWEP:DoRTScopeEffects()
 
     render.UpdateScreenEffectTexture()
 
-    if atttbl.RTScopeMotionBlur then
-        DrawMotionBlur(0.1, 0.5, 0)
-    end
-
     if atttbl.RTScopeNoPP then return end
 
     pp_ca_r:SetTexture("$basetexture", rtmat)
@@ -172,6 +168,10 @@ function SWEP:DoRTScopeEffects()
 
     -- Sharpen
     -- DrawSharpen(0.05, 12) -- dont work for some reason
+
+    if atttbl.RTScopeMotionBlur then
+        DrawMotionBlur(0.1, 0.5, 0)
+    end
 
 end
 

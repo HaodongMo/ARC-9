@@ -64,6 +64,8 @@ SWEP.BobCT = 0
 function SWEP:GetViewModelBob(pos, ang)
     local step = 10
     local mag = 1
+    local ts = self:GetTraversalSprintAmount()
+    -- ts = 1
 
     if self:GetCustomize() then return pos, ang end
 
@@ -78,14 +80,15 @@ function SWEP:GetViewModelBob(pos, ang)
         self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 1)
     end
 
-    d = d * Lerp(self:GetSightAmount(), 1, 0.5)
+    d = d * Lerp(self:GetSightAmount(), 1, 0.5) * Lerp(ts, 1, 1.5)
     mag = d * 2
+    mag = mag * Lerp(ts, 1, 1.5)
     step = 10
 
     ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(CurTime() * 6.151) * 0.2) + 1) * 4.5 * d)
     ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(CurTime() * 1.521) * 0.2) + 1) * 2.11 * d)
     pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.07 * ((math.sin(CurTime() * 3.515) * 0.2) + 1) * mag)
-    pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(CurTime() * 1.615) * 0.2) + 1) * mag)
+    pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(CurTime() * 2) * ts * 1.25) + 1) * ((math.sin(CurTime() * 1.615) * 0.2) + 1) * mag)
     pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.15) + (math.cos(self.BobCT * step * 0.3332))) * 0.16 * mag)
 
     local steprate = Lerp(d, 1, 2.5)

@@ -92,11 +92,22 @@ function SWEP:GetViewModelPosition(pos, ang)
     local curvedcustomizedelta = self:Curve(self.CustomizeDelta)
 
     -- local sprintdelta = self:Curve(self:GetSprintDelta())
-    local sprintdelta = math.ease.InOutQuad(self:GetSprintDelta()) - curvedcustomizedelta
+    local sprintdelta = self:GetSprintDelta()
+    local ts_sprintdelta = self:GetTraversalSprintAmount()
+    sprintdelta = math.ease.InOutQuad(sprintdelta) - curvedcustomizedelta
+    ts_sprintdelta = math.ease.InOutSine(ts_sprintdelta)
+
+    sprintdelta = math.max(sprintdelta, ts_sprintdelta)
 
     if sprintdelta > 0 then
-        offsetpos = LerpVector(sprintdelta, offsetpos, self:GetProcessedValue("SprintPos") or self:GetProcessedValue("HolsterPos"))
-        offsetang = LerpAngle(sprintdelta, offsetang, self:GetProcessedValue("SprintAng") or self:GetProcessedValue("HolsterAng"))
+        local sprpos = self:GetProcessedValue("SprintPos") or self:GetProcessedValue("RestPos")
+        local sprang = self:GetProcessedValue("SprintAng") or self:GetProcessedValue("RestAng")
+
+        sprpos = LerpVector(ts_sprintdelta, sprpos, self:GetProcessedValue("TraversalSprintPos"))
+        sprang = LerpAngle(ts_sprintdelta, sprang, self:GetProcessedValue("TraversalSprintAng"))
+
+        offsetpos = LerpVector(sprintdelta, offsetpos, sprpos)
+        offsetang = LerpAngle(sprintdelta, offsetang, sprang)
 
         extra_offsetang = LerpAngle(sprintdelta, extra_offsetang, Angle(0, 0, 0))
     end

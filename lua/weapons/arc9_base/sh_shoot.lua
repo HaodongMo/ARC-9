@@ -21,6 +21,7 @@ end
 
 function SWEP:SprintLock()
     if self:GetSprintAmount() > 0 then return true end
+    if self:GetTraversalSprintAmount() > 0 then return true end
     if self:GetIsSprinting() then return true end
 
     return false

@@ -24,6 +24,7 @@ function SWEP:Reload()
 
     if self:StillWaiting() then return end
     if self:GetCapacity() <= 0 then return end
+    if self:GetTraversalSprintAmount() >= 1 then return end
     if self:Clip1() >= self:GetCapacity() then return end
     if self:Ammo1() <= 0 then return end
 

@@ -15,6 +15,10 @@ function ARC9.Move(ply, mv, cmd)
         if ply:KeyDown(IN_SPEED) then
             mult = mult / Lerp(wpn:GetSightAmount(), 1, ply:GetRunSpeed() / ply:GetWalkSpeed())
         end
+    else
+        if wpn:GetTraversalSprint() then
+            mult = 1
+        end
     end
 
     mv:SetMaxSpeed(basespd * mult)

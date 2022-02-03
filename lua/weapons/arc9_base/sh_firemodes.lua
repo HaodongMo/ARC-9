@@ -69,7 +69,7 @@ function SWEP:ToggleSafety(onoff)
 end
 
 function SWEP:ThinkFiremodes()
-    if self:GetOwner():KeyPressed(IN_ATTACK2) and self:GetOwner():KeyDown(IN_USE) then
+    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ATTACK2) and self:GetOwner():KeyDown(IN_USE) then
         self:ToggleSafety()
     end
 
