@@ -35,6 +35,8 @@ function SWEP:DoHolosight(mdl, atttbl)
 
     local img = atttbl.HoloSightReticle
 
+    -- render.DepthRange(0, 0)
+
     if img then
         local pos = self:GetOwner():EyePos()
 
@@ -85,6 +87,8 @@ function SWEP:DoHolosight(mdl, atttbl)
         -- surface.DrawRect(sx + ss, 0, w - sx, h)
     end
     -- cam.End2D()
+
+    -- render.DepthRange(0, 1)
 
     render.SetStencilEnable(false)
 end

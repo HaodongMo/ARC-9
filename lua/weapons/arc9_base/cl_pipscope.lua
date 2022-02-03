@@ -74,14 +74,14 @@ function SWEP:DoRT(fov, atttbl)
         render.Clear(0, 0, 0, 255, true, true)
     end
 
-    if atttbl.RTScopeNightVision then
-        self:DoNightScopeEffects(atttbl)
-    end
-
     if atttbl.RTScopeFLIR then
         cam.Start3D(rtpos, rtang, fov, 0, 0, rtsize, rtsize, 16, 30000)
         self:DoFLIR(atttbl)
         cam.End3D()
+    end
+
+    if atttbl.RTScopeNightVision then
+        self:DoNightScopeEffects(atttbl)
     end
 
     self:DoRTScopeEffects()
@@ -126,7 +126,7 @@ function SWEP:DoNightScopeEffects(atttbl)
     if !atttbl.RTScopeNightVisionNoPP then
         cam.Start2D()
         surface.SetMaterial(noise)
-        surface.SetDrawColor(255, 255, 255, 50)
+        surface.SetDrawColor(atttbl.RTScopeNightVisionNoiseColor or Color(255, 255, 255))
         surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), (rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), rtsize, rtsize, math.Rand(0, 360))
         surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), (rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), rtsize * 2, rtsize * 2, math.Rand(0, 360))
         cam.End2D()
@@ -145,7 +145,16 @@ end
 
 function SWEP:DoRTScopeEffects()
     if !render.SupportsPixelShaders_2_0() then return end
-    if ((self:GetSight() or {}).atttbl or {}).RTScopeNoPP then return end
+
+    local atttbl = ((self:GetSight() or {}).atttbl or {})
+
+    render.UpdateScreenEffectTexture()
+
+    if atttbl.RTScopeMotionBlur then
+        DrawMotionBlur(0.1, 0.5, 0)
+    end
+
+    if atttbl.RTScopeNoPP then return end
 
     pp_ca_r:SetTexture("$basetexture", rtmat)
     pp_ca_g:SetTexture("$basetexture", rtmat)
@@ -241,6 +250,7 @@ function SWEP:DoRTScope(model, atttbl)
 end
 
 local hascostscoped = false
+local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)
 
 function SWEP:DoCheapScope(fov, atttbl)
     if !self:ShouldDoScope() then
@@ -256,6 +266,14 @@ function SWEP:DoCheapScope(fov, atttbl)
         hascostscoped = true
     end
 
+    ARC9:DrawPhysBullets()
+
+    render.UpdateScreenEffectTexture()
+    render.UpdateFullScreenDepthTexture()
+    local screen = render.GetScreenEffectTexture()
+
+    render.CopyTexture( screen, rtmat_spare )
+
     local scrw = ScrW()
     local scrh = ScrH()
 
@@ -270,17 +288,16 @@ function SWEP:DoCheapScope(fov, atttbl)
     scrx = scrx + 8
     scry = scry + 8
 
-    ARC9:DrawPhysBullets()
+    cam.Start3D()
+    if atttbl.RTScopeFLIR then
+        self:DoFLIR(atttbl)
+    end
+    cam.End3D()
 
-    render.UpdateScreenEffectTexture()
-    render.UpdateFullScreenDepthTexture()
-    local depth = render.GetFullScreenDepthTexture()
-    local screen = render.GetScreenEffectTexture()
     render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
 
     -- cam.Start2D()
     render.DrawTextureToScreenRect(screen, scrx, scry, scrw * s, scrh * s)
-    render.DrawTextureToScreenRect(depth, scrx, scry, scrw * s, scrh * s)
     -- render.DrawTextureToScreenRect(ITexture tex, number x, number y, number width, number height)
     -- cam.End2D()
 
@@ -294,13 +311,10 @@ function SWEP:DoCheapScope(fov, atttbl)
         self:DoNightScopeEffects(atttbl)
     end
 
-    cam.Start3D(nil, nil, fov / 1.15, 0, 0, rtsize, rtsize, 16, 10000)
-    if atttbl.RTScopeFLIR then
-        self:DoFLIR(atttbl)
-    end
-    cam.End3D()
-
     self:DoRTScopeEffects()
 
     render.PopRenderTarget()
+
+    render.DrawTextureToScreen(rtmat_spare)
+    render.UpdateFullScreenDepthTexture()
 end

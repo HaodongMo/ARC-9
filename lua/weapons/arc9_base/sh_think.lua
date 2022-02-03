@@ -23,6 +23,8 @@ function SWEP:Think()
         end
     end
 
+    self:ThinkCycle()
+
     self:ThinkRecoil()
 
     self:ThinkSprint()

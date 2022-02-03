@@ -36,6 +36,7 @@ function SWEP:PrimaryAttack()
     end
 
     if self:StillWaiting() then return end
+    if self:GetNeedsCycle() then return end
 
     if self:GetCustomize() then return end
 
@@ -214,6 +215,14 @@ function SWEP:PrimaryAttack()
     self:ApplyRecoil()
 
     self:SetBurstCount(self:GetBurstCount() + 1)
+
+    if self:GetValue("ManualAction") then
+        if self:Clip1() > 0 or !self:GetValue("ManualActionNoLastCycle") then
+            if self:GetNthShot() % self:GetValue("ManualActionChamber") == 0 then
+                self:SetNeedsCycle(true)
+            end
+        end
+    end
 
     if self:GetCurrentFiremode() == 1 or self:Clip1() == 0 then
         self:SetNeedTriggerPress(true)

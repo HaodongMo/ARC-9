@@ -2,7 +2,7 @@ SWEP.FinishFiremodeAnimTime = 0
 
 function SWEP:SwitchFiremode()
     if self:StillWaiting() then return end
-    if #self:GetValue("Firemodes") == 0 then return end
+    if #self:GetValue("Firemodes") < 2 then return end
 
     local fm = self:GetFiremode()
 

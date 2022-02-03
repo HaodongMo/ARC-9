@@ -99,7 +99,18 @@ ATT.RTScopeFLIRHotFunc = function(swep, ent) end -- return true for hot and fals
 ATT.RTScopeFLIRMonochrome = true
 ATT.RTScopeFLIRNoPP = false
 ATT.RTScopeFLIRBlend = 0.25
-ATT.RTScopeFLIRCC = { -- Color correction drawn only on FLIR targets
+ATT.RTScopeFLIRCCHot = { -- Color correction drawn only on FLIR targets
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = -255,
+    ["$pp_colour_brightness"] = 0,
+    ["$pp_colour_contrast"] = 4,
+    ["$pp_colour_colour"] = 1,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0
+}
+ATT.RTScopeFLIRCCCold = { -- Color correction drawn only on FLIR targets
     ["$pp_colour_addr"] = 0,
     ["$pp_colour_addg"] = 0,
     ["$pp_colour_addb"] = -255,
@@ -111,6 +122,8 @@ ATT.RTScopeFLIRCC = { -- Color correction drawn only on FLIR targets
     ["$pp_colour_mulb"] = 0
 }
 ATT.RTScopeFLIRFunc = function(swep) end
+
+ATT.RTScopeMotionBlur = false
 
 ATT.Attachments = {
     {

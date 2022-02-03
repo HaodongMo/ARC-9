@@ -3,6 +3,24 @@ SWEP.CustomizeDelta = 0
 SWEP.ViewModelPos = Vector(0, 0, 0)
 SWEP.ViewModelAng = Angle(0, 0, 0)
 
+local LerpVector = function(a, v1, v2)
+    local d = v2 - v1
+
+    return v1 + (a * d)
+end
+
+local LerpAngle = function(a, a1, a2)
+    local d = a2 - a1
+
+    return a1 + (a * d)
+end
+
+local Lerp = function(a, v1, v2)
+    local d = v2 - v1
+
+    return v1 + (a * d)
+end
+
 function SWEP:GetViewModelPosition(pos, ang)
     local oldang = Angle(0, 0, 0)
 
@@ -28,7 +46,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     offsetpos:Set(self:GetProcessedValue("ActivePos"))
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
 
-    local sightdelta = self:Curve(self:GetSightDelta())
+    local sightdelta = math.ease.InOutCirc(self:GetSightDelta())
 
     -- cor_val = Lerp(sightdelta, cor_val, 1)
 
@@ -71,7 +89,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     local curvedcustomizedelta = self:Curve(self.CustomizeDelta)
 
     -- local sprintdelta = self:Curve(self:GetSprintDelta())
-    local sprintdelta = self:Curve(self:GetSprintDelta()) - curvedcustomizedelta
+    local sprintdelta = math.ease.InOutQuad(self:GetSprintDelta()) - curvedcustomizedelta
 
     if sprintdelta > 0 then
         offsetpos = LerpVector(sprintdelta, offsetpos, self:GetProcessedValue("SprintPos") or self:GetProcessedValue("HolsterPos"))

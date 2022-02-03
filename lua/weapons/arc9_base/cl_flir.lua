@@ -1,6 +1,7 @@
 -- Render thermal highlighting to the currently active RT.
 
-local color = Material("vgui/white")
+local lastentcount = 0
+local lastents = {}
 
 function SWEP:DoFLIR(atttbl)
     local ref = 32
@@ -11,7 +12,15 @@ function SWEP:DoFLIR(atttbl)
     render.ClearStencil()
 
     -- local targets = ents.FindInCone(EyePos(), EyeAngles():Forward(), atttbl.RTScopeFLIRRange or 30000, math.cos(fov + 5))
-    local targets = ents.GetAll()
+    local targets = lastents
+    local entcount = ents.GetCount()
+
+    if lastentcount != entcount then
+        targets = ents.GetAll()
+        lastents = targets
+    end
+
+    lastentcount = entcount
 
     render.SuppressEngineLighting(true)
 
@@ -48,6 +57,7 @@ function SWEP:DoFLIR(atttbl)
 
     render.SetStencilReferenceValue(ref)
     render.SetStencilCompareFunction(STENCIL_EQUAL)
+    render.SetStencilPassOperation(STENCIL_KEEP)
 
     if atttbl.RTScopeFLIRSolid then
         render.SetColorMaterial()
@@ -55,6 +65,7 @@ function SWEP:DoFLIR(atttbl)
     end
 
     if atttbl.RTScopeFLIRMonochrome then
+        render.SetStencilCompareFunction(STENCIL_ALWAYS)
         DrawColorModify({
             ["$pp_colour_addr"] = 0,
             ["$pp_colour_addg"] = 0,
@@ -68,9 +79,18 @@ function SWEP:DoFLIR(atttbl)
         })
     end
 
-    if atttbl.RTScopeFLIRCC then
-        DrawColorModify(atttbl.RTScopeFLIRCC)
+    if atttbl.RTScopeFLIRCCCold then
+        render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
+        DrawColorModify(atttbl.RTScopeFLIRCCCold)
+        -- DrawColorModify(atttbl.RTScopeFLIRCCHot)
     end
+
+    if atttbl.RTScopeFLIRCCHot then
+        render.SetStencilCompareFunction(STENCIL_EQUAL)
+        DrawColorModify(atttbl.RTScopeFLIRCCHot)
+    end
+
+    render.UpdateScreenEffectTexture()
 
     if atttbl.RTScopeFLIRFunc then
         atttbl.RTScopeFLIRFunc(self)

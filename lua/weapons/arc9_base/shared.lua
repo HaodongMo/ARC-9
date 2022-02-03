@@ -795,6 +795,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 11, "PrimedAttack")
     self:NetworkVar("Bool", 12, "BlindFire")
     self:NetworkVar("Bool", 13, "BlindFireLeft")
+    self:NetworkVar("Bool", 14, "NeedsCycle")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
     self:NetworkVar("Angle", 1, "LastAimAngle")
