@@ -6,6 +6,12 @@ util.AddNetworkString("arc9_sendbullet")
 util.AddNetworkString("arc9_reloadatts")
 util.AddNetworkString("arc9_reloadlangs")
 
+if game.SinglePlayer() then
+
+util.AddNetworkString("arc9_sp_health")
+
+end
+
 net.Receive("arc9_togglecustomize", function(len, ply)
     local bf = net.ReadBool()
 

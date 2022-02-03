@@ -91,6 +91,27 @@ ATT.RTScopeNightVisionCC = {
 }
 ATT.RTScopeNightVisionFunc = function(swep) end
 
+ATT.RTScopeFLIR = true
+ATT.RTScopeFLIRSolid = false -- Solid color FLIR instead of like a shaded look
+ATT.RTScopeFLIRHighlightColor = Color(255, 255, 255)
+ATT.RTScopeFLIRRange = 30000
+ATT.RTScopeFLIRHotFunc = function(swep, ent) end -- return true for hot and false for cold
+ATT.RTScopeFLIRMonochrome = true
+ATT.RTScopeFLIRNoPP = false
+ATT.RTScopeFLIRBlend = 0.25
+ATT.RTScopeFLIRCC = { -- Color correction drawn only on FLIR targets
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = -255,
+    ["$pp_colour_brightness"] = 0,
+    ["$pp_colour_contrast"] = 4,
+    ["$pp_colour_colour"] = 1,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0
+}
+ATT.RTScopeFLIRFunc = function(swep) end
+
 ATT.Attachments = {
     {
         PrintName = "",

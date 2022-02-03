@@ -54,6 +54,8 @@ function SWEP:DoRT(fov, atttbl)
                                 -- also i found out that if comment out 2d stuff (shadow and reticle), everything becomes as it should be. might be some problem with cam2d.
                                 -- if you can fix it it will be very cool
         fov = fov,
+        znear = 16,
+        zfar = 30000
     }
 
     render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
@@ -74,6 +76,12 @@ function SWEP:DoRT(fov, atttbl)
 
     if atttbl.RTScopeNightVision then
         self:DoNightScopeEffects(atttbl)
+    end
+
+    if atttbl.RTScopeFLIR then
+        cam.Start3D(rtpos, rtang, fov, 0, 0, rtsize, rtsize, 16, 30000)
+        self:DoFLIR(atttbl)
+        cam.End3D()
     end
 
     self:DoRTScopeEffects()
@@ -265,11 +273,14 @@ function SWEP:DoCheapScope(fov, atttbl)
     ARC9:DrawPhysBullets()
 
     render.UpdateScreenEffectTexture()
+    render.UpdateFullScreenDepthTexture()
+    local depth = render.GetFullScreenDepthTexture()
     local screen = render.GetScreenEffectTexture()
     render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
 
     -- cam.Start2D()
     render.DrawTextureToScreenRect(screen, scrx, scry, scrw * s, scrh * s)
+    render.DrawTextureToScreenRect(depth, scrx, scry, scrw * s, scrh * s)
     -- render.DrawTextureToScreenRect(ITexture tex, number x, number y, number width, number height)
     -- cam.End2D()
 
@@ -282,6 +293,12 @@ function SWEP:DoCheapScope(fov, atttbl)
     if atttbl.RTScopeNightVision then
         self:DoNightScopeEffects(atttbl)
     end
+
+    cam.Start3D(nil, nil, fov / 1.15, 0, 0, rtsize, rtsize, 16, 10000)
+    if atttbl.RTScopeFLIR then
+        self:DoFLIR(atttbl)
+    end
+    cam.End3D()
 
     self:DoRTScopeEffects()
 
