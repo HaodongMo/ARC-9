@@ -29,6 +29,7 @@ function SWEP:Deploy()
     self:SetRecoilSide(0)
     self:SetPrimedAttack(false)
     self:SetReloading(false)
+    self:SetHolster_Time(0)
 
     self:SetBlindFire(false)
     self:SetBlindFireLeft(false)
@@ -75,7 +76,7 @@ end
 function SWEP:Holster(wep)
     -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
     if game.SinglePlayer() and CLIENT then return end
-    
+
     if self:GetOwner():IsNPC() then
         return
     end
@@ -97,9 +98,14 @@ function SWEP:Holster(wep)
         return true
     else
         -- Prepare the holster and set up the timer
-        local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1), true, false)
-        self:SetHolster_Time(CurTime() + animation)
-        self:SetHolster_Entity(wep)
+        if self:HasAnimation("holster") then
+            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1), true, false)
+            self:SetHolster_Time(CurTime() + animation)
+            self:SetHolster_Entity(wep)
+        else
+            self:SetHolster_Time(CurTime() + (self:GetProcessedValue("DeployTime", 1)))
+            self:SetHolster_Entity(wep)
+        end
 
     end
 end

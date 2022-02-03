@@ -514,13 +514,16 @@ SWEP.HasSights = true
 SWEP.ActivePos = Vector(0, 0, 0)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
--- Position when sprinting or holstered
-SWEP.HolsterPos = Vector(0.532, -6, 0)
-SWEP.HolsterAng = Angle(-4.633, 36.881, 0)
+-- Position when sprinting or safe
+SWEP.RestPos = Vector(0.532, -6, 0)
+SWEP.RestAng = Angle(-4.633, 36.881, 0)
 
--- Overrides HolsterPos/Ang but only for sprinting
+-- Overrides RestPos/Ang but only for sprinting
 SWEP.SprintPos = nil
 SWEP.SprintAng = nil
+
+SWEP.HolsterPos = Vector(0, 0, -5)
+SWEP.HolsterAng = Angle(0, -15, 25)
 
 SWEP.SprintMidPoint = {
     Pos = Vector(4, 2, -4),

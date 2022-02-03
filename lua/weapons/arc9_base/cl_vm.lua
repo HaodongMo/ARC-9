@@ -3,6 +3,9 @@ SWEP.CustomizeDelta = 0
 SWEP.ViewModelPos = Vector(0, 0, 0)
 SWEP.ViewModelAng = Angle(0, 0, 0)
 
+local lht = 0
+local sht = 0
+
 local LerpVector = function(a, v1, v2)
     local d = v2 - v1
 
@@ -131,11 +134,29 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         cpos = cpos + cang:Up() * self.CustomizePanX
         cpos = cpos + cang:Forward() * self.CustomizePanY
-        cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom+24)
+        cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom + 24)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
     end
+
+    local ht = self:GetHolster_Time()
+
+    if (ht + 0.1) > CurTime() then
+        if ht > lht then
+            sht = CurTime()
+        end
+
+        local hdelta = 1 - ((ht - CurTime()) / (ht - sht))
+
+        if hdelta > 0 then
+            hdelta = math.ease.InOutQuad(hdelta)
+            offsetpos = LerpVector(hdelta, offsetpos, self:GetValue("HolsterPos"))
+            offsetang = LerpAngle(hdelta, offsetang, self:GetValue("HolsterAng"))
+        end
+    end
+
+    lht = ht
 
     if game.SinglePlayer() or IsFirstTimePredicted() then
         self.ViewModelPos = LerpVector(0.8, offsetpos, self.ViewModelPos)

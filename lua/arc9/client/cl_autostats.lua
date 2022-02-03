@@ -66,7 +66,7 @@ ARC9.AutoStatsMains = {
     ["BottomlessClip"] = {false, false},
     ["ShotgunReload"] = {false, false},
     ["HybridReload"] = {false, false},
-    ["ManualAction"] = {false, true},
+    ["ManualAction"] = {false, false},
     ["CanFireUnderwater"] = {false, false},
     ["AutoReload"] = {false, false},
     ["AutoBurst"] = {false, false},
@@ -223,9 +223,14 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         if asop == "Hook" then continue end
 
         if !foundop then
-            autostat = tostring(value) .. " " .. autostat
+            -- autostat = tostring(value) .. " " .. autostat
 
-            if isnumber(value) then neg = value <= (weapon[asmain] or 0) else neg = value end
+            -- if isnumber(value) then neg = value <= (weapon[asmain] or 0) else neg = value end
+            local pre, post, isneg = ARC9.AutoStatsOperations.Override(value, weapon, asmain, unit)
+            autostat = pre .. autostat .. post
+            neg = isneg
+            foundop = true
+            asop = "Override"
         else
             stat = string.sub(stat, string.len(asop) + 1, string.len(stat))
         end
