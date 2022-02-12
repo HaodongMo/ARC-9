@@ -48,11 +48,9 @@ function ARC9.GetHUDColor(part, alpha)
     return col
 end
 
-local lastammo = 0
-local lastshoottime = 0
 local rackrisetime = 0
-local lastshotalpha = 0
 local lastrow = 0
+local lastweapon = NULL
 
 local firemode_pics = {
     [-1] = Material("arc9/fs_auto.png", "mips smooth"),
@@ -73,6 +71,11 @@ function ARC9.DrawHUD()
     local weapon = LocalPlayer():GetActiveWeapon()
 
     if !IsValid(weapon) then return end
+
+    if lastweapon != weapon then
+        rackrisetime = CurTime()
+        lastrow = 0
+    end
 
     -- local weapon_printname = weapon:GetPrintName()
     local weapon_clipsize = weapon:GetMaxClip1()
@@ -414,6 +417,8 @@ function ARC9.DrawHUD()
     cam.End3D2D()
 
     cam.End3D()
+
+    lastweapon = weapon
 end
 
 hook.Add("HUDPaint", "ARC9_DrawHud", ARC9.DrawHUD)
