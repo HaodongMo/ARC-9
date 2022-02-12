@@ -75,6 +75,14 @@ local function generatefonts()
 
 end
 
+surface.CreateFont( "ARC9_Deco_8_Unscaled", {
+    font = "Consolas",
+    size = 8,
+    weight = 500,
+    antialias = true,
+    extended = true,
+} )
+
 generatefonts()
 
 function ARC9.Regen(full)

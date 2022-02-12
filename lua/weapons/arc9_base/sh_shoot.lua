@@ -81,7 +81,14 @@ function SWEP:PrimaryAttack()
     if self:RunHook("HookP_BlockFire") then return end
 
     if IsFirstTimePredicted() then
-        self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+        if self:GetProcessedValue("BottomlessClip") then
+            if !self:GetProcessedValue("InfiniteAmmo") then
+                local ammotype = self:GetProcessedValue("Ammo")
+                self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetProcessedValue("AmmoPerShot"), ammotype)
+            end
+        else
+            self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+        end
     end
 
     local idle = true

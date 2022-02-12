@@ -25,8 +25,14 @@ function SWEP:Reload()
     if self:StillWaiting() then return end
     if self:GetCapacity() <= 0 then return end
     if self:GetTraversalSprintAmount() >= 1 then return end
-    if self:Clip1() >= self:GetCapacity() then return end
-    if self:Ammo1() <= 0 then return end
+
+    if !self:GetProcessedValue("BottomlessClip") then
+        if self:Clip1() >= self:GetCapacity() then return end
+
+        if !self:GetValue("InfiniteAmmo") then
+            if self:Ammo1() <= 0 then return end
+        end
+    end
 
     -- self:ScopeToggle(0)
     -- self:ToggleCustomize(false)
@@ -110,6 +116,10 @@ end
 
 function SWEP:RestoreClip(amt)
     local reserve = self:Clip1() + self:Ammo1()
+
+    if self:GetValue("InfiniteAmmo") then
+        reserve = math.huge
+    end
 
     local lastclip1 = self:Clip1()
 
