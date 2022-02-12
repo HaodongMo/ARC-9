@@ -33,14 +33,18 @@ ARC9.Colors = {
 function ARC9.ShouldDrawHUD()
     local wpn = LocalPlayer():GetActiveWeapon()
 
-    if !wpn.ARC9 then return end
+    -- if !wpn.ARC9 then return end
 
     return true
 end
 
 function ARC9.GetHUDColor(part, alpha)
+    alpha = alpha or 255
     local col = ARC9.Colors[part] or ARC9.Colors.hi
-    col.a = alpha or 255
+    if alpha < 255 then
+        col = Color(col.r, col.g, col.b)
+        col.a = alpha or 255
+    end
     return col
 end
 
@@ -58,29 +62,37 @@ local firemode_pics = {
     [3] = Material("arc9/fs_3rb.png", "mips smooth"),
 }
 
+local automatics = {
+    ["weapon_smg1"] = true,
+    ["weapon_ar2"] = true,
+}
+
 function ARC9.DrawHUD()
     if !ARC9.ShouldDrawHUD() then return end
 
     local weapon = LocalPlayer():GetActiveWeapon()
 
+    if !IsValid(weapon) then return end
+
     -- local weapon_printname = weapon:GetPrintName()
     local weapon_clipsize = weapon:GetMaxClip1()
     local weapon_clip = weapon:Clip1()
-    local weapon_reserve = weapon:Ammo1()
+    local weapon_reserve = LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType())
 
     local flash_period = 3
 
     local firemode_pic = firemode_pics[-1]
-
-    if !weapon.Primary.Automatic then
-        firemode_pic = firemode_pics[1]
-    end
 
     local chambered = math.max(weapon_clip - weapon_clipsize, 0)
     local clip_to_show = math.min(weapon_clip, weapon_clipsize)
 
     local inf_clip = false
     local inf_reserve = false
+    local melee = false
+
+    if weapon_clipsize <= 0 then
+        inf_clip = true
+    end
 
     if weapon.ARC9 then
         local arc9_mode = weapon:GetCurrentFiremodeTable()
@@ -103,6 +115,7 @@ function ARC9.DrawHUD()
 
         if weapon:GetProcessedValue("BottomlessClip") then
             inf_clip = true
+            weapon_reserve = weapon_reserve + weapon_clip
             clip_to_show = weapon_reserve
             weapon_clipsize = 30
             chambered = 0
@@ -114,6 +127,18 @@ function ARC9.DrawHUD()
                 clip_to_show = 2147483640 - weapon:GetNthShot() % 2147483640
             end
         end
+    elseif weapon:IsScripted() then
+        if !weapon.Primary.Automatic then
+            firemode_pic = firemode_pics[1]
+        end
+    else
+        if !automatics[weapon:GetClass()] then
+            firemode_pic = firemode_pics[1]
+        end
+    end
+
+    if weapon_clipsize <= 0 and weapon:GetPrimaryAmmoType() == -1 then
+        melee = true
     end
 
     local flashammowidgets = false
@@ -153,9 +178,14 @@ function ARC9.DrawHUD()
     -- cam.Start3D2D(EyePos() + (forward * 8) + (up * -3.25) + (right * -10), ang2, 0.0125 )
     -- cam.End3D2D()
 
-    cam.Start3D2D(EyePos() + (forward * 8) + (up * -3) + (right * 5), ang, 0.0125 )
+    cam.Start3D2D(EyePos() + (forward * 8) + (up * -3) + (right * -9), ang2, 0.0125 )
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
+        surface.DrawRect( 8, 8, 254, 110 )
+
         surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
         surface.DrawRect( 0, 0, 254, 110 )
+
+        surface.DrawLine(0, 115, 254, 115)
 
         -- surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
         -- surface.DrawRect( 0, 0, 140, 70 )
@@ -176,7 +206,7 @@ function ARC9.DrawHUD()
 
         local health_x = 8
         local health_y = 9
-        local health = math.Round((LocalPlayer():Health() / LocalPlayer():GetMaxHealth()) * 100)
+        local health = LocalPlayer():Health() / LocalPlayer():GetMaxHealth()
 
         local flashhealthwidgets = false
 
@@ -184,41 +214,65 @@ function ARC9.DrawHUD()
             flashhealthwidgets = true
         end
 
+        local hb_col = ARC9.GetHUDColor("fg_3d", 225)
         local hw_col = ARC9.GetHUDColor("fg_3d", 255)
 
         if flashhealthwidgets and math.floor(CurTime() * flash_period) % 2 == 0 then
             hw_col = ARC9.GetHUDColor("hi_3d", 255)
+            hb_col = ARC9.GetHUDColor("hi_3d", 170)
         end
 
-        health = "♥:" .. tostring(health) .. "%"
+        local hb_tall = 24
+
+        if LocalPlayer():Armor() > 0 then
+            hb_tall = 18
+
+            local armor = math.min(LocalPlayer():Armor() / 100, 1)
+
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
+            surface.DrawRect(34 + s_right, 32 + s_down, 209 * armor, 3)
+
+            surface.SetDrawColor(hb_col)
+            surface.DrawRect(34, 32, 209 * armor, 3)
+        end
+
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
+        surface.DrawLine(242 + s_right, 12 + s_down, 242 + s_right, 12 + hb_tall + s_down)
+        surface.DrawRect(34 + s_right, 12 + s_down, 209 * health, hb_tall)
+
+        surface.SetDrawColor(hb_col)
+        surface.DrawLine(242, 12, 242, 12 + hb_tall)
+        surface.DrawRect(34, 12, 209 * health, hb_tall)
+
+        local healthtext = "♥"
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
         surface.SetFont("ARC9_24_Unscaled")
         surface.SetTextPos(health_x + s_right, health_y + s_down)
-        surface.DrawText(health)
+        surface.DrawText(healthtext)
 
         surface.SetTextColor(hw_col)
         surface.SetFont("ARC9_24_Unscaled")
         surface.SetTextPos(health_x, health_y)
-        surface.DrawText(health)
+        surface.DrawText(healthtext)
 
-        local armor_x = 250
-        local armor_y = 9
-        local armor = math.Round((LocalPlayer():Armor() / 100) * 100)
-        armor = "⌂:" .. tostring(armor) .. "%"
+        -- local armor_x = 250
+        -- local armor_y = 9
+        -- local armor = math.Round((LocalPlayer():Armor() / 100) * 100)
+        -- armor = "⌂:" .. tostring(armor) .. "%"
 
-        surface.SetFont("ARC9_24_Unscaled")
-        armor_x = armor_x - surface.GetTextSize(armor)
+        -- surface.SetFont("ARC9_24_Unscaled")
+        -- armor_x = armor_x - surface.GetTextSize(armor)
 
-        surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
-        surface.SetFont("ARC9_24_Unscaled")
-        surface.SetTextPos(armor_x + s_right, armor_y + s_down)
-        surface.DrawText(armor)
+        -- surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
+        -- surface.SetFont("ARC9_24_Unscaled")
+        -- surface.SetTextPos(armor_x + s_right, armor_y + s_down)
+        -- surface.DrawText(armor)
 
-        surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
-        surface.SetFont("ARC9_24_Unscaled")
-        surface.SetTextPos(armor_x, armor_y)
-        surface.DrawText(armor)
+        -- surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
+        -- surface.SetFont("ARC9_24_Unscaled")
+        -- surface.SetTextPos(armor_x, armor_y)
+        -- surface.DrawText(armor)
 
         -- local title_x = 8
         -- local title_y = 2
@@ -249,8 +303,12 @@ function ARC9.DrawHUD()
         else
             ammo_text = ammo_text .. "/" .. tostring(weapon_reserve)
             if inf_clip then
-                ammo_text = "-/" .. tostring(weapon_reserve)
+                ammo_text = tostring(weapon_reserve)
             end
+        end
+
+        if melee then
+            ammo_text = "-"
         end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
@@ -264,7 +322,7 @@ function ARC9.DrawHUD()
         surface.DrawText(ammo_text)
 
         local fmi_x = 215
-        local fmi_y = 40
+        local fmi_y = 38
         local fmi_s = 30
 
         surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))

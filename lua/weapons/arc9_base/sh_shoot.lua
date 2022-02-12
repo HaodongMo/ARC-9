@@ -83,8 +83,14 @@ function SWEP:PrimaryAttack()
     if IsFirstTimePredicted() then
         if self:GetProcessedValue("BottomlessClip") then
             if !self:GetProcessedValue("InfiniteAmmo") then
-                local ammotype = self:GetProcessedValue("Ammo")
-                self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetProcessedValue("AmmoPerShot"), ammotype)
+                self:RestoreClip(self:GetProcessedValue("ClipSize"))
+
+                if self:Ammo1() > 0 then
+                    local ammotype = self:GetProcessedValue("Ammo")
+                    self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetProcessedValue("AmmoPerShot"), ammotype)
+                else
+                    self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+                end
             end
         else
             self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
