@@ -57,9 +57,8 @@ function SWEP:DoHolosight(mdl, atttbl)
         local v4 = pos - (up * s / 2) - (right * s / 2)
 
         -- render.DrawQuadEasy(pos, -mdl:GetAngles():Forward(), s, s, atttbl.HoloSightColor or Color(255, 255, 255))
-        render.DrawQuad(v1, v2, v3, v4, atttbl.HoloSightColor or Color(255, 255, 255))
 
-        -- cam.End3D()
+        render.DrawQuad(v1, v2, v3, v4, atttbl.HoloSightColor or Color(255, 255, 255))
 
         -- local toscreen = pos:ToScreen()
 
