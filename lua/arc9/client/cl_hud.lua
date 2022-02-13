@@ -190,24 +190,28 @@ function ARC9.DrawHUD()
     local up, right, forward = EyeAngles():Up(), EyeAngles():Right(), EyeAngles():Forward()
 
     local ang = EyeAngles()
-    local ang2 = EyeAngles()
+    -- local ang = EyeAngles()
 
     -- ang = ang + Angle(0, 180, 0)
 
     -- ang = -ang
 
-    ang:RotateAroundAxis(up, 175)
-    ang:RotateAroundAxis(right, 80)
-    ang:RotateAroundAxis(forward, -90)
+    -- ang:RotateAroundAxis(up, 175)
+    -- ang:RotateAroundAxis(right, 80)
+    -- ang:RotateAroundAxis(forward, -90)
 
-    ang2:RotateAroundAxis(up, 185)
-    ang2:RotateAroundAxis(right, 105)
-    ang2:RotateAroundAxis(forward, -90)
+    ang:RotateAroundAxis(up, 185)
+    ang:RotateAroundAxis(right, 105)
+    ang:RotateAroundAxis(forward, -90)
 
     -- cam.Start3D2D(EyePos() + (forward * 8) + (up * -3.25) + (right * -10), ang2, 0.0125 )
     -- cam.End3D2D()
 
-    cam.Start3D2D(EyePos() + (forward * 5) + (up * -0.5) + (right * -2), ang2, 0.015 )
+    local pos = EyePos() + (forward * 5) + (up * -0.5) + (right * -2)
+
+    pos, ang = ARC9.HUDBob(pos, ang)
+
+    cam.Start3D2D(pos, ang, ScreenScale(0.0125) )
         surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
         surface.DrawRect( 8, 8, 254, 110 )
 
