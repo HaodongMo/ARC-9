@@ -467,6 +467,8 @@ SWEP.CaseEffectQCA = 2 -- QC Attachment for shell ejection.
 SWEP.CamQCA = nil -- QC Attachment for camera movement.
 SWEP.ProceduralViewQCA = nil -- QC Attachment for procedural camera movement. Use if you don't have a camera. Usually the muzzle.
 
+SWEP.CamOffsetAng = Angle(0, 0, 0)
+
 -------------------------- VISUALS
 
 SWEP.BulletBones = { -- the bone that represents bullets in gun/mag

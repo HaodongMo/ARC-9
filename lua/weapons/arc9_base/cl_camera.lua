@@ -15,6 +15,8 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     fov = fov / self:GetSmoothedFOVMag()
 
+    ang = ang + (self:GetCameraControl() or Angle(0, 0, 0))
+
     return pos, ang, fov
 end
 
@@ -32,4 +34,18 @@ function SWEP:GetSmoothedFOVMag()
     self.SmoothedMagnification = math.Approach(self.SmoothedMagnification, mag, FrameTime() * diff * 60)
 
     return self.SmoothedMagnification
+end
+
+function SWEP:GetCameraControl()
+    local camqca = self:GetProcessedValue("CamQCA")
+
+    if !camqca then return end
+
+    local vm = self:GetVM()
+
+    local ang = vm:GetAttachment(camqca).Ang
+    ang = vm:WorldToLocalAngles(ang)
+    ang = ang - self.CamOffsetAng
+
+    return ang
 end

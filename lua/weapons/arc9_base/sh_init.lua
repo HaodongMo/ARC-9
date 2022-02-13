@@ -53,6 +53,10 @@ function SWEP:Deploy()
 
     self:GetOwner():DoAnimationEvent(self:GetValue("AnimDraw"))
 
+    if self:GetProcessedValue("AutoReload") then
+        self:RestoreClip(math.huge)
+    end
+
     if SERVER then
         if !self.GaveDefaultAmmo then
             self:GiveDefaultAmmo()
@@ -96,7 +100,12 @@ function SWEP:Holster(wep)
         self:SetHolster_Entity(NULL)
 
         self:KillTimers()
-        self:GetOwner():SetFOV(0, 0.1)
+        self:GetOwner():SetFOV(0, 0)
+
+        if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
+            self:Remove()
+        end
+
         return true
     else
         -- Prepare the holster and set up the timer
