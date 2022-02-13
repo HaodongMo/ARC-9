@@ -210,6 +210,7 @@ function ARC9.DrawHUD()
     local pos = EyePos() + (forward * 5) + (up * -0.5) + (right * -2)
 
     pos, ang = ARC9.HUDBob(pos, ang)
+    pos, ang = ARC9.HUDSway(pos, ang)
 
     cam.Start3D2D(pos, ang, ScreenScale(0.0125) )
         surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))

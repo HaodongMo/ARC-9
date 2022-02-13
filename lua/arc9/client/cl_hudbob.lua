@@ -38,3 +38,22 @@ function ARC9.HUDBob(pos, ang)
 
     return pos, ang
 end
+
+local lasteyeangles = Angle(0, 0, 0)
+local hudsway = Angle(0, 0, 0)
+
+function ARC9.HUDSway(pos, ang)
+    hudsway = hudsway + (0.75 * Angle(math.AngleDifference(lasteyeangles[1], EyeAngles()[1]) * FrameTime(), math.AngleDifference(lasteyeangles[2], EyeAngles()[2]) * FrameTime(), 0))
+
+    hudsway[1] = math.Clamp(math.NormalizeAngle(hudsway[1]), -2, 2)
+    hudsway[2] = math.Clamp(math.NormalizeAngle(hudsway[2]), -2, 2)
+
+    pos = pos + ang:Right() * hudsway[1]
+    pos = pos + ang:Forward() * -hudsway[2] * 1.25
+
+    hudsway = LerpAngle(0.2, hudsway, Angle(0, 0, 0))
+
+    lasteyeangles = EyeAngles()
+
+    return pos, ang
+end
