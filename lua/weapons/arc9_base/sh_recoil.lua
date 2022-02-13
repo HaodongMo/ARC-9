@@ -128,16 +128,19 @@ function SWEP:ThinkVisualRecoil()
 end
 
 function SWEP:DoVisualRecoil()
-    if game.SinglePlayer() and SERVER then self:CallOnClient("DoVisualRecoil") end
-    local mult = self:GetProcessedValue("VisualRecoilMult")
+    if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
 
-    local up = self:GetProcessedValue("VisualRecoilUp") * mult
-    local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
-    local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 2 * mult
-    local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(self:GetSightDelta(), 1, 0.5) * mult
+    if IsFirstTimePredicted() or game.SinglePlayer() then
+        local mult = self:GetProcessedValue("VisualRecoilMult")
 
-    self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
-    self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * (1 - self:GetSightDelta()), 0, roll)
+        local up = self:GetProcessedValue("VisualRecoilUp") * mult
+        local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
+        local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 2 * mult
+        local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(self:GetSightDelta(), 1, 0.5) * mult
+
+        self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
+        self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * Lerp(self:GetSightDelta(), 1, 0.05), 0, roll)
+    end
 end
 
 function SWEP:GetViewModelRecoil(pos, ang)

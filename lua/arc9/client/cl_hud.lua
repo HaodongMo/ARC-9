@@ -217,7 +217,7 @@ function ARC9.DrawHUD()
     pos, ang = ARC9.HUDBob(pos, ang)
     pos, ang = ARC9.HUDSway(pos, ang)
 
-    cam.Start3D2D(pos, ang, ScreenScale(0.0125) )
+    cam.Start3D2D(pos, ang, 0.0125 )
         -- surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
         -- surface.DrawRect( 8, 4, 254, 110 )
 

@@ -5,6 +5,10 @@ function SWEP:GetAttPos(slottbl, wm, idle)
     if wm then
         if slottbl.WMBase then
             parentmdl = self:GetOwner()
+
+            if !IsValid(parentmdl) then
+                parentmdl = self
+            end
         else
             parentmdl = self.WModel[1]
         end

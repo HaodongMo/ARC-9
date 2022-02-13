@@ -9,6 +9,10 @@ end
 function SWEP:SetTimer(time, callback, id)
     if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
 
+    if !self.ActiveTimers then
+        self:InitTimers()
+    end
+
     table.insert(self.ActiveTimers, { time + CurTime(), id or "", callback })
 end
 

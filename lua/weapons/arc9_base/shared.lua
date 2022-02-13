@@ -250,9 +250,9 @@ SWEP.RecoilAutoControl = 1 -- Multiplier for automatic recoil control.
 
 SWEP.UseVisualRecoil = true
 
-SWEP.VisualRecoilUp = 0.005 -- Vertical tilt for visual recoil.
-SWEP.VisualRecoilSide = 0.005 -- Horizontal tilt for visual recoil.
-SWEP.VisualRecoilRoll = 1 -- Roll tilt for visual recoil.
+SWEP.VisualRecoilUp = 0.01 -- Vertical tilt for visual recoil.
+SWEP.VisualRecoilSide = 0.05 -- Horizontal tilt for visual recoil.
+SWEP.VisualRecoilRoll = 0.23 -- Roll tilt for visual recoil.
 
 SWEP.VisualRecoilCenter = Vector(2, 4, 2) -- The "axis" of visual recoil. Where your hand is.
 

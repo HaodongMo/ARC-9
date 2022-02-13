@@ -117,12 +117,14 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "True")
     end
 
-    if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
-        stat = self:GetValue(val, stat, "MidAir")
-    end
+    if self:GetOwner():IsValid() then
+        if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
+            stat = self:GetValue(val, stat, "MidAir")
+        end
 
-    if self:GetOwner():Crouching() and self:GetOwner():OnGround() then
-        stat = self:GetValue(val, stat, "Crouch")
+        if self:GetOwner():Crouching() and self:GetOwner():OnGround() then
+            stat = self:GetValue(val, stat, "Crouch")
+        end
     end
 
     if self:GetBurstCount() == 0 then
@@ -179,15 +181,17 @@ function SWEP:GetProcessedValue(val, base)
 
     stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
 
-    local spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
+    if self:GetOwner():IsValid() then
+        local spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
 
-    spd = spd / 250
+        spd = spd / 250
 
-    if isnumber(stat) then
-        stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
-    else
-        if spd > 0 then
-            stat = self:GetValue(val, stat, "Move")
+        if isnumber(stat) then
+            stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
+        else
+            if spd > 0 then
+                stat = self:GetValue(val, stat, "Move")
+            end
         end
     end
 
