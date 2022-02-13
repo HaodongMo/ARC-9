@@ -310,6 +310,17 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
 
     dmg:SetDamage(dmgv)
 
+    if self:GetProcessedValue("ImpactDecal") then
+        util.Decal(self:GetProcessedValue("ImpactDecal"), tr.StartPos, tr.HitPos - (tr.HitNormal * 2), self:GetOwner())
+    end
+
+    if self:GetProcessedValue("ImpactEffect") then
+        local fx = EffectData()
+        fx:SetOrigin(tr.HitPos)
+        fx:SetNormal(tr.HitNormal)
+        util.Effect(self:GetProcessedValue("ImpactEffect"), fx)
+    end
+
     if tr.Entity and alreadypenned[tr.Entity] then
         dmg:SetDamage(0)
     elseif tr.Entity then
