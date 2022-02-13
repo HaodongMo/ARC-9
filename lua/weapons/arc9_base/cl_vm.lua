@@ -198,8 +198,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- this needs to be better
     -- its more like proof of concept
     -- probably this can be better if it based on selected slot offset not random numbers
-    pos = pos + (ang:Right() *math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-    pos = pos + (ang:Forward() *math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
+    pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
+    pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
 
     pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
     pos = pos + (ang:Forward() * 15) * curvedcustomizedelta ^ 2
@@ -208,6 +208,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
 
+    pos, ang = self:GetViewModelRecoil(pos, ang)
     pos, ang = self:GetViewModelBob(pos, ang)
     pos, ang = self:GetMidAirBob(pos, ang)
     -- pos, ang = self:GetViewModelLeftRight(pos, ang)

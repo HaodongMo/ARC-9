@@ -61,7 +61,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
     start = start or 0
     mult = mult
 
-    for _, v in pairs(soundtable) do
+    for i, v in pairs(soundtable) do
         local ttime
         if v.t then
             ttime = v.t * mult
@@ -73,6 +73,14 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
         self:SetTimer(ttime, function()
             self:EmitSound(self:RandomChoice(v.s or ""), v.v or 75, v.p or 100, 1, v.c or CHAN_AUTO)
-        end)
+        end, "soundtable_" .. tostring(i))
+    end
+end
+
+function SWEP:CancelSoundTable()
+    for _, t in pairs(self.ActiveTimers) do
+        if isstring(t[2]) and string.sub(t[2], 1, 10) == "soundtable" then
+            self:KillTimer(t[2])
+        end
     end
 end

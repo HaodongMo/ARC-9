@@ -24,9 +24,9 @@ function ARC9.HUDBob(pos, ang)
 
     -- ang:RotateAroundAxis(ang:Forward(), math.sin(bobct * step * 0.5) * ((math.sin(CurTime() * 6.151) * 0.2) + 1) * 4.5 * d)
     -- ang:RotateAroundAxis(ang:Right(), math.sin(bobct * step * 0.12) * ((math.sin(CurTime() * 1.521) * 0.2) + 1) * 2.11 * d)
-    pos = pos - (ang:Forward() * math.sin(bobct * step * 0.35) * 0.12 * mag)
+    pos = pos - (ang:Forward() * math.sin(bobct * step * 0.35) * 0.25 * mag)
     -- pos = pos + (ang:Forward() * math.sin(bobct * step * 0.3) * 0.11 * ((math.sin(CurTime() * 2) * ts * 1.25) + 1) * ((math.sin(CurTime() * 1.615) * 0.2) + 1) * mag)
-    pos = pos + (ang:Right() * (math.sin(bobct * step * 0.7) * 0.25 * mag))
+    pos = pos + (ang:Right() * (math.sin(bobct * step * 0.9) * 0.25 * mag))
 
     local steprate = Lerp(d, 1, 2.5)
 

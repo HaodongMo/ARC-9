@@ -101,6 +101,8 @@ function SWEP:PrimaryAttack()
 
     self:PlayAnimation("fire", 1, false, idle)
 
+    self:DoVisualRecoil()
+
     local ejectdelay = self:GetProcessedValue("EjectDelay")
 
     if ejectdelay == 0 then
@@ -345,7 +347,7 @@ function SWEP:GetShootPos()
     local pos = self:GetOwner():EyePos()
     local ang = self:GetShootDir()
 
-    pos = pos + (ang:Up() * -1)
+    pos = pos + (ang:Up() * self:GetProcessedValue("HeightOverBore"))
 
     return pos
 end

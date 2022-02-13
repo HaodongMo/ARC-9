@@ -10,6 +10,8 @@ function SWEP:ThinkRecoil()
     self:SetRecoilUp(self:GetRecoilUp() - (FrameTime() * self:GetRecoilUp() * self:GetProcessedValue("RecoilDissipationRate")))
 
     self:SetRecoilSide(self:GetRecoilSide() - (FrameTime() * self:GetRecoilSide() * self:GetProcessedValue("RecoilDissipationRate")))
+
+    self:ThinkVisualRecoil()
 end
 
 SWEP.RecoilPatternCache = {}
@@ -113,4 +115,55 @@ function SWEP:ApplyRecoil()
 
     -- self:GetOwner():SetFOV(self:GetOwner():GetFOV() * 0.99, 0)
     -- self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
+end
+
+SWEP.VisualRecoilPos = Vector(0, 0, 0)
+SWEP.VisualRecoilAng = Angle(0, 0, 0)
+
+function SWEP:ThinkVisualRecoil()
+    if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
+
+    self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
+    self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
+end
+
+function SWEP:DoVisualRecoil()
+    if game.SinglePlayer() and SERVER then self:CallOnClient("DoVisualRecoil") end
+    local mult = self:GetProcessedValue("VisualRecoilMult")
+
+    local up = self:GetProcessedValue("VisualRecoilUp") * mult
+    local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
+    local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 2 * mult
+    local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(self:GetSightDelta(), 1, 0.5) * mult
+
+    self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
+    self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * (1 - self:GetSightDelta()), 0, roll)
+end
+
+function SWEP:GetViewModelRecoil(pos, ang)
+    if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
+
+    local v = Vector(0, 0, 0)
+    local vrc = self:GetProcessedValue("VisualRecoilCenter")
+
+    v = v + (vrc.x * ang:Right())
+    v = v + (vrc.y * ang:Forward())
+    v = v + (vrc.z * ang:Up())
+
+    ang:RotateAroundAxis(ang:Right(), self.VisualRecoilAng.p)
+    ang:RotateAroundAxis(ang:Forward(), self.VisualRecoilAng.r)
+
+    v = v + ang:Right() * self.VisualRecoilPos.x
+    v = v + ang:Forward() * self.VisualRecoilPos.y
+    v = v + ang:Up() * self.VisualRecoilPos.z
+
+    v:Rotate(self.VisualRecoilAng)
+
+    v = v - (vrc.x * ang:Right())
+    v = v - (vrc.y * ang:Forward())
+    v = v - (vrc.z * ang:Up())
+
+    pos = pos + v
+
+    return pos, ang
 end

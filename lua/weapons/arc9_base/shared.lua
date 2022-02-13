@@ -172,7 +172,8 @@ SWEP.ManualActionChamber = 1 -- How many shots we go between needing to cycle ag
 SWEP.ManualAction = false -- Pump/bolt action. Play the "cycle" animation after firing, when the trigger is released.
 SWEP.ManualActionNoLastCycle = false -- Do not cycle on the last shot.
 
-SWEP.ReloadInSights = false -- This weapon can aim down sights while reloading.
+SWEP.ReloadWhileSprint = true -- This weapon can reload while the user is sprinting.
+SWEP.ReloadInSights = true -- This weapon can aim down sights while reloading.
 
 SWEP.CanFireUnderwater = false -- This weapon can shoot while underwater.
 
@@ -249,15 +250,15 @@ SWEP.RecoilAutoControl = 1 -- Multiplier for automatic recoil control.
 
 SWEP.UseVisualRecoil = true
 
-SWEP.VisualRecoilUp = 0.15 -- Vertical tilt for visual recoil.
-SWEP.VisualRecoilSide = 0.1 -- Horizontal tilt for visual recoil.
+SWEP.VisualRecoilUp = 0.005 -- Vertical tilt for visual recoil.
+SWEP.VisualRecoilSide = 0.005 -- Horizontal tilt for visual recoil.
 SWEP.VisualRecoilRoll = 1 -- Roll tilt for visual recoil.
 
-SWEP.VisualRecoilCenter = Vector(0, 2, 2) -- The "axis" of visual recoil. Where your hand is.
+SWEP.VisualRecoilCenter = Vector(2, 4, 2) -- The "axis" of visual recoil. Where your hand is.
 
-SWEP.VisualRecoilPunch = 1 -- How far back visual recoil moves the gun.
+SWEP.VisualRecoilPunch = 1.5 -- How far back visual recoil moves the gun.
 
-SWEP.VisualRecoilMultSights = 0.25 -- Visual recoil multiplier while in sights.
+SWEP.VisualRecoilMult = 1
 
 SWEP.RecoilKick = 1 -- Camera recoil
 
@@ -539,6 +540,8 @@ SWEP.CustomizePos = Vector(20, 32, 4)
 
 SWEP.InBipodPos = Vector(-8, 0, -4)
 SWEP.InBipodMult = Vector(2, 1, 1)
+
+SWEP.HeightOverBore = 1
 
 -------------------------- HoldTypes
 

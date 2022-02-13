@@ -30,6 +30,10 @@ end
 function SWEP:EnterSprint()
     self:SetShouldHoldType()
 
+    if !self:GetProcessedValue("ReloadWhileSprint") then
+        self:CancelReload()
+    end
+
     if !self:StillWaiting() then
         self:PlayAnimation("enter_sprint", self:GetProcessedValue("SprintToFireTime"))
     end

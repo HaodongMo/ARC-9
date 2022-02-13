@@ -18,6 +18,10 @@ function SWEP:Reload()
         return
     end
 
+    if !self:GetProcessedValue("ReloadWhileSprint") and self:GetSprintAmount() > 0 then
+        return
+    end
+
     if self:GetCustomize() then
         return
     end
@@ -77,6 +81,10 @@ function SWEP:Reload()
     self:SetReloading(true)
     self:SetEndReload(false)
 
+    if !self:GetProcessedValue("ReloadInSights") then
+        self:ExitSights()
+    end
+
     -- self:SetTimer(t * 0.9, function()
     --     if !IsValid(self) then return end
 
@@ -85,6 +93,20 @@ function SWEP:Reload()
     -- end)
 
     self:SetReloadFinishTime(CurTime() + (t * 0.95))
+end
+
+function SWEP:CancelReload()
+    if !self:GetReloading() then return end
+
+    self:SetReloading(false)
+    self:SetReloadFinishTime(0)
+    local vm = self:GetVM()
+    vm:SetSequence(0)
+    vm:SetCycle(0)
+    self:SetAnimLockTime(0)
+    self:PlayAnimation("idle")
+    self:GetOwner():DoAnimationEvent(ACT_HL2MP_GESTURE_RELOAD_MAGIC)
+    self:CancelSoundTable()
 end
 
 function SWEP:DropMagazine()
