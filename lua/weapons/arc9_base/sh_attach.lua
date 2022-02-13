@@ -202,6 +202,7 @@ function SWEP:CanAttach(addr, att, slottbl)
     end
 
     if self:GetAttBlocked(atttbl) then return false end
+    if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then return false end
 
     local attcat = atttbl.Category
 

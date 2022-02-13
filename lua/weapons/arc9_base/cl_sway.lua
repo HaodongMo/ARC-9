@@ -75,9 +75,9 @@ function SWEP:GetViewModelBob(pos, ang)
     local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
 
     if self:GetOwner():OnGround() and self:GetOwner():GetMoveType() != MOVETYPE_NOCLIP then
-        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, FrameTime() / 1)
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, FrameTime() / 0.1)
     else
-        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 1)
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 0.1)
     end
 
     d = d * Lerp(self:GetSightAmount(), 1, 0.5) * Lerp(ts, 1, 1.5)
@@ -85,10 +85,10 @@ function SWEP:GetViewModelBob(pos, ang)
     mag = mag * Lerp(ts, 1, 1.5)
     step = 10
 
-    ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(CurTime() * 6.151) * 0.2) + 1) * 4.5 * d)
-    ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(CurTime() * 1.521) * 0.2) + 1) * 2.11 * d)
-    pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.07 * ((math.sin(CurTime() * 3.515) * 0.2) + 1) * mag)
-    pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(CurTime() * 2) * ts * 1.25) + 1) * ((math.sin(CurTime() * 1.615) * 0.2) + 1) * mag)
+    ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 4.5 * d)
+    ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 2.11 * d)
+    pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.07 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
+    pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 1.615) * 0.2) + 1) * mag)
     pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.15) + (math.cos(self.BobCT * step * 0.3332))) * 0.16 * mag)
 
     local steprate = Lerp(d, 1, 2.5)

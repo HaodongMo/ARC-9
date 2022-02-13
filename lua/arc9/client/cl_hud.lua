@@ -162,19 +162,23 @@ function ARC9.DrawHUD()
         end
     end
 
-    if weapon_clipsize <= 0 and weapon:GetPrimaryAmmoType() == -1 then
-        melee = true
-    end
-
     local flashammowidgets = false
 
     if (weapon_clip / weapon_clipsize) < 0.34 then
         flashammowidgets = true
+        if weapon_clip == 0 then
+            flashammowidgets = false
+        end
+    end
+
+    if weapon_clipsize <= 0 and weapon:GetPrimaryAmmoType() == -1 then
+        melee = true
+        flashammowidgets = false
     end
 
     local am_col = ARC9.GetHUDColor("fg_3d", 255)
 
-    if flashammowidgets and math.floor(CurTime() * flash_period) % 2 == 0 then
+    if (flashammowidgets and math.floor(CurTime() * flash_period) % 2 == 0) or weapon_clip == 0 then
         am_col = ARC9.GetHUDColor("hi_3d", 255)
     end
 
@@ -213,8 +217,8 @@ function ARC9.DrawHUD()
     pos, ang = ARC9.HUDSway(pos, ang)
 
     cam.Start3D2D(pos, ang, ScreenScale(0.0125) )
-        surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
-        surface.DrawRect( 8, 8, 254, 110 )
+        -- surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
+        -- surface.DrawRect( 8, 4, 254, 110 )
 
         surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
         surface.DrawRect( 0, 0, 254, 110 )
@@ -255,7 +259,7 @@ function ARC9.DrawHUD()
         local hb_col = ARC9.GetHUDColor("fg_3d", 225)
         local hw_col = ARC9.GetHUDColor("fg_3d", 255)
 
-        if flashhealthwidgets and math.floor(CurTime() * flash_period) % 2 == 0 then
+        if (flashhealthwidgets and math.floor(CurTime() * flash_period) % 2 == 0) then
             hw_col = ARC9.GetHUDColor("hi_3d", 255)
             hb_col = ARC9.GetHUDColor("hi_3d", 170)
         end
