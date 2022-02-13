@@ -24,7 +24,7 @@ ARC9.Colors = {
     neg     = Color(255, 100, 100),
     pos     = Color(100, 255, 100),
 
-    bg_3d = Color(255, 255, 255),
+    bg_3d = Color(255, 255, 240),
     fg_3d = Color(0, 0, 0),
     shadow_3d = Color(0, 0, 0),
     hi_3d = Color(255, 50, 50)
@@ -100,6 +100,8 @@ function ARC9.DrawHUD()
     end
 
     if weapon.ARC9 then
+        if weapon:GetCustomize() then return end
+
         local arc9_mode = weapon:GetCurrentFiremodeTable()
 
         if arc9_mode.Icon then
@@ -136,6 +138,24 @@ function ARC9.DrawHUD()
         if !weapon.Primary.Automatic then
             firemode_pic = firemode_pics[1]
         end
+
+        if weapon.GetSafe then
+            if weapon:GetSafe() then
+                firemode_pic = firemode_pics[0]
+            end
+        end
+
+        if isfunction(weapon.Safe) then
+            if weapon:Safe() then
+                firemode_pic = firemode_pics[0]
+            end
+        end
+
+        if isfunction(weapon.Safety) then
+            if weapon:Safety() then
+                firemode_pic = firemode_pics[0]
+            end
+        end
     else
         if !automatics[weapon:GetClass()] then
             firemode_pic = firemode_pics[1]
@@ -161,7 +181,11 @@ function ARC9.DrawHUD()
     local s_right = 2
     local s_down = 1
 
-    cam.Start3D(nil, nil, 105)
+    -- cam.Start3D(Vector pos=EyePos(), Angle angles=EyeAngles(), number fov=nil, number x=0, number y=0, number w=ScrW(), number h=ScrH(), number zNear=nil, number zFar=nil)
+    local anchorwidth = math.max(ScrW() / 3, ScrH() / 3)
+
+    cam.Start3D(nil, nil, 55, 0, ScrH() - anchorwidth, anchorwidth, anchorwidth)
+    -- cam.Start3D(nil, nil, 105)
 
     local up, right, forward = EyeAngles():Up(), EyeAngles():Right(), EyeAngles():Forward()
 
@@ -177,13 +201,13 @@ function ARC9.DrawHUD()
     ang:RotateAroundAxis(forward, -90)
 
     ang2:RotateAroundAxis(up, 185)
-    ang2:RotateAroundAxis(right, 110)
+    ang2:RotateAroundAxis(right, 105)
     ang2:RotateAroundAxis(forward, -90)
 
     -- cam.Start3D2D(EyePos() + (forward * 8) + (up * -3.25) + (right * -10), ang2, 0.0125 )
     -- cam.End3D2D()
 
-    cam.Start3D2D(EyePos() + (forward * 8) + (up * -3) + (right * -9), ang2, 0.0125 )
+    cam.Start3D2D(EyePos() + (forward * 5) + (up * -0.5) + (right * -2), ang2, 0.015 )
         surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
         surface.DrawRect( 8, 8, 254, 110 )
 
