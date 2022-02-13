@@ -64,7 +64,7 @@ SWEP.BobCT = 0
 function SWEP:GetViewModelBob(pos, ang)
     local step = 10
     local mag = 1
-    local ts = self:GetTraversalSprintAmount()
+    local ts = 0 // self:GetTraversalSprintAmount()
     -- ts = 1
 
     if self:GetCustomize() then return pos, ang end

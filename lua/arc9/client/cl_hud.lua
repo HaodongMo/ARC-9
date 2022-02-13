@@ -52,6 +52,8 @@ local rackrisetime = 0
 local lastrow = 0
 local lastweapon = NULL
 
+local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
+
 local firemode_pics = {
     [-1] = Material("arc9/fs_auto.png", "mips smooth"),
     [0] = Material("arc9/fs_safe.png", "mips smooth"),
@@ -188,6 +190,10 @@ function ARC9.DrawHUD()
         surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
         surface.DrawRect( 0, 0, 254, 110 )
 
+        surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 100))
+        surface.SetMaterial(hud_bg)
+        surface.DrawTexturedRect(0, 0, 254, 110)
+
         surface.DrawLine(0, 115, 254, 115)
 
         -- surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
@@ -195,7 +201,7 @@ function ARC9.DrawHUD()
 
         local deco_x = 6
         local deco_y = 2
-        local deco = "ARC9 UNIVERSAL HUD v1.02"
+        local deco = "ARC9 UNIVERSAL HUD v1.03"
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
         surface.SetFont("ARC9_Deco_8_Unscaled")
@@ -225,7 +231,9 @@ function ARC9.DrawHUD()
             hb_col = ARC9.GetHUDColor("hi_3d", 170)
         end
 
+        local hb_left = 30
         local hb_tall = 24
+        local hb_wide = 209
 
         if LocalPlayer():Armor() > 0 then
             hb_tall = 18
@@ -233,19 +241,23 @@ function ARC9.DrawHUD()
             local armor = math.min(LocalPlayer():Armor() / 100, 1)
 
             surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
-            surface.DrawRect(34 + s_right, 32 + s_down, 209 * armor, 3)
+            surface.DrawRect(hb_left + s_right, 32 + s_down, hb_wide * armor, 3)
 
             surface.SetDrawColor(hb_col)
-            surface.DrawRect(34, 32, 209 * armor, 3)
+            surface.DrawRect(hb_left, 32, hb_wide * armor, 3)
         end
 
         surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
-        surface.DrawLine(242 + s_right, 12 + s_down, 242 + s_right, 12 + hb_tall + s_down)
-        surface.DrawRect(34 + s_right, 12 + s_down, 209 * health, hb_tall)
+        if health < 1 then
+            surface.DrawLine(hb_wide + hb_left + s_right, 12 + s_down, hb_wide + hb_left + s_right, 12 + hb_tall + s_down)
+        end
+        surface.DrawRect(hb_left + s_right, 12 + s_down, hb_wide * health, hb_tall)
 
         surface.SetDrawColor(hb_col)
-        surface.DrawLine(242, 12, 242, 12 + hb_tall)
-        surface.DrawRect(34, 12, 209 * health, hb_tall)
+        if health < 1 then
+            surface.DrawLine(hb_wide + hb_left, 12, hb_wide + hb_left, 12 + hb_tall)
+        end
+        surface.DrawRect(hb_left, 12, hb_wide * health, hb_tall)
 
         local healthtext = "♥"
 

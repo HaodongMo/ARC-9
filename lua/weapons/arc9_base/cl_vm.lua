@@ -93,7 +93,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     -- local sprintdelta = self:Curve(self:GetSprintDelta())
     local sprintdelta = self:GetSprintDelta()
-    local ts_sprintdelta = self:GetTraversalSprintAmount()
+    local ts_sprintdelta = 0 // self:GetTraversalSprintAmount()
     sprintdelta = math.ease.InOutQuad(sprintdelta) - curvedcustomizedelta
     ts_sprintdelta = math.ease.InOutSine(ts_sprintdelta)
 

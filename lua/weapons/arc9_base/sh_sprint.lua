@@ -53,7 +53,7 @@ function SWEP:ThinkSprint()
     end
 
     local amt = self:GetSprintAmount()
-    local ts_amt = self:GetTraversalSprintAmount()
+    -- local ts_amt = self:GetTraversalSprintAmount()
 
     if self.LastWasSprinting and !sprinting then
         self:ExitSprint()
@@ -65,29 +65,39 @@ function SWEP:ThinkSprint()
 
     if sprinting then
         amt = math.Approach(amt, 1, FrameTime() / self:GetSprintToFireTime())
-        if self:GetTraversalSprint() then
-            ts_amt = math.Approach(ts_amt, 1, FrameTime() / (self:GetTraverseSprintToFireTime()))
-        end
+        -- if self:GetTraversalSprint() then
+        --     ts_amt = math.Approach(ts_amt, 1, FrameTime() / (self:GetTraverseSprintToFireTime()))
+        -- end
     else
         amt = math.Approach(amt, 0, FrameTime() / self:GetSprintToFireTime())
     end
 
-    if !self:GetTraversalSprint() then
-        ts_amt = math.Approach(ts_amt, 0, FrameTime() / (self:GetTraverseSprintToFireTime()))
-    end
+    -- if !self:GetTraversalSprint() then
+    --     ts_amt = math.Approach(ts_amt, 0, FrameTime() / (self:GetTraverseSprintToFireTime()))
+    -- end
 
-    self:SetTraversalSprintAmount(ts_amt)
+    -- self:SetTraversalSprintAmount(ts_amt)
     self:SetSprintAmount(amt)
 
-    if self:GetOwner():KeyDown(IN_SPEED) and self:GetOwner():KeyPressed(IN_FORWARD) then
-        if self:GetLastPressedWTime() >= (CurTime() - 0.33) then
-            self:SetTraversalSprint(true)
-        else
-            self:SetLastPressedWTime(CurTime())
-        end
-    end
+    -- if self:GetOwner():KeyDown(IN_FORWARD) and self:GetOwner():KeyPressed(IN_SPEED) then
+    --     if self:GetLastPressedWTime() >= (CurTime() - 0.33) then
+    --         self:SetTraversalSprint(true)
+    --     else
+    --         self:SetLastPressedWTime(CurTime())
+    --     end
+    -- end
 
-    if self:GetTraversalSprint() and (!sprinting or !self:GetOwner():KeyDown(IN_FORWARD)) then
-        self:SetTraversalSprint(false)
-    end
+    -- if self:GetTraversalSprint() then
+    --     if !sprinting then
+    --         self:SetTraversalSprint(false)
+    --     end
+
+    --     if !self:GetOwner():KeyDown(IN_FORWARD) then
+    --         self:SetTraversalSprint(false)
+    --     end
+
+    --     if self:GetSprintAmount() <= 0 then
+    --         self:SetTraversalSprint(false)
+    --     end
+    -- end
 end

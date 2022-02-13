@@ -20,7 +20,7 @@ function SWEP:DoRHIK()
     local lh_delta = 1
     local rh_delta = 1
 
-    lhik_ts_delta = self:GetTraversalSprintAmount()
+    lhik_ts_delta = 0 //self:GetTraversalSprintAmount()
 
     local hide_lh_d = 0
     local hide_rh_d = 0
