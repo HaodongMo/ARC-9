@@ -97,6 +97,7 @@ function ARC9.DrawHUD()
 
     if weapon_clipsize <= 0 then
         inf_clip = true
+        clip_to_show = weapon_reserve
     end
 
     if weapon.ARC9 then
@@ -178,7 +179,7 @@ function ARC9.DrawHUD()
 
     local am_col = ARC9.GetHUDColor("fg_3d", 255)
 
-    if (flashammowidgets and math.floor(CurTime() * flash_period) % 2 == 0) or weapon_clip == 0 then
+    if (flashammowidgets and math.floor(CurTime() * flash_period) % 2 == 0) or (weapon_clip == 0 and !melee) then
         am_col = ARC9.GetHUDColor("hi_3d", 255)
     end
 
