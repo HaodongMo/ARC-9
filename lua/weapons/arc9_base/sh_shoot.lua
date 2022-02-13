@@ -27,6 +27,13 @@ function SWEP:SprintLock()
     return false
 end
 
+function SWEP:DryFire()
+    self:PlayAnimation("dryfire")
+    self:EmitSound(self:RandomChoice(self:GetProcessedValue("DryFireSound")), 75, 100, 1, CHAN_BODY)
+    self:SetBurstCount(0)
+    self:SetNeedTriggerPress(true)
+end
+
 function SWEP:PrimaryAttack()
     if self:GetOwner():IsNPC() then
         return
@@ -67,11 +74,15 @@ function SWEP:PrimaryAttack()
     if self:GetCurrentFiremode() > 0 and self:GetBurstCount() >= self:GetCurrentFiremode() then return end
 
     if self:Clip1() < self:GetProcessedValue("AmmoPerShot") then
-        self:PlayAnimation("dryfire")
-        self:EmitSound(self:RandomChoice(self:GetProcessedValue("DryFireSound")), 75, 100, 1, CHAN_BODY)
-        self:SetBurstCount(0)
-        self:SetNeedTriggerPress(true)
+        self:DryFire()
         return
+    end
+
+    if !self:GetProcessedValue("CanFireUnderwater") then
+        if bit.band(util.PointContents(self:GetShootPos()), CONTENTS_WATER) == CONTENTS_WATER then
+            self:DryFire()
+            return
+        end
     end
 
     self:SetBaseSettings()
