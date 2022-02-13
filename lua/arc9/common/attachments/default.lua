@@ -63,6 +63,8 @@ ATT.HoloSightReticle = ""
 ATT.HoloSightSize = 32
 ATT.HoloSightColor = Color(255, 255, 255)
 
+ATT.FLIRHotFunc = function(swep, ent) end -- return true for hot and false for cold
+
 ATT.RTScope = true
 ATT.RTScopeSubmatIndex = 1
 ATT.RTScopeFOV = 2.5
@@ -94,8 +96,6 @@ ATT.RTScopeNightVisionFunc = function(swep) end
 ATT.RTScopeFLIR = true
 ATT.RTScopeFLIRSolid = false -- Solid color FLIR instead of like a shaded look
 ATT.RTScopeFLIRHighlightColor = Color(255, 255, 255)
-ATT.RTScopeFLIRRange = 30000
-ATT.RTScopeFLIRHotFunc = function(swep, ent) end -- return true for hot and false for cold
 ATT.RTScopeFLIRMonochrome = true
 ATT.RTScopeFLIRNoPP = false
 ATT.RTScopeFLIRBlend = 0.25

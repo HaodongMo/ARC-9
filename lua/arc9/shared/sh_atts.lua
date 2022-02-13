@@ -122,6 +122,8 @@ function ARC9.GetFoldersForAtts(atts)
     return folders
 end
 
+hook.Add("OnReloaded", "ARC9_ReloadAtts", ARC9.LoadAtts)
+
 function ARC9.GetMaxAtts()
     return GetConVar("arc9_maxatts"):GetInt()
 end

@@ -42,6 +42,9 @@ function SWEP:DoFLIR(atttbl)
     for _, ent in ipairs(targets) do
         if ent == self:GetOwner() then continue end
         local hot = self:GetEntityHot(ent)
+        if atttbl.FLIRHotFunc then
+            hot = atttbl.FLIRHotFunc(self, ent)
+        end
 
         if !hot then continue end
 

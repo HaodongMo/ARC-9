@@ -65,6 +65,9 @@ local firemode_pics = {
 local automatics = {
     ["weapon_smg1"] = true,
     ["weapon_ar2"] = true,
+    ["weapon_mp5_hl1"] = true,
+    ["weapon_gauss"] = true,
+    ["weapon_egon"] = true
 }
 
 function ARC9.DrawHUD()
@@ -175,6 +178,10 @@ function ARC9.DrawHUD()
     if weapon_clipsize <= 0 and weapon:GetPrimaryAmmoType() == -1 then
         melee = true
         flashammowidgets = false
+    end
+
+    if inf_clip then
+        weapon_clipsize = 30
     end
 
     local am_col = ARC9.GetHUDColor("fg_3d", 255)
