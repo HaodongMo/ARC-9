@@ -91,6 +91,7 @@ L["autostat.secondary.hipfire"] = "{1} In Hipfire"
 L["autostat.secondary.shooting"] = "{1} While Shooting"
 L["autostat.secondary.recoil"] = "{1} From Recoil" --"{1} With Each Shot"
 L["autostat.secondary.move"] = "{1} While Moving"
+L["autostat.secondary.blindfire"] = "{1} While Blind Firing"
 
 L["unit.second"] = "s"
 L["unit.meter"] = "m"

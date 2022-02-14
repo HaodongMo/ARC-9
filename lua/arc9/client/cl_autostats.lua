@@ -171,7 +171,8 @@ ARC9.AutoStatsConditions = {
     ["HipFire"] = "In Hipfire",
     ["Shooting"] = "While Shooting",
     ["Recoil"] = "With Each Shot",
-    ["Move"] = "While Moving"
+    ["Move"] = "While Moving",
+    ["BlindFire"] = "While Blind Firing"
 }
 
 function ARC9.GetProsAndCons(atttbl, weapon)
