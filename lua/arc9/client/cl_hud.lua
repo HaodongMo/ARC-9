@@ -289,7 +289,7 @@ function ARC9.DrawHUD()
 
         local health_x = 8
         local health_y = 9
-        local health = LocalPlayer():Health() / LocalPlayer():GetMaxHealth()
+        local health = math.Clamp(LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), 0, 1)
 
         local flashhealthwidgets = false
 
