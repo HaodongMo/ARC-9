@@ -383,11 +383,11 @@ SWEP.BlindFirePos = Vector(-6, -4, 12)
 SWEP.BlindFireAng = Angle(0, 0, -45)
 
 SWEP.BlindFireRightOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFireRightPos = Vector(-12, 10, 0)
+SWEP.BlindFireRightPos = Vector(-12, 12, 0)
 SWEP.BlindFireRightAng = Angle(-90, 0, 0)
 
 SWEP.BlindFireLeftOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFireLeftPos = Vector(12, 12, 0)
+SWEP.BlindFireLeftPos = Vector(12, 10, 0)
 SWEP.BlindFireLeftAng = Angle(90, 0, 0)
 
 SWEP.BlindFireBoneMods = {
