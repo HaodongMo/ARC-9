@@ -8,6 +8,11 @@ function SWEP:Reload()
         return
     end
 
+    if self:GetJammed() then
+        self:UnJam()
+        return
+    end
+
     if self:GetOwner():KeyDown(IN_USE) then
         -- firemode switch
         return

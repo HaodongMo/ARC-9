@@ -36,7 +36,7 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
     vm:SetPlaybackRate(tmult)
 
     if animation.EventTable then
-        self:PlaySoundTable(animation.EventTable, mult)
+        self:PlaySoundTable(animation.EventTable or animation.SoundTable, mult)
     end
 
     if animation.IKTimeLine then

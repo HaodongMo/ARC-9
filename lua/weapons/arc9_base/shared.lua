@@ -340,6 +340,7 @@ SWEP.PostBashTime = 0.5
 -------------------------- MALFUNCTIONS
 
 SWEP.Overheat = false -- Weapon will jam when it overheats, playing the "overheat" animation.
+SWEP.HeatPerShot = 1
 SWEP.HeatCapacity = 50 -- rounds that can be fired non-stop before the gun jams, playing the "fix" animation
 SWEP.HeatDissipation = 10 -- rounds' worth of heat lost per second
 SWEP.HeatLockout = true -- overheating means you cannot fire until heat has been fully depleted
@@ -352,8 +353,7 @@ SWEP.HeatFix = false -- when the "overheat" animation is played, all heat is res
 -- When the trigger is pressed, the gun will try to play the "jamfire" animation. Otherwise, it will try "dryfire". Otherwise, it will do nothing.
 SWEP.Malfunction = false
 SWEP.MalfunctionJam = true -- After a malfunction happens, the gun will dryfire until reload is pressed. If unset, instead plays animation right after.
-SWEP.MalfunctionTakeRound = true -- When malfunctioning, a bullet is consumed.
-SWEP.MalfunctionWait = 0.25 -- The amount of time to wait before playing malfunction animation (or can reload)
+SWEP.MalfunctionWait = 0 -- The amount of time to wait before playing malfunction animation (or can reload)
 SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfunctions, will be autocalculated if nil
 
 -------------------------- HOOKS
@@ -845,6 +845,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 11, "PrimedAttack")
     self:NetworkVar("Bool", 12, "BlindFire")
     self:NetworkVar("Bool", 13, "NeedsCycle")
+    self:NetworkVar("Bool", 14, "Bipod")
+    self:NetworkVar("Bool", 15, "HeatLockout")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")

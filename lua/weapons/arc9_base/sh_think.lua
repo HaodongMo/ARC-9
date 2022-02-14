@@ -27,6 +27,8 @@ function SWEP:Think()
 
     self:ThinkRecoil()
 
+    self:ThinkHeat()
+
     self:ThinkSprint()
 
     self:ThinkReload()

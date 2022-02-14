@@ -22,7 +22,7 @@ end
 function SWEP:SprintLock()
     if self:GetSprintAmount() > 0 then return true end
     -- if self:GetTraversalSprintAmount() > 0 then return true end
-    if self:GetIsSprinting() then return true end
+    -- if self:GetIsSprinting() then return true end
 
     return false
 end
@@ -90,6 +90,11 @@ function SWEP:PrimaryAttack()
     if self:SprintLock() then return end
 
     if self:RunHook("HookP_BlockFire") then return end
+
+    if self:GetJammed() or self:GetHeatLockout() then
+        self:DryFire()
+        return
+    end
 
     if IsFirstTimePredicted() then
         if self:GetProcessedValue("BottomlessClip") then
@@ -159,7 +164,7 @@ function SWEP:PrimaryAttack()
         end
     end
 
-    self:EmitSound(dss, 149, self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
+    self:EmitSound(dss, math.min(149, self:GetProcessedValue("ShootVolume") * 2), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
 
     local delay = 60 / self:GetProcessedValue("RPM")
 
@@ -254,6 +259,9 @@ function SWEP:PrimaryAttack()
     if self:GetCurrentFiremode() == 1 or self:Clip1() == 0 then
         self:SetNeedTriggerPress(true)
     end
+
+    self:RollJam()
+    self:DoHeat()
 end
 
 function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)

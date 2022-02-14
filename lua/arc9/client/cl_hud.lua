@@ -54,6 +54,8 @@ local lastrow = 0
 local lastweapon = NULL
 
 local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
+local hud_t_full = Material("arc9/thermometer_full.png", "mips")
+local hud_t_empty = Material("arc9/thermometer_empty.png", "mips")
 
 local firemode_pics = {
     [-1] = Material("arc9/fs_auto.png", "mips smooth"),
@@ -98,6 +100,11 @@ function ARC9.DrawHUD()
     local inf_clip = false
     local inf_reserve = false
     local melee = false
+    local jammed = false
+    local showheat = false
+    local heat = 0
+    local heatcap = 100
+    local heatlocked = false
 
     if weapon_clipsize <= 0 then
         inf_clip = true
@@ -138,6 +145,17 @@ function ARC9.DrawHUD()
             if inf_clip then
                 clip_to_show = 2147483640 - weapon:GetNthShot() % 2147483640
             end
+        end
+
+        if weapon:GetJammed() then
+            jammed = true
+        end
+
+        if weapon:GetProcessedValue("Overheat") then
+            showheat = true
+            heat = weapon:GetHeatAmount()
+            heatcap = weapon:GetProcessedValue("HeatCapacity")
+            heatlocked = weapon:GetHeatLockout()
         end
     elseif weapon:IsScripted() then
         if !weapon.Primary.Automatic then
@@ -183,6 +201,20 @@ function ARC9.DrawHUD()
 
     if inf_clip then
         weapon_clipsize = 30
+    end
+
+    if jammed then
+        flashammowidgets = true
+    end
+
+    local flashheatbar = false
+
+    if heatlocked then flashheatbar = true end
+
+    local heat_col = ARC9.GetHUDColor("fg_3d", 200)
+
+    if (flashheatbar and math.floor(CurTime() * flash_period) % 2 == 0) then
+        heat_col = ARC9.GetHUDColor("hi_3d", 200)
     end
 
     local am_col = ARC9.GetHUDColor("fg_3d", 255)
@@ -344,6 +376,34 @@ function ARC9.DrawHUD()
         -- surface.SetTextPos(title_x, title_y)
         -- surface.DrawText(weapon_printname)
 
+        if showheat then
+            local therm_x = 174
+            local therm_y = 69
+            local therm_w = 70
+            local therm_h = 35
+
+            local fill = math.Clamp(0.05 + (0.9 * heat) / heatcap, 0, 1)
+
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
+            surface.SetMaterial(hud_t_full)
+            surface.DrawTexturedRectUV(therm_x + s_right, therm_y + s_down, math.ceil(therm_w * fill), therm_h, 0, 0, fill, 1)
+            -- surface.DrawTexturedRect(therm_x + s_right, therm_y + s_down, therm_s, therm_s)
+
+            surface.SetDrawColor(heat_col)
+            surface.SetMaterial(hud_t_full)
+            surface.DrawTexturedRectUV(therm_x, therm_y, math.ceil(therm_w * fill), therm_h, 0, 0,  fill, 1)
+
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
+            surface.SetMaterial(hud_t_empty)
+            surface.DrawTexturedRectUV(therm_x + math.ceil(therm_w * fill) + s_right, therm_y + s_down, therm_w * (1 - fill), therm_h, fill, 0, 1, 1)
+            -- surface.DrawTexturedRect(therm_x + s_right, therm_y + s_down, therm_s, therm_s)
+
+            surface.SetDrawColor(heat_col)
+            surface.SetMaterial(hud_t_empty)
+            surface.DrawTexturedRectUV(therm_x + math.ceil(therm_w * fill), therm_y, therm_w * (1 - fill), therm_h, fill, 0, 1, 1)
+            -- surface.DrawTexturedRect(therm_x, therm_y, therm_s, therm_s)
+        end
+
         local ammo_x = 8
         local ammo_y = 40
         local ammo_text = tostring(clip_to_show)
@@ -366,6 +426,10 @@ function ARC9.DrawHUD()
 
         if melee then
             ammo_text = "-"
+        end
+
+        if jammed then
+            ammo_text = "JAMMED!"
         end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
@@ -399,6 +463,10 @@ function ARC9.DrawHUD()
         local b_m_margin = 2
 
         local row_size = 15
+
+        if showheat then
+            row_size = 10
+        end
 
         local row1_bullets = 0
         local row2_bullets = 0
