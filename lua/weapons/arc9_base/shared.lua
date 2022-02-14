@@ -7,7 +7,7 @@ SWEP.AdminOnly = false
 
 -- Any string can be replaced with a localized string by using # in front of it.
 -- Get the appropriate localized string for the weapon with #WEAPON_NAME_VARIABLE.
--- For example, #A2_BASE_PRINTNAME.
+-- For example, #ARC9_BASE_PRINTNAME.
 -- Otherwise, it'll just use the direct string.
 -- If a localized string is unavailable in your language, English will be used. Otherwise, the default language will be used.
 
@@ -374,11 +374,11 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 
 SWEP.CanBlindFire = true -- This weapon is capable of blind firing.
 
-SWEP.BlindFireOffset = Vector(0, 0, 16) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFirePos = Vector(-6, -4, 8)
+SWEP.BlindFireOffset = Vector(0, 0, 32) -- The amount by which to offset the blind fire muzzle.
+SWEP.BlindFirePos = Vector(-6, -4, 12)
 SWEP.BlindFireAng = Angle(0, 0, -45)
 
-SWEP.BlindFireCornerOffset = Vector(0, 16, 0) -- The amount by which to offset the blind fire muzzle.
+SWEP.BlindFireCornerOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
 SWEP.BlindFireCornerPos = Vector(12, 10, 0)
 SWEP.BlindFireCornerAng = Angle(75, 0, 0)
 

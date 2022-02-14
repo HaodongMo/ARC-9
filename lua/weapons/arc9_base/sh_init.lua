@@ -118,6 +118,8 @@ function SWEP:Holster(wep)
             self:SetHolster_Entity(wep)
         end
 
+        self:ToggleBlindFire(false)
+
     end
 end
 

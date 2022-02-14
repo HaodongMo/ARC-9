@@ -3,6 +3,10 @@ function SWEP:TranslateAnimation(seq)
         seq = seq .. "_iron"
     end
 
+    if self:GetBlindFire() and self:HasAnimation(seq .. "_blindfire") then
+        seq = seq .. "_blindfire"
+    end
+
     if self:GetSprintAmount() > 0 and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
         seq = seq .. "_sprint"
     end

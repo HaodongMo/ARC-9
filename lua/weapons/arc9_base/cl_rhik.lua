@@ -20,12 +20,12 @@ function SWEP:DoRHIK()
     local lh_delta = 1
     local rh_delta = 1
 
-    lhik_ts_delta = 0 //self:GetTraversalSprintAmount()
+    local lhik_bf_d = self:GetBlindFireAmount() - self:GetBlindFireCornerAmount()
 
     local hide_lh_d = 0
     local hide_rh_d = 0
 
-    hide_lh_d = math.max(lhik_ts_delta, self.CustomizeDelta)
+    hide_lh_d = math.max(lhik_bf_d, self.CustomizeDelta)
     hide_rh_d = self.CustomizeDelta
 
     hide_lh_d = math.ease.InCubic(hide_lh_d)

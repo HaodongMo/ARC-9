@@ -146,6 +146,7 @@ Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS 
  - **OddShot**: Enabled on odd shots.
  - **EvenReload**: Enabled on even reloads.
  - **OddReload**: Enabled on odd reloads.
+ - **BlindFire**: Enabled while blind firing.
  - **Sights**: Enabled when sighted.
  - **HipFire**: Enabled when not sighted.
  - **Shooting**: Enabled when constantly shooting.
