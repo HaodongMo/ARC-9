@@ -140,6 +140,10 @@ function SWEP:DoVisualRecoil()
 
         self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
         self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * Lerp(self:GetSightDelta(), 1, 0.05), 0, roll)
+
+        if self:GetSightAmount() > 0 then
+            self.VisualRecoilPos.y = math.Clamp(self.VisualRecoilPos.y, -0.1, 0)
+        end
     end
 end
 
