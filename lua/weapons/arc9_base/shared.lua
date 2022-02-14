@@ -373,14 +373,22 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -------------------------- BLIND FIRE
 
 SWEP.CanBlindFire = true -- This weapon is capable of blind firing.
+SWEP.BlindFireLHIK = true -- Hide the left hand while blind firing forward.
+
+SWEP.BlindFireLeft = true
+SWEP.BlindFireRight = false -- This weapon can blind fire towards the right. Generally keep this off.
 
 SWEP.BlindFireOffset = Vector(0, 0, 32) -- The amount by which to offset the blind fire muzzle.
 SWEP.BlindFirePos = Vector(-6, -4, 12)
 SWEP.BlindFireAng = Angle(0, 0, -45)
 
-SWEP.BlindFireCornerOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFireCornerPos = Vector(12, 10, 0)
-SWEP.BlindFireCornerAng = Angle(75, 0, 0)
+SWEP.BlindFireRightOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
+SWEP.BlindFireRightPos = Vector(-12, 10, 0)
+SWEP.BlindFireRightAng = Angle(-90, 0, 0)
+
+SWEP.BlindFireLeftOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
+SWEP.BlindFireLeftPos = Vector(12, 12, 0)
+SWEP.BlindFireLeftAng = Angle(90, 0, 0)
 
 SWEP.BlindFireBoneMods = {
     ["ValveBiped.Bip01_R_UpperArm"] = {
@@ -392,13 +400,24 @@ SWEP.BlindFireBoneMods = {
         pos = Vector(0, 0, 0)
     }
 }
-SWEP.BlindFireCornerBoneMods = {
+SWEP.BlindFireLeftBoneMods = {
     ["ValveBiped.Bip01_R_UpperArm"] = {
         ang = Angle(45, 0, 0),
         pos = Vector(0, 0, 0)
     },
     ["ValveBiped.Bip01_R_Hand"] = {
         ang = Angle(0, -75, 0),
+        pos = Vector(0, 0, 0)
+    }
+}
+
+SWEP.BlindFireRightBoneMods = {
+    ["ValveBiped.Bip01_R_UpperArm"] = {
+        ang = Angle(-45, 0, 0),
+        pos = Vector(0, 0, 0)
+    },
+    ["ValveBiped.Bip01_R_Hand"] = {
+        ang = Angle(0, 75, 0),
         pos = Vector(0, 0, 0)
     }
 }
@@ -810,6 +829,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", 3, "Firemode")
     self:NetworkVar("Int", 4, "NthReload")
     self:NetworkVar("Int", 5, "MultiSight")
+    self:NetworkVar("Int", 6, "BlindFireDirection")
 
     self:NetworkVar("Bool", 0, "Customize")
     self:NetworkVar("Bool", 1, "Reloading")
@@ -824,8 +844,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 10, "InSights")
     self:NetworkVar("Bool", 11, "PrimedAttack")
     self:NetworkVar("Bool", 12, "BlindFire")
-    self:NetworkVar("Bool", 13, "BlindFireCorner")
-    self:NetworkVar("Bool", 14, "NeedsCycle")
+    self:NetworkVar("Bool", 13, "NeedsCycle")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")

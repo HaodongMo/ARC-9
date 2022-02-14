@@ -378,7 +378,7 @@ function SWEP:GetShootPos()
 
         local testpos = pos + eyeang:Up() * 24
 
-        if self:GetBlindFireCorner() then
+        if self:GetBlindFireDirection() != 0 then
             testpos = pos + eyeang:Forward() * 24
         end
 
@@ -401,8 +401,10 @@ end
 function SWEP:GetShootDir()
     local dir = self:GetOwner():EyeAngles()
 
-    if self:GetBlindFireCorner() then
+    if self:GetBlindFireDirection() < 0 then
         dir:RotateAroundAxis(dir:Up(), 90)
+    elseif self:GetBlindFireDirection() > 0 then
+        dir:RotateAroundAxis(dir:Up(), -90)
     end
 
     dir = dir + self:GetFreeAimOffset()

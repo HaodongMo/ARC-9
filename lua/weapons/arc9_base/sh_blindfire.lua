@@ -59,10 +59,19 @@ ValveBiped.Bip01_R_Finger02
 
 */
 
-function SWEP:ToggleBoneMods(on, left)
+function SWEP:ToggleBoneMods(on, dir)
     if on then
-        if left then
-            for i, k in pairs(self:GetValue("BlindFireCornerBoneMods")) do
+        if dir < 0 then
+            for i, k in pairs(self:GetValue("BlindFireLeftBoneMods")) do
+                local boneindex = self:GetOwner():LookupBone(i)
+
+                if !boneindex then continue end
+
+                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
+                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
+            end
+        elseif dir > 0 then
+            for i, k in pairs(self:GetValue("BlindFireRightBoneMods")) do
                 local boneindex = self:GetOwner():LookupBone(i)
 
                 if !boneindex then continue end
@@ -90,7 +99,16 @@ function SWEP:ToggleBoneMods(on, left)
             self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
         end
 
-        for i, k in pairs(self:GetValue("BlindFireCornerBoneMods")) do
+        for i, k in pairs(self:GetValue("BlindFireRightBoneMods")) do
+            local boneindex = self:GetOwner():LookupBone(i)
+
+            if !boneindex then continue end
+
+            self:GetOwner():ManipulateBonePosition(boneindex, Vector(0, 0, 0))
+            self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
+        end
+
+        for i, k in pairs(self:GetValue("BlindFireLeftBoneMods")) do
             local boneindex = self:GetOwner():LookupBone(i)
 
             if !boneindex then continue end
@@ -101,26 +119,29 @@ function SWEP:ToggleBoneMods(on, left)
     end
 end
 
-function SWEP:ToggleBlindFire(bf, left)
-    left = left or false
+function SWEP:ToggleBlindFire(bf, dir)
+    dir = dir or 0
     if !self:GetValue("CanBlindFire") then return end
 
-    if bf == self:GetBlindFire() and left == self:GetBlindFireCorner() then return end
+    if bf == self:GetBlindFire() and dir == self:GetBlindFireDirection() then return end
     if bf and self:GetIsSprinting() then return end
     if bf and self:GetAnimLockTime() > CurTime() then return end
     if bf and self:GetSafe() then return end
+
+    if dir < 0 and !self:GetValue("BlindFireLeft") then dir = 0 bf = false end
+    if dir > 0 and !self:GetValue("BlindFireRight") then dir = 0 bf = false end
 
     self:ExitSights()
 
     self:SetBlindFire(bf)
     self:ToggleCustomize(false)
 
-    self:ToggleBoneMods(bf, left)
+    self:ToggleBoneMods(bf, dir)
 
     if !bf then
-        self:SetBlindFireCorner(false)
+        self:SetBlindFireDirection(0)
     else
-        self:SetBlindFireCorner(left)
+        self:SetBlindFireDirection(dir)
     end
 
     if self:StillWaiting() then self:IdleAtEndOfAnimation() return end
@@ -141,8 +162,10 @@ function SWEP:ThinkBlindFire()
 
     local amt2 = self:GetBlindFireCornerAmount()
 
-    if self:GetBlindFireCorner() then
+    if self:GetBlindFireDirection() > 0 then
         amt2 = math.Approach(amt2, 1, FrameTime() / 0.25)
+    elseif self:GetBlindFireDirection() < 0 then
+        amt2 = math.Approach(amt2, -1, FrameTime() / 0.25)
     else
         amt2 = math.Approach(amt2, 0, FrameTime() / 0.25)
     end
@@ -150,20 +173,14 @@ function SWEP:ThinkBlindFire()
     self:SetBlindFireCornerAmount(amt2)
 
     if self:GetOwner():KeyDown(IN_WALK) then
-        if self:GetBlindFire() then
-            if self:GetOwner():KeyDown(IN_MOVERIGHT) or self:GetOwner():KeyDown(IN_BACK) then
-                self:ToggleBlindFire(false)
-            elseif self:GetOwner():KeyDown(IN_FORWARD) then
-                self:ToggleBlindFire(true, false)
-            elseif self:GetOwner():KeyDown(IN_MOVELEFT) then
-                self:ToggleBlindFire(true, true)
-            end
-        else
-            if self:GetOwner():KeyDown(IN_MOVELEFT) then
-                self:ToggleBlindFire(true, true)
-            elseif self:GetOwner():KeyDown(IN_FORWARD) then
-                self:ToggleBlindFire(true, false)
-            end
+        if self:GetOwner():KeyDown(IN_BACK) then
+            self:ToggleBlindFire(false)
+        elseif self:GetOwner():KeyDown(IN_FORWARD) then
+            self:ToggleBlindFire(true, 0)
+        elseif self:GetOwner():KeyDown(IN_MOVELEFT) then
+            self:ToggleBlindFire(true, -1)
+        elseif self:GetOwner():KeyDown(IN_MOVERIGHT) then
+            self:ToggleBlindFire(true, 1)
         end
     end
 

@@ -34,7 +34,7 @@ function SWEP:Deploy()
     -- self:SetLastPressedWTime(0)
 
     self:SetBlindFire(false)
-    self:SetBlindFireCorner(false)
+    self:SetBlindFireDirection(0)
 
     self:SetHolster_Entity(NULL)
     self:SetHolster_Time(0)

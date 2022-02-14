@@ -53,15 +53,18 @@ function SWEP:GetViewModelPosition(pos, ang)
     local blindfirecornerdelta = self:GetBlindFireCornerAmount()
 
     local curvedblindfiredelta = self:Curve(blindfiredelta)
-    local curvedblindfirecornerdelta = self:Curve(blindfirecornerdelta)
+    local curvedblindfirecornerdelta = self:Curve(math.abs(blindfirecornerdelta))
 
     if blindfiredelta > 0 then
         offsetpos = LerpVector(curvedblindfiredelta, offsetpos, self:GetValue("BlindFirePos"))
         offsetang = LerpAngle(curvedblindfiredelta, offsetang, self:GetValue("BlindFireAng"))
 
-        if curvedblindfirecornerdelta > 0 then
-            offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireCornerPos"))
-            offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireCornerAng"))
+        if blindfirecornerdelta > 0 then
+            offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireRightPos"))
+            offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireRightAng"))
+        elseif blindfirecornerdelta < 0 then
+            offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireLeftPos"))
+            offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireLeftAng"))
         end
     end
 
