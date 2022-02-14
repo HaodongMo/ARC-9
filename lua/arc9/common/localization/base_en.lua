@@ -72,6 +72,7 @@ L["autostat.bipod"] = "Bipod"
 L["autostat.noflash"] = "No Muzzle Flash"
 L["autostat.bulletguidance"] = "Guided Rounds"
 L["autostat.bulletguidanceamount"] = "Guidance Factor"
+L["autostat.heatpershot"] = "Heat Per Shot"
 
 L["autostat.secondary.true"] = "{1} When TrueNames Is On"
 L["autostat.secondary.silenced"] = "{1} When Silenced"

@@ -341,7 +341,7 @@ SWEP.PostBashTime = 0.5
 
 SWEP.Overheat = false -- Weapon will jam when it overheats, playing the "overheat" animation.
 SWEP.HeatPerShot = 1
-SWEP.HeatCapacity = 50 -- rounds that can be fired non-stop before the gun jams, playing the "fix" animation
+SWEP.HeatCapacity = 1 -- rounds that can be fired non-stop before the gun jams, playing the "fix" animation
 SWEP.HeatDissipation = 10 -- rounds' worth of heat lost per second
 SWEP.HeatLockout = true -- overheating means you cannot fire until heat has been fully depleted
 SWEP.HeatDelayTime = 0.5 -- Amount of time that passes before heat begins to dissipate.
