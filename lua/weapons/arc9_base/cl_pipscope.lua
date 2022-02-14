@@ -180,6 +180,7 @@ function SWEP:DoRTScope(model, atttbl)
     local ang = EyeAngles()
 
     local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
+    sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
 
     pos = pos + (sightpos.x * ang:Right())
     -- pos = pos + (sightpos.y * ang:Forward())

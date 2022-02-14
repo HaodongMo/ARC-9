@@ -1,9 +1,10 @@
 function SWEP:GenerateAutoSight(sight, slottbl)
     local pos, ang = self:GetAttPos(slottbl, false, true)
+    local scale = slottbl.Scale or 1
 
-    pos = pos - (ang:Right() * sight.Pos.x)
-    pos = pos - (ang:Forward() * sight.Pos.y)
-    pos = pos - (ang:Up() * sight.Pos.z)
+    pos = pos - (ang:Right() * sight.Pos.x * scale)
+    pos = pos - (ang:Forward() * sight.Pos.y * scale)
+    pos = pos - (ang:Up() * sight.Pos.z * scale)
 
     ang:RotateAroundAxis(ang:Right(), sight.Ang.p)
     ang:RotateAroundAxis(ang:Up(), sight.Ang.y)

@@ -97,7 +97,7 @@ function SWEP:BuildMultiSight()
 
                 s.atttbl = atttbl
                 s.OriginalSightTable = sight
-                s.slotbl = slottbl
+                s.slottbl = slottbl
 
                 table.insert(self.MultiSightTable, s)
 

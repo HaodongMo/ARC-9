@@ -91,6 +91,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 subatts[i].Pos = pos
                 subatts[i].Ang = att_ang + subatts[i].Ang
                 subatts[i].Ang:Normalize()
+                subatts[i].Scale = (subatts[i].Scale or 1) * (parenttbl.Scale or 1)
                 subatts[i].Installed = tbl.SubAttachments[i].Installed
                 subatts[i].ExtraSightDistance = subatts[i].ExtraSightDistance
                 subatts[i].MergeSlots = subatts[i].MergeSlots

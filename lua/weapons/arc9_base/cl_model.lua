@@ -99,7 +99,9 @@ function SWEP:GetAttPos(slottbl, wm, idle)
     return apos, aang
 end
 
-function SWEP:CreateAttachmentModel(wm, atttbl, slottbl)
+function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale)
+    ignorescale = ignorescale or false
+
     local model = atttbl.Model
 
     if wm and atttbl.WorldModel then
@@ -114,11 +116,13 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl)
     csmodel.atttbl = atttbl
     csmodel.slottbl = slottbl
 
-    local scale = Matrix()
-    local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
-    vec = vec * (slottbl.Scale or 1)
-    scale:Scale(vec)
-    csmodel:EnableMatrix("RenderMultiply", scale)
+    if !ignorescale then
+        local scale = Matrix()
+        local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
+        vec = vec * (slottbl.Scale or 1)
+        scale:Scale(vec)
+        csmodel:EnableMatrix("RenderMultiply", scale)
+    end
 
     local tbl = {
         Model = csmodel,
@@ -209,7 +213,7 @@ function SWEP:SetupModel(wm)
 
         if !wm then
             if atttbl.LHIK or atttbl.RHIK then
-                local proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl)
+                local proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
                 proxmodel.NoDraw = true
 
                 if atttbl.LHIK then

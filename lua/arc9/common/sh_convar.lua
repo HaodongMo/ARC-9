@@ -1,9 +1,7 @@
-// the 0 is for load order!!!
-
 local conVars = {
     {
         name = "truenames",
-        default = "2",
+        default = "0",
         client = true,
         min = 0,
         max = 2,
@@ -130,11 +128,6 @@ local conVars = {
     {
         name = "cheapscopes",
         default = "0"
-    },
-    {
-        name = "truenames",
-        default = "1",
-        replicated = true
     },
     {
         name = "compensate_sens",
