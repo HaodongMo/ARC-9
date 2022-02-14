@@ -378,9 +378,23 @@ function ARC9.DrawHUD()
 
         if showheat then
             local therm_x = 174
-            local therm_y = 69
+            local therm_y = 66
             local therm_w = 70
             local therm_h = 35
+
+            local therm_deco_x = 190
+            local therm_deco_y = 97
+            local therm_deco = "BARREL TEMP"
+
+            surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
+            surface.SetFont("ARC9_Deco_8_Unscaled")
+            surface.SetTextPos(therm_deco_x + s_right, therm_deco_y + s_down)
+            surface.DrawText(therm_deco)
+
+            surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
+            surface.SetFont("ARC9_Deco_8_Unscaled")
+            surface.SetTextPos(therm_deco_x, therm_deco_y)
+            surface.DrawText(therm_deco)
 
             local fill = math.Clamp(0.05 + (0.9 * heat) / heatcap, 0, 1)
 
