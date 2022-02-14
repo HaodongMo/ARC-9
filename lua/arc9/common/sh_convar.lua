@@ -147,6 +147,10 @@ local conVars = {
     {
         name = "cust_blur",
         default = "1"
+    },
+    {
+        name = "hud_always",
+        default = "1" -- change to zero ok??????
     }
 }
 
@@ -184,6 +188,10 @@ local function menu_client_ti(panel)
     panel:AddControl("checkbox", {
         label = "Customization Blur",
         command = "arc9_cust_blur"
+    })
+    panel:AddControl("checkbox", {
+        label = "Draw HUD always even not on ARC NINE     change this text later ok",
+        command = "arc9_hud_always"
     })
 end
 
