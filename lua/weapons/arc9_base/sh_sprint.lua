@@ -36,6 +36,8 @@ end
 function SWEP:EnterSprint()
     self:SetShouldHoldType()
 
+    self:ToggleBlindFire(false)
+
     if !self:GetProcessedValue("ReloadWhileSprint") then
         self:CancelReload()
     end

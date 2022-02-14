@@ -80,6 +80,7 @@ function SWEP:Reload()
 
     self:SetReloading(true)
     self:SetEndReload(false)
+    self:ToggleBlindFire(false)
 
     if !self:GetProcessedValue("ReloadInSights") then
         self:ExitSights()

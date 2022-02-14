@@ -373,16 +373,32 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -------------------------- BLIND FIRE
 
 SWEP.CanBlindFire = true -- This weapon is capable of blind firing.
+
 SWEP.BlindFireOffset = Vector(0, 0, 16) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFirePos = Vector(1, -2, 0)
-SWEP.BlindFireAng = Angle(0, 15, 0)
+SWEP.BlindFirePos = Vector(-6, -4, 8)
+SWEP.BlindFireAng = Angle(0, 0, -45)
+
+SWEP.BlindFireCornerOffset = Vector(0, 16, 0) -- The amount by which to offset the blind fire muzzle.
+SWEP.BlindFireCornerPos = Vector(12, 10, 0)
+SWEP.BlindFireCornerAng = Angle(75, 0, 0)
+
 SWEP.BlindFireBoneMods = {
     ["ValveBiped.Bip01_R_UpperArm"] = {
-        ang = Angle(25, -50, 0),
+        ang = Angle(45, -90, 0),
         pos = Vector(0, 0, 0)
     },
     ["ValveBiped.Bip01_R_Hand"] = {
-        ang = Angle(-50, 0, 0),
+        ang = Angle(-90, 0, 0),
+        pos = Vector(0, 0, 0)
+    }
+}
+SWEP.BlindFireCornerBoneMods = {
+    ["ValveBiped.Bip01_R_UpperArm"] = {
+        ang = Angle(45, 0, 0),
+        pos = Vector(0, 0, 0)
+    },
+    ["ValveBiped.Bip01_R_Hand"] = {
+        ang = Angle(0, -75, 0),
         pos = Vector(0, 0, 0)
     }
 }
@@ -784,6 +800,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 16, "IKTimeLineStart")
     self:NetworkVar("Float", 17, "IKTime")
     self:NetworkVar("Float", 18, "Holster_Time")
+    self:NetworkVar("Float", 19, "BlindFireCornerAmount")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
@@ -807,7 +824,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 10, "InSights")
     self:NetworkVar("Bool", 11, "PrimedAttack")
     self:NetworkVar("Bool", 12, "BlindFire")
-    self:NetworkVar("Bool", 13, "BlindFireLeft")
+    self:NetworkVar("Bool", 13, "BlindFireCorner")
     self:NetworkVar("Bool", 14, "NeedsCycle")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 

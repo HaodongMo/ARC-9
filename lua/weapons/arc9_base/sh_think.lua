@@ -37,6 +37,8 @@ function SWEP:Think()
 
     self:ThinkFreeAim()
 
+    self:ThinkBlindFire()
+
     self:ProcessTimers()
 
     if self:GetNextIdle() < CurTime() then

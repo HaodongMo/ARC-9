@@ -366,16 +366,44 @@ function SWEP:GetDamageAtRange(range)
 end
 
 function SWEP:GetShootPos()
+    if self:GetOwner():IsNPC() then
+        return self:GetOwner():GetShootPos()
+    end
+
     local pos = self:GetOwner():EyePos()
+
+    if self:GetBlindFire() then
+        pos = self:GetOwner():EyePos()
+        local eyeang = self:GetOwner():EyeAngles()
+
+        local testpos = pos + eyeang:Up() * 24
+
+        if self:GetBlindFireCorner() then
+            testpos = pos + eyeang:Forward() * 24
+        end
+
+        local tr = util.TraceLine({
+            start = pos,
+            endpos = testpos,
+            filter = self:GetOwner()
+        })
+
+        pos = tr.HitPos
+    end
+
     local ang = self:GetShootDir()
 
-    pos = pos + (ang:Up() * self:GetProcessedValue("HeightOverBore"))
+    pos = pos + (ang:Up() * -self:GetProcessedValue("HeightOverBore"))
 
     return pos
 end
 
 function SWEP:GetShootDir()
     local dir = self:GetOwner():EyeAngles()
+
+    if self:GetBlindFireCorner() then
+        dir:RotateAroundAxis(dir:Up(), 90)
+    end
 
     dir = dir + self:GetFreeAimOffset()
 

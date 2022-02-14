@@ -8,6 +8,7 @@ function SWEP:EnterSights()
     if self:GetCustomize() then return end
     if !self:GetProcessedValue("ReloadInSights") and self:GetReloading() then return end
 
+    self:ToggleBlindFire(false)
     self:SetInSights(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)
 
