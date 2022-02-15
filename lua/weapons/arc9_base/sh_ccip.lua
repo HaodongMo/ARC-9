@@ -1,12 +1,12 @@
-function SWEP:GetCCIP()
+function SWEP:GetCCIP(pos, ang)
     // get calculated point of impact
 
     local v = self:GetProcessedValue("PhysBulletMuzzleVelocity")
     local g = self:GetProcessedValue("PhysBulletGravity")
     local d = self:GetProcessedValue("PhysBulletDrag")
 
-    local pos = self:GetShootPos()
-    local vel = self:GetShootDir():Forward() * v
+    pos = pos or self:GetShootPos()
+    local vel = (ang or self:GetShootDir()):Forward() * v
     local maxiter = 100
     local timestep = 1 / 30
 
