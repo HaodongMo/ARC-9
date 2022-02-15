@@ -3,7 +3,7 @@ function SWEP:RollJam()
 
     local chance = 1 / self:GetProcessedValue("MalfunctionMeanShotsToFail")
 
-    if math.Rand(0, 1) <= chance then
+    if util.SharedRandom("arc9_jam", 0, 1) <= chance then
         if self:GetProcessedValue("MalfunctionJam") then
             self:SetJammed(true)
         end
