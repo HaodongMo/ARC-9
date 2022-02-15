@@ -60,6 +60,10 @@ function SWEP:DoHolosight(mdl, atttbl)
 
         render.DrawQuad(v1, v2, v3, v4, atttbl.HoloSightColor or Color(255, 255, 255))
 
+        if atttbl.HoloSightFunc then
+            atttbl.HoloSightFunc(self, pos, mdl)
+        end
+
         -- local toscreen = pos:ToScreen()
 
         -- local x = toscreen.x

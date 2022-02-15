@@ -62,6 +62,7 @@ ATT.HoloSight = false
 ATT.HoloSightReticle = ""
 ATT.HoloSightSize = 32
 ATT.HoloSightColor = Color(255, 255, 255)
+ATT.HoloSightFunc = function(swep, pos, mdl) end -- pos = reticle position
 
 ATT.FLIRHotFunc = function(swep, ent) end -- return true for hot and false for cold
 
