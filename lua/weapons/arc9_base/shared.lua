@@ -753,6 +753,7 @@ SWEP.Animations = {
     --     }, -- relevant pose parameters will be set to default values while the animation is playing, so make sure you take that into consideration for animating.
     --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one.
     --     MinProgress = 0, -- seconds that must pass before the reload is considered done
+    --     RestoreAmmo = 0 -- Restores ammunition to clip
     -- }
 }
 
