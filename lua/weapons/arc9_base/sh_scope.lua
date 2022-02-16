@@ -56,13 +56,13 @@ function SWEP:ThinkSights()
     end
 
     if sighted then
-        if self:GetOwner():KeyPressed(IN_USE) and IsFirstTimePredicted() then
-            if CurTime() - self:GetLastPressedETime() < 0.33 then
-                self:SwitchMultiSight()
-                self:SetLastPressedETime(0)
-            else
-                self:SetLastPressedETime(CurTime())
-            end
+        if self:GetOwner():KeyPressed(IN_USE) and self:GetOwner():KeyDown(IN_WALK) and IsFirstTimePredicted() then
+            -- if CurTime() - self:GetLastPressedETime() < 0.33 then
+            self:SwitchMultiSight()
+            --     self:SetLastPressedETime(0)
+            -- else
+            --     self:SetLastPressedETime(CurTime())
+            -- end
         end
     end
 end

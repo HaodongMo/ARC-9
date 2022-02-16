@@ -216,8 +216,11 @@ function SWEP:CreateCustomizeHUD()
             cam.Start3D(nil, nil, self:GetViewModelFOV())
 
             for _, slot in pairs(self:GetSubSlotList()) do
-                if self:GetSlotBlocked(slot) then continue end
                 if slot.Hidden then continue end
+                local ms_slot = self:GetFilledMergeSlot(slot.Address)
+
+                if !ms_slot.Installed and self:GetSlotBlocked(slot) then continue end
+
                 local attpos = self:GetAttPos(slot)
 
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
@@ -278,8 +281,6 @@ function SWEP:CreateCustomizeHUD()
                 end
 
                 table.insert(bumpy, {x = x, y = y, slot = slot})
-
-                local ms_slot = self:GetFilledMergeSlot(slot.Address)
 
                 -- if self2:IsHovered() then
                 -- end
