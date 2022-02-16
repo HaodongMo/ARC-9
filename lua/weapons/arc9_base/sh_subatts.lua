@@ -56,6 +56,8 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
 
     local atttbl = ARC9.GetAttTable(tbl.Installed)
 
+    tbl.ToggleNum = tbl.ToggleNum or 1
+
     local subatts = {}
 
     if atttbl then
@@ -96,6 +98,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 subatts[i].ExtraSightDistance = subatts[i].ExtraSightDistance
                 subatts[i].MergeSlots = subatts[i].MergeSlots
                 subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
+                subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
             end
         end
     end
@@ -115,6 +118,7 @@ function SWEP:BuildSubAttachments(tbl)
         if !k.Installed then continue end
 
         local atttbl = ARC9.GetAttTable(k.Installed)
+        self.Attachments[i].ToggleNum = k.ToggleNum or 1
 
         if atttbl then
             if atttbl.Attachments then

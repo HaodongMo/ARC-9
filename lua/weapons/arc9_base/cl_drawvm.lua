@@ -14,6 +14,7 @@ function SWEP:PreDrawViewModel()
 
     -- self:SetFiremodePose()
     self:GetVM():SetPoseParameter("sights", self:GetSightAmount())
+    self:GetVM():InvalidateBoneCache()
 
     self.ViewModelFOV = self:GetViewModelFOV()
 

@@ -25,6 +25,7 @@ ATT.Folder = "" -- a string separated by slashes (/), e.g. "my/folder/hierarchy"
 
 ATT.ActivateElements = {"plum_stock"}
 
+ATT.ToggleOnF = false -- This attachment is toggleable with the flashlight key.
 ATT.ToggleStats = {
     ["On"] = {
         SpreadAddHipFire = -0.1,

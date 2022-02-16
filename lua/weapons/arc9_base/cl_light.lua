@@ -19,7 +19,7 @@ function SWEP:CreateFlashlightsVM()
 
     for _, k in pairs(self:GetSubSlotList()) do
         if !k.Installed then continue end
-        local atttbl = ARC9.GetAttTable(k.Installed)
+        local atttbl = self:GetFinalAttTable(k)
 
         if atttbl.Flashlight then
             local newlight = {

@@ -242,3 +242,41 @@ function SWEP:CountAttachments(countatt)
 
     return qty
 end
+
+function SWEP:ToggleAllStatsOnF()
+    local toggled = false
+
+    for _, slottbl in pairs(self:GetSubSlotList()) do
+        if !slottbl.Installed then continue end
+
+        local atttbl = self:GetFinalAttTable(slottbl)
+
+        if !atttbl.ToggleStats then continue end
+        if !atttbl.ToggleOnF then continue end
+
+        toggled = true
+
+        self:ToggleStat(slottbl.Address)
+    end
+
+    if toggled then
+        self:PostModify()
+        return true
+    end
+end
+
+function SWEP:ToggleStat(addr)
+    local slottbl = self:LocateSlotFromAddress(addr)
+
+    if !slottbl.Installed then return end
+
+    local atttbl = self:GetFinalAttTableFromAddress(addr)
+
+    if !atttbl.ToggleStats then return end
+
+    slottbl.ToggleNum = (slottbl.ToggleNum or 1) + 1
+
+    if slottbl.ToggleNum > #atttbl.ToggleStats then
+        slottbl.ToggleNum = 1
+    end
+end

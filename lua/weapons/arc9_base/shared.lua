@@ -711,6 +711,14 @@ SWEP.Attachments = {
 -- }
 }
 
+-- draw
+-- ready
+-- holster
+-- fire
+-- dryfire
+-- reload
+-- reload_empty
+-- reload_insert_1, reload_insert_2, reload_insert_3...: Animation that reloads multiple rounds in at once, such as a stripper clip.
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
 SWEP.Animations = {

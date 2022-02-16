@@ -7,6 +7,14 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
 
     -- print(bind)
 
+    if bind == "impulse 100" then
+       local toggled = wpn:ToggleAllStatsOnF()
+
+       if toggled then
+            return true
+       end
+    end
+
     if bind == "+menu_context" then
         if !LocalPlayer():KeyDown(IN_USE) then
             if wpn:GetCustomize() then

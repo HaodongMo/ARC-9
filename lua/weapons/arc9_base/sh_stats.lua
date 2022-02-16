@@ -63,9 +63,9 @@ function SWEP:GetFinalAttTable(slot)
 
     if atttbl.ToggleStats then
         local tbl = table.Copy(atttbl)
-        local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1]
+        local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
 
-        table.Add(tbl, toggletbl)
+        table.Merge(tbl, toggletbl)
 
         return tbl
     else

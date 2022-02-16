@@ -28,7 +28,7 @@ function SWEP:SendAttachmentTree(tree)
         tree.SubAttachments = tree.SubAttachments or {}
 
         if atttbl.ToggleStats then
-            net.WriteUInt((atttbl.ToggleNum or 1) - 1, 8)
+            net.WriteUInt((tree.ToggleNum or 1) - 1, 8)
         end
 
         if atttbl.Attachments then
