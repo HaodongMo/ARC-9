@@ -9,14 +9,14 @@ end
 function SWEP:GetIsSprinting()
     local owner = self:GetOwner()
 
+    if !self:GetOwner():IsValid() or self:GetOwner():IsNPC() then
+        return false
+    end
+
     if self:GetProcessedValue("ShootWhileSprint") then
         if owner:KeyDown(IN_ATTACK) then
             return false
         end
-    end
-
-    if !self:GetOwner():IsValid() or self:GetOwner():IsNPC() then
-        return false
     end
 
     local curspeed = owner:GetVelocity():Length()
