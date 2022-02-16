@@ -102,7 +102,8 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             ARC9:ShootPhysBullet(self, endpos, dir * self:GetProcessedValue("PhysBulletMuzzleVelocity"), {
                 Penleft = penleft,
                 Travelled = range,
-                Damaged = alreadypenned
+                Damaged = alreadypenned,
+                Indirect = true
             })
         else
             self:GetOwner():FireBullets({

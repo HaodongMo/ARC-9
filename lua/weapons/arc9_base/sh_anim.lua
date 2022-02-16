@@ -36,7 +36,9 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
     vm:SetPlaybackRate(tmult)
 
     if animation.RestoreAmmo then
-        self:RestoreClip(animation.RestoreAmmo)
+        self:SetTimer(animation.MinProgress or 0.5, function()
+            self:RestoreClip(animation.RestoreAmmo)
+        end)
     end
 
     if animation.EventTable then

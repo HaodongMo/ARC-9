@@ -44,6 +44,7 @@ function ARC9:SendBullet(bullet, attacker)
     net.WriteFloat(bullet.Vel:Length())
     net.WriteFloat(bullet.Travelled)
     net.WriteFloat(bullet.Drag)
+    net.WriteBool(bullet.Indirect or false)
     net.WriteFloat(bullet.Gravity)
     net.WriteEntity(bullet.Weapon)
     net.WriteUInt(bullet.ModelIndex or 0, 8)
@@ -143,6 +144,7 @@ net.Receive("arc9_sendbullet", function(len, ply)
     local trav = net.ReadFloat()
     local drag = net.ReadFloat()
     local grav = net.ReadFloat()
+    local indirect = net.ReadBool()
     local weapon = net.ReadEntity()
     local modelindex = net.ReadUInt(8)
     local ent = nil
@@ -158,6 +160,7 @@ net.Receive("arc9_sendbullet", function(len, ply)
         StartTime = CurTime(),
         Imaginary = false,
         Underwater = false,
+        ShouldLerpTrail = !indirect,
         Dead = false,
         Damaged = {},
         Drag = drag,
@@ -521,6 +524,9 @@ function ARC9.DrawPhysBullets()
         local speedvec = -i.Vel:GetNormalized()
 
         local d = math.min(i.Travelled / 1024, 1)
+        if !i.ShouldLerpTrail then
+            d = 1
+        end
 
         local vec = LerpVector(d, fromvec, speedvec)
 

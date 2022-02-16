@@ -214,6 +214,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             local attached = slot.Installed == self2.att
 
             local col1 = ARC9.GetHUDColor("fg")
+            local col2 = ARC9.GetHUDColor("shadow")
 
             local hasbg = false
 
@@ -225,8 +226,10 @@ local function enterfolder(self, scroll, slottbl, fname)
 
                 if self2:IsHovered() then
                     surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+                    col2 = ARC9.GetHUDColor("hi")
                 else
                     surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                    col2 = ARC9.GetHUDColor("fg")
                 end
                 surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
 
@@ -258,6 +261,32 @@ local function enterfolder(self, scroll, slottbl, fname)
             surface.SetDrawColor(col1)
             surface.SetMaterial(icon)
             surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+
+            if atttbl.HoloSight or atttbl.RTScope then
+                local hrs = ScreenScale(12)
+                local hricon = atttbl.RTScopeReticle or atttbl.HoloSightReticle
+                local icons = hrs
+
+                if atttbl.RTScopeReticle then
+                    icons = icons * 2
+                elseif atttbl.HoloSightSize then
+                    icons = icons * (atttbl.HoloSightSize / 500)
+                end
+
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawRect(ScreenScale(1), ScreenScale(1) + h - hrs, hrs, hrs)
+
+                surface.SetDrawColor(col1)
+                surface.DrawRect(0, h - hrs, hrs, hrs)
+
+                local scx, scy = self2:LocalToScreen(0, h - hrs)
+
+                render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, true)
+                surface.SetDrawColor(col2)
+                surface.SetMaterial(hricon)
+                surface.DrawTexturedRect((hrs / 2) - (icons / 2), h - (hrs / 2) - (icons / 2), icons, icons)
+                render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, false)
+            end
 
             local name = ARC9:GetPhraseForAtt(self2.att, "CompactName") or ARC9:GetPhraseForAtt(self2.att, "PrintName") or ARC9:GetPhraseForAtt(self2.att, "ShortName") or ""
 

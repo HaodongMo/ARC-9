@@ -260,6 +260,7 @@ function SWEP:ToggleAllStatsOnF()
     end
 
     if toggled then
+        surface.PlaySound("items/flashlight1.wav")
         self:PostModify()
         return true
     end
