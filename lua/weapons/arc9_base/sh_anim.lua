@@ -35,6 +35,10 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
     vm:SendViewModelMatchingSequence(seq)
     vm:SetPlaybackRate(tmult)
 
+    if animation.RestoreAmmo then
+        self:RestoreClip(animation.RestoreAmmo)
+    end
+
     if animation.EventTable then
         self:PlaySoundTable(animation.EventTable or animation.SoundTable, mult)
     end

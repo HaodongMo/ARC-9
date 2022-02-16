@@ -183,23 +183,24 @@ function SWEP:EndReload()
             self:SetNthShot(0)
             self:SetNthReload(self:GetNthReload() + 1)
         else
-            local t = self:PlayAnimation("reload_insert", self:GetProcessedValue("ReloadTime", 1), true)
-
+            local anim = "reload_insert"
             local attempt_to_restore = 1
+
+            for i = 1, self:GetCapacity() - self:Clip1() do
+                if self:HasAnimation("reload_insert_" .. tostring(i)) then
+                    anim = "reload_insert_" .. tostring(i)
+                    attempt_to_restore = i
+                end
+            end
+
+            local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
+
             local res = math.min(math.min(attempt_to_restore, self:GetCapacity() - self:Clip1()), self:Ammo1())
 
             self:SetLoadedRounds(res)
+            self:RestoreClip(attempt_to_restore)
 
-            for i = 1, res do
-                self:SetTimer(t * 0.95 * ((i - 1) / attempt_to_restore), function()
-                    self:RestoreClip(1)
-                    if self:Clip1() >= self:GetCapacity() then
-                        self:EndReload()
-                    end
-                end)
-            end
-
-            self:SetReloadFinishTime(CurTime() + (t * 0.95 * (res / attempt_to_restore)))
+            self:SetReloadFinishTime(CurTime() + t)
 
             -- self:SetTimer(t * 0.95 * (res / 3), function()
             --     if !IsValid(self) then return end
