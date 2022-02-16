@@ -77,6 +77,10 @@ function SWEP:PostModify()
         self:SetupModel(true)
         self:SetupModel(false)
         self:SavePreset()
+    else
+        if self:GetValue("ToggleOnF") then
+            self:GetOwner():Flashlight(false)
+        end
     end
 end
 

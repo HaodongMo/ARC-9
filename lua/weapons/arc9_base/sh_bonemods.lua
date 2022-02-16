@@ -1,2 +1,0 @@
-function SWEP:DoBoneMods()
-end

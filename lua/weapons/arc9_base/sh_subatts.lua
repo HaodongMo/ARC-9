@@ -88,14 +88,16 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                     end
                 end
 
-                local pos, _ = LocalToWorld(subatts[i].Pos or Vector(0, 0, 0), subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
+                local scale =  parenttbl.Scale or 1
+
+                local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
 
                 subatts[i].Pos = pos
                 subatts[i].Ang = att_ang + subatts[i].Ang
                 subatts[i].Ang:Normalize()
-                subatts[i].Scale = (subatts[i].Scale or 1) * (parenttbl.Scale or 1)
+                subatts[i].Scale = (subatts[i].Scale or 1) * scale
                 subatts[i].Installed = tbl.SubAttachments[i].Installed
-                subatts[i].ExtraSightDistance = subatts[i].ExtraSightDistance
+                subatts[i].ExtraSightDistance = (subatts[i].ExtraSightDistance or 0) + (parenttbl.ExtraSightDistance or 0)
                 subatts[i].MergeSlots = subatts[i].MergeSlots
                 subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
                 subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1

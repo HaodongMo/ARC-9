@@ -1,4 +1,4 @@
-local flaremat = Material("", "mips smooth")
+local flaremat = Material("particle/particle_glow_04", "mips smooth")
 flaremat:SetInt("$additive", 1)
 
 function SWEP:DrawLightFlare(pos, norm, col, size)

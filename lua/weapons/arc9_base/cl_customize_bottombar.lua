@@ -411,6 +411,7 @@ function SWEP:CreateHUD_Bottom()
                 local slottbl2 = self:LocateSlotFromAddress(addr)
 
                 local atts2 = ARC9.GetAttsForCats(slottbl2.Category or "")
+                table.Add(atts, atts2)
                 for _, att in pairs(atts2) do
                     table.insert(atts_slots, {
                         att = att,
