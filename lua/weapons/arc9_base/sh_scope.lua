@@ -58,7 +58,11 @@ function SWEP:ThinkSights()
     if sighted then
         if self:GetOwner():KeyPressed(IN_USE) and self:GetOwner():KeyDown(IN_WALK) and IsFirstTimePredicted() then
             -- if CurTime() - self:GetLastPressedETime() < 0.33 then
-            self:SwitchMultiSight()
+            if self:GetOwner():KeyDown(IN_SPEED) then
+                self:SwitchMultiSight(-1)
+            else
+                self:SwitchMultiSight()
+            end
             --     self:SetLastPressedETime(0)
             -- else
             --     self:SetLastPressedETime(CurTime())
@@ -124,13 +128,16 @@ function SWEP:BuildMultiSight()
     end
 end
 
-function SWEP:SwitchMultiSight()
+function SWEP:SwitchMultiSight(amt)
+    amt = amt or 1
     local old_msi = self:GetMultiSight()
     msi = old_msi
-    msi = msi + 1
+    msi = msi + amt
 
     if msi > #self.MultiSightTable then
         msi = 1
+    elseif msi <= 0 then
+        msi = #self.MultiSightTable
     end
 
     self:SetMultiSight(msi)

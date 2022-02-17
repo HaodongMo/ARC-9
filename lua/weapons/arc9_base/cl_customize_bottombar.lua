@@ -446,6 +446,18 @@ function SWEP:CreateHUD_Bottom()
         self.BottomBarFolders = ARC9.GetFoldersForAtts(atts)
         self.BottomBarAtts = atts_slots
 
+        if table.Count(self.BottomBarFolders) == 1 then
+            local sub = table.GetKeys(self.BottomBarFolders)[1]
+
+            -- print(sub)
+
+            if istable(self.BottomBarFolders[sub]) then
+                self.BottomBarPath = {}
+                enterfolder(self, scroll, slottbl, sub)
+                return
+            end
+        end
+
         enterfolder(self, scroll, slottbl, true)
     else
         self:CreateHUD_Presets(scroll)
