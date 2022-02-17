@@ -280,6 +280,8 @@ function SWEP:CreateCustomizeHUD()
                     end
                 end
 
+                if mousey > (ScrH() - ScreenScale(64)) then hoveredslot = false end
+
                 table.insert(bumpy, {x = x, y = y, slot = slot})
 
                 -- if self2:IsHovered() then
