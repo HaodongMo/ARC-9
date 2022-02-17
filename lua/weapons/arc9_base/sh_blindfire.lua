@@ -131,11 +131,12 @@ function SWEP:ToggleBlindFire(bf, dir)
     if dir < 0 and !self:GetValue("BlindFireLeft") then dir = 0 bf = false end
     if dir > 0 and !self:GetValue("BlindFireRight") then dir = 0 bf = false end
 
-    self:ExitSights()
+    if bf and self:GetSightAmount() > 0 then return end
 
     self:SetBlindFire(bf)
     self:ToggleCustomize(false)
 
+    self:ToggleBoneMods(false, false)
     self:ToggleBoneMods(bf, dir)
 
     if !bf then

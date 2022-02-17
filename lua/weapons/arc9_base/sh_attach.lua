@@ -79,7 +79,9 @@ function SWEP:PostModify()
         self:SavePreset()
     else
         if self:GetValue("ToggleOnF") then
-            self:GetOwner():Flashlight(false)
+            if self:GetOwner():FlashlightIsOn() then
+                self:GetOwner():Flashlight(false)
+            end
         end
     end
 end
@@ -183,6 +185,8 @@ function SWEP:CanAttach(addr, att, slottbl)
 
     if self:GetSlotBlocked(slottbl) then return false end
 
+    if (slottbl.RejectAttachments or {})[att] then return false end
+
     local cat = slottbl.Category
 
     if !istable(cat) then
@@ -202,7 +206,7 @@ function SWEP:CanAttach(addr, att, slottbl)
             end
         end
 
-        if count >= atttbl.Max then return false end
+        if count > atttbl.Max then return false end
     end
 
     if self:GetAttBlocked(atttbl) then return false end
@@ -214,13 +218,16 @@ function SWEP:CanAttach(addr, att, slottbl)
         attcat = {attcat}
     end
 
+    local cat_true = false
+
     for _, c in pairs(attcat) do
+        if (slottbl.RejectAttachments or {})[c] then return false end
         if table.HasValue(cat, c) then
-            return true
+            cat_true = true
         end
     end
 
-    return false
+    return cat_true
 end
 
 function SWEP:CanDetach(addr)

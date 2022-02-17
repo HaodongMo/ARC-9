@@ -90,7 +90,7 @@ function ARC9.StartCommand(ply, cmd)
 
     recrise = ARC9.RecoilRise
 
-    local recreset = recrise * FrameTime() * 3.5 * wpn:GetProcessedValue("RecoilAutoControl")
+    local recreset = recrise * FrameTime() * wpn:GetProcessedValue("RecoilAutoControl")
 
     recrise = recrise - recreset
 
