@@ -157,7 +157,9 @@ function SWEP:GetSight()
 end
 
 function SWEP:GetRTScopeFOV()
-    local sights = self:GetSight() or {}
+    local sights = self:GetSight()
+
+    if !sights then return self:GetOwner():GetFOV() end
 
     local atttbl = sights.atttbl
 
