@@ -145,7 +145,10 @@ SWEP.LHIK_Priority = -1
 SWEP.RHIKModel = nil
 SWEP.RHIK_Priority = -1
 
-function SWEP:SetupModel(wm)
+function SWEP:SetupModel(wm, lod)
+    lod = lod or 0
+    if !wm then lod = 0 end
+
     self:KillModel()
 
     if !wm and !IsValid(self:GetOwner()) then return end
@@ -189,6 +192,7 @@ function SWEP:SetupModel(wm)
     self:DoBodygroups(wm)
 
     if !wm and self:GetOwner() != LocalPlayer() then return end
+    if lod > 0 then return end
 
     for _, slottbl in pairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
