@@ -246,6 +246,12 @@ SWEP.RecoilResetTime = 0.1 -- How long the gun must go before the recoil pattern
 
 SWEP.RecoilAutoControl = 1 -- Multiplier for automatic recoil control.
 
+-- SInput rumble configuration
+-- Max of 65535
+SWEP.RumbleHeavy = 30000
+SWEP.RumbleLight = 30000
+SWEP.RumbleDuration = 0.12
+
 -------------------------- VISUAL RECOIL
 
 SWEP.UseVisualRecoil = true

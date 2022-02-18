@@ -45,6 +45,11 @@ local conVars = {
         client = true
     },
     {
+        name = "rumble"
+        default = "1",
+        client = true
+    }
+    {
         name = "bodydamagecancel",
         default = "1",
         replicated = true

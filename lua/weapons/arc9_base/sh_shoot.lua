@@ -186,6 +186,12 @@ function SWEP:PrimaryAttack()
 
     self:DoEffects()
 
+    if game.SinglePlayer() and SERVER then
+        self:CallOnClient("SInputRumble")
+    elseif !game.SinglePlayer() and CLIENT then
+        self:SInputRumble()
+    end
+
     local spread = self:GetProcessedValue("Spread")
 
     local dir = self:GetShootDir()
@@ -210,6 +216,26 @@ function SWEP:PrimaryAttack()
 
     self:RollJam()
     self:DoHeat()
+end
+
+if CLIENT then
+    local cl_rumble = GetConVar("arc9_rumble")
+    function SWEP:SInputRumble()
+        if !sinput then return false end
+        if !cl_rumble:GetBool() then return false end
+        if !sinput.enabled then sinput.Init() end
+
+        local P1 = sinput.GetControllerForGamepadIndex(0)
+        
+        sinput.TriggerVibration(P1, self.RumbleHeavy, self.RumbleLight)
+        sinput.SetLEDColor(P1, 255, 255, 255, false)
+
+        timer.Remove( "SInput_ARC9_Rumble" )
+        timer.Create( "SInput_ARC9_Rumble", self.RumbleDuration, 1, function()
+            sinput.TriggerVibration(P1, 0, 0)
+            sinput.SetLEDColor(P1, 255, 255, 255, true)
+        end )
+    end
 end
 
 function SWEP:DoProjectileAttack(pos, ang, spread)

@@ -76,8 +76,52 @@ function SWEP:PlaySoundTable(soundtable, mult)
         if !(IsValid(self) and IsValid(owner)) then continue end
 
         self:SetTimer(ttime, function()
-            self:EmitSound(self:RandomChoice(v.s or ""), v.v or 75, v.p or 100, 1, v.c or CHAN_AUTO)
+            if v.s then
+                self:EmitSound(self:RandomChoice(v.s or ""), v.v or 75, v.p or 100, 1, v.c or CHAN_AUTO)
+            end
+            
+            if game.SinglePlayer() and SERVER then
+                if ( v.v1 or v.v2 or v.vt ) then
+                    net.Start("ARC9_AnimRumble")
+                        net.WriteUInt(v.v1 or 0, 16)
+                        net.WriteUInt(v.v2 or 0, 16)
+                        net.WriteFloat(v.vt or 0.1)
+                    net.Send(self:GetOwner())
+                end
+            elseif !game.SinglePlayer() and CLIENT then
+                SInputAnimRumble(v.v1 or 0, v.v2 or 0, v.vt or 0.1)
+            end
         end, "soundtable_" .. tostring(i))
+
+        
+    end
+end
+
+if SERVER then util.AddNetworkString("ARC9_AnimRumble") end
+
+if CLIENT then
+    local cl_rumble = GetConVar("arc9_rumble")
+
+    net.Receive("ARC9_AnimRumble", function()
+        local v1 = net.ReadUInt(16)
+        local v2 = net.ReadUInt(16)
+        local vt = net.ReadFloat()
+        
+        SInputAnimRumble(v1 or 0, v2 or 0, vt or 0.1)
+    end)
+
+    function SInputAnimRumble(v1, v2, vt)
+        if !sinput then return false end
+        if !cl_rumble:GetBool() then return false end
+        if !sinput.enabled then sinput.Init() end
+        local P1 = sinput.GetControllerForGamepadIndex(0)
+
+        sinput.TriggerVibration(P1, v1, v2)
+
+        timer.Remove( "SInput_ARC9_AnimRumble" )
+        timer.Create( "SInput_ARC9_AnimRumble", vt, 1, function()
+            sinput.TriggerVibration(P1, 0, 0)
+        end )
     end
 end
 
