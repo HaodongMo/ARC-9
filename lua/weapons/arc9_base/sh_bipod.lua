@@ -54,6 +54,7 @@ function SWEP:EnterBipod()
 
     self:SetBipod(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterBipodSound")))
+    self:PlayAnimation("enter_bipod")
 end
 
 function SWEP:ExitBipod()
@@ -61,4 +62,5 @@ function SWEP:ExitBipod()
 
     self:SetBipod(false)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitBipodSound")))
+    self:PlayAnimation("exit_bipod")
 end
