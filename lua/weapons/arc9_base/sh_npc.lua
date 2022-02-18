@@ -66,17 +66,13 @@ function SWEP:GetNPCBurstSettings()
     if !mode then return 1, 1, delay end
 
     if mode < 0 then
-        return -mode, -mode, delay
+        return 2, math.floor(0.5 * (self:GetOwner():GetCurrentWeaponProficiency()) / delay), delay
     elseif mode == 0 then
         return 0, 0, delay
     elseif mode == 1 then
-        return 0, 1, delay + math.Rand(0.3, 0.6)
+        return 1, 1, delay + math.Rand(0.3, 0.6)
     elseif mode >= 2 then
-        if self:GetValue("RunAwayBurst") then
-            return self:Clip1(), self:Clip1(), delay
-        else
-            return 2, math.floor(2.5 / delay), delay
-        end
+        return mode, mode, delay
     end
 end
 
