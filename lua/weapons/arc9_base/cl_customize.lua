@@ -221,9 +221,13 @@ function SWEP:CreateCustomizeHUD()
 
                 if !ms_slot.Installed and self:GetSlotBlocked(slot) then continue end
 
+                local atttbl = self:GetFinalAttTable(ms_slot)
+
                 local attpos = self:GetAttPos(slot)
 
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
+
+                icon_offset = icon_offset + (atttbl.IconOffset or Vector(0, 0, 0))
 
                 attpos = attpos + EyeAngles():Right() * -icon_offset.x
                 attpos = attpos + EyeAngles():Up() * icon_offset.y
@@ -304,7 +308,6 @@ function SWEP:CreateCustomizeHUD()
                 local atttxt = ms_slot.PrintName or "SLOT"
 
                 if ms_slot.Installed then
-                    local atttbl = self:GetFinalAttTable(ms_slot)
                     atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
                     atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
                     surface.SetMaterial(atttbl.Icon)

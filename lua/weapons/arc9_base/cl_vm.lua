@@ -49,6 +49,16 @@ function SWEP:GetViewModelPosition(pos, ang)
     offsetpos:Set(self:GetProcessedValue("ActivePos"))
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
 
+    if self:GetBipod() then
+        local sightpos, sightang = self:GetSightPositions()
+
+        offsetpos:Set(self:GetProcessedValue("BipodPos"))
+        offsetang:Set(self:GetProcessedValue("BipodAng"))
+
+        offsetpos = offsetpos + sightpos
+        offsetang = offsetang + sightang
+    end
+
     local blindfiredelta = self:GetBlindFireAmount()
     local blindfirecornerdelta = self:GetBlindFireCornerAmount()
 
@@ -155,6 +165,13 @@ function SWEP:GetViewModelPosition(pos, ang)
 
             if slot then
                 local apos = self:GetAttPos(slot, false, true)
+
+                local opos = (slot.Icon_Offset or Vector(0, 0, 0))
+                local atttbl = self:GetFinalAttTable(slot)
+                opos = opos + (atttbl.IconOffset or Vector(0, 0, 0))
+
+                apos.x = apos.x + opos.x
+                apos.z = apos.z - opos.z
 
                 cpos = cpos + cang:Up() * (apos.x - cpos.x)
                 -- cpos = cpos + cang:Right() * (apos.y - cpos.y)

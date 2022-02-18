@@ -49,6 +49,8 @@ function SWEP:Deploy()
     self:SetLoadedRounds(self:Clip1())
     self:SetCustomize(false)
 
+    self:SetBipod(false)
+
     self:SetTriggerDown(self:GetOwner():KeyDown(IN_ATTACK))
 
     self:GetOwner():DoAnimationEvent(self:GetValue("AnimDraw"))

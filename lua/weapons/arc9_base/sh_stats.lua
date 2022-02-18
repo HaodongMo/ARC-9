@@ -158,6 +158,10 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "BlindFire")
     end
 
+    if self:GetBipod() then
+        stat = self:GetValue(val, stat, "Bipod")
+    end
+
     if isnumber(stat) then
         stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
     else

@@ -430,7 +430,9 @@ SWEP.NPCWeight = 100 -- How likely it is for an NPC to get this weapon as oppose
 -------------------------- BIPOD
 
 SWEP.Bipod = false -- This weapon comes with a bipod.
--- When bipod is deployed, the gun does not experience recoil.
+SWEP.RecoilMultBipod = 0.25
+SWEP.SwayMultBipod = 0.25
+SWEP.FreeAimRadiusMultBipod = 0
 
 -------------------------- SOUNDS
 
@@ -460,8 +462,8 @@ SWEP.FiremodeSound = "arc9/firemode.wav"
 SWEP.EnterSightsSound = ""
 SWEP.ExitSightsSound = ""
 
-SWEP.EnterBipodSound = ""
-SWEP.ExitBipodSound = ""
+SWEP.EnterBipodSound = "arc9/bipod_down.wav"
+SWEP.ExitBipodSound = "arc9/bipod_up.wav"
 
 SWEP.SelectUBGLSound = ""
 SWEP.ExitUBGLSound = ""
@@ -575,8 +577,8 @@ SWEP.SprintMidPoint = {
 SWEP.CustomizeAng = Angle(90, 0, 0)
 SWEP.CustomizePos = Vector(20, 32, 4)
 
-SWEP.InBipodPos = Vector(-8, 0, -4)
-SWEP.InBipodMult = Vector(2, 1, 1)
+SWEP.BipodPos = Vector(0, 4, -4)
+SWEP.BipodAng = Angle(0, 0, 0)
 
 SWEP.HeightOverBore = 1
 

@@ -15,6 +15,10 @@ function SWEP:TranslateAnimation(seq)
         seq = seq .. "_blindfire"
     end
 
+    if self:GetBipod() and self:HasAnimation(seq .. "_bipod") then
+        seq = seq .. "_bipod"
+    end
+
     if self:GetSprintAmount() > 0 and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
         seq = seq .. "_sprint"
     end
