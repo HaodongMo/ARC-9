@@ -78,11 +78,14 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
-    local sightdelta = math.ease.InOutCirc(self:GetSightDelta())
+    local sightdelta = self:GetSightDelta()
 
     -- cor_val = Lerp(sightdelta, cor_val, 1)
 
+    self.SwayScale = 1
+
     if sightdelta > 0 then
+        sightdelta = math.ease.InOutCirc(sightdelta)
         local sightpos, sightang = self:GetSightPositions()
 
         -- local sightpos = self.SightPos
@@ -90,19 +93,22 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         offsetpos = LerpVector(sightdelta, offsetpos, sightpos)
         offsetang = LerpAngle(sightdelta, offsetang, sightang)
-    end
-
-    local eepos, eeang = self:GetExtraSightPositions()
     -- local eepos, eeang = Vector(0, 0, 0), Angle(0, 0, 0)
 
-    local im = self:GetProcessedValue("SightMidPoint")
+        local im = self:GetProcessedValue("SightMidPoint")
 
-    local midpoint = sightdelta * math.cos(sightdelta * (math.pi / 2))
-    local joffset = (im and im.Pos or Vector(0, 0, 0)) * midpoint
-    local jaffset = (im and im.Ang or Angle(0, 0, 0)) * midpoint
+        local midpoint = sightdelta * math.cos(sightdelta * (math.pi / 2))
+        local joffset = (im and im.Pos or Vector(0, 0, 0)) * midpoint
+        local jaffset = (im and im.Ang or Angle(0, 0, 0)) * midpoint
 
-    extra_offsetpos = LerpVector(sightdelta, extra_offsetpos, -eepos + joffset)
-    extra_offsetang = LerpAngle(sightdelta, extra_offsetang, -eeang + jaffset)
+        local eepos, eeang = self:GetExtraSightPositions()
+
+        extra_offsetpos = LerpVector(sightdelta, extra_offsetpos, -eepos + joffset)
+        extra_offsetang = LerpAngle(sightdelta, extra_offsetang, -eeang + jaffset)
+
+        self.BobScale = 0
+        self.SwayScale = Lerp(sightdelta, 1, 0.1)
+    end
 
     extra_offsetang.y = extra_offsetang.y - (self:GetFreeSwayAngles().p * cor_val)
     extra_offsetang.p = extra_offsetang.p + (self:GetFreeSwayAngles().y * cor_val)
@@ -112,9 +118,13 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     if game.SinglePlayer() or IsFirstTimePredicted() then
         if self:GetCustomize() then
-            self.CustomizeDelta = math.Approach(self.CustomizeDelta, 1, FrameTime() * 1 / 0.15)
+            if self.CustomizeDelta < 1 then
+                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 1, FrameTime() * 1 / 0.15)
+            end
         else
-            self.CustomizeDelta = math.Approach(self.CustomizeDelta, 0, FrameTime() * 1 / 0.15)
+            if self.CustomizeDelta > 0 then
+                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 0, FrameTime() * 1 / 0.15)
+            end
         end
     end
 
@@ -122,13 +132,14 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     -- local sprintdelta = self:Curve(self:GetSprintDelta())
     local sprintdelta = self:GetSprintDelta()
-    local ts_sprintdelta = 0 // self:GetTraversalSprintAmount()
-    sprintdelta = math.ease.InOutQuad(sprintdelta) - curvedcustomizedelta
-    ts_sprintdelta = math.ease.InOutSine(ts_sprintdelta)
-
-    sprintdelta = math.max(sprintdelta, ts_sprintdelta)
 
     if sprintdelta > 0 then
+        local ts_sprintdelta = 0 // self:GetTraversalSprintAmount()
+        sprintdelta = math.ease.InOutQuad(sprintdelta) - curvedcustomizedelta
+        ts_sprintdelta = math.ease.InOutSine(ts_sprintdelta)
+
+        sprintdelta = math.max(sprintdelta, ts_sprintdelta)
+
         local sprpos = self:GetProcessedValue("SprintPos") or self:GetProcessedValue("RestPos")
         local sprang = self:GetProcessedValue("SprintAng") or self:GetProcessedValue("RestAng")
 
@@ -139,19 +150,16 @@ function SWEP:GetViewModelPosition(pos, ang)
         offsetang = LerpAngle(sprintdelta, offsetang, sprang)
 
         extra_offsetang = LerpAngle(sprintdelta, extra_offsetang, Angle(0, 0, 0))
+
+        local sim = self:GetProcessedValue("SprintMidPoint")
+
+        local spr_midpoint = sprintdelta * math.cos(sprintdelta * (math.pi / 2))
+        local spr_joffset = (sim and sim.Pos or Vector(0, 0, 0)) * spr_midpoint
+        local spr_jaffset = (sim and sim.Ang or Angle(0, 0, 0)) * spr_midpoint
+
+        extra_offsetpos = extra_offsetpos + spr_joffset
+        extra_offsetang = extra_offsetang + spr_jaffset
     end
-
-    local sim = self:GetProcessedValue("SprintMidPoint")
-
-    local spr_midpoint = sprintdelta * math.cos(sprintdelta * (math.pi / 2))
-    local spr_joffset = (sim and sim.Pos or Vector(0, 0, 0)) * spr_midpoint
-    local spr_jaffset = (sim and sim.Ang or Angle(0, 0, 0)) * spr_midpoint
-
-    extra_offsetpos = extra_offsetpos + spr_joffset
-    extra_offsetang = extra_offsetang + spr_jaffset
-
-    self.BobScale = 0
-    self.SwayScale = Lerp(sightdelta, 1, 0.1)
 
     if curvedcustomizedelta > 0 then
         local cpos = self:GetProcessedValue("CustomizePos")
@@ -230,17 +238,19 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Right(), extra_offsetang[2])
     ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
 
-    self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
-    -- this needs to be better
-    -- its more like proof of concept
-    -- probably this can be better if it based on selected slot offset not random numbers
-    pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-    pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
+    if curvedcustomizedelta > 0 then
+        self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
+        -- this needs to be better
+        -- its more like proof of concept
+        -- probably this can be better if it based on selected slot offset not random numbers
+        pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
+        pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
 
-    pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
-    pos = pos + (ang:Forward() * 15) * curvedcustomizedelta ^ 2
+        pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
+        pos = pos + (ang:Forward() * 15) * curvedcustomizedelta ^ 2
 
-    ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
+        ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
+    end
 
     -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
 

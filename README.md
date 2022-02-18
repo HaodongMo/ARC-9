@@ -140,8 +140,8 @@ Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS 
  - **Silenced**: Enabled when a silencer is installed.
  - **MidAir**: Enabled when in mid-air.
  - **Crouch**: Enabled when crouching.
- - **First, FirstShot**: Enabled on the first shot.
- - **Last, LastShot, Empty**: Enabled on the last shot of a magazine.
+ - **FirstShot**: Enabled on the first shot.
+ - **Empty**: Enabled on the last shot of a magazine.
  - **EvenShot**: Enabled on even shots.
  - **OddShot**: Enabled on odd shots.
  - **EvenReload**: Enabled on even reloads.

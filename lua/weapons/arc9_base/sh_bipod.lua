@@ -50,11 +50,15 @@ function SWEP:CanBipod()
 end
 
 function SWEP:EnterBipod()
+    if self:GetBipod() then return end
+
     self:SetBipod(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterBipodSound")))
 end
 
 function SWEP:ExitBipod()
+    if !self:GetBipod() then return end
+
     self:SetBipod(false)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitBipodSound")))
 end

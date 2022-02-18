@@ -179,31 +179,28 @@ function SWEP:DoRTScope(model, atttbl)
     local pos = model:GetPos()
     local ang = EyeAngles()
 
-    local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
-    sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
-
-    pos = pos + (sightpos.x * ang:Right())
-    -- pos = pos + (sightpos.y * ang:Forward())
-    pos = pos + (sightpos.z * -ang:Up())
-
-    local screenpos = pos:ToScreen()
-
-    local shadow_intensity = atttbl.RTScopeShadowIntensity or 30
-
-    local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
-    local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
-
-    local sh_s = math.floor(rtsize * 1.3)
-
-    sh_x = sh_x - ((sh_s-rtsize) / 2)
-    sh_y = sh_y - ((sh_s-rtsize) / 2)
-
-
-    render.PushRenderTarget(rtmat)
-
-    cam.Start2D()
-
     if self:ShouldDoScope() then
+        local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
+        sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
+
+        pos = pos + (sightpos.x * ang:Right())
+        -- pos = pos + (sightpos.y * ang:Forward())
+        pos = pos + (sightpos.z * -ang:Up())
+
+        local screenpos = pos:ToScreen()
+
+        local shadow_intensity = atttbl.RTScopeShadowIntensity or 30
+
+        local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
+        local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
+
+        local sh_s = math.floor(rtsize * 1.3)
+
+        sh_x = sh_x - ((sh_s-rtsize) / 2)
+        sh_y = sh_y - ((sh_s-rtsize) / 2)
+
+        render.PushRenderTarget(rtmat)
+        cam.Start2D()
 
         surface.SetDrawColor(atttbl.RTScopeColor or color_white)
         surface.SetMaterial(atttbl.RTScopeReticle)
@@ -227,7 +224,9 @@ function SWEP:DoRTScope(model, atttbl)
             surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
             surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
         end
-
+    else
+        render.PushRenderTarget(rtmat)
+        cam.Start2D()
     end
 
     surface.SetDrawColor(0, 0, 0, 255 * (1 - self:GetSightAmount()))

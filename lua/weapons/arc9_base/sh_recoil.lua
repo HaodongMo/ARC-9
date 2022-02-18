@@ -7,9 +7,16 @@ function SWEP:ThinkRecoil()
         self:SetRecoilAmount(math.max(rec, 0))
     end
 
-    self:SetRecoilUp(self:GetRecoilUp() - (FrameTime() * self:GetRecoilUp() * self:GetProcessedValue("RecoilDissipationRate")))
+    local ru = self:GetRecoilUp()
+    local rs = self:GetRecoilSide()
 
-    self:SetRecoilSide(self:GetRecoilSide() - (FrameTime() * self:GetRecoilSide() * self:GetProcessedValue("RecoilDissipationRate")))
+    if math.abs(ru) > 0 or math.abs(rs) > 0 then
+        local new_ru = ru - (FrameTime() * self:GetRecoilUp() * self:GetProcessedValue("RecoilDissipationRate"))
+        local new_rs = rs - (FrameTime() * self:GetRecoilSide() * self:GetProcessedValue("RecoilDissipationRate"))
+
+        self:SetRecoilUp(new_ru)
+        self:SetRecoilSide(new_rs)
+    end
 
     self:ThinkVisualRecoil()
 end

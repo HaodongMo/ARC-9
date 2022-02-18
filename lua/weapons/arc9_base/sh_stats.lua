@@ -129,13 +129,10 @@ function SWEP:GetProcessedValue(val, base)
 
     if self:GetBurstCount() == 0 then
         stat = self:GetValue(val, stat, "FirstShot")
-        stat = self:GetValue(val, stat, "First")
     end
 
     if self:Clip1() == 0 then
         stat = self:GetValue(val, stat, "Empty")
-        stat = self:GetValue(val, stat, "LastShot")
-        stat = self:GetValue(val, stat, "Last")
     end
 
     if self:GetValue("Silencer") then
@@ -187,7 +184,9 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
+    if self:GetRecoilAmount() > 0 then
+        stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
+    end
 
     if self:GetOwner():IsValid() then
         local spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)

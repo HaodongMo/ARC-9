@@ -6,7 +6,21 @@ function SWEP:GetTraverseSprintToFireTime()
     return self:GetProcessedValue("SprintToFireTime") * 1.5
 end
 
+-- local cachedissprinting = false
+-- local cachedsprinttime = 0
+
 function SWEP:GetIsSprinting()
+    -- if cachedsprinttime == CurTime() then
+    --     return cachedissprinting
+    -- end
+
+    -- cachedsprinttime = CurTime()
+    -- cachedissprinting = self:GetIsSprintingCheck()
+
+    return self:GetIsSprintingCheck()
+end
+
+function SWEP:GetIsSprintingCheck()
     local owner = self:GetOwner()
 
     if !self:GetOwner():IsValid() or self:GetOwner():IsNPC() then
@@ -55,10 +69,8 @@ function SWEP:ExitSprint()
     end
 end
 
-SWEP.LastWasSprinting = false
-
 function SWEP:ThinkSprint()
-    local sprinting = self:GetIsSprinting() or self:GetSafe()
+    local sprinting = self:GetSafe() or self:GetIsSprinting()
 
     if self:GetSightAmount() >= 1 then
         sprinting = false
@@ -66,22 +78,27 @@ function SWEP:ThinkSprint()
 
     local amt = self:GetSprintAmount()
     -- local ts_amt = self:GetTraversalSprintAmount()
+    local lastwassprinting = self:GetLastWasSprinting()
 
-    if self.LastWasSprinting and !sprinting then
+    if lastwassprinting and !sprinting then
         self:ExitSprint()
-    elseif !self.LastWasSprinting and sprinting then
+    elseif !lastwassprinting and sprinting then
         self:EnterSprint()
     end
 
-    self.LastWasSprinting = sprinting
+    self:SetLastWasSprinting(sprinting)
 
     if sprinting then
-        amt = math.Approach(amt, 1, FrameTime() / self:GetSprintToFireTime())
+        if amt < 1 then
+            amt = math.Approach(amt, 1, FrameTime() / self:GetSprintToFireTime())
+        end
         -- if self:GetTraversalSprint() then
         --     ts_amt = math.Approach(ts_amt, 1, FrameTime() / (self:GetTraverseSprintToFireTime()))
         -- end
     else
-        amt = math.Approach(amt, 0, FrameTime() / self:GetSprintToFireTime())
+        if amt > 0 then
+            amt = math.Approach(amt, 0, FrameTime() / self:GetSprintToFireTime())
+        end
     end
 
     -- if !self:GetTraversalSprint() then
