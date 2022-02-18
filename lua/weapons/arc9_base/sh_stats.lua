@@ -1,6 +1,7 @@
 SWEP.StatCache = {}
 SWEP.HookCache = {}
 SWEP.AffectorsCache = nil
+SWEP.HasNoAffectors = {}
 
 SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
@@ -13,11 +14,14 @@ function SWEP:InvalidateCache()
     self.ElementsCache = nil
     self.RecoilPatternCache = {}
     self.ScrollLevels = {}
+    self.HasNoAffectors = {}
 
     self:SetBaseSettings()
 end
 
 function SWEP:RunHook(val, data)
+    local any = false
+
     if self.HookCache[val] then
         for _, chook in pairs(self.HookCache[val]) do
             local d = chook(self, data)
@@ -25,9 +29,11 @@ function SWEP:RunHook(val, data)
             if d != nil then
                 data = d
             end
+
+            any = true
         end
 
-        return data
+        return data, any
     end
 
     self.HookCache[val] = {}
@@ -43,13 +49,15 @@ function SWEP:RunHook(val, data)
                 if d != nil then
                     data = d
                 end
+
+                any = true
             end) then
                 print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
             end
         end
     end
 
-    return data
+    return data, any
 end
 
 function SWEP:GetFinalAttTableFromAddress(address)
@@ -210,10 +218,24 @@ function SWEP:GetValue(val, base, condition, amount)
     amount = amount or 1
     local stat = base or self:GetTable()[val]
 
+    if self.HasNoAffectors[val .. condition] == true then
+        return stat
+    end
+
+    local unaffected = true
+
+    if istable(stat) then
+        stat.BaseClass = nil
+    end
+
     if self.StatCache[tostring(base) .. val .. condition] then
         stat = self.StatCache[tostring(base) .. val .. condition]
 
         stat = self:RunHook(val .. "Hook" .. condition, stat) or stat
+
+        if istable(stat) then
+            stat.BaseClass = nil
+        end
 
         return stat
     end
@@ -227,6 +249,7 @@ function SWEP:GetValue(val, base, condition, amount)
             if tbl[val .. condition] != nil and att_priority >= priority then
                 stat = tbl[val .. condition]
                 priority = att_priority
+                unaffected = false
             end
         end
     end
@@ -237,6 +260,7 @@ function SWEP:GetValue(val, base, condition, amount)
         if tbl[val .. "Override" .. condition] != nil and att_priority >= priority then
             stat = tbl[val .. "Override" .. condition]
             priority = att_priority
+            unaffected = false
         end
     end
 
@@ -247,6 +271,7 @@ function SWEP:GetValue(val, base, condition, amount)
                 if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
                     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
                 end
+                unaffected = false
             end
         end
 
@@ -255,6 +280,7 @@ function SWEP:GetValue(val, base, condition, amount)
                 if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
                     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
                 end
+                unaffected = false
             end
         end
 
@@ -262,7 +288,13 @@ function SWEP:GetValue(val, base, condition, amount)
 
     self.StatCache[tostring(base) .. val .. condition] = stat
 
-    stat = self:RunHook(val .. "Hook" .. condition, stat) or stat
+    local newstat, any = self:RunHook(val .. "Hook" .. condition, stat)
+
+    stat = newstat or stat
+
+    if any then unaffected = false end
+
+    self.HasNoAffectors[val .. condition] = unaffected
 
     if istable(stat) then
         stat.BaseClass = nil
