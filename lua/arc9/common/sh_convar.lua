@@ -45,7 +45,7 @@ local conVars = {
         client = true
     },
     {
-        name = "rumble"
+        name = "rumble",
         default = "1",
         client = true
     },
