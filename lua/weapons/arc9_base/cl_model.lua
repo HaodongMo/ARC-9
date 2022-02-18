@@ -1,6 +1,6 @@
 function SWEP:GetAttPos(slottbl, wm, idle)
     idle = idle or false
-    local parentmdl = self:GetVM()
+    local parentmdl = nil
 
     if wm then
         if slottbl.WMBase then
@@ -12,6 +12,8 @@ function SWEP:GetAttPos(slottbl, wm, idle)
         else
             parentmdl = self.WModel[1]
         end
+    else
+        parentmdl = self:GetVM()
     end
 
     if idle then

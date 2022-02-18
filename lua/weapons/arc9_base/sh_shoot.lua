@@ -34,8 +34,46 @@ function SWEP:DryFire()
     self:SetNeedTriggerPress(true)
 end
 
+function SWEP:DoShootSounds()
+    local pvar = self:GetProcessedValue("ShootPitchVariation")
+    local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
+
+    local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
+
+    if self:GetProcessedValue("Silencer") then
+        ss = self:RandomChoice(self:GetProcessedValue("ShootSoundSilenced")) or ss
+
+        if self:GetBurstCount() == 0 then
+            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSoundSilenced")) or ss
+        end
+    else
+        if self:GetBurstCount() == 0 then
+            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSound")) or ss
+        end
+    end
+
+    self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON)
+
+    local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
+
+    if self:GetProcessedValue("Silencer") then
+        dss = self:RandomChoice(self:GetProcessedValue("DistantShootSoundSilenced")) or dss
+
+        if self:GetBurstCount() == 0 then
+            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSoundSilenced")) or dss
+        end
+    else
+        if self:GetBurstCount() == 0 then
+            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSound")) or dss
+        end
+    end
+
+    self:EmitSound(dss, math.min(149, self:GetProcessedValue("ShootVolume") * 2), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
+end
+
 function SWEP:PrimaryAttack()
     if self:GetOwner():IsNPC() then
+        self:NPC_PrimaryAttack()
         return
     end
 
@@ -129,42 +167,9 @@ function SWEP:PrimaryAttack()
         end)
     end
 
+    self:DoShootSounds()
+
     self:GetOwner():DoAnimationEvent(self:GetProcessedValue("AnimShoot"))
-
-    local pvar = self:GetProcessedValue("ShootPitchVariation")
-    local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
-
-    local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
-
-    if self:GetProcessedValue("Silencer") then
-        ss = self:RandomChoice(self:GetProcessedValue("ShootSoundSilenced")) or ss
-
-        if self:GetBurstCount() == 0 then
-            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSoundSilenced")) or ss
-        end
-    else
-        if self:GetBurstCount() == 0 then
-            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSound")) or ss
-        end
-    end
-
-    self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON)
-
-    local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
-
-    if self:GetProcessedValue("Silencer") then
-        dss = self:RandomChoice(self:GetProcessedValue("DistantShootSoundSilenced")) or dss
-
-        if self:GetBurstCount() == 0 then
-            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSoundSilenced")) or dss
-        end
-    else
-        if self:GetBurstCount() == 0 then
-            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSound")) or dss
-        end
-    end
-
-    self:EmitSound(dss, math.min(149, self:GetProcessedValue("ShootVolume") * 2), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
 
     local delay = 60 / self:GetProcessedValue("RPM")
 
@@ -185,6 +190,29 @@ function SWEP:PrimaryAttack()
 
     local dir = self:GetShootDir()
 
+    self:DoProjectileAttack(self:GetShootPos(), dir, spread)
+
+    self:ApplyRecoil()
+
+    self:SetBurstCount(self:GetBurstCount() + 1)
+
+    if self:GetValue("ManualAction") then
+        if self:Clip1() > 0 or !self:GetValue("ManualActionNoLastCycle") then
+            if self:GetNthShot() % self:GetValue("ManualActionChamber") == 0 then
+                self:SetNeedsCycle(true)
+            end
+        end
+    end
+
+    if self:GetCurrentFiremode() == 1 or self:Clip1() == 0 then
+        self:SetNeedTriggerPress(true)
+    end
+
+    self:RollJam()
+    self:DoHeat()
+end
+
+function SWEP:DoProjectileAttack(pos, ang, spread)
     if self:GetProcessedValue("ShootEnt") then
         self:ShootRocket()
     else
@@ -207,8 +235,8 @@ function SWEP:PrimaryAttack()
         if IsFirstTimePredicted() then
             if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
                 for i = 1, self:GetProcessedValue("Num") do
-                    dir = dir + (spread * AngleRand() / 3.6)
-                    ARC9:ShootPhysBullet(self, self:GetShootPos(), dir:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
+                    ang = ang + (spread * AngleRand() / 3.6)
+                    ARC9:ShootPhysBullet(self, pos, ang:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
                 end
             else
                 self:GetOwner():LagCompensation(true)
@@ -220,8 +248,8 @@ function SWEP:PrimaryAttack()
                     Tracer = tr,
                     TracerName = self:GetProcessedValue("TracerEffect"),
                     Num = self:GetProcessedValue("Num"),
-                    Dir = dir:Forward(),
-                    Src = self:GetShootPos(),
+                    Dir = ang:Forward(),
+                    Src = pos,
                     Spread = Vector(spread, spread, spread),
                     IgnoreEntity = self:GetOwner():GetVehicle(),
                     Callback = function(att, btr, dmg)
@@ -243,25 +271,6 @@ function SWEP:PrimaryAttack()
             end
         end
     end
-
-    self:ApplyRecoil()
-
-    self:SetBurstCount(self:GetBurstCount() + 1)
-
-    if self:GetValue("ManualAction") then
-        if self:Clip1() > 0 or !self:GetValue("ManualActionNoLastCycle") then
-            if self:GetNthShot() % self:GetValue("ManualActionChamber") == 0 then
-                self:SetNeedsCycle(true)
-            end
-        end
-    end
-
-    if self:GetCurrentFiremode() == 1 or self:Clip1() == 0 then
-        self:SetNeedTriggerPress(true)
-    end
-
-    self:RollJam()
-    self:DoHeat()
 end
 
 function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)

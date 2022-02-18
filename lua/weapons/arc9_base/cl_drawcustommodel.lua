@@ -8,7 +8,13 @@ end
 function SWEP:ShouldLOD()
     if LocalPlayer() == self:GetOwner() then return 0 end
 
-    local dsquared = EyePos():DistToSqr(self:GetOwner():GetPos())
+    local dsquared
+
+    if IsValid(self:GetOwner()) then
+        dsquared = EyePos():DistToSqr(self:GetOwner():GetPos())
+    else
+        dsquared = EyePos():DistToSqr(self:GetPos())
+    end
 
     if dsquared >= 25000000 then
         return 2

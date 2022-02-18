@@ -15,6 +15,10 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
        end
     end
 
+    if bind == "+use" then
+        return ARC9.AttemptGiveNPCWeapon()
+    end
+
     if bind == "+menu_context" then
         if !LocalPlayer():KeyDown(IN_USE) then
             if wpn:GetCustomize() then

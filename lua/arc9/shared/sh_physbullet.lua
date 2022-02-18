@@ -153,6 +153,9 @@ net.Receive("arc9_sendbullet", function(len, ply)
         ent = net.ReadEntity()
     end
 
+    if !IsValid(weapon) then return end
+    if !weapon.ARC9 then return end
+
     local bullet = {
         Pos = pos,
         Vel = ang:Forward() * vel,
@@ -380,20 +383,22 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                 bullet.Damaged[eid] = true
                 bullet.Dead = true
 
-                bullet.Attacker:FireBullets({
-                    Damage = weapon:GetProcessedValue("Damage_Max"),
-                    Force = 8,
-                    Tracer = 0,
-                    Num = 1,
-                    Dir = bullet.Vel:GetNormalized(),
-                    Src = oldpos,
-                    Spread = Vector(0, 0, 0),
-                    Callback = function(att, btr, dmg)
-                        local range = bullet.Travelled
+                if IsValid(bullet.Attacker) then
+                    bullet.Attacker:FireBullets({
+                        Damage = weapon:GetProcessedValue("Damage_Max"),
+                        Force = 8,
+                        Tracer = 0,
+                        Num = 1,
+                        Dir = bullet.Vel:GetNormalized(),
+                        Src = oldpos,
+                        Spread = Vector(0, 0, 0),
+                        Callback = function(att, btr, dmg)
+                            local range = bullet.Travelled
 
-                        weapon:AfterShotFunction(btr, dmg, range, bullet.Penleft, bullet.Damaged)
-                    end
-                })
+                            weapon:AfterShotFunction(btr, dmg, range, bullet.Penleft, bullet.Damaged)
+                        end
+                    })
+                end
             end
 
             if attacker:IsPlayer() then
@@ -520,15 +525,19 @@ function ARC9.DrawPhysBullets()
 
         render.SetMaterial(tracer)
 
-        local fromvec = (i.Weapon:GetTracerOrigin() - pos):GetNormalized()
         local speedvec = -i.Vel:GetNormalized()
+        local vec = speedvec
 
-        local d = math.min(i.Travelled / 1024, 1)
-        if i.Indirect then
-            d = 1
+        if IsValid(i.Weapon) then
+            local fromvec = (i.Weapon:GetTracerOrigin() - pos):GetNormalized()
+
+            local d = math.min(i.Travelled / 1024, 1)
+            if i.Indirect then
+                d = 1
+            end
+
+            vec = LerpVector(d, fromvec, speedvec)
         end
-
-        local vec = LerpVector(d, fromvec, speedvec)
 
         render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled))), size * 0.75, 1, 0, col)
 

@@ -2,6 +2,7 @@ util.AddNetworkString("arc9_togglecustomize")
 util.AddNetworkString("arc9_networkweapon")
 util.AddNetworkString("arc9_sendattinv")
 util.AddNetworkString("arc9_sendbullet")
+util.AddNetworkString("arc9_givenpcweapon")
 
 util.AddNetworkString("arc9_reloadatts")
 util.AddNetworkString("arc9_reloadlangs")

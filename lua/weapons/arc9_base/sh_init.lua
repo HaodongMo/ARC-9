@@ -191,42 +191,52 @@ end
 
 function SWEP:SetShouldHoldType()
     if self:GetOwner():IsNPC() then
-        self:SetHoldType(self:GetValue("HoldTypeNPC") or self:GetValue("HoldType"))
+        local htnpc = self:GetValue("HoldTypeNPC")
+
+        if !htnpc then
+            if self:GetProcessedValue("ManualAction") then
+                self:SetHoldType("shotgun")
+            else
+                self:SetHoldType(self:GetValue("HoldTypeSights") or self:GetValue("HoldType"))
+            end
+        else
+            self:SetHoldType(self:GetValue("HoldTypeNPC"))
+        end
 
         return
     end
 
     if self:GetInSights() then
-        if self:GetValue("HoldTypeSights") then
-            self:SetHoldType(self:GetValue("HoldTypeSights"))
+        if self:GetProcessedValue("HoldTypeSights") then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeSights"))
 
             return
         end
     end
 
     if self:GetSafe() then
-        if self:GetValue("HoldTypeHolstered") then
-            self:SetHoldType(self:GetValue("HoldTypeHolstered"))
+        if self:GetProcessedValue("HoldTypeHolstered") then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeHolstered"))
 
             return
         end
     end
 
     if self:GetIsSprinting() or self:GetSafe() then
-        if self:GetValue("HoldTypeSprint") then
-            self:SetHoldType(self:GetValue("HoldTypeSprint"))
+        if self:GetProcessedValue("HoldTypeSprint") then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeSprint"))
 
             return
         end
     end
 
     if self:GetCustomize() then
-        if self:GetValue("HoldTypeCustomize") then
-            self:SetHoldType(self:GetValue("HoldTypeCustomize"))
+        if self:GetProcessedValue("HoldTypeCustomize") then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeCustomize"))
 
             return
         end
     end
 
-    self:SetHoldType(self:GetValue("HoldType"))
+    self:SetHoldType(self:GetProcessedValue("HoldType"))
 end

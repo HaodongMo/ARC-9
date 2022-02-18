@@ -125,7 +125,7 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "True")
     end
 
-    if self:GetOwner():IsValid() then
+    if self:GetOwner():IsValid() and !self:GetOwner():IsNPC() then
         if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
             stat = self:GetValue(val, stat, "MidAir")
         end
