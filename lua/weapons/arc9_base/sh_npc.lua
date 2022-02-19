@@ -86,6 +86,7 @@ end
 
 function SWEP:NPC_Reload()
     self:DropMagazine()
+    self:SetNthShot(0)
 end
 
 function SWEP:NPC_Initialize()

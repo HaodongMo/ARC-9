@@ -182,8 +182,6 @@ function SWEP:PrimaryAttack()
 
     self:SetNextPrimaryFire(curatt + delay)
 
-    self:SetNthShot(self:GetNthShot() + 1)
-
     self:DoEffects()
 
     if game.SinglePlayer() and SERVER then
@@ -226,7 +224,7 @@ if CLIENT then
         if !sinput.enabled then sinput.Init() end
 
         local P1 = sinput.GetControllerForGamepadIndex(0)
-        
+
         sinput.TriggerVibration(P1, self.RumbleHeavy, self.RumbleLight)
         sinput.SetLEDColor(P1, 255, 255, 255, false)
 
@@ -257,6 +255,8 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
         end
 
         bullettbl.Size = self:GetProcessedValue("TracerSize")
+
+        self:SetNthShot(self:GetNthShot() + 1)
 
         if IsFirstTimePredicted() then
             if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then

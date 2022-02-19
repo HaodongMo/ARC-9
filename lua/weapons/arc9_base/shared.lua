@@ -529,6 +529,8 @@ SWEP.BulletBGs = {}
 SWEP.CaseBGs = {}
 SWEP.StripperClipBGs = {}
 
+SWEP.HideBones = {} -- bones to hide in third person and customize menu. {"list", "of", "bones"}
+
 SWEP.PoseParameters = {} -- Poseparameters to manage. ["parameter"] = starting value.
 -- Use animations to switch between different pose parameters.
 -- When an animation is being played that switches between pose parameters, those parameters are all set to 0 for the animation.

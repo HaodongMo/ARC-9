@@ -255,7 +255,7 @@ function SWEP:GetValue(val, base, condition, amount)
     end
 
     for _, tbl in pairs(self:GetAllAffectors()) do
-        local att_priority = tbl[val .. "Override" .. condition .. "Priority"] or 1
+        local att_priority = tbl[val .. "Override" .. condition .. "_Priority"] or 1
 
         if tbl[val .. "Override" .. condition] != nil and att_priority >= priority then
             stat = tbl[val .. "Override" .. condition]
