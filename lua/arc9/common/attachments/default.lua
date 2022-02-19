@@ -15,6 +15,7 @@ ATT.Model = ""
 ATT.WorldModel = "" -- optional
 ATT.Scale = 1
 ATT.ModelOffset = Vector(0, 0, 0)
+ATT.ModelAngleOffset = Angle(0, 0, 0)
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.
 
