@@ -201,7 +201,7 @@ function SWEP:EndReload()
 
             self:SetLoadedRounds(res)
 
-            self:SetTimer(minprogress, function()
+            self:SetTimer(minprogress * t, function()
                 self:RestoreClip(attempt_to_restore)
             end)
 
