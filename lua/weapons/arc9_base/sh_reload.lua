@@ -13,28 +13,12 @@ function SWEP:Reload()
         return
     end
 
-    if self:GetOwner():KeyDown(IN_USE) then
-        -- firemode switch
-        return
-    end
-
     if self:GetOwner():KeyDown(IN_WALK) then
         self:Inspect()
         return
     end
 
-    if !self:GetProcessedValue("ReloadWhileSprint") and self:GetSprintAmount() > 0 then
-        return
-    end
-
-    if self:GetCustomize() then
-        return
-    end
-
-    if self:StillWaiting() then return end
-    if self:GetCapacity() <= 0 then return end
-    -- if self:GetTraversalSprintAmount() >= 0 then return end
-    if self:Ammo1() <= 0 then return end
+    if !self:CanReload() then return end
 
     if !self:GetProcessedValue("BottomlessClip") then
         if self:Clip1() >= self:GetCapacity() then return end
@@ -87,6 +71,7 @@ function SWEP:Reload()
     self:SetReloading(true)
     self:SetEndReload(false)
     self:ToggleBlindFire(false)
+    self:SetRequestReload(false)
 
     if !self:GetProcessedValue("ReloadInSights") then
         self:ExitSights()
@@ -100,6 +85,23 @@ function SWEP:Reload()
     -- end)
 
     self:SetReloadFinishTime(CurTime() + (t * 0.95))
+end
+
+function SWEP:CanReload()
+    if self:GetOwner():KeyDown(IN_WALK) then return false end
+    if self:StillWaiting() then return end
+    if self:GetCapacity() <= 0 then return end
+    -- if self:GetTraversalSprintAmount() >= 0 then return end
+    if self:Ammo1() <= 0 then return end
+    if !self:GetProcessedValue("ReloadWhileSprint") and self:GetSprintAmount() > 0 then
+        return
+    end
+    if self:GetJammed() then return end
+    if self:GetCustomize() then
+        return
+    end
+
+    return true
 end
 
 function SWEP:CancelReload()

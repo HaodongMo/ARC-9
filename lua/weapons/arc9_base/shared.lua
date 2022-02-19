@@ -868,6 +868,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 14, "Bipod")
     self:NetworkVar("Bool", 15, "HeatLockout")
     self:NetworkVar("Bool", 16, "LastWasSprinting")
+    self:NetworkVar("Bool", 17, "RequestReload")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")

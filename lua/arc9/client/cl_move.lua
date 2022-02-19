@@ -4,7 +4,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     if !IsValid(wpn) then return end
     if !wpn.ARC9 then return end
 
-    if wpn:Clip1() == 0 and wpn:Ammo1() > 0 and !wpn:GetCustomize() then
+    if wpn:GetRequestReload() and !wpn:GetCustomize() and wpn:CanReload() then
         if cmd:TickCount() % 2 == 0 then
             local buttons = cmd:GetButtons()
 

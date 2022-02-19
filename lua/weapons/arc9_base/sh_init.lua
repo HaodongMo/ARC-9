@@ -30,6 +30,7 @@ function SWEP:Deploy()
     self:SetPrimedAttack(false)
     self:SetReloading(false)
     self:SetHolster_Time(0)
+    self:SetRequestReload(false)
 
     self:GetOwner():SetCanZoom(false)
 

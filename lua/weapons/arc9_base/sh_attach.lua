@@ -92,16 +92,18 @@ function SWEP:PostModify()
             if self.LastAmmo != self:GetValue("Ammo") then
                 self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
                 self:SetClip1(0)
+                self:SetRequestReload(true)
             end
 
             if self.LastClipSize != self:GetValue("ClipSize") then
                 self:GetOwner():GiveAmmo(self:Clip1(), self:GetValue("Ammo"))
                 self:SetClip1(0)
+                self:SetRequestReload(true)
             end
 
             self.LastAmmo = self:GetValue("Ammo")
             self.LastClipSize = self:GetValue("ClipSize")
-        end
+            end
     end
 end
 
