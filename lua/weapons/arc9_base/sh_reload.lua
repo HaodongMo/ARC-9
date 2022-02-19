@@ -51,6 +51,7 @@ function SWEP:Reload()
 
     if !self:GetShouldShotgunReload() then
         local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
+        minprogress = math.min(minprogress, 1)
 
         self:SetTimer(t * minprogress, function()
             self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + self:Ammo1()))
