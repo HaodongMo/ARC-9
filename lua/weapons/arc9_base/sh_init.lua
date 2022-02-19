@@ -30,6 +30,11 @@ function SWEP:Deploy()
     self:SetPrimedAttack(false)
     self:SetReloading(false)
     self:SetHolster_Time(0)
+
+    self:GetOwner():SetCanZoom(false)
+
+    self.LastAmmo = self:GetValue("Ammo")
+    self.LastClipSize = self:GetValue("ClipSize")
     -- self:SetTraversalSprint(false)
     -- self:SetLastPressedWTime(0)
 
@@ -103,6 +108,7 @@ function SWEP:Holster(wep)
 
         self:KillTimers()
         self:GetOwner():SetFOV(0, 0)
+        self:GetOwner():SetCanZoom(true)
 
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()

@@ -69,8 +69,12 @@ function SWEP:GetFilledMergeSlot(addr)
     return slottbl
 end
 
+SWEP.LastClipSize = 0
+SWEP.LastAmmo = ""
+
 function SWEP:PostModify()
     self:InvalidateCache()
+    self:CancelReload()
 
     if CLIENT then
         self:SendWeapon()
@@ -78,10 +82,25 @@ function SWEP:PostModify()
         self:SetupModel(false)
         self:SavePreset()
     else
-        if self:GetValue("ToggleOnF") then
-            if self:GetOwner():FlashlightIsOn() then
-                self:GetOwner():Flashlight(false)
+        if self:GetOwner():IsPlayer() then
+            if self:GetValue("ToggleOnF") then
+                if self:GetOwner():FlashlightIsOn() then
+                    self:GetOwner():Flashlight(false)
+                end
             end
+
+            if self.LastAmmo != self:GetValue("Ammo") then
+                self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
+                self:SetClip1(0)
+            end
+
+            if self.LastClipSize != self:GetValue("ClipSize") then
+                self:GetOwner():GiveAmmo(self:Clip1(), self:GetValue("Ammo"))
+                self:SetClip1(0)
+            end
+
+            self.LastAmmo = self:GetValue("Ammo")
+            self.LastClipSize = self:GetValue("ClipSize")
         end
     end
 end

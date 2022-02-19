@@ -60,3 +60,6 @@ function SWEP:Think()
         end
     end
 end
+
+SWEP.LastClipSize = 0
+SWEP.LastAmmo = ""

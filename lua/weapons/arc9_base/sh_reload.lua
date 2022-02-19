@@ -186,6 +186,7 @@ function SWEP:EndReload()
 
             self:SetNthShot(0)
             self:SetNthReload(self:GetNthReload() + 1)
+            self:SetEmptyReload(false)
         else
             local anim = "reload_insert"
             local attempt_to_restore = 1
@@ -222,6 +223,7 @@ function SWEP:EndReload()
 
         self:SetNthShot(0)
         self:SetNthReload(self:GetNthReload() + 1)
+
         self:SetEmptyReload(false)
     end
 end

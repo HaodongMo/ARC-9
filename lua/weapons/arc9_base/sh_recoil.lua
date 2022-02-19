@@ -130,8 +130,19 @@ SWEP.VisualRecoilAng = Angle(0, 0, 0)
 function SWEP:ThinkVisualRecoil()
     if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
 
-    self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
-    self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
+    -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
+    -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
+
+    local ds = 0.1 / (self.VisualRecoilPos:Length() / 2)
+    -- local dr = 0.4 / (self.VisualRecoilAng.p + self.VisualRecoilAng.y + self.VisualRecoilAng.r)
+
+    self.VisualRecoilPos.x = math.Approach(self.VisualRecoilPos.x, 0, FrameTime() / ds)
+    self.VisualRecoilPos.y = math.Approach(self.VisualRecoilPos.y, 0, FrameTime() / ds)
+    self.VisualRecoilPos.z = math.Approach(self.VisualRecoilPos.z, 0, FrameTime() / ds)
+
+    -- self.VisualRecoilAng.p = math.Approach(self.VisualRecoilAng.p, 0, FrameTime() / dr)
+    -- self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
+    -- self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
 end
 
 function SWEP:DoVisualRecoil()
@@ -147,10 +158,12 @@ function SWEP:DoVisualRecoil()
         local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(sd, 1, 0.5) * mult
 
         self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
-        self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * Lerp(sd, 1, 0), 0, roll)
+        -- self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * Lerp(sd, 1, 0), 0, roll)
 
         if self:GetSightAmount() > 0 then
+            self.VisualRecoilPos.x = math.Clamp(self.VisualRecoilPos.x, -0.1, 0.1)
             self.VisualRecoilPos.y = math.Clamp(self.VisualRecoilPos.y, -0.1, 0)
+            self.VisualRecoilPos.z = math.Clamp(self.VisualRecoilPos.z, 0, 0.25)
         end
     end
 end

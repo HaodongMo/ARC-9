@@ -35,6 +35,11 @@ function SWEP:SetFiremodePose()
 
     local pp = self:GetFiremode()
 
+    if pp > #self:GetValue("Firemodes") then
+        pp = 1
+        self:SetFiremode(pp)
+    end
+
     pp = self:RunHook("HookP_ModifyFiremodePoseParam", pp) or pp
 
     if self:GetFinishFiremodeAnimTime() <= CurTime() then
@@ -45,7 +50,7 @@ function SWEP:SetFiremodePose()
 end
 
 function SWEP:GetCurrentFiremode()
-    mode = self:GetValue("Firemodes")[self:GetFiremode()].Mode
+    mode = self:GetCurrentFiremodeTable().Mode
 
     mode = self:RunHook("Hook_TranslateMode") or mode
 
@@ -57,6 +62,7 @@ function SWEP:GetCurrentFiremodeTable()
 
     if fm > #self:GetValue("Firemodes") then
         fm = 1
+        self:SetFiremode(fm)
     end
 
     return self:GetValue("Firemodes")[fm]
@@ -73,7 +79,7 @@ function SWEP:ThinkFiremodes()
         self:ToggleSafety()
     end
 
-    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_RELOAD) and self:GetOwner():KeyDown(IN_USE) then
+    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ZOOM) then
         self:SwitchFiremode()
     end
 

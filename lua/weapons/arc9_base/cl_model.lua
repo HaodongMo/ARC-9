@@ -162,6 +162,18 @@ function SWEP:SetupModel(wm, lod)
         self.LHIK_Priority = -1
         self.RHIKModel = nil
         self.RHIK_Priority = -1
+
+        -- local RenderOverrideFunction = function(self2)
+        --     if LocalPlayer():GetActiveWeapon() != self then LocalPlayer():GetViewModel().RenderOverride = nil return end
+        --     if !IsValid(self) then LocalPlayer():GetViewModel().RenderOverride = nil return end
+
+        --     self:SetFiremodePose()
+        --     self2:DrawModel()
+        -- end
+
+        -- local vm = self:GetVM()
+
+        -- vm.RenderOverride = RenderOverrideFunction
     else
         self.WModel = {}
 
