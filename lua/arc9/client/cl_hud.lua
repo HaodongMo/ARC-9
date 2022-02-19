@@ -32,8 +32,11 @@ ARC9.Colors = {
 }
 
 function ARC9.ShouldDrawHUD()
+    if !GetConVar("cl_drawhud"):GetBool() then return false end
+
     local wpn = LocalPlayer():GetActiveWeapon()
 
+    if !wpn.ARC9 and !GetConVar("arc9_hud_always"):GetBool() then return end
     -- if !wpn.ARC9 then return end
 
     return true
