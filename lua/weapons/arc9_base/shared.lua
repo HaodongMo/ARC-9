@@ -839,6 +839,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 16, "IKTime")
     self:NetworkVar("Float", 17, "Holster_Time")
     self:NetworkVar("Float", 18, "BlindFireCornerAmount")
+    self:NetworkVar("Float", 19, "EnterBipodTime")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
@@ -882,6 +883,7 @@ function SWEP:SetupDataTables()
     self:SetNthReload(0)
     self:SetNthShot(0)
     self:SetLastWasSprinting(false)
+    self:SetEnterBipodTime(0)
 end
 
 function SWEP:SecondaryAttack()

@@ -52,13 +52,27 @@ function SWEP:DoBodygroups(wm)
         end
     end
 
-    self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = eles})
-
     local v0 = Vector(0, 0, 0)
     local v1 = Vector(1, 1, 1)
     local hide = false
 
-    if self:GetCustomize() or wm then
+    if !wm then
+        local bulletbones = self:GetProcessedValue("BulletBones")
+
+        for i, bone in pairs(bulletbones) do
+            local boneid = mdl:LookupBone(bone)
+
+            if !boneid then continue end
+
+            if i <= self:Clip1() then
+                mdl:ManipulateBoneScale(boneid, v0)
+            else
+                mdl:ManipulateBoneScale(boneid, v1)
+            end
+        end
+    end
+
+    if !self:GetReloading() or self:GetCustomize() or wm then
         hide = true
     end
     local hidebones = self:GetProcessedValue("HideBones")
@@ -76,6 +90,8 @@ function SWEP:DoBodygroups(wm)
             end
         end
     end
+
+    self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = eles})
 end
 
 function SWEP:GetElements()

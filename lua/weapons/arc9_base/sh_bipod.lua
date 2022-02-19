@@ -15,12 +15,13 @@ end
 
 function SWEP:CanBipod()
     if !self:GetProcessedValue("Bipod") then return end
+    if self:GetSprintAmount() > 0 then return end
 
     local pos = self:GetOwner():EyePos()
     local ang = self:GetOwner():EyeAngles()
 
-    local maxs = Vector(2, 2, 16)
-    local mins = Vector(-2, -2, -16)
+    local maxs = Vector(2, 2, 2)
+    local mins = Vector(-2, -2, -32)
 
     local tr = util.TraceLine({
         start = pos,
@@ -54,7 +55,9 @@ function SWEP:EnterBipod()
 
     self:SetBipod(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterBipodSound")))
-    self:PlayAnimation("enter_bipod")
+    self:PlayAnimation("enter_bipod", 1, true)
+    self:CancelReload()
+    self:SetEnterBipodTime(CurTime())
 end
 
 function SWEP:ExitBipod()
@@ -62,5 +65,19 @@ function SWEP:ExitBipod()
 
     self:SetBipod(false)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitBipodSound")))
-    self:PlayAnimation("exit_bipod")
+    self:PlayAnimation("exit_bipod", 1, true)
+    self:CancelReload()
+end
+
+SWEP.BipodTime = 0.5
+
+function SWEP:GetBipodAmount()
+    local bipodamount = 0
+
+    if self:GetBipod() then
+        local d = math.Clamp(CurTime() - self:GetEnterBipodTime(), 0, self:GetValue("BipodTime"))
+        bipodamount = d / self:GetValue("BipodTime")
+    end
+
+    return bipodamount
 end

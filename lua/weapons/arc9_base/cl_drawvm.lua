@@ -12,10 +12,10 @@ function SWEP:PreDrawViewModel()
 
     self:DoBodygroups(false)
 
-    -- local bipodamount = (self:GetBipod() and 1) or 0
+    local bipodamount = self:GetBipodAmount()
 
-    -- self:SetFiremodePose()
-    self:GetVM():SetPoseParameter("sights", self:GetSightAmount())
+    self:SetFiremodePose()
+    self:GetVM():SetPoseParameter("sights", math.max(self:GetSightAmount(), bipodamount))
     self:GetVM():InvalidateBoneCache()
 
     self.ViewModelFOV = self:GetViewModelFOV()

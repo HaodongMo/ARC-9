@@ -539,7 +539,7 @@ function ARC9.DrawPhysBullets()
             vec = LerpVector(d, fromvec, speedvec)
         end
 
-        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled))), size * 0.75, 1, 0, col)
+        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled - 64))), size * 0.75, 1, 0, col)
 
         -- cam.End3D()
     end

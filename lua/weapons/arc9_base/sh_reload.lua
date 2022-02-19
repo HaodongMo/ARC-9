@@ -113,6 +113,8 @@ function SWEP:CancelReload()
     self:PlayAnimation("idle")
     self:GetOwner():DoAnimationEvent(ACT_HL2MP_GESTURE_RELOAD_MAGIC)
     self:CancelSoundTable()
+    self:SetIKTimeLineStart(0)
+    self:SetIKTime(0)
 end
 
 function SWEP:DropMagazine()

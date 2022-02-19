@@ -50,13 +50,17 @@ function SWEP:GetViewModelPosition(pos, ang)
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
 
     if self:GetBipod() then
+        local bipodamount = self:GetBipodAmount()
+
+        bipodamount = math.ease.InOutCirc(bipodamount)
+
         local sightpos, sightang = self:GetSightPositions()
 
-        offsetpos:Set(self:GetProcessedValue("BipodPos"))
-        offsetang:Set(self:GetProcessedValue("BipodAng"))
+        LerpVector(bipodamount, offsetpos, self:GetProcessedValue("BipodPos"))
+        LerpAngle(bipodamount, offsetang, self:GetProcessedValue("BipodAng"))
 
-        offsetpos = offsetpos + sightpos
-        offsetang = offsetang + sightang
+        offsetpos = offsetpos + (sightpos * bipodamount)
+        offsetang = offsetang + (sightang * bipodamount)
     end
 
     local blindfiredelta = self:GetBlindFireAmount()

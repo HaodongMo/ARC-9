@@ -118,7 +118,7 @@ function SWEP:BuildMultiSight()
 
     if keepbaseirons then
         local tbl = {}
-        table.insert(tbl, self.IronSights)
+        table.insert(tbl, self:GetProcessedValue("IronSights"))
         table.Add(tbl, self.MultiSightTable)
         self.MultiSightTable = tbl
     end
