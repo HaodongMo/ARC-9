@@ -30,6 +30,7 @@ function SWEP:GetAttPos(slottbl, wm, idle)
         parentmdl:SetPoseParameter("sights", 1)
 
         parentmdl:SetupBones()
+        parentmdl:InvalidateBoneCache()
     end
 
     local bone = slottbl.Bone
