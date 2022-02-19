@@ -32,11 +32,9 @@ ARC9.Colors = {
 }
 
 function ARC9.ShouldDrawHUD()
-    if !GetConVar("cl_drawhud"):GetBool() then return false end
-
     local wpn = LocalPlayer():GetActiveWeapon()
 
-    if !wpn.ARC9 and !GetConVar("arc9_hud_always"):GetBool() then return end
+    -- if !wpn.ARC9 then return end
 
     return true
 end
@@ -94,6 +92,7 @@ function ARC9.DrawHUD()
 
     local flash_period = 3
 
+    local firemode_text = "AUTO"
     local firemode_pic = firemode_pics[-1]
 
     local chambered = math.max(weapon_clip - weapon_clipsize, 0)
@@ -107,6 +106,7 @@ function ARC9.DrawHUD()
     local heat = 0
     local heatcap = 100
     local heatlocked = false
+    local multiple_modes = false
 
     if weapon_clipsize <= 0 then
         inf_clip = true
@@ -130,8 +130,27 @@ function ARC9.DrawHUD()
             end
         end
 
+        if arc9_mode.PrintName then
+            firemode_text = arc9_mode.PrintName
+        else
+            if arc9_mode.Mode == 1 then
+                firemode_text = "SEMI"
+            elseif arc9_mode.Mode == 0 then
+                firemode_text = "SAFE"
+            elseif arc9_mode.Mode < 0 then
+                firemode_text = "AUTO"
+            elseif arc9_mode.Mode > 1 then
+                firemode_text = tostring(arc9_mode.Mode) .. "BST"
+            end
+        end
+
         if weapon:GetSafe() then
             firemode_pic = firemode_pics[0]
+            firemode_text = "SAFE"
+        end
+
+        if #weapon:GetValue("Firemodes") > 1 then
+            multiple_modes = true
         end
 
         if weapon:GetProcessedValue("BottomlessClip") then
@@ -159,31 +178,56 @@ function ARC9.DrawHUD()
             heatcap = weapon:GetProcessedValue("HeatCapacity")
             heatlocked = weapon:GetHeatLockout()
         end
+    elseif weapon.ArcCW then
+        local arccw_mode = weapon:GetCurrentFiremode()
+
+        firemode_text = weapon:GetFiremodeName()
+        // there was a reason I kept it to 4 letters you assholes
+
+        firemode_text = string.Replace(firemode_text, "-", "")
+        firemode_text = string.Replace(firemode_text, " ", "")
+        firemode_text = string.sub(firemode_text, 1, 4)
+        firemode_text = string.upper(firemode_text)
+
+        if arccw_mode.Mode > 1 then
+            firemode_pic = firemode_pics[-1]
+        elseif arccw_mode.Mode == 1 then
+            firemode_pic = firemode_pics[1]
+        elseif firemode_pics[-arccw_mode.Mode] then
+            firemode_pic = firemode_pics[-arccw_mode.Mode]
+        else
+            firemode_pic = firemode_pics[3]
+        end
     elseif weapon:IsScripted() then
         if !weapon.Primary.Automatic then
             firemode_pic = firemode_pics[1]
+            firemode_text = "SEMI"
         end
 
         if weapon.GetSafe then
             if weapon:GetSafe() then
                 firemode_pic = firemode_pics[0]
+                firemode_text = "SAFE"
             end
         end
 
         if isfunction(weapon.Safe) then
             if weapon:Safe() then
                 firemode_pic = firemode_pics[0]
+                firemode_text = "SAFE"
             end
         end
 
         if isfunction(weapon.Safety) then
             if weapon:Safety() then
                 firemode_pic = firemode_pics[0]
+                firemode_text = "SAFE"
             end
         end
     else
         if !automatics[weapon:GetClass()] then
             firemode_pic = firemode_pics[1]
+            firemode_text = "SEMI"
         end
     end
 
@@ -292,6 +336,7 @@ function ARC9.DrawHUD()
         local health_x = 8
         local health_y = 9
         local health = math.Clamp(LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), 0, 1)
+        local overheal = LocalPlayer():Health() > LocalPlayer():GetMaxHealth()
 
         local flashhealthwidgets = false
 
@@ -422,11 +467,7 @@ function ARC9.DrawHUD()
 
         local ammo_x = 8
         local ammo_y = 40
-        local ammo_text = tostring(clip_to_show)
-
-        if chambered > 0 then
-            ammo_text = ammo_text .. "+" .. tostring(chambered)
-        end
+        local ammo_text = tostring(weapon_clip)
 
         if inf_reserve then
             ammo_text = ammo_text .. "/∞"
@@ -469,6 +510,41 @@ function ARC9.DrawHUD()
         surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", 255))
         surface.SetMaterial(firemode_pic)
         surface.DrawTexturedRect(fmi_x, fmi_y, fmi_s, fmi_s)
+
+        local fmm_text = firemode_text
+        local fmm_x = 212
+        local fmm_y = 39
+
+        if !multiple_modes then
+            fmm_y = 45
+        end
+
+        surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
+        surface.SetFont("ARC9_12_Unscaled")
+        local fmm_w = surface.GetTextSize(fmm_text)
+        surface.SetTextPos(fmm_x + s_right - fmm_w, fmm_y + s_down)
+        surface.DrawText(fmm_text)
+
+        surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
+        surface.SetFont("ARC9_12_Unscaled")
+        surface.SetTextPos(fmm_x - fmm_w, fmm_y)
+        surface.DrawText(fmm_text)
+
+        if multiple_modes then
+            local fmh_text = "[" .. ARC9.GetBindKey("+zoom") .. "]"
+            local fmh_x = 185
+            local fmh_y = 53
+
+            surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
+            surface.SetFont("ARC9_12_Unscaled")
+            surface.SetTextPos(fmh_x + s_right, fmh_y + s_down)
+            surface.DrawText(fmh_text)
+
+            surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
+            surface.SetFont("ARC9_12_Unscaled")
+            surface.SetTextPos(fmh_x, fmh_y)
+            surface.DrawText(fmh_text)
+        end
 
         // bullet fields
 

@@ -47,3 +47,13 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
         end
     end
 end)
+
+function ARC9.GetBindKey(bind)
+    local key = input.LookupBinding(bind)
+
+    if key == "no value" then
+        return ""
+    else
+        return string.upper(key)
+    end
+end
