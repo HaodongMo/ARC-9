@@ -66,11 +66,12 @@ function SWEP:Reload()
     self:GetOwner():DoAnimationEvent(self:GetProcessedValue("AnimReload"))
 
     if !self:GetShouldShotgunReload() then
-        local minprogress = self:GetAnimationEntry(anim).MinProgress or 1
+        local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
 
         self:SetTimer(t * minprogress, function()
             self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + self:Ammo1()))
-        end)
+            self:RestoreClip(self:GetValue("ClipSize"))
+        end, "reloadtimer")
     end
 
     if SERVER then
@@ -113,6 +114,7 @@ function SWEP:CancelReload()
     self:PlayAnimation("idle")
     self:GetOwner():DoAnimationEvent(ACT_HL2MP_GESTURE_RELOAD_MAGIC)
     self:CancelSoundTable()
+    self:KillTimer("reloadtimer")
     self:SetIKTimeLineStart(0)
     self:SetIKTime(0)
 end
@@ -216,7 +218,6 @@ function SWEP:EndReload()
             -- end)
         end
     else
-        self:RestoreClip(self:GetValue("ClipSize"))
         self:SetReloading(false)
 
         self:SetNthShot(0)
