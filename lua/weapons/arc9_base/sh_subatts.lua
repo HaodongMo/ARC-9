@@ -91,6 +91,12 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 local scale =  parenttbl.Scale or 1
 
                 local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
+                -- local pos = Vector(0, 0, 0)
+                -- pos:Set(subatts[i].Pos)
+
+                -- pos = pos + (subatts[i].Ang:Forward() * att_pos.y)
+                -- pos = pos + (subatts[i].Ang:Right() * att_pos.x)
+                -- pos = pos + (subatts[i].Ang:Up() * att_pos.z)
 
                 subatts[i].Pos = pos
                 subatts[i].Ang = att_ang + subatts[i].Ang

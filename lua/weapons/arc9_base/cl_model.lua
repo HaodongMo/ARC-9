@@ -76,13 +76,17 @@ function SWEP:GetAttPos(slottbl, wm, idle)
 
     local apos, aang
 
-    apos = bpos + bang:Forward() * offset_pos.x
-    apos = apos + bang:Right() * offset_pos.y
-    apos = apos + bang:Up() * offset_pos.z
+    aang = Angle()
+    aang:Set(bang)
+
+    apos = bpos + aang:Forward() * offset_pos.x
+
+    apos = apos + aang:Right() * offset_pos.y
+
+    apos = apos + aang:Up() * offset_pos.z
 
     offset_ang = offset_ang + (atttbl.ModelAngleOffset or Angle(0, 0, 0))
 
-    aang = Angle()
     aang:Set(bang)
 
     aang:RotateAroundAxis(aang:Right(), offset_ang.p)
