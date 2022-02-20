@@ -81,6 +81,7 @@ function SWEP:PostModify()
         self:SetupModel(true)
         self:SetupModel(false)
         self:SavePreset()
+        self:BuildMultiSight()
     else
         if self:GetOwner():IsPlayer() then
             if self:GetValue("ToggleOnF") then
@@ -159,6 +160,94 @@ function SWEP:GetAttBlocked(atttbl)
     return false
 end
 
+function SWEP:SlotInvalid(slottbl)
+    local eles = self:GetElements()
+
+    if slottbl.ExcludeElements then
+        for _, group in ipairs(slottbl.ExcludeElements) do
+            if !istable(group) then
+                group = {group}
+            end
+
+            local ok = false
+            for _, ele in ipairs(group) do
+                if !eles[ele] then ok = true break end
+            end
+
+            if !ok then return true end
+        end
+    end
+
+    local totalcount = self:CountAttachments()
+
+    if totalcount > ARC9.GetMaxAtts() then return true end
+
+    if slottbl.RequireElements then
+        for _, group in ipairs(slottbl.RequireElements) do
+            if !istable(group) then
+                group = {group}
+            end
+
+            local ok = true
+            for _, ele in ipairs(group) do
+                if !eles[ele] then ok = false break end
+            end
+
+            if !ok then return true end
+        end
+    end
+
+    local att = slottbl.Installed
+
+    if !att then return false end
+
+    if self:RunHook("Hook_BlockAttachment", {att = att, slottbl = slottbl}) == false then return true end
+
+    if (slottbl.RejectAttachments or {})[att] then return true end
+
+    local cat = slottbl.Category
+
+    if !istable(cat) then
+        cat = {cat}
+    end
+
+    local atttbl = ARC9.GetAttTable(att)
+
+    if atttbl.Max then
+        local count = self:CountAttachments(att)
+
+        if slottbl.Installed then
+            local installed_atttbl = ARC9.GetAttTable(slottbl.Installed)
+
+            if slottbl.Installed == installed_atttbl.InvAtt then
+                count = count - 1
+            end
+        end
+
+        if count > atttbl.Max then return true end
+    end
+
+    if self:GetAttBlocked(atttbl) then return true end
+    if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then return true end
+
+    local attcat = atttbl.Category
+
+    if !istable(attcat) then
+        attcat = {attcat}
+    end
+
+    local cat_true = false
+
+    for _, c in pairs(attcat) do
+        if (slottbl.RejectAttachments or {})[c] then return false end
+        if table.HasValue(cat, c) then
+            cat_true = true
+        end
+    end
+
+    return !cat_true
+end
+
 function SWEP:GetSlotBlocked(slottbl)
     local eles = self:GetElements()
 
@@ -227,7 +316,7 @@ function SWEP:CanAttach(addr, att, slottbl)
             end
         end
 
-        if count > atttbl.Max then return false end
+        if count >= atttbl.Max then return false end
     end
 
     if self:GetAttBlocked(atttbl) then return false end

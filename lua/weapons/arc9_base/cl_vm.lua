@@ -91,21 +91,35 @@ function SWEP:GetViewModelPosition(pos, ang)
     if sightdelta > 0 then
         sightdelta = math.ease.InOutCirc(sightdelta)
         local sightpos, sightang = self:GetSightPositions()
+        local sight = self:GetSight()
+        local eepos, eeang = self:GetExtraSightPositions()
 
-        -- local sightpos = self.SightPos
-        -- local sightang = self.SightAng
+        if sight.GeneratedSight then
+            local t_sightpos = LerpVector(sightdelta, Vector(0, 0 ,0), sightpos)
+            local t_sightang = LerpAngle(sightdelta, Angle(0, 0, 0), sightang)
 
-        offsetpos = LerpVector(sightdelta, offsetpos, sightpos)
-        offsetang = LerpAngle(sightdelta, offsetang, sightang)
-    -- local eepos, eeang = Vector(0, 0, 0), Angle(0, 0, 0)
+            ang:RotateAroundAxis(oldang:Up(), t_sightang.p)
+            ang:RotateAroundAxis(oldang:Right(), t_sightang.y)
+            ang:RotateAroundAxis(oldang:Forward(), t_sightang.r)
+
+            pos = pos + (ang:Right() * t_sightpos.x)
+            pos = pos + (ang:Forward() * t_sightpos.y)
+            pos = pos + (ang:Up() * t_sightpos.z)
+
+            offsetpos = LerpVector(sightdelta, offsetpos, Vector(0, 0, 0))
+            offsetang = LerpAngle(sightdelta, offsetang, Angle(0, 0, 0))
+        else
+            offsetpos = LerpVector(sightdelta, offsetpos, sightpos)
+            offsetang = LerpAngle(sightdelta, offsetang, sightang)
+        end
+
+        local eepos, eeang = Vector(0, 0, 0), Angle(0, 0, 0)
 
         local im = self:GetProcessedValue("SightMidPoint")
 
         local midpoint = sightdelta * math.cos(sightdelta * (math.pi / 2))
         local joffset = (im and im.Pos or Vector(0, 0, 0)) * midpoint
         local jaffset = (im and im.Ang or Angle(0, 0, 0)) * midpoint
-
-        local eepos, eeang = self:GetExtraSightPositions()
 
         extra_offsetpos = LerpVector(sightdelta, extra_offsetpos, -eepos + joffset)
         extra_offsetang = LerpAngle(sightdelta, extra_offsetang, -eeang + jaffset)

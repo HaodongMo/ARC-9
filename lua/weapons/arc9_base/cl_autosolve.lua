@@ -25,10 +25,11 @@ function SWEP:GenerateAutoSight(sight, slottbl)
 
     return {
         Pos = s_pos,
-        Ang = s_ang,
+        Ang = -ang + (slottbl.CorrectiveAng or Angle(0, 0, 0)),
         -- ExtraPos = Vector(0, pos.y + self.IronSights.Pos.y, 0),
         Magnification = sight.Magnification or 1,
-        ExtraSightDistance = slottbl.ExtraSightDistance
+        ExtraSightDistance = slottbl.ExtraSightDistance,
+        GeneratedSight = true
         -- ExtraAng = ang
     }
 end
@@ -44,6 +45,7 @@ function SWEP:GetExtraSightPositions()
     local s = self:GetSight()
     local se = s.ExtraPos or Vector(0, 0, 0)
     se.y = se.y - (s.ExtraSightDistance or 0)
+    -- return Vector(0, 0, 0), Angle(0, 0, 0)
     return se, s.ExtraAng or Angle(0, 0, 0)
 end
 

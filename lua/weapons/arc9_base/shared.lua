@@ -701,6 +701,7 @@ SWEP.Attachments = {
 --         Bone = "",
 --         Pos = Vector(0, 0, 0),
 --         Ang = Angle(0, 0, 0),
+--         CorrectiveAng = Angle(0, 0, 0), -- sometimes, the autosolver needs a little help. Try (-1, -1, 0)
 --         Scale = 1,
 --         Icon_Offset = Vector(0, 0, 0),
 --         KeepBaseIrons = false,

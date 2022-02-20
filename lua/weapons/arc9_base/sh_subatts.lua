@@ -101,6 +101,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 subatts[i].MergeSlots = subatts[i].MergeSlots
                 subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
                 subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
+                subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
             end
         end
     end
@@ -159,7 +160,7 @@ function SWEP:PruneAttachments()
     for _, slot in pairs(self:GetSubSlotList()) do
         if !slot.Installed then continue end
 
-        if !self:CanAttach(slot.Address, slot.Installed, slot) then
+        if self:SlotInvalid(slot) then
             slot.Installed = false
             slot.SubAttachments = nil
         end
