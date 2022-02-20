@@ -51,7 +51,7 @@ end)
 function ARC9.GetBindKey(bind)
     local key = input.LookupBinding(bind)
 
-    if key == "no value" then
+    if !key then
         return ""
     else
         return string.upper(key)
