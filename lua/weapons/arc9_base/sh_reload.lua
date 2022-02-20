@@ -202,6 +202,7 @@ function SWEP:EndReload()
             end
 
             local minprogress = self:GetAnimationEntry(anim).MinProgress or 0.75
+            minprogress = math.min(minprogress, 1)
 
             local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
 
