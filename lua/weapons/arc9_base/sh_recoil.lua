@@ -155,7 +155,7 @@ function SWEP:DoVisualRecoil()
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
         local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
         local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 2 * mult
-        local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(sd, 1, 0.5) * mult
+        local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(sd, 1, 0) * mult
 
         self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
         self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * Lerp(sd, 1, 0), 0, roll)

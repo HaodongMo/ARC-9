@@ -85,6 +85,7 @@ function SWEP:BuildMultiSight()
 
     for i, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
+        if slottbl.BlockSights then continue end
         local atttbl = self:GetFinalAttTable(slottbl)
 
         if atttbl.Sights then

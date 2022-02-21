@@ -35,7 +35,7 @@ function SWEP:PostDrawViewModel()
         cam.End3D()
     end
 
-    cam.Start3D(nil, nil, self:GetViewModelFOV())
+    cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 10000 )
     for _, model in pairs(self.VModel) do
         local slottbl = model.slottbl
         local atttbl = self:GetFinalAttTable(slottbl)
@@ -47,4 +47,6 @@ function SWEP:PostDrawViewModel()
         end
     end
     cam.End3D()
+
+    -- render.UpdateFullScreenDepthTexture()
 end
