@@ -202,12 +202,36 @@ function SWEP:DoRTScope(model, atttbl)
         render.PushRenderTarget(rtmat)
         cam.Start2D()
 
-        surface.SetDrawColor(atttbl.RTScopeColor or color_white)
-        surface.SetMaterial(atttbl.RTScopeReticle)
-        surface.DrawTexturedRect(0, 0, rtsize, rtsize)
+        local reticle = atttbl.RTScopeReticle
+        local color = atttbl.RTScopeColor or color_white
+        local drawfunc = nil
+        local size = rtsize
+        if atttbl.RTScopeDefer then
+            local slot = self:GetSight().slottbl
+            for k, v in pairs(slot.SubAttachments) do
+                local at = ARC9.Attachments[v.Installed or ""]
+                if at and (at.RTScopeReticle or at.HoloSightReticle) then
+                    reticle = (at.RTScopeReticle or at.HoloSightReticle)
+                    color = (at.RTScopeColor or at.HoloSightColor)
+                    drawfunc = at.HoloSightFunc
+                    size = (at.HoloSightSize and at.HoloSightSize * 0.5) or size
+                    break
+                end
+            end
+        end
+
+        if reticle then
+            surface.SetDrawColor(color)
+            surface.SetMaterial(reticle)
+            surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
+        end
 
         if atttbl.RTScopeDrawFunc then
             atttbl.RTScopeDrawFunc(self, rtsize)
+        end
+
+        if drawfunc then -- doesn't seem to be working
+            drawfunc(self, pos, model)
         end
 
         if !atttbl.RTScopeNoShadow then

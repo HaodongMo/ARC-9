@@ -281,11 +281,13 @@ local function enterfolder(self, scroll, slottbl, fname)
 
                 local scx, scy = self2:LocalToScreen(0, h - hrs)
 
-                render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, true)
-                surface.SetDrawColor(col2)
-                surface.SetMaterial(hricon)
-                surface.DrawTexturedRect((hrs / 2) - (icons / 2), h - (hrs / 2) - (icons / 2), icons, icons)
-                render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, false)
+                if hricon then
+                    render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, true)
+                    surface.SetDrawColor(col2)
+                    surface.SetMaterial(hricon)
+                    surface.DrawTexturedRect((hrs / 2) - (icons / 2), h - (hrs / 2) - (icons / 2), icons, icons)
+                    render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, false)
+                end
             end
 
             local name = ARC9:GetPhraseForAtt(self2.att, "CompactName") or ARC9:GetPhraseForAtt(self2.att, "PrintName") or ARC9:GetPhraseForAtt(self2.att, "ShortName") or ""
