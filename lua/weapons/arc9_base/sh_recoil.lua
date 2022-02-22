@@ -133,8 +133,8 @@ function SWEP:ThinkVisualRecoil()
     -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
     -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
 
-    local ds = 0.1 / (self.VisualRecoilPos:Length() / 3)
-    local dr = 0.4 / (self.VisualRecoilAng.p + self.VisualRecoilAng.y + self.VisualRecoilAng.r)
+    local ds = 0.2 / (self.VisualRecoilPos:Length() / 1.5)
+    local dr = 0.1 / (self.VisualRecoilAng.p + self.VisualRecoilAng.y + self.VisualRecoilAng.r)
 
     self.VisualRecoilPos.x = math.Approach(self.VisualRecoilPos.x, 0, FrameTime() / ds)
     self.VisualRecoilPos.y = math.Approach(self.VisualRecoilPos.y, 0, FrameTime() / ds)
@@ -158,7 +158,7 @@ function SWEP:DoVisualRecoil()
         local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(sd, 1, 0) * mult
 
         self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
-        self.VisualRecoilAng = self.VisualRecoilAng + Angle(2.5 * mult * Lerp(sd, 1, 0), 0, roll)
+        self.VisualRecoilAng = self.VisualRecoilAng + Angle(0, 0, roll)
 
         if self:GetSightAmount() > 0 then
             self.VisualRecoilPos.x = math.Clamp(self.VisualRecoilPos.x, -0.1, 0.1)
