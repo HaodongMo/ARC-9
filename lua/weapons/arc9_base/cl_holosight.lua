@@ -61,8 +61,9 @@ function SWEP:DoHolosight(mdl, atttbl)
         pos = pos + mdl:GetAngles():Forward() * 9000
 
         -- cam.Start3D()
-        local dist = (mdl:GetPos() - self:GetOwner():EyePos()):Length()
-        local s = atttbl.HoloSightSize / math.Clamp(dist / 7, 0.5, 3)
+        -- local dist = (mdl:GetPos() - self:GetOwner():EyePos()):Length()
+        -- local s = atttbl.HoloSightSize / math.Clamp(dist / 7, 0.5, 3)
+        local s = atttbl.HoloSightSize
 
         render.SetMaterial(img)
 
