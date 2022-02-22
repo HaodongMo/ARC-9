@@ -325,17 +325,6 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             bullet.Vel = newvel
             bullet.Travelled = bullet.Travelled + spd
 
-            if CLIENT or game.SinglePlayer() then
-                attacker:FireBullets({
-                    Src = oldpos,
-                    Dir = dir,
-                    Distance = spd + 16,
-                    Tracer = 0,
-                    Damage = 0,
-                    IgnoreEntity = bullet.Attacker
-                })
-            end
-
             if SERVER then
                 bullet.Dead = true
             end
