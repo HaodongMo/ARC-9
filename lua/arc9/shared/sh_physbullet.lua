@@ -325,6 +325,17 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             bullet.Vel = newvel
             bullet.Travelled = bullet.Travelled + spd
 
+            if CLIENT or game.SinglePlayer() then
+                attacker:FireBullets({
+                    Src = oldpos,
+                    Dir = dir,
+                    Distance = spd + 16,
+                    Tracer = 0,
+                    Damage = 0,
+                    IgnoreEntity = bullet.Attacker
+                })
+            end
+
             if SERVER then
                 bullet.Dead = true
             end
@@ -408,56 +419,61 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         else
             -- bullet did not impact anything
             -- break glass in the way
-            -- attacker:FireBullets({
-            --     Src = oldpos,
-            --     Dir = dir,
-            --     Distance = spd,
-            --     Tracer = 0,
-            --     Damage = 0,
-            --     IgnoreEntity = bullet.Attacker
-            -- })
+            -- if CLIENT or game.SinglePlayer() then
+            --     bullet.Attacker:FireBullets({
+            --         Src = oldpos,
+            --         Dir = dir,
+            --         Distance = spd * 5,
+            --         -- Distance = 10000,
+            --         Tracer = 0,
+            --         Damage = 0,
+            --         IgnoreEntity = bullet.Attacker
+            --     })
+            -- end
 
             bullet.Pos = tr.HitPos
             bullet.Vel = newvel
             bullet.Travelled = bullet.Travelled + spd
 
-            if bullet.Underwater then
-                if bit.band( util.PointContents( tr.HitPos ), CONTENTS_WATER ) != CONTENTS_WATER then
-                    local utr = util.TraceLine({
-                        start = tr.HitPos,
-                        endpos = oldpos,
-                        filter = bullet.Attacker,
-                        mask = MASK_WATER
-                    })
+            if CLIENT or game.SinglePlayer() then
+                if bullet.Underwater then
+                    if bit.band( util.PointContents( tr.HitPos ), CONTENTS_WATER ) != CONTENTS_WATER then
+                        local utr = util.TraceLine({
+                            start = tr.HitPos,
+                            endpos = oldpos,
+                            filter = bullet.Attacker,
+                            mask = MASK_WATER
+                        })
 
-                    if utr.Hit then
-                        local fx = EffectData()
-                        fx:SetOrigin(utr.HitPos)
-                        fx:SetScale(5)
-                        fx:SetFlags(0)
-                        util.Effect("gunshotsplash", fx)
+                        if utr.Hit then
+                            local fx = EffectData()
+                            fx:SetOrigin(utr.HitPos)
+                            fx:SetScale(5)
+                            fx:SetFlags(0)
+                            util.Effect("gunshotsplash", fx)
+                        end
+
+                        bullet.Underwater = false
                     end
+                else
+                    if bit.band( util.PointContents( tr.HitPos ), CONTENTS_WATER ) == CONTENTS_WATER then
+                        local utr = util.TraceLine({
+                            start = oldpos,
+                            endpos = tr.HitPos,
+                            filter = bullet.Attacker,
+                            mask = MASK_WATER
+                        })
 
-                    bullet.Underwater = false
-                end
-            else
-                if bit.band( util.PointContents( tr.HitPos ), CONTENTS_WATER ) == CONTENTS_WATER then
-                    local utr = util.TraceLine({
-                        start = oldpos,
-                        endpos = tr.HitPos,
-                        filter = bullet.Attacker,
-                        mask = MASK_WATER
-                    })
+                        if utr.Hit then
+                            local fx = EffectData()
+                            fx:SetOrigin(utr.HitPos)
+                            fx:SetScale(5)
+                            fx:SetFlags(0)
+                            util.Effect("gunshotsplash", fx)
+                        end
 
-                    if utr.Hit then
-                        local fx = EffectData()
-                        fx:SetOrigin(utr.HitPos)
-                        fx:SetScale(5)
-                        fx:SetFlags(0)
-                        util.Effect("gunshotsplash", fx)
+                        bullet.Underwater = true
                     end
-
-                    bullet.Underwater = true
                 end
             end
         end
