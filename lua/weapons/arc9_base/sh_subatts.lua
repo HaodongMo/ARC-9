@@ -90,24 +90,29 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
 
                 local scale =  parenttbl.Scale or 1
 
-                local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
-                -- local pos = Vector(0, 0, 0)
-                -- pos:Set(subatts[i].Pos)
+                subatts[i].Scale = (subatts[i].Scale or 1) * scale
 
-                -- pos = pos + (subatts[i].Ang:Forward() * att_pos.y)
-                -- pos = pos + (subatts[i].Ang:Right() * att_pos.x)
-                -- pos = pos + (subatts[i].Ang:Up() * att_pos.z)
+                -- local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
+                local pos = Vector(0, 0, 0)
+                pos:Set(att_pos)
+
+                subatts[i].Pos = subatts[i].Pos * (subatts[i].Scale or 1)
+
+                pos = pos + (att_ang:Forward() * subatts[i].Pos.x)
+                pos = pos + (att_ang:Right() * -subatts[i].Pos.y)
+                pos = pos + (att_ang:Up() * subatts[i].Pos.z)
+
+                -- print(subatts[i].Pos)
 
                 subatts[i].Pos = pos
                 subatts[i].Ang = att_ang + subatts[i].Ang
                 subatts[i].Ang:Normalize()
-                subatts[i].Scale = (subatts[i].Scale or 1) * scale
                 subatts[i].Installed = tbl.SubAttachments[i].Installed
                 subatts[i].ExtraSightDistance = (subatts[i].ExtraSightDistance or 0) + (parenttbl.ExtraSightDistance or 0)
                 subatts[i].MergeSlots = subatts[i].MergeSlots
-                subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
                 subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
                 subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
+                subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
             end
         end
     end
