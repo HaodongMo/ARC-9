@@ -128,7 +128,7 @@ SWEP.VisualRecoilPos = Vector(0, 0, 0)
 SWEP.VisualRecoilAng = Angle(0, 0, 0)
 
 function SWEP:ThinkVisualRecoil()
-    if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
+    -- if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
 
     -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
     -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
