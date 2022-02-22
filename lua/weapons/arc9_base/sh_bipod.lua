@@ -22,11 +22,11 @@ function SWEP:CanBipod()
     local ang = self:GetOwner():EyeAngles()
 
     local maxs = Vector(2, 2, 2)
-    local mins = Vector(-2, -2, -32)
+    local mins = Vector(-2, -2, -48)
 
     local tr = util.TraceLine({
         start = pos,
-        endpos = pos + (ang:Forward() * 24),
+        endpos = pos + (ang:Forward() * 48),
         filter = self:GetOwner(),
         mask = MASK_PLAYERSOLID
     })
