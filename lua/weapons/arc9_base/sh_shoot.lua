@@ -442,6 +442,7 @@ function SWEP:GetShootPos()
 end
 
 function SWEP:GetShootDir()
+    if !self:GetOwner():IsValid() then return self:GetAngles() end
     local dir = self:GetOwner():EyeAngles()
 
     if self:GetBlindFireDirection() < 0 then

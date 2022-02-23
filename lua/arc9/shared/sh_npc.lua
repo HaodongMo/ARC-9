@@ -42,6 +42,7 @@ function ARC9.GiveNPCPlayerWeapon(npc, ply)
 
     local wpn = npc:GetActiveWeapon()
     wpn.Attachments = weapon.Attachments
+    wpn.WeaponWasGiven = true
     wpn:Activate()
     wpn:NPC_Initialize()
     wpn:SetClip1(weapon:Clip1())

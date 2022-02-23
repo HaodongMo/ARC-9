@@ -90,9 +90,46 @@ function SWEP:NPC_Reload()
 end
 
 function SWEP:NPC_Initialize()
+    self:SetBaseSettings()
+
+    if CLIENT then return end
+
+    if !self.WeaponWasGiven then
+        self:RollRandomAtts(self.Attachments)
+    end
+    self:PruneAttachments()
+    self:PostModify()
+
     timer.Simple(0.25, function()
         self:SendWeapon()
     end)
+end
 
-    self:SetBaseSettings()
+function SWEP:RollRandomAtts(tree)
+    local attchance = 75
+
+    for i, slottbl in pairs(tree) do
+        if slottbl.MergeSlots then
+            if math.Rand(0, 100) > (100 / table.Count(slottbl.MergeSlots)) then continue end
+        end
+
+        if math.Rand(0, 100) > attchance then slottbl.Installed = nil continue end
+
+        local atts = ARC9.GetAttsForCats(slottbl.Category or "")
+
+        local att = table.Random(atts)
+
+        if !att then slottbl.Installed = nil continue end
+
+        local atttbl = ARC9.GetAttTable(att)
+
+        if !atttbl then continue end
+
+        slottbl.Installed = att
+
+        if atttbl.Attachments then
+            slottbl.SubAttachments = table.Copy(atttbl.Attachments)
+            self:RollRandomAtts(slottbl.SubAttachments)
+        end
+    end
 end

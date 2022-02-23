@@ -193,5 +193,18 @@ function SWEP:PruneAttachments()
             slot.Installed = false
             slot.SubAttachments = nil
         end
+
+        if slot.MergeSlotAddresses then
+            for _, msa in pairs(slot.MergeSlotAddresses) do
+                local mslottbl = self:LocateSlotFromAddress(msa)
+
+                if !mslottbl then continue end
+
+                if mslottbl.Installed then
+                    slot.Installed = false
+                    slot.SubAttachments = nil
+                end
+            end
+        end
     end
 end

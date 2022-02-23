@@ -41,7 +41,9 @@ function SWEP:ThinkSights()
         amt = math.Approach(amt, 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
     end
 
-    self:GetVM():SetPoseParameter("sights", amt)
+    if CLIENT then
+        self:GetVM():SetPoseParameter("sights", amt)
+    end
 
     self:SetSightAmount(amt)
 

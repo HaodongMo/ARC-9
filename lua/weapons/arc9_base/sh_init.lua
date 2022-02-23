@@ -189,9 +189,11 @@ function SWEP:SetBaseSettings()
     self.Primary.DefaultClip = self.Primary.ClipSize
 
     if SERVER then
-        if self:GetCapacity() > 0 and self:Clip1() > self:GetCapacity() then
-            self:GetOwner():GiveAmmo(self:Clip1() - self:GetCapacity(), self:GetValue("Ammo"))
-            self:SetClip1(self:GetCapacity())
+        if self:GetOwner():IsPlayer() then
+            if self:GetCapacity() > 0 and self:Clip1() > self:GetCapacity() then
+                self:GetOwner():GiveAmmo(self:Clip1() - self:GetCapacity(), self:GetValue("Ammo"))
+                self:SetClip1(self:GetCapacity())
+            end
         end
     end
 end

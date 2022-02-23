@@ -228,7 +228,7 @@ function SWEP:SlotInvalid(slottbl)
     end
 
     if self:GetAttBlocked(atttbl) then return true end
-    if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then return true end
+    if atttbl.AdminOnly and (self:GetOwner():IsNPC() or !self:GetOwner():IsAdmin()) then return true end
 
     local attcat = atttbl.Category
 

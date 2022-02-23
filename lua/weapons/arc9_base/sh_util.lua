@@ -14,6 +14,7 @@ end
 
 function SWEP:GetVM()
     if !IsValid(self:GetOwner()) then return nil end
+    if !self:GetOwner():IsPlayer() then return nil end
     return self:GetOwner():GetViewModel()
 end
 

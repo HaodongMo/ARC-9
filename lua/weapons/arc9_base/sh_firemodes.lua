@@ -33,6 +33,8 @@ end
 function SWEP:SetFiremodePose()
     local vm = self:GetVM()
 
+    if !vm then return end
+
     local pp = self:GetFiremode()
 
     if pp > #self:GetValue("Firemodes") then
