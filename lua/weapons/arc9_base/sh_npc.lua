@@ -97,10 +97,11 @@ function SWEP:NPC_Initialize()
     if !self.WeaponWasGiven then
         self:RollRandomAtts(self.Attachments)
     end
-    self:PruneAttachments()
+
     self:PostModify()
 
     timer.Simple(0.25, function()
+        self:PruneAttachments()
         self:SendWeapon()
     end)
 end
