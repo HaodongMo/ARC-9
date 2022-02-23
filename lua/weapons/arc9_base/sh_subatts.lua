@@ -187,7 +187,9 @@ function SWEP:PruneAttachments()
     for _, slot in pairs(self:GetSubSlotList()) do
         if !slot.Installed then continue end
 
-        if self:SlotInvalid(slot) then
+        local atttbl = ARC9.GetAttTable(slot.Installed)
+
+        if !atttbl or self:SlotInvalid(slot) then
             slot.Installed = false
             slot.SubAttachments = nil
         end

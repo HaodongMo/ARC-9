@@ -1,5 +1,5 @@
 function SWEP:BuildMergeSlots(tree)
-    for i, slot in pairs(tree) do
+    for i, slot in pairs(tree or {}) do
         if slot.MergeSlots then
             slot.MergeSlotAddresses = {}
 
