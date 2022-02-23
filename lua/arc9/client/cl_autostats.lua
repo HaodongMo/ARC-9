@@ -242,7 +242,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         if string.len(stat) > 0 then
             for cond, postfix in pairs(ARC9.AutoStatsConditions) do
                 if string.StartWith(stat, cond) then
-                    autostat = ARC9:GetPhrase("autostat.secondary." .. string.lower(cond), {autostat})
+                    autostat = ARC9:GetPhrase("autostat.secondary." .. string.lower(cond), {autostat}) or ""
                     break
                 end
             end
