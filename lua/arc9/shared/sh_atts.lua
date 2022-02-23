@@ -37,6 +37,7 @@ function ARC9.LoadAtts()
 
         ATT.ShortName = shortname
         ATT.ID = ARC9.Attachments_Count
+        ATT.Icon = ATT.Icon or defaulticon
 
         ARC9.Attachments[shortname] = ATT
         ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
@@ -72,7 +73,7 @@ function ARC9.GetAttTable(name)
         return ARC9.Attachments[shortname]
     else
         print("!!!! ARC9 tried to access invalid attachment " .. (shortname or "NIL") .. "!!!")
-        return {}
+        return nil
     end
 end
 

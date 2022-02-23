@@ -70,6 +70,10 @@ function SWEP:LoadPreset(filename)
             k.Installed = nil
             continue
         end
+
+        local atttbl = ARC9.GetAttTable(slottbl.Installed)
+        if !atttbl then k.Installed = nil continue end
+
         self.Attachments[i].Installed = slottbl.Installed
         self.Attachments[i].ToggleNum = slottbl.ToggleNum
         self.Attachments[i].SubAttachments = slottbl.SubAttachments

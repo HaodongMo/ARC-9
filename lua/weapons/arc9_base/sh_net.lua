@@ -23,6 +23,11 @@ function SWEP:SendAttachmentTree(tree)
         local atttbl = ARC9.GetAttTable(tree.Installed)
         local id = atttbl.ID
 
+        if !atttbl then
+            net.WriteUInt(0, ARC9.Attachments_Bits)
+            return
+        end
+
         net.WriteUInt(id, ARC9.Attachments_Bits)
 
         tree.SubAttachments = tree.SubAttachments or {}
@@ -94,6 +99,8 @@ function SWEP:ReceiveAttachmentTree()
     if !att then return tree end
 
     local atttbl = ARC9.GetAttTable(att)
+
+    if !atttbl then return {} end
 
     if atttbl.ToggleStats then
         tree.ToggleNum = net.ReadUInt(8) + 1

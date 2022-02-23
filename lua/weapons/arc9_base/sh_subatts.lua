@@ -115,11 +115,20 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 subatts[i].Ang = att_ang + subatts[i].Ang
                 subatts[i].Ang:Normalize()
                 subatts[i].Installed = tbl.SubAttachments[i].Installed
+                if subatts[i].Installed then
+                    local satttbl = ARC9.GetAttTable(subatts[i].Installed)
+
+                    if !satttbl then
+                        subatts[i].Installed = nil
+                    end
+                end
                 subatts[i].ExtraSightDistance = (subatts[i].ExtraSightDistance or 0) + (parenttbl.ExtraSightDistance or 0)
                 subatts[i].MergeSlots = subatts[i].MergeSlots
                 subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
                 subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
-                subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
+                if subatts[i].Installed then
+                    subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
+                end
             end
         end
     end
