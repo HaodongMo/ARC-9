@@ -1,6 +1,6 @@
-local hutom = function(i) return math.Round(i * ARC9.HUToM) .. ARC9:GetPhrase("unit.meter") end
-local hutoms = function(i) return math.Round(i * ARC9.HUToM) .. ARC9:GetPhrase("unit.meterpersecond") end
-local degtomoa = function(i) return math.Round(i / ARC9.MOAToAcc, 2) .. ARC9:GetPhrase("unit.moa") end
+local hutom = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meter") or "m") end
+local hutoms = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meterpersecond") or "m/s") end
+local degtomoa = function(i) return math.Round(i / ARC9.MOAToAcc, 2) .. (ARC9:GetPhrase("unit.moa") or "MOA") end
 
 -- [AutoStatName] = {unit, lower_is_better}
 -- unit can be:
