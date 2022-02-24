@@ -107,16 +107,18 @@ function SWEP:NPC_Initialize()
 end
 
 function SWEP:RollRandomAtts(tree)
-    local attchance = 75
+    local attchance = 40
 
     for i, slottbl in pairs(tree) do
         if slottbl.MergeSlots then
             if math.Rand(0, 100) > (100 / table.Count(slottbl.MergeSlots)) then continue end
         end
 
-        if math.Rand(0, 100) > attchance then slottbl.Installed = nil continue end
+        if math.Rand(0, 100) > attchance then continue end
 
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
+
+        if math.Rand(0, 100) > 100 / (table.Count(atts) + 1) then slottbl.Installed = nil continue end
 
         local att = table.Random(atts)
 
