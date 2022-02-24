@@ -23,6 +23,7 @@ function SWEP:DoDrawCrosshair(x, y)
     end
 
     if !self:GetProcessedValue("Crosshair") then return true end
+    if self:GetCustomize() then return true end
 
     local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
     local toscreen = endpos:ToScreen()
