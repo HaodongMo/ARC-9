@@ -50,6 +50,8 @@ SWEP.WorldModelOffset = nil
 --     scale = 1
 -- }
 
+SWEP.Crosshair = false
+
 -------------------------- SAVING
 
 SWEP.SaveBase = nil -- set to a weapon class to make this weapon share saves with it.
@@ -743,6 +745,7 @@ SWEP.Animations = {
     --     RareSourceChance = 0.01, -- chance that rare source will play
     --     Time = 0.5, -- overrides the duration of the sequence
     --     Mult = 1, -- multiplies time
+    --     Reverse = false, -- Reverse the animation
     --     IKTimeLine = { -- t is in fraction of animation
     --         {
     --             t = 0.1,

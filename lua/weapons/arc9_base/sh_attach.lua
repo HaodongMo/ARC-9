@@ -75,6 +75,7 @@ SWEP.LastAmmo = ""
 function SWEP:PostModify()
     self:InvalidateCache()
     self:CancelReload()
+    self:PruneAttachments()
 
     if CLIENT then
         self:SendWeapon()

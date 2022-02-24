@@ -31,6 +31,7 @@ function SWEP:Deploy()
     self:SetReloading(false)
     self:SetHolster_Time(0)
     self:SetRequestReload(false)
+    self:SetEmptyReload(false)
 
     self:GetOwner():SetCanZoom(false)
 
@@ -96,7 +97,7 @@ function SWEP:Holster(wep)
     end
 
     if self:GetReloading() then
-        self:SetReady(false)
+        self:CancelReload()
     end
 
     if self:GetHolster_Time() > CurTime() then return false end

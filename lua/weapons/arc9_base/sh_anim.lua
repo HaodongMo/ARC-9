@@ -32,8 +32,14 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
 
     local tmult = (vm:SequenceDuration(seq) / time) / mult
 
+    if animation.Reverse then
+        tmult = tmult * -1
+    end
+
     vm:SendViewModelMatchingSequence(seq)
     vm:SetPlaybackRate(tmult)
+
+    mult = math.abs(mult)
 
     if animation.RestoreAmmo then
         local minprogress = animation.MinProgress or 0.5
