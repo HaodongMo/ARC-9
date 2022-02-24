@@ -22,7 +22,7 @@ function SWEP:DoDrawCrosshair(x, y)
         surface.DrawLine(0, ScrH() / 2, ScrW(), ScrH() / 2)
     end
 
-    if !self:GetProcessedValue("Crosshair") then return end
+    if !self:GetProcessedValue("Crosshair") then return true end
 
     local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
     local toscreen = endpos:ToScreen()
