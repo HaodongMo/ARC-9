@@ -37,9 +37,11 @@ function SWEP:DoDrawCrosshair(x, y)
 
     local gap = ScreenScale(8)
 
-    local shoottimegap = math.Clamp((self:GetNextPrimaryFire() - CurTime()) / 0.1, 0, 1)
+    local shoottimegap = math.Clamp((self:GetNextPrimaryFire() - CurTime()) / 0.5, 0, 1)
 
-    gap = gap + (shoottimegap * ScreenScale(4))
+    shoottimegap = math.ease.OutCirc(shoottimegap)
+
+    gap = gap + (shoottimegap * ScreenScale(24))
 
     lastgap = Lerp(0.5, gap, lastgap)
 

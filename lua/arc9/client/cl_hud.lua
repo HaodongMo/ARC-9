@@ -535,17 +535,18 @@ function ARC9.DrawHUD()
 
         if multiple_modes then
             local fmh_text = "[" .. ARC9.GetBindKey("+zoom") .. "]"
-            local fmh_x = 185
+            local fmh_x = 212
             local fmh_y = 53
 
             surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetFont("ARC9_12_Unscaled")
-            surface.SetTextPos(fmh_x + s_right, fmh_y + s_down)
+            local fmh_w = surface.GetTextSize(fmh_text)
+            surface.SetTextPos(fmh_x + s_right - fmh_w, fmh_y + s_down)
             surface.DrawText(fmh_text)
 
             surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
             surface.SetFont("ARC9_12_Unscaled")
-            surface.SetTextPos(fmh_x, fmh_y)
+            surface.SetTextPos(fmh_x - fmh_w, fmh_y)
             surface.DrawText(fmh_text)
         end
 
