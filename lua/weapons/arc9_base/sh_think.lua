@@ -43,6 +43,8 @@ function SWEP:Think()
 
     self:ThinkBipod()
 
+    self:ThinkLoopingSound()
+
     self:ProcessTimers()
 
     if self:GetNextIdle() < CurTime() then

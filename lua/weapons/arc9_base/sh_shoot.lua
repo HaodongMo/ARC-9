@@ -69,6 +69,8 @@ function SWEP:DoShootSounds()
     end
 
     self:EmitSound(dss, math.min(149, self:GetProcessedValue("ShootVolume") * 2), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
+
+    self:StartLoop()
 end
 
 function SWEP:PrimaryAttack()

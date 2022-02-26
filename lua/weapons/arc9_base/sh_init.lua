@@ -111,6 +111,7 @@ function SWEP:Holster(wep)
         self:KillTimers()
         self:GetOwner():SetFOV(0, 0)
         self:GetOwner():SetCanZoom(true)
+        self:EndLoop()
 
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
