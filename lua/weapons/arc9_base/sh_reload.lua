@@ -151,6 +151,8 @@ function SWEP:GetCapacity()
 end
 
 function SWEP:RestoreClip(amt)
+    if CLIENT then return end
+
     local reserve = self:Clip1() + self:Ammo1()
 
     if self:GetValue("InfiniteAmmo") then
