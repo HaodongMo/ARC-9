@@ -251,3 +251,11 @@ function SWEP:SetShouldHoldType()
 
     self:SetHoldType(self:GetProcessedValue("HoldType"))
 end
+
+function SWEP:OnDrop()
+    self:EndLoop()
+end
+
+function SWEP:OnRemove()
+    self:EndLoop()
+end
