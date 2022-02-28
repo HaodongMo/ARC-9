@@ -25,8 +25,10 @@ local Lerp = function(a, v1, v2)
 end
 
 function SWEP:GetViewModelPosition(pos, ang)
+    local oldpos = Vector(0, 0, 0)
     local oldang = Angle(0, 0, 0)
 
+    oldpos:Set(pos)
     oldang:Set(ang)
 
     if GetConVar("ARC9_benchgun"):GetBool() then
@@ -231,15 +233,6 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     lht = ht
 
-    if game.SinglePlayer() or IsFirstTimePredicted() then
-        self.ViewModelPos = LerpVector(0.8, offsetpos, self.ViewModelPos)
-        self.ViewModelAng = LerpAngle(0.8, offsetang, self.ViewModelAng)
-    end
-
-    offsetpos = self.ViewModelPos
-    offsetang = self.ViewModelAng
-    self.ViewModelAng:Normalize()
-
     pos = pos + (ang:Right() * offsetpos.x)
     pos = pos + (ang:Forward() * offsetpos.y)
     pos = pos + (ang:Up() * offsetpos.z)
@@ -255,6 +248,21 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Up(), extra_offsetang[1])
     ang:RotateAroundAxis(oldang:Right(), extra_offsetang[2])
     ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
+
+    if game.SinglePlayer() or IsFirstTimePredicted() then
+        pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
+
+        pos = LerpVector(0.8, pos, self.ViewModelPos)
+        ang = LerpAngle(0.8, ang, self.ViewModelAng)
+
+        self.ViewModelPos = pos
+        self.ViewModelAng = ang
+
+        pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
+
+        -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
+        self.ViewModelAng:Normalize()
+    end
 
     if curvedcustomizedelta > 0 then
         self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
