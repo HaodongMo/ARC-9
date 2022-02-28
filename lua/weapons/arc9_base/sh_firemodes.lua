@@ -2,6 +2,12 @@ SWEP.FinishFiremodeAnimTime = 0
 
 function SWEP:SwitchFiremode()
     if self:StillWaiting() then return end
+
+    if self:GetSafe() then
+        self:ToggleSafety(false)
+        return
+    end
+
     if #self:GetValue("Firemodes") < 2 then return end
 
     local fm = self:GetFiremode()
@@ -71,14 +77,25 @@ function SWEP:GetCurrentFiremodeTable()
 end
 
 function SWEP:ToggleSafety(onoff)
-    onoff = onoff or !self:GetSafe()
+    if onoff == nil then
+        onoff = !self:GetSafe()
+    end
+
+    local last = self:GetSafe()
 
     self:SetSafe(onoff)
+
+    if onoff != last then
+        if IsFirstTimePredicted() then
+            self:EmitSound(self:RandomChoice(self:GetProcessedValue("FiremodeSound")), 75, 100, 1, CHAN_ITEM)
+        end
+    end
 end
 
 function SWEP:ThinkFiremodes()
-    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ATTACK2) and self:GetOwner():KeyDown(IN_USE) then
+    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ZOOM) and self:GetOwner():KeyDown(IN_WALK) then
         self:ToggleSafety()
+        return
     end
 
     if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ZOOM) then
