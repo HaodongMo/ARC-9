@@ -11,10 +11,13 @@ ARC9 is so called for being the ninth public Arctic base. It is designed to be a
 It's far better designed, better networked, and in the long run, will be more sustainable. It is easier to develop for, easier to use, has more features, and is more comfortable to use in multiplayer.
 
 ### Why ARC9? Where's ARC2-8? Why not just ArcCW 2?
-Because I don't want people to think it has anything to do with CW 2.0.
+Because "CW 2" is a substring of "ArcCW 2" and I don't want people to think it has anything to do with CW 2.0. Just ask the creator of TeamDeathMatch Cars. ARC1-8 are my other bases. In order: ASTW, ASTW2, ACT3, ArcVR, ArcCW, TacInt, Neotokyo, TacRP.
 
 ### Are ArcCW 1 weapons compatible with this?
 No, they aren't, and without some effort, automatic porting isn't going to be possible. However, manual porting should be doable, and will be a lot easier than creating a new weapon from scratch.
+
+### How can I start developing?
+Read weapons/arc9_base/shared.lua, arc9/common/attachments/default.lua, and this file.
 
 **New features include:**
  - Overhauled standardized recoil mechanics
