@@ -249,21 +249,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Right(), extra_offsetang[2])
     ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
 
-    if game.SinglePlayer() or IsFirstTimePredicted() then
-        pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
-
-        pos = LerpVector(0.8, pos, self.ViewModelPos)
-        ang = LerpAngle(0.8, ang, self.ViewModelAng)
-
-        self.ViewModelPos = pos
-        self.ViewModelAng = ang
-
-        pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
-
-        -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
-        self.ViewModelAng:Normalize()
-    end
-
     if curvedcustomizedelta > 0 then
         self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
         -- this needs to be better
@@ -287,6 +272,21 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos, ang = self:GetViewModelInertia(pos, ang)
     pos, ang = self:GetViewModelSway(pos, ang)
     pos, ang = self:GetViewModelSmooth(pos, ang)
+
+    if game.SinglePlayer() or IsFirstTimePredicted() then
+        pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
+
+        pos = LerpVector(0.8, pos, self.ViewModelPos)
+        ang = LerpAngle(0.8, ang, self.ViewModelAng)
+
+        self.ViewModelPos = pos
+        self.ViewModelAng = ang
+
+        pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
+
+        -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
+        self.ViewModelAng:Normalize()
+    end
 
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang
