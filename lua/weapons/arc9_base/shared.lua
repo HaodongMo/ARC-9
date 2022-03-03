@@ -770,6 +770,8 @@ SWEP.Animations = {
     --             mag = 100, -- with magnitude whatever this is
     --             ind = 0, -- change bodygroup
     --             bg = 0,
+    --             pp = "", -- pose parameter name
+    --             ppv = 0, -- pose parameter value
     --         }
     --     },
     --     PoseParamChanges = { -- pose parameters to change after this animation is done.

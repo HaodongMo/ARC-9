@@ -10,6 +10,7 @@ function SWEP:PreDrawViewModel()
         cam.End2D()
     end
 
+    self:DoPoseParams()
     self:DoBodygroups(false)
 
     local bipodamount = self:GetBipodAmount()
