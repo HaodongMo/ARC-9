@@ -102,7 +102,7 @@ Some applications of this include the new built-in system for toggleable hybrid 
 
 ### New UI
 
-A new heads-up display with minimap support and cooler design.
+A new heads-up display with cooler design.
 
 ### New Weapon Ecosystem
 
@@ -125,16 +125,14 @@ Only terminology that may cause confusion is laid out. Any terms that are standa
  - Attachment: A thing that goes on your gun.
  - QC Attachment: Attachment point that follows a bone used by Source engine, defined in .qc files.
  - Slot: Something you can put an attachment on.
- - Predictible Recoil: Recoil that is part of the pattern, which is the same every single time you shoot a burst.
- - Random Recoil: Recoil that cannot be predicted, added on to predictible recoil.
- - Precision: The mechanical accuracy of a gun.
  - Spread: The amount that a bullet can deviate from the aim point, in 1/10ths of a full circle.
  - Chamber: An area in a firearm that holds a round before it is fired, separate from the magazine. Only some guns have a chamber in this sense of the word. Allows guns to "+1". Revolvers and open bolt guns lack this ability and cannot chamber.
  - Clip: The same thing as a magazine.
  - Stripper Clip: An item that holds rounds that can be used to quickly refill a magazine. NOT the same thing as just a "clip".
- - VM: View Model.
- - WM: World Model.
+ - VM: ViewModel.
+ - WM: WorldModel.
  - BG: Bodygroup.
+ - PP: Pose Parameter. A .qc defined blend ratio between different animation sequences.
 
  ## List of Conditions
 Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS time when crouching.

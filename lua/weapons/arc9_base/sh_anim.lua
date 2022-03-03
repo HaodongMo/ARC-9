@@ -71,6 +71,12 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
         self:SetNextIdle(math.huge)
     end
 
+    if animation.PoseParamChanges then
+        for i, k in pairs(animation.PoseParamChanges) do
+            self.PoseParamState[i] = k
+        end
+    end
+
     self:SetFinishFiremodeAnimTime(CurTime())
 
     return time * mult
@@ -91,4 +97,16 @@ function SWEP:Idle()
     if self:GetPrimedAttack() then return end
 
     self:PlayAnimation("idle")
+end
+
+SWEP.PoseParamState = {}
+
+function SWEP:DoPoseParams()
+    local vm = self:GetVM()
+
+    if !vm or !IsValid(vm) then return end
+
+    for i, k in pairs(self.PoseParamState) do
+        vm:SetPoseParameter(i, k)
+    end
 end
