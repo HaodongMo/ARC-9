@@ -111,6 +111,11 @@ function SWEP:PrimaryAttack()
         return
     end
 
+    if self:GetOwner():KeyDown(IN_USE) then
+        self:MeleeAttack()
+        return
+    end
+
     if self:GetCurrentFiremode() > 0 and self:GetBurstCount() >= self:GetCurrentFiremode() then return end
 
     if self:Clip1() < self:GetProcessedValue("AmmoPerShot") then

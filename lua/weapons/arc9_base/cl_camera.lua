@@ -31,7 +31,7 @@ function SWEP:GetSmoothedFOVMag()
 
     local diff = math.abs(self.SmoothedMagnification - mag)
 
-    self.SmoothedMagnification = math.Approach(self.SmoothedMagnification, mag, FrameTime() * diff * 60)
+    self.SmoothedMagnification = math.Approach(self.SmoothedMagnification, mag, FrameTime() * diff * 150)
 
     return self.SmoothedMagnification
 end

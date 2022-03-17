@@ -10,6 +10,7 @@ local scrolleles = {}
 
 local foldericon = Material("arc9/folder.png", "mips smooth")
 local backicon = Material("arc9/back.png", "mips smooth")
+local adminicon = Material("arc9/admin.png", "mips smooth")
 
 local function iconbutton(self, scroll, name, icon)
     local btn = vgui.Create("DButton", scroll)
@@ -160,6 +161,8 @@ local function enterfolder(self, scroll, slottbl, fname)
     for _, att in pairs(self.BottomBarAtts) do
         local atttbl = ARC9.GetAttTable(att.att)
 
+        if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then continue end
+
         if (!atttbl.Folder and #self.BottomBarPath > 0) or (atttbl.Folder and atttbl.Folder != strpath) then continue end
 
         local attbtn = vgui.Create("DButton", scroll)
@@ -288,6 +291,14 @@ local function enterfolder(self, scroll, slottbl, fname)
                     surface.DrawTexturedRect((hrs / 2) - (icons / 2), h - (hrs / 2) - (icons / 2), icons, icons)
                     render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, false)
                 end
+            end
+
+            if atttbl.AdminOnly then
+                local hrs = ScreenScale(12)
+
+                surface.SetDrawColor(col1)
+                surface.SetMaterial(adminicon)
+                surface.DrawTexturedRect(w - hrs, h - hrs, hrs, hrs)
             end
 
             local name = ARC9:GetPhraseForAtt(self2.att, "CompactName") or ARC9:GetPhraseForAtt(self2.att, "PrintName") or ARC9:GetPhraseForAtt(self2.att, "ShortName") or ""

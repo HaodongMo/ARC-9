@@ -339,7 +339,7 @@ SWEP.SpeedMultBlindFire = 1
 
 -------------------------- MELEE
 
-SWEP.Bash = true
+SWEP.Bash = false
 SWEP.PrimaryBash = false
 
 SWEP.BashDamage = 50
@@ -481,6 +481,10 @@ SWEP.SelectUBGLSound = ""
 SWEP.ExitUBGLSound = ""
 
 SWEP.MalfunctionSound = ""
+
+SWEP.MeleeHitSound = ""
+SWEP.MeleeHitWallSound = ""
+SWEP.MeleeSwingSound = ""
 
 -------------------------- EFFECTS
 
