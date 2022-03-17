@@ -347,6 +347,7 @@ SWEP.BashLungeRange = 64
 SWEP.BashRange = 64
 SWEP.PreBashTime = 0.5
 SWEP.PostBashTime = 0.5
+SWEP.BashDecal = "ManhackCut"
 
 -------------------------- MALFUNCTIONS
 

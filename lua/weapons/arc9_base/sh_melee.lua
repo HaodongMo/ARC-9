@@ -17,10 +17,13 @@ function SWEP:MeleeAttack()
 
     if tr.Hit then
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
-            self:SetInMeleeAttack(true)
             self:SetLungeEntity(tr.Entity)
         end
     end
+
+    self:SetFreeAimAngle(Angle(0, 0, 0))
+
+    self:SetInMeleeAttack(true)
 
     self:SetLastMeleeTime(CurTime())
     self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PreBashTime") + self:GetProcessedValue("PostBashTime"))
@@ -29,7 +32,7 @@ end
 function SWEP:MeleeAttackShoot()
     local tr = util.TraceHull({
         start = self:GetOwner():EyePos(),
-        endpos = self:GetOwner():EyePos() + (self:GetOwner():EyeAngles():Forward() * self:GetProcessedValue("BashLungeRange")),
+        endpos = self:GetOwner():EyePos() + (self:GetOwner():EyeAngles():Forward() * self:GetProcessedValue("BashRange")),
         mask = MASK_SHOT,
         filter = self:GetOwner(),
         maxs = Vector(2, 2, 2),
@@ -39,8 +42,29 @@ function SWEP:MeleeAttackShoot()
     if tr.Hit then
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeHitSound")) or "", 75, 100, 1, CHAN_VOICE)
+
+            if IsFirstTimePredicted() then
+                local fx = EffectData()
+                fx:SetStart(tr.StartPos)
+                fx:SetOrigin(tr.HitPos)
+                fx:SetEntity(tr.Entity)
+                fx:SetSurfaceProp(tr.SurfaceProps)
+                fx:SetHitBox(tr.HitBox)
+                util.Effect("BloodImpact", fx)
+            end
         else
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound")) or "", 75, 100, 1, CHAN_VOICE)
+            util.Decal(self:GetProcessedValue("BashDecal"), tr.HitPos + (tr.HitNormal * 8), tr.HitPos - (tr.HitNormal * 8), self:GetOwner())
+
+            if IsFirstTimePredicted() then
+                local fx = EffectData()
+                fx:SetStart(tr.StartPos)
+                fx:SetOrigin(tr.HitPos)
+                fx:SetEntity(tr.Entity)
+                fx:SetSurfaceProp(tr.SurfaceProps)
+                fx:SetHitBox(tr.HitBox)
+                util.Effect("Impact", fx)
+            end
         end
 
         if SERVER then
