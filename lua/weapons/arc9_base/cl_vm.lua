@@ -275,7 +275,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     end
 
     -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
-
     pos, ang = self:GetViewModelRecoil(pos, ang)
     pos, ang = self:GetViewModelBob(pos, ang)
     pos, ang = self:GetMidAirBob(pos, ang)
@@ -298,6 +297,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
         self.ViewModelAng:Normalize()
     end
+
+    pos, ang = self:GunControllerThirdArm(pos, ang)
 
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang

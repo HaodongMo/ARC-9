@@ -349,13 +349,15 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
 
     ap = math.min(ap, 1)
 
-    local apdmg = DamageInfo()
-    apdmg:SetDamage(dmgv * ap)
-    apdmg:SetDamageType(DMG_DIRECT)
-    apdmg:SetInflictor(dmg:GetInflictor())
-    apdmg:SetAttacker(dmg:GetAttacker())
+    -- local apdmg = DamageInfo()
+    -- apdmg:SetDamage(dmgv * ap)
+    -- apdmg:SetDamageType(DMG_DIRECT)
+    -- apdmg:SetInflictor(dmg:GetInflictor())
+    -- apdmg:SetAttacker(dmg:GetAttacker())
 
-    tr.Entity:TakeDamageInfo(apdmg)
+    -- tr.Entity:TakeDamageInfo(apdmg)
+    local apdmg = dmgv * ap
+    tr.Entity:SetHealth(tr.Entity:Health() - apdmg)
 
     dmgv = dmgv * (1 - ap)
 

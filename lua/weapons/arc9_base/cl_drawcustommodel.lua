@@ -1,10 +1,3 @@
-function SWEP:ViewModelDrawn()
-    -- self:DrawLasers(false)
-    self:DrawCustomModel(false)
-    self:DoRHIK()
-    self:DrawLasers(false)
-end
-
 function SWEP:ShouldLOD()
     if LocalPlayer() == self:GetOwner() then return 0 end
 

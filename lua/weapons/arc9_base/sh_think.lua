@@ -47,6 +47,10 @@ function SWEP:Think()
 
     self:ThinkLoopingSound()
 
+    if CLIENT then
+        self:ThinkThirdArm()
+    end
+
     self:ProcessTimers()
 
     if self:GetNextIdle() < CurTime() then

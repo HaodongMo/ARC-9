@@ -27,6 +27,14 @@ function SWEP:PreDrawViewModel()
     cam.IgnoreZ(true)
 end
 
+function SWEP:ViewModelDrawn()
+    -- self:DrawLasers(false)
+    self:DrawCustomModel(false)
+    self:DoRHIK()
+    self:DrawLasers(false)
+    self:PreDrawThirdArm()
+end
+
 function SWEP:PostDrawViewModel()
     if ARC9.PresetCam then return end
 

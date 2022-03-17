@@ -1,8 +1,29 @@
-function SWEP:MeleeAttack()
-    if self:StillWaiting() then return end
-    if self:SprintLock() then return end
+function SWEP:MeleeAttack(bypass)
+    if !bypass then
+        if self:StillWaiting() then return end
+        if self:SprintLock() then return end
+    end
 
-    self:PlayAnimation("bash", 1, true)
+    if self:HasAnimation("bash") then
+        self:PlayAnimation("bash", 1, true)
+    else
+        if game.SinglePlayer() and SERVER then
+            self:CallOnClient("MeleeAttack", "true")
+        else
+            self:PlayThirdArmAnim({
+                rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",
+                sequence = self:RandomChoice({"melee1", "melee2"}),
+                gun_controller_attachment = 1,
+                offsetang = Angle(0, 0, 0),
+                mult = 2,
+                invisible = true
+            }, false)
+
+            if game.SinglePlayer() and CLIENT then
+                return
+            end
+        end
+    end
 
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeSwingSound")) or "", 75, 100, 1, CHAN_VOICE)
 

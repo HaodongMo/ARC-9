@@ -9,8 +9,8 @@ end
 local lhik_ts_delta = 0
 
 function SWEP:DoRHIK()
-    -- local vm = self:GetOwner():GetHands()
-    local vm = self:GetVM()
+    local vm = self:GetOwner():GetHands()
+    -- local vm = self:GetVM()
 
     if !IsValid(vm) then return end
     if !self.UseHands then return end
@@ -156,6 +156,8 @@ function SWEP:DoRHIK()
             vm:SetBoneMatrix(vm_bone, newtransform)
         end
     end
+
+    self:LHIKThirdArm()
 
     local enable_ik = false
 
