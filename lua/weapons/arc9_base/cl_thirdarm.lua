@@ -36,10 +36,21 @@ SWEP.ThirdArmCamOffsetAngle = Angle(0, 0, 0)
 --     soundtable = {}
 -- }
 
+local function qerp(delta, a, b)
+    local qdelta = -(delta ^ 2) + (delta * 2)
+
+    qdelta = math.Clamp(qdelta, 0, 1)
+
+    return Lerp(qdelta, a, b)
+end
+
 function SWEP:PlayThirdArmAnim(tbl, persist)
     local rig = tbl.rig
 
     if !self.ThirdArmModel or tbl.rig != (self.ThirdArmAnimation or {}).rig then
+        if self.ThirdArmModel then
+            SafeRemoveEntity(self.ThirdArmModel)
+        end
         self.ThirdArmModel = ClientsideModel(rig)
     end
 
@@ -48,9 +59,9 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
     local seq = self.ThirdArmModel:LookupSequence(tbl.sequence)
     self.ThirdArmModel:ResetSequence(seq)
 
-    if tbl.invisible then
+    -- if tbl.invisible then
         self.ThirdArmModel:SetNoDraw(true)
-    end
+    -- end
 
     local mult = tbl.mult or 1
 
@@ -95,6 +106,10 @@ function SWEP:PreDrawThirdArm()
         local iket = self.ThirdArmAnimationLength
         local iklt = math.Clamp((CurTime() - self.ThirdArmAnimationTime) / iket, 0, 1)
         self.ThirdArmModel:SetCycle(iklt)
+
+        if !self.ThirdArmAnimation.invisible then
+            self.ThirdArmModel:DrawModel()
+        end
     end
 end
 
@@ -172,7 +187,7 @@ function SWEP:LHIKThirdArm()
         if next_stage_index then
             if next_stage_index == 1 then
                 -- we are on the first stage.
-                stage = {t = 0, lhik = 0}
+                stage = {t = 0, rhik = 0}
                 next_stage = iktl[next_stage_index]
             else
                 stage = iktl[next_stage_index - 1]
@@ -180,7 +195,7 @@ function SWEP:LHIKThirdArm()
             end
         else
             stage = iktl[#iktl]
-            next_stage = {t = iket, lhik = iktl[#iktl].rhik}
+            next_stage = {t = iket, rhik = iktl[#iktl].rhik}
         end
 
         local local_time = iklt
@@ -190,7 +205,7 @@ function SWEP:LHIKThirdArm()
 
         delta_time = math.ease.InOutQuart(delta_time)
 
-        lh_delta = qerp(delta_time, stage.rhik, next_stage.rhik)
+        rh_delta = qerp(delta_time, stage.rhik, next_stage.rhik)
     end
 
     local rhik_model = self.ThirdArmModel

@@ -15,8 +15,8 @@ function SWEP:MeleeAttack(bypass)
                 sequence = self:RandomChoice({"melee1", "melee2"}),
                 gun_controller_attachment = 1,
                 offsetang = Angle(0, 0, 0),
-                mult = 2,
-                invisible = true
+                mult = 1,
+                invisible = false,
             }, false)
 
             if game.SinglePlayer() and CLIENT then
