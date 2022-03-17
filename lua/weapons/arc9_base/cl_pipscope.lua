@@ -206,7 +206,7 @@ function SWEP:DoRTScope(model, atttbl)
         local color = atttbl.RTScopeColor or color_white
 
         if atttbl.RTScopeColorable then
-            color.a = 255
+            color = Color(0, 0, 0)
             color.r = GetConVar("arc9_scope_r"):GetInt()
             color.g = GetConVar("arc9_scope_g"):GetInt()
             color.b = GetConVar("arc9_scope_b"):GetInt()

@@ -68,7 +68,7 @@ function SWEP:DoHolosight(mdl, atttbl)
         local col = atttbl.HoloSightColor or Color(255, 255, 255)
 
         if atttbl.HoloSightColorable then
-            col.a = 255
+            col = Color(0, 0, 0)
             col.r = GetConVar("arc9_reflex_r"):GetFloat()
             col.g = GetConVar("arc9_reflex_g"):GetFloat()
             col.b = GetConVar("arc9_reflex_b"):GetFloat()
