@@ -51,6 +51,17 @@ function SWEP:GetViewModelPosition(pos, ang)
     offsetpos:Set(self:GetProcessedValue("ActivePos"))
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
 
+    if !self:GetReloading() and self:GetOwner():Crouching() then
+        local crouchpos = self:GetProcessedValue("CrouchPos")
+        local crouchang = self:GetProcessedValue("CrouchAng")
+        if crouchpos then
+            offsetpos:Set(crouchpos)
+        end
+        if crouchang then
+            offsetang:Set(crouchang)
+        end
+    end
+
     if self:GetBipod() then
         local bipodamount = self:GetBipodAmount()
 
