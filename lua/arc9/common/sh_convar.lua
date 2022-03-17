@@ -21,6 +21,36 @@ local conVars = {
         max = 1,
     },
     {
+        name = "reflex_r",
+        default = "255",
+        client = true
+    },
+    {
+        name = "reflex_g",
+        default = "0",
+        client = true
+    },
+    {
+        name = "reflex_b",
+        default = "0",
+        client = true
+    },
+    {
+        name = "scope_r",
+        default = "255",
+        client = true
+    },
+    {
+        name = "scope_g",
+        default = "0",
+        client = true
+    },
+    {
+        name = "scope_b",
+        default = "0",
+        client = true
+    },
+    {
         name = "language",
         default = "",
         client = true,

@@ -64,6 +64,7 @@ ATT.HoloSight = false
 ATT.HoloSightReticle = ""
 ATT.HoloSightSize = 32
 ATT.HoloSightColor = Color(255, 255, 255)
+ATT.HoloSightColorable = true -- Holosight takes color from player settings
 ATT.HoloSightFunc = function(swep, pos, mdl) end -- pos = reticle position
 
 ATT.FLIRHotFunc = function(swep, ent) end -- return true for hot and false for cold
@@ -76,6 +77,7 @@ ATT.RTScopeReticle = Material("")
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
+ATT.RTScopeColorable = true -- Scope takes color from player settings
 -- Lets you draw more things on to the reticle
 ATT.RTScopeDrawFunc = function(swep, rtsize) end
 

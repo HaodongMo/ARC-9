@@ -204,21 +204,30 @@ function SWEP:DoRTScope(model, atttbl)
 
         local reticle = atttbl.RTScopeReticle
         local color = atttbl.RTScopeColor or color_white
-        local drawfunc = nil
-        local size = rtsize
-        if atttbl.RTScopeDefer then
-            local slot = self:GetSight().slottbl
-            for k, v in pairs(slot.SubAttachments) do
-                local at = ARC9.Attachments[v.Installed or ""]
-                if at and (at.RTScopeReticle or at.HoloSightReticle) then
-                    reticle = (at.RTScopeReticle or at.HoloSightReticle)
-                    color = (at.RTScopeColor or at.HoloSightColor)
-                    drawfunc = at.HoloSightFunc
-                    size = (at.HoloSightSize and at.HoloSightSize * 0.5) or size
-                    break
-                end
-            end
+
+        if atttbl.RTScopeColorable then
+            color.a = 255
+            color.r = GetConVar("arc9_scope_r"):GetInt()
+            color.g = GetConVar("arc9_scope_g"):GetInt()
+            color.b = GetConVar("arc9_scope_b"):GetInt()
         end
+
+        -- I'm not sure this is a good feature to add
+        -- local drawfunc = nil
+        local size = rtsize
+        -- if atttbl.RTScopeDefer then
+        --     local slot = self:GetSight().slottbl
+        --     for k, v in pairs(slot.SubAttachments) do
+        --         local at = ARC9.Attachments[v.Installed or ""]
+        --         if at and (at.RTScopeReticle or at.HoloSightReticle) then
+        --             reticle = (at.RTScopeReticle or at.HoloSightReticle)
+        --             color = (at.RTScopeColor or at.HoloSightColor)
+        --             drawfunc = at.HoloSightFunc
+        --             size = (at.HoloSightSize and at.HoloSightSize * 0.5) or size
+        --             break
+        --         end
+        --     end
+        -- end
 
         if reticle then
             surface.SetDrawColor(color)

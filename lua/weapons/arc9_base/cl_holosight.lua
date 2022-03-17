@@ -65,6 +65,15 @@ function SWEP:DoHolosight(mdl, atttbl)
         -- local s = atttbl.HoloSightSize / math.Clamp(dist / 7, 0.5, 3)
         local s = atttbl.HoloSightSize
 
+        local col = atttbl.HoloSightColor or Color(255, 255, 255)
+
+        if atttbl.HoloSightColorable then
+            col.a = 255
+            col.r = GetConVar("arc9_reflex_r"):GetFloat()
+            col.g = GetConVar("arc9_reflex_g"):GetFloat()
+            col.b = GetConVar("arc9_reflex_b"):GetFloat()
+        end
+
         render.SetMaterial(img)
 
         local up = mdl:GetAngles():Up()
@@ -78,7 +87,7 @@ function SWEP:DoHolosight(mdl, atttbl)
 
         -- render.DrawQuadEasy(pos, -mdl:GetAngles():Forward(), s, s, atttbl.HoloSightColor or Color(255, 255, 255))
 
-        render.DrawQuad(v1, v2, v3, v4, atttbl.HoloSightColor or Color(255, 255, 255))
+        render.DrawQuad(v1, v2, v3, v4, col or Color(255, 255, 255))
 
         if atttbl.HoloSightFunc then
             atttbl.HoloSightFunc(self, pos, mdl)
