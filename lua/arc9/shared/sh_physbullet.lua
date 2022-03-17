@@ -247,6 +247,8 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
     local attacker = bullet.Attacker
     local weapon = bullet.Weapon
 
+    if !IsValid(attacker) then bullet.Dead = true return end
+
     local dir = bullet.Vel:GetNormalized()
     local spd = bullet.Vel:Length() * timestep
 
