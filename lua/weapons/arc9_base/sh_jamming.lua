@@ -57,7 +57,7 @@ function SWEP:ThinkHeat()
             self:SetHeatLockout(false)
         end
 
-        if self:GetJammed() then
+        if self:GetJammed() and IsFirstTimePredicted() then
             self:FixHeat()
         end
 

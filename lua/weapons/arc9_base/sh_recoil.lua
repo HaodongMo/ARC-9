@@ -124,25 +124,142 @@ function SWEP:ApplyRecoil()
     -- self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
 end
 
+local function lensqr(ang)
+    return (ang[1] ^ 2) + (ang[2] ^ 2) + (ang[3] ^ 2)
+end
+
+-- scraped from source SDK 2013, just like this viewpunch damping code
+local PUNCH_DAMPING = 10
+local PUNCH_SPRING_CONSTANT = 120
+local POS_PUNCH_DAMPING = 12
+local POS_PUNCH_CONSTANT = 90
+
+local ang0 = Angle(0, 0, 0)
+local vec0 = Vector(0, 0, 0)
+
 SWEP.VisualRecoilPos = Vector(0, 0, 0)
+SWEP.VisualRecoilPosVel = Vector(0, 0, 0)
 SWEP.VisualRecoilAng = Angle(0, 0, 0)
+SWEP.VisualRecoilVel = Angle(0, 0, 0)
 
 function SWEP:ThinkVisualRecoil()
-    -- if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
+    if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
 
     -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
     -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
 
-    local ds = 0.2 / (self.VisualRecoilPos:Length() / 1.5)
-    local dr = 0.1 / (self.VisualRecoilAng.p + self.VisualRecoilAng.y + self.VisualRecoilAng.r)
+    -- local ds = 0.2 / (self.VisualRecoilPos:Length() / 1.5)
+    -- local dr = 0.1 / (self.VisualRecoilAng.p + self.VisualRecoilAng.y + self.VisualRecoilAng.r)
 
-    self.VisualRecoilPos.x = math.Approach(self.VisualRecoilPos.x, 0, FrameTime() / ds)
-    self.VisualRecoilPos.y = math.Approach(self.VisualRecoilPos.y, 0, FrameTime() / ds)
-    self.VisualRecoilPos.z = math.Approach(self.VisualRecoilPos.z, 0, FrameTime() / ds)
+    -- self.VisualRecoilPos.x = math.Approach(self.VisualRecoilPos.x, 0, FrameTime() / ds)
+    -- self.VisualRecoilPos.y = math.Approach(self.VisualRecoilPos.y, 0, FrameTime() / ds)
+    -- self.VisualRecoilPos.z = math.Approach(self.VisualRecoilPos.z, 0, FrameTime() / ds)
 
-    self.VisualRecoilAng.p = math.Approach(self.VisualRecoilAng.p, 0, FrameTime() / dr)
-    self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
-    self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
+    -- self.VisualRecoilAng.p = math.Approach(self.VisualRecoilAng.p, 0, FrameTime() / dr)
+    -- self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
+    -- self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
+
+    local vpa = self.VisualRecoilPos
+    local vpv = self.VisualRecoilPosVel
+
+    if lensqr(vpa) + lensqr(vpv) > 0.000001 then
+        -- {
+        --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
+        --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
+
+        local ft = FrameTime()
+
+        vpa = vpa + (vpv * ft)
+        local damping = 1 - (POS_PUNCH_DAMPING * ft)
+
+        --     if ( damping < 0 )
+        --     {
+        --         damping = 0;
+        --     }
+
+        if damping < 0 then damping = 0 end
+
+        --     player->m_Local.m_vecPunchAngleVel *= damping;
+
+        vpv = vpv * damping
+
+        --     // torsional spring
+        --     // UNDONE: Per-axis spring constant?
+        --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
+        local springforcemagnitude = POS_PUNCH_CONSTANT * ft
+        --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
+        springforcemagnitude = math.Clamp(springforcemagnitude, 0, 2)
+        --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
+        vpv = vpv - (vpa * springforcemagnitude)
+
+        --     // don't wrap around
+        --     player->m_Local.m_vecPunchAngle.Init( 
+        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
+        --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
+        --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
+        -- }
+
+        vpa[1] = math.Clamp(vpa[1], -89.9, 89.9)
+        vpa[2] = math.Clamp(vpa[2], -179.9, 179.9)
+        vpa[3] = math.Clamp(vpa[3], -89.9, 89.9)
+
+        self.VisualRecoilPos = vpa
+        self.VisualRecoilPosVel = vpv
+    else
+        self.VisualRecoilPos = vec0
+        self.VisualRecoilPosVel = vec0
+    end
+
+    local vaa = self.VisualRecoilAng
+    local vav = self.VisualRecoilVel
+
+    if lensqr(vaa) + lensqr(vav) > 0.000001 then
+        -- {
+        --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
+        --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
+
+        local ft = FrameTime()
+
+        vaa = vaa + (vav * ft)
+        local damping = 1 - (PUNCH_DAMPING * ft)
+
+        --     if ( damping < 0 )
+        --     {
+        --         damping = 0;
+        --     }
+
+        if damping < 0 then damping = 0 end
+
+        --     player->m_Local.m_vecPunchAngleVel *= damping;
+
+        vav = vav * damping
+
+        --     // torsional spring
+        --     // UNDONE: Per-axis spring constant?
+        --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
+        local springforcemagnitude = PUNCH_SPRING_CONSTANT * ft
+        --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
+        springforcemagnitude = math.Clamp(springforcemagnitude, 0, 2)
+        --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
+        vav = vav - (vaa * springforcemagnitude)
+
+        --     // don't wrap around
+        --     player->m_Local.m_vecPunchAngle.Init( 
+        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
+        --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
+        --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
+        -- }
+
+        vaa[1] = math.Clamp(vaa[1], -89.9, 89.9)
+        vaa[2] = math.Clamp(vaa[2], -179.9, 179.9)
+        vaa[3] = math.Clamp(vaa[3], -89.9, 89.9)
+
+        self.VisualRecoilAng = vaa
+        self.VisualRecoilVel = vav
+    else
+        self.VisualRecoilAng = Angle(ang0)
+        self.VisualRecoilVel = Angle(ang0)
+    end
 end
 
 function SWEP:DoVisualRecoil()
@@ -165,33 +282,46 @@ function SWEP:DoVisualRecoil()
             self.VisualRecoilPos.y = math.Clamp(self.VisualRecoilPos.y, -0.5, 0)
             self.VisualRecoilPos.z = math.Clamp(self.VisualRecoilPos.z, 0, 0.25)
         end
+
+        if self:GetProcessedValue("VisualRecoilFake") then
+            local fake = 0
+
+            if self:GetProcessedValue("VisualRecoilFakeHipFire") then
+                fake = 2.5
+            end
+
+            fake = Lerp(self:GetSightDelta(), fake, 1)
+
+            self.VisualRecoilAng = self.VisualRecoilAng + Angle(10 * fake, math.Rand(-1, 1), 0)
+            self.VisualRecoilPos = self.VisualRecoilPos - (Vector(0, 1.5, 1.25) * fake) - Vector(math.Rand(-0.1, 0.1), 0, 0)
+        end
     end
 end
 
 function SWEP:GetViewModelRecoil(pos, ang)
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
-
-    local v = Vector(0, 0, 0)
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
-    v = v + (vrc.x * ang:Right())
-    v = v + (vrc.y * ang:Forward())
-    v = v + (vrc.z * ang:Up())
+    -- v = v + (vrc.x * ang:Right())
+    -- v = v + (vrc.y * ang:Forward())
+    -- v = v + (vrc.z * ang:Up())
 
-    ang:RotateAroundAxis(ang:Right(), self.VisualRecoilAng.p)
-    ang:RotateAroundAxis(ang:Forward(), self.VisualRecoilAng.r)
+    -- ang:RotateAroundAxis(ang:Right(), self.VisualRecoilAng.p)
+    -- ang:RotateAroundAxis(ang:Forward(), self.VisualRecoilAng.r)
 
-    v = v + ang:Right() * self.VisualRecoilPos.x
-    v = v + ang:Forward() * self.VisualRecoilPos.y
-    v = v + ang:Up() * self.VisualRecoilPos.z
+    -- v = v + ang:Right() * self.VisualRecoilPos.x
+    -- v = v + ang:Forward() * self.VisualRecoilPos.y
+    -- v = v + ang:Up() * self.VisualRecoilPos.z
 
-    v:Rotate(self.VisualRecoilAng)
+    -- v:Rotate(self.VisualRecoilAng)
 
-    v = v - (vrc.x * ang:Right())
-    v = v - (vrc.y * ang:Forward())
-    v = v - (vrc.z * ang:Up())
+    -- v = v - (vrc.x * ang:Right())
+    -- v = v - (vrc.y * ang:Forward())
+    -- v = v - (vrc.z * ang:Up())
 
-    pos = pos + v
+    -- pos = pos + v
+
+    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng)
 
     return pos, ang
 end

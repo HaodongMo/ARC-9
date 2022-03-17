@@ -99,7 +99,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     -- cor_val = Lerp(sightdelta, cor_val, 1)
 
-    self.SwayScale = 1
+    self.SwayScale = 0
 
     if sightdelta > 0 then
         sightdelta = math.ease.InOutCirc(sightdelta)
@@ -288,7 +288,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
         pos = LerpVector(0.8, pos, self.ViewModelPos)
-        ang = LerpAngle(0.8, ang, self.ViewModelAng)
+        ang = LerpAngle(0.9, ang, self.ViewModelAng)
 
         self.ViewModelPos = pos
         self.ViewModelAng = ang

@@ -72,16 +72,21 @@ end
 SWEP.LastClipSize = 0
 SWEP.LastAmmo = ""
 
-function SWEP:PostModify()
+function SWEP:PostModify(toggleonly)
     self:InvalidateCache()
-    self:CancelReload()
-    self:PruneAttachments()
+
+    if !toggleonly then
+        self:CancelReload()
+        self:PruneAttachments()
+    end
 
     if CLIENT then
         self:SendWeapon()
         self:SetupModel(true)
         self:SetupModel(false)
-        self:SavePreset()
+        if !toggleonly then
+            self:SavePreset()
+        end
         self:BuildMultiSight()
     else
         if self:GetOwner():IsPlayer() then
