@@ -23,6 +23,12 @@ function ARC9.Move(ply, mv, cmd)
 
     mv:SetMaxSpeed(basespd * mult)
     mv:SetMaxClientSpeed(basespd * mult)
+
+    if wpn:GetInMeleeAttack() and wpn:GetLungeEntity():IsValid() then
+        local lungevec = (wpn:GetLungeEntity():GetPos() - ply:GetPos()):GetNormalized()
+        ply:SetEyeAngles(lungevec:Angle())
+        ply:SetVelocity(lungevec * 100)
+    end
 end
 
 hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)

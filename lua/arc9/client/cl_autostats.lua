@@ -55,6 +55,7 @@ ARC9.AutoStatsMains = {
     ["OverheatTime"] = {true, true},
     ["Speed"] = {true, false},
     ["BashDamage"] = {false, false},
+    ["BashRange"] = {"HU", false},
     ["BashLungeRange"] = {"HU", false},
     ["HeatPerShot"] = {false, true},
     ["HeatCapacity"] = {false, false},

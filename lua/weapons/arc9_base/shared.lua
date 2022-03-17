@@ -344,6 +344,7 @@ SWEP.PrimaryBash = false
 
 SWEP.BashDamage = 50
 SWEP.BashLungeRange = 64
+SWEP.BashRange = 64
 SWEP.PreBashTime = 0.5
 SWEP.PostBashTime = 0.5
 
@@ -482,9 +483,9 @@ SWEP.ExitUBGLSound = ""
 
 SWEP.MalfunctionSound = ""
 
-SWEP.MeleeHitSound = ""
-SWEP.MeleeHitWallSound = ""
-SWEP.MeleeSwingSound = ""
+SWEP.MeleeHitSound = "arc9/melee_hitbody.wav"
+SWEP.MeleeHitWallSound = "arc9/melee_hitworld.wav"
+SWEP.MeleeSwingSound = "arc9/melee_miss.wav"
 
 -------------------------- EFFECTS
 
@@ -887,6 +888,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 15, "HeatLockout")
     self:NetworkVar("Bool", 16, "LastWasSprinting")
     self:NetworkVar("Bool", 17, "RequestReload")
+    self:NetworkVar("Bool", 18, "InMeleeAttack")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
@@ -895,6 +897,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("String", 0, "IKAnimation")
 
     self:NetworkVar("Entity", 0, "Holster_Entity")
+    self:NetworkVar("Entity", 1, "LungeEntity")
 
 
     self:SetMultiSight(1)

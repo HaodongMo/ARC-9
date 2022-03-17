@@ -111,8 +111,9 @@ function SWEP:PrimaryAttack()
         return
     end
 
-    if self:GetOwner():KeyDown(IN_USE) then
+    if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) then
         self:MeleeAttack()
+        self:SetNeedTriggerPress(true)
         return
     end
 

@@ -177,6 +177,23 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
+    if self:GetLastMeleeTime() < CurTime() then
+        local pft = CurTime() - self:GetLastMeleeTime()
+        local d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
+
+        d = math.Clamp(d, 0, 1)
+
+        d = 1 - d
+
+        if isnumber(stat) then
+            stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
+        else
+            if d > 0 then
+                stat = self:GetValue(val, stat, "Melee")
+            end
+        end
+    end
+
     if self:GetNextPrimaryFire() + 0.1 > CurTime() then
         local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
         local d = pft / 0.1

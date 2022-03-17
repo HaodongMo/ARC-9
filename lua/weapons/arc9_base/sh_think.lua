@@ -43,6 +43,8 @@ function SWEP:Think()
 
     self:ThinkBipod()
 
+    self:ThinkMelee()
+
     self:ThinkLoopingSound()
 
     self:ProcessTimers()
