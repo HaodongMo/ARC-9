@@ -49,13 +49,13 @@ function SWEP:RotateAroundPoint(pos, ang, point, offset, offset_ang)
     v = v + ang:Forward() * offset.y
     v = v + ang:Up() * offset.z
 
-    v:Rotate(offset_ang)
+    -- v:Rotate(offset_ang)
 
     v = v - (point.x * ang:Right())
     v = v - (point.y * ang:Forward())
     v = v - (point.z * ang:Up())
 
-    pos = pos + v
+    pos = v + pos
 
     return pos, ang
 end

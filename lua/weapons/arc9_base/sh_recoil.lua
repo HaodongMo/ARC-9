@@ -267,34 +267,31 @@ function SWEP:DoVisualRecoil()
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
         local mult = self:GetProcessedValue("VisualRecoilMult")
-        local sd = math.max(self:GetSightDelta(), self:GetBipodAmount())
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
         local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
-        local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 2 * mult
-        local punch = self:GetProcessedValue("VisualRecoilPunch") * Lerp(sd, 1, 0) * mult
+        local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * mult
+        local punch = self:GetProcessedValue("VisualRecoilPunch") * mult
 
-        self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
-        self.VisualRecoilAng = self.VisualRecoilAng + Angle(0, 0, roll)
+        -- self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
+        -- self.VisualRecoilAng = self.VisualRecoilAng + Angle(0, 0, roll)
 
-        if self:GetSightAmount() > 0 then
-            self.VisualRecoilPos.x = math.Clamp(self.VisualRecoilPos.x, -0.1, 0.1)
-            self.VisualRecoilPos.y = math.Clamp(self.VisualRecoilPos.y, -0.5, 0)
-            self.VisualRecoilPos.z = math.Clamp(self.VisualRecoilPos.z, 0, 0.25)
+        -- if self:GetSightAmount() > 0 then
+        --     self.VisualRecoilPos.x = math.Clamp(self.VisualRecoilPos.x, -0.1, 0.1)
+        --     self.VisualRecoilPos.y = math.Clamp(self.VisualRecoilPos.y, -0.5, 0)
+        --     self.VisualRecoilPos.z = math.Clamp(self.VisualRecoilPos.z, 0, 0.25)
+        -- end
+
+        local fake = 0
+
+        if self:GetProcessedValue("VisualRecoilHipFire") then
+            fake = 1.5
         end
 
-        if self:GetProcessedValue("VisualRecoilFake") then
-            local fake = 0
+        fake = Lerp(self:GetSightDelta(), fake, 1)
 
-            if self:GetProcessedValue("VisualRecoilFakeHipFire") then
-                fake = 2.5
-            end
-
-            fake = Lerp(self:GetSightDelta(), fake, 1)
-
-            self.VisualRecoilAng = self.VisualRecoilAng + Angle(10 * fake, math.Rand(-1, 1), 0)
-            self.VisualRecoilPos = self.VisualRecoilPos - (Vector(0, 1.5, 1.25) * fake) - Vector(math.Rand(-0.1, 0.1), 0, 0)
-        end
+        self.VisualRecoilAng = self.VisualRecoilAng + Angle(up * fake, side * 15, roll)
+        self.VisualRecoilPos = self.VisualRecoilPos - (Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0)
     end
 end
 

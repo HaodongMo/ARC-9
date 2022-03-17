@@ -268,8 +268,7 @@ SWEP.VisualRecoilPunch = 1.5 -- How far back visual recoil moves the gun.
 
 SWEP.VisualRecoilMult = 1
 
-SWEP.VisualRecoilFake = false -- Fake viewmodel animation, for guns which have no iron anims.
-SWEP.VisualRecoilFakeHipFire = false -- Fake viewmodel animation even in hipfire
+SWEP.VisualRecoilHipFire = true
 
 SWEP.RecoilKick = 1 -- Camera recoil
 
