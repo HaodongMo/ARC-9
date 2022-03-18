@@ -23,8 +23,8 @@ function SWEP:Reload()
     if !self:GetProcessedValue("BottomlessClip") then
         if self:Clip1() >= self:GetCapacity() then return end
 
-        if !self:GetValue("InfiniteAmmo") then
-            if self:Ammo1() <= 0 then return end
+        if !self:GetInfiniteAmmo() and self:Ammo1() <= 0 then
+            return
         end
     end
 
@@ -93,7 +93,7 @@ function SWEP:CanReload()
     if self:StillWaiting() then return end
     if self:GetCapacity() <= 0 then return end
     -- if self:GetTraversalSprintAmount() >= 0 then return end
-    if self:Ammo1() <= 0 then return end
+    if self:Ammo1() <= 0 and !self:GetInfiniteAmmo() then return end
     if !self:GetProcessedValue("ReloadWhileSprint") and self:GetSprintAmount() > 0 then
         return
     end
@@ -153,11 +153,8 @@ end
 function SWEP:RestoreClip(amt)
     if CLIENT then return end
 
-    local reserve = self:Clip1() + self:Ammo1()
-
-    if self:GetValue("InfiniteAmmo") then
-        reserve = math.huge
-    end
+    local inf = self:GetInfiniteAmmo()
+    local reserve = inf and math.huge or (self:Clip1() + self:Ammo1())
 
     local lastclip1 = self:Clip1()
 
@@ -165,7 +162,9 @@ function SWEP:RestoreClip(amt)
 
     reserve = reserve - self:Clip1()
 
-    self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
+    if !inf then
+        self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
+    end
 
     return self:Clip1() - lastclip1
 end
@@ -180,6 +179,10 @@ function SWEP:GetShouldShotgunReload()
     end
 
     return self:GetProcessedValue("ShotgunReload")
+end
+
+function SWEP:GetInfiniteAmmo()
+    return self:GetValue("InfiniteAmmo") or GetConVar("arc9_infinite_ammo"):GetBool()
 end
 
 function SWEP:EndReload()

@@ -164,7 +164,7 @@ function ARC9.DrawHUD()
             chambered = 0
         end
 
-        if weapon:GetProcessedValue("InfiniteAmmo") then
+        if weapon:GetInfiniteAmmo() then
             inf_reserve = true
             if inf_clip then
                 clip_to_show = 2147483640 - weapon:GetNthShot() % 2147483640

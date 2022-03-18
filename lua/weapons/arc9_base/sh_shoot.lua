@@ -144,7 +144,7 @@ function SWEP:PrimaryAttack()
 
     if IsFirstTimePredicted() then
         if self:GetProcessedValue("BottomlessClip") then
-            if !self:GetProcessedValue("InfiniteAmmo") then
+            if !self:GetInfiniteAmmo() then
                 self:RestoreClip(self:GetProcessedValue("ClipSize"))
 
                 if self:Ammo1() > 0 then

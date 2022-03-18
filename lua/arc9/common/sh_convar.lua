@@ -179,7 +179,12 @@ local conVars = {
     {
         name = "hud_always",
         default = "1" -- change to zero ok??????
-    }
+    },
+    {
+        name = "infinite_ammo",
+        default = "0",
+        replicated = true
+    },
 }
 
 local prefix = "arc9_"
@@ -258,6 +263,10 @@ local function menu_server_ti(panel)
     panel:AddControl("checkbox", {
         label = "Default Body Damage Cancel",
         command = "ARC9_bodydamagecancel"
+    })
+    panel:AddControl("checkbox", {
+        label = "Infinite Ammo",
+        command = "arc9_infinite_ammo"
     })
 end
 
