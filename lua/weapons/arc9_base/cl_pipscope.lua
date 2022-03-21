@@ -282,6 +282,10 @@ function SWEP:DoRTScope(model, atttbl)
     -- end
 end
 
+function SWEP:GetCheapScopeScale(scale)
+    return 2 / (scale or 0.5)
+end
+
 local hascostscoped = false
 local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)
 
@@ -313,7 +317,7 @@ function SWEP:DoCheapScope(fov, atttbl)
     scrw = scrw
     scrh = scrh * scrh / scrw
 
-    local s = 2 / (atttbl.ScopeScreenRatio or 0.5)
+    local s = self:GetCheapScopeScale(atttbl.ScopeScreenRatio)
 
     local scrx = (ScrW() - scrw * s) / 2
     local scry = (ScrH() - scrh * s) / 2

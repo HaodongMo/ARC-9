@@ -159,8 +159,6 @@ function SWEP:BuildSubAttachments(tbl)
 
     self:BuildAttachmentAddresses()
     self:BuildMergeSlots(self.Attachments)
-
-    self:PruneAttachments()
 end
 
 function SWEP:ValidateInventoryForNewTree(tree)

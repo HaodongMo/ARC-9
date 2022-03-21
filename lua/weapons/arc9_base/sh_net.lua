@@ -87,6 +87,8 @@ function SWEP:ReceiveWeapon()
     end
 
     self:SetBaseSettings()
+
+    self:PruneAttachments()
 end
 
 function SWEP:ReceiveAttachmentTree()

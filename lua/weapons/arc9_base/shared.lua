@@ -256,7 +256,7 @@ SWEP.RumbleDuration = 0.12
 
 -------------------------- VISUAL RECOIL
 
-SWEP.UseVisualRecoil = true
+SWEP.UseVisualRecoil = false
 
 SWEP.VisualRecoilUp = 0.01 -- Vertical tilt for visual recoil.
 SWEP.VisualRecoilSide = 0.05 -- Horizontal tilt for visual recoil.

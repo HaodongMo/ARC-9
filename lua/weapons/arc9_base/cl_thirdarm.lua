@@ -123,12 +123,13 @@ function SWEP:ThinkThirdArm()
 end
 
 function SWEP:LHIKThirdArm()
-    local vm = self:GetOwner():GetHands()
+    -- local vm = self:GetOwner():GetHands()
+    local vm = self:GetVM()
 
     if !IsValid(vm) then return end
     if !self.UseHands then return end
 
-    vm:SetupBones()
+    -- vm:SetupBones()
 
     local lh_delta = 1
     local rh_delta = 1

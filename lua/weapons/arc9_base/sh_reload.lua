@@ -120,6 +120,7 @@ function SWEP:CancelReload()
     self:KillTimer("reloadtimer")
     self:SetIKTimeLineStart(0)
     self:SetIKTime(0)
+    self:SetEmptyReload(false)
 end
 
 function SWEP:DropMagazine()

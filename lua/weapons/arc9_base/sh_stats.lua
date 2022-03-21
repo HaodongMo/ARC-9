@@ -121,6 +121,14 @@ end
 function SWEP:GetProcessedValue(val, base)
     local stat = self:GetValue(val, base)
 
+    if val == "Malfunction" and self:GetJammed() then
+        return true
+    end
+
+    if val == "Overheat" and self:GetHeatLockout() then
+        return true
+    end
+
     if GetConVar("arc9_truenames"):GetBool() then
         stat = self:GetValue(val, stat, "True")
     end

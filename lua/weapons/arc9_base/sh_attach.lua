@@ -52,6 +52,8 @@ end
 function SWEP:GetFilledMergeSlot(addr)
     local slottbl = self:LocateSlotFromAddress(addr)
 
+    if !slottbl then return {} end
+
     if slottbl.Installed then
         return slottbl
     end
@@ -77,7 +79,7 @@ function SWEP:PostModify(toggleonly)
 
     if !toggleonly then
         self:CancelReload()
-        self:PruneAttachments()
+        -- self:PruneAttachments()
     end
 
     if CLIENT then

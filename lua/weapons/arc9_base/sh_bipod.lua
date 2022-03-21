@@ -26,14 +26,19 @@ function SWEP:CanBipod()
 
     local tr = util.TraceLine({
         start = pos,
-        endpos = pos + (ang:Forward() * 48),
+        endpos = pos + (ang:Forward() * 64),
         filter = self:GetOwner(),
         mask = MASK_PLAYERSOLID
     })
 
-    if tr.Hit then return end
+    -- if tr.Hit then return end
 
     -- ang:RotateAroundAxis(ang:Right(), -30)
+
+    local d = (tr.HitPos - pos):Length()
+    d = d / 2
+
+    mins.z = -d
 
     local tr2 = util.TraceHull({
         start = pos,
