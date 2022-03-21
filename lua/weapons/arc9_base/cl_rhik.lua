@@ -199,7 +199,7 @@ function SWEP:DoRHIK()
         if self:GetValue("RHIK") and enable_ik then
             local rupperarm_dir = (rupperarm_position - rupperarm_matrix:GetTranslation())
             local rupperarm_ang = rupperarm_dir:Angle()
-            rupperarm_ang.r = rupperarm_dir:Angle()
+            rupperarm_ang.r = 90 -- rupperarm_dir:Angle()
             rupperarm_matrix:SetAngles(rupperarm_ang)
             local rupperarm_norm = (rupperarm_position - rarm_start)
             rupperarm_norm:Normalize()
@@ -208,7 +208,7 @@ function SWEP:DoRHIK()
             rforearm_norm:Normalize()
             rforearm_matrix:SetTranslation(rupperarm_position + rforearm_norm * 0)
             local rforearm_dir = rhand_end - rupperarm_position
-            local rforearm_ang = rforearm_dir:Angle()
+            local rforearm_ang = 90 -- rforearm_dir:Angle()
             rforearm_ang.r = rforearm_dir:Angle()
             rforearm_matrix:SetAngles(rforearm_ang)
 
@@ -234,7 +234,7 @@ function SWEP:DoRHIK()
         if self:GetValue("LHIK") and enable_ik then
             local lupperarm_dir = (lupperarm_position - lupperarm_matrix:GetTranslation())
             local lupperarm_ang = lupperarm_dir:Angle()
-            lupperarm_ang.r = lupperarm_matrix:GetAngles().r
+            lupperarm_ang.r = -125 -- lupperarm_matrix:GetAngles().r
             lupperarm_matrix:SetAngles(lupperarm_ang)
             local lupperarm_norm = (lupperarm_position - larm_start)
             lupperarm_norm:Normalize()
@@ -244,7 +244,7 @@ function SWEP:DoRHIK()
             lforearm_matrix:SetTranslation(lupperarm_position + (lforearm_norm * 0))
             local lforearm_dir = lhand_end - lupperarm_position
             local lforearm_ang = lforearm_dir:Angle()
-            lforearm_ang.r = lforearm_matrix:GetAngles().r
+            lforearm_ang.r = -90 -- lforearm_matrix:GetAngles().r
             lforearm_matrix:SetAngles(lforearm_ang)
             vm:SetBoneMatrix(lupperarm, lupperarm_matrix)
             vm:SetBoneMatrix(lforearm, lforearm_matrix)

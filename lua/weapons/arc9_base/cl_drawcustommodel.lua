@@ -68,7 +68,8 @@ function SWEP:DrawCustomModel(wm)
                 end
 
                 if !wm and atttbl.RTScope then
-                    self:DoRTScope(model, atttbl)
+                    local active = slottbl == self:GetActiveSightSlotTable()
+                    self:DoRTScope(model, atttbl, active)
                 end
             end
 
@@ -81,4 +82,10 @@ function SWEP:DrawCustomModel(wm)
             self:DrawFlashlightsVM()
         end
     end
+end
+
+function SWEP:GetActiveSightSlotTable()
+    local sight = self:GetSight() or {}
+
+    return sight.slottbl or {}
 end

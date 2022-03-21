@@ -65,6 +65,7 @@ function SWEP:GetFinalAttTableFromAddress(address)
 end
 
 function SWEP:GetFinalAttTable(slot)
+    if !slot then return {} end
     if !slot.Installed then return {} end
 
     local atttbl = ARC9.GetAttTable(slot.Installed)

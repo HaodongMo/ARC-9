@@ -2,7 +2,6 @@ local rtsize = 1024 -- better use scrh()
 
 local rtmat = GetRenderTarget("arc9_pipscope2", rtsize, rtsize, false)
 
-
 matproxy.Add({
     name = "arc9_scope_alpha",
     init = function(self, mat, values)
@@ -175,105 +174,112 @@ function SWEP:DoRTScopeEffects()
 
 end
 
-function SWEP:DoRTScope(model, atttbl)
+function SWEP:DoRTScope(model, atttbl, active)
     local pos = model:GetPos()
     local ang = EyeAngles()
 
-    if self:ShouldDoScope() then
-        local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
-        sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
+    if active then
+        if self:ShouldDoScope() then
+            local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
+            sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
 
-        pos = pos + (sightpos.x * ang:Right())
-        -- pos = pos + (sightpos.y * ang:Forward())
-        pos = pos + (sightpos.z * -ang:Up())
+            pos = pos + (sightpos.x * ang:Right())
+            -- pos = pos + (sightpos.y * ang:Forward())
+            pos = pos + (sightpos.z * -ang:Up())
 
-        local screenpos = pos:ToScreen()
+            local screenpos = pos:ToScreen()
 
-        local shadow_intensity = atttbl.RTScopeShadowIntensity or 30
+            local shadow_intensity = atttbl.RTScopeShadowIntensity or 30
 
-        local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
-        local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
+            local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
+            local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
 
-        local sh_s = math.floor(rtsize * 1.3)
+            local sh_s = math.floor(rtsize * 1.3)
 
-        sh_x = sh_x - ((sh_s-rtsize) / 2)
-        sh_y = sh_y - ((sh_s-rtsize) / 2)
+            sh_x = sh_x - ((sh_s-rtsize) / 2)
+            sh_y = sh_y - ((sh_s-rtsize) / 2)
 
-        render.PushRenderTarget(rtmat)
-        cam.Start2D()
+            render.PushRenderTarget(rtmat)
+            cam.Start2D()
 
-        local reticle = atttbl.RTScopeReticle
-        local color = atttbl.RTScopeColor or color_white
+            local reticle = atttbl.RTScopeReticle
+            local color = atttbl.RTScopeColor or color_white
 
-        if atttbl.RTScopeColorable then
-            color = Color(0, 0, 0)
-            color.r = GetConVar("arc9_scope_r"):GetInt()
-            color.g = GetConVar("arc9_scope_g"):GetInt()
-            color.b = GetConVar("arc9_scope_b"):GetInt()
-        end
+            if atttbl.RTScopeColorable then
+                color = Color(0, 0, 0)
+                color.r = GetConVar("arc9_scope_r"):GetInt()
+                color.g = GetConVar("arc9_scope_g"):GetInt()
+                color.b = GetConVar("arc9_scope_b"):GetInt()
+            end
 
-        -- I'm not sure this is a good feature to add
-        -- local drawfunc = nil
-        local size = rtsize
-        -- if atttbl.RTScopeDefer then
-        --     local slot = self:GetSight().slottbl
-        --     for k, v in pairs(slot.SubAttachments) do
-        --         local at = ARC9.Attachments[v.Installed or ""]
-        --         if at and (at.RTScopeReticle or at.HoloSightReticle) then
-        --             reticle = (at.RTScopeReticle or at.HoloSightReticle)
-        --             color = (at.RTScopeColor or at.HoloSightColor)
-        --             drawfunc = at.HoloSightFunc
-        --             size = (at.HoloSightSize and at.HoloSightSize * 0.5) or size
-        --             break
-        --         end
-        --     end
-        -- end
+            -- I'm not sure this is a good feature to add
+            -- local drawfunc = nil
+            local size = rtsize
+            -- if atttbl.RTScopeDefer then
+            --     local slot = self:GetSight().slottbl
+            --     for k, v in pairs(slot.SubAttachments) do
+            --         local at = ARC9.Attachments[v.Installed or ""]
+            --         if at and (at.RTScopeReticle or at.HoloSightReticle) then
+            --             reticle = (at.RTScopeReticle or at.HoloSightReticle)
+            --             color = (at.RTScopeColor or at.HoloSightColor)
+            --             drawfunc = at.HoloSightFunc
+            --             size = (at.HoloSightSize and at.HoloSightSize * 0.5) or size
+            --             break
+            --         end
+            --     end
+            -- end
 
-        if reticle then
-            surface.SetDrawColor(color)
-            surface.SetMaterial(reticle)
-            surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
-        end
+            if reticle then
+                surface.SetDrawColor(color)
+                surface.SetMaterial(reticle)
+                surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
+            end
 
-        if atttbl.RTScopeDrawFunc then
-            atttbl.RTScopeDrawFunc(self, rtsize)
-        end
+            if atttbl.RTScopeDrawFunc then
+                atttbl.RTScopeDrawFunc(self, rtsize)
+            end
 
-        if drawfunc then -- doesn't seem to be working
-            drawfunc(self, pos, model)
-        end
+            if drawfunc then -- doesn't seem to be working
+                drawfunc(self, pos, model)
+            end
 
-        if !atttbl.RTScopeNoShadow then
-            surface.SetDrawColor(0, 0, 0)
-            surface.SetMaterial(shadow)
-            surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
-        end
+            if !atttbl.RTScopeNoShadow then
+                surface.SetDrawColor(0, 0, 0)
+                surface.SetMaterial(shadow)
+                surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
+            end
 
-        if !screenpos.visible then
-            surface.DrawRect(0, 0, rtsize, rtsize)
+            if !screenpos.visible then
+                surface.DrawRect(0, 0, rtsize, rtsize)
+            else
+                surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
+                surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
+                surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
+                surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
+            end
         else
-            surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
-            surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
-            surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
-            surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
+            render.PushRenderTarget(rtmat)
+            cam.Start2D()
         end
+
+        local sd = self:GetSightAmount()
+
+        surface.SetDrawColor(0, 0, 0, 255 * (1 - sd))
+        surface.DrawRect(0, 0, rtsize, rtsize)
+
+        cam.End2D()
+
+        render.PopRenderTarget()
+
+        rtsurf:SetTexture("$basetexture", rtmat)
+
+        model:SetSubMaterial()
+
+        model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
     else
-        render.PushRenderTarget(rtmat)
-        cam.Start2D()
+        model:SetSubMaterial()
+        model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
     end
-
-    surface.SetDrawColor(0, 0, 0, 255 * (1 - self:GetSightAmount()))
-    surface.DrawRect(0, 0, rtsize, rtsize)
-
-    cam.End2D()
-
-    render.PopRenderTarget()
-
-    rtsurf:SetTexture("$basetexture", rtmat)
-
-    model:SetSubMaterial()
-
-    model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
 
     -- if atttbl.RTScopeUseSubmatReticle then        gross
     --     atttbl.RTScopeReticle:SetInt("$flags", bit.bor(32768, 2097152))

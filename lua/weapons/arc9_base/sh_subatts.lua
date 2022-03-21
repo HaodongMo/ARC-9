@@ -12,6 +12,17 @@ function SWEP:BuildAttachmentAddresses()
 
         self.AttachmentAddresses[c] = i
     end
+
+    for _, i in pairs(self.Attachments) do
+        self:BuildParentAddresses(i)
+    end
+end
+
+function SWEP:BuildParentAddresses(parenttbl)
+    for _, i in pairs(parenttbl.SubAttachments or {}) do
+        i.ParentAddress = parenttbl.Address
+        self:BuildParentAddresses(i)
+    end
 end
 
 function SWEP:AttTreeToList(tree)
@@ -123,7 +134,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                     end
                 end
                 subatts[i].ExtraSightDistance = (subatts[i].ExtraSightDistance or 0) + (parenttbl.ExtraSightDistance or 0)
-                subatts[i].MergeSlots = subatts[i].MergeSlots
+                -- subatts[i].MergeSlots = subatts[i].MergeSlots
                 subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
                 subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
                 if subatts[i].Installed then

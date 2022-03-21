@@ -106,6 +106,12 @@ function SWEP:BuildMultiSight()
                 s.OriginalSightTable = sight
                 s.slottbl = slottbl
 
+                if sight.DeferSights then
+                    if (slottbl.SubAttachments or {})[1] then
+                        s.slottbl = slottbl.SubAttachments[1]
+                    end
+                end
+
                 table.insert(self.MultiSightTable, s)
 
                 if self.ScrollLevels[#self.MultiSightTable] then

@@ -73,15 +73,14 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
 
     self.ThirdArmPersist = persist
 
-    self.ThirdArmModel:SetPos(Vector(0, 0, 0))
-    self.ThirdArmModel:SetAngles(Angle(0, 0, 0))
-
     self.ThirdArmModel:SetupBones()
 
     if tbl.gun_controller_attachment != nil then
         local posang = self.ThirdArmModel:GetAttachment(tbl.gun_controller_attachment)
         self.ThirdArmGunOffsetAngle = posang.Ang
         self.ThirdArmGunOffsetPos = posang.Pos
+
+        print(self.ThirdArmGunOffsetAngle)
     end
 
     if tbl.cam_controller_attachment != nil then
@@ -271,16 +270,24 @@ function SWEP:GunControllerThirdArm(pos, ang)
         local offset_ang = posang.Ang
         local offset_pos =  posang.Pos
 
-        offset_pos, offset_ang = WorldToLocal(offset_pos, offset_ang, EyePos(), EyeAngles() + (self.ThirdArmAnimation.offsetang or Angle(0, 0, 0)))
+        offset_pos, offset_ang = WorldToLocal(EyePos(), EyeAngles(), offset_pos, offset_ang)
 
-        -- offset_pos = offset_pos - self.ThirdArmGunOffsetPos
-        -- offset_ang = offset_ang - self.ThirdArmGunOffsetAngle
+        offset_pos = offset_pos - self.ThirdArmGunOffsetPos - (self.ThirdArmAnimation.offsetpos or Vector(0, 0, 0))
+        offset_ang = offset_ang - self.ThirdArmGunOffsetAngle - (self.ThirdArmAnimation.offsetang or Angle(0, 0, 0))
 
-        offset_pos, offset_ang = WorldToLocal(offset_pos, offset_ang, self.ThirdArmGunOffsetPos, self.ThirdArmGunOffsetAngle - (self.ThirdArmAnimation.offsetang or Angle(0, 0, 0)))
+        -- offset_pos, offset_ang = WorldToLocal(offset_pos, offset_ang, self.ThirdArmGunOffsetPos, self.ThirdArmGunOffsetAngle - (self.ThirdArmAnimation.offsetang or Angle(0, 0, 0)))
 
         -- print(offset_pos)
 
-        pos, ang = LocalToWorld(offset_pos, offset_ang, pos, ang)
+        -- pos, ang = LocalToWorld(offset_pos, offset_ang, pos, ang)
+
+        pos = pos + (EyeAngles():Right() * offset_pos.x)
+        pos = pos + (EyeAngles():Forward() * offset_pos.y)
+        pos = pos + (EyeAngles():Up() * offset_pos.z)
+
+        ang:RotateAroundAxis(EyeAngles():Right(), offset_ang.p)
+        ang:RotateAroundAxis(EyeAngles():Up(), offset_ang.y)
+        ang:RotateAroundAxis(EyeAngles():Forward(), offset_ang.r)
 
         return pos, ang
     end
