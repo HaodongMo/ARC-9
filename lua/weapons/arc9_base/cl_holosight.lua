@@ -51,7 +51,7 @@ function SWEP:DoHolosight(mdl, atttbl)
 
     -- render.DepthRange(0, 0.0095 + (0.0003 * eyedist / 20))
 
-    self:SetHoloSightRenderDepth(mdl)
+    self:SetHoloSightRenderDepth(mdl, atttbl.HoloSightDepthAdjustment)
 
     -- render.DepthRange(0, 0.0098)
 
@@ -128,9 +128,9 @@ function SWEP:DoHolosight(mdl, atttbl)
     -- mdl:DrawModel()
 end
 
-function SWEP:SetHoloSightRenderDepth(mdl)
+function SWEP:SetHoloSightRenderDepth(mdl, depthadj)
     local eyedist = WorldToLocal(mdl:GetPos(), mdl:GetAngles(), EyePos(), EyeAngles()).x
 
-    render.DepthRange(0, 0.0093 + (0.0004 * eyedist / 20))
+    render.DepthRange(0, (depthadj or 0.0093) + (0.0004 * eyedist / 20))
     -- render.DepthRange(0, (eyedist + 77.99) / 10000)
 end

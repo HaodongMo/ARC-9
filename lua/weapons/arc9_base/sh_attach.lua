@@ -83,6 +83,7 @@ function SWEP:PostModify(toggleonly)
     end
 
     if CLIENT then
+        self:PruneAttachments()
         self:SendWeapon()
         self:SetupModel(true)
         self:SetupModel(false)

@@ -56,7 +56,13 @@ ATT.LaserAttachment = 0
 ATT.Sights = {
     {
         Pos = Vector(0, 0, 0),
-        Ang = Angle(0, 0, 0)
+        Ang = Angle(0, 0, 0),
+        ExtraSightData = {
+            // like an atttbl, only works for sight related data
+        },
+        DeferSights = false, // the first parent sight will be used for sight data instead. Use for magnifiers
+        Magnification = 1,
+        Disassociate = false, // don't associate with parent slot
     }
 }
 
@@ -66,6 +72,7 @@ ATT.HoloSightSize = 32
 ATT.HoloSightColor = Color(255, 255, 255)
 ATT.HoloSightColorable = true -- Holosight takes color from player settings
 ATT.HoloSightFunc = function(swep, pos, mdl) end -- pos = reticle position
+ATT.HoloSightDepthAdjustment = 0.0093 -- Increase this slightly if holosight clips into the model
 
 ATT.FLIRHotFunc = function(swep, ent) end -- return true for hot and false for cold
 

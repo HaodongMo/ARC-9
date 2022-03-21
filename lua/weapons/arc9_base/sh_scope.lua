@@ -103,6 +103,11 @@ function SWEP:BuildMultiSight()
                 end
 
                 s.atttbl = atttbl
+                if sight.ExtraSightData then
+                    s.atttbl = table.Copy(atttbl)
+                    table.Merge(s.atttbl, sight.ExtraSightData)
+                    s.ExtraSightData = sight.ExtraSightData
+                end
                 s.OriginalSightTable = sight
                 s.slottbl = slottbl
 
