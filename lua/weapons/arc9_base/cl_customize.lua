@@ -223,15 +223,15 @@ function SWEP:CreateCustomizeHUD()
 
                 local atttbl = self:GetFinalAttTable(ms_slot)
 
-                local attpos = self:GetAttPos(slot)
+                local attpos, attang = self:GetAttPos(slot)
 
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
 
                 icon_offset = icon_offset + (atttbl.IconOffset or Vector(0, 0, 0))
 
-                attpos = attpos + EyeAngles():Right() * -icon_offset.x
-                attpos = attpos + EyeAngles():Up() * icon_offset.y
-                attpos = attpos + EyeAngles():Forward() * icon_offset.z
+                attpos = attpos + attang:Right() * icon_offset.y
+                attpos = attpos + attang:Up() * icon_offset.z
+                attpos = attpos + attang:Forward() * icon_offset.x
 
                 local toscreen = attpos:ToScreen()
 

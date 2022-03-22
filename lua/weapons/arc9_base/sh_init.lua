@@ -56,6 +56,7 @@ function SWEP:Deploy()
     self:SetLoadedRounds(self:Clip1())
     self:SetCustomize(false)
     self:SetBreath(100)
+    self:SetInspecting(false)
 
     self:SetBipod(false)
 

@@ -895,6 +895,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 17, "RequestReload")
     self:NetworkVar("Bool", 18, "InMeleeAttack")
     self:NetworkVar("Bool", 19, "OutOfBreath")
+    self:NetworkVar("Bool", 20, "Inspecting")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")

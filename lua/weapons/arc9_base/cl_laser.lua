@@ -77,7 +77,18 @@ function SWEP:DrawLasers(wm, behav)
                 model:SetPos(pos)
                 model:SetAngles(ang)
 
-                local a = model:GetAttachment(atttbl.LaserAttachment)
+                local a
+
+                if atttbl.LaserAttachment then
+                    a = model:GetAttachment(atttbl.LaserAttachment)
+                else
+                    a = {
+                        Pos = model:GetPos(),
+                        Ang = model:GetAngles()
+                    }
+
+                    a.Ang:RotateAroundAxis(a.Ang:Up(), -90)
+                end
 
                 if !wm or self:GetOwner() == LocalPlayer() then
                     if behav then

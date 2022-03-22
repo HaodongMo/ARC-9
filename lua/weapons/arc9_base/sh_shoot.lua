@@ -163,6 +163,8 @@ function SWEP:PrimaryAttack()
 
     self:PlayAnimation("fire", 1, false, idle)
 
+    self:SetLoadedRounds(self:Clip1())
+
     self:DoVisualRecoil()
 
     local ejectdelay = self:GetProcessedValue("EjectDelay")

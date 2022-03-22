@@ -49,6 +49,8 @@ function SWEP:Think()
 
     self:ThinkLoopingSound()
 
+    self:ThinkInspect()
+
     if CLIENT then
         self:ThinkThirdArm()
     end

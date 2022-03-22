@@ -14,7 +14,6 @@ function SWEP:Reload()
     end
 
     if self:GetOwner():KeyDown(IN_WALK) then
-        self:Inspect()
         return
     end
 
