@@ -54,9 +54,14 @@ function SWEP:Reload()
         minprogress = math.min(minprogress, 0.95)
 
         self:SetTimer(t * minprogress, function()
-            self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + self:Ammo1()))
             self:RestoreClip(self:GetValue("ClipSize"))
         end, "reloadtimer")
+
+        local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.25
+
+        self:SetTimer(t * newcliptime, function()
+            self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + self:Ammo1()))
+        end)
     end
 
     if SERVER then

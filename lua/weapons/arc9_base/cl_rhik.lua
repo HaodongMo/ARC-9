@@ -7,9 +7,10 @@ end
 
 local lhik_ts_delta = 0
 
-function SWEP:DoRHIK()
+function SWEP:DoRHIK(wm)
     -- local vm = self:GetOwner():GetHands()
     local vm = self:GetVM()
+    if wm then vm = self:GetWM() end
     if not IsValid(vm) then return end
     if not self.UseHands then return end
     vm:SetupBones()
@@ -112,7 +113,11 @@ function SWEP:DoRHIK()
 
     local rhik_model = self.RHIKModel
 
-    if rhik_model then
+    if wm then
+        rhik_model = self.RHIKModelWM
+    end
+
+    if IsValid(rhik_model) then
         rhik_model:SetupBones()
 
         for _, bone in pairs(ARC9.RHIKBones) do
@@ -133,7 +138,11 @@ function SWEP:DoRHIK()
 
     local lhik_model = self.LHIKModel
 
-    if lhik_model then
+    if wm then
+        lhik_model = self.LHIKModelWM
+    end
+
+    if IsValid(lhik_model) then
         lhik_model:SetupBones()
 
         for _, bone in pairs(ARC9.LHIKBones) do
@@ -150,6 +159,8 @@ function SWEP:DoRHIK()
             vm:SetBoneMatrix(vm_bone, newtransform)
         end
     end
+
+    if wm then return end
 
     self:LHIKThirdArm()
     local enable_ik = true

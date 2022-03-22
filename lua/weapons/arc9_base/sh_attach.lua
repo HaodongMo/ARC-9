@@ -374,6 +374,8 @@ function SWEP:CountAttachments(countatt)
 end
 
 function SWEP:ToggleAllStatsOnF()
+    if self:GetReloading() then return true end
+
     local toggled = false
 
     for _, slottbl in pairs(self:GetSubSlotList()) do

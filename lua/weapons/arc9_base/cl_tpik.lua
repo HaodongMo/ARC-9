@@ -33,6 +33,8 @@ function SWEP:DoTPIK()
     wm:SetupBones()
     wm:InvalidateBoneCache()
 
+    self:DoRHIK(true)
+
     self:SetFiremodePose(true)
 
     ply:SetupBones()

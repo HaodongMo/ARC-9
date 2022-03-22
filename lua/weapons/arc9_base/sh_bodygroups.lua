@@ -64,7 +64,7 @@ function SWEP:DoBodygroups(wm)
 
             if !boneid then continue end
 
-            if i <= self:Clip1() then
+            if i > self:GetLoadedRounds() then
                 mdl:ManipulateBoneScale(boneid, v0)
             else
                 mdl:ManipulateBoneScale(boneid, v1)

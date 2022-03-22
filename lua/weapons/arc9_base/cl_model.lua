@@ -156,9 +156,11 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale)
 end
 
 SWEP.LHIKModel = nil
-SWEP.LHIK_Priority = -1
+SWEP.LHIK_Priority = -1000
 SWEP.RHIKModel = nil
-SWEP.RHIK_Priority = -1
+SWEP.RHIK_Priority = -1000
+SWEP.LHIKModelWM = nil
+SWEP.RHIKModelWM = nil
 
 function SWEP:SetupModel(wm, lod)
     lod = lod or 0
@@ -168,12 +170,13 @@ function SWEP:SetupModel(wm, lod)
 
     if !wm and !IsValid(self:GetOwner()) then return end
 
+    self.LHIK_Priority = -1000
+    self.RHIK_Priority = -1000
+
     if !wm then
         self.VModel = {}
         self.LHIKModel = nil
-        self.LHIK_Priority = -1
         self.RHIKModel = nil
-        self.RHIK_Priority = -1
 
         -- local RenderOverrideFunction = function(self2)
         --     if LocalPlayer():GetActiveWeapon() != self then LocalPlayer():GetViewModel().RenderOverride = nil return end
@@ -187,6 +190,8 @@ function SWEP:SetupModel(wm, lod)
 
         -- vm.RenderOverride = RenderOverrideFunction
     else
+        self.LHIKModelWM = nil
+        self.RHIKModelWM = nil
         self.WModel = {}
 
         local csmodel = ClientsideModel(self.MirrorModel or self.ViewModel)
@@ -242,19 +247,25 @@ function SWEP:SetupModel(wm, lod)
             slottbl.VModel = csmodel
         end
 
-        if !wm then
-            if atttbl.LHIK or atttbl.RHIK then
-                local proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
-                proxmodel.NoDraw = true
+        if atttbl.LHIK or atttbl.RHIK then
+            local proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
+            proxmodel.NoDraw = true
 
-                if atttbl.LHIK then
-                    if (atttbl.LHIK_Priority or 0) > self.LHIK_Priority then
-                        self.LHIK_Priority = atttbl.LHIK_Priority or 0
+            if atttbl.LHIK then
+                if (atttbl.LHIK_Priority or 0) > self.LHIK_Priority then
+                    self.LHIK_Priority = atttbl.LHIK_Priority or 0
+                    if wm then
+                        self.LHIKModelWM = proxmodel
+                    else
                         self.LHIKModel = proxmodel
                     end
-                elseif atttbl.RHIK then
-                    if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
-                        self.RHIK_Priority = atttbl.RHIK_Priority or 0
+                end
+            elseif atttbl.RHIK then
+                if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
+                    self.RHIK_Priority = atttbl.RHIK_Priority or 0
+                    if wm then
+                        self.RHIKModelWM = proxmodel
+                    else
                         self.RHIKModel = proxmodel
                     end
                 end
