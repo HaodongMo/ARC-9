@@ -93,11 +93,11 @@ function SWEP:DoTPIK()
     ply_r_elbow_matrix:SetTranslation(ply_r_upperarm_pos)
 
     local ply_r_shoulder_angle = (ply_r_upperarm_pos - ply_r_shoulder_matrix:GetTranslation()):GetNormalized():Angle()
-    ply_r_shoulder_angle.r = 90
+    ply_r_shoulder_angle.r = 180
     ply_r_shoulder_matrix:SetAngles(ply_r_shoulder_angle)
 
     local ply_r_elbow_angle = (ply_r_forearm_pos - ply_r_upperarm_pos):GetNormalized():Angle()
-    ply_r_elbow_angle.r = 180 - 45
+    ply_r_elbow_angle.r = -90
     ply_r_elbow_matrix:SetAngles(ply_r_elbow_angle)
 
     ply:SetBoneMatrix(ply_r_elbow_index, ply_r_elbow_matrix)
