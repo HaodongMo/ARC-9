@@ -38,6 +38,10 @@ function SWEP:GetAttPos(slottbl, wm, idle)
 
     if slottbl.WMBase then
         bone = "ValveBiped.Bip01_R_Hand"
+
+        -- if self:ShouldTPIK() then
+        --     bone = "ValveBiped.Bip01_Head1"
+        -- end
     end
 
     if slottbl.Installed then
@@ -51,6 +55,8 @@ function SWEP:GetAttPos(slottbl, wm, idle)
 
     if !boneindex then return Vector(0, 0, 0), Angle(0, 0, 0) end
 
+    parentmdl:SetupBones()
+    -- parentmdl:InvalidateBoneCache()
     local bonemat = parentmdl:GetBoneMatrix(boneindex)
     if bonemat then
         bpos = bonemat:GetTranslation()

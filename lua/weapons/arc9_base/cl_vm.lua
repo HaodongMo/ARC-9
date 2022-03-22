@@ -308,9 +308,10 @@ end
 
 function SWEP:GetViewModelFOV()
     local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
+    local sightedtarget = self:GetSight().ViewModelFOV or (75 + GetConVar("arc9_fov"):GetInt())
 
     if self:GetSightAmount() > 0 then
-        return Lerp(self:GetSightAmount(), target, 75 + GetConVar("arc9_fov"):GetInt())
+        return Lerp(self:GetSightAmount(), target, sightedtarget)
     end
 
     return target

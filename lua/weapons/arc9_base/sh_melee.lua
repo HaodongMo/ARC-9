@@ -12,8 +12,8 @@ function SWEP:MeleeAttack(bypass)
         else
             self:PlayThirdArmAnim({
                 rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",
-                -- sequence = self:RandomChoice({"melee1", "melee2"}),
-                sequence = "melee1",
+                sequence = self:RandomChoice({"melee1", "melee2"}),
+                -- sequence = "melee1",
                 gun_controller_attachment = 1,
                 -- offsetang = Angle(90, 180, 90),
                 mult = 1,

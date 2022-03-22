@@ -115,7 +115,7 @@ function SWEP:DoRHIK()
     if rhik_model then
         rhik_model:SetupBones()
 
-        for _, bone in pairs(ARC9.RHIKHandBones) do
+        for _, bone in pairs(ARC9.RHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = rhik_model:LookupBone(bone)
             if not vm_bone or not target_bone then continue end
@@ -136,7 +136,7 @@ function SWEP:DoRHIK()
     if lhik_model then
         lhik_model:SetupBones()
 
-        for _, bone in pairs(ARC9.LHIKHandBones) do
+        for _, bone in pairs(ARC9.LHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = lhik_model:LookupBone(bone)
             if not vm_bone or not target_bone then continue end
@@ -163,18 +163,18 @@ function SWEP:DoRHIK()
         local lforearm_matrix = vm:GetBoneMatrix(lforearm)
         local rarm_start, rhand_end = rupperarm_matrix:GetTranslation(), rhand_matrix:GetTranslation()
         local larm_start, lhand_end = lupperarm_matrix:GetTranslation(), lhand_matrix:GetTranslation()
-        local rupperarm_length, rarm_length = vm:BoneLength(rupperarm), vm:BoneLength(rforearm)
-        if rupperarm_length > 15 or rarm_length > 15 or rupperarm_length < 5 or rarm_length < 5 then
-            rupperarm_length = 8
-            rarm_length = 8
-        end
-        -- local rupperarm_length, rarm_length = 10, 10
-        -- local lupperarm_length, larm_length = 10, 10
-        local lupperarm_length, larm_length = vm:BoneLength(lupperarm), vm:BoneLength(lforearm)
-        if lupperarm_length < 5 or larm_length < 5 then
-            lupperarm_length = 8
-            larm_length = 8
-        end
+        local rupperarm_length, rarm_length = 10, 10
+        local lupperarm_length, larm_length = 10, 10
+        -- local rupperarm_length, rarm_length = vm:BoneLength(rupperarm), vm:BoneLength(rforearm)
+        -- if rupperarm_length > 15 or rarm_length > 15 or rupperarm_length < 5 or rarm_length < 5 then
+        --     rupperarm_length = 8
+        --     rarm_length = 8
+        -- end
+        -- local lupperarm_length, larm_length = vm:BoneLength(lupperarm), vm:BoneLength(lforearm)
+        -- if lupperarm_length < 5 or larm_length < 5 then
+        --     lupperarm_length = 8
+        --     larm_length = 8
+        -- end
         -- lupperarm_length = lupperarm_length + 2
         -- larm_length = larm_length + 2
         rupperarm_matrix, rhand_matrix = vm:GetBoneMatrix(rupperarm), vm:GetBoneMatrix(rhand)

@@ -17,6 +17,7 @@ function SWEP:CanBipod()
     if !self:GetProcessedValue("Bipod") then return end
     if self:GetSprintAmount() > 0 then return end
     if self:GetReloading() and !self:GetBipod() then return end
+    if self:GetBlindFireAmount() > 0 then return end
 
     local pos = self:GetOwner():EyePos()
     local ang = self:GetOwner():EyeAngles()
