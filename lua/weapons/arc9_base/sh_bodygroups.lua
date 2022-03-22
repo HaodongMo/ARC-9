@@ -72,9 +72,18 @@ function SWEP:DoBodygroups(wm)
         end
     end
 
-    if !self:GetReloading() or self:GetCustomize() or wm then
+    if self:GetCustomize() then
         hide = true
     end
+
+    if wm then
+        hide = true
+    end
+
+    if self:GetReloading() then
+        hide = false
+    end
+
     local hidebones = self:GetProcessedValue("HideBones")
 
     if hidebones then

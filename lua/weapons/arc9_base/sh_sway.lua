@@ -1,4 +1,6 @@
 function SWEP:ThinkHoldBreath()
+    if !self:GetOwner():IsPlayer() then return end
+
     if self:HoldingBreath() then
         self:SetBreath(self:GetBreath() - (FrameTime() * 100 / self:GetProcessedValue("HoldBreathTime")))
         if self:GetOwner():KeyPressed(IN_SPEED) and IsFirstTimePredicted() then
@@ -90,6 +92,7 @@ end
 
 function SWEP:GetFreeSwayAmount()
     if !GetConVar("arc9_sway"):GetBool() then return 0 end
+    if !self:GetOwner():IsPlayer() then return 0 end
     local sway = self:GetProcessedValue("Sway")
 
     if self:HoldingBreath() then return 0 end

@@ -24,11 +24,11 @@ function SWEP:DoTPIK()
         wm:SetPoseParameter(pp_name, vm:GetPoseParameter(pp_name))
     end
 
-    for i = 0, vm:GetNumBodyGroups() do
-        local bg = vm:GetBodygroup(i)
-        if !bg then continue end
-        wm:SetBodygroup(i, bg)
-    end
+    -- for i = 0, vm:GetNumBodyGroups() do
+    --     local bg = vm:GetBodygroup(i)
+    --     if !bg then continue end
+    --     wm:SetBodygroup(i, bg)
+    -- end
 
     wm:SetupBones()
     wm:InvalidateBoneCache()
