@@ -7,12 +7,40 @@ ARC9.Attachments_Bits = 16
 
 local defaulticon = Material("arc9/arccw_bird.png", "mips smooth")
 
+function ARC9.LoadAttachment(atttbl, shortname)
+    if atttbl.Ignore then return end
+    shortname = shortname or "default"
+
+    ARC9.Attachments_Count = ARC9.Attachments_Count + 1
+
+    atttbl.ShortName = shortname
+    atttbl.ID = ARC9.Attachments_Count
+    atttbl.Icon = atttbl.Icon or defaulticon
+
+    ARC9.Attachments[shortname] = atttbl
+    ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
+
+    if GetConVar("arc9_generateattentities"):GetBool() and !atttbl.DoNotRegister and !atttbl.InvAtt and !atttbl.Free then
+        local attent = {}
+        attent.Base = "ARC9_att"
+        attent.Icon = atttbl.Icon or defaulticon
+        attent.PrintName = atttbl.PrintName or shortname
+        attent.Spawnable = true
+        attent.AdminOnly = atttbl.AdminOnly or false
+        attent.AttToGive = shortname
+        attent.Category =  atttbl.MenuCategory or "ARC-9 - Attachments"
+
+        scripted_ents.Register(attent, "ARC9_att_" .. shortname)
+    end
+end
+
 function ARC9.LoadAtts()
     ARC9.Attachments_Count = 0
     ARC9.Attachments = {}
     ARC9.Attachments_Index = {}
 
     local searchdir = "ARC9/common/attachments/"
+    local searchdir_bulk = "ARC9/common/bulk_attachments/"
 
     local files = file.Find(searchdir .. "/*.lua", "LUA")
 
@@ -31,29 +59,21 @@ function ARC9.LoadAtts()
 
         include(searchdir .. filename)
 
-        if ATT.Ignore then continue end
+        ARC9.LoadAttachment(ATT, shortname)
+    end
 
-        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
+    local bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
 
-        ATT.ShortName = shortname
-        ATT.ID = ARC9.Attachments_Count
-        ATT.Icon = ATT.Icon or defaulticon
+    for _, filename in pairs(bulkfiles) do
+        AddCSLuaFile(searchdir_bulk .. filename)
+    end
 
-        ARC9.Attachments[shortname] = ATT
-        ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
+    bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
 
-        if GetConVar("arc9_generateattentities"):GetBool() and !ATT.DoNotRegister and !ATT.InvAtt and !ATT.Free then
-            local attent = {}
-            attent.Base = "ARC9_att"
-            attent.Icon = ATT.Icon or defaulticon
-            attent.PrintName = ATT.PrintName or shortname
-            attent.Spawnable = true
-            attent.AdminOnly = ATT.AdminOnly or false
-            attent.AttToGive = shortname
-            attent.Category =  ATT.MenuCategory or "ARC-9 - Attachments"
+    for _, filename in pairs(bulkfiles) do
+        if filename == "default.lua" then continue end
 
-            scripted_ents.Register(attent, "ARC9_att_" .. shortname)
-        end
+        include(searchdir_bulk .. filename)
     end
 
     print("ARC9 Registered " .. tostring(ARC9.Attachments_Count) .. " Attachments.")
