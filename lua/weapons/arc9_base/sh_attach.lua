@@ -14,6 +14,8 @@ function SWEP:Attach(addr, att, silent)
         self:EmitSound(slottbl.InstallSound or "arc9/install.wav")
     end
 
+    self:PruneAttachments()
+
     self:PostModify()
 
     return true
@@ -31,6 +33,8 @@ function SWEP:Detach(addr, silent)
     if !silent then
         self:EmitSound(slottbl.UninstallSound or "arc9/uninstall.wav")
     end
+
+    self:PruneAttachments()
 
     self:PostModify()
 

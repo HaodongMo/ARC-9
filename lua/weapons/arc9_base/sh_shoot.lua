@@ -443,7 +443,7 @@ function SWEP:GetShootPos()
             filter = self:GetOwner()
         })
 
-        pos = tr.HitPos
+        pos = tr.HitPos + (tr.HitNormal * 2)
     end
 
     local ang = self:GetShootDir()

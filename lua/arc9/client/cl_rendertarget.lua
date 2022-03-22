@@ -1,9 +1,11 @@
 hook.Add("PreRender", "ARC9_PreRender", function()
-    if GetConVar("ARC9_cheapscopes"):GetBool() then return end
-
     local wpn = LocalPlayer():GetActiveWeapon()
 
     if !wpn.ARC9 then return end
+
+    wpn:RunHook("Hook_DoRT")
+
+    if GetConVar("ARC9_cheapscopes"):GetBool() then return end
 
     local sight = wpn:GetSight()
 

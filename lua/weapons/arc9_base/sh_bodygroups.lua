@@ -1,4 +1,7 @@
-function SWEP:DoBodygroups(wm)
+local v0 = Vector(0, 0, 0)
+local v1 = Vector(1, 1, 1)
+
+function SWEP:DoBodygroups(wm, clear)
     if !wm and !IsValid(self:GetOwner()) then return end
     if !wm and self:GetOwner():IsNPC() then return end
 
@@ -16,6 +19,10 @@ function SWEP:DoBodygroups(wm)
 
     mdl:SetSkin(self.DefaultSkin)
     mdl:SetBodyGroups(dbg or "")
+
+    for i = 0, mdl:GetBoneCount() do
+        mdl:ManipulateBoneScale(i, v1)
+    end
 
     local eles = self:GetElements()
 
@@ -52,8 +59,6 @@ function SWEP:DoBodygroups(wm)
         end
     end
 
-    local v0 = Vector(0, 0, 0)
-    local v1 = Vector(1, 1, 1)
     local hide = false
 
     if !wm then
@@ -64,7 +69,7 @@ function SWEP:DoBodygroups(wm)
 
             if !boneid then continue end
 
-            if i > self:GetLoadedRounds() then
+            if i > self:GetLoadedRounds() and !clear then
                 mdl:ManipulateBoneScale(boneid, v0)
             else
                 mdl:ManipulateBoneScale(boneid, v1)
@@ -83,6 +88,8 @@ function SWEP:DoBodygroups(wm)
     if self:GetReloading() then
         hide = false
     end
+
+    if clear then hide = false end
 
     local hidebones = self:GetProcessedValue("HideBones")
 

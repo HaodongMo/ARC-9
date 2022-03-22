@@ -18,17 +18,19 @@ function SWEP:DoTPIK()
     wm:SetSequence(vm:GetSequence())
     wm:SetCycle(vm:GetCycle())
 
-    for i = 0, vm:GetNumPoseParameters() do
-        local pp_name = wm:GetPoseParameterName(i)
-        if !pp_name then continue end
-        wm:SetPoseParameter(pp_name, vm:GetPoseParameter(pp_name))
-    end
+    -- for i = 0, vm:GetNumPoseParameters() do
+    --     local pp_name = wm:GetPoseParameterName(i)
+    --     if !pp_name then continue end
+    --     wm:SetPoseParameter(pp_name, vm:GetPoseParameter(pp_name))
+    -- end
 
     -- for i = 0, vm:GetNumBodyGroups() do
     --     local bg = vm:GetBodygroup(i)
     --     if !bg then continue end
     --     wm:SetBodygroup(i, bg)
     -- end
+
+    wm:SetPoseParameter("sights", self:GetSightAmount())
 
     wm:SetupBones()
     wm:InvalidateBoneCache()

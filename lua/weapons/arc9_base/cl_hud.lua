@@ -103,6 +103,8 @@ end
 function SWEP:DrawHUD()
     self:HoldBreathHUD()
     self:DrawCustomizeHUD()
+
+    self:RunHook("Hook_HUDPaint")
 end
 
 SWEP.Mat_Select = nil
