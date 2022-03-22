@@ -55,8 +55,10 @@ function SWEP:GetAttPos(slottbl, wm, idle)
 
     if !boneindex then return Vector(0, 0, 0), Angle(0, 0, 0) end
 
-    parentmdl:SetupBones()
-    -- parentmdl:InvalidateBoneCache()
+    if parentmdl == self:GetOwner() then
+        parentmdl:SetupBones()
+        parentmdl:InvalidateBoneCache()
+    end
     local bonemat = parentmdl:GetBoneMatrix(boneindex)
     if bonemat then
         bpos = bonemat:GetTranslation()

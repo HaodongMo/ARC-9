@@ -101,6 +101,7 @@ function SWEP:GetBinding(bind)
 end
 
 function SWEP:DrawHUD()
+    self:HoldBreathHUD()
     self:DrawCustomizeHUD()
 end
 

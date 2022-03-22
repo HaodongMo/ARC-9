@@ -177,7 +177,7 @@ function SWEP:PrimaryAttack()
 
     self:DoShootSounds()
 
-    self:GetOwner():DoAnimationEvent(self:GetProcessedValue("AnimShoot"))
+    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimShoot"))
 
     local delay = 60 / self:GetProcessedValue("RPM")
 

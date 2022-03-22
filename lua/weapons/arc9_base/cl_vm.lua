@@ -107,6 +107,10 @@ function SWEP:GetViewModelPosition(pos, ang)
         local sight = self:GetSight()
         local eepos, eeang = self:GetExtraSightPositions()
 
+        if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
+            eepos = eepos + Vector(-1, 0, 1)
+        end
+
         if sight.GeneratedSight then
             local t_sightpos = LerpVector(sightdelta, Vector(0, 0 ,0), sightpos)
             local t_sightang = LerpAngle(sightdelta, Angle(0, 0, 0), sightang)

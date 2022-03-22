@@ -47,7 +47,7 @@ function SWEP:Reload()
 
     local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true, true)
 
-    self:GetOwner():DoAnimationEvent(self:GetProcessedValue("AnimReload"))
+    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
 
     if !self:GetShouldShotgunReload() then
         local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
@@ -115,7 +115,7 @@ function SWEP:CancelReload()
     vm:SetCycle(0)
     self:SetAnimLockTime(0)
     self:PlayAnimation("idle")
-    self:GetOwner():DoAnimationEvent(ACT_HL2MP_GESTURE_RELOAD_MAGIC)
+    self:DoPlayerAnimationEvent(ACT_HL2MP_GESTURE_RELOAD_MAGIC)
     self:CancelSoundTable()
     self:KillTimer("reloadtimer")
     self:SetIKTimeLineStart(0)

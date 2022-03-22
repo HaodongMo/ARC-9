@@ -313,6 +313,9 @@ SWEP.SpreadAddRecoil = 0 -- Applied per unit of recoil.
 SWEP.FreeAimRadius = 10 -- In degrees, how much this gun can free aim in hip fire.
 SWEP.Sway = 1 -- How much the gun sways.
 
+SWEP.HoldBreathTime = 5 -- time that you can hold breath for
+SWEP.RestoreBreathTime = 5
+
 SWEP.FreeAimRadiusMultSights = 0.25
 
 SWEP.SwayMultSights = 0.5
@@ -860,6 +863,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 17, "Holster_Time")
     self:NetworkVar("Float", 18, "BlindFireCornerAmount")
     self:NetworkVar("Float", 19, "EnterBipodTime")
+    self:NetworkVar("Float", 20, "Breath")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
@@ -890,6 +894,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 16, "LastWasSprinting")
     self:NetworkVar("Bool", 17, "RequestReload")
     self:NetworkVar("Bool", 18, "InMeleeAttack")
+    self:NetworkVar("Bool", 19, "OutOfBreath")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
@@ -907,6 +912,8 @@ function SWEP:SetupDataTables()
     self:SetNthShot(0)
     self:SetLastWasSprinting(false)
     self:SetEnterBipodTime(0)
+    self:SetBreath(100)
+    self:SetOutOfBreath(false)
 end
 
 function SWEP:SecondaryAttack()

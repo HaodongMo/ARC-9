@@ -41,13 +41,6 @@ function SWEP:GetFreeAimOffset()
     end
 end
 
-function SWEP:GetFreeSwayAmount()
-    if !GetConVar("arc9_sway"):GetBool() then return 0 end
-    local sway = self:GetProcessedValue("Sway")
-
-    return sway
-end
-
 function SWEP:GetFreeSwayAngles()
     if !GetConVar("arc9_freeaim"):GetBool() then return Angle(0, 0, 0) end
     local swayamt = self:GetFreeSwayAmount()

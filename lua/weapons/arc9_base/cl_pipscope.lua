@@ -277,7 +277,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
     else
-        model:SetSubMaterial()
+        -- model:SetSubMaterial()
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
     end
 

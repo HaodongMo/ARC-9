@@ -45,6 +45,8 @@ function SWEP:Think()
 
     self:ThinkMelee()
 
+    self:ThinkHoldBreath()
+
     self:ThinkLoopingSound()
 
     if CLIENT then

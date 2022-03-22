@@ -17,13 +17,23 @@ function SWEP:DoTPIK()
 
     wm:SetSequence(vm:GetSequence())
     wm:SetCycle(vm:GetCycle())
-    wm:SetupBones()
 
-    for i = 0, wm:GetNumPoseParameters() do
+    for i = 0, vm:GetNumPoseParameters() do
         local pp_name = wm:GetPoseParameterName(i)
         if !pp_name then continue end
         wm:SetPoseParameter(pp_name, vm:GetPoseParameter(pp_name))
     end
+
+    for i = 0, vm:GetNumBodyGroups() do
+        local bg = vm:GetBodygroup(i)
+        if !bg then continue end
+        wm:SetBodygroup(i, bg)
+    end
+
+    wm:SetupBones()
+    wm:InvalidateBoneCache()
+
+    self:SetFiremodePose(true)
 
     ply:SetupBones()
 
@@ -102,6 +112,7 @@ function SWEP:DoTPIK()
     -- debugoverlay.Line(ply_l_forearm_pos, ply_l_hand_matrix:GetTranslation(), 0.1, Color(255, 255, 255), true)
 
     -- ply_l_shoulder_matrix:SetTranslation(ply_l_upperarm_pos)
+    ply_l_hand_matrix:SetTranslation(ply_l_forearm_pos)
     ply_l_elbow_matrix:SetTranslation(ply_l_upperarm_pos)
 
     local ply_l_shoulder_angle = (ply_l_upperarm_pos - ply_l_shoulder_matrix:GetTranslation()):GetNormalized():Angle()
@@ -112,6 +123,7 @@ function SWEP:DoTPIK()
     ply_l_elbow_angle.r = -90
     ply_l_elbow_matrix:SetAngles(ply_l_elbow_angle)
 
+    ply:SetBoneMatrix(ply_l_hand_index, ply_l_hand_matrix)
     ply:SetBoneMatrix(ply_l_elbow_index, ply_l_elbow_matrix)
     ply:SetBoneMatrix(ply_l_shoulder_index, ply_l_shoulder_matrix)
 end
