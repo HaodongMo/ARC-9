@@ -1,4 +1,4 @@
-local rtsize = ScrH()
+local rtsize = 1024
 
 local rtmat = GetRenderTarget("arc9_pipscope2", rtsize, rtsize, false)
 
@@ -34,12 +34,16 @@ end
 function SWEP:DoRT(fov, atttbl)
     if ARC9.OverDraw then return end
 
-    local rtpos = self.LastViewModelPos
-    rtpos = rtpos - self.LastViewModelAng:Right() * self.ViewModelPos.x
-    rtpos = rtpos - self.LastViewModelAng:Forward() * (self.ViewModelPos.y - (self:GetSight().atttbl.ScopeLength or 20))
-    rtpos = rtpos - self.LastViewModelAng:Up() * self.ViewModelPos.z
+    -- The fuck was this?
+    -- local rtpos = self.LastViewModelPos
+    -- rtpos = rtpos - self.LastViewModelAng:Right() * self.ViewModelPos.x
+    -- rtpos = rtpos - self.LastViewModelAng:Forward() * (self.ViewModelPos.y - (self:GetSight().atttbl.ScopeLength or 20))
+    -- rtpos = rtpos - self.LastViewModelAng:Up() * self.ViewModelPos.z
 
-    local rtang = self.LastViewModelAng
+    -- local rtang = self.LastViewModelAng
+
+    local rtpos = self:GetShootPos()
+    local rtang = self:GetShootDir()
 
     local rt = {
         x = 0,

@@ -1,3 +1,5 @@
+SWEP.SetBreathDSP = false
+
 function SWEP:ThinkHoldBreath()
     if !self:GetOwner():IsPlayer() then return end
 
@@ -8,13 +10,22 @@ function SWEP:ThinkHoldBreath()
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
             self:SetBreath(0)
-            self:GetOwner():SetDSP(0)
+
+            if self.SetBreathDSP then
+                self:GetOwner():SetDSP(0)
+            end
         else
             target_ts = 0.25
-            self:GetOwner():SetDSP(30)
+            if !self.SetBreathDSP then
+                self:GetOwner():SetDSP(30)
+                self.SetBreathDSP = true
+            end
         end
     else
-        self:GetOwner():SetDSP(0)
+        if self.SetBreathDSP then
+            self:GetOwner():SetDSP(0)
+        end
+
         self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime")))
         if self:GetBreath() >= 100 then
             self:SetBreath(100)
