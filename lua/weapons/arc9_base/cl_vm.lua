@@ -231,7 +231,7 @@ function SWEP:GetViewModelPosition(pos, ang)
             local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
 
             if slot then
-                local apos = self:GetAttPos(slot, false, true)
+                local apos = self:GetAttPos(slot, false, true, true)
 
                 local opos = (slot.Icon_Offset or Vector(0, 0, 0))
                 local atttbl = self:GetFinalAttTable(slot)
