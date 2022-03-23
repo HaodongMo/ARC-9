@@ -9,7 +9,7 @@ function SWEP:MeleeAttack(bypass)
     else
         if game.SinglePlayer() and SERVER then
             self:CallOnClient("MeleeAttack", "true")
-        else
+        elseif CLIENT then
             self:PlayThirdArmAnim({
                 rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",
                 sequence = self:RandomChoice({"melee1", "melee2"}),

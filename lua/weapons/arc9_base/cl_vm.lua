@@ -287,7 +287,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos, ang = self:GetViewModelSway(pos, ang)
     pos, ang = self:GetViewModelSmooth(pos, ang)
 
-    if game.SinglePlayer() or IsFirstTimePredicted() then
+    -- if game.SinglePlayer() or IsFirstTimePredicted() then
+    if game.SinglePlayer() or CLIENT then
         pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
         pos = LerpVector(0.8, pos, self.ViewModelPos)
