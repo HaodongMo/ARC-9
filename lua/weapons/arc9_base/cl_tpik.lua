@@ -16,6 +16,12 @@ function SWEP:DoTPIK()
     if !IsValid(vm) then return end
     if !IsValid(wm) then return end
 
+    local nolefthand = false
+
+    if self:GetHoldType() == "slam" then
+        nolefthand = true
+    end
+
     wm:SetupBones()
 
     wm:SetSequence(vm:GetSequence())
@@ -41,7 +47,13 @@ function SWEP:DoTPIK()
 
     ply:SetupBones()
 
-    for _, bone in pairs(ARC9.TPIKBones) do
+    local bones = ARC9.TPIKBones
+
+    if nolefthand then
+        bones = ARC9.RHIKHandBones
+    end
+
+    for _, bone in pairs(bones) do
         local wm_boneindex = wm:LookupBone(bone)
         if !wm_boneindex then continue end
         local wm_bonematrix = wm:GetBoneMatrix(wm_boneindex)
@@ -104,6 +116,8 @@ function SWEP:DoTPIK()
 
     ply:SetBoneMatrix(ply_r_elbow_index, ply_r_elbow_matrix)
     ply:SetBoneMatrix(ply_r_shoulder_index, ply_r_shoulder_matrix)
+
+    if nolefthand then return end
 
     local ply_l_shoulder_matrix = ply:GetBoneMatrix(ply_l_shoulder_index)
     local ply_l_elbow_matrix = ply:GetBoneMatrix(ply_l_elbow_index)

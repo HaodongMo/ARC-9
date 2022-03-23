@@ -51,6 +51,17 @@ function SWEP:DeletePreset(filename)
     end
 end
 
+function SWEP:ClearPreset()
+    local baseattachments = baseclass.Get(self:GetClass()).Attachments or {}
+
+    for slot, slottbl in ipairs(self.Attachments) do
+        slottbl.Installed = (baseattachments[slot] or {}).Installed
+    end
+
+    self:SendWeapon()
+    self:PostModify()
+end
+
 function SWEP:LoadPreset(filename)
     if LocalPlayer() != self:GetOwner() then return end
 
