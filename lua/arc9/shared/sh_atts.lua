@@ -40,7 +40,7 @@ function ARC9.LoadAtts()
     ARC9.Attachments_Index = {}
 
     local searchdir = "ARC9/common/attachments/"
-    local searchdir_bulk = "ARC9/common/bulk_attachments/"
+    local searchdir_bulk = "ARC9/common/attachments_bulk/"
 
     local files = file.Find(searchdir .. "/*.lua", "LUA")
 
