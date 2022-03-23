@@ -1,6 +1,7 @@
 // third person inverse kinematics
 
 function SWEP:ShouldTPIK()
+    if self:GetSafe() then return false end
     return LocalPlayer() == self:GetOwner()
 end
 

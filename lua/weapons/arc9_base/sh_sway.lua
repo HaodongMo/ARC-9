@@ -5,12 +5,15 @@ function SWEP:ThinkHoldBreath()
         self:SetBreath(self:GetBreath() - (FrameTime() * 100 / self:GetProcessedValue("HoldBreathTime")))
         if self:GetOwner():KeyPressed(IN_SPEED) and IsFirstTimePredicted() then
             self:SetBreath(self:GetBreath() - 20)
+            self:GetOwner():SetDSP(30)
         end
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
             self:SetBreath(0)
+            self:GetOwner():SetDSP(0)
         end
     else
+        self:GetOwner():SetDSP(0)
         self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime")))
         if self:GetBreath() >= 100 then
             self:SetBreath(100)
@@ -42,7 +45,7 @@ function SWEP:HoldBreathPP()
 
     DrawSharpen((0.25 * pp_amount) + (1.2 * amt_d), 1.2 * pp_amount)
 
-    local tint = Color(250, 255, 255)
+    local tint = Color(253, 255, 255)
 
     local tab = {
         [ "$pp_colour_addr" ] = (-1 + (tint.r / 255)) * pp_amount,

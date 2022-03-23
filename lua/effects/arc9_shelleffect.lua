@@ -45,7 +45,7 @@ function EFFECT:Init(data)
     if !IsValid(ent:GetOwner()) then self:Remove() return end
 
     if LocalPlayer():ShouldDrawLocalPlayer() or ent:GetOwner() != LocalPlayer() then
-        mdl = ent
+        mdl = (ent.WModel or {})[1] or ent
         att = 2
     else
         mdl = LocalPlayer():GetViewModel()
