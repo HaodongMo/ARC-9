@@ -18,6 +18,8 @@ function EFFECT:Init(data)
 
     if !wm then
         parent = LocalPlayer():GetViewModel()
+    else
+        parent = (wpn.WModel or {})[1] or wpn
     end
 
     local pa = parent:GetAttachment(att)
