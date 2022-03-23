@@ -15,9 +15,9 @@ matproxy.Add({
             if IsValid(weapon) and weapon.ARC9 then
                 local amt = 1 - weapon:GetSightAmount() / 3
 
-                if render.GetHDREnabled() and amt < 0.07 then
-                    render.SetToneMappingScaleLinear(Vector(1,1,1)) -- hdr fix
-                end
+                -- if render.GetHDREnabled() and amt < 0.07 then
+                --     render.SetToneMappingScaleLinear(Vector(1,1,1)) -- hdr fix
+                -- end
 
                 mat:SetVector(self.ResultTo, Vector(amt,amt,amt))
             end
@@ -204,6 +204,9 @@ function SWEP:DoRTScope(model, atttbl, active)
             sh_y = sh_y - ((sh_s-rtsize) / 2)
 
             render.PushRenderTarget(rtmat)
+
+            render.SetToneMappingScaleLinear(Vector(1,1,1))
+
             cam.Start2D()
 
             local reticle = atttbl.RTScopeReticle
