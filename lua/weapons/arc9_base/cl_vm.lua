@@ -18,10 +18,34 @@ local LerpAngle = function(a, a1, a2)
     return a1 + (a * d)
 end
 
+-- local ApproachVector = function(a1, a2, d)
+--     a1[1] = math.Approach(a1[1], a2[1], d)
+--     a1[2] = math.Approach(a1[2], a2[2], d)
+--     a1[3] = math.Approach(a1[3], a2[3], d)
+
+--     return a1
+-- end
+
 local Lerp = function(a, v1, v2)
     local d = v2 - v1
 
     return v1 + (a * d)
+end
+
+local Damp = function(a, v1, v2)
+    return Lerp(1 - math.pow(a, FrameTime()), v2, v1)
+end
+
+local DampVector = function(a, v1, v2)
+    a = 1 - math.pow(a, FrameTime())
+
+    return LerpVector(a, v2, v1)
+end
+
+local DampAngle = function(a, v1, v2)
+    a = 1 - math.pow(a, FrameTime())
+
+    return LerpAngle(a, v2, v1)
 end
 
 function SWEP:GetViewModelPosition(pos, ang)
@@ -291,8 +315,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     if game.SinglePlayer() or CLIENT then
         pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
-        pos = LerpVector(0.8, pos, self.ViewModelPos)
-        ang = LerpAngle(0.9, ang, self.ViewModelAng)
+        pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
+        ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
 
         self.ViewModelPos = pos
         self.ViewModelAng = ang

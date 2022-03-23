@@ -1,4 +1,4 @@
-local rtsize = 1024 -- better use scrh()
+local rtsize = ScrH()
 
 local rtmat = GetRenderTarget("arc9_pipscope2", rtsize, rtsize, false)
 
