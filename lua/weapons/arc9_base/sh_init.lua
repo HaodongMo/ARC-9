@@ -115,6 +115,11 @@ function SWEP:Holster(wep)
         self:GetOwner():SetCanZoom(true)
         self:EndLoop()
 
+        if self.SetBreathDSP then
+            self:GetOwner():SetDSP(0)
+            self.SetBreathDSP = false
+        end
+
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
         end

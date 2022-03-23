@@ -1,4 +1,4 @@
-function SWEP:GetAttPos(slottbl, wm, idle)
+function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset)
     idle = idle or false
     local parentmdl = nil
 
@@ -93,7 +93,9 @@ function SWEP:GetAttPos(slottbl, wm, idle)
 
     apos = apos + aang:Up() * offset_pos.z
 
-    offset_ang = offset_ang + (atttbl.ModelAngleOffset or Angle(0, 0, 0))
+    if !nomodeloffset then
+        offset_ang = offset_ang + (atttbl.ModelAngleOffset or Angle(0, 0, 0))
+    end
 
     aang:Set(bang)
 
@@ -101,11 +103,13 @@ function SWEP:GetAttPos(slottbl, wm, idle)
     aang:RotateAroundAxis(aang:Up(), offset_ang.y)
     aang:RotateAroundAxis(aang:Forward(), offset_ang.r)
 
-    local moffset = (atttbl.ModelOffset or Vector(0, 0, 0)) * (slottbl.Scale or 1)
+    if !nomodeloffset then
+        local moffset = (atttbl.ModelOffset or Vector(0, 0, 0)) * (slottbl.Scale or 1)
 
-    apos = apos + aang:Forward() * moffset.x
-    apos = apos + aang:Right() * moffset.y
-    apos = apos + aang:Up() * moffset.z
+        apos = apos + aang:Forward() * moffset.x
+        apos = apos + aang:Right() * moffset.y
+        apos = apos + aang:Up() * moffset.z
+    end
 
     if idle then
         SafeRemoveEntity(parentmdl)

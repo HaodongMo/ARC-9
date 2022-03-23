@@ -223,7 +223,7 @@ function SWEP:CreateCustomizeHUD()
 
                 local atttbl = self:GetFinalAttTable(ms_slot)
 
-                local attpos, attang = self:GetAttPos(slot)
+                local attpos, attang = self:GetAttPos(slot, false, false, true)
 
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
 

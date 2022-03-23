@@ -13,6 +13,7 @@ function SWEP:ThinkHoldBreath()
 
             if self.SetBreathDSP then
                 self:GetOwner():SetDSP(0)
+                self.SetBreathDSP = false
             end
         else
             target_ts = 0.25
@@ -24,6 +25,7 @@ function SWEP:ThinkHoldBreath()
     else
         if self.SetBreathDSP then
             self:GetOwner():SetDSP(0)
+            self.SetBreathDSP = false
         end
 
         self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime")))
