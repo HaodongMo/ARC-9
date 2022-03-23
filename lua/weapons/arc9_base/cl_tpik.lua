@@ -16,6 +16,8 @@ function SWEP:DoTPIK()
     if !IsValid(vm) then return end
     if !IsValid(wm) then return end
 
+    wm:SetupBones()
+
     wm:SetSequence(vm:GetSequence())
     wm:SetCycle(vm:GetCycle())
 
@@ -31,9 +33,6 @@ function SWEP:DoTPIK()
     --     wm:SetBodygroup(i, bg)
     -- end
 
-    wm:SetPoseParameter("sights", self:GetSightAmount())
-
-    wm:SetupBones()
     wm:InvalidateBoneCache()
 
     self:DoRHIK(true)

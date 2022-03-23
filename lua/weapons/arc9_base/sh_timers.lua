@@ -42,7 +42,7 @@ end
 function SWEP:ProcessTimers()
     local keeptimers = {}
     local UCT = CurTime()
-    if CLIENT and UCT == tick then return end
+    -- if CLIENT and UCT == tick then return end
 
     if not self.ActiveTimers then
         self:InitTimers()
@@ -88,6 +88,10 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
             if v.pp then
                 self.PoseParamState[v.pp] = v.ppv or 0
+            end
+
+            if v.hide != nil then
+                self:SetHideBoneIndex(v.hide)
             end
 
             if game.SinglePlayer() and SERVER then

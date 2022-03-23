@@ -53,6 +53,8 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
         self:PlaySoundTable(animation.EventTable or animation.SoundTable, mult)
     end
 
+    self:SetHideBoneIndex(animation.HideBoneIndex or 0)
+
     if animation.IKTimeLine then
         self:SetIKAnimation(anim)
         self:SetIKTimeLineStart(CurTime())

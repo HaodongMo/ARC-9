@@ -546,6 +546,10 @@ SWEP.CaseBGs = {}
 SWEP.StripperClipBGs = {}
 
 SWEP.HideBones = {} -- bones to hide in third person and customize menu. {"list", "of", "bones"}
+SWEP.ReloadHideBoneTables = { -- works only with TPIK
+    -- [1] = {"list", "of", "bones"},
+    -- [2] = {"list", "of", "bones"}
+}
 
 SWEP.PoseParameters = {} -- Poseparameters to manage. ["parameter"] = starting value.
 -- Use animations to switch between different pose parameters.
@@ -788,6 +792,7 @@ SWEP.Animations = {
     --             bg = 0,
     --             pp = "", -- pose parameter name
     --             ppv = 0, -- pose parameter value
+    --             hide = 1, -- hide reloadhidebonetables table, 0 for none
     --         }
     --     },
     --     PoseParamChanges = { -- pose parameters to change after this animation is done.
@@ -875,6 +880,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", 4, "NthReload")
     self:NetworkVar("Int", 5, "MultiSight")
     self:NetworkVar("Int", 6, "BlindFireDirection")
+    self:NetworkVar("Int", 7, "HideBoneIndex")
 
     self:NetworkVar("Bool", 0, "Customize")
     self:NetworkVar("Bool", 1, "Reloading")
@@ -916,6 +922,7 @@ function SWEP:SetupDataTables()
     self:SetEnterBipodTime(0)
     self:SetBreath(100)
     self:SetOutOfBreath(false)
+    self:SetHideBoneIndex(0)
 end
 
 function SWEP:SecondaryAttack()
