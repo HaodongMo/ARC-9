@@ -225,9 +225,8 @@ SWEP.RecoilSeed = nil -- Leave blank to use weapon class name as recoil seed.
 SWEP.RecoilPatternDrift = 12 -- Higher values = more extreme recoil patterns.
 SWEP.RecoilLookupTable = nil -- Use to set specific values for predictible recoil. If it runs out, it'll just use Recoil Seed.
 -- SWEP.RecoilLookupTable = {
---     {
---          dir = 15
---     }
+--     15,
+--     3,
 -- }
 SWEP.RecoilLookupTableOverrun = nil -- Repeatedly take values from this table if we run out in the main table
 
