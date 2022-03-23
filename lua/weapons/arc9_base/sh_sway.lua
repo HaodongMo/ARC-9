@@ -1,16 +1,17 @@
 function SWEP:ThinkHoldBreath()
     if !self:GetOwner():IsPlayer() then return end
 
+    local target_ts = 1
+
     if self:HoldingBreath() then
         self:SetBreath(self:GetBreath() - (FrameTime() * 100 / self:GetProcessedValue("HoldBreathTime")))
-        if self:GetOwner():KeyPressed(IN_SPEED) and IsFirstTimePredicted() then
-            self:SetBreath(self:GetBreath() - 20)
-            self:GetOwner():SetDSP(30)
-        end
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
             self:SetBreath(0)
             self:GetOwner():SetDSP(0)
+        else
+            target_ts = 0.25
+            self:GetOwner():SetDSP(30)
         end
     else
         self:GetOwner():SetDSP(0)
@@ -19,6 +20,13 @@ function SWEP:ThinkHoldBreath()
             self:SetBreath(100)
             self:SetOutOfBreath(false)
         end
+    end
+
+    if game.SinglePlayer() and SERVER then
+        local ts = game.GetTimeScale()
+
+        ts = math.Approach(ts, target_ts, FrameTime() / 0.25)
+        game.SetTimeScale(ts)
     end
 end
 

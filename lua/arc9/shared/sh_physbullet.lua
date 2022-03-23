@@ -335,7 +335,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             bullet.Pos = tr.HitPos
             -- if we're the client, we'll get the bullet back when it exits.
 
-            if attacker:IsPlayer() then
+            if attacker:IsPlayer() and !attacker.ARC9_LAGCOMP then
                 attacker:LagCompensation(true) -- Sometimes this line is called before the first lag compensation finishes, somehow.
                 attacker.ARC9_LAGCOMP = true
             end
@@ -350,16 +350,16 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
             if CLIENT then
                 -- do an impact effect and forget about it
-                if !game.SinglePlayer() then
-                    attacker:FireBullets({
-                        Src = oldpos,
-                        Dir = dir,
-                        Distance = spd + 16,
-                        Tracer = 0,
-                        Damage = 0,
-                        IgnoreEntity = bullet.Attacker
-                    })
-                end
+                -- if !game.SinglePlayer() then
+                --     attacker:FireBullets({
+                --         Src = oldpos,
+                --         Dir = dir,
+                --         Distance = spd + 16,
+                --         Tracer = 0,
+                --         Damage = 0,
+                --         IgnoreEntity = bullet.Attacker
+                --     })
+                -- end
                 if IsValid(bullet.ClientModel) then
                     local t = weapon:GetProcessedValue("PhysBulletModelStick") or 0
                     if t > 0 then
@@ -403,7 +403,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                 end
             end
 
-            if attacker:IsPlayer() then
+            if attacker:IsPlayer() and attacker.ARC9_LAGCOMP then
                 attacker:LagCompensation(false)
                 attacker.ARC9_LAGCOMP = false
             end

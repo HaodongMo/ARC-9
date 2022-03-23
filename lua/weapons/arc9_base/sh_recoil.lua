@@ -28,10 +28,7 @@ function SWEP:ApplyRecoil()
 
     local rps = 1
 
-    if IsFirstTimePredicted() then
-        rec = rec + rps
-    end
-
+    rec = rec + rps
     local delay = 60 / self:GetProcessedValue("RPM")
 
     local recoilup = 1

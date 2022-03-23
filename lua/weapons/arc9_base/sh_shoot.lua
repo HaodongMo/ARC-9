@@ -206,7 +206,9 @@ function SWEP:PrimaryAttack()
 
     self:DoProjectileAttack(self:GetShootPos(), dir, spread)
 
-    self:ApplyRecoil()
+    if IsFirstTimePredicted() then
+        self:ApplyRecoil()
+    end
 
     self:SetBurstCount(self:GetBurstCount() + 1)
 
@@ -222,8 +224,10 @@ function SWEP:PrimaryAttack()
         self:SetNeedTriggerPress(true)
     end
 
-    self:RollJam()
-    self:DoHeat()
+    if IsFirstTimePredicted() then
+        self:RollJam()
+        self:DoHeat()
+    end
 end
 
 if CLIENT then
