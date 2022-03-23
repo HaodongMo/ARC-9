@@ -31,8 +31,13 @@ function SWEP:ViewModelDrawn()
     -- self:DrawLasers(false)
     self:DrawCustomModel(false)
     self:DoRHIK()
-    self:DrawLasers(false)
     self:PreDrawThirdArm()
+
+    cam.Start3D(nil, nil, self:GetViewModelFOV(), 0, 0, ScrW(), ScrH(), 4, 30000)
+        self:DrawLasers(false)
+    cam.End3D()
+
+    cam.IgnoreZ(true)
 end
 
 function SWEP:PostDrawViewModel()
