@@ -61,7 +61,7 @@ function SWEP:DoBodygroups(wm, clear)
 
     local hide = false
 
-    if self:GetCustomize() then
+    if self.CustomizeDelta > 0 then
         hide = true
     end
 
@@ -78,7 +78,7 @@ function SWEP:DoBodygroups(wm, clear)
         hide = false
     end
 
-    if self:GetReloading() and reloadhidebones and self:ShouldTPIK() then
+    if self:GetReloading() and reloadhidebones and self:ShouldTPIK() and wm then
         local index = self:GetHideBoneIndex()
 
         if index != 0 then

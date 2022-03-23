@@ -26,6 +26,8 @@ function SWEP:MeleeAttack(bypass)
         end
     end
 
+    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimMelee"))
+
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeSwingSound")) or "", 75, 100, 1, CHAN_VOICE)
 
     local tr = util.TraceHull({
