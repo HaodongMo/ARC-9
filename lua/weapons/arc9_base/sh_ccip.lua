@@ -8,7 +8,7 @@ function SWEP:GetCCIP(pos, ang)
     pos = pos or self:GetShootPos()
     local vel = (ang or self:GetShootDir()):Forward() * v
     local maxiter = 100
-    local timestep = 1 / 30
+    local timestep = 1 / 15
 
     for i = 1, maxiter do
         local dir = vel:GetNormalized()

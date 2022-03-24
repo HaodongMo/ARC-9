@@ -1,4 +1,5 @@
 SWEP.SmoothedMagnification = 1
+SWEP.FOV = 90
 
 function SWEP:CalcView(ply, pos, ang, fov)
     local rec = (self:GetLastRecoilTime() + self:GetProcessedValue("RecoilResetTime")) - CurTime()
@@ -14,6 +15,8 @@ function SWEP:CalcView(ply, pos, ang, fov)
     end
 
     fov = fov / self:GetSmoothedFOVMag()
+
+    self.FOV = fov
 
     ang = ang + (self:GetCameraControl() or Angle(0, 0, 0))
 
