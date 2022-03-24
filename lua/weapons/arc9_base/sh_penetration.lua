@@ -21,6 +21,9 @@ end
 function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     if !GetConVar("ARC9_penetration"):GetBool() then return end
 
+    if !IsValid(self) then return end
+    if !IsValid(self:GetOwner()) then return end
+
     local hitpos, startpos = tr.HitPos, tr.StartPos
     local dir    = (hitpos - startpos):GetNormalized()
 
