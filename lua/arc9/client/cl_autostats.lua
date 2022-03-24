@@ -80,7 +80,9 @@ ARC9.AutoStatsMains = {
     ["Bipod"] = {false, true},
     ["NoFlash"] = {false, true},
     ["BulletGuidance"] = {false, true},
-    ["BulletGuidanceAmount"] = {false, false}
+    ["BulletGuidanceAmount"] = {false, false},
+    ["ExplosionDamage"] = {false, false},
+    ["ExplosionRadius"] = {false, false}
 }
 
 ARC9.AutoStatsOperations = {

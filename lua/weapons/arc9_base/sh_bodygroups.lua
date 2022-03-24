@@ -104,17 +104,15 @@ function SWEP:DoBodygroups(wm, clear)
         end
     end
 
-    if !wm then
-        local bulletbones = self:GetProcessedValue("BulletBones")
+    local bulletbones = self:GetProcessedValue("BulletBones")
 
-        for i, bone in pairs(bulletbones) do
-            local boneid = mdl:LookupBone(bone)
+    for i, bone in pairs(bulletbones) do
+        local boneid = mdl:LookupBone(bone)
 
-            if !boneid then continue end
+        if !boneid then continue end
 
-            if i > self:GetLoadedRounds() and !clear then
-                mdl:ManipulateBoneScale(boneid, v0)
-            end
+        if i > self:GetLoadedRounds() and !clear then
+            mdl:ManipulateBoneScale(boneid, v0)
         end
     end
 

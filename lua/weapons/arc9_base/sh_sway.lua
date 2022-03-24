@@ -38,7 +38,7 @@ function SWEP:ThinkHoldBreath()
     if game.SinglePlayer() and SERVER then
         local ts = game.GetTimeScale()
 
-        ts = math.Approach(ts, target_ts, FrameTime() / 0.25)
+        ts = math.Approach(ts, target_ts, FrameTime() / ts / 0.5)
         game.SetTimeScale(ts)
     end
 end
