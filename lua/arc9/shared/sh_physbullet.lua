@@ -61,7 +61,7 @@ end
 
 function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
-    local physmdl = wep:GetProcessedValue("PhysBulletModel")
+    local physmdl = string.lower(wep:GetProcessedValue("PhysBulletModel"))
     local mdlindex = ARC9.PhysBulletModelsLookup[physmdl] or 0
 
     if physmdl and mdlindex == 0 then
