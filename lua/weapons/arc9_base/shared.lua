@@ -114,6 +114,10 @@ SWEP.BodyDamageMults = {
 --     [HITGROUP_RIGHTARM] = 0.9,
 -- }
 
+SWEP.ExplosionDamage = 0
+SWEP.ExplosionRadius = 0
+SWEP.ExplosionEffect = nil
+
 -------------------------- ENTITY LAUNCHING
 
 SWEP.ShootEntity = nil -- Set to an entity to launch it out of this weapon.
@@ -608,6 +612,7 @@ SWEP.SprintMidPoint = {
 -- Position for customizing
 SWEP.CustomizeAng = Angle(90, 0, 0)
 SWEP.CustomizePos = Vector(20, 32, 4)
+SWEP.CustomizeSnapshotFOV = 90
 
 SWEP.BipodPos = Vector(0, 4, -4)
 SWEP.BipodAng = Angle(0, 0, 0)

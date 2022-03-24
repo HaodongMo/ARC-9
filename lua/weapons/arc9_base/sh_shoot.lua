@@ -380,6 +380,22 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
         util.Effect(self:GetProcessedValue("ImpactEffect"), fx)
     end
 
+    if self:GetProcessedValue("ExplosionDamage") > 0 then
+        util.BlastDamage(self, self:GetOwner(), tr.HitPos, self:GetProcessedValue("ExplosionRadius"), self:GetProcessedValue("ExplosionDamage"))
+    end
+
+    if self:GetProcessedValue("ExplosionEffect") then
+        local fx = EffectData()
+        fx:SetOrigin(tr.HitPos)
+        fx:SetNormal(tr.HitNormal)
+
+        if bit.band(util.PointContents(tr.HitPos), CONTENTS_WATER) == CONTENTS_WATER then
+            util.Effect("WaterSurfaceExplosion", fx)
+        else
+            util.Effect(self:GetProcessedValue("ExplosionEffect"), fx)
+        end
+    end
+
     if tr.Entity and alreadypenned[tr.Entity] then
         dmg:SetDamage(0)
     elseif tr.Entity then

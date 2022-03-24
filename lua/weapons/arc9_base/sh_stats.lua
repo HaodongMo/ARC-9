@@ -242,7 +242,11 @@ end
 function SWEP:GetValue(val, base, condition, amount)
     condition = condition or ""
     amount = amount or 1
-    local stat = base or self:GetTable()[val]
+    local stat = base
+
+    if stat == nil then
+        stat = self:GetTable()[val]
+    end
 
     if self.HasNoAffectors[val .. condition] == true then
         return stat
@@ -254,10 +258,15 @@ function SWEP:GetValue(val, base, condition, amount)
         stat.BaseClass = nil
     end
 
-    if self.StatCache[tostring(base) .. val .. condition] then
+    if self.StatCache[tostring(base) .. val .. condition] != nil then
         stat = self.StatCache[tostring(base) .. val .. condition]
 
-        stat = self:RunHook(val .. "Hook" .. condition, stat) or stat
+        local oldstat = stat
+        stat = self:RunHook(val .. "Hook" .. condition, stat)
+
+        if stat == nil then
+            stat = oldstat
+        end
 
         if istable(stat) then
             stat.BaseClass = nil

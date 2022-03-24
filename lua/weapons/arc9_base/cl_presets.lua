@@ -170,7 +170,7 @@ function SWEP:DoPresetCapture(filename)
     campos = campos + camang:Forward() * -custpos.y
     campos = campos + camang:Up() * -custpos.z
 
-    cam.Start3D(campos, camang, 75, 0, 0, ScrW(), ScrH(), 4, 1024)
+    cam.Start3D(campos, camang, self:GetProcessedValue("CustomizeSnapshotFOV"), 0, 0, ScrW(), ScrH(), 4, 1024)
 
     render.ClearDepth()
 
