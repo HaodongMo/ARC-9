@@ -23,6 +23,10 @@ function SWEP:DoRHIK(wm)
     hide_rh_d = self.CustomizeDelta
     hide_lh_d = math.ease.InCubic(hide_lh_d)
     hide_rh_d = math.ease.InCubic(hide_rh_d)
+    if ARC9.PresetCam then
+        hide_lh_d = 1
+        hide_rh_d = 1
+    end
     local iktl = (self.Animations[self:GetIKAnimation() or ""] or {}).IKTimeLine
     local iket = self:GetIKTime()
     local iklt = math.Clamp((CurTime() - self:GetIKTimeLineStart()) / iket, 0, 1)

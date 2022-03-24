@@ -15,7 +15,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
        end
     end
 
-    if bind == "+use" then
+    if bind == "+use" and !LocalPlayer():KeyDown(IN_USE) then
         return ARC9.AttemptGiveNPCWeapon()
     end
 
@@ -25,6 +25,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                 net.Start("ARC9_togglecustomize")
                 net.WriteBool(false)
                 net.SendToServer()
+                wpn:DoIconCapture()
             else
                 net.Start("ARC9_togglecustomize")
                 net.WriteBool(true)

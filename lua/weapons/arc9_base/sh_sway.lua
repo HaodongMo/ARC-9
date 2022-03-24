@@ -1,4 +1,4 @@
-SWEP.SetBreathDSP = false
+SWEP.SetBreathDSP = true
 
 function SWEP:ThinkHoldBreath()
     if !self:GetOwner():IsPlayer() then return end

@@ -36,6 +36,7 @@ SWEP.Description = [[Description Unavailable.]]
 -- Multi-line strings are possible with the double square brackets.]]
 
 SWEP.UseHands = true -- Same as weapon_base
+SWEP.DefaultSelectIcon = nil -- Material(), use if auto select icons aren't generated yet or in case player has it turned off
 
 SWEP.ViewModel = ""
 SWEP.WorldModel = ""

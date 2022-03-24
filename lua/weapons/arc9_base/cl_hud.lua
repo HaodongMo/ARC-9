@@ -122,6 +122,32 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
     -- end
 
     -- surface.DrawTexturedRect(x, y, w, w)
+
+    local selecticon = self.AutoSelectIcon
+
+    if !selecticon then
+        local filename = ARC9.PresetPath .. self:GetPresetBase() .. "_icon.png"
+        if !file.Exists(filename, "DATA") then
+            selecticon = self.DefaultSelectIcon
+        else
+            selecticon = Material("data/" .. filename, "smooth")
+        end
+    end
+
+    if !selecticon then return end
+
+    surface.SetDrawColor(255, 255, 255, 255)
+    surface.SetMaterial(selecticon)
+    if w > h then
+        y = y - ((w - h) / 2)
+    end
+    surface.DrawTexturedRect(x, y, w, w)
+end
+
+SWEP.AutoSelectIcon = nil
+
+function SWEP:DoIconCapture()
+    self:DoPresetCapture(ARC9.PresetPath .. self:GetPresetBase() .. "_icon")
 end
 
 function SWEP:RangeUnitize(range)

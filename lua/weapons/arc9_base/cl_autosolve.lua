@@ -58,7 +58,7 @@ function SWEP:GetMagnification()
         local atttbl = self:GetSight().atttbl
 
         if atttbl and atttbl.RTScope then
-            target = (self:GetOwner():GetFOV() / self:GetRTScopeFOV()) / 2.5
+            target = (self:GetOwner():GetFOV() / self:GetRTScopeFOV())
         end
     end
 

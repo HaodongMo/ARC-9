@@ -129,7 +129,7 @@ function SWEP:SavePreset(presetname)
     end
 end
 
-function SWEP:DoPresetCapture(filename)
+function SWEP:DoPresetCapture(filename, foricon)
     render.PushRenderTarget(cammat)
 
     render.SetColorMaterial()
@@ -158,9 +158,8 @@ function SWEP:DoPresetCapture(filename)
     local campos, camang = Vector(0, 0, 0), Angle(0, 0, 0)
     local custpos, custang = self:GetProcessedValue("CustomizePos"), self:GetProcessedValue("CustomizeAng")
 
-    camang = self.LastViewModelAng
-
-    campos = self.LastViewModelPos
+    camang = self.LastViewModelAng or EyeAngles()
+    campos = self.LastViewModelPos or EyePos()
 
     camang:RotateAroundAxis(camang:Up(), -custang.p)
     camang:RotateAroundAxis(camang:Right(), -custang.y)
@@ -170,11 +169,13 @@ function SWEP:DoPresetCapture(filename)
     campos = campos + camang:Forward() * -custpos.y
     campos = campos + camang:Up() * -custpos.z
 
-    cam.Start3D(campos, camang, self:GetProcessedValue("CustomizeSnapshotFOV"), 0, 0, ScrW(), ScrH(), 4, 1024)
+    cam.Start3D(campos, camang, self:GetProcessedValue("CustomizeSnapshotFOV"), 0, 0, ScrW(), ScrH(), 1, 1024)
 
     render.ClearDepth()
 
+    -- render.MaterialOverride(Material("model_color"))
     render.SuppressEngineLighting(true)
+    -- render.SetWriteDepthToDestAlpha(false)
     self:GetVM():DrawModel()
     render.SuppressEngineLighting(false)
 
@@ -210,6 +211,9 @@ function SWEP:DoPresetCapture(filename)
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
     file.Write(filename .. ".png", data)
+    -- file.Write(ARC9.PresetPath .. self:GetPresetBase() .. "/icon.png", "DATA")
 
     render.PopRenderTarget()
+
+    self.AutoSelectIcon = Material("data/" .. filename .. ".png", "smooth")
 end

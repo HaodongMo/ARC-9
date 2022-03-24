@@ -96,6 +96,18 @@ function SWEP:IdleAtEndOfAnimation()
 end
 
 function SWEP:Idle()
+    if game.SinglePlayer() then
+        if SERVER then
+            self:CallOnClient("Idle")
+        else
+            if !self.AutoSelectIcon then
+                self:DoIconCapture()
+            end
+        end
+
+        return
+    end
+
     if self:GetPrimedAttack() then return end
 
     self:PlayAnimation("idle")

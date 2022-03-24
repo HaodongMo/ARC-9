@@ -1,5 +1,8 @@
 function SWEP:PreDrawViewModel()
-    if ARC9.PresetCam then self:DoBodygroups(false) return end
+    if ARC9.PresetCam then
+        self:DoBodygroups(false)
+        return
+    end
 
     if self:GetCustomize() then
         if GetConVar("arc9_cust_blur"):GetBool() then DrawBokehDOF( 10, 1, 0.1 ) end
