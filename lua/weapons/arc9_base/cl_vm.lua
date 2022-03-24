@@ -89,7 +89,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     if self:GetBipod() then
         local bipodamount = self:GetBipodAmount()
 
-        bipodamount = math.ease.InOutCirc(bipodamount)
+        bipodamount = math.ease.InOutQuad(bipodamount)
 
         local sightpos, sightang = self:GetSightPositions()
 
@@ -126,7 +126,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     self.SwayScale = 0
 
     if sightdelta > 0 then
-        sightdelta = math.ease.InOutCirc(sightdelta)
+        sightdelta = math.ease.InOutQuad(sightdelta)
         local sightpos, sightang = self:GetSightPositions()
         local sight = self:GetSight()
         local eepos, eeang = self:GetExtraSightPositions()
