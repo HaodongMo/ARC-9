@@ -155,7 +155,22 @@ function SWEP:DoPresetCapture(filename)
 
     ARC9.PresetCam = true
 
-    cam.Start3D()
+    local campos, camang = Vector(0, 0, 0), Angle(0, 0, 0)
+    local custpos, custang = self:GetProcessedValue("CustomizePos"), self:GetProcessedValue("CustomizeAng")
+
+    camang = self.LastViewModelAng
+
+    campos = self.LastViewModelPos
+
+    camang:RotateAroundAxis(camang:Up(), -custang.p)
+    camang:RotateAroundAxis(camang:Right(), -custang.y)
+    camang:RotateAroundAxis(camang:Forward(), -custang.r)
+
+    campos = campos + camang:Right() * -custpos.x
+    campos = campos + camang:Forward() * -custpos.y
+    campos = campos + camang:Up() * -custpos.z
+
+    cam.Start3D(campos, camang, 75, 0, 0, ScrW(), ScrH(), 4, 1024)
 
     render.ClearDepth()
 

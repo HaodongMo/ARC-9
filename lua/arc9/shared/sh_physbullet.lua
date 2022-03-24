@@ -501,6 +501,25 @@ function ARC9.DrawPhysBullets()
 
         local pos = i.Pos
 
+        local speedvec = -i.Vel:GetNormalized()
+        local vec = speedvec
+        local shoulddraw = true
+
+        if IsValid(i.Weapon) then
+            shoulddraw = i.Weapon:RunHook("HookC_DrawBullet", i)
+
+            local fromvec = (i.Weapon:GetTracerOrigin() - pos):GetNormalized()
+
+            local d = math.min(i.Travelled / 1024, 1)
+            if i.Indirect then
+                d = 1
+            end
+
+            vec = LerpVector(d, fromvec, speedvec)
+        end
+
+        if !shoulddraw then continue end
+
         if i.ModelIndex != 0 then
             if IsValid(i.ClientModel) then
                 i.ClientModel:SetPos(pos)
@@ -531,20 +550,6 @@ function ARC9.DrawPhysBullets()
         render.DrawSprite(pos, headsize, headsize, col)
 
         render.SetMaterial(tracer)
-
-        local speedvec = -i.Vel:GetNormalized()
-        local vec = speedvec
-
-        if IsValid(i.Weapon) then
-            local fromvec = (i.Weapon:GetTracerOrigin() - pos):GetNormalized()
-
-            local d = math.min(i.Travelled / 1024, 1)
-            if i.Indirect then
-                d = 1
-            end
-
-            vec = LerpVector(d, fromvec, speedvec)
-        end
 
         render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled - 64))), size * 0.75, 1, 0, col)
 

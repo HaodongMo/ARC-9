@@ -83,6 +83,7 @@ The base weapon is also considered.
 HookT: Table hooks. Return a {table} of values. Every hook's returned values are gathered into one big table for later use. Every returned value is used.
 HookA: Accumulator hooks. Return an Angle, Vector, or Number - the resulting value is made up of all of these values added together.
 HookP: Pipeline hooks. Accept previously returned data, return new data. Each function modifies the data given. Return nil to make no change. Used for things like animation translate.
+HookC: Check hooks. Return false to prevent something from happening.
 
 Hooks run in an order that can be compared as such:
 1. If A's \[Hook_*\]_Priority value is higher than B (Unspecified is treated as 1) then run it first.

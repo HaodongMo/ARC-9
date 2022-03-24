@@ -377,6 +377,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_RTScopeReticle = function(self, {rtsize = num, rtmat = Material})
 -- SWEP.Hook_ModifyRecoilDir = function(self, dir) return dir end # direction of recoil in degrees, 0 = up
 -- SWEP.HookP_ModifyFiremode = function(self, firemode) return firemode end
+-- SWEP.HookC_DrawBullet = function(self, bullet) return bool end -- called when a bullet gets drawn, return true to prevent drawing bullet
 -- SWEP.HookP_ModifyBullet = function(self, bullet) return end # bullet = phys bullet table, modify in place, does not accept return
 -- SWEP.HookP_ModifyNewBullet = function(self, bullet) return end # bullet = phys bullet table, modify in place, does not accept return
 -- SWEP.HookP_BlockFire = function(self) return block end # return true to block firing

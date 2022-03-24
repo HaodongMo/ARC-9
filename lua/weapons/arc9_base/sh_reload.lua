@@ -58,7 +58,7 @@ function SWEP:Reload()
 
         local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.25
 
-        self:SetTimer(t * newcliptime, function()
+        self:SetTimer(self:GetProcessedValue("ReloadTime") * newcliptime, function()
             self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + self:Ammo1()))
         end)
     end
