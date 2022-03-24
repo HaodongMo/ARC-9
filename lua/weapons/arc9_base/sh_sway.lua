@@ -16,7 +16,7 @@ function SWEP:ThinkHoldBreath()
                 self.SetBreathDSP = false
             end
         else
-            target_ts = 0.25
+            target_ts = Lerp(1 - (self:GetBreath() / 100), 0.33, 0.25)
             if !self.SetBreathDSP then
                 self:GetOwner():SetDSP(30)
                 self.SetBreathDSP = true

@@ -78,17 +78,18 @@ function SWEP:ReceiveWeapon()
 
     if CLIENT then
         self:InvalidateCache()
+        self:PruneAttachments()
         self:SetupModel(true)
         self:SetupModel(false)
         self:RefreshCustomizeMenu()
     else
+        self:InvalidateCache()
+        self:PruneAttachments()
         self:SendWeapon()
         self:PostModify()
     end
 
     self:SetBaseSettings()
-
-    self:PruneAttachments()
 end
 
 function SWEP:ReceiveAttachmentTree()
