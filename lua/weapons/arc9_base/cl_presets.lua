@@ -176,7 +176,17 @@ function SWEP:DoPresetCapture(filename, foricon)
     -- render.MaterialOverride(Material("model_color"))
     render.SuppressEngineLighting(true)
     -- render.SetWriteDepthToDestAlpha(false)
+
+    render.MaterialOverride(Material("model_color"))
+    render.OverrideColorWriteEnable(true, false)
     self:GetVM():DrawModel()
+    render.OverrideColorWriteEnable(false, false)
+
+    render.BlurRenderTarget(cammat, 10, 10, 1)
+
+    render.MaterialOverride()
+    self:GetVM():DrawModel()
+
     render.SuppressEngineLighting(false)
 
     cam.End3D()

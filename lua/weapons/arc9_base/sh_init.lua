@@ -115,6 +115,10 @@ function SWEP:Holster(wep)
         self:GetOwner():SetCanZoom(true)
         self:EndLoop()
 
+        if game.SinglePlayer() then
+            game.SetTimeScale(1)
+        end
+
         if self.SetBreathDSP then
             self:GetOwner():SetDSP(0)
             self.SetBreathDSP = false
