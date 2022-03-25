@@ -198,7 +198,7 @@ function SWEP:SetupModel(wm, lod)
         self.RHIKModelWM = nil
         self.WModel = {}
 
-        local csmodel = ClientsideModel(self.MirrorModel or self.ViewModel)
+        local csmodel = ClientsideModel(self.WorldModelMirror or self.ViewModel)
 
         if !IsValid(csmodel) then return end
 
