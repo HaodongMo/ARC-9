@@ -5,7 +5,7 @@ function SWEP:GetElements()
 
     local eles = {}
 
-    for _, slottbl in pairs(self:GetSubSlotList()) do
+    for _, slottbl in ipairs(self:GetSubSlotList()) do
         if slottbl.Installed then
             table.Add(eles, slottbl.InstalledElements or {})
             local atttbl = ARC9.GetAttTable(slottbl.Installed)
@@ -31,7 +31,7 @@ function SWEP:GetElements()
 
     local eles2 = {}
 
-    for _, ele in ipairs(eles) do
+    for _, ele in pairs(eles) do
         eles2[ele] = true
     end
 

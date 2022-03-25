@@ -84,7 +84,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     if slottbl.OriginalAddress then
         local eles = self:GetElements()
 
-        for i, k in ipairs(eles) do
+        for i, k in pairs(eles) do
             local ele = self.AttachmentElements[i]
 
             if !ele then continue end
