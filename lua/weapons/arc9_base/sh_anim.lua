@@ -108,7 +108,7 @@ function SWEP:DoPoseParams()
 
     if !vm or !IsValid(vm) then return end
 
-    for i, k in ipairs(self.PoseParamState) do
+    for i, k in pairs(self.PoseParamState) do
         vm:SetPoseParameter(i, k)
     end
 end
