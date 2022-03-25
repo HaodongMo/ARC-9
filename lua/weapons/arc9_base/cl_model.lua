@@ -1,6 +1,7 @@
-function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset)
+function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     idle = idle or false
     local parentmdl = nil
+    if custompos then wm = true end
 
     if wm then
         if slottbl.WMBase then
@@ -9,8 +10,17 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset)
             if !IsValid(parentmdl) then
                 parentmdl = self
             end
+
+            if custompos then
+                parentmdl = nil
+            end
         else
-            parentmdl = self.WModel[1]
+            if custompos then
+                parentmdl = self.CModel[1]
+                parentmdl:SetupBones()
+            else
+                parentmdl = self.WModel[1]
+            end
         end
     else
         parentmdl = self:GetVM()
@@ -50,19 +60,25 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset)
 
     local offset_pos = slottbl.Pos or Vector(0, 0, 0)
     local offset_ang = slottbl.Ang or Angle(0, 0, 0)
+    local bpos, bang
 
-    local boneindex = parentmdl:LookupBone(bone)
+    if parentmdl then
+        local boneindex = parentmdl:LookupBone(bone)
 
-    if !boneindex then return Vector(0, 0, 0), Angle(0, 0, 0) end
+        if !boneindex then return Vector(0, 0, 0), Angle(0, 0, 0) end
 
-    if parentmdl == self:GetOwner() then
-        parentmdl:SetupBones()
-        parentmdl:InvalidateBoneCache()
-    end
-    local bonemat = parentmdl:GetBoneMatrix(boneindex)
-    if bonemat then
-        bpos = bonemat:GetTranslation()
-        bang = bonemat:GetAngles()
+        if parentmdl == self:GetOwner() then
+            parentmdl:SetupBones()
+            parentmdl:InvalidateBoneCache()
+        end
+        local bonemat = parentmdl:GetBoneMatrix(boneindex)
+        if bonemat then
+            bpos = bonemat:GetTranslation()
+            bang = bonemat:GetAngles()
+        end
+    elseif custompos then
+        bpos = custompos
+        bang = customang or Angle(0, 0, 0)
     end
 
     if slottbl.OriginalAddress then
@@ -118,7 +134,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset)
     return apos, aang
 end
 
-function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale)
+function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     ignorescale = ignorescale or false
 
     local model = atttbl.Model
@@ -150,10 +166,14 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale)
 
     table.insert(ARC9.CSModelPile, tbl)
 
-    if wm then
-        table.insert(self.WModel, csmodel)
+    if cm then
+        table.insert(self.CModel, csmodel)
     else
-        table.insert(self.VModel, csmodel)
+        if wm then
+            table.insert(self.WModel, csmodel)
+        else
+            table.insert(self.VModel, csmodel)
+        end
     end
 
     return csmodel
@@ -166,19 +186,22 @@ SWEP.RHIK_Priority = -1000
 SWEP.LHIKModelWM = nil
 SWEP.RHIKModelWM = nil
 
-function SWEP:SetupModel(wm, lod)
+function SWEP:SetupModel(wm, lod, cm)
     lod = lod or 0
     if !wm then lod = 0 end
+    if cm then wm = true end
 
-    self:KillModel()
+    self:KillModel(cm)
 
     if !wm and !IsValid(self:GetOwner()) then return end
 
     self.LHIK_Priority = -1000
     self.RHIK_Priority = -1000
 
+    local mdl = {}
+
     if !wm then
-        self.VModel = {}
+        self.VModel = mdl
         self.LHIKModel = nil
         self.RHIKModel = nil
 
@@ -194,9 +217,13 @@ function SWEP:SetupModel(wm, lod)
 
         -- vm.RenderOverride = RenderOverrideFunction
     else
-        self.LHIKModelWM = nil
-        self.RHIKModelWM = nil
-        self.WModel = {}
+        if cm then
+            self.CModel = mdl
+        else
+            self.LHIKModelWM = nil
+            self.RHIKModelWM = nil
+            self.WModel = mdl
+        end
 
         local csmodel = ClientsideModel(self.WorldModelMirror or self.ViewModel)
 
@@ -204,11 +231,20 @@ function SWEP:SetupModel(wm, lod)
 
         csmodel:SetNoDraw(true)
         csmodel.atttbl = {}
-        csmodel.slottbl = {
-            WMBase = true,
-            Pos = self.WorldModelOffset.Pos,
-            Ang = self.WorldModelOffset.Ang
-        }
+
+        if cm then
+            csmodel.slottbl = {
+                WMBase = true,
+                Pos = Vector(0, 0, 0),
+                Ang = Angle(0, 0, 0)
+            }
+        else
+            csmodel.slottbl = {
+                WMBase = true,
+                Pos = self.WorldModelOffset.Pos,
+                Ang = self.WorldModelOffset.Ang
+            }
+        end
 
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (self.WorldModelOffset.Scale or 1)
@@ -222,10 +258,8 @@ function SWEP:SetupModel(wm, lod)
 
         table.insert(ARC9.CSModelPile, tbl)
 
-        table.insert(self.WModel, 1, csmodel)
+        table.insert(mdl, 1, csmodel)
     end
-
-    self:DoBodygroups(wm)
 
     if !wm and self:GetOwner() != LocalPlayer() then return end
     if lod > 0 then return end
@@ -237,21 +271,23 @@ function SWEP:SetupModel(wm, lod)
 
         if !atttbl.Model then continue end
 
-        local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl)
+        local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm)
 
-        if atttbl.MuzzleDevice then
+        if atttbl.MuzzleDevice and !cm then
             local slmodel = self:CreateAttachmentModel(wm, atttbl, slottbl)
             slmodel.IsMuzzleDevice = true
             slmodel.NoDraw = true
         end
 
-        if wm then
-            slottbl.WModel = csmodel
-        else
-            slottbl.VModel = csmodel
+        if !cm then
+            if wm then
+                slottbl.WModel = csmodel
+            else
+                slottbl.VModel = csmodel
+            end
         end
 
-        if atttbl.LHIK or atttbl.RHIK then
+        if !cm and atttbl.LHIK or atttbl.RHIK then
             local proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
             proxmodel.NoDraw = true
 
@@ -280,12 +316,25 @@ function SWEP:SetupModel(wm, lod)
     if !wm then
         self:CreateFlashlightsVM()
     end
+
+    self:DoBodygroups(wm, cm)
 end
 
 SWEP.VModel = nil
 SWEP.WModel = nil
+SWEP.CModel = nil
 
-function SWEP:KillModel()
+function SWEP:KillModel(cmo)
+    if cmo then
+        for _, model in pairs(self.CModel or {}) do
+            SafeRemoveEntity(model)
+        end
+
+        self.CModel = nil
+
+        return
+    end
+
     for _, model in pairs(self.VModel or {}) do
         SafeRemoveEntity(model)
     end

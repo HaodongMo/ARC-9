@@ -155,19 +155,29 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     ARC9.PresetCam = true
 
+    -- local ppos, pang = EyePos(), EyeAngles()
     local campos, camang = Vector(0, 0, 0), Angle(0, 0, 0)
     local custpos, custang = self:GetProcessedValue("CustomizePos"), self:GetProcessedValue("CustomizeAng")
+    local pos, ang = Vector(0, 0, 0), Angle(0, 0, 0)
 
-    camang = self.LastViewModelAng or EyeAngles()
-    campos = self.LastViewModelPos or EyePos()
+    pos = pos + (camang:Right() * custpos[1])
+    pos = pos + (camang:Forward() * custpos[2])
+    pos = pos + (camang:Up() * custpos[3])
 
-    camang:RotateAroundAxis(camang:Up(), -custang.p)
-    camang:RotateAroundAxis(camang:Right(), -custang.y)
-    camang:RotateAroundAxis(camang:Forward(), -custang.r)
+    ang:RotateAroundAxis(camang:Up(), custang[1])
+    ang:RotateAroundAxis(camang:Right(), custang[2])
+    ang:RotateAroundAxis(camang:Forward(), custang[3])
 
-    campos = campos + camang:Right() * -custpos.x
-    campos = campos + camang:Forward() * -custpos.y
-    campos = campos + camang:Up() * -custpos.z
+    -- camang = self.LastViewModelAng or EyeAngles()
+    -- campos = self.LastViewModelPos or EyePos()
+
+    -- camang:RotateAroundAxis(camang:Up(), -custang.p)
+    -- camang:RotateAroundAxis(camang:Right(), -custang.y)
+    -- camang:RotateAroundAxis(camang:Forward(), -custang.r)
+
+    -- campos = campos + camang:Right() * -custpos.x
+    -- campos = campos + camang:Forward() * -custpos.y
+    -- campos = campos + camang:Up() * -custpos.z
 
     cam.Start3D(campos, camang, self:GetProcessedValue("CustomizeSnapshotFOV"), 0, 0, ScrW(), ScrH(), 1, 1024)
 
@@ -176,17 +186,37 @@ function SWEP:DoPresetCapture(filename, foricon)
     render.SuppressEngineLighting(true)
     -- render.SetWriteDepthToDestAlpha(false)
 
+    self:SetupModel(true, 0, true)
+
+    local mdl = self.CModel[1]
+
+    local anim = self:TranslateAnimation("idle")
+    local ae = self:GetAnimationEntry(anim)
+    local seq = mdl:LookupSequence(self:RandomChoice(ae.Source))
+
+    mdl:ResetSequence(seq)
+    mdl:SetPoseParameter("sights", 1)
+
+    mdl:SetupBones()
+    mdl:InvalidateBoneCache()
+
     render.MaterialOverride(Material("model_color"))
     render.OverrideColorWriteEnable(true, false)
-    self:GetVM():DrawModel()
+    -- self:GetVM():DrawModel()
+    self:DrawCustomModel(true, pos, ang)
     render.OverrideColorWriteEnable(false, false)
 
     render.BlurRenderTarget(cammat, 10, 10, 1)
 
     render.MaterialOverride(Material("model_color"))
-    self:GetVM():DrawModel()
+    -- self:GetVM():DrawModel()
+    self:DrawCustomModel(true, pos, ang)
+
+    render.MaterialOverride()
 
     render.SuppressEngineLighting(false)
+
+    self:KillModel(true)
 
     cam.End3D()
 

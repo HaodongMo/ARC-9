@@ -18,16 +18,21 @@ function SWEP:ShouldLOD()
     end
 end
 
-function SWEP:DrawCustomModel(wm)
+function SWEP:DrawCustomModel(wm, custompos, customang)
     if !wm and !IsValid(self:GetOwner()) then return end
     if !wm and self:GetOwner():IsNPC() then return end
+    if custompos then wm = true end
 
     local mdl = self.VModel
     local lod = 0
 
     if wm then
-        mdl = self.WModel
-        lod = self:ShouldLOD()
+        if custompos then
+            mdl = self.CModel
+        else
+            mdl = self.WModel
+            lod = self:ShouldLOD()
+        end
 
         if lod >= 2 then
             self:KillModel()
@@ -37,12 +42,15 @@ function SWEP:DrawCustomModel(wm)
     end
 
     if !mdl then
-        self:SetupModel(wm, lod)
+        self:SetupModel(wm, lod, !!custompos)
 
         mdl = self.VModel
 
         if wm then
             mdl = self.WModel
+            if custompos then
+                mdl = self.CModel
+            end
         end
     end
 
@@ -51,7 +59,7 @@ function SWEP:DrawCustomModel(wm)
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
 
-            local apos, aang = self:GetAttPos(slottbl, wm)
+            local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or Angle(0, 0, 0))
 
             model:SetPos(apos)
             model:SetAngles(aang)

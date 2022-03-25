@@ -27,6 +27,8 @@ function SWEP:PreDrawViewModel()
         cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 0.5, 10000)
     end
 
+    -- self:DrawCustomModel(true, EyePos() + EyeAngles():Forward() * 16, EyeAngles())
+
     cam.IgnoreZ(true)
 end
 

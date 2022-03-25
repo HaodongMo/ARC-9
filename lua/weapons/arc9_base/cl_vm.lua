@@ -318,6 +318,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
         ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
 
+        ang:Normalize()
+
         self.ViewModelPos = pos
         self.ViewModelAng = ang
 
