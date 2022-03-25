@@ -173,7 +173,6 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.ClearDepth()
 
-    -- render.MaterialOverride(Material("model_color"))
     render.SuppressEngineLighting(true)
     -- render.SetWriteDepthToDestAlpha(false)
 
@@ -184,7 +183,7 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.BlurRenderTarget(cammat, 10, 10, 1)
 
-    render.MaterialOverride()
+    render.MaterialOverride(Material("model_color"))
     self:GetVM():DrawModel()
 
     render.SuppressEngineLighting(false)
