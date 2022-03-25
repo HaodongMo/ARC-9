@@ -95,6 +95,7 @@ function SWEP:PostModify(toggleonly)
             self:SavePreset()
         end
         self:BuildMultiSight()
+        self.InvalidateSelectIcon = true
     else
         if self:GetOwner():IsPlayer() then
             if self:GetValue("ToggleOnF") then

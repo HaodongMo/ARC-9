@@ -188,17 +188,17 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     self:SetupModel(true, 0, true)
 
-    local mdl = self.CModel[1]
+    -- local mdl = self.CModel[1]
 
-    local anim = self:TranslateAnimation("idle")
-    local ae = self:GetAnimationEntry(anim)
-    local seq = mdl:LookupSequence(self:RandomChoice(ae.Source))
+    -- local anim = self:TranslateAnimation("idle")
+    -- local ae = self:GetAnimationEntry(anim)
+    -- local seq = mdl:LookupSequence(self:RandomChoice(ae.Source))
 
-    mdl:ResetSequence(seq)
-    mdl:SetPoseParameter("sights", 1)
+    -- mdl:ResetSequence(seq)
+    -- mdl:SetPoseParameter("sights", 1)
 
-    mdl:SetupBones()
-    mdl:InvalidateBoneCache()
+    -- mdl:SetupBones()
+    -- mdl:InvalidateBoneCache()
 
     render.MaterialOverride(Material("model_color"))
     render.OverrideColorWriteEnable(true, false)
@@ -255,4 +255,5 @@ function SWEP:DoPresetCapture(filename, foricon)
     render.PopRenderTarget()
 
     self.AutoSelectIcon = Material("data/" .. filename .. "." .. ARC9.PresetIconFormat, "smooth")
+    self.InvalidateSelectIcon = false
 end

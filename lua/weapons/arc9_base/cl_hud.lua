@@ -107,7 +107,7 @@ function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaint")
 end
 
-SWEP.Mat_Select = nil
+SWEP.InvalidateSelectIcon = false
 
 function SWEP:DrawWeaponSelection(x, y, w, h, a)
     -- if !self.Mat_Select then
@@ -125,13 +125,11 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
 
     local selecticon = self.AutoSelectIcon
 
-    if !selecticon then
+    if !selecticon or self.InvalidateSelectIcon then
+        self:DoIconCapture()
+
         local filename = ARC9.PresetPath .. self:GetPresetBase() .. "_icon." .. ARC9.PresetIconFormat
-        if !file.Exists(filename, "DATA") then
-            selecticon = self.DefaultSelectIcon
-        else
-            selecticon = Material("data/" .. filename, "smooth")
-        end
+        selecticon = Material("data/" .. filename, "smooth")
     end
 
     if !selecticon then return end

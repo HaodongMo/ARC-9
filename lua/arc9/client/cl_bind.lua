@@ -25,7 +25,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                 net.Start("ARC9_togglecustomize")
                 net.WriteBool(false)
                 net.SendToServer()
-                wpn:DoIconCapture()
+                -- wpn:DoIconCapture()
             else
                 net.Start("ARC9_togglecustomize")
                 net.WriteBool(true)
