@@ -52,7 +52,7 @@ function SWEP:CreateHUD_Trivia()
 
     multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(4)), "ARC9_8")
 
-    for i, text in pairs(multiline) do
+    for i, text in ipairs(multiline) do
         local desc_line = vgui.Create("DPanel", tp)
         desc_line:SetSize(tp:GetWide(), ScreenScale(9))
         desc_line:Dock(TOP)
@@ -72,7 +72,7 @@ function SWEP:CreateHUD_Trivia()
         end
     end
 
-    for title, trivia in pairs(self:GetValue("Trivia")) do
+    for title, trivia in ipairs(self:GetValue("Trivia")) do
         if title == "BaseClass" then continue end
         local newbtn2 = tp:Add("DPanel")
         newbtn2:SetSize(ScreenScale(200), ScreenScale(21))

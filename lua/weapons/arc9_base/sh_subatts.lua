@@ -7,19 +7,19 @@ end
 function SWEP:BuildAttachmentAddresses()
     self.AttachmentAddresses = {}
 
-    for c, i in pairs(self:GetSubSlotList()) do
+    for c, i in ipairs(self:GetSubSlotList()) do
         i.Address = c
 
         self.AttachmentAddresses[c] = i
     end
 
-    for _, i in pairs(self.Attachments) do
+    for _, i in ipairs(self.Attachments) do
         self:BuildParentAddresses(i)
     end
 end
 
 function SWEP:BuildParentAddresses(parenttbl)
-    for _, i in pairs(parenttbl.SubAttachments or {}) do
+    for _, i in ipairs(parenttbl.SubAttachments or {}) do
         i.ParentAddress = parenttbl.Address
         self:BuildParentAddresses(i)
     end
@@ -32,7 +32,7 @@ function SWEP:AttTreeToList(tree)
     atts = {tree}
 
     if tree.SubAttachments then
-        for _, sub in pairs(tree.SubAttachments) do
+        for _, sub in ipairs(tree.SubAttachments) do
             table.Add(atts, self:AttTreeToList(sub))
         end
     end
@@ -53,7 +53,7 @@ end
 function SWEP:GetAttachmentList()
     local atts = {}
 
-    for _, i in pairs(self:GetSubSlotList()) do
+    for _, i in ipairs(self:GetSubSlotList()) do
         if i.Installed then
             table.insert(atts, i.Installed)
         end
@@ -148,12 +148,12 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
 end
 
 function SWEP:BuildSubAttachments(tbl)
-    for i, k in pairs(self.Attachments) do
+    for i, k in ipairs(self.Attachments) do
         k.OriginalAddress = i
         k.SubAttachments = {}
     end
 
-    for i, k in pairs(tbl) do
+    for i, k in ipairs(tbl) do
         self.Attachments[i].Installed = k.Installed
 
         if !k.Installed then continue end
@@ -177,7 +177,7 @@ function SWEP:ValidateInventoryForNewTree(tree)
 
     local currcount = self:CountAttsInTree(self.Attachments)
 
-    for att, attc in pairs(count) do
+    for att, attc in ipairs(count) do
         local atttbl = ARC9.GetAttTable(att)
 
         if atttbl.Free then continue end
@@ -193,7 +193,7 @@ function SWEP:ValidateInventoryForNewTree(tree)
 end
 
 function SWEP:PruneAttachments()
-    for _, slot in pairs(self:GetSubSlotList()) do
+    for _, slot in ipairs(self:GetSubSlotList()) do
         if !slot.Installed then continue end
 
         local atttbl = ARC9.GetAttTable(slot.Installed)
@@ -204,7 +204,7 @@ function SWEP:PruneAttachments()
         end
 
         if slot.MergeSlotAddresses then
-            for _, msa in pairs(slot.MergeSlotAddresses) do
+            for _, msa in ipairs(slot.MergeSlotAddresses) do
                 local mslottbl = self:LocateSlotFromAddress(msa)
 
                 if !mslottbl then continue end

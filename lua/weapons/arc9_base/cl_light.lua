@@ -2,7 +2,7 @@ SWEP.Flashlights = {} -- tracks projectedlights
 -- {{att = int, light = ProjectedTexture}}
 
 function SWEP:GetHasFlashlights()
-    for i, k in pairs(self:GetAttachmentList()) do
+    for i, k in ipairs(self:GetAttachmentList()) do
         local atttbl = ARC9.GetAttTable(k)
 
         if atttbl.Flashlight then return true end
@@ -17,7 +17,7 @@ function SWEP:CreateFlashlightsVM()
 
     local total_lights = 0
 
-    for _, k in pairs(self:GetSubSlotList()) do
+    for _, k in ipairs(self:GetSubSlotList()) do
         if !k.Installed then continue end
         local atttbl = self:GetFinalAttTable(k)
 
@@ -59,7 +59,7 @@ function SWEP:CreateFlashlightsVM()
     end
 
     if total_lights > 2 then -- you are a madman
-        for i, k in pairs(self.Flashlights) do
+        for i, k in ipairs(self.Flashlights) do
             if k.light:IsValid() then k.light:SetEnableShadows(false) end
         end
     end
@@ -73,7 +73,7 @@ end
 function SWEP:KillFlashlightsVM()
     if !self.Flashlights then return end
 
-    for i, k in pairs(self.Flashlights) do
+    for i, k in ipairs(self.Flashlights) do
         if k.light and k.light:IsValid() then
             k.light:Remove()
         end
@@ -87,7 +87,7 @@ function SWEP:DrawFlashlightsVM()
         self:CreateFlashlightsVM()
     end
 
-    for i, k in pairs(self.Flashlights) do
+    for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).VModel
 
         if !model then continue end

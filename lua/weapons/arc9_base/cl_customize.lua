@@ -8,10 +8,10 @@ function SWEP:MultiLineText(text, maxw, font)
 
     local newlined = string.Split(text, "\n")
 
-    for _, line in pairs(newlined) do
+    for _, line in ipairs(newlined) do
         local words = string.Split(line, " ")
 
-        for _, word in pairs(words) do
+        for _, word in ipairs(words) do
             local tx = surface.GetTextSize(word)
 
             if x + tx >= maxw then
@@ -215,7 +215,7 @@ function SWEP:CreateCustomizeHUD()
 
             cam.Start3D(nil, nil, self:GetViewModelFOV())
 
-            for _, slot in pairs(self:GetSubSlotList()) do
+            for _, slot in ipairs(self:GetSubSlotList()) do
                 if slot.Hidden then continue end
                 local ms_slot = self:GetFilledMergeSlot(slot.Address)
 
@@ -272,7 +272,7 @@ function SWEP:CreateCustomizeHUD()
                 if isinaabb(x, y) then
                     hoveredslot = true
                     dist = math.Distance(x, y, mousex, mousey)
-                    for _, bump in pairs(bumpy) do
+                    for _, bump in ipairs(bumpy) do
                         if isinaabb(bump.x, bump.y) then
                             local d2 = math.Distance(bump.x, bump.y, mousex, mousey)
 
@@ -501,7 +501,7 @@ function SWEP:CreateHUD_RHP()
         surface.DrawRect(w - ScreenScale(420), ScreenScale(42), ScreenScale(407), ScreenScale(1))
     end
 
-    for i, btn in pairs(self.CustomizeButtons) do
+    for i, btn in ipairs(self.CustomizeButtons) do
         local newbtn = vgui.Create("DButton", bg)
         newbtn:SetPos(ScrW() - ScreenScale(6) - (ScreenScale(69) * i), ScreenScale(58))
         newbtn:SetSize(ScreenScale(64), ScreenScale(12))

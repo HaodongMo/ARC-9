@@ -35,7 +35,7 @@ function SWEP:DoRHIK(wm)
         if self:GetProcessedValue("LHIK") then
             local next_stage_index
 
-            for i, k in pairs(iktl) do
+            for i, k in ipairs(iktl) do
                 if not k or not k.t then continue end
 
                 if k.t > iklt then
@@ -76,7 +76,7 @@ function SWEP:DoRHIK(wm)
         if self:GetProcessedValue("RHIK") then
             local next_stage_index
 
-            for i, k in pairs(iktl) do
+            for i, k in ipairs(iktl) do
                 if not k or not k.t then continue end
 
                 if k.t > iklt then
@@ -124,7 +124,7 @@ function SWEP:DoRHIK(wm)
     if IsValid(rhik_model) then
         rhik_model:SetupBones()
 
-        for _, bone in pairs(ARC9.RHIKBones) do
+        for _, bone in ipairs(ARC9.RHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = rhik_model:LookupBone(bone)
             if not vm_bone or not target_bone then continue end
@@ -149,7 +149,7 @@ function SWEP:DoRHIK(wm)
     if IsValid(lhik_model) then
         lhik_model:SetupBones()
 
-        for _, bone in pairs(ARC9.LHIKBones) do
+        for _, bone in ipairs(ARC9.LHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = lhik_model:LookupBone(bone)
             if not vm_bone or not target_bone then continue end

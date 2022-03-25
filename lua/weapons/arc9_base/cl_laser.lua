@@ -73,7 +73,7 @@ function SWEP:DrawLasers(wm, behav)
         end
     end
 
-    for _, model in pairs(mdl) do
+    for _, model in ipairs(mdl) do
         local slottbl = model.slottbl
         local atttbl = self:GetFinalAttTable(slottbl)
 

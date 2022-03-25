@@ -38,7 +38,7 @@ function SWEP:RunHook(val, data)
 
     self.HookCache[val] = {}
 
-    for _, tbl in pairs(self:GetAllAffectors()) do
+    for _, tbl in ipairs(self:GetAllAffectors()) do
         if tbl[val] then
 
             table.insert(self.HookCache[val], tbl[val])
@@ -100,7 +100,7 @@ function SWEP:GetAllAffectors()
         ARC9.Overrun = false
     end
 
-    for _, slot in pairs(self:GetSubSlotList()) do
+    for _, slot in ipairs(self:GetSubSlotList()) do
         local atttbl = self:GetFinalAttTable(slot)
 
         if atttbl then
@@ -278,7 +278,7 @@ function SWEP:GetValue(val, base, condition, amount)
     local priority = 0
 
     if !self.ExcludeFromRawStats[val] then
-        for _, tbl in pairs(self:GetAllAffectors()) do
+        for _, tbl in ipairs(self:GetAllAffectors()) do
             local att_priority = tbl[val .. condition .. "_Priority"] or 1
 
             if tbl[val .. condition] != nil and att_priority >= priority then
@@ -289,7 +289,7 @@ function SWEP:GetValue(val, base, condition, amount)
         end
     end
 
-    for _, tbl in pairs(self:GetAllAffectors()) do
+    for _, tbl in ipairs(self:GetAllAffectors()) do
         local att_priority = tbl[val .. "Override" .. condition .. "_Priority"] or 1
 
         if tbl[val .. "Override" .. condition] != nil and att_priority >= priority then
@@ -301,7 +301,7 @@ function SWEP:GetValue(val, base, condition, amount)
 
     if isnumber(stat) then
 
-        for _, tbl in pairs(self:GetAllAffectors()) do
+        for _, tbl in ipairs(self:GetAllAffectors()) do
             if tbl[val .. "Add" .. condition] != nil then
                 if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
                     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
@@ -310,7 +310,7 @@ function SWEP:GetValue(val, base, condition, amount)
             end
         end
 
-        for _, tbl in pairs(self:GetAllAffectors()) do
+        for _, tbl in ipairs(self:GetAllAffectors()) do
             if tbl[val .. "Mult" .. condition] != nil then
                 if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
                     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")

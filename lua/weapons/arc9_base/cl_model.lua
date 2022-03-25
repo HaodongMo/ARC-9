@@ -84,7 +84,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     if slottbl.OriginalAddress then
         local eles = self:GetElements()
 
-        for i, k in pairs(eles) do
+        for i, k in ipairs(eles) do
             local ele = self.AttachmentElements[i]
 
             if !ele then continue end
@@ -264,7 +264,7 @@ function SWEP:SetupModel(wm, lod, cm)
     if !wm and self:GetOwner() != LocalPlayer() then return end
     if lod > 0 then return end
 
-    for _, slottbl in pairs(self:GetSubSlotList()) do
+    for _, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
 
         local atttbl = ARC9.GetAttTable(slottbl.Installed)
@@ -326,7 +326,7 @@ SWEP.CModel = nil
 
 function SWEP:KillModel(cmo)
     if cmo then
-        for _, model in pairs(self.CModel or {}) do
+        for _, model in ipairs(self.CModel or {}) do
             SafeRemoveEntity(model)
         end
 
@@ -335,10 +335,10 @@ function SWEP:KillModel(cmo)
         return
     end
 
-    for _, model in pairs(self.VModel or {}) do
+    for _, model in ipairs(self.VModel or {}) do
         SafeRemoveEntity(model)
     end
-    for _, model in pairs(self.WModel or {}) do
+    for _, model in ipairs(self.WModel or {}) do
         SafeRemoveEntity(model)
     end
 

@@ -56,7 +56,7 @@ function SWEP:PostDrawViewModel()
     end
 
     cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 1, 10000 )
-    for _, model in pairs(self.VModel) do
+    for _, model in ipairs(self.VModel) do
         local slottbl = model.slottbl
         local atttbl = self:GetFinalAttTable(slottbl)
 
