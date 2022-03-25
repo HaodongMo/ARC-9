@@ -275,8 +275,8 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
         if IsFirstTimePredicted() then
             if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
                 for i = 1, self:GetProcessedValue("Num") do
-                    ang = ang + (spread * AngleRand() / 3.6)
-                    ARC9:ShootPhysBullet(self, pos, ang:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
+                    local newang = ang + (spread * AngleRand() / 3.6)
+                    ARC9:ShootPhysBullet(self, pos, newang:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
                 end
             else
                 self:GetOwner():LagCompensation(true)
