@@ -28,8 +28,8 @@ function SWEP:GetSmoothedFOVMag()
 
     if self:GetSightAmount() > 0 then
         local target = self:GetMagnification()
-
-        mag = Lerp(self:GetSightAmount(), 1, target)
+        
+        mag = Lerp(math.ease.InQuint(self:GetSightAmount()), 1, target)
     end
 
     local diff = math.abs(self.SmoothedMagnification - mag)

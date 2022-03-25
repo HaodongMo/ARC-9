@@ -62,7 +62,7 @@ end
 function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
     local physmdl = wep:GetProcessedValue("PhysBulletModel")
-    local mdlindex = ARC9.PhysBulletModelsLookup[physmdl] or 0
+    local mdlindex = ARC9.PhysBulletModelsLookup[string.lower(physmdl or "")] or 0
 
     if physmdl and mdlindex == 0 then
         print("\nARC9 encountered unregistered PhysBulletModel '" .. physmdl .. "'!\nWe will register and refresh this model for all clients, but this is network-intensive!\n\nPlease tell the addon developer to register the model in a shared lua file like so: ARC9:RegisterPhysBulletModel(\"" .. physmdl .. "\")")
