@@ -62,7 +62,9 @@ function SWEP:Deploy()
 
     self:SetTriggerDown(self:GetOwner():KeyDown(IN_ATTACK))
 
-    self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))
+    if self:GetValue("AnimDraw") then
+        self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))
+    end
 
     if self:GetProcessedValue("AutoReload") then
         self:RestoreClip(math.huge)
