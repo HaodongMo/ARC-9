@@ -47,7 +47,7 @@ function SWEP:DetachAllFromSubSlot(addr, silent)
     self:Detach(addr, silent)
 
     if slottbl.MergeSlotAddresses then
-        for _, addr2 in pairs(slottbl.MergeSlotAddresses) do
+        for _, addr2 in ipairs(slottbl.MergeSlotAddresses) do
             self:Detach(addr2, silent)
         end
     end
@@ -63,7 +63,7 @@ function SWEP:GetFilledMergeSlot(addr)
     end
 
     if slottbl.MergeSlots then
-        for _, merge_addr in pairs(slottbl.MergeSlotAddresses) do
+        for _, merge_addr in ipairs(slottbl.MergeSlotAddresses) do
             local mergeslot = self:LocateSlotFromAddress(merge_addr)
 
             if mergeslot.Installed then
@@ -248,7 +248,7 @@ function SWEP:SlotInvalid(slottbl)
 
     local cat_true = false
 
-    for _, c in pairs(attcat) do
+    for _, c in ipairs(attcat) do
         if (slottbl.RejectAttachments or {})[c] then return false end
         if table.HasValue(cat, c) then
             cat_true = true
@@ -340,7 +340,7 @@ function SWEP:CanAttach(addr, att, slottbl)
 
     local cat_true = false
 
-    for _, c in pairs(attcat) do
+    for _, c in ipairs(attcat) do
         if (slottbl.RejectAttachments or {})[c] then return false end
         if table.HasValue(cat, c) then
             cat_true = true
@@ -379,7 +379,7 @@ function SWEP:ToggleAllStatsOnF()
 
     local toggled = false
 
-    for _, slottbl in pairs(self:GetSubSlotList()) do
+    for _, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
 
         local atttbl = self:GetFinalAttTable(slottbl)

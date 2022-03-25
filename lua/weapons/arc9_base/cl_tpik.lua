@@ -55,7 +55,7 @@ function SWEP:DoTPIK()
         bones = ARC9.RHIKHandBones
     end
 
-    for _, bone in pairs(bones) do
+    for _, bone in ipairs(bones) do
         local wm_boneindex = wm:LookupBone(bone)
         if !wm_boneindex then continue end
         local wm_bonematrix = wm:GetBoneMatrix(wm_boneindex)
