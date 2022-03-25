@@ -103,9 +103,9 @@ function SWEP:Idle()
             if !self.AutoSelectIcon then
                 self:DoIconCapture()
             end
-        end
 
-        return
+            return
+        end
     end
 
     if self:GetPrimedAttack() then return end
