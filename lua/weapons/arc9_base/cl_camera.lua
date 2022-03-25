@@ -2,16 +2,14 @@ SWEP.SmoothedMagnification = 1
 SWEP.FOV = 90
 
 function SWEP:CalcView(ply, pos, ang, fov)
-    local rec = (self:GetLastRecoilTime() + self:GetProcessedValue("RecoilResetTime")) - CurTime()
+    local rec = (self:GetLastRecoilTime() + 0.25) - CurTime()
 
-    rec = rec * 10
-
-    rec = math.Clamp(rec, 0, 1)
+    -- rec = rec * 0.5
 
     rec = rec * self:GetProcessedValue("RecoilKick")
 
     if rec > 0 then
-        ang.r = ang.r + (math.sin(CurTime() * 70.151) * rec * 0.25)
+        ang.r = ang.r + (math.sin(CurTime() * 70.151) * rec)
     end
 
     fov = fov / self:GetSmoothedFOVMag()
@@ -28,7 +26,7 @@ function SWEP:GetSmoothedFOVMag()
 
     if self:GetSightAmount() > 0 then
         local target = self:GetMagnification()
-        
+
         mag = Lerp(math.ease.InQuint(self:GetSightAmount()), 1, target)
     end
 
