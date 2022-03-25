@@ -208,10 +208,8 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.BlurRenderTarget(cammat, 10, 10, 1)
 
-    render.MaterialOverride()
-    -- self:GetVM():DrawModel()
+    render.MaterialOverride(Material("model_color"))
     self:DrawCustomModel(true, pos, ang)
-
     render.MaterialOverride()
 
     render.SuppressEngineLighting(false)

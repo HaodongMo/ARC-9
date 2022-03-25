@@ -355,15 +355,26 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
 
     ap = math.min(ap, 1)
 
-    -- local apdmg = DamageInfo()
-    -- apdmg:SetDamage(dmgv * ap)
-    -- apdmg:SetDamageType(DMG_DIRECT)
-    -- apdmg:SetInflictor(dmg:GetInflictor())
-    -- apdmg:SetAttacker(dmg:GetAttacker())
+    if tr.Entity:GetClass() == "npc_helicopter" then
+        local apdmg = DamageInfo()
+        apdmg:SetDamage(dmgv * ap)
+        apdmg:SetDamageType(DMG_AIRBOAT)
+        apdmg:SetInflictor(dmg:GetInflictor())
+        apdmg:SetAttacker(dmg:GetAttacker())
 
-    -- tr.Entity:TakeDamageInfo(apdmg)
-    local apdmg = dmgv * ap
-    tr.Entity:SetHealth(tr.Entity:Health() - apdmg)
+        tr.Entity:TakeDamageInfo(apdmg)
+    elseif tr.Entity:GetClass() == "npc_gunship" then
+        local apdmg = DamageInfo()
+        apdmg:SetDamage(dmgv * ap)
+        apdmg:SetDamageType(DMG_BLAST)
+        apdmg:SetInflictor(dmg:GetInflictor())
+        apdmg:SetAttacker(dmg:GetAttacker())
+
+        tr.Entity:TakeDamageInfo(apdmg)
+    else
+        local apdmg = dmgv * ap
+        tr.Entity:SetHealth(tr.Entity:Health() - apdmg)
+    end
 
     dmgv = dmgv * (1 - ap)
 

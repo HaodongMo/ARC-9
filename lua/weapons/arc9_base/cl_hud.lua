@@ -1,10 +1,13 @@
 function SWEP:ShouldDrawCrosshair()
-    -- return false
-    -- return true
+    if !self:GetProcessedValue("Crosshair") then return false end
+    if self:GetCustomize() then return false end
+    if self:GetInSights() then return false end
+
+    return true
 end
 
 local function drawshadowrect(x, y, w, h, col)
-    local shadow = Color(0, 0, 0, 100)
+    local shadow = Color(0, 0, 0, col.a * 100 / 150)
 
     surface.SetDrawColor(col)
     surface.DrawRect(x, y, w, h)
@@ -13,8 +16,16 @@ local function drawshadowrect(x, y, w, h, col)
 end
 
 local lastgap = 0
+local lasthelperalpha = 0
 
 function SWEP:DoDrawCrosshair(x, y)
+
+    local dotsize = ScreenScale(1)
+    local prong = ScreenScale(8)
+    local minigap = ScreenScale(2)
+    local miniprong_1 = ScreenScale(4)
+    local miniprong_2 = ScreenScale(2)
+    local col = Color(255, 255, 255, 100)
 
     if self:GetOwner():IsAdmin() and GetConVar("developer"):GetInt() >= 2 and self:GetInSights() then
         surface.SetDrawColor(255, 0, 0, 150)
@@ -22,18 +33,31 @@ function SWEP:DoDrawCrosshair(x, y)
         surface.DrawLine(0, ScrH() / 2, ScrW(), ScrH() / 2)
     end
 
-    if !self:GetProcessedValue("Crosshair") then return true end
-    if self:GetCustomize() then return true end
+    local helpertarget = 0
+
+    col.a = lasthelperalpha * col.a
+
+    if !self:ShouldDrawCrosshair() then
+        if self:GetOwner():KeyDown(IN_USE) then
+            helpertarget = 1
+        end
+
+        lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
+
+        drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col)
+
+        return true
+    else
+        helpertarget = 1
+
+        lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
+    end
 
     local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
     local toscreen = endpos:ToScreen()
     x, y = toscreen.x, toscreen.y
 
-    if self:GetInSights() then return true end
-
     local mode = self:GetCurrentFiremode()
-
-    local dotsize = ScreenScale(1)
 
     local gap = ScreenScale(8)
 
@@ -48,13 +72,6 @@ function SWEP:DoDrawCrosshair(x, y)
     lastgap = Lerp(0.5, gap, lastgap)
 
     gap = lastgap
-
-    local prong = ScreenScale(8)
-    local minigap = ScreenScale(2)
-    local miniprong_1 = ScreenScale(4)
-    local miniprong_2 = ScreenScale(2)
-
-    local col = Color(255, 255, 255, 150)
 
     drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col)
 
