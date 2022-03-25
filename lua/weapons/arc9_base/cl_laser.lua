@@ -24,20 +24,28 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
         pos = pos - (dir * 256)
     end
 
-    if !behav then
-        render.SetMaterial(lasermat)
-        render.DrawBeam(pos, tr.HitPos, width * 0.3, 0, 1, Color(200, 200, 200))
-        render.DrawBeam(pos, tr.HitPos, width, 0, 1, color)
+    local hit = tr.Hit
+    local hitpos = tr.HitPos
+
+    if tr.HitSky then
+        hit = false
+        hitpos = pos + (dir * 30000)
     end
 
-    if tr.Hit then
+    if !behav then
+        render.SetMaterial(lasermat)
+        render.DrawBeam(pos, hitpos, width * 0.3, 0, 1, Color(200, 200, 200))
+        render.DrawBeam(pos, hitpos, width, 0, 1, color)
+    end
+
+    if hit then
         local mul = strength
         local rad = math.Rand(4, 6) * mul
 
         render.SetMaterial(flaremat)
-        render.DrawSprite(tr.HitPos, rad, rad, color)
+        render.DrawSprite(hitpos, rad, rad, color)
 
-        render.DrawSprite(tr.HitPos, rad * 0.3, rad * 0.3, Color(200, 200, 200))
+        render.DrawSprite(hitpos, rad * 0.3, rad * 0.3, Color(200, 200, 200))
     end
 
     if behavior then
