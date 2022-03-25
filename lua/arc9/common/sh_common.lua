@@ -65,6 +65,7 @@ ARC9.RicochetSounds = {
  }
 
 ARC9.PresetPath = "ARC9_presets/"
+ARC9.PresetIconFormat = "png"
 
 ARC9.OverDraw = false
 

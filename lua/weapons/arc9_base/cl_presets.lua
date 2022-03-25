@@ -46,8 +46,8 @@ function SWEP:DeletePreset(filename)
         file.Delete(filename .. ".txt")
     end
 
-    if file.Exists(filename .. ".png", "DATA") then
-        file.Delete(filename .. ".png")
+    if file.Exists(filename .. "." .. ARC9.PresetIconFormat, "DATA") then
+        file.Delete(filename .. "." .. ARC9.PresetIconFormat)
     end
 end
 
@@ -208,7 +208,7 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.BlurRenderTarget(cammat, 10, 10, 1)
 
-    render.MaterialOverride(Material("model_color"))
+    render.MaterialOverride()
     -- self:GetVM():DrawModel()
     self:DrawCustomModel(true, pos, ang)
 
@@ -241,7 +241,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     local x = (pr_w - 256) / 2
 
     local data = render.Capture( {
-        format = "png",
+        format = ARC9.PresetIconFormat,
         x = x,
         y = 0,
         w = 256,
@@ -249,10 +249,10 @@ function SWEP:DoPresetCapture(filename, foricon)
     } )
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
-    file.Write(filename .. ".png", data)
+    file.Write(filename .. "." .. ARC9.PresetIconFormat, data)
     -- file.Write(ARC9.PresetPath .. self:GetPresetBase() .. "/icon.png", "DATA")
 
     render.PopRenderTarget()
 
-    self.AutoSelectIcon = Material("data/" .. filename .. ".png", "smooth")
+    self.AutoSelectIcon = Material("data/" .. filename .. "." .. ARC9.PresetIconFormat, "smooth")
 end

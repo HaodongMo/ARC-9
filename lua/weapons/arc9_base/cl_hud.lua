@@ -126,7 +126,7 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
     local selecticon = self.AutoSelectIcon
 
     if !selecticon then
-        local filename = ARC9.PresetPath .. self:GetPresetBase() .. "_icon.png"
+        local filename = ARC9.PresetPath .. self:GetPresetBase() .. "_icon." .. ARC9.PresetIconFormat
         if !file.Exists(filename, "DATA") then
             selecticon = self.DefaultSelectIcon
         else
