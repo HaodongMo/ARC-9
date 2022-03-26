@@ -177,5 +177,5 @@ function EFFECT:Render()
 end
 
 function EFFECT:DrawTranslucent()
-    self:DrawModel()
+    -- self:DrawModel()
 end
