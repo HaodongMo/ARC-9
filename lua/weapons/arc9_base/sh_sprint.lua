@@ -35,6 +35,7 @@ function SWEP:GetIsSprintingCheck()
 
     local curspeed = owner:GetVelocity():Length()
 
+    if owner:Crouching() then return false end
     if !owner:KeyDown(IN_FORWARD) and !owner:KeyDown(IN_BACK) and !owner:KeyDown(IN_MOVELEFT) and !owner:KeyDown(IN_MOVERIGHT) then return false end
     if !owner:KeyDown(IN_SPEED) then return false end
     -- if owner:KeyDown(IN_WALK) then return false end

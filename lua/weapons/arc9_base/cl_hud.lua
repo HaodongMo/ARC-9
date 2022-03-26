@@ -151,6 +151,8 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
 
     if !selecticon then return end
 
+    self.WepSelectIcon = selecticon:GetTexture("$basetexture")
+
     surface.SetDrawColor(255, 255, 255, 255)
     surface.SetMaterial(selecticon)
     if w > h then
