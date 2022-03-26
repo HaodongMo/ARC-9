@@ -50,7 +50,7 @@ function SWEP:GetFreeSwayAngles()
 
     local ang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
 
-    ang = ang * swayamt
+    ang:Mul(swayamt)
 
     return ang
 end
