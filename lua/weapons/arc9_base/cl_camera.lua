@@ -2,6 +2,8 @@ SWEP.SmoothedMagnification = 1
 SWEP.FOV = 90
 
 function SWEP:CalcView(ply, pos, ang, fov)
+    if self:GetOwner():ShouldDrawLocalPlayer() then return end
+
     local rec = (self:GetLastRecoilTime() + 0.25) - CurTime()
 
     -- rec = rec * 0.5
