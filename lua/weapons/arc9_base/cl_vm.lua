@@ -49,14 +49,11 @@ local DampAngle = function(a, v1, v2)
 end
 
 function SWEP:GetViewModelPosition(pos, ang)
-    local oldpos = Vector(0, 0, 0)
-    local oldang = Angle(0, 0, 0)
-
-    oldpos:Set(pos)
-    oldang:Set(ang)
+    local oldpos = Vector(pos)
+    local oldang = Angle(ang)
 
     if GetConVar("ARC9_benchgun"):GetBool() then
-        return Vector(0, 0, 0), Angle(0, 0, 0)
+        return ARC9_VECTORZERO, ARC9_ANGLEZERO
     end
 
     -- pos = Vector(0, 0, 0)
@@ -64,11 +61,14 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     local cor_val = 0.75
 
+    -- possible micro-optimization: These could be cached outside the func and just set here but w/e
     local offsetpos = Vector(0, 0, 0)
     local offsetang = Angle(0, 0, 0)
 
     local extra_offsetpos = Vector(0, 0, 0)
     local extra_offsetang = Angle(0, 0, 0)
+
+    local oldforward, oldright, oldup = oldang:Forward(), oldang:Right(), oldang:Up()
 
     -- print(extra_offsetang)
 
@@ -96,8 +96,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         LerpVector(bipodamount, offsetpos, self:GetProcessedValue("BipodPos"))
         LerpAngle(bipodamount, offsetang, self:GetProcessedValue("BipodAng"))
 
-        offsetpos = offsetpos + (sightpos * bipodamount)
-        offsetang = offsetang + (sightang * bipodamount)
+        offsetpos:Add(sightpos * bipodamount)
+        offsetang:Add(sightang * bipodamount)
     end
 
     local blindfiredelta = self:GetBlindFireAmount()
@@ -132,23 +132,38 @@ function SWEP:GetViewModelPosition(pos, ang)
         local eepos, eeang = self:GetExtraSightPositions()
 
         if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
-            eepos = eepos + Vector(-1, 0, 1)
+            eepos:Add(Vector(-1, 0, 1))
         end
 
         if sight.GeneratedSight then
-            local t_sightpos = LerpVector(sightdelta, Vector(0, 0 ,0), sightpos)
-            local t_sightang = LerpAngle(sightdelta, Angle(0, 0, 0), sightang)
+            --[[
+                NONSENSE:
+                LerpVector(sightdelta, Vector(0, 0 ,0), sightpos) in this case expands into
+
+                local ret = Vector(0, 0, 0)
+                for i = 1, 3 do
+                    ret[i] = Vector(0, 0, 0)[i] + (sightpos[i] - Vector(0, 0, 0)[i]) * sightdelta
+                end
+
+                which is literally the same as t_sightpos = sightpos * sightdelta
+                ~BlacK 26/03/2022
+            ]]--
+            -- local t_sightpos = LerpVector(sightdelta, Vector(0, 0 ,0), sightpos)
+            -- local t_sightang = LerpAngle(sightdelta, Angle(0, 0, 0), sightang)
+
+            local t_sightpos = sightpos * sightdelta
+            local t_sightang = sightang * sightdelta
 
             ang:RotateAroundAxis(oldang:Up(), t_sightang.p)
             ang:RotateAroundAxis(oldang:Right(), t_sightang.y)
             ang:RotateAroundAxis(oldang:Forward(), t_sightang.r)
 
-            pos = pos + (ang:Right() * t_sightpos.x)
-            pos = pos + (ang:Forward() * t_sightpos.y)
-            pos = pos + (ang:Up() * t_sightpos.z)
+            pos:Add(ang:Right() * t_sightpos.x)
+            pos:Add(ang:Forward() * t_sightpos.y)
+            pos:Add(ang:Up() * t_sightpos.z)
 
-            offsetpos = LerpVector(sightdelta, offsetpos, Vector(0, 0, 0))
-            offsetang = LerpAngle(sightdelta, offsetang, Angle(0, 0, 0))
+            offsetpos:Mul(1 - sightdelta) -- LerpVector(sightdelta, offsetpos, Vector(0, 0, 0))
+            offsetang:Mul(1 - sightdelta) -- LerpAngle(sightdelta, offsetang, Angle(0, 0, 0))
         else
             offsetpos = LerpVector(sightdelta, offsetpos, sightpos)
             offsetang = LerpAngle(sightdelta, offsetang, sightang)
@@ -208,7 +223,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         offsetpos = LerpVector(sprintdelta, offsetpos, sprpos)
         offsetang = LerpAngle(sprintdelta, offsetang, sprang)
 
-        extra_offsetang = LerpAngle(sprintdelta, extra_offsetang, Angle(0, 0, 0))
+        extra_offsetang = extra_offsetang * sprintdelta -- LerpAngle(sprintdelta, extra_offsetang, Angle(0, 0, 0))
 
         local sim = self:GetProcessedValue("SprintMidPoint")
 
@@ -216,16 +231,16 @@ function SWEP:GetViewModelPosition(pos, ang)
         local spr_joffset = (sim and sim.Pos or Vector(0, 0, 0)) * spr_midpoint
         local spr_jaffset = (sim and sim.Ang or Angle(0, 0, 0)) * spr_midpoint
 
-        extra_offsetpos = extra_offsetpos + spr_joffset
-        extra_offsetang = extra_offsetang + spr_jaffset
+        extra_offsetpos:Add(spr_joffset)
+        extra_offsetang:Add(spr_jaffset)
     end
 
     if curvedcustomizedelta > 0 then
-        local cpos = self:GetProcessedValue("CustomizePos")
-        local cang = self:GetProcessedValue("CustomizeAng")
+        local cpos = Vector(self:GetProcessedValue("CustomizePos"))
+        local cang = Angle(self:GetProcessedValue("CustomizeAng"))
 
-        extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
-        extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))
+        extra_offsetpos:Mul(curvedcustomizedelta) -- LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
+        extra_offsetang:Mul(curvedcustomizedelta) -- LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))
 
         if self.BottomBarAddress then
             local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
@@ -240,15 +255,15 @@ function SWEP:GetViewModelPosition(pos, ang)
                 apos.x = apos.x + opos.x
                 apos.z = apos.z - opos.z
 
-                cpos = cpos + cang:Up() * (apos.x - cpos.x)
-                -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
-                cpos = cpos + cang:Forward() * (apos.z + cpos.z)
+                cpos:Add(cang:Up() * (apos.x - cpos.x))
+                -- cpos:Add(cang:Right() * (apos.y - cpos.y))
+                cpos:Add(cang:Forward() * (apos.z + cpos.z))
             end
         end
 
-        cpos = cpos + cang:Up() * self.CustomizePanX
-        cpos = cpos + cang:Forward() * self.CustomizePanY
-        cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom + 24)
+        cpos:Add(cang:Up() * self.CustomizePanX)
+        cpos:Add(cang:Forward() * self.CustomizePanY)
+        cpos:Add(Vector(0, 1, 0) * (self.CustomizeZoom + 24))
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
@@ -272,37 +287,41 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     lht = ht
 
-    pos = pos + (ang:Right() * offsetpos.x)
-    pos = pos + (ang:Forward() * offsetpos.y)
-    pos = pos + (ang:Up() * offsetpos.z)
+    pos:Add(ang:Right() * offsetpos.x)
+    pos:Add(ang:Forward() * offsetpos.y)
+    pos:Add(ang:Up() * offsetpos.z)
 
-    ang:RotateAroundAxis(oldang:Up(), offsetang.p)
-    ang:RotateAroundAxis(oldang:Right(), offsetang.y)
-    ang:RotateAroundAxis(oldang:Forward(), offsetang.r)
+    ang:RotateAroundAxis(oldup, offsetang.p)
+    ang:RotateAroundAxis(oldright, offsetang.y)
+    ang:RotateAroundAxis(oldforward, offsetang.r)
 
-    pos = pos + (oldang:Right() * extra_offsetpos[1])
-    pos = pos + (oldang:Forward() * extra_offsetpos[2])
-    pos = pos + (oldang:Up() * extra_offsetpos[3])
+    pos:Add(oldright * extra_offsetpos[1])
+    pos:Add(oldforward * extra_offsetpos[2])
+    pos:Add(oldup * extra_offsetpos[3])
 
-    ang:RotateAroundAxis(oldang:Up(), extra_offsetang[1])
-    ang:RotateAroundAxis(oldang:Right(), extra_offsetang[2])
-    ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
+    ang:RotateAroundAxis(oldup, extra_offsetang[1])
+    ang:RotateAroundAxis(oldright, extra_offsetang[2])
+    ang:RotateAroundAxis(oldforward, extra_offsetang[3])
 
     if curvedcustomizedelta > 0 then
         self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
         -- this needs to be better
         -- its more like proof of concept
         -- probably this can be better if it based on selected slot offset not random numbers
-        pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-        pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
+        pos:Add((ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2)
+        pos:Add((ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2)
 
-        pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
-        pos = pos + (ang:Forward() * 15) * curvedcustomizedelta ^ 2
+        pos:Add((ang:Right() * -18) * curvedcustomizedelta ^ 2)
+        pos:Add((ang:Forward() * 15) * curvedcustomizedelta ^ 2)
 
         ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
     end
 
     -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
+    --[[
+        All of these could be Apply* instead of Get* functions and they could just internaly set their arguments values using :Set() function
+        Think back to ArcCW and how munch trouble GetViewModelPosition() function causes, this function is a SWEP maker's worst night nightmare. ~BlacK 26/03/2022
+    ]]--
     pos, ang = self:GetViewModelRecoil(pos, ang)
     pos, ang = self:GetViewModelBob(pos, ang)
     pos, ang = self:GetMidAirBob(pos, ang)

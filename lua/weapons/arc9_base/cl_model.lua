@@ -29,7 +29,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     if idle then
         parentmdl = ClientsideModel(self.ViewModel)
         parentmdl:SetPos(Vector(0, 0, 0))
-        parentmdl:SetAngles(Angle(0, 0, 0))
+        parentmdl:SetAngles(ARC9_ANGLEZERO)
         parentmdl:SetNoDraw(true)
 
         local anim = self:TranslateAnimation("idle")
@@ -65,7 +65,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     if parentmdl then
         local boneindex = parentmdl:LookupBone(bone)
 
-        if !boneindex then return Vector(0, 0, 0), Angle(0, 0, 0) end
+        if !boneindex then return Vector(0, 0, 0), ARC9_VECTORZERO end
 
         if parentmdl == self:GetOwner() then
             parentmdl:SetupBones()
@@ -98,40 +98,35 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
         end
     end
 
-    local apos, aang
+    local attachmentPos = Vector(bpos)
+    local attachmentAng = Angle(bang)
 
-    aang = Angle()
-    aang:Set(bang)
-
-    apos = bpos + aang:Forward() * offset_pos.x
-
-    apos = apos + aang:Right() * offset_pos.y
-
-    apos = apos + aang:Up() * offset_pos.z
+    attachmentPos:Add(attachmentAng:Forward() * offset_pos.x)
+    attachmentPos:Add(attachmentAng:Right() * offset_pos.y)
+    attachmentPos:Add(attachmentAng:Up() * offset_pos.z)
 
     if !nomodeloffset then
         offset_ang = offset_ang + (atttbl.ModelAngleOffset or Angle(0, 0, 0))
     end
 
-    aang:Set(bang)
-
-    aang:RotateAroundAxis(aang:Right(), offset_ang.p)
-    aang:RotateAroundAxis(aang:Up(), offset_ang.y)
-    aang:RotateAroundAxis(aang:Forward(), offset_ang.r)
+    -- attachmentAng:Set(bang)
+    attachmentAng:RotateAroundAxis(attachmentAng:Right(), offset_ang.p)
+    attachmentAng:RotateAroundAxis(attachmentAng:Up(), offset_ang.y)
+    attachmentAng:RotateAroundAxis(attachmentAng:Forward(), offset_ang.r)
 
     if !nomodeloffset then
         local moffset = (atttbl.ModelOffset or Vector(0, 0, 0)) * (slottbl.Scale or 1)
 
-        apos = apos + aang:Forward() * moffset.x
-        apos = apos + aang:Right() * moffset.y
-        apos = apos + aang:Up() * moffset.z
+        attachmentPos:Add(attachmentAng:Forward() * moffset.x)
+        attachmentPos:Add(attachmentAng:Right() * moffset.y)
+        attachmentPos:Add(attachmentAng:Up() * moffset.z)
     end
 
     if idle then
         SafeRemoveEntity(parentmdl)
     end
 
-    return apos, aang
+    return attachmentPos, attachmentAng
 end
 
 function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
@@ -153,8 +148,10 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 
     if !ignorescale then
         local scale = Matrix()
-        local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
-        vec = vec * (slottbl.Scale or 1)
+        -- Is this double multiplication accidental? wtf??
+        -- local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
+        -- vec = vec * (slottbl.Scale or 1)
+        local vec = Vector(1, 1, 1) * (atttbl.Scale or 1) * (slottbl.Scale or 1)
         scale:Scale(vec)
         csmodel:EnableMatrix("RenderMultiply", scale)
     end
