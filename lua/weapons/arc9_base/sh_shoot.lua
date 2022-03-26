@@ -225,6 +225,7 @@ function SWEP:PrimaryAttack()
         self:SetNeedTriggerPress(true)
     end
 
+    -- This is probably wrong and is gonna cause prediction errors, tell me to fix it later. (~BlacK)
     if IsFirstTimePredicted() then
         self:RollJam()
         self:DoHeat()
@@ -280,7 +281,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     ARC9:ShootPhysBullet(self, pos, newang:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
                 end
             else
-                -- Don'T do this, FireBullets() calls lag compensation internally.
+                -- Don't do this, FireBullets() calls lag compensation internally. (That uppercase T really needed it's own pull request to fix.)
                 --self:GetOwner():LagCompensation(true)
                 -- local tr = self:GetProcessedValue("TracerNum")
 
@@ -455,16 +456,16 @@ function SWEP:GetDamageAtRange(range)
 end
 
 function SWEP:GetShootPos()
-    if self:GetOwner():IsNPC() then
-        return self:GetOwner():GetShootPos()
+    local owner = self:GetOwner()
+    if owner:IsNPC() then
+        return owner:GetShootPos()
     end
 
-    local pos = self:GetOwner():EyePos()
+    local pos = owner:GetShootPos()
 
     if self:GetBlindFire() then
-        pos = self:GetOwner():EyePos()
-        local eyeang = self:GetOwner():EyeAngles()
-
+        -- pos:Set(owner:GetShootPos()) -- wtf?
+        local eyeang = owner:EyeAngles()
         local testpos = pos + eyeang:Up() * 24
 
         if self:GetBlindFireDirection() != 0 then
@@ -474,15 +475,14 @@ function SWEP:GetShootPos()
         local tr = util.TraceLine({
             start = pos,
             endpos = testpos,
-            filter = self:GetOwner()
+            filter = owner
         })
 
         pos = tr.HitPos + (tr.HitNormal * 2)
     end
 
     local ang = self:GetShootDir()
-
-    pos = pos + (ang:Up() * -self:GetProcessedValue("HeightOverBore"))
+    pos:Sub(ang:Up() * self:GetProcessedValue("HeightOverBore"))
 
     return pos
 end
