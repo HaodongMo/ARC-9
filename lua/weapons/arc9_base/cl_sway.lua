@@ -16,11 +16,8 @@ local lookymult = 1
 function SWEP:GetViewModelSway(pos, ang)
     local sightedmult = Lerp(self:GetSightAmount(), 1, 0.25)
     smootheyeang = LerpAngle(0.05, smootheyeang, EyeAngles() - lasteyeang)
-    pos_offset.x = -smootheyeang.x * -0.5 * sightedmult * lookxmult
-    pos_offset.y = smootheyeang.y * 0.5 * sightedmult * lookymult
-    ang_offset.x = pos_offset.x * 2.5
-    ang_offset.y = pos_offset.y * 2.5
-    ang_offset.r = (pos_offset.x * 2) + (pos_offset.y * -2)
+    pos_offset:SetUnpacked(-smootheyeang.x * -0.5 * sightedmult * lookxmult, smootheyeang.y * 0.5 * sightedmult * lookymult, 0)
+    ang_offset:SetUnpacked(pos_offset.x * 2.5,pos_offset.y * 2.5, (pos_offset.x * 2) + (pos_offset.y * -2))
     -- local a1 = look_lerp.y
     -- local a2 = ang_offset.y * -3 + smootheyeang.y
     -- look_lerp.y = math.ApproachAngle(a1, a2, FrameTime() * math.abs(math.AngleDifference(a1, a2)) * 50)
@@ -91,7 +88,6 @@ SWEP.BobCT = 0
 
 function SWEP:GetViewModelBob(pos, ang)
     local step = 10
-    local mag = 1
     local ts = 0 -- self:GetTraversalSprintAmount()
     -- ts = 1
     if self:GetCustomize() then return pos, ang end
@@ -107,19 +103,19 @@ function SWEP:GetViewModelBob(pos, ang)
     end
 
     d = d * Lerp(self:GetSightAmount(), 1, 0.5) * Lerp(ts, 1, 1.5)
-    mag = d * 2
-    mag = mag * Lerp(ts, 1, 1.5)
-    step = 10
-    ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 4.5 * d)
-    ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 2.11 * d)
-    pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.07 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
-    pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 1.615) * 0.2) + 1) * mag)
-    pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.15) + (math.cos(self.BobCT * step * 0.3332))) * 0.16 * mag)
+    local mag = d * 2 * Lerp(ts, 1, 1.5)
+    local bobtime = self.BobCT
+    -- step = 10
+    ang:RotateAroundAxis(ang:Forward(), math.sin(bobtime * step * 0.5) * ((math.sin(bobtime * 6.151) * 0.2) + 1) * 4.5 * d)
+    ang:RotateAroundAxis(ang:Right(), math.sin(bobtime * step * 0.12) * ((math.sin(bobtime * 1.521) * 0.2) + 1) * 2.11 * d)
+    pos:Sub(ang:Up() * math.sin(bobtime * step) * 0.07 * ((math.sin(bobtime * 3.515) * 0.2) + 1) * mag)
+    pos:Add(ang:Forward() * math.sin(bobtime * step * 0.3) * 0.11 * ((math.sin(bobtime * 2) * ts * 1.25) + 1) * ((math.sin(bobtime * 1.615) * 0.2) + 1) * mag)
+    pos:Add(ang:Right() * (math.sin(bobtime * step * 0.15) + (math.cos(bobtime * step * 0.3332))) * 0.16 * mag)
     local steprate = Lerp(d, 1, 2.5)
     steprate = Lerp(self.ViewModelNotOnGround, steprate, 0.25)
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
-        self.BobCT = self.BobCT + (FrameTime() * steprate)
+        self.BobCT = bobtime + (FrameTime() * steprate)
     end
 
     return pos, ang
@@ -157,7 +153,7 @@ function SWEP:GetViewModelLeftRight(pos, ang)
     if self:GetCustomize() then return pos, ang end
     local v = self:GetOwner():GetVelocity()
     local d = Lerp(self:GetSightDelta(), 1, 0)
-    v, _ = WorldToLocal(v, Angle(0, 0, 0), Vector(0, 0, 0), self:GetOwner():EyeAngles())
+    v, _ = WorldToLocal(v, ARC9_ANGLEZERO, ARC9_VECTORZERO, self:GetOwner():EyeAngles())
     local vx = math.Clamp(v.x / 200, -1, 1)
     local vy = math.Clamp(v.y / 200, -1, 1)
     self.ViewModelInertiaX = math.Approach(self.ViewModelInertiaX, vx, math.abs(vx) * FrameTime() / 0.1)

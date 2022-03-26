@@ -197,4 +197,18 @@ ARC9.RHIKBones = {
 }
 
 ARC9.HUToM = 0.0254
+
+-- BTW: To properly convert inaccuracy from minutes of arc to Source engine's tangent accuracy vector:
+--[[
+local oneeightyoversixty = 180 / 60
+local cone = math.tan(math.deg(inacuracyInMOA / oneeightyoversixty))
+]]--
+
 ARC9.MOAToAcc = 10 / 360 / 60
+
+-- Intentionally not using the "dot" and not making this a member variable of the ARC9 table because it's a global for once and becasue it helps with performance, as there's no need for additional table lookup.
+ARC9_VECTORZERO = Vector(0, 0, 0)
+ARC9_VECTORFORWARD = Vector(1, 0, 0)
+ARC9_VECTORRIGHT = Vector(0, 1, 0)
+ARC9_VECTORUP = Vector(0, 0, 1)
+ARC9_ANGLEZERO = Angle(0, 0, 0)

@@ -71,75 +71,77 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
 
     local subatts = {}
 
-    if atttbl then
-        if atttbl.Attachments then
-            subatts = table.Copy(atttbl.Attachments)
+    if atttbl and atttbl.Attachments then
+        subatts = table.Copy(atttbl.Attachments)
 
-            for i, k in ipairs(tbl.SubAttachments) do
-                subatts[i].Bone = parenttbl.Bone
-                local att_pos = parenttbl.Pos
-                local att_ang = parenttbl.Ang
+        for i, k in ipairs(tbl.SubAttachments) do
+            subatts[i].Bone = parenttbl.Bone
+            local att_pos = parenttbl.Pos
+            local att_ang = parenttbl.Ang
 
-                local og_addr = parenttbl.OriginalAddress
+            local og_addr = parenttbl.OriginalAddress
 
-                if og_addr then
-                    local eles = self:GetElements()
+            if og_addr then
+                local eles = self:GetElements()
 
-                    for i2, _ in pairs(eles) do
-                        local ele = self.AttachmentElements[i2]
+                for i2, _ in pairs(eles) do
+                    local ele = self.AttachmentElements[i2]
 
-                        if !ele then continue end
+                    if !ele then continue end
 
-                        local mods = ele.AttPosMods or {}
+                    local mods = ele.AttPosMods or {}
 
-                        if mods[og_addr] then
-                            att_pos = mods[og_addr].Pos or att_pos
-                            att_ang = mods[og_addr].Ang or att_ang
-                        end
+                    if mods[og_addr] then
+                        att_pos = mods[og_addr].Pos or att_pos
+                        att_ang = mods[og_addr].Ang or att_ang
                     end
                 end
+            end
 
-                local scale =  parenttbl.Scale or 1
+            local scale =  parenttbl.Scale or 1
 
-                subatts[i].Scale = (subatts[i].Scale or 1) * scale
+            subatts[i].Scale = (subatts[i].Scale or 1) * scale
 
-                -- local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
-                local pos = Vector(0, 0, 0)
-                pos:Set(att_pos)
+            -- local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
+            local pos = Vector(att_pos)
 
-                local off_ang = Angle(0, 0, 0)
-                local forward, up, right = off_ang:Forward(), off_ang:Up(), off_ang:Right()
+            -- What the hell are you doing over here, this is heresy of the highest degree...
+            -- local off_ang = Angle(0, 0, 0)
+            -- local forward, up, right = off_ang:Forward(), off_ang:Up(), off_ang:Right()
 
-                forward:Rotate(-att_ang)
-                up:Rotate(-att_ang)
-                right:Rotate(-att_ang)
+            -- forward:Rotate(-att_ang)
+            -- up:Rotate(-att_ang)
+            -- right:Rotate(-att_ang)
 
-                subatts[i].Pos = subatts[i].Pos * (subatts[i].Scale or 1)
+            local forward = att_ang:Forward() * -1
+            local right = att_ang:Right() * -1
+            local up = att_ang:Up() * -1
 
-                pos = pos + (forward * -subatts[i].Pos.x)
-                pos = pos + (right * -subatts[i].Pos.y)
-                pos = pos + (up * -subatts[i].Pos.z)
+            subatts[i].Pos = subatts[i].Pos * (subatts[i].Scale or 1)
 
-                -- print(subatts[i].Pos)
+            pos:Add(forward * -subatts[i].Pos.x)
+            pos:Add(right * -subatts[i].Pos.y)
+            pos:Add(up * -subatts[i].Pos.z)
 
-                subatts[i].Pos = pos
-                subatts[i].Ang = att_ang + subatts[i].Ang
-                subatts[i].Ang:Normalize()
-                subatts[i].Installed = tbl.SubAttachments[i].Installed
-                if subatts[i].Installed then
-                    local satttbl = ARC9.GetAttTable(subatts[i].Installed)
+            -- print(subatts[i].Pos)
 
-                    if !satttbl then
-                        subatts[i].Installed = nil
-                    end
+            subatts[i].Pos = pos
+            subatts[i].Ang = att_ang + subatts[i].Ang
+            subatts[i].Ang:Normalize()
+            subatts[i].Installed = tbl.SubAttachments[i].Installed
+            if subatts[i].Installed then
+                local satttbl = ARC9.GetAttTable(subatts[i].Installed)
+
+                if !satttbl then
+                    subatts[i].Installed = nil
                 end
-                subatts[i].ExtraSightDistance = (subatts[i].ExtraSightDistance or 0) + (parenttbl.ExtraSightDistance or 0)
-                -- subatts[i].MergeSlots = subatts[i].MergeSlots
-                subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
-                subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
-                if subatts[i].Installed then
-                    subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
-                end
+            end
+            subatts[i].ExtraSightDistance = (subatts[i].ExtraSightDistance or 0) + (parenttbl.ExtraSightDistance or 0)
+            -- subatts[i].MergeSlots = subatts[i].MergeSlots
+            subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
+            subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
+            if subatts[i].Installed then
+                subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
             end
         end
     end

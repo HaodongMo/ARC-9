@@ -16,7 +16,10 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     self.FOV = fov
 
-    ang = ang + (self:GetCameraControl() or Angle(0, 0, 0))
+    local cameracntrl = self:GetCameraControl()
+    if cameracntrl then
+        ang:Add(cameracntrl)
+    end
 
     return pos, ang, fov
 end
@@ -46,7 +49,7 @@ function SWEP:GetCameraControl()
 
     local ang = vm:GetAttachment(camqca).Ang
     ang = vm:WorldToLocalAngles(ang)
-    ang = ang - self.CamOffsetAng
+    ang:Sub(self.CamOffsetAng)
 
     return ang
 end

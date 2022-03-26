@@ -1,12 +1,12 @@
 ARC9.LastEyeAngles = Angle(0, 0, 0)
 ARC9.RecoilRise = Angle(0, 0, 0)
+ARC9.SwayAngle = Angle(0, 0, 0)
 
 function ARC9.Move(ply, mv, cmd)
     local wpn = ply:GetActiveWeapon()
-
     if !wpn.ARC9 then return end
 
-    local basespd = (Vector(cmd:GetForwardMove(), cmd:GetUpMove(), cmd:GetSideMove())):Length()
+    local basespd = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), cmd:GetUpMove()):Length()
     basespd = math.min(basespd, mv:GetMaxClientSpeed())
 
     local mult = wpn:GetProcessedValue("Speed", 1)
@@ -41,8 +41,11 @@ hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)
 
 function ARC9.StartCommand(ply, cmd)
     local wpn = ply:GetActiveWeapon()
+    local curtime = CurTime()
+    local frametime = FrameTime()
+    local viewangles = cmd:GetViewAngles()
 
-    if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
+    if !wpn.ARC9 then ARC9.RecoilRise:Set(ARC9_ANGLEZERO) return end
 
     local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
     local recrise = ARC9.RecoilRise
@@ -60,27 +63,17 @@ function ARC9.StartCommand(ply, cmd)
     end
 
     recrise:Normalize()
-    ARC9.RecoilRise = recrise
 
     if math.abs(wpn:GetRecoilUp()) > 0 or math.abs(wpn:GetRecoilSide()) > 0 then
-        local eyeang = cmd:GetViewAngles()
+        local uprec = frametime * wpn:GetRecoilUp() * 100
+        local siderec = frametime * wpn:GetRecoilSide() * 100
+        local recoilang = Angle(uprec, siderec, 0)
 
-        local uprec = FrameTime() * wpn:GetRecoilUp() * 100
-        local siderec = FrameTime() * wpn:GetRecoilSide() * 100
+        viewangles:Add(recoilang)
+        recrise:Add(recoilang)
 
-        eyeang.p = eyeang.p + uprec
-        eyeang.y = eyeang.y + siderec
-
-        recrise = ARC9.RecoilRise
-
-        recrise = recrise + Angle(uprec, siderec, 0)
-
-        ARC9.RecoilRise = recrise
-
-        cmd:SetViewAngles(eyeang)
-
-        -- local aim_kick_v = rec * math.sin(CurTime() * 15) * FrameTime() * (1 - sightdelta)
-        -- local aim_kick_h = rec * math.sin(CurTime() * 12.2) * FrameTime() * (1 - sightdelta)
+        -- local aim_kick_v = rec * math.sin(curtime * 15) * frametime * (1 - sightdelta)
+        -- local aim_kick_h = rec * math.sin(curtime * 12.2) * frametime * (1 - sightdelta)
 
         -- wpn:SetFreeAimAngle(wpn:GetFreeAimAngle() - Angle(aim_kick_v, aim_kick_h, 0))
     end
@@ -88,37 +81,23 @@ function ARC9.StartCommand(ply, cmd)
     if wpn:GetSightAmount() > 0 then
         local swayspeed = 1
         local swayamt = wpn:GetFreeSwayAmount()
-        local swayang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
 
-        swayang = swayang * wpn:GetSightAmount() * swayamt
+        local swayang = ARC9.SwayAngle
+        swayang.p = math.sin(curtime * 0.6 * swayspeed) + (math.cos(curtime * 2) * 0.5)
+        swayang.y = math.sin(curtime * 0.4 * swayspeed) + (math.cos(curtime * 1.6) * 0.5)
+        swayang:Mul(wpn:GetSightAmount() * swayamt)
 
-        local eyeang = cmd:GetViewAngles()
-
-        eyeang.p = eyeang.p + (swayang.p * FrameTime())
-        eyeang.y = eyeang.y + (swayang.y * FrameTime())
-
-        cmd:SetViewAngles(eyeang)
+        viewangles:Add(swayang * frametime)
     end
 
-    recrise = ARC9.RecoilRise
-
-    local recreset = recrise * FrameTime() * wpn:GetProcessedValue("RecoilAutoControl")
-
-    recrise = recrise - recreset
-
+    local recdecay = recrise * frametime * wpn:GetProcessedValue("RecoilAutoControl")
+    recrise:Sub(recdecay)
     recrise:Normalize()
 
-    local eyeang = cmd:GetViewAngles()
-
-    -- eyeang.p = math.AngleDifference(eyeang.p, recreset.p)
-    -- eyeang.y = math.AngleDifference(eyeang.y, recreset.y)
-
-    eyeang = eyeang - recreset
-
-    cmd:SetViewAngles(eyeang)
+    viewangles:Sub(recdecay)
+    cmd:SetViewAngles(viewangles)
 
     ARC9.RecoilRise = recrise
-
     ARC9.LastEyeAngles = cmd:GetViewAngles()
 end
 
