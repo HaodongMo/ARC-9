@@ -46,8 +46,13 @@ function SWEP:Deploy()
     self:SetHolster_Entity(NULL)
     self:SetHolster_Time(0)
 
-    self:SetFreeAimAngle(Angle(0, 0, 0))
-    self:SetLastAimAngle(Angle(0, 0, 0))
+    self:SetFreeAimPitch(0)
+    self:SetFreeAimYaw(0)
+    self:SetLastAimPitch(0)
+    self:SetLastAimYaw(0)
+
+    -- self:SetFreeAimAngle(Angle(0, 0, 0))
+    -- self:SetLastAimAngle(Angle(0, 0, 0))
 
     self:DoDeployAnimation()
 

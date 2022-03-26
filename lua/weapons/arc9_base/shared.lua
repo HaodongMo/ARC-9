@@ -880,6 +880,12 @@ function SWEP:SetupDataTables()
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
+    -- Intentionally using floats, m_GMOD_QAngle netvars suffer from near zero truncation/compression.
+    self:NetworkVar("Float", 21, "FreeAimPitch")
+    self:NetworkVar("Float", 22, "FreeAimYaw")
+    self:NetworkVar("Float", 23, "LastAimPitch")
+    self:NetworkVar("Float", 24, "LastAimYaw")
+
     self:NetworkVar("Int", 0, "BurstCount")
     self:NetworkVar("Int", 1, "NthShot")
     self:NetworkVar("Int", 2, "LoadedRounds")
@@ -912,14 +918,15 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 20, "Inspecting")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
-    self:NetworkVar("Angle", 0, "FreeAimAngle")
-    self:NetworkVar("Angle", 1, "LastAimAngle")
+    -- Don't use this, client suffers from compression/truncation near zero values.
+    -- self:NetworkVar("Angle", 0, "FreeAimAngle")
+    -- self:NetworkVar("Angle", 1, "LastAimAngle")
+    -- self:NetworkVar("Angle", 2, "FreeSwayAngles")
 
     self:NetworkVar("String", 0, "IKAnimation")
 
     self:NetworkVar("Entity", 0, "Holster_Entity")
     self:NetworkVar("Entity", 1, "LungeEntity")
-
 
     self:SetMultiSight(1)
     self:SetFiremode(1)

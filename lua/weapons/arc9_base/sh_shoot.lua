@@ -206,9 +206,10 @@ function SWEP:PrimaryAttack()
 
     self:DoProjectileAttack(self:GetShootPos(), dir, spread)
 
-    if IsFirstTimePredicted() then
+    -- Again, you can't do this, anything that needs to be same/synchronized across game server and the client has to be predicted and needs to use netvars.
+    -- if IsFirstTimePredicted() then
         self:ApplyRecoil()
-    end
+    -- end
 
     self:SetBurstCount(self:GetBurstCount() + 1)
 
@@ -279,9 +280,11 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     ARC9:ShootPhysBullet(self, pos, newang:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
                 end
             else
-                self:GetOwner():LagCompensation(true)
+                -- Don'T do this, FireBullets() calls lag compensation internally.
+                --self:GetOwner():LagCompensation(true)
                 -- local tr = self:GetProcessedValue("TracerNum")
 
+                -- TODO: Write fully custom FireBullets in Lua, because this is messy and I don't like it.
                 self:GetOwner():FireBullets({
                     Damage = self:GetProcessedValue("Damage_Max"),
                     Force = 8,
@@ -307,7 +310,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     end
                 })
 
-                self:GetOwner():LagCompensation(false)
+                --self:GetOwner():LagCompensation(false)
             end
         end
     end
@@ -494,9 +497,10 @@ function SWEP:GetShootDir()
         dir:RotateAroundAxis(dir:Up(), -90)
     end
 
-    dir = dir + self:GetFreeAimOffset()
-
-    dir = dir + self:GetFreeSwayAngles()
+    dir = dir + (self:GetFreeAimOffset())
+    --dir:Normalize()
+    dir = dir + (self:GetFreeSwayAngles())
+    -- dir:Normalize()
 
     return dir
 end

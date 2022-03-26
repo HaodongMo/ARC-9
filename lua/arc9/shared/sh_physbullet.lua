@@ -113,6 +113,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
             local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
             local timestep = engine.TickInterval()
 
+            -- Is this supposed to be 200msec? because this is 200 ticks... which on default tickrate would be 2.9 seconds... which is latency so high you would get dropped from the server.
             latency = math.min(latency, 200) // can't let people cheat TOO hard
 
             while latency > 0 do
@@ -213,6 +214,7 @@ end)
 
 end
 
+-- This needs a complete overhaul
 function ARC9:DoPhysBullets()
     local new = {}
     for _, i in ipairs(ARC9.PhysBullets) do
@@ -226,6 +228,7 @@ function ARC9:DoPhysBullets()
     ARC9.PhysBullets = new
 end
 
+-- You can't do this, we are simulating projectiles that need to be in sync and predicted, so this needs to be done in simulation ticks.
 hook.Add("Think", "ARC9_DoPhysBullets", ARC9.DoPhysBullets)
 
 local function indim(vec, maxdim)
@@ -236,6 +239,7 @@ local function indim(vec, maxdim)
     end
 end
 
+-- And so does this
 function ARC9:ProgressPhysBullet(bullet, timestep)
     timestep = timestep or FrameTime()
 
@@ -337,6 +341,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
             if attacker:IsPlayer() and !attacker.ARC9_LAGCOMP then
                 attacker:LagCompensation(true) -- Sometimes this line is called before the first lag compensation finishes, somehow.
+                -- Because LagCompensation shouldn't be invoked like this, you should start lag compensation, do all your logic and then end it.
                 attacker.ARC9_LAGCOMP = true
             end
 

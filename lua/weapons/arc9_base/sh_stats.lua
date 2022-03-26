@@ -119,6 +119,31 @@ function SWEP:GetAllAffectors()
     return aff
 end
 
+--[[
+    This function is incredibly inefficient, the amount of if statements and the number of string comparisons done here is absolutely crazy.
+    You should move these if statements to the places where they will get triggered insead of having them in this incredibly large function.
+    Because this function bottlenecks pretty much everything, so like if you are doing self:GetProcessedValue("Overaheat", base) you might as well
+    just do self:GetHeatLockout() instead, will save you about 400uS.
+
+    Profiler Results:
+    ╦ average_time = 0.00044565808390657
+    ╠ total_called = 55728
+    ╠ total_time   = 24.835633699945
+    ╠ func         = function: 0x027e83fb0e90	-- [addons/arc-9/lua/weapons/arc9_base/sh_stats.lua]: 122-240
+    ╠ info:
+    ║            ╦ lastlinedefined = 240
+    ║            ╠ linedefined     = 122
+    ║            ╠ namewhat        = ''
+    ║            ╠ short_src       = "addons/arc-9/lua/weapons/arc9_base/sh_stats.lua"
+    ║            ╠ source          = "@addons/arc-9/lua/weapons/arc9_base/sh_stats.lua"
+    ║            ╠ what            = "Lua"
+    ║            ╚ func            = function: 0x027e83fb0e90	-- [addons/arc-9/lua/weapons/arc9_base/sh_stats.lua]: 122-240
+    ╠ names:
+    ║            ╦ 1:
+    ║            ║    ╦ name     = "GetProcessedValue"
+    ║            ║    ╠ namewhat = "method"
+    ║            ║    ╚ nparams  = 3
+]]--
 function SWEP:GetProcessedValue(val, base)
     local stat = self:GetValue(val, base)
 

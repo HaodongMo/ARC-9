@@ -184,11 +184,15 @@ function SWEP:GetViewModelPosition(pos, ang)
         self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
 
-    extra_offsetang.y = extra_offsetang.y - (self:GetFreeSwayAngles().p * cor_val)
-    extra_offsetang.p = extra_offsetang.p + (self:GetFreeSwayAngles().y * cor_val)
+    local freeSwayAngles = self:GetFreeSwayAngles()
+    extra_offsetang.y = extra_offsetang.y - (freeSwayAngles.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (freeSwayAngles.y * cor_val)
+    extra_offsetang:Normalize()
 
-    extra_offsetang.y = extra_offsetang.y - (self:GetFreeAimOffset().p * cor_val)
-    extra_offsetang.p = extra_offsetang.p + (self:GetFreeAimOffset().y * cor_val)
+    local freeAimOffset = self:GetFreeAimOffset()
+    extra_offsetang.y = extra_offsetang.y - (freeAimOffset.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (freeAimOffset.y * cor_val)
+    extra_offsetang:Normalize()
 
     if game.SinglePlayer() or IsFirstTimePredicted() then
         if self:GetCustomize() then

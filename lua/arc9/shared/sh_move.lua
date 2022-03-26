@@ -1,6 +1,6 @@
-ARC9.LastEyeAngles = Angle(0, 0, 0)
-ARC9.RecoilRise = Angle(0, 0, 0)
-ARC9.SwayAngle = Angle(0, 0, 0)
+ARC9.LastEyeAngles = Angle(0, 0, 0) -- Unsused global varaiable: ARC9.LastEyeAngles, variable should be local to the file.
+ARC9.RecoilRise = Angle(0, 0, 0) -- Unsused global varaiable: ARC9.RecoilRise, variable should be local to the file.
+ARC9.SwayAngle = Angle(0, 0, 0) -- Unsused global varaiable: ARC9.SwayAngle, variable should be local to the file.
 
 function ARC9.Move(ply, mv, cmd)
     local wpn = ply:GetActiveWeapon()

@@ -45,8 +45,8 @@ function SWEP:MeleeAttack(bypass)
         end
     end
 
-    self:SetFreeAimAngle(Angle(0, 0, 0))
-
+    self:SetFreeAimPitch(0)
+    self:SetFreeAimYaw(0)
     self:SetInMeleeAttack(true)
 
     self:SetLastMeleeTime(CurTime())

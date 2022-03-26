@@ -190,8 +190,8 @@ function SWEP:ThinkVisualRecoil()
         vpv = vpv - (vpa * springforcemagnitude)
 
         --     // don't wrap around
-        --     player->m_Local.m_vecPunchAngle.Init( 
-        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
+        --     player->m_Local.m_vecPunchAngle.Init(
+        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ),
         --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
         --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
         -- }
@@ -241,8 +241,8 @@ function SWEP:ThinkVisualRecoil()
         vav = vav - (vaa * springforcemagnitude)
 
         --     // don't wrap around
-        --     player->m_Local.m_vecPunchAngle.Init( 
-        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
+        --     player->m_Local.m_vecPunchAngle.Init(
+        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ),
         --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
         --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
         -- }
