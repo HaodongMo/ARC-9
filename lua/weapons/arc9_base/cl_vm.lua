@@ -49,21 +49,18 @@ local DampAngle = function(a, v1, v2)
 end
 
 function SWEP:GetViewModelPosition(pos, ang)
-    local oldpos = Vector(pos)
-    local oldang = Angle(ang)
-
     if GetConVar("ARC9_benchgun"):GetBool() then
         return ARC9_VECTORZERO, ARC9_ANGLEZERO
     end
+
+    local oldpos = Vector(pos)
+    local oldang = Angle(ang)
+
 
     -- pos = Vector(0, 0, 0)
     -- ang = Angle(0, 0, 0)
 
     local cor_val = 0.75
-
-    -- possible micro-optimization: These could be cached outside the func and just set here but w/e
-    local offsetpos = Vector(0, 0, 0)
-    local offsetang = Angle(0, 0, 0)
 
     local extra_offsetpos = Vector(0, 0, 0)
     local extra_offsetang = Angle(0, 0, 0)
@@ -72,8 +69,8 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     -- print(extra_offsetang)
 
-    offsetpos:Set(self:GetProcessedValue("ActivePos"))
-    offsetang:Set(self:GetProcessedValue("ActiveAng"))
+    local offsetpos = Vector(self:GetProcessedValue("ActivePos"))
+    local offsetang = Angle(self:GetProcessedValue("ActiveAng"))
 
     if !self:GetReloading() and !self:GetBipod() and self:GetOwner():Crouching() then
         local crouchpos = self:GetProcessedValue("CrouchPos")

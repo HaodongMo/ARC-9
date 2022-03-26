@@ -269,10 +269,8 @@ function SWEP:GunControllerThirdArm(pos, ang)
 
     if self.ThirdArmModel and self.ThirdArmAnimation.gun_controller_attachment != nil then
         local posang = self.ThirdArmModel:GetAttachment(self.ThirdArmAnimation.gun_controller_attachment)
-        offset_ang:Set(posang.Ang)
-        offset_pos:Set(posang.Pos)
 
-        offset_pos, offset_ang = WorldToLocal(offset_pos, offset_ang, EyePos(), EyeAngles() + (self.ThirdArmAnimation.offsetang or Angle(0, 0, 0)))
+        local offset_pos, offset_ang = WorldToLocal(posang.Pos, posang.Ang, EyePos(), EyeAngles() + (self.ThirdArmAnimation.offsetang or Angle(0, 0, 0)))
 
         -- offset_pos = offset_pos - self.ThirdArmGunOffsetPos
         -- offset_ang = offset_ang - self.ThirdArmGunOffsetAngle

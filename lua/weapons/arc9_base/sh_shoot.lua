@@ -497,10 +497,10 @@ function SWEP:GetShootDir()
         dir:RotateAroundAxis(dir:Up(), -90)
     end
 
-    dir = dir + (self:GetFreeAimOffset())
-    --dir:Normalize()
-    dir = dir + (self:GetFreeSwayAngles())
-    -- dir:Normalize()
+    dir:Add(self:GetFreeAimOffset())
+    -- dir:Normalize() If something in future regarding this function breaks then uncomment this and pray to god.
+    dir:Add(self:GetFreeSwayAngles())
+    dir:Normalize()
 
     return dir
 end
