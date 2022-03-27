@@ -2,6 +2,8 @@ SWEP.StatCache = {}
 SWEP.HookCache = {}
 SWEP.AffectorsCache = nil
 SWEP.HasNoAffectors = {}
+SWEP.ProcessedValueTickCache = {}
+SWEP.ProcessedValueTick = 0
 
 SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
@@ -130,6 +132,14 @@ function SWEP:GetProcessedValue(val, base)
         return true
     end
 
+    if self.ProcessedValueTick < CurTime() then
+        self.ProcessedValueTickCache = {}
+    end
+
+    if IsFirstTimePredicted() and self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)] then
+        return self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)]
+    end
+
     if GetConVar("arc9_truenames"):GetBool() then
         stat = self:GetValue(val, stat, "True")
     end
@@ -235,6 +245,9 @@ function SWEP:GetProcessedValue(val, base)
             end
         end
     end
+
+    self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)] = stat
+    self.ProcessedValueTick = CurTime()
 
     return stat
 end

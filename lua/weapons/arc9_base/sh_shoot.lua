@@ -206,9 +206,9 @@ function SWEP:PrimaryAttack()
 
     self:DoProjectileAttack(self:GetShootPos(), dir, spread)
 
-    if IsFirstTimePredicted() then
+    -- if IsFirstTimePredicted() then
         self:ApplyRecoil()
-    end
+    -- end
 
     self:SetBurstCount(self:GetBurstCount() + 1)
 
