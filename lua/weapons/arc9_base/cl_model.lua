@@ -65,7 +65,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     if parentmdl then
         local boneindex = parentmdl:LookupBone(bone)
 
-        if !boneindex then return Vector(0, 0, 0), ARC9_VECTORZERO end
+        if !boneindex then return ARC9_VECTORZERO, ARC9_ANGLEZERO end
 
         if parentmdl == self:GetOwner() then
             parentmdl:SetupBones()

@@ -11,6 +11,10 @@ function ARC9.Move(ply, mv, cmd)
 
     local mult = wpn:GetProcessedValue("Speed", 1)
 
+    if IsFirstTimePredicted() then
+        ARC9:SimulatePhysBullets(ply)
+    end
+
     if wpn:GetSightAmount() > 0 then
         if ply:KeyDown(IN_SPEED) then
             mult = mult / Lerp(wpn:GetSightAmount(), 1, ply:GetRunSpeed() / ply:GetWalkSpeed())

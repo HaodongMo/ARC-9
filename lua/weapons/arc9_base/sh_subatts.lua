@@ -105,17 +105,8 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
             -- local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
             local pos = Vector(att_pos)
 
-            -- What the hell are you doing over here, this is heresy of the highest degree...
-            -- local off_ang = Angle(0, 0, 0)
-            -- local forward, up, right = off_ang:Forward(), off_ang:Up(), off_ang:Right()
-
-            -- forward:Rotate(-att_ang)
-            -- up:Rotate(-att_ang)
-            -- right:Rotate(-att_ang)
-
-            local forward = att_ang:Forward() * -1
-            local right = att_ang:Right() * -1
-            local up = att_ang:Up() * -1
+            local off_ang = Angle(-att_ang)
+            local forward, up, right = off_ang:Forward(), off_ang:Up(), off_ang:Right()
 
             subatts[i].Pos = subatts[i].Pos * (subatts[i].Scale or 1)
 
