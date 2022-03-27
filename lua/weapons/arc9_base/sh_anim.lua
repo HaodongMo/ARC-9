@@ -1,8 +1,7 @@
-function SWEP:PlayAnimation(anim, mult, lock, doidle)
+function SWEP:PlayAnimation(anim, mult, lock)
     mult = mult or 1
     lock = lock or false
     anim = self:TranslateAnimation(anim)
-    doidle = doidle or true
 
     mult = self:RunHook("Hook_TranslateAnimSpeed", {mult = mult, anim = anim}).Mult or mult
 
@@ -67,7 +66,7 @@ function SWEP:PlayAnimation(anim, mult, lock, doidle)
         self:SetAnimLockTime(CurTime())
     end
 
-    if doidle then
+    if !animation.NoIdle then
         self:SetNextIdle(CurTime() + (time * mult))
     else
         self:SetNextIdle(math.huge)

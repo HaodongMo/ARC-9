@@ -2,6 +2,8 @@ SWEP.StatCache = {}
 SWEP.HookCache = {}
 SWEP.AffectorsCache = nil
 SWEP.HasNoAffectors = {}
+SWEP.ProcessedValueTickCache = {}
+SWEP.ProcessedValueTick = 0
 
 SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
@@ -119,31 +121,17 @@ function SWEP:GetAllAffectors()
     return aff
 end
 
---[[
-    This function is incredibly inefficient, the amount of if statements and the number of string comparisons done here is absolutely crazy.
-    You should move these if statements to the places where they will get triggered insead of having them in this incredibly large function.
-    Because this function bottlenecks pretty much everything, so like if you are doing self:GetProcessedValue("Overaheat", base) you might as well
-    just do self:GetHeatLockout() instead, will save you about 400uS.
+local Lerp = function(a, v1, v2)
+    local d = v2 - v1
 
-    Profiler Results:
-    ╦ average_time = 0.00044565808390657
-    ╠ total_called = 55728
-    ╠ total_time   = 24.835633699945
-    ╠ func         = function: 0x027e83fb0e90	-- [addons/arc-9/lua/weapons/arc9_base/sh_stats.lua]: 122-240
-    ╠ info:
-    ║            ╦ lastlinedefined = 240
-    ║            ╠ linedefined     = 122
-    ║            ╠ namewhat        = ''
-    ║            ╠ short_src       = "addons/arc-9/lua/weapons/arc9_base/sh_stats.lua"
-    ║            ╠ source          = "@addons/arc-9/lua/weapons/arc9_base/sh_stats.lua"
-    ║            ╠ what            = "Lua"
-    ║            ╚ func            = function: 0x027e83fb0e90	-- [addons/arc-9/lua/weapons/arc9_base/sh_stats.lua]: 122-240
-    ╠ names:
-    ║            ╦ 1:
-    ║            ║    ╦ name     = "GetProcessedValue"
-    ║            ║    ╠ namewhat = "method"
-    ║            ║    ╚ nparams  = 3
-]]--
+    return v1 + (a * d)
+end
+
+local pvtick = 0
+local pv_move = 0
+local pv_shooting = 0
+local pv_melee = 0
+
 function SWEP:GetProcessedValue(val, base)
     local stat = self:GetValue(val, base)
 
@@ -155,45 +143,45 @@ function SWEP:GetProcessedValue(val, base)
         return true
     end
 
-    if GetConVar("arc9_truenames"):GetBool() then
+    if !self.HasNoAffectors[val .. "True"] and GetConVar("arc9_truenames"):GetBool() then
         stat = self:GetValue(val, stat, "True")
     end
 
     if self:GetOwner():IsValid() and !self:GetOwner():IsNPC() then
-        if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
+        if !self.HasNoAffectors[val .. "MidAir"] and !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
             stat = self:GetValue(val, stat, "MidAir")
         end
 
-        if self:GetOwner():Crouching() and self:GetOwner():OnGround() then
+        if !self.HasNoAffectors[val .. "Crouch"] and self:GetOwner():Crouching() and self:GetOwner():OnGround() then
             stat = self:GetValue(val, stat, "Crouch")
         end
     end
 
-    if self:GetBurstCount() == 0 then
+    if self:GetBurstCount() == 0 and !self.HasNoAffectors[val .. "FirstShot"] then
         stat = self:GetValue(val, stat, "FirstShot")
     end
 
-    if self:Clip1() == 0 then
+    if self:Clip1() == 0 and !self.HasNoAffectors[val .. "Empty"] then
         stat = self:GetValue(val, stat, "Empty")
     end
 
-    if self:GetValue("Silencer") then
+    if self:GetValue("Silencer") and !self.HasNoAffectors[val .. "Silencer"] then
         stat = self:GetValue(val, stat, "Silenced")
     end
 
-    if self:GetNthShot() % 2 == 0 then
+    if self:GetNthShot() % 2 == 0  and !self.HasNoAffectors[val .. "EvenShot"] then
         stat = self:GetValue(val, stat, "EvenShot")
-    else
+    elseif !self.HasNoAffectors[val .. "OddShot"] then
         stat = self:GetValue(val, stat, "OddShot")
     end
 
-    if self:GetNthReload() % 2 == 0 then
+    if self:GetNthReload() % 2 == 0 and !self.HasNoAffectors[val .. "EvenReload"] then
         stat = self:GetValue(val, stat, "EvenReload")
-    else
+    elseif !self.HasNoAffectors[val .. "OddReload"] then
         stat = self:GetValue(val, stat, "OddReload")
     end
 
-    if self:GetBlindFire() then
+    if self:GetBlindFire() and !self.HasNoAffectors[val .. "BlindFire"] then
         stat = self:GetValue(val, stat, "BlindFire")
     end
 
@@ -201,65 +189,94 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Bipod")
     end
 
-    if isnumber(stat) then
-        stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
-    else
-        if self:GetSightAmount() >= 1 then
-            stat = self:GetValue(val, stat, "Sights")
-        else
-            stat = self:GetValue(val, stat, "HipFire")
-        end
-    end
-
-    if self:GetLastMeleeTime() < CurTime() then
-        local pft = CurTime() - self:GetLastMeleeTime()
-        local d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
-
-        d = math.Clamp(d, 0, 1)
-
-        d = 1 - d
-
+    if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
         if isnumber(stat) then
-            stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
+            stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
         else
-            if d > 0 then
-                stat = self:GetValue(val, stat, "Melee")
+            if self:GetSightAmount() >= 1 then
+                stat = self:GetValue(val, stat, "Sights")
+            else
+                stat = self:GetValue(val, stat, "HipFire")
             end
         end
     end
 
-    if self:GetNextPrimaryFire() + 0.1 > CurTime() then
-        local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
-        local d = pft / 0.1
+    if !self.HasNoAffectors[val .. "Melee"] then
+        if self:GetLastMeleeTime() < CurTime() then
+            local d = pv_melee
 
-        d = math.Clamp(d, 0, 1)
+            if pvtick != CurTime() then
+                local pft = CurTime() - self:GetLastMeleeTime()
+                d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
-        if isnumber(stat) then
-            stat = Lerp(d, stat, self:GetValue(val, stat, "Shooting"))
-        else
-            if d > 0 then
-                stat = self:GetValue(val, stat, "Shooting")
+                d = math.Clamp(d, 0, 1)
+
+                d = 1 - d
+
+                pv_melee = d
+            end
+
+            if isnumber(stat) then
+                stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
+            else
+                if d > 0 then
+                    stat = self:GetValue(val, stat, "Melee")
+                end
             end
         end
     end
 
-    if self:GetRecoilAmount() > 0 then
-        stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
-    end
+    if !self.HasNoAffectors[val .. "Shooting"] then
+        if self:GetNextPrimaryFire() + 0.1 > CurTime() then
+            local d = pv_shooting
 
-    if self:GetOwner():IsValid() then
-        local spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
+            if pvtick != CurTime() then
+                local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
+                d = pft / 0.1
 
-        spd = spd / 250
+                d = math.Clamp(d, 0, 1)
 
-        if isnumber(stat) then
-            stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
-        else
-            if spd > 0 then
-                stat = self:GetValue(val, stat, "Move")
+                pv_shooting = d
+            end
+
+            if isnumber(stat) then
+                stat = Lerp(d, stat, self:GetValue(val, stat, "Shooting"))
+            else
+                if d > 0 then
+                    stat = self:GetValue(val, stat, "Shooting")
+                end
             end
         end
     end
+
+    if !self.HasNoAffectors[val .. "Recoil"] then
+        if self:GetRecoilAmount() > 0 then
+            stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
+        end
+    end
+
+    if !self.HasNoAffectors[val .. "Move"] then
+        if self:GetOwner():IsValid() then
+            local spd = pv_move
+            if pvtick != CurTime() then
+                spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
+
+                spd = spd / 250
+
+                pv_move = spd
+            end
+
+            if isnumber(stat) then
+                stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
+            else
+                if spd > 0 then
+                    stat = self:GetValue(val, stat, "Move")
+                end
+            end
+        end
+    end
+
+    pvtick = CurTime()
 
     return stat
 end

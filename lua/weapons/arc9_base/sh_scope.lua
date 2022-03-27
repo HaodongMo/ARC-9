@@ -135,6 +135,7 @@ function SWEP:BuildMultiSight()
     if keepbaseirons then
         local tbl = {}
         table.insert(tbl, self:GetProcessedValue("IronSights"))
+        tbl[1].BaseSight = true
         table.Add(tbl, self.MultiSightTable)
         self.MultiSightTable = tbl
     end
@@ -177,7 +178,13 @@ function SWEP:GetRTScopeFOV()
 
     if !sights then return self:GetOwner():GetFOV() end
 
-    local atttbl = sights.atttbl
+    local atttbl
+
+    if sights.BaseSight then
+        atttbl = self:GetTable()
+    else
+        atttbl = self:GetFinalAttTable(sights.slottbl)
+    end
 
     local scrolllevel = sights.ScrollLevel or 0
 

@@ -44,11 +44,9 @@ function SWEP:Reload()
 
     anim = self:RunHook("Hook_SelectReloadAnimation", anim) or anim
 
-    local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true, true)
+    local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true)
 
-    if CLIENT and !self:ShouldTPIK() then
-        self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
-    end
+    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
 
     if !self:GetShouldShotgunReload() then
         local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
@@ -61,7 +59,11 @@ function SWEP:Reload()
         local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.25
 
         self:SetTimer(self:GetProcessedValue("ReloadTime") * newcliptime, function()
-            self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + self:Ammo1()))
+            local ammo = self:Ammo1()
+            if self:GetInfiniteAmmo() then
+                ammo = math.huge
+            end
+            self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + ammo))
         end)
     end
 
@@ -196,7 +198,7 @@ function SWEP:EndReload()
     if self:GetShouldShotgunReload() then
         if self:Clip1() >= self:GetCapacity() or self:Ammo1() == 0 or self:GetEndReload() then
             // finish
-            self:PlayAnimation("reload_finish", self:GetProcessedValue("ReloadTime", 1), true, true)
+            self:PlayAnimation("reload_finish", self:GetProcessedValue("ReloadTime", 1), true)
             self:SetReloading(false)
 
             self:SetNthShot(0)
@@ -239,6 +241,7 @@ function SWEP:EndReload()
 
         self:SetNthShot(0)
         self:SetNthReload(self:GetNthReload() + 1)
+        self:SetLoadedRounds(self:Clip1())
 
         self:SetEmptyReload(false)
     end

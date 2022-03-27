@@ -112,8 +112,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
             local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
             local timestep = engine.TickInterval()
 
-            -- Is this supposed to be 200msec? because this is 200 ticks... which on default tickrate would be 2.9 seconds... which is latency so high you would get dropped from the server.
-            latency = math.min(latency, 200) // can't let people cheat TOO hard
+            latency = math.min(latency, ARC9.TimeToTicks(0.2)) // can't let people cheat TOO hard
 
             while latency > 0 do
                 ARC9:ProgressPhysBullet(bullet, timestep)

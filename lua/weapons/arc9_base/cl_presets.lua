@@ -159,21 +159,6 @@ function SWEP:DoPresetCapture(filename, foricon)
     local campos, camang = Vector(0, 0, 0), Angle(0, 0, 0)
     local custpos, custang = self:GetProcessedValue("CustomizePos"), self:GetProcessedValue("CustomizeAng")
 
-    --[[
-    But why this mess?
-    This is same case as in the same case as line 18 of cl_autosolve.lua, you are not setting the camang to anything before doing this,
-    therefore camang will always be zero, and the Forward(), Right(), Up() calls are useless and can be represet---- do I even have to explain this again?
-    Just read the comment I made in cl_autosolve.lua about this same thing, you'll get the point.
-
-    ~BlacK 26/03/2022
-    ]]--
-
-    -- Dont();
-    -- pos = pos + (camang:Right() * custpos[1])
-    -- pos = pos + (camang:Forward() * custpos[2])
-    -- pos = pos + (camang:Up() * custpos[3])
-
-    -- This might be a wrong, I might be bit retarded and lost in your code. ~BlacK 26/03/2022
     local pos = Vector(custpos.y, -custpos.x, custpos.z)
 
     local ang = Angle(0, 0, 0)

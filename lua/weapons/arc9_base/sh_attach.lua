@@ -151,7 +151,7 @@ function SWEP:GetAttBlocked(atttbl)
     end
 
     if atttbl.RequireElements then
-        for _, group in ipairs(atttbl.ExcludeElements) do
+        for _, group in ipairs(atttbl.RequireElements) do
             if !istable(group) then
                 group = {group}
             end

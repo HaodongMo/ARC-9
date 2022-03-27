@@ -29,7 +29,7 @@ function SWEP:SwitchFiremode()
     self:InvalidateCache()
 
     if self:HasAnimation(anim) then
-        local t = self:PlayAnimation(anim, 1, false, true)
+        local t = self:PlayAnimation(anim, 1, false)
 
         self:SetFinishFiremodeAnimTime(CurTime() + t)
         -- self:SetFiremodePose()

@@ -6,17 +6,24 @@ SWEP.ViewModelAng = Angle(0, 0, 0)
 local lht = 0
 local sht = 0
 
+local Lerp = function(a, v1, v2)
+    local d = v2 - v1
+
+    return v1 + (a * d)
+end
+
 local LerpVector = function(a, v1, v2)
     local d = v2 - v1
 
     return v1 + (a * d)
 end
 
-local LerpAngle = function(a, a1, a2)
-    local d = a2 - a1
+local LerpAngle = function(a, v1, v2)
+    local d = v2 - v1
 
-    return a1 + (a * d)
+    return v1 + (a * d)
 end
+
 
 -- local ApproachVector = function(a1, a2, d)
 --     a1[1] = math.Approach(a1[1], a2[1], d)
@@ -332,22 +339,27 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos, ang = self:GetViewModelSmooth(pos, ang)
 
     -- if game.SinglePlayer() or IsFirstTimePredicted() then
-    if game.SinglePlayer() or CLIENT then
-        pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
+    pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
+    if game.SinglePlayer() or IsFirstTimePredicted() then
         pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
         ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
 
-        ang:Normalize()
+        -- pos = DampVector(0, pos, self.ViewModelPos)
+        -- ang = DampAngle(0, ang, self.ViewModelAng)
+
+        -- ang:Normalize()
 
         self.ViewModelPos = pos
         self.ViewModelAng = ang
-
-        pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
-
-        -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
-        self.ViewModelAng:Normalize()
+    else
+         pos, ang = self.ViewModelPos, self.ViewModelAng
     end
+
+    pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
+
+       -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
+       -- self.ViewModelAng:Normalize()
 
     pos, ang = self:GunControllerThirdArm(pos, ang)
 

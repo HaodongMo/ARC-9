@@ -9,7 +9,13 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 
     local sight = wpn:GetSight()
 
-    local atttbl = wpn:GetFinalAttTable(sight.slottbl)
+    local atttbl
+
+    if sight.BaseSight then
+        atttbl = wpn:GetTable()
+    else
+        atttbl = wpn:GetFinalAttTable(sight.slottbl)
+    end
 
     if sight.ExtraSightData then
         atttbl = table.Copy(atttbl)
@@ -17,7 +23,7 @@ hook.Add("PreRender", "ARC9_PreRender", function()
     end
 
     if atttbl and atttbl.RTScope and wpn:GetSightAmount() > 0 then
-        wpn:DoRT(wpn:GetRTScopeFOV(), sight.atttbl)
+        wpn:DoRT(wpn:GetRTScopeFOV(), atttbl)
     end
 end)
 
@@ -30,7 +36,13 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
 
     local sight = wpn:GetSight()
 
-    local atttbl = wpn:GetFinalAttTable(sight.slottbl)
+    local atttbl
+
+    if sight.BaseSight then
+        atttbl = wpn:GetTable()
+    else
+        atttbl = wpn:GetFinalAttTable(sight.slottbl)
+    end
 
     if sight.ExtraSightData then
         atttbl = table.Copy(atttbl)

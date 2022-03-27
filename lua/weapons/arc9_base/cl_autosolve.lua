@@ -12,25 +12,6 @@ function SWEP:GenerateAutoSight(sight, slottbl)
 
     debugoverlay.Axis(pos, ang, 16, 1, true)
 
-    -- local s_pos = Vector(0, 0, 0)
-    -- local s_ang = Angle(0, 0, 0)
-
-    -- s_ang is defined right above as angle 0, 0, 0 therefore these will always be Vector(1, 0, 0), Vector(0, -1, 0), Vector(0, 0, 1)
-    -- I moved their definitions to sh_common.lua
-    -- local up, forward, right = s_ang:Up(), s_ang:Forward(), s_ang:Right()
-
-    -- Since the direction vectors are static constant variables this can be represented as simple Add(Vector()) operation, see blow.
-    -- s_pos:Add(ARC9_VECTORRIGHT * pos.x)
-    -- s_pos:Add(ARC9_VECTORFORWARD * pos.y)
-    -- s_pos:Add(ARC9_VECTORUP * -pos.z)
-
-    -- Tadaaaaa, also we don't need this because we know exactly what the vector is supposed to be so...
-    -- s_pos:Add(Vector(pos.y, -pos.x, -pos.z))
-
-    -- This could also be represented as local s_pos = pos:ShiftLeft()
-
-    -- print(ang)
-
     return {
         Pos = Vector(pos.y, -pos.x, -pos.z), -- s_pos
         Ang = -ang + (slottbl.CorrectiveAng or Angle(0, 0, 0)),
@@ -41,6 +22,7 @@ function SWEP:GenerateAutoSight(sight, slottbl)
         -- ExtraAng = ang
     }
 end
+
 
 SWEP.MultiSightIndex = 1
 
@@ -59,10 +41,15 @@ end
 
 function SWEP:GetMagnification()
     local sight = self:GetSight()
+
     local target = sight.Magnification or 1
 
     if GetConVar("arc9_cheapscopes"):GetBool() and !sight.Disassociate then
-        local atttbl = self:GetSight().atttbl
+        local atttbl = sight.atttbl
+
+        if sight.BaseSight then
+            atttbl = self:GetTable()
+        end
 
         if atttbl and atttbl.RTScope then
             target = (self:GetOwner():GetFOV() / self:GetRTScopeFOV())
@@ -79,8 +66,13 @@ function SWEP:AdjustMouseSensitivity()
     local fov = GetConVar("fov_desired"):GetFloat()
 
     local sight = self:GetSight()
+    local atttbl = sight.atttbl
 
-    if sight.atttbl and sight.atttbl.RTScope and !sight.Disassociate then
+    if sight.BaseSight then
+        atttbl = self:GetTable()
+    end
+
+    if atttbl and atttbl.RTScope and !sight.Disassociate then
         mag = mag + (fov / self:GetRTScopeFOV())
     end
 

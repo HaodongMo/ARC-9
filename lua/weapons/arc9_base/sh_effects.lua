@@ -8,7 +8,12 @@ function SWEP:DoEffects()
 
     local muzzle = "ARC9_muzzleeffect"
 
-    muzzle = self:GetProcessedValue("MuzzleEffect") or muzzle
+    if !self:GetProcessedValue("MuzzleParticle") and self:GetProcessedValue("MuzzleEffect") then
+        muzzle = self:GetProcessedValue("MuzzleEffect")
+        data:SetScale(1)
+        data:SetFlags(0)
+        data:SetEntity(self:GetVM())
+    end
 
     util.Effect( muzzle, data )
 end

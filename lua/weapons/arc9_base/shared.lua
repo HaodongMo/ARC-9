@@ -50,6 +50,7 @@ SWEP.WorldModelOffset = nil
 --     ang = Angle(0, 0, 0),
 --     scale = 1
 -- }
+SWEP.NoTPIK = false
 
 SWEP.Crosshair = false
 
@@ -501,9 +502,9 @@ SWEP.MeleeSwingSound = "arc9/melee_miss.wav"
 
 SWEP.NoFlash = false -- Disable light flash
 
-SWEP.MuzzleParticle = "" -- Used for some muzzle effects.
+SWEP.MuzzleParticle = nil -- Used for some muzzle effects.
 
-SWEP.MuzzleEffect = nil
+SWEP.MuzzleEffect = "MuzzleFlash"
 SWEP.FastMuzzleEffect = nil
 
 SWEP.ImpactEffect = nil

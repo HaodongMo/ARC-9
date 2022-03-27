@@ -29,6 +29,12 @@ function SWEP:PreDrawViewModel()
 
     -- self:DrawCustomModel(true, EyePos() + EyeAngles():Forward() * 16, EyeAngles())
 
+    self:GetVM():SetSubMaterial()
+
+    if self.RTScope then
+        self:DoRTScope(self:GetVM(), self:GetTable(), self:GetSightAmount() > 0)
+    end
+
     cam.IgnoreZ(true)
 end
 
