@@ -143,45 +143,45 @@ function SWEP:GetProcessedValue(val, base)
         return true
     end
 
-    if GetConVar("arc9_truenames"):GetBool() then
+    if !self.HasNoAffectors[val .. "True"] and GetConVar("arc9_truenames"):GetBool() then
         stat = self:GetValue(val, stat, "True")
     end
 
     if self:GetOwner():IsValid() and !self:GetOwner():IsNPC() then
-        if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
+        if !self.HasNoAffectors[val .. "MidAir"] and !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
             stat = self:GetValue(val, stat, "MidAir")
         end
 
-        if self:GetOwner():Crouching() and self:GetOwner():OnGround() then
+        if !self.HasNoAffectors[val .. "Crouch"] and self:GetOwner():Crouching() and self:GetOwner():OnGround() then
             stat = self:GetValue(val, stat, "Crouch")
         end
     end
 
-    if self:GetBurstCount() == 0 then
+    if self:GetBurstCount() == 0 and !self.HasNoAffectors[val .. "FirstShot"] then
         stat = self:GetValue(val, stat, "FirstShot")
     end
 
-    if self:Clip1() == 0 then
+    if self:Clip1() == 0 and !self.HasNoAffectors[val .. "Empty"] then
         stat = self:GetValue(val, stat, "Empty")
     end
 
-    if self:GetValue("Silencer") then
+    if self:GetValue("Silencer") and !self.HasNoAffectors[val .. "Silencer"] then
         stat = self:GetValue(val, stat, "Silenced")
     end
 
-    if self:GetNthShot() % 2 == 0 then
+    if self:GetNthShot() % 2 == 0  and !self.HasNoAffectors[val .. "EvenShot"] then
         stat = self:GetValue(val, stat, "EvenShot")
-    else
+    elseif !self.HasNoAffectors[val .. "OddShot"] then
         stat = self:GetValue(val, stat, "OddShot")
     end
 
-    if self:GetNthReload() % 2 == 0 then
+    if self:GetNthReload() % 2 == 0 and !self.HasNoAffectors[val .. "EvenReload"] then
         stat = self:GetValue(val, stat, "EvenReload")
-    else
+    elseif !self.HasNoAffectors[val .. "OddReload"] then
         stat = self:GetValue(val, stat, "OddReload")
     end
 
-    if self:GetBlindFire() then
+    if self:GetBlindFire() and !self.HasNoAffectors[val .. "BlindFire"] then
         stat = self:GetValue(val, stat, "BlindFire")
     end
 
@@ -189,13 +189,15 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Bipod")
     end
 
-    if isnumber(stat) then
-        stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
-    else
-        if self:GetSightAmount() >= 1 then
-            stat = self:GetValue(val, stat, "Sights")
+    if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
+        if isnumber(stat) then
+            stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
         else
-            stat = self:GetValue(val, stat, "HipFire")
+            if self:GetSightAmount() >= 1 then
+                stat = self:GetValue(val, stat, "Sights")
+            else
+                stat = self:GetValue(val, stat, "HipFire")
+            end
         end
     end
 
