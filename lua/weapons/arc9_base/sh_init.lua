@@ -1,9 +1,9 @@
 function SWEP:DoDeployAnimation()
     if !self:GetReady() and self:HasAnimation("ready") then
-        self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true, true)
+        self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true)
         self:SetReady(true)
     else
-        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true, true)
+        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)
     end
 end
 

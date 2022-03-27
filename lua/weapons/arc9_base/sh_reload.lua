@@ -44,7 +44,7 @@ function SWEP:Reload()
 
     anim = self:RunHook("Hook_SelectReloadAnimation", anim) or anim
 
-    local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true, true)
+    local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true)
 
     self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
 
@@ -198,7 +198,7 @@ function SWEP:EndReload()
     if self:GetShouldShotgunReload() then
         if self:Clip1() >= self:GetCapacity() or self:Ammo1() == 0 or self:GetEndReload() then
             // finish
-            self:PlayAnimation("reload_finish", self:GetProcessedValue("ReloadTime", 1), true, true)
+            self:PlayAnimation("reload_finish", self:GetProcessedValue("ReloadTime", 1), true)
             self:SetReloading(false)
 
             self:SetNthShot(0)

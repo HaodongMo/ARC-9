@@ -44,6 +44,10 @@ function SWEP:ViewModelDrawn()
     -- cam.End3D()
 
     -- cam.IgnoreZ(true)
+
+    if self.RTScope then
+        self:DoRTScope(self:GetVM(), self:GetTable(), self:GetSightAmount() > 0)
+    end
 end
 
 function SWEP:PostDrawViewModel()

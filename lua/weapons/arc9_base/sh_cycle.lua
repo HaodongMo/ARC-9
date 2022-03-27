@@ -3,7 +3,7 @@ function SWEP:ThinkCycle()
 
     if self:GetNeedsCycle() and !self:GetOwner():KeyDown(IN_ATTACK) then
         if IsFirstTimePredicted() then
-            self:PlayAnimation("cycle", 1, true, true)
+            self:PlayAnimation("cycle", 1, true)
         end
         self:SetNeedsCycle(false)
     end
