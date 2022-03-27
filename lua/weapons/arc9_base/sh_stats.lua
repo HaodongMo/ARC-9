@@ -199,69 +199,77 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if self:GetLastMeleeTime() < CurTime() then
-        local d = pv_melee
+    if !self.HasNoAffectors[val .. "Melee"] then
+        if self:GetLastMeleeTime() < CurTime() then
+            local d = pv_melee
 
-        if pvtick != CurTime() then
-            local pft = CurTime() - self:GetLastMeleeTime()
-            d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
+            if pvtick != CurTime() then
+                local pft = CurTime() - self:GetLastMeleeTime()
+                d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
-            d = math.Clamp(d, 0, 1)
+                d = math.Clamp(d, 0, 1)
 
-            d = 1 - d
+                d = 1 - d
 
-            pv_melee = d
-        end
+                pv_melee = d
+            end
 
-        if isnumber(stat) then
-            stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
-        else
-            if d > 0 then
-                stat = self:GetValue(val, stat, "Melee")
+            if isnumber(stat) then
+                stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
+            else
+                if d > 0 then
+                    stat = self:GetValue(val, stat, "Melee")
+                end
             end
         end
     end
 
-    if self:GetNextPrimaryFire() + 0.1 > CurTime() then
-        local d = pv_shooting
+    if !self.HasNoAffectors[val .. "Shooting"] then
+        if self:GetNextPrimaryFire() + 0.1 > CurTime() then
+            local d = pv_shooting
 
-        if pvtick != CurTime() then
-            local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
-            d = pft / 0.1
+            if pvtick != CurTime() then
+                local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
+                d = pft / 0.1
 
-            d = math.Clamp(d, 0, 1)
+                d = math.Clamp(d, 0, 1)
 
-            pv_shooting = d
-        end
+                pv_shooting = d
+            end
 
-        if isnumber(stat) then
-            stat = Lerp(d, stat, self:GetValue(val, stat, "Shooting"))
-        else
-            if d > 0 then
-                stat = self:GetValue(val, stat, "Shooting")
+            if isnumber(stat) then
+                stat = Lerp(d, stat, self:GetValue(val, stat, "Shooting"))
+            else
+                if d > 0 then
+                    stat = self:GetValue(val, stat, "Shooting")
+                end
             end
         end
     end
 
-    if self:GetRecoilAmount() > 0 then
-        stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
+    if !self.HasNoAffectors[val .. "Recoil"] then
+        if self:GetRecoilAmount() > 0 then
+            stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
+        end
     end
 
-    if self:GetOwner():IsValid() then
-        local spd = pv_move
-        if pvtick != CurTime() then
-            spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
+    if !self.HasNoAffectors[val .. "Move"] then
+        if self:GetOwner():IsValid() then
+            local spd = pv_move
+            if pvtick != CurTime() then
+                spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
 
-            spd = spd / 250
+                spd = spd / 250
 
-            pv_move = spd
-        end
+                pv_move = spd
+            end
 
-        if isnumber(stat) then
-            stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
-        else
-            if spd > 0 then
-                stat = self:GetValue(val, stat, "Move")
+            if isnumber(stat) then
+                stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
+            else
+                if spd > 0 then
+                    stat = self:GetValue(val, stat, "Move")
+                end
             end
         end
     end
