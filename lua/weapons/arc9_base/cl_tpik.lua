@@ -5,7 +5,9 @@ function SWEP:ShouldTPIK()
     if self:GetSafe() then return false end
     if self:GetBlindFireAmount() > 0 then return false end
     if !self:GetOwner():ShouldDrawLocalPlayer() then return false end
-    return LocalPlayer() == self:GetOwner()
+    -- return LocalPlayer() == self:GetOwner()
+    -- return false
+    return GetConVar("arc9_tpik"):GetBool()
 end
 
 function SWEP:DoTPIK()
@@ -123,11 +125,13 @@ function SWEP:DoTPIK()
     ply_r_elbow_angle.r = -90
     ply_r_elbow_matrix:SetAngles(ply_r_elbow_angle)
 
-    local camcontrol = self:GetCameraControl()*4
-    local ply_head_angle = ply:GetBoneMatrix(ply_head_index):GetAngles() + Angle(camcontrol.z, -camcontrol.x, camcontrol.y)
-    
-    ply_head_matrix:SetAngles(ply_head_angle)
-    ply:SetBoneMatrix(ply_head_index, ply_head_matrix)
+    if self:GetCameraControl() then
+        local camcontrol = self:GetCameraControl() * 4
+        local ply_head_angle = ply:GetBoneMatrix(ply_head_index):GetAngles() + Angle(camcontrol.z, -camcontrol.x, camcontrol.y)
+
+        ply_head_matrix:SetAngles(ply_head_angle)
+        ply:SetBoneMatrix(ply_head_index, ply_head_matrix)
+    end
 
     ply:SetBoneMatrix(ply_r_elbow_index, ply_r_elbow_matrix)
     ply:SetBoneMatrix(ply_r_shoulder_index, ply_r_shoulder_matrix)

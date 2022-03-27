@@ -185,6 +185,11 @@ local conVars = {
         default = "0",
         replicated = true
     },
+    {
+        name = "tpik",
+        default = "1",
+        client = true
+    }
 }
 
 local prefix = "arc9_"

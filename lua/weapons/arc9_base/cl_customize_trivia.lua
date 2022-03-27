@@ -72,7 +72,7 @@ function SWEP:CreateHUD_Trivia()
         end
     end
 
-    for title, trivia in ipairs(self:GetValue("Trivia")) do
+    for title, trivia in pairs(self:GetValue("Trivia")) do
         if title == "BaseClass" then continue end
         local newbtn2 = tp:Add("DPanel")
         newbtn2:SetSize(ScreenScale(200), ScreenScale(21))
