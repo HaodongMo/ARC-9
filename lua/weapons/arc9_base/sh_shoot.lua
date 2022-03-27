@@ -161,7 +161,15 @@ function SWEP:PrimaryAttack()
 
     local idle = true
 
-    self:PlayAnimation("fire", 1, false, idle)
+    if self:GetProcessedValue("Akimbo") then
+        if bit.band(self:GetNthShot(), 1) == 0 then
+            self:PlayAnimation("fire_left", 1, false, idle)
+        else
+            self:PlayAnimation("fire_right", 1, false, idle)
+        end
+    else
+        self:PlayAnimation("fire", 1, false, idle)
+    end
 
     self:SetLoadedRounds(self:Clip1())
 

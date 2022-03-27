@@ -1,7 +1,13 @@
 function SWEP:ShouldDrawCrosshair()
+    if self:GetInSights() then
+        if self:GetSight().CrosshairInSights then
+            return true
+        else
+            return false
+        end
+    end
     if !self:GetProcessedValue("Crosshair") then return false end
     if self:GetCustomize() then return false end
-    if self:GetInSights() then return false end
 
     return true
 end
@@ -25,7 +31,16 @@ function SWEP:DoDrawCrosshair(x, y)
     local minigap = ScreenScale(2)
     local miniprong_1 = ScreenScale(4)
     local miniprong_2 = ScreenScale(2)
+    local gap = ScreenScale(8)
     local col = Color(255, 255, 255, 100)
+
+    local d = self:GetSightDelta()
+
+    prong = Lerp(d, prong, ScreenScale(6))
+    gap = Lerp(d, gap, ScreenScale(4))
+    minigap = Lerp(d, minigap, ScreenScale(1))
+    miniprong_1 = Lerp(d, miniprong_1, ScreenScale(3))
+    miniprong_2 = Lerp(d, miniprong_1, ScreenScale(1))
 
     if self:GetOwner():IsAdmin() and GetConVar("developer"):GetInt() >= 2 and self:GetInSights() then
         surface.SetDrawColor(255, 0, 0, 150)
@@ -58,8 +73,6 @@ function SWEP:DoDrawCrosshair(x, y)
     x, y = toscreen.x, toscreen.y
 
     local mode = self:GetCurrentFiremode()
-
-    local gap = ScreenScale(8)
 
     local shoottimegap = math.Clamp((self:GetNextPrimaryFire() - CurTime()) / (60 / (self:GetProcessedValue("RPM") * 0.1)), 0, 1)
 
