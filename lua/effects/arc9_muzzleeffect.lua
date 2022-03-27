@@ -7,6 +7,8 @@ function EFFECT:Init(data)
 
     local att = data:GetAttachment() or 1
 
+    local vm = LocalPlayer():GetViewModel()
+
     local wm = false
 
     if (LocalPlayer():ShouldDrawLocalPlayer() or wpn.Owner != LocalPlayer()) then
@@ -17,15 +19,15 @@ function EFFECT:Init(data)
     local parent = wpn
 
     if !wm then
-        parent = LocalPlayer():GetViewModel()
+        parent = vm
     else
         parent = (wpn.WModel or {})[1] or wpn
     end
 
+    parent = wpn:GetMuzzleDevice(wm)
+
     local pa = parent:GetAttachment(att)
     local pos = pa.Pos
-
-    parent = wpn:GetMuzzleDevice(wm)
 
     -- if !IsValid(parent) then return end
 
@@ -47,6 +49,8 @@ function EFFECT:Init(data)
             light.DieTime = CurTime() + 0.1
         end
     end
+
+    debugoverlay.Sphere(pos, 2, 1, Color(255, 255, 255, 1))
 end
 
 function EFFECT:Think()
