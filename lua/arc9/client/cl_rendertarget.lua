@@ -23,7 +23,7 @@ hook.Add("PreRender", "ARC9_PreRender", function()
     end
 
     if atttbl and atttbl.RTScope and wpn:GetSightAmount() > 0 then
-        wpn:DoRT(wpn:GetRTScopeFOV(), sight.atttbl)
+        wpn:DoRT(wpn:GetRTScopeFOV(), atttbl)
     end
 end)
 

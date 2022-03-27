@@ -184,14 +184,24 @@ function SWEP:DoRTScope(model, atttbl, active)
 
     if active then
         if self:ShouldDoScope() then
-            local sightpos = (self:GetSight().OriginalSightTable or {}).Pos or Vector(0, 0, 0)
+            local sightpos = self:GetSight().ShadowPos or (self:GetSight().OriginalSightTable or {}).Pos or self:GetSight().Pos or Vector(0, 0, 0)
             sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
 
             pos = pos + (sightpos.x * ang:Right())
             -- pos = pos + (sightpos.y * ang:Forward())
             pos = pos + (sightpos.z * -ang:Up())
 
-            local screenpos = pos:ToScreen()
+            local screenpos
+
+            if self:GetSight().BaseSight then
+                screenpos = {
+                    visible = true,
+                    x = ScrW() / 2,
+                    y = ScrH() / 2
+                }
+            else
+                screenpos = pos:ToScreen()
+            end
 
             local shadow_intensity = atttbl.RTScopeShadowIntensity or 30
 
@@ -240,6 +250,7 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
                 surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
+                -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
             end
 
             if atttbl.RTScopeDrawFunc then
