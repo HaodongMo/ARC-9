@@ -73,22 +73,22 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
 
     self.ThirdArmPersist = persist
 
-    self.ThirdArmModel:SetPos(ARC9_VECTORZERO)
-    self.ThirdArmModel:SetAngles(ARC9_ANGLEZERO)
+    self.ThirdArmModel:SetPos(Vector(0, 0, 0))
+    self.ThirdArmModel:SetAngles(Angle(0, 0, 0))
 
     self.ThirdArmModel:SetupBones()
     self.ThirdArmModel:InvalidateBoneCache()
 
     if tbl.gun_controller_attachment != nil then
         local posang = self.ThirdArmModel:GetAttachment(tbl.gun_controller_attachment)
-        self.ThirdArmGunOffsetAngle:Set(posang.Ang)
-        self.ThirdArmGunOffsetPos:Set(posang.Pos)
+        self.ThirdArmGunOffsetAngle = posang.Ang
+        self.ThirdArmGunOffsetPos = posang.Pos
     end
 
     if tbl.cam_controller_attachment != nil then
         local posang = self.ThirdArmModel:GetAttachment(tbl.cam_controller_attachment)
-        self.ThirdArmCamOffsetAngle:Set(posang.Ang)
-        self.ThirdArmCamOffsetPos:Set(posang.Pos)
+        self.ThirdArmCamOffsetAngle = posang.Ang
+        self.ThirdArmCamOffsetPos = posang.Pos
     end
 
     if tbl.soundtable then
@@ -269,8 +269,8 @@ function SWEP:GunControllerThirdArm(pos, ang)
 
     if self.ThirdArmModel and self.ThirdArmAnimation.gun_controller_attachment != nil then
         local posang = self.ThirdArmModel:GetAttachment(self.ThirdArmAnimation.gun_controller_attachment)
-        offset_ang:Set(posang.Ang)
-        offset_pos:Set(posang.Pos)
+        local offset_ang = posang.Ang
+        local offset_pos =  posang.Pos
 
         offset_pos, offset_ang = WorldToLocal(offset_pos, offset_ang, EyePos(), EyeAngles() + (self.ThirdArmAnimation.offsetang or Angle(0, 0, 0)))
 

@@ -60,62 +60,61 @@ ValveBiped.Bip01_R_Finger02
 */
 
 function SWEP:ToggleBoneMods(on, dir)
-    local owner = self:GetOwner()
     if on then
         if dir < 0 then
             for i, k in pairs(self:GetValue("BlindFireLeftBoneMods")) do
-                local boneindex = owner:LookupBone(i)
+                local boneindex = self:GetOwner():LookupBone(i)
 
                 if !boneindex then continue end
 
-                owner:ManipulateBonePosition(boneindex, k.pos or ARC9_VECTORZERO)
-                owner:ManipulateBoneAngles(boneindex, k.ang or ARC9_ANGLEZERO)
+                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
+                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
             end
         elseif dir > 0 then
             for i, k in pairs(self:GetValue("BlindFireRightBoneMods")) do
-                local boneindex = owner:LookupBone(i)
+                local boneindex = self:GetOwner():LookupBone(i)
 
                 if !boneindex then continue end
 
-                owner:ManipulateBonePosition(boneindex, k.pos or ARC9_VECTORZERO)
-                owner:ManipulateBoneAngles(boneindex, k.ang or ARC9_ANGLEZERO)
+                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
+                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
             end
         else
             for i, k in pairs(self:GetValue("BlindFireBoneMods")) do
-                local boneindex = owner:LookupBone(i)
+                local boneindex = self:GetOwner():LookupBone(i)
 
                 if !boneindex then continue end
 
-                owner:ManipulateBonePosition(boneindex, k.pos or ARC9_VECTORZERO)
-                owner:ManipulateBoneAngles(boneindex, k.ang or ARC9_ANGLEZERO)
+                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
+                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
             end
         end
     else
         for i, k in pairs(self:GetValue("BlindFireBoneMods")) do
-            local boneindex = owner:LookupBone(i)
+            local boneindex = self:GetOwner():LookupBone(i)
 
             if !boneindex then continue end
 
-            owner:ManipulateBonePosition(boneindex, ARC9_VECTORZERO)
-            owner:ManipulateBoneAngles(boneindex, ARC9_ANGLEZERO)
+            self:GetOwner():ManipulateBonePosition(boneindex, Vector(0, 0, 0))
+            self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
         end
 
         for i, k in pairs(self:GetValue("BlindFireRightBoneMods")) do
-            local boneindex = owner:LookupBone(i)
+            local boneindex = self:GetOwner():LookupBone(i)
 
             if !boneindex then continue end
 
-            owner:ManipulateBonePosition(boneindex, ARC9_VECTORZERO)
-            owner:ManipulateBoneAngles(boneindex, ARC9_ANGLEZERO)
+            self:GetOwner():ManipulateBonePosition(boneindex, Vector(0, 0, 0))
+            self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
         end
 
         for i, k in pairs(self:GetValue("BlindFireLeftBoneMods")) do
-            local boneindex = owner:LookupBone(i)
+            local boneindex = self:GetOwner():LookupBone(i)
 
             if !boneindex then continue end
 
-            owner:ManipulateBonePosition(boneindex, ARC9_VECTORZERO)
-            owner:ManipulateBoneAngles(boneindex, ARC9_ANGLEZERO)
+            self:GetOwner():ManipulateBonePosition(boneindex, Vector(0, 0, 0))
+            self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
         end
     end
 end
@@ -174,21 +173,20 @@ function SWEP:ThinkBlindFire()
 
     self:SetBlindFireCornerAmount(amt2)
 
-    local owner = self:GetOwner()
-    if owner:KeyDown(IN_ALT1) then
-        if owner:KeyDown(IN_BACK) then
+    if self:GetOwner():KeyDown(IN_ALT1) then
+        if self:GetOwner():KeyDown(IN_BACK) then
             self:ToggleBlindFire(false)
-        elseif owner:KeyDown(IN_FORWARD) then
+        elseif self:GetOwner():KeyDown(IN_FORWARD) then
             self:ToggleBlindFire(true, 0)
-        elseif owner:KeyDown(IN_MOVELEFT) then
+        elseif self:GetOwner():KeyDown(IN_MOVELEFT) then
             self:ToggleBlindFire(true, -1)
-        elseif owner:KeyDown(IN_MOVERIGHT) then
+        elseif self:GetOwner():KeyDown(IN_MOVERIGHT) then
             self:ToggleBlindFire(true, 1)
         end
     end
 
     -- if self:GetBlindFire() then
-    --     if owner:KeyDown(IN_USE) and owner:KeyPressed(IN_MOVELEFT) then
+    --     if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_MOVELEFT) then
     --         self:SetBlindFireCorner(!self:GetBlindFireCorner())
     --     end
     -- else
