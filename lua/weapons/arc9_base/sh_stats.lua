@@ -136,7 +136,7 @@ function SWEP:GetProcessedValue(val, base)
         self.ProcessedValueTickCache = {}
     end
 
-    if IsFirstTimePredicted() and self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)] then
+    if !IsFirstTimePredicted() and self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)] then
         return self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)]
     end
 

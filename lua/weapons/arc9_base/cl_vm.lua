@@ -312,19 +312,23 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos, ang = self:GetViewModelSmooth(pos, ang)
 
     -- if game.SinglePlayer() or IsFirstTimePredicted() then
-    if game.SinglePlayer() or IsFirstTimePredicted() then
+    if game.SinglePlayer() or CLIENT then
         pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
-        pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
-        ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
+        if IsFirstTimePredicted() then
+            pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
+            ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
 
-        -- pos = DampVector(0, pos, self.ViewModelPos)
-        -- ang = DampAngle(0, ang, self.ViewModelAng)
+            -- pos = DampVector(0, pos, self.ViewModelPos)
+            -- ang = DampAngle(0, ang, self.ViewModelAng)
 
-        ang:Normalize()
+            ang:Normalize()
 
-        self.ViewModelPos = pos
-        self.ViewModelAng = ang
+            self.ViewModelPos = pos
+            self.ViewModelAng = ang
+        else
+            pos, ang = self.ViewModelPos, self.ViewModelAng
+        end
 
         pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
 
