@@ -205,6 +205,7 @@ local cone = math.tan(math.deg(inacuracyInMOA / oneeightyoversixty))
 ]]--
 
 ARC9.MOAToAcc = 10 / 360 / 60
+ARC9.PenetrationTraceStepSize = 4
 
 -- Intentionally not using the "dot" and not making this a member variable of the ARC9 table because it's a global for once and becasue it helps with performance, as there's no need for additional table lookup.
 ARC9_VECTORZERO = Vector(0, 0, 0)

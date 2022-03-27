@@ -140,21 +140,6 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
 
         if sight.GeneratedSight then
-            --[[
-                NONSENSE:
-                LerpVector(sightdelta, Vector(0, 0 ,0), sightpos) in this case expands into
-
-                local ret = Vector(0, 0, 0)
-                for i = 1, 3 do
-                    ret[i] = Vector(0, 0, 0)[i] + (sightpos[i] - Vector(0, 0, 0)[i]) * sightdelta
-                end
-
-                which is literally the same as t_sightpos = sightpos * sightdelta
-                ~BlacK 26/03/2022
-            ]]--
-            -- local t_sightpos = LerpVector(sightdelta, Vector(0, 0 ,0), sightpos)
-            -- local t_sightang = LerpAngle(sightdelta, Angle(0, 0, 0), sightang)
-
             local t_sightpos = sightpos * sightdelta
             local t_sightang = sightang * sightdelta
 
