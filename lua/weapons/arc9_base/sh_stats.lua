@@ -121,6 +121,17 @@ function SWEP:GetAllAffectors()
     return aff
 end
 
+local Lerp = function(a, v1, v2)
+    local d = v2 - v1
+
+    return v1 + (a * d)
+end
+
+local pvtick = 0
+local pv_move = 0
+local pv_shooting = 0
+local pv_melee = 0
+
 function SWEP:GetProcessedValue(val, base)
     local stat = self:GetValue(val, base)
 
@@ -130,14 +141,6 @@ function SWEP:GetProcessedValue(val, base)
 
     if val == "Overheat" and self:GetHeatLockout() then
         return true
-    end
-
-    if self.ProcessedValueTick < CurTime() then
-        self.ProcessedValueTickCache = {}
-    end
-
-    if !IsFirstTimePredicted() and self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)] then
-        return self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)]
     end
 
     if GetConVar("arc9_truenames"):GetBool() then
@@ -197,12 +200,18 @@ function SWEP:GetProcessedValue(val, base)
     end
 
     if self:GetLastMeleeTime() < CurTime() then
-        local pft = CurTime() - self:GetLastMeleeTime()
-        local d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
+        local d = pv_melee
 
-        d = math.Clamp(d, 0, 1)
+        if pvtick != CurTime() then
+            local pft = CurTime() - self:GetLastMeleeTime()
+            d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
-        d = 1 - d
+            d = math.Clamp(d, 0, 1)
+
+            d = 1 - d
+
+            pv_melee = d
+        end
 
         if isnumber(stat) then
             stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
@@ -214,10 +223,16 @@ function SWEP:GetProcessedValue(val, base)
     end
 
     if self:GetNextPrimaryFire() + 0.1 > CurTime() then
-        local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
-        local d = pft / 0.1
+        local d = pv_shooting
 
-        d = math.Clamp(d, 0, 1)
+        if pvtick != CurTime() then
+            local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
+            d = pft / 0.1
+
+            d = math.Clamp(d, 0, 1)
+
+            pv_shooting = d
+        end
 
         if isnumber(stat) then
             stat = Lerp(d, stat, self:GetValue(val, stat, "Shooting"))
@@ -233,9 +248,14 @@ function SWEP:GetProcessedValue(val, base)
     end
 
     if self:GetOwner():IsValid() then
-        local spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
+        local spd = pv_move
+        if pvtick != CurTime() then
+            spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
 
-        spd = spd / 250
+            spd = spd / 250
+
+            pv_move = spd
+        end
 
         if isnumber(stat) then
             stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
@@ -246,8 +266,7 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    self.ProcessedValueTickCache[tostring(val) .. "," .. tostring(base)] = stat
-    self.ProcessedValueTick = CurTime()
+    pvtick = CurTime()
 
     return stat
 end
