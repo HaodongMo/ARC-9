@@ -85,6 +85,16 @@ function SWEP:DoTPIK()
     local ply_r_elbow_index = ply:LookupBone("ValveBiped.Bip01_R_Forearm")
     local ply_l_hand_index = ply:LookupBone("ValveBiped.Bip01_L_Hand")
     local ply_r_hand_index = ply:LookupBone("ValveBiped.Bip01_R_Hand")
+    
+    local ply_l_HELPERelbow_index = ply:LookupBone("ValveBiped.Bip01_L_Elbow")
+    local ply_l_bicep_index = ply:LookupBone("ValveBiped.Bip01_L_Bicep")
+    local ply_l_ulna_index = ply:LookupBone("ValveBiped.Bip01_L_Ulna") or ply:LookupBone("HumanLForearm2") -- THANK YOU MAl0 FOR NOT RENAMING YOUR BONES
+    local ply_l_wrist_index = ply:LookupBone("ValveBiped.Bip01_L_Wrist") or ply:LookupBone("HumanLForearm3")
+
+    local ply_r_HELPERelbow_index = ply:LookupBone("ValveBiped.Bip01_R_Elbow")
+    local ply_r_bicep_index = ply:LookupBone("ValveBiped.Bip01_R_Bicep")
+    local ply_r_ulna_index = ply:LookupBone("ValveBiped.Bip01_R_Ulna") or ply:LookupBone("HumanRForearm2")
+    local ply_r_wrist_index = ply:LookupBone("ValveBiped.Bip01_R_Wrist") or ply:LookupBone("HumanRForearm3")
 
     local ply_head_index = ply:LookupBone("ValveBiped.Bip01_Head1")
 
@@ -142,6 +152,16 @@ function SWEP:DoTPIK()
     local ply_l_elbow_matrix = ply:GetBoneMatrix(ply_l_elbow_index)
     local ply_l_hand_matrix = ply:GetBoneMatrix(ply_l_hand_index)
 
+    local ply_l_HELPERelbow_matrix = ply_l_HELPERelbow_index and ply:GetBoneMatrix(ply_l_HELPERelbow_index)
+    local ply_l_bicep_matrix = ply_l_bicep_index and ply:GetBoneMatrix(ply_l_bicep_index)
+    local ply_l_ulna_matrix = ply_l_ulna_index and ply:GetBoneMatrix(ply_l_ulna_index)
+    local ply_l_wrist_matrix = ply_l_wrist_index and ply:GetBoneMatrix(ply_l_wrist_index)
+
+    local ply_r_HELPERelbow_matrix = ply_r_HELPERelbow_index and ply:GetBoneMatrix(ply_r_HELPERelbow_index)
+    local ply_r_bicep_matrix = ply_r_bicep_index and ply:GetBoneMatrix(ply_r_bicep_index)
+    local ply_r_ulna_matrix = ply_r_ulna_index and ply:GetBoneMatrix(ply_r_ulna_index)
+    local ply_r_wrist_matrix = ply_r_wrist_index and ply:GetBoneMatrix(ply_r_wrist_index)
+
     local ply_l_upperarm_pos, ply_l_forearm_pos = self:Solve2PartIK(ply_l_shoulder_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 35)
 
     debugoverlay.Line(ply_l_shoulder_matrix:GetTranslation(), ply_l_upperarm_pos, 0.1, Color(255, 255, 255), true)
@@ -152,6 +172,18 @@ function SWEP:DoTPIK()
     ply_l_hand_matrix:SetTranslation(ply_l_forearm_pos)
     ply_l_elbow_matrix:SetTranslation(ply_l_upperarm_pos)
 
+    if ply_l_HELPERelbow_index then ply_l_HELPERelbow_matrix:SetTranslation(ply_l_forearm_pos) end
+    if ply_l_bicep_index then ply_l_bicep_matrix:SetTranslation(ply_l_forearm_pos) end
+    if ply_l_ulna_index then ply_l_ulna_matrix:SetTranslation(ply_l_forearm_pos) end
+    if ply_l_wrist_index then ply_l_wrist_matrix:SetTranslation(ply_l_forearm_pos) end
+
+    if ply_r_HELPERelbow_index then ply_r_HELPERelbow_matrix:SetTranslation(ply_r_forearm_pos) end
+    if ply_r_bicep_index then ply_r_bicep_matrix:SetTranslation(ply_r_forearm_pos) end
+    if ply_r_ulna_index then ply_r_ulna_matrix:SetTranslation(ply_r_forearm_pos) end
+    if ply_r_wrist_index then ply_r_wrist_matrix:SetTranslation(ply_r_forearm_pos) end
+    
+    -- print(ply:GetBoneName(ply_l_ulna_index), ply:GetBoneName(ply_l_wrist_index))
+
     local ply_l_shoulder_angle = (ply_l_upperarm_pos - ply_l_shoulder_matrix:GetTranslation()):GetNormalized():Angle()
     ply_l_shoulder_angle.r = -45
     ply_l_shoulder_matrix:SetAngles(ply_l_shoulder_angle)
@@ -159,6 +191,16 @@ function SWEP:DoTPIK()
     local ply_l_elbow_angle = (ply_l_forearm_pos - ply_l_upperarm_pos):GetNormalized():Angle()
     ply_l_elbow_angle.r = -90
     ply_l_elbow_matrix:SetAngles(ply_l_elbow_angle)
+
+    if ply_l_HELPERelbow_index then ply:SetBoneMatrix(ply_l_HELPERelbow_index, ply_l_elbow_matrix) end
+    if ply_l_bicep_index then ply:SetBoneMatrix(ply_l_bicep_index, ply_l_shoulder_matrix) end
+    if ply_l_ulna_index then ply:SetBoneMatrix(ply_l_ulna_index, ply_l_hand_matrix) end
+    if ply_l_wrist_index then ply:SetBoneMatrix(ply_l_wrist_index, ply_l_hand_matrix) end
+
+    if ply_r_HELPERelbow_index then ply:SetBoneMatrix(ply_r_HELPERelbow_index, ply_r_elbow_matrix) end
+    if ply_r_bicep_index then ply:SetBoneMatrix(ply_r_bicep_index, ply_r_shoulder_matrix) end
+    if ply_r_ulna_index then ply:SetBoneMatrix(ply_r_ulna_index, ply_r_hand_matrix) end
+    if ply_r_wrist_index then ply:SetBoneMatrix(ply_r_wrist_index, ply_r_hand_matrix) end
 
     ply:SetBoneMatrix(ply_l_hand_index, ply_l_hand_matrix)
     ply:SetBoneMatrix(ply_l_elbow_index, ply_l_elbow_matrix)
