@@ -28,7 +28,10 @@ ARC9.Colors = {
     fg_3d = Color(0, 0, 0),
     shadow_3d = Color(0, 0, 0),
     hi_3d = Color(255, 50, 50),
-    pos_3d = Color(255, 255, 255)
+    pos_3d = Color(255, 255, 255),
+
+    bg_menu = Color(26, 26, 23, 252),
+    md = Color(107,107,92)
 }
 
 function ARC9.ShouldDrawHUD()
