@@ -81,6 +81,7 @@ ATT.RTScopeSubmatIndex = 1
 ATT.RTScopeFOV = 2.5
 ATT.RTScopeRes = 512
 ATT.RTScopeReticle = Material("")
+ATT.RTScopeReticleScale = 1
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
