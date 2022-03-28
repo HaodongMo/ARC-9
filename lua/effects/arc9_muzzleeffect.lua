@@ -24,15 +24,15 @@ function EFFECT:Init(data)
         parent = (wpn.WModel or {})[1] or wpn
     end
 
-    parent = wpn:GetMuzzleDevice(wm)
+    local muz = wpn:GetMuzzleDevice(wm)
 
-    local pa = parent:GetAttachment(att)
-    local pos = pa.Pos
+    local pa = muz:GetAttachment(att)
+    local pos = pa and pa.Pos or muz:GetPos()
 
     -- if !IsValid(parent) then return end
 
     if muzzle then
-        ParticleEffectAttach(muzzle, PATTACH_POINT_FOLLOW, parent, att)
+        ParticleEffectAttach(muzzle, PATTACH_POINT_FOLLOW, muz or parent, att)
     end
 
     if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash") then
