@@ -231,7 +231,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
             -- I'm not sure this is a good feature to add
             -- local drawfunc = nil
-            local size = rtsize
+            local size = rtsize * (atttbl.RTScopeReticleScale or 1)
             -- if atttbl.RTScopeDefer then
             --     local slot = self:GetSight().slottbl
             --     for k, v in pairs(slot.SubAttachments) do
