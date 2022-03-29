@@ -289,17 +289,21 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
 
     if curvedcustomizedelta > 0 then
-        self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
-        -- this needs to be better
-        -- its more like proof of concept
-        -- probably this can be better if it based on selected slot offset not random numbers
-        pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-        pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
+        if !self.CustomizeNoRotate then
+            self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
+            -- this needs to be better
+            -- its more like proof of concept
+            -- probably this can be better if it based on selected slot offset not random numbers
+            pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
+            pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
+        end
 
         pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
         pos = pos + (ang:Forward() * 15) * curvedcustomizedelta ^ 2
 
-        ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
+        if !self.CustomizeNoRotate then
+            ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
+        end
     end
 
     -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)

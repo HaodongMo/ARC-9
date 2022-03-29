@@ -6,7 +6,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     local rec = (self:GetLastRecoilTime() + 0.25) - CurTime()
 
-    -- rec = rec * 0.5
+    rec = rec * 3
 
     rec = rec * self:GetProcessedValue("RecoilKick")
 

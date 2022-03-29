@@ -103,7 +103,7 @@ function SWEP:ApplyRecoil()
     -- self:SetRecoilDirection(-90)
     self:SetRecoilAmount(rec)
 
-    self:SetLastRecoilTime(CurTime() + (delay * 2))
+    self:SetLastRecoilTime(CurTime())
 
     -- local vis_kick = self:GetProcessedValue("RecoilKick")
     -- local vis_shake = 0
