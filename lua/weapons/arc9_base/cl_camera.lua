@@ -49,7 +49,7 @@ function SWEP:GetCameraControl()
     local ang = vm:GetAttachment(camqca).Ang
     ang = vm:WorldToLocalAngles(ang)
     ang:Sub( self.CamOffsetAng )
-    ang:Mul( self:GetProcessedValue("CamQCA_Mult") )
+    ang:Mul( self:GetProcessedValue("CamQCA_Mult") or 1 )
 
     return ang
 end
