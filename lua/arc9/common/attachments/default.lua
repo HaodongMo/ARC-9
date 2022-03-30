@@ -68,6 +68,7 @@ ATT.Sights = {
         DeferSights = false, // the first parent sight will be used for sight data instead. Use for magnifiers
         Magnification = 1,
         Disassociate = false, // don't associate with parent slot
+        IsIronSight = false, // disable if another sight is installed
     }
 }
 

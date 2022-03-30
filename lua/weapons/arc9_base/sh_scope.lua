@@ -83,8 +83,10 @@ SWEP.MultiSightTable = {
 
 function SWEP:BuildMultiSight()
     self.MultiSightTable = {}
+    local modularironsights = {}
 
     local keepbaseirons = true
+    local keepmodularirons = true
 
     for i, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
@@ -92,6 +94,8 @@ function SWEP:BuildMultiSight()
         local atttbl = self:GetFinalAttTable(slottbl)
 
         if atttbl.Sights then
+            local isirons = false
+
             for _, sight in pairs(atttbl.Sights) do
                 local s = {}
 
@@ -119,7 +123,12 @@ function SWEP:BuildMultiSight()
                     end
                 end
 
-                table.insert(self.MultiSightTable, s)
+                if sight.IsIronSight then
+                    table.insert(modularironsights, s)
+                    isirons = true
+                else
+                    table.insert(self.MultiSightTable, s)
+                end
 
                 if self.ScrollLevels[#self.MultiSightTable] then
                     s.ScrollLevel = self.ScrollLevels[#self.MultiSightTable]
@@ -128,6 +137,10 @@ function SWEP:BuildMultiSight()
 
             if !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
                 keepbaseirons = false
+
+                if !isirons then
+                    keepmodularirons = false
+                end
             end
         end
     end
@@ -138,6 +151,10 @@ function SWEP:BuildMultiSight()
         tbl[1].BaseSight = true
         table.Add(tbl, self.MultiSightTable)
         self.MultiSightTable = tbl
+    end
+
+    if keepmodularirons then
+        table.Add(self.MultiSightTable, modularironsights)
     end
 
     if self:GetMultiSight() > #self.MultiSightTable then

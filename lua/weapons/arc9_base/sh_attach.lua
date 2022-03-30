@@ -86,7 +86,14 @@ function SWEP:PostModify(toggleonly)
         -- self:PruneAttachments()
     end
 
-    self.PrintName = self:GetValue("PrintName")
+    local base = baseclass.Get(self:GetClass())
+
+    if ARC9:UseTrueNames() then
+        self.PrintName = base.TrueName
+    else
+        self.PrintName = base.PrintName
+    end
+
     self.Ammo = self:GetValue("Ammo")
     self.Primary.ClipSize = self:GetValue("ClipSize")
 
