@@ -39,8 +39,6 @@ function SWEP:GetElements()
         eles2[ele] = true
     end
 
-    PrintTable(eles2)
-
     self.ElementsCache = eles2
 
     return eles2

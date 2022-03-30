@@ -86,6 +86,10 @@ function SWEP:PostModify(toggleonly)
         -- self:PruneAttachments()
     end
 
+    self.PrintName = self:GetValue("PrintName")
+    self.Ammo = self:GetValue("Ammo")
+    self.Primary.ClipSize = self:GetValue("ClipSize")
+
     if CLIENT then
         -- self:PruneAttachments()
         self:SendWeapon()

@@ -154,3 +154,10 @@ Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS 
  - **Shooting**: Enabled when constantly shooting.
  - **Recoil**: Scales with bursts.
  - **Move**: Enabled when moving.
+
+ ## Tips for Developers
+ - If you want to increase recoil without making view shoot to the top, try increasing RecoilPatternDrift.
+ - Be creative; stat modifiers can be inserted in more places than you might think.
+ - Use PrintName for a game's version of a weapon name and TrueName for its real life name.
+ - Unlike ArcCW, trivia table keys and values are arbitrary. Go wild!
+ - The same goes for the credits table.
