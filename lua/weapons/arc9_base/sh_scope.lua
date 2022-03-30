@@ -95,6 +95,7 @@ function SWEP:BuildMultiSight()
 
         if atttbl.Sights then
             local isirons = false
+            local kbi = false
 
             for _, sight in pairs(atttbl.Sights) do
                 local s = {}
@@ -130,12 +131,16 @@ function SWEP:BuildMultiSight()
                     table.insert(self.MultiSightTable, s)
                 end
 
+                if sight.KeepBaseIrons then
+                    kbi = true
+                end
+
                 if self.ScrollLevels[#self.MultiSightTable] then
                     s.ScrollLevel = self.ScrollLevels[#self.MultiSightTable]
                 end
             end
 
-            if !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
+            if !kbi and !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
                 keepbaseirons = false
 
                 if !isirons then
