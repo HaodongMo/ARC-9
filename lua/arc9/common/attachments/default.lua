@@ -39,6 +39,7 @@ ATT.ToggleStats = {
 ATT.DrawFunc = function(swep, model, wm) end
 
 ATT.MuzzleDevice = false -- set to true if you want to use this to emit particles
+ATT.MuzzleDevice_Priority = 0
 
 ATT.Flashlight = false
 ATT.FlashlightColor = Color(255, 255, 255)
