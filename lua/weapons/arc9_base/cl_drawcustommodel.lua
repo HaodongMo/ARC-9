@@ -83,6 +83,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 end
             end
 
+            if model.DrawFunc then
+                model.DrawFunc(self, model)
+            end
+
             if !model.NoDraw then
                 model:DrawModel()
             end
