@@ -41,8 +41,6 @@ ATT.ToggleStats = {
 }
 -- max of 256 togglestats
 
-ATT.DrawFunc = function(swep, model, wm) end
-
 ATT.MuzzleDevice = false -- set to true if you want to use this to emit particles
 ATT.MuzzleDevice_Priority = 0
 
