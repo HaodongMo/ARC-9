@@ -8,24 +8,28 @@ function SWEP:GetElements()
     for _, slottbl in ipairs(self:GetSubSlotList()) do
         if slottbl.Installed then
             table.Add(eles, slottbl.InstalledElements or {})
-            local atttbl = ARC9.GetAttTable(slottbl.Installed)
-            table.Add(eles, atttbl.ActivateElements or {})
-            local cat = atttbl.Category
-            if !istable(cat) then
-                cat = {cat}
-            end
-            table.Add(eles, cat)
             table.insert(eles, slottbl.Installed)
         else
             table.Add(eles, slottbl.UnInstalledElements or {})
         end
     end
 
-    table.insert(eles, self.DefaultElements or {})
+    table.Add(eles, self.DefaultElements or {})
 
     if !ARC9.Overrun then
         ARC9.Overrun = true
-        table.insert(eles, self:GetCurrentFiremodeTable().ActivateElements or {})
+
+        for _, affector in ipairs(self:GetAllAffectors()) do
+            table.Add(eles, affector.ActivateElements or {})
+
+            local cat = affector.Category
+            if !istable(cat) then
+                cat = {cat}
+            end
+
+            table.Add(eles, cat)
+        end
+
         ARC9.Overrun = false
     end
 
@@ -34,6 +38,8 @@ function SWEP:GetElements()
     for _, ele in pairs(eles) do
         eles2[ele] = true
     end
+
+    PrintTable(eles2)
 
     self.ElementsCache = eles2
 
