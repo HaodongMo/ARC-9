@@ -147,10 +147,8 @@ end
 
 function SWEP:SwitchMultiSight(amt)
     if game.SinglePlayer() then
-        self:CallOnClient("SwitchMultiSight", tostring(amt))
+        self:CallOnClient("InvalidateCache")
     end
-
-    if isstring(amt) then amt = tonumber(amt) end
 
     amt = amt or 1
     local old_msi = self:GetMultiSight()
