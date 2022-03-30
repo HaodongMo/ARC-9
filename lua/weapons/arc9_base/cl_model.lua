@@ -155,6 +155,14 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         csmodel.DrawFunc = atttbl.DrawFunc
     end
 
+    if atttbl.ModelSkin then
+        csmodel:SetSkin(atttbl.ModelSkin)
+    end
+
+    if atttbl.ModelBodygroups then
+        csmodel:SetBodyGroups(atttbl.ModelBodygroups)
+    end
+
     if !ignorescale then
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)

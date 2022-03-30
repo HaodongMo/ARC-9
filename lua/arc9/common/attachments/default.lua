@@ -17,6 +17,8 @@ ATT.Scale = 1
 ATT.ModelOffset = Vector(0, 0, 0)
 ATT.ModelAngleOffset = Angle(0, 0, 0)
 ATT.DrawFunc = function(swep, model) end
+ATT.ModelSkin = 0
+ATT.ModelBodygroups = ""
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.
 
