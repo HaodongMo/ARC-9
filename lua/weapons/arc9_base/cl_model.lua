@@ -151,6 +151,22 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     csmodel.atttbl = atttbl
     csmodel.slottbl = slottbl
 
+    if atttbl.DrawFunc then
+        csmodel.DrawFunc = atttbl.DrawFunc
+    end
+
+    if atttbl.ModelSkin then
+        csmodel:SetSkin(atttbl.ModelSkin)
+    end
+
+    if atttbl.ModelBodygroups then
+        csmodel:SetBodyGroups(atttbl.ModelBodygroups)
+    end
+
+    if atttbl.ModelMaterial then
+        csmodel:SetMaterial(atttbl.ModelMaterial)
+    end
+
     if !ignorescale then
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
@@ -185,6 +201,8 @@ SWEP.RHIKModel = nil
 SWEP.RHIK_Priority = -1000
 SWEP.LHIKModelWM = nil
 SWEP.RHIKModelWM = nil
+SWEP.MuzzleDeviceVM = nil
+SWEP.MuzzleDeviceWM = nil
 
 function SWEP:SetupModel(wm, lod, cm)
     lod = lod or 0
@@ -197,6 +215,7 @@ function SWEP:SetupModel(wm, lod, cm)
 
     self.LHIK_Priority = -1000
     self.RHIK_Priority = -1000
+    self.MuzzleDevice_Priority = -1000
 
     local mdl = {}
 
@@ -204,6 +223,7 @@ function SWEP:SetupModel(wm, lod, cm)
         self.VModel = mdl
         self.LHIKModel = nil
         self.RHIKModel = nil
+        self.MuzzleDeviceVM = nil
 
         -- local RenderOverrideFunction = function(self2)
         --     if LocalPlayer():GetActiveWeapon() != self then LocalPlayer():GetViewModel().RenderOverride = nil return end
@@ -222,6 +242,7 @@ function SWEP:SetupModel(wm, lod, cm)
         else
             self.LHIKModelWM = nil
             self.RHIKModelWM = nil
+            self.MuzzleDeviceWM = nil
             self.WModel = mdl
         end
 
@@ -274,9 +295,17 @@ function SWEP:SetupModel(wm, lod, cm)
         local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm)
 
         if atttbl.MuzzleDevice and !cm then
-            local slmodel = self:CreateAttachmentModel(wm, atttbl, slottbl)
-            slmodel.IsMuzzleDevice = true
-            slmodel.NoDraw = true
+            if (atttbl.MuzzleDevice_Priority or 0) > self.MuzzleDevice_Priority then
+                self.MuzzleDevice_Priority = atttbl.MuzzleDevice_Priority or 0
+                local slmodel = self:CreateAttachmentModel(wm, atttbl, slottbl)
+                slmodel.IsMuzzleDevice = true
+                slmodel.NoDraw = true
+                if wm then
+                    self.MuzzleDeviceWM = slmodel
+                else
+                    self.MuzzleDeviceVM = slmodel
+                end
+            end
         end
 
         if !cm then

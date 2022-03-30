@@ -16,6 +16,12 @@ ATT.WorldModel = "" -- optional
 ATT.Scale = 1
 ATT.ModelOffset = Vector(0, 0, 0)
 ATT.ModelAngleOffset = Angle(0, 0, 0)
+ATT.DrawFunc = function(swep, model, wm) end
+ATT.ModelSkin = 0
+ATT.ModelBodygroups = ""
+ATT.ModelMaterial = ""
+
+ATT.Material = ""
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.
 
@@ -35,9 +41,8 @@ ATT.ToggleStats = {
 }
 -- max of 256 togglestats
 
-ATT.DrawFunc = function(swep, model, wm) end
-
 ATT.MuzzleDevice = false -- set to true if you want to use this to emit particles
+ATT.MuzzleDevice_Priority = 0
 
 ATT.Flashlight = false
 ATT.FlashlightColor = Color(255, 255, 255)
@@ -63,6 +68,8 @@ ATT.Sights = {
         DeferSights = false, // the first parent sight will be used for sight data instead. Use for magnifiers
         Magnification = 1,
         Disassociate = false, // don't associate with parent slot
+        IsIronSight = false, // disable if another sight is installed
+        KeepBaseIrons = false
     }
 }
 

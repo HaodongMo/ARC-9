@@ -35,6 +35,8 @@ function SWEP:PreDrawViewModel()
         self:DoRTScope(self:GetVM(), self:GetTable(), self:GetSightAmount() > 0)
     end
 
+    self:GetVM():SetMaterial(self:GetProcessedValue("Material"))
+
     cam.IgnoreZ(true)
 end
 

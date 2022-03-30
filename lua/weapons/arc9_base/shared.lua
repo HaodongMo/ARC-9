@@ -51,6 +51,7 @@ SWEP.WorldModelOffset = nil
 --     scale = 1
 -- }
 SWEP.NoTPIK = false
+SWEP.Material = ""
 
 SWEP.Crosshair = false
 
@@ -530,6 +531,7 @@ SWEP.ShellTime = 0.5 -- Extra time these shells stay on the ground for.
 SWEP.MuzzleEffectQCA = 1 -- QC Attachment that controls muzzle effect.
 SWEP.CaseEffectQCA = 2 -- QC Attachment for shell ejection.
 SWEP.CamQCA = nil -- QC Attachment for camera movement.
+SWEP.CamQCA_Mult = nil -- Intensity for QC camera movement.
 SWEP.ProceduralViewQCA = nil -- QC Attachment for procedural camera movement. Use if you don't have a camera. Usually the muzzle.
 
 SWEP.CamOffsetAng = Angle(0, 0, 0)
@@ -615,6 +617,7 @@ SWEP.SprintMidPoint = {
 SWEP.CustomizeAng = Angle(90, 0, 0)
 SWEP.CustomizePos = Vector(20, 32, 4)
 SWEP.CustomizeSnapshotFOV = 90
+SWEP.CustomizeNoRotate = false
 
 SWEP.BipodPos = Vector(0, 4, -4)
 SWEP.BipodAng = Angle(0, 0, 0)

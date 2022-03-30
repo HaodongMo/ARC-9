@@ -6,7 +6,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     local rec = (self:GetLastRecoilTime() + 0.25) - CurTime()
 
-    -- rec = rec * 0.5
+    rec = rec * 3
 
     rec = rec * self:GetProcessedValue("RecoilKick")
 
@@ -48,7 +48,8 @@ function SWEP:GetCameraControl()
 
     local ang = vm:GetAttachment(camqca).Ang
     ang = vm:WorldToLocalAngles(ang)
-    ang = ang - self.CamOffsetAng
+    ang:Sub( self.CamOffsetAng )
+    ang:Mul( self:GetProcessedValue("CamQCA_Mult") or 1 )
 
     return ang
 end

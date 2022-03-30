@@ -6,7 +6,7 @@ function SWEP:ShouldDrawCrosshair()
             return false
         end
     end
-    if !self:GetProcessedValue("Crosshair") then return false end
+    if !self:GetProcessedValue("Crosshair") and !ARC9.ShouldThirdPerson() then return false end
     if self:GetCustomize() then return false end
 
     return true
@@ -70,6 +70,18 @@ function SWEP:DoDrawCrosshair(x, y)
 
     local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
     local toscreen = endpos:ToScreen()
+
+    if ARC9.ShouldThirdPerson() then
+        local tr = util.TraceLine({
+            start = self:GetShootPos(),
+            endpos = endpos,
+            mask = MASK_SHOT,
+            filter = self:GetOwner()
+        })
+
+        toscreen = tr.HitPos:ToScreen()
+    end
+
     x, y = toscreen.x, toscreen.y
 
     local mode = self:GetCurrentFiremode()

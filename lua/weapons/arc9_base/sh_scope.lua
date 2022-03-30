@@ -83,8 +83,10 @@ SWEP.MultiSightTable = {
 
 function SWEP:BuildMultiSight()
     self.MultiSightTable = {}
+    local modularironsights = {}
 
     local keepbaseirons = true
+    local keepmodularirons = true
 
     for i, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
@@ -92,6 +94,9 @@ function SWEP:BuildMultiSight()
         local atttbl = self:GetFinalAttTable(slottbl)
 
         if atttbl.Sights then
+            local isirons = false
+            local kbi = false
+
             for _, sight in pairs(atttbl.Sights) do
                 local s = {}
 
@@ -119,15 +124,28 @@ function SWEP:BuildMultiSight()
                     end
                 end
 
-                table.insert(self.MultiSightTable, s)
+                if sight.IsIronSight then
+                    table.insert(modularironsights, s)
+                    isirons = true
+                else
+                    table.insert(self.MultiSightTable, s)
+                end
+
+                if sight.KeepBaseIrons then
+                    kbi = true
+                end
 
                 if self.ScrollLevels[#self.MultiSightTable] then
                     s.ScrollLevel = self.ScrollLevels[#self.MultiSightTable]
                 end
             end
 
-            if !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
+            if !kbi and !slottbl.KeepBaseIrons and !atttbl.KeepBaseIrons then
                 keepbaseirons = false
+
+                if !isirons then
+                    keepmodularirons = false
+                end
             end
         end
     end
@@ -140,12 +158,20 @@ function SWEP:BuildMultiSight()
         self.MultiSightTable = tbl
     end
 
+    if keepmodularirons then
+        table.Add(self.MultiSightTable, modularironsights)
+    end
+
     if self:GetMultiSight() > #self.MultiSightTable then
         self:SetMultiSight(1)
     end
 end
 
 function SWEP:SwitchMultiSight(amt)
+    if game.SinglePlayer() then
+        self:CallOnClient("InvalidateCache")
+    end
+
     amt = amt or 1
     local old_msi = self:GetMultiSight()
     msi = old_msi

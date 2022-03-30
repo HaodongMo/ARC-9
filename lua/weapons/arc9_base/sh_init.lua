@@ -134,7 +134,7 @@ function SWEP:Holster(wep)
     else
         -- Prepare the holster and set up the timer
         if self:HasAnimation("holster") then
-            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1), true, false)
+            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1), true, false) or 0
             self:SetHolster_Time(CurTime() + animation)
             self:SetHolster_Entity(wep)
         else

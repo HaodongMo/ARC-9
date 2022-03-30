@@ -32,14 +32,14 @@ function SWEP:CreatePresetName()
     accept.OnMousePressed = function(spaa, kc)
         local txt = text:GetText()
         txt = string.sub(txt, 0, 36)
-        if txt == "" then txt = "UNNAMED" end
+        -- if txt == "" then txt = "UNNAMED" end
 
         -- self:SavePreset(os.date("%y%m%d%H%M%S", os.time()))
         self:SavePreset(txt)
         surface.PlaySound("arc9/shutter.ogg")
 
         timer.Simple(0.2, function()
-            if IsValid(self:GetOwner()) then
+            if IsValid(self) and IsValid(self:GetOwner()) then
                 self:GetOwner():ScreenFade(SCREENFADE.IN, Color(255, 255, 255, 45), 0.5, 0)
                 if self:GetCustomize() then
                     self:CreateHUD_Bottom()

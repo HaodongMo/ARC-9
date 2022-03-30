@@ -66,9 +66,17 @@ function SWEP:GetMuzzleDevice(wm)
     if wm then
         model = self.WModel
         muzz = self:GetWM()
+
+        if self.MuzzleDeviceWM then
+            return self.MuzzleDeviceWM
+        end
     else
         model = self.VModel
         muzz = self:GetVM()
+
+        if self.MuzzleDeviceVM then
+            return self.MuzzleDeviceVM
+        end
     end
 
     if model then

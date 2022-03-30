@@ -147,6 +147,7 @@ function SWEP:RefreshCustomizeMenu()
 end
 
 local mat_circle = Material("arc9/circle.png", "mips smooth")
+local mat_gear = Material("arc9/gear.png", "mips smooth")
 
 local lastlmbdown = false
 local lastrmbdown = false
@@ -348,7 +349,7 @@ function SWEP:CreateCustomizeHUD()
                 -- surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
                 -- surface.DrawText(atttxt)
 
-                if hoveredslot then
+                if hoveredslot and !ARC9.NoFocus then
                     anyhovered = true
                     if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
                         self.BottomBarMode = 1
@@ -373,7 +374,7 @@ function SWEP:CreateCustomizeHUD()
 
         end
 
-        if !anyhovered then
+        if !anyhovered and !ARC9.NoFocus then
             if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown then
                 dragging = true
                 lastmousex, lastmousey = input.GetCursorPos()
@@ -431,6 +432,38 @@ function SWEP:CreateCustomizeHUD()
     bg:MoveToFront()
 
     -- self:CreateHUD_Bottom()
+
+
+    local settings = vgui.Create("DButton", bg) -- I dont know where to put it
+    settings:SetPos(ScreenScale(8), ScreenScale(8))
+    settings:SetSize(ScreenScale(24), ScreenScale(24))
+    settings:SetText("")
+
+    settings.Paint = function(self2, w, h)
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+        surface.SetMaterial(mat_gear)
+        surface.DrawTexturedRect(2, 2, w, h)
+
+        if self2:IsHovered() then
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        end
+        surface.SetMaterial(mat_gear)
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+
+    settings.DoClick = function(self2)
+        surface.PlaySound("arc9/ubgl_select.wav")
+        ARC9_ClientSettings()
+        
+        -- self:ToggleCustomize(false)
+        bg:SetMouseInputEnabled(false)
+    end
+
+    settings.DoRightClick = function(self2)
+        surface.PlaySound("arc9/ubgl_exit.wav")
+    end
 end
 
 function SWEP:RemoveCustomizeHUD()
@@ -553,8 +586,10 @@ function SWEP:CreateHUD_RHP()
             surface.DrawText(self2.title)
         end
         newbtn.DoClick = function(self2)
-            self.CustomizeTab = self2.page
-            self2.func(self)
+            if !ARC9.NoFocus then
+                self.CustomizeTab = self2.page
+                self2.func(self)
+            end
         end
         newbtn.DoRightClick = function(self2)
             self.CustomizeTab = 0
