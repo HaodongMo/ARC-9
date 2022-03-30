@@ -156,12 +156,12 @@ function SWEP:GetAttBlocked(atttbl)
                 group = {group}
             end
 
-            local ok = true
+            local ok = false
             for _, ele in ipairs(group) do
-                if !eles[ele] then ok = false break end
+                if !eles[ele] then ok = true break end
             end
 
-            if ok then return true end
+            if !ok then return false end
         end
 
         return true
