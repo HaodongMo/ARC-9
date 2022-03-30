@@ -19,6 +19,9 @@ ATT.ModelAngleOffset = Angle(0, 0, 0)
 ATT.DrawFunc = function(swep, model) end
 ATT.ModelSkin = 0
 ATT.ModelBodygroups = ""
+ATT.ModelMaterial = ""
+
+ATT.Material = ""
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.
 

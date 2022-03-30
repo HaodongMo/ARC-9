@@ -51,6 +51,7 @@ SWEP.WorldModelOffset = nil
 --     scale = 1
 -- }
 SWEP.NoTPIK = false
+SWEP.Material = ""
 
 SWEP.Crosshair = false
 

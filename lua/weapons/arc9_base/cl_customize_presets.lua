@@ -32,7 +32,7 @@ function SWEP:CreatePresetName()
     accept.OnMousePressed = function(spaa, kc)
         local txt = text:GetText()
         txt = string.sub(txt, 0, 36)
-        if txt == "" then txt = "UNNAMED" end
+        -- if txt == "" then txt = "UNNAMED" end
 
         -- self:SavePreset(os.date("%y%m%d%H%M%S", os.time()))
         self:SavePreset(txt)
