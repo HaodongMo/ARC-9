@@ -23,7 +23,7 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     local seq = vm:LookupSequence(source)
 
-    if seq == 0 then return end
+    if seq == -1 then return end
 
     local time = animation.Time or vm:SequenceDuration(seq)
 
