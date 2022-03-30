@@ -189,6 +189,21 @@ local conVars = {
         name = "tpik",
         default = "1",
         client = true
+    },
+    {
+        name = "thirdperson",
+        default = "0",
+        client = true
+    },
+    {
+        name = "thirdperson_force",
+        default = "0",
+        replicated = true
+    },
+    {
+        name = "cam_shoulder",
+        default = "1",
+        client = true
     }
 }
 

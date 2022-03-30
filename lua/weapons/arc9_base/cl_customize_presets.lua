@@ -39,7 +39,7 @@ function SWEP:CreatePresetName()
         surface.PlaySound("arc9/shutter.ogg")
 
         timer.Simple(0.2, function()
-            if IsValid(self:GetOwner()) then
+            if IsValid(self) and IsValid(self:GetOwner()) then
                 self:GetOwner():ScreenFade(SCREENFADE.IN, Color(255, 255, 255, 45), 0.5, 0)
                 if self:GetCustomize() then
                     self:CreateHUD_Bottom()
