@@ -761,6 +761,7 @@ SWEP.Attachments = {
 -- ready
 -- holster
 -- fire
+-- fire_1, fire_2, fire_3...
 -- dryfire
 -- reload
 -- reload_empty

@@ -143,13 +143,13 @@ function SWEP:PrimaryAttack()
     end
 
     if IsFirstTimePredicted() then
-        if self:GetProcessedValue("BottomlessClip") then
+        if self:GetValue("BottomlessClip") then
             if !self:GetInfiniteAmmo() then
-                self:RestoreClip(self:GetProcessedValue("ClipSize"))
+                self:RestoreClip(self:GetValue("ClipSize"))
 
                 if self:Ammo1() > 0 then
-                    local ammotype = self:GetProcessedValue("Ammo")
-                    self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetProcessedValue("AmmoPerShot"), ammotype)
+                    local ammotype = self:GetValue("Ammo")
+                    self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
                 else
                     self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
                 end
@@ -159,15 +159,27 @@ function SWEP:PrimaryAttack()
         end
     end
 
+    local anim = "fire"
+
     if self:GetProcessedValue("Akimbo") then
         if bit.band(self:GetNthShot(), 1) == 0 then
-            self:PlayAnimation("fire_left", 1, false)
+            anim = "fire_left"
         else
-            self:PlayAnimation("fire_right", 1, false)
+            anim = "fire_right"
         end
-    else
-        self:PlayAnimation("fire", 1, false)
     end
+
+    local banim = anim
+
+    for i = 0, self:GetBurstCount() do
+        local b = i + 1
+
+        if self:HasAnimation(anim .. "_" .. tostring(b)) then
+            banim = anim .. "_" .. tostring(b)
+        end
+    end
+
+    self:PlayAnimation(banim, 1, false)
 
     self:SetLoadedRounds(self:Clip1())
 

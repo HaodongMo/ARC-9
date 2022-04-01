@@ -21,7 +21,6 @@ Read weapons/arc9_base/shared.lua, arc9/common/attachments/default.lua, and this
 
 **New features include:**
  - Overhauled standardized recoil mechanics
- - "Supply Limit" system
  - Magazine dropping
  - Attachments on top of attachments
  - Free aim
@@ -29,18 +28,20 @@ Read weapons/arc9_base/shared.lua, arc9/common/attachments/default.lua, and this
  - Reworked standardized weapon stat handling
  - Blind fire for all weapons
  - Looping sounds
- - Indoor audio
  - Reworked RHIK system with greater compatibility, better performance, and multiple targets
  - RHIK supports right hands too
  - Snazzy new UI
  - Better standard weapon ecosystem
- - Pose Parameter handler
+ - Third Person IK animations
+ - 
 
 ### New Recoil
 
 Weapons can be set with a Recoil Seed, unique to that gun, or a lookup table of recoil values. This gives them a recoil pattern which is consistent and predictible every time you shoot.
 
 Weapons also have an amount of random recoil, which is added onto the predictible recoil. Random recoil cannot be predicted, meaning the pattern will vary a little bit every time.
+
+Visual recoil has been totally reworked from the ground up using springs, which look much better than the previous system.
 
 ### Supply Limit
 

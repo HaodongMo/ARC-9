@@ -346,8 +346,8 @@ function SWEP:DoCheapScope(fov, atttbl)
     local scrx = (ScrW() - scrw * s) / 2
     local scry = (ScrH() - scrh * s) / 2
 
-    scrx = scrx + 8
-    scry = scry + 8
+    -- scrx = scrx + 8
+    -- scry = scry + 8
 
     cam.Start3D()
     if atttbl.RTScopeFLIR then
