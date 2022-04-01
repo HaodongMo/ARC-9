@@ -474,7 +474,7 @@ SWEP.FirstDistantShootSoundSilenced = nil
 
 SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil
-SWEP.ShootSoundWindDown = nil -- played after the loop ends
+SWEP.ShootSoundTail = nil -- played after the loop ends
 
 SWEP.Silencer = false -- Silencer installed or not?
 

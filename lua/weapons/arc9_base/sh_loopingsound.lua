@@ -20,7 +20,7 @@ function SWEP:EndLoop()
     -- self:StopLoopingSound(self.LoopingSound)
     self.LoopingSound = nil
 
-    self:EmitSound(self:GetProcessedValue("ShootSoundWindDown"))
+    self:EmitSound(self:GetProcessedValue("ShootSoundTail") or self:GetProcessedValue("ShootSoundWindDown") or "")
 end
 
 function SWEP:ThinkLoopingSound()
