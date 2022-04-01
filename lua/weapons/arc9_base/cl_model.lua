@@ -167,6 +167,13 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         csmodel:SetMaterial(atttbl.ModelMaterial)
     end
 
+    if atttbl.Flare then
+        csmodel.Flare = {
+            Color = atttbl.FlareColor or Color(255, 255, 255),
+            Size = atttbl.FlareSize or 200
+        }
+    end
+
     if !ignorescale then
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
@@ -288,7 +295,8 @@ function SWEP:SetupModel(wm, lod, cm)
     for _, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
 
-        local atttbl = ARC9.GetAttTable(slottbl.Installed)
+        -- local atttbl = ARC9.GetAttTable(slottbl.Installed)
+        local atttbl = self:GetFinalAttTable(slottbl)
 
         if !atttbl.Model then continue end
 

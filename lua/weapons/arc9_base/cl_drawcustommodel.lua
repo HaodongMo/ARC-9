@@ -86,6 +86,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             if !model.NoDraw then
                 model:DrawModel()
             end
+
+            if model.Flare then
+                self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size)
+            end
         end
 
         if !wm then

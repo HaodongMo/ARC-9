@@ -1,12 +1,38 @@
-local flaremat = Material("particle/particle_glow_04", "mips smooth")
-flaremat:SetInt("$additive", 1)
-
 function SWEP:DrawLightFlare(pos, norm, col, size)
     col = col or Color(255, 255, 255)
     size = size or 1
-    local eyevec = pos - EyePos()
+    local eyevec = (pos - EyePos()):GetNormalized()
 
     local dot = norm:Dot(eyevec)
 
+    if dot > 0 then return end
 
+    local tr = util.TraceLine({
+        start = pos,
+        endpos = EyePos(),
+        mask = MASK_OPAQUE_AND_NPCS,
+        filter = LocalPlayer():GetViewEntity()
+    })
+
+    if tr.Hit then return end
+
+    dot = -dot
+
+    dot = (dot - 0.8) * 9
+
+    dot = math.Clamp(dot, 0, 1)
+
+    dot = math.ease.InOutExpo(dot)
+
+    size = size * dot
+
+    local toscreen = pos:ToScreen()
+
+    table.insert(ARC9.Flares, {
+        pos = pos,
+        x = toscreen.x,
+        y = toscreen.y,
+        size = ScreenScale(size),
+        col = col
+    })
 end
