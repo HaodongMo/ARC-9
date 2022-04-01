@@ -31,7 +31,7 @@ function SWEP:DoDrawCrosshair(x, y)
     local minigap = ScreenScale(2)
     local miniprong_1 = ScreenScale(4)
     local miniprong_2 = ScreenScale(2)
-    local gap = ScreenScale(8)
+    local gap = ScreenScale(4)
     local col = Color(255, 255, 255, 100)
 
     local d = self:GetSightDelta()
@@ -40,7 +40,7 @@ function SWEP:DoDrawCrosshair(x, y)
     gap = Lerp(d, gap, ScreenScale(4))
     minigap = Lerp(d, minigap, ScreenScale(1))
     miniprong_1 = Lerp(d, miniprong_1, ScreenScale(3))
-    miniprong_2 = Lerp(d, miniprong_1, ScreenScale(1))
+    miniprong_2 = Lerp(d, miniprong_2, ScreenScale(1))
 
     if self:GetOwner():IsAdmin() and GetConVar("developer"):GetInt() >= 2 and self:GetInSights() then
         surface.SetDrawColor(255, 0, 0, 150)
