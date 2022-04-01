@@ -59,6 +59,7 @@ ATT.LaserAttachment = 0
 ATT.Flare = false
 ATT.FlareColor = Color(255, 255, 255)
 ATT.FlareSize = 200
+ATT.FlareAttachment = 0
 
 -- Allows a custom sight position to be defined
 

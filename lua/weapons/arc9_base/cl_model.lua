@@ -170,7 +170,8 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     if atttbl.Flare then
         csmodel.Flare = {
             Color = atttbl.FlareColor or Color(255, 255, 255),
-            Size = atttbl.FlareSize or 200
+            Size = atttbl.FlareSize or 200,
+            Attachment = atttbl.FlareAttachment
         }
     end
 

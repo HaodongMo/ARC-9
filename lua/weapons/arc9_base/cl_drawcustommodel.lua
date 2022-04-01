@@ -65,6 +65,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             model:SetAngles(aang)
             model:SetRenderOrigin(apos)
             model:SetRenderAngles(aang)
+            model:SetupBones()
 
             -- if !wm and atttbl.HoloSight then
             --     self:DoHolosight(model, atttbl)
@@ -88,7 +89,17 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             end
 
             if model.Flare then
-                self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size)
+                if model.Flare.Attachment then
+                    local attpos = model:GetAttachment(model.Flare.Attachment)
+
+                    if attpos then
+                        self:DrawLightFlare(attpos.Pos, -attpos.Ang:Right(), model.Flare.Color, model.Flare.Size)
+                    else
+                        self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size)
+                    end
+                else
+                    self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size)
+                end
             end
         end
 
