@@ -1,5 +1,5 @@
 local lasermat = Material("effects/laser1")
-local flaremat = Material("effects/whiteflare")
+local flaremat = Material("effects/arc9_lensflare", "mips smooth")
 
 function SWEP:DrawLaser(pos, dir, atttbl, behav)
     behav = behav or false

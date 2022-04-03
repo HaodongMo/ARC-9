@@ -518,6 +518,8 @@ SWEP.ShellMaterial = nil -- string
 
 SWEP.EjectDelay = 0
 
+SWEP.NoShellEject = false
+
 SWEP.ShellScale = 1
 SWEP.ShellPhysBox = Vector(0.5, 0.5, 2)
 
