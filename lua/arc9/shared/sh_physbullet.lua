@@ -181,7 +181,7 @@ net.Receive("arc9_sendbullet", function(len, ply)
         Guidance = weapon:GetProcessedValue("BulletGuidance"),
         GuidanceAmount = weapon:GetProcessedValue("BulletGuidanceAmount"),
         Invisible = false,
-        Secondary = wep:GetUBGL()
+        Secondary = weapon:GetUBGL()
     }
 
     if !weapon:ShouldTracer() then
