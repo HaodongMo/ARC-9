@@ -126,9 +126,9 @@ local function lensqr(ang)
 end
 
 -- scraped from source SDK 2013, just like this viewpunch damping code
-local PUNCH_DAMPING = 10
+local PUNCH_DAMPING = 5
 local PUNCH_SPRING_CONSTANT = 120
-local POS_PUNCH_DAMPING = 12
+local POS_PUNCH_DAMPING = 6
 local POS_PUNCH_CONSTANT = 90
 
 local ang0 = Angle(0, 0, 0)
