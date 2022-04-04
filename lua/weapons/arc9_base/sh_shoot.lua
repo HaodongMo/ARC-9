@@ -74,6 +74,13 @@ function SWEP:DoShootSounds()
 end
 
 function SWEP:PrimaryAttack()
+    if self:GetProcessedValue("UBGLInsteadOfSights") then
+        self:ToggleUBGL(false)
+    end
+    self:DoPrimaryAttack()
+end
+
+function SWEP:DoPrimaryAttack()
     if self:GetOwner():IsNPC() then
         self:NPC_PrimaryAttack()
         return
@@ -119,9 +126,21 @@ function SWEP:PrimaryAttack()
 
     if self:GetCurrentFiremode() > 0 and self:GetBurstCount() >= self:GetCurrentFiremode() then return end
 
-    if self:Clip1() < self:GetProcessedValue("AmmoPerShot") then
-        self:DryFire()
-        return
+    local clip = self:Clip1()
+
+    if self:GetUBGL() then
+        clip = self:Clip2()
+    end
+
+    if clip < self:GetProcessedValue("AmmoPerShot") then
+        if self:GetUBGL() and !self:GetProcessedValue("UBGLInsteadOfSights") then
+            self:ToggleUBGL(false)
+            self:SetNeedTriggerPress(true)
+            return
+        else
+            self:DryFire()
+            return
+        end
     end
 
     if !self:GetProcessedValue("CanFireUnderwater") then
@@ -143,56 +162,64 @@ function SWEP:PrimaryAttack()
     end
 
     if IsFirstTimePredicted() then
-        if self:GetValue("BottomlessClip") then
-            if !self:GetInfiniteAmmo() then
-                self:RestoreClip(self:GetValue("ClipSize"))
+        if self:GetUBGL() then
+            self:TakeSecondaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+        else
+            if self:GetValue("BottomlessClip") then
+                if !self:GetInfiniteAmmo() then
+                    self:RestoreClip(self:GetValue("ClipSize"))
 
-                if self:Ammo1() > 0 then
-                    local ammotype = self:GetValue("Ammo")
-                    self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
-                else
-                    self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+                    if self:Ammo1() > 0 then
+                        local ammotype = self:GetValue("Ammo")
+                        self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
+                    else
+                        self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+                    end
                 end
+            else
+                self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
             end
-        else
-            self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
         end
     end
 
-    local anim = "fire"
+    if self:GetProcessedValue("DoFireAnimation") then
+        local anim = "fire"
 
-    if self:GetProcessedValue("Akimbo") then
-        if bit.band(self:GetNthShot(), 1) == 0 then
-            anim = "fire_left"
-        else
-            anim = "fire_right"
+        if self:GetProcessedValue("Akimbo") then
+            if bit.band(self:GetNthShot(), 1) == 0 then
+                anim = "fire_left"
+            else
+                anim = "fire_right"
+            end
         end
-    end
 
-    local banim = anim
+        local banim = anim
 
-    for i = 0, self:GetBurstCount() do
-        local b = i + 1
+        for i = 0, self:GetBurstCount() do
+            local b = i + 1
 
-        if self:HasAnimation(anim .. "_" .. tostring(b)) then
-            banim = anim .. "_" .. tostring(b)
+            if self:HasAnimation(anim .. "_" .. tostring(b)) then
+                banim = anim .. "_" .. tostring(b)
+            end
         end
-    end
 
-    self:PlayAnimation(banim, 1, false)
+        self:PlayAnimation(banim, 1, false)
+    end
 
     self:SetLoadedRounds(self:Clip1())
 
     self:DoVisualRecoil()
 
-    local ejectdelay = self:GetProcessedValue("EjectDelay")
+    if !self:GetProcessedValue("NoShellEject") then
+        local ejectdelay = self:GetProcessedValue("EjectDelay")
 
-    if ejectdelay == 0 then
-        self:DoEject()
-    else
-        self:SetTimer(ejectdelay, function()
+        if ejectdelay == 0 then
             self:DoEject()
-        end)
+        else
+            self:SetTimer(ejectdelay, function()
+                self:DoEject()
+            end)
+        end
     end
 
     self:DoShootSounds()
@@ -230,15 +257,17 @@ function SWEP:PrimaryAttack()
 
     self:SetBurstCount(self:GetBurstCount() + 1)
 
-    if self:GetValue("ManualAction") then
-        if self:Clip1() > 0 or !self:GetValue("ManualActionNoLastCycle") then
-            if self:GetNthShot() % self:GetValue("ManualActionChamber") == 0 then
-                self:SetNeedsCycle(true)
+    if !self:GetUBGL() then
+        if self:GetValue("ManualAction") then
+            if self:Clip1() > 0 or !self:GetValue("ManualActionNoLastCycle") then
+                if self:GetNthShot() % self:GetValue("ManualActionChamber") == 0 then
+                    self:SetNeedsCycle(true)
+                end
             end
         end
     end
 
-    if self:GetCurrentFiremode() == 1 or self:Clip1() == 0 then
+    if self:GetCurrentFiremode() == 1 or clip == 0 then
         self:SetNeedTriggerPress(true)
     end
 
@@ -331,8 +360,13 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
     end
 end
 
-function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
+function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondary)
     if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
+
+    local lastsecondary = self:GetUBGL()
+
+    self:SetUBGL(secondary)
+
     local dmgv = self:GetDamageAtRange(range)
 
     self:RunHook("Hook_BulletImpact", {
@@ -432,6 +466,8 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned)
     end
 
     self:Penetrate(tr, range, penleft, alreadypenned)
+
+    self:SetUBGL(lastsecondary)
 end
 
 function SWEP:ShouldTracer()
@@ -522,7 +558,7 @@ end
 function SWEP:ShootRocket()
     if CLIENT then return end
 
-    local src = self:GetMuzzleOrigin()
+    local src = self:GetShootPos()
     local dir = self:GetShootDir()
 
     local num = self:GetProcessedValue("Num")
@@ -532,9 +568,9 @@ function SWEP:ShootRocket()
 
     if self:GetOwner():IsNPC() then
         -- ang = self:GetOwner():GetAimVector():Angle()
-        spread = self:GetNPCSpread()
+        spread = self:GetNPCBulletSpread()
     else
-        spread = self:GetSpread()
+        spread = self:GetProcessedValue("Spread")
     end
 
     for i = 1, num do

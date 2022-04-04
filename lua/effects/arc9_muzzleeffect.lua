@@ -3,7 +3,7 @@ function EFFECT:Init(data)
 
     if !IsValid(wpn) then self:Remove() return end
 
-    local muzzle = wpn:GetValue("MuzzleParticle")
+    local muzzle = wpn:GetProcessedValue("MuzzleParticle")
 
     local att = data:GetAttachment() or 1
 

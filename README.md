@@ -33,7 +33,6 @@ Read weapons/arc9_base/shared.lua, arc9/common/attachments/default.lua, and this
  - Snazzy new UI
  - Better standard weapon ecosystem
  - Third Person IK animations
- - 
 
 ### New Recoil
 
@@ -141,6 +140,7 @@ Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS 
 
  - **True**: Enabled when TrueNames is active.
  - **Silenced**: Enabled when a silencer is installed.
+ - **UBGL**: Enabled when an underbarrel weapon is active.
  - **MidAir**: Enabled when in mid-air.
  - **Crouch**: Enabled when crouching.
  - **FirstShot**: Enabled on the first shot.

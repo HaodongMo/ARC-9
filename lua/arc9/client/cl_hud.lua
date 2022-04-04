@@ -124,6 +124,21 @@ function ARC9.DrawHUD()
 
         local arc9_mode = weapon:GetCurrentFiremodeTable()
 
+        if #weapon:GetValue("Firemodes") > 1 then
+            multiple_modes = true
+        end
+
+        if weapon:GetUBGL() then
+            arc9_mode = {
+                Mode = weapon:GetCurrentFiremode(),
+                PrintName = weapon:GetProcessedValue("UBGLFiremodeName")
+            }
+            weapon_clipsize = weapon:GetMaxClip2()
+            weapon_clip = weapon:Clip2()
+            weapon_reserve = LocalPlayer():GetAmmoCount(weapon:GetSecondaryAmmoType())
+            multiple_modes = false
+        end
+
         if arc9_mode.Icon then
             firemode_pic = arc9_mode.Icon
         else
@@ -153,10 +168,6 @@ function ARC9.DrawHUD()
         if weapon:GetSafe() then
             firemode_pic = firemode_pics[0]
             firemode_text = "SAFE"
-        end
-
-        if #weapon:GetValue("Firemodes") > 1 then
-            multiple_modes = true
         end
 
         if weapon:GetProcessedValue("BottomlessClip") then

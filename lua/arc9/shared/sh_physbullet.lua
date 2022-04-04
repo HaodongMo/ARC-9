@@ -92,6 +92,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Size = wep:GetProcessedValue("TracerSize"),
         Guidance = wep:GetProcessedValue("BulletGuidance"),
         GuidanceAmount = wep:GetProcessedValue("BulletGuidanceAmount"),
+        Secondary = wep:GetUBGL()
     }
 
     for i, k in pairs(tbl) do
@@ -179,7 +180,8 @@ net.Receive("arc9_sendbullet", function(len, ply)
         Filter = {ent},
         Guidance = weapon:GetProcessedValue("BulletGuidance"),
         GuidanceAmount = weapon:GetProcessedValue("BulletGuidanceAmount"),
-        Invisible = false
+        Invisible = false,
+        Secondary = wep:GetUBGL()
     }
 
     if !weapon:ShouldTracer() then
@@ -399,7 +401,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                         Callback = function(att, btr, dmg)
                             local range = bullet.Travelled
 
-                            weapon:AfterShotFunction(btr, dmg, range, bullet.Penleft, bullet.Damaged)
+                            weapon:AfterShotFunction(btr, dmg, range, bullet.Penleft, bullet.Damaged, bullet.Secondary)
                         end
                     })
                 end
@@ -477,7 +479,15 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
         local tgt_dir = (tgt_point - oldpos):GetNormalized()
 
+        -- needs work
         bullet.Vel = bullet.Vel + (tgt_dir * timestep * (bullet.GuidanceAmount or 15000))
+
+        local bdir = bullet.Vel:Forward()
+        local vel = bullet.Vel:Length()
+
+        vel = math.Clamp(vel, 0, bullet.GuidanceAmount)
+
+        bullet.Vel = bdir * vel
     end
 
     local MaxDimensions = 16384 * 4

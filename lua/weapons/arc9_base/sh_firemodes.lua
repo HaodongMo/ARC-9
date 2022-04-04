@@ -60,6 +60,10 @@ function SWEP:SetFiremodePose(wm)
 end
 
 function SWEP:GetCurrentFiremode()
+    if self:GetUBGL() then
+        return self:GetProcessedValue("UBGLFiremode")
+    end
+
     mode = self:GetCurrentFiremodeTable().Mode
 
     mode = self:RunHook("Hook_TranslateMode") or mode

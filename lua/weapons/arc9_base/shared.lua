@@ -260,6 +260,26 @@ SWEP.RumbleHeavy = 30000
 SWEP.RumbleLight = 30000
 SWEP.RumbleDuration = 0.12
 
+-------------------------- UBGL
+-- Underbarrel weapons
+-- Stats that BEGIN with UBGL are actual specific stats
+SWEP.UBGL = false
+SWEP.UBGLAmmo = "smg1_grenade"
+SWEP.UBGLClipSize = 1
+SWEP.UBGLFiremode = 1
+SWEP.UBGLFiremodeName = "UBGL"
+SWEP.UBGLChamberSize = 0
+SWEP.UBGLIntegralReload = false -- The UBGL uses reload animations that are baked into the gun.
+SWEP.UBGLInsteadOfSights = false -- Right clicking fires UBGL instead of going into irons.
+SWEP.UBGLDualReload = false -- Reloading UBGL reloads regular gun, and vice versa
+
+-- Otherwise, these are just stats that get overwritten when selecting a UBGL.
+SWEP.AmmoPerShotUBGL = 1
+SWEP.SpreadUBGL = 0.0
+SWEP.RecoilUBGL = 1
+SWEP.DoFireAnimationUBGL = false
+SWEP.NoShellEjectUBGL = true
+
 -------------------------- VISUAL RECOIL
 
 SWEP.UseVisualRecoil = false
@@ -490,7 +510,7 @@ SWEP.ExitSightsSound = ""
 SWEP.EnterBipodSound = "arc9/bipod_down.wav"
 SWEP.ExitBipodSound = "arc9/bipod_up.wav"
 
-SWEP.SelectUBGLSound = ""
+SWEP.EnterUBGLSound = ""
 SWEP.ExitUBGLSound = ""
 
 SWEP.MalfunctionSound = ""
@@ -537,6 +557,8 @@ SWEP.CamQCA_Mult = nil -- Intensity for QC camera movement.
 SWEP.ProceduralViewQCA = nil -- QC Attachment for procedural camera movement. Use if you don't have a camera. Usually the muzzle.
 
 SWEP.CamOffsetAng = Angle(0, 0, 0)
+
+SWEP.DoFireAnimation = true
 
 -------------------------- VISUALS
 
@@ -937,7 +959,14 @@ function SWEP:SetupDataTables()
     self:SetBreath(100)
     self:SetOutOfBreath(false)
     self:SetHideBoneIndex(0)
+    self:SetUBGL(false)
 end
 
 function SWEP:SecondaryAttack()
+    if self:GetValue("UBGL") and self:GetProcessedValue("UBGLInsteadOfSights") then
+        -- self:SetUBGL(true)
+        self:ToggleUBGL(true)
+        self:DoPrimaryAttack()
+        -- self:SetUBGL(false)
+    end
 end

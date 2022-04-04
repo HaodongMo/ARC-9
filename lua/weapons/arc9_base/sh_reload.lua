@@ -19,10 +19,18 @@ function SWEP:Reload()
 
     if !self:CanReload() then return end
 
-    if !self:GetProcessedValue("BottomlessClip") then
-        if self:Clip1() >= self:GetCapacity() then return end
+    local clip = self:Clip1()
+    local ammo = self:Ammo1()
 
-        if !self:GetInfiniteAmmo() and self:Ammo1() <= 0 then
+    if self:GetUBGL() then
+        clip = self:Clip2()
+        ammo = self:Ammo2()
+    end
+
+    if !self:GetProcessedValue("BottomlessClip") then
+        if clip >= self:GetCapacity() then return end
+
+        if !self:GetInfiniteAmmo() and ammo <= 0 then
             return
         end
     end
@@ -30,7 +38,7 @@ function SWEP:Reload()
     -- self:ScopeToggle(0)
     -- self:ToggleCustomize(false)
 
-    if self:Clip1() == 0 then
+    if clip == 0 then
         self:SetEmptyReload(true)
     else
         self:SetEmptyReload(false)
@@ -38,8 +46,16 @@ function SWEP:Reload()
 
     local anim = "reload"
 
+    if self:GetUBGL() then
+        anim = "reload_ubgl"
+    end
+
     if self:GetShouldShotgunReload() then
         anim = "reload_start"
+
+        if self:GetUBGL() then
+            anim = "reload_start_ubgl"
+        end
     end
 
     anim = self:RunHook("Hook_SelectReloadAnimation", anim) or anim
@@ -52,23 +68,32 @@ function SWEP:Reload()
         local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
         minprogress = math.min(minprogress, 0.95)
 
-        self:SetTimer(t * minprogress, function()
-            self:RestoreClip(self:GetValue("ClipSize"))
-        end, "reloadtimer")
+        if self:GetUBGL() then
+            self:SetTimer(t * minprogress, function()
+                self:RestoreClip(self:GetValue("UBGLClipSize"))
+            end, "reloadtimer")
+        else
+            self:SetTimer(t * minprogress, function()
+                self:RestoreClip(self:GetValue("ClipSize"))
+            end, "reloadtimer")
+        end
 
         local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.25
 
-        self:SetTimer(self:GetProcessedValue("ReloadTime") * newcliptime, function()
-            local ammo = self:Ammo1()
-            if self:GetInfiniteAmmo() then
-                ammo = math.huge
-            end
-            self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + ammo))
-        end)
+        if !self:GetUBGL() then
+            self:SetTimer(self:GetProcessedValue("ReloadTime") * newcliptime, function()
+                local ammo1 = self:Ammo1()
+
+                if self:GetInfiniteAmmo() then
+                    ammo1 = math.huge
+                end
+                self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + ammo1))
+            end)
+        end
     end
 
     if SERVER then
-        if self:Clip1() == 0 then
+        if clip == 0 then
             self:SetTimer(self:GetProcessedValue("DropMagazineTime"), function()
                 self:DropMagazine()
             end)
@@ -101,7 +126,11 @@ function SWEP:CanReload()
     if self:StillWaiting() then return end
     if self:GetCapacity() <= 0 then return end
     -- if self:GetTraversalSprintAmount() >= 0 then return end
-    if self:Ammo1() <= 0 and !self:GetInfiniteAmmo() then return end
+    local ammo = self:Ammo1()
+    if self:GetUBGL() then
+        ammo = self:Ammo2()
+    end
+    if ammo <= 0 and !self:GetInfiniteAmmo() then return end
     if !self:GetProcessedValue("ReloadWhileSprint") and self:GetSprintAmount() > 0 then
         return
     end
@@ -155,27 +184,57 @@ function SWEP:DropMagazine()
     end
 end
 
-function SWEP:GetCapacity()
-    return self:GetValue("ClipSize") + self:GetValue("ChamberSize")
+function SWEP:GetCapacity(ubgl)
+    if ubgl then
+        return self:GetValue("UBGLClipSize") + self:GetValue("UBGLChamberSize")
+    else
+        return self:GetValue("ClipSize") + self:GetValue("ChamberSize")
+    end
 end
 
-function SWEP:RestoreClip(amt)
+function SWEP:RestoreClip(amt, ubgl)
     if CLIENT then return end
 
     local inf = self:GetInfiniteAmmo()
-    local reserve = inf and math.huge or (self:Clip1() + self:Ammo1())
+    local clip = self:Clip1()
+    local ammo = self:Ammo1()
 
-    local lastclip1 = self:Clip1()
-
-    self:SetClip1(math.min(math.min(self:Clip1() + amt, self:GetCapacity()), reserve))
-
-    reserve = reserve - self:Clip1()
-
-    if !inf then
-        self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
+    if self:GetUBGL() then
+        clip = self:Clip2()
+        ammo = self:Ammo2()
     end
 
-    return self:Clip1() - lastclip1
+    local reserve = inf and math.huge or (clip + ammo)
+
+    local lastclip
+
+    if self:GetUBGL() then
+        lastclip = self:Clip2()
+
+        self:SetClip2(math.min(math.min(clip + amt, self:GetCapacity()), reserve))
+
+        reserve = reserve - self:Clip2()
+
+        if !inf then
+            self:GetOwner():SetAmmo(reserve, self.Secondary.Ammo)
+        end
+
+        clip = self:Clip2()
+    else
+        lastclip = self:Clip1()
+
+        self:SetClip1(math.min(math.min(clip + amt, self:GetCapacity()), reserve))
+
+        reserve = reserve - self:Clip1()
+
+        if !inf then
+            self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
+        end
+
+        clip = self:Clip1()
+    end
+
+    return clip - lastclip
 end
 
 function SWEP:GetShouldShotgunReload()

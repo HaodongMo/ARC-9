@@ -169,6 +169,10 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Silenced")
     end
 
+    if self:GetUBGL() and !self.HasNoAffectors[val .. "UBGL"] then
+        stat = self:GetValue(val, stat, "UBGL")
+    end
+
     if self:GetNthShot() % 2 == 0  and !self.HasNoAffectors[val .. "EvenShot"] then
         stat = self:GetValue(val, stat, "EvenShot")
     elseif !self.HasNoAffectors[val .. "OddShot"] then

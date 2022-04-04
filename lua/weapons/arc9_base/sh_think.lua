@@ -1,7 +1,7 @@
 function SWEP:Think()
     local owner = self:GetOwner()
 
-    if owner:KeyReleased(IN_ATTACK) then
+    if owner:KeyReleased(IN_ATTACK) or (self:GetUBGL() and owner:KeyReleased(IN_ATTACK2)) then
         self:SetNeedTriggerPress(false)
         if !self:GetProcessedValue("RunawayBurst") then
             self:SetBurstCount(0)
@@ -50,6 +50,8 @@ function SWEP:Think()
     self:ThinkLoopingSound()
 
     self:ThinkInspect()
+
+    self:ThinkUBGL()
 
     if CLIENT then
         self:ThinkThirdArm()
