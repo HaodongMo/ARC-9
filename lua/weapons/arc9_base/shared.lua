@@ -54,6 +54,7 @@ SWEP.NoTPIK = false
 SWEP.Material = ""
 
 SWEP.Crosshair = false
+SWEP.LauncherCrosshair = false -- Force the launcher crosshair
 
 -------------------------- SAVING
 
