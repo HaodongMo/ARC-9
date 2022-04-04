@@ -51,6 +51,15 @@ function SWEP:DeletePreset(filename)
     end
 end
 
+function SWEP:StripWeapon()
+    for slot, slottbl in ipairs(self.Attachments) do
+        slottbl.Installed = nil
+        slottbl.SubAttachments = nil
+    end
+
+    self:PostModify()
+end
+
 function SWEP:ClearPreset()
     for slot, slottbl in ipairs(self.Attachments) do
         slottbl.Installed = nil
@@ -80,6 +89,10 @@ function SWEP:LoadPreset(filename)
     if !f then return end
 
     local tbl = util.JSONToTable(f:Read())
+
+    self.Attachments = baseclass.Get(self:GetClass()).Attachments
+
+    self:StripWeapon()
 
     for i, k in pairs(self.Attachments) do
         local slottbl = tbl[i]
