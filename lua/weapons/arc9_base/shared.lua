@@ -279,6 +279,7 @@ SWEP.SpreadUBGL = 0.0
 SWEP.RecoilUBGL = 1
 SWEP.DoFireAnimationUBGL = false
 SWEP.NoShellEjectUBGL = true
+SWEP.ManualActionUBGL = false
 
 -------------------------- VISUAL RECOIL
 
@@ -789,6 +790,7 @@ SWEP.Attachments = {
 -- dryfire
 -- reload
 -- reload_empty
+-- reload_ubgl
 -- reload_insert_1, reload_insert_2, reload_insert_3...: Animation that reloads multiple rounds in at once, such as a stripper clip.
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 

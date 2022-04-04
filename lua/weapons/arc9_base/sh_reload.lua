@@ -28,7 +28,7 @@ function SWEP:Reload()
     end
 
     if !self:GetProcessedValue("BottomlessClip") then
-        if clip >= self:GetCapacity() then return end
+        if clip >= self:GetCapacity(self:GetUBGL()) then return end
 
         if !self:GetInfiniteAmmo() and ammo <= 0 then
             return
@@ -54,7 +54,7 @@ function SWEP:Reload()
         anim = "reload_start"
 
         if self:GetUBGL() then
-            anim = "reload_start_ubgl"
+            anim = "reload_ubgl_start"
         end
     end
 
@@ -124,7 +124,7 @@ end
 function SWEP:CanReload()
     if self:GetOwner():KeyDown(IN_WALK) then return false end
     if self:StillWaiting() then return end
-    if self:GetCapacity() <= 0 then return end
+    if self:GetCapacity(self:GetUBGL()) <= 0 then return end
     -- if self:GetTraversalSprintAmount() >= 0 then return end
     local ammo = self:Ammo1()
     if self:GetUBGL() then
@@ -192,7 +192,7 @@ function SWEP:GetCapacity(ubgl)
     end
 end
 
-function SWEP:RestoreClip(amt, ubgl)
+function SWEP:RestoreClip(amt)
     if CLIENT then return end
 
     local inf = self:GetInfiniteAmmo()
@@ -211,7 +211,7 @@ function SWEP:RestoreClip(amt, ubgl)
     if self:GetUBGL() then
         lastclip = self:Clip2()
 
-        self:SetClip2(math.min(math.min(clip + amt, self:GetCapacity()), reserve))
+        self:SetClip2(math.min(math.min(clip + amt, self:GetCapacity(true)), reserve))
 
         reserve = reserve - self:Clip2()
 
@@ -223,7 +223,7 @@ function SWEP:RestoreClip(amt, ubgl)
     else
         lastclip = self:Clip1()
 
-        self:SetClip1(math.min(math.min(clip + amt, self:GetCapacity()), reserve))
+        self:SetClip1(math.min(math.min(clip + amt, self:GetCapacity(false)), reserve))
 
         reserve = reserve - self:Clip1()
 
@@ -255,9 +255,27 @@ end
 
 function SWEP:EndReload()
     if self:GetShouldShotgunReload() then
-        if self:Clip1() >= self:GetCapacity() or self:Ammo1() == 0 or self:GetEndReload() then
+        local clip = self:Clip1()
+        local ammo = self:Ammo1()
+
+        if self:GetUBGL() then
+            clip = self:Clip2()
+            ammo = self:Ammo2()
+        end
+
+        if self:GetInfiniteAmmo() then
+            ammo = math.huge
+        end
+
+        if clip >= self:GetCapacity(self:GetUBGL()) or ammo == 0 or self:GetEndReload() then
             // finish
-            self:PlayAnimation("reload_finish", self:GetProcessedValue("ReloadTime", 1), true)
+            local anim = "reload_finish"
+
+            if self:GetUBGL() then
+                anim = "reload_ubgl_finish"
+            end
+
+            self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
             self:SetReloading(false)
 
             self:SetNthShot(0)
@@ -265,21 +283,28 @@ function SWEP:EndReload()
             self:SetEmptyReload(false)
         else
             local anim = "reload_insert"
+            if self:GetUBGL() then
+                anim = "reload_ubgl_insert"
+            end
             local attempt_to_restore = 1
 
-            for i = 1, self:GetCapacity() - self:Clip1() do
-                if self:HasAnimation("reload_insert_" .. tostring(i)) then
-                    anim = "reload_insert_" .. tostring(i)
+            local banim = anim
+
+            for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+                if self:HasAnimation(anim .. "_" .. tostring(i)) then
+                    banim = anim .. "_" .. tostring(i)
                     attempt_to_restore = i
                 end
             end
 
-            local minprogress = self:GetAnimationEntry(anim).MinProgress or 0.75
+            anim = banim
+
+            local minprogress = (self:GetAnimationEntry(anim) or {}).MinProgress or 0.75
             minprogress = math.min(minprogress, 1)
 
             local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
 
-            local res = math.min(math.min(attempt_to_restore, self:GetCapacity() - self:Clip1()), self:Ammo1())
+            local res = math.min(math.min(attempt_to_restore, self:GetCapacity(self:GetUBGL()) - clip), ammo)
 
             self:SetLoadedRounds(res)
 

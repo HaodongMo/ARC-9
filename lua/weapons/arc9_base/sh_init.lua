@@ -207,9 +207,22 @@ function SWEP:SetBaseSettings()
     if self:GetValue("UBGL") then
         self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
         self.Secondary.Ammo = self:GetValue("UBGLAmmo")
+
+        self.LastUBGLAmmo = self.Secondary.Ammo
+
+        if self:Clip2() < 0 and SERVER then
+            self:SetClip2(0)
+        end
     else
+        if self.LastUBGLAmmo and SERVER then
+            self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
+            self:SetClip2(0)
+        end
+
         self.Secondary.ClipSize = -1
         self.Secondary.Ammo = nil
+
+        self.LastUBGLAmmo = nil
 
         self:SetUBGL(false)
     end

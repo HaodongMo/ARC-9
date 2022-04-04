@@ -36,7 +36,7 @@ local function rollallhits(self, range_3, range_1)
     local radius_1 = solvetriangle(ang, range_1)
     local radius_3 = solvetriangle(ang, range_3)
 
-    local hitcount = math.Clamp(math.max(math.Round(self:GetCapacity() / 4), math.Round(self:GetValue("Num") * 2)), 10, 20)
+    local hitcount = math.Clamp(math.max(math.Round(self:GetCapacity(self:GetUBGL()) / 4), math.Round(self:GetValue("Num") * 2)), 10, 20)
 
     for i = 1, hitcount do
         table.insert(hits_1, rollhit(radius_1))

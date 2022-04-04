@@ -257,12 +257,10 @@ function SWEP:DoPrimaryAttack()
 
     self:SetBurstCount(self:GetBurstCount() + 1)
 
-    if !self:GetUBGL() then
-        if self:GetValue("ManualAction") then
-            if self:Clip1() > 0 or !self:GetValue("ManualActionNoLastCycle") then
-                if self:GetNthShot() % self:GetValue("ManualActionChamber") == 0 then
-                    self:SetNeedsCycle(true)
-                end
+    if self:GetProcessedValue("ManualAction") then
+        if self:Clip1() > 0 or !self:GetProcessedValue("ManualActionNoLastCycle") then
+            if self:GetNthShot() % self:GetProcessedValue("ManualActionChamber") == 0 then
+                self:SetNeedsCycle(true)
             end
         end
     end
