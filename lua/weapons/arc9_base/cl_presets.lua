@@ -52,13 +52,16 @@ function SWEP:DeletePreset(filename)
 end
 
 function SWEP:ClearPreset()
-    local baseattachments = baseclass.Get(self:GetClass()).Attachments or {}
-
     for slot, slottbl in ipairs(self.Attachments) do
-        slottbl.Installed = (baseattachments[slot] or {}).Installed
+        slottbl.Installed = nil
+        slottbl.SubAttachments = nil
     end
 
-    self:SendWeapon()
+    PrintTable(self.DefaultAttachments)
+
+    self:BuildSubAttachments(self.DefaultAttachments)
+
+    -- self:SendWeapon()
     self:PostModify()
 end
 
@@ -97,7 +100,7 @@ function SWEP:LoadPreset(filename)
 
     f:Close()
 
-    self:SendWeapon()
+    -- self:SendWeapon()
     self:PostModify()
 end
 

@@ -183,7 +183,9 @@ function SWEP:Initialize()
 
     -- PrintTable(base.Attachments)
 
-    self:BuildSubAttachments(table.Copy(self.Attachments))
+    self.DefaultAttachments = table.Copy(self.Attachments)
+
+    self:BuildSubAttachments(self.DefaultAttachments)
 end
 
 function SWEP:ClientInitialize()
@@ -194,7 +196,9 @@ function SWEP:ClientInitialize()
 
     -- self:BuildSubAttachments(base.Attachments)
 
-    self:BuildSubAttachments(table.Copy(self.Attachments))
+    self.DefaultAttachments = table.Copy(self.Attachments)
+
+    self:BuildSubAttachments(self.DefaultAttachments)
 
     self:SetBaseSettings()
 

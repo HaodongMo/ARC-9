@@ -62,6 +62,8 @@ function SWEP:GetAttachmentList()
     return atts
 end
 
+-- tbl: The table we are installing on to the gun
+-- parenttbl: The parent of the table we are installing on to
 function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
     if !tbl.Installed then return {} end
 
@@ -147,6 +149,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
     return subatts
 end
 
+-- Call this after changing the attachment structure
 function SWEP:BuildSubAttachments(tbl)
     for i, k in ipairs(self.Attachments) do
         k.OriginalAddress = i
@@ -172,6 +175,8 @@ function SWEP:BuildSubAttachments(tbl)
     self:BuildMergeSlots(self.Attachments)
 end
 
+-- Checks if the subatt tree is illegal
+-- i.e. if it attempts to place attachments the player does not actually own
 function SWEP:ValidateInventoryForNewTree(tree)
     local count = self:CountAttsInTree(tree)
 
@@ -192,6 +197,7 @@ function SWEP:ValidateInventoryForNewTree(tree)
     return true
 end
 
+-- Gets rid of invalid attachments
 function SWEP:PruneAttachments()
     for _, slot in ipairs(self:GetSubSlotList()) do
         if !slot.Installed then continue end
