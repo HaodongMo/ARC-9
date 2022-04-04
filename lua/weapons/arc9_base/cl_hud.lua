@@ -139,7 +139,7 @@ function SWEP:DoDrawCrosshair(x, y)
         drawshadowrect(x - (dotsize / 2) - (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
         drawshadowrect(x - (dotsize / 2) + (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
     elseif self:GetProcessedValue("Num") > 1 then
-        local dotcount = 7
+        local dotcount = 10
 
         for i = 1, dotcount do
             local rad = i * math.pi * 2 / dotcount
