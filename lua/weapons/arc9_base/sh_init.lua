@@ -173,22 +173,34 @@ function SWEP:Initialize()
     self:SetLastMeleeTime(0)
     self:SetNthShot(0)
 
-    self:BuildAttachmentAddresses()
+    -- self:BuildAttachmentAddresses()
 
     self:InitTimers()
 
     self:ClientInitialize()
+
+    -- local base = baseclass.Get(self:GetClass())
+
+    -- PrintTable(base.Attachments)
+
+    self:BuildSubAttachments(table.Copy(self.Attachments))
 end
 
 function SWEP:ClientInitialize()
     if game.SinglePlayer() then self:CallOnClient("ClientInitialize") end
     if SERVER then return end
 
-    self:BuildAttachmentAddresses()
+    -- local base = baseclass.Get(self:GetClass())
+
+    -- self:BuildSubAttachments(base.Attachments)
+
+    self:BuildSubAttachments(table.Copy(self.Attachments))
+
     self:SetBaseSettings()
-    self:LoadPreset("autosave")
 
     self:InitTimers()
+
+    self:LoadPreset("autosave")
 end
 
 function SWEP:SetBaseSettings()

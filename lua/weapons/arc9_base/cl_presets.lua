@@ -66,6 +66,11 @@ function SWEP:LoadPreset(filename)
     if LocalPlayer() != self:GetOwner() then return end
 
     filename = filename or "autosave"
+
+    if filename == "autosave" then
+        if !GetConVar("arc9_autosave"):GetBool() then return end
+    end
+
     filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename .. ".txt"
 
     if !file.Exists(filename, "DATA") then return end

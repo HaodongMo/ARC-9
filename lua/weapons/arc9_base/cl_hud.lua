@@ -104,7 +104,9 @@ function SWEP:DoDrawCrosshair(x, y)
     if self:GetSprintAmount() > 0 then return true end
     if self:GetReloading() then return true end
 
-    if self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("LauncherCrosshair") then
+    if self:GetProcessedValue("MissileCrosshair") then
+        
+    elseif self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("LauncherCrosshair") then
         if mode > 1 then
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2, y - (dotsize / 2), miniprong_2, dotsize, col)
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2 - minigap - miniprong_1, y - (dotsize / 2), miniprong_1, dotsize, col)

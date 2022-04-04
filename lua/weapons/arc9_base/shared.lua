@@ -55,6 +55,7 @@ SWEP.Material = ""
 
 SWEP.Crosshair = false
 SWEP.LauncherCrosshair = false -- Force the launcher crosshair
+SWEP.MissileCrosshair = false -- Force the missile launcher crosshair
 
 -------------------------- SAVING
 

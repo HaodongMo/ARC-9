@@ -75,7 +75,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
         if atttbl.Attachments then
             subatts = table.Copy(atttbl.Attachments)
 
-            for i, k in ipairs(tbl.SubAttachments) do
+            for i, k in ipairs(tbl.SubAttachments or {}) do
                 subatts[i].Bone = parenttbl.Bone
                 local att_pos = parenttbl.Pos
                 local att_ang = parenttbl.Ang
