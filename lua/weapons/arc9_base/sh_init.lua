@@ -210,6 +210,8 @@ function SWEP:SetBaseSettings()
     else
         self.Secondary.ClipSize = -1
         self.Secondary.Ammo = nil
+
+        self:SetUBGL(false)
     end
 
     if SERVER then

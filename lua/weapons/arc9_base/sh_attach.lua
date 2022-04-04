@@ -94,9 +94,6 @@ function SWEP:PostModify(toggleonly)
         self.PrintName = base.PrintName
     end
 
-    self.Ammo = self:GetValue("Ammo")
-    self.Primary.ClipSize = self:GetValue("ClipSize")
-
     if CLIENT then
         -- self:PruneAttachments()
         self:SendWeapon()
@@ -129,8 +126,10 @@ function SWEP:PostModify(toggleonly)
 
             self.LastAmmo = self:GetValue("Ammo")
             self.LastClipSize = self:GetValue("ClipSize")
-            end
+        end
     end
+
+    self:SetBaseSettings()
 end
 
 function SWEP:ToggleCustomize(on)
