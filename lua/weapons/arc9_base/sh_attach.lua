@@ -79,8 +79,6 @@ SWEP.LastClipSize = 0
 SWEP.LastAmmo = ""
 
 function SWEP:PostModify(toggleonly)
-    self:InvalidateCache()
-
     if !toggleonly then
         self:CancelReload()
         -- self:PruneAttachments()
@@ -127,7 +125,35 @@ function SWEP:PostModify(toggleonly)
             self.LastAmmo = self:GetValue("Ammo")
             self.LastClipSize = self:GetValue("ClipSize")
         end
+
+        if self:GetOwner():IsPlayer() then
+            if self:GetCapacity(false) > 0 and self:Clip1() > self:GetCapacity(false) then
+                self:GetOwner():GiveAmmo(self:Clip1() - self:GetCapacity(false), self:GetValue("Ammo"))
+                self:SetClip1(self:GetCapacity(false))
+            end
+        end
+
+        if self:GetValue("UBGL") then
+            if !self.AlreadyGaveUBGLAmmo or self.SpawnTime + 0.25 > CurTime() then
+                self:SetClip2(self:GetMaxClip2())
+                self.AlreadyGaveUBGLAmmo = true
+            end
+
+            self.LastUBGLAmmo = self:GetProcessedValue("UBGLAmmo")
+
+            if self:GetOwner():IsPlayer() and self:GetCapacity(true) > 0 and self:Clip2() > self:GetCapacity(true) then
+                self:GetOwner():GiveAmmo(self:Clip2() - self:GetCapacity(true), self:GetValue("UBGLAmmo"))
+                self:SetClip2(self:GetCapacity(true))
+            end
+        else
+            if self.LastUBGLAmmo and SERVER then
+                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
+                self:SetClip2(0)
+            end
+        end
     end
+
+    self:InvalidateCache()
 
     self:SetBaseSettings()
 end

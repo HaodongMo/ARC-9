@@ -171,6 +171,8 @@ function SWEP:Initialize()
     self:SetLastMeleeTime(0)
     self:SetNthShot(0)
 
+    self.SpawnTime = CurTime()
+
     -- self:BuildAttachmentAddresses()
 
     self:InitTimers()
@@ -184,8 +186,6 @@ function SWEP:Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
     self:BuildSubAttachments(self.DefaultAttachments)
-
-    self:SetBaseSettings()
 end
 
 function SWEP:ClientInitialize()
@@ -199,8 +199,6 @@ function SWEP:ClientInitialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
     self:BuildSubAttachments(self.DefaultAttachments)
-
-    self:SetBaseSettings()
 
     self:InitTimers()
 
@@ -230,38 +228,14 @@ function SWEP:SetBaseSettings()
             if self:Clip2() < 0 then
                 self:SetClip2(0)
             end
-
-            if !self.AlreadyGaveUBGLAmmo then
-                self:SetClip2(self.Secondary.ClipSize)
-                self.AlreadyGaveUBGLAmmo = true
-            end
         end
     else
-        if self.LastUBGLAmmo and SERVER then
-            self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
-            self:SetClip2(0)
-        end
-
         self.Secondary.ClipSize = -1
         self.Secondary.Ammo = nil
 
         self.LastUBGLAmmo = nil
 
         self:SetUBGL(false)
-    end
-
-    if SERVER then
-        if self:GetOwner():IsPlayer() then
-            if self:GetCapacity(false) > 0 and self:Clip1() > self:GetCapacity(false) then
-                self:GetOwner():GiveAmmo(self:Clip1() - self:GetCapacity(false), self:GetValue("Ammo"))
-                self:SetClip1(self:GetCapacity(false))
-            end
-
-            if self:GetCapacity(true) > 0 and self:Clip2() > self:GetCapacity(true) then
-                self:GetOwner():GiveAmmo(self:Clip2() - self:GetCapacity(true), self:GetValue("UBGLAmmo"))
-                self:SetClip2(self:GetCapacity(true))
-            end
-        end
     end
 end
 
