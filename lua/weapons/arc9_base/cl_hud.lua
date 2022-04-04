@@ -138,6 +138,20 @@ function SWEP:DoDrawCrosshair(x, y)
 
         drawshadowrect(x - (dotsize / 2) - (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
         drawshadowrect(x - (dotsize / 2) + (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
+    elseif self:GetProcessedValue("Num") > 1 then
+        local dotcount = 7
+
+        for i = 1, dotcount do
+            local rad = i * math.pi * 2 / dotcount
+            rad = rad - (math.pi / 2)
+            local cx = math.cos(rad)
+            local cy = math.sin(rad)
+
+            cx = cx * gap
+            cy = cy * gap
+
+            drawshadowrect(x + cx - (dotsize / 2), y + cy - (dotsize / 2), dotsize, dotsize, col)
+        end
     else
         if mode > 1 then
             // Burst crosshair
