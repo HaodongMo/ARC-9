@@ -57,8 +57,6 @@ function SWEP:ClearPreset()
         slottbl.SubAttachments = nil
     end
 
-    PrintTable(self.DefaultAttachments)
-
     self:BuildSubAttachments(self.DefaultAttachments)
 
     -- self:SendWeapon()

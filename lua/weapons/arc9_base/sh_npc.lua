@@ -90,6 +90,9 @@ function SWEP:NPC_Reload()
 end
 
 function SWEP:NPC_Initialize()
+    self.DefaultAttachments = table.Copy(self.Attachments)
+
+    self:BuildSubAttachments(self.DefaultAttachments)
     self:SetBaseSettings()
 
     if CLIENT then return end

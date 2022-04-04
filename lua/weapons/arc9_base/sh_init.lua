@@ -168,8 +168,6 @@ function SWEP:Initialize()
         return
     end
 
-    self:SetBaseSettings()
-
     self:SetLastMeleeTime(0)
     self:SetNthShot(0)
 
@@ -186,6 +184,8 @@ function SWEP:Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
     self:BuildSubAttachments(self.DefaultAttachments)
+
+    self:SetBaseSettings()
 end
 
 function SWEP:ClientInitialize()
