@@ -40,7 +40,7 @@ function SWEP:DoShootSounds()
 
     local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
 
-    if self:GetProcessedValue("Silencer") then
+    if self:GetProcessedValue("Silencer") and !self:GetUBGL() then
         ss = self:RandomChoice(self:GetProcessedValue("ShootSoundSilenced")) or ss
 
         if self:GetBurstCount() == 0 then
@@ -56,7 +56,7 @@ function SWEP:DoShootSounds()
 
     local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
 
-    if self:GetProcessedValue("Silencer") then
+    if self:GetProcessedValue("Silencer") and !self:GetUBGL() then
         dss = self:RandomChoice(self:GetProcessedValue("DistantShootSoundSilenced")) or dss
 
         if self:GetBurstCount() == 0 then

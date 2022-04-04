@@ -165,7 +165,7 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Empty")
     end
 
-    if self:GetValue("Silencer") and !self.HasNoAffectors[val .. "Silencer"] then
+    if !self:GetUBGL() and self:GetValue("Silencer") and !self.HasNoAffectors[val .. "Silencer"] then
         stat = self:GetValue(val, stat, "Silenced")
     end
 
