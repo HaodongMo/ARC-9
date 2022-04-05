@@ -40,6 +40,7 @@ function SWEP:ThinkHoldBreath()
 
         ts = math.Approach(ts, target_ts, FrameTime() / ts / 0.5)
         game.SetTimeScale(ts)
+        Entity(1):SetLaggedMovementValue(1 + ((1-ts)*2))
     end
 end
 
