@@ -700,78 +700,89 @@ function ARC9.DrawHUD()
         --     },
         -- }
 
+        local CTRL = ControllerMode()
         local hints = {}
 
         if capabilities.UBGL then
-            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+attack2") .. "]"
-            str = str .. " Toggle Weapon"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "shared_button_b" or ARC9.GetBindKey("+use"),
+                glyph2 = CTRL and "xbox_lt" or ARC9.GetBindKey("+attack2"),
+                action = "Toggle Weapon"
+            })
         end
 
         if capabilities.SwitchSights then
-            local str = "[" .. ARC9.GetBindKey("+walk") .. "&" .. ARC9.GetBindKey("+use") .. "]"
-            str = str .. " Switch Sights"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "sd_l4" or ARC9.GetBindKey("+walk"),
+                glyph2 = CTRL and "shared_button_b" or ARC9.GetBindKey("+use"),
+                action = "Switch Sights"
+            })
         end
 
         if capabilities.HoldBreath then
-            local str = "[" .. ARC9.GetBindKey("+speed") .. "]"
-            str = str .. " Hold Breath"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "xbox_lb" or ARC9.GetBindKey("+speed"),
+                action = "Hold Breath"
+            })
         end
 
         if capabilities.Bash then
-            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+attack") .. "]"
-            str = str .. " Bash"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "shared_button_x" or ARC9.GetBindKey("+use"),
+                glyph2 = CTRL and "xbox_rt" or ARC9.GetBindKey("+attack"),
+                action = "Bash"
+            })
         end
 
         if capabilities.Inspect then
-            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("reload") .. "]"
-            str = str .. " Inspect"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "shared_button_b" or ARC9.GetBindKey("+reload"),
+                glyph2 = CTRL and "shared_button_x" or ARC9.GetBindKey("+use"),
+                action = "Inspect"
+            })
         end
 
         if capabilities.Blindfire then
-            local str = "[" .. ARC9.GetBindKey("+alt1") .. "&" .. ARC9.GetBindKey("+forward") .. "]"
-            str = str .. " Blindfire"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "sd_r4" or ARC9.GetBindKey("+alt1"),
+                glyph2 = CTRL and "shared_lstick_up" or ARC9.GetBindKey("+forward"),
+                action = "Blindfire"
+            })
         end
 
         if capabilities.BlindfireLeft then
-            local str = "[" .. ARC9.GetBindKey("+alt1") .. "&" .. ARC9.GetBindKey("+moveleft") .. "]"
-            str = str .. " Blindfire Left"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "sd_r4" or ARC9.GetBindKey("+alt1"),
+                glyph2 = CTRL and "shared_lstick_left" or ARC9.GetBindKey("+moveleft"),
+                action = "Blindfire Left"
+            })
         end
 
         if capabilities.Firemode then
-            local str = "[" .. ARC9.GetBindKey("+zoom") .. "]"
-            str = str .. " Change Firemode"
-
-            table.insert(hints, str)
+            table.insert(hints, {
+                glyph = CTRL and "shared_rstick_click" or ARC9.GetBindKey("+zoom"),
+                action = "Switch Firemode"
+            })
         end
 
-        local str = "[" .. ARC9.GetBindKey("+menu_context") .. "]"
+        table.insert(hints, {
+            glyph = CTRL and "ps5_trackpad_left" or ARC9.GetBindKey("+menu_context"),
+            action = weapon:GetInSights() and "Peek" or "Customize" })
 
-        if weapon:GetInSights() then
-            str = str .. " Peek"
-        else
-            str = str .. " Customize"
+        table.insert(hints, {
+            glyph = CTRL and "shared_button_x" or ARC9.GetBindKey("+use"),
+            glyph2 = CTRL and "shared_rstick_click" or ARC9.GetBindKey("+attack2"),
+            action = "Toggle Safe"
+        })
+
+        for i, v in ipairs(hints) do
+            if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "vgui/glyphs/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
+            if v.glyph2 then 
+                if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "vgui/glyphs/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
+            end
         end
-
-        table.insert(hints, str)
-
-        local str2 = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+zoom") .. "]"
-        str2 = str2 .. " Toggle Safe"
-
-        table.insert(hints, str2)
 
         if lasthintcount != #hints and hidefadetime + 1.5 < CurTime() then
             hidefadetime = CurTime()
@@ -790,67 +801,32 @@ function ARC9.DrawHUD()
 
         local hx = 0
         local hy = 0
+        local SIZE = 16
 
-        if hidefadetime + 1.5 > CurTime() then
+        --[[if hidefadetime + 1.5 > CurTime() then
             hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
         else
             hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
-        end
+        end]]
+        hint_alpha = 1
 
         cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
             for _, hint in ipairs(hints) do
-                hx = 0
-
+                local strreturn = 0
                 surface.SetFont("ARC9_16_Unscaled")
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
                 surface.SetTextPos(hx + 4, hy + 2)
-                surface.DrawText(hint)
+                strreturn = CreateControllerKeyLine( {x = hx + 4, y = hy + 2, size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+                CreateControllerKeyLine( {x = hx + 4 + math.max(strreturn, 48), y = hy + 2, size = 16, font = "ARC9_16_Unscaled" }, " " .. hint.action )
+
 
                 surface.SetFont("ARC9_16_Unscaled")
+                surface.SetDrawColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
                 surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
                 surface.SetTextPos(hx, hy)
-                surface.DrawText(hint)
-
-                hx = hx + surface.GetTextSize(hint)
-
-                -- local hc = #hint[1]
-                -- for v, i in ipairs(hint[1]) do
-                --     if isstring(i) then
-                --         surface.SetFont("ARC9_24_Unscaled")
-                --         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-
-                --         surface.SetTextPos(hx, hy)
-                --         surface.DrawText(i)
-
-                --         hx = hx + surface.GetTextSize(i)
-                --     end
-
-                --     if v < hc then
-                --         surface.SetFont("ARC9_24_Unscaled")
-                --         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-
-                --         surface.SetTextPos(hx, hy)
-                --         surface.DrawText("+")
-
-                --         hx = hx + surface.GetTextSize("+")
-                --     end
-                -- end
-
-                -- surface.SetFont("ARC9_24_Unscaled")
-                -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
-
-                -- surface.SetTextPos(hx, hy)
-                -- surface.DrawText("] ")
-
-                -- hx = hx + surface.GetTextSize("] ")
-
-                -- surface.SetFont("ARC9_24_Unscaled")
-                -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
-
-                -- surface.SetTextPos(hx, hy)
-                -- surface.DrawText(hint[2])
-
-                -- hx = hx + surface.GetTextSize(hint[2])
+                strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+                CreateControllerKeyLine( {x = hx + math.max(strreturn, 48), y = hy, size = 16, font = "ARC9_16_Unscaled" }, " " .. hint.action )
 
                 hy = hy + 16
             end
@@ -863,3 +839,624 @@ function ARC9.DrawHUD()
 end
 
 hook.Add("HUDPaint", "ARC9_DrawHud", ARC9.DrawHUD)
+
+
+
+-- Controller / key additions by Fesiug. Blame Fesiug!
+
+local convar_controllermode = GetConVar("arc9_controller")
+function ControllerMode()
+    return convar_controllermode:GetBool()
+end
+
+ARC9.CTRL_Lookup = {
+    shared_button_a = "ps_button_x",
+    shared_button_b = "ps_button_circle",
+    shared_button_x = "ps_button_square",
+    shared_button_y = "ps_button_triangle",
+
+    xbox_lb = "ps5_l1",
+    xbox_rb = "ps5_r1",
+    xbox_lt = "ps5_l2",
+    xbox_rt = "ps5_r2",
+    xbox_lt_soft = "ps5_l2_soft",
+    xbox_rt_soft = "ps5_r2_soft",
+
+    MOUSE1 = "shared_mouse_l_click",
+    MOUSE2 = "shared_mouse_r_click",
+    MOUSE3 = "shared_mouse_mid_click",
+    MOUSE4 = "shared_mouse_4",
+    MOUSE5 = "shared_mouse_5",
+
+    MWHEELUP = "shared_mouse_scroll_up",
+    MWHEELDOWN = "shared_mouse_scroll_down",
+}
+
+ARC9.CTRL_Exists = {
+    ps4_button_logo = true,
+    ps4_button_options = true,
+    ps4_button_share = true,
+    ps4_l1 = true,
+    ps4_l2 = true,
+    ps4_l2_soft = true,
+    ps4_r1 = true,
+    ps4_r2 = true,
+    ps4_r2_soft = true,
+    ps4_trackpad_click = true,
+    ps4_trackpad_down = true,
+    ps4_trackpad_l_click = true,
+    ps4_trackpad_l_down = true,
+    ps4_trackpad_l_left = true,
+    ps4_trackpad_l_right = true,
+    ps4_trackpad_l_ring = true,
+    ps4_trackpad_l_swipe = true,
+    ps4_trackpad_l_touch = true,
+    ps4_trackpad_l_up = true,
+    ps4_trackpad_left = true,
+    ps4_trackpad = true,
+    ps4_trackpad_r_click = true,
+    ps4_trackpad_r_down = true,
+    ps4_trackpad_r_left = true,
+    ps4_trackpad_r_right = true,
+    ps4_trackpad_r_ring = true,
+    ps4_trackpad_r_swipe = true,
+    ps4_trackpad_r_touch = true,
+    ps4_trackpad_r_up = true,
+    ps4_trackpad_right = true,
+    ps4_trackpad_ring = true,
+    ps4_trackpad_swipe = true,
+    ps4_trackpad_up = true,
+    ps5_button_create = true,
+    ps5_button_options = true,
+    ps5_l1 = true,
+    ps5_l2 = true,
+    ps5_l2_soft = true,
+    ps5_r1 = true,
+    ps5_r2 = true,
+    ps5_r2_soft = true,
+    ps5_trackpad_click = true,
+    ps5_trackpad_down = true,
+    ps5_trackpad_l_click = true,
+    ps5_trackpad_l_down = true,
+    ps5_trackpad_l_left = true,
+    ps5_trackpad_l_right = true,
+    ps5_trackpad_l_ring = true,
+    ps5_trackpad_l_swipe = true,
+    ps5_trackpad_l_touch = true,
+    ps5_trackpad_l_up = true,
+    ps5_trackpad_left = true,
+    ps5_trackpad = true,
+    ps5_trackpad_r_click = true,
+    ps5_trackpad_r_down = true,
+    ps5_trackpad_r_left = true,
+    ps5_trackpad_r_right = true,
+    ps5_trackpad_r_ring = true,
+    ps5_trackpad_r_swipe = true,
+    ps5_trackpad_r_touch = true,
+    ps5_trackpad_r_up = true,
+    ps5_trackpad_right = true,
+    ps5_trackpad_ring = true,
+    ps5_trackpad_swipe = true,
+    ps5_trackpad_up = true,
+    ps_button_circle = true,
+    ps_button_mute = true,
+    ps_button_square = true,
+    ps_button_triangle = true,
+    ps_button_x = true,
+    ps_color_button_circle = true,
+    ps_color_button_square = true,
+    ps_color_button_triangle = true,
+    ps_color_button_x = true,
+    ps_color_outlined_button_circle = true,
+    ps_color_outlined_button_square = true,
+    ps_color_outlined_button_triangle = true,
+    ps_color_outlined_button_x = true,
+    ps_dpad_down = true,
+    ps_dpad_left = true,
+    ps_dpad = true,
+    ps_dpad_right = true,
+    ps_dpad_up = true,
+    ps_outlined_button_circle = true,
+    ps_outlined_button_square = true,
+    ps_outlined_button_triangle = true,
+    ps_outlined_button_x = true,
+    sc_button_l_arrow = true,
+    sc_button_r_arrow = true,
+    sc_button_steam = true,
+    sc_dpad_click = true,
+    sc_dpad_down = true,
+    sc_dpad_left = true,
+    sc_dpad = true,
+    sc_dpad_right = true,
+    sc_dpad_swipe = true,
+    sc_dpad_touch = true,
+    sc_dpad_up = true,
+    sc_lb = true,
+    sc_lg = true,
+    sc_lt_click = true,
+    sc_lt = true,
+    sc_lt_soft = true,
+    sc_rb = true,
+    sc_rg = true,
+    sc_rt_click = true,
+    sc_rt = true,
+    sc_rt_soft = true,
+    sc_touchpad_click = true,
+    sc_touchpad_down = true,
+    sc_touchpad_edge = true,
+    sc_touchpad_left = true,
+    sc_touchpad = true,
+    sc_touchpad_right = true,
+    sc_touchpad_swipe = true,
+    sc_touchpad_touch = true,
+    sc_touchpad_up = true,
+    sd_button_aux = true,
+    sd_button_menu = true,
+    sd_button_steam = true,
+    sd_button_view = true,
+    sd_l1 = true,
+    sd_l2_half = true,
+    sd_l2 = true,
+    sd_l4 = true,
+    sd_l5 = true,
+    sd_ltrackpad_click = true,
+    sd_ltrackpad_down = true,
+    sd_ltrackpad_left = true,
+    sd_ltrackpad = true,
+    sd_ltrackpad_right = true,
+    sd_ltrackpad_ring = true,
+    sd_ltrackpad_swipe = true,
+    sd_ltrackpad_up = true,
+    sd_r1 = true,
+    sd_r2_half = true,
+    sd_r2 = true,
+    sd_r4 = true,
+    sd_r5 = true,
+    sd_rtrackpad_click = true,
+    sd_rtrackpad_down = true,
+    sd_rtrackpad_left = true,
+    sd_rtrackpad = true,
+    sd_rtrackpad_right = true,
+    sd_rtrackpad_ring = true,
+    sd_rtrackpad_swipe = true,
+    sd_rtrackpad_up = true,
+    shared_button_a = true,
+    shared_button_b = true,
+    shared_button_x = true,
+    shared_button_y = true,
+    shared_buttons_e = true,
+    shared_buttons_n = true,
+    shared_buttons_s = true,
+    shared_buttons_w = true,
+    shared_color_button_a = true,
+    shared_color_button_b = true,
+    shared_color_button_x = true,
+    shared_color_button_y = true,
+    shared_color_outlined_button_a = true,
+    shared_color_outlined_button_b = true,
+    shared_color_outlined_button_x = true,
+    shared_color_outlined_button_y = true,
+    shared_dpad_down = true,
+    shared_dpad_left = true,
+    shared_dpad = true,
+    shared_dpad_right = true,
+    shared_dpad_up = true,
+    shared_gyro = true,
+    shared_gyro_pitch = true,
+    shared_gyro_roll = true,
+    shared_gyro_yaw = true,
+    shared_l3 = true,
+    shared_lstick_click = true,
+    shared_lstick_down = true,
+    shared_lstick_left = true,
+    shared_lstick = true,
+    shared_lstick_right = true,
+    shared_lstick_touch = true,
+    shared_lstick_up = true,
+    shared_mouse_4 = true,
+    shared_mouse_5 = true,
+    shared_mouse_l_click = true,
+    shared_mouse_mid_click = true,
+    shared_mouse_r_click = true,
+    shared_mouse_scroll_down = true,
+    shared_mouse_scroll_up = true,
+    shared_outlined_button_a = true,
+    shared_outlined_button_b = true,
+    shared_outlined_button_x = true,
+    shared_outlined_button_y = true,
+    shared_r3 = true,
+    shared_rstick_click = true,
+    shared_rstick_down = true,
+    shared_rstick_left = true,
+    shared_rstick = true,
+    shared_rstick_right = true,
+    shared_rstick_touch = true,
+    shared_rstick_up = true,
+    shared_touch_doubletap = true,
+    shared_touch = true,
+    shared_touch_tap = true,
+    switchpro_button_capture = true,
+    switchpro_button_home = true,
+    switchpro_button_minus = true,
+    switchpro_button_plus = true,
+    switchpro_dpad_down = true,
+    switchpro_dpad_left = true,
+    switchpro_dpad = true,
+    switchpro_dpad_right = true,
+    switchpro_dpad_up = true,
+    switchpro_l2 = true,
+    switchpro_l2_soft = true,
+    switchpro_l = true,
+    switchpro_lstick_click = true,
+    switchpro_lstick_down = true,
+    switchpro_lstick_left = true,
+    switchpro_lstick = true,
+    switchpro_lstick_right = true,
+    switchpro_lstick_up = true,
+    switchpro_r2 = true,
+    switchpro_r2_soft = true,
+    switchpro_r = true,
+    switchpro_rstick_click = true,
+    switchpro_rstick_down = true,
+    switchpro_rstick_left = true,
+    switchpro_rstick = true,
+    switchpro_rstick_right = true,
+    switchpro_rstick_up = true,
+    xbox360_button_select = true,
+    xbox360_button_start = true,
+    xbox_button_logo = true,
+    xbox_button_select = true,
+    xbox_button_share = true,
+    xbox_button_start = true,
+    xbox_lb = true,
+    xbox_lt = true,
+    xbox_lt_soft = true,
+    xbox_p1 = true,
+    xbox_p2 = true,
+    xbox_p3 = true,
+    xbox_p4 = true,
+    xbox_rb = true,
+    xbox_rt = true,
+    xbox_rt_soft = true,
+}
+
+surface.CreateFont( "ARC9_KeybindPreview", {
+	font = "Arial",
+	size = 16,
+	weight = 600,
+	antialias = false,
+} )
+
+--[[
+    Creates a controller key line.
+Info:
+     x: X position
+     y: Y position
+     size: Height of font
+     font: Font to use
+
+Vararg:
+    String: Out goes a string.
+    Table:
+        If it has a proper glyph name, it is used.
+        If it doesn't, it is made into a key.
+]]
+function CreateControllerKeyLine( info, ... )
+	local args = { ... } 
+	local strlength = 0
+
+	for i, v in ipairs( args ) do
+		if isstring(v) then
+			surface.SetTextPos(info.x + strlength, info.y)
+			surface.DrawText(v)
+			strlength = strlength + surface.GetTextSize(v)
+		elseif istable(v) then
+			local size = v[2]
+			if isstring(v[1]) and !ARC9.CTRL_Exists[v[1]] then
+				surface.SetFont("ARC9_KeybindPreview")
+				local sx = surface.GetTextSize(v[1])
+				surface.DrawOutlinedRect(info.x + strlength, info.y, math.max(6 + sx, 16), info.size )
+				surface.SetTextPos(info.x + strlength + 3, info.y - 0)
+				surface.DrawText( v[1] )
+				surface.SetFont(info.font)
+				strlength = strlength + math.max(6 + sx, 16)
+			else
+				surface.SetMaterial(v[1])
+				surface.DrawTexturedRect( info.x + strlength, info.y - ((size - info.size)*0.5), size, size )
+				strlength = strlength + size
+			end
+		end
+	end
+	return strlength
+end
+
+-- Gets the size of the controller key line.
+function GetControllerKeyLineSize( ... )
+	local args = { ... } 
+	local strlength = 0
+
+	for i, v in ipairs( args ) do
+		if isstring(v) then
+			strlength = strlength + surface.GetTextSize(v)
+		elseif istable(v) then
+			local size = v[2]
+			if isstring(v[1]) and !Exists[v[1]] then
+				surface.SetFont("KeybindPreview")
+				local sx = surface.GetTextSize(v[1])
+				surface.DrawOutlinedRect(info.x + strlength, info.y, math.max(6 + sx, 16), info.size )
+				surface.SetFont(info.font)
+				strlength = strlength + math.max(6 + sx, 16)
+			else
+				strlength = strlength + size
+			end
+		end
+	end
+	return strlength
+end
+
+--[[
+
+ps4
+	button_logo
+	button_options
+	button_share
+	l1
+	l2
+	l2_soft
+	r1
+	r2
+	r2_soft
+	trackpad_click
+	trackpad_down
+	trackpad_l_click
+	trackpad_l_down
+	trackpad_l_left
+	trackpad_l_right
+	trackpad_l_ring
+	trackpad_l_swipe
+	trackpad_l_touch
+	trackpad_l_up
+	trackpad_left
+	trackpad
+	trackpad_r_click
+	trackpad_r_down
+	trackpad_r_left
+	trackpad_r_right
+	trackpad_r_ring
+	trackpad_r_swipe
+	trackpad_r_touch
+	trackpad_r_up
+	trackpad_right
+	trackpad_ring
+	trackpad_swipe
+	trackpad_up
+
+ps5
+	button_create
+	button_options
+	l1
+	l2
+	l2_soft
+	r1
+	r2
+	r2_soft
+	trackpad_click
+	trackpad_down
+	trackpad_l_click
+	trackpad_l_down
+	trackpad_l_left
+	trackpad_l_right
+	trackpad_l_ring
+	trackpad_l_swipe
+	trackpad_l_touch
+	trackpad_l_up
+	trackpad_left
+	trackpad
+	trackpad_r_click
+	trackpad_r_down
+	trackpad_r_left
+	trackpad_r_right
+	trackpad_r_ring
+	trackpad_r_swipe
+	trackpad_r_touch
+	trackpad_r_up
+	trackpad_right
+	trackpad_ring
+	trackpad_swipe
+	trackpad_up
+
+ps
+	button_circle
+	button_mute
+	button_square
+	button_triangle
+	button_x
+	color_button_circle
+	color_button_square
+	color_button_triangle
+	color_button_x
+	color_outlined_button_circle
+	color_outlined_button_square
+	color_outlined_button_triangle
+	color_outlined_button_x
+	dpad_down
+	dpad_left
+	dpad
+	dpad_right
+	dpad_up
+	outlined_button_circle
+	outlined_button_square
+	outlined_button_triangle
+	outlined_button_x
+
+sc
+	button_l_arrow
+	button_r_arrow
+	button_steam
+	dpad_click
+	dpad_down
+	dpad_left
+	dpad
+	dpad_right
+	dpad_swipe
+	dpad_touch
+	dpad_up
+	lb
+	lg
+	lt_click
+	lt
+	lt_soft
+	rb
+	rg
+	rt_click
+	rt
+	rt_soft
+	touchpad_click
+	touchpad_down
+	touchpad_edge
+	touchpad_left
+	touchpad
+	touchpad_right
+	touchpad_swipe
+	touchpad_touch
+	touchpad_up
+
+sd
+	button_aux
+	button_menu
+	button_steam
+	button_view
+	l1
+	l2_half
+	l2
+	l4
+	l5
+	ltrackpad_click
+	ltrackpad_down
+	ltrackpad_left
+	ltrackpad
+	ltrackpad_right
+	ltrackpad_ring
+	ltrackpad_swipe
+	ltrackpad_up
+	r1
+	r2_half
+	r2
+	r4
+	r5
+	rtrackpad_click
+	rtrackpad_down
+	rtrackpad_left
+	rtrackpad
+	rtrackpad_right
+	rtrackpad_ring
+	rtrackpad_swipe
+	rtrackpad_up
+
+shared
+	button_a
+	button_b
+	button_x
+	button_y
+	buttons_e
+	buttons_n
+	buttons_s
+	buttons_w
+	color_button_a
+	color_button_b
+	color_button_x
+	color_button_y
+	color_outlined_button_a
+	color_outlined_button_b
+	color_outlined_button_x
+	color_outlined_button_y
+	dpad_down
+	dpad_left
+	dpad
+	dpad_right
+	dpad_up
+	gyro
+	gyro_pitch
+	gyro_roll
+	gyro_yaw
+	l3
+	lstick_click
+	lstick_down
+	lstick_left
+	lstick
+	lstick_right
+	lstick_touch
+	lstick_up
+	mouse_4
+	mouse_5
+	mouse_l_click
+	mouse_mid_click
+	mouse_r_click
+	mouse_scroll_down
+	mouse_scroll_up
+	outlined_button_a
+	outlined_button_b
+	outlined_button_x
+	outlined_button_y
+	r3
+	rstick_click
+	rstick_down
+	rstick_left
+	rstick
+	rstick_right
+	rstick_touch
+	rstick_up
+	touch_doubletap
+	touch
+	touch_tap
+
+switchpro
+	button_capture
+	button_home
+	button_minus
+	button_plus
+	dpad_down
+	dpad_left
+	dpad
+	dpad_right
+	dpad_up
+	l2
+	l2_soft
+	l
+	lstick_click
+	lstick_down
+	lstick_left
+	lstick
+	lstick_right
+	lstick_up
+	r2
+	r2_soft
+	r
+	rstick_click
+	rstick_down
+	rstick_left
+	rstick
+	rstick_right
+	rstick_up
+
+xbox360
+	button_select
+	button_start
+
+xbox
+	button_logo
+	button_select
+	button_share
+	button_start
+	lb
+	lt
+	lt_soft
+	p1
+	p2
+	p3
+	p4
+	rb
+	rt
+	rt_soft
+
+]]

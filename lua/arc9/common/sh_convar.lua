@@ -75,7 +75,12 @@ local conVars = {
         client = true
     },
     {
-        name = "rumble",
+        name = "controller",
+        default = "0",
+        client = true
+    },
+    {
+        name = "controller_rumble",
         default = "1",
         client = true
     },

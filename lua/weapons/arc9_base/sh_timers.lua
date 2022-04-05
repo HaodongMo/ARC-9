@@ -114,7 +114,7 @@ if SERVER then
 end
 
 if CLIENT then
-    local cl_rumble = GetConVar("arc9_rumble")
+    local cl_rumble = GetConVar("arc9_controller_rumble")
 
     net.Receive("ARC9_AnimRumble", function()
         local v1 = net.ReadUInt(16)

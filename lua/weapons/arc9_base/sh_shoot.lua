@@ -276,7 +276,7 @@ function SWEP:DoPrimaryAttack()
 end
 
 if CLIENT then
-    local cl_rumble = GetConVar("arc9_rumble")
+    local cl_rumble = GetConVar("arc9_controller_rumble")
     function SWEP:SInputRumble()
         if !sinput then return false end
         if !cl_rumble:GetBool() then return false end
