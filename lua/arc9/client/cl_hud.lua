@@ -771,7 +771,7 @@ function ARC9.DrawHUD()
 
         table.insert(hints, {
             glyph = CTRL and "shared_button_x" or ARC9.GetBindKey("+use"),
-            glyph2 = CTRL and "shared_rstick_click" or ARC9.GetBindKey("+attack2"),
+            glyph2 = CTRL and "shared_rstick_click" or ARC9.GetBindKey("+zoom"),
             action = "Toggle Safe"
         })
 
