@@ -224,7 +224,7 @@ function SWEP:CreateHUD_Presets(scroll)
     end
 
     for _, preset in pairs(self:GetPresets()) do
-        if preset == "autosave" then continue end
+        if preset == "autosave" or preset == "default" then continue end
         local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. "." .. ARC9.PresetIconFormat
         local btn = vgui.Create("DButton", scroll)
         btn:SetSize(ScreenScale(48), ScreenScale(48))

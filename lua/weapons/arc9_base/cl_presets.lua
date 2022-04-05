@@ -61,15 +61,15 @@ function SWEP:StripWeapon()
 end
 
 function SWEP:ClearPreset()
-    for slot, slottbl in ipairs(self.Attachments) do
-        slottbl.Installed = nil
-        slottbl.SubAttachments = nil
-    end
+    -- for slot, slottbl in ipairs(self.Attachments) do
+    --     slottbl.Installed = nil
+    --     slottbl.SubAttachments = nil
+    -- end
 
-    self:BuildSubAttachments(self.DefaultAttachments)
+    -- self:BuildSubAttachments(self.DefaultAttachments)
 
-    -- self:SendWeapon()
-    self:PostModify()
+    -- self:PostModify()
+    self:LoadPreset("default")
 end
 
 function SWEP:LoadPreset(filename)
@@ -143,7 +143,7 @@ function SWEP:SavePreset(presetname)
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
     file.Write(filename .. ".txt", str)
 
-    if presetname != "autosave" then
+    if presetname != "autosave" and presetname != "default" then
         self:DoPresetCapture(filename)
     end
 end

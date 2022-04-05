@@ -293,6 +293,42 @@ function SWEP:SetupModel(wm, lod, cm)
     if !wm and self:GetOwner() != LocalPlayer() then return end
     if lod > 0 then return end
 
+    for e, _ in pairs(self:GetElements()) do
+        local ele = self.AttachmentElements[e]
+
+        if !ele then continue end
+        if !ele.Models then continue end
+
+        for _, model in ipairs(ele.Models) do
+            local csmodel = ClientsideModel(model.Model)
+
+            if !IsValid(csmodel) then continue end
+
+            csmodel:SetNoDraw(true)
+            csmodel.atttbl = {}
+
+            csmodel.slottbl = {
+                Pos = model.Pos or Vector(0, 0, 0),
+                Ang = model.Ang or Angle(0, 0, 0),
+                Bone = model.Bone
+            }
+
+            local scale = Matrix()
+            local vec = Vector(1, 1, 1) * (model.Scale or 1)
+            scale:Scale(vec)
+            csmodel:EnableMatrix("RenderMultiply", scale)
+
+            local tbl = {
+                Model = csmodel,
+                Weapon = self
+            }
+
+            table.insert(ARC9.CSModelPile, tbl)
+
+            table.insert(mdl, 1, csmodel)
+        end
+    end
+
     for _, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
 

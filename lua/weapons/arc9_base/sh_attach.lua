@@ -134,6 +134,11 @@ function SWEP:PostModify(toggleonly)
         end
 
         if self:GetValue("UBGL") then
+            if self.LastUBGLAmmo != self:GetProcessedValue("UBGLAmmo") and SERVER then
+                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
+                self:SetClip2(0)
+            end
+
             if !self.AlreadyGaveUBGLAmmo or self.SpawnTime + 0.25 > CurTime() then
                 self:SetClip2(self:GetMaxClip2())
                 self.AlreadyGaveUBGLAmmo = true

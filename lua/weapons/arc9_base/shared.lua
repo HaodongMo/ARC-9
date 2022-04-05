@@ -719,6 +719,15 @@ SWEP.AttachmentElements = {
     --     },
     --     PoseParameters = {
     --         ["blople"] = 0.5
+    --     },
+    --     Models = {
+    --         {
+    --             Model = "",
+    --             Scale = 1,
+    --             Pos = Vector(0, 0, 0),
+    --             Ang = Angle(0, 0, 0),
+    --             Bone = ""
+    --         }
     --     }
     --     -- Other attachment parameters work here
     -- }
