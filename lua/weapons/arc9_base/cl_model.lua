@@ -98,6 +98,11 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
         end
     end
 
+    if !bang or !bpos then
+        bang = self:GetAngles()
+        bpos = self:GetPos()
+    end
+
     local apos, aang
 
     aang = Angle()
