@@ -61,6 +61,7 @@ local lastweapon = NULL
 local hint_alpha = 1
 local lasthintcount = 0
 local hidefadetime = 0
+local first = true
 
 local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
 local hud_t_full = Material("arc9/thermometer_full.png", "mips")
@@ -90,7 +91,8 @@ local function GetWeaponCapabilities(wpn)
         Inspect = tobool(!wpn:GetInSights() and wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("enter_inspect")),
         Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
         BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
-        Firemode = tobool(#wpn:GetValue("Firemodes") > 1)
+        Firemode = tobool(!wpn:GetUBGL() and #wpn:GetValue("Firemodes") > 1),
+        HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0)
     }
 
     return cap
@@ -308,9 +310,9 @@ function ARC9.DrawHUD()
     local s_down = 1
 
     -- cam.Start3D(Vector pos=EyePos(), Angle angles=EyeAngles(), number fov=nil, number x=0, number y=0, number w=ScrW(), number h=ScrH(), number zNear=nil, number zFar=nil)
-    local anchorwidth = math.max(ScrW() / 3, ScrH() / 3)
+    local anchorwidth = math.min(ScrW() / 2, ScrH() / 2)
 
-    cam.Start3D(nil, nil, 55, 0, 0, anchorwidth, ScrH())
+    cam.Start3D(nil, nil, 55, 0, ScrH() - anchorwidth, anchorwidth, anchorwidth)
     -- cam.Start3D(nil, nil, 105)
 
     local up, right, forward = EyeAngles():Up(), EyeAngles():Right(), EyeAngles():Forward()
@@ -333,7 +335,9 @@ function ARC9.DrawHUD()
     -- cam.Start3D2D(EyePos() + (forward * 8) + (up * -3.25) + (right * -10), ang2, 0.0125 )
     -- cam.End3D2D()
 
-    local pos = EyePos() + (forward * 5) + (up * -2.5) + (right * -2)
+    -- local ratio = ScrW() / ScrH()
+
+    local pos = EyePos() + (forward * 4) + (up * -0.25) + (right * -1.5)
 
     pos, ang = ARC9.HUDBob(pos, ang)
     pos, ang = ARC9.HUDSway(pos, ang)
@@ -370,8 +374,8 @@ function ARC9.DrawHUD()
 
         local health_x = 8
         local health_y = 9
-        local health = math.Clamp(LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), 0, 1)
-        local overheal = LocalPlayer():Health() > LocalPlayer():GetMaxHealth()
+        local health = math.Clamp(LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), 0, 99.99)
+        local overheal = LocalPlayer():Health() > LocalPlayer():GetMaxHealth() or LocalPlayer():Armor() > 100
 
         local flashhealthwidgets = false
 
@@ -391,31 +395,37 @@ function ARC9.DrawHUD()
         local hb_tall = 24
         local hb_wide = 209
 
-        if LocalPlayer():Armor() > 0 then
-            hb_tall = 18
+        if !overheal then
+            if LocalPlayer():Armor() > 0 then
+                hb_tall = 18
 
-            local armor = math.min(LocalPlayer():Armor() / 100, 1)
+                local armor = math.min(LocalPlayer():Armor() / 100, 1)
+
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
+                surface.DrawRect(hb_left + s_right, 32 + s_down, hb_wide * armor, 3)
+
+                surface.SetDrawColor(hb_col)
+                surface.DrawRect(hb_left, 32, hb_wide * armor, 3)
+            end
 
             surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
-            surface.DrawRect(hb_left + s_right, 32 + s_down, hb_wide * armor, 3)
+            if health < 1 then
+                surface.DrawLine(hb_wide + hb_left + s_right, 12 + s_down, hb_wide + hb_left + s_right, 12 + hb_tall + s_down)
+            end
+            surface.DrawRect(hb_left + s_right, 12 + s_down, hb_wide * health, hb_tall)
 
             surface.SetDrawColor(hb_col)
-            surface.DrawRect(hb_left, 32, hb_wide * armor, 3)
+            if health < 1 then
+                surface.DrawLine(hb_wide + hb_left, 12, hb_wide + hb_left, 12 + hb_tall)
+            end
+            surface.DrawRect(hb_left, 12, hb_wide * health, hb_tall)
         end
-
-        surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
-        if health < 1 then
-            surface.DrawLine(hb_wide + hb_left + s_right, 12 + s_down, hb_wide + hb_left + s_right, 12 + hb_tall + s_down)
-        end
-        surface.DrawRect(hb_left + s_right, 12 + s_down, hb_wide * health, hb_tall)
-
-        surface.SetDrawColor(hb_col)
-        if health < 1 then
-            surface.DrawLine(hb_wide + hb_left, 12, hb_wide + hb_left, 12 + hb_tall)
-        end
-        surface.DrawRect(hb_left, 12, hb_wide * health, hb_tall)
 
         local healthtext = "♥"
+
+        if overheal then
+            healthtext = "♥:" .. tostring(health * 100) .. "%"
+        end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
         surface.SetFont("ARC9_24_Unscaled")
@@ -427,23 +437,25 @@ function ARC9.DrawHUD()
         surface.SetTextPos(health_x, health_y)
         surface.DrawText(healthtext)
 
-        -- local armor_x = 250
-        -- local armor_y = 9
-        -- local armor = math.Round((LocalPlayer():Armor() / 100) * 100)
-        -- armor = "⌂:" .. tostring(armor) .. "%"
+        if overheal then
+            local armor_x = 250
+            local armor_y = 9
+            local armor = math.Round((LocalPlayer():Armor() / 100) * 100)
+            armor = "⌂:" .. tostring(armor) .. "%"
 
-        -- surface.SetFont("ARC9_24_Unscaled")
-        -- armor_x = armor_x - surface.GetTextSize(armor)
+            surface.SetFont("ARC9_24_Unscaled")
+            armor_x = armor_x - surface.GetTextSize(armor)
 
-        -- surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
-        -- surface.SetFont("ARC9_24_Unscaled")
-        -- surface.SetTextPos(armor_x + s_right, armor_y + s_down)
-        -- surface.DrawText(armor)
+            surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
+            surface.SetFont("ARC9_24_Unscaled")
+            surface.SetTextPos(armor_x + s_right, armor_y + s_down)
+            surface.DrawText(armor)
 
-        -- surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
-        -- surface.SetFont("ARC9_24_Unscaled")
-        -- surface.SetTextPos(armor_x, armor_y)
-        -- surface.DrawText(armor)
+            surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
+            surface.SetFont("ARC9_24_Unscaled")
+            surface.SetTextPos(armor_x, armor_y)
+            surface.DrawText(armor)
+        end
 
         -- local title_x = 8
         -- local title_y = 2
@@ -697,16 +709,23 @@ function ARC9.DrawHUD()
             table.insert(hints, str)
         end
 
-        if capabilities.Bash then
-            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+attack") .. "]"
-            str = str .. " Bash"
+        if capabilities.SwitchSights then
+            local str = "[" .. ARC9.GetBindKey("+walk") .. "&" .. ARC9.GetBindKey("+use") .. "]"
+            str = str .. " Switch Sights"
 
             table.insert(hints, str)
         end
 
-        if capabilities.SwitchSights then
-            local str = "[" .. ARC9.GetBindKey("+walk") .. "&" .. ARC9.GetBindKey("+use") .. "]"
-            str = str .. " Switch Sights"
+        if capabilities.HoldBreath then
+            local str = "[" .. ARC9.GetBindKey("+speed") .. "]"
+            str = str .. " Hold Breath"
+
+            table.insert(hints, str)
+        end
+
+        if capabilities.Bash then
+            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+attack") .. "]"
+            str = str .. " Bash"
 
             table.insert(hints, str)
         end
@@ -744,8 +763,17 @@ function ARC9.DrawHUD()
 
         table.insert(hints, str)
 
-        if lasthintcount != #hints then
+        if lasthintcount != #hints and hidefadetime + 1.5 < CurTime() then
             hidefadetime = CurTime()
+        end
+
+        if weapon:GetInSights() and hidefadetime + 1.5 < CurTime() then
+            hidefadetime = CurTime()
+        end
+
+        if first then
+            hidefadetime = CurTime() + 10
+            first = false
         end
 
         lasthintcount = #hints

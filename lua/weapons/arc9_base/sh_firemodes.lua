@@ -8,6 +8,8 @@ function SWEP:SwitchFiremode()
         return
     end
 
+    if self:GetUBGL() then return end
+
     if #self:GetValue("Firemodes") < 2 then return end
 
     local fm = self:GetFiremode()

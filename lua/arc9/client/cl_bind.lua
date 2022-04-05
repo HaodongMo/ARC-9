@@ -55,7 +55,7 @@ function ARC9.GetBindKey(bind)
     local key = input.LookupBinding(bind)
 
     if !key then
-        return "!" .. bind .. "!"
+        return bind .. "(UNBOUND)"
     else
         return string.upper(key)
     end
