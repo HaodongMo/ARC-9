@@ -92,7 +92,8 @@ local function GetWeaponCapabilities(wpn)
         Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
         BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
         Firemode = tobool(!wpn:GetUBGL() and #wpn:GetValue("Firemodes") > 1),
-        HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0)
+        HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
+        VariableZoom = tobool(wpn:GetInSights() and wpn:GetSight().atttbl.RTScopeAdjustable)
     }
 
     return cap
@@ -716,6 +717,14 @@ function ARC9.DrawHUD()
                 glyph = CTRL and "sd_l4" or ARC9.GetBindKey("+walk"),
                 glyph2 = CTRL and "shared_button_b" or ARC9.GetBindKey("+use"),
                 action = "Switch Sights"
+            })
+        end
+
+        if capabilities.VariableZoom then
+            table.insert(hints, {
+                glyph = CTRL and "dpad_up" or ARC9.GetBindKey("+invnext"),
+                glyph2 = CTRL and "dpad_down" or ARC9.GetBindKey("+invprev"),
+                action = "Change Zoom"
             })
         end
 
