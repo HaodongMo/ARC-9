@@ -181,6 +181,13 @@ function SWEP:ToggleCustomize(on)
     self:SetShouldHoldType()
 
     self:SetInSights(false)
+
+    if !on then
+        if self:HasAnimation("postcustomize") then
+            self:CancelReload()
+            self:PlayAnimation("postcustomize", 1, true)
+        end
+    end
 end
 
 function SWEP:GetAttBlocked(atttbl)
