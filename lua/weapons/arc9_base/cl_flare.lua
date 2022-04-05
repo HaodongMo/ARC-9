@@ -1,4 +1,4 @@
-function SWEP:DrawLightFlare(pos, norm, col, size)
+function SWEP:DrawLightFlare(pos, norm, col, size, focus)
     col = col or Color(255, 255, 255)
     size = size or 1
     local eyevec = (pos - EyePos()):GetNormalized()
@@ -18,13 +18,19 @@ function SWEP:DrawLightFlare(pos, norm, col, size)
 
     dot = -dot
 
-    dot = (dot - 0.8) * 9
+    if dot < 0.75 then return end
 
     dot = math.Clamp(dot, 0, 1)
 
     dot = math.ease.InOutExpo(dot)
 
     size = size * dot
+
+    if !focus then
+        local dist = (pos - EyePos()):Length()
+
+        size = size * 12000 / (math.pow(dist, 1.25))
+    end
 
     local toscreen = pos:ToScreen()
 

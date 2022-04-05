@@ -93,12 +93,12 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                     local attpos = model:GetAttachment(model.Flare.Attachment)
 
                     if attpos then
-                        self:DrawLightFlare(attpos.Pos, -attpos.Ang:Right(), model.Flare.Color, model.Flare.Size)
+                        self:DrawLightFlare(attpos.Pos, -attpos.Ang:Right(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
                     else
-                        self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size)
+                        self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
                     end
                 else
-                    self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size)
+                    self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
                 end
             end
         end

@@ -60,6 +60,7 @@ ATT.Flare = false
 ATT.FlareColor = Color(255, 255, 255)
 ATT.FlareSize = 200
 ATT.FlareAttachment = 0
+ATT.FlareFocus = false -- This flare comes from a source of light that persists over distance, like a laser.
 
 -- Allows a custom sight position to be defined
 
