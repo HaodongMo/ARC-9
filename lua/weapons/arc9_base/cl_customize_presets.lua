@@ -24,6 +24,25 @@ function SWEP:CreatePresetName()
     text:SetFont("ARC9_24")
     text:SetText("")
 
+    text.OnEnter = function(spaa, kc)
+        local txt = text:GetText()
+        txt = string.sub(txt, 0, 36)
+        self:SavePreset(txt)
+        surface.PlaySound("arc9/shutter.ogg")
+
+        timer.Simple(0.5, function()
+            if IsValid(self) and IsValid(self:GetOwner()) then
+                self:GetOwner():ScreenFade(SCREENFADE.IN, Color(255, 255, 255, 127), 0.5, 0)
+                if self:GetCustomize() then
+                    self:CreateHUD_Bottom()
+                end
+            end
+        end)
+
+        bg:Close()
+        bg:Remove()
+    end
+
     local accept = vgui.Create("DButton", bg)
     accept:SetSize((ScreenScale(256) - ScreenScale(2)) / 2, ScreenScale(14))
     accept:SetText("")
@@ -38,9 +57,9 @@ function SWEP:CreatePresetName()
         self:SavePreset(txt)
         surface.PlaySound("arc9/shutter.ogg")
 
-        timer.Simple(0.2, function()
+        timer.Simple(0.5, function()
             if IsValid(self) and IsValid(self:GetOwner()) then
-                self:GetOwner():ScreenFade(SCREENFADE.IN, Color(255, 255, 255, 45), 0.5, 0)
+                self:GetOwner():ScreenFade(SCREENFADE.IN, Color(255, 255, 255, 127), 0.5, 0)
                 if self:GetCustomize() then
                     self:CreateHUD_Bottom()
                 end
