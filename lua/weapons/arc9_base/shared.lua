@@ -257,6 +257,8 @@ SWEP.RecoilResetTime = 0.1 -- How long the gun must go before the recoil pattern
 
 SWEP.RecoilAutoControl = 1 -- Multiplier for automatic recoil control.
 
+SWEP.PushBackForce = 0 -- Push the player back when shooting.
+
 -- SInput rumble configuration
 -- Max of 65535
 SWEP.RumbleHeavy = 30000

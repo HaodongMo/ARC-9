@@ -29,7 +29,7 @@ function SWEP:ApplyRecoil()
     local rps = 1
 
     rec = rec + rps
-    local delay = 60 / self:GetProcessedValue("RPM")
+    -- local delay = 60 / self:GetProcessedValue("RPM")
 
     local recoilup = 1
     local recoilside = 0
@@ -104,6 +104,12 @@ function SWEP:ApplyRecoil()
     self:SetRecoilAmount(rec)
 
     self:SetLastRecoilTime(CurTime())
+
+    local pbf = self:GetProcessedValue("PushBackForce")
+
+    if pbf != 0 then
+        self:GetOwner():SetVelocity(self:GetShootDir():Forward() * -pbf)
+    end
 
     -- local vis_kick = self:GetProcessedValue("RecoilKick")
     -- local vis_shake = 0
