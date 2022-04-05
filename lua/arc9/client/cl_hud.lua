@@ -777,10 +777,10 @@ function ARC9.DrawHUD()
 
         for i, v in ipairs(hints) do
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
-            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "vgui/glyphs/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/steamcontroller/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
             if v.glyph2 then 
                 if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
-                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "vgui/glyphs/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/steamcontroller/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
             end
         end
 
