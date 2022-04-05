@@ -224,8 +224,6 @@ function SWEP:SetBaseSettings()
         self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
         self.Secondary.Ammo = self:GetValue("UBGLAmmo")
 
-        self.LastUBGLAmmo = self.Secondary.Ammo
-
         if SERVER then
             if self:Clip2() < 0 then
                 self:SetClip2(0)
@@ -234,8 +232,6 @@ function SWEP:SetBaseSettings()
     else
         self.Secondary.ClipSize = -1
         self.Secondary.Ammo = nil
-
-        self.LastUBGLAmmo = nil
 
         self:SetUBGL(false)
     end

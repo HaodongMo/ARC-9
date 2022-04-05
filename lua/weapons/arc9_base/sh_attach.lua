@@ -124,6 +124,21 @@ function SWEP:PostModify(toggleonly)
 
             self.LastAmmo = self:GetValue("Ammo")
             self.LastClipSize = self:GetValue("ClipSize")
+
+            if self.LastUBGLAmmo and self.LastUBGLAmmo != self:GetValue("UBGLAmmo") then
+                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
+                self:SetClip2(0)
+                self:SetRequestReload(true)
+            end
+
+            if self.LastUBGLAmmo and self.LastUBGLClipSize != self:GetValue("UBGLClipSize") then
+                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
+                self:SetClip2(0)
+                self:SetRequestReload(true)
+            end
+
+            self.LastUBGLAmmo = self:GetValue("UBGLAmmo")
+            self.LastUBGLClipSize = self:GetValue("UBGLClipSize")
         end
 
         if self:GetOwner():IsPlayer() then
@@ -134,11 +149,6 @@ function SWEP:PostModify(toggleonly)
         end
 
         if self:GetValue("UBGL") then
-            if self.LastUBGLAmmo != self:GetProcessedValue("UBGLAmmo") and SERVER then
-                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
-                self:SetClip2(0)
-            end
-
             if !self.AlreadyGaveUBGLAmmo or self.SpawnTime + 0.25 > CurTime() then
                 self:SetClip2(self:GetMaxClip2())
                 self.AlreadyGaveUBGLAmmo = true

@@ -182,6 +182,7 @@ SWEP.HybridReload = false -- Enable on top of Shotgun Reload. If the weapon is c
 SWEP.ManualActionChamber = 1 -- How many shots we go between needing to cycle again.
 SWEP.ManualAction = false -- Pump/bolt action. Play the "cycle" animation after firing, when the trigger is released.
 SWEP.ManualActionNoLastCycle = false -- Do not cycle on the last shot.
+SWEP.ManualActionEjectAnyway = false -- Eject a shell when firing anyway.
 
 SWEP.ReloadWhileSprint = true -- This weapon can reload while the user is sprinting.
 SWEP.ReloadInSights = true -- This weapon can aim down sights while reloading.

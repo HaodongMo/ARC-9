@@ -210,7 +210,7 @@ function SWEP:DoPrimaryAttack()
 
     self:DoVisualRecoil()
 
-    if !self:GetProcessedValue("NoShellEject") then
+    if !self:GetProcessedValue("NoShellEject") and !(self:GetProcessedValue("ManualAction") and !self:GetProcessedValue("ManualActionEjectAnyway")) then
         local ejectdelay = self:GetProcessedValue("EjectDelay")
 
         if ejectdelay == 0 then
