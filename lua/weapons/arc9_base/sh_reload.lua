@@ -33,6 +33,8 @@ function SWEP:Reload()
         if !self:GetInfiniteAmmo() and ammo <= 0 then
             return
         end
+    else
+        return
     end
 
     -- self:ScopeToggle(0)

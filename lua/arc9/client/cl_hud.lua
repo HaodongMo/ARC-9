@@ -66,6 +66,7 @@ local first = true
 local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
 local hud_t_full = Material("arc9/thermometer_full.png", "mips")
 local hud_t_empty = Material("arc9/thermometer_empty.png", "mips")
+local hud_bigblur = Material("arc9/bigblur.png", "mips")
 
 local firemode_pics = {
     [-1] = Material("arc9/fs_auto.png", "mips smooth"),
@@ -820,6 +821,10 @@ function ARC9.DrawHUD()
         -- hint_alpha = 1
 
         cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow", 150 * hint_alpha))
+            surface.SetMaterial(hud_bigblur)
+            surface.DrawTexturedRect(-32, 0, 300, 16 * #hints)
+
             for _, hint in ipairs(hints) do
                 local strreturn = 0
                 surface.SetFont("ARC9_16_Unscaled")

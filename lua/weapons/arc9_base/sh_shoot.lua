@@ -580,9 +580,10 @@ function SWEP:ShootRocket()
         if !IsValid(rocket) then return end
 
         rocket:SetPos(src)
-        rocket:SetOwner(self:GetOwner())
         rocket:SetAngles(dir + dispersion)
         rocket:Spawn()
+        rocket.Owner = self:GetOwner()
+        rocket:SetOwner(self:GetOwner())
 
         local phys = rocket:GetPhysicsObject()
 
