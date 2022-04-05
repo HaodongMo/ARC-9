@@ -150,8 +150,8 @@ function SWEP:GetViewModelPosition(pos, ang)
             offsetpos = LerpVector(sightdelta, offsetpos, Vector(0, 0, 0))
             offsetang = LerpAngle(sightdelta, offsetang, Angle(0, 0, 0))
         else
-            offsetpos = LerpVector(sightdelta, offsetpos, sightpos)
-            offsetang = LerpAngle(sightdelta, offsetang, sightang)
+            offsetpos = LerpVector(sightdelta, offsetpos or Vector(0, 0 ,0), sightpos or Vector(0, 0 ,0))
+            offsetang = LerpAngle(sightdelta, offsetang or Angle(0, 0 ,0), sightang or Angle(0, 0, 0))
         end
 
         -- local eepos, eeang = Vector(0, 0, 0), Angle(0, 0, 0)
