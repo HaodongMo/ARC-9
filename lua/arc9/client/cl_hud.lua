@@ -58,6 +58,9 @@ end
 local rackrisetime = 0
 local lastrow = 0
 local lastweapon = NULL
+local hint_alpha = 1
+local lasthintcount = 0
+local hidefadetime = 0
 
 local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
 local hud_t_full = Material("arc9/thermometer_full.png", "mips")
@@ -79,6 +82,20 @@ local automatics = {
     ["weapon_egon"] = true
 }
 
+local function GetWeaponCapabilities(wpn)
+    cap = {
+        UBGL = tobool(!wpn:GetInSights() and wpn:GetValue("UBGL")),
+        Bash = tobool(!wpn:GetInSights() and wpn:GetValue("Bash")),
+        SwitchSights = tobool(wpn:GetInSights() and #wpn.MultiSightTable > 1),
+        Inspect = tobool(!wpn:GetInSights() and wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("enter_inspect")),
+        Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
+        BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
+        Firemode = tobool(#wpn:GetValue("Firemodes") > 1)
+    }
+
+    return cap
+end
+
 function ARC9.DrawHUD()
     if !ARC9.ShouldDrawHUD() then return end
 
@@ -89,6 +106,7 @@ function ARC9.DrawHUD()
     if lastweapon != weapon then
         rackrisetime = CurTime()
         lastrow = 0
+        hidefadetime = CurTime()
     end
 
     -- local weapon_printname = weapon:GetPrintName()
@@ -292,7 +310,7 @@ function ARC9.DrawHUD()
     -- cam.Start3D(Vector pos=EyePos(), Angle angles=EyeAngles(), number fov=nil, number x=0, number y=0, number w=ScrW(), number h=ScrH(), number zNear=nil, number zFar=nil)
     local anchorwidth = math.max(ScrW() / 3, ScrH() / 3)
 
-    cam.Start3D(nil, nil, 55, 0, ScrH() - anchorwidth, anchorwidth, anchorwidth)
+    cam.Start3D(nil, nil, 55, 0, 0, anchorwidth, ScrH())
     -- cam.Start3D(nil, nil, 105)
 
     local up, right, forward = EyeAngles():Up(), EyeAngles():Right(), EyeAngles():Forward()
@@ -308,19 +326,19 @@ function ARC9.DrawHUD()
     -- ang:RotateAroundAxis(right, 80)
     -- ang:RotateAroundAxis(forward, -90)
 
-    ang:RotateAroundAxis(up, 185)
+    ang:RotateAroundAxis(up, 180)
     ang:RotateAroundAxis(right, 105)
-    ang:RotateAroundAxis(forward, -90)
+    ang:RotateAroundAxis(forward, -95)
 
     -- cam.Start3D2D(EyePos() + (forward * 8) + (up * -3.25) + (right * -10), ang2, 0.0125 )
     -- cam.End3D2D()
 
-    local pos = EyePos() + (forward * 5) + (up * -0.5) + (right * -2)
+    local pos = EyePos() + (forward * 5) + (up * -2.5) + (right * -2)
 
     pos, ang = ARC9.HUDBob(pos, ang)
     pos, ang = ARC9.HUDSway(pos, ang)
 
-    cam.Start3D2D(pos, ang, 0.0125 )
+    cam.Start3D2D(pos, ang, 0.0125)
         -- surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
         -- surface.DrawRect( 8, 4, 254, 110 )
 
@@ -647,6 +665,159 @@ function ARC9.DrawHUD()
         end
 
     cam.End3D2D()
+
+    if weapon.ARC9 then
+        local capabilities = GetWeaponCapabilities(weapon)
+
+        -- local hints = {
+        --     {
+        --         {"E", "R"},
+        --         "Inspect"
+        --     },
+        --     {
+        --         {"E", "M2"},
+        --         "Toggle Alt-Weapon"
+        --     },
+        --     {
+        --         {"E", "M1"},
+        --         "Bash"
+        --     },
+        --     {
+        --         {"B"},
+        --         "Switch Firemode"
+        --     },
+        -- }
+
+        local hints = {}
+
+        if capabilities.UBGL then
+            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+attack2") .. "]"
+            str = str .. " Toggle Weapon"
+
+            table.insert(hints, str)
+        end
+
+        if capabilities.Bash then
+            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+attack") .. "]"
+            str = str .. " Bash"
+
+            table.insert(hints, str)
+        end
+
+        if capabilities.SwitchSights then
+            local str = "[" .. ARC9.GetBindKey("+walk") .. "&" .. ARC9.GetBindKey("+use") .. "]"
+            str = str .. " Switch Sights"
+
+            table.insert(hints, str)
+        end
+
+        if capabilities.Inspect then
+            local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("reload") .. "]"
+            str = str .. " Inspect"
+
+            table.insert(hints, str)
+        end
+
+        if capabilities.Blindfire then
+            local str = "[" .. ARC9.GetBindKey("+alt1") .. "&" .. ARC9.GetBindKey("+forward") .. "]"
+            str = str .. " Blindfire"
+
+            table.insert(hints, str)
+        end
+
+        if capabilities.BlindfireLeft then
+            local str = "[" .. ARC9.GetBindKey("+alt1") .. "&" .. ARC9.GetBindKey("+moveleft") .. "]"
+            str = str .. " Blindfire Left"
+
+            table.insert(hints, str)
+        end
+
+        if capabilities.Firemode then
+            local str = "[" .. ARC9.GetBindKey("+zoom") .. "]"
+            str = str .. " Change Firemode"
+
+            table.insert(hints, str)
+        end
+
+        local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+zoom") .. "]"
+        str = str .. " Toggle Safe"
+
+        table.insert(hints, str)
+
+        if lasthintcount != #hints then
+            hidefadetime = CurTime()
+        end
+
+        lasthintcount = #hints
+
+        local hx = 0
+        local hy = 0
+
+        if hidefadetime + 1.5 > CurTime() then
+            hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
+        else
+            hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
+        end
+
+        cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
+            for _, hint in ipairs(hints) do
+                hx = 0
+
+                surface.SetFont("ARC9_16_Unscaled")
+                surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
+                surface.SetTextPos(hx + 4, hy + 2)
+                surface.DrawText(hint)
+
+                surface.SetFont("ARC9_16_Unscaled")
+                surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
+                surface.SetTextPos(hx, hy)
+                surface.DrawText(hint)
+
+                hx = hx + surface.GetTextSize(hint)
+
+                -- local hc = #hint[1]
+                -- for v, i in ipairs(hint[1]) do
+                --     if isstring(i) then
+                --         surface.SetFont("ARC9_24_Unscaled")
+                --         surface.SetTextColor(ARC9.GetHUDColor("fg"))
+
+                --         surface.SetTextPos(hx, hy)
+                --         surface.DrawText(i)
+
+                --         hx = hx + surface.GetTextSize(i)
+                --     end
+
+                --     if v < hc then
+                --         surface.SetFont("ARC9_24_Unscaled")
+                --         surface.SetTextColor(ARC9.GetHUDColor("fg"))
+
+                --         surface.SetTextPos(hx, hy)
+                --         surface.DrawText("+")
+
+                --         hx = hx + surface.GetTextSize("+")
+                --     end
+                -- end
+
+                -- surface.SetFont("ARC9_24_Unscaled")
+                -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
+
+                -- surface.SetTextPos(hx, hy)
+                -- surface.DrawText("] ")
+
+                -- hx = hx + surface.GetTextSize("] ")
+
+                -- surface.SetFont("ARC9_24_Unscaled")
+                -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
+
+                -- surface.SetTextPos(hx, hy)
+                -- surface.DrawText(hint[2])
+
+                -- hx = hx + surface.GetTextSize(hint[2])
+
+                hy = hy + 16
+            end
+        cam.End3D2D()
+    end
 
     cam.End3D()
 

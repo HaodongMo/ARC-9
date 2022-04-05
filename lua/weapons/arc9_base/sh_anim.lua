@@ -96,6 +96,7 @@ end
 
 function SWEP:Idle()
     if self:GetPrimedAttack() then return end
+    if self:GetSafe() then return end
 
     self:PlayAnimation("idle")
 end

@@ -24,6 +24,7 @@ local sizes_to_make = {
 
 local unscaled_sizes_to_make = {
     12,
+    16,
     24
 }
 
