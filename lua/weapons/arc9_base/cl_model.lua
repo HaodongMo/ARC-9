@@ -314,7 +314,7 @@ function SWEP:SetupModel(wm, lod, cm)
             }
 
             local scale = Matrix()
-            local vec = Vector(1, 1, 1) * (model.Scale or 1)
+            local vec = model.ScaleVector or (Vector(1, 1, 1) * (model.Scale or 1))
             scale:Scale(vec)
             csmodel:EnableMatrix("RenderMultiply", scale)
 

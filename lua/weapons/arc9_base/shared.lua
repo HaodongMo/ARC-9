@@ -726,7 +726,8 @@ SWEP.AttachmentElements = {
     --             Scale = 1,
     --             Pos = Vector(0, 0, 0),
     --             Ang = Angle(0, 0, 0),
-    --             Bone = ""
+    --             Bone = "",
+    --             ScaleVector = Vector(1, 1, 1)
     --         }
     --     }
     --     -- Other attachment parameters work here
