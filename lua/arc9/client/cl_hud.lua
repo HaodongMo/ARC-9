@@ -723,8 +723,8 @@ function ARC9.DrawHUD()
 
         if capabilities.VariableZoom then
             table.insert(hints, {
-                glyph = CTRL and "dpad_up" or ARC9.GetBindKey("+invnext"),
-                glyph2 = CTRL and "dpad_down" or ARC9.GetBindKey("+invprev"),
+                glyph = CTRL and "shared_dpad_up" or ARC9.GetBindKey("+invnext"),
+                glyph2 = CTRL and "shared_dpad_down" or ARC9.GetBindKey("+invprev"),
                 action = "Change Zoom"
             })
         end
@@ -875,6 +875,12 @@ ARC9.CTRL_Lookup = {
     xbox_rt = "ps5_r2",
     xbox_lt_soft = "ps5_l2_soft",
     xbox_rt_soft = "ps5_r2_soft",
+
+    shared_dpad = "ps5_dpad",
+    shared_dpad_down = "ps5_dpad_down",
+    shared_dpad_up = "ps5_dpad_up",
+    shared_dpad_left = "ps5_dpad_left",
+    shared_dpad_right = "ps5_dpad_right",
 
     MOUSE1 = "shared_mouse_l_click",
     MOUSE2 = "shared_mouse_r_click",
