@@ -225,7 +225,13 @@ function SWEP:SetupModel(wm, lod, cm)
 
     -- self:KillModel(cm)
 
+    if !cm then
+        self:KillSpecificModel(wm)
+    end
+
     if !wm and !IsValid(self:GetOwner()) then return end
+
+    if wm and !self.MirrorVMWM then return end
 
     self.LHIK_Priority = -1000
     self.RHIK_Priority = -1000
@@ -403,6 +409,22 @@ end
 SWEP.VModel = nil
 SWEP.WModel = nil
 SWEP.CModel = nil
+
+function SWEP:KillSpecificModel(wm)
+    if wm then
+        for _, model in ipairs(self.WModel or {}) do
+            SafeRemoveEntity(model)
+        end
+
+        self.WModel = nil
+    else
+        for _, model in ipairs(self.VModel or {}) do
+            SafeRemoveEntity(model)
+        end
+
+        self.VModel = nil
+    end
+end
 
 function SWEP:KillModel(cmo)
     if cmo then
