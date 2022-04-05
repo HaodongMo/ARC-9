@@ -105,7 +105,31 @@ function SWEP:DoDrawCrosshair(x, y)
     if self:GetReloading() then return true end
 
     if self:GetProcessedValue("MissileCrosshair") then
-        
+        local dotcount = 4
+
+        for i = 1, dotcount do
+            local rad = i * math.pi * 2 / dotcount
+            rad = rad - (math.pi / 4)
+            local cx = math.cos(rad)
+            local cy = math.sin(rad)
+
+            cx = cx * gap * 3
+            cy = cy * gap * 3
+
+            drawshadowrect(x + cx - (dotsize / 2), y + cy - (dotsize / 2), dotsize, dotsize, col)
+        end
+
+        drawshadowrect(x - gap * 2.75 - (dotsize / 2), y - gap * 2 - (dotsize / 2), dotsize, gap * 1, col)
+        drawshadowrect(x + gap * 2.75 - (dotsize / 2), y - gap * 2 - (dotsize / 2), dotsize, gap * 1, col)
+
+        drawshadowrect(x - gap * 2.75 - (dotsize / 2), y - gap * -1 - (dotsize / 2), dotsize, gap * 1, col)
+        drawshadowrect(x + gap * 2.75 - (dotsize / 2), y - gap * -1 - (dotsize / 2), dotsize, gap * 1, col)
+
+        drawshadowrect(x - gap * 2 - (dotsize / 2), y - gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
+        drawshadowrect(x - gap * 2 - (dotsize / 2), y + gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
+
+        drawshadowrect(x - gap * -1 - (dotsize / 2), y - gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
+        drawshadowrect(x - gap * -1 - (dotsize / 2), y + gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
     elseif self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("LauncherCrosshair") then
         if mode > 1 then
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2, y - (dotsize / 2), miniprong_2, dotsize, col)

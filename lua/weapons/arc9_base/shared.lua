@@ -497,6 +497,7 @@ SWEP.DistantShootSoundSilenced = nil
 SWEP.FirstDistantShootSoundSilenced = nil
 
 SWEP.ShootSoundLooping = nil
+SWEP.ShootSoundLoopingForceLoop = false -- Use a non-looping sound; when the sound ends, start it again.
 SWEP.ShootSoundLoopingSilenced = nil
 SWEP.ShootSoundTail = nil -- played after the loop ends
 
