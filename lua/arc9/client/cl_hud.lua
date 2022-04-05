@@ -758,10 +758,20 @@ function ARC9.DrawHUD()
             table.insert(hints, str)
         end
 
-        local str = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+zoom") .. "]"
-        str = str .. " Toggle Safe"
+        local str = "[" .. ARC9.GetBindKey("+menu_context") .. "]"
+
+        if weapon:GetInSights() then
+            str = str .. " Peek"
+        else
+            str = str .. " Customize"
+        end
 
         table.insert(hints, str)
+
+        local str2 = "[" .. ARC9.GetBindKey("+use") .. "&" .. ARC9.GetBindKey("+zoom") .. "]"
+        str2 = str2 .. " Toggle Safe"
+
+        table.insert(hints, str2)
 
         if lasthintcount != #hints and hidefadetime + 1.5 < CurTime() then
             hidefadetime = CurTime()
