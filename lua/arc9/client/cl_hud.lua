@@ -803,11 +803,11 @@ function ARC9.DrawHUD()
         local hy = 0
         local SIZE = 16
 
-        --[[if hidefadetime + 1.5 > CurTime() then
+        if hidefadetime + 1.5 > CurTime() then
             hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
         else
             hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
-        end]]
+        end
         hint_alpha = 1
 
         cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
