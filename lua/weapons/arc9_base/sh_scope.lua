@@ -36,6 +36,7 @@ function SWEP:ThinkSights()
     local sighted = self:GetInSights()
 
     local amt = self:GetSightAmount()
+    local oldamt = amt
 
     if sighted then
         amt = math.Approach(amt, 1, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
@@ -47,7 +48,9 @@ function SWEP:ThinkSights()
         self:GetVM():SetPoseParameter("sights", amt)
     end
 
-    self:SetSightAmount(amt)
+    if oldamt != amt then
+        self:SetSightAmount(amt)
+    end
 
     if sighted and !self:GetOwner():KeyDown(IN_ATTACK2) then
         self:ExitSights()

@@ -27,20 +27,20 @@ function SWEP:GetIsSprintingCheck()
         return false
     end
 
+    if !owner:KeyDown(IN_SPEED) then return false end
+    if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then return false end
+    if !owner:KeyDown(IN_FORWARD) and !owner:KeyDown(IN_BACK) and !owner:KeyDown(IN_MOVELEFT) and !owner:KeyDown(IN_MOVERIGHT) then return false end
+
     if self:GetProcessedValue("ShootWhileSprint") then
         if owner:KeyDown(IN_ATTACK) then
             return false
         end
     end
 
-    local curspeed = owner:GetVelocity():Length()
-
     if owner:Crouching() then return false end
-    if !owner:KeyDown(IN_FORWARD) and !owner:KeyDown(IN_BACK) and !owner:KeyDown(IN_MOVELEFT) and !owner:KeyDown(IN_MOVERIGHT) then return false end
-    if !owner:KeyDown(IN_SPEED) then return false end
     -- if owner:KeyDown(IN_WALK) then return false end
+    local curspeed = owner:GetVelocity():LengthSqr()
     if curspeed <= 0 then return false end
-    if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then return false end
 
     return true
 end

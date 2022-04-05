@@ -27,7 +27,7 @@ function SWEP:CreateHUD_Stats()
             unit = "DMG",
             fifty = 50,
             conv = function(a)
-                local dv = self:GetValue("DamageMax")
+                local dv = self:GetProcessedValue("DamageMax")
 
                 dv = math.Round(dv, 0)
 
@@ -54,15 +54,15 @@ function SWEP:CreateHUD_Stats()
             unit = "%",
             fifty = 75,
             conv = function(a)
-                local recoilup = self:GetValue("RecoilUp")
-                local recoilside = self:GetValue("RecoilSide")
-                local recoilrup = self:GetValue("RecoilRandomUp")
-                local recoilrside = self:GetValue("RecoilRandomSide")
+                local recoilup = self:GetProcessedValue("RecoilUp")
+                local recoilside = self:GetProcessedValue("RecoilSide")
+                local recoilrup = self:GetProcessedValue("RecoilRandomUp")
+                local recoilrside = self:GetProcessedValue("RecoilRandomSide")
 
                 local rv = recoilup + (recoilside * 1.5) + (recoilrup * 4) + (recoilrside * 4)
-                rv = rv * self:GetValue("Recoil")
+                rv = rv * self:GetProcessedValue("Recoil")
 
-                rv = rv - (self:GetValue("RecoilAutoControl") * 0.25)
+                rv = rv - (self:GetProcessedValue("RecoilAutoControl") * 0.25)
 
                 rv = rv * 15
 
@@ -87,7 +87,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 0.1,
             unit = "s",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash") or self:GetValue("PostBurstDelay") <= 0
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("PostBurstDelay") <= 0
             end
         },
         {
@@ -188,8 +188,8 @@ function SWEP:CreateHUD_Stats()
             conv = function(a)
                 a = tostring(a)
 
-                if self:GetValue("ChamberSize") > 0 then
-                    a = a .. "+" .. tostring(self:GetValue("ChamberSize"))
+                if self:GetProcessedValue("ChamberSize") > 0 then
+                    a = a .. "+" .. tostring(self:GetProcessedValue("ChamberSize"))
                 end
 
                 return a
