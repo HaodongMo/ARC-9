@@ -98,6 +98,11 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
         end
     end
 
+    if !bang or !bpos then
+        bang = self:GetAngles()
+        bpos = self:GetPos()
+    end
+
     local apos, aang
 
     aang = Angle()
@@ -218,9 +223,15 @@ function SWEP:SetupModel(wm, lod, cm)
     if !wm then lod = 0 end
     if cm then wm = true end
 
-    self:KillModel(cm)
+    -- self:KillModel(cm)
+
+    if !cm then
+        self:KillSpecificModel(wm)
+    end
 
     if !wm and !IsValid(self:GetOwner()) then return end
+
+    if wm and !self.MirrorVMWM then return end
 
     self.LHIK_Priority = -1000
     self.RHIK_Priority = -1000
@@ -398,6 +409,22 @@ end
 SWEP.VModel = nil
 SWEP.WModel = nil
 SWEP.CModel = nil
+
+function SWEP:KillSpecificModel(wm)
+    if wm then
+        for _, model in ipairs(self.WModel or {}) do
+            SafeRemoveEntity(model)
+        end
+
+        self.WModel = nil
+    else
+        for _, model in ipairs(self.VModel or {}) do
+            SafeRemoveEntity(model)
+        end
+
+        self.VModel = nil
+    end
+end
 
 function SWEP:KillModel(cmo)
     if cmo then

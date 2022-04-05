@@ -21,6 +21,13 @@ function SWEP:InvalidateCache()
     self:SetBaseSettings()
 end
 
+
+local Lerp = function(a, v1, v2)
+    local d = v2 - v1
+
+    return v1 + (a * d)
+end
+
 function SWEP:RunHook(val, data)
     local any = false
 
@@ -135,11 +142,13 @@ local pv_melee = 0
 function SWEP:GetProcessedValue(val, base)
     local stat = self:GetValue(val, base)
 
-    if val == "Malfunction" and self:GetJammed() then
+    -- if true then return stat end
+
+    if self:GetJammed() and val == "Malfunction" then
         return true
     end
 
-    if val == "Overheat" and self:GetHeatLockout() then
+    if self:GetHeatLockout() and val == "Overheat" then
         return true
     end
 
@@ -171,6 +180,10 @@ function SWEP:GetProcessedValue(val, base)
 
     if self:GetUBGL() and !self.HasNoAffectors[val .. "UBGL"] then
         stat = self:GetValue(val, stat, "UBGL")
+
+        if self:Clip2() == 0 and !self.HasNoAffectors[val .. "EmptyUBGL"] then
+            stat = self:GetValue(val, stat, "EmptyUBGL")
+        end
     end
 
     if self:GetNthShot() % 2 == 0  and !self.HasNoAffectors[val .. "EvenShot"] then

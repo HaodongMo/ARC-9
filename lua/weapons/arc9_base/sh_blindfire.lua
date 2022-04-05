@@ -152,6 +152,7 @@ end
 
 function SWEP:ThinkBlindFire()
     local amt = self:GetBlindFireAmount()
+    local oldamt = amt
 
     if self:GetBlindFire() then
         amt = math.Approach(amt, 1, FrameTime() / 0.25)
@@ -159,9 +160,12 @@ function SWEP:ThinkBlindFire()
         amt = math.Approach(amt, 0, FrameTime() / 0.25)
     end
 
-    self:SetBlindFireAmount(amt)
+    if oldamt != amt then
+        self:SetBlindFireAmount(amt)
+    end
 
     local amt2 = self:GetBlindFireCornerAmount()
+    local oldamt2 = amt2
 
     if self:GetBlindFireDirection() > 0 then
         amt2 = math.Approach(amt2, 1, FrameTime() / 0.25)
@@ -171,7 +175,9 @@ function SWEP:ThinkBlindFire()
         amt2 = math.Approach(amt2, 0, FrameTime() / 0.25)
     end
 
-    self:SetBlindFireCornerAmount(amt2)
+    if oldamt2 != amt2 then
+        self:SetBlindFireCornerAmount(amt2)
+    end
 
     if self:GetOwner():KeyDown(IN_ALT1) then
         if self:GetOwner():KeyDown(IN_BACK) then
