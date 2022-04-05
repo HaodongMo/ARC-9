@@ -223,7 +223,7 @@ function SWEP:SetupModel(wm, lod, cm)
     if !wm then lod = 0 end
     if cm then wm = true end
 
-    self:KillModel(cm)
+    -- self:KillModel(cm)
 
     if !wm and !IsValid(self:GetOwner()) then return end
 
