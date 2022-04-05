@@ -457,6 +457,23 @@ function SWEP:ToggleAllStatsOnF()
     end
 end
 
+function SWEP:CanToggleAllStatsOnF()
+    local toggled = false
+
+    for _, slottbl in ipairs(self:GetSubSlotList()) do
+        if !slottbl.Installed then continue end
+
+        local atttbl = self:GetFinalAttTable(slottbl)
+
+        if !atttbl.ToggleStats then continue end
+        if !atttbl.ToggleOnF then continue end
+
+        toggled = true
+    end
+
+    return toggled
+end
+
 function SWEP:ToggleStat(addr)
     local slottbl = self:LocateSlotFromAddress(addr)
 

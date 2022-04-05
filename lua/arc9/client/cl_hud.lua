@@ -775,6 +775,13 @@ function ARC9.DrawHUD()
             })
         end
 
+        if weapon:CanToggleAllStatsOnF() then
+            table.insert(hints, {
+                glyph = CTRL and "shared_button_y" or ARC9.GetBindKey("impulse 100"),
+                action = "Toggle Att. Stats"
+            })
+        end
+
         table.insert(hints, {
             glyph = CTRL and "ps5_trackpad_left" or ARC9.GetBindKey("+menu_context"),
             action = weapon:GetInSights() and "Peek" or "Customize" })
