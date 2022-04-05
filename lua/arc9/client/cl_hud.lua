@@ -808,7 +808,7 @@ function ARC9.DrawHUD()
         else
             hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
         end
-        hint_alpha = 1
+        -- hint_alpha = 1
 
         cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
             for _, hint in ipairs(hints) do

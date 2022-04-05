@@ -384,6 +384,16 @@ SWEP.PreBashTime = 0.5
 SWEP.PostBashTime = 0.5
 SWEP.BashDecal = "ManhackCut"
 
+SWEP.BashThirdArmAnimation = {
+        rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",
+        sequence = {"melee1", "melee2"},
+        -- sequence = "melee1",
+        gun_controller_attachment = 1,
+        -- offsetang = Angle(90, 180, 90),
+        mult = 1,
+        invisible = false,
+    }
+
 -------------------------- MALFUNCTIONS
 
 SWEP.Overheat = false -- Weapon will jam when it overheats, playing the "overheat" animation.
