@@ -93,7 +93,7 @@ local function GetWeaponCapabilities(wpn)
         BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
         Firemode = tobool(!wpn:GetUBGL() and #wpn:GetValue("Firemodes") > 1),
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
-        VariableZoom = tobool(wpn:GetInSights() and wpn:GetSight().atttbl.RTScopeAdjustable)
+        VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable)
     }
 
     return cap

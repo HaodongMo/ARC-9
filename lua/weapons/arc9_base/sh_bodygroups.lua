@@ -123,6 +123,6 @@ function SWEP:DoBodygroups(wm, cm)
     self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = eles})
 end
 
-function SWEP:GetElements()
-    return {}
-end
+-- function SWEP:GetElements()
+--     return {}
+-- end
