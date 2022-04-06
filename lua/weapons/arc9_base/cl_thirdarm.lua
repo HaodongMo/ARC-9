@@ -56,7 +56,7 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
 
     if !self.ThirdArmModel then return end
 
-    local seq = self.ThirdArmModel:LookupSequence(tbl.sequence)
+    local seq = self.ThirdArmModel:LookupSequence(self:RandomChoice(tbl.sequence))
     self.ThirdArmModel:ResetSequence(seq)
 
     -- if tbl.invisible then
