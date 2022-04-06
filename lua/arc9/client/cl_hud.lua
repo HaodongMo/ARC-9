@@ -726,6 +726,8 @@ function ARC9.DrawHUD()
                     ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS4
                 elseif glyphset == "!SwitchPro" then
                     ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SwitchPro
+                elseif glyphset == "!SwitchProXboxABXY" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SwitchPro_XboxABXY
                 end
             else
                 table.Empty(ARC9.CTRL_Set_UserCustom)

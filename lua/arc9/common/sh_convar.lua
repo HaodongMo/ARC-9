@@ -188,7 +188,7 @@ local conVars = {
     },
     {
         name = "hud_always",
-        default = "1" -- change to zero ok??????
+        default = "0"
     },
     {
         name = "infinite_ammo",
@@ -253,14 +253,16 @@ local function menu_client_ti(panel)
         command = "arc9_cust_blur"
     })
     panel:AddControl("checkbox", {
-        label = "Draw HUD always even not on ARC NINE     change this text later ok",
+        label = "Draw ARC-9 HUD Everywhere",
         command = "arc9_hud_always"
     })
 end
 
 local function menu_client_controller(panel)
     --local textbox = panel:TextEntry("Custom Controller Glyphset", "arc9_controller_glyphset")
-    local combobox = panel:ComboBox("test", "arc9_controller_glyphset" )
+    panel:AddControl( "label", { text = "Select a controller glyphset to use." } )
+    panel:CheckBox("Controller Glyphs", "arc9_controller")
+    local combobox = panel:ComboBox("Controller Glyphset", "arc9_controller_glyphset" )
     combobox:AddChoice( "PS4", "!PS4" )
     combobox:AddChoice( "PS5", "!PS5" )
     combobox:AddChoice( "Xbox", "!Xbox" )
@@ -268,6 +270,114 @@ local function menu_client_controller(panel)
     combobox:AddChoice( "Steam Controller", "!SC" )
     combobox:AddChoice( "Steam Deck", "!SD" )
     combobox:AddChoice( "Switch Pro", "!SwitchPro" )
+    combobox:AddChoice( "Switch Pro (Xbox ABXY)", "!SwitchProXboxABXY" )
+
+    panel:AddControl("label", { text = "\nOr, make your own." } )
+    local listview = vgui.Create("DListView", panel)
+    listview:SetSize( 99, 200 )
+    panel:AddItem( listview )
+    listview:SetMultiSelect( true )
+    listview:AddColumn( "Input" )
+    listview:AddColumn( "Output" )
+
+    local tex_inp = vgui.Create( "DTextEntry", panel )
+    local tex_out = vgui.Create( "DTextEntry", panel )
+    panel:AddItem( tex_inp )
+    panel:ControlHelp( "Glyph or keyboard icon to be replaced.\nAll keyboard and mouse inputs are in uppercase." )
+    panel:AddItem( tex_out )
+    panel:ControlHelp( "Glyph or keyboard icon to replace." )
+    tex_inp:SetPlaceholderText("Input: Button to replace")
+    tex_out:SetPlaceholderText("Output: Button to show")
+
+    local but_add = vgui.Create( "DButton", panel )
+    local but_rem = vgui.Create( "DButton", panel )
+    local but_upd = vgui.Create( "DButton", panel )
+    local but_app = vgui.Create( "DButton", panel )
+    panel:AddItem( but_add )
+    panel:AddItem( but_rem )
+    panel:AddItem( but_upd )
+    panel:AddItem( but_app )
+    but_add:SetText("Add")
+    but_rem:SetText("Remove selected")
+    but_upd:SetText("Restore from memory")
+    but_app:SetText("Save & apply")
+
+    function but_add:DoClick()
+        listview:AddLine( tex_inp:GetValue(), tex_out:GetValue() )
+    end
+
+    function but_rem:DoClick()
+        for i, v in pairs(listview:GetSelected()) do
+            listview:RemoveLine( v:GetID() )
+        end
+    end
+
+    function but_upd:DoClick()
+        listview:Clear()
+
+        local config = GetConVar("arc9_controller_glyphset"):GetString()
+        config = string.Split( config, "\\n" )
+        for i, v in ipairs(config) do
+            local swig = string.Split( v, "\\t" )
+            if swig[1] == "" then continue end
+            listview:AddLine( swig[1], swig[2] )
+        end
+    end
+
+    function but_app:DoClick()
+        local toapply = ""
+        local order = 1
+        for k, line in pairs( listview:GetLines() ) do
+            if order != 1 then toapply = toapply .. "\\n" end
+            toapply = toapply .. line:GetValue( 1 ) .. "\\t" .. line:GetValue( 2 )
+            order = order + 1
+        end
+        RunConsoleCommand("arc9_controller_glyphset", toapply)
+    end
+
+
+    local matselect_filter = vgui.Create( "DComboBox", panel )
+    panel:AddItem( matselect_filter )
+    matselect_filter:AddChoice( "! No filter", "" )
+    matselect_filter:AddChoice( "Common", "shared" )
+    matselect_filter:AddChoice( "PS4", "ps4" )
+    matselect_filter:AddChoice( "PS5", "ps5" )
+    matselect_filter:AddChoice( "PS Common", "ps" )
+    matselect_filter:AddChoice( "Switch Pro", "switchpro" )
+    matselect_filter:AddChoice( "Steam Controller", "sc" )
+    matselect_filter:AddChoice( "Steam Deck", "sd" )
+    matselect_filter:AddChoice( "Xbox", "xbox" )
+    matselect_filter:AddChoice( "Xbox 360", "xbox360" )
+    matselect_filter:SetValue( "Filter by controller type" )
+
+    local matselect = ""
+    local function GenerateMatSelect()
+        matselect = vgui.Create( "ARC9_MatSelect", panel )
+        Derma_Hook( matselect.List, "Paint", "Paint", "Panel" )
+        panel:AddItem( matselect )
+
+        for k, v in SortedPairs( ARC9.CTRL_Exists ) do
+            local sel, seldata = matselect_filter:GetSelected()
+            if string.find( k, seldata or "" ) then
+                matselect:AddMaterial( k, "arc9/glyphs_light/" .. k .. "_lg.png" )
+            end
+        end
+
+        matselect:SetAutoHeight( true )
+        matselect:SetItemWidth( 0.1875 )
+        matselect:SetItemHeight( 0.1875 )
+
+        matselect.InputPanel = tex_inp
+        matselect.OutputPanel = tex_out
+    end
+    GenerateMatSelect()
+    but_upd:DoClick()
+
+    function matselect_filter:OnSelect()
+        matselect:Remove()
+        GenerateMatSelect()
+    end
+
 end
 
 local function menu_server_ti(panel)
@@ -329,5 +439,236 @@ hook.Add("PopulateToolMenu", "ARC9_MenuOptions", function()
         spawnmenu.AddToolMenuOption("Options", "ARC-9", "ARC9_" .. tostring(smenu), data.text, "", "", data.func)
     end
 end)
+
+end
+
+
+-- This is an edit of the MatSelect panel for the controller configurator. TODO: Move this to another file.
+
+if CLIENT then
+
+
+local PANEL = {}
+
+AccessorFunc( PANEL, "ItemWidth", "ItemWidth", FORCE_NUMBER )
+AccessorFunc( PANEL, "ItemHeight", "ItemHeight", FORCE_NUMBER )
+AccessorFunc( PANEL, "Height", "NumRows", FORCE_NUMBER )
+AccessorFunc( PANEL, "m_bSizeToContent", "AutoHeight", FORCE_BOOL )
+
+local border = 0
+local border_w = 8
+local matHover = Material( "gui/ps_hover.png", "nocull" )
+local boxHover = GWEN.CreateTextureBorder( border, border, 64 - border * 2, 64 - border * 2, border_w, border_w, border_w, border_w, matHover )
+
+-- This function is used as the paint function for selected buttons.
+local function HighlightedButtonPaint( self, w, h )
+
+	boxHover( 0, 0, w, h, color_white )
+
+end
+
+function PANEL:Init()
+
+	-- A panellist is a panel that you shove other panels
+	-- into and it makes a nice organised frame.
+	self.List = vgui.Create( "DPanelList", self )
+	self.List:EnableHorizontal( true )
+	self.List:EnableVerticalScrollbar()
+	self.List:SetSpacing( 1 )
+	self.List:SetPadding( 3 )
+
+	self.Controls = {}
+	self.Height = 2
+
+    self.InputPanel = ""
+    self.OutputPanel = ""
+
+	self:SetItemWidth( 128 )
+	self:SetItemHeight( 128 )
+
+end
+
+function PANEL:SetAutoHeight( bAutoHeight )
+
+	self.m_bSizeToContent = bAutoHeight
+	self.List:SetAutoSize( bAutoHeight )
+
+	self:InvalidateLayout()
+
+end
+
+function PANEL:AddMaterial( label, value )
+
+	-- Creeate a spawnicon and set the model
+	local Mat = vgui.Create( "DImageButton", self )
+	Mat:SetOnViewMaterial( value, "models/wireframe" )
+	Mat.AutoSize = false
+	Mat.Value = value
+	Mat:SetSize( self.ItemWidth, self.ItemHeight )
+	Mat:SetTooltip( label )
+
+	-- Run a console command when the Icon is clicked
+	Mat.DoClick = function( button )
+		local menu = DermaMenu()
+		menu:AddOption( "As input", function() self.InputPanel:SetValue( label ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:AddOption( "As output", function() self.OutputPanel:SetValue( label ) end ):SetIcon( "icon16/page_paste.png" )
+		menu:Open()
+	end
+
+	Mat.DoRightClick = function( button )
+	end
+
+	-- Add the Icon us
+	self.List:AddItem( Mat )
+	table.insert( self.Controls, Mat )
+
+	self:InvalidateLayout()
+
+end
+
+function PANEL:SetItemSize( pnl )
+
+	local maxW = self:GetWide()
+	if ( self.List.VBar && self.List.VBar.Enabled ) then maxW = maxW - self.List.VBar:GetWide() end
+
+	local w = self.ItemWidth
+	if ( w < 1 ) then
+		local numIcons = math.floor( 1 / w )
+		w = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
+
+	local h = self.ItemHeight
+	if ( h < 1 ) then
+		local numIcons = math.floor( 1 / h )
+		h = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
+
+	pnl:SetSize( w, h )
+
+end
+
+function PANEL:AddMaterialEx( label, material, value, convars )
+
+	-- Creeate a spawnicon and set the model
+	local Mat = vgui.Create( "DImageButton", self )
+	Mat:SetImage( material )
+	Mat.AutoSize = false
+	Mat.Value = value
+	Mat.ConVars = convars
+	self:SetItemSize( Mat )
+	Mat:SetTooltip( label )
+
+	-- Run a console command when the Icon is clicked
+	Mat.DoClick = function ( button )
+
+		for k, v in pairs( convars ) do RunConsoleCommand( k, v ) end
+
+	end
+
+	-- Add the Icon us
+	self.List:AddItem( Mat )
+	table.insert( self.Controls, Mat )
+
+	self:InvalidateLayout()
+
+end
+
+function PANEL:ControlValues( kv )
+
+	self.BaseClass.ControlValues( self, kv )
+
+	self.Height = kv.height or 2
+
+	-- Load the list of models from our keyvalues file
+	if ( kv.options ) then
+
+		for k, v in pairs( kv.options ) do
+			self:AddMaterial( k, v )
+		end
+
+	end
+
+	self.ItemWidth = kv.itemwidth or 32
+	self.ItemHeight = kv.itemheight or 32
+
+	for k, v in pairs( self.Controls ) do
+		v:SetSize( self.ItemWidth, self.ItemHeight )
+	end
+
+	self:InvalidateLayout()
+
+end
+
+function PANEL:PerformLayout()
+
+	self.List:SetPos( 0, 0 )
+
+	for k, v in pairs( self.List:GetItems() ) do
+		self:SetItemSize( v )
+	end
+
+	if ( self.m_bSizeToContent ) then
+		self.List:SetWide( self:GetWide() )
+		self.List:InvalidateLayout( true )
+		self:SetTall( self.List:GetTall() + 5 )
+
+		return
+	end
+
+	self.List:InvalidateLayout( true ) -- Rebuild
+
+	local maxW = self:GetWide()
+	if ( self.List.VBar && self.List.VBar.Enabled ) then maxW = maxW - self.List.VBar:GetWide() end
+
+	local h = self.ItemHeight
+	if ( h < 1 ) then
+		local numIcons = math.floor( 1 / h )
+		h = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
+
+	local Height = ( h * self.Height ) + ( self.List:GetPadding() * 2 ) + self.List:GetSpacing() * ( self.Height - 1 )
+
+	self.List:SetSize( self:GetWide(), Height )
+	self:SetTall( Height + 5 )
+
+end
+
+function PANEL:FindAndSelectMaterial( Value )
+
+	self.CurrentValue = Value
+
+	for k, Mat in pairs( self.Controls ) do
+
+		if ( Mat.Value == Value ) then
+
+			-- Remove the old overlay
+			if ( self.SelectedMaterial ) then
+				self.SelectedMaterial.PaintOver = self.OldSelectedPaintOver
+			end
+
+			-- Add the overlay to this button
+			self.OldSelectedPaintOver = Mat.PaintOver
+			Mat.PaintOver = HighlightedButtonPaint
+			self.SelectedMaterial = Mat
+
+		end
+
+	end
+
+end
+
+function PANEL:TestForChanges()
+
+	local cvar = self:ConVar()
+	if ( !cvar ) then return end
+
+	local Value = GetConVarString( cvar )
+	if ( Value == self.CurrentValue ) then return end
+
+	self:FindAndSelectMaterial( Value )
+
+end
+
+vgui.Register( "ARC9_MatSelect", PANEL, "ContextBase" )
 
 end
