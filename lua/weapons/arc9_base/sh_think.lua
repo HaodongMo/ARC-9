@@ -53,6 +53,8 @@ function SWEP:Think()
 
     self:ThinkUBGL()
 
+    self:RunHook("Hook_Think")
+
     if CLIENT then
         self:ThinkThirdArm()
     end

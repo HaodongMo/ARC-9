@@ -428,6 +428,10 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookP_ModifyBulletPoseParam = function(self, pp) return pp end
 -- SWEP.HookP_ModifyFiremodePoseParam = function(self, pp) return pp end
 -- SWEP.Hook_DoRT = function(self) return end
+-- SWEP.Hook_Think = function(self) return end
+-- SWEP.Hook_Deploy = function(self) return end
+-- SWEP.Hook_Holster = function(self) return end
+-- SWEP.Hook_GetShootEntData = function(self, table) return end -- Each function should add an entry to the table for shoot ents
 
 -------------------------- BLIND FIRE
 

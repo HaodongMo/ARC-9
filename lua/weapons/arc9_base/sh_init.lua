@@ -87,6 +87,8 @@ function SWEP:Deploy()
 
     self:SetShouldHoldType()
 
+    self:RunHook("Hook_Deploy")
+
     return true
 end
 
@@ -128,6 +130,8 @@ function SWEP:Holster(wep)
             self:GetOwner():SetDSP(0)
             self.SetBreathDSP = false
         end
+
+        self:RunHook("Hook_Holster")
 
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
