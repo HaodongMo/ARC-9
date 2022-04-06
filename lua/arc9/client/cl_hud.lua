@@ -587,17 +587,18 @@ function ARC9.DrawHUD()
             if ARC9.CTRL_Lookup[fmh_text] then fmh_text = ARC9.CTRL_Lookup[fmh_text] end
             if ARC9.CTRL_ConvertTo[fmh_text] then fmh_text = ARC9.CTRL_ConvertTo[fmh_text] end
             if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/glyphs_knockout/" .. fmh_text .. "_lg" .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
+            fmh_text = isstring(fmh_text) and fmh_text or { fmh_text, 16 }
 
             surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetFont("ARC9_12_Unscaled")
-            local fmh_w = GetControllerKeyLineSize( { font = "ARC9_12_Unscaled" }, isstring(fmh_text) and fmh_text or { fmh_text, 16 } )
-            CreateControllerKeyLine( { x = fmh_x + s_right - fmh_w, y = fmh_y + s_down, size = 16, font = "ARC9_12_Unscaled" }, isstring(fmh_text) and fmh_text or { fmh_text, 16 } )
+            local fmh_w = GetControllerKeyLineSize( { font = "ARC9_12_Unscaled" }, fmh_text )
+            CreateControllerKeyLine( { x = fmh_x + s_right - fmh_w, y = fmh_y + s_down, size = 16, font = "ARC9_12_Unscaled" }, fmh_text )
 
             surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", 255))
             surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
             surface.SetFont("ARC9_12_Unscaled")
-            CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_Unscaled" }, isstring(fmh_text) and fmh_text or { fmh_text, 16 } )
+            CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_Unscaled" }, fmh_text )
         end
 
         // bullet fields
