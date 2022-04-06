@@ -1,5 +1,5 @@
 function SWEP:TranslateAnimation(seq)
-    if self:GetSightAmount() > 0 and self:HasAnimation(seq .. "_iron") then
+    if self:GetInSights() and self:HasAnimation(seq .. "_iron") then
         seq = seq .. "_iron"
     end
 

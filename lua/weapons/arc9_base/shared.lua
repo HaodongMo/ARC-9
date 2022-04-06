@@ -125,8 +125,8 @@ SWEP.ExplosionEffect = nil
 
 -------------------------- ENTITY LAUNCHING
 
-SWEP.ShootEntity = nil -- Set to an entity to launch it out of this weapon.
-SWEP.EntityMuzzleVelocity = 10000
+SWEP.ShootEnt = nil -- Set to an entity to launch it out of this weapon.
+SWEP.ShootEntForce = 10000
 SWEP.ShootEntityData = {} -- Extra data that can be given to a projectile. Sets SENT.WeaponDataLink with this table.
 
 -------------------------- PHYS BULLET BALLISTICS
