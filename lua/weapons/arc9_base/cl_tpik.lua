@@ -4,7 +4,7 @@ function SWEP:ShouldTPIK()
     if render.GetDXLevel() < 90 then return false end
     if self:GetSafe() then return false end
     if self:GetBlindFireAmount() > 0 then return false end
-    if !self:GetOwner():ShouldDrawLocalPlayer() then return false end
+    -- if !self:GetOwner():ShouldDrawLocalPlayer() then return false end
     -- return LocalPlayer() == self:GetOwner()
     -- return false
     return GetConVar("arc9_tpik"):GetBool()

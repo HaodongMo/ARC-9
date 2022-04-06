@@ -583,6 +583,7 @@ function SWEP:ShootRocket()
         rocket:Spawn()
         rocket.Owner = self:GetOwner()
         rocket:SetOwner(self:GetOwner())
+        rocket.Weapon = self
         rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", {})
 
         local phys = rocket:GetPhysicsObject()

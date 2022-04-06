@@ -111,16 +111,15 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
     if !game.SinglePlayer() then
         local owner = wep:GetOwner()
         if owner:IsPlayer() and SERVER and !owner:IsListenServerHost() then
-            local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
-            local timestep = engine.TickInterval()
+            -- local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
+            local ping = owner:Ping() / 1000
+            local timestep = 0.2
 
-            local maxticks = 0.2 / timestep
+            ping = math.min(ping, 0.25) // can't let people cheat TOO hard
 
-            latency = math.min(latency, maxticks) // can't let people cheat TOO hard
-
-            while latency > 0 do
+            while ping > 0 do
                 ARC9:ProgressPhysBullet(bullet, timestep)
-                latency = latency - 1
+                ping = ping - timestep
             end
         end
 
