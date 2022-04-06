@@ -24,7 +24,7 @@ SWEP.Trivia = {} -- Optional. Any stats you like can be added.
 --     Calibre = "9x21mm Jager",
 --     Mechanism = "Roller-Delayed Blowback",
 --     Country = "UK-Australia-China",
---     Year = 2021
+--     Year = 2022
 -- }
 SWEP.Credits = {}
 -- SWEP.Credits = {
