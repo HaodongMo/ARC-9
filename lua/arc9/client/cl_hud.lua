@@ -580,20 +580,24 @@ function ARC9.DrawHUD()
         surface.DrawText(fmm_text)
 
         if multiple_modes then
-            local fmh_text = "[" .. ARC9.GetBindKey("+zoom") .. "]"
+            local fmh_text = ARC9.GetBindKey("+zoom")--"[" .. ARC9.GetBindKey("+zoom") .. "]"
             local fmh_x = 212
             local fmh_y = 53
 
+            if ARC9.CTRL_Lookup[fmh_text] then fmh_text = ARC9.CTRL_Lookup[fmh_text] end
+            if ARC9.CTRL_ConvertTo[fmh_text] then fmh_text = ARC9.CTRL_ConvertTo[fmh_text] end
+            if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/glyphs_knockout/" .. fmh_text .. "_lg" .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
+
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetFont("ARC9_12_Unscaled")
-            local fmh_w = surface.GetTextSize(fmh_text)
-            surface.SetTextPos(fmh_x + s_right - fmh_w, fmh_y + s_down)
-            surface.DrawText(fmh_text)
+            local fmh_w = GetControllerKeyLineSize( { font = "ARC9_12_Unscaled" }, isstring(fmh_text) and fmh_text or { fmh_text, 16 } )
+            CreateControllerKeyLine( { x = fmh_x + s_right - fmh_w, y = fmh_y + s_down, size = 16, font = "ARC9_12_Unscaled" }, isstring(fmh_text) and fmh_text or { fmh_text, 16 } )
 
+            surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", 255))
             surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
             surface.SetFont("ARC9_12_Unscaled")
-            surface.SetTextPos(fmh_x - fmh_w, fmh_y)
-            surface.DrawText(fmh_text)
+            CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_Unscaled" }, isstring(fmh_text) and fmh_text or { fmh_text, 16 } )
         end
 
         // bullet fields
@@ -702,102 +706,157 @@ function ARC9.DrawHUD()
         --     },
         -- }
 
-        local CTRL = ControllerMode()
+        local CTRL = false--ARC9.ControllerMode()
         local hints = {}
+
+        local glyphset = GetConVar("arc9_controller_glyphset"):GetString()
+        if glyphset != "" then
+            if glyphset:Left(1) == "!" then
+                if glyphset == "!SC" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SC
+                elseif glyphset == "!SD" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SD
+                elseif glyphset == "!Xbox" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
+                elseif glyphset == "!Xbox360" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox360
+                elseif glyphset == "!PS5" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS5
+                elseif glyphset == "!PS4" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS4
+                elseif glyphset == "!SwitchPro" then
+                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SwitchPro
+                end
+            else
+                table.Empty(ARC9.CTRL_Set_UserCustom)
+                local config = glyphset
+                config = string.Split( config, "\\n" )
+                for i, v in ipairs(config) do
+                    local swig = string.Split( v, "\\t" )
+                    ARC9.CTRL_Set_UserCustom[swig[1]] = swig[2]
+                end
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_UserCustom
+            end
+        elseif sinput then
+            if !sinput.enabled then sinput.Init() end
+            local P1 = sinput.GetControllerForGamepadIndex(0)
+            local controltype = sinput.GetInputTypeForHandle(P1)
+            if !controltype or controltype == "Unknown" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
+            elseif controltype == "SteamController" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SC
+            elseif controltype == "XBox360Controller" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox360
+            elseif controltype == "XBoxOneController" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
+            elseif controltype == "GenericXInput" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
+            elseif controltype == "PS4Controller" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS4
+            elseif controltype == "SwitchProController" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SwitchPro
+            elseif controltype == "PS3Controller" then
+                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS4
+            end
+        else
+            ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
+        end
 
         if capabilities.UBGL then
             table.insert(hints, {
-                glyph = CTRL and "shared_button_b" or ARC9.GetBindKey("+use"),
-                glyph2 = CTRL and "xbox_lt" or ARC9.GetBindKey("+attack2"),
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("+attack2"),
                 action = "Toggle Weapon"
             })
         end
 
         if capabilities.SwitchSights then
             table.insert(hints, {
-                glyph = CTRL and "sd_l4" or ARC9.GetBindKey("+walk"),
-                glyph2 = CTRL and "shared_button_b" or ARC9.GetBindKey("+use"),
+                glyph = ARC9.GetBindKey("+walk"),
+                glyph2 = ARC9.GetBindKey("+use"),
                 action = "Switch Sights"
             })
         end
 
         if capabilities.VariableZoom then
             table.insert(hints, {
-                glyph = CTRL and "shared_dpad_up" or ARC9.GetBindKey("+invnext"),
-                glyph2 = CTRL and "shared_dpad_down" or ARC9.GetBindKey("+invprev"),
+                glyph = ARC9.GetBindKey("+invnext"),
+                glyph2 = ARC9.GetBindKey("+invprev"),
                 action = "Change Zoom"
             })
         end
 
         if capabilities.HoldBreath then
             table.insert(hints, {
-                glyph = CTRL and "xbox_lb" or ARC9.GetBindKey("+speed"),
+                glyph = ARC9.GetBindKey("+speed"),
                 action = "Hold Breath"
             })
         end
 
         if capabilities.Bash then
             table.insert(hints, {
-                glyph = CTRL and "shared_button_x" or ARC9.GetBindKey("+use"),
-                glyph2 = CTRL and "xbox_rt" or ARC9.GetBindKey("+attack"),
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("+attack"),
                 action = "Bash"
             })
         end
 
         if capabilities.Inspect then
             table.insert(hints, {
-                glyph = CTRL and "shared_button_b" or ARC9.GetBindKey("+reload"),
-                glyph2 = CTRL and "shared_button_x" or ARC9.GetBindKey("+use"),
+                glyph = ARC9.GetBindKey("+reload"),
+                glyph2 = ARC9.GetBindKey("+use"),
                 action = "Inspect"
             })
         end
 
         if capabilities.Blindfire then
             table.insert(hints, {
-                glyph = CTRL and "sd_r4" or ARC9.GetBindKey("+alt1"),
-                glyph2 = CTRL and "shared_lstick_up" or ARC9.GetBindKey("+forward"),
+                glyph = ARC9.GetBindKey("+alt1"),
+                glyph2 = ARC9.GetBindKey("+forward"),
                 action = "Blindfire"
             })
         end
 
         if capabilities.BlindfireLeft then
             table.insert(hints, {
-                glyph = CTRL and "sd_r4" or ARC9.GetBindKey("+alt1"),
-                glyph2 = CTRL and "shared_lstick_left" or ARC9.GetBindKey("+moveleft"),
+                glyph = ARC9.GetBindKey("+alt1"),
+                glyph2 = ARC9.GetBindKey("+moveleft"),
                 action = "Blindfire Left"
             })
         end
 
         if capabilities.Firemode then
             table.insert(hints, {
-                glyph = CTRL and "shared_rstick_click" or ARC9.GetBindKey("+zoom"),
+                glyph = ARC9.GetBindKey("+zoom"),
                 action = "Switch Firemode"
             })
         end
 
         if weapon:CanToggleAllStatsOnF() then
             table.insert(hints, {
-                glyph = CTRL and "shared_button_y" or ARC9.GetBindKey("impulse 100"),
+                glyph = ARC9.GetBindKey("impulse 100"),
                 action = "Toggle Att. Stats"
             })
         end
 
         table.insert(hints, {
-            glyph = CTRL and "ps5_trackpad_left" or ARC9.GetBindKey("+menu_context"),
+            glyph = ARC9.GetBindKey("+menu_context"),
             action = weapon:GetInSights() and "Peek" or "Customize" })
 
         table.insert(hints, {
-            glyph = CTRL and "shared_button_x" or ARC9.GetBindKey("+use"),
-            glyph2 = CTRL and "shared_rstick_click" or ARC9.GetBindKey("+zoom"),
+            glyph = ARC9.GetBindKey("+use"),
+            glyph2 = ARC9.GetBindKey("+zoom"),
             action = "Toggle Safe"
         })
 
         for i, v in ipairs(hints) do
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
-            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/steamcontroller/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
+            if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
             if v.glyph2 then 
                 if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
-                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/steamcontroller/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
+                if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
             end
         end
 
@@ -818,14 +877,14 @@ function ARC9.DrawHUD()
 
         local hx = 0
         local hy = 0
-        local SIZE = 16
+        local SIZE = 18
 
         if hidefadetime + 1.5 > CurTime() then
             hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
         else
             hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
         end
-        -- hint_alpha = 1
+        hint_alpha = 1
 
         cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 150 * hint_alpha))
@@ -866,11 +925,38 @@ hook.Add("HUDPaint", "ARC9_DrawHud", ARC9.DrawHUD)
 -- Controller / key additions by Fesiug. Blame Fesiug!
 
 local convar_controllermode = GetConVar("arc9_controller")
-function ControllerMode()
+function ARC9.ControllerMode()
     return convar_controllermode:GetBool()
 end
 
-ARC9.CTRL_Lookup = {
+ARC9.CTRL_Set_PS4 = {
+    xbox_button_select = "ps4_button_share",
+    xbox_button_start = "ps4_button_options",
+    xbox_button_logo = "ps4_button_logo",
+
+    shared_button_a = "ps_button_x",
+    shared_button_b = "ps_button_circle",
+    shared_button_x = "ps_button_square",
+    shared_button_y = "ps_button_triangle",
+
+    xbox_lb = "ps4_l1",
+    xbox_rb = "ps4_r1",
+    xbox_lt = "ps4_l2",
+    xbox_rt = "ps4_r2",
+    xbox_lt_soft = "ps4_l2_soft",
+    xbox_rt_soft = "ps4_r2_soft",
+
+    shared_dpad = "ps_dpad",
+    shared_dpad_down = "ps_dpad_down",
+    shared_dpad_up = "ps_dpad_up",
+    shared_dpad_left = "ps_dpad_left",
+    shared_dpad_right = "ps_dpad_right",
+}
+ARC9.CTRL_Set_PS5 = {
+    xbox_button_select = "ps5_button_create",
+    xbox_button_start = "ps5_button_options",
+    xbox_button_logo = "ps4_button_logo",
+
     shared_button_a = "ps_button_x",
     shared_button_b = "ps_button_circle",
     shared_button_x = "ps_button_square",
@@ -889,6 +975,134 @@ ARC9.CTRL_Lookup = {
     shared_dpad_left = "ps_dpad_left",
     shared_dpad_right = "ps_dpad_right",
 
+}
+ARC9.CTRL_Set_SwitchPro = {
+    xbox_button_select = "switchpro_button_minus",
+    xbox_button_start = "switchpro_button_plus",
+    xbox_button_logo = "switchpro_button_home",
+
+    -- WHY DO I ALWAYS GET THE FREAKS?!
+    shared_button_a = "shared_button_b",
+    shared_button_b = "shared_button_a",
+    shared_button_x = "shared_button_y",
+    shared_button_y = "shared_button_x",
+
+    shared_dpad = "switchpro_dpad",
+    shared_dpad_down = "switchpro_dpad_down",
+    shared_dpad_up = "switchpro_dpad_up",
+    shared_dpad_left = "switchpro_dpad_left",
+    shared_dpad_right = "switchpro_dpad_right",
+
+    xbox_lb = "switchpro_l",
+    xbox_rb = "switchpro_r",
+    xbox_lt = "switchpro_l2",
+    xbox_rt = "switchpro_r2",
+    xbox_lt_soft = "switchpro_l2_soft",
+    xbox_rt_soft = "switchpro_r2_soft",
+
+    shared_lstick = "switchpro_lstick",
+    shared_lstick_click = "switchpro_lstick_click",
+    shared_lstick_down = "switchpro_lstick_down",
+    shared_lstick_up = "switchpro_lstick_up",
+    shared_lstick_left = "switchpro_lstick_left",
+    shared_lstick_right = "switchpro_lstick_right",
+
+    shared_rstick = "switchpro_rstick",
+    shared_rstick_click = "switchpro_rstick_click",
+    shared_rstick_down = "switchpro_rstick_down",
+    shared_rstick_up = "switchpro_rstick_up",
+    shared_rstick_left = "switchpro_rstick_left",
+    shared_rstick_right = "switchpro_rstick_right",
+}
+ARC9.CTRL_Set_SwitchPro_XboxABXY = {
+    xbox_button_select = "switchpro_button_minus",
+    xbox_button_start = "switchpro_button_plus",
+    xbox_button_logo = "switchpro_button_home",
+
+    -- DON'T THOSE FREAKS HAVE FLIPPED ABXYs
+
+    shared_dpad = "switchpro_dpad",
+    shared_dpad_down = "switchpro_dpad_down",
+    shared_dpad_up = "switchpro_dpad_up",
+    shared_dpad_left = "switchpro_dpad_left",
+    shared_dpad_right = "switchpro_dpad_right",
+
+    xbox_lb = "switchpro_l",
+    xbox_rb = "switchpro_r",
+    xbox_lt = "switchpro_l2",
+    xbox_rt = "switchpro_r2",
+    xbox_lt_soft = "switchpro_l2_soft",
+    xbox_rt_soft = "switchpro_r2_soft",
+
+    shared_lstick = "switchpro_lstick",
+    shared_lstick_click = "switchpro_lstick_click",
+    shared_lstick_down = "switchpro_lstick_down",
+    shared_lstick_up = "switchpro_lstick_up",
+    shared_lstick_left = "switchpro_lstick_left",
+    shared_lstick_right = "switchpro_lstick_right",
+
+    shared_rstick = "switchpro_rstick",
+    shared_rstick_click = "switchpro_rstick_click",
+    shared_rstick_down = "switchpro_rstick_down",
+    shared_rstick_up = "switchpro_rstick_up",
+    shared_rstick_left = "switchpro_rstick_left",
+    shared_rstick_right = "switchpro_rstick_right",
+}
+ARC9.CTRL_Set_SC = {
+    xbox_button_select = "sc_button_l_arrow",
+    xbox_button_start = "sc_button_r_arrow",
+    xbox_button_logo = "sc_button_steam",
+
+    shared_dpad = "sc_dpad",
+    shared_dpad_down = "sc_dpad_down",
+    shared_dpad_up = "sc_dpad_up",
+    shared_dpad_left = "sc_dpad_left",
+    shared_dpad_right = "sc_dpad_right",
+
+    -- shared_dpad_click = "sc_dpad_click"
+    -- shared_dpad_swipe = "sc_dpad_swipe"
+    -- shared_dpad_touch = "sc_dpad_touch"
+
+    xbox_lb = "sc_lb",
+    xbox_rb = "sc_rb",
+    xbox_lt = "sc_lt",
+    xbox_rt = "sc_rt",
+    xbox_lt_soft = "sc_lt_soft",
+    xbox_rt_soft = "sc_rt_soft",
+    xbox_p1 = "sc_rg",
+    xbox_p3 = "sc_lg",
+
+    -- xbox_lb_click = "sc_lt_click",
+    -- xbox_rt_click = "sc_rt_click",
+}
+ARC9.CTRL_Set_SD = {
+    xbox_button_select = "button_view",
+    xbox_button_start = "button_menu",
+    xbox_button_logo = "button_steam",
+    xbox_button_share = "button_aux",
+
+    xbox_lb = "sd_l1",
+    xbox_rb = "sd_r1",
+    xbox_lt = "sd_l2",
+    xbox_rt = "sd_r2",
+    xbox_lt_soft = "sd_l2_half",
+    xbox_rt_soft = "sd_r2_half",
+
+    xbox_p1 = "sd_r4",
+    xbox_p2 = "sc_r5",
+    xbox_p3 = "sd_l4",
+    xbox_p4 = "sc_l5",
+}
+ARC9.CTRL_Set_Xbox360 = {
+    xbox_button_select = "xbox360_button_select",
+    xbox_button_start = "xbox360_button_select",
+}
+ARC9.CTRL_Set_Xbox = {}
+ARC9.CTRL_Set_UserCustom = {}
+
+ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox360 -- {}
+
+ARC9.CTRL_Lookup = {
     MOUSE1 = "shared_mouse_l_click",
     MOUSE2 = "shared_mouse_r_click",
     MOUSE3 = "shared_mouse_mid_click",
@@ -897,6 +1111,28 @@ ARC9.CTRL_Lookup = {
 
     MWHEELUP = "shared_mouse_scroll_up",
     MWHEELDOWN = "shared_mouse_scroll_down",
+}
+
+ARC9.CTRL_BindTo = {
+    ["+attack2"] = "xbox_lt_soft",
+    ["+attack"] = "xbox_rt_soft",
+    ["+jump"] = "shared_button_a",
+    ["+reload"] = "shared_button_b",
+    ["+use"] = "shared_button_x",
+    ["+alt1"] = "shared_button_y",
+    ["+speed"] = "shared_lstick_click",
+    ["toggle_duck"] = "shared_rstick_click",
+    ["+menu_context"] = "xbox_lb",
+    ["+walk"] = "xbox_rb",
+    ["invprev"] = "shared_dpad_up",
+    ["impulse 100"] = "shared_dpad_right",
+    ["invnext"] = "shared_dpad_down",
+    ["+zoom"] = "shared_dpad_left",
+
+    ["+forward"] = "shared_lstick_up",
+    ["+back"] = "shared_lstick_down",
+    ["+moveleft"] = "shared_lstick_left",
+    ["+right"] = "shared_lstick_right",
 }
 
 ARC9.CTRL_Exists = {
@@ -1169,56 +1405,60 @@ Vararg:
         If it doesn't, it is made into a key.
 ]]
 function CreateControllerKeyLine( info, ... )
-	local args = { ... } 
-	local strlength = 0
+    local args = { ... } 
+    local strlength = 0
 
-	for i, v in ipairs( args ) do
-		if isstring(v) then
-			surface.SetTextPos(info.x + strlength, info.y)
-			surface.DrawText(v)
-			strlength = strlength + surface.GetTextSize(v)
-		elseif istable(v) then
-			local size = v[2]
-			if isstring(v[1]) and !ARC9.CTRL_Exists[v[1]] then
-				surface.SetFont("ARC9_KeybindPreview")
-				local sx = surface.GetTextSize(v[1])
-				surface.DrawOutlinedRect(info.x + strlength, info.y, math.max(6 + sx, 16), info.size )
-				surface.SetTextPos(info.x + strlength + 3, info.y - 0)
-				surface.DrawText( v[1] )
-				surface.SetFont(info.font)
-				strlength = strlength + math.max(6 + sx, 16)
-			else
-				surface.SetMaterial(v[1])
-				surface.DrawTexturedRect( info.x + strlength, info.y - ((size - info.size)*0.5), size, size )
-				strlength = strlength + size
-			end
-		end
-	end
-	return strlength
+    for i, v in ipairs( args ) do
+        if isstring(v) then
+            -- Draw text.
+            surface.SetTextPos(info.x + strlength, info.y)
+            surface.DrawText(v)
+            strlength = strlength + surface.GetTextSize(v)
+        elseif istable(v) then
+            local size = v[2]
+            if isstring(v[1]) and !ARC9.CTRL_Exists[v[1]] then
+                -- Draw a key.
+                surface.SetFont("ARC9_KeybindPreview")
+                local sx, sy = surface.GetTextSize(v[1])
+                local keylength = math.max(6 + sx, 16)
+                surface.DrawOutlinedRect(info.x + strlength, info.y, keylength, info.size )
+                surface.SetTextPos(info.x + strlength - (sx/2) + (keylength/2), info.y - (sy/2) + (info.size/2) )
+                surface.DrawText( v[1] )
+                surface.SetFont(info.font)
+                strlength = strlength + keylength
+            else
+                -- Draw a controller input.
+                surface.SetMaterial(v[1])
+                surface.DrawTexturedRect( info.x + strlength, info.y - ((size - info.size)*0.5), size, size )
+                strlength = strlength + size
+            end
+        end
+    end
+    return strlength
 end
 
 -- Gets the size of the controller key line.
-function GetControllerKeyLineSize( ... )
-	local args = { ... } 
-	local strlength = 0
+function GetControllerKeyLineSize( info, ... )
+    local args = { ... } 
+    local strlength = 0
 
-	for i, v in ipairs( args ) do
-		if isstring(v) then
-			strlength = strlength + surface.GetTextSize(v)
-		elseif istable(v) then
-			local size = v[2]
-			if isstring(v[1]) and !Exists[v[1]] then
-				surface.SetFont("KeybindPreview")
-				local sx = surface.GetTextSize(v[1])
-				surface.DrawOutlinedRect(info.x + strlength, info.y, math.max(6 + sx, 16), info.size )
-				surface.SetFont(info.font)
-				strlength = strlength + math.max(6 + sx, 16)
-			else
-				strlength = strlength + size
-			end
-		end
-	end
-	return strlength
+    for i, v in ipairs( args ) do
+        if isstring(v) then
+            strlength = strlength + surface.GetTextSize(v)
+        elseif istable(v) then
+            local size = v[2]
+            if isstring(v[1]) and !ARC9.CTRL_Exists[v[1]] then
+                surface.SetFont("ARC9_KeybindPreview")
+                local sx = surface.GetTextSize(v[1])
+                local keylength = math.max(6 + sx, 16)
+                surface.SetFont(info.font)
+                strlength = strlength + keylength
+            else
+                strlength = strlength + size
+            end
+        end
+    end
+    return strlength
 end
 
 --[[

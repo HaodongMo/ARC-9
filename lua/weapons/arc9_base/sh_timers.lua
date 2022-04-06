@@ -127,10 +127,6 @@ if CLIENT then
         if not sinput then return false end
         if not cl_rumble:GetBool() then return false end
 
-        if not sinput.enabled then
-            sinput.Init()
-        end
-
         local P1 = sinput.GetControllerForGamepadIndex(0)
         sinput.TriggerVibration(P1, v1, v2)
         timer.Remove("SInput_ARC9_AnimRumble")

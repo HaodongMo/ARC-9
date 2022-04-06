@@ -85,6 +85,11 @@ local conVars = {
         client = true
     },
     {
+        name = "controller_glyphset",
+        default = "",
+        client = true
+    },
+    {
         name = "bodydamagecancel",
         default = "1",
         replicated = true
@@ -253,6 +258,18 @@ local function menu_client_ti(panel)
     })
 end
 
+local function menu_client_controller(panel)
+    --local textbox = panel:TextEntry("Custom Controller Glyphset", "arc9_controller_glyphset")
+    local combobox = panel:ComboBox("test", "arc9_controller_glyphset" )
+    combobox:AddChoice( "PS4", "!PS4" )
+    combobox:AddChoice( "PS5", "!PS5" )
+    combobox:AddChoice( "Xbox", "!Xbox" )
+    combobox:AddChoice( "Xbox 360", "!Xbox360" )
+    combobox:AddChoice( "Steam Controller", "!SC" )
+    combobox:AddChoice( "Steam Deck", "!SD" )
+    combobox:AddChoice( "Switch Pro", "!SwitchPro" )
+end
+
 local function menu_server_ti(panel)
     panel:AddControl("checkbox", {
         label = "Free Attachments",
@@ -298,6 +315,9 @@ end
 local clientmenus_ti = {
     {
         text = "Client", func = menu_client_ti
+    },
+    {
+        text = "Controller", func = menu_client_controller
     },
     {
         text = "Server", func = menu_server_ti

@@ -280,7 +280,6 @@ if CLIENT then
     function SWEP:SInputRumble()
         if !sinput then return false end
         if !cl_rumble:GetBool() then return false end
-        if !sinput.enabled then sinput.Init() end
 
         local P1 = sinput.GetControllerForGamepadIndex(0)
 
