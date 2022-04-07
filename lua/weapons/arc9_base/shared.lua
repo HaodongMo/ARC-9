@@ -619,6 +619,7 @@ SWEP.PoseParameters = {} -- Poseparameters to manage. ["parameter"] = starting v
 
 SWEP.CustomCamoTexture = nil
 SWEP.CustomCamoScale = 1
+SWEP.CustomBlendFactor = 1
 
 -------------------------- POSITIONS
 

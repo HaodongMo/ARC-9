@@ -4,6 +4,7 @@ matproxy.Add({
         -- Store the name of the variable we want to set
         self.DetailResult = values.camotexture
         self.ScaleResult = values.camoscale
+        self.BlendResult = values.blend
 
         if self.DetailResult then
             self.DefaultTexture = mat:GetTexture(self.DetailResult)
@@ -11,6 +12,10 @@ matproxy.Add({
 
         if self.ScaleResult then
             self.DefaultScale = mat:GetFloat(self.ScaleResult)
+        end
+
+        if self.BlendResult then
+            self.DefaultBlend = mat:GetFloat(self.BlendResult)
         end
     end,
     bind = function( self, mat, ent )
@@ -25,6 +30,12 @@ matproxy.Add({
             mat:SetFloat(self.ScaleResult, ent.CustomCamoScale)
         elseif self.ScaleResult then
             mat:SetFloat(self.ScaleResult, self.DefaultScale)
+        end
+
+        if self.BlendResult and ent.CustomCamoBlend then
+            mat:SetFloat(self.BlendResult, ent.CustomCamoBlend)
+        elseif self.BlendResult then
+            mat:SetFloat(self.BlendResult, self.DefaultBlend)
         end
 
     end
