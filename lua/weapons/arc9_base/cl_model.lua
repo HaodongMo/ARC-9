@@ -41,6 +41,8 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
 
         parentmdl:SetupBones()
         parentmdl:InvalidateBoneCache()
+
+        table.insert(ARC9.CSModelPile, {Model = parentmdl, Weapon = self})
     end
 
     local bone = slottbl.Bone

@@ -127,6 +127,8 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
             local mdl = ARC9.PhysBulletModels[mdlindex]
             bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
             bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
+
+            table.insert(ARC9.CSModelPile, {Model = bullet.ClientModel, Weapon = wep})
         end
     end
 
@@ -195,6 +197,7 @@ net.Receive("arc9_sendbullet", function(len, ply)
         local mdl = ARC9.PhysBulletModels[modelindex]
         bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
         bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
+        table.insert(ARC9.CSModelPile, {Model = bullet.ClientModel, Weapon = weapon})
     end
 
     table.insert(ARC9.PhysBullets, bullet)

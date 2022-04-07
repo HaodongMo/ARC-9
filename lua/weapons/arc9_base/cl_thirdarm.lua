@@ -54,6 +54,8 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
         self.ThirdArmModel = ClientsideModel(rig)
     -- end
 
+    table.insert(ARC9.CSModelPile, {Model = self.ThirdArmModel, Weapon = self})
+
     if !self.ThirdArmModel then return end
 
     local seq = self.ThirdArmModel:LookupSequence(self:RandomChoice(tbl.sequence))
