@@ -133,7 +133,7 @@ local pv_melee = 0
 local pvcache = {}
 
 function SWEP:GetProcessedValue(val, base)
-    if CLIENT and pvcache[tostring(val) .. tostring(base)] and pvtick == UnPredictedCurTime() then
+    if CLIENT and pvcache[tostring(val) .. tostring(base)] != nil and pvtick == UnPredictedCurTime() then
         return pvcache[tostring(val) .. tostring(base)]
     end
 
@@ -360,8 +360,11 @@ function SWEP:GetValue(val, base, condition, amount)
 
         for _, tbl in ipairs(self:GetAllAffectors()) do
             if tbl[val .. "Add" .. condition] != nil then
-                if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
-                    print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
+                -- if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
+                --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
+                -- end
+                if isnumber(tbl[val .. "Add" .. condition]) then
+                    stat = stat + (tbl[val .. "Add" .. condition] * amount)
                 end
                 unaffected = false
             end
@@ -369,8 +372,15 @@ function SWEP:GetValue(val, base, condition, amount)
 
         for _, tbl in ipairs(self:GetAllAffectors()) do
             if tbl[val .. "Mult" .. condition] != nil then
-                if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
-                    print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
+                -- if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
+                --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
+                -- end
+                if isnumber(tbl[val .. "Mult" .. condition]) then
+                    if amount > 1 then
+                        stat = stat * (math.pow(tbl[val .. "Mult" .. condition], amount))
+                    else
+                        stat = stat * tbl[val .. "Mult" .. condition]
+                    end
                 end
                 unaffected = false
             end

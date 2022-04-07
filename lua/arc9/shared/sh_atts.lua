@@ -17,6 +17,11 @@ function ARC9.LoadAttachment(atttbl, shortname)
     atttbl.ID = ARC9.Attachments_Count
     atttbl.Icon = atttbl.Icon or defaulticon
 
+    -- for stat, val in ipairs(atttbl) do
+    --     local stat2 = string.Replace(stat, "Override", "")
+    --     atttbl[stat2] = val
+    -- end
+
     ARC9.Attachments[shortname] = atttbl
     ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
 
