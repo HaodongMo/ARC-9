@@ -11,7 +11,7 @@ function SWEP:InvalidateCache()
     StatCache = {}
     HookCache = {}
     AffectorsCache = nil
-    ElementsCache = nil
+    self.ElementsCache = nil
     self.RecoilPatternCache = {}
     self.ScrollLevels = {}
     HasNoAffectors = {}
