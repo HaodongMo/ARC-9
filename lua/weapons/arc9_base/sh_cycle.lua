@@ -3,7 +3,11 @@ function SWEP:ThinkCycle()
 
     if self:GetNeedsCycle() and !self:GetOwner():KeyDown(IN_ATTACK) then
         if IsFirstTimePredicted() then
-            self:PlayAnimation("cycle", 1, true)
+            local t = self:PlayAnimation("cycle", 1, false)
+
+            t = t * (self:GetAnimationEntry(self:TranslateAnimation("cycle"))).MinProgress or {}
+
+            self:SetAnimLockTime(CurTime() + t)
 
             local ejectdelay = self:GetProcessedValue("EjectDelay")
 
