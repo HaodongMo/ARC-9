@@ -19,13 +19,6 @@ function SWEP:InvalidateCache()
     self:SetBaseSettings()
 end
 
-
-local Lerp = function(a, v1, v2)
-    local d = v2 - v1
-
-    return v1 + (a * d)
-end
-
 function SWEP:RunHook(val, data)
     local any = false
 
@@ -137,9 +130,13 @@ local pv_move = 0
 local pv_shooting = 0
 local pv_melee = 0
 
-local PredictedValueCache = {}
+local pvcache = {}
 
 function SWEP:GetProcessedValue(val, base)
+    if CLIENT and pvcache[tostring(val) .. tostring(base)] and pvtick == UnPredictedCurTime() then
+        return pvcache[tostring(val) .. tostring(base)]
+    end
+
     local stat = self:GetValue(val, base)
 
     -- if true then return stat end
@@ -222,7 +219,7 @@ function SWEP:GetProcessedValue(val, base)
         if self:GetLastMeleeTime() < CurTime() then
             local d = pv_melee
 
-            if pvtick != CurTime() then
+            if pvtick != UnPredictedCurTime() then
                 local pft = CurTime() - self:GetLastMeleeTime()
                 d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
@@ -247,7 +244,7 @@ function SWEP:GetProcessedValue(val, base)
         if self:GetNextPrimaryFire() + 0.1 > CurTime() then
             local d = pv_shooting
 
-            if pvtick != CurTime() then
+            if pvtick != UnPredictedCurTime() then
                 local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
                 d = pft / 0.1
 
@@ -275,7 +272,7 @@ function SWEP:GetProcessedValue(val, base)
     if !HasNoAffectors[val .. "Move"] then
         if self:GetOwner():IsValid() then
             local spd = pv_move
-            if pvtick != CurTime() then
+            if pvtick != UnPredictedCurTime() then
                 spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
 
                 spd = spd / 250
@@ -293,7 +290,8 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    pvtick = CurTime()
+    pvtick = UnPredictedCurTime()
+    pvcache[tostring(val) .. tostring(base)] = stat
 
     return stat
 end
