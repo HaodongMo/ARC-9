@@ -128,8 +128,18 @@ function SWEP:DoPrimaryAttack()
 
     local clip = self:Clip1()
 
+    if self:GetProcessedValue("BottomlessClip") then
+        clip = self:Ammo1()
+        self:RestoreClip(math.huge)
+    end
+
     if self:GetUBGL() then
         clip = self:Clip2()
+
+        if self:GetProcessedValue("BottomlessClip") then
+            clip = self:Ammo2()
+            self:RestoreClip(math.huge)
+        end
     end
 
     if clip < self:GetProcessedValue("AmmoPerShot") then
