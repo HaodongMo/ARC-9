@@ -137,6 +137,10 @@ function SWEP:GetProcessedValue(val, base)
         return pvcache[tostring(val) .. tostring(base)]
     end
 
+    if pvtick != UnPredictedCurTime() then
+        pvcache = {}
+    end
+
     local stat = self:GetValue(val, base)
 
     -- if true then return stat end
