@@ -1,22 +1,20 @@
-SWEP.StatCache = {}
-SWEP.HookCache = {}
-SWEP.AffectorsCache = nil
-SWEP.HasNoAffectors = {}
-SWEP.ProcessedValueTickCache = {}
-SWEP.ProcessedValueTick = 0
+local StatCache = {}
+local HookCache = {}
+local AffectorsCache = nil
+local HasNoAffectors = {}
 
 SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
 }
 
 function SWEP:InvalidateCache()
-    self.StatCache = {}
-    self.HookCache = {}
-    self.AffectorsCache = nil
-    self.ElementsCache = nil
+    StatCache = {}
+    HookCache = {}
+    AffectorsCache = nil
+    ElementsCache = nil
     self.RecoilPatternCache = {}
     self.ScrollLevels = {}
-    self.HasNoAffectors = {}
+    HasNoAffectors = {}
 
     self:SetBaseSettings()
 end
@@ -31,8 +29,8 @@ end
 function SWEP:RunHook(val, data)
     local any = false
 
-    if self.HookCache[val] then
-        for _, chook in pairs(self.HookCache[val]) do
+    if HookCache[val] then
+        for _, chook in pairs(HookCache[val]) do
             local d = chook(self, data)
 
             if d != nil then
@@ -45,12 +43,12 @@ function SWEP:RunHook(val, data)
         return data, any
     end
 
-    self.HookCache[val] = {}
+    HookCache[val] = {}
 
     for _, tbl in ipairs(self:GetAllAffectors()) do
         if tbl[val] then
 
-            table.insert(self.HookCache[val], tbl[val])
+            table.insert(HookCache[val], tbl[val])
 
             if !pcall(function()
                 local d = tbl[val](self, data)
@@ -92,7 +90,7 @@ function SWEP:GetFinalAttTable(slot)
 end
 
 function SWEP:GetAllAffectors()
-    if self.AffectorsCache then return self.AffectorsCache end
+    if AffectorsCache then return AffectorsCache end
 
     local aff = {}
 
@@ -123,7 +121,7 @@ function SWEP:GetAllAffectors()
         ARC9.Overrun = false
     end
 
-    self.AffectorsCache = aff
+    AffectorsCache = aff
 
     return aff
 end
@@ -139,6 +137,8 @@ local pv_move = 0
 local pv_shooting = 0
 local pv_melee = 0
 
+local PredictedValueCache = {}
+
 function SWEP:GetProcessedValue(val, base)
     local stat = self:GetValue(val, base)
 
@@ -152,53 +152,53 @@ function SWEP:GetProcessedValue(val, base)
         return true
     end
 
-    if !self.HasNoAffectors[val .. "True"] and GetConVar("arc9_truenames"):GetBool() then
+    if !HasNoAffectors[val .. "True"] and GetConVar("arc9_truenames"):GetBool() then
         stat = self:GetValue(val, stat, "True")
     end
 
     if self:GetOwner():IsValid() and !self:GetOwner():IsNPC() then
-        if !self.HasNoAffectors[val .. "MidAir"] and !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
+        if !HasNoAffectors[val .. "MidAir"] and !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
             stat = self:GetValue(val, stat, "MidAir")
         end
 
-        if !self.HasNoAffectors[val .. "Crouch"] and self:GetOwner():Crouching() and self:GetOwner():OnGround() then
+        if !HasNoAffectors[val .. "Crouch"] and self:GetOwner():Crouching() and self:GetOwner():OnGround() then
             stat = self:GetValue(val, stat, "Crouch")
         end
     end
 
-    if self:GetBurstCount() == 0 and !self.HasNoAffectors[val .. "FirstShot"] then
+    if self:GetBurstCount() == 0 and !HasNoAffectors[val .. "FirstShot"] then
         stat = self:GetValue(val, stat, "FirstShot")
     end
 
-    if self:Clip1() == 0 and !self.HasNoAffectors[val .. "Empty"] then
+    if self:Clip1() == 0 and !HasNoAffectors[val .. "Empty"] then
         stat = self:GetValue(val, stat, "Empty")
     end
 
-    if !self:GetUBGL() and self:GetValue("Silencer") and !self.HasNoAffectors[val .. "Silencer"] then
+    if !self:GetUBGL() and self:GetValue("Silencer") and !HasNoAffectors[val .. "Silencer"] then
         stat = self:GetValue(val, stat, "Silenced")
     end
 
-    if self:GetUBGL() and !self.HasNoAffectors[val .. "UBGL"] then
+    if self:GetUBGL() and !HasNoAffectors[val .. "UBGL"] then
         stat = self:GetValue(val, stat, "UBGL")
 
-        if self:Clip2() == 0 and !self.HasNoAffectors[val .. "EmptyUBGL"] then
+        if self:Clip2() == 0 and !HasNoAffectors[val .. "EmptyUBGL"] then
             stat = self:GetValue(val, stat, "EmptyUBGL")
         end
     end
 
-    if self:GetNthShot() % 2 == 0  and !self.HasNoAffectors[val .. "EvenShot"] then
+    if self:GetNthShot() % 2 == 0  and !HasNoAffectors[val .. "EvenShot"] then
         stat = self:GetValue(val, stat, "EvenShot")
-    elseif !self.HasNoAffectors[val .. "OddShot"] then
+    elseif !HasNoAffectors[val .. "OddShot"] then
         stat = self:GetValue(val, stat, "OddShot")
     end
 
-    if self:GetNthReload() % 2 == 0 and !self.HasNoAffectors[val .. "EvenReload"] then
+    if self:GetNthReload() % 2 == 0 and !HasNoAffectors[val .. "EvenReload"] then
         stat = self:GetValue(val, stat, "EvenReload")
-    elseif !self.HasNoAffectors[val .. "OddReload"] then
+    elseif !HasNoAffectors[val .. "OddReload"] then
         stat = self:GetValue(val, stat, "OddReload")
     end
 
-    if self:GetBlindFire() and !self.HasNoAffectors[val .. "BlindFire"] then
+    if self:GetBlindFire() and !HasNoAffectors[val .. "BlindFire"] then
         stat = self:GetValue(val, stat, "BlindFire")
     end
 
@@ -206,7 +206,7 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Bipod")
     end
 
-    if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
+    if !HasNoAffectors[val .. "Sights"] or !HasNoAffectors[val .. "HipFire"] then
         if isnumber(stat) then
             stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
         else
@@ -218,7 +218,7 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if !self.HasNoAffectors[val .. "Melee"] then
+    if !HasNoAffectors[val .. "Melee"] then
         if self:GetLastMeleeTime() < CurTime() then
             local d = pv_melee
 
@@ -243,7 +243,7 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if !self.HasNoAffectors[val .. "Shooting"] then
+    if !HasNoAffectors[val .. "Shooting"] then
         if self:GetNextPrimaryFire() + 0.1 > CurTime() then
             local d = pv_shooting
 
@@ -266,13 +266,13 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if !self.HasNoAffectors[val .. "Recoil"] then
+    if !HasNoAffectors[val .. "Recoil"] then
         if self:GetRecoilAmount() > 0 then
             stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
         end
     end
 
-    if !self.HasNoAffectors[val .. "Move"] then
+    if !HasNoAffectors[val .. "Move"] then
         if self:GetOwner():IsValid() then
             local spd = pv_move
             if pvtick != CurTime() then
@@ -307,7 +307,7 @@ function SWEP:GetValue(val, base, condition, amount)
         stat = self:GetTable()[val]
     end
 
-    if self.HasNoAffectors[val .. condition] == true then
+    if HasNoAffectors[val .. condition] == true then
         return stat
     end
 
@@ -317,8 +317,8 @@ function SWEP:GetValue(val, base, condition, amount)
         stat.BaseClass = nil
     end
 
-    if self.StatCache[tostring(base) .. val .. condition] != nil then
-        stat = self.StatCache[tostring(base) .. val .. condition]
+    if StatCache[tostring(base) .. val .. condition] != nil then
+        stat = StatCache[tostring(base) .. val .. condition]
 
         local oldstat = stat
         stat = self:RunHook(val .. "Hook" .. condition, stat)
@@ -380,7 +380,7 @@ function SWEP:GetValue(val, base, condition, amount)
 
     end
 
-    self.StatCache[tostring(base) .. val .. condition] = stat
+    StatCache[tostring(base) .. val .. condition] = stat
 
     local newstat, any = self:RunHook(val .. "Hook" .. condition, stat)
 
@@ -388,7 +388,7 @@ function SWEP:GetValue(val, base, condition, amount)
 
     if any then unaffected = false end
 
-    self.HasNoAffectors[val .. condition] = unaffected
+    HasNoAffectors[val .. condition] = unaffected
 
     if istable(stat) then
         stat.BaseClass = nil
