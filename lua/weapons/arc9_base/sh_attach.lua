@@ -92,6 +92,8 @@ function SWEP:PostModify(toggleonly)
         self.PrintName = base.PrintName
     end
 
+    self.PrintName = self:GetValue("PrintName")
+
     if CLIENT then
         -- self:PruneAttachments()
         self:SendWeapon()

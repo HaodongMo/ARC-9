@@ -13,4 +13,4 @@ ATT.Cons = {}
 ATT.SortOrder = 0
 ATT.MenuCategory = "ARC-9 - Attachments"
 
-Arc9.LoadAttachment(ATT, "optic_rds")
+ARC9.LoadAttachment(ATT, "optic_rds")
