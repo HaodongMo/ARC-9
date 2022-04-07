@@ -613,6 +613,12 @@ SWEP.PoseParameters = {} -- Poseparameters to manage. ["parameter"] = starting v
 -- empty (Changes based on whether a bullet is loaded)
 -- ammo (Changes based on the ammo in the clip)
 
+
+-------------------------- CAMO SYSTEM
+
+SWEP.CustomCamoTexture = nil
+SWEP.CustomCamoScale = 1
+
 -------------------------- POSITIONS
 
 SWEP.IronSights = {

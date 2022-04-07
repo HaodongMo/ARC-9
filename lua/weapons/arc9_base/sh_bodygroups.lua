@@ -120,6 +120,13 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
+    mdl.CustomCamoTexture = self:GetValue("CustomCamoTexture")
+    mdl.CustomCamoScale = self:GetValue("CustomCamoScale")
+    -- mdl.CustomCamoBlend = self:GetValue("CustomCamoBlend")
+    -- mdl.CustomCamoBlendMode = self:GetValue("CustomCamoBlendMode")
+
+    -- PrintTable(mdl:GetMaterials())
+
     self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = eles})
 end
 

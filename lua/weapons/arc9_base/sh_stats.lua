@@ -1,20 +1,20 @@
-local StatCache = {}
-local HookCache = {}
-local AffectorsCache = nil
-local HasNoAffectors = {}
+SWEP.StatCache = {}
+SWEP.HookCache = {}
+SWEP.AffectorsCache = nil
+SWEP.HasNoAffectors = {}
 
 SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
 }
 
 function SWEP:InvalidateCache()
-    StatCache = {}
-    HookCache = {}
-    AffectorsCache = nil
+    self.StatCache = {}
+    self.HookCache = {}
+    self.AffectorsCache = nil
     self.ElementsCache = nil
     self.RecoilPatternCache = {}
     self.ScrollLevels = {}
-    HasNoAffectors = {}
+    self.HasNoAffectors = {}
 
     self:SetBaseSettings()
 end
@@ -22,8 +22,8 @@ end
 function SWEP:RunHook(val, data)
     local any = false
 
-    if HookCache[val] then
-        for _, chook in pairs(HookCache[val]) do
+    if self.HookCache[val] then
+        for _, chook in pairs(self.HookCache[val]) do
             local d = chook(self, data)
 
             if d != nil then
@@ -36,12 +36,12 @@ function SWEP:RunHook(val, data)
         return data, any
     end
 
-    HookCache[val] = {}
+    self.HookCache[val] = {}
 
     for _, tbl in ipairs(self:GetAllAffectors()) do
         if tbl[val] then
 
-            table.insert(HookCache[val], tbl[val])
+            table.insert(self.HookCache[val], tbl[val])
 
             if !pcall(function()
                 local d = tbl[val](self, data)
@@ -83,7 +83,7 @@ function SWEP:GetFinalAttTable(slot)
 end
 
 function SWEP:GetAllAffectors()
-    if AffectorsCache then return AffectorsCache end
+    if self.AffectorsCache then return self.AffectorsCache end
 
     local aff = {}
 
@@ -114,7 +114,7 @@ function SWEP:GetAllAffectors()
         ARC9.Overrun = false
     end
 
-    AffectorsCache = aff
+    self.AffectorsCache = aff
 
     return aff
 end
@@ -207,7 +207,7 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Bipod")
     end
 
-    if !HasNoAffectors[val .. "Sights"] or !HasNoAffectors[val .. "HipFire"] then
+    if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
         if isnumber(stat) then
             stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
         else
@@ -219,7 +219,7 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if !HasNoAffectors[val .. "Melee"] then
+    if !self.HasNoAffectors[val .. "Melee"] then
         if self:GetLastMeleeTime() < CurTime() then
             local d = pv_melee
 
@@ -244,7 +244,7 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if !HasNoAffectors[val .. "Shooting"] then
+    if !self.HasNoAffectors[val .. "Shooting"] then
         if self:GetNextPrimaryFire() + 0.1 > CurTime() then
             local d = pv_shooting
 
@@ -267,13 +267,13 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if !HasNoAffectors[val .. "Recoil"] then
+    if !self.HasNoAffectors[val .. "Recoil"] then
         if self:GetRecoilAmount() > 0 then
             stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
         end
     end
 
-    if !HasNoAffectors[val .. "Move"] then
+    if !self.HasNoAffectors[val .. "Move"] then
         if self:GetOwner():IsValid() then
             local spd = pv_move
             if pvtick != UnPredictedCurTime() then
@@ -309,7 +309,7 @@ function SWEP:GetValue(val, base, condition, amount)
         stat = self:GetTable()[val]
     end
 
-    if HasNoAffectors[val .. condition] == true then
+    if self.HasNoAffectors[val .. condition] == true then
         return stat
     end
 
@@ -319,8 +319,8 @@ function SWEP:GetValue(val, base, condition, amount)
         stat.BaseClass = nil
     end
 
-    if StatCache[tostring(base) .. val .. condition] != nil then
-        stat = StatCache[tostring(base) .. val .. condition]
+    if self.StatCache[tostring(base) .. val .. condition] != nil then
+        stat = self.StatCache[tostring(base) .. val .. condition]
 
         local oldstat = stat
         stat = self:RunHook(val .. "Hook" .. condition, stat)
@@ -392,7 +392,7 @@ function SWEP:GetValue(val, base, condition, amount)
 
     end
 
-    StatCache[tostring(base) .. val .. condition] = stat
+    self.StatCache[tostring(base) .. val .. condition] = stat
 
     local newstat, any = self:RunHook(val .. "Hook" .. condition, stat)
 
@@ -400,7 +400,7 @@ function SWEP:GetValue(val, base, condition, amount)
 
     if any then unaffected = false end
 
-    HasNoAffectors[val .. condition] = unaffected
+    self.HasNoAffectors[val .. condition] = unaffected
 
     if istable(stat) then
         stat.BaseClass = nil
