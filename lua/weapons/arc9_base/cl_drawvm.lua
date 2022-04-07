@@ -38,6 +38,10 @@ function SWEP:PreDrawViewModel()
     self:GetVM():SetMaterial(self:GetProcessedValue("Material"))
 
     cam.IgnoreZ(true)
+
+    if self:GetSightAmount() > 0.75 and self:GetSight().FlatScope and !self:GetSight().FlatScopeKeepVM then
+        render.SetBlend(0)
+    end
 end
 
 function SWEP:ViewModelDrawn()
@@ -58,6 +62,7 @@ function SWEP:PostDrawViewModel()
     if ARC9.PresetCam then return end
 
     cam.IgnoreZ(false)
+    render.SetBlend(1)
 
     if !GetConVar("ARC9_benchgun"):GetBool() then
         cam.End3D()

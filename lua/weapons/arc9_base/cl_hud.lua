@@ -225,6 +225,24 @@ function SWEP:GetBinding(bind)
 end
 
 function SWEP:DrawHUD()
+    self:RunHook("Hook_HUDPaintBackground")
+
+    if self:GetSightAmount() > 0.75 and self:GetSight().FlatScope and self:GetSight().FlatScopeOverlay then
+        if self:GetSight().FlatScopeBlackBox then
+            surface.SetMaterial(self:GetSight().FlatScopeOverlay)
+            surface.SetDrawColor(255, 255, 255)
+            surface.DrawTexturedRect((ScrW() - ScrH()) / 2, 0, ScrH(), ScrH())
+
+            surface.SetDrawColor(0, 0, 0)
+            surface.DrawRect(0, 0, (ScrW() - ScrH()) / 2, ScrH())
+            surface.DrawRect(ScrW() - (ScrW() - ScrH()) / 2, 0, (ScrW() - ScrH()) / 2, ScrH())
+        else
+            surface.SetMaterial(self:GetSight().FlatScopeOverlay)
+            surface.SetDrawColor(255, 255, 255)
+            surface.DrawTexturedRect(0, (ScrH() - ScrW()) / 2, ScrW(), ScrW())
+        end
+    end
+
     self:HoldBreathHUD()
     self:DrawCustomizeHUD()
 

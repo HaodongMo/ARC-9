@@ -274,9 +274,7 @@ SWEP.UBGLClipSize = 1
 SWEP.UBGLFiremode = 1
 SWEP.UBGLFiremodeName = "UBGL"
 SWEP.UBGLChamberSize = 0
-SWEP.UBGLIntegralReload = false -- The UBGL uses reload animations that are baked into the gun.
 SWEP.UBGLInsteadOfSights = false -- Right clicking fires UBGL instead of going into irons.
-SWEP.UBGLDualReload = false -- Reloading UBGL reloads regular gun, and vice versa
 
 -- Otherwise, these are just stats that get overwritten when selecting a UBGL.
 SWEP.AmmoPerShotUBGL = 1
@@ -417,6 +415,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 
 -- SWEP.Hook_Draw = function(self, vm) end # Called when the weapon is drawn. Call functions here to modify the viewmodel, such as drawing RT screens onto the gun.
 -- SWEP.Hook_HUDPaint = function(self) end
+-- SWEP.Hook_HUDPaintBackground = function(self) end
 -- SWEP.Hook_RTScopeReticle = function(self, {rtsize = num, rtmat = Material})
 -- SWEP.Hook_ModifyRecoilDir = function(self, dir) return dir end # direction of recoil in degrees, 0 = up
 -- SWEP.HookP_ModifyFiremode = function(self, firemode) return firemode end
@@ -622,6 +621,13 @@ SWEP.IronSights = {
     Magnification = 1,
     AssociatedSlot = 0, -- Attachment slot to associate the sights with. Causes RT scopes to render.
     CrosshairInSights = false,
+    ---- FLAT SCOPES
+    -- These don't look very good; please use actual RT scopes if possible.
+    FlatScope = false,
+    FlatScopeOverlay = nil, -- Material()
+    FlatScopeKeepVM = false,
+    FlatScopeBlackBox = true,
+    FlatScopeCC = nil -- Color correction table, see default.lua
 }
 
 SWEP.SightMidPoint = { -- Where the gun should be at the middle of it's irons
