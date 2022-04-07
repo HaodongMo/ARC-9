@@ -1,6 +1,7 @@
 ATT.PrintName = "Konstantin Red Dot"
 ATT.CompactName = "RDSx1"
 ATT.Icon = Material("")
+ATT.FullColorIcon = false -- This icon spans the entire area of the material and needs special treatment.
 ATT.Description = [[Collimated red dot optic sight.]]
 ATT.Pros = {}
 ATT.Cons = {}

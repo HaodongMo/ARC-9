@@ -222,19 +222,20 @@ local function enterfolder(self, scroll, slottbl, fname)
             local hasbg = false
 
             if self2:IsHovered() or attached then
-                col1 = ARC9.GetHUDColor("shadow")
+                if !atttbl.FullColorIcon then
+                    col1 = ARC9.GetHUDColor("shadow")
+                    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+                    surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
 
-                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-                surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
-
-                if self2:IsHovered() then
-                    surface.SetDrawColor(ARC9.GetHUDColor("hi"))
-                    col2 = ARC9.GetHUDColor("hi")
-                else
-                    surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-                    col2 = ARC9.GetHUDColor("fg")
+                    if self2:IsHovered() then
+                        surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+                        col2 = ARC9.GetHUDColor("hi")
+                    else
+                        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                        col2 = ARC9.GetHUDColor("fg")
+                    end
+                    surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
                 end
-                surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
 
                 hasbg = true
             else
@@ -261,9 +262,15 @@ local function enterfolder(self, scroll, slottbl, fname)
                 surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
             end
 
-            surface.SetDrawColor(col1)
-            surface.SetMaterial(icon)
-            surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+            if atttbl.FullColorIcon then
+                surface.SetDrawColor(ARC9.GetHUDColor("fg", 150))
+                surface.SetMaterial(icon)
+                surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+            else
+                surface.SetDrawColor(col1)
+                surface.SetMaterial(icon)
+                surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+            end
 
             if atttbl.HoloSight or atttbl.RTScope then
                 local hrs = ScreenScale(12)
