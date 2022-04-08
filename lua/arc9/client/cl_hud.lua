@@ -783,8 +783,8 @@ function ARC9.DrawHUD()
 
         if capabilities.VariableZoom then
             table.insert(hints, {
-                glyph = ARC9.GetBindKey("+invnext"),
-                glyph2 = ARC9.GetBindKey("+invprev"),
+                glyph = ARC9.GetBindKey("invnext"),
+                glyph2 = ARC9.GetBindKey("invprev"),
                 action = "Change Zoom"
             })
         end

@@ -286,7 +286,7 @@ local function menu_client_controller(panel)
     panel:AddItem( tex_inp )
     panel:ControlHelp( "Glyph or keyboard icon to be replaced.\nAll keyboard and mouse inputs are in uppercase." )
     panel:AddItem( tex_out )
-    panel:ControlHelp( "Glyph or keyboard icon to replace." )
+    panel:ControlHelp( "Glyph to show." )
     tex_inp:SetPlaceholderText("Input: Button to replace")
     tex_out:SetPlaceholderText("Output: Button to show")
 
