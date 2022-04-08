@@ -575,6 +575,7 @@ SWEP.MuzzleEffectQCA = 1 -- QC Attachment that controls muzzle effect.
 SWEP.CaseEffectQCA = 2 -- QC Attachment for shell ejection.
 SWEP.CamQCA = nil -- QC Attachment for camera movement.
 SWEP.CamQCA_Mult = nil -- Intensity for QC camera movement.
+SWEP.CamQCA_Mult_ADS = nil -- Intensity for QC camera movement in ADS.
 SWEP.ProceduralViewQCA = nil -- QC Attachment for procedural camera movement. Use if you don't have a camera. Usually the muzzle.
 
 SWEP.CamOffsetAng = Angle(0, 0, 0)
