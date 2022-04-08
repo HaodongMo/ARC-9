@@ -300,7 +300,10 @@ SWEP.VisualRecoilMult = 1
 
 SWEP.VisualRecoilHipFire = true
 
+SWEP.VisualRecoilDampingConst = nil -- How spring will be visual recoil, 120 is default
+
 SWEP.RecoilKick = 1 -- Camera recoil
+SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
 
 -------------------------- SPREAD
 

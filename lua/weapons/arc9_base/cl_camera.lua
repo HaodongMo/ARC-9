@@ -11,7 +11,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
     rec = rec * self:GetProcessedValue("RecoilKick")
 
     if rec > 0 then
-        ang.r = ang.r + (math.sin(CurTime() * 70.151) * rec)
+        ang.r = ang.r + (math.sin(CurTime() * self:GetProcessedValue("RecoilKickDamping")) * rec)
     end
 
     fov = fov / self:GetSmoothedFOVMag()

@@ -164,6 +164,7 @@ function SWEP:ThinkVisualRecoil()
 
     local vpa = self.VisualRecoilPos
     local vpv = self.VisualRecoilPosVel
+    PUNCH_SPRING_CONSTANT = self.VisualRecoilDampingConst or 120
 
     if lensqr(vpa) + lensqr(vpv) > 0.000001 then
         -- {
