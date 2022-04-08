@@ -433,6 +433,7 @@ function SWEP:CreateCustomizeHUD()
         lastmousex, lastmousey = input.GetCursorPos()
 
         lmbdown = input.IsMouseDown(MOUSE_LEFT)
+        rmbdown = input.IsMouseDown(MOUSE_RIGHT)
         
         if lmbdown then lmbdowntime = lmbdowntime + FrameTime() else lmbdowntime = 0 end
         if rmbdown then rmbdowntime = rmbdowntime + FrameTime() else rmbdowntime = 0 end
