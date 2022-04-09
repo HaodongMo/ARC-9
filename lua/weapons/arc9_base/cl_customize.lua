@@ -149,8 +149,14 @@ end
 local mat_circle = Material("arc9/circle.png", "mips smooth")
 local mat_gear = Material("arc9/gear.png", "mips smooth")
 
-local lastlmbdown = false
-local lastrmbdown = false
+local lmbdown = false
+local lmbdowntime = 0
+local rmbdown = false
+local rmbdowntime = 0
+local lmbhold = false
+local lmbclick = false
+local rmbhold = false
+local rmbclick = false
 
 local lastmousex = 0
 local lastmousey = 0
@@ -351,7 +357,8 @@ function SWEP:CreateCustomizeHUD()
 
                 if hoveredslot and !ARC9.NoFocus then
                     anyhovered = true
-                    if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
+                    -- print(lmbdown)
+                    if input.IsMouseDown(MOUSE_LEFT) and !lmbdown and (self.BottomBarAddress != slot.Address or self.BottomBarMode != 1) then
                         self.BottomBarMode = 1
                         self.BottomBarAddress = slot.Address
                         self.BottomBarPath = {}
@@ -362,7 +369,8 @@ function SWEP:CreateCustomizeHUD()
                         self.CustomizePanX = 0
                         self.CustomizePanY = 0
                         self.CustomizePitch = 0
-                    elseif input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
+                        -- print("hi")
+                    elseif input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
                         self:DetachAllFromSubSlot(slot.Address)
                     end
                 end
@@ -375,11 +383,11 @@ function SWEP:CreateCustomizeHUD()
         end
 
         if !anyhovered and !ARC9.NoFocus then
-            if input.IsMouseDown(MOUSE_LEFT) and !lastlmbdown then
+            if input.IsMouseDown(MOUSE_LEFT) and !lmbdown then
                 dragging = true
                 lastmousex, lastmousey = input.GetCursorPos()
             end
-            if input.IsMouseDown(MOUSE_RIGHT) and !lastrmbdown then
+            if input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
                 dragging_r = true
                 lastmousex, lastmousey = input.GetCursorPos()
             end
@@ -410,21 +418,30 @@ function SWEP:CreateCustomizeHUD()
                 local dy = mousey - lastmousey
 
                 self.CustomizePitch = self.CustomizePitch - (dx / ScreenScale(4))*3
-                self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
+                -- self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
+                self.CustomizeYaw = self.CustomizeYaw + (dy / ScreenScale(8)) 
 
             end
         elseif self:GetOwner():KeyDown(IN_RELOAD) then
-            self.CustomizePanX = Lerp(0.1, self.CustomizePanX, 0)
-            self.CustomizePanY = Lerp(0.1, self.CustomizePanY, 0)
-            self.CustomizePitch = Lerp(0.1, self.CustomizePitch, 0)
-            self.CustomizeYaw = Lerp(0.1, self.CustomizeYaw, 0)
-            self.CustomizeZoom = Lerp(0.1, self.CustomizeZoom, 0)
+            self.CustomizePanX = Lerp(0.25, self.CustomizePanX, 0)
+            self.CustomizePanY = Lerp(0.25, self.CustomizePanY, 0)
+            self.CustomizePitch = Lerp(0.25, self.CustomizePitch, 0)
+            self.CustomizeYaw = Lerp(0.25, self.CustomizeYaw, 0)
+            self.CustomizeZoom = Lerp(0.25, self.CustomizeZoom, 0)
         end
 
         lastmousex, lastmousey = input.GetCursorPos()
 
-        lastlmbdown = input.IsMouseDown(MOUSE_LEFT)
-        lastrmbdown = input.IsMouseDown(MOUSE_RIGHT)
+        lmbdown = input.IsMouseDown(MOUSE_LEFT)
+        rmbdown = input.IsMouseDown(MOUSE_RIGHT)
+        
+        if lmbdown then lmbdowntime = lmbdowntime + FrameTime() else lmbdowntime = 0 end
+        if rmbdown then rmbdowntime = rmbdowntime + FrameTime() else rmbdowntime = 0 end
+
+        lmbhold, rmbhold = lmbdowntime > 0.1, rmbdowntime > 0.1
+        lmbclick, rmbclick = (!lmbdown and !lmbhold), (rmbdown and !rmbhold)
+
+        -- print(lmbclick) - gross
     end
 
     self:CreateHUD_RHP()
