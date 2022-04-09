@@ -46,9 +46,9 @@ SWEP.MirrorVMWM = false -- Use this to use the viewmodel as a worldmodel.
 SWEP.WorldModelMirror = nil -- Use this to set a lower-quality version of the viewmodel, with the same bone structure, as a worldmodel, to take advantage of MirrorVMWM without having to use the viewmodel.
 SWEP.WorldModelOffset = nil
 -- SWEP.WorldModelOffset = {
---     pos = Vector(0, 0, 0),
---     ang = Angle(0, 0, 0),
---     scale = 1
+--     Pos = Vector(0, 0, 0),
+--     Ang = Angle(0, 0, 0),
+--     Scale = 1
 -- }
 SWEP.NoTPIK = false
 SWEP.Material = ""
