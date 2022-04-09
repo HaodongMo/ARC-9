@@ -88,11 +88,17 @@ function SWEP:PostModify(toggleonly)
 
     if ARC9:UseTrueNames() then
         self.PrintName = base.TrueName
+        self.PrintName = self:GetValue("TrueName")
     else
         self.PrintName = base.PrintName
+        self.PrintName = self:GetValue("PrintName")
     end
 
-    self.PrintName = self:GetValue("PrintName")
+    if !self.PrintName then
+        self.PrintName = base.PrintName
+        self.PrintName = self:GetValue("PrintName")
+    end
+
     self.PrintName = self:RunHook("HookP_NameChange", self.PrintName)
 
     if CLIENT then
