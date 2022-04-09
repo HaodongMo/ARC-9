@@ -21,6 +21,7 @@ ATT.DrawFunc = function(swep, model, wm) end
 ATT.ModelSkin = 0
 ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
+ATT.Bonemerge = false -- bonemerge model to vm. Pos, ang and scale do not matter if true
 
 ATT.Material = ""
 
