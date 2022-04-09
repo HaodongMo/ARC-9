@@ -5,7 +5,7 @@ function SWEP:ThinkCycle()
         if IsFirstTimePredicted() then
             local t = self:PlayAnimation("cycle", 1, false)
 
-            t = t * (self:GetAnimationEntry(self:TranslateAnimation("cycle"))).MinProgress or {}
+            t = t * ((self:GetAnimationEntry(self:TranslateAnimation("cycle")) or {}).MinProgress or 1)
 
             self:SetAnimLockTime(CurTime() + t)
 
