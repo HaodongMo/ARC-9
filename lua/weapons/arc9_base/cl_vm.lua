@@ -48,6 +48,21 @@ local DampAngle = function(a, v1, v2)
     return LerpAngle(a, v2, v1)
 end
 
+local function rotatearound2dpoint(cx, cy, ang, px, py) -- idk how to use it
+    local s = math.sin(math.rad(ang))
+    local c = math.cos(math.rad(ang))
+    
+    -- translate point back to origin:
+    px = px - cx
+    py = py - cy
+    
+    -- rotate point
+    local xnew = px * c - py * s
+    local ynew = px * s + py * c
+    
+    return xnew + cx, ynew + cy
+end
+
 function SWEP:GetViewModelPosition(pos, ang)
     local oldpos = Vector(0, 0, 0)
     local oldang = Angle(0, 0, 0)
@@ -247,7 +262,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
 
         cpos = cpos + cang:Up() * self.CustomizePanX
-        cpos = cpos + cang:Forward() * self.CustomizePanY
+        cpos = cpos + cang:Forward() * (self.CustomizePanY - 0.7)
         cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom + 10)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
@@ -294,12 +309,16 @@ function SWEP:GetViewModelPosition(pos, ang)
             -- this needs to be better
             -- its more like proof of concept
             -- probably this can be better if it based on selected slot offset not random numbers
+
+            -- local px, py = rotatearound2dpoint(pos.x - 4, pos.y - 15, self.CustomizePitch, pos.x, pos.y)
+            -- i have no fucking ideaaaaa im bad at trigonometry
+
             pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-            pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -15) * curvedcustomizedelta ^ 2
+            pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -18) * curvedcustomizedelta ^ 2
         end
 
         pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
-        pos = pos + (ang:Forward() * 15) * curvedcustomizedelta ^ 2
+        pos = pos + (ang:Forward() * 18) * curvedcustomizedelta ^ 2
 
         if !self.CustomizeNoRotate then
             ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
