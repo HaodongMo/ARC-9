@@ -29,7 +29,7 @@ function SWEP:DrawLightFlare(pos, norm, col, size, focus)
     if !focus then
         local dist = (pos - EyePos()):Length()
 
-        size = size * 12000 / (math.pow(dist, 1.25))
+        size = size * 120 / (math.pow(dist, 1.25))      -- the math is wrong here pls fix
     end
 
     local toscreen = pos:ToScreen()

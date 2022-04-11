@@ -88,7 +88,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 model:DrawModel()
             end
 
-            if model.Flare then
+            if model.Flare and !self:GetCustomize() then
                 if model.Flare.Attachment then
                     local attpos = model:GetAttachment(model.Flare.Attachment)
 
