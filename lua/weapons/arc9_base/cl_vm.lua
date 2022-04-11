@@ -248,7 +248,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         cpos = cpos + cang:Up() * self.CustomizePanX
         cpos = cpos + cang:Forward() * self.CustomizePanY
-        cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom + 24)
+        cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom + 10)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)

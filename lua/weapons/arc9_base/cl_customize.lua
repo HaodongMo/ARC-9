@@ -188,7 +188,7 @@ function SWEP:CreateCustomizeHUD()
     bg.OnMouseWheeled = function(self2, sd)
         self.CustomizeZoom = self.CustomizeZoom - (sd * 2)
 
-        self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -32, 32)
+        self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -16, 16)
     end
     bg:SetMouseInputEnabled(true)
     bg.Paint = function(self2, w, h)
