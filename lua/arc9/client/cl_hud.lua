@@ -62,6 +62,7 @@ local hint_alpha = 1
 local lasthintcount = 0
 local hidefadetime = 0
 local first = true
+local convar_keephints = GetConVar("arc9_hud_keephints")
 
 local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
 local hud_t_full = Material("arc9/thermometer_full.png", "mips")
@@ -887,7 +888,7 @@ function ARC9.DrawHUD()
         else
             hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
         end
-        hint_alpha = 1
+        if convar_keephints:GetBool() then hint_alpha = 1 end
 
         cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 150 * hint_alpha))

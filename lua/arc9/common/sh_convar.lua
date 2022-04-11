@@ -191,6 +191,11 @@ local conVars = {
         default = "0"
     },
     {
+        name = "hud_keephints",
+        default = "0",
+        client = true
+    },
+    {
         name = "infinite_ammo",
         default = "0",
         replicated = true
