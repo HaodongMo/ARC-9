@@ -1,0 +1,8 @@
+"Sprite"
+{
+	"$basetexture" "effects/whiteflare"
+	
+	"$vertexalpha" 1
+	"$vertexcolor" 1
+	"$spriterendermode" 5
+}
