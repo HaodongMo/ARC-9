@@ -97,6 +97,10 @@ function SWEP:ToggleSafety(onoff)
         if IsFirstTimePredicted() then
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("FiremodeSound")), 75, 100, 1, CHAN_ITEM)
         end
+
+        if onoff == false then
+            self:ExitSights()
+        end
     end
 end
 

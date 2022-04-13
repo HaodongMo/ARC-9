@@ -9,6 +9,7 @@ function SWEP:EnterSights()
     if !self:GetProcessedValue("ReloadInSights") and self:GetReloading() then return end
     if self:GetHolster_Time() > 0 then return end
     if self:GetProcessedValue("UBGLInsteadOfSights") then return end
+    if self:GetSafe() then return end
 
     self:ToggleBlindFire(false)
     self:SetInSights(true)
@@ -31,9 +32,13 @@ function SWEP:ExitSights()
 end
 
 function SWEP:ThinkSights()
-    if self:GetSafe() then return end
+    -- if self:GetSafe() then return end
 
     local sighted = self:GetInSights()
+
+    if self:GetSafe() then
+        sighted = false
+    end
 
     local amt = self:GetSightAmount()
     local oldamt = amt
