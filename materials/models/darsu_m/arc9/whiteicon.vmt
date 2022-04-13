@@ -1,0 +1,5 @@
+VertexlitGeneric
+{
+	"$basetexture" 	"models/darsu_m/arc9/arc9_att_optic_acog"
+	"$translucent" "1"
+}
