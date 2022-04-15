@@ -32,6 +32,7 @@ function ARC9.LoadAttachment(atttbl, shortname)
         attent.PrintName = atttbl.PrintName or shortname
         attent.Spawnable = true
         attent.AdminOnly = atttbl.AdminOnly or false
+        attent.Model = atttbl.BoxModel or "models/items/arc9/att_plastic_box.mdl"
         attent.AttToGive = shortname
         attent.GiveAttachments = {
             [shortname] = 1
