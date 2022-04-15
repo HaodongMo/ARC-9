@@ -40,3 +40,18 @@ matproxy.Add({
 
     end
 })
+
+matproxy.Add({
+    name = "ARC9_Heat",
+    init = function( self, mat, values )
+        self.BlendResult = values.blend
+    end,
+
+    bind = function( self, mat, ent )
+        local weapon = ent and ent:GetOwner() and ent:GetOwner():GetActiveWeapon()
+
+        if weapon and weapon:GetProcessedValue("Overheat") then
+            mat:SetFloat(self.BlendResult, (math.ease.InExpo(weapon:GetHeatAmount() / weapon:GetProcessedValue("HeatCapacity"))) * 2)
+        end
+    end
+})
