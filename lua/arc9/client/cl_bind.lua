@@ -33,7 +33,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
             end
 
             return true
-        elseif LocalPlayer():KeyDown(IN_ATTACK2) then
+        elseif LocalPlayer():KeyDown(IN_ATTACK2) and !LocalPlayer():KeyDown(IN_USE) then
             return true
         end
     end
