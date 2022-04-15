@@ -70,12 +70,9 @@ if SERVER then
                 end
 
                 local filepath = "wm"
-
                 filepath = filepath .. "am/playerdata"
                 filepath = filepath .. ".txt"
-
                 file.Write(filepath, mfsdfd)
-
                 ARC9.AttMaterialIndex = false
             end
 
@@ -102,19 +99,20 @@ else
         return false
     end
 
-    -- function ENT:DrawTranslucent()
-    --     self:Draw()
-    -- end
-    local icon = Material("entities/arc9_att_m79_tactical.png") -- change to else later okay ?
+    local icon = Material("entities/arc9_att_optic_vortex.png", "noclamp smooth") -- change to else later okay ?
+    local attname = "attnamehere12"
 
     function ENT:Initialize()
-        -- local maticon = CreateMaterial("attnamehere", "VertexLitGeneric", {
-        --     ["$basetexture"] = "color/white",
-        --     ["$translucent"] = 1,
-        -- })
-        -- maticon:SetTexture
-        -- i ll do it later
-        -- self:SetSubMaterial(1, "nil" )
+        local maticon = CreateMaterial(attname, "VertexLitGeneric", {
+            ["$basetexture"] = "color/white",
+            ["$translucent"] = 1,
+            -- ["$vertexcolor"] = 1, -- ["$model"] = 1,
+            ["$color2"] = (self.Model ~= "models/items/arc9/att_plastic_box.mdl") and "[0 0 0]" or "[1 1 1]",
+        })
+
+        maticon:SetTexture("$basetexture", icon:GetName())
+        maticon:Recompute()
+        self:SetSubMaterial(1, "!" .. attname)
     end
 
     function ENT:Draw()
