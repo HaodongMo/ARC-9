@@ -234,6 +234,8 @@ function SWEP:RestoreClip(amt)
         end
 
         clip = self:Clip1()
+
+        self:SetLoadedRounds(self:Clip1())
     end
 
     return clip - lastclip
@@ -327,7 +329,7 @@ function SWEP:EndReload()
 
         self:SetNthShot(0)
         self:SetNthReload(self:GetNthReload() + 1)
-        self:SetLoadedRounds(self:Clip1())
+        -- self:SetLoadedRounds(self:Clip1())
 
         self:SetEmptyReload(false)
     end
