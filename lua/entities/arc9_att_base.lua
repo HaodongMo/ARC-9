@@ -7,6 +7,8 @@ ENT.Spawnable = false
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 ENT.Category = "ARC9 - Attachments"
 AddCSLuaFile()
+
+ENT.Icon = Material("arc9/arccw_bird.png", "mips smooth")
 ENT.GiveAttachments = nil -- table of all the attachments to give, and in what quantity. {{["id"] = int quantity}}
 ENT.SoundImpact = "weapon.ImpactSoft"
 ENT.Model = "models/items/arc9/att_wooden_box.mdl"
@@ -99,10 +101,11 @@ else
         return false
     end
 
-    local icon = Material("entities/arc9_att_optic_vortex.png", "noclamp smooth") -- change to else later okay ?
-    local attname = "attnamehere12"
+    -- local icon = Material("entities/arc9_att_optic_vortex.png", "noclamp smooth") -- change to else later okay ?
+    -- local attname = "attnamehere12"
 
     function ENT:Initialize()
+        local attname = table.GetKeys(self.GiveAttachments)[1]
         local maticon = CreateMaterial(attname, "VertexLitGeneric", {
             ["$basetexture"] = "color/white",
             ["$translucent"] = 1,
@@ -110,7 +113,7 @@ else
             ["$color2"] = (self.Model ~= "models/items/arc9/att_plastic_box.mdl") and "[0 0 0]" or "[1 1 1]",
         })
 
-        maticon:SetTexture("$basetexture", icon:GetName())
+        maticon:SetTexture("$basetexture", self.Icon:GetTexture("$basetexture"))
         maticon:Recompute()
         self:SetSubMaterial(1, "!" .. attname)
     end
