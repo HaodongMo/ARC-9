@@ -10,7 +10,35 @@ end
 local clr_b = Color(160, 190, 255)
 local clr_r = Color(255, 190, 190)
 
-concommand.Add("arc9_listvmanims", function()
+concommand.Add("arc9_dev_printirons", function()
+    MsgC(clr_b, "{\n")
+    MsgC(color_white, "    Pos")
+    MsgC(clr_b, " = ")
+    MsgC(clr_r, "Vector")
+    MsgC(color_white, "(")
+    MsgC(clr_b, tostring(GetConVar("arc9_dev_irons_x"):GetFloat()))
+    MsgC(color_white, ",")
+    MsgC(clr_b, tostring(GetConVar("arc9_dev_irons_y"):GetFloat()))
+    MsgC(color_white, ",")
+    MsgC(clr_b, tostring(GetConVar("arc9_dev_irons_z"):GetFloat()))
+    MsgC(color_white, "),\n")
+    MsgC(color_white, "    Ang")
+    MsgC(clr_b, " = ")
+    MsgC(clr_r, "Angle")
+    MsgC(color_white, "(")
+    MsgC(clr_b, tostring(GetConVar("arc9_dev_irons_pitch"):GetFloat()))
+    MsgC(color_white, ",")
+    MsgC(clr_b, tostring(GetConVar("arc9_dev_irons_yaw"):GetFloat()))
+    MsgC(color_white, ",")
+    MsgC(clr_b, tostring(GetConVar("arc9_dev_irons_roll"):GetFloat()))
+    MsgC(color_white, "),\n")
+    MsgC(clr_b, "}\n")
+
+    -- Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
+    --                     Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
+end)
+
+concommand.Add("arc9_dev_listanims", function()
     local wep = LocalPlayer():GetActiveWeapon()
     if !wep then return end
     local vm = LocalPlayer():GetViewModel()
@@ -24,7 +52,7 @@ concommand.Add("arc9_listvmanims", function()
     end
 end)
 
-concommand.Add("arc9_listvmbones", function()
+concommand.Add("arc9_dev_listbones", function()
     local wep = LocalPlayer():GetActiveWeapon()
     if !wep then return end
     local vm = LocalPlayer():GetViewModel()
@@ -35,7 +63,7 @@ concommand.Add("arc9_listvmbones", function()
     end
 end)
 
-concommand.Add("arc9_listvmatts", function()
+concommand.Add("arc9_dev_listatts", function()
     local wep = LocalPlayer():GetActiveWeapon()
     if !wep then return end
     local vm = LocalPlayer():GetViewModel()
@@ -49,7 +77,7 @@ concommand.Add("arc9_listvmatts", function()
     end
 end)
 
-concommand.Add("arc9_listvmbgs", function()
+concommand.Add("arc9_dev_listbgs", function()
     local wep = LocalPlayer():GetActiveWeapon()
     if !wep then return end
     local vm = LocalPlayer():GetViewModel()
