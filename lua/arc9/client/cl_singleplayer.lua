@@ -1,7 +1,7 @@
 if game.SinglePlayer() then
     net.Receive("arc9_sp_health", function(len, ply)
         local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
+        if !IsValid(ent) then return end
         ent:SetHealth(0)
         ent.ARC9CLHealth = 0
     end)
@@ -12,9 +12,9 @@ local clr_r = Color(255, 190, 190)
 
 concommand.Add("arc9_listvmanims", function()
     local wep = LocalPlayer():GetActiveWeapon()
-    if not wep then return end
+    if !wep then return end
     local vm = LocalPlayer():GetViewModel()
-    if not vm then return end
+    if !vm then return end
     local alist = vm:GetSequenceList()
 
     for i = 0, #alist do
@@ -26,9 +26,9 @@ end)
 
 concommand.Add("arc9_listvmbones", function()
     local wep = LocalPlayer():GetActiveWeapon()
-    if not wep then return end
+    if !wep then return end
     local vm = LocalPlayer():GetViewModel()
-    if not vm then return end
+    if !vm then return end
 
     for i = 0, (vm:GetBoneCount() - 1) do
         print(i .. " - " .. vm:GetBoneName(i))
@@ -37,9 +37,9 @@ end)
 
 concommand.Add("arc9_listvmatts", function()
     local wep = LocalPlayer():GetActiveWeapon()
-    if not wep then return end
+    if !wep then return end
     local vm = LocalPlayer():GetViewModel()
-    if not vm then return end
+    if !vm then return end
     local alist = vm:GetAttachments()
 
     for i = 1, #alist do
@@ -51,9 +51,9 @@ end)
 
 concommand.Add("arc9_listvmbgs", function()
     local wep = LocalPlayer():GetActiveWeapon()
-    if not wep then return end
+    if !wep then return end
     local vm = LocalPlayer():GetViewModel()
-    if not vm then return end
+    if !vm then return end
     local alist = vm:GetBodyGroups()
 
     for i = 1, #alist do

@@ -135,7 +135,7 @@ SWEP.ShootEntityData = {} -- Extra data that can be given to a projectile. Sets 
 SWEP.AlwaysPhysBullet = false
 SWEP.NeverPhysBullet = false
 
-SWEP.PhysBulletMuzzleVelocity = 150000 -- Physical bullet muzzle velocity in Hammer Units/second. 1 HU ~= 1 inch.
+SWEP.PhysBulletMuzzleVelocity = 150000 -- Physical bullet muzzle velocity in Hammer Units/second. 1 HU != 1 inch.
 SWEP.PhysBulletDrag = 1 -- Drag multiplier
 SWEP.PhysBulletGravity = 1 -- Gravity multiplier
 SWEP.PhysBulletDontInheritPlayerVelocity = false -- Set to true to disable "Browning Effect"

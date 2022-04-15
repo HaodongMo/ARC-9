@@ -15,7 +15,7 @@ ENT.Model = "models/items/arc9/att_wooden_box.mdl"
 
 if SERVER then
     function ENT:Initialize()
-        if not self.Model then
+        if !self.Model then
             self:Remove()
 
             return
@@ -42,7 +42,7 @@ if SERVER then
     end
 
     function ENT:Use(activator, caller)
-        if not caller:IsPlayer() then return end
+        if !caller:IsPlayer() then return end
         -- if GetConVar("arc9_free_atts"):GetBool() then return end
         local take = false
 
@@ -86,7 +86,7 @@ if SERVER then
 else
     function ENT:BeingLookedAtByLocalPlayer()
         local ply = LocalPlayer()
-        if not IsValid(ply) then return false end
+        if !IsValid(ply) then return false end
         local dist = 10000
         local pos = ply:EyePos()
 
@@ -110,7 +110,7 @@ else
             ["$basetexture"] = "color/white",
             ["$translucent"] = 1,
             -- ["$vertexcolor"] = 1, -- ["$model"] = 1,
-            ["$color2"] = (self.Model ~= "models/items/arc9/att_plastic_box.mdl") and "[0 0 0]" or "[1 1 1]",
+            ["$color2"] = (self.Model != "models/items/arc9/att_plastic_box.mdl") and "[0 0 0]" or "[1 1 1]",
         })
 
         maticon:SetTexture("$basetexture", self.Icon:GetTexture("$basetexture"))
