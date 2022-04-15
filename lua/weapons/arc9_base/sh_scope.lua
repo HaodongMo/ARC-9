@@ -110,7 +110,16 @@ function SWEP:BuildMultiSight()
                 local s = {}
 
                 if CLIENT then
-                    s = self:GenerateAutoSight(sight, slottbl)
+                    if GetConVar("developer"):GetInt() >= 3 then
+                        s = self:GenerateAutoSight({
+                            Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
+                            Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
+                            ViewModelFOV = 40,
+                            Magnification = 1.1
+                        }, slottbl)
+                    else
+                        s = self:GenerateAutoSight(sight, slottbl)
+                    end
                 end
 
                 if sight.Disassociate then
@@ -123,7 +132,17 @@ function SWEP:BuildMultiSight()
                     table.Merge(s.atttbl, sight.ExtraSightData)
                     s.ExtraSightData = sight.ExtraSightData
                 end
-                s.OriginalSightTable = sight
+
+                if GetConVar("developer"):GetInt() >= 3 then
+                    s.OriginalSightTable = {
+                        Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
+                        Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
+                        ViewModelFOV = 40,
+                        Magnification = 1.1
+                    }
+                else
+                    s.OriginalSightTable = sight
+                end
                 s.slottbl = slottbl
                 s.ViewModelFOV = sight.ViewModelFOV
 
@@ -161,7 +180,16 @@ function SWEP:BuildMultiSight()
 
     if keepbaseirons then
         local tbl = {}
-        table.insert(tbl, self:GetProcessedValue("IronSights"))
+        if GetConVar("developer"):GetInt() >= 3 then
+            table.insert(tbl, {
+                Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
+                Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
+                ViewModelFOV = 40,
+                Magnification = 1.1
+            })
+        else
+            table.insert(tbl, self:GetProcessedValue("IronSights"))
+        end
         tbl[1].BaseSight = true
         table.Add(tbl, self.MultiSightTable)
         self.MultiSightTable = tbl
