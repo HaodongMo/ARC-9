@@ -186,4 +186,14 @@ end)
 
 end
 
+local CT = 0
+
+hook.Add("OnReloaded", "ARC9_OnReloaded", function()
+    if CT == CurTime() then return end
+
+    ARC9.LoadAtts()
+
+    CT = CurTime()
+end)
+
 ARC9.LoadAtts()
