@@ -24,6 +24,17 @@ Making underbarrel grenade launchers is simple! If using integrated animations, 
 
 You can ONLY have one UBGL active at any one time. Set up your weapons to accept only one UBGL; otherwise, weird things will probably happen.
 
+### What's the best way to have a weapon with two modes?
+There are three main ways to do this: As a firemode, as a UBGL, and as an attachment.
+
+Firemodes are the easiest by far to set up, and have the benefit that you can cycle through more than 2 modes if you need.
+
+UBGLs provides the greatest versatility, including allowing your alternate mode to use a different ammo type. This is the best mode for underbarrel launchers, shotguns, etc.
+
+Attachments that change the way your weapon works are like firemodes, but it's possible to control the use of them through the attachment inventory system, they're attached via the customization menu, and you can combine different attachments together.
+
+You could also opt to combine these methods together - it's common for an attachment to grant a UBGL weapon. You could use firemodes to grant the player multiple UBGLs to switch between. Or you could have an attachment that adds firemodes.
+
 **New features include:**
  - Overhauled standardized recoil mechanics
  - Magazine dropping

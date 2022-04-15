@@ -134,6 +134,9 @@ function SWEP:Holster(wep)
 
         self:RunHook("Hook_Holster")
 
+        self:GetVM():SetSubMaterial()
+        self:GetVM():SetMaterial()
+
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
         end
