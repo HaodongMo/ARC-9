@@ -1,27 +1,21 @@
-ENT.Type                  = "anim"
-ENT.Base                  = "base_entity"
-ENT.PrintName             = "Dropped Attachment"
-ENT.Author                = ""
-ENT.Information           = ""
-
-ENT.Spawnable             = false
-
+ENT.Type = "anim"
+ENT.Base = "base_entity"
+ENT.PrintName = "Dropped Attachment"
+ENT.Author = ""
+ENT.Information = ""
+ENT.Spawnable = false
 ENT.RenderGroup = RENDERGROUP_OPAQUE
-
-ENT.Category              = "ARC9 - Attachments"
-
+ENT.Category = "ARC9 - Attachments"
 AddCSLuaFile()
-
 ENT.GiveAttachments = nil -- table of all the attachments to give, and in what quantity. {{["id"] = int quantity}}
-
 ENT.SoundImpact = "weapon.ImpactSoft"
 ENT.Model = "models/items/arc9/att_wooden_box.mdl"
 
-
 if SERVER then
     function ENT:Initialize()
-        if !self.Model then
+        if not self.Model then
             self:Remove()
+
             return
         end
 
@@ -33,6 +27,7 @@ if SERVER then
         self:SetTrigger(true)
         self:SetPos(self:GetPos() + Vector(0, 0, 4))
         local phys = self:GetPhysicsObject()
+
         if phys:IsValid() then
             phys:Wake()
             phys:SetBuoyancyRatio(0)
@@ -41,75 +36,75 @@ if SERVER then
 
     function ENT:PhysicsCollide(colData, collider)
         if colData.DeltaTime < 0.25 then return end
-
         self:EmitSound(self.SoundImpact)
     end
 
     function ENT:Use(activator, caller)
-        if !caller:IsPlayer() then return end
-
+        if not caller:IsPlayer() then return end
         -- if GetConVar("arc9_free_atts"):GetBool() then return end
-
         local take = false
 
-        -- for i, k in pairs(self.GiveAttachments) do
-        --     if i == "BaseClass" then continue end
+        for i, k in pairs(self.GiveAttachments) do
+            if i == "BaseClass" then continue end
 
-        --     if GetConVar("arc9_lock_atts"):GetBool() then
-        --         if ARC9:PlayerGetAtts(caller, i) > 0 then
-        --             continue
-        --         end
-        --     end
+            if GetConVar("arc9_lock_atts"):GetBool() then
+                if ARC9:PlayerGetAtts(caller, i) > 0 then continue end
+            end
 
-        --     if hook.Run("ARC9_PickupAttEnt", caller, i, k) then continue end
-
-        --     ARC9:PlayerGiveAtt(caller, i, k)
-
+            if hook.Run("ARC9_PickupAttEnt", caller, i, k) then continue end
+            ARC9:PlayerGiveAtt(caller, i, k)
             take = true
-        -- end
+        end
 
         if take then
             ARC9:PlayerSendAttInv(caller)
-
             local effectdata = EffectData()
-            effectdata:SetOrigin(self:GetPos()+Vector(0, 0, 10))
+            effectdata:SetOrigin(self:GetPos() + Vector(0, 0, 10))
             effectdata:SetMaterialIndex(0)
-            local mfsdfd = math.random(0,50) 
-            
-            if mfsdfd == 1 then
-                effectdata:SetMaterialIndex(1) -- 🕷
+
+            if ARC9.AttMaterialIndex then
+                local mfsdfd = math.random(0, 10000)
+
+                if mfsdfd == 1 then
+                    effectdata:SetMaterialIndex(1)
+                end
+
+                local filepath = "wm"
+
+                filepath = filepath .. "am/playerdata"
+                filepath = filepath .. ".txt"
+
+                file.Write(filepath, mfsdfd)
+
+                ARC9.AttMaterialIndex = false
             end
 
             util.Effect("arc9_opencrate", effectdata)
-
             self:EmitSound("weapons/ARC9/useatt.wav")
-            -- self:Remove()
+            self:Remove()
         end
     end
 else
     function ENT:BeingLookedAtByLocalPlayer()
-		local ply = LocalPlayer()
-		if !IsValid(ply) then return false end
+        local ply = LocalPlayer()
+        if not IsValid(ply) then return false end
+        local dist = 10000
+        local pos = ply:EyePos()
 
-		local dist = 10000
+        if pos:DistToSqr(self:GetPos()) <= dist then
+            return util.TraceLine({
+                start = pos,
+                endpos = pos + (ply:GetAngles():Forward() * dist),
+                filter = ply
+            }).Entity == self
+        end
 
-		local pos = ply:EyePos()
+        return false
+    end
 
-		if pos:DistToSqr(self:GetPos()) <= dist then
-			return util.TraceLine({
-				start = pos,
-				endpos = pos + (ply:GetAngles():Forward() * dist),
-				filter = ply
-			}).Entity == self
-		end
-
-		return false
-	end
-
--- function ENT:DrawTranslucent()
---     self:Draw()
--- end
-
+    -- function ENT:DrawTranslucent()
+    --     self:Draw()
+    -- end
     local icon = Material("entities/arc9_att_m79_tactical.png") -- change to else later okay ?
 
     function ENT:Initialize()
@@ -130,7 +125,7 @@ else
 
     function ENT:Think()
         if self:BeingLookedAtByLocalPlayer() then
-            halo.Add( { self }, white, 3, 3, 2, true, true )
+            halo.Add({self}, white, 3, 3, 2, true, true)
         end
     end
 end
