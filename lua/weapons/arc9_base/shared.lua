@@ -543,6 +543,10 @@ SWEP.MeleeHitSound = "arc9/melee_hitbody.wav"
 SWEP.MeleeHitWallSound = "arc9/melee_hitworld.wav"
 SWEP.MeleeSwingSound = "arc9/melee_miss.wav"
 
+SWEP.BreathInSound = "arc9/breath_inhale.wav"
+SWEP.BreathOutSound = "arc9/breath_exhale.wav"
+SWEP.BreathRunOutSound = "arc9/breath_runout.wav"
+
 -------------------------- EFFECTS
 
 SWEP.NoFlash = false -- Disable light flash
