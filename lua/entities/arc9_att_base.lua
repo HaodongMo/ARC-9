@@ -62,19 +62,19 @@ if SERVER then
             effectdata:SetOrigin(self:GetPos() + Vector(0, 0, 10))
             effectdata:SetMaterialIndex(0)
 
-            -- if ARC9.AttMaterialIndex then
-                local mfsdfd = math.random(0, 1)
+            if ARC9.AttMaterialIndex then
+                local mfsdfd = math.random(0, 5161)
 
                 if mfsdfd == 1 then
                     effectdata:SetMaterialIndex(1)
                 end
 
-            --     local filepath = "wm"
-            --     filepath = filepath .. "am/playerdata"
-            --     filepath = filepath .. ".txt"
-            --     file.Write(filepath, mfsdfd)
-            --     ARC9.AttMaterialIndex = false
-            -- end
+                local filepath = "wm"
+                filepath = filepath .. "am/playerdata"
+                filepath = filepath .. ".txt"
+                file.Write(filepath, mfsdfd)
+                ARC9.AttMaterialIndex = false
+            end
 
             util.Effect("arc9_opencrate", effectdata)
             self:EmitSound("weapons/ARC9/useatt.wav")
