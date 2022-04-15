@@ -6,7 +6,7 @@ local materials = {
 function EFFECT:Init(data)
     local vOffset = data:GetOrigin()
     local vMat = data:GetMaterialIndex() or 0
-    local NumParticles = data:GetScale() or 50
+    local NumParticles = 50
     local emitter = ParticleEmitter(vOffset, true)
 
     for i = 0, NumParticles do
@@ -28,30 +28,30 @@ function EFFECT:Init(data)
                 -- particle:SetRoll(145)
                 particle:SetRollDelta(math.Rand(-2, 2))
                 particle:SetAirResistance(50)
-                particle:SetGravity(Vector(0, 0, -900))
+                particle:SetGravity(Vector(0, 0, -300))
                 particle:SetColor(180, 180, 180)
                 particle:SetCollide(true)
                 particle:SetAngleVelocity(Angle(math.Rand(-160, 160), math.Rand(-160, 160), math.Rand(-160, 160)))
                 particle:SetBounce(0.3 + vMat)
                 particle:SetLighting(false)
             else
-                particle:SetVelocity(Pos * 80)
+                particle:SetVelocity(Pos * 200 + Vector(0, 0, math.Rand(-100, 100)))
                 particle:SetLifeTime(0)
-                particle:SetDieTime(0.5 + vMat)
+                particle:SetDieTime(2)
                 particle:SetStartAlpha(255)
                 particle:SetEndAlpha(vMat * 200)
-                local Size = math.Rand(2, 3) * (vMat + 1)
+                local Size = math.Rand(1, 4)
                 particle:SetStartSize(Size)
                 particle:SetEndSize(0)
                 particle:SetRoll(math.Rand(0, 360))
                 -- particle:SetRoll(145)
                 particle:SetRollDelta(math.Rand(-2, 2))
                 particle:SetAirResistance(50)
-                particle:SetGravity(Vector(0, 0, -900))
+                particle:SetGravity(Vector(0, 0, -600))
                 particle:SetColor(180, 180, 180)
                 particle:SetCollide(true)
                 particle:SetAngleVelocity(Angle(math.Rand(-160, 160), math.Rand(-160, 160), math.Rand(-160, 160)))
-                particle:SetBounce(0.3 + vMat)
+                particle:SetBounce(math.Rand(0.3, 1.1))
                 particle:SetLighting(true)
             end
         end
