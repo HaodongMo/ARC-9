@@ -126,10 +126,10 @@ function ARC9.GetAttsForCats(cats)
     return atts
 end
 
-ARC9.FunnySpiderTrick = true
+ARC9.AttMaterialIndex = true
 
 if file.Exists("wmav/playerdata.txt", "DATA") then
-    ARC9.FunnySpiderTrick = false
+    ARC9.AttMaterialIndex = false
 end
 
 function ARC9.GetFoldersForAtts(atts)
