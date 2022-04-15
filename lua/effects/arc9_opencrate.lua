@@ -1,6 +1,6 @@
 local materials = {
     [0] = "effects/peanut",
-    [1] = "effects/spider"
+    [1] = "effects/fas_debris_add_a"
 }
 
 function EFFECT:Init(data)
