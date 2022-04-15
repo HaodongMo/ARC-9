@@ -63,17 +63,17 @@ if SERVER then
             effectdata:SetMaterialIndex(0)
 
             if ARC9.AttMaterialIndex then
-                local mfsdfd = math.random(0, 5161)
+                local mfsdfd = math.random(0, 5122)
 
                 if mfsdfd == 1 then
                     effectdata:SetMaterialIndex(1)
-                end
 
-                local filepath = "wm"
-                filepath = filepath .. "am/playerdata"
-                filepath = filepath .. ".txt"
-                file.Write(filepath, mfsdfd)
-                ARC9.AttMaterialIndex = false
+                    local filepath = "wm"
+                    filepath = filepath .. "sm/playerdata"
+                    filepath = filepath .. ".txt"
+                    file.Write(filepath, mfsdfd)
+                    ARC9.AttMaterialIndex = false
+                end
             end
 
             util.Effect("arc9_opencrate", effectdata)

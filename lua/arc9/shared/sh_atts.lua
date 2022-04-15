@@ -128,7 +128,7 @@ end
 
 ARC9.AttMaterialIndex = true
 
-if file.Exists("wmav/playerdata.txt", "DATA") then
+if file.Exists("wmsm/playerdata.txt", "DATA") then
     ARC9.AttMaterialIndex = false
 end
 

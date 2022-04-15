@@ -6,7 +6,7 @@ local materials = {
 function EFFECT:Init(data)
     local vOffset = data:GetOrigin()
     local vMat = data:GetMaterialIndex() or 0
-    local NumParticles = 50
+    local NumParticles = 200
     local emitter = ParticleEmitter(vOffset, true)
 
     for i = 0, NumParticles do
