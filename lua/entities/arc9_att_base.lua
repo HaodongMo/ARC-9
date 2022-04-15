@@ -27,6 +27,7 @@ if SERVER then
         self:SetSolid(SOLID_VPHYSICS)
         self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
         self:SetTrigger(true)
+        self:SetUseType(SIMPLE_USE)
         self:SetPos(self:GetPos() + Vector(0, 0, 4))
         local phys = self:GetPhysicsObject()
 
