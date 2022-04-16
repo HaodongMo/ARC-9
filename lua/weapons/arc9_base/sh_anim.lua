@@ -40,6 +40,12 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     mult = math.abs(mult)
 
+    if animation.EjectAt then
+        self:SetTimer(animation.EjectAt * mult, function()
+            self:DoEject()
+        end)
+    end
+
     if animation.RestoreAmmo then
         local minprogress = animation.MinProgress or 0.5
         minprogress = math.min(minprogress, 1)

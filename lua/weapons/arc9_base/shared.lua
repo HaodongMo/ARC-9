@@ -860,6 +860,7 @@ SWEP.Animations = {
     --     Time = 0.5, -- overrides the duration of the sequence
     --     Mult = 1, -- multiplies time
     --     Reverse = false, -- Reverse the animation
+    --     EjectAt = 0, -- Eject a shell at this time
     --     IKTimeLine = { -- t is in fraction of animation
     --         {
     --             t = 0.1,
