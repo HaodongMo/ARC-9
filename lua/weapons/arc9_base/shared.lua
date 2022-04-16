@@ -560,6 +560,7 @@ SWEP.ImpactEffect = nil
 SWEP.ImpactDecal = nil
 
 SWEP.ShellEffect = nil -- Override the ARC9 shell eject effect for your own.
+SWEP.ShellEffectCount = 1
 
 SWEP.ShellModel = "models/shells/shell_556.mdl"
 SWEP.ShellMaterial = nil -- string
@@ -567,6 +568,7 @@ SWEP.ShellMaterial = nil -- string
 SWEP.EjectDelay = 0
 
 SWEP.NoShellEject = false
+SWEP.ManualActionEjectAnyway = false -- Overrides standard behaviour to eject a shell when a shot is fired and manual action is on.
 
 SWEP.ShellScale = 1
 SWEP.ShellPhysBox = Vector(0.5, 0.5, 2)
