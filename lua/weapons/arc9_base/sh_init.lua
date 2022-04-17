@@ -56,10 +56,10 @@ function SWEP:Deploy()
 
     self:SetBurstCount(0)
     self:SetSightAmount(0)
-    self:SetLoadedRounds(self:Clip1())
     self:SetCustomize(false)
     self:SetBreath(100)
     self:SetInspecting(false)
+    self:SetLoadedRounds(self:Clip1())
 
     self:SetBipod(false)
 
@@ -77,6 +77,7 @@ function SWEP:Deploy()
         if !self.GaveDefaultAmmo then
             self:GiveDefaultAmmo()
             self.GaveDefaultAmmo = true
+            self:SetLoadedRounds(self:Clip1())
         end
 
         -- self:NetworkWeapon()
@@ -132,6 +133,9 @@ function SWEP:Holster(wep)
         end
 
         self:RunHook("Hook_Holster")
+
+        self:GetVM():SetSubMaterial()
+        self:GetVM():SetMaterial()
 
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()

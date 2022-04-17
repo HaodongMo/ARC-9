@@ -7,6 +7,7 @@ ATT.Pros = {}
 ATT.Cons = {}
 ATT.SortOrder = 0
 ATT.MenuCategory = "ARC-9 - Attachments"
+ATT.Pack = "default" -- lua/arc9/common/packs/*.lua   you can define per slot stuff there 
 
 ATT.AdminOnly = false
 ATT.Free = false
@@ -14,6 +15,9 @@ ATT.Ignore = true
 
 ATT.Model = ""
 ATT.WorldModel = "" -- optional
+ATT.BoxModel = nil --"models/items/arc9/att_plastic_box.mdl" 
+--                                          ^ Use att_plastic_box (modern middle sized container), att_wooden_box (old big box) or att_cardboard_box (cheap small box)
+-- If nil, will use slot defined ATT.Pack
 ATT.Scale = 1
 ATT.ModelOffset = Vector(0, 0, 0)
 ATT.ModelAngleOffset = Angle(0, 0, 0)

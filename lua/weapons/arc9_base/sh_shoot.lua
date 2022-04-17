@@ -74,6 +74,12 @@ function SWEP:DoShootSounds()
 end
 
 function SWEP:PrimaryAttack()
+    if self:GetProcessedValue("PrimaryBash") then
+        self:MeleeAttack()
+        self:SetNeedTriggerPress(true)
+        return
+    end
+
     if self:GetProcessedValue("UBGLInsteadOfSights") then
         self:ToggleUBGL(false)
     end

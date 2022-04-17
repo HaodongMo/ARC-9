@@ -51,15 +51,15 @@ end
 local function rotatearound2dpoint(cx, cy, ang, px, py) -- idk how to use it
     local s = math.sin(math.rad(ang))
     local c = math.cos(math.rad(ang))
-    
+
     -- translate point back to origin:
     px = px - cx
     py = py - cy
-    
+
     -- rotate point
     local xnew = px * c - py * s
     local ynew = px * s + py * c
-    
+
     return xnew + cx, ynew + cy
 end
 
@@ -72,6 +72,9 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     if GetConVar("ARC9_benchgun"):GetBool() then
         return Vector(0, 0, 0), Angle(0, 0, 0)
+    elseif GetConVar("developer"):GetInt() >= 3 then
+        pos = EyePos()
+        ang = EyeAngles()
     end
 
     -- pos = Vector(0, 0, 0)

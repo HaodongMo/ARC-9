@@ -6,9 +6,9 @@ function SWEP:InitTimers()
 end
 
 function SWEP:SetTimer(time, callback, id)
-    if not IsFirstTimePredicted() and not game.SinglePlayer() then return end
+    if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
 
-    if not self.ActiveTimers then
+    if !self.ActiveTimers then
         self:InitTimers()
     end
 
@@ -27,7 +27,7 @@ function SWEP:KillTimer(id)
     local keeptimers = {}
 
     for _, v in pairs(self.ActiveTimers) do
-        if v[2] ~= id then
+        if v[2] != id then
             table.insert(keeptimers, v)
         end
     end
@@ -44,7 +44,7 @@ function SWEP:ProcessTimers()
     local UCT = CurTime()
     -- if CLIENT and UCT == tick then return end
 
-    if not self.ActiveTimers then
+    if !self.ActiveTimers then
         self:InitTimers()
     end
 
@@ -79,7 +79,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
         end
 
         if ttime < 0 then continue end
-        if not (IsValid(self) and IsValid(owner)) then continue end
+        if !(IsValid(self) and IsValid(owner)) then continue end
 
         self:SetTimer(ttime, function()
             if v.s then
@@ -102,7 +102,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
                     net.WriteFloat(v.vt or 0.1)
                     net.Send(self:GetOwner())
                 end
-            elseif not game.SinglePlayer() and CLIENT then
+            elseif !game.SinglePlayer() and CLIENT then
                 SInputAnimRumble(v.v1 or 0, v.v2 or 0, v.vt or 0.1)
             end
         end, "soundtable_" .. tostring(i))
@@ -124,8 +124,8 @@ if CLIENT then
     end)
 
     function SInputAnimRumble(v1, v2, vt)
-        if not sinput then return false end
-        if not cl_rumble:GetBool() then return false end
+        if !sinput then return false end
+        if !cl_rumble:GetBool() then return false end
 
         local P1 = sinput.GetControllerForGamepadIndex(0)
         sinput.TriggerVibration(P1, v1, v2)

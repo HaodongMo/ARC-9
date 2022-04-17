@@ -135,7 +135,7 @@ SWEP.ShootEntityData = {} -- Extra data that can be given to a projectile. Sets 
 SWEP.AlwaysPhysBullet = false
 SWEP.NeverPhysBullet = false
 
-SWEP.PhysBulletMuzzleVelocity = 150000 -- Physical bullet muzzle velocity in Hammer Units/second. 1 HU ~= 1 inch.
+SWEP.PhysBulletMuzzleVelocity = 150000 -- Physical bullet muzzle velocity in Hammer Units/second. 1 HU != 1 inch.
 SWEP.PhysBulletDrag = 1 -- Drag multiplier
 SWEP.PhysBulletGravity = 1 -- Gravity multiplier
 SWEP.PhysBulletDontInheritPlayerVelocity = false -- Set to true to disable "Browning Effect"
@@ -544,6 +544,10 @@ SWEP.MeleeHitSound = "arc9/melee_hitbody.wav"
 SWEP.MeleeHitWallSound = "arc9/melee_hitworld.wav"
 SWEP.MeleeSwingSound = "arc9/melee_miss.wav"
 
+SWEP.BreathInSound = "arc9/breath_inhale.wav"
+SWEP.BreathOutSound = "arc9/breath_exhale.wav"
+SWEP.BreathRunOutSound = "arc9/breath_runout.wav"
+
 -------------------------- EFFECTS
 
 SWEP.NoFlash = false -- Disable light flash
@@ -557,6 +561,7 @@ SWEP.ImpactEffect = nil
 SWEP.ImpactDecal = nil
 
 SWEP.ShellEffect = nil -- Override the ARC9 shell eject effect for your own.
+SWEP.ShellEffectCount = 1
 
 SWEP.ShellModel = "models/shells/shell_556.mdl"
 SWEP.ShellMaterial = nil -- string
@@ -564,6 +569,7 @@ SWEP.ShellMaterial = nil -- string
 SWEP.EjectDelay = 0
 
 SWEP.NoShellEject = false
+SWEP.ManualActionEjectAnyway = false -- Overrides standard behaviour to eject a shell when a shot is fired and manual action is on.
 
 SWEP.ShellScale = 1
 SWEP.ShellPhysBox = Vector(0.5, 0.5, 2)
@@ -855,6 +861,7 @@ SWEP.Animations = {
     --     Time = 0.5, -- overrides the duration of the sequence
     --     Mult = 1, -- multiplies time
     --     Reverse = false, -- Reverse the animation
+    --     EjectAt = 0, -- Eject a shell at this time
     --     IKTimeLine = { -- t is in fraction of animation
     --         {
     --             t = 0.1,

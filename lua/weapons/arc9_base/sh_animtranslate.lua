@@ -38,6 +38,8 @@ function SWEP:TranslateAnimation(seq)
         seq = seq[math.Round(util.SharedRandom("ARC9_animtr", 1, #seq))]
     end
 
+    -- print(seq)
+
     return seq
 end
 

@@ -11,8 +11,8 @@ function SWEP:DoRHIK(wm)
     -- local vm = self:GetOwner():GetHands()
     local vm = self:GetVM()
     if wm then vm = self:GetWM() end
-    if not IsValid(vm) then return end
-    if not self.UseHands then return end
+    if !IsValid(vm) then return end
+    if !self.UseHands then return end
     vm:SetupBones()
     local lh_delta = 1
     local rh_delta = 1
@@ -36,7 +36,7 @@ function SWEP:DoRHIK(wm)
             local next_stage_index
 
             for i, k in ipairs(iktl) do
-                if not k or not k.t then continue end
+                if !k or !k.t then continue end
 
                 if k.t > iklt then
                     next_stage_index = i
@@ -77,7 +77,7 @@ function SWEP:DoRHIK(wm)
             local next_stage_index
 
             for i, k in ipairs(iktl) do
-                if not k or not k.t then continue end
+                if !k or !k.t then continue end
 
                 if k.t > iklt then
                     next_stage_index = i
@@ -127,7 +127,7 @@ function SWEP:DoRHIK(wm)
         for _, bone in ipairs(ARC9.RHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = rhik_model:LookupBone(bone)
-            if not vm_bone or not target_bone then continue end
+            if !vm_bone or !target_bone then continue end
             local vm_bone_matrix = vm:GetBoneMatrix(vm_bone)
             local target_bone_matrix = rhik_model:GetBoneMatrix(target_bone)
             local lerped_pos = LerpVector(rh_delta, vm_bone_matrix:GetTranslation(), target_bone_matrix:GetTranslation())
@@ -152,7 +152,7 @@ function SWEP:DoRHIK(wm)
         for _, bone in ipairs(ARC9.LHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = lhik_model:LookupBone(bone)
-            if not vm_bone or not target_bone then continue end
+            if !vm_bone or !target_bone then continue end
             local vm_bone_matrix = vm:GetBoneMatrix(vm_bone)
             local target_bone_matrix = lhik_model:GetBoneMatrix(target_bone)
             local lerped_pos = LerpVector(lh_delta, vm_bone_matrix:GetTranslation(), target_bone_matrix:GetTranslation())
@@ -282,9 +282,9 @@ function SWEP:DoRHIK(wm)
     if hide_lh_d > 0 then
         for _, bone in ipairs(ARC9.LHIKBones) do
             local vmbone = vm:LookupBone(bone)
-            if not vmbone then continue end -- Happens when spectating someone prolly
+            if !vmbone then continue end -- Happens when spectating someone prolly
             local vmtransform = vm:GetBoneMatrix(vmbone)
-            if not vmtransform then continue end -- something very bad has happened
+            if !vmtransform then continue end -- something very bad has happened
             local vm_pos = vmtransform:GetTranslation()
             local vm_ang = vmtransform:GetAngles()
             local newtransform = Matrix()
@@ -297,9 +297,9 @@ function SWEP:DoRHIK(wm)
     if hide_rh_d > 0 then
         for _, bone in ipairs(ARC9.RHIKBones) do
             local vmbone = vm:LookupBone(bone)
-            if not vmbone then continue end -- Happens when spectating someone prolly
+            if !vmbone then continue end -- Happens when spectating someone prolly
             local vmtransform = vm:GetBoneMatrix(vmbone)
-            if not vmtransform then continue end -- something very bad has happened
+            if !vmtransform then continue end -- something very bad has happened
             local vm_pos = vmtransform:GetTranslation()
             local vm_ang = vmtransform:GetAngles()
             local newtransform = Matrix()

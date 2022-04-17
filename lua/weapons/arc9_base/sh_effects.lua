@@ -39,7 +39,9 @@ function SWEP:DoEject()
     data:SetEntity(self)
     data:SetAttachment(eject_qca)
 
-    util.Effect("ARC9_shelleffect", data)
+    for i = 1, self:GetProcessedValue("ShellEffectCount") do
+        util.Effect("ARC9_shelleffect", data)
+    end
 end
 
 function SWEP:GetTracerOrigin()

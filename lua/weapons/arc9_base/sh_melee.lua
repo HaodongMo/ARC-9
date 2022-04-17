@@ -5,7 +5,7 @@ function SWEP:MeleeAttack(bypass)
     end
 
     if self:HasAnimation("bash") then
-        self:PlayAnimation("bash", 1, true)
+        self:PlayAnimation("bash", 1, false)
     else
         if game.SinglePlayer() and SERVER then
             self:CallOnClient("MeleeAttack", "true")

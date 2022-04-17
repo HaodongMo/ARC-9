@@ -25,16 +25,19 @@ end
 
 function SWEP:GetSmoothedFOVMag()
     local mag = 1
+    local speed = 100
 
-    if self:GetSightAmount() > 0 then
+    if self:GetInSights() then
         local target = self:GetMagnification()
 
         mag = Lerp(math.ease.InQuint(self:GetSightAmount()), 1, target)
+        -- mag = target
+        speed = Lerp(self:GetSightAmount(), speed, 20)
     end
 
     local diff = math.abs(self.SmoothedMagnification - mag)
 
-    self.SmoothedMagnification = math.Approach(self.SmoothedMagnification, mag, FrameTime() * diff * 150)
+    self.SmoothedMagnification = math.Approach(self.SmoothedMagnification, mag, FrameTime() * diff * speed)
 
     return self.SmoothedMagnification
 end
@@ -52,7 +55,7 @@ function SWEP:GetCameraControl()
 
     ang = vm:WorldToLocalAngles(ang)
     ang:Sub(self.CamOffsetAng)
-    ang:Mul((self:GetProcessedValue("CamQCA_Mult") or 1))
+    ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
     ang:Mul(1-(self:GetSightAmount() * 1-(self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
 
     return ang

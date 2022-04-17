@@ -18,6 +18,14 @@ local function IsPenetrating(ptr, ptrent)
     return false
 end
 
+local ricochetsounds = {
+    "arc9/ricochet01.wav",
+    "arc9/ricochet02.wav",
+    "arc9/ricochet03.wav",
+    "arc9/ricochet04.wav",
+    "arc9/ricochet05.wav",
+}
+
 function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     if !GetConVar("ARC9_penetration"):GetBool() then return end
 
@@ -57,6 +65,8 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         local d = math.Rand(0.25, 0.95)
 
         penleft = penleft * d
+
+        sound.Play(ricochetsounds[math.random(#ricochetsounds)], tr.HitPos, 75, math.Rand(90, 110), 1)
 
         skip = true
     end

@@ -174,6 +174,10 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         csmodel:SetMaterial(atttbl.ModelMaterial)
     end
 
+    csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
+    csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
+    csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
+
     if atttbl.Bonemerge then
         csmodel:SetParent(self:GetVM())
         csmodel:AddEffects(EF_BONEMERGE)

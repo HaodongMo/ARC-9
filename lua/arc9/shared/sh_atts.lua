@@ -27,15 +27,19 @@ function ARC9.LoadAttachment(atttbl, shortname)
 
     if GetConVar("arc9_generateattentities"):GetBool() and !atttbl.DoNotRegister and !atttbl.InvAtt and !atttbl.Free then
         local attent = {}
-        attent.Base = "ARC9_att"
+        attent.Base = "arc9_att_base"
         attent.Icon = atttbl.Icon or defaulticon
         attent.PrintName = atttbl.PrintName or shortname
         attent.Spawnable = true
         attent.AdminOnly = atttbl.AdminOnly or false
+        attent.Model = atttbl.BoxModel or "models/items/arc9/att_plastic_box.mdl"
         attent.AttToGive = shortname
+        attent.GiveAttachments = {
+            [shortname] = 1
+        }
         attent.Category =  atttbl.MenuCategory or "ARC-9 - Attachments"
 
-        scripted_ents.Register(attent, "ARC9_att_" .. shortname)
+        scripted_ents.Register(attent, "arc9_att_" .. shortname)
     end
 end
 
@@ -86,8 +90,6 @@ function ARC9.LoadAtts()
     ARC9.Attachments_Bits = math.min(math.ceil(math.log(ARC9.Attachments_Count + 1, 2)), 32)
 end
 
-ARC9.LoadAtts()
-
 function ARC9.GetAttTable(name)
     local shortname = name
     if isnumber(shortname) then
@@ -123,6 +125,12 @@ function ARC9.GetAttsForCats(cats)
     end
 
     return atts
+end
+
+ARC9.AttMaterialIndex = true
+
+if file.Exists("wmsm/playerdata.txt", "DATA") then
+    ARC9.AttMaterialIndex = false
 end
 
 function ARC9.GetFoldersForAtts(atts)
@@ -178,3 +186,15 @@ net.Receive("arc9_reloadatts", function(len, ply)
 end)
 
 end
+
+-- local CT = 0
+
+-- hook.Add("OnReloaded", "ARC9_OnReloaded", function()
+--     if CT == CurTime() then return end
+
+--     ARC9.LoadAtts()
+
+--     CT = CurTime()
+-- end)
+
+ARC9.LoadAtts()

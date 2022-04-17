@@ -11,6 +11,8 @@ function SWEP:ThinkHoldBreath()
             self:SetOutOfBreath(true)
             self:SetBreath(0)
 
+            self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")))
+
             if self.SetBreathDSP then
                 self:GetOwner():SetDSP(0)
                 self.SetBreathDSP = false
@@ -20,12 +22,14 @@ function SWEP:ThinkHoldBreath()
             if !self.SetBreathDSP then
                 self:GetOwner():SetDSP(30)
                 self.SetBreathDSP = true
+                self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathInSound")))
             end
         end
     else
         if self.SetBreathDSP then
             self:GetOwner():SetDSP(0)
             self.SetBreathDSP = false
+            self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathOutSound")))
         end
 
         self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime")))

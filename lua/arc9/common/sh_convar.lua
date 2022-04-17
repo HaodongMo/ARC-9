@@ -219,7 +219,37 @@ local conVars = {
         name = "cam_shoulder",
         default = "1",
         client = true
-    }
+    },
+    {
+        name = "dev_irons_x",
+        default = "0",
+        client = true
+    },
+    {
+        name = "dev_irons_y",
+        default = "0",
+        client = true
+    },
+    {
+        name = "dev_irons_z",
+        default = "0",
+        client = true
+    },
+    {
+        name = "dev_irons_pitch",
+        default = "0",
+        client = true
+    },
+    {
+        name = "dev_irons_yaw",
+        default = "0",
+        client = true
+    },
+    {
+        name = "dev_irons_roll",
+        default = "0",
+        client = true
+    },
 }
 
 local prefix = "arc9_"
