@@ -52,7 +52,7 @@ function SWEP:DoShootSounds()
         end
     end
 
-    self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON)
+    self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, self:GetProcessedValue("ShootVolumeActual") or 1, CHAN_WEAPON)
 
     local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
 
@@ -68,7 +68,7 @@ function SWEP:DoShootSounds()
         end
     end
 
-    self:EmitSound(dss, math.min(149, self:GetProcessedValue("ShootVolume") * 2), self:GetProcessedValue("ShootPitch") + pvrand, 1, CHAN_WEAPON + 1)
+    self:EmitSound(dss, math.min(149, (self:GetProcessedValue("DistantShootVolume") or self:GetProcessedValue("ShootVolume")) * 2), (self:GetProcessedValue("DistantShootPitch") or self:GetProcessedValue("ShootPitch")) + pvrand, self:GetProcessedValue("DistantShootVolumeActual") or self:GetProcessedValue("ShootVolumeActual") or 1, CHAN_WEAPON + 1)
 
     self:StartLoop()
 end

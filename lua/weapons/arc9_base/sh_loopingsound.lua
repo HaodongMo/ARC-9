@@ -10,6 +10,7 @@ function SWEP:StartLoop()
     self.LoopingSound:Play()
     self.LoopingSound:SetSoundLevel(math.Clamp(self:GetProcessedValue("ShootVolume"), 51, 149))
     self.LoopingSound:ChangePitch(self:GetProcessedValue("ShootPitch"), 0)
+    self.LoopingSound:ChangeVolume(self:GetProcessedValue("ShootVolumeActual"))
     -- self.LoopingSound = self:StartLoopingSound(s)
 end
 

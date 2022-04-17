@@ -503,6 +503,7 @@ SWEP.FreeAimRadiusMultBipod = 0
 -------------------------- SOUNDS
 
 SWEP.ShootVolume = 125
+SWEP.ShootVolumeActual = 1
 SWEP.ShootPitch = 100
 SWEP.ShootPitchVariation = 0.05
 
