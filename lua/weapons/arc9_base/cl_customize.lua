@@ -551,6 +551,11 @@ function SWEP:CreateHUD_RHP()
         surface.DrawRect(w - ScreenScale(420), ScreenScale(42), ScreenScale(407), ScreenScale(1))
     end
 
+    if !self.Attachments[1] and self.CustomizeButtons[2].title == "Customize" then 
+        table.remove(self.CustomizeButtons, 2)
+        self.CustomizeTab = 0
+    end
+
     for i, btn in ipairs(self.CustomizeButtons) do
         local newbtn = vgui.Create("DButton", bg)
         newbtn:SetPos(ScrW() - ScreenScale(6) - (ScreenScale(69) * i), ScreenScale(58))
