@@ -650,8 +650,8 @@ SWEP.IronSights = {
 }
 
 SWEP.SightMidPoint = { -- Where the gun should be at the middle of it's irons
-    Pos = Vector(-1, 15, -4),
-    Ang = Angle(0, 0, -35),
+    Pos = Vector(-3, 15, -5),
+    Ang = Angle(0, 0, -45),
 }
 
 SWEP.HasSights = true
@@ -679,8 +679,8 @@ SWEP.HolsterPos = Vector(0, 0, -5)
 SWEP.HolsterAng = Angle(0, -15, 25)
 
 SWEP.SprintMidPoint = {
-    Pos = Vector(4, 2, -4),
-    Ang = Angle(0, 5, -15)
+    Pos = Vector(4, 8, -4),
+    Ang = Angle(0, 5, -25)
 }
 
 -- Position for customizing
