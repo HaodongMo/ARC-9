@@ -6,7 +6,7 @@ function SWEP:ShouldDrawCrosshair()
             return false
         end
     end
-    if !self:GetProcessedValue("Crosshair") and !ARC9.ShouldThirdPerson() then return false end
+    if (!self:GetProcessedValue("Crosshair") and !GetConVar("arc9_crosshair_force"):GetBool()) and !ARC9.ShouldThirdPerson() then return false end
     if self:GetCustomize() then return false end
 
     return true

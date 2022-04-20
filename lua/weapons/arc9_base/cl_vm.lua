@@ -144,6 +144,11 @@ function SWEP:GetViewModelPosition(pos, ang)
     self.SwayScale = 0
 
     if sightdelta > 0 then
+        if self:GetInSights() then
+            sightdelta = math.ease.OutQuart(sightdelta)
+        else
+            sightdelta = math.ease.InQuart(sightdelta)
+        end
         sightdelta = math.ease.InOutQuad(sightdelta)
         local sightpos, sightang = self:GetSightPositions()
         local sight = self:GetSight()
@@ -325,10 +330,10 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         if !self.CustomizeNoRotate then
             ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
+            -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
         end
     end
 
-    -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
     pos, ang = self:GetViewModelRecoil(pos, ang)
     pos, ang = self:GetViewModelBob(pos, ang)
     pos, ang = self:GetMidAirBob(pos, ang)

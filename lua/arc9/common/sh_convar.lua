@@ -206,6 +206,11 @@ local conVars = {
         client = true
     },
     {
+        name = "crosshair_force",
+        default = "0",
+        replicated = true
+    },
+    {
         name = "thirdperson",
         default = "0",
         client = true
