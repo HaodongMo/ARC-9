@@ -30,6 +30,15 @@ function SWEP:PreDrawViewModel()
     local bipodamount = self:GetBipodAmount()
 
     self:GetVM():SetPoseParameter("sights", math.max(self:GetSightAmount(), bipodamount))
+    if self:GetValue("BoneMods") then for i, k in pairs(self:GetValue("BoneMods")) do
+        local boneindex = self:GetVM():LookupBone(i)
+
+        if !boneindex then continue end
+
+        self:GetVM():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
+        self:GetVM():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
+        self:GetVM():ManipulateBoneScale(boneindex, k.scale or Vector(0, 0, 0))
+    end end
     self:GetVM():InvalidateBoneCache()
 
     self.ViewModelFOV = self:GetViewModelFOV()
