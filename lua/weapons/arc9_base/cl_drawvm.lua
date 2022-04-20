@@ -15,8 +15,7 @@ function SWEP:PreDrawViewModel()
         cam.End2D()
     end
 
-    -- THIS IS SO FUCKING UGLY
-    if false and self:GetCustomize() then -- we also maybe can make some button in cust to turn on/off lights :^)
+    if GetConVar("arc9_cust_light"):GetBool() and self:GetCustomize() then -- we also maybe can make some button in cust to turn on/off lights :^)
         render.SuppressEngineLighting( true )
         render.ResetModelLighting(0.6, 0.6, 0.6)
         render.SetModelLighting(BOX_TOP, 4, 4, 4)

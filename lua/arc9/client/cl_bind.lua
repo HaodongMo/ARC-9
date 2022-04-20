@@ -56,8 +56,8 @@ function ARC9.GetBindKey(bind)
 
     local CTRL = ARC9.ControllerMode()
 
-    if CTRL and ARC9.CTRL_BindTo[bind] then
-        return ARC9.CTRL_BindTo[bind]
+    if CTRL then
+        return bind
     elseif !key then
         return bind .. "(UNBOUND)"
     else

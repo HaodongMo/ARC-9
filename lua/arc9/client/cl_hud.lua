@@ -713,55 +713,14 @@ function ARC9.DrawHUD()
 
         local glyphset = GetConVar("arc9_controller_glyphset"):GetString()
         if glyphset != "" then
-            if glyphset:Left(1) == "!" then
-                if glyphset == "!SC" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SC
-                elseif glyphset == "!SD" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SD
-                elseif glyphset == "!Xbox" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
-                elseif glyphset == "!Xbox360" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox360
-                elseif glyphset == "!PS5" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS5
-                elseif glyphset == "!PS4" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS4
-                elseif glyphset == "!SwitchPro" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SwitchPro
-                elseif glyphset == "!SwitchProXboxABXY" then
-                    ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SwitchPro_XboxABXY
-                end
-            else
-                table.Empty(ARC9.CTRL_Set_UserCustom)
-                local config = glyphset
-                config = string.Split( config, "\\n" )
-                for i, v in ipairs(config) do
-                    local swig = string.Split( v, "\\t" )
-                    ARC9.CTRL_Set_UserCustom[swig[1]] = swig[2]
-                end
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_UserCustom
+            table.Empty(ARC9.CTRL_Set_UserCustom)
+            local config = glyphset
+            config = string.Split( config, "\\n" )
+            for i, v in ipairs(config) do
+                local swig = string.Split( v, "\\t" )
+                ARC9.CTRL_Set_UserCustom[swig[1]] = swig[2]
             end
-        elseif sinput then
-            if !sinput.enabled then sinput.Init() end
-            local P1 = sinput.GetControllerForGamepadIndex(0)
-            local controltype = sinput.GetInputTypeForHandle(P1)
-            if !controltype or controltype == "Unknown" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
-            elseif controltype == "SteamController" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SC
-            elseif controltype == "XBox360Controller" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox360
-            elseif controltype == "XBoxOneController" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
-            elseif controltype == "GenericXInput" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
-            elseif controltype == "PS4Controller" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS4
-            elseif controltype == "SwitchProController" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_SwitchPro
-            elseif controltype == "PS3Controller" then
-                ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_PS4
-            end
+            ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_UserCustom
         else
             ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
         end
@@ -881,7 +840,7 @@ function ARC9.DrawHUD()
 
         local hx = 0
         local hy = 0
-        local SIZE = 18
+        local SIZE = 16
 
         if hidefadetime + 1.5 > CurTime() then
             hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
@@ -1104,7 +1063,7 @@ ARC9.CTRL_Set_Xbox360 = {
 ARC9.CTRL_Set_Xbox = {}
 ARC9.CTRL_Set_UserCustom = {}
 
-ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox360 -- {}
+ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox -- {}
 
 ARC9.CTRL_Lookup = {
     MOUSE1 = "shared_mouse_l_click",
@@ -1117,28 +1076,7 @@ ARC9.CTRL_Lookup = {
     MWHEELDOWN = "shared_mouse_scroll_down",
 }
 
-ARC9.CTRL_BindTo = {
-    ["+attack2"] = "xbox_lt_soft",
-    ["+attack"] = "xbox_rt_soft",
-    ["+jump"] = "shared_button_a",
-    ["+reload"] = "shared_button_b",
-    ["+use"] = "shared_button_x",
-    ["+alt1"] = "shared_button_y",
-    ["+speed"] = "shared_lstick_click",
-    ["toggle_duck"] = "shared_rstick_click",
-    ["+menu_context"] = "xbox_lb",
-    ["+walk"] = "xbox_rb",
-    ["invprev"] = "shared_dpad_up",
-    ["impulse 100"] = "shared_dpad_right",
-    ["invnext"] = "shared_dpad_down",
-    ["+zoom"] = "shared_dpad_left",
-
-    ["+forward"] = "shared_lstick_up",
-    ["+back"] = "shared_lstick_down",
-    ["+moveleft"] = "shared_lstick_left",
-    ["+right"] = "shared_lstick_right",
-}
-
+-- This is useless.
 ARC9.CTRL_Exists = {
     ps4_button_logo = true,
     ps4_button_options = true,
