@@ -167,7 +167,7 @@ function SWEP:DoRHIK(wm)
     if wm then return end
 
     self:LHIKThirdArm()
-    local enable_ik = true
+    local enable_ik = false
 
     if enable_ik then
         local rupperarm, rforearm, rulna, rwrist, rhand = vm:LookupBone("ValveBiped.Bip01_R_UpperArm"), vm:LookupBone("ValveBiped.Bip01_R_Forearm"), vm:LookupBone("ValveBiped.Bip01_R_Ulna"), vm:LookupBone("ValveBiped.Bip01_R_Wrist"), vm:LookupBone("ValveBiped.Bip01_R_Hand")
