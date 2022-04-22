@@ -135,14 +135,6 @@ function SWEP:DoTPIK()
     ply_r_elbow_angle.r = -90
     ply_r_elbow_matrix:SetAngles(ply_r_elbow_angle)
 
-    if self:GetCameraControl() then
-        local camcontrol = self:GetCameraControl() * 4
-        local ply_head_angle = ply:GetBoneMatrix(ply_head_index):GetAngles() + Angle(camcontrol.z, -camcontrol.x, camcontrol.y)
-
-        ply_head_matrix:SetAngles(ply_head_angle)
-        ply:SetBoneMatrix(ply_head_index, ply_head_matrix)
-    end
-
     ply:SetBoneMatrix(ply_r_elbow_index, ply_r_elbow_matrix)
     ply:SetBoneMatrix(ply_r_shoulder_index, ply_r_shoulder_matrix)
 
