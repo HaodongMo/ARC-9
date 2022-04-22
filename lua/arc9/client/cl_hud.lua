@@ -3,6 +3,7 @@ local hide = {
     ["CHudBattery"] = true,
     ["CHudAmmo"] = true,
     ["CHudSecondaryAmmo"] = true,
+    ["CHudGMod"] = false,
 }
 
 hook.Add("HUDShouldDraw", "ARC9_HideHUD", function(name)
@@ -35,13 +36,19 @@ ARC9.Colors = {
 }
 
 function ARC9.ShouldDrawHUD()
-    if !GetConVar("cl_drawhud"):GetBool() then return false end
+    if !GetConVar("cl_drawhud"):GetBool() then return end
 
     local wpn = LocalPlayer():GetActiveWeapon()
+    local a9 = wpn.ARC9
+    local incust = a9 and wpn:GetCustomize()
+    -- local hud = GetConVar("arc9_hud_arc9"):GetBool()
+    -- local hudalways = GetConVar("arc9_hud_always"):GetBool()
 
-    if !wpn.ARC9 and !GetConVar("arc9_hud_always"):GetBool() then return end
-    -- if !wpn.ARC9 then return end
+    hide.CHudGMod = incust
 
+    -- if (!hud and !incust) or (!a9 and !hudalways) then return end
+    if (!GetConVar("arc9_hud_arc9"):GetBool() and !incust) or (!a9 and !GetConVar("arc9_hud_always"):GetBool()) then return end -- this line was hard
+    
     return true
 end
 
