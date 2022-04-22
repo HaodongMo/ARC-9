@@ -28,7 +28,8 @@ function ARC9.CalcView( ply, pos, angles, fov )
     -- if wpn:BeingOvertaken() then return end
 
     if !cam_enabled then return end
-    if wpn:GetSightAmount() >= 0.1 then return end
+    if wpn:GetInSights() then return end
+    --if wpn:GetSightAmount() >= 0.1 then return end
 
     -- local targetfov = GetConVar("ARC9_fov"):GetFloat()
     -- local basefov = targetfov
@@ -45,10 +46,10 @@ function ARC9.CalcView( ply, pos, angles, fov )
     --     cam_up = GetConVar("ARC9_rcam_up"):GetFloat()
     -- end
 
-    att = "eyes"
-    cam_forward = -64
+    -- att = "eyes"
+    cam_forward = -48
     cam_right = 16
-    cam_up = 8
+    cam_up = 4
 
     -- if wpn:GetCustomize() then
     --     targetfov = targetfov * 0.8
@@ -65,13 +66,13 @@ function ARC9.CalcView( ply, pos, angles, fov )
     --     end
     -- end
 
-    local attob = ply:LookupAttachment(att)
+    -- local attob = ply:LookupAttachment(att)
 
-    local attpos = pos
+    local attpos = ply:EyePos() -- pos
 
-    if attob > 0 then
-        attpos = ply:GetAttachment(attob).Pos
-    end
+    -- if attob > 0 then
+    --     attpos = ply:GetAttachment(attob).Pos
+    -- end
 
     -- if GetConVar("ARC9_cam_obj"):GetBool() then
     --     attpos = pos
@@ -138,7 +139,7 @@ function ARC9.InputMouseApply( cmd, x, y, ang )
     local wpn = ply:GetActiveWeapon()
     local turnspeed = ARC9.TurningSpeed
 
-    if !IsValid(wpn) or !wpn.ARC9 or wpn:GetSightAmount() >= 0.1 then
+    if !IsValid(wpn) or !wpn.ARC9 or wpn:GetInSights() then--wpn:GetSightAmount() >= 0.1 then
         ARC9.RelativeCamAngles = EyeAngles()
         ARC9.RelativePlayerAngles = EyeAngles()
         ARC9.RealCamAng = EyeAngles()
