@@ -195,10 +195,6 @@ local conVars = {
     {
         name = "hud_always",
         default = "0"
-    },    
-    {
-        name = "hud_arc9",
-        default = "1"
     },
     {
         name = "hud_keephints",
@@ -299,14 +295,9 @@ local function menu_client_ti(panel)
         command = "arc9_compensate_sens"
     })
     panel:AddControl("checkbox", {
-        label = "Draw ARC9 HUD",
-        command = "arc9_hud_arc9"
-    })
-    panel:AddControl("checkbox", {
-        label = "Draw it anywhere you go hold up tududuuuttu",
+        label = "HUD Everywhere",
         command = "arc9_hud_always"
-    })    
-
+    })
 end
 
 local function menu_client_customization(panel)
