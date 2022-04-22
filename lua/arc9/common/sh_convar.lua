@@ -90,6 +90,10 @@ local conVars = {
         client = true
     },
     {
+        name = "modifiers",
+        default = "",
+    },
+    {
         name = "bodydamagecancel",
         default = "1",
         replicated = true
@@ -137,7 +141,7 @@ local conVars = {
         replicated = true
     },
     {
-        name = "benchgun",
+        name = "dev_benchgun",
         default = "0",
     },
     {
@@ -283,6 +287,31 @@ for _, var in pairs(conVars) do
     end
 end
 
+if SERVER then
+    util.AddNetworkString("ARC9_InvalidateAll")
+    util.AddNetworkString("ARC9_InvalidateAll_ToClients")
+
+    net.Receive("ARC9_InvalidateAll", function(len, ply)
+        if ply:IsAdmin() then
+            ARC9.InvalidateAll()
+            net.Start("ARC9_InvalidateAll_ToClients")
+            net.Broadcast()
+        end
+    end)
+else
+    net.Receive("ARC9_InvalidateAll_ToClients", function(len, ply)
+        ARC9.InvalidateAll()
+    end)
+end
+
+function ARC9.InvalidateAll()
+    for _, ent in ipairs(ents.GetAll()) do
+        if IsValid(ent) and ent:IsWeapon() and ent.ARC9 then
+            ent:InvalidateCache()
+        end
+    end
+end
+
 if CLIENT then
 
 local function menu_client_ti(panel)
@@ -424,6 +453,10 @@ local function menu_client_controller(panel)
                 end
 
                 Mat.DoRightClick = function( button )
+                    local menu = DermaMenu()
+                    menu:AddOption( "As input", function() self.InputPanel:SetValue( label ) end ):SetIcon( "icon16/page_copy.png" )
+                    menu:AddOption( "As output", function() self.OutputPanel:SetValue( label ) end ):SetIcon( "icon16/page_paste.png" )
+                    menu:Open()
                 end
 
                 -- Add the Icon us
@@ -504,8 +537,212 @@ local function menu_server_attachments(panel)
     })
 end
 
+c1 = {
+    ["DamageMax"] = true,
+    ["DamageMin"] = true,
+    ["DamageRand"] = true,
+    ["RangeMin"] = true,
+    ["RangeMax"] = true,
+    ["Num"] = true,
+    ["Penetration"] = true,
+    ["RicochetAngleMax"] = true,
+    ["RicochetChance"] = true,
+    ["ArmorPiercing"] = true,
+    ["EntityMuzzleVelocity"] = true,
+    ["PhysBulletMuzzleVelocity"] = true,
+    ["PhysBulletDrag"] = true,
+    ["PhysBulletGravity"] = true,
+    ["ChamberSize"] = true,
+    ["ClipSize"] = true,
+    ["SupplyLimit"] = true,
+    ["SecondarySupplyLimit"] = true,
+    ["AmmoPerShot"] = true,
+    ["ManualActionChamber"] = true,
+    ["TriggerDelay"] = true,
+    ["RPM"] = true,
+    ["PostBurstDelay"] = true,
+    ["Recoil"] = true,
+    ["RecoilPatternDrift"] = true,
+    ["RecoilUp"] = true,
+    ["RecoilSide"] = true,
+    ["RecoilRandomUp"] = true,
+    ["RecoilRandomSide"] = true,
+    ["RecoilDissipationRate"] = true,
+    ["RecoilResetTime"] = true,
+    ["RecoilAutoControl"] = true,
+    ["RecoilKick"] = true,
+    ["Spread"] = true,
+    ["PelletSpread"] = true,
+    ["FreeAimRadius"] = true,
+    ["Sway"] = true,
+    ["AimDownSightsTime"] = true,
+    ["SprintToFireTime"] = true,
+    ["ReloadTime"] = true,
+    ["DeployTime"] = true,
+    ["CycleTime"] = true,
+    ["FixTime"] = true,
+    ["OverheatTime"] = true,
+    ["Speed"] = true,
+    ["BashDamage"] = true,
+    ["BashRange"] = true,
+    ["BashLungeRange"] = true,
+    ["HeatPerShot"] = true,
+    ["HeatCapacity"] = true,
+    ["HeatDissipation"] = true,
+    ["MalfunctionMeanShotsToFail"] = true,
+    ["ShootVolume"] = true,
+    ["AlwaysPhysBullet"] = true,
+    ["NeverPhysBullet"] = true,
+    ["InfiniteAmmo"] = true,
+    ["BottomlessClip"] = true,
+    ["ShotgunReload"] = true,
+    ["HybridReload"] = true,
+    ["ManualAction"] = true,
+    ["CanFireUnderwater"] = true,
+    ["AutoReload"] = true,
+    ["AutoBurst"] = true,
+    ["RunAwayBurst"] = true,
+    ["ShootWhileSprint"] = true,
+    ["Bash"] = true,
+    ["Overheat"] = true,
+    ["Malfunction"] = true,
+    ["Bipod"] = true,
+    ["NoFlash"] = true,
+    ["BulletGuidance"] = true,
+    ["BulletGuidanceAmount"] = true,
+    ["ExplosionDamage"] = true,
+    ["ExplosionRadius"] = true,
+}
+
+c2 = {
+    [""] = true,
+    ["Mult"] = true,
+    ["Add"] = true,
+    ["Override"] = true,
+}
+
+c3 = {
+    [""] = true,
+    ["True"] = true,
+    ["Silenced"] = true,
+    ["UBGL"] = true,
+    ["MidAir"] = true,
+    ["Crouch"] = true,
+    ["FirstShot"] = true,
+    ["Empty"] = true,
+    ["EvenShot"] = true,
+    ["OddShot"] = true,
+    ["EvenReload"] = true,
+    ["OddReload"] = true,
+    ["BlindFire"] = true,
+    ["Sights"] = true,
+    ["HipFire"] = true,
+    ["Shooting"] = true,
+    ["Recoil"] = true,
+    ["Move"] = true,
+}
+
 local function menu_server_modifiers(panel)
+    local listview = vgui.Create("DListView", panel)
+    listview:SetSize( 99, 200 )
+    panel:AddItem( listview )
+    listview:SetMultiSelect( true )
+    listview:AddColumn( "Stat" )
+    listview:AddColumn( "Modifier" )
+
+    local tex_inp = vgui.Create( "DTextEntry", panel )
+    local tex_out = vgui.Create( "DTextEntry", panel )
+    panel:AddItem( tex_inp )
+    panel:AddItem( tex_out )
+    tex_inp:SetPlaceholderText("Stat to edit, along with type and conditions")
+    tex_out:SetPlaceholderText("Additive, multiplicative, or overidiative.")
+
+    local com_1 = vgui.Create( "DComboBox", panel )
+    local com_2 = vgui.Create( "DComboBox", panel )
+    local com_3 = vgui.Create( "DComboBox", panel )
+    panel:AddItem( com_1 )
+    panel:ControlHelp( "Stat to edit." )
+    panel:AddItem( com_2 )
+    panel:ControlHelp( "Type. Some don't have these, like 'Overheat'." )
+    panel:AddItem( com_3 )
+    panel:ControlHelp( "Special conditions." )
+
+    for i, v in pairs(c1) do
+        com_1:AddChoice( i )
+    end
+    for i, v in pairs(c2) do
+        com_2:AddChoice( i )
+    end
+    for i, v in pairs(c3) do
+        com_3:AddChoice( i )
+    end
+
+    com_1.OnSelect = function( self, index, value )
+        tex_inp:SetValue( ( com_1:GetValue() or "" ) .. ( com_2:GetValue() or "" ) .. ( com_3:GetValue() or "" ) )
+    end
+
+    com_2.OnSelect = function( self, index, value )
+        tex_inp:SetValue( ( com_1:GetValue() or "" ) .. ( com_2:GetValue() or "" ) .. ( com_3:GetValue() or "" ) )
+    end
+
+    com_3.OnSelect = function( self, index, value )
+        tex_inp:SetValue( ( com_1:GetValue() or "" ) .. ( com_2:GetValue() or "" ) .. ( com_3:GetValue() or "" ) )
+    end
+
+    local but_add = vgui.Create( "DButton", panel )
+    local but_rem = vgui.Create( "DButton", panel )
+    local but_upd = vgui.Create( "DButton", panel )
+    local but_app = vgui.Create( "DButton", panel )
+    panel:AddItem( but_add )
+    panel:AddItem( but_rem )
+    panel:AddItem( but_upd )
+    panel:AddItem( but_app )
+    but_add:SetText("Add")
+    but_rem:SetText("Remove selected")
+    but_upd:SetText("Restore from memory")
+    but_app:SetText("Save & apply")
+    
+    function but_add:DoClick()
+        listview:AddLine( tex_inp:GetValue(), tex_out:GetValue() )
+    end
+
+    function but_rem:DoClick()
+        for i, v in pairs(listview:GetSelected()) do
+            listview:RemoveLine( v:GetID() )
+        end
+    end
+
+    function but_upd:DoClick()
+        listview:Clear()
+
+        local config = GetConVar("arc9_modifiers"):GetString()
+        config = string.Split( config, "\\n" )
+        for i, v in ipairs(config) do
+            local swig = string.Split( v, "\\t" )
+            if swig[1] == "" then continue end
+            listview:AddLine( swig[1], swig[2] )
+        end
+    end
+    but_upd:DoClick()
+
+    function but_app:DoClick()
+        local toapply = ""
+        local order = 1
+        for k, line in pairs( listview:GetLines() ) do
+            if order != 1 then toapply = toapply .. "\\n" end
+            toapply = toapply .. line:GetValue( 1 ) .. "\\t" .. line:GetValue( 2 )
+            order = order + 1
+        end
+        RunConsoleCommand("arc9_modifiers", toapply)
+        RunConsoleCommand("arc9_modifiers_invalidateall")
+    end
 end
+
+concommand.Add( "arc9_modifiers_invalidateall", function( ply, cmd, args )
+    if IsValid(ply) and ply:IsAdmin() then
+        net.Start("ARC9_InvalidateAll") net.SendToServer()
+    end
+end )
 
 local clientmenus_ti = {
     {

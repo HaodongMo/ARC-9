@@ -108,6 +108,21 @@ function SWEP:GetAllAffectors()
         end
     end
 
+    local config = string.Split( GetConVar("arc9_modifiers"):GetString(), "\\n" )
+    local c4 = {}
+    for i, v in ipairs(config) do
+        local swig = string.Split( v, "\\t" )
+        local c2 = c4[swig[1]]
+        if tonumber(swig[2]) then
+            c4[swig[1]] = tonumber(swig[2])
+        elseif swig[2] == "true" or swig[2] == "false" then
+            c4[swig[1]] = swig[2] == "true"
+        else
+            c4[swig[1]] = swig[2]
+        end
+    end
+    table.insert(aff, c4)
+
     if !ARC9.Overrun then
         ARC9.Overrun = true
         table.insert(aff, self:GetCurrentFiremodeTable())

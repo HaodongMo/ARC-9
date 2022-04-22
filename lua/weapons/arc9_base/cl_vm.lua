@@ -70,7 +70,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     oldpos:Set(pos)
     oldang:Set(ang)
 
-    if GetConVar("ARC9_benchgun"):GetBool() then
+    if GetConVar("arc9_dev_benchgun"):GetBool() then
         return Vector(0, 0, 0), Angle(0, 0, 0)
     elseif GetConVar("developer"):GetInt() >= 3 then
         pos = EyePos()
