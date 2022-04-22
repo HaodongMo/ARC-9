@@ -504,12 +504,15 @@ local function menu_server_attachments(panel)
     })
 end
 
+local function menu_server_modifiers(panel)
+end
+
 local clientmenus_ti = {
     {
         text = "Client", func = menu_client_ti
     },
     {
-        text = "Client - Customization", func = menu_client_cust
+        text = "Client - Customization", func = menu_client_customization
     },
     {
         text = "Client - Controller", func = menu_client_controller
@@ -519,6 +522,9 @@ local clientmenus_ti = {
     },
     {
         text = "Server - Attachments", func = menu_server_attachments
+    },
+    {
+        text = "Server - Modifiers", func = menu_server_modifiers
     },
 }
 
