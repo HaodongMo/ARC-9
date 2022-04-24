@@ -89,38 +89,94 @@ SWEP.ViewModelBobVelocity = 0
 SWEP.ViewModelNotOnGround = 0
 SWEP.BobCT = 0
 
+local v = 0
+
+local offset = Vector()
+local affset = Angle()
+
+local airtime = 0
+
+local stammer = 0
+local stammer_moving = false
+
 function SWEP:GetViewModelBob(pos, ang)
-    local step = 10
-    local mag = 1
-    local ts = 0 -- self:GetTraversalSprintAmount()
-    -- ts = 1
     if self:GetCustomize() then return pos, ang end
-    local v = self:GetOwner():GetVelocity():Length()
-    v = math.Clamp(v, 0, 350)
-    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, FrameTime() * 10000)
-    local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
+    local cv = self:GetOwner():GetVelocity():Length()
+    v = math.Approach(v, cv, FrameTime()*400/0.4)
+    v = math.Clamp(v, 0, 400)
+    local tv = v / 400
+    tv = tv * 1.1
+    local mulp = Lerp(self:GetSightDelta(), 1, 0.15)
+    tv = tv * mulp
+    self.BobScale = 0
+    local p = math.pi
+    local spe = self:GetOwner():KeyDown(IN_SPEED)
 
-    if self:GetOwner():OnGround() and self:GetOwner():GetMoveType() != MOVETYPE_NOCLIP then
-        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, FrameTime() / 0.1)
+    local grounded = (self:GetOwner():IsOnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP)
+    airtime = math.Approach(airtime, (grounded and 0 or 1), FrameTime()*5*(grounded and 10 or 1))
+
+    offset:Set(vector_origin)
+    affset:Set(angle_zero)
+    
+    local ct = ( (CurTime() * 1.1) % (0.975 * ((1/1.1)+0.1)) )
+
+    offset.x = offset.x + math.sin( ct * p * 2 ) * 0.2 * ( spe and -2 or 1 )
+    offset.y = offset.y + math.pow(math.sin( ct * p * 2 ), 2) * -0.5 * ( spe and -2 or 1 )
+    offset.z = offset.z + math.abs(math.sin( ct * p * -1 )) * -0.15
+
+    offset.z = offset.z + math.pow(math.abs( math.sin(ct * p * 2) ), 6) * -0.395 * ( spe and -4 or 0 )
+
+    offset.z = offset.z + ( (-0.395/2)*3 * tv )
+
+    offset.z = offset.z + ( math.pow(math.sin((ct+0)*p*2.5), 2) * -0.3 )
+    offset.z = offset.z + ( math.pow(math.sin((ct+0.3)*p*2.5), 2) * -0.3 )
+
+    affset.x = affset.x - ( math.pow( math.sin( ct * p ) * 2.2, 2 ) - ( (2.2/2) * tv ) ) * ( spe and 2 or 1 )
+    affset.y = affset.y + math.sin( ct * p * -(3) ) * 0.5 * 1.5
+    affset.z = affset.z + ( ( ((ct/2) % 1) < 0.5 and -1 or 2 ) * math.sin( ct * p * 2 ) * 2 * 1.5 ) * ( spe and 2 or 1 )
+    affset.z = affset.z + ( ( ((ct/2) % 1) > 0.5 and -1 or 2 ) * math.sin( ct * p * 2 ) * 2 * 1.5 ) * ( spe and 2 or 1 )
+
+    affset.x = affset.x + ( (-2) * tv )
+
+    pos:Add( ang:Right()     *   offset.x * tv )
+    pos:Add( ang:Forward()   *   offset.y * tv )
+    pos:Add( ang:Up()        *   offset.z * tv )
+
+    local stammertime_pos = Vector()
+    local stammertime_ang = Angle()
+
+    local pe = self:GetOwner()
+    local pep = pe:KeyDown(IN_FORWARD) or pe:KeyDown(IN_BACK) or pe:KeyDown(IN_MOVELEFT) or pe:KeyDown(IN_MOVERIGHT)
+    if tv > 0.1 then
+        stammer = 1
+        stammer_moving = true
     else
-        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 0.1)
+        stammer_moving = false
+        stammer = math.Approach(stammer, 0, FrameTime()*3)
     end
+    local elistam = (!pep and stammer or 0)*1
 
-    d = d * Lerp(self:GetSightAmount(), 1, 0.5) * Lerp(ts, 1, 1.5)
-    mag = d * 2
-    mag = mag * Lerp(ts, 1, 1.5)
-    step = 10
-    ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 4.5 * d)
-    ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 2.11 * d)
-    pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.1 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
-    pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 1.615) * 0.2) + 1) * mag)
-    pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.15) + (math.cos(self.BobCT * step * 0.3332))) * 0.16 * mag)
-    local steprate = Lerp(d, 1, 2.5)
-    steprate = Lerp(self.ViewModelNotOnGround, steprate, 0.25)
+    stammertime_pos.y = stammertime_pos.y + elistam*-0.5
+    stammertime_pos.z = stammertime_pos.z + elistam*-0.25
+    stammertime_ang.y = stammertime_ang.y + math.sin( ct * p * 2*1.334 ) * 0.8
+    stammertime_ang.z = stammertime_ang.z + math.sin( ct * p * 5*1.334 ) * 0.5
 
-    if IsFirstTimePredicted() or game.SinglePlayer() then
-        self.BobCT = self.BobCT + (FrameTime() * steprate)
-    end
+    pos:Add( ang:Right()     *   stammertime_pos.x * elistam )
+    pos:Add( ang:Forward()   *   stammertime_pos.y * elistam )
+    pos:Add( ang:Up()        *   stammertime_pos.z * elistam )
+
+    ang:RotateAroundAxis( ang:Forward(),        affset.x * tv )
+    ang:RotateAroundAxis( ang:Right(),          affset.y * tv )
+    ang:RotateAroundAxis( ang:Up(),             affset.z * tv )
+
+    ang:RotateAroundAxis( ang:Forward(),        stammertime_ang.x * elistam )
+    ang:RotateAroundAxis( ang:Right(),          stammertime_ang.y * elistam )
+    ang:RotateAroundAxis( ang:Up(),             stammertime_ang.z * elistam )
+    ang:RotateAroundAxis( ang:Up(),             (pe:KeyDown(IN_MOVELEFT) and 2 or pe:KeyDown(IN_MOVERIGHT) and -2 or 0) * tv )
+
+    ang:RotateAroundAxis( ang:Forward(),          math.sin( ct * p * 1 ) * airtime*-5 * mulp )
+    ang:RotateAroundAxis( ang:Right(),          ( math.sin( ct * p * 1 ) * airtime*3 * mulp ) + ( (3/2) * airtime * mulp ) ) 
+    ang:RotateAroundAxis( ang:Up(),          math.sin( ct * p * 2 ) * airtime*2 * mulp )
 
     return pos, ang
 end
