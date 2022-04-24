@@ -373,13 +373,24 @@ function SWEP:GetViewModelPosition(pos, ang)
     return pos, ang
 end
 
+function SWEP:ScaleFOVByWidthRatio( fovDegrees, ratio )
+    local halfAngleRadians = fovDegrees * ( 0.5 * math.pi / 180 )
+    local t = math.tan( halfAngleRadians )
+    t = t * ratio
+    local retDegrees = ( 180 / math.pi ) * math.atan( t )
+    return retDegrees * 2
+end
+
 function SWEP:GetViewModelFOV()
-    local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
+    -- local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
+    local target = (self:GetProcessedValue("ViewModelFOVBase") or self:GetOwner():GetFOV()) + GetConVar("arc9_fov"):GetInt()
     local sightedtarget = self:GetSight().ViewModelFOV or (75 + GetConVar("arc9_fov"):GetInt())
 
     if self:GetSightAmount() > 0 then
-        return Lerp(self:GetSightAmount(), target, sightedtarget)
+        target = Lerp(self:GetSightAmount(), target, sightedtarget)
     end
+
+    target = self:ScaleFOVByWidthRatio(target, (ScrW() / ScrH()) / (4 / 3))
 
     return target
     -- return 60 * self:GetSmoothedFOVMag()

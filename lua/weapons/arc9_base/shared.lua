@@ -57,6 +57,8 @@ SWEP.Crosshair = false
 SWEP.LauncherCrosshair = false -- Force the launcher crosshair
 SWEP.MissileCrosshair = false -- Force the missile launcher crosshair
 
+SWEP.ViewModelFOVBase = nil -- Set to override viewmodel FOV
+
 -------------------------- SAVING
 
 SWEP.SaveBase = nil -- set to a weapon class to make this weapon share saves with it.
