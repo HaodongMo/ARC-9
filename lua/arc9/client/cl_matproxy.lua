@@ -24,7 +24,8 @@ matproxy.Add({
             mat:SetTexture(self.DetailResult, ent.CustomCamoTexture)
             self.ShouldRecomputeIfSet = true
         elseif self.DetailResult then
-            if self.DefaultTexture:IsError() then
+            self.DefaultTexture = nil
+            if !self.DefaultTexture then
                 mat:SetUndefined(self.DetailResult)
                 if self.ShouldRecomputeIfSet then
                     mat:Recompute()
