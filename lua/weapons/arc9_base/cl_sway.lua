@@ -99,7 +99,7 @@ local airtime = 0
 local stammer = 0
 local stammer_moving = false
 
-function SWEP:GetViewModelBob(pos, ang)
+local function goodassbob(self, pos, ang)
     if self:GetCustomize() then return pos, ang end
     local cv = self:GetOwner():GetVelocity():Length()
     v = math.Approach(v, cv, FrameTime()*400/0.4)
@@ -156,6 +156,7 @@ function SWEP:GetViewModelBob(pos, ang)
     end
     local elistam = (!pep and stammer or 0)*1
 
+    stammertime_pos.x = stammertime_pos.x + math.sin( ct * p * 5*1.334 ) * -0.05
     stammertime_pos.y = stammertime_pos.y + elistam*-0.5
     stammertime_pos.z = stammertime_pos.z + elistam*-0.25
     stammertime_ang.y = stammertime_ang.y + math.sin( ct * p * 2*1.334 ) * 0.8
@@ -180,6 +181,51 @@ function SWEP:GetViewModelBob(pos, ang)
 
     return pos, ang
 end
+
+local function goofyassbob(self, pos, ang)
+    local step = 10
+    local mag = 1
+    local ts = 0 -- self:GetTraversalSprintAmount()
+    -- ts = 1
+    if self:GetCustomize() then return pos, ang end
+    local v = self:GetOwner():GetVelocity():Length()
+    v = math.Clamp(v, 0, 350)
+    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, FrameTime() * 10000)
+    local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
+    if self:GetOwner():OnGround() and self:GetOwner():GetMoveType() != MOVETYPE_NOCLIP then
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, FrameTime() / 0.1)
+    else
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 0.1)
+    end
+
+    d = d * Lerp(self:GetSightAmount(), 1, 0.5) * Lerp(ts, 1, 1.5)
+    mag = d * 2
+    mag = mag * Lerp(ts, 1, 1.5)
+    step = 10
+    ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 4.5 * d)
+    ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 2.11 * d)
+    pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.1 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
+    pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 1.615) * 0.2) + 1) * mag)
+    pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.15) + (math.cos(self.BobCT * step * 0.3332))) * 0.16 * mag)
+    
+    local steprate = Lerp(d, 1, 2.5)
+    steprate = Lerp(self.ViewModelNotOnGround, steprate, 0.25)
+
+    if IsFirstTimePredicted() or game.SinglePlayer() then
+        self.BobCT = self.BobCT + (FrameTime() * steprate)
+    end
+
+    return pos, ang
+end
+
+function SWEP:GetViewModelBob(pos, ang)
+    if GetConVar("arc9_vm_bobstyle"):GetBool() then
+        return goofyassbob(self, pos, ang)
+    else
+        return goodassbob(self, pos, ang)
+    end
+end
+
 
 SWEP.LastViewModelVerticalVelocity = 0
 

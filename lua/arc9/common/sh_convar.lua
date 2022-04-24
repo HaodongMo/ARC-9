@@ -165,6 +165,10 @@ local conVars = {
         replicated = true
     },
     {
+        name = "vm_bobstyle",
+        default = "0",
+    },
+    {
         name = "bullet_imaginary",
         default = "1",
         replicated = true
@@ -334,8 +338,11 @@ local function menu_client_ti(panel)
     panel:AddControl("checkbox", {
         label = "Draw it anywhere you go hold up tududuuuttu",
         command = "arc9_hud_always"
-    })    
-
+    })
+    panel:AddControl("checkbox", {
+        label = "Viewmodel Bob Style",
+        command = "arc9_vm_bobstyle"
+    })
 end
 
 local function menu_client_customization(panel)
