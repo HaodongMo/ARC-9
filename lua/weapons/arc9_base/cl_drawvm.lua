@@ -20,7 +20,7 @@ function SWEP:PreDrawViewModel()
         -- render.ResetModelLighting(0.6, 0.6, 0.6)
         -- render.SetModelLighting(BOX_TOP, 4, 4, 4)
         local light = DynamicLight(self:EntIndex(), true)
-        light.pos = EyePos()
+        light.pos = EyePos() + (EyeAngles():Up() * 12)
         light.r = 255
         light.g = 255
         light.b = 255
