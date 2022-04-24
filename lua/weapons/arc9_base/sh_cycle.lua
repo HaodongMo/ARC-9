@@ -1,7 +1,7 @@
 function SWEP:ThinkCycle()
     if self:StillWaiting() then return end
 
-    if self:GetNeedsCycle() and (!self:GetOwner():KeyDown(IN_ATTACK) || self:GetCurrentFiremode() < 0) then
+    if self:GetNeedsCycle() and (!self:GetOwner():KeyDown(IN_ATTACK) || self:GetProcessedValue("SlamFire")) then
         if IsFirstTimePredicted() then
             local t = self:PlayAnimation("cycle", 1, false)
 

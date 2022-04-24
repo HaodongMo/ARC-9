@@ -221,6 +221,8 @@ SWEP.Firemodes = {
     }
 }
 
+SWEP.SlamFire = false -- Manual action weapons cycle themselves
+
 SWEP.AutoBurst = false -- Hold fire to keep firing bursts
 SWEP.PostBurstDelay = 0
 SWEP.RunAwayBurst = false -- Burst will keep firing until all of the burst has been expended.
