@@ -7,18 +7,27 @@ function SWEP:PreDrawViewModel()
     local custdelta = self.CustomizeDelta
 
     if custdelta > 0 then
-        if GetConVar("arc9_cust_blur"):GetBool() then DrawBokehDOF( 10*custdelta, 1, 0.1 ) end
+        if GetConVar("arc9_cust_blur"):GetBool() then DrawBokehDOF( 10 * custdelta, 1, 0.1 ) end
 
         cam.Start2D()
-            surface.SetDrawColor(0, 0, 0, 220*custdelta)
+            surface.SetDrawColor(0, 0, 0, 220 * custdelta)
             surface.DrawRect(0, 0, ScrW(), ScrH())
         cam.End2D()
     end
 
     if GetConVar("arc9_cust_light"):GetBool() and self:GetCustomize() then -- we also maybe can make some button in cust to turn on/off lights :^)
-        render.SuppressEngineLighting( true )
-        render.ResetModelLighting(0.6, 0.6, 0.6)
-        render.SetModelLighting(BOX_TOP, 4, 4, 4)
+        -- render.SuppressEngineLighting( true )
+        -- render.ResetModelLighting(0.6, 0.6, 0.6)
+        -- render.SetModelLighting(BOX_TOP, 4, 4, 4)
+        local light = DynamicLight(self:EntIndex(), true)
+        light.pos = EyePos()
+        light.r = 255
+        light.g = 255
+        light.b = 255
+        light.brightness = 0.2
+        light.Decay = 1000
+        light.Size = 500
+        light.DieTime = CurTime() + 0.1
     else
         render.SuppressEngineLighting( false )
         render.ResetModelLighting(1,1,1)
