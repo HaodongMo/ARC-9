@@ -805,7 +805,7 @@ function ARC9.DrawHUD()
         if weapon:CanToggleAllStatsOnF() then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("impulse 100"),
-                action = "Toggle Att. Stats"
+                action = "Toggle Attachments"
             })
         end
 
