@@ -22,20 +22,47 @@ matproxy.Add({
         if self.DetailResult and ent.CustomCamoTexture then
             -- mat:SetString(self.DetailResult, self.CustomCamoTexture)
             mat:SetTexture(self.DetailResult, ent.CustomCamoTexture)
+            self.ShouldRecomputeIfSet = true
         elseif self.DetailResult then
-            mat:SetTexture(self.DetailResult, self.DefaultTexture)
+            if self.DefaultTexture:IsError() then
+                mat:SetUndefined(self.DetailResult)
+                if self.ShouldRecomputeIfSet then
+                    mat:Recompute()
+                    self.ShouldRecomputeIfSet = false
+                end
+            else
+                mat:SetTexture(self.DetailResult, self.DefaultTexture)
+            end
         end
 
         if self.ScaleResult and ent.CustomCamoScale then
             mat:SetFloat(self.ScaleResult, ent.CustomCamoScale)
+            self.ShouldRecomputeIfSet = true
         elseif self.ScaleResult then
-            mat:SetFloat(self.ScaleResult, self.DefaultScale)
+            if self.DefaultScale then
+                mat:SetFloat(self.ScaleResult, self.DefaultScale)
+            else
+                mat:SetUndefined(self.ScaleResult)
+                if self.ShouldRecomputeIfSet then
+                    mat:Recompute()
+                    self.ShouldRecomputeIfSet = false
+                end
+            end
         end
 
         if self.BlendResult and ent.CustomCamoBlend then
             mat:SetFloat(self.BlendResult, ent.CustomCamoBlend)
+            self.ShouldRecomputeIfSet = true
         elseif self.BlendResult then
-            mat:SetFloat(self.BlendResult, self.DefaultBlend)
+            if self.DefaultBlend then
+                mat:SetFloat(self.BlendResult, self.DefaultBlend)
+            else
+                mat:SetUndefined(self.DefaultBlend)
+                if self.ShouldRecomputeIfSet then
+                    mat:Recompute()
+                    self.ShouldRecomputeIfSet = false
+                end
+            end
         end
 
     end
