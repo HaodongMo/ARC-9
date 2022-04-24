@@ -70,7 +70,7 @@ function SWEP:GetMagnification()
 end
 
 function SWEP:AdjustMouseSensitivity()
-    if self:GetSightAmount() <= 0 then return end
+    if !self:GetInSights() then return end
 
     local mag = self:GetMagnification()
     local fov = GetConVar("fov_desired"):GetFloat()

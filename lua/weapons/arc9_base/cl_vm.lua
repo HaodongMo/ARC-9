@@ -149,7 +149,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         else
             sightdelta = math.ease.InQuart(sightdelta)
         end
-        sightdelta = math.ease.InOutQuad(sightdelta)
+        -- sightdelta = math.ease.InOutQuad(sightdelta)
         local sightpos, sightang = self:GetSightPositions()
         local sight = self:GetSight()
         local eepos, eeang = self:GetExtraSightPositions()
@@ -381,18 +381,22 @@ function SWEP:ScaleFOVByWidthRatio( fovDegrees, ratio )
     return retDegrees * 2
 end
 
+SWEP.SmoothedViewModelFOV = nil
+
 function SWEP:GetViewModelFOV()
     -- local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
     local target = (self:GetProcessedValue("ViewModelFOVBase") or self:GetOwner():GetFOV()) + GetConVar("arc9_fov"):GetInt()
-    local sightedtarget = self:GetSight().ViewModelFOV or (75 + GetConVar("arc9_fov"):GetInt())
 
-    if self:GetSightAmount() > 0 then
-        target = Lerp(self:GetSightAmount(), target, sightedtarget)
+    if self:GetInSights() then
+        -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
+        target = self:GetSight().ViewModelFOV or (75 + GetConVar("arc9_fov"):GetInt())
     end
 
-    target = self:ScaleFOVByWidthRatio(target, (ScrW() / ScrH()) / (4 / 3))
+    self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
 
-    return target
+    self.SmoothedViewModelFOV = Damp(1E-100, self.SmoothedViewModelFOV, target)
+
+    return self:ScaleFOVByWidthRatio(self.SmoothedViewModelFOV, (ScrW() / ScrH()) / (4 / 3))
     -- return 60 * self:GetSmoothedFOVMag()
     -- return 150
     -- return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)
