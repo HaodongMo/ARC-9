@@ -107,6 +107,8 @@ local function goodassbob(self, pos, ang)
     local tv = v / 400
     tv = tv * 1.1
     local mulp = Lerp(self:GetSightDelta(), 1, 0.15)
+    local mulk = Lerp(self:GetSightDelta(), 1, 0.3)
+    local tk = tv * mulk
     tv = tv * mulp
     self.BobScale = 0
     local p = math.pi
@@ -147,14 +149,14 @@ local function goodassbob(self, pos, ang)
 
     local pe = self:GetOwner()
     local pep = pe:KeyDown(IN_FORWARD) or pe:KeyDown(IN_BACK) or pe:KeyDown(IN_MOVELEFT) or pe:KeyDown(IN_MOVERIGHT)
-    if tv > 0.1 then
+    if tk > 0.1 then
         stammer = 1
         stammer_moving = true
     else
         stammer_moving = false
         stammer = math.Approach(stammer, 0, FrameTime()*3)
     end
-    local elistam = (!pep and stammer or 0)*1
+    local elistam = (!pep and stammer or 0)*Lerp(self:GetSightDelta(), 1, 0.3)
 
     stammertime_pos.x = stammertime_pos.x + math.sin( ct * p * 5*1.334 ) * -0.05
     stammertime_pos.y = stammertime_pos.y + elistam*-0.5
