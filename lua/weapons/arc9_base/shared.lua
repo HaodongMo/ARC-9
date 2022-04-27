@@ -851,6 +851,23 @@ SWEP.Attachments = {
 -- reload_empty
 -- reload_ubgl
 -- reload_insert_1, reload_insert_2, reload_insert_3...: Animation that reloads multiple rounds in at once, such as a stripper clip.
+-- enter_bipod, exit_bipod
+-- enter_inspect, exit_inspect, idle_inspect
+-- jam
+-- fix
+-- bash
+-- enter_sights, exit_sights, idle_sights
+-- enter_sprint, exit_sprint, idle_sprint
+-- Suffixes (Must be in this order):
+-- _iron (When sighted)
+-- _sights (Alternative to _iron)
+-- _blindfire_left
+-- _blindfire_right
+-- _blindfire
+-- _bipod
+-- _sprint
+-- _empty
+
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
 SWEP.Animations = {
