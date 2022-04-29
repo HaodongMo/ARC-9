@@ -7,7 +7,6 @@ ATT.Pros = {}
 ATT.Cons = {}
 ATT.SortOrder = 0
 ATT.MenuCategory = "ARC-9 - Attachments"
-ATT.Pack = "default" -- lua/arc9/common/packs/*.lua   you can define per slot stuff there 
 
 ATT.AdminOnly = false
 ATT.Free = false
