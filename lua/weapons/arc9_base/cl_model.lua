@@ -178,11 +178,6 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
     csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
 
-    if atttbl.Bonemerge then
-        csmodel:SetParent(self:GetVM())
-        csmodel:AddEffects(EF_BONEMERGE)
-    end
-
     if atttbl.Flare then
         csmodel.Flare = {
             Color = atttbl.FlareColor or Color(255, 255, 255),
@@ -192,7 +187,7 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         }
     end
 
-    if !ignorescale or !atttbl.Bonemerge then
+    if !ignorescale then
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
         vec = vec * (slottbl.Scale or 1)
