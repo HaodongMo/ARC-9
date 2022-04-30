@@ -349,7 +349,7 @@ function SWEP:CreateHUD_Bottom()
                 glyph2 = "shared_lstick"
             },
             {
-                action = "Move",
+                action = "Rotate",
                 glyph = "shared_lstick"
             },
             {

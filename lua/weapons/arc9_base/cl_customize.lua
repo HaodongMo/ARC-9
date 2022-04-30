@@ -269,23 +269,31 @@ function SWEP:CreateCustomizeHUD()
             gui.EnableScreenClicker(false)
         end
 
-        surface.SetMaterial( Material( "arc9/gamepad/corner.png", "" ) )
-        surface.SetDrawColor(255, 255, 255, 255)
+        if ARC9.ControllerMode() then
 
-        local si = ScreenScale(6)
-        local of = si/2
-        local bo = si*2
-        surface.DrawTexturedRectRotated(of, of, si, si, 0)
-        surface.DrawTexturedRectRotated(of+bo, of, si, si, 270)
-        surface.DrawTexturedRectRotated(of+bo, of+bo, si, si, 180)
-        surface.DrawTexturedRectRotated(of, of+bo, si, si, 90)
+            surface.SetTextPos(ScreenScale(4), ScreenScale(4))
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetFont("ARC9_8")
+            surface.DrawText("Controller mode is on.")
 
-        surface.SetMaterial( Material( "arc9/gamepad/pointer.png", "" ) )
-        surface.DrawTexturedRect(si, si, si, si)
+            --[[surface.SetMaterial( Material( "arc9/gamepad/corner.png", "" ) )
+            surface.SetDrawColor(255, 255, 255, 255)
 
-        surface.SetMaterial(mat_grad)
-        surface.SetDrawColor(0, 0, 0, 250)
-        surface.DrawTexturedRect(w - h, 0, h, h)
+            local si = ScreenScale(6)
+            local of = si/2
+            local bo = si*2
+            surface.DrawTexturedRectRotated(of, of, si, si, 0)
+            surface.DrawTexturedRectRotated(of+bo, of, si, si, 270)
+            surface.DrawTexturedRectRotated(of+bo, of+bo, si, si, 180)
+            surface.DrawTexturedRectRotated(of, of+bo, si, si, 90)
+
+            surface.SetMaterial( Material( "arc9/gamepad/pointer.png", "" ) )
+            surface.DrawTexturedRect(si, si, si, si)
+
+            surface.SetMaterial(mat_grad)
+            surface.SetDrawColor(0, 0, 0, 250)
+            surface.DrawTexturedRect(w - h, 0, h, h)]]
+        end
 
         local bumpy = {}
 
@@ -537,7 +545,7 @@ function SWEP:CreateCustomizeHUD()
     -- self:CreateHUD_Bottom()
 
 
-    local settings = vgui.Create("DButton", bg) -- I dont know where to put it
+    --[[local settings = vgui.Create("DButton", bg) -- I dont know where to put it
     settings:SetPos(ScreenScale(8), ScreenScale(8))
     settings:SetSize(ScreenScale(24), ScreenScale(24))
     settings:SetText("")
@@ -566,7 +574,7 @@ function SWEP:CreateCustomizeHUD()
 
     settings.DoRightClick = function(self2)
         surface.PlaySound("arc9/ubgl_exit.wav")
-    end
+    end]]
 end
 
 function SWEP:RemoveCustomizeHUD()
