@@ -181,7 +181,7 @@ local Press2 = false
 local Release1 = false
 local Release2 = false
 hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
-    if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon():GetCustomize() then
+    if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon().ARC9 and LocalPlayer():GetActiveWeapon():GetCustomize() then
         local wpn = LocalPlayer():GetActiveWeapon()
     
         local pox = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_U ))-0.5, 1 )*2
@@ -189,7 +189,7 @@ hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
 
         local p1x = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_X ))-0.5, 1 )*2
         local p1y = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_Y ))-0.5, 1 )*2
-        
+
         if ARC9.ControllerMode() then
             if cmd:KeyDown( IN_JUMP ) then
                 cmd:RemoveKey( IN_JUMP )
