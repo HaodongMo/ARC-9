@@ -23,6 +23,21 @@ function SWEP:Think()
         end
     end
 
+    if self:GetProcessedValue("TriggerDelay") and !self:StillWaiting() then
+        local check = (game.SinglePlayer() and SERVER or CLIENT and IsFirstTimePredicted())
+        if owner:KeyDown(IN_ATTACK) then
+            if check and self:GetTriggerDelay() <= 0 then
+                self:PlayAnimation("trigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)
+            end
+            self:SetTriggerDelay( math.Approach( self:GetTriggerDelay(), 1, FrameTime() * (1 / self:GetProcessedValue("TriggerDelayTime")) ) )
+        else
+            if check and self:GetTriggerDelay() != 1 and self:GetTriggerDelay() != 0 then
+                self:PlayAnimation("untrigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)
+            end
+            self:SetTriggerDelay(0)
+        end
+    end
+
     self:ThinkCycle()
 
     self:ThinkRecoil()

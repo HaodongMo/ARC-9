@@ -206,6 +206,10 @@ SWEP.DropMagazineTime = 0.25
 
 SWEP.RPM = 750
 
+SWEP.TriggerDelay = false -- Add a delay before the weapon fires.
+SWEP.TriggerDelayTime = 0.2 -- Time until weapon fires.
+SWEP.TriggerDelayRepeat = false -- Whether to do it for every shot on automatics.
+
 -- Works different to ArcCW
 
 -- -1: Automatic
@@ -849,6 +853,8 @@ SWEP.Attachments = {
 -- dryfire
 -- reload
 -- reload_empty
+-- trigger Trigger delay
+-- untrigger Let go of trigger before fire
 -- reload_ubgl
 -- reload_insert_1, reload_insert_2, reload_insert_3...: Animation that reloads multiple rounds in at once, such as a stripper clip.
 -- enter_bipod, exit_bipod
@@ -971,8 +977,9 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 5, "RecoilSide")
     self:NetworkVar("Float", 6, "SprintAmount")
     self:NetworkVar("Float", 7, "LastMeleeTime")
-    self:NetworkVar("Float", 8, "PrimedAttackTime")
-    self:NetworkVar("Float", 9, "StartPrimedAttackTime")
+    self:NetworkVar("Float", 8, "TriggerDelay")
+    --self:NetworkVar("Float", 8, "PrimedAttackTime")
+    --self:NetworkVar("Float", 9, "StartPrimedAttackTime")
     self:NetworkVar("Float", 10, "ReloadFinishTime")
     self:NetworkVar("Float", 11, "SightAmount")
     self:NetworkVar("Float", 12, "HeatAmount")

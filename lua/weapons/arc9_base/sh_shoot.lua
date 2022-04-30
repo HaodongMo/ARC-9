@@ -166,6 +166,14 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
+    if self:GetProcessedValue("TriggerDelay") then
+        if self:GetTriggerDelay() != 1 then
+            return
+        elseif self:GetProcessedValue("TriggerDelayRepeat") then
+            self:SetTriggerDelay(0)
+        end
+    end
+
     self:SetBaseSettings()
 
     if self:SprintLock() then return end
