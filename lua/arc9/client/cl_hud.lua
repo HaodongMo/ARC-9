@@ -1358,7 +1358,10 @@ function CreateControllerKeyLine( info, ... )
     local strlength = 0
 
     for i, v in ipairs( args ) do
-        if isstring(v) then
+        if IsColor(v) then
+            surface.SetDrawColor(v)
+            surface.SetTextColor(v)
+        elseif isstring(v) then
             -- Draw text.
             surface.SetTextPos(info.x + strlength, info.y)
             surface.DrawText(v)
@@ -1369,7 +1372,7 @@ function CreateControllerKeyLine( info, ... )
                 -- Draw a key.
                 surface.SetFont("ARC9_KeybindPreview")
                 local sx, sy = surface.GetTextSize(v[1])
-                local keylength = math.max(6 + sx, 16)
+                local keylength = math.max(6 + sx, info.size or 16)
                 surface.DrawOutlinedRect(info.x + strlength, info.y, keylength, info.size )
                 surface.SetTextPos(info.x + strlength - (sx/2) + (keylength/2), info.y - (sy/2) + (info.size/2) )
                 surface.DrawText( v[1] )

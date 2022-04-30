@@ -172,6 +172,75 @@ SWEP.CustomizeYaw = 0
 
 SWEP.CustomizeZoom = 0
 
+local gpX = 0
+local gpY = 0
+
+local Press1 = false
+local Press2 = false
+
+local Release1 = false
+local Release2 = false
+hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
+    if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon():GetCustomize() then
+        local wpn = LocalPlayer():GetActiveWeapon()
+    
+        local pox = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_U ))-0.5, 1 )*2
+        local poy = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_R ))-0.5, 1 )*2
+
+        local p1x = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_X ))-0.5, 1 )*2
+        local p1y = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_Y ))-0.5, 1 )*2
+        
+        if ARC9.ControllerMode() then
+            if cmd:KeyDown( IN_JUMP ) then
+                cmd:RemoveKey( IN_JUMP )
+                if !Press1 then
+                    gui.InternalMousePressed( MOUSE_LEFT )
+                    Press1 = true
+                end
+                Release1 = true
+            else
+                if Release1 then
+                    gui.InternalMouseReleased( MOUSE_LEFT )
+                    Release1 = false
+                    Press1 = false
+                end
+            end
+            if cmd:KeyDown( IN_RELOAD ) then
+                cmd:RemoveKey( IN_RELOAD )
+                if !Press2 then
+                    gui.InternalMousePressed( MOUSE_RIGHT )
+                    Press2 = true
+                end
+                Release2 = true
+            else
+                if Release2 then
+                    gui.InternalMouseReleased( MOUSE_RIGHT )
+                    Release2 = false
+                    Press2 = false
+                end
+            end
+        end
+
+        if true then
+            local cx, cy = input.GetCursorPos()
+
+            gpX = ( ( pox * 160 * ( ScrH() / 480 ) ) * RealFrameTime() )
+            gpY = ( ( poy * 160 * ( ScrH() / 480 ) ) * RealFrameTime() )
+            input.SetCursorPos( cx+gpX, cy+gpY )
+            gpX = 0
+            gpY = 0
+        end
+
+        if cmd:KeyDown( IN_USE ) then
+            wpn.CustomizePanX = wpn.CustomizePanX + (p1x * 5 * RealFrameTime())
+            wpn.CustomizePanY = wpn.CustomizePanY + (p1y * 5 * RealFrameTime())
+        else
+            wpn.CustomizePitch = wpn.CustomizePitch - (p1x * 45 * RealFrameTime())
+            wpn.CustomizeYaw   = wpn.CustomizeYaw   + (p1x * 1 * RealFrameTime())
+        end
+    end
+end)
+
 function SWEP:CreateCustomizeHUD()
     local bg = vgui.Create("DPanel")
 
@@ -179,6 +248,9 @@ function SWEP:CreateCustomizeHUD()
 
     gui.EnableScreenClicker(true)
 
+    gpX = ScrW()/2
+    gpY = ScrH()/2
+    
     bg:SetPos(0, 0)
     bg:SetSize(ScrW(), ScrH())
     bg.OnRemove = function(self2)
@@ -196,6 +268,20 @@ function SWEP:CreateCustomizeHUD()
             self2:Remove()
             gui.EnableScreenClicker(false)
         end
+
+        surface.SetMaterial( Material( "arc9/gamepad/corner.png", "" ) )
+        surface.SetDrawColor(255, 255, 255, 255)
+
+        local si = ScreenScale(6)
+        local of = si/2
+        local bo = si*2
+        surface.DrawTexturedRectRotated(of, of, si, si, 0)
+        surface.DrawTexturedRectRotated(of+bo, of, si, si, 270)
+        surface.DrawTexturedRectRotated(of+bo, of+bo, si, si, 180)
+        surface.DrawTexturedRectRotated(of, of+bo, si, si, 90)
+
+        surface.SetMaterial( Material( "arc9/gamepad/pointer.png", "" ) )
+        surface.DrawTexturedRect(si, si, si, si)
 
         surface.SetMaterial(mat_grad)
         surface.SetDrawColor(0, 0, 0, 250)

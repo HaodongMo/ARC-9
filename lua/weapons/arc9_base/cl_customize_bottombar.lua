@@ -332,6 +332,94 @@ function SWEP:CreateHUD_Bottom()
 
     self.AttInfoBarAtt = nil
 
+    local trolling = ""
+    if ARC9.ControllerMode() then
+        trolling = {
+            {
+                action = "Select",
+                glyph = ARC9.GetBindKey("+jump")
+            },
+            {
+                action = "Deselect",
+                glyph = ARC9.GetBindKey("+reload")
+            },
+            {
+                action = "Pan",
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = "shared_lstick"
+            },
+            {
+                action = "Move",
+                glyph = "shared_lstick"
+            },
+            {
+                action = "Cursor",
+                glyph = "shared_rstick"
+            },
+        }
+    else
+        trolling = {
+            {
+                action = "Select",
+                glyph = ARC9.GetBindKey("+attack")
+            },
+            {
+                action = "Deselect",
+                glyph = ARC9.GetBindKey("+attack2")
+            },
+            {
+                action = "Pan",
+                glyph = ARC9.GetBindKey("+attack"),
+                glyph2 = "shared_touch",
+            },
+            {
+                action = "Rotate",
+                glyph = ARC9.GetBindKey("+attack2"),
+                glyph2 = "shared_touch",
+            },
+            {
+                action = "Reset",
+                glyph = ARC9.GetBindKey("+reload")
+            },
+        }
+    end
+
+    local help = vgui.Create("DPanel", bg)
+    help:SetSize(ScrW(), ScreenScale(16))
+    help:SetPos(0, ScrH() - ScreenScale(62+16) )
+    help.Paint = function(self2, w, h)
+        if !IsValid(self) then
+            self2:Remove()
+            gui.EnableScreenClicker(false)
+        end
+
+        surface.SetFont("ARC9_10")
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+
+        local ToAdd = {}
+        for _, v in ipairs(trolling) do
+            if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
+            if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
+            if v.glyph2 then 
+                if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
+                if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
+            end
+
+            --table.insert( ToAdd, color_white )
+            table.insert( ToAdd, { v.glyph, ScreenScale(12) } )
+            if v.glyph2 then
+                table.insert( ToAdd, " " )
+                table.insert( ToAdd, { v.glyph2, ScreenScale(12) } )
+            end
+            --table.insert( ToAdd, ARC9.GetHUDColor("fg") )
+            table.insert(ToAdd, " " .. v.action .. "    ")
+        end
+        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_12" }, unpack( ToAdd ) )
+    end
+
     local bp = vgui.Create("DPanel", bg)
     bp:SetSize(ScrW(), ScreenScale(62))
     bp:SetPos(0, ScrH() - ScreenScale(62))

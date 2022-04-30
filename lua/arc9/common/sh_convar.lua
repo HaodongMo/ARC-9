@@ -357,9 +357,8 @@ local function menu_client_customization(panel)
 end
 
 local function menu_client_controller(panel)
-    --local textbox = panel:TextEntry("Custom Controller Glyphset", "arc9_controller_glyphset")
     panel:AddControl( "header", { description = "Replace key names with controller glyphs." } )
-    panel:CheckBox("Internal Command Names", "arc9_controller")
+    panel:CheckBox("Engage Super Controller Mode", "arc9_controller")
     panel:CheckBox("Controller Rumble w/ SInput", "arc9_controller_rumble")
 
     local listview = vgui.Create("DListView", panel)
