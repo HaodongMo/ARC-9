@@ -6,7 +6,7 @@ end
 
 function SWEP:DoPlayerAnimationEvent(event)
     -- if CLIENT and self:ShouldTPIK() then return end
-    self:GetOwner():DoAnimationEvent(event)
+    if event then self:GetOwner():DoAnimationEvent(event) end
 end
 
 function SWEP:GetWM()
