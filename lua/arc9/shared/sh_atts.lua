@@ -183,6 +183,10 @@ net.Receive("arc9_reloadatts", function(len, ply)
 
     net.Start("arc9_reloadatts")
     net.Broadcast()
+
+    ARC9.InvalidateAll()
+    net.Start("ARC9_InvalidateAll_ToClients")
+    net.Broadcast()
 end)
 
 end
