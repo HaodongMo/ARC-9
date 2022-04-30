@@ -392,7 +392,7 @@ local function menu_client_controller(panel)
     but_app:SetText("Save & apply")
 
     function but_add:DoClick()
-        listview:AddLine( tex_inp:GetValue(), tex_out:GetValue() )
+        listview:AddLine( string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue()) )
     end
 
     function but_rem:DoClick()
@@ -710,7 +710,7 @@ local function menu_server_modifiers(panel)
     but_app:SetText("Save & apply")
     
     function but_add:DoClick()
-        listview:AddLine( tex_inp:GetValue(), tex_out:GetValue() )
+        listview:AddLine( string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue()) )
     end
 
     function but_rem:DoClick()
