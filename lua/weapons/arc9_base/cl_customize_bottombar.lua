@@ -325,6 +325,13 @@ local function enterfolder(self, scroll, slottbl, fname)
     end
 end
 
+surface.CreateFont( "ARC9_KeybindPreview_Cust", {
+	font = "Arial",
+	size = ScreenScale(8),
+	weight = 1000,
+	antialias = true,
+} )
+
 function SWEP:CreateHUD_Bottom()
     local bg = self.CustomizeHUD
 
@@ -417,7 +424,7 @@ function SWEP:CreateHUD_Bottom()
             --table.insert( ToAdd, ARC9.GetHUDColor("fg") )
             table.insert(ToAdd, " " .. v.action .. "    ")
         end
-        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_12" }, unpack( ToAdd ) )
+        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_12", font_keyb = "ARC9_KeybindPreview_Cust" }, unpack( ToAdd ) )
     end
 
     local bp = vgui.Create("DPanel", bg)

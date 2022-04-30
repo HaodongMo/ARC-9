@@ -1083,7 +1083,6 @@ ARC9.CTRL_Lookup = {
     MWHEELDOWN = "shared_mouse_scroll_down",
 }
 
--- This is useless.
 ARC9.CTRL_Exists = {
     ps4_button_logo = true,
     ps4_button_options = true,
@@ -1370,9 +1369,9 @@ function CreateControllerKeyLine( info, ... )
             local size = v[2]
             if isstring(v[1]) and !ARC9.CTRL_Exists[v[1]] then
                 -- Draw a key.
-                surface.SetFont("ARC9_KeybindPreview")
+                surface.SetFont(info.font_keyb or "ARC9_KeybindPreview")
                 local sx, sy = surface.GetTextSize(v[1])
-                local keylength = math.max(6 + sx, info.size or 16)
+                local keylength = math.max(sx + (info.size/2), info.size)
                 surface.DrawOutlinedRect(info.x + strlength, info.y, keylength, info.size )
                 surface.SetTextPos(info.x + strlength - (sx/2) + (keylength/2), info.y - (sy/2) + (info.size/2) )
                 surface.DrawText( v[1] )
@@ -1400,9 +1399,9 @@ function GetControllerKeyLineSize( info, ... )
         elseif istable(v) then
             local size = v[2]
             if isstring(v[1]) and !ARC9.CTRL_Exists[v[1]] then
-                surface.SetFont("ARC9_KeybindPreview")
+                surface.SetFont(info.font_keyb or "ARC9_KeybindPreview")
                 local sx = surface.GetTextSize(v[1])
-                local keylength = math.max(6 + sx, 16)
+                local keylength = math.max(sx, info.size or 16)
                 surface.SetFont(info.font)
                 strlength = strlength + keylength
             else
