@@ -337,6 +337,13 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
+    do
+        pos:Add( ang:Up() * math.sin(CurTime() * math.pi) * 0.02 * Lerp(self:GetSightDelta(), 1, 0.05) )
+        pos:Add( ang:Right() * math.sin(CurTime() * math.pi * 0.5) * 0.04 * Lerp(self:GetSightDelta(), 1, 0.05) )
+        ang.x = ang.x + math.pow( math.sin(CurTime() * math.pi * 0.5) * 0.3 * Lerp(self:GetSightDelta(), 1, 0.05), 2 )
+        ang.y = ang.y + ( math.sin(CurTime() * math.pi * 1) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
+        ang.z = ang.z + ( math.sin(CurTime() * math.pi * 0.25) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
+    end
     pos, ang = self:GetViewModelRecoil(pos, ang)
     pos, ang = self:GetViewModelBob(pos, ang)
     pos, ang = self:GetMidAirBob(pos, ang)
