@@ -1352,6 +1352,7 @@ Vararg:
         If it has a proper glyph name, it is used.
         If it doesn't, it is made into a key.
 ]]
+
 function CreateControllerKeyLine( info, ... )
     local args = { ... } 
     local strlength = 0
