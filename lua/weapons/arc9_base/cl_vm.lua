@@ -404,6 +404,10 @@ end
 
 SWEP.SmoothedViewModelFOV = nil
 
+function SWEP:WidescreenFix(target)
+    return self:ScaleFOVByWidthRatio(target, ((ScrW and ScrW() or 4) / (ScrH and ScrH() or 3)) / (4 / 3))
+end
+
 function SWEP:GetViewModelFOV()
     -- local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
     local target = (self:GetProcessedValue("ViewModelFOVBase") or self:GetOwner():GetFOV()) + GetConVar("arc9_fov"):GetInt()
@@ -417,7 +421,7 @@ function SWEP:GetViewModelFOV()
 
     self.SmoothedViewModelFOV = Damp(1E-20, self.SmoothedViewModelFOV, target)
 
-    return self:ScaleFOVByWidthRatio(self.SmoothedViewModelFOV, (ScrW() / ScrH()) / (4 / 3))
+    return self.SmoothedViewModelFOV
     -- return 60 * self:GetSmoothedFOVMag()
     -- return 150
     -- return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)

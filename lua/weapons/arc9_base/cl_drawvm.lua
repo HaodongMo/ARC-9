@@ -53,7 +53,7 @@ function SWEP:PreDrawViewModel()
     self.ViewModelFOV = self:GetViewModelFOV()
 
     if !GetConVar("arc9_dev_benchgun"):GetBool() then
-        cam.Start3D(nil, nil, self:GetViewModelFOV(), nil, nil, nil, nil, 0.5, 10000)
+        cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), nil, nil, nil, nil, 0.5, 10000)
     end
 
     -- self:DrawCustomModel(true, EyePos() + EyeAngles():Forward() * 16, EyeAngles())
@@ -79,7 +79,7 @@ function SWEP:ViewModelDrawn()
     self:DoRHIK()
     self:PreDrawThirdArm()
 
-    -- cam.Start3D(nil, nil, self:GetViewModelFOV(), 0, 0, ScrW(), ScrH(), 4, 30000)
+    -- cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), 0, 0, ScrW(), ScrH(), 4, 30000)
     --     cam.IgnoreZ(true)
         self:DrawLasers(false)
     -- cam.End3D()
