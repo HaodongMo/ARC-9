@@ -145,6 +145,10 @@ local conVars = {
         default = "0",
     },
     {
+        name = "dev_benchgun_custom",
+        default = "",
+    },
+    {
         name = "ricochet",
         default = "1",
         replicated = true

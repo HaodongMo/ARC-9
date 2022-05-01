@@ -71,7 +71,18 @@ function SWEP:GetViewModelPosition(pos, ang)
     oldang:Set(ang)
 
     if GetConVar("arc9_dev_benchgun"):GetBool() then
-        return Vector(0, 0, 0), Angle(0, 0, 0)
+        if GetConVar("arc9_dev_benchgun_custom"):GetString() then
+            local bgc = GetConVar("arc9_dev_benchgun_custom"):GetString()
+            if string.Left(bgc, 6) != "setpos" then return vector_origin, angle_zero end
+
+            bgc = string.TrimLeft(bgc, "setpos ")
+            bgc = string.Replace(bgc, ";setang", "")
+            bgc = string.Explode(" ", bgc)
+
+            pos, ang = Vector(bgc[1], bgc[2], bgc[3]), Angle(bgc[4], bgc[5], bgc[6])
+	else
+		return Vector(), Angle()
+	end
     elseif GetConVar("developer"):GetInt() >= 3 then
         pos = EyePos()
         ang = EyeAngles()
