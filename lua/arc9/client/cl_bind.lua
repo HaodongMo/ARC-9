@@ -20,7 +20,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     end
 
     if bind == "+menu_context" then
-        if !LocalPlayer():KeyDown(IN_ATTACK2) and !LocalPlayer():KeyDown(IN_USE) then
+        if !wpn:GetInSights() and !LocalPlayer():KeyDown(IN_USE) then
             if wpn:GetCustomize() then
                 net.Start("ARC9_togglecustomize")
                 net.WriteBool(false)
@@ -33,7 +33,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
             end
 
             return true
-        elseif LocalPlayer():KeyDown(IN_ATTACK2) and !LocalPlayer():KeyDown(IN_USE) then
+        elseif wpn:GetInSights() and !LocalPlayer():KeyDown(IN_USE) then
             return true
         end
     end

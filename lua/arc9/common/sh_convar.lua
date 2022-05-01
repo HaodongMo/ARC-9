@@ -61,10 +61,6 @@ local conVars = {
         client = true,
     },
     {
-        name = "maxatts",
-        default = "100",
-    },
-    {
         name = "autosave",
         default = "1",
         client = true
@@ -94,26 +90,30 @@ local conVars = {
         default = "",
     },
     {
-        name = "bodydamagecancel",
+        name = "mod_bodydamagecancel",
         default = "1",
         replicated = true
     },
     {
-        name = "free_atts",
+        name = "atts_free",
         default = "0",
         replicated = true
     },
     {
-        name = "lock_atts",
+        name = "atts_max",
+        default = "100",
+    },
+    {
+        name = "atts_lock",
         default = "0",
         replicated = true
     },
     {
-        name = "loseattsondie",
+        name = "atts_loseondie",
         default = "1",
     },
     {
-        name = "generateattentities",
+        name = "atts_generateentities",
         default = "1",
         replicated = true
     },
@@ -126,17 +126,17 @@ local conVars = {
         default = "1",
     },
     {
-        name = "penetration",
+        name = "mod_penetration",
         default = "1",
         replicated = true
     },
     {
-        name = "freeaim",
+        name = "mod_freeaim",
         default = "1",
         replicated = true
     },
     {
-        name = "sway",
+        name = "mod_sway",
         default = "1",
         replicated = true
     },
@@ -191,10 +191,6 @@ local conVars = {
         default = "1"
     },
     {
-        name = "freeaim",
-        default = "1"
-    },
-    {
         name = "cust_blur",
         default = "0",
         client = true
@@ -226,6 +222,12 @@ local conVars = {
         name = "tpik",
         default = "1",
         client = true
+    },
+    {
+        name = "toggleads",
+        default = "0",
+        client = true,
+        userinfo = true
     },
     {
         name = "crosshair_force",
@@ -285,11 +287,14 @@ for _, var in pairs(conVars) do
     local convar_name = prefix .. var.name
 
     if var.client and CLIENT then
-        CreateClientConVar(convar_name, var.default, true)
+        CreateClientConVar(convar_name, var.default, true, var.userinfo)
     else
         local flags = FCVAR_ARCHIVE
         if var.replicated then
             flags = flags + FCVAR_REPLICATED
+        end
+        if var.userinfo then
+            flags = flags + FCVAR_USERINFO
         end
         CreateConVar(convar_name, var.default, flags, var.helptext, var.min, var.max)
     end
@@ -336,16 +341,24 @@ local function menu_client_ti(panel)
         command = "arc9_compensate_sens"
     })
     panel:AddControl("checkbox", {
-        label = "Draw ARC9 HUD",
+        label = "Draw HUD",
         command = "arc9_hud_arc9"
     })
     panel:AddControl("checkbox", {
-        label = "Draw it anywhere you go hold up tududuuuttu",
+        label = "Draw HUD Everywhere",
         command = "arc9_hud_always"
+    })
+    panel:AddControl("checkbox", {
+        label = "Keep HUD Hints",
+        command = "arc9_hud_keephints"
     })
     panel:AddControl("checkbox", {
         label = "Viewmodel Bob Style",
         command = "arc9_vm_bobstyle"
+    })
+    panel:AddControl("checkbox", {
+        label = "Toggle ADS",
+        command = "arc9_toggleads"
     })
 end
 
@@ -505,18 +518,18 @@ end
 local function menu_server_ti(panel)
     panel:AddControl("checkbox", {
         label = "Enable Penetration",
-        command = "ARC9_penetration"
+        command = "arc9_penetration"
     })
     panel:AddControl("checkbox", {
         label = "NPCs Deal Equal Damage",
-        command = "ARC9_npc_equality"
+        command = "arc9_npc_equality"
     })
     panel:AddControl("label", {
-        text = "Disable body damage cancel only if you have another addon that will override the hl2 limb damage multipliers."
+        text = "Disable body damage cancel only if you have another addon that will override the HL2 limb damage multipliers."
     })
     panel:AddControl("checkbox", {
         label = "Default Body Damage Cancel",
-        command = "ARC9_bodydamagecancel"
+        command = "arc9_mod_bodydamagecancel"
     })
     panel:AddControl("checkbox", {
         label = "Infinite Ammo",
@@ -527,23 +540,23 @@ end
 local function menu_server_attachments(panel)
     panel:AddControl("checkbox", {
         label = "Free Attachments",
-        command = "ARC9_free_atts"
+        command = "arc9_atts_free"
     })
     panel:AddControl("checkbox", {
         label = "Attachment Locking",
-        command = "ARC9_lock_atts"
+        command = "arc9_atts_lock"
     })
     panel:AddControl("checkbox", {
         label = "Lose Attachments On Death",
-        command = "ARC9_loseattsondie"
+        command = "arc9_atts_loseondie"
     })
     panel:AddControl("checkbox", {
         label = "Generate Attachment Entities",
-        command = "arc9_generateattentities"
+        command = "arc9_atts_generateentities"
     })
     panel:AddControl("checkbox", {
         label = "NPCs Get Random Attachments",
-        command = "ARC9_npc_atts"
+        command = "arc9_atts_npc"
     })
 end
 
@@ -622,6 +635,10 @@ c1 = {
     ["BulletGuidanceAmount"] = true,
     ["ExplosionDamage"] = true,
     ["ExplosionRadius"] = true,
+
+    ["CanBlindFire"] = true,
+    ["BlindFireLeft"] = true,
+    ["BlindFireRight"] = true,
 }
 
 c2 = {

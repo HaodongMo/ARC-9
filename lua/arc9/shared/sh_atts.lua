@@ -25,7 +25,7 @@ function ARC9.LoadAttachment(atttbl, shortname)
     ARC9.Attachments[shortname] = atttbl
     ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
 
-    if GetConVar("arc9_generateattentities"):GetBool() and !atttbl.DoNotRegister and !atttbl.InvAtt and !atttbl.Free then
+    if GetConVar("arc9_atts_generateentities"):GetBool() and !atttbl.DoNotRegister and !atttbl.InvAtt and !atttbl.Free then
         local attent = {}
         attent.Base = "arc9_att_base"
         attent.Icon = atttbl.Icon or defaulticon
@@ -158,7 +158,7 @@ end
 hook.Add("OnReloaded", "ARC9_ReloadAtts", ARC9.LoadAtts)
 
 function ARC9.GetMaxAtts()
-    return GetConVar("arc9_maxatts"):GetInt()
+    return GetConVar("arc9_atts_max"):GetInt()
 end
 
 if CLIENT then

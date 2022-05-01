@@ -1,6 +1,6 @@
 function ARC9:PlayerGetAtts(ply, att)
     if !IsValid(ply) then return 0 end
-    if GetConVar("ARC9_free_atts"):GetBool() then return 999 end
+    if GetConVar("arc9_atts_free"):GetBool() then return 999 end
 
     if att == "" then return 999 end
 
@@ -42,7 +42,7 @@ function ARC9:PlayerGiveAtt(ply, att, amt)
 
     if atttbl.InvAtt then att = atttbl.InvAtt end
 
-    if GetConVar("ARC9_lock_atts"):GetBool() then
+    if GetConVar("arc9_atts_lock"):GetBool() then
         if ply.ARC9_AttInv[att] == 1 then return end
         ply.ARC9_AttInv[att] = 1
     else
@@ -54,7 +54,7 @@ end
 function ARC9:PlayerTakeAtt(ply, att, amt)
     amt = amt or 1
 
-    if GetConVar("ARC9_lock_atts"):GetBool() then return end
+    if GetConVar("arc9_atts_lock"):GetBool() then return end
 
     if !IsValid(ply) then return end
 
@@ -100,12 +100,12 @@ end)
 elseif SERVER then
 
 hook.Add("PlayerDeath", "ARC9_DeathAttInv", function(ply)
-    -- if GetConVar("ARC9_loseattsondie"):GetBool() then
+    -- if GetConVar("arc9_atts_loseondie"):GetBool() then
     --     ply.ARC9_AttInv = ply.ARC9_AttInv or {}
     -- end
     -- if table.Count(ply.ARC9_AttInv) > 0
-    --         and GetConVar("ARC9_attinv_loseondie"):GetInt() >= 2
-    --         and !GetConVar("ARC9_free_atts"):GetBool() then
+    --         and GetConVar("arc9_atts_loseondie"):GetInt() >= 2
+    --         and !GetConVar("arc9_atts_free"):GetBool() then
     --     local boxEnt = ents.Create("ARC9_att_dropped")
     --     boxEnt:SetPos(ply:GetPos() + Vector(0, 0, 4))
     --     boxEnt.GiveAttachments = ply.ARC9_AttInv
@@ -120,7 +120,7 @@ end)
 hook.Add("PlayerSpawn", "ARC9_SpawnAttInv", function(ply, trans)
     if trans then return end
 
-    if GetConVar("ARC9_loseattsondie"):GetInt() >= 1 then
+    if GetConVar("arc9_atts_loseondie"):GetInt() >= 1 then
         ply.ARC9_AttInv = {}
 
         ARC9:PlayerSendAttInv(ply)
@@ -128,7 +128,7 @@ hook.Add("PlayerSpawn", "ARC9_SpawnAttInv", function(ply, trans)
 end)
 
 function ARC9:PlayerSendAttInv(ply)
-    if GetConVar("ARC9_free_atts"):GetBool() then return end
+    if GetConVar("arc9_atts_free"):GetBool() then return end
 
     if !IsValid(ply) then return end
 

@@ -407,7 +407,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         dmgbodymult = dmgbodymult * bodydamage[tr.HitGroup]
     end
 
-    if GetConVar("ARC9_bodydamagecancel"):GetBool() and cancelmults[tr.HitGroup] then
+    if GetConVar("arc9_mod_bodydamagecancel"):GetBool() and cancelmults[tr.HitGroup] then
     -- if cancelmults[tr.HitGroup] then
         dmgbodymult = dmgbodymult / cancelmults[tr.HitGroup]
     end

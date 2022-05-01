@@ -44,13 +44,13 @@ if SERVER then
 
     function ENT:Use(activator, caller)
         if !caller:IsPlayer() then return end
-        -- if GetConVar("arc9_free_atts"):GetBool() then return end
+        -- if GetConVar("arc9_atts_free"):GetBool() then return end
         local take = false
 
         for i, k in pairs(self.GiveAttachments) do
             if i == "BaseClass" then continue end
 
-            if GetConVar("arc9_lock_atts"):GetBool() then
+            if GetConVar("arc9_atts_lock"):GetBool() then
                 if ARC9:PlayerGetAtts(caller, i) > 0 then continue end
             end
 

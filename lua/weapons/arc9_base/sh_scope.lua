@@ -31,6 +31,10 @@ function SWEP:ExitSights()
     self:SetShouldHoldType()
 end
 
+function SWEP:ToggleADS()
+    return (self:GetOwner():GetInfoNum("arc9_toggleads", 0) >= 1) and true or false
+end
+
 function SWEP:ThinkSights()
     -- if self:GetSafe() then return end
 
@@ -57,20 +61,25 @@ function SWEP:ThinkSights()
         self:SetSightAmount(amt)
     end
 
-    if sighted and !self:GetOwner():KeyDown(IN_ATTACK2) then
+    local owner = self:GetOwner()
+    local toggle = self:ToggleADS()
+    local inatt = owner:KeyDown(IN_ATTACK2)
+    local pratt = owner:KeyPressed(IN_ATTACK2)
+    local sp_cl = game.SinglePlayer() and CLIENT
+
+    if sighted and (!sp_cl and toggle and pratt) or (!toggle and !inatt) then
         self:ExitSights()
-    elseif !sighted and self:GetOwner():KeyDown(IN_ATTACK2) then
+    elseif !sighted and (!sp_cl and toggle and pratt) or (!toggle and inatt) then
         if self:GetOwner():KeyDown(IN_USE) then
             return
         end
-
         self:EnterSights()
     end
 
     if sighted then
-        if self:GetOwner():KeyPressed(IN_USE) and self:GetOwner():KeyDown(IN_WALK) and IsFirstTimePredicted() then
+        if owner:KeyPressed(IN_USE) and owner:KeyDown(IN_WALK) and IsFirstTimePredicted() then
             -- if CurTime() - self:GetLastPressedETime() < 0.33 then
-            if self:GetOwner():KeyDown(IN_SPEED) then
+            if owner:KeyDown(IN_SPEED) then
                 self:SwitchMultiSight(-1)
             else
                 self:SwitchMultiSight()
