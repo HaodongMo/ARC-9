@@ -1067,6 +1067,23 @@ ARC9.CTRL_Lookup = {
 
     MWHEELUP = "shared_mouse_scroll_up",
     MWHEELDOWN = "shared_mouse_scroll_down",
+
+    KP_INS        = "KP 0",
+    KP_END        = "KP 1",
+    KP_DOWNARROW  = "KP 2",
+    KP_PGDN       = "KP 3",
+    KP_LEFTARROW  = "KP 4",
+    KP_5          = "KP 5",
+    KP_RIGHTARROW = "KP 6",
+    KP_HOME       = "KP 7",
+    KP_UPARROW    = "KP 8",
+    KP_PGUP       = "KP 9",
+    KP_SLASH      = "KP /",
+    KP_MULTIPLY   = "KP *",
+    KP_MINUS      = "KP -",
+    KP_PLUS       = "KP +",
+    KP_ENTER      = "KP ENTER",
+    KP_DEL        = "KP .",
 }
 
 ARC9.CTRL_Exists = {

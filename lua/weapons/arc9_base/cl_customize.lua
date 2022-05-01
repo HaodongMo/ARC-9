@@ -657,7 +657,7 @@ function SWEP:CreateCustomizeHUD()
             --table.insert( ToAdd, ARC9.GetHUDColor("fg") )
             table.insert(ToAdd, " " .. v.action .. "    ")
         end
-        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_12", font_keyb = "ARC9_KeybindPreview_Cust" }, unpack( ToAdd ) )
+        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, unpack( ToAdd ) )
     end
 
     -- self:CreateHUD_Bottom()
