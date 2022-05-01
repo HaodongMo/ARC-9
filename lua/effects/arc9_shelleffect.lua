@@ -146,6 +146,10 @@ function EFFECT:Init(data)
 end
 
 function EFFECT:PhysicsCollide()
+    local phys = self:GetPhysicsObject()
+    if IsValid(phys) then
+        phys:SetMaterial("default_silent")
+    end
     if self.AlreadyPlayedSound then return end
 
     sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 65, self.ShellPitch, 1)
