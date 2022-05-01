@@ -718,20 +718,6 @@ function ARC9.DrawHUD()
         local CTRL = false--ARC9.ControllerMode()
         local hints = {}
 
-        local glyphset = GetConVar("arc9_controller_glyphset"):GetString()
-        if glyphset != "" then
-            table.Empty(ARC9.CTRL_Set_UserCustom)
-            local config = glyphset
-            config = string.Split( config, "\\n" )
-            for i, v in ipairs(config) do
-                local swig = string.Split( v, "\\t" )
-                ARC9.CTRL_Set_UserCustom[swig[1]] = swig[2]
-            end
-            ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_UserCustom
-        else
-            ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
-        end
-
         if capabilities.UBGL then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
@@ -1353,7 +1339,32 @@ Vararg:
         If it doesn't, it is made into a key.
 ]]
 
+local lastupdate = 0
+local function UpdateGlyphs()
+    if lastupdate == FrameNumber() then
+        return false
+    end
+    lastupdate = FrameNumber()
+
+    local glyphset = GetConVar("arc9_controller_glyphset"):GetString()
+    if glyphset != "" then
+        table.Empty(ARC9.CTRL_Set_UserCustom)
+        local config = glyphset
+        config = string.Split( config, "\\n" )
+        for i, v in ipairs(config) do
+            local swig = string.Split( v, "\\t" )
+            ARC9.CTRL_Set_UserCustom[swig[1]] = swig[2]
+        end
+        ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_UserCustom
+    else
+        ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox
+    end
+
+    return true
+end
+
 function CreateControllerKeyLine( info, ... )
+    UpdateGlyphs()
     local args = { ... } 
     local strlength = 0
 
@@ -1391,6 +1402,7 @@ end
 
 -- Gets the size of the controller key line.
 function GetControllerKeyLineSize( info, ... )
+    UpdateGlyphs()
     local args = { ... } 
     local strlength = 0
 
@@ -1402,7 +1414,7 @@ function GetControllerKeyLineSize( info, ... )
             if isstring(v[1]) and !ARC9.CTRL_Exists[v[1]] then
                 surface.SetFont(info.font_keyb or "ARC9_KeybindPreview")
                 local sx = surface.GetTextSize(v[1])
-                local keylength = math.max(sx, info.size or 16)
+                local keylength = math.max(sx + (info.size/2), info.size)
                 surface.SetFont(info.font)
                 strlength = strlength + keylength
             else
