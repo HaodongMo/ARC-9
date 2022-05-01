@@ -24,21 +24,23 @@ end
 local lastgap = 0
 local lasthelperalpha = 0
 
+local gaA = 0
+
 function SWEP:DoDrawCrosshair(x, y)
 
     local dotsize = ScreenScale(1)
-    local prong = ScreenScale(8)
+    local prong = ScreenScale(4)
     local minigap = ScreenScale(2)
     local miniprong_1 = ScreenScale(4)
     local miniprong_2 = ScreenScale(2)
-    local gap = ScreenScale(4)
+    local gap = 0
     local staticgap = gap
     local col = Color(255, 255, 255, 100)
 
     local d = self:GetSightDelta()
 
     prong = Lerp(d, prong, ScreenScale(6))
-    gap = Lerp(d, gap, ScreenScale(4))
+    gap = Lerp(d, gap, 0)
     minigap = Lerp(d, minigap, ScreenScale(1))
     miniprong_1 = Lerp(d, miniprong_1, ScreenScale(3))
     miniprong_2 = Lerp(d, miniprong_2, ScreenScale(1))
@@ -91,8 +93,17 @@ function SWEP:DoDrawCrosshair(x, y)
 
     shoottimegap = math.ease.OutCirc(shoottimegap)
 
-    gap = gap + ((self:GetProcessedValue("Spread") - self:GetValue("Spread", true)) * 36 * ScreenScale(8))
 
+	cam.Start3D()
+		local lool = ( EyePos() + ( EyeAngles():Forward() ) + ( (self:GetProcessedValue("Spread")) * EyeAngles():Up() ) ):ToScreen()
+	cam.End3D()
+
+	local gau = 0
+	gau = ( (ScrH()/2) - lool.y )
+    
+    gap = gap + gau
+
+    gap = math.max(ScreenScale(4), gap)
     gap = gap + (shoottimegap * ScreenScale(8))
 
     lastgap = Lerp(0.5, gap, lastgap)
