@@ -180,6 +180,7 @@ local Press2 = false
 
 local Release1 = false
 local Release2 = false
+local setscroll = 0
 hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
     if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon().ARC9 and LocalPlayer():GetActiveWeapon():GetCustomize() then
         local wpn = LocalPlayer():GetActiveWeapon()
@@ -237,6 +238,25 @@ hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
         else
             wpn.CustomizePitch = wpn.CustomizePitch - (p1x * 45 * RealFrameTime())
             wpn.CustomizeYaw   = wpn.CustomizeYaw   + (p1x * 1 * RealFrameTime())
+        end
+
+        gui.InternalMouseWheeled(setscroll)
+        setscroll = 0
+    end
+end)
+
+local doop = 0
+hook.Add("PlayerBindPress", "ARC9_GamepadHUDBinds", function(ply, bind, pressed, code)
+    if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon().ARC9 and LocalPlayer():GetActiveWeapon():GetCustomize() and ARC9.ControllerMode() then
+        local wpn = LocalPlayer():GetActiveWeapon()
+        if bind == "invprev" then
+            if doop % 2 == 0 then setscroll = 1 end
+            doop = doop + 1
+            return true
+        elseif bind == "invnext" then
+            if doop % 2 == 0 then setscroll = -1 end
+            doop = doop + 1
+            return true
         end
     end
 end)
@@ -554,6 +574,11 @@ function SWEP:CreateCustomizeHUD()
                 glyph = ARC9.GetBindKey("+reload")
             },
             {
+                action = "Zoom",
+                glyph = ARC9.GetBindKey("invprev"),
+                glyph2 = ARC9.GetBindKey("invnext")
+            },
+            {
                 action = "Pan",
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = "shared_lstick"
@@ -576,6 +601,11 @@ function SWEP:CreateCustomizeHUD()
             {
                 action = "Deselect",
                 glyph = ARC9.GetBindKey("+attack2")
+            },
+            {
+                action = "Zoom",
+                glyph = ARC9.GetBindKey("invprev"),
+                glyph2 = ARC9.GetBindKey("invnext")
             },
             {
                 action = "Pan",
