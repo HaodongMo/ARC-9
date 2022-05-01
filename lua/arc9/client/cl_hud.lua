@@ -100,6 +100,7 @@ local function GetWeaponCapabilities(wpn)
         Inspect = tobool(!wpn:GetInSights() and wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("enter_inspect")),
         Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
         BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
+        BlindfireRight = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireRight")),
         Firemode = tobool(!wpn:GetUBGL() and #wpn:GetValue("Firemodes") > 1),
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
         VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable)
@@ -778,6 +779,14 @@ function ARC9.DrawHUD()
                 glyph = ARC9.GetBindKey("+alt1"),
                 glyph2 = ARC9.GetBindKey("+moveleft"),
                 action = "Blindfire Left"
+            })
+        end
+
+        if capabilities.BlindfireRight then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+alt1"),
+                glyph2 = ARC9.GetBindKey("+moveright"),
+                action = "Blindfire Right"
             })
         end
 
