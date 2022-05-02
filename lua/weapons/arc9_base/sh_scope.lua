@@ -10,7 +10,8 @@ function SWEP:EnterSights()
     if self:GetHolster_Time() > 0 then return end
     if self:GetProcessedValue("UBGLInsteadOfSights") then return end
     if self:GetSafe() then return end
-
+    if self:StillWaiting() then return end
+    
     self:ToggleBlindFire(false)
     self:SetInSights(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)
