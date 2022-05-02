@@ -316,10 +316,12 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             attacker.ARC9_LAGCOMP = false
         end
 
-        if SERVER then
-            debugoverlay.Line(oldpos, tr.HitPos, 5, Color(100,100,255), true)
-        else
-            debugoverlay.Line(oldpos, tr.HitPos, 5, Color(255,200,100), true)
+        if ARC9.Dev(2) then
+            if SERVER then
+                debugoverlay.Line(oldpos, tr.HitPos, 5, Color(100,100,255), true)
+            else
+                debugoverlay.Line(oldpos, tr.HitPos, 5, Color(255,200,100), true)
+            end
         end
 
         if tr.HitSky then
@@ -346,10 +348,12 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                 attacker.ARC9_LAGCOMP = true
             end
 
-            if SERVER then
-                debugoverlay.Cross(tr.HitPos, 5, 5, Color(100,100,255), true)
-            else
-                debugoverlay.Cross(tr.HitPos, 5, 5, Color(255,200,100), true)
+            if ARC9.Dev(2) then
+                if SERVER then
+                    debugoverlay.Cross(tr.HitPos, 5, 5, Color(100,100,255), true)
+                else
+                    debugoverlay.Cross(tr.HitPos, 5, 5, Color(255,200,100), true)
+                end
             end
 
             local eid = tr.Entity:EntIndex()

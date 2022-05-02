@@ -119,7 +119,7 @@ function SWEP:BuildMultiSight()
                 local s = {}
 
                 if CLIENT then
-                    if GetConVar("developer"):GetInt() >= 3 then
+                    if ARC9.Dev(3) then
                         s = self:GenerateAutoSight({
                             Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
                             Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
@@ -142,7 +142,7 @@ function SWEP:BuildMultiSight()
                     s.ExtraSightData = sight.ExtraSightData
                 end
 
-                if GetConVar("developer"):GetInt() >= 3 then
+                if ARC9.Dev(3) then
                     s.OriginalSightTable = {
                         Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
                         Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
@@ -189,7 +189,7 @@ function SWEP:BuildMultiSight()
 
     if keepbaseirons then
         local tbl = {}
-        if GetConVar("developer"):GetInt() >= 3 then
+        if ARC9.Dev(3) then
             table.insert(tbl, {
                 Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
                 Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
@@ -239,7 +239,7 @@ function SWEP:SwitchMultiSight(amt)
 end
 
 function SWEP:GetSight()
-    if GetConVar("developer"):GetBool() then
+    if ARC9.Dev(2) then
         self:BuildMultiSight()
     end
     return self.MultiSightTable[self:GetMultiSight()] or self:GetValue("IronSights")

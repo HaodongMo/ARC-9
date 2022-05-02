@@ -20,7 +20,7 @@ function ARC9.CollectGarbage()
 
     ARC9.CSModelPile = newpile
 
-    if GetConVar("developer"):GetBool() and removed > 0 then
+    if ARC9.Dev(2) and removed > 0 then
         print("Removed " .. tostring(removed) .. " CSModels")
     end
 end

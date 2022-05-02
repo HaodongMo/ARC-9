@@ -83,7 +83,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 	else
 		return Vector(), Angle()
 	end
-    elseif GetConVar("developer"):GetInt() >= 3 then
+    elseif ARC9.Dev(3) then
         pos = self:GetOwner():EyePos()
         ang = self:GetOwner():EyeAngles()
     end

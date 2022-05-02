@@ -45,7 +45,7 @@ function SWEP:DoDrawCrosshair(x, y)
     miniprong_1 = Lerp(d, miniprong_1, ScreenScale(3))
     miniprong_2 = Lerp(d, miniprong_2, ScreenScale(1))
 
-    if self:GetOwner():IsAdmin() and GetConVar("developer"):GetInt() >= 2 and self:GetInSights() then
+    if self:GetOwner():IsAdmin() and ARC9.Dev(2) and self:GetInSights() then
         surface.SetDrawColor(255, 0, 0, 150)
         surface.DrawLine(ScrW() / 2, 0, ScrW() / 2, ScrH())
         surface.DrawLine(0, ScrH() / 2, ScrW(), ScrH() / 2)

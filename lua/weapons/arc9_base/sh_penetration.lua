@@ -9,7 +9,7 @@ local function IsPenetrating(ptr, ptrent)
         mins = mins + (mins - wsc) * 0.25
         maxs = maxs + (maxs - wsc) * 0.25
         local withinbounding = ptr.HitPos:WithinAABox(mins, maxs)
-        if GetConVar("developer"):GetBool() then
+        if ARC9.Dev(2) then
             debugoverlay.Cross(ptr.HitPos, withinbounding and 2 or 6, 5, withinbounding and Color(255, 255, 0) or Color(128, 255, 0), true)
         end
 
@@ -97,7 +97,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 
         ptr = util.TraceLine(td)
 
-        if GetConVar("developer"):GetBool() then
+        if ARC9.Dev(2) then
             local pdeltap = penleft / self:GetValue("Penetration")
             local colorlr = Lerp(pdeltap, 0, 255)
 
@@ -130,7 +130,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                     range = range + (btr.HitPos - btr.StartPos):Length()
                     self:AfterShotFunction(btr, dmg, range, penleft, alreadypenned)
 
-                    if GetConVar("developer"):GetBool() then
+                    if ARC9.Dev(2) then
                         if SERVER then
                             debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
                         else

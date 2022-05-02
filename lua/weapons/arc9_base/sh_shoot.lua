@@ -365,7 +365,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
 
                         self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
 
-                        if GetConVar("developer"):GetBool() then
+                        if ARC9.Dev(2) then
                             if SERVER then
                                 debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
                             else
