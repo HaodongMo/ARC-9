@@ -15,20 +15,19 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     if rec > 0 then
         ang.r = ang.r + (math.sin(CurTime() * self:GetProcessedValue("RecoilKickDamping")) * rec)
-
     end
 
     -- EFT like recoil
-    local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
-    local srupmult = self:GetProcessedValue("RecoilUp") * 10
-    local srsidemult = self:GetProcessedValue("RecoilSide") * 5
+    if self.Recoil_EFT then
+        local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
+        local srupmult = self:GetProcessedValue("RecoilUp") * 10
+        local srsidemult = self:GetProcessedValue("RecoilSide") * 5
 
-    SmoothRecoilUp = Lerp(FrameTime()*ftmult, SmoothRecoilUp, self:GetRecoilUp()*srupmult)
-    SmoothRecoilSide = Lerp(FrameTime()*(ftmult + 2), SmoothRecoilSide, self:GetRecoilSide()*srsidemult)
-
-    ang.p = ang.p + SmoothRecoilUp
-    ang.y = ang.y + SmoothRecoilSide
-
+        SmoothRecoilUp = Lerp(FrameTime()*ftmult, SmoothRecoilUp, self:GetRecoilUp()*srupmult)
+        SmoothRecoilSide = Lerp(FrameTime()*(ftmult + 2), SmoothRecoilSide, self:GetRecoilSide()*srsidemult)
+        ang.p = ang.p + SmoothRecoilUp
+        ang.y = ang.y + SmoothRecoilSide
+    end
 
     fov = fov / self:GetSmoothedFOVMag()
 
