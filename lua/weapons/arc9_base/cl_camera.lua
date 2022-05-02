@@ -19,14 +19,25 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     -- EFT like recoil
     if self.EFTRecoil then
-        local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
-        local srupmult = self:GetProcessedValue("RecoilUp") * 10
-        local srsidemult = self:GetProcessedValue("RecoilSide") * 5
+        if self.RecoilSpring then
+            local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
+            local srupmult = self:GetProcessedValue("RecoilUp") * 20
+            local srsidemult = self:GetProcessedValue("RecoilSide") * 10
 
-        SmoothRecoilUp = Lerp(FrameTime()*ftmult, SmoothRecoilUp, self:GetRecoilUp()*srupmult)
-        SmoothRecoilSide = Lerp(FrameTime()*(ftmult + 2), SmoothRecoilSide, self:GetRecoilSide()*srsidemult)
-        ang.p = ang.p + SmoothRecoilUp
-        ang.y = ang.y + SmoothRecoilSide
+            SmoothRecoilUp = Lerp(FrameTime() * ftmult, SmoothRecoilUp, self:GetRecoilUp() * srupmult)
+            SmoothRecoilSide = Lerp(FrameTime() * (ftmult + 2), SmoothRecoilSide, self:GetRecoilSide() * srsidemult)
+            self.RecoilSpring.g = Angle(SmoothRecoilUp, SmoothRecoilSide, 0)
+            self.RecoilSpring:Update(FrameTime())
+
+            ang.p = ang.p + self.RecoilSpring.p.p
+            ang.y = ang.y + self.RecoilSpring.p.y
+        else
+            self.RecoilSpring = spring:new(Angle(), 2, 0.3)
+            self.RecoilSpring.g = Angle() -- sets the goal/target to reach
+            self.RecoilSpring.v = Angle() -- the "velocity" it's traveling towards the target goal
+            self.RecoilSpring.p = Angle() -- the current "position" of the spring
+            self.RecoilSpring:Update(0.25) -- updates to the next position in a time-delta of 0.25s
+        end
     end
 
     fov = fov / self:GetSmoothedFOVMag()
