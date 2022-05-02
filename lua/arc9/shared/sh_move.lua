@@ -100,6 +100,10 @@ function ARC9.StartCommand(ply, cmd)
         cmd:SetViewAngles(eyeang)
     end
 
+    if wpn:GetProcessedValue("NoSprintWhenLocked") and wpn:GetAnimLockTime() > CurTime() then
+        cmd:RemoveKey(IN_SPEED)
+    end
+
     recrise = ARC9.RecoilRise
 
     local recreset = recrise * FrameTime() * wpn:GetProcessedValue("RecoilAutoControl")
