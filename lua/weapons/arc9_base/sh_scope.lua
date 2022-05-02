@@ -70,9 +70,9 @@ function SWEP:ThinkSights()
     if sighted and (!sp_cl and toggle and pratt) or (!toggle and !inatt) then
         self:ExitSights()
     elseif !sighted and (!sp_cl and toggle and pratt) or (!toggle and inatt) then
-        if self:GetOwner():KeyDown(IN_USE) then
-            return
-        end
+        -- if self:GetOwner():KeyDown(IN_USE) then
+            -- return
+        -- end why was this here?
         self:EnterSights()
     end
 
