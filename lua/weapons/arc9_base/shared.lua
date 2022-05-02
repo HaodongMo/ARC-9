@@ -313,6 +313,13 @@ SWEP.VisualRecoilDampingConst = nil -- How spring will be visual recoil, 120 is 
 SWEP.RecoilKick = 1 -- Camera recoil
 SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
 
+SWEP.FOV_RecoilAdd = 0 -- FOV to increase or decrease by.
+SWEP.FOV_Recoil_TimeStart = 0.05 -- Peak
+SWEP.FOV_Recoil_TimeEnd = 0.15 -- Until dropoff
+-- https://wiki.facepunch.com/gmod/math.ease
+SWEP.FOV_Recoil_FuncStart = math.ease.OutCirc -- Function to use
+SWEP.FOV_Recoil_FuncEnd = math.ease.InCirc
+
 -------------------------- SPREAD
 
 SWEP.Spread = 0
@@ -904,8 +911,11 @@ SWEP.Animations = {
     --     EventTable = {
     --         {
     --             t = 1, -- in seconds
-    --             s = "", -- sound to play
-    --             chan = CHAN_ITEM, -- sound channel
+    --                 s = "", -- sound to play
+    --                 c = CHAN_ITEM, -- sound channel
+    --                 p = 1 -- sound pitch
+    --                 v = 1 -- sound volume
+    --                 l = 1 -- sound level
     --             e = "", -- effect to emit
     --             att = nil, -- on attachment point X
     --             mag = 100, -- with magnitude whatever this is
@@ -914,6 +924,11 @@ SWEP.Animations = {
     --             pp = "", -- pose parameter name
     --             ppv = 0, -- pose parameter value
     --             hide = 1, -- hide reloadhidebonetables table, 0 for none
+    --             FOV = -3, -- change fov in anim, see SWEP.FOV_Recoil_x for detials
+    --             FOV_Start = 0.2,
+    --             FOV_End = 0.4,
+    --             FOV_FuncStart = ARC9.Ease.OutCirc,
+    --             FOV_FuncEnd = ARC9.Ease.InCirc,
     --         }
     --     },
     --     PoseParamChanges = { -- pose parameters to change after this animation is done.
@@ -924,6 +939,41 @@ SWEP.Animations = {
     --     RestoreAmmo = 0 -- Restores ammunition to clip
     -- }
 }
+
+--[[
+    FOV anim settings
+        for use in FOV_FuncStart, FOV_FuncEnd
+    ARC9.Ease.InBack
+    ARC9.Ease.InBounce
+    ARC9.Ease.InCirc
+    ARC9.Ease.InCubic
+    ARC9.Ease.InElastic
+    ARC9.Ease.InExpo
+    ARC9.Ease.InOutBack
+    ARC9.Ease.InOutBounce
+    ARC9.Ease.InOutCirc
+    ARC9.Ease.InOutCubic
+    ARC9.Ease.InOutElastic
+    ARC9.Ease.InOutExpo
+    ARC9.Ease.InOutQuad
+    ARC9.Ease.InOutQuart
+    ARC9.Ease.InOutQuint
+    ARC9.Ease.InOutSine
+    ARC9.Ease.InQuad
+    ARC9.Ease.InQuart
+    ARC9.Ease.InQuint
+    ARC9.Ease.InSine
+    ARC9.Ease.OutBack
+    ARC9.Ease.OutBounce
+    ARC9.Ease.OutCirc
+    ARC9.Ease.OutCubic
+    ARC9.Ease.OutElastic
+    ARC9.Ease.OutExpo
+    ARC9.Ease.OutQuad
+    ARC9.Ease.OutQuart
+    ARC9.Ease.OutQuint
+    ARC9.Ease.OutSine
+]]
 
 SWEP.Primary.Automatic = true
 SWEP.Primary.DefaultClip = -1

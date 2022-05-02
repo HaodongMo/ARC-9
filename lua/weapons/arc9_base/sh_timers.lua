@@ -90,6 +90,22 @@ function SWEP:PlaySoundTable(soundtable, mult)
                 self.PoseParamState[v.pp] = v.ppv or 0
             end
 
+            if v.FOV then
+                if game.SinglePlayer() then
+                    net.Start("ARC9_SP_FOV")
+                        net.WriteEntity(self)
+                        net.WriteFloat(v.FOV or 0)
+                        net.WriteFloat(v.FOV_Start or 0)
+                        net.WriteFloat(v.FOV_End or 0)
+                        print(v.FOV_FuncStart)
+                        print(v.FOV_FuncEnd)
+                        net.WriteUInt(v.FOV_FuncStart or 0, 5)
+                        net.WriteUInt(v.FOV_FuncEnd or 0, 5)
+                    net.Send(self:GetOwner())
+                end
+                --self:CreateFOVEvent( v.FOV, v.FOV_Start, v.FOV_End, v.FOV_FuncStart, v.FOV_FuncEnd )
+            end
+
             if v.hide != nil then
                 self:SetHideBoneIndex(v.hide)
             end
@@ -111,9 +127,88 @@ end
 
 if SERVER then
     util.AddNetworkString("ARC9_AnimRumble")
+    if game.SinglePlayer() then
+        util.AddNetworkString("ARC9_SP_FOV")
+    end
 end
 
+ARC9.Ease = {
+    ["InBack"]       = 1,
+    ["InBounce"]     = 2,
+    ["InCirc"]       = 3,
+    ["InCubic"]      = 4,
+    ["InElastic"]    = 5,
+    ["InExpo"]       = 6,
+    ["InOutBack"]    = 7,
+    ["InOutBounce"]  = 8,
+    ["InOutCirc"]    = 9,
+    ["InOutCubic"]   = 10,
+    ["InOutElastic"] = 11,
+    ["InOutExpo"]    = 12,
+    ["InOutQuad"]    = 13,
+    ["InOutQuart"]   = 14,
+    ["InOutQuint"]   = 15,
+    ["InOutSine"]    = 16,
+    ["InQuad"]       = 17,
+    ["InQuart"]      = 18,
+    ["InQuint"]      = 19,
+    ["InSine"]       = 20,
+    ["OutBack"]      = 21,
+    ["OutBounce"]    = 22,
+    ["OutCirc"]      = 23,
+    ["OutCubic"]     = 24,
+    ["OutElastic"]   = 25,
+    ["OutExpo"]      = 26,
+    ["OutQuad"]      = 27,
+    ["OutQuart"]     = 28,
+    ["OutQuint"]     = 29,
+    ["OutSine"]      = 30,
+}
+
+ARC9.EaseToFunc = {
+    [1] = math.ease.InBack,
+    [2] = math.ease.InBounce,
+    [3] = math.ease.InCirc,
+    [4] = math.ease.InCubic,
+    [5] = math.ease.InElastic,
+    [6] = math.ease.InExpo,
+    [7] = math.ease.InOutBack,
+    [8] = math.ease.InOutBounce,
+    [9] = math.ease.InOutCirc,
+    [10] = math.ease.InOutCubic,
+    [11] = math.ease.InOutElastic,
+    [12] = math.ease.InOutExpo,
+    [13] = math.ease.InOutQuad,
+    [14] = math.ease.InOutQuart,
+    [15] = math.ease.InOutQuint,
+    [16] = math.ease.InOutSine,
+    [17] = math.ease.InQuad,
+    [18] = math.ease.InQuart,
+    [19] = math.ease.InQuint,
+    [20] = math.ease.InSine,
+    [21] = math.ease.OutBack,
+    [22] = math.ease.OutBounce,
+    [23] = math.ease.OutCirc,
+    [24] = math.ease.OutCubic,
+    [25] = math.ease.OutElastic,
+    [26] = math.ease.OutExpo,
+    [27] = math.ease.OutQuad,
+    [28] = math.ease.OutQuart,
+    [29] = math.ease.OutQuint,
+    [30] = math.ease.OutSine,
+}
+
 if CLIENT then
+    net.Receive("ARC9_SP_FOV", function()
+        local wpn = net.ReadEntity()
+        local v1 = net.ReadFloat()
+        local v2 = net.ReadFloat()
+        local v3 = net.ReadFloat()
+        local v4 = ARC9.EaseToFunc[net.ReadUInt(5)]
+        local v5 = ARC9.EaseToFunc[net.ReadUInt(5)]
+        wpn:CreateFOVEvent( v1, v2, v3, v4, v5 )
+    end)
+
     local cl_rumble = GetConVar("arc9_controller_rumble")
 
     net.Receive("ARC9_AnimRumble", function()

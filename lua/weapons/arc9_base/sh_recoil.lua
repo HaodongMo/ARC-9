@@ -266,8 +266,31 @@ function SWEP:ThinkVisualRecoil()
     end
 end
 
+SWEP.FOV_Recoil = 0
+SWEP.FOV_RecoilMods = {}
+
+function SWEP:CreateFOVEvent( fov, start, endt, fpre, fact )
+    table.insert(self.FOV_RecoilMods, {
+        amount = fov,
+        time_start = CurTime() + start,
+        time_end = CurTime() + endt,
+        func_pre = fpre,
+        func_act = fact,
+        realstart = CurTime(),
+    })
+end
+
 function SWEP:DoVisualRecoil()
     if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
+    if self.FOV_RecoilAdd and self.FOV_RecoilAdd != 0 then
+        self:CreateFOVEvent(
+            self.FOV_RecoilAdd,
+            self.FOV_Recoil_TimeStart,
+            self.FOV_Recoil_TimeEnd,
+            self.FOV_Recoil_FuncStart,
+            self.FOV_Recoil_FuncEnd
+        )
+    end
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
         local mult = self:GetProcessedValue("VisualRecoilMult")
