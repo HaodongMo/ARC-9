@@ -82,7 +82,7 @@ function SWEP:ApplyRecoil()
     recoilup = math.sin(dir)
     recoilside = math.cos(dir)
 
-    local randomrecoilup = util.SharedRandom("arc9_recoil_up_r", -1, 1)
+    local randomrecoilup = util.SharedRandom("arc9_recoil_up_r", -1, 0)
     local randomrecoilside = util.SharedRandom("arc9_recoil_side_r", -1, 1)
 
     recoilup = recoilup * self:GetProcessedValue("RecoilUp")
