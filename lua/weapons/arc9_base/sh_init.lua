@@ -154,7 +154,7 @@ function SWEP:Holster(wep)
         end
 
         self:ToggleBlindFire(false)
-
+        self:SetInSights(false)
     end
 end
 
