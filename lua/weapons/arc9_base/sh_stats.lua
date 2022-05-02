@@ -291,7 +291,7 @@ function SWEP:GetProcessedValue(val, base)
     if !self.HasNoAffectors[val .. "Move"] then
         if self:GetOwner():IsValid() then
             local spd = pv_move
-            if pvtick != UnPredictedCurTime() then
+            if game.SinglePlayer() or pvtick != UnPredictedCurTime() then
                 spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
 
                 spd = spd / 250
