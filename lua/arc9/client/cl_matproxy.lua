@@ -76,10 +76,13 @@ matproxy.Add({
     end,
 
     bind = function( self, mat, ent )
-        local weapon = ent and ent:GetOwner() and ent:GetOwner():GetActiveWeapon()
-
-        if weapon and weapon.ARC9 and weapon:GetProcessedValue("Overheat") then
-            mat:SetFloat(self.BlendResult, (math.ease.InExpo(weapon:GetHeatAmount() / weapon:GetProcessedValue("HeatCapacity"))) * 2)
+        if IsValid(ent) and IsValid(ent:GetOwner()) and IsValid(ent:GetOwner():GetActiveWeapon()) then
+            local weapon = ent:GetOwner():GetActiveWeapon()
+            if weapon and weapon.ARC9 and weapon:GetProcessedValue("Overheat") then
+                mat:SetFloat(self.BlendResult, (math.ease.InExpo(weapon:GetHeatAmount() / weapon:GetProcessedValue("HeatCapacity"))) * 2)
+            end
+        else
+            mat:SetFloat(self.BlendResult, 0)
         end
     end
 })
