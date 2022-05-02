@@ -1,5 +1,6 @@
 local hutom = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meter") or "m") end
 local hutoms = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meterpersecond") or "m/s") end
+local hutoms_1 = function(i) return math.Round(i * ARC9.HUToM, 1) .. (ARC9:GetPhrase("unit.meterpersecond") or "m/s") end
 local degtomoa = function(i) return math.Round(i / ARC9.MOAToAcc, 2) .. (ARC9:GetPhrase("unit.moa") or "MOA") end
 
 -- [AutoStatName] = {unit, lower_is_better}
@@ -31,6 +32,7 @@ ARC9.AutoStatsMains = {
     ["ManualActionChamber"] = {false, false},
     ["TriggerDelay"] = {"s", true},
     ["RPM"] = {"RPM", false},
+    ["PushBackForce"] = {hutoms_1, false},
     ["PostBurstDelay"] = {"s", true},
     ["Recoil"] = {false, true},
     ["RecoilPatternDrift"] = {false, true},

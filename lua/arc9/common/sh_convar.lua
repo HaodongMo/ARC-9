@@ -639,6 +639,7 @@ c1 = {
     ["CanBlindFire"] = true,
     ["BlindFireLeft"] = true,
     ["BlindFireRight"] = true,
+    ["PushBackForce"] = true,
 }
 
 c2 = {
