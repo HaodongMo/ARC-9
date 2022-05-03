@@ -173,7 +173,12 @@ function SWEP:DoRTScopeEffects()
     -- DrawSharpen(0.05, 12) -- dont work for some reason
 
     if atttbl.RTScopeMotionBlur then
-        DrawMotionBlur(0.1, 0.5, 0)
+        -- DrawMotionBlur(0.1, 0.5, 0)
+        
+        -- It is bad on some maps (gm_eft_customs for example)
+        -- Whole screen becomes picture from sights
+        -- We should use delayed low fps rendering like on arccw thermals (wait time before next draw call) 
+        -- It'll be better for performance and won't cause any issues
     end
 
 end
@@ -203,7 +208,7 @@ function SWEP:DoRTScope(model, atttbl, active)
                 screenpos = pos:ToScreen()
             end
 
-            local shadow_intensity = atttbl.RTScopeShadowIntensity or 30
+            local shadow_intensity = atttbl.RTScopeShadowIntensity or 10
 
             local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
             local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
@@ -249,7 +254,8 @@ function SWEP:DoRTScope(model, atttbl, active)
             if reticle then
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
-                surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
+                -- surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
+                surface.DrawTexturedRect((rtsize - size) / 2 + (-sh_x - sh_s/2 + rtsize/2) * 0.2, (rtsize - size) / 2 + (-sh_y - sh_s/2 + rtsize/2) * 0.2, size, size)
                 -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
             end
 

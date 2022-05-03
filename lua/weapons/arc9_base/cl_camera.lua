@@ -21,8 +21,8 @@ function SWEP:CalcView(ply, pos, ang, fov)
     if self.EFTRecoil then
         if self.RecoilSpring then
             local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
-            local srupmult = self:GetProcessedValue("RecoilUp") * 20
-            local srsidemult = self:GetProcessedValue("RecoilSide") * 10
+            local srupmult = self:GetProcessedValue("RecoilUp") * 15
+            local srsidemult = self:GetProcessedValue("RecoilSide") * 7.5
 
             SmoothRecoilUp = Lerp(FrameTime() * ftmult, SmoothRecoilUp, self:GetRecoilUp() * srupmult)
             SmoothRecoilSide = Lerp(FrameTime() * (ftmult + 2), SmoothRecoilSide, self:GetRecoilSide() * srsidemult)
