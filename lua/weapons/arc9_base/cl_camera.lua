@@ -105,7 +105,7 @@ function SWEP:GetCameraControl()
     ang = vm:WorldToLocalAngles(ang)
     ang:Sub(self.CamOffsetAng)
     ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
-    ang:Mul(1-(self:GetSightAmount() * 1-(self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
+    ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
 
     return ang
 end
