@@ -436,7 +436,7 @@ function SWEP:GetViewModelFOV()
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
 
-    self.SmoothedViewModelFOV = Damp(1E-20, self.SmoothedViewModelFOV, target)
+    self.SmoothedViewModelFOV = Lerp(0.1, self.SmoothedViewModelFOV, target)
 
     return self.SmoothedViewModelFOV
     -- return 60 * self:GetSmoothedFOVMag()
