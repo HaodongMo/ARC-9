@@ -254,9 +254,21 @@ function SWEP:DoRTScope(model, atttbl, active)
             if reticle then
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
+
+                local rtr_x = (rtsize - size) / 2 + (-sh_x - sh_s / 2 + rtsize / 2) * 0.2
+                local rtr_y = (rtsize - size) / 2 + (-sh_y - sh_s / 2 + rtsize / 2) * 0.2
+
                 -- surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
-                surface.DrawTexturedRect((rtsize - size) / 2 + (-sh_x - sh_s/2 + rtsize/2) * 0.2, (rtsize - size) / 2 + (-sh_y - sh_s/2 + rtsize/2) * 0.2, size, size)
+                surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
                 -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
+
+                if atttbl.RTScopeBlackBox then
+                    surface.SetDrawColor(0, 0, 0)
+                    surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
+                    surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
+                    surface.DrawRect(rtr_x - size * 4, rtr_y + size, size * 8, size * 8) -- bottom
+                    surface.DrawRect(rtr_x + size, rtr_y - size * 4, size * 8, size * 8) -- right
+                end
             end
 
             if atttbl.RTScopeDrawFunc then
