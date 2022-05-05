@@ -83,6 +83,10 @@ function SWEP:MeleeAttackShoot()
             end
         end
 
+        if self:HasAnimation("impact") then
+            self:PlayAnimation("impact", 1, false)
+        end
+
         if SERVER then
             local dmg = DamageInfo()
 

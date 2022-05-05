@@ -870,6 +870,7 @@ SWEP.Attachments = {
 -- jam
 -- fix
 -- bash
+-- impact
 -- enter_sights, exit_sights, idle_sights
 -- enter_sprint, exit_sprint, idle_sprint
 -- Suffixes (Must be in this order):
