@@ -4,21 +4,22 @@ function SWEP:ShouldTPIK()
     if render.GetDXLevel() < 90 then return false end
     if self:GetSafe() then return false end
     if self:GetBlindFireAmount() > 0 then return false end
-    -- if !self:GetOwner():ShouldDrawLocalPlayer() then return false end
+    if !self:GetOwner():ShouldDrawLocalPlayer() then return false end
+    -- if !GetConVar("arc9_tpik"):GetBool() then return false end
     -- return LocalPlayer() == self:GetOwner()
-    -- return false
     return GetConVar("arc9_tpik"):GetBool()
+    -- return false
 end
 
 function SWEP:DoTPIK()
     if !self:ShouldTPIK() then return end
     if !self.MirrorVMWM then return end
 
-    local vm = self:GetVM()
+    -- local vm = self:GetVM()
     local wm = self:GetWM()
     local ply = self:GetOwner()
 
-    if !IsValid(vm) then return end
+    -- if !IsValid(vm) then return end
     if !IsValid(wm) then return end
 
     local nolefthand = false
@@ -29,8 +30,19 @@ function SWEP:DoTPIK()
 
     wm:SetupBones()
 
-    wm:SetSequence(vm:GetSequence())
-    wm:SetCycle(vm:GetCycle())
+    local time = self:GetSequenceCycle()
+    local seq = self:GetSequenceIndex()
+
+    wm:SetSequence(seq)
+
+    local duration = wm:SequenceDuration()
+
+    local cycle = time / duration
+
+    wm:SetCycle(cycle)
+
+    -- wm:SetSequence(vm:GetSequence())
+    -- wm:SetCycle(vm:GetCycle())
 
     -- for i = 0, vm:GetNumPoseParameters() do
     --     local pp_name = wm:GetPoseParameterName(i)

@@ -38,6 +38,10 @@ function SWEP:PlayAnimation(anim, mult, lock)
     vm:SendViewModelMatchingSequence(seq)
     vm:SetPlaybackRate(tmult)
 
+    self:SetSequenceIndex(seq)
+    self:SetSequenceSpeed(tmult)
+    self:SetSequenceCycle(0)
+
     mult = math.abs(mult)
 
     if animation.EjectAt then
@@ -117,4 +121,8 @@ function SWEP:DoPoseParams()
     for i, k in pairs(self.PoseParamState) do
         vm:SetPoseParameter(i, k)
     end
+end
+
+function SWEP:ThinkAnimation()
+    self:SetSequenceCycle(self:GetSequenceCycle() + (FrameTime() * self:GetSequenceSpeed()))
 end

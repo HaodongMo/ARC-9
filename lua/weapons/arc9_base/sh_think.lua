@@ -68,6 +68,8 @@ function SWEP:Think()
 
     self:ThinkUBGL()
 
+    self:ThinkAnimation()
+
     self:RunHook("Hook_Think")
 
     if CLIENT then
