@@ -2,6 +2,7 @@
 
 function SWEP:ShouldTPIK()
     if render.GetDXLevel() < 90 then return false end
+    if !self:GetOwner():IsPlayer() then return false end
     if self:GetSafe() then return false end
     if self:GetBlindFireAmount() > 0 then return false end
     if !self:GetOwner():ShouldDrawLocalPlayer() then return false end
