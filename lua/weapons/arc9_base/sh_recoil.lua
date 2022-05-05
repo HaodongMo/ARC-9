@@ -281,6 +281,8 @@ function SWEP:CreateFOVEvent( fov, start, endt, fpre, fact )
 end
 
 function SWEP:DoVisualRecoil()
+    if !self:GetProcessedValue("UseVisualRecoil") then return end
+
     if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
     if self.FOV_RecoilAdd and self.FOV_RecoilAdd != 0 then
         self:CreateFOVEvent(
