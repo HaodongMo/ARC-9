@@ -34,7 +34,7 @@ function SWEP:DoDrawCrosshair(x, y)
     local miniprong_1 = ScreenScale(4)
     local miniprong_2 = ScreenScale(2)
     local gap = 0
-    local staticgap = gap
+    local staticgap = ScreenScale(4)
     local col = Color(255, 255, 255, 100)
 
     local d = self:GetSightDelta()
@@ -94,13 +94,13 @@ function SWEP:DoDrawCrosshair(x, y)
     shoottimegap = math.ease.OutCirc(shoottimegap)
 
 
-	cam.Start3D()
-		local lool = ( EyePos() + ( EyeAngles():Forward() ) + ( (self:GetProcessedValue("Spread")) * EyeAngles():Up() ) ):ToScreen()
-	cam.End3D()
+    cam.Start3D()
+        local lool = ( EyePos() + ( EyeAngles():Forward() ) + ( (self:GetProcessedValue("Spread")) * EyeAngles():Up() ) ):ToScreen()
+    cam.End3D()
 
-	local gau = 0
-	gau = ( (ScrH()/2) - lool.y )
-    
+    local gau = 0
+    gau = ( (ScrH() / 2) - lool.y )
+
     gap = gap + gau
 
     gap = math.max(ScreenScale(4), gap)
