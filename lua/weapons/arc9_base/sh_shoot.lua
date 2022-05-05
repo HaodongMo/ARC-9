@@ -38,37 +38,69 @@ function SWEP:DoShootSounds()
     local pvar = self:GetProcessedValue("ShootPitchVariation")
     local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
 
-    local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
+    local sstr = "ShootSound"
 
-    if self:GetProcessedValue("Silencer") and !self:GetUBGL() then
-        ss = self:RandomChoice(self:GetProcessedValue("ShootSoundSilenced")) or ss
-
-        if self:GetBurstCount() == 0 then
-            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSoundSilenced")) or ss
-        end
-    else
-        if self:GetBurstCount() == 0 then
-            ss = self:RandomChoice(self:GetProcessedValue("FirstShootSound")) or ss
-        end
+    if self:GetProcessedValue("Silencer") and !self:GetUBGL() and self:GetProcessedValue(sstr .. "Silenced") then
+        sstr = sstr .. "Silenced"
     end
+
+    if self:GetBurstCount() == 0 and self:GetProcessedValue("First" .. sstr) then
+        sstr = "First" .. sstr
+    end
+
+    if self:GetIndoor() and self:GetProcessedValue(sstr .. "Indoor") then
+        sstr = sstr .. "Indoor"
+    end
+
+    -- local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
+
+    -- if self:GetProcessedValue("Silencer") and !self:GetUBGL() then
+    --     ss = self:RandomChoice(self:GetProcessedValue("ShootSoundSilenced")) or ss
+
+    --     if self:GetBurstCount() == 0 then
+    --         ss = self:RandomChoice(self:GetProcessedValue("FirstShootSoundSilenced")) or ss
+    --     end
+    -- else
+    --     if self:GetBurstCount() == 0 then
+    --         ss = self:RandomChoice(self:GetProcessedValue("FirstShootSound")) or ss
+    --     end
+    -- end
+
+    local ss = self:GetProcessedValue(sstr)
 
     self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, self:GetProcessedValue("ShootVolumeActual") or 1, CHAN_WEAPON)
 
-    local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
+    local dsstr = "DistantShootSound"
 
-    if self:GetProcessedValue("Silencer") and !self:GetUBGL() then
-        dss = self:RandomChoice(self:GetProcessedValue("DistantShootSoundSilenced")) or dss
-
-        if self:GetBurstCount() == 0 then
-            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSoundSilenced")) or dss
-        end
-    else
-        if self:GetBurstCount() == 0 then
-            dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSound")) or dss
-        end
+    if self:GetProcessedValue("Silencer") and !self:GetUBGL() and self:GetProcessedValue(dsstr .. "Silenced") then
+        dsstr = dsstr .. "Silenced"
     end
 
-    self:EmitSound(dss, math.min(149, (self:GetProcessedValue("DistantShootVolume") or self:GetProcessedValue("ShootVolume")) * 2), (self:GetProcessedValue("DistantShootPitch") or self:GetProcessedValue("ShootPitch")) + pvrand, self:GetProcessedValue("DistantShootVolumeActual") or self:GetProcessedValue("ShootVolumeActual") or 1, CHAN_WEAPON + 1)
+    if self:GetBurstCount() == 0 and self:GetProcessedValue("First" .. dsstr) then
+        dsstr = "First" .. dsstr
+    end
+
+    if self:GetIndoor() and self:GetProcessedValue(dsstr .. "Indoor") then
+        dsstr = dsstr .. "Indoor"
+    end
+
+    -- local dss = self:RandomChoice(self:GetProcessedValue("DistantShootSound")) or ""
+
+    -- if self:GetProcessedValue("Silencer") and !self:GetUBGL() then
+    --     dss = self:RandomChoice(self:GetProcessedValue("DistantShootSoundSilenced")) or dss
+
+    --     if self:GetBurstCount() == 0 then
+    --         dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSoundSilenced")) or dss
+    --     end
+    -- else
+    --     if self:GetBurstCount() == 0 then
+    --         dss = self:RandomChoice(self:GetProcessedValue("FirstDistantShootSound")) or dss
+    --     end
+    -- end
+
+    local dss = self:GetProcessedValue(dsstr)
+
+    self:EmitSound(dss or "", math.min(149, (self:GetProcessedValue("DistantShootVolume") or self:GetProcessedValue("ShootVolume")) * 2), (self:GetProcessedValue("DistantShootPitch") or self:GetProcessedValue("ShootPitch")) + pvrand, self:GetProcessedValue("DistantShootVolumeActual") or self:GetProcessedValue("ShootVolumeActual") or 1, CHAN_WEAPON + 1)
 
     self:StartLoop()
 end
