@@ -28,9 +28,9 @@ function SWEP:PreDrawViewModel()
         light.Decay = 1000
         light.Size = 500
         light.DieTime = CurTime() + 0.1
-    else
-        render.SuppressEngineLighting( false )
-        render.ResetModelLighting(1,1,1)
+    -- else
+    --     render.SuppressEngineLighting( false )
+    --     render.ResetModelLighting(1,1,1)
     end
 
     self:DoPoseParams()
@@ -97,15 +97,15 @@ function SWEP:PostDrawViewModel()
         cam.End3D()
     end
 
-    cam.Start3D(nil, nil, self.ViewModelFOV, nil, nil, nil, nil, 1, 10000 )
+    cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), nil, nil, nil, nil, 1, 10000 )
     for _, model in ipairs(self.VModel) do
         local slottbl = model.slottbl
         local atttbl = self:GetFinalAttTable(slottbl)
 
         if atttbl.HoloSight then
-            cam.IgnoreZ(true)
+            -- cam.IgnoreZ(true)
             self:DoHolosight(model, atttbl)
-            cam.IgnoreZ(false)
+            -- cam.IgnoreZ(false)
         end
     end
     cam.End3D()
