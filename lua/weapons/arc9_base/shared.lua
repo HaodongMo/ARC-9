@@ -299,7 +299,7 @@ SWEP.ManualActionUBGL = false
 
 SWEP.UseVisualRecoil = false
 
-SWEP.VisualRecoilUp = 0.01 -- Vertical tilt for visual recoil.
+SWEP.VisualRecoilUp = 0.01 -- Vertical tilt for visual recoil.F
 SWEP.VisualRecoilSide = 0.05 -- Horizontal tilt for visual recoil.
 SWEP.VisualRecoilRoll = 0.23 -- Roll tilt for visual recoil.
 
@@ -539,7 +539,7 @@ SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil
 SWEP.ShootSoundLoopingIndoor = nil
 SWEP.ShootSoundTail = nil -- played after the loop ends
-SWEP.ShootSoundLoopingIndoorTail = nil
+SWEP.ShootSoundTailIndoor = nil
 
 SWEP.Silencer = false -- Silencer installed or not?
 

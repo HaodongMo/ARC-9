@@ -27,7 +27,7 @@ function ARC9.Move(ply, mv, cmd)
     if wpn:GetInMeleeAttack() and wpn:GetLungeEntity():IsValid() then
         mv:SetMaxSpeed(10000)
         mv:SetMaxClientSpeed(10000)
-        local targetpos = (wpn:GetLungeEntity():WorldSpaceCenter() + wpn:GetLungeEntity():EyePos()) / 2
+        local targetpos = (wpn:GetLungeEntity():EyePos() + wpn:GetLungeEntity():EyePos()) / 2
         local lungevec = targetpos - ply:EyePos()
         local lungedir = lungevec:GetNormalized()
         local lungespd = (2 * (lungevec:Length() / math.Max(0.01, wpn:GetProcessedValue("PreBashTime")))) + 100
