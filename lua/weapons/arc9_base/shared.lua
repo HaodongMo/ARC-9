@@ -707,6 +707,8 @@ SWEP.SprintMidPoint = {
 SWEP.CustomizeAng = Angle(90, 0, 0)
 SWEP.CustomizePos = Vector(20, 32, 4)
 SWEP.CustomizeSnapshotFOV = 90
+SWEP.CustomizeSnapshotPos = Vector(0, 0, 0)
+SWEP.CustomizeSnapshotAng = Angle(0, 0, 0)
 SWEP.CustomizeNoRotate = false
 
 SWEP.BipodPos = Vector(0, 4, -4)

@@ -182,6 +182,8 @@ function SWEP:DoPresetCapture(filename, foricon)
     -- local ppos, pang = EyePos(), EyeAngles()
     local campos, camang = Vector(0, 0, 0), Angle(0, 0, 0)
     local custpos, custang = self:GetProcessedValue("CustomizePos"), self:GetProcessedValue("CustomizeAng")
+    custpos = custpos + self.CustomizeSnapshotPos
+    custang = custang + self.CustomizeSnapshotAng
     local pos, ang = Vector(0, 0, 0), Angle(0, 0, 0)
 
     pos = pos + (camang:Right() * custpos[1])
