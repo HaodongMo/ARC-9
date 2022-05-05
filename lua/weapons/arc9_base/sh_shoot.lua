@@ -74,6 +74,8 @@ function SWEP:DoShootSounds()
 end
 
 function SWEP:PrimaryAttack()
+    if self.NotAWeapon then return end
+
     if self:GetProcessedValue("PrimaryBash") then
         self:MeleeAttack()
         self:SetNeedTriggerPress(true)
