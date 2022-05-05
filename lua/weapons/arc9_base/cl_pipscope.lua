@@ -174,7 +174,7 @@ function SWEP:DoRTScopeEffects()
 
     if atttbl.RTScopeMotionBlur then
         -- DrawMotionBlur(0.1, 0.5, 0)
-        
+
         -- It is bad on some maps (gm_eft_customs for example)
         -- Whole screen becomes picture from sights
         -- We should use delayed low fps rendering like on arccw thermals (wait time before next draw call) 
@@ -314,6 +314,7 @@ function SWEP:DoRTScope(model, atttbl, active)
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
     else
         -- model:SetSubMaterial()
+        rtsurf:SetTexture("$basetexture", "vgui/black")
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
     end
 
