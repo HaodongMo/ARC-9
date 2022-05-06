@@ -308,6 +308,8 @@ function SWEP:DoPrimaryAttack()
 
     local spread = self:GetProcessedValue("Spread")
 
+    spread = math.Max(spread, 0)
+
     local dir = self:GetShootDir()
 
     self:DoProjectileAttack(self:GetShootPos(), dir, spread)
