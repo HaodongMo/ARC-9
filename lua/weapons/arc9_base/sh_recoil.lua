@@ -296,12 +296,13 @@ function SWEP:DoVisualRecoil()
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
         local adsmult = (1 - self:GetSightAmount() * 1 + (self:GetProcessedValue("VisualRecoilADSMult") or 0.5))
+        local punchadsmult = (1 - self:GetSightAmount() * 1 + (self:GetProcessedValue("VisualRecoilPunchADSMult") or 0.5))
         local mult = self:GetProcessedValue("VisualRecoilMult") * adsmult
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
         local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
         local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * mult
-        local punch = self:GetProcessedValue("VisualRecoilPunch") * mult
+        local punch = self:GetProcessedValue("VisualRecoilPunch") * punchadsmult
         -- self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
         -- self.VisualRecoilAng = self.VisualRecoilAng + Angle(0, 0, roll)
 

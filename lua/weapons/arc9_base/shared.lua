@@ -309,6 +309,7 @@ SWEP.VisualRecoilPunch = 1.5 -- How far back visual recoil moves the gun.
 
 SWEP.VisualRecoilMult = 1
 SWEP.VisualRecoilADSMult = 0.1
+SWEP.VisualRecoilPunchADSMult = 0.1
 
 SWEP.VisualRecoilHipFire = true
 
