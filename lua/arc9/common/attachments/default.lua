@@ -103,6 +103,7 @@ ATT.RTScopeShadowIntensity = 1.5
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
 ATT.RTScopeBlackBox = false
+ATT.RTScopeBlackBoxShadow = true
 ATT.RTScopeColorable = true -- Scope takes color from player settings
 -- Lets you draw more things on to the reticle
 ATT.RTScopeDrawFunc = function(swep, rtsize) end

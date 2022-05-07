@@ -94,6 +94,7 @@ end
 
 local rtsurf = Material("effects/arc9/rt")
 local shadow = Material("arc9/shadow.png", "mips smooth")
+local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 
 local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
 
@@ -252,15 +253,8 @@ function SWEP:DoRTScope(model, atttbl, active)
             -- end
 
             if reticle then
-                surface.SetDrawColor(color)
-                surface.SetMaterial(reticle)
-
                 local rtr_x = (rtsize - size) / 2 + (-sh_x - sh_s / 2 + rtsize / 2) * 0.2
                 local rtr_y = (rtsize - size) / 2 + (-sh_y - sh_s / 2 + rtsize / 2) * 0.2
-
-                -- surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
-                surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
-                -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
 
                 if atttbl.RTScopeBlackBox then
                     surface.SetDrawColor(0, 0, 0)
@@ -268,7 +262,19 @@ function SWEP:DoRTScope(model, atttbl, active)
                     surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
                     surface.DrawRect(rtr_x - size * 4, rtr_y + size, size * 8, size * 8) -- bottom
                     surface.DrawRect(rtr_x + size, rtr_y - size * 4, size * 8, size * 8) -- right
+                    
+                    if atttbl.RTScopeBlackBoxShadow then
+                        surface.SetMaterial(shadow2)
+                        surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
+                    end
                 end
+                
+                -- surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
+                -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
+
+                surface.SetDrawColor(color)
+                surface.SetMaterial(reticle)
+                surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
             end
 
             if atttbl.RTScopeDrawFunc then
