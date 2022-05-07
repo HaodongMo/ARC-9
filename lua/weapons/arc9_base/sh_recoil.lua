@@ -165,6 +165,7 @@ function SWEP:ThinkVisualRecoil()
     local vpa = self.VisualRecoilPos
     local vpv = self.VisualRecoilPosVel
     PUNCH_SPRING_CONSTANT = self.VisualRecoilDampingConst or 120
+    VisualRecoilSpringMagnitude = self.VisualRecoilSpringMagnitude or 1
 
     if lensqr(vpa) + lensqr(vpv) > 0.000001 then
         -- {
@@ -190,7 +191,7 @@ function SWEP:ThinkVisualRecoil()
         --     // torsional spring
         --     // UNDONE: Per-axis spring constant?
         --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
-        local springforcemagnitude = POS_PUNCH_CONSTANT * ft
+        local springforcemagnitude = POS_PUNCH_CONSTANT * ft * VisualRecoilSpringMagnitude
         --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
         springforcemagnitude = math.Clamp(springforcemagnitude, 0, 2)
         --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
@@ -295,14 +296,15 @@ function SWEP:DoVisualRecoil()
     end
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
-        local adsmult = (1 - self:GetSightAmount() * 1 + (self:GetProcessedValue("VisualRecoilADSMult") or 0.5))
-        local punchadsmult = (1 - self:GetSightAmount() * 1 + (self:GetProcessedValue("VisualRecoilPunchADSMult") or 0.5))
+        local adsmult = (1 - (self:GetSightAmount() * (1 - (self:GetProcessedValue("VisualRecoilADSMult") or 1))))
+        local punchadsmult = (1 - (self:GetSightAmount() * (1 - (self:GetProcessedValue("VisualRecoilPunchADSMult") or 1))))
+        
         local mult = self:GetProcessedValue("VisualRecoilMult") * adsmult
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
         local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
         local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * mult
-        local punch = self:GetProcessedValue("VisualRecoilPunch") * punchadsmult
+        local punch = self:GetProcessedValue("VisualRecoilPunch") * punchadsmult * (self.EFTRecoil and math.Min(0.3, self:GetBurstCount() * 0.05) or 1)
         -- self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
         -- self.VisualRecoilAng = self.VisualRecoilAng + Angle(0, 0, roll)
 

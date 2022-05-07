@@ -258,6 +258,12 @@ SWEP.Recoil = 1
 SWEP.RecoilUp = 1 -- Multiplier for vertical recoil
 SWEP.RecoilSide = 1 -- Multiplier for vertical recoil
 
+-- This is for EFT-like recoil, where gun shoots where sights at. Adds aditional movement to player view
+SWEP.EFTRecoil = nil -- true
+SWEP.EFTRecoilUpMult = nil -- 40-100
+SWEP.EFTRecoilSideMult = nil -- 1-20
+SWEP.FirstShootRecoilUp = 1 -- eft too
+
 -- These values determine how much extra movement is applied to the recoil entirely randomly, like in a circle.
 -- This type of recoil CANNOT be predicted.
 SWEP.RecoilRandomUp = 0.1
@@ -314,6 +320,7 @@ SWEP.VisualRecoilPunchADSMult = 0.1
 SWEP.VisualRecoilHipFire = true
 
 SWEP.VisualRecoilDampingConst = nil -- How spring will be visual recoil, 120 is default
+SWEP.VisualRecoilSpringMagnitude = 1
 
 SWEP.RecoilKick = 1 -- Camera recoil
 SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
