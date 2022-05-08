@@ -31,6 +31,7 @@ function SWEP:GenerateAutoSight(sight, slottbl)
         ExtraSightDistance = slottbl.ExtraSightDistance,
         GeneratedSight = true,
         -- ExtraAng = ang
+        ShadowPos = sight.ShadowPos
     }
 end
 

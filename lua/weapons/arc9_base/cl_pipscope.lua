@@ -192,7 +192,8 @@ function SWEP:DoRTScope(model, atttbl, active)
         if self:ShouldDoScope() then
             local sightpos = self:GetSight().ShadowPos or (self:GetSight().OriginalSightTable or {}).Pos or self:GetSight().Pos or Vector(0, 0, 0)
             sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
-
+            sightpos.x = -sightpos.x -- to fix pso-like side scopes
+            
             pos = pos + (sightpos.x * ang:Right())
             -- pos = pos + (sightpos.y * ang:Forward())
             pos = pos + (sightpos.z * -ang:Up())
