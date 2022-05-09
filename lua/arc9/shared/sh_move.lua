@@ -124,6 +124,16 @@ function ARC9.StartCommand(ply, cmd)
     ARC9.RecoilRise = recrise
 
     ARC9.LastEyeAngles = cmd:GetViewAngles()
+    
+    if cmd:GetImpulse() == 100 and wpn:CanToggleAllStatsOnF() then
+        if SERVER then
+            wpn:PlayAnimation("mod_switch", 1, false)
+            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound")), 75, 100, 1, CHAN_ITEM)
+            cmd:SetImpulse(0)
+        else
+            wpn:ToggleAllStatsOnF()
+        end
+    end
 end
 
 hook.Add("StartCommand", "ARC9_StartCommand", ARC9.StartCommand)

@@ -234,7 +234,8 @@ function SWEP:SwitchMultiSight(amt)
     self:InvalidateCache()
 
     if msi != old_msi then
-        // eh put some code in here
+        if self:StillWaiting() then return end
+        self:PlayAnimation("mod_switch", 1, false)
     end
 end
 
