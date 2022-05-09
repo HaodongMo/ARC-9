@@ -235,7 +235,9 @@ function SWEP:SwitchMultiSight(amt)
 
     if msi != old_msi then
         if self:StillWaiting() then return end
-        self:PlayAnimation("mod_switch", 1, false)
+        if self.MultiSightTable[old_msi].atttbl.ID == self.MultiSightTable[msi].atttbl.ID then
+            self:PlayAnimation("mod_switch", 1, false)
+        end
     end
 end
 
