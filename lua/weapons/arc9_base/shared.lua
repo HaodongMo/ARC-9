@@ -556,6 +556,7 @@ SWEP.DistantShootSound = nil
 SWEP.DryFireSound = ""
 
 SWEP.FiremodeSound = "arc9/firemode.wav"
+SWEP.ToggleAttSound = "items/flashlight1.wav"
 
 SWEP.EnterSightsSound = ""
 SWEP.ExitSightsSound = ""

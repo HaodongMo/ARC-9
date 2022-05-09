@@ -45,7 +45,7 @@ function SWEP:DoHolosight(mdl, atttbl)
     -- render.SetColorMaterial()
     -- render.DrawScreenQuad()
 
-    local img = atttbl.HoloSightReticle
+    local reticle = self:GetSight().Reticle or atttbl.HoloSightReticle
 
     -- local eyedist = WorldToLocal(mdl:GetPos(), mdl:GetAngles(), EyePos(), EyeAngles()).x
 
@@ -55,7 +55,7 @@ function SWEP:DoHolosight(mdl, atttbl)
 
     -- render.DepthRange(0, 0.0098)
 
-    if img then
+    if reticle then
         local pos = self:GetOwner():EyePos()
 
         pos = pos + mdl:GetAngles():Forward() * 9000
@@ -74,7 +74,7 @@ function SWEP:DoHolosight(mdl, atttbl)
             col.b = GetConVar("arc9_reflex_b"):GetFloat()
         end
 
-        render.SetMaterial(img)
+        render.SetMaterial(reticle)
 
         local up = mdl:GetAngles():Up()
         local right = mdl:GetAngles():Right()
@@ -109,7 +109,7 @@ function SWEP:DoHolosight(mdl, atttbl)
         -- sx = sx + math.Round(math.Rand(-shakey, shakey))
         -- sy = sy + math.Round(math.Rand(-shakey, shakey))
 
-        -- surface.SetMaterial(img)
+        -- surface.SetMaterial(reticle)
         -- surface.SetDrawColor(255, 255, 255, 255)
         -- surface.DrawTexturedRect(sx, sy, ss, ss)
 

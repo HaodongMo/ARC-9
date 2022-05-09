@@ -5,16 +5,6 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
 
     if !pressed then return end
 
-    -- print(bind)
-
-    if bind == "impulse 100" then
-        local toggled = wpn:ToggleAllStatsOnF()
-
-        if toggled then
-            return true
-        end
-    end
-
     if bind == "+use" and !LocalPlayer():KeyDown(IN_USE) then
         return ARC9.AttemptGiveNPCWeapon()
     end
