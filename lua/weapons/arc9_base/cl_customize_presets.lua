@@ -136,6 +136,25 @@ function SWEP:CreateHUD_Presets(scroll)
         self:CreatePresetName()
     end
 
+    plusbtn.DoRightClick = function(self2)
+        if nextpreset > CurTime() then return end
+        nextpreset = CurTime() + 1
+		
+		local txt = os.date( "%I.%M%p", os.time() )
+		if txt:Left(1) == "0" then txt = txt:Right( #txt-1 ) end
+        self:SavePreset( txt )
+        surface.PlaySound("arc9/shutter.ogg")
+
+        timer.Simple(0.5, function()
+            if IsValid(self) and IsValid(self:GetOwner()) then
+                self:GetOwner():ScreenFade(SCREENFADE.IN, Color(255, 255, 255, 127), 0.5, 0)
+                if self:GetCustomize() then
+                    self:CreateHUD_Bottom()
+                end
+            end
+        end)
+    end
+
     plusbtn.Paint = function(self2, w, h)
         local col1 = ARC9.GetHUDColor("fg")
         local name = "NEW"

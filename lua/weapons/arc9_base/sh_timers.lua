@@ -83,7 +83,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
         self:SetTimer(ttime, function()
             if v.s then
-                self:EmitSound(self:RandomChoice(v.s or ""), v.v or 75, v.p or 100, 1, v.c or CHAN_AUTO)
+                self:EmitSound(self:RandomChoice(v.s or ""), v.l or 75, v.p or 100, v.v or 1, v.c or CHAN_AUTO)
             end
 
             if v.pp then
