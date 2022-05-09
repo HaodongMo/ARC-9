@@ -72,6 +72,7 @@ ATT.Sights = {
     {
         Pos = Vector(0, 0, 0),
         Ang = Angle(0, 0, 0),
+        Reticle = nil, -- Same as ATT.RTScopeReticle or HoloSightReticle but this sight only. Better cache material somewhere outside this structure: local Reticle1 = Material("reticle1.png", "mips smooth") and here you type only Reticle1). If not defined, will use ATT.RTScopeReticle/HoloSightReticle
         ExtraSightData = {
             // like an atttbl, only works for sight related data
         },

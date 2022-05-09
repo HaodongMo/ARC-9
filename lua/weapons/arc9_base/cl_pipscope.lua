@@ -190,8 +190,9 @@ function SWEP:DoRTScope(model, atttbl, active)
 
     if active then
         if self:ShouldDoScope() then
-            local sightpos = self:GetSight().ShadowPos or (self:GetSight().OriginalSightTable or {}).Pos or self:GetSight().Pos or Vector(0, 0, 0)
-            sightpos = sightpos * ((self:GetSight().slottbl or {}).Scale or 1)
+            local sight = self:GetSight()
+            local sightpos = sight.ShadowPos or (sight.OriginalSightTable or {}).Pos or sight.Pos or Vector(0, 0, 0)
+            sightpos = sightpos * ((sight.slottbl or {}).Scale or 1)
             sightpos.x = -sightpos.x -- to fix pso-like side scopes
             
             pos = pos + (sightpos.x * ang:Right())
@@ -200,7 +201,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
             local screenpos
 
-            if self:GetSight().BaseSight then
+            if sight.BaseSight then
                 screenpos = {
                     visible = true,
                     x = ScrW() / 2,
@@ -226,7 +227,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
             cam.Start2D()
 
-            local reticle = atttbl.RTScopeReticle
+            local reticle = sight.Reticle or atttbl.RTScopeReticle
             local color = atttbl.RTScopeColor or color_white
 
             if atttbl.RTScopeColorable then
@@ -240,7 +241,7 @@ function SWEP:DoRTScope(model, atttbl, active)
             -- local drawfunc = nil
             local size = rtsize * (atttbl.RTScopeReticleScale or 1)
             -- if atttbl.RTScopeDefer then
-            --     local slot = self:GetSight().slottbl
+            --     local slot = sight.slottbl
             --     for k, v in pairs(slot.SubAttachments) do
             --         local at = ARC9.Attachments[v.Installed or ""]
             --         if at and (at.RTScopeReticle or at.HoloSightReticle) then
