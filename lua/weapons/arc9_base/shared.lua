@@ -313,9 +313,14 @@ SWEP.VisualRecoilCenter = Vector(2, 4, 2) -- The "axis" of visual recoil. Where 
 
 SWEP.VisualRecoilPunch = 1.5 -- How far back visual recoil moves the gun.
 
+-- SWEP.VisualRecoilMult = 1
+-- SWEP.VisualRecoilADSMult = 0.1
+-- SWEP.VisualRecoilPunchADSMult = 0.1
+
+SWEP.VisualRecoil = 1
 SWEP.VisualRecoilMult = 1
-SWEP.VisualRecoilADSMult = 0.1
-SWEP.VisualRecoilPunchADSMult = 0.1
+SWEP.VisualRecoilMultSights = 0.1
+SWEP.VisualRecoilPunchMultSights = 0.1
 
 SWEP.VisualRecoilHipFire = true
 
