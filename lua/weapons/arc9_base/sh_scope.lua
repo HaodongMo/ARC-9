@@ -266,7 +266,7 @@ function SWEP:GetRTScopeFOV()
     if atttbl.RTScopeAdjustable then
         return Lerp(scrolllevel / atttbl.RTScopeAdjustmentLevels, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
     else
-        return atttbl.RTScopeFOV
+        return sights.RTScopeFOV or atttbl.RTScopeFOV
     end
 end
 

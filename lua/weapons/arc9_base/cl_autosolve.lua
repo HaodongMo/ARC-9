@@ -32,7 +32,8 @@ function SWEP:GenerateAutoSight(sight, slottbl)
         GeneratedSight = true,
         -- ExtraAng = ang
         ShadowPos = sight.ShadowPos,
-        Reticle = sight.Reticle
+        Reticle = sight.Reticle,
+        RTScopeFOV = sight.RTScopeFOV
     }
 end
 
