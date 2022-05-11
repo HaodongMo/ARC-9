@@ -894,7 +894,7 @@ SWEP.Attachments = {
 -- enter_sights, exit_sights, idle_sights
 -- enter_sprint, exit_sprint, idle_sprint
 -- toggle (F)
--- changesights
+-- switchsights (alt+e)
 -- Suffixes (Must be in this order):
 -- _iron (When sighted)
 -- _sights (Alternative to _iron)
