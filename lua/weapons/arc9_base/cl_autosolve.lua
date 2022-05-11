@@ -12,7 +12,7 @@ function SWEP:GenerateAutoSight(sight, slottbl)
 
     debugoverlay.Axis(pos, ang, 16, 1, true)
 
-    local s_pos = Vector(0, 0, 0)
+    local s_pos = Vector(0, self:GetProcessedValue("AdditionalSightDistance"), 0)
     local s_ang = Angle(0, 0, 0)
 
     local up, forward, right = s_ang:Up(), s_ang:Forward(), s_ang:Right()
