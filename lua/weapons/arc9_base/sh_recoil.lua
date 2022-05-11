@@ -301,7 +301,7 @@ function SWEP:DoVisualRecoil()
         -- local punchadsmult = (1 - (self:GetSightAmount() * (1 - (self:GetProcessedValue("VisualRecoilPunchADSMult") or 1))))
 
         -- Should literally just be VisualRecoil for VisualRecoilAdd, VisualRecoilHook, etc
-        local mult = self:GetProcessedValue("VisualRecoil")
+        local mult = self:GetProcessedValue("VisualRecoilMult")
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
         local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
