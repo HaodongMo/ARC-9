@@ -95,6 +95,11 @@ local conVars = {
         replicated = true
     },
     {
+        name = "atts_nocustomize",
+        default = "0",
+        replicated = true
+    },
+    {
         name = "atts_free",
         default = "0",
         replicated = true

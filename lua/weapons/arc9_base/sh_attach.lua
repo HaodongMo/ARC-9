@@ -366,6 +366,8 @@ function SWEP:GetSlotBlocked(slottbl)
 end
 
 function SWEP:CanAttach(addr, att, slottbl)
+    if GetConVar("atts_nocustomize"):GetBool() then return false end
+
     slottbl = slottbl or self:LocateSlotFromAddress(addr)
 
     if self:RunHook("Hook_BlockAttachment", {att = att, slottbl = slottbl}) == false then return false end
@@ -418,6 +420,8 @@ function SWEP:CanAttach(addr, att, slottbl)
 end
 
 function SWEP:CanDetach(addr)
+    if GetConVar("atts_nocustomize"):GetBool() then return false end
+
     local slottbl = self:LocateSlotFromAddress(addr)
 
     if slottbl and slottbl.Integral then return false end
