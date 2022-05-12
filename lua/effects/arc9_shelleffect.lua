@@ -8,33 +8,33 @@ EFFECT.AlreadyPlayedSound = false
 EFFECT.ShellTime = 0.5
 EFFECT.SpawnTime = 0
 
-EFFECT.TypeSettings = {
-    [1] = {
-        Model = "models/weapons/shell.mdl",
-        Sounds = {
-            "player/pl_shell1.wav",
-            "player/pl_shell2.wav",
-            "player/pl_shell3.wav",
-        }
-    },
-    [2] = {
-        Model = "models/weapons/rifleshell.mdl",
-        Sounds = {
-            "player/pl_shell1.wav",
-            "player/pl_shell2.wav",
-            "player/pl_shell3.wav",
-        },
-        Scale = 0.5
-    },
-    [3] = {
-        Model = "models/weapons/shotgun_shell.mdl",
-        Sounds = {
-            "weapons/fx/tink/shotgun_shell1.wav",
-            "weapons/fx/tink/shotgun_shell2.wav",
-            "weapons/fx/tink/shotgun_shell3.wav",
-        }
-    },
-}
+-- EFFECT.TypeSettings = {
+--     [1] = {
+--         Model = "models/weapons/shell.mdl",
+--         Sounds = {
+--             "player/pl_shell1.wav",
+--             "player/pl_shell2.wav",
+--             "player/pl_shell3.wav",
+--         }
+--     },
+--     [2] = {
+--         Model = "models/weapons/rifleshell.mdl",
+--         Sounds = {
+--             "player/pl_shell1.wav",
+--             "player/pl_shell2.wav",
+--             "player/pl_shell3.wav",
+--         },
+--         Scale = 0.5
+--     },
+--     [3] = {
+--         Model = "models/weapons/shotgun_shell.mdl",
+--         Sounds = {
+--             "weapons/fx/tink/shotgun_shell1.wav",
+--             "weapons/fx/tink/shotgun_shell2.wav",
+--             "weapons/fx/tink/shotgun_shell3.wav",
+--         }
+--     },
+-- }
 
 function EFFECT:Init(data)
 
@@ -154,7 +154,7 @@ function EFFECT:PhysicsCollide()
     -- end
     if self.AlreadyPlayedSound then return end
 
-    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 65, self.ShellPitch, 1)
+    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1)
 
     self.AlreadyPlayedSound = true
 end
