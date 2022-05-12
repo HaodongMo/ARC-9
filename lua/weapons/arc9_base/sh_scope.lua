@@ -32,7 +32,7 @@ function SWEP:ExitSights()
 end
 
 function SWEP:ToggleADS()
-    return (self:GetOwner():GetInfoNum("arc9_toggleads", 0) >= 1) and true or false
+    return self:GetOwner():GetInfoNum("arc9_toggleads", 0) >= 1
 end
 
 function SWEP:ThinkSights()
