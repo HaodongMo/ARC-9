@@ -600,6 +600,8 @@ SWEP.ShellEffectCount = 1
 SWEP.ShellModel = "models/shells/shell_556.mdl"
 SWEP.ShellMaterial = nil -- string
 
+SWEP.ShellSmoke = true
+
 SWEP.EjectDelay = 0
 
 SWEP.NoShellEject = false
