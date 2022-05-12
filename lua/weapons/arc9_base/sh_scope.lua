@@ -10,7 +10,7 @@ function SWEP:EnterSights()
     if self:GetHolster_Time() > 0 then return end
     if self:GetProcessedValue("UBGLInsteadOfSights") then return end
     if self:GetSafe() then return end
-    
+
     self:ToggleBlindFire(false)
     self:SetInSights(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)
@@ -18,8 +18,6 @@ function SWEP:EnterSights()
     self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
 
     self:SetShouldHoldType()
-
-    self:BuildMultiSight()
 end
 
 function SWEP:ExitSights()
@@ -65,15 +63,32 @@ function SWEP:ThinkSights()
     local toggle = self:ToggleADS()
     local inatt = owner:KeyDown(IN_ATTACK2)
     local pratt = owner:KeyPressed(IN_ATTACK2)
-    local sp_cl = game.SinglePlayer() and CLIENT
 
-    if sighted and (!sp_cl and toggle and pratt) or (!toggle and !inatt) then
-        self:ExitSights()
-    elseif !sighted and (!sp_cl and toggle and pratt) or (!toggle and inatt) then
-        -- if self:GetOwner():KeyDown(IN_USE) then
-            -- return
-        -- end why was this here?
-        self:EnterSights()
+    if toggle then
+        if IsFirstTimePredicted() then
+            if sighted and pratt then
+                self:ExitSights()
+            elseif !sighted and pratt then
+                -- if self:GetOwner():KeyDown(IN_USE) then
+                    -- return
+                -- end why was this here?
+                self:EnterSights()
+            end
+        end
+
+        if pratt then
+            self:BuildMultiSight()
+        end
+    else
+        if sighted and !inatt then
+            self:ExitSights()
+        elseif !sighted and inatt then
+            -- if self:GetOwner():KeyDown(IN_USE) then
+                -- return
+            -- end why was this here?
+            self:EnterSights()
+            self:BuildMultiSight()
+        end
     end
 
     if sighted then
@@ -243,8 +258,9 @@ end
 
 function SWEP:GetSight()
     if ARC9.Dev(2) then
-        self:BuildMultiSight()
+        self:BuildMultiSight() -- this is what was fixing toggle sights
     end
+    -- if !self.MultiSightTable and self:GetValue("Sights") then self:BuildMultiSight() end
     return self.MultiSightTable[self:GetMultiSight()] or self:GetValue("IronSights")
 end
 
