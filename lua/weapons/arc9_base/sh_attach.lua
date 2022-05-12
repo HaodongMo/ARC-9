@@ -366,7 +366,7 @@ function SWEP:GetSlotBlocked(slottbl)
 end
 
 function SWEP:CanAttach(addr, att, slottbl)
-    if GetConVar("atts_nocustomize"):GetBool() then return false end
+    if GetConVar("arc9_atts_nocustomize"):GetBool() then return false end
 
     slottbl = slottbl or self:LocateSlotFromAddress(addr)
 
@@ -420,7 +420,7 @@ function SWEP:CanAttach(addr, att, slottbl)
 end
 
 function SWEP:CanDetach(addr)
-    if GetConVar("atts_nocustomize"):GetBool() then return false end
+    if GetConVar("arc9_atts_nocustomize"):GetBool() then return false end
 
     local slottbl = self:LocateSlotFromAddress(addr)
 
