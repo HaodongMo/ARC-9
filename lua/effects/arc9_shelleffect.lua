@@ -8,33 +8,33 @@ EFFECT.AlreadyPlayedSound = false
 EFFECT.ShellTime = 0.5
 EFFECT.SpawnTime = 0
 
-EFFECT.TypeSettings = {
-    [1] = {
-        Model = "models/weapons/shell.mdl",
-        Sounds = {
-            "player/pl_shell1.wav",
-            "player/pl_shell2.wav",
-            "player/pl_shell3.wav",
-        }
-    },
-    [2] = {
-        Model = "models/weapons/rifleshell.mdl",
-        Sounds = {
-            "player/pl_shell1.wav",
-            "player/pl_shell2.wav",
-            "player/pl_shell3.wav",
-        },
-        Scale = 0.5
-    },
-    [3] = {
-        Model = "models/weapons/shotgun_shell.mdl",
-        Sounds = {
-            "weapons/fx/tink/shotgun_shell1.wav",
-            "weapons/fx/tink/shotgun_shell2.wav",
-            "weapons/fx/tink/shotgun_shell3.wav",
-        }
-    },
-}
+-- EFFECT.TypeSettings = {
+--     [1] = {
+--         Model = "models/weapons/shell.mdl",
+--         Sounds = {
+--             "player/pl_shell1.wav",
+--             "player/pl_shell2.wav",
+--             "player/pl_shell3.wav",
+--         }
+--     },
+--     [2] = {
+--         Model = "models/weapons/rifleshell.mdl",
+--         Sounds = {
+--             "player/pl_shell1.wav",
+--             "player/pl_shell2.wav",
+--             "player/pl_shell3.wav",
+--         },
+--         Scale = 0.5
+--     },
+--     [3] = {
+--         Model = "models/weapons/shotgun_shell.mdl",
+--         Sounds = {
+--             "weapons/fx/tink/shotgun_shell1.wav",
+--             "weapons/fx/tink/shotgun_shell2.wav",
+--             "weapons/fx/tink/shotgun_shell3.wav",
+--         }
+--     },
+-- }
 
 function EFFECT:Init(data)
 
@@ -120,39 +120,37 @@ function EFFECT:Init(data)
     phys:AddAngleVelocity(VectorRand() * 100)
     phys:AddAngleVelocity(ang:Up() * 2500 * math.Rand(0.75, 1.25))
 
-    -- local emitter = ParticleEmitter(origin)
+    if ent:GetProcessedValue("ShellSmoke") then
+        local emitter = ParticleEmitter(origin)
 
-    -- for i = 1, 3 do
-    --     local particle = emitter:Add("particles/smokey", origin + (dir * 2))
+        for i = 1, 3 do
+            local particle = emitter:Add("particles/smokey", origin + (dir * 2))
 
-    --     if (particle) then
-    --         particle:SetVelocity(VectorRand() * 10 + (dir * i * math.Rand(48, 64)) + plyvel)
-    --         particle:SetLifeTime(0)
-    --         particle:SetDieTime(math.Rand(0.05, 0.15))
-    --         particle:SetStartAlpha(math.Rand(40, 60))
-    --         particle:SetEndAlpha(0)
-    --         particle:SetStartSize(0)
-    --         particle:SetEndSize(math.Rand(18, 24))
-    --         particle:SetRoll(math.rad(math.Rand(0, 360)))
-    --         particle:SetRollDelta(math.Rand(-1, 1))
-    --         particle:SetLighting(true)
-    --         particle:SetAirResistance(96)
-    --         particle:SetGravity(Vector(-7, 3, 20))
-    --         particle:SetColor(150, 150, 150)
-    --     end
-    -- end
+            if (particle) then
+                particle:SetVelocity(VectorRand() * 10 + (dir * i * math.Rand(48, 64)) + plyvel)
+                particle:SetLifeTime(0)
+                particle:SetDieTime(math.Rand(0.05, 0.15))
+                particle:SetStartAlpha(math.Rand(40, 60))
+                particle:SetEndAlpha(0)
+                particle:SetStartSize(0)
+                particle:SetEndSize(math.Rand(18, 24))
+                particle:SetRoll(math.rad(math.Rand(0, 360)))
+                particle:SetRollDelta(math.Rand(-1, 1))
+                particle:SetLighting(true)
+                particle:SetAirResistance(96)
+                particle:SetGravity(Vector(-7, 3, 20))
+                particle:SetColor(150, 150, 150)
+            end
+        end
+    end
 
     self.SpawnTime = CurTime()
 end
 
 function EFFECT:PhysicsCollide()
-    local phys = self:GetPhysicsObject()
-    if IsValid(phys) then
-        phys:SetMaterial("default_silent")
-    end
     if self.AlreadyPlayedSound then return end
 
-    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 65, self.ShellPitch, 1)
+    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1)
 
     self.AlreadyPlayedSound = true
 end

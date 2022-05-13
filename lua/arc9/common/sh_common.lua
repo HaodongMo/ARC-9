@@ -25,43 +25,43 @@ ARC9.PenTable = {
 }
 
 ARC9.ShellSoundsTable = {
-    "weapons/arc9/casings/casing_556_1.wav",
-    "weapons/arc9/casings/casing_556_2.wav",
-    "weapons/arc9/casings/casing_556_3.wav",
-    "weapons/arc9/casings/casing_556_4.wav",
-    "weapons/arc9/casings/casing_308_1.wav",
-    "weapons/arc9/casings/casing_308_2.wav",
-    "weapons/arc9/casings/casing_308_3.wav",
-    "weapons/arc9/casings/casing_308_4.wav"
+    "arc9/casings/casing_556_1.wav",
+    "arc9/casings/casing_556_2.wav",
+    "arc9/casings/casing_556_3.wav",
+    "arc9/casings/casing_556_4.wav",
+    "arc9/casings/casing_308_1.wav",
+    "arc9/casings/casing_308_2.wav",
+    "arc9/casings/casing_308_3.wav",
+    "arc9/casings/casing_308_4.wav"
 }
 
 ARC9.PistolShellSoundsTable = {
-    "weapons/arc9/casings/casing_9mm_1.wav",
-    "weapons/arc9/casings/casing_9mm_2.wav",
-    "weapons/arc9/casings/casing_9mm_3.wav",
-    "weapons/arc9/casings/casing_9mm_4.wav"
+    "arc9/casings/casing_9mm_1.wav",
+    "arc9/casings/casing_9mm_2.wav",
+    "arc9/casings/casing_9mm_3.wav",
+    "arc9/casings/casing_9mm_4.wav"
 }
 
 ARC9.TinyShellSoundsTable = {
-    "weapons/arc9/casings/casing_22_1.wav",
-    "weapons/arc9/casings/casing_22_2.wav",
-    "weapons/arc9/casings/casing_22_3.wav",
-    "weapons/arc9/casings/casing_22_4.wav"
+    "arc9/casings/casing_22_1.wav",
+    "arc9/casings/casing_22_2.wav",
+    "arc9/casings/casing_22_3.wav",
+    "arc9/casings/casing_22_4.wav"
 }
 
 ARC9.ShotgunShellSoundsTable = {
-    "weapons/arc9/casings/casing_12ga_1.wav",
-    "weapons/arc9/casings/casing_12ga_2.wav",
-    "weapons/arc9/casings/casing_12ga_3.wav",
-    "weapons/arc9/casings/casing_12ga_4.wav"
+    "arc9/casings/casing_12ga_1.wav",
+    "arc9/casings/casing_12ga_2.wav",
+    "arc9/casings/casing_12ga_3.wav",
+    "arc9/casings/casing_12ga_4.wav"
 }
 
 ARC9.RicochetSounds = {
-    "weapons/arc9/ricochet01.wav",
-    "weapons/arc9/ricochet02.wav",
-    "weapons/arc9/ricochet03.wav",
-    "weapons/arc9/ricochet04.wav",
-    "weapons/arc9/ricochet05.wav"
+    "arc9/ricochet01.wav",
+    "arc9/ricochet02.wav",
+    "arc9/ricochet03.wav",
+    "arc9/ricochet04.wav",
+    "arc9/ricochet05.wav"
  }
 
 ARC9.PresetPath = "ARC9_presets/"

@@ -194,7 +194,7 @@ function SWEP:DoRTScope(model, atttbl, active)
             local sightpos = sight.ShadowPos or (sight.OriginalSightTable or {}).Pos or sight.Pos or Vector(0, 0, 0)
             sightpos = sightpos * ((sight.slottbl or {}).Scale or 1)
             sightpos.x = -sightpos.x -- to fix pso-like side scopes
-            
+
             pos = pos + (sightpos.x * ang:Right())
             -- pos = pos + (sightpos.y * ang:Forward())
             pos = pos + (sightpos.z * -ang:Up())
@@ -264,13 +264,12 @@ function SWEP:DoRTScope(model, atttbl, active)
                     surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
                     surface.DrawRect(rtr_x - size * 4, rtr_y + size, size * 8, size * 8) -- bottom
                     surface.DrawRect(rtr_x + size, rtr_y - size * 4, size * 8, size * 8) -- right
-                    
+
                     if atttbl.RTScopeBlackBoxShadow then
                         surface.SetMaterial(shadow2)
                         surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
                     end
                 end
-                
                 -- surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
                 -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
 

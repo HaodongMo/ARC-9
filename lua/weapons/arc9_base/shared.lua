@@ -313,9 +313,14 @@ SWEP.VisualRecoilCenter = Vector(2, 4, 2) -- The "axis" of visual recoil. Where 
 
 SWEP.VisualRecoilPunch = 1.5 -- How far back visual recoil moves the gun.
 
+-- SWEP.VisualRecoilMult = 1
+-- SWEP.VisualRecoilADSMult = 0.1
+-- SWEP.VisualRecoilPunchADSMult = 0.1
+
+SWEP.VisualRecoil = 1
 SWEP.VisualRecoilMult = 1
-SWEP.VisualRecoilADSMult = 0.1
-SWEP.VisualRecoilPunchADSMult = 0.1
+SWEP.VisualRecoilMultSights = 0.1
+SWEP.VisualRecoilPunchMultSights = 0.1
 
 SWEP.VisualRecoilHipFire = true
 
@@ -594,6 +599,8 @@ SWEP.ShellEffectCount = 1
 
 SWEP.ShellModel = "models/shells/shell_556.mdl"
 SWEP.ShellMaterial = nil -- string
+
+SWEP.ShellSmoke = true
 
 SWEP.EjectDelay = 0
 
@@ -888,6 +895,8 @@ SWEP.Attachments = {
 -- impact
 -- enter_sights, exit_sights, idle_sights
 -- enter_sprint, exit_sprint, idle_sprint
+-- toggle (F)
+-- switchsights (alt+e)
 -- Suffixes (Must be in this order):
 -- _iron (When sighted)
 -- _sights (Alternative to _iron)
