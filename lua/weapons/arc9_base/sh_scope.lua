@@ -7,7 +7,7 @@ function SWEP:EnterSights()
     if !self:GetProcessedValue("HasSights") then return end
     if self:GetCustomize() then return end
     if !self:GetProcessedValue("ReloadInSights") and self:GetReloading() then return end
-    if self:GetHolster_Time() > 0 then return end
+    if self:GetHolsterTime() > 0 then return end
     if self:GetProcessedValue("UBGLInsteadOfSights") then return end
     if self:GetSafe() then return end
 

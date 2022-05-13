@@ -296,7 +296,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
     end
 
-    local ht = self:GetHolster_Time()
+    local ht = self:GetHolsterTime()
 
     if (ht + 0.1) > CurTime() then
         if ht > lht then

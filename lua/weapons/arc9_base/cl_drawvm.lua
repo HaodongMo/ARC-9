@@ -60,7 +60,7 @@ function SWEP:PreDrawViewModel()
 
     self:GetVM():SetSubMaterial()
 
-    if self:GetHolster_Time() < CurTime() and self.RTScope and self:GetSightAmount() > 0 then
+    if self:GetHolsterTime() < CurTime() and self.RTScope and self:GetSightAmount() > 0 then
         self:DoRTScope(self:GetVM(), self:GetTable(), self:GetSightAmount() > 0)
     end
 

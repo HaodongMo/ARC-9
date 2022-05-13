@@ -32,7 +32,7 @@ function SWEP:Deploy()
     self:SetRecoilSide(0)
     self:SetPrimedAttack(false)
     self:SetReloading(false)
-    self:SetHolster_Time(0)
+    self:SetHolsterTime(0)
     self:SetRequestReload(false)
     self:SetEmptyReload(false)
 
@@ -47,7 +47,7 @@ function SWEP:Deploy()
     self:SetBlindFireDirection(0)
 
     self:SetHolster_Entity(NULL)
-    self:SetHolster_Time(0)
+    self:SetHolsterTime(0)
 
     self:SetFreeAimAngle(Angle(0, 0, 0))
     self:SetLastAimAngle(Angle(0, 0, 0))
@@ -110,12 +110,12 @@ function SWEP:Holster(wep)
         self:CancelReload()
     end
 
-    if self:GetHolster_Time() > CurTime() then return false end
+    if self:GetHolsterTime() > CurTime() then return false end
 
-    if (self:GetHolster_Time() != 0 and self:GetHolster_Time() <= CurTime()) or !IsValid(wep) then
+    if (self:GetHolsterTime() != 0 and self:GetHolsterTime() <= CurTime()) or !IsValid(wep) then
         -- Do the final holster request
         -- Picking up props try to switch to NULL, by the way
-        self:SetHolster_Time(0)
+        self:SetHolsterTime(0)
         self:SetHolster_Entity(NULL)
 
         self:KillTimers()
@@ -146,10 +146,10 @@ function SWEP:Holster(wep)
         -- Prepare the holster and set up the timer
         if self:HasAnimation("holster") then
             local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1), true, false) or 0
-            self:SetHolster_Time(CurTime() + animation)
+            self:SetHolsterTime(CurTime() + animation)
             self:SetHolster_Entity(wep)
         else
-            self:SetHolster_Time(CurTime() + (self:GetProcessedValue("DeployTime", 1)))
+            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", 1)))
             self:SetHolster_Entity(wep)
         end
 
@@ -162,9 +162,9 @@ hook.Add("StartCommand", "ARC9_Holster", function(ply, ucmd)
     local wep = ply:GetActiveWeapon()
 
     if IsValid(wep) and wep.ARC9 then
-        if wep:GetHolster_Time() != 0 and wep:GetHolster_Time() <= CurTime() then
+        if wep:GetHolsterTime() != 0 and wep:GetHolsterTime() <= CurTime() then
             if IsValid(wep:GetHolster_Entity()) then
-                wep:SetHolster_Time(-math.huge) -- Pretty much force it to work
+                wep:SetHolsterTime(-math.huge) -- Pretty much force it to work
                 ucmd:SelectWeapon(wep:GetHolster_Entity()) -- Call the final holster request
             end
         end
