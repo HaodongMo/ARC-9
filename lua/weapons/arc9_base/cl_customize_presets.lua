@@ -168,6 +168,8 @@ function SWEP:CreateHUD_Presets(scroll)
             col1 = ARC9.GetHUDColor("shadow")
             surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
             surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+            self.CustomizeHints["Select"]   = "Create Preset"
+            self.CustomizeHints["Deselect"] = "Quicksave"
 
             if self2:IsHovered() then
                 surface.SetDrawColor(ARC9.GetHUDColor("hi"))
@@ -227,6 +229,8 @@ function SWEP:CreateHUD_Presets(scroll)
             col1 = ARC9.GetHUDColor("shadow")
             surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
             surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+            self.CustomizeHints["Select"]   = "Reset to default"
+            self.CustomizeHints["Deselect"] = ""
 
             if self2:IsHovered() then
                 surface.SetDrawColor(ARC9.GetHUDColor("hi"))
@@ -296,6 +300,8 @@ function SWEP:CreateHUD_Presets(scroll)
             local hasbg = false
 
             if self2:IsHovered() then
+                self.CustomizeHints["Select"]   = "Load"
+                self.CustomizeHints["Deselect"] = "Delete"
                 col1 = ARC9.GetHUDColor("shadow")
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))

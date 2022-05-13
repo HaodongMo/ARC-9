@@ -116,6 +116,14 @@ local function enterfolder(self, scroll, slottbl, fname)
                 enterfolder(self, scroll, slottbl, nil)
             end
         end
+        local oldp = backbtn.Paint
+        backbtn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
+            oldp(self2, w, h)
+            if self2:IsHovered() then
+                self.CustomizeHints["Select"] = "Return"
+            end
+        end
     else
         local deselbtn = iconbutton(self, scroll, ARC9:GetPhrase("folder.deselect") or "DESELECT", backicon)
         deselbtn.OnMousePressed = function(self2, kc)
@@ -123,6 +131,14 @@ local function enterfolder(self, scroll, slottbl, fname)
                 self.BottomBarAddress = nil
                 self.BottomBarMode = 0
                 self:CreateHUD_Bottom()
+            end
+        end
+        local oldp = deselbtn.Paint
+        deselbtn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
+            oldp(self2, w, h)
+            if self2:IsHovered() then
+                self.CustomizeHints["Select"] = "Return"
             end
         end
     end
@@ -145,6 +161,10 @@ local function enterfolder(self, scroll, slottbl, fname)
         folderbtn.Paint = function(self2, w, h)
             if !IsValid(self) then return end
             oldp(self2, w, h)
+
+            if self2:IsHovered() then
+                self.CustomizeHints["Select"] = "Expand"
+            end
 
             surface.SetFont("ARC9_10")
             local txtw, txth = surface.GetTextSize(self2.count)
@@ -220,6 +240,11 @@ local function enterfolder(self, scroll, slottbl, fname)
             local col2 = ARC9.GetHUDColor("shadow")
 
             local hasbg = false
+
+            if self2:IsHovered() then
+                if !attached then self.CustomizeHints["Select"]  = "Attach" end
+                if attached then self.CustomizeHints["Deselect"] = "Unattach" end
+            end
 
             if self2:IsHovered() or attached then
                 if !atttbl.FullColorIcon then
@@ -556,6 +581,7 @@ function SWEP:CreateHUD_AttInfo()
         if self2:IsHovered() then
             col1 = ARC9.GetHUDColor("hi")
             col2 = ARC9.GetHUDColor("shadow")
+            self.CustomizeHints["Select"] = "Hide"
 
             noshade = true
         end

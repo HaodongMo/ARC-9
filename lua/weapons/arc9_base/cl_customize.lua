@@ -172,6 +172,8 @@ SWEP.CustomizeYaw = 0
 
 SWEP.CustomizeZoom = 0
 
+SWEP.CustomizeHints = {}
+
 local gpX = 0
 local gpY = 0
 
@@ -422,6 +424,14 @@ function SWEP:CreateCustomizeHUD()
                     col = ARC9.GetHUDColor("occupied")
                 end
 
+                if hoveredslot then
+                    self.CustomizeHints["Select"] = "Expand"
+                    if slot.Installed then
+                        self.CustomizeHints["Deselect"] = "Unattach"
+                    end
+                end
+                
+
                 surface.SetMaterial(mat_circle)
                 surface.SetDrawColor(col)
                 surface.DrawTexturedRect(x, y, s, s)
@@ -567,65 +577,77 @@ function SWEP:CreateCustomizeHUD()
         trolling = {
             {
                 action = "Select",
-                glyph = ARC9.GetBindKey("+jump")
+                glyph = ARC9.GetBindKey("+jump"),
+                hidden = true,
             },
             {
                 action = "Deselect",
-                glyph = ARC9.GetBindKey("+reload")
+                glyph = ARC9.GetBindKey("+reload"),
+                hidden = true,
             },
             {
                 action = "Zoom",
                 glyph = ARC9.GetBindKey("invprev"),
-                glyph2 = ARC9.GetBindKey("invnext")
+                glyph2 = ARC9.GetBindKey("invnext"),
+                row2 = true,
             },
             {
                 action = "Pan",
                 glyph = ARC9.GetBindKey("+use"),
-                glyph2 = "shared_lstick"
+                glyph2 = "shared_lstick",
+                row2 = true,
             },
             {
                 action = "Rotate",
-                glyph = "shared_lstick"
+                glyph = "shared_lstick",
+                row2 = true,
             },
             {
                 action = "Cursor",
-                glyph = "shared_rstick"
+                glyph = "shared_rstick",
+                row2 = true,
             },
         }
     else
         trolling = {
             {
                 action = "Select",
-                glyph = ARC9.GetBindKey("+attack")
+                glyph = ARC9.GetBindKey("+attack"),
+                hidden = true,
             },
             {
                 action = "Deselect",
-                glyph = ARC9.GetBindKey("+attack2")
+                glyph = ARC9.GetBindKey("+attack2"),
+                hidden = true,
             },
             {
                 action = "Zoom",
                 glyph = ARC9.GetBindKey("invprev"),
-                glyph2 = ARC9.GetBindKey("invnext")
+                glyph2 = ARC9.GetBindKey("invnext"),
+                row2 = true,
             },
             {
                 action = "Pan",
                 glyph = ARC9.GetBindKey("+attack"),
                 glyph2 = "shared_touch",
+                row2 = true,
             },
             {
                 action = "Rotate",
                 glyph = ARC9.GetBindKey("+attack2"),
                 glyph2 = "shared_touch",
+                row2 = true,
             },
             {
-                action = "Reset",
-                glyph = ARC9.GetBindKey("+reload")
+                action = "Recenter",
+                glyph = ARC9.GetBindKey("+reload"),
+                row2 = true,
             },
         }
     end
 
     local help = vgui.Create("DPanel", bg)
-    help:SetSize(ScrW(), ScreenScale(16))
+    help:SetSize(ScrW(), ScreenScale(16+16))
     help:SetPos(0, ScreenScale(4) )--ScrH() - ScreenScale(16+2) )
     help.Paint = function(self2, w, h)
         if !IsValid(self) then
@@ -638,7 +660,12 @@ function SWEP:CreateCustomizeHUD()
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
 
         local ToAdd = {}
+        local ToAdd2 = {}
         for _, v in ipairs(trolling) do
+            local act, hid = v.action, v.hidden
+            if self.CustomizeHints[v.action] == "" then continue end
+            if self.CustomizeHints[v.action] then hid = false end
+            if hid then continue end
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
             if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
             if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
@@ -648,17 +675,29 @@ function SWEP:CreateCustomizeHUD()
                 if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
             end
 
-            --table.insert( ToAdd, color_white )
+            if v.row2 then
+            table.insert( ToAdd2, { v.glyph, ScreenScale(12) } )
+            if v.glyph2 then
+                table.insert( ToAdd2, " " )
+                table.insert( ToAdd2, { v.glyph2, ScreenScale(12) } )
+            end
+            table.insert(ToAdd2, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+            else
             table.insert( ToAdd, { v.glyph, ScreenScale(12) } )
             if v.glyph2 then
                 table.insert( ToAdd, " " )
                 table.insert( ToAdd, { v.glyph2, ScreenScale(12) } )
             end
-            --table.insert( ToAdd, ARC9.GetHUDColor("fg") )
-            table.insert(ToAdd, " " .. v.action .. "    ")
+            table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+            end
         end
-        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, unpack( ToAdd ) )
+        CreateControllerKeyLine( {x = ScreenScale(8+1), y = ScreenScale(2+16+1), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack( ToAdd ) )
+        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2+16), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack( ToAdd ) )
+        CreateControllerKeyLine( {x = ScreenScale(8+1), y = ScreenScale(2+1), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack( ToAdd2 ) )
+        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack( ToAdd2 ) )
+        table.Empty( self.CustomizeHints )
     end
+
 
     -- self:CreateHUD_Bottom()
 
@@ -792,6 +831,7 @@ function SWEP:CreateHUD_RHP()
             if self2:IsHovered() then
                 col1 = ARC9.GetHUDColor("hi")
                 col2 = ARC9.GetHUDColor("shadow")
+                if self.CustomizeTab != self2.page then self.CustomizeHints["Select"] = "Open" end
 
                 noshade = true
             end

@@ -240,6 +240,7 @@ function SWEP:CreateHUD_Bench()
 
         local col = ARC9.GetHUDColor("bg", 50)
         if self2:IsHovered() then
+            self.CustomizeHints["Select"] = "Recalculate"
             col = ARC9.GetHUDColor("hi", 50)
         end
 
