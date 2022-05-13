@@ -164,6 +164,8 @@ end
 
 function SWEP:DropMagazine()
     -- if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
+    if !self:GetProcessedValue("ShouldDropMag") then return end
+
     if self:GetProcessedValue("DropMagazineModel") then
         for i = 1, self:GetProcessedValue("DropMagazineAmount") do
             local mag = ents.Create("ARC9_droppedmag")

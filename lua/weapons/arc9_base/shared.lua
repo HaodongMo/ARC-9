@@ -200,6 +200,9 @@ SWEP.AutoReload = false -- When the gun is drawn, it will automatically reload.
 
 SWEP.TriggerDelay = 0 -- Set to > 0 to play the "trigger" animation before shooting. Delay time is based on this value.
 
+SWEP.ShouldDropMag = false
+SWEP.ShouldDropMagEmpty = true
+
 SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.
 SWEP.DropMagazineSounds = {} -- Table of sounds a dropped magazine should play.
 SWEP.DropMagazineAmount = 1 -- Amount of mags to drop.
