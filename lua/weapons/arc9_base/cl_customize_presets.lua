@@ -27,6 +27,8 @@ function SWEP:CreatePresetName()
     text.OnEnter = function(spaa, kc)
         local txt = text:GetText()
         txt = string.sub(txt, 0, 36)
+        
+        if txt != "autosave" and txt != "default" then
         self:SavePreset(txt)
         surface.PlaySound("arc9/shutter.ogg")
 
@@ -38,6 +40,7 @@ function SWEP:CreatePresetName()
                 end
             end
         end)
+        end
 
         bg:Close()
         bg:Remove()

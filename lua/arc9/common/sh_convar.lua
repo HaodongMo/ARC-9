@@ -328,38 +328,46 @@ end
 if CLIENT then
 
 local function menu_client_ti(panel)
-    panel:AddControl("checkbox", {
-        label = "Reload Automatically",
-        command = "arc9_autoreload"
-    })
+    -- panel:AddControl("checkbox", {
+    --     label = "Reload Automatically",
+    --     command = "arc9_autoreload"
+    -- })
+    -- This doesn't exist.
     panel:AddControl("checkbox", {
         label = "Auto-Save Weapon",
         command = "arc9_autosave"
     })
+    panel:ControlHelp( "Reattach your last used attachments." )
     panel:AddControl("checkbox", {
         label = "Compensate Sensitivity",
         command = "arc9_compensate_sens"
     })
+    panel:ControlHelp( "Does this do anything?" )
     panel:AddControl("checkbox", {
         label = "Draw HUD",
         command = "arc9_hud_arc9"
     })
+    panel:ControlHelp( "HUD on ARC-9 weapons." )
     panel:AddControl("checkbox", {
         label = "Draw HUD Everywhere",
         command = "arc9_hud_always"
     })
+    panel:ControlHelp( "HUD on all weapons." )
     panel:AddControl("checkbox", {
         label = "Keep HUD Hints",
         command = "arc9_hud_keephints"
     })
+    panel:ControlHelp( "Never fade HUD hints." )
     panel:AddControl("checkbox", {
         label = "Viewmodel Bob Style",
         command = "arc9_vm_bobstyle"
     })
+    panel:ControlHelp( "Toggle between old and new viewmodel bobbing." )
     panel:AddControl("checkbox", {
         label = "Toggle ADS",
         command = "arc9_toggleads"
     })
+    panel:ControlHelp( "Toggle ADS is very broken on RT sights. Fix before release." )
 end
 
 local function menu_client_customization(panel)
@@ -367,17 +375,20 @@ local function menu_client_customization(panel)
         label = "Customization Blur",
         command = "arc9_cust_blur"
     })
+    panel:ControlHelp( "Blur the background of the customization screen.\nMay reduce performance." )
     panel:AddControl("checkbox", {
         label = "Customization Light",
         command = "arc9_cust_light"
     })
+    panel:ControlHelp( "Add a light to the customization screen." )
 end
 
 local function menu_client_controller(panel)
     panel:AddControl( "header", { description = "Replace key names with controller glyphs." } )
     panel:CheckBox("Engage Super Controller Mode", "arc9_controller")
+    panel:ControlHelp( "Activate controller-focused features in ARC-9.\n- Keys are replaced with their bindnames.\n- Jump and reload are used as Select and Deselect, respectively." )
     panel:CheckBox("Controller Rumble w/ SInput", "arc9_controller_rumble")
-
+    panel:ControlHelp( "Use Fesiug's SInput to interact with ARC-9.\nFound at github.com/Fesiug/gmod-sinput" )
     local listview = vgui.Create("DListView", panel)
     listview:SetSize( 99, 200 )
     panel:AddItem( listview )
