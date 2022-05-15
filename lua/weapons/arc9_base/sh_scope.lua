@@ -7,7 +7,7 @@ function SWEP:EnterSights()
     if !self:GetProcessedValue("HasSights") then return end
     if self:GetCustomize() then return end
     if !self:GetProcessedValue("ReloadInSights") and self:GetReloading() then return end
-    if self:GetHolster_Time() > 0 then return end
+    if self:GetHolsterTime() > 0 then return end
     if self:GetProcessedValue("UBGLInsteadOfSights") then return end
     if self:GetSafe() then return end
 
@@ -250,7 +250,7 @@ function SWEP:SwitchMultiSight(amt)
 
     if msi != old_msi then
         if self:StillWaiting() then return end
-        if self.MultiSightTable[old_msi].atttbl.ID == self.MultiSightTable[msi].atttbl.ID then
+        if (self.MultiSightTable[old_msi].atttbl or {}).ID == (self.MultiSightTable[msi].atttbl or {}).ID then
             self:PlayAnimation("switchsights", 1, false)
         end
     end

@@ -27,7 +27,7 @@ function SWEP:CreatePresetName()
     text.OnEnter = function(spaa, kc)
         local txt = text:GetText()
         txt = string.sub(txt, 0, 36)
-        
+
         if txt != "autosave" and txt != "default" then
         self:SavePreset(txt)
         surface.PlaySound("arc9/shutter.ogg")
@@ -125,6 +125,8 @@ function SWEP:CreatePresetName()
 end
 
 function SWEP:CreateHUD_Presets(scroll)
+    local presetlist = self:GetPresets()
+
     local plusbtn = vgui.Create("DButton", scroll)
     plusbtn:SetSize(ScreenScale(48), ScreenScale(48))
     plusbtn:DockMargin(ScreenScale(2), 0, 0, 0)
@@ -142,9 +144,26 @@ function SWEP:CreateHUD_Presets(scroll)
     plusbtn.DoRightClick = function(self2)
         if nextpreset > CurTime() then return end
         nextpreset = CurTime() + 1
-		
-		local txt = os.date( "%I.%M%p", os.time() )
-		if txt:Left(1) == "0" then txt = txt:Right( #txt-1 ) end
+
+        -- local txt = os.date( "%I.%M%p", os.time() )
+        -- if txt:Left(1) == "0" then txt = txt:Right( #txt-1 ) end
+        local txt = "preset "
+        local num = 0
+
+        for _, preset in ipairs(presetlist) do
+            if string.StartWith(preset, txt) then
+                local qsnum = tonumber(string.sub(preset, string.len(txt) + 1))
+
+                print(string.sub(preset, string.len(txt) + 1))
+
+                if qsnum and qsnum > num then
+                    num = qsnum
+                end
+            end
+        end
+
+        txt = txt .. tostring(num + 1)
+
         self:SavePreset( txt )
         surface.PlaySound("arc9/shutter.ogg")
 
@@ -268,7 +287,7 @@ function SWEP:CreateHUD_Presets(scroll)
         self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
     end
 
-    for _, preset in pairs(self:GetPresets()) do
+    for _, preset in pairs(presetlist) do
         if preset == "autosave" or preset == "default" then continue end
         local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. "." .. ARC9.PresetIconFormat
         local btn = vgui.Create("DButton", scroll)
@@ -320,7 +339,7 @@ function SWEP:CreateHUD_Presets(scroll)
             end
 
             preset = string.upper(preset)
-            
+
             if !hasbg then
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
                 surface.SetMaterial(icon)
@@ -336,7 +355,6 @@ function SWEP:CreateHUD_Presets(scroll)
             surface.SetMaterial(icon)
             surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
 
-            
             surface.SetTextColor(col1)
             surface.SetTextPos(ScreenScale(13), 0)
             surface.SetFont("ARC9_10")

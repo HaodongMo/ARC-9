@@ -258,7 +258,7 @@ function SWEP:DoRTScope(model, atttbl, active)
                 local rtr_x = (rtsize - size) / 2 + (-sh_x - sh_s / 2 + rtsize / 2) * 0.2
                 local rtr_y = (rtsize - size) / 2 + (-sh_y - sh_s / 2 + rtsize / 2) * 0.2
 
-                if atttbl.RTScopeBlackBox then
+                if atttbl.RTScopeBlackBox != false then
                     surface.SetDrawColor(0, 0, 0)
                     surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
                     surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left

@@ -392,6 +392,16 @@ function ARC9.DrawHUD()
             firemode_text = "SEMI"
         end
 
+        if weapon.ThreeRoundBurst then
+            firemode_pic = firemode_pics[3]
+            firemode_text = "3BST"
+        end
+
+        if weapon.TwoRoundBurst then
+            firemode_pic = firemode_pics[2]
+            firemode_text = "2BST"
+        end
+
         if weapon.GetSafe then
             if weapon:GetSafe() then
                 firemode_pic = firemode_pics[0]
