@@ -263,6 +263,18 @@ hook.Add("PlayerBindPress", "ARC9_GamepadHUDBinds", function(ply, bind, pressed,
     end
 end)
 
+local ghs = {
+    Material( "arc9/seasonal/g1.png", "mips smooth"),
+    Material( "arc9/seasonal/g2.png", "mips smooth"),
+    Material( "arc9/seasonal/g3.png", "mips smooth"),
+    Material( "arc9/seasonal/g4.png", "mips smooth"),
+    Material( "arc9/seasonal/g5.png", "mips smooth"),
+    Material( "arc9/seasonal/g6.png", "mips smooth"),
+}
+
+local SeasonalHalloween = {}
+local SeasonalHolidays = {}
+
 function SWEP:CreateCustomizeHUD()
     local bg = vgui.Create("DPanel")
 
@@ -285,14 +297,160 @@ function SWEP:CreateCustomizeHUD()
         self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -16, 16)
     end
     bg:SetMouseInputEnabled(true)
+    table.Empty(SeasonalHalloween)
+    table.Empty(SeasonalHolidays)
+    if ARC9.ActiveHolidays["Christmas"] then
+        bg.Posh = 0
+    end
     bg.Paint = function(self2, w, h)
         if !IsValid(self) or LocalPlayer():GetActiveWeapon() != self then
             self2:Remove()
             gui.EnableScreenClicker(false)
         end
 
-        if ARC9.ControllerMode() then
+        if ARC9.ActiveHolidays["Summer Break"] then
 
+            do  -- nice text
+                surface.SetFont("ARC9_10")
+                local tx = "Summer break!"
+                local tz = surface.GetTextSize(tx)
+                surface.SetTextPos( (w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1) )
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawText(tx)
+                surface.SetTextPos( (w/2) - (tz/2), ScreenScale(8) )
+                surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                surface.DrawText(tx)
+            end
+
+            surface.SetDrawColor( 255, 255, 127, 255*0.04 )
+            surface.SetMaterial( Material( "arc9/seasonal/sun.png", "mips smooth" ) )
+            local si = ScreenScale(256)
+            surface.DrawTexturedRectRotated(w-ScreenScale(32), ScreenScale(32), si, si, CurTime()*3 )
+
+        elseif ARC9.ActiveHolidays["Halloween"] then
+
+            do  -- nice text
+                surface.SetFont("ARC9_10")
+                local tx = "Happy Halloween!"
+                local tz = surface.GetTextSize(tx)
+                surface.SetTextPos( (w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1) )
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawText(tx)
+                surface.SetTextPos( (w/2) - (tz/2), ScreenScale(8) )
+                surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                surface.DrawText(tx)
+            end
+
+            surface.SetDrawColor( 255, 255, 255, 255/64 )
+
+            for i, v in ipairs(SeasonalHalloween) do
+                if isnumber(v.mat) then continue end -- fuck off
+                surface.SetMaterial( v.mat )
+                local si = ScreenScale(32)
+
+
+                v.x = v.x + (v.px * 2)
+                v.y = v.y + (v.py2 * 2)
+                v.py = math.sin( (CurTime() + (i / i)) * math.pi * 0.5 ) * ScreenScale(8)
+
+                surface.DrawTexturedRectRotated(v.x + v.px, v.y + v.py, si, si, math.sin( (CurTime() + (i / i)) * math.pi ) * 15 )
+
+                if v.x >= w then
+                    v.x = 0
+                elseif v.x <= 0 then
+                    v.x = w
+                end
+
+                if v.y >= w then
+                    v.y = 0
+                elseif v.y <= 0 then
+                    v.y = h
+                end
+            end
+
+            if table.IsEmpty(SeasonalHalloween) then
+                for i=1, 13 do
+                    table.insert(SeasonalHalloween,
+                        {
+                            x = w*math.Rand(0, 1),
+                            y = h*math.Rand(0, 1),
+                            px = math.Rand(-1, 1),
+                            py = 0,
+                            py2 = math.Rand(-1, 1),
+                            mat = table.Random( ghs ),
+                        }
+                    )
+                end
+            end
+        elseif ARC9.ActiveHolidays["Christmas"] then
+
+            do  -- nice text
+                surface.SetFont("ARC9_10")
+                local tx = "Happy Holidays!"
+                local tz = surface.GetTextSize(tx)
+                surface.SetTextPos( (w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1) )
+                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                surface.DrawText(tx)
+                surface.SetTextPos( (w/2) - (tz/2), ScreenScale(8) )
+                surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                surface.DrawText(tx)
+            end
+
+            surface.SetDrawColor( 255, 255, 255, 255/32 )
+            surface.SetMaterial( Material( "arc9/seasonal/hills.png", "smooth" ) )
+            bg.Posh = math.Approach(bg.Posh or 0, 2, FrameTime() * (1/20) )
+            if bg.Posh > 1 then
+                bg.Posh = 0
+            end
+            surface.DrawTexturedRect(
+                math.Round( 0-(ScreenScale(1024)*bg.Posh), 0 ),
+                h-ScreenScale(1024/8*0.75) + ( ( math.sin( CurTime() * math.pi / 10 ) ) * ScreenScale(16) ),
+                ScreenScale(1024),
+                ScreenScale(1024/8)
+            )
+            surface.DrawTexturedRect(
+                math.Round( 0+ScreenScale(1024)-(ScreenScale(1024)*bg.Posh), 0 ),
+                h-ScreenScale(1024/8*0.75) + ( ( math.sin( CurTime() * math.pi / 10 ) ) * ScreenScale(16) ),
+                ScreenScale(1024),
+                ScreenScale(1024/8)
+            )
+
+            for i, v in ipairs(SeasonalHolidays) do
+                surface.SetMaterial( Material( "arc9/seasonal/snowflake.png", "mips smooth" ) )
+                local si = ScreenScale(16)
+
+                surface.DrawTexturedRectRotated(v[1], v[2], si, si, v[5] or 0 )
+                v[1] = math.Approach( v[1], v[1] + v[3], FrameTime() * ScreenScale(1) * 20 * v[3] )
+                v[2] = math.Approach( v[2], h, FrameTime() * ScreenScale(1) * 20 * v[4] )
+                v[5] = math.Approach( v[5] or 0, 370, FrameTime() * ScreenScale(1) * 20 * v[4] )
+                if v[2] >= h then
+                    v[2] = ScreenScale(-16)
+                end
+                if math.abs(v[1]) >= w then
+                    v[2] = ScreenScale(-16)
+                    v[1] = w*math.Rand(0, 1)
+                end
+                if math.abs(v[5]) >= 360 then
+                    v[5] = 0
+                end
+            end
+
+            if table.IsEmpty(SeasonalHolidays) then
+                for i=1, 32 do
+                    table.insert(SeasonalHolidays,
+                        {
+                            [1] = w*math.Rand(0, 1),
+                            [2] = -h*math.Rand(0, 0.5),
+                            [3] = math.Rand(-4, 4),
+                            [4] = math.Rand(0.5, 4),
+                            [5] = 0,
+                        }
+                    )
+                end
+            end
+        end
+
+        if ARC9.ControllerMode() then
             surface.SetTextPos(ScreenScale(4), ScreenScale(4))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetFont("ARC9_8")

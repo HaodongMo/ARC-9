@@ -52,9 +52,149 @@ function ARC9.ShouldDrawHUD()
     return true
 end
 
+local alldays = {
+    [1] = true,
+    [2] = true,
+    [3] = true,
+    [4] = true,
+    [5] = true,
+    [6] = true,
+    [7] = true,
+    [8] = true,
+    [9] = true,
+    [10] = true,
+    [11] = true,
+    [12] = true,
+    [13] = true,
+    [14] = true,
+    [15] = true,
+    [16] = true,
+    [17] = true,
+    [18] = true,
+    [19] = true,
+    [20] = true,
+    [21] = true,
+    [22] = true,
+    [23] = true,
+    [24] = true,
+    [25] = true,
+    [26] = true,
+    [27] = true,
+    [28] = true,
+    [29] = true,
+    [30] = true,
+    [31] = true,
+    [32] = true, -- you can't fight nature, jack
+}
+local events = {
+    ["New Year's"] = {
+        months = { [1] = true },
+        days = { [1] = true },
+    },
+    -- ["Opposite Day"] = {
+    --     months = { 1 },
+    --     days = { 25 },
+    -- },
+    -- ["Earth Day"] = {
+    --     months = { 4 },
+    --     days = { 22 },
+    -- },
+    ["Earth Day"] = {
+        months = { [4] = true },
+        days = { [22] = true },
+    },
+    ["Easter"] = {
+        months = { [4] = true },
+        days = alldays,
+    },
+    ["Halloween"] = {
+        months = { [10] = true },
+        days = alldays,
+    },
+    ["Thanksgiving"] = {
+        months = { [9] = true, [11] = true }, -- Also includes September to give it a brownish theme
+        days = alldays,
+    },
+    ["Christmas"] = {
+        months = { [12] = true },
+        days = alldays,
+    },
+    ["Summer Break"] = {
+        months = { [6] = true, [7] = true, [8] = true,  },
+        days = alldays,
+    },
+}
+
+function ARC9.GetTime()
+    if GetConVar("arc9_holiday_month"):GetInt() > 0 and GetConVar("arc9_holiday_day"):GetInt() > 0 then
+        return os.time( { month = GetConVar("arc9_holiday_month"):GetInt(), day = GetConVar("arc9_holiday_day"):GetInt(), year = 2000 } )
+    else
+        return os.time( )--{ month = 12, day = 1, year = 2000 } )
+    end
+end
+
+function ARC9.GetHoliday()
+    local d = os.date( "*t", ARC9.GetTime() )
+    return d
+end
+
+ARC9.ActiveHolidays = {}
+
+local holidayscolors = {
+    ["Christmas"] = {
+        fg     = Color(184, 210, 160),
+        shadow = Color(33, 11, 9),
+    },
+    ["Halloween"] = {
+        fg     = Color(255, 187, 132),
+        shadow = Color(14, 6, 37),
+    },
+    ["Thanksgiving"] = {
+        fg     = Color(240, 195, 172),
+        shadow = Color(38, 34, 27),
+    },
+    ["Summer Break"] = {
+        fg     = Color(255, 255, 200),
+        shadow = Color(30, 30, 40, 255*0.6),
+    }
+}
+
+local lastholidaycheck = -math.huge
+
 function ARC9.GetHUDColor(part, alpha)
+    if GetConVar("arc9_holiday_month"):GetInt() > 0 and GetConVar("arc9_holiday_day"):GetInt() > 0 then
+        lastholidaycheck = -math.huge
+    end
+    if GetConVar("arc9_holiday_grinch"):GetBool() then
+        table.Empty(ARC9.ActiveHolidays)
+        lastholidaycheck = -math.huge
+    else
+        if lastholidaycheck + 300 < CurTime() then
+            -- print("holiday check", CurTime())
+            table.Empty(ARC9.ActiveHolidays)
+            for _, event in pairs(events) do
+                local d = ARC9.GetHoliday()
+                if event.months[d.month] and event.days[d.day] then
+                    ARC9.ActiveHolidays[_] = true
+                end
+            end
+            lastholidaycheck = CurTime()
+        end
+    end
+
+    local event_holiday = {}
+    if ARC9.ActiveHolidays["Christmas"] then
+        event_holiday = holidayscolors["Christmas"]
+    elseif ARC9.ActiveHolidays["Halloween"] then
+        event_holiday = holidayscolors["Halloween"]
+    elseif ARC9.ActiveHolidays["Thanksgiving"] then
+        event_holiday = holidayscolors["Thanksgiving"]
+    elseif ARC9.ActiveHolidays["Summer Break"] then
+        event_holiday = holidayscolors["Summer Break"]
+    end
+
     alpha = alpha or 255
-    local col = ARC9.Colors[part] or ARC9.Colors.hi
+    local col = event_holiday[part] or ARC9.Colors[part] or ARC9.Colors.hi
     if alpha < 255 then
         col = Color(col.r, col.g, col.b)
         col.a = alpha or 255

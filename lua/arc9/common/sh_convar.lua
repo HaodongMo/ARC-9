@@ -235,6 +235,21 @@ local conVars = {
         userinfo = true
     },
     {
+        name = "holiday_grinch",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "holiday_month",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "holiday_day",
+        default = "0",
+        client = true,
+    },
+    {
         name = "crosshair_force",
         default = "0",
         replicated = true
@@ -386,6 +401,25 @@ local function menu_client_customization(panel)
         command = "arc9_cust_light"
     })
     panel:ControlHelp( "Add a light to the customization screen." )
+    panel:AddControl("checkbox", {
+        label = "Disable Holiday Theming",
+        command = "arc9_holiday_grinch"
+    })
+    panel:ControlHelp( "Disable all holiday and events related theming.\nYou're a mean one, Mr. Grinch." )
+    panel:AddControl("slider", {
+        label = "DEBUG: Holiday Month",
+        command = "arc9_holiday_month",
+        min = 0,
+        max = 12,
+    })
+    panel:ControlHelp( "Fake month to debug and test as, set over 0!!" )
+    panel:AddControl("slider", {
+        label = "DEBUG: Holiday Day",
+        command = "arc9_holiday_day",
+        min = 0,
+        max = 31,
+    })
+    panel:ControlHelp( "Fake day to debug and test as, set over 0!!" )
 end
 
 local function menu_client_controller(panel)
