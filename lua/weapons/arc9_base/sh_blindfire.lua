@@ -60,6 +60,8 @@ ValveBiped.Bip01_R_Finger02
 */
 
 function SWEP:ToggleBoneMods(on, dir)
+    if true then return end        -- total shit
+
     if on then
         if dir < 0 then
             for i, k in pairs(self:GetValue("BlindFireLeftBoneMods")) do

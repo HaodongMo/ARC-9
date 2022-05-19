@@ -395,6 +395,13 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang
+    
+    local wm = self:GetWM()
+
+    if self:ShouldTPIK() and IsValid(wm) and curvedcustomizedelta == 0 then
+        wm.slottbl.Pos = self.WorldModelOffset.Pos - self.ViewModelPos * Vector(-1, -1, 1)
+        wm.slottbl.Ang = self.WorldModelOffset.Ang + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
+    end
 
     return pos, ang
 end

@@ -3,8 +3,9 @@
 function SWEP:ShouldTPIK()
     if render.GetDXLevel() < 90 then return false end
     if !self:GetOwner():IsPlayer() then return false end
+    if !self.MirrorVMWM then return end
     if self:GetSafe() then return false end
-    if self:GetBlindFireAmount() > 0 then return false end
+    -- if self:GetBlindFireAmount() > 0 then return false end
     if !self:GetOwner():ShouldDrawLocalPlayer() then return false end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
     -- return LocalPlayer() == self:GetOwner()
@@ -14,7 +15,6 @@ end
 
 function SWEP:DoTPIK()
     if !self:ShouldTPIK() then return end
-    if !self.MirrorVMWM then return end
 
     -- local vm = self:GetVM()
     local wm = self:GetWM()
@@ -25,7 +25,7 @@ function SWEP:DoTPIK()
 
     local nolefthand = false
 
-    if self:GetHoldType() == "slam" then
+    if self:GetHoldType() == "slam" or self:GetHoldType() == "magic" then
         nolefthand = true
     end
 
