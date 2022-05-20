@@ -12,6 +12,7 @@ function SWEP:CreatePresetName()
     bg:SetDraggable(false)
     bg:ShowCloseButton(false)
     bg.Paint = function(span)
+        if !IsValid(self) then return end
         surface.SetDrawColor(0, 0, 0, 180)
         surface.DrawRect(0, 0, ScrW(), ScrH())
     end
@@ -178,6 +179,8 @@ function SWEP:CreateHUD_Presets(scroll)
     end
 
     plusbtn.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
         local col1 = ARC9.GetHUDColor("fg")
         local name = "NEW"
         local icon = mat_new
@@ -239,6 +242,8 @@ function SWEP:CreateHUD_Presets(scroll)
     end
 
     resetbtn.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
         local col1 = ARC9.GetHUDColor("fg")
         local name = "RESET"
         local icon = mat_reset
@@ -314,6 +319,8 @@ function SWEP:CreateHUD_Presets(scroll)
         end
 
         btn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
+
             local col1 = ARC9.GetHUDColor("fg")
             local icon = self2.icon or mat_default
             local hasbg = false

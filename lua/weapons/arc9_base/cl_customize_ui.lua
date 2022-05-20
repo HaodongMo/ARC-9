@@ -276,6 +276,8 @@ local SeasonalHalloween = {}
 local SeasonalHolidays = {}
 
 function SWEP:CreateCustomizeHUD()
+    if !IsValid(self) then return end
+
     local bg = vgui.Create("DPanel")
 
     self.CustomizeHUD = bg
@@ -284,7 +286,7 @@ function SWEP:CreateCustomizeHUD()
 
     gpX = ScrW()/2
     gpY = ScrH()/2
-    
+
     bg:SetPos(0, 0)
     bg:SetSize(ScrW(), ScrH())
     bg.OnRemove = function(self2)
@@ -292,6 +294,7 @@ function SWEP:CreateCustomizeHUD()
         -- self:SavePreset()
     end
     bg.OnMouseWheeled = function(self2, sd)
+        if !IsValid(self) then return end
         self.CustomizeZoom = self.CustomizeZoom - (sd * 2)
 
         self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -16, 16)
@@ -306,6 +309,7 @@ function SWEP:CreateCustomizeHUD()
         if !IsValid(self) or LocalPlayer():GetActiveWeapon() != self then
             self2:Remove()
             gui.EnableScreenClicker(false)
+            return
         end
 
         if ARC9.ActiveHolidays["Summer Break"] then
@@ -811,6 +815,7 @@ function SWEP:CreateCustomizeHUD()
         if !IsValid(self) then
             self2:Remove()
             gui.EnableScreenClicker(false)
+            return
         end
 
         surface.SetFont("ARC9_10")
@@ -926,6 +931,8 @@ function SWEP:CreateHUD_RHP()
     nameplate:SetSize(ScrW(), ScreenScale(64))
     nameplate:MoveToBack()
     nameplate.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
         surface.SetFont("ARC9_24")
         local tw = surface.GetTextSize(self.PrintName)
 
@@ -974,6 +981,7 @@ function SWEP:CreateHUD_RHP()
         newbtn.func = btn.func
         newbtn:SetText("")
         newbtn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
             local col1 = Color(0, 0, 0, 0)
             local col2 = ARC9.GetHUDColor("fg")
 

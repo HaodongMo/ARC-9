@@ -32,6 +32,7 @@ function SWEP:CreateHUD_Trivia()
     newbtn:Dock(TOP)
     newbtn.title = "Description"
     newbtn.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
         -- title
         surface.SetFont("ARC9_6")
         local tw = surface.GetTextSize(self2.title)
@@ -57,6 +58,7 @@ function SWEP:CreateHUD_Trivia()
         desc_line:SetSize(tp:GetWide(), ScreenScale(9))
         desc_line:Dock(TOP)
         desc_line.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
             surface.SetFont("ARC9_8")
             local tw = surface.GetTextSize(text)
 
@@ -80,6 +82,7 @@ function SWEP:CreateHUD_Trivia()
         newbtn2.title = title
         newbtn2.trivia = trivia
         newbtn2.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
             -- title
             surface.SetFont("ARC9_6")
             local tw = surface.GetTextSize(self2.title)

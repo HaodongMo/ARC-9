@@ -48,7 +48,7 @@ function ARC9.ShouldDrawHUD()
 
     -- if (!hud and !incust) or (!a9 and !hudalways) then return end
     if (!GetConVar("arc9_hud_arc9"):GetBool() and !incust) or (!a9 and !GetConVar("arc9_hud_always"):GetBool()) then return end -- this line was hard
-    
+
     return true
 end
 
@@ -123,6 +123,10 @@ local events = {
         months = { [6] = true, [7] = true, [8] = true,  },
         days = alldays,
     },
+    ["April Fools"] = {
+        months = { [4] = true },
+        days = { [1] = true }
+    }
 }
 
 function ARC9.GetTime()

@@ -35,6 +35,7 @@ function SWEP:CreateHUD_Credits()
         newbtn2.title = title
         newbtn2.trivia = trivia
         newbtn2.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
             -- title
             surface.SetFont("ARC9_8")
             local tw = surface.GetTextSize(self2.title)

@@ -268,6 +268,7 @@ function SWEP:CreateHUD_Stats()
         newbtn:Dock(TOP)
         newbtn.stats = stat
         newbtn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
             -- title
             surface.SetFont("ARC9_8")
             local tw = surface.GetTextSize(self2.stats.title)
