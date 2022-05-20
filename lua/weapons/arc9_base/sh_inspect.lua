@@ -1,8 +1,8 @@
 function SWEP:ThinkInspect()
     if self:StillWaiting() or self:GetInSights() then return end
-    
+
     -- self:PlayAnimation("inspect", 1, true)
-    if self:GetOwner():KeyDown(IN_RELOAD) and self:GetOwner():KeyDown(IN_USE) then
+    if self:GetOwner():KeyDown(IN_RELOAD) and self:GetOwner():KeyDown(IN_WALK) then
         if !self:HasAnimation("enter_inspect") then
             self:PlayAnimation("inspect", 1, true)
             return

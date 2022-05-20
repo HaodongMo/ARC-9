@@ -914,7 +914,7 @@ function ARC9.DrawHUD()
 
         if capabilities.Inspect then
             table.insert(hints, {
-                glyph = ARC9.GetBindKey("+use"),
+                glyph = ARC9.GetBindKey("+walk"),
                 glyph2 = ARC9.GetBindKey("+reload"),
                 action = "Inspect"
             })
