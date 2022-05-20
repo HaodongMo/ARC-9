@@ -840,42 +840,61 @@ SWEP.RejectAttachments = {
 
 -- The big one
 SWEP.Attachments = {
---     [1] = {
---         PrintName = "",
---         DefaultName = "No Attachment",
---         DefaultIcon = Material(""),
---         InstalledElements = {""}, -- list of elements to activate when something is installed here
---         UnInstalledElements = {""},
---         RequireElements = {}, -- {{a and b}, or {c and d and e}, or f}
---         -- list of "strings" or {"lists", "of", "strings"}.
---         -- one of these must all be enabled for this to be valid.
---         ExcludeElements = {},
---         -- same but for exclusion.
---         Integral = false, -- cannot be removed
---         Category = "", -- single or {"list", "of", "values"}
---         InstallSound = "",
---         Bone = "",
---         Pos = Vector(0, 0, 0),
---         Ang = Angle(0, 0, 0),
---         CorrectiveAng = Angle(0, 0, 0), -- sometimes, the autosolver needs a little help. Try (-1, -1, 0)
---         Scale = 1,
---         Icon_Offset = Vector(0, 0, 0),
---         KeepBaseIrons = false,
---         ExtraSightDistance = 0,
---         Installed = nil,
---         MergeSlots = {}, // merge this slot with another
---         SubAttachments = {
---             {
---                 Installed = nil,
---                 SubAttachments = {}
---             },
---             {
---                 Installed = nil,
---                 SubAttachments = {}
---             }
---         }
---     }
--- }
+    -- [1] = {
+    --     PrintName = "",
+    --     DefaultName = "No Attachment",
+    --     DefaultIcon = Material(""),
+    --     InstalledElements = {""}, -- list of elements to activate when something is installed here
+    --     UnInstalledElements = {""},
+    --     RequireElements = {}, -- {{a and b}, or {c and d and e}, or f}
+    --     -- list of "strings" or {"lists", "of", "strings"}.
+    --     -- one of these must all be enabled for this to be valid.
+    --     ExcludeElements = {},
+    --     -- same but for exclusion.
+    --     Integral = false, -- cannot be removed
+    --     Category = "", -- single or {"list", "of", "values"}
+    --     InstallSound = "",
+    --     Bone = "",
+    --     Pos = Vector(0, 0, 0),
+    --     Ang = Angle(0, 0, 0),
+    --     CorrectiveAng = Angle(0, 0, 0), -- sometimes, the autosolver needs a little help. Try (-1, -1, 0)
+    --     Scale = 1,
+    --     Icon_Offset = Vector(0, 0, 0),
+    --     KeepBaseIrons = false,
+    --     ExtraSightDistance = 0,
+    --     Installed = nil,
+    --     MergeSlots = {}, // merge this slot with another
+    --     SubAttachments = {
+    --         {
+    --             Installed = "att_with_sub_atts",
+    --             SubAttachments = {
+    --                 {
+    --                     Installed = "another_attachment",
+    --                     SubAttachments = {
+    --                         {
+    --                             Installed = "even_more_nesting",
+    --                             SubAttachments = {}
+    --                         },
+    --                         {
+    --                             Installed = nil,
+    --                         }
+    --                     }
+    --                 },
+    --                 {
+    --                     Installed = nil
+    --                 },
+    --                 {
+    --                     Installed = "something_or_other",
+    --                     SubAttachments = {}
+    --                 }
+    --             }
+    --         },
+    --         {
+    --             Installed = nil,
+    --             SubAttachments = {}
+    --         }
+    --     }
+    -- }
 }
 
 -- draw

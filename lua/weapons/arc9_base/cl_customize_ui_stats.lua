@@ -27,7 +27,7 @@ function SWEP:CreateHUD_Stats()
             unit = "DMG",
             fifty = 50,
             conv = function(a)
-                local dv = self:GetProcessedValue("DamageMax")
+                local dv = self:GetProcessedValue("DamageMax") * self:GetProcessedValue("Num")
 
                 dv = math.Round(dv, 0)
 
@@ -35,6 +35,15 @@ function SWEP:CreateHUD_Stats()
             end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
+            title = "Projectile Count",
+            fifty = 3,
+            stat = "Num",
+            unit = "",
+            cond = function()
+                return self:GetProcessedValue("Num") <= 1
             end
         },
         {
