@@ -23,6 +23,7 @@ function SWEP:ToggleUBGL(on)
     if on then
         self:EmitSound(self:GetProcessedValue("EnterUBGLSound"), 75, 100, 1, CHAN_AUTO)
         self:PlayAnimation("enter_ubgl", 1, true)
+        self:ExitSights()
     else
         self:EmitSound(self:GetProcessedValue("ExitUBGLSound"), 75, 100, 1, CHAN_AUTO)
         self:PlayAnimation("exit_ubgl", 1, true)

@@ -427,6 +427,8 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     self:SetUBGL(secondary)
 
+    dmg:SetDamageType(self:GetProcessedValue("DamageType") or DMG_BULLET)
+
     local dmgv = self:GetDamageAtRange(range)
 
     self:RunHook("Hook_BulletImpact", {

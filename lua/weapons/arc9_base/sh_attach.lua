@@ -79,6 +79,8 @@ SWEP.LastClipSize = 0
 SWEP.LastAmmo = ""
 
 function SWEP:PostModify(toggleonly)
+    self:InvalidateCache()
+
     if !toggleonly then
         self:CancelReload()
         -- self:PruneAttachments()
@@ -176,8 +178,6 @@ function SWEP:PostModify(toggleonly)
             end
         end
     end
-
-    self:InvalidateCache()
 
     self:SetBaseSettings()
 end
