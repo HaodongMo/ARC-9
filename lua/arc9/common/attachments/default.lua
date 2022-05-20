@@ -109,7 +109,7 @@ ATT.RTScopeColorable = true -- Scope takes color from player settings
 -- Lets you draw more things on to the reticle
 ATT.RTScopeDrawFunc = function(swep, rtsize) end
 
-ATT.ScopeScreenRatio = 1.4 -- Needed for Cheap Scopes
+ATT.ScopeScreenRatio = 0.75 -- Needed for Cheap Scopes
 
 ATT.RTScopeNightVision = true
 ATT.RTScopeNightVisionMonochrome = true

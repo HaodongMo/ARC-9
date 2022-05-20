@@ -83,7 +83,7 @@ function SWEP:GetSmoothedFOVMag()
     if self:GetInSights() then
         local target = self:GetMagnification()
         local sightdelta = self:GetSightAmount()
-        
+
         if self:GetInSights() then
             sightdelta = math.ease.OutQuart(sightdelta)
         else
