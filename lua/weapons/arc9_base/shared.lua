@@ -206,6 +206,7 @@ SWEP.ShouldDropMagEmpty = true
 SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.
 SWEP.DropMagazineSounds = {} -- Table of sounds a dropped magazine should play.
 SWEP.DropMagazineAmount = 1 -- Amount of mags to drop.
+SWEP.DropMagazineSkin = 0 -- Model skin of mag.
 SWEP.DropMagazineTime = 0.25
 
 -------------------------- FIREMODES
