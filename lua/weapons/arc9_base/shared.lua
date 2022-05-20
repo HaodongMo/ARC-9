@@ -1120,17 +1120,17 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Entity", 0, "Holster_Entity")
     self:NetworkVar("Entity", 1, "LungeEntity")
 
-
     self:SetMultiSight(1)
-    self:SetFiremode(1)
-    self:SetNthReload(0)
-    self:SetNthShot(0)
     self:SetLastWasSprinting(false)
     self:SetEnterBipodTime(0)
     self:SetBreath(100)
     self:SetOutOfBreath(false)
-    self:SetHideBoneIndex(0)
-    self:SetUBGL(false)
+    self:SetFiremode(1)
+
+    self:SetRecoilUp(0)
+    self:SetRecoilSide(0)
+
+    self:SetLastRecoilTime(0)
 end
 
 function SWEP:SecondaryAttack()

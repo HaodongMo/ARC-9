@@ -23,7 +23,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
             local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
             local srupmult = self:GetProcessedValue("RecoilUp") * (self:GetProcessedValue("EFTRecoilUpMult") or 50)
             local srsidemult = self:GetProcessedValue("RecoilSide") * (self:GetProcessedValue("EFTRecoilSideMult") or 2)
-            
+
             local firstrec = self:GetProcessedValue("FirstShootRecoilUp")
 
             if firstrec and self:GetBurstCount() == 0 then
