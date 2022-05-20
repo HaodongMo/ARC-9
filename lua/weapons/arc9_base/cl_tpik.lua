@@ -109,8 +109,6 @@ function SWEP:DoTPIK()
     local ply_r_ulna_index = ply:LookupBone("ValveBiped.Bip01_R_Ulna") or ply:LookupBone("HumanRForearm2")
     local ply_r_wrist_index = ply:LookupBone("ValveBiped.Bip01_R_Wrist") or ply:LookupBone("HumanRForearm3")
 
-    local ply_head_index = ply:LookupBone("ValveBiped.Bip01_Head1")
-
     if !ply_l_shoulder_index then return end
     if !ply_r_shoulder_index then return end
     if !ply_l_elbow_index then return end
@@ -118,13 +116,9 @@ function SWEP:DoTPIK()
     if !ply_l_hand_index then return end
     if !ply_r_hand_index then return end
 
-    if !ply_head_index then return end
-
     local ply_r_shoulder_matrix = ply:GetBoneMatrix(ply_r_shoulder_index)
     local ply_r_elbow_matrix = ply:GetBoneMatrix(ply_r_elbow_index)
     local ply_r_hand_matrix = ply:GetBoneMatrix(ply_r_hand_index)
-
-    local ply_head_matrix = ply:GetBoneMatrix(ply_head_index)
 
     local r_upperarm_length = 12
     local r_forearm_length = 12
