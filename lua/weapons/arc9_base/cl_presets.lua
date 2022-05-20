@@ -226,7 +226,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     -- mdl:SetupBones()
     -- mdl:InvalidateBoneCache()
 
-    render.MaterialOverride(Material("model_color"))
+    render.MaterialOverride(Material("models/shiny"))
     render.OverrideColorWriteEnable(true, false)
     -- self:GetVM():DrawModel()
     self:DrawCustomModel(true, pos, ang)
@@ -234,7 +234,7 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.BlurRenderTarget(cammat, 10, 10, 1)
 
-    render.MaterialOverride(Material("model_color"))
+    render.MaterialOverride(Material("models/shiny"))
     self:DrawCustomModel(true, pos, ang)
     render.MaterialOverride()
 
