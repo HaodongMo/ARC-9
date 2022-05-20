@@ -876,7 +876,7 @@ function ARC9.DrawHUD()
         if capabilities.UBGL then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
-                glyph2 = ARC9.GetBindKey("+attack2"),
+                glyph2 = ARC9.GetBindKey("+reload"),
                 action = "Toggle Weapon"
             })
         end
