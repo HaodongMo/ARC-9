@@ -1131,6 +1131,16 @@ function SWEP:SetupDataTables()
     self:SetRecoilSide(0)
 
     self:SetLastRecoilTime(0)
+
+    self:SetAnimLockTime(0)
+    self:SetNextPrimaryFire(0)
+    self:SetNextSecondaryFire(0)
+    self:SetNextIdle(0)
+    self:SetRecoilAmount(0)
+    self:SetLastMeleeTime(0)
+    self:SetEnterBipodTime(0)
+    self:SetFinishFiremodeAnimTime(0)
+    self:SetReloadFinishTime(0)
 end
 
 function SWEP:SecondaryAttack()
