@@ -969,6 +969,9 @@ SWEP.Animations = {
     -- }
 }
 
+SWEP.SuppressDefaultSuffixes = false -- Animations won't automatically play _iron, _empty, etc. versions of animations
+SWEP.SuppressDefaultAnimations = false -- Animations won't automatically generated based on sequences defined in QC
+
 --[[
     FOV anim settings
         for use in FOV_FuncStart, FOV_FuncEnd

@@ -1,34 +1,38 @@
 function SWEP:TranslateAnimation(seq)
-    if self:GetInSights() and self:HasAnimation(seq .. "_iron") then
-        seq = seq .. "_iron"
-    end
+    local sds = self:GetProcessedValue("SuppressDefaultSuffixes")
 
-    if self:GetInSights() and self:HasAnimation(seq .. "_sights") then
-        seq = seq .. "_sights"
-    end
+    if !sds then
+        if self:GetInSights() and self:HasAnimation(seq .. "_iron") then
+            seq = seq .. "_iron"
+        end
 
-    if self:GetBlindFire() and self:GetBlindFireDirection() < 0 and self:HasAnimation(seq .. "_blindfire_left") then
-        seq = seq .. "_blindfire_left"
-    end
+        if self:GetInSights() and self:HasAnimation(seq .. "_sights") then
+            seq = seq .. "_sights"
+        end
 
-    if self:GetBlindFire() and self:GetBlindFireDirection() < 0 and self:HasAnimation(seq .. "_blindfire_right") then
-        seq = seq .. "_blindfire_right"
-    end
+        if self:GetBlindFire() and self:GetBlindFireDirection() < 0 and self:HasAnimation(seq .. "_blindfire_left") then
+            seq = seq .. "_blindfire_left"
+        end
 
-    if self:GetBlindFire() and self:HasAnimation(seq .. "_blindfire") then
-        seq = seq .. "_blindfire"
-    end
+        if self:GetBlindFire() and self:GetBlindFireDirection() < 0 and self:HasAnimation(seq .. "_blindfire_right") then
+            seq = seq .. "_blindfire_right"
+        end
 
-    if self:GetBipod() and self:HasAnimation(seq .. "_bipod") then
-        seq = seq .. "_bipod"
-    end
+        if self:GetBlindFire() and self:HasAnimation(seq .. "_blindfire") then
+            seq = seq .. "_blindfire"
+        end
 
-    if self:GetSprintAmount() > 0 and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
-        seq = seq .. "_sprint"
-    end
+        if self:GetBipod() and self:HasAnimation(seq .. "_bipod") then
+            seq = seq .. "_bipod"
+        end
 
-    if (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
-        seq = seq .. "_empty"
+        if self:GetSprintAmount() > 0 and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
+            seq = seq .. "_sprint"
+        end
+
+        if (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
+            seq = seq .. "_empty"
+        end
     end
 
     local traq = self:RunHook("Hook_TranslateAnimation", seq) or seq
@@ -70,7 +74,7 @@ function SWEP:GetAnimationEntry(seq)
     if self:HasAnimation(seq) then
         if self.Animations[seq] then
             return self.Animations[seq]
-        else
+        elseif !self:GetProcessedValue("SuppressDefaultAnimations") then
             return {
                 Source = seq,
                 Time = self:GetSequenceTime(seq)
