@@ -123,7 +123,7 @@ local events = {
         months = { [6] = true, [7] = true, [8] = true,  },
         days = alldays,
     },
-    ["April Fools"] = {
+    ["Troll Day"] = {
         months = { [4] = true },
         days = { [1] = true }
     }
