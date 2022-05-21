@@ -101,7 +101,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                     end
                 end
 
-                local scale = parenttbl.Scale or 1
+                local scale =  parenttbl.Scale or 1
 
                 subatts[i].Scale = (subatts[i].Scale or 1) * scale
 
