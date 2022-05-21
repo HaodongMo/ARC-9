@@ -50,9 +50,10 @@ function SWEP:PlayAnimation(anim, mult, lock)
         end)
     end
 
+    local minprogress = animation.MinProgress or 0.8
+    minprogress = math.min(minprogress, 1)
+    
     if animation.RestoreAmmo then
-        local minprogress = animation.MinProgress or 0.5
-        minprogress = math.min(minprogress, 1)
         self:SetTimer(time * mult * minprogress, function()
             self:RestoreClip(animation.RestoreAmmo)
         end)
@@ -71,7 +72,9 @@ function SWEP:PlayAnimation(anim, mult, lock)
     end
 
     if lock then
-        self:SetAnimLockTime(CurTime() + (time * mult))
+        if !animation.FireASAP then minprogress = 1 end
+
+        self:SetAnimLockTime(CurTime() + (time * mult * minprogress))
     else
         self:SetAnimLockTime(CurTime())
     end

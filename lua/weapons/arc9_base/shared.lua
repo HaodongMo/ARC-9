@@ -206,6 +206,7 @@ SWEP.ShouldDropMagEmpty = true
 SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.
 SWEP.DropMagazineSounds = {} -- Table of sounds a dropped magazine should play.
 SWEP.DropMagazineAmount = 1 -- Amount of mags to drop.
+SWEP.DropMagazineSkin = 0 -- Model skin of mag.
 SWEP.DropMagazineTime = 0.25
 
 -------------------------- FIREMODES
@@ -470,6 +471,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_Holster = function(self) return end
 -- SWEP.Hook_GetShootEntData = function(self, table) return end -- Each function should add an entry to the table for shoot ents
 -- SWEP.HookP_NameChange = function(self, name) return name end
+-- SWEP.HookP_DescriptionChange = function(self, desc) return desc end
 
 -------------------------- BLIND FIRE
 
@@ -983,7 +985,8 @@ SWEP.Animations = {
     --         ["selector"] = 1 -- an application might be to change firemodes.
     --     }, -- relevant pose parameters will be set to default values while the animation is playing, so make sure you take that into consideration for animating.
     --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one.
-    --     MinProgress = 0, -- seconds that must pass before the reload is considered done
+    --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
+    --     FireASAP = false, -- allowes to shoot right after clip anim was "done" with MinProgress
     --     RestoreAmmo = 0 -- Restores ammunition to clip
     -- }
 }

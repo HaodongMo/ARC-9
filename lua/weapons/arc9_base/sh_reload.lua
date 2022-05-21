@@ -177,6 +177,7 @@ function SWEP:DropMagazine()
                 mag.ImpactSounds = self:GetProcessedValue("DropMagazineSounds")
                 mag:SetOwner(self:GetOwner())
                 mag:Spawn()
+                mag:SetSkin(self:GetProcessedValue("DropMagazineSkin"))
 
                 local phys = mag:GetPhysicsObject()
 
