@@ -265,7 +265,8 @@ function SWEP:DoPresetCapture(filename, foricon)
     local x = (pr_w - 256) / 2
 
     local data = render.Capture( {
-        format = ARC9.PresetIconFormat,
+        // format = ARC9.PresetIconFormat,
+        format = "png",
         x = x,
         y = 0,
         w = 256,

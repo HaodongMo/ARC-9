@@ -129,6 +129,8 @@ function SWEP:GetFreeSwayAmount()
     if !self:GetOwner():IsPlayer() then return 0 end
     local sway = self:GetProcessedValue("Sway")
 
+    sway = math.Max(sway, 0)
+
     if self:HoldingBreath() then return 0 end
 
     if self:GetOutOfBreath() then
