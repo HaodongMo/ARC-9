@@ -66,9 +66,12 @@ function SWEP:GetMagnification()
 
         if atttbl and atttbl.RTScope then
             -- target = (self:GetOwner():GetFOV() / self:GetRTScopeFOV())
+
             local realfov = self:GetOwner():GetFOV()
             local screenamt = ((ScrW() - ScrH()) / ScrW()) * (atttbl.ScopeScreenRatio or 0.5) * 2
             target = (realfov / self:GetRTScopeFOV()) * screenamt
+
+            target = math.max(target, 1)
         end
     end
 

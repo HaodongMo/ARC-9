@@ -119,7 +119,7 @@ local function goodassbob(self, pos, ang)
 
     offset:Set(vector_origin)
     affset:Set(angle_zero)
-    
+
     local ct = ( (CurTime() * 1.1) % (0.975 * ((1/1.1)+0.1)) )
 
     offset.x = offset.x + math.sin( ct * p * 2 ) * 0.2 * ( spe and -2 or 1 )

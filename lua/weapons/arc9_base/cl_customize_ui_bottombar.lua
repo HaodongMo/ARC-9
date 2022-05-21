@@ -243,7 +243,8 @@ local function enterfolder(self, scroll, slottbl, fname)
 
             if self2:IsHovered() then
                 if !attached then self.CustomizeHints["Select"]  = "Attach" end
-                if attached then self.CustomizeHints["Deselect"] = "Unattach" end
+                -- if attached then self.CustomizeHints["Deselect"] = "Unattach" end
+                if slot.Installed then self.CustomizeHints["Deselect"] = "Unattach" end
             end
 
             if self2:IsHovered() or attached then

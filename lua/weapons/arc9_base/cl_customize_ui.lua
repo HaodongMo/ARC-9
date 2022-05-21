@@ -651,7 +651,6 @@ function SWEP:CreateCustomizeHUD()
                         self.CustomizeHints["Deselect"] = "Unattach"
                     end
                 end
-                
 
                 surface.SetMaterial(mat_circle)
                 surface.SetDrawColor(col)
@@ -969,6 +968,10 @@ end
 function SWEP:DrawCustomizeHUD()
 
     local customize = self:GetCustomize()
+
+    if self.CustomizeHUD and !IsValid(self.CustomizeHUD) then
+        self:RemoveCustomizeHUD()
+    end
 
     if customize and !self.CustomizeHUD then
         self:CreateCustomizeHUD()
