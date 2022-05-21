@@ -3,13 +3,14 @@ ARC9.FlashlightPile = {}
 
 function ARC9.CollectGarbage()
     local removed = 0
-
+    local kept = 0
     local newpile = {}
 
-    for _, k in pairs(ARC9.CSModelPile) do
+    for _, k in ipairs(ARC9.CSModelPile) do
         if IsValid(k.Weapon) then
-            table.insert(newpile, k)
-
+            -- table.insert(newpile, k)
+            kept = kept + 1
+            newpile[kept] = k
             continue
         end
 
@@ -34,7 +35,7 @@ timer.Create("ARC9 CSModel Garbage Collector", 5, 0, ARC9.CollectGarbage)
 hook.Add("PostDrawEffects", "ARC9_CleanFlashlights", function()
     local newflashlightpile = {}
 
-    for _, k in pairs(ARC9.FlashlightPile) do
+    for _, k in ipairs(ARC9.FlashlightPile) do
         if IsValid(k.Weapon) and k.Weapon == LocalPlayer():GetActiveWeapon() then
             table.insert(newflashlightpile, k)
 

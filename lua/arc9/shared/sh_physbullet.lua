@@ -569,7 +569,11 @@ function ARC9.DrawPhysBullets()
 
         render.SetMaterial(tracer)
 
-        render.DrawBeam(pos, pos + (vec * math.min(i.Vel:Length() * 0.1, math.min(512, i.Travelled - 64))), size * 0.75, 1, 0, col)
+        local vel = i.Vel - LocalPlayer():GetVelocity()
+
+        local tail = (vel:GetNormalized() * math.min(vel:Length() * 0.1, math.min(512, i.Travelled - 64)))
+
+        render.DrawBeam(pos, pos - tail, size * 0.75, 1, 0, col)
 
         -- cam.End3D()
     end

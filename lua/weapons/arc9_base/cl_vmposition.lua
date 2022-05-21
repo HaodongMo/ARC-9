@@ -80,9 +80,9 @@ function SWEP:GetViewModelPosition(pos, ang)
             bgc = string.Explode(" ", bgc)
 
             pos, ang = Vector(bgc[1], bgc[2], bgc[3]), Angle(bgc[4], bgc[5], bgc[6])
-	else
-		return Vector(), Angle()
-	end
+    else
+        return Vector(), Angle()
+    end
     elseif ARC9.Dev(3) then
         pos = self:GetOwner():EyePos()
         ang = self:GetOwner():EyeAngles()

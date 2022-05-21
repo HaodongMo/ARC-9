@@ -28,7 +28,7 @@ function SWEP:Think()
             end
         end
 
-        if self:GetProcessedValue("TriggerDelay") and !self:StillWaiting() then
+        if !self:StillWaiting() and self:GetProcessedValue("TriggerDelay") then
             local check = (game.SinglePlayer() and SERVER or CLIENT and IsFirstTimePredicted())
             if owner:KeyDown(IN_ATTACK) then
                 if check and self:GetTriggerDelay() <= 0 then

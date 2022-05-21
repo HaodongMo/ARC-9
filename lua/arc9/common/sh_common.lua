@@ -202,3 +202,17 @@ ARC9.MOAToAcc = 10 / 360 / 60
 function ARC9.Dev(level)
     return GetConVar("developer"):GetInt() >= level
 end
+
+-- A cheaper, dirtier branchless implementation
+function math.Approach(cur, target, inc)
+    inc = math.abs(inc)
+
+    -- if (cur < target) then
+    --     return math.min(cur + inc, target)
+    -- elseif (cur > target) then
+    --     return math.max(cur - inc, target)
+    -- end
+
+    -- return target
+    return ((cur < target) and math.min(cur + inc, target)) or ((cur > target) and math.max(cur - inc, target)) or target
+end

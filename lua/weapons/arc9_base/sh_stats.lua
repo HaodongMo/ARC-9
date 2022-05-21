@@ -112,7 +112,7 @@ function SWEP:GetAllAffectors()
     local c4 = {}
     for i, v in ipairs(config) do
         local swig = string.Split( v, "\\t" )
-        local c2 = c4[swig[1]]
+        -- local c2 = c4[swig[1]]
         if tonumber(swig[2]) then
             c4[swig[1]] = tonumber(swig[2])
         elseif swig[2] == "true" or swig[2] == "false" then
@@ -158,6 +158,9 @@ function SWEP:GetProcessedValue(val, base)
 
     local stat = self:GetValue(val, base)
 
+    local ubgl = self:GetUBGL()
+    local owner = self:GetOwner()
+
     -- if true then return stat end
 
     if self:GetJammed() and val == "Malfunction" then
@@ -172,12 +175,12 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "True")
     end
 
-    if self:GetOwner():IsValid() and !self:GetOwner():IsNPC() then
-        if !self:GetOwner():OnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP then
+    if owner:IsValid() and !owner:IsNPC() then
+        if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then
             stat = self:GetValue(val, stat, "MidAir")
         end
 
-        if self:GetOwner():Crouching() and self:GetOwner():OnGround() then
+        if owner:Crouching() and owner:OnGround() then
             stat = self:GetValue(val, stat, "Crouch")
         end
     end
@@ -190,11 +193,11 @@ function SWEP:GetProcessedValue(val, base)
         stat = self:GetValue(val, stat, "Empty")
     end
 
-    if !self:GetUBGL() and self:GetValue("Silencer") then
+    if !ubgl and self:GetValue("Silencer") then
         stat = self:GetValue(val, stat, "Silenced")
     end
 
-    if self:GetUBGL() then
+    if ubgl then
         stat = self:GetValue(val, stat, "UBGL")
 
         if self:Clip2() == 0 then
@@ -202,13 +205,13 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    if self:GetNthShot() % 2 == 0 then
+    if bit.band(self:GetNthShot(), 1) == 0 then
         stat = self:GetValue(val, stat, "EvenShot")
     else
         stat = self:GetValue(val, stat, "OddShot")
     end
 
-    if self:GetNthReload() % 2 == 0  then
+    if bit.band(self:GetNthReload(), 1) == 0  then
         stat = self:GetValue(val, stat, "EvenReload")
     else
         stat = self:GetValue(val, stat, "OddReload")
@@ -289,10 +292,10 @@ function SWEP:GetProcessedValue(val, base)
     end
 
     if !self.HasNoAffectors[val .. "Move"] then
-        if self:GetOwner():IsValid() then
+        if owner:IsValid() then
             local spd = pv_move
             if game.SinglePlayer() or pvtick != UnPredictedCurTime() then
-                spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
+                spd = math.min(owner:GetAbsVelocity():Length(), 250)
 
                 spd = spd / 250
 
@@ -324,7 +327,7 @@ function SWEP:GetValue(val, base, condition, amount)
         stat = self:GetTable()[val]
     end
 
-    if self.HasNoAffectors[val .. condition] == true then
+    if (self.HasNoAffectors[val] or {})[condition] == true then
         return stat
     end
 
@@ -334,8 +337,9 @@ function SWEP:GetValue(val, base, condition, amount)
         stat.BaseClass = nil
     end
 
-    if self.StatCache[tostring(base) .. val .. condition] != nil then
-        stat = self.StatCache[tostring(base) .. val .. condition]
+    if ((self.StatCache[tostring(base)] or {})[val] or {})[condition] != nil then
+        -- stat = self.StatCache[tostring(base) .. val .. condition]
+        stat = ((self.StatCache[tostring(base)] or {})[val] or {})[condition]
 
         local oldstat = stat
         stat = self:RunHook(val .. "Hook" .. condition, stat)
@@ -407,7 +411,10 @@ function SWEP:GetValue(val, base, condition, amount)
 
     end
 
-    self.StatCache[tostring(base) .. val .. condition] = stat
+    self.StatCache[tostring(base)] = self.StatCache[tostring(base)] or {}
+    self.StatCache[tostring(base)][val] = self.StatCache[tostring(base)][val] or {}
+    self.StatCache[tostring(base)][val][condition] = stat
+    -- self.StatCache[tostring(base) .. val .. condition] = stat
 
     local newstat, any = self:RunHook(val .. "Hook" .. condition, stat)
 
@@ -415,7 +422,8 @@ function SWEP:GetValue(val, base, condition, amount)
 
     if any then unaffected = false end
 
-    self.HasNoAffectors[val .. condition] = unaffected
+    self.HasNoAffectors[val] = {}
+    self.HasNoAffectors[val][condition] = unaffected
 
     if istable(stat) then
         stat.BaseClass = nil

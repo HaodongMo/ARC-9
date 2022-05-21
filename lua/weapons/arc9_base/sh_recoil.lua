@@ -1,8 +1,10 @@
 function SWEP:ThinkRecoil()
+    local rdr = self:GetProcessedValue("RecoilDissipationRate")
+
     if (self:GetLastRecoilTime() + self:GetProcessedValue("RecoilResetTime")) < CurTime() then
         local rec = self:GetRecoilAmount()
 
-        rec = rec - (FrameTime() * self:GetProcessedValue("RecoilDissipationRate"))
+        rec = rec - (FrameTime() * rdr)
 
         self:SetRecoilAmount(math.max(rec, 0))
     end
@@ -11,8 +13,8 @@ function SWEP:ThinkRecoil()
     local rs = self:GetRecoilSide()
 
     if math.abs(ru) > 0 or math.abs(rs) > 0 then
-        local new_ru = ru - (FrameTime() * self:GetRecoilUp() * self:GetProcessedValue("RecoilDissipationRate"))
-        local new_rs = rs - (FrameTime() * self:GetRecoilSide() * self:GetProcessedValue("RecoilDissipationRate"))
+        local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
+        local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
 
         self:SetRecoilUp(new_ru)
         self:SetRecoilSide(new_rs)
