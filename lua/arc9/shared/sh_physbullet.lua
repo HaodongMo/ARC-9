@@ -568,6 +568,7 @@ function ARC9.DrawPhysBullets()
         dot = math.Clamp(((dot * dot) - 0.75) * 4, 0, 1)
 
         headsize = headsize * dot
+        size = size * (1 - dot)
 
         -- cam.Start3D()
 

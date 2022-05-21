@@ -455,6 +455,18 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     dmgv = dmgv * dmgbodymult
 
+    if tr.HitGroup == HITGROUP_HEAD then
+        dmgv = dmgv * self:GetProcessedValue("HeadshotDamage")
+    elseif tr.HitGroup == HITGROUP_CHEST then
+        dmgv = dmgv * self:GetProcessedValue("ChestDamage")
+    elseif tr.HitGroup == HITGROUP_STOMACH then
+        dmgv = dmgv * self:GetProcessedValue("StomachDamage")
+    elseif tr.HitGroup == HITGROUP_LEFTARM or tr.HitGroup == HITGROUP_RIGHTARM then
+        dmgv = dmgv * self:GetProcessedValue("ArmDamage")
+    elseif tr.HitGroup == HITGROUP_LEFTLEG or tr.HitGroup == HITGROUP_RIGHTLEG then
+        dmgv = dmgv * self:GetProcessedValue("LegDamage")
+    end
+
     local pendelta = penleft / self:GetProcessedValue("Penetration")
 
     pendelta = math.Clamp(pendelta, 0.1, 1)
