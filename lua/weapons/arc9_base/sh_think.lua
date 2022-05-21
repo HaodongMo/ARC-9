@@ -1,6 +1,9 @@
 function SWEP:Think()
     local owner = self:GetOwner()
 
+    if !IsValid(owner) then return end
+    if self:GetOwner():IsNPC() then return end
+
     if !self.NotAWeapon then
 
         if owner:KeyReleased(IN_ATTACK) or (self:GetUBGL() and owner:KeyReleased(IN_ATTACK2)) then
