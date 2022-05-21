@@ -557,7 +557,17 @@ function ARC9.DrawPhysBullets()
 
         local headsize = size
 
-        headsize = headsize * math.min(EyePos():DistToSqr(pos) / math.pow(5000, 2), 2.5)
+        headsize = headsize * math.min(EyePos():DistToSqr(pos) / math.pow(2500, 2), 1)
+
+        local vel = i.Vel - LocalPlayer():GetVelocity()
+
+        local dot = EyeAngles():Forward():Dot(vel:GetNormalized())
+
+        dot = math.abs(dot)
+
+        dot = math.Clamp(((dot * dot) - 0.75) * 4, 0, 1)
+
+        headsize = headsize * dot
 
         -- cam.Start3D()
 
@@ -568,8 +578,6 @@ function ARC9.DrawPhysBullets()
         render.DrawSprite(pos, headsize, headsize, col)
 
         render.SetMaterial(tracer)
-
-        local vel = i.Vel - LocalPlayer():GetVelocity()
 
         local tail = (vel:GetNormalized() * math.min(vel:Length() * 0.1, math.min(512, i.Travelled - 64)))
 

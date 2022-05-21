@@ -679,6 +679,7 @@ c1 = {
     ["Bash"] = true,
     ["Overheat"] = true,
     ["Malfunction"] = true,
+    ["MalfunctionMeanShotsToFail"] = true,
     ["Bipod"] = true,
     ["NoFlash"] = true,
     ["BulletGuidance"] = true,
@@ -690,6 +691,13 @@ c1 = {
     ["BlindFireLeft"] = true,
     ["BlindFireRight"] = true,
     ["PushBackForce"] = true,
+
+    ["HoldBreathTime"] = true,
+    ["RestoreBreathTime"] = true,
+    ["SlamFire"] = true,
+    ["TriggerDelay"] = true,
+    ["TriggerDelayTime"] = true,
+    ["TriggerDelayRepeat"] = true
 }
 
 c2 = {
