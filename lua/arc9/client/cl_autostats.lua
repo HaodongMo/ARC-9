@@ -84,7 +84,12 @@ ARC9.AutoStatsMains = {
     ["BulletGuidance"] = {false, true},
     ["BulletGuidanceAmount"] = {false, false},
     ["ExplosionDamage"] = {false, false},
-    ["ExplosionRadius"] = {false, false}
+    ["ExplosionRadius"] = {false, false},
+    ["HeadshotDamage"] = {false, false},
+    ["ChestDamage"] = {false, false},
+    ["StomachDamage"] = {false, false},
+    ["ArmDamage"] = {false, false},
+    ["LegDamage"] = {false, false},
 }
 
 ARC9.AutoStatsOperations = {

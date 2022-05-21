@@ -697,7 +697,12 @@ c1 = {
     ["SlamFire"] = true,
     ["TriggerDelay"] = true,
     ["TriggerDelayTime"] = true,
-    ["TriggerDelayRepeat"] = true
+    ["TriggerDelayRepeat"] = true,
+    ["HeadshotDamage"] = true,
+    ["ChestDamage"] = true,
+    ["StomachDamage"] = true,
+    ["ArmDamage"] = true,
+    ["LegDamage"] = true,
 }
 
 c2 = {
