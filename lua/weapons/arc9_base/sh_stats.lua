@@ -327,7 +327,7 @@ function SWEP:GetValue(val, base, condition, amount)
         stat = self:GetTable()[val]
     end
 
-    if (self.HasNoAffectors[val] or {})[condition] == true then
+    if self.HasNoAffectors[val .. condition] == true then
         return stat
     end
 
@@ -337,9 +337,9 @@ function SWEP:GetValue(val, base, condition, amount)
         stat.BaseClass = nil
     end
 
-    if ((self.StatCache[tostring(base)] or {})[val] or {})[condition] != nil then
+    if self.StatCache[tostring(base) .. val .. condition] != nil then
         -- stat = self.StatCache[tostring(base) .. val .. condition]
-        stat = ((self.StatCache[tostring(base)] or {})[val] or {})[condition]
+        stat = self.StatCache[tostring(base) .. val .. condition]
 
         local oldstat = stat
         stat = self:RunHook(val .. "Hook" .. condition, stat)
@@ -411,9 +411,7 @@ function SWEP:GetValue(val, base, condition, amount)
 
     end
 
-    self.StatCache[tostring(base)] = self.StatCache[tostring(base)] or {}
-    self.StatCache[tostring(base)][val] = self.StatCache[tostring(base)][val] or {}
-    self.StatCache[tostring(base)][val][condition] = stat
+    self.StatCache[tostring(base) .. val .. condition] = stat
     -- self.StatCache[tostring(base) .. val .. condition] = stat
 
     local newstat, any = self:RunHook(val .. "Hook" .. condition, stat)
@@ -422,8 +420,7 @@ function SWEP:GetValue(val, base, condition, amount)
 
     if any then unaffected = false end
 
-    self.HasNoAffectors[val] = {}
-    self.HasNoAffectors[val][condition] = unaffected
+    self.HasNoAffectors[val .. condition] = unaffected
 
     if istable(stat) then
         stat.BaseClass = nil
