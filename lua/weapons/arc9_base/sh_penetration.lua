@@ -46,7 +46,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     local trent = tr.Entity
 
     local penmult     = ARC9.PenTable[tr.MatType] or 1
-    local pentracelen = math.max(penleft * penmult / 8, 1)
+    // local pentracelen = math.max(penleft * penmult / 8, 1)
     local curr_ent    = trent
 
     if self:GetRicochetChance(tr) > math.random(0, 100) then
@@ -81,32 +81,56 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 
     local td  = {}
     td.start  = endpos
-    td.endpos = endpos + (dir * pentracelen)
+    td.endpos = endpos + (dir * 520000)
     td.mask   = MASK_SHOT
+
+    if !tr.HitWorld then
+        td.filter = tr.Entity
+    else
+        td.start = endpos + (dir * 1)
+    end
 
     local ptr = util.TraceLine(td)
 
-    local ptrent = ptr.Entity
+    // Penetrate through to whatever the next thing is
 
-    while !skip and penleft > 0 and IsPenetrating(ptr, ptrent) and ptr.Fraction < 1 and ptrent == curr_ent do
-        penleft = penleft - (pentracelen * penmult)
+    local ntr = util.TraceLine({
+        start = ptr.HitPos,
+        endpos = endpos,
+        mask = MASK_SHOT
+    })
 
-        td.start  = endpos
-        td.endpos = endpos + (dir * pentracelen)
-        td.mask   = MASK_SHOT
+    // Go backwards to find out where this thing ends
 
-        ptr = util.TraceLine(td)
+    debugoverlay.Line(endpos, ntr.HitPos, 10, Color(255, 0, 0), true)
 
-        if ARC9.Dev(2) then
-            local pdeltap = penleft / self:GetValue("Penetration")
-            local colorlr = Lerp(pdeltap, 0, 255)
+    local dist = (endpos - ntr.HitPos):Length()
+    endpos = ntr.HitPos
 
-            debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
-        end
+    dist = dist * penmult
 
-        endpos = endpos + (dir * pentracelen)
-        range = range + pentracelen
-    end
+    penleft = penleft - dist
+    range = range + dist
+
+    // while !skip and penleft > 0 and IsPenetrating(ptr, ptrent) and ptr.Fraction < 1 and ptrent == curr_ent do
+    //     penleft = penleft - (pentracelen * penmult)
+
+    //     td.start  = endpos
+    //     td.endpos = endpos + (dir * pentracelen)
+    //     td.mask   = MASK_SHOT
+
+    //     ptr = util.TraceLine(td)
+
+    //     if ARC9.Dev(2) then
+    //         local pdeltap = penleft / self:GetValue("Penetration")
+    //         local colorlr = Lerp(pdeltap, 0, 255)
+
+    //         debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
+    //     end
+
+    //     endpos = endpos + (dir * pentracelen)
+    //     range = range + pentracelen
+    // end
 
     if penleft > 0 then
         if (dir:Length() == 0) then return end
