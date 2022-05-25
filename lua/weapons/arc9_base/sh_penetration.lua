@@ -89,7 +89,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     // print(SURF_HITBOX)
 
     // if bit.band(!tr.SurfaceFlags or 0, SURF_HITBOX) == 0 then
-        td.start = endpos + dir
+    td.start = endpos + (dir * 0.25)
     // end
 
     local ptr = util.TraceLine(td)
