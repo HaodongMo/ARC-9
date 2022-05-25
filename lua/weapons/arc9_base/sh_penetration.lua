@@ -71,7 +71,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         skip = true
     end
 
-    if !tr.HitWorld then penmult = penmult * 0.5 end
+    // if !tr.HitWorld then penmult = penmult * 0.5 end
 
     if trent.mmRHAe then penmult = trent.mmRHAe end
 
@@ -84,11 +84,13 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     td.endpos = endpos + (dir * 520000)
     td.mask   = MASK_SHOT
 
-    if !tr.HitWorld then
-        td.filter = tr.Entity
-    else
-        td.start = endpos + (dir * 1)
-    end
+    td.filter = tr.Entity
+
+    // print(SURF_HITBOX)
+
+    // if bit.band(!tr.SurfaceFlags or 0, SURF_HITBOX) == 0 then
+        td.start = endpos + dir
+    // end
 
     local ptr = util.TraceLine(td)
 
@@ -105,12 +107,11 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     debugoverlay.Line(endpos, ntr.HitPos, 10, Color(255, 0, 0), true)
 
     local dist = (endpos - ntr.HitPos):Length()
+    local amt = dist * penmult
     endpos = ntr.HitPos
 
-    dist = dist * penmult
-
-    penleft = penleft - dist
-    range = range + dist
+    penleft = penleft - amt
+    range = range + amt
 
     // while !skip and penleft > 0 and IsPenetrating(ptr, ptrent) and ptr.Fraction < 1 and ptrent == curr_ent do
     //     penleft = penleft - (pentracelen * penmult)
@@ -170,9 +171,9 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             Force = 0,
             Tracer = 0,
             Num = 1,
-            Distance = 8,
+            Distance = (ptr.HitPos - ntr.HitPos):Length() + 1,
             Dir = -dir,
-            Src = endpos,
+            Src = ptr.HitPos - (dir * 1),
         })
     end
 end
