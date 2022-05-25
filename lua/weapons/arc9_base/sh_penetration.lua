@@ -96,6 +96,11 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 
     // Penetrate through to whatever the next thing is
 
+    if !ptr.Hit then return end
+    if ptr.HitSky then return end
+
+    // If we'd shoot through to the sky, then we don't really care if we can penetrate or not.
+
     local ntr = util.TraceLine({
         start = ptr.HitPos,
         endpos = endpos,
