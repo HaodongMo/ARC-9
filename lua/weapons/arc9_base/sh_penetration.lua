@@ -121,7 +121,10 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             td.start  = endpos
             td.endpos = endpos + (dir * 520000)
             td.mask   = MASK_SHOT
-            td.filter = tr.Entity
+
+            if !tr.HitWorld then
+                td.filter = tr.Entity
+            end
 
             td.start = endpos + (dir * 0.25)
 
