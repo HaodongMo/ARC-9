@@ -4,6 +4,57 @@ SWEP.Spawnable = false
 SWEP.Category = "ARC-9"
 SWEP.AdminOnly = false
 
+-- IMPORTANT:
+-- ARC9 uses a procedural stat system.
+-- You can create a huge number of weapon stats with this system.
+-- Simply chain a Base with an optional Modifier and then optionally a Condition.
+-- Base stats are all laid out in this file.
+-- Modifiers: Add, Mult, Override, Hook. If no modifier is specified, it will default to an override.
+-- Conditions:
+-- True (Enabled when TrueNames is active)
+-- Silenced
+-- UBGL (Enabled when UBGL is active)
+-- MidAir
+-- Crouch
+-- FirstShot
+-- Empty
+-- EvenShot
+-- OddShot
+-- EvenReload
+-- OddReload
+-- BlindFire
+-- Sights
+-- HipFire
+-- Shooting (Enabled when constantly shooting)
+-- Recoil (Scales with long bursts)
+-- Move (Scaled with move speed)
+
+-- Example:
+-- VisualRecoil (Base), Mult (Modifier), Sights (Condition)
+-- Usage:
+-- SWEP.VisualRecoilMultSights = 0.1
+-- This stat will reduce the visual recoil when in sights by 90%.
+
+-- Another example:
+-- DamageMax (Base) FirstShot (Condition)
+-- Usage:
+-- SWEP.DamageMaxFirstShot = 100
+-- This will give the gun a close-range damage of 100 for the first shot in a burst.
+
+-- One more example:
+-- DamageMin (Base) Mult (Modifier)
+-- Usage:
+-- SWEP.DamageMinMult = 0.9
+-- This will reduce the long range damage of the gun by 10%.
+
+-- The following are INCORRECT:
+-- VisualRecoilMultSightsMult (VisualRecoil is the base, not VisualRecoilMult. Also, modifier always comes before condition.)
+-- SpreadMoveMult (Modifier comes between base and condition)
+-- MultSpeed (Base is always first)
+-- SpeedSightsMult (Condition is always last)
+-- ReloadTimeAddMult (One modifier max, per stat)
+
+-- For more information, see README.md
 
 -- Any string can be replaced with a localized string by using # in front of it.
 -- Get the appropriate localized string for the weapon with #WEAPON_NAME_VARIABLE.
@@ -322,6 +373,7 @@ SWEP.VisualRecoilRoll = 0.23 -- Roll tilt for visual recoil.
 SWEP.VisualRecoilCenter = Vector(2, 4, 2) -- The "axis" of visual recoil. Where your hand is.
 
 SWEP.VisualRecoilPunch = 1.5 -- How far back visual recoil moves the gun.
+SWEP.VisualRecoilPunchMultSights = 0.1
 
 -- SWEP.VisualRecoilMult = 1
 -- SWEP.VisualRecoilADSMult = 0.1
@@ -330,7 +382,6 @@ SWEP.VisualRecoilPunch = 1.5 -- How far back visual recoil moves the gun.
 SWEP.VisualRecoil = 1
 SWEP.VisualRecoilMult = 1
 SWEP.VisualRecoilMultSights = 0.1
-SWEP.VisualRecoilPunchMultSights = 0.1
 
 SWEP.VisualRecoilHipFire = true
 
