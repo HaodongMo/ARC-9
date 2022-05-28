@@ -333,6 +333,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     if curvedcustomizedelta > 0 then
         if !self.CustomizeNoRotate then
             self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
+            self.CustomizeYaw = math.NormalizeAngle(self.CustomizeYaw)
             -- this needs to be better
             -- its more like proof of concept
             -- probably this can be better if it based on selected slot offset not random numbers
@@ -349,7 +350,10 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         if !self.CustomizeNoRotate then
             ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
-            -- ang:RotateAroundAxis(EyeAngles():Forward(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
+            
+            if GetConVar("arc9_cust_roll_unlock"):GetBool() then
+                ang:RotateAroundAxis(EyeAngles():Right(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
+            end
         end
     end
 
@@ -422,7 +426,7 @@ end
 
 function SWEP:GetViewModelFOV()
     -- local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
-    local target = (self:GetProcessedValue("ViewModelFOVBase") or self:GetOwner():GetFOV()) + GetConVar("arc9_fov"):GetInt()
+    local target = (self:GetProcessedValue("ViewModelFOVBase") or self:GetOwner():GetFOV()) + (self:GetCustomize() and 0 or GetConVar("arc9_fov"):GetInt())
 
     if self:GetInSights() then
         -- target = Lerp(self:GetSightAmount(), target, sightedtarget)

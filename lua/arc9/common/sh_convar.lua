@@ -206,6 +206,11 @@ local conVars = {
         client = true
     },
     {
+        name = "cust_roll_unlock",
+        default = "0",
+        client = true
+    },
+    {
         name = "hud_always",
         default = "0"
     },    

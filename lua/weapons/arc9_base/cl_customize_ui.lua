@@ -239,7 +239,7 @@ hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
             wpn.CustomizePanY = wpn.CustomizePanY + (p1y * 5 * RealFrameTime())
         else
             wpn.CustomizePitch = wpn.CustomizePitch - (p1x * 45 * RealFrameTime())
-            wpn.CustomizeYaw   = wpn.CustomizeYaw   + (p1x * 1 * RealFrameTime())
+            wpn.CustomizeYaw   = wpn.CustomizeYaw   + (p1y * 1 * RealFrameTime())
         end
 
         gui.InternalMouseWheeled(setscroll)
