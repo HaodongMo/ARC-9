@@ -383,7 +383,7 @@ SWEP.VisualRecoil = 1
 SWEP.VisualRecoilMult = 1
 SWEP.VisualRecoilMultSights = 0.1
 
-SWEP.VisualRecoilHipFire = true
+SWEP.VisualRecoilHipFire = 1
 
 SWEP.VisualRecoilDampingConst = nil -- How spring will be visual recoil, 120 is default
 SWEP.VisualRecoilSpringMagnitude = 1
