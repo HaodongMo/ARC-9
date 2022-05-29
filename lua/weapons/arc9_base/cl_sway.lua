@@ -15,6 +15,7 @@ local lookymult = 1
 
 function SWEP:GetViewModelSway(pos, ang)
     local sightedmult = Lerp(self:GetSightAmount(), 1, 0.25)
+    sightedmult = Lerp(self:Curve(self.CustomizeDelta), sightedmult, 0)
     smootheyeang = LerpAngle(0.05, smootheyeang, EyeAngles() - lasteyeang)
     pos_offset.x = -smootheyeang.x * -0.5 * sightedmult * lookxmult
     pos_offset.y = smootheyeang.y * 0.5 * sightedmult * lookymult

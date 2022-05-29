@@ -263,7 +263,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     end
 
     if curvedcustomizedelta > 0 then
-        local cpos = self:GetProcessedValue("CustomizePos")
+        --[[local cpos = self:GetProcessedValue("CustomizePos")
         local cang = self:GetProcessedValue("CustomizeAng")
 
         extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
@@ -293,7 +293,17 @@ function SWEP:GetViewModelPosition(pos, ang)
         cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom + 10)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
-        offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
+        offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)]]
+
+        if !swagger then
+            swagger = ClientsideModel("models/weapons/arccw/c_ud_glock.mdl")
+            print(swagger, "created")
+        else
+        end
+    elseif curvedcustomizedelta == 0 and swagger and IsValid(swagger) then
+        print(swagger, "destroyed")
+        swagger:Remove()
+        swagger = nil
     end
 
     local ht = self:GetHolsterTime()
@@ -330,40 +340,44 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldang:Right(), extra_offsetang[2])
     ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
 
+    local godpos1 = Vector( 13.203133, -2.294874, -5.605469 )
+
     if curvedcustomizedelta > 0 then
         if !self.CustomizeNoRotate then
             self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
             self.CustomizeYaw = math.NormalizeAngle(self.CustomizeYaw)
-            -- this needs to be better
-            -- its more like proof of concept
-            -- probably this can be better if it based on selected slot offset not random numbers
+        pos:Set(oldpos)
+        ang:Set(oldang)
+        --ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch)
+        ang:RotateAroundAxis(EyeAngles():Right(), self.CustomizeYaw)
 
-            -- local px, py = rotatearound2dpoint(pos.x - 4, pos.y - 15, self.CustomizePitch, pos.x, pos.y)
-            -- i have no fucking ideaaaaa im bad at trigonometry
+        print( pos )
+        local a = swagger:LocalToWorld( godpos1 )
+        --print(self:GetOwner():GetViewModel(0):GetPos(), EyePos())
+        local b = self:GetOwner():GetViewModel(0):LocalToWorld( godpos1 )
 
-            pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-            pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -18) * curvedcustomizedelta ^ 2
-        end
+        --print( b - a )
+        pos:Sub((b - a))
 
-        pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
-        pos = pos + (ang:Forward() * 18) * curvedcustomizedelta ^ 2
+        print( pos )
 
-        if !self.CustomizeNoRotate then
-            ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
-            
-            if GetConVar("arc9_cust_roll_unlock"):GetBool() then
-                ang:RotateAroundAxis(EyeAngles():Right(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
-            end
+        debugoverlay.Cross( a, 4, 0.01, nil, true )
+        debugoverlay.Cross( b, 4, 0.01, Color( 0, 0, 255 ), true )
+        debugoverlay.Line( b, a, 0.01, Color( 255, 0, 0 ), true )
+
+        if swagger then
+            swagger:SetPos(oldpos)
+            swagger:SetAngles(oldang)
         end
     end
 
-    do
-        pos:Add( ang:Up() * math.sin(CurTime() * math.pi) * 0.02 * Lerp(self:GetSightDelta(), 1, 0.05) )
-        pos:Add( ang:Right() * math.sin(CurTime() * math.pi * 0.5) * 0.04 * Lerp(self:GetSightDelta(), 1, 0.05) )
-        ang.x = ang.x + math.pow( math.sin(CurTime() * math.pi * 0.5) * 0.3 * Lerp(self:GetSightDelta(), 1, 0.05), 2 )
-        ang.y = ang.y + ( math.sin(CurTime() * math.pi * 1) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
-        ang.z = ang.z + ( math.sin(CurTime() * math.pi * 0.25) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
-    end
+--    do
+--        pos:Add( ang:Up() * math.sin(CurTime() * math.pi) * 0.02 * Lerp(self:GetSightDelta(), 1, 0.05) )
+--        pos:Add( ang:Right() * math.sin(CurTime() * math.pi * 0.5) * 0.04 * Lerp(self:GetSightDelta(), 1, 0.05) )
+--        ang.x = ang.x + math.pow( math.sin(CurTime() * math.pi * 0.5) * 0.3 * Lerp(self:GetSightDelta(), 1, 0.05), 2 )
+--        ang.y = ang.y + ( math.sin(CurTime() * math.pi * 1) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
+--        ang.z = ang.z + ( math.sin(CurTime() * math.pi * 0.25) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
+--    end
     pos, ang = self:GetViewModelRecoil(pos, ang)
     pos, ang = self:GetViewModelBob(pos, ang)
     pos, ang = self:GetMidAirBob(pos, ang)
