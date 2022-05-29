@@ -343,9 +343,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     local godpos1 = Vector( 13.203133, -2.294874, -5.605469 )
 
     if curvedcustomizedelta > 0 then
-        if !self.CustomizeNoRotate then
-            self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
-            self.CustomizeYaw = math.NormalizeAngle(self.CustomizeYaw)
         pos:Set(oldpos)
         ang:Set(oldang)
         --ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch)
