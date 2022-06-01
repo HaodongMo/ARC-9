@@ -402,9 +402,16 @@ function SWEP:GetViewModelPosition(pos, ang)
     
     local wm = self:GetWM()
 
-    if self:ShouldTPIK() and IsValid(wm) and curvedcustomizedelta == 0 then
-        wm.slottbl.Pos = self.WorldModelOffset.Pos - self.ViewModelPos * Vector(-1, -1, 1)
-        wm.slottbl.Ang = self.WorldModelOffset.Ang + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
+    if IsValid(wm) and curvedcustomizedelta == 0 then
+        if !self:ShouldTPIK() then
+            wm.slottbl.Pos = self.WorldModelOffset.Pos
+            wm.slottbl.Ang = self.WorldModelOffset.Ang
+        else
+            if LocalPlayer() == self:GetOwner() then
+                wm.slottbl.Pos = (self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos) - self.ViewModelPos * Vector(-1, -1, 1)
+                wm.slottbl.Ang = (self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
+            end
+        end
     end
 
     return pos, ang
@@ -426,7 +433,8 @@ end
 
 function SWEP:GetViewModelFOV()
     -- local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
-    local target = (self:GetProcessedValue("ViewModelFOVBase") or self:GetOwner():GetFOV()) + (self:GetCustomize() and 0 or GetConVar("arc9_fov"):GetInt())
+    local owner = self:GetOwner()
+    local target = (self:GetProcessedValue("ViewModelFOVBase") or owner:GetFOV()) + (self:GetCustomize() and 0 or GetConVar("arc9_fov"):GetInt())
 
     if self:GetInSights() then
         -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
@@ -446,7 +454,7 @@ function SWEP:GetViewModelFOV()
         per_act = math.Clamp(per_act, 0, 1)
         local satarget = 0
         satarget = satarget + (mod.amount * per_act)
-        target = target + satarget * ( target / (self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt() ) )
+        target = target + satarget * ( target / (owner:GetFOV() + GetConVar("arc9_fov"):GetInt() ) )
         if mod.time_end < CurTime() then self.FOV_RecoilMods[_] = nil end
     end
 

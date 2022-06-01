@@ -97,8 +97,10 @@ SWEP.MirrorVMWM = false -- Use this to use the viewmodel as a worldmodel.
 SWEP.WorldModelMirror = nil -- Use this to set a lower-quality version of the viewmodel, with the same bone structure, as a worldmodel, to take advantage of MirrorVMWM without having to use the viewmodel.
 SWEP.WorldModelOffset = nil
 -- SWEP.WorldModelOffset = {
---     Pos = Vector(0, 0, 0),
+--     Pos = Vector(0, 0, 0), -- non tpik (while on ground, on npc etc) 
 --     Ang = Angle(0, 0, 0),
+--     TPIKPos = Vector(0, 0, 0), -- arc9_tpik 1, you can make cool poses with it
+--     TPIKAng = Angle(0, 0, 0),
 --     Scale = 1
 -- }
 SWEP.NoTPIK = false
@@ -805,7 +807,8 @@ SWEP.HoldTypeBlindfire = "pistol"
 SWEP.HoldTypeNPC = nil
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
-SWEP.AnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2
+SWEP.AnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- While in TPIK only
+SWEP.NonTPIKAnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- Non TPIK
 SWEP.AnimDraw = false
 SWEP.AnimMelee = ACT_GMOD_GESTURE_MELEE_SHOVE_2HAND
 

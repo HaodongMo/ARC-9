@@ -37,6 +37,12 @@ function SWEP:Reload()
         return
     end
 
+    if CLIENT and !self:ShouldTPIK() then
+        self:DoPlayerAnimationEvent(self:GetProcessedValue("NonTPIKAnimReload"))
+    else
+        self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
+    end
+
     -- self:ScopeToggle(0)
     -- self:ToggleCustomize(false)
 
@@ -63,8 +69,6 @@ function SWEP:Reload()
     anim = self:RunHook("Hook_SelectReloadAnimation", anim) or anim
 
     local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true)
-
-    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
 
     if !self:GetShouldShotgunReload() then
         local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
