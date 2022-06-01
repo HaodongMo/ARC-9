@@ -157,6 +157,7 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     csmodel:SetNoDraw(true)
     csmodel.atttbl = atttbl
     csmodel.slottbl = slottbl
+    csmodel.weapon = self -- for matproxy
 
     if atttbl.DrawFunc then
         csmodel.DrawFunc = atttbl.DrawFunc

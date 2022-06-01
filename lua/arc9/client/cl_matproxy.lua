@@ -76,6 +76,8 @@ matproxy.Add({
     end,
 
     bind = function( self, mat, ent )
+        if IsValid(ent) and IsValid(ent.weapon) then ent = ent.weapon end
+
         if IsValid(ent) and IsValid(ent:GetOwner()) and IsValid(ent:GetOwner():GetActiveWeapon()) then
             local weapon = ent:GetOwner():GetActiveWeapon()
             if weapon and weapon.ARC9 and weapon:GetProcessedValue("Overheat") then
