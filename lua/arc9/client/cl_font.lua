@@ -1,4 +1,5 @@
 local font_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_font")
+local fontaddsize_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_font_addsize")
 
 function ARC9:GetFont()
     local f = font_cvar and font_cvar:GetString()
@@ -29,15 +30,15 @@ local unscaled_sizes_to_make = {
 }
 
 local function generatefonts()
-
     local font = ARC9:GetFont()
     local unscaled_font = ARC9:GetUnscaledFont()
+    local addsize = fontaddsize_cvar:GetInt() or 0
 
     for _, i in pairs(sizes_to_make) do
 
         surface.CreateFont( "ARC9_" .. tostring(i), {
             font = font,
-            size = ScreenScale(i),
+            size = ScreenScale(i+addsize),
             weight = 500,
             antialias = true,
             extended = true, -- Required for non-latin fonts
@@ -45,7 +46,7 @@ local function generatefonts()
 
         surface.CreateFont( "ARC9_" .. tostring(i) .. "_Glow", {
             font = font,
-            size = ScreenScale(i),
+            size = ScreenScale(i+addsize),
             weight = 500,
             antialias = true,
             blursize = ScreenScale(i * 0.2),
@@ -93,18 +94,12 @@ function ARC9.Regen(full)
     end
 end
 
-local lastscrw = ScrW()
-local lastscrh = ScrH()
+concommand.Add("arc9_font_reload", ARC9.Regen)
 
-hook.Add( "Think", "ARC9.Regen", function()
-    if lastscrw != ScrW() or lastscrh != ScrH() then
-        ARC9.Regen(true)
-    end
-
-    lastscrw = ScrW()
-    lastscrh = ScrH()
+hook.Add("OnScreenSizeChanged", "ARC9.Regen", function(oldWidth, oldHeight)
+    ARC9.Regen(true)
 end)
 
-cvars.AddChangeCallback("arc9_font", function(cvar, old, new)
+cvars.AddChangeCallback("arc9_font", function(cvar, old, new) -- Dont work btw https://github.com/Facepunch/garrysmod-issues/issues/3740
     generatefonts()
 end, "reload_fonts")

@@ -61,6 +61,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "font_addsize",
+        default = "0",
+        client = true,
+    },
+    {
         name = "autosave",
         default = "1",
         client = true
