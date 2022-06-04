@@ -73,16 +73,22 @@ SWEP.IndoorTick = 0
 SWEP.IsIndoors = false
 
 local dirs = {
-    Angle(0, -30, 0),
-    Angle(0, 90, 0),
-    Angle(90, -45, 0),
-    Angle(-90, -45, 0),
-    Angle(90, 45, 0),
-    Angle(-90, 45, 0),
-    Angle(180, 0, 0)
+    -- Angle(-90, 90, 0), -- Up         angled by 45 degrees
+    -- Angle(-45, 90, 0), -- Up right
+    -- Angle(-135, 90, 0), -- Up left
+    -- Angle(-135, 0, 0), -- Up front
+    -- Angle(-135, 180, 0), -- Up back
+
+    Angle(-90, 90, 0), -- Up            angled by 15 degrees + diagonal direction
+    Angle(-75, 135, 0), -- Up right
+    Angle(-105, 135, 0), -- Up left
+    Angle(-105, 45, 0), -- Up front
+    Angle(-105, 225, 0), -- Up back
 }
 
 function SWEP:GetIndoor()
+    if !self.ShootSoundIndoor then return false end -- non realism guns!!!
+
     if self.IndoorTick == UnPredictedCurTime() then return self.IsIndoors end
 
     self.IndoorTick = UnPredictedCurTime()
@@ -90,14 +96,20 @@ function SWEP:GetIndoor()
     local isindoors = false
 
     local hits = 0
+    
+    local multlength = 1
 
-    for _, dir in ipairs(dirs) do
-        local tr = util.TraceLine({
+    for i, dir in ipairs(dirs) do
+        local tracetable = {
             start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() + dir:Forward() * 5000,
+            endpos = self:GetOwner():EyePos() + dir:Forward() * 500 * (i == 1 and 1.5 or 1), -- if first trace (up) then multiplicate length by 1.5
             mask = MASK_NPCSOLID_BRUSHONLY
-        })
+        }
 
+        local tr = util.TraceLine(tracetable)
+
+        if ARC9.Dev(2) then debugoverlay.Line(tracetable.start, tracetable.endpos, 3, color_white, true) end
+        
         if tr.Hit and !tr.HitSky then
             hits = hits + 1
         end

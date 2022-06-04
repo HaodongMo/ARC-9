@@ -603,14 +603,19 @@ SWEP.ShootVolumeActual = 1
 SWEP.ShootPitch = 100
 SWEP.ShootPitchVariation = 0.05
 
-SWEP.FirstShootSound = nil
-SWEP.ShootSound = ""
-SWEP.ShootSoundSilenced = ""
-SWEP.FirstShootSoundSilenced = nil
-SWEP.FirstDistantShootSound = nil
-SWEP.DistantShootSound = ""
-SWEP.DistantShootSoundSilenced = nil
-SWEP.FirstDistantShootSoundSilenced = nil
+SWEP.FirstShootSound = nil                      -- First fire
+SWEP.ShootSound = ""                            -- Fire
+SWEP.ShootSoundIndoor = nil                     -- Fire indoors
+SWEP.ShootSoundSilenced = ""                    -- Fire silenced
+SWEP.ShootSoundIndoorSilenced = nil             -- Fire indoors silenced
+SWEP.FirstShootSoundSilenced = nil              -- First fire silenced
+SWEP.FirstDistantShootSound = nil               -- First distant fire
+SWEP.DistantShootSound = ""                     -- Distant fire
+SWEP.DistantShootSoundIndoor = nil              -- Distant fire indoors
+SWEP.DistantShootSoundSilenced = nil            -- Distant fire silenced
+SWEP.DistantShootSoundIndoorSilenced = nil      -- Distant fire indoors silenced
+SWEP.FirstDistantShootSoundSilenced = nil       -- First distant fire silenced
+
 
 SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil
