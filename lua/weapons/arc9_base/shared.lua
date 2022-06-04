@@ -325,7 +325,6 @@ SWEP.RecoilSide = 1 -- Multiplier for vertical recoil
 SWEP.EFTRecoil = nil -- true
 SWEP.EFTRecoilUpMult = nil -- 40-100
 SWEP.EFTRecoilSideMult = nil -- 1-20
-SWEP.FirstShootRecoilUp = 1 -- eft too
 
 -- These values determine how much extra movement is applied to the recoil entirely randomly, like in a circle.
 -- This type of recoil CANNOT be predicted.
@@ -382,8 +381,8 @@ SWEP.VisualRecoilPunchMultSights = 0.1
 -- SWEP.VisualRecoilPunchADSMult = 0.1
 
 SWEP.VisualRecoil = 1
-SWEP.VisualRecoilMult = 1
 SWEP.VisualRecoilMultSights = 0.1
+SWEP.VisualRecoilPositionBump = 1.5
 
 SWEP.VisualRecoilHipFire = 1
 
