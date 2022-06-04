@@ -8,6 +8,7 @@ function SWEP:RollJam()
             self:SetJammed(true)
         end
 
+        self:ExitSights()
         self:PlayAnimation("jam", 1, true)
         self:EmitSound(self:GetProcessedValue("MalfunctionSound"), 75, 100, 1, CHAN_ITEM)
         self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("MalfunctionWait"))
@@ -36,6 +37,7 @@ end
 function SWEP:FixHeat()
     if self:StillWaiting() then return end
 
+    self:ExitSights()
     self:PlayAnimation("fix", self:GetProcessedValue("OverheatTime"), true)
     self:SetJammed(false)
 
