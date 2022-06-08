@@ -5,11 +5,13 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     mult = self:RunHook("Hook_TranslateAnimSpeed", {mult = mult, anim = anim}).Mult or mult
 
-    if !self:HasAnimation(anim) then return end
+    if !self:HasAnimation(anim) then return 0 end
+
+    if self:RunHook("Hook_BlockAnimation", anim) then return 0 end
 
     local vm = self:GetVM()
 
-    if !IsValid(vm) then return end
+    if !IsValid(vm) then return 0 end
 
     local animation = self:GetAnimationEntry(anim)
 
@@ -23,7 +25,7 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     local seq = vm:LookupSequence(source)
 
-    if seq == -1 then return end
+    if seq == -1 then return 0 end
 
     local time = animation.Time or vm:SequenceDuration(seq)
 

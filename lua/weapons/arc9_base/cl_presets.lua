@@ -226,6 +226,9 @@ function SWEP:DoPresetCapture(filename, foricon)
     -- mdl:SetupBones()
     -- mdl:InvalidateBoneCache()
 
+    render.SetBlend(1)
+    render.SetColorModulation(1, 1, 1)
+
     render.MaterialOverride(Material("models/shiny"))
     render.OverrideColorWriteEnable(true, false)
     -- self:GetVM():DrawModel()

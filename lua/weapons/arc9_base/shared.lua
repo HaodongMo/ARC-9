@@ -530,6 +530,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_GetShootEntData = function(self, table) return end -- Each function should add an entry to the table for shoot ents
 -- SWEP.HookP_NameChange = function(self, name) return name end
 -- SWEP.HookP_DescriptionChange = function(self, desc) return desc end
+-- SWEP.Hook_BlockAnimation = function(self, anim) return block end -- Return true to block animation from playing.
 
 -------------------------- BLIND FIRE
 
@@ -1057,6 +1058,8 @@ SWEP.Animations = {
 
 SWEP.SuppressDefaultSuffixes = false -- Animations won't automatically play _iron, _empty, etc. versions of animations
 SWEP.SuppressDefaultAnimations = false -- Animations won't automatically generated based on sequences defined in QC
+SWEP.SuppressEmptySuffix = false -- _empty animations won't automatically trigger.
+SWEP.SuppressSprintSuffix = false -- _sprint animations won't automatically trigger.
 
 --[[
     FOV anim settings

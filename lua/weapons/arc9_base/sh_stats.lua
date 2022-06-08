@@ -227,7 +227,12 @@ function SWEP:GetProcessedValue(val, base)
 
     if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
         if isnumber(stat) then
-            stat = Lerp(self:GetSightAmount(), self:GetValue(val, stat, "HipFire"), self:GetValue(val, stat, "Sights"))
+            local hipfire = self:GetValue(val, stat, "HipFire")
+            local sights = self:GetValue(val, stat, "Sights")
+
+            if isnumber(hipfire) and isnumber(sights) then
+                stat = Lerp(self:GetSightAmount(), hipfire, sights)
+            end
         else
             if self:GetSightAmount() >= 1 then
                 stat = self:GetValue(val, stat, "Sights")
@@ -386,7 +391,7 @@ function SWEP:GetValue(val, base, condition, amount)
                 -- if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
                 --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
                 -- end
-                if isnumber(tbl[val .. "Add" .. condition]) then
+                if type(tbl[val .. "Add" .. condition]) == type(stat) then
                     stat = stat + (tbl[val .. "Add" .. condition] * amount)
                 end
                 unaffected = false
@@ -398,7 +403,7 @@ function SWEP:GetValue(val, base, condition, amount)
                 -- if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
                 --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
                 -- end
-                if isnumber(tbl[val .. "Mult" .. condition]) then
+                if type(tbl[val .. "Mult" .. condition]) == type(stat) then
                     if amount > 1 then
                         stat = stat * (math.pow(tbl[val .. "Mult" .. condition], amount))
                     else
