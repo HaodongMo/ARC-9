@@ -7,7 +7,7 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     if !self:HasAnimation(anim) then return 0 end
 
-    if self:RunHook("Hook_BlockAnimation", anim) then return 0 end
+    if self:RunHook("Hook_BlockAnimation", anim) == true then return 0 end
 
     local vm = self:GetVM()
 
