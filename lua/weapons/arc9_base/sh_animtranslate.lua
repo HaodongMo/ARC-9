@@ -26,11 +26,11 @@ function SWEP:TranslateAnimation(seq)
             seq = seq .. "_bipod"
         end
 
-        if self:GetSprintAmount() > 0 and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
+        if !self:GetProcessedValue("SuppressSprintSuffix") and self:GetSprintAmount() > 0 and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
             seq = seq .. "_sprint"
         end
 
-        if (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
+        if !self:GetProcessedValue("SuppressEmptySuffix") and (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
             seq = seq .. "_empty"
         end
     end
