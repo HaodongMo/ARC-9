@@ -151,6 +151,10 @@ local conVars = {
         replicated = true
     },
     {
+        name = "dev_always_ready",
+        default = "0",
+    },
+    {
         name = "dev_benchgun",
         default = "0",
     },
