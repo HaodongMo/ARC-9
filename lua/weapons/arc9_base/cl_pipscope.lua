@@ -8,16 +8,13 @@ matproxy.Add({
         self.ResultTo = values.resultvar
     end,
     bind = function(self, mat, ent)
-        local ply = LocalPlayer() -- we re on client, right?
+        local ply = LocalPlayer()
+
         if IsValid(ply) then
             local weapon = ply:GetActiveWeapon()
 
             if IsValid(weapon) and weapon.ARC9 then
                 local amt = 1 - weapon:GetSightAmount() / 3
-
-                -- if render.GetHDREnabled() and amt < 0.07 then
-                --     render.SetToneMappingScaleLinear(Vector(1,1,1)) -- hdr fix
-                -- end
 
                 mat:SetVector(self.ResultTo, Vector(amt,amt,amt))
             end
@@ -34,14 +31,6 @@ end
 function SWEP:DoRT(fov, atttbl)
     if ARC9.OverDraw then return end
 
-    -- The fuck was this?
-    -- local rtpos = self.LastViewModelPos
-    -- rtpos = rtpos - self.LastViewModelAng:Right() * self.ViewModelPos.x
-    -- rtpos = rtpos - self.LastViewModelAng:Forward() * (self.ViewModelPos.y - (self:GetSight().atttbl.ScopeLength or 20))
-    -- rtpos = rtpos - self.LastViewModelAng:Up() * self.ViewModelPos.z
-
-    -- local rtang = self.LastViewModelAng
-
     local rtpos = self:GetShootPos()
     local rtang = self:GetShootDir()
 
@@ -52,10 +41,7 @@ function SWEP:DoRT(fov, atttbl)
         h = rtsize,
         angles = rtang,
         origin = rtpos,
-        drawviewmodel = false,  -- for some reason, turning it on makes everything black. 
-                                -- gun render in scope is fine rn (except fov, maybe copy it from arccw).  
-                                -- also i found out that if comment out 2d stuff (shadow and reticle), everything becomes as it should be. might be some problem with cam2d.
-                                -- if you can fix it it will be very cool
+        drawviewmodel = false,
         fov = fov,
         znear = 16,
         zfar = 30000
@@ -110,27 +96,29 @@ local pp_cc_tab = {
     ["$pp_colour_mulb"] = 0
 }
 
+local monochrometable = {
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = 0,
+    ["$pp_colour_brightness"] = 0,
+    ["$pp_colour_contrast"] = 1,
+    ["$pp_colour_colour"] = 0,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0
+}
+
 local noise = Material("arc9/nvnoise")
 
 function SWEP:DoNightScopeEffects(atttbl)
     if atttbl.RTScopeNightVisionMonochrome then
-        DrawColorModify({
-            ["$pp_colour_addr"] = 0,
-            ["$pp_colour_addg"] = 0,
-            ["$pp_colour_addb"] = 0,
-            ["$pp_colour_brightness"] = 0,
-            ["$pp_colour_contrast"] = 1,
-            ["$pp_colour_colour"] = 0,
-            ["$pp_colour_mulr"] = 0,
-            ["$pp_colour_mulg"] = 0,
-            ["$pp_colour_mulb"] = 0
-        })
+        DrawColorModify(monochrometable)
     end
 
     if !atttbl.RTScopeNightVisionNoPP then
         cam.Start2D()
         surface.SetMaterial(noise)
-        surface.SetDrawColor(atttbl.RTScopeNightVisionNoiseColor or Color(255, 255, 255))
+        surface.SetDrawColor(atttbl.RTScopeNightVisionNoiseColor or color_white)
         surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), (rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), rtsize, rtsize, math.Rand(0, 360))
         surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), (rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), rtsize * 2, rtsize * 2, math.Rand(0, 360))
         cam.End2D()
@@ -174,7 +162,7 @@ function SWEP:DoRTScopeEffects()
     -- DrawSharpen(0.05, 12) -- dont work for some reason
 
     if atttbl.RTScopeMotionBlur then
-        -- DrawMotionBlur(0.1, 0.5, 0)
+        -- DrawMotionBlur(1, 1, 1/24)
 
         -- It is bad on some maps (gm_eft_customs for example)
         -- Whole screen becomes picture from sights

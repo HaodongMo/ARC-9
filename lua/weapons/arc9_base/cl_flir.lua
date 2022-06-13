@@ -17,9 +17,9 @@ local monochrometable = {
     ["$pp_colour_mulb"] = 0
 }
 
-function SWEP:DoFLIR(atttbl)
-    local ref = 32
+local ref = 32
 
+function SWEP:DoFLIR(atttbl)
     render.SetStencilEnable(true)
     render.SetStencilWriteMask(255)
     render.SetStencilTestMask(255)
