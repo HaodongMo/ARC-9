@@ -3,6 +3,20 @@
 local lastentcount = 0
 local lastents = {}
 
+local coldtime = 20
+
+local monochrometable = {
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = 0,
+    ["$pp_colour_brightness"] = 0,
+    ["$pp_colour_contrast"] = 1,
+    ["$pp_colour_colour"] = 0,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0
+}
+
 function SWEP:DoFLIR(atttbl)
     local ref = 32
 
@@ -69,17 +83,7 @@ function SWEP:DoFLIR(atttbl)
 
     if atttbl.RTScopeFLIRMonochrome then
         render.SetStencilCompareFunction(STENCIL_ALWAYS)
-        DrawColorModify({
-            ["$pp_colour_addr"] = 0,
-            ["$pp_colour_addg"] = 0,
-            ["$pp_colour_addb"] = 0,
-            ["$pp_colour_brightness"] = 0,
-            ["$pp_colour_contrast"] = 1,
-            ["$pp_colour_colour"] = 0,
-            ["$pp_colour_mulr"] = 0,
-            ["$pp_colour_mulg"] = 0,
-            ["$pp_colour_mulb"] = 0
-        })
+        DrawColorModify(monochrometable)
     end
 
     if atttbl.RTScopeFLIRCCCold then
@@ -103,32 +107,24 @@ function SWEP:DoFLIR(atttbl)
 end
 
 function SWEP:GetEntityHot(ent)
-    if !IsValid(ent) then return end
-    if ent:IsWorld() then return end
-    if (ent.Health and (ent:Health() <= 0)) then return end
-    if ent:IsOnFire() then return true end
-
-    if ent.ARC9HotFunc then
-        return ent:ARC9HotFunc()
-    end
+    if !ent:IsValid() or ent:IsWorld() then return false end
 
     if ent:IsPlayer() then
-        if ent.ArcticMedShots_ActiveEffects and ent.ArcticMedShots_ActiveEffects["coldblooded"] then
-            return false
-        end
-
+        if ent.ArcticMedShots_ActiveEffects and ent.ArcticMedShots_ActiveEffects["coldblooded"] or ent:Health() <= 0 then return false end -- arc stims
         return true
     end
 
-    if ent:IsNextBot() then return true end
-    if (ent:IsNPC()) then
-        if ent.ARC9CLHealth and ent.ARC9CLHealth <= 0 then return false end
-        if (ent.Health and (ent:Health() > 0)) then return true end
-    elseif (ent:IsRagdoll()) then
-        local Time = CurTime()
-        if !ent.ARC9_ColdTime then ent.ARC9_ColdTime = Time + coldtime end
-        return ent.ARC9_ColdTime > Time
-    elseif (ent:IsVehicle()) then
+    if ent:IsNPC() or ent:IsNextBot() then -- npcs
+        if ent.ARC9CLHealth and ent.ARC9CLHealth <= 0 or ent:Health() <= 0 then return false end
+        return true
+    end
+
+    if ent:IsRagdoll() then -- ragdolling
+        if !ent.ARC9_ColdTime then ent.ARC9_ColdTime = CurTime() + coldtime end
+        return ent.ARC9_ColdTime > CurTime()
+    end
+
+    if ent:IsVehicle() or ent:IsOnFire() or ent.ArcCW_Hot or ent:IsScripted() and !ent:GetOwner():IsValid() then -- arccw_hot for compatibillity
         return true
     end
 

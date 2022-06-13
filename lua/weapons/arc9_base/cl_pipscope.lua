@@ -1,6 +1,6 @@
 local rtsize = 1024
 
-local rtmat = GetRenderTarget("arc9_pipscope2", rtsize, rtsize, false)
+local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)
 
 matproxy.Add({
     name = "arc9_scope_alpha",
