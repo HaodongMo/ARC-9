@@ -106,8 +106,12 @@ function SWEP:DoFLIR(atttbl)
     render.SetStencilEnable(false)
 end
 
+local maxrange = (160/ARC9.HUToM)^2 -- 160 m
+
 function SWEP:GetEntityHot(ent)
     if !ent:IsValid() or ent:IsWorld() then return false end
+
+    if self:GetPos():DistToSqr(ent:GetPos()) > maxrange then return end
 
     if ent:IsPlayer() then
         if ent.ArcticMedShots_ActiveEffects and ent.ArcticMedShots_ActiveEffects["coldblooded"] or ent:Health() <= 0 then return false end -- arc stims
