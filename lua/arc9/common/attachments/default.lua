@@ -50,7 +50,7 @@ ATT.MuzzleDevice_Priority = 0
 
 ATT.Flashlight = false
 ATT.FlashlightColor = Color(255, 255, 255)
-ATT.FlashlightMaterial = Material("")
+ATT.FlashlightMaterial = "" -- Not path to vmt, you need path to vtf file here
 ATT.FlashlightDistance = 1024
 ATT.FlashlightFOV = 70
 ATT.FlashlightAttachment = 0
@@ -108,6 +108,8 @@ ATT.RTScopeBlackBoxShadow = true
 ATT.RTScopeColorable = true -- Scope takes color from player settings
 -- Lets you draw more things on to the reticle
 ATT.RTScopeDrawFunc = function(swep, rtsize) end
+-- Extra post processing like DrawMotionBlur() DrawSharpen() DrawBloom()
+ATT.RTScopeCustomPPFunc = function(swep) end
 
 ATT.ScopeScreenRatio = 0.75 -- Needed for Cheap Scopes
 

@@ -161,14 +161,17 @@ function SWEP:DoRTScopeEffects()
     -- Sharpen
     -- DrawSharpen(0.05, 12) -- dont work for some reason
 
-    if atttbl.RTScopeMotionBlur then
-        -- DrawMotionBlur(1, 1, 1/24)
-
+    if atttbl.RTScopeCustomPPFunc then
+        atttbl.RTScopeCustomPPFunc(self)
+    end
+    -- if atttbl.RTScopeMotionBlur then
+        -- DrawMotionBlur(0.8, 1, 1/35)
+        
         -- It is bad on some maps (gm_eft_customs for example)
         -- Whole screen becomes picture from sights
         -- We should use delayed low fps rendering like on arccw thermals (wait time before next draw call) 
         -- It'll be better for performance and won't cause any issues
-    end
+    -- end
 
 end
 
