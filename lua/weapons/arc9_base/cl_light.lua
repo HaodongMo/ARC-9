@@ -25,7 +25,7 @@ function SWEP:CreateFlashlightsVM()
             local newlight = {
                 slottbl = k,
                 light = ProjectedTexture(),
-                col = Color(255, 255, 255),
+                col = color_white,
                 br = 3,
             }
             total_lights = total_lights + 1
@@ -43,9 +43,9 @@ function SWEP:CreateFlashlightsVM()
 
             l:SetQuadraticAttenuation(100)
 
-            l:SetColor(atttbl.FlashlightColor or Color(255, 255, 255))
+            l:SetColor(atttbl.FlashlightColor or color_white)
             l:SetTexture(atttbl.FlashlightMaterial or "effects/flashlight001")
-            l:SetBrightness(3)
+            l:SetBrightness(atttbl.FlashlightBrightness or 3)
             l:SetEnableShadows(true)
             l:Update()
 

@@ -50,13 +50,16 @@ ATT.MuzzleDevice_Priority = 0
 
 ATT.Flashlight = false
 ATT.FlashlightColor = Color(255, 255, 255)
-ATT.FlashlightMaterial = "" -- Not path to vmt, you need path to vtf file here
+ATT.FlashlightMaterial = "" -- Not material but texture, you need here path to vtf file
+ATT.FlashlightBrightness = 3
 ATT.FlashlightDistance = 1024
 ATT.FlashlightFOV = 70
 ATT.FlashlightAttachment = 0
 
 ATT.Laser = false
 ATT.LaserStrength = 1
+ATT.LaserFlareMat = nil
+ATT.LaserTraceMat = nil
 ATT.LaserColor = Color(255, 0, 0)
 ATT.LaserAttachment = 0
 

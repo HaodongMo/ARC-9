@@ -1,12 +1,14 @@
-local lasermat = Material("effects/laser1")
-local flaremat = Material("effects/arc9_lensflare", "mips smooth")
+local defaulttracemat = Material("effects/laser1")
+local defaultflaremat = Material("effects/arc9_lensflare", "mips smooth")
+local lasercolorred = Color(255, 0, 0)
+local lasercolor200 = Color(200, 200, 200)
 
 function SWEP:DrawLaser(pos, dir, atttbl, behav)
     behav = behav or false
     local strength = atttbl.LaserStrength or 1
-    local color = atttbl.LaserColor or Color(255, 0, 0)
-
-    -- ang = self:GetShootDir()
+    local color = atttbl.LaserColor or lasercolorred
+    local flaremat = atttbl.LaserFlareMat or defaultflaremat
+    local lasermat = atttbl.LaserTraceMat or defaulttracemat
 
     local tr = util.TraceLine({
         start = pos,
@@ -34,18 +36,22 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     if !behav then
         render.SetMaterial(lasermat)
-        render.DrawBeam(pos, hitpos, width * 0.3, 0, 1, Color(200, 200, 200))
+        render.DrawBeam(pos, hitpos, width * 0.3, 0, 1, lasercolor200)
         render.DrawBeam(pos, hitpos, width, 0, 1, color)
     end
 
     if hit then
-        local mul = strength
-        local rad = math.Rand(4, 6) * mul
+        local rad = math.Rand(4, 6) * strength * math.max(tr.Fraction*70, 1)
+        local dotcolor = color
+        local whitedotcolor = lasercolor200
+        
+        dotcolor.a = 255 - math.min(tr.Fraction*3000, 250)
+        whitedotcolor.a = 255 - math.min(tr.Fraction*2500, 250)
 
         render.SetMaterial(flaremat)
-        render.DrawSprite(hitpos, rad, rad, color)
 
-        render.DrawSprite(hitpos, rad * 0.3, rad * 0.3, Color(200, 200, 200))
+        render.DrawSprite(hitpos, rad, rad, dotcolor)
+        render.DrawSprite(hitpos, rad * 0.3, rad * 0.3, whitedotcolor)
     end
 
     if behavior then
@@ -97,6 +103,8 @@ function SWEP:DrawLasers(wm, behav)
 
                     a.Ang:RotateAroundAxis(a.Ang:Up(), -90)
                 end
+
+                if !a then return end
 
                 if !wm or self:GetOwner() == LocalPlayer() then
                     if behav then
