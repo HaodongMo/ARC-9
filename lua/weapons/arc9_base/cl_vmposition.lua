@@ -355,9 +355,7 @@ function SWEP:GetViewModelPosition(pos, ang)
                 ang:RotateAroundAxis(EyeAngles():Right(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
             end
         end
-    end
-
-    do
+    else
         pos:Add( ang:Up() * math.sin(CurTime() * math.pi) * 0.02 * Lerp(self:GetSightDelta(), 1, 0.05) )
         pos:Add( ang:Right() * math.sin(CurTime() * math.pi * 0.5) * 0.04 * Lerp(self:GetSightDelta(), 1, 0.05) )
         ang.x = ang.x + math.pow( math.sin(CurTime() * math.pi * 0.5) * 0.3 * Lerp(self:GetSightDelta(), 1, 0.05), 2 )
