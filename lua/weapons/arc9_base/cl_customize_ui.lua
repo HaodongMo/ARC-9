@@ -371,7 +371,7 @@ function SWEP:CreateCustomizeHUD()
                     )
                 end
             end
-        elseif ARC9.ActiveHolidays["Summer Break"] then
+        elseif false then--ARC9.ActiveHolidays["Summer Break"] then
 
             do  -- nice text
                 surface.SetFont("ARC9_10")
