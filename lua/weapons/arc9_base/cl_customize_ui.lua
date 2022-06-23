@@ -1,5 +1,7 @@
 local mat_grad = Material("arc9/gradient.png")
 
+local DevMode = false 
+
 function SWEP:MultiLineText(text, maxw, font)
     local content = {}
     local tline = ""
@@ -183,41 +185,41 @@ local Press2 = false
 local Release1 = false
 local Release2 = false
 local setscroll = 0
-hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
+hook.Add("StartCommand", "ARC9_GamepadHUD", function(ply, cmd)
     if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon().ARC9 and LocalPlayer():GetActiveWeapon():GetCustomize() then
         local wpn = LocalPlayer():GetActiveWeapon()
     
-        local pox = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_U ))-0.5, 1 )*2
-        local poy = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_R ))-0.5, 1 )*2
+        local pox = math.Round(math.TimeFraction(-32768, 32767, input.GetAnalogValue(ANALOG_JOY_U))-0.5, 1)*2
+        local poy = math.Round(math.TimeFraction(-32768, 32767, input.GetAnalogValue(ANALOG_JOY_R))-0.5, 1)*2
 
-        local p1x = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_X ))-0.5, 1 )*2
-        local p1y = math.Round( math.TimeFraction( -32768, 32767, input.GetAnalogValue( ANALOG_JOY_Y ))-0.5, 1 )*2
+        local p1x = math.Round(math.TimeFraction(-32768, 32767, input.GetAnalogValue(ANALOG_JOY_X))-0.5, 1)*2
+        local p1y = math.Round(math.TimeFraction(-32768, 32767, input.GetAnalogValue(ANALOG_JOY_Y))-0.5, 1)*2
 
         if ARC9.ControllerMode() then
-            if cmd:KeyDown( IN_JUMP ) then
-                cmd:RemoveKey( IN_JUMP )
+            if cmd:KeyDown(IN_JUMP) then
+                cmd:RemoveKey(IN_JUMP)
                 if !Press1 then
-                    gui.InternalMousePressed( MOUSE_LEFT )
+                    gui.InternalMousePressed(MOUSE_LEFT)
                     Press1 = true
                 end
                 Release1 = true
             else
                 if Release1 then
-                    gui.InternalMouseReleased( MOUSE_LEFT )
+                    gui.InternalMouseReleased(MOUSE_LEFT)
                     Release1 = false
                     Press1 = false
                 end
             end
-            if cmd:KeyDown( IN_RELOAD ) then
-                cmd:RemoveKey( IN_RELOAD )
+            if cmd:KeyDown(IN_RELOAD) then
+                cmd:RemoveKey(IN_RELOAD)
                 if !Press2 then
-                    gui.InternalMousePressed( MOUSE_RIGHT )
+                    gui.InternalMousePressed(MOUSE_RIGHT)
                     Press2 = true
                 end
                 Release2 = true
             else
                 if Release2 then
-                    gui.InternalMouseReleased( MOUSE_RIGHT )
+                    gui.InternalMouseReleased(MOUSE_RIGHT)
                     Release2 = false
                     Press2 = false
                 end
@@ -227,14 +229,14 @@ hook.Add("StartCommand", "ARC9_GamepadHUD", function( ply, cmd )
         if true then
             local cx, cy = input.GetCursorPos()
 
-            gpX = ( ( pox * 160 * ( ScrH() / 480 ) ) * RealFrameTime() )
-            gpY = ( ( poy * 160 * ( ScrH() / 480 ) ) * RealFrameTime() )
-            input.SetCursorPos( cx+gpX, cy+gpY )
+            gpX = ((pox * 160 * (ScrH() / 480)) * RealFrameTime())
+            gpY = ((poy * 160 * (ScrH() / 480)) * RealFrameTime())
+            input.SetCursorPos(cx+gpX, cy+gpY)
             gpX = 0
             gpY = 0
         end
 
-        if cmd:KeyDown( IN_USE ) then
+        if cmd:KeyDown(IN_USE) then
             wpn.CustomizePanX = wpn.CustomizePanX + (p1x * 5 * RealFrameTime())
             wpn.CustomizePanY = wpn.CustomizePanY + (p1y * 5 * RealFrameTime())
         else
@@ -316,33 +318,51 @@ function SWEP:CreateCustomizeHUD()
             gui.EnableScreenClicker(false)
             return
         end
+        
+        if DevMode then
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextPos((w/2) - 10, ScreenScale(5))
+            surface.DrawText("Developer mode")
 
-        if ARC9.ActiveHolidays["Troll Day"] then
+            surface.SetFont("ARC9_8")
+
+            surface.SetTextColor(255, 174, 0)
+            surface.SetTextPos((w/2) - 10, ScreenScale(16))
+            surface.DrawText("bone pos")    
+            surface.SetTextColor(230, 166, 255)
+            surface.SetTextPos((w/2) - 10, ScreenScale(23))
+            surface.DrawText("icon pos")     
+            surface.SetTextColor(206, 90, 90)
+            surface.SetTextPos((w/2) - 10, ScreenScale(30))
+            surface.DrawText("att pos")    
+
+        elseif ARC9.ActiveHolidays["Troll Day"] then
             do  -- nice text
                 surface.SetFont("ARC9_10")
                 local tx = "problem?"
                 local tz = surface.GetTextSize(tx)
-                surface.SetTextPos( (w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1) )
+                surface.SetTextPos((w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(tx)
-                surface.SetTextPos( (w/2) - (tz/2), ScreenScale(8) )
+                surface.SetTextPos((w/2) - (tz/2), ScreenScale(8))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(tx)
             end
 
-            surface.SetDrawColor( 255, 255, 255, 255 / 64 )
+            surface.SetDrawColor(255, 255, 255, 255 / 64)
 
             for i, v in ipairs(SeasonalHalloween) do
                 if isnumber(v.mat) then continue end -- fuck off
-                surface.SetMaterial( v.mat )
+                surface.SetMaterial(v.mat)
                 local si = ScreenScale(32)
 
 
                 v.x = v.x + (v.px * 2)
                 v.y = v.y + (v.py2 * 2)
-                v.py = math.sin( (CurTime() + (i / i)) * math.pi * 0.5 ) * ScreenScale(8)
+                v.py = math.sin((CurTime() + (i / i)) * math.pi * 0.5) * ScreenScale(8)
 
-                surface.DrawTexturedRectRotated(v.x + v.px, v.y + v.py, si, si, math.sin( (CurTime() + (i / i)) * math.pi ) * 15 )
+                surface.DrawTexturedRectRotated(v.x + v.px, v.y + v.py, si, si, math.sin((CurTime() + (i / i)) * math.pi) * 15)
 
                 if v.x >= w then
                     v.x = 0
@@ -366,29 +386,28 @@ function SWEP:CreateCustomizeHUD()
                             px = math.Rand(-1, 1),
                             py = 0,
                             py2 = math.Rand(-1, 1),
-                            mat = table.Random( troll ),
+                            mat = table.Random(troll),
                         }
-                    )
+                   )
                 end
             end
         elseif false then--ARC9.ActiveHolidays["Summer Break"] then
-
             do  -- nice text
                 surface.SetFont("ARC9_10")
                 local tx = "Summer break!"
                 local tz = surface.GetTextSize(tx)
-                surface.SetTextPos( (w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1) )
+                surface.SetTextPos((w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(tx)
-                surface.SetTextPos( (w/2) - (tz/2), ScreenScale(8) )
+                surface.SetTextPos((w/2) - (tz/2), ScreenScale(8))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(tx)
             end
 
-            surface.SetDrawColor( 255, 255, 127, 255*0.04 )
-            surface.SetMaterial( Material( "arc9/seasonal/sun.png", "mips smooth" ) )
+            surface.SetDrawColor(255, 255, 127, 255*0.04)
+            surface.SetMaterial(Material("arc9/seasonal/sun.png", "mips smooth"))
             local si = ScreenScale(256)
-            surface.DrawTexturedRectRotated(w-ScreenScale(32), ScreenScale(32), si, si, CurTime()*3 )
+            surface.DrawTexturedRectRotated(w-ScreenScale(32), ScreenScale(32), si, si, CurTime()*3)
 
         elseif ARC9.ActiveHolidays["Halloween"] then
 
@@ -396,27 +415,27 @@ function SWEP:CreateCustomizeHUD()
                 surface.SetFont("ARC9_10")
                 local tx = "Happy Halloween!"
                 local tz = surface.GetTextSize(tx)
-                surface.SetTextPos( (w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1) )
+                surface.SetTextPos((w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(tx)
-                surface.SetTextPos( (w/2) - (tz/2), ScreenScale(8) )
+                surface.SetTextPos((w/2) - (tz/2), ScreenScale(8))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(tx)
             end
 
-            surface.SetDrawColor( 255, 255, 255, 255/64 )
+            surface.SetDrawColor(255, 255, 255, 255/64)
 
             for i, v in ipairs(SeasonalHalloween) do
                 if isnumber(v.mat) then continue end -- fuck off
-                surface.SetMaterial( v.mat )
+                surface.SetMaterial(v.mat)
                 local si = ScreenScale(32)
 
 
                 v.x = v.x + (v.px * 2)
                 v.y = v.y + (v.py2 * 2)
-                v.py = math.sin( (CurTime() + (i / i)) * math.pi * 0.5 ) * ScreenScale(8)
+                v.py = math.sin((CurTime() + (i / i)) * math.pi * 0.5) * ScreenScale(8)
 
-                surface.DrawTexturedRectRotated(v.x + v.px, v.y + v.py, si, si, math.sin( (CurTime() + (i / i)) * math.pi ) * 15 )
+                surface.DrawTexturedRectRotated(v.x + v.px, v.y + v.py, si, si, math.sin((CurTime() + (i / i)) * math.pi) * 15)
 
                 if v.x >= w then
                     v.x = 0
@@ -440,9 +459,9 @@ function SWEP:CreateCustomizeHUD()
                             px = math.Rand(-1, 1),
                             py = 0,
                             py2 = math.Rand(-1, 1),
-                            mat = table.Random( ghs ),
+                            mat = table.Random(ghs),
                         }
-                    )
+                   )
                 end
             end
         elseif ARC9.ActiveHolidays["Christmas"] then
@@ -451,41 +470,41 @@ function SWEP:CreateCustomizeHUD()
                 surface.SetFont("ARC9_10")
                 local tx = "Happy Holidays!"
                 local tz = surface.GetTextSize(tx)
-                surface.SetTextPos( (w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1) )
+                surface.SetTextPos((w/2) - (tz/2)+ScreenScale(1), ScreenScale(8+1))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(tx)
-                surface.SetTextPos( (w/2) - (tz/2), ScreenScale(8) )
+                surface.SetTextPos((w/2) - (tz/2), ScreenScale(8))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(tx)
             end
 
-            surface.SetDrawColor( 255, 255, 255, 255/32 )
-            surface.SetMaterial( Material( "arc9/seasonal/hills.png", "smooth" ) )
-            bg.Posh = math.Approach(bg.Posh or 0, 2, FrameTime() * (1/20) )
+            surface.SetDrawColor(255, 255, 255, 255/32)
+            surface.SetMaterial(Material("arc9/seasonal/hills.png", "smooth"))
+            bg.Posh = math.Approach(bg.Posh or 0, 2, FrameTime() * (1/20))
             if bg.Posh > 1 then
                 bg.Posh = 0
             end
             surface.DrawTexturedRect(
-                math.Round( 0-(ScreenScale(1024)*bg.Posh), 0 ),
-                h-ScreenScale(1024/8*0.75) + ( ( math.sin( CurTime() * math.pi / 10 ) ) * ScreenScale(16) ),
+                math.Round(0-(ScreenScale(1024)*bg.Posh), 0),
+                h-ScreenScale(1024/8*0.75) + ((math.sin(CurTime() * math.pi / 10)) * ScreenScale(16)),
                 ScreenScale(1024),
                 ScreenScale(1024/8)
-            )
+           )
             surface.DrawTexturedRect(
-                math.Round( 0+ScreenScale(1024)-(ScreenScale(1024)*bg.Posh), 0 ),
-                h-ScreenScale(1024/8*0.75) + ( ( math.sin( CurTime() * math.pi / 10 ) ) * ScreenScale(16) ),
+                math.Round(0+ScreenScale(1024)-(ScreenScale(1024)*bg.Posh), 0),
+                h-ScreenScale(1024/8*0.75) + ((math.sin(CurTime() * math.pi / 10)) * ScreenScale(16)),
                 ScreenScale(1024),
                 ScreenScale(1024/8)
-            )
+           )
 
             for i, v in ipairs(SeasonalHolidays) do
-                surface.SetMaterial( Material( "arc9/seasonal/snowflake.png", "mips smooth" ) )
+                surface.SetMaterial(Material("arc9/seasonal/snowflake.png", "mips smooth"))
                 local si = ScreenScale(16)
 
-                surface.DrawTexturedRectRotated(v[1], v[2], si, si, v[5] or 0 )
-                v[1] = math.Approach( v[1], v[1] + v[3], FrameTime() * ScreenScale(1) * 20 * v[3] )
-                v[2] = math.Approach( v[2], h, FrameTime() * ScreenScale(1) * 20 * v[4] )
-                v[5] = math.Approach( v[5] or 0, 370, FrameTime() * ScreenScale(1) * 20 * v[4] )
+                surface.DrawTexturedRectRotated(v[1], v[2], si, si, v[5] or 0)
+                v[1] = math.Approach(v[1], v[1] + v[3], FrameTime() * ScreenScale(1) * 20 * v[3])
+                v[2] = math.Approach(v[2], h, FrameTime() * ScreenScale(1) * 20 * v[4])
+                v[5] = math.Approach(v[5] or 0, 370, FrameTime() * ScreenScale(1) * 20 * v[4])
                 if v[2] >= h then
                     v[2] = ScreenScale(-16)
                 end
@@ -508,7 +527,7 @@ function SWEP:CreateCustomizeHUD()
                             [4] = math.Rand(0.5, 4),
                             [5] = 0,
                         }
-                    )
+                   )
                 end
             end
         end
@@ -519,7 +538,7 @@ function SWEP:CreateCustomizeHUD()
             surface.SetFont("ARC9_8")
             surface.DrawText("Controller mode is on.")
 
-            --[[surface.SetMaterial( Material( "arc9/gamepad/corner.png", "" ) )
+            --[[surface.SetMaterial(Material("arc9/gamepad/corner.png", ""))
             surface.SetDrawColor(255, 255, 255, 255)
 
             local si = ScreenScale(6)
@@ -530,7 +549,7 @@ function SWEP:CreateCustomizeHUD()
             surface.DrawTexturedRectRotated(of+bo, of+bo, si, si, 180)
             surface.DrawTexturedRectRotated(of, of+bo, si, si, 90)
 
-            surface.SetMaterial( Material( "arc9/gamepad/pointer.png", "" ) )
+            surface.SetMaterial(Material("arc9/gamepad/pointer.png", ""))
             surface.DrawTexturedRect(si, si, si, si)
 
             surface.SetMaterial(mat_grad)
@@ -568,20 +587,23 @@ function SWEP:CreateCustomizeHUD()
                 local atttbl = self:GetFinalAttTable(ms_slot)
 
                 local attpos, attang = self:GetAttPos(slot, false, false, true)
+                local attposOffset = attpos
 
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
 
                 icon_offset = icon_offset + (atttbl.IconOffset or Vector(0, 0, 0))
-
-                attpos = attpos + attang:Right() * icon_offset.y
-                attpos = attpos + attang:Up() * icon_offset.z
-                attpos = attpos + attang:Forward() * icon_offset.x
+                
+                attposOffset = attposOffset + attang:Right() * icon_offset.y
+                attposOffset = attposOffset + attang:Up() * icon_offset.z
+                attposOffset = attposOffset + attang:Forward() * icon_offset.x
 
                 local toscreen = attpos:ToScreen()
+                local toscreenOffset = attposOffset:ToScreen()
 
                 cam.Start2D()
 
-                local x, y = toscreen.x, toscreen.y
+                local x, y = toscreenOffset.x, toscreenOffset.y
+                local xUOS, yUOS = toscreen.x, toscreen.y -- unoffsetted
 
                 local s = ScreenScale(8)
 
@@ -651,53 +673,87 @@ function SWEP:CreateCustomizeHUD()
                         self.CustomizeHints["Deselect"] = "Unattach"
                     end
                 end
+                
+                if DevMode then
+                    -- local bonepos = self:GetVM():GetBonePosition(self:GetVM():LookupBone(slot.Bone))
+                    local bonepos =  self:GetVM():GetBoneMatrix(self:GetVM():LookupBone(slot.Bone)):GetTranslation()
+                    local bonepostoscreen = bonepos:ToScreen()
+                    local boneposX, boneposY = bonepostoscreen.x, bonepostoscreen.y
 
-                surface.SetMaterial(mat_circle)
-                surface.SetDrawColor(col)
-                surface.DrawTexturedRect(x, y, s, s)
+                    surface.SetFont("ARC9_4")
+            
+                    -- att
 
-                local atttxt = ms_slot.PrintName or "SLOT"
+                    surface.SetDrawColor(206, 90, 90)
+                    surface.DrawRect(xUOS-5, yUOS-5, 10, 10)
 
-                if ms_slot.Installed then
-                    atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
-                    atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
-                    surface.SetMaterial(atttbl.Icon)
-                    surface.SetDrawColor(col)
-                    surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                    surface.SetDrawColor(230, 166, 255)
+                    surface.DrawLine(x, y, xUOS, yUOS)
+                    surface.DrawRect(x-2.5, y-2.5, 5, 5)
+                    
+                    surface.SetTextColor(230, 166, 255)
+                    surface.SetTextPos(x, y-20)
+                    surface.DrawText(slot.PrintName)
+                    
+                    -- bone
+                    surface.SetDrawColor(255, 174, 0)
+                    surface.DrawLine(xUOS, yUOS, boneposX, boneposY)
+                    surface.DrawRect(boneposX-2.5, boneposY-2.5, 5, 5)
+
+                    surface.SetTextColor(255, 174, 0)
+                    surface.SetTextPos(boneposX, boneposY)
+                    surface.DrawText(slot.Bone)
                 else
-                    if ms_slot.DefaultCompactName then
-                        atttxt = ARC9:UseTrueNames() and ms_slot.DefaultCompactName_TrueName or ms_slot.DefaultCompactName
-                        atttxt = atttxt or ms_slot.DefaultName_TrueName or ms_slot.DefaultName or ""
-                    end
-                    if ms_slot.DefaultIcon then
-                        surface.SetMaterial(ms_slot.DefaultIcon)
+                    x, y = x-s/2, y-s/2
+
+                    surface.SetMaterial(mat_circle)
+                    surface.SetDrawColor(col)
+                    surface.DrawTexturedRect(x, y, s, s)
+
+                    local atttxt = ms_slot.PrintName or "SLOT"
+
+                    if ms_slot.Installed then
+                        atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
+                        atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
+                        surface.SetMaterial(atttbl.Icon)
                         surface.SetDrawColor(col)
                         surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                    else
+                        if ms_slot.DefaultCompactName then
+                            atttxt = ARC9:UseTrueNames() and ms_slot.DefaultCompactName_TrueName or ms_slot.DefaultCompactName
+                            atttxt = atttxt or ms_slot.DefaultName_TrueName or ms_slot.DefaultName or ""
+                        end
+                        if ms_slot.DefaultIcon then
+                            surface.SetMaterial(ms_slot.DefaultIcon)
+                            surface.SetDrawColor(col)
+                            surface.DrawTexturedRect(x + ScreenScale(1), y + ScreenScale(1), s - ScreenScale(2), s - ScreenScale(2))
+                        end
                     end
+
+                    surface.SetFont("ARC9_6")
+                    local tw = surface.GetTextSize(atttxt)
+
+                    surface.SetFont("ARC9_6")
+                    surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                    surface.SetTextPos(x + (s / 2) - (tw / 2), y + s + ScreenScale(1))
+                    surface.DrawText(atttxt)
+
+                    surface.SetFont("ARC9_6")
+                    surface.SetTextColor(col)
+                    surface.SetTextPos(x + (s / 2) - (tw / 2), y + s)
+                    surface.DrawText(atttxt)
+                    
+                    -- surface.SetFont("ARC9_6")
+                    -- surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                    -- surface.SetTextPos(x + s + ScreenScale(3), y + (s / 2) + ScreenScale(1))
+                    -- surface.DrawText(atttxt)
+
+                    -- surface.SetFont("ARC9_6")
+                    -- surface.SetTextColor(col)
+                    -- surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
+                    -- surface.DrawText(atttxt)
+
                 end
-
-                surface.SetFont("ARC9_6")
-                local tw = surface.GetTextSize(atttxt)
-
-                surface.SetFont("ARC9_6")
-                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                surface.SetTextPos(x + (s / 2) - (tw / 2), y + s + ScreenScale(1))
-                surface.DrawText(atttxt)
-
-                surface.SetFont("ARC9_6")
-                surface.SetTextColor(col)
-                surface.SetTextPos(x + (s / 2) - (tw / 2), y + s)
-                surface.DrawText(atttxt)
-
-                -- surface.SetFont("ARC9_6")
-                -- surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                -- surface.SetTextPos(x + s + ScreenScale(3), y + (s / 2) + ScreenScale(1))
-                -- surface.DrawText(atttxt)
-
-                -- surface.SetFont("ARC9_6")
-                -- surface.SetTextColor(col)
-                -- surface.SetTextPos(x + s + ScreenScale(2), y + (s / 2))
-                -- surface.DrawText(atttxt)
 
                 if hoveredslot and !ARC9.NoFocus then
                     anyhovered = true
@@ -737,7 +793,7 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
-        if dragging then
+        if dragging and !self.devlockeddrag then
             if !input.IsMouseDown(MOUSE_LEFT) then
                 dragging = false
             else
@@ -752,7 +808,7 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizePanX = math.Clamp(self.CustomizePanX, -32, 32)
                 self.CustomizePanY = math.Clamp(self.CustomizePanY, -32, 32)
             end
-        elseif dragging_r then
+        elseif dragging_r and !self.devlockeddrag then
             if !input.IsMouseDown(MOUSE_RIGHT) then
                 dragging_r = false
             else
@@ -868,7 +924,7 @@ function SWEP:CreateCustomizeHUD()
 
     local help = vgui.Create("DPanel", bg)
     help:SetSize(ScrW(), ScreenScale(16+16))
-    help:SetPos(0, ScreenScale(4) )--ScrH() - ScreenScale(16+2) )
+    help:SetPos(0, ScreenScale(4))--ScrH() - ScreenScale(16+2))
     help.Paint = function(self2, w, h)
         if !IsValid(self) then
             self2:Remove()
@@ -889,34 +945,34 @@ function SWEP:CreateCustomizeHUD()
             if hid then continue end
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
             if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material("arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth") end
             if v.glyph2 then 
                 if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
                 if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material("arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth") end
             end
 
             if v.row2 then
-            table.insert( ToAdd2, { v.glyph, ScreenScale(12) } )
+            table.insert(ToAdd2, { v.glyph, ScreenScale(12) })
             if v.glyph2 then
-                table.insert( ToAdd2, " " )
-                table.insert( ToAdd2, { v.glyph2, ScreenScale(12) } )
+                table.insert(ToAdd2, " ")
+                table.insert(ToAdd2, { v.glyph2, ScreenScale(12) })
             end
             table.insert(ToAdd2, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
             else
-            table.insert( ToAdd, { v.glyph, ScreenScale(12) } )
+            table.insert(ToAdd, { v.glyph, ScreenScale(12) })
             if v.glyph2 then
-                table.insert( ToAdd, " " )
-                table.insert( ToAdd, { v.glyph2, ScreenScale(12) } )
+                table.insert(ToAdd, " ")
+                table.insert(ToAdd, { v.glyph2, ScreenScale(12) })
             end
             table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
             end
         end
-        CreateControllerKeyLine( {x = ScreenScale(8+1), y = ScreenScale(2+16+1), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack( ToAdd ) )
-        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2+16), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack( ToAdd ) )
-        CreateControllerKeyLine( {x = ScreenScale(8+1), y = ScreenScale(2+1), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack( ToAdd2 ) )
-        CreateControllerKeyLine( {x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack( ToAdd2 ) )
-        table.Empty( self.CustomizeHints )
+        CreateControllerKeyLine({x = ScreenScale(8+1), y = ScreenScale(2+16+1), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack(ToAdd))
+        CreateControllerKeyLine({x = ScreenScale(8), y = ScreenScale(2+16), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack(ToAdd))
+        CreateControllerKeyLine({x = ScreenScale(8+1), y = ScreenScale(2+1), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack(ToAdd2))
+        CreateControllerKeyLine({x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack(ToAdd2))
+        table.Empty(self.CustomizeHints)
     end
 
 
@@ -1100,4 +1156,182 @@ function SWEP:CreateHUD_RHP()
     end
 
     self.CustomizeButtons[self.CustomizeTab + 1].func(self)
+    
+    if DevMode then
+        self:DevStuffMenu()
+    end
 end
+
+local devselectedatt = 0
+local devoffsetmode = false
+local selectedbonename = "None"
+
+SWEP.devlockeddrag = false 
+
+function SWEP:DevStuffMenu()
+    print("Developers developers developers developers developers developers developers developers developers developers developers developers developers ")
+    
+    local DevFrame = vgui.Create("DFrame")
+    DevFrame:SetPos(ScrW()-1015, ScrH()-315) 
+    DevFrame:SetSize(1000, 300) 
+    DevFrame:SetTitle("Dev stuff") 
+    DevFrame:SetVisible(true) 
+    DevFrame:SetDraggable(true) 
+    DevFrame:ShowCloseButton(true) 
+    DevFrame:MakePopup()
+
+    self.DevFrame = DevFrame
+
+	local LockDragToggle = DevFrame:Add("DCheckBoxLabel") 
+	LockDragToggle:SetPos(400, 273)
+	LockDragToggle:SetText("Lock dragging")
+    LockDragToggle.OnChange = function(non, val)
+        self.devlockeddrag = val
+    end
+
+    
+    local function makecoolslider(y, min, max, text, dec, func)
+        local itis = vgui.Create("DNumSlider", DevFrame)
+        itis:SetPos(10, y)
+        itis:SetSize(1000, 50)
+        itis:SetText(text)
+        itis:SetMin(min)
+        itis:SetMax(max)
+        itis:SetDecimals(dec)
+
+        itis.OnValueChanged = func
+
+        return itis
+    end
+
+    local SliderX = makecoolslider(30, -25, 25, "X", 3, function(no, value) if devoffsetmode then devselectedatt.Icon_Offset.x = value else devselectedatt.Pos.x = value end end)
+    local SliderY = makecoolslider(60, -25, 25, "Y", 3, function(no, value) if devoffsetmode then devselectedatt.Icon_Offset.y = value else devselectedatt.Pos.y = value end end)
+    local SliderZ = makecoolslider(90, -25, 25, "Z", 3, function(no, value) if devoffsetmode then devselectedatt.Icon_Offset.z = value else devselectedatt.Pos.z = value end end)
+
+    local SliderPitch = makecoolslider(130, -180, 180, "P", 0, function(no, value) devselectedatt.Ang.p = value end)
+    local SliderYaw = makecoolslider(160, -180, 180, "Y", 0, function(no, value) devselectedatt.Ang.y = value end)
+    local SliderRoll = makecoolslider(190, -180, 180, "R", 0, function(no, value) devselectedatt.Ang.r = value end)
+
+	local OffsetModeToggle = DevFrame:Add("DCheckBoxLabel") 
+	OffsetModeToggle:SetPos(200, 273)
+	OffsetModeToggle:SetText("Icon offset mode")
+    OffsetModeToggle.OnChange = function(non, val)
+        devoffsetmode = val
+        
+        if val then
+            if !devselectedatt.Icon_Offset then devselectedatt.Icon_Offset = Vector() end
+
+            SliderX:SetValue(devselectedatt.Icon_Offset.x)
+            SliderY:SetValue(devselectedatt.Icon_Offset.y)
+            SliderZ:SetValue(devselectedatt.Icon_Offset.z)
+        else
+            SliderX:SetValue(devselectedatt.Pos.x)
+            SliderY:SetValue(devselectedatt.Pos.y)
+            SliderZ:SetValue(devselectedatt.Pos.z)
+        end
+    end
+
+    local AttSelector = vgui.Create("DComboBox", DevFrame)
+    AttSelector:SetPos(15, 300-30)
+    AttSelector:SetSize(150, 20)
+    AttSelector:SetValue("Select att")
+    for i, slot in ipairs(self:GetSubSlotList()) do
+        AttSelector:AddChoice(i.." - "..slot.PrintName)
+    end
+    
+    AttSelector.OnSelect = function(no, index, value)
+        print(value .. " was selected")
+        devselectedatt = self:GetSubSlotList()[tonumber(value[1]..value[2])]
+
+        if devoffsetmode then
+            SliderX:SetValue(devselectedatt.Icon_Offset.x)
+            SliderY:SetValue(devselectedatt.Icon_Offset.y)
+            SliderZ:SetValue(devselectedatt.Icon_Offset.z)
+
+            SliderX:SetMin(devselectedatt.Icon_Offset.x-5)
+            SliderX:SetMax(devselectedatt.Icon_Offset.x+5)
+            SliderY:SetMin(devselectedatt.Icon_Offset.y-5)
+            SliderY:SetMax(devselectedatt.Icon_Offset.y+5)
+            SliderZ:SetMin(devselectedatt.Icon_Offset.z-5)
+            SliderZ:SetMax(devselectedatt.Icon_Offset.z+5)
+        else
+            SliderX:SetValue(devselectedatt.Pos.x)
+            SliderY:SetValue(devselectedatt.Pos.y)
+            SliderZ:SetValue(devselectedatt.Pos.z)
+            
+            SliderX:SetMin(devselectedatt.Pos.x-3)
+            SliderX:SetMax(devselectedatt.Pos.x+3)
+            SliderY:SetMin(devselectedatt.Pos.y-10)
+            SliderY:SetMax(devselectedatt.Pos.y+10)
+            SliderZ:SetMin(devselectedatt.Pos.z-8)
+            SliderZ:SetMax(devselectedatt.Pos.z+8)
+        end
+
+        SliderPitch:SetValue(devselectedatt.Ang.p)
+        SliderYaw:SetValue(devselectedatt.Ang.y)
+        SliderRoll:SetValue(devselectedatt.Ang.r)
+    end
+
+    local function ExportAtt()
+        if !devselectedatt.Icon_Offset then devselectedatt.Icon_Offset = Vector() end
+        return string.format("Pos = Vector(%s, %s, %s),\nAng = Angle(%s, %s, %s),\nIcon_Offset = Vector(%s, %s, %s),", math.Round(devselectedatt.Pos.x, 3), math.Round(devselectedatt.Pos.y, 3), math.Round(devselectedatt.Pos.z, 3), math.Round(devselectedatt.Ang.p), math.Round(devselectedatt.Ang.y), math.Round(devselectedatt.Ang.r), math.Round(devselectedatt.Icon_Offset.x, 3), math.Round(devselectedatt.Icon_Offset.y, 3), math.Round(devselectedatt.Icon_Offset.z, 3))
+    end
+
+    local ConsoleButton = vgui.Create("DButton", DevFrame)
+    ConsoleButton:SetText("To console")
+    ConsoleButton:SetPos(640, 260)
+    ConsoleButton:SetSize(100, 30)
+    ConsoleButton.DoClick = function()
+        print("---------\n\n")
+        print(ExportAtt())
+        print("\n\n---------")
+    end
+    
+    local ClipboardButton = vgui.Create("DButton", DevFrame)
+    ClipboardButton:SetText("To clipboard")
+    ClipboardButton:SetPos(760, 260)
+    ClipboardButton:SetSize(100, 30)
+    ClipboardButton.DoClick = function()
+        SetClipboardText(ExportAtt())
+    end
+    
+    local ResetButton = vgui.Create("DButton", DevFrame)
+    ResetButton:SetText("Reload atts")
+    ResetButton:SetPos(880, 260)
+    ResetButton:SetSize(100, 30)
+    ResetButton.DoClick = function()
+        RunConsoleCommand("arc9_reloadatts")
+        timer.Simple(0, function() self:PostModify(true) end)
+    end
+    
+
+    -- local AppList = vgui.Create("DListView", DevFrame)
+    -- AppList:Dock(FILL)
+    -- AppList:SetMultiSelect(false)
+    -- AppList:AddColumn("Bone")
+
+    -- local vm = self:GetVM()
+    -- if !vm then return end
+
+    -- for i = 0, (vm:GetBoneCount() - 1) do
+    --     AppList:AddLine(vm:GetBoneName(i))
+    -- end
+
+    -- AppList.OnRowSelected = function(lst, index, pnl)
+    --     print("Selected " .. pnl:GetColumnText(1) .. " at index " .. index)
+    --     selectedbone = index
+    --     selectedbonename = pnl:GetColumnText(1)
+    -- end
+end
+
+concommand.Add("arc9_dev_togglemenu", function(ply, cmd, args)
+
+    -- add here check for sv_cheats 1 or/and admin
+
+    local wep = ply:GetActiveWeapon()
+
+    if wep.ARC9 then 
+        DevMode = !DevMode
+        if DevMode then ply:GetActiveWeapon():DevStuffMenu() elseif IsValid(wep.DevFrame) then wep.DevFrame:Close() end
+    end
+end)
