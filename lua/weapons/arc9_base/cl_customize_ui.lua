@@ -1208,7 +1208,7 @@ function SWEP:DevStuffMenu()
     local SliderY = makecoolslider(60, -25, 25, "Y", 3, function(no, value) self:PostModify(true) if devoffsetmode then devselectedatt.Icon_Offset.y = value else devselectedatt.Pos.y = value end end)
     local SliderZ = makecoolslider(90, -25, 25, "Z", 3, function(no, value) self:PostModify(true) if devoffsetmode then devselectedatt.Icon_Offset.z = value else devselectedatt.Pos.z = value end end)
 
-    local SliderPitch = makecoolslider(130, -180, 180, "P", 0, function(no, value) devselectedatt.Ang.p = value end)
+    local SliderPitch = makecoolslider(130, -180, 180, "P", 0, function(no, value) self:PostModify(true) devselectedatt.Ang.p = value end)
     local SliderYaw = makecoolslider(160, -180, 180, "Y", 0, function(no, value) self:PostModify(true) devselectedatt.Ang.y = value end)
     local SliderRoll = makecoolslider(190, -180, 180, "R", 0, function(no, value) self:PostModify(true) devselectedatt.Ang.r = value end)
 
