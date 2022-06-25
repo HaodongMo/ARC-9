@@ -66,7 +66,7 @@ function SWEP:MeleeAttackShoot()
                 fx:SetEntity(tr.Entity)
                 fx:SetSurfaceProp(tr.SurfaceProps)
                 fx:SetHitBox(tr.HitBox)
-                util.Effect("BloodImpact", fx)
+                util.Effect("BloodImpact", fx, true)
             end
         else
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound")) or "", 75, 100, 1, CHAN_VOICE)
@@ -79,7 +79,7 @@ function SWEP:MeleeAttackShoot()
                 fx:SetEntity(tr.Entity)
                 fx:SetSurfaceProp(tr.SurfaceProps)
                 fx:SetHitBox(tr.HitBox)
-                util.Effect("Impact", fx)
+                util.Effect("Impact", fx, true)
             end
         end
 

@@ -514,7 +514,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         local fx = EffectData()
         fx:SetOrigin(tr.HitPos)
         fx:SetNormal(tr.HitNormal)
-        util.Effect(self:GetProcessedValue("ImpactEffect"), fx)
+        util.Effect(self:GetProcessedValue("ImpactEffect"), fx, true)
     end
 
     if self:GetProcessedValue("ExplosionDamage") > 0 then
@@ -527,9 +527,9 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         fx:SetNormal(tr.HitNormal)
 
         if bit.band(util.PointContents(tr.HitPos), CONTENTS_WATER) == CONTENTS_WATER then
-            util.Effect("WaterSurfaceExplosion", fx)
+            util.Effect("WaterSurfaceExplosion", fx, true)
         else
-            util.Effect(self:GetProcessedValue("ExplosionEffect"), fx)
+            util.Effect(self:GetProcessedValue("ExplosionEffect"), fx, true)
         end
     end
 

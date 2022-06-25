@@ -1,5 +1,7 @@
 function SWEP:DoEffects()
     if !IsFirstTimePredicted() then return end
+    if self:GetProcessedValue("NoMuzzleEffect") then return end
+
     local muzz_qca = self:GetQCAMuzzle()
 
     local data = EffectData()
@@ -15,7 +17,7 @@ function SWEP:DoEffects()
         data:SetEntity(self:GetVM())
     end
 
-    util.Effect( muzzle, data )
+    util.Effect(muzzle, data, true)
 end
 
 function SWEP:GetQCAMuzzle()
@@ -40,7 +42,7 @@ function SWEP:DoEject()
     data:SetAttachment(eject_qca)
 
     for i = 1, self:GetProcessedValue("ShellEffectCount") do
-        util.Effect("ARC9_shelleffect", data)
+        util.Effect("ARC9_shelleffect", data, true)
     end
 end
 

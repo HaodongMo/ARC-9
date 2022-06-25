@@ -451,7 +451,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                             fx:SetOrigin(utr.HitPos)
                             fx:SetScale(5)
                             fx:SetFlags(0)
-                            util.Effect("gunshotsplash", fx)
+                            util.Effect("gunshotsplash", fx, true)
                         end
 
                         bullet.Underwater = false
@@ -470,7 +470,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                             fx:SetOrigin(utr.HitPos)
                             fx:SetScale(5)
                             fx:SetFlags(0)
-                            util.Effect("gunshotsplash", fx)
+                            util.Effect("gunshotsplash", fx, true)
                         end
 
                         bullet.Underwater = true

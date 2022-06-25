@@ -653,6 +653,7 @@ SWEP.BreathRunOutSound = "arc9/breath_runout.wav"
 
 -------------------------- EFFECTS
 
+SWEP.NoMuzzleEffect = false -- Disable muzzle effect entirely
 SWEP.NoFlash = false -- Disable light flash
 
 SWEP.MuzzleParticle = nil -- Used for some muzzle effects.
