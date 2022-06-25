@@ -35,31 +35,6 @@ function SWEP:GetViewModelSway(pos, ang)
     return pos, ang
 end
 
-function SWEP:RotateAroundPoint(pos, ang, point, offset, offset_ang)
-    local v = Vector(0, 0, 0)
-    v = v + (point.x * ang:Right())
-    v = v + (point.y * ang:Forward())
-    v = v + (point.z * ang:Up())
-
-    ang:RotateAroundAxis(ang:Right(), offset_ang.p)
-    ang:RotateAroundAxis(ang:Forward(), offset_ang.r)
-    ang:RotateAroundAxis(ang:Up(), offset_ang.y)
-
-    v = v + ang:Right() * offset.x
-    v = v + ang:Forward() * offset.y
-    v = v + ang:Up() * offset.z
-
-    -- v:Rotate(offset_ang)
-
-    v = v - (point.x * ang:Right())
-    v = v - (point.y * ang:Forward())
-    v = v - (point.z * ang:Up())
-
-    pos = v + pos
-
-    return pos, ang
-end
-
 SWEP.ViewModelLastEyeAng = Angle(0, 0, 0)
 SWEP.ViewModelSwayInertia = Angle(0, 0, 0)
 

@@ -82,3 +82,31 @@ function SWEP:Solve2PartIK(start_p, end_p, length0, length1, rotation)
 end
 -- returns two vectors
 -- upper arm and forearm
+
+function SWEP:RotateAroundPoint(pos, ang, point, offset, offset_ang)
+    local v = Vector(0, 0, 0)
+    v = v + (point.x * ang:Right())
+    v = v + (point.y * ang:Forward())
+    v = v + (point.z * ang:Up())
+
+    local newang = Angle()
+    newang:Set(ang)
+
+    newang:RotateAroundAxis(ang:Right(), offset_ang.p)
+    newang:RotateAroundAxis(ang:Forward(), offset_ang.r)
+    newang:RotateAroundAxis(ang:Up(), offset_ang.y)
+
+    v = v + newang:Right() * offset.x
+    v = v + newang:Forward() * offset.y
+    v = v + newang:Up() * offset.z
+
+    -- v:Rotate(offset_ang)
+
+    v = v - (point.x * newang:Right())
+    v = v - (point.y * newang:Forward())
+    v = v - (point.z * newang:Up())
+
+    pos = v + pos
+
+    return pos, newang
+end
