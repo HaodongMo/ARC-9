@@ -111,7 +111,7 @@ function SWEP:DoRHIK(wm)
             local delta_time = next_stage.t - stage.t
             delta_time = (local_time - stage.t) / delta_time
             delta_time = math.ease.InOutQuart(delta_time)
-            lh_delta = qerp(delta_time, stage.rhik or 0, next_stage.rhik or 0)
+            rh_delta = qerp(delta_time, stage.rhik or 0, next_stage.rhik or 0)
         end
     end
 
