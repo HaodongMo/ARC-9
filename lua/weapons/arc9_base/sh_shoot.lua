@@ -133,6 +133,8 @@ function SWEP:DoPrimaryAttack()
         self:SetEndReload(true)
     end
 
+    if self:SprintLock() then return end
+
     if self:StillWaiting() then return end
     if self:GetNeedsCycle() then return end
 
@@ -212,8 +214,6 @@ function SWEP:DoPrimaryAttack()
     end
 
     self:SetBaseSettings()
-
-    if self:SprintLock() then return end
 
     if self:RunHook("HookP_BlockFire") then return end
 
