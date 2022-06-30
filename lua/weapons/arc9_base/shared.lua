@@ -1051,7 +1051,7 @@ SWEP.Animations = {
     --     PoseParamChanges = { -- pose parameters to change after this animation is done.
     --         ["selector"] = 1 -- an application might be to change firemodes.
     --     }, -- relevant pose parameters will be set to default values while the animation is playing, so make sure you take that into consideration for animating.
-    --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one.
+    --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one. For SWEP.BulletBones
     --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
     --     FireASAP = false, -- allowes to shoot right after clip anim was "done" with MinProgress
     --     RestoreAmmo = 0 -- Restores ammunition to clip
