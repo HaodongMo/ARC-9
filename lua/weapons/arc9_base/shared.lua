@@ -685,6 +685,7 @@ SWEP.ShellSounds = ARC9.ShellSoundsTable
 
 SWEP.ShellCorrectPos = Vector(0, 0, 0)
 SWEP.ShellCorrectAng = Angle(0, 0, 0)
+SWEP.ShellVelocity = nil -- nothing for random, otherwise keep this 0 - 2
 SWEP.ShellTime = 0.5 -- Extra time these shells stay on the ground for.
 
 SWEP.MuzzleEffectQCA = 1 -- QC Attachment that controls muzzle effect.
