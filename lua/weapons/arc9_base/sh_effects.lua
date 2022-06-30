@@ -33,7 +33,7 @@ SWEP.EjectedShells = {}
 function SWEP:DoEject()
     if !IsFirstTimePredicted() then return end
 
-    if self:GetProcessedValue("NoShellEject") then return end
+    -- if self:GetProcessedValue("NoShellEject") then return end
 
     local eject_qca = self:GetQCAEject()
 

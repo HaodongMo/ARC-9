@@ -674,7 +674,7 @@ SWEP.ShellSmoke = true
 
 SWEP.EjectDelay = 0
 
-SWEP.NoShellEject = false
+SWEP.NoShellEject = false -- Don't eject shell on fire
 SWEP.ManualActionEjectAnyway = false -- Overrides standard behaviour to eject a shell when a shot is fired and manual action is on.
 
 SWEP.ShellScale = 1
