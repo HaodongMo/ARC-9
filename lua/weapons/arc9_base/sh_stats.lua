@@ -70,6 +70,8 @@ function SWEP:GetFinalAttTable(slot)
 
     local atttbl = ARC9.GetAttTable(slot.Installed)
 
+    if !atttbl then return {} end
+    
     if atttbl.ToggleStats then
         local tbl = table.Copy(atttbl)
         local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
