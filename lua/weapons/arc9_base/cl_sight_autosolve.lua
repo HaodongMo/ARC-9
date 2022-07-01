@@ -81,6 +81,10 @@ end
 function SWEP:AdjustMouseSensitivity()
     if !self:GetInSights() then return end
 
+    if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
+        return
+    end
+
     local mag = self:GetMagnification()
     local fov = GetConVar("fov_desired"):GetFloat()
 
