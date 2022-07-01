@@ -115,10 +115,12 @@ function EFFECT:Init(data)
     phys:SetMass(1)
     phys:SetMaterial("gmod_silent")
 
-    phys:SetVelocity((dir * mag * math.Rand(1, 2)) + plyvel)
+    local velocity = ent:GetProcessedValue("ShellVelocity") or math.Rand(1, 2)
+
+    phys:SetVelocity((dir * mag * velocity) + plyvel)
 
     phys:AddAngleVelocity(VectorRand() * 100)
-    phys:AddAngleVelocity(ang:Up() * 2500 * math.Rand(0.75, 1.25))
+    phys:AddAngleVelocity(ang:Up() * 2500 * velocity/0.75)
 
     if ent:GetProcessedValue("ShellSmoke") then
         local emitter = ParticleEmitter(origin)

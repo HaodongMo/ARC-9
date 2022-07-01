@@ -674,7 +674,7 @@ SWEP.ShellSmoke = true
 
 SWEP.EjectDelay = 0
 
-SWEP.NoShellEject = false
+SWEP.NoShellEject = false -- Don't eject shell on fire
 SWEP.ManualActionEjectAnyway = false -- Overrides standard behaviour to eject a shell when a shot is fired and manual action is on.
 
 SWEP.ShellScale = 1
@@ -685,6 +685,7 @@ SWEP.ShellSounds = ARC9.ShellSoundsTable
 
 SWEP.ShellCorrectPos = Vector(0, 0, 0)
 SWEP.ShellCorrectAng = Angle(0, 0, 0)
+SWEP.ShellVelocity = nil -- nothing for random, otherwise keep this 0 - 2
 SWEP.ShellTime = 0.5 -- Extra time these shells stay on the ground for.
 
 SWEP.MuzzleEffectQCA = 1 -- QC Attachment that controls muzzle effect.
@@ -1050,7 +1051,7 @@ SWEP.Animations = {
     --     PoseParamChanges = { -- pose parameters to change after this animation is done.
     --         ["selector"] = 1 -- an application might be to change firemodes.
     --     }, -- relevant pose parameters will be set to default values while the animation is playing, so make sure you take that into consideration for animating.
-    --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one.
+    --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one. For SWEP.BulletBones
     --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
     --     FireASAP = false, -- allowes to shoot right after clip anim was "done" with MinProgress
     --     RestoreAmmo = 0 -- Restores ammunition to clip
