@@ -84,7 +84,7 @@ function SWEP:Reload()
             end, "reloadtimer")
         end
 
-        local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.25
+        local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.5
 
         if !self:GetUBGL() then
             self:SetTimer(self:GetProcessedValue("ReloadTime") * newcliptime, function()
@@ -93,7 +93,7 @@ function SWEP:Reload()
                 if self:GetInfiniteAmmo() then
                     ammo1 = math.huge
                 end
-                self:SetLoadedRounds(math.min(self:GetValue("ClipSize"), self:Clip1() + ammo1))
+                self:SetLoadedRounds(math.min((clip == 0 and self:GetValue("ClipSize") or self:GetCapacity(false)), self:Clip1() + ammo1))
             end)
         end
     end
