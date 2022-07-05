@@ -902,11 +902,6 @@ SWEP.AttachmentTableOverrides = {
     -- }
 }
 
--- Specifically refuse to allow certain attachments to be attached
-SWEP.RejectAttachments = {
-    -- ["att_name"] = true
-}
-
 -- The big one
 SWEP.Attachments = {
     -- [1] = {
@@ -920,6 +915,7 @@ SWEP.Attachments = {
     --     -- one of these must all be enabled for this to be valid.
     --     ExcludeElements = {},
     --     -- same but for exclusion.
+    --     RejectAttachments = { ["att_name"] = true }, -- Specifically refuse to allow certain attachments to be attached
     --     Integral = false, -- cannot be removed
     --     Category = "", -- single or {"list", "of", "values"}
     --     InstallSound = "",
