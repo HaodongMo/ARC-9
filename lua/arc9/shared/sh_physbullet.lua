@@ -515,7 +515,7 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in ipairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
+        // if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
 
         local pos = i.Pos
 
@@ -568,7 +568,7 @@ function ARC9.DrawPhysBullets()
         dot = math.Clamp(((dot * dot) - 0.5) * 5, 0, 1)
 
         headsize = headsize * dot * 2
-        size = size * (1 - dot)
+        // size = size * (1 - dot)
 
         -- cam.Start3D()
 
@@ -580,7 +580,7 @@ function ARC9.DrawPhysBullets()
 
         render.SetMaterial(tracer)
 
-        local tail = (vel:GetNormalized() * math.min(vel:Length() * 0.1, math.min(512, i.Travelled - 64)))
+        local tail = (vec:GetNormalized() * math.min(vel:Length() * 0.5, math.min(1024, i.Travelled - 64)))
 
         render.DrawBeam(pos, pos - tail, size * 0.75, 1, 0, col)
 
