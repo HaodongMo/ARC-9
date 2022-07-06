@@ -142,20 +142,25 @@ local Lerp = function(a, v1, v2)
     return v1 + (a * d)
 end
 
-local pvtick = 0
-local pv_move = 0
-local pv_shooting = 0
-local pv_melee = 0
+// local pvtick = 0
+// local pv_move = 0
+// local pv_shooting = 0
+// local pv_melee = 0
 
-local pvcache = {}
+SWEP.PV_Tick = 0
+SWEP.PV_Move = 0
+SWEP.PV_Shooting = 0
+SWEP.PV_Melee = 0
+
+SWEP.PV_Cache = {}
 
 function SWEP:GetProcessedValue(val, base)
-    if CLIENT and pvcache[tostring(val) .. tostring(base)] != nil and pvtick == UnPredictedCurTime() then
-        return pvcache[tostring(val) .. tostring(base)]
+    if CLIENT and self.PV_Cache[tostring(val) .. tostring(base)] != nil and self.PV_Tick == UnPredictedCurTime() then
+        return self.PV_Cache[tostring(val) .. tostring(base)]
     end
 
-    if pvtick != UnPredictedCurTime() then
-        pvcache = {}
+    if self.PV_Tick != UnPredictedCurTime() then
+        self.PV_Cache = {}
     end
 
     local stat = self:GetValue(val, base)
@@ -246,9 +251,9 @@ function SWEP:GetProcessedValue(val, base)
 
     if !self.HasNoAffectors[val .. "Melee"] then
         if self:GetLastMeleeTime() < CurTime() then
-            local d = pv_melee
+            local d = self.PV_Melee
 
-            if pvtick != UnPredictedCurTime() then
+            if self.PV_Tick != UnPredictedCurTime() then
                 local pft = CurTime() - self:GetLastMeleeTime()
                 d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
@@ -256,7 +261,7 @@ function SWEP:GetProcessedValue(val, base)
 
                 d = 1 - d
 
-                pv_melee = d
+                self.PV_Melee = d
             end
 
             if isnumber(stat) then
@@ -271,15 +276,15 @@ function SWEP:GetProcessedValue(val, base)
 
     if !self.HasNoAffectors[val .. "Shooting"] then
         if self:GetNextPrimaryFire() + 0.1 > CurTime() then
-            local d = pv_shooting
+            local d = self.PV_Shooting
 
-            if pvtick != UnPredictedCurTime() then
+            if self.PV_Tick != UnPredictedCurTime() then
                 local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
                 d = pft / 0.1
 
                 d = math.Clamp(d, 0, 1)
 
-                pv_shooting = d
+                self.PV_Shooting = d
             end
 
             if isnumber(stat) then
@@ -300,13 +305,13 @@ function SWEP:GetProcessedValue(val, base)
 
     if !self.HasNoAffectors[val .. "Move"] then
         if owner:IsValid() then
-            local spd = pv_move
-            if game.SinglePlayer() or pvtick != UnPredictedCurTime() then
+            local spd = self.PV_Move
+            if game.SinglePlayer() or self.PV_Tick != UnPredictedCurTime() then
                 spd = math.min(owner:GetAbsVelocity():Length(), 250)
 
                 spd = spd / 250
 
-                pv_move = spd
+                self.PV_Move = spd
             end
 
             if isnumber(stat) then
@@ -319,8 +324,8 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    pvtick = UnPredictedCurTime()
-    pvcache[tostring(val) .. tostring(base)] = stat
+    self.PV_Tick = UnPredictedCurTime()
+    self.PV_Cache[tostring(val) .. tostring(base)] = stat
 
     return stat
 end

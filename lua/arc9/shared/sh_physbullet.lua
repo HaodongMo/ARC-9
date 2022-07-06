@@ -515,7 +515,7 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in ipairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        // if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
+        if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
 
         local pos = i.Pos
 
