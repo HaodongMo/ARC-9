@@ -88,6 +88,16 @@ function ARC9.LoadAtts()
     print("ARC9 Registered " .. tostring(ARC9.Attachments_Count) .. " Attachments.")
 
     ARC9.Attachments_Bits = math.min(math.ceil(math.log(ARC9.Attachments_Count + 1, 2)), 32)
+
+    if game.SinglePlayer() then
+        if IsValid(Entity(1)) then
+            local wep = Entity(1):GetActiveWeapon()
+
+            if IsValid(wep) and wep.ARC9 then
+                timer.Simple(0, function() wep:PostModify(true) end)
+            end
+        end
+    end
 end
 
 function ARC9.GetAttTable(name)
