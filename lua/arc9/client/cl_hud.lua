@@ -119,6 +119,10 @@ local events = {
         months = { [12] = true },
         days = alldays,
     },
+    ["Birthday - Arctic"] = {
+        months = { [7] = true },
+        days = { [27] = true },
+    },
     ["Summer Break"] = {
         months = { [6] = true, [7] = true, [8] = true,  },
         days = alldays,
@@ -126,7 +130,7 @@ local events = {
     ["Troll Day"] = {
         months = { [4] = true },
         days = { [1] = true }
-    }
+    },
 }
 
 function ARC9.GetTime()
@@ -160,6 +164,10 @@ local holidayscolors = {
     ["Summer Break"] = {
         fg     = Color(255, 255, 200),
         shadow = Color(30, 30, 40, 255*0.6),
+    },
+    ["Birthday - Arctic"] = {
+        fg     = Color(210, 235, 255),
+        shadow = Color(40, 40, 30, 255*0.6),
     }
 }
 
@@ -176,7 +184,7 @@ function ARC9.GetHUDColor(part, alpha)
         if lastholidaycheck + 300 < CurTime() then
             -- print("holiday check", CurTime())
             table.Empty(ARC9.ActiveHolidays)
-            for _, event in pairs(events) do
+            for _, event in SortedPairs(events) do
                 local d = ARC9.GetHoliday()
                 if event.months[d.month] and event.days[d.day] then
                     ARC9.ActiveHolidays[_] = true
@@ -193,6 +201,8 @@ function ARC9.GetHUDColor(part, alpha)
         event_holiday = holidayscolors["Halloween"]
     elseif ARC9.ActiveHolidays["Thanksgiving"] then
         event_holiday = holidayscolors["Thanksgiving"]
+    elseif ARC9.ActiveHolidays["Birthday - Arctic"] then
+        event_holiday = holidayscolors["Birthday - Arctic"]
     elseif ARC9.ActiveHolidays["Summer Break"] then
         event_holiday = holidayscolors["Summer Break"]
     end
