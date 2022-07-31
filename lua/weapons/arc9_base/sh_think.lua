@@ -1,8 +1,18 @@
+local lastwalking = false
+
 function SWEP:Think()
     local owner = self:GetOwner()
 
     if !IsValid(owner) then return end
     if self:GetOwner():IsNPC() then return end
+
+    if self:GetNextIdle() < CurTime() then
+        self:Idle()
+    end
+
+    if !self:StillWaiting() and (lastwalking != self:GetIsWalking()) then
+        self:Idle()
+    end
 
     if !self.NotAWeapon then
 
@@ -85,9 +95,7 @@ function SWEP:Think()
 
     self:ProcessTimers()
 
-    if self:GetNextIdle() < CurTime() then
-        self:Idle()
-    end
+    lastwalking = self:GetIsWalking()
 
     if CLIENT then
         if !self.LoadedPreset then

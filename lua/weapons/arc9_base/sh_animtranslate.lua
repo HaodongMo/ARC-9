@@ -28,6 +28,8 @@ function SWEP:TranslateAnimation(seq)
 
         if !self:GetProcessedValue("SuppressSprintSuffix") and self:GetSprintAmount() > 0 and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
             seq = seq .. "_sprint"
+        elseif self:GetIsWalking() and self:HasAnimation(seq .. "_walk") then
+            seq = seq .. "_walk"
         end
 
         if !self:GetProcessedValue("SuppressEmptySuffix") and (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
