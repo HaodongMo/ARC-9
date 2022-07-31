@@ -286,7 +286,9 @@ function SWEP:PruneUnnecessaryAttachmentDataRecursive(tbl)
     end
 
     if table.Count(tbl.SubAttachments or {}) > 0 then
-        self:PruneUnnecessaryAttachmentDataRecursive(tbl.SubAttachments)
+        for i, k in pairs(tbl.SubAttachments) do
+            self:PruneUnnecessaryAttachmentDataRecursive(k)
+        end
     end
 end
 
