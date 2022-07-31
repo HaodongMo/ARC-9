@@ -27,6 +27,7 @@ local lasthelperalpha = 0
 local gaA = 0
 
 function SWEP:DoDrawCrosshair(x, y)
+    if !GetConVar("arc9_cross_enable"):GetBool() then return end
 
     local dotsize = ScreenScale(1)
     local prong = ScreenScale(4)
@@ -36,6 +37,10 @@ function SWEP:DoDrawCrosshair(x, y)
     local gap = 0
     local staticgap = ScreenScale(4)
     local col = Color(255, 255, 255, 100)
+
+    col.r = GetConVar("arc9_cross_r"):GetFloat()
+    col.g = GetConVar("arc9_cross_g"):GetFloat()
+    col.b = GetConVar("arc9_cross_b"):GetFloat()
 
     local d = self:GetSightDelta()
 

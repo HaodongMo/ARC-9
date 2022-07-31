@@ -97,7 +97,7 @@ function SWEP:CycleSelectedAtt(amt, cyc)
     if #self.AttachmentAddresses <= 0 then return end
     if cyc > #self.AttachmentAddresses then return end
 
-    local addr = self.BottomBarAddress
+    local addr = self.BottomBarAddress or 1
 
     local newaddr = addr + amt
 

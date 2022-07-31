@@ -53,6 +53,8 @@ You could also opt to combine these methods together - it's common for an attach
  - New RT scopes
  - Dynamic camo support
  - Controller support
+ - Dynamic selecticon and preset icon generation
+ - Exportable presets
 
 ### New Recoil
 

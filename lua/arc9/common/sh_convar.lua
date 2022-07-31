@@ -30,6 +30,26 @@ local conVars = {
         max = 1,
     },
     {
+        name = "cross_r",
+        default = "255",
+        client = true
+    },
+    {
+        name = "cross_enable",
+        default = "1",
+        client = true
+    },
+    {
+        name = "cross_g",
+        default = "255",
+        client = true
+    },
+    {
+        name = "cross_b",
+        default = "255",
+        client = true
+    },
+    {
         name = "reflex_r",
         default = "255",
         client = true
@@ -490,6 +510,23 @@ local function menu_client_customization(panel)
         max = 31,
     })
     panel:ControlHelp( "Fake day to debug and test as, set over 0!!" )
+end
+
+
+local function menu_client_crosshair(panel)
+    panel:AddControl("label", {
+        text = "Crosshairs are only enabled on certain weapons."
+    })
+    panel:AddControl("checkbox", {
+        label = "Enable Crosshair",
+        command = "arc9_cross_enable"
+    })
+    panel:AddControl("color", {
+        label = "Crosshair Color",
+        red = "arc9_cross_r",
+        green = "arc9_cross_g",
+        blue = "arc9_cross_b"
+    })
 end
 
 local function menu_client_optics(panel)
@@ -984,6 +1021,9 @@ local clientmenus_ti = {
     },
     {
         text = "Client - Controller", func = menu_client_controller
+    },
+    {
+        text = "Client - Crosshair", func = menu_client_crosshair
     },
     {
         text = "Client - Optics", func = menu_client_optics
