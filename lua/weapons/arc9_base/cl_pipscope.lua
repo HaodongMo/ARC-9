@@ -1,4 +1,4 @@
-local rtsize = 1024
+local rtsize = math.min(1024, ScrW(), ScrH())
 
 local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)
 local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)

@@ -50,6 +50,10 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     end
 
     if atttbl and atttbl.RTScope and wpn:GetSightAmount() > 0 then
-        wpn:DoCheapScope(wpn:GetRTScopeFOV(), atttbl)
+        local fov = wpn:GetRTScopeFOV()
+
+        fov = wpn:WidescreenFix(wpn:GetViewModelFOV())
+
+        wpn:DoCheapScope(fov, atttbl)
     end
 end)
