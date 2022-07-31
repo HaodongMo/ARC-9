@@ -66,11 +66,6 @@ function SWEP:CreateFlashlights()
 end
 
 function SWEP:KillFlashlights()
-    self:KillFlashlights()
-    -- self:KillFlashlightsWM()
-end
-
-function SWEP:KillFlashlights()
     if !self.Flashlights then return end
 
     for i, k in ipairs(self.Flashlights) do
@@ -83,14 +78,14 @@ function SWEP:KillFlashlights()
 end
 
 function SWEP:DrawFlashlightsWM()
+    if (!GetConVar("arc9_allflash"):GetBool()) and self:GetOwner() != LocalPlayer() then return end
+
     if !self.Flashlights then
         self:CreateFlashlights()
     end
 
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).WModel
-
-        if !model then continue end
 
         local pos, ang
 
@@ -103,6 +98,25 @@ function SWEP:DrawFlashlightsWM()
         end
 
         -- ang:RotateAroundAxis(ang:Up(), 90)
+
+        local tr = util.TraceLine({
+            start = pos,
+            endpos = pos + ang:Forward() * 16,
+            mask = MASK_OPAQUE,
+            filter = LocalPlayer(),
+        })
+        if tr.Fraction < 1 then -- We need to push the flashlight back
+            local tr2 = util.TraceLine({
+                start = pos,
+                endpos = pos - ang:Forward() * 16,
+                mask = MASK_OPAQUE,
+                filter = LocalPlayer(),
+            })
+            -- push it as back as the area behind us allows
+            pos = pos + -ang:Forward() * 16 * math.min(1 - tr.Fraction, tr2.Fraction)
+        else
+            pos = tr.HitPos
+        end
 
         k.light:SetPos(pos)
         k.light:SetAngles(ang)

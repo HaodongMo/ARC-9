@@ -70,7 +70,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             -- if !wm and atttbl.HoloSight then
             --     self:DoHolosight(model, atttbl)
             -- end
-            
+
             if !ARC9.PresetCam then
                 if !wm and atttbl.RTScope then
                     local active = slottbl == self:GetActiveSightSlotTable()
@@ -103,10 +103,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             end
         end
 
-        if !wm then
-            self:DrawFlashlightsVM()
-        else
+        if wm then
             self:DrawFlashlightsWM()
+        else
+            self:DrawFlashlightsVM()
         end
     end
 end

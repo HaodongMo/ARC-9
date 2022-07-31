@@ -49,13 +49,13 @@ hook.Add("PostDrawEffects", "ARC9_CleanFlashlights", function()
 
     ARC9.FlashlightPile = newflashlightpile
 
-    local wpn = LocalPlayer():GetActiveWeapon()
+    // local wpn = LocalPlayer():GetActiveWeapon()
 
-    if !wpn then return end
-    if !IsValid(wpn) then return end
-    if !wpn.ARC9 then return end
+    // if !wpn then return end
+    // if !IsValid(wpn) then return end
+    // if !wpn.ARC9 then return end
 
-    if GetViewEntity() == LocalPlayer() then return end
+    // if GetViewEntity() == LocalPlayer() then return end
 
-    wpn:KillFlashlights()
+    // wpn:KillFlashlights()
 end)

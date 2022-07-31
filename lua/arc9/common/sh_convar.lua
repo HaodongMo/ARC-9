@@ -4,6 +4,11 @@ local conVars = {
         default = "1",
     },
     {
+        name = "allflash",
+        default = "0",
+        client = true
+    },
+    {
         name = "truenames",
         default = "0",
         client = true,
@@ -432,6 +437,11 @@ local function menu_client_ti(panel)
         label = "Automatic Reload",
         command = "arc9_autoreload"
     })
+    panel:AddControl("checkbox", {
+        label = "Other Player Flashlights",
+        command = "arc9_allflash"
+    })
+    panel:ControlHelp( "Other players have proper, visible flashlights in third person. Extremely expensive." )
 
     // Add a slider for FOV
     panel:AddControl("slider", {
