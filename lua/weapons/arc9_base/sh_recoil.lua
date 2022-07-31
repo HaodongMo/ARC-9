@@ -26,19 +26,10 @@ end
 
 SWEP.RecoilPatternCache = {}
 
-function SWEP:ApplyRecoil()
-    local rec = self:GetRecoilAmount()
-
-    local rps = 1
-
-    rec = rec + rps
-    -- local delay = 60 / self:GetProcessedValue("RPM")
-
-    local recoilup = 1
-    local recoilside = 0
+function SWEP:GetRecoilPatternDirection(shot)
+    local dir = 0
 
     local seed = self:GetProcessedValue("RecoilSeed") or self:GetClass()
-    local shot = math.floor(self:GetRecoilAmount()) + 1
 
     if isstring(seed) then
         local numseed = 0
@@ -53,8 +44,6 @@ function SWEP:ApplyRecoil()
     end
 
     seed = seed + shot
-
-    local dir = 0
 
     if self:GetProcessedValue("RecoilLookupTable") then
         dir = self:PatternWithRunOff(self:GetProcessedValue("RecoilLookupTable"), self:GetProcessedValue("RecoilLookupTableOverrun") or self:GetProcessedValue("RecoilLookupTable"), shot)
@@ -79,6 +68,24 @@ function SWEP:ApplyRecoil()
     dir = self:RunHook("Hook_ModifyRecoilDir", dir) or dir
 
     dir = dir - 90
+
+    return dir
+end
+
+function SWEP:ApplyRecoil()
+    local rec = self:GetRecoilAmount()
+
+    local rps = 1
+
+    rec = rec + rps
+    -- local delay = 60 / self:GetProcessedValue("RPM")
+
+    local recoilup = 1
+    local recoilside = 0
+
+    local shot = math.floor(self:GetRecoilAmount()) + 1
+
+    local dir = self:GetRecoilPatternDirection(shot)
 
     dir = math.rad(dir)
 

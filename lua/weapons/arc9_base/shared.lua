@@ -168,10 +168,13 @@ SWEP.ArmDamage = 0.9
 SWEP.LegDamage = 0.9
 
 SWEP.BodyDamageMults = {
-    [HITGROUP_HEAD] = 1,
-    [HITGROUP_CHEST] = 1,
+    [HITGROUP_HEAD] = 2.5,
+    [HITGROUP_CHEST] = 1.15,
+    [HITGROUP_STOMACH] = 1,
     [HITGROUP_LEFTARM] = 1,
     [HITGROUP_RIGHTARM] = 1,
+    [HITGROUP_LEFTLEG] = 0.9,
+    [HITGROUP_RIGHTLEG] = 0.9,
 }
 
 -- Set the multiplier for each part of the body.

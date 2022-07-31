@@ -47,9 +47,87 @@ local function rollallhits(self, range_3, range_1)
     end
 end
 
+local recoil_hits = {}
+
+function SWEP:RollRecoilHit(shot, lastx, lasty)
+    local dir = self:GetRecoilPatternDirection(shot)
+
+    dir = dir + 90
+
+    dir = math.rad(dir)
+
+    recoilup = math.sin(dir)
+    recoilside = math.cos(dir)
+
+    local randomrecoilup = math.Rand(-1, 0)
+    local randomrecoilside = math.Rand(-1, 1)
+
+    recoilup = recoilup * self:GetProcessedValue("RecoilUp")
+    recoilside = recoilside * self:GetProcessedValue("RecoilSide")
+
+    randomrecoilup = randomrecoilup * self:GetProcessedValue("RecoilRandomUp")
+    randomrecoilside = randomrecoilside * self:GetProcessedValue("RecoilRandomSide")
+
+    recoilup = recoilup + randomrecoilup
+    recoilside = recoilside + randomrecoilside
+
+    recoilup = recoilup * self:GetProcessedValue("Recoil")
+    recoilside = recoilside * self:GetProcessedValue("Recoil")
+
+    recoil_hits[shot] = {
+        x = recoilup + randomrecoilup + lastx,
+        y = recoilside + randomrecoilside + lasty
+    }
+end
+
+function SWEP:RollRecoil()
+    recoil_hits = {}
+
+    recoil_hits[1] = {
+        x = 0,
+        y = 0,
+    }
+
+    for i = 2, math.min(self:GetMaxClip1(), 100) do
+        local lastx = recoil_hits[i - 1].x
+        local lasty = recoil_hits[i - 1].y
+
+        self:RollRecoilHit(i, lastx, lasty)
+    end
+end
+
 local bullseye = Material("arc9/bullseye.png", "mips smooth")
+local target_ipsc = Material("arc9/target_ipsc.png", "mips smooth")
 local mat_hit = Material("arc9/hit.png", "mips smooth")
 local mat_hit_dot = Material("arc9/hit_dot.png", "mips smooth")
+local ranger_range = 0
+
+local mat_body = Material("arc9/body.png", "mips smooth")
+local mat_body_arms = Material("arc9/body_arms.png", "mips smooth")
+local mat_body_head = Material("arc9/body_head.png", "mips smooth")
+local mat_body_chest = Material("arc9/body_chest.png", "mips smooth")
+local mat_body_stomach = Material("arc9/body_stomach.png", "mips smooth")
+local mat_body_legs = Material("arc9/body_legs.png", "mips smooth")
+
+local stk_clr = {
+    [1] = Color(75, 25, 25),
+    [2] = Color(40, 20, 20),
+    [3] = Color(50, 50, 50),
+    [4] = Color(75, 75, 75),
+    [5] = Color(100, 100, 100),
+    [6] = Color(120, 120, 120),
+    [7] =  Color(140, 140, 140),
+    [8] = Color(160, 160, 160),
+    [9] = Color(200, 200, 200),
+}
+
+local function getstkcolor(stk)
+    if stk_clr[stk] then
+        return stk_clr[stk]
+    else
+        return stk_clr[9]
+    end
+end
 
 function SWEP:CreateHUD_Bench()
     local bg = self.CustomizeHUD
@@ -57,8 +135,8 @@ function SWEP:CreateHUD_Bench()
     self:ClearTabPanel()
 
     local tp = vgui.Create("DScrollPanel", bg)
-    tp:SetSize(ScreenScale(200), ScrH() - ScreenScale(76 + 4))
-    tp:SetPos(ScrW() - ScreenScale(200 + 12), ScreenScale(76))
+    tp:SetSize(ScreenScale(550), ScrH() - ScreenScale(76 + 4))
+    tp:SetPos(ScrW() - ScreenScale(550 + 12), ScreenScale(76))
 
     local scroll_preset = tp:GetVBar()
     scroll_preset.Paint = function() end
@@ -70,8 +148,181 @@ function SWEP:CreateHUD_Bench()
 
     self.TabPanel = tp
 
+    self:RollRecoil()
+
+    local recoilchart = vgui.Create("DButton", tp)
+    recoilchart:SetSize(ScreenScale(220), ScreenScale(220))
+    recoilchart:SetPos(ScreenScale(310), ScreenScale(0))
+    recoilchart:SetText("")
+    recoilchart.DoClick = function(self2)
+        self:RollRecoil()
+    end
+    recoilchart.Paint = function(self2, w, h)
+        surface.SetDrawColor(ARC9.GetHUDColor("bg", 50))
+        surface.DrawRect(0, 0, w, h)
+
+        surface.SetMaterial(target_ipsc)
+        surface.SetDrawColor(ARC9.GetHUDColor("fg", 75))
+        surface.DrawTexturedRect(0, 0, w, h)
+
+        local scale = ScreenScale(8)
+
+        for i = 1, math.min(self:GetMaxClip1(), 100) do
+            local hit = recoil_hits[i]
+            local x = -hit.x * scale + (w / 2)
+            local y = -hit.y * scale + (h / 2)
+
+            local s = ScreenScale(12)
+
+            surface.SetMaterial(mat_hit)
+            surface.SetDrawColor(ARC9.GetHUDColor("fg", 75))
+            if i == 1 then
+                surface.SetDrawColor(Color(255, 0, 0, 75))
+            end
+            surface.DrawTexturedRect(x - (s / 2), y - (s / 2), s, s)
+
+            if i < math.min(self:GetMaxClip1(), 100) then
+                local hit2 = recoil_hits[i + 1]
+                local x2 = -hit2.x * scale + (w / 2)
+                local y2 = -hit2.y * scale + (h / 2)
+
+                surface.DrawLine(x, y, x2, y2)
+            end
+        end
+
+        local txt_bottom = "ARCTIC SYSTEMS RECOIL TEST"
+        surface.SetFont("ARC9_6")
+        local tbw = surface.GetTextSize(txt_bottom)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos((w - tbw) / 2, h - ScreenScale(12))
+        surface.DrawText(txt_bottom)
+    end
+
+    local dmgpanel = vgui.Create("DPanel", tp)
+    dmgpanel:SetSize(ScreenScale(80), ScreenScale(100))
+    dmgpanel:SetPos(ScreenScale(10), 0)
+    dmgpanel.Paint = function(span, w, h)
+        if !IsValid(self) then return end
+
+        surface.SetDrawColor(ARC9.GetHUDColor("bg", 50))
+        surface.DrawRect(0, 0, w, h)
+
+        local dmgv = self:GetDamageAtRange(ranger_range)
+        local bodydamage = self:GetProcessedValue("BodyDamageMults")
+
+        local dmg_head = dmgv * self:GetProcessedValue("HeadshotDamage") * (bodydamage[HITGROUP_HEAD] or 2)
+        local dmg_chest = dmgv * self:GetProcessedValue("ChestDamage") * (bodydamage[HITGROUP_CHEST] or 1)
+        local dmg_stomach = dmgv * self:GetProcessedValue("StomachDamage") * (bodydamage[HITGROUP_STOMACH] or 1)
+        local dmg_legs = dmgv * self:GetProcessedValue("LegDamage") * ((bodydamage[HITGROUP_LEFTLEG] or 0.25) + (bodydamage[HITGROUP_RIGHTLEG] or 0.25)) / 2
+        local dmg_arms = dmgv * self:GetProcessedValue("ArmDamage") * ((bodydamage[HITGROUP_LEFTARM] or 0.25) + (bodydamage[HITGROUP_RIGHTARM] or 0.25)) / 2
+
+        local stk_head = math.ceil(100 / dmg_head)
+        local stk_chest = math.ceil(100 / dmg_chest)
+        local stk_stomach = math.ceil(100 / dmg_stomach)
+        local stk_legs = math.ceil(100 / dmg_legs)
+        local stk_arms = math.ceil(100 / dmg_arms)
+ 
+        // draw the body
+
+        local body_w = ScreenScale(30)
+        local body_h = ScreenScale(80)
+        local body_x = (w - body_w) / 2
+        local body_y = (h - body_h) / 2
+
+        surface.SetDrawColor(Color(150, 150, 150, 255))
+        surface.SetMaterial(mat_body)
+        surface.DrawTexturedRect(body_x, body_y, body_w, body_h)
+
+        local txt_dmg_head = tostring(math.Round(dmg_head, 0)) .. "DMG"
+        local txt_dmg_chest = tostring(math.Round(dmg_chest, 0)) .. "DMG"
+        local txt_dmg_stomach = tostring(math.Round(dmg_stomach, 0)) .. "DMG"
+        local txt_dmg_legs = tostring(math.Round(dmg_legs, 0)) .. "DMG"
+        local txt_dmg_arms = tostring(math.Round(dmg_arms, 0)) .. "DMG"
+
+        surface.SetDrawColor(getstkcolor(stk_head))
+        surface.SetMaterial(mat_body_head)
+        surface.DrawTexturedRect(body_x, body_y, body_w, body_h)
+
+        surface.SetDrawColor(getstkcolor(stk_chest))
+        surface.SetMaterial(mat_body_chest)
+        surface.DrawTexturedRect(body_x, body_y, body_w, body_h)
+
+        surface.SetDrawColor(getstkcolor(stk_stomach))
+        surface.SetMaterial(mat_body_stomach)
+        surface.DrawTexturedRect(body_x, body_y, body_w, body_h)
+
+        surface.SetDrawColor(getstkcolor(stk_legs))
+        surface.SetMaterial(mat_body_legs)
+        surface.DrawTexturedRect(body_x, body_y, body_w, body_h)
+
+        surface.SetDrawColor(getstkcolor(stk_arms))
+        surface.SetMaterial(mat_body_arms)
+        surface.DrawTexturedRect(body_x, body_y, body_w, body_h)
+
+        surface.SetFont("ARC9_6")
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos(ScreenScale(4), ScreenScale(12))
+        surface.DrawText(txt_dmg_head)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawLine(ScreenScale(4), ScreenScale(18), ScreenScale(38), ScreenScale(18))
+
+        surface.SetFont("ARC9_6")
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos(ScreenScale(4), ScreenScale(25))
+        surface.DrawText(txt_dmg_chest)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawLine(ScreenScale(4), ScreenScale(25 + 6), ScreenScale(35), ScreenScale(25 + 6))
+
+        surface.SetFont("ARC9_6")
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos(ScreenScale(4), ScreenScale(35))
+        surface.DrawText(txt_dmg_stomach)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawLine(ScreenScale(4), ScreenScale(35 + 6), ScreenScale(40), ScreenScale(35 + 6))
+
+        surface.SetFont("ARC9_6")
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos(ScreenScale(4), ScreenScale(50))
+        surface.DrawText(txt_dmg_arms)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawLine(ScreenScale(4), ScreenScale(50 + 6), ScreenScale(27), ScreenScale(50 + 6))
+
+        surface.SetFont("ARC9_6")
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos(ScreenScale(4), ScreenScale(70))
+        surface.DrawText(txt_dmg_legs)
+
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.DrawLine(ScreenScale(4), ScreenScale(70 + 6), ScreenScale(30), ScreenScale(70 + 6))
+
+        local txt_tr = tostring(self:GetProcessedValue("Num")) .. "x PROJ"
+        surface.SetFont("ARC9_6")
+        local trw = surface.GetTextSize(txt_tr)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos(w - trw - ScreenScale(2), ScreenScale(10))
+        surface.DrawText(txt_tr)
+
+        local txt_corner = "BALLISTICS DUMMY TEST"
+        surface.SetFont("ARC9_6")
+        local tw = surface.GetTextSize(txt_corner)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos((w - tw) / 2, ScreenScale(1))
+        surface.DrawText(txt_corner)
+
+        local txt_bottom = "EFFECT AT RANGE " .. tostring(math.Round(ARC9.HUToM * ranger_range, 0)) .. "m"
+        surface.SetFont("ARC9_6")
+        local tbw = surface.GetTextSize(txt_bottom)
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextPos((w - tbw) / 2, h - ScreenScale(8))
+        surface.DrawText(txt_bottom)
+    end
+
     local ranger = vgui.Create("DPanel", tp)
-    ranger:SetPos(0, 0)
+    ranger:SetPos(ScreenScale(100), 0)
     ranger:SetSize(ScreenScale(200), ScreenScale(100))
     ranger.Paint = function(self2, w, h)
         if !IsValid(self) then return end
@@ -86,6 +337,8 @@ function SWEP:CreateHUD_Bench()
         local range_max = self:GetValue("RangeMax")
 
         surface.SetDrawColor(ARC9.GetHUDColor("fg", 75))
+
+        ranger_range = range_min
 
         local range_1_y = 2 * (h / 5)
         local range_2_y = 4 * (h / 5)
@@ -140,6 +393,8 @@ function SWEP:CreateHUD_Bench()
                     range = Lerp(d, range_min, range_max)
                     range_m_x = mouse_x
                 end
+
+                ranger_range = range
 
                 local dmg = self:GetDamageAtRange(range)
 
@@ -230,7 +485,7 @@ function SWEP:CreateHUD_Bench()
 
     local ballisticchart = vgui.Create("DButton", tp)
     ballisticchart:SetSize(ScreenScale(200), ScreenScale(110))
-    ballisticchart:SetPos(0, ScreenScale(110))
+    ballisticchart:SetPos(ScreenScale(100), ScreenScale(110))
     ballisticchart:SetText("")
     ballisticchart.DoClick = function(self2)
         rollallhits(self, range_3, range_1)
@@ -268,7 +523,7 @@ function SWEP:CreateHUD_Bench()
         local range_3_txt = self:RangeUnitize(range_3)
 
         surface.SetMaterial(bullseye)
-        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.SetDrawColor(ARC9.GetHUDColor("fg", 50))
         surface.DrawTexturedRect(0, 0, s, s)
 
         local r_1_x, r_1_y = self2:LocalToScreen(0, 0)
@@ -295,7 +550,7 @@ function SWEP:CreateHUD_Bench()
         surface.DrawText(range_1_txt)
 
         surface.SetMaterial(bullseye)
-        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.SetDrawColor(ARC9.GetHUDColor("fg", 50))
         surface.DrawTexturedRect(s, 0, s, s)
 
         render.SetScissorRect(r_1_x + s, r_1_y, r_1_x + (s * 2), r_1_y + s, true)
