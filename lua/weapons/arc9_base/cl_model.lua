@@ -122,9 +122,13 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
 
     aang:Set(bang)
 
-    aang:RotateAroundAxis(aang:Right(), offset_ang.p)
-    aang:RotateAroundAxis(aang:Up(), offset_ang.y)
-    aang:RotateAroundAxis(aang:Forward(), offset_ang.r)
+    local forward = aang:Forward()
+    local right = aang:Right()
+    local up = aang:Up()
+
+    aang:RotateAroundAxis(forward, offset_ang.r)
+    aang:RotateAroundAxis(right, offset_ang.p)
+    aang:RotateAroundAxis(up, offset_ang.y)
 
     if !nomodeloffset then
         local moffset = (atttbl.ModelOffset or Vector(0, 0, 0)) * (slottbl.Scale or 1)

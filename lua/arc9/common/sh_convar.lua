@@ -30,13 +30,13 @@ local conVars = {
         max = 1,
     },
     {
-        name = "cross_r",
-        default = "255",
+        name = "cross_enable",
+        default = "1",
         client = true
     },
     {
-        name = "cross_enable",
-        default = "1",
+        name = "cross_r",
+        default = "255",
         client = true
     },
     {
@@ -47,6 +47,36 @@ local conVars = {
     {
         name = "cross_b",
         default = "255",
+        client = true
+    },
+    {
+        name = "cross_a",
+        default = "150",
+        client = true
+    },
+    {
+        name = "cross_out_r",
+        default = "255",
+        client = true
+    },
+    {
+        name = "cross_out_g",
+        default = "255",
+        client = true
+    },
+    {
+        name = "cross_out_b",
+        default = "255",
+        client = true
+    },
+    {
+        name = "cross_out_a",
+        default = "150",
+        client = true
+    },
+    {
+        name = "cross_out_thickness",
+        default = "1",
         client = true
     },
     {
