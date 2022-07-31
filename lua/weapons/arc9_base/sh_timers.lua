@@ -64,6 +64,7 @@ function SWEP:ProcessTimers()
 end
 
 SWEP.SoundTableBodygroups = {}
+SWEP.SoundTablePoseParams = {}
 
 function SWEP:PlaySoundTable(soundtable, mult)
     --if CLIENT and game.SinglePlayer() then return end
@@ -89,15 +90,11 @@ function SWEP:PlaySoundTable(soundtable, mult)
             end
 
             if v.pp then
-                self.PoseParamState[v.pp] = v.ppv or 0
+                self.PoseParamState[v.pp] = v.ppv
             end
 
             if v.ind then
-                if v.bg or 0 <= -1 then
-                    self.SoundTableBodygroups[v.ind] = nil
-                else
-                    self.SoundTableBodygroups[v.ind] = v.bg
-                end
+                self.SoundTableBodygroups[v.ind] = v.bg or nil
             end
 
             if v.FOV then

@@ -67,6 +67,14 @@ function SWEP:DoBodygroups(wm, cm)
         mdl:SetBodygroup(i, k)
     end
 
+    for i = 0, mdl:GetNumPoseParameters() -1 do
+        mdl:SetPoseParameter(i, 0)
+
+        if self.SoundTablePoseParams[mdl:GetPoseParameterName(i)] then
+            mdl:SetPoseParameter(i, self.SoundTablePoseParams[mdl:GetPoseParameterName(i)])
+        end
+    end
+
     local hide = false
 
     if self.CustomizeDelta > 0 then
