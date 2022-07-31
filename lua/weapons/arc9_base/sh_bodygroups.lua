@@ -63,6 +63,10 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
+    for i, k in pairs(self.SoundTableBodygroups) do
+        mdl:SetBodygroup(i, k)
+    end
+
     local hide = false
 
     if self.CustomizeDelta > 0 then

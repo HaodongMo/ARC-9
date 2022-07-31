@@ -63,6 +63,8 @@ function SWEP:ProcessTimers()
     self.ActiveTimers = keeptimers
 end
 
+SWEP.SoundTableBodygroups = {}
+
 function SWEP:PlaySoundTable(soundtable, mult)
     --if CLIENT and game.SinglePlayer() then return end
     local owner = self:GetOwner()
@@ -88,6 +90,14 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
             if v.pp then
                 self.PoseParamState[v.pp] = v.ppv or 0
+            end
+
+            if v.ind then
+                if v.bg or 0 <= -1 then
+                    self.SoundTableBodygroups[v.ind] = nil
+                else
+                    self.SoundTableBodygroups[v.ind] = v.bg
+                end
             end
 
             if v.FOV then
