@@ -75,28 +75,13 @@ end
 function SWEP:LoadPresetFromTable(tbl)
     self.Attachments = baseclass.Get(self:GetClass()).Attachments
 
-    -- self:StripWeapon()
     for slot, slottbl in ipairs(self.Attachments) do
         slottbl.Installed = nil
         slottbl.SubAttachments = nil
     end
 
-    -- for i, k in pairs(self.Attachments) do
-    --     local slottbl = tbl[i]
-    --     if !slottbl.Installed then
-    --         k.Installed = nil
-    --         continue
-    --     end
+    self:PruneAttachments()
 
-    --     local atttbl = ARC9.GetAttTable(slottbl.Installed)
-    --     if !atttbl then k.Installed = nil continue end
-
-    --     self.Attachments[i].Installed = slottbl.Installed
-    --     self.Attachments[i].ToggleNum = slottbl.ToggleNum
-    --     self.Attachments[i].SubAttachments = slottbl.SubAttachments
-    -- end
-
-    -- self:SendWeapon()
     self:BuildSubAttachments(tbl)
     self:PostModify()
 end
