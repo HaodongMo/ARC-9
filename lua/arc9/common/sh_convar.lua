@@ -385,11 +385,6 @@ end
 if CLIENT then
 
 local function menu_client_ti(panel)
-    -- panel:AddControl("checkbox", {
-    --     label = "Reload Automatically",
-    --     command = "arc9_autoreload"
-    -- })
-    -- This doesn't exist.
     panel:AddControl("checkbox", {
         label = "Auto-Save Weapon",
         command = "arc9_autosave"
