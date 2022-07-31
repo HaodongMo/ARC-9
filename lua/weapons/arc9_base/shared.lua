@@ -864,26 +864,6 @@ SWEP.AttachmentElements = {
     --     Bodygroups = {
     --         {1, 1}
     --     },
-    --     Bonemods = {
-    --         ["body"] = {
-    --             Pos = Vector(0, 0, 0),
-    --             Ang = Angle(0, 0, 0),
-    --             Scale = 1,
-    --         }
-    --     },
-    --     PoseParameters = {
-    --         ["blople"] = 0.5
-    --     },
-    --     Models = {
-    --         {
-    --             Model = "",
-    --             Scale = 1,
-    --             Pos = Vector(0, 0, 0),
-    --             Ang = Angle(0, 0, 0),
-    --             Bone = "",
-    --             ScaleVector = Vector(1, 1, 1)
-    --         }
-    --     }
     --     -- Other attachment parameters work here
     -- }
 }
@@ -1034,9 +1014,9 @@ SWEP.Animations = {
     --             att = nil, -- on attachment point X
     --             mag = 100, -- with magnitude whatever this is
     --             ind = 0, -- change bodygroup,
-    --             bg = 0, -- -1 to reset
+    --             bg = 0, -- nil to reset
     --             pp = "", -- pose parameter name
-    --             ppv = 0, -- pose parameter value
+    --             ppv = 0, -- pose parameter value, set to nil to reset
     --             hide = 1, -- hide reloadhidebonetables table, 0 for none
     --             FOV = -3, -- change fov in anim, see SWEP.FOV_Recoil_x for detials
     --             FOV_Start = 0.2,

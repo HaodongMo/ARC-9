@@ -82,6 +82,9 @@ function SWEP:GiveDefaultAmmo()
     self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * 2, self:GetValue("Ammo"))
 end
 
+local v0 = Vector(0, 0, 0)
+local v1 = Vector(1, 1, 1)
+
 function SWEP:Holster(wep)
     -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
     if game.SinglePlayer() and CLIENT then return end
@@ -123,6 +126,12 @@ function SWEP:Holster(wep)
 
         self:GetVM():SetSubMaterial()
         self:GetVM():SetMaterial()
+
+        if CLIENT then
+            for i = 0, self:GetVM():GetBoneCount() do
+                self:GetVM():ManipulateBoneScale(boneid, v1)
+            end
+        end
 
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
