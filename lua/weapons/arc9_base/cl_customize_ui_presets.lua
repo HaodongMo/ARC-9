@@ -1,7 +1,159 @@
 local mat_default = Material("arc9/arccw_bird.png")
 local mat_new = Material("arc9/plus.png")
 local mat_reset = Material("arc9/reset.png")
+local mat_export = Material("arc9/arrow_up.png")
+local mat_import = Material("arc9/arrow_down.png")
 local nextpreset = 0
+
+function SWEP:CreatePresetExport()
+    local bg = vgui.Create("DFrame")
+    bg:SetPos(0, 0)
+    bg:SetSize(ScrW(), ScrH())
+    bg:SetText("")
+    bg:SetTitle("")
+    bg:SetDraggable(false)
+    bg:ShowCloseButton(false)
+    bg.Paint = function(span)
+        if !IsValid(self) then return end
+        surface.SetDrawColor(0, 0, 0, 180)
+        surface.DrawRect(0, 0, ScrW(), ScrH())
+    end
+    bg:MakePopup()
+
+    local text = vgui.Create("DTextEntry", bg)
+    text:SetSize(ScreenScale(256), ScreenScale(26))
+    text:Center()
+    text:RequestFocus()
+    text:SetFont("ARC9_24")
+    text:SetText(self:GeneratePresetExportCode())
+
+    text.OnEnter = function(spaa, kc)
+        bg:Close()
+        bg:Remove()
+    end
+
+    local cancel = vgui.Create("DButton", bg)
+    cancel:SetSize((ScreenScale(256) - ScreenScale(2)) / 2, ScreenScale(14))
+    cancel:SetText("")
+    cancel:SetPos(((ScrW() - ScreenScale(256)) / 2) + ScreenScale(128 + 1), ((ScrH() - ScreenScale(14)) / 2) + ScreenScale(26) + ScreenScale(2))
+
+    cancel.OnMousePressed = function(spaa, kc)
+        bg:Close()
+        bg:Remove()
+    end
+
+    cancel.Paint = function(spaa, w, h)
+        if !self:IsValid() then return end
+        local Bfg_col = ARC9.GetHUDColor("shadow")
+
+        if spaa:IsHovered() then
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        end
+
+        surface.DrawRect(0, 0, w, h)
+
+        local txt = "Close"
+
+        surface.SetTextColor(Bfg_col)
+        surface.SetTextPos(ScreenScale(2), ScreenScale(1))
+        surface.SetFont("ARC9_12")
+        surface.DrawText(txt)
+    end
+end
+
+function SWEP:CreatePresetImport()
+    local bg = vgui.Create("DFrame")
+    bg:SetPos(0, 0)
+    bg:SetSize(ScrW(), ScrH())
+    bg:SetText("")
+    bg:SetTitle("")
+    bg:SetDraggable(false)
+    bg:ShowCloseButton(false)
+    bg.Paint = function(span)
+        if !IsValid(self) then return end
+        surface.SetDrawColor(0, 0, 0, 180)
+        surface.DrawRect(0, 0, ScrW(), ScrH())
+    end
+    bg:MakePopup()
+
+    local text = vgui.Create("DTextEntry", bg)
+    text:SetSize(ScreenScale(256), ScreenScale(26))
+    text:Center()
+    text:RequestFocus()
+    text:SetFont("ARC9_24")
+    text:SetText("")
+
+    text.OnEnter = function(spaa, kc)
+        self:LoadPresetFromCode(spaa:GetText())
+
+        bg:Close()
+        bg:Remove()
+    end
+
+    local accept = vgui.Create("DButton", bg)
+    accept:SetSize((ScreenScale(256) - ScreenScale(2)) / 2, ScreenScale(14))
+    accept:SetText("")
+    accept:SetPos((ScrW() - ScreenScale(256)) / 2, ((ScrH() - ScreenScale(14)) / 2) + ScreenScale(26) + ScreenScale(2))
+
+    accept.OnMousePressed = function(spaa, kc)
+        self:LoadPresetFromCode(text:GetText())
+
+        bg:Close()
+        bg:Remove()
+    end
+
+    accept.Paint = function(spaa, w, h)
+        if !self:IsValid() then return end
+        local Bfg_col = ARC9.GetHUDColor("shadow")
+
+        if spaa:IsHovered() then
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        end
+
+        surface.DrawRect(0, 0, w, h)
+
+        local txt = "Import"
+
+        surface.SetTextColor(Bfg_col)
+        surface.SetTextPos(ScreenScale(2), ScreenScale(1))
+        surface.SetFont("ARC9_12")
+        surface.DrawText(txt)
+    end
+
+    local cancel = vgui.Create("DButton", bg)
+    cancel:SetSize((ScreenScale(256) - ScreenScale(2)) / 2, ScreenScale(14))
+    cancel:SetText("")
+    cancel:SetPos(((ScrW() - ScreenScale(256)) / 2) + ScreenScale(128 + 1), ((ScrH() - ScreenScale(14)) / 2) + ScreenScale(26) + ScreenScale(2))
+
+    cancel.OnMousePressed = function(spaa, kc)
+        bg:Close()
+        bg:Remove()
+    end
+
+    cancel.Paint = function(spaa, w, h)
+        if !self:IsValid() then return end
+        local Bfg_col = ARC9.GetHUDColor("shadow")
+
+        if spaa:IsHovered() then
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        end
+
+        surface.DrawRect(0, 0, w, h)
+
+        local txt = "Cancel"
+
+        surface.SetTextColor(Bfg_col)
+        surface.SetTextPos(ScreenScale(2), ScreenScale(1))
+        surface.SetFont("ARC9_12")
+        surface.DrawText(txt)
+    end
+end
 
 function SWEP:CreatePresetName()
     local bg = vgui.Create("DFrame")
@@ -182,7 +334,7 @@ function SWEP:CreateHUD_Presets(scroll)
         if !IsValid(self) then return end
 
         local col1 = ARC9.GetHUDColor("fg")
-        local name = "NEW"
+        local name = "SAVE"
         local icon = mat_new
         local hasbg = false
 
@@ -255,6 +407,134 @@ function SWEP:CreateHUD_Presets(scroll)
             surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
             self.CustomizeHints["Select"]   = "Reset to default"
             self.CustomizeHints["Deselect"] = ""
+
+            if self2:IsHovered() then
+                surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            else
+                surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+            end
+
+            surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
+            hasbg = true
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+            surface.DrawRect(0, 0, w, h)
+        end
+
+        if !hasbg then
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.SetMaterial(icon)
+            surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
+        end
+
+        surface.SetDrawColor(col1)
+        surface.SetMaterial(icon)
+        surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+
+        if !hasbg then
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(ScreenScale(14), ScreenScale(1))
+            surface.SetFont("ARC9_10")
+            self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+        end
+
+        surface.SetTextColor(col1)
+        surface.SetTextPos(ScreenScale(13), 0)
+        surface.SetFont("ARC9_10")
+        self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+    end
+
+    local exportbtn = vgui.Create("DButton", scroll)
+    exportbtn:SetSize(ScreenScale(48), ScreenScale(48))
+    exportbtn:DockMargin(ScreenScale(2), 0, 0, 0)
+    exportbtn:Dock(LEFT)
+    exportbtn:SetText("")
+    scroll:AddPanel(exportbtn)
+
+    exportbtn.DoClick = function(self2)
+        if nextpreset > CurTime() then return end
+        nextpreset = CurTime() + 1
+
+        self:CreatePresetExport()
+    end
+
+    exportbtn.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
+        local col1 = ARC9.GetHUDColor("fg")
+        local name = "EXPORT"
+        local icon = mat_export
+        local hasbg = false
+
+        if self2:IsHovered() then
+            col1 = ARC9.GetHUDColor("shadow")
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+            self.CustomizeHints["Select"]   = "Export Preset"
+
+            if self2:IsHovered() then
+                surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            else
+                surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+            end
+
+            surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
+            hasbg = true
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+            surface.DrawRect(0, 0, w, h)
+        end
+
+        if !hasbg then
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.SetMaterial(icon)
+            surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
+        end
+
+        surface.SetDrawColor(col1)
+        surface.SetMaterial(icon)
+        surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+
+        if !hasbg then
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(ScreenScale(14), ScreenScale(1))
+            surface.SetFont("ARC9_10")
+            self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+        end
+
+        surface.SetTextColor(col1)
+        surface.SetTextPos(ScreenScale(13), 0)
+        surface.SetFont("ARC9_10")
+        self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+    end
+
+    local importbtn = vgui.Create("DButton", scroll)
+    importbtn:SetSize(ScreenScale(48), ScreenScale(48))
+    importbtn:DockMargin(ScreenScale(2), 0, 0, 0)
+    importbtn:Dock(LEFT)
+    importbtn:SetText("")
+    scroll:AddPanel(importbtn)
+
+    importbtn.DoClick = function(self2)
+        if nextpreset > CurTime() then return end
+        nextpreset = CurTime() + 1
+
+        self:CreatePresetImport()
+    end
+
+    importbtn.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
+        local col1 = ARC9.GetHUDColor("fg")
+        local name = "IMPORT"
+        local icon = mat_import
+        local hasbg = false
+
+        if self2:IsHovered() then
+            col1 = ARC9.GetHUDColor("shadow")
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
+            surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+            self.CustomizeHints["Select"]   = "Import Preset"
 
             if self2:IsHovered() then
                 surface.SetDrawColor(ARC9.GetHUDColor("hi"))

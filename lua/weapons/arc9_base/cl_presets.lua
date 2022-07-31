@@ -101,6 +101,16 @@ function SWEP:LoadPresetFromTable(tbl)
     self:PostModify()
 end
 
+function SWEP:LoadPresetFromCode(str)
+    local tbl = self:ImportPresetCode(str)
+
+    if !tbl then print("Invalid export code! Are you sure you copied the full thing correctly?") return end
+
+    self:LoadPresetFromTable(tbl)
+
+    surface.PlaySound("arc9/preset_install.ogg")
+end
+
 function SWEP:LoadPreset(filename)
     if LocalPlayer() != self:GetOwner() then return end
 
@@ -303,8 +313,9 @@ end
 
 function SWEP:GeneratePresetExportCode()
     local str = self:GetPresetJSON()
+
     str = util.Compress(str)
-    str = util.Base64Encode(str)
+    str = util.Base64Encode(str, true)
 
     return str
 end
@@ -313,7 +324,9 @@ function SWEP:ImportPresetCode(str)
     str = util.Base64Decode(str)
     str = util.Decompress(str)
 
-    local tbl = util.JSONToTable(str) or {}
+    if !str then return end
+
+    local tbl = util.JSONToTable(str)
 
     return tbl
 end

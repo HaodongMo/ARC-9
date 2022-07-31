@@ -64,7 +64,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     local offset_ang = slottbl.Ang or Angle(0, 0, 0)
     local bpos, bang
 
-    if parentmdl then
+    if parentmdl and bone then
         local boneindex = parentmdl:LookupBone(bone)
 
         if !boneindex then return Vector(0, 0, 0), Angle(0, 0, 0) end
