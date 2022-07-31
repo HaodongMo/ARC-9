@@ -17,7 +17,6 @@ function SWEP:Deploy()
     self:SetRecoilSide(0)
     self:SetPrimedAttack(false)
     self:SetReloading(false)
-    self:SetHolsterTime(0)
     self:SetRequestReload(false)
     self:SetEmptyReload(false)
 
@@ -86,6 +85,9 @@ end
 function SWEP:Holster(wep)
     -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
     if game.SinglePlayer() and CLIENT then return end
+
+    if CLIENT and self:GetOwner() != LocalPlayer() then return end
+    // Really stupid that this happens
 
     if self:GetOwner():IsNPC() then
         return
