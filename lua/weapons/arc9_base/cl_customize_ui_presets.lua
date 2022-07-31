@@ -155,7 +155,7 @@ function SWEP:CreateHUD_Presets(scroll)
             if string.StartWith(preset, txt) then
                 local qsnum = tonumber(string.sub(preset, string.len(txt) + 1))
 
-                print(string.sub(preset, string.len(txt) + 1))
+                // print(string.sub(preset, string.len(txt) + 1))
 
                 if qsnum and qsnum > num then
                     num = qsnum

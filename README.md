@@ -49,6 +49,10 @@ You could also opt to combine these methods together - it's common for an attach
  - Snazzy new UI
  - Better standard weapon ecosystem
  - Third Person IK animations
+ - New and improved Modifier system
+ - New RT scopes
+ - Dynamic camo support
+ - Controller support
 
 ### New Recoil
 

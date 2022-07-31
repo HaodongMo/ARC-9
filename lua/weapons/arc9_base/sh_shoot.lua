@@ -120,6 +120,13 @@ function SWEP:PrimaryAttack()
     if self:GetProcessedValue("UBGLInsteadOfSights") then
         self:ToggleUBGL(false)
     end
+
+    if self:GetSafe() then
+        self:ToggleSafety(false)
+        self:SetNeedTriggerPress(true)
+        return
+    end
+
     self:DoPrimaryAttack()
 end
 
@@ -156,12 +163,6 @@ function SWEP:DoPrimaryAttack()
     -- end
 
     if self:GetNeedTriggerPress() then return end
-
-    if self:GetSafe() then
-        self:ToggleSafety(false)
-        self:SetNeedTriggerPress(true)
-        return
-    end
 
     if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
         self:MeleeAttack()

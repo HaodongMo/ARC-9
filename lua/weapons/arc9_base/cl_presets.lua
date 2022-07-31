@@ -72,24 +72,7 @@ function SWEP:ClearPreset()
     self:LoadPreset("default")
 end
 
-function SWEP:LoadPreset(filename)
-    if LocalPlayer() != self:GetOwner() then return end
-
-    filename = filename or "autosave"
-
-    if filename == "autosave" then
-        if !GetConVar("arc9_autosave"):GetBool() then return end
-    end
-
-    filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename .. ".txt"
-
-    if !file.Exists(filename, "DATA") then return end
-
-    local f = file.Open(filename, "r", "DATA")
-    if !f then return end
-
-    local tbl = util.JSONToTable(f:Read())
-
+function SWEP:LoadPresetFromTable(tbl)
     self.Attachments = baseclass.Get(self:GetClass()).Attachments
 
     -- self:StripWeapon()
@@ -113,11 +96,30 @@ function SWEP:LoadPreset(filename)
     --     self.Attachments[i].SubAttachments = slottbl.SubAttachments
     -- end
 
-    f:Close()
-
     -- self:SendWeapon()
     self:BuildSubAttachments(tbl)
     self:PostModify()
+end
+
+function SWEP:LoadPreset(filename)
+    if LocalPlayer() != self:GetOwner() then return end
+
+    filename = filename or "autosave"
+
+    if filename == "autosave" then
+        if !GetConVar("arc9_autosave"):GetBool() then return end
+    end
+
+    filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename .. ".txt"
+
+    if !file.Exists(filename, "DATA") then return end
+
+    local f = file.Open(filename, "r", "DATA")
+    if !f then return end
+
+    self:LoadPresetFromTable(self:ImportPresetCode(f:Read()))
+
+    f:Close()
 end
 
 local ratio = ScrW() / ScrH()
@@ -130,18 +132,7 @@ SWEP.PresetCapture = nil
 function SWEP:SavePreset(presetname)
     presetname = presetname or "autosave"
 
-    local tbl = {}
-
-    for i, k in pairs(self.Attachments or {}) do
-        tbl[i] = {
-            Installed = k.Installed,
-            ToggleNum = k.ToggleNum,
-            SubAttachments = k.SubAttachments
-        }
-        -- self:WriteAttachmentTree(self.Attachments[i])
-    end
-
-    local str = util.TableToJSON(tbl, false)
+    local str = self:GeneratePresetExportCode()
 
     local filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/" .. presetname
 
@@ -284,4 +275,45 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     self.AutoSelectIcon = Material("data/" .. filename .. "." .. ARC9.PresetIconFormat, "smooth")
     self.InvalidateSelectIcon = false
+end
+
+function SWEP:PruneUnnecessaryAttachmentDataRecursive(tbl)
+    for i, k in pairs(tbl) do
+        if i != "Installed" and i != "SubAttachments" and i != "ToggleNum" then
+            tbl[i] = nil
+        end
+    end
+
+    if table.Count(tbl.SubAttachments or {}) > 0 then
+        self:PruneUnnecessaryAttachmentDataRecursive(tbl.SubAttachments)
+    end
+end
+
+function SWEP:GetPresetJSON()
+    local newtbl = {}
+
+    newtbl = table.Copy(self.Attachments)
+
+    for i, k in pairs(newtbl) do
+        self:PruneUnnecessaryAttachmentDataRecursive(k)
+    end
+
+    return util.TableToJSON(newtbl)
+end
+
+function SWEP:GeneratePresetExportCode()
+    local str = self:GetPresetJSON()
+    str = util.Compress(str)
+    str = util.Base64Encode(str)
+
+    return str
+end
+
+function SWEP:ImportPresetCode(str)
+    str = util.Base64Decode(str)
+    str = util.Decompress(str)
+
+    local tbl = util.JSONToTable(str) or {}
+
+    return tbl
 end
