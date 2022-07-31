@@ -154,6 +154,7 @@ Only terminology that may cause confusion is laid out. Any terms that are standa
  ## List of Conditions
 Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS time when crouching.
 
+ - **NPC**: Enabled when the owner is an NPC.
  - **True**: Enabled when TrueNames is active.
  - **Silenced**: Enabled when a silencer is installed.
  - **UBGL**: Enabled when an underbarrel weapon is active.

@@ -178,6 +178,10 @@ function SWEP:GetProcessedValue(val, base)
         return true
     end
 
+    if owner:IsNPC() then
+        stat = self:GetValue(val, stat, "NPC")
+    end
+
     if GetConVar("arc9_truenames"):GetBool() then
         stat = self:GetValue(val, stat, "True")
     end

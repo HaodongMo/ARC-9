@@ -521,21 +521,32 @@ function ARC9.DrawHUD()
         -- surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
         -- surface.DrawRect( 8, 4, 254, 110 )
 
-        surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
-        surface.DrawRect( 0, 0, 254, 110 )
+        if GetConVar("arc9_hud_compact"):GetBool() then
+            surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
+            surface.DrawRect( 0, 0, 254, 80 )
 
-        surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 100))
-        surface.SetMaterial(hud_bg)
-        surface.DrawTexturedRect(0, 0, 254, 110)
+            surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 100))
+            surface.SetMaterial(hud_bg)
+            surface.DrawTexturedRect(0, 0, 254, 80)
 
-        surface.DrawLine(0, 115, 254, 115)
+            surface.DrawLine(0, 85, 254, 85)
+        else
+            surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
+            surface.DrawRect( 0, 0, 254, 110 )
+
+            surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 100))
+            surface.SetMaterial(hud_bg)
+            surface.DrawTexturedRect(0, 0, 254, 110)
+
+            surface.DrawLine(0, 115, 254, 115)
+        end
 
         -- surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
         -- surface.DrawRect( 0, 0, 140, 70 )
 
         local deco_x = 6
         local deco_y = 2
-        local deco = "ARC9 UNIVERSAL HUD v1.03"
+        local deco = "ARCTIC SYSTEMS HUD v" .. ARC9.Version
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
         surface.SetFont("ARC9_Deco_8_Unscaled")
@@ -774,86 +785,88 @@ function ARC9.DrawHUD()
             CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_Unscaled" }, fmh_text )
         end
 
-        // bullet fields
+        if !GetConVar("arc9_hud_compact"):GetBool() then
+            // bullet fields
 
-        local b_alpha = 225
+            local b_alpha = 225
 
-        local b_m_left = -8
-        local b_m_down = 72
-        local b_m_margin = 2
+            local b_m_left = -8
+            local b_m_down = 72
+            local b_m_margin = 2
 
-        local row_size = 15
+            local row_size = 15
 
-        if showheat then
-            row_size = 10
-        end
-
-        local row1_bullets = 0
-        local row2_bullets = 0
-        local rackrise = 0
-
-        local disparity = weapon_clipsize % row_size
-
-        local corrected = clip_to_show - disparity
-
-        local row = math.ceil(corrected / row_size)
-
-        local sb = 14
-
-        local crc = clip_to_show
-
-        if disparity > 0 then
-            crc = clip_to_show + row_size - disparity
-        end
-
-        if crc > row_size then
-            row2_bullets = math.min(row_size, clip_to_show + disparity)
-            row1_bullets = (corrected % row_size)
-
-            if row1_bullets == 0 then
-                row1_bullets = row_size
+            if showheat then
+                row_size = 10
             end
 
-            if clip_to_show <= row_size + disparity then
-                row2_bullets = disparity
+            local row1_bullets = 0
+            local row2_bullets = 0
+            local rackrise = 0
+
+            local disparity = weapon_clipsize % row_size
+
+            local corrected = clip_to_show - disparity
+
+            local row = math.ceil(corrected / row_size)
+
+            local sb = 14
+
+            local crc = clip_to_show
+
+            if disparity > 0 then
+                crc = clip_to_show + row_size - disparity
             end
 
-            if row < lastrow then
-                rackrisetime = CurTime()
-            end
+            if crc > row_size then
+                row2_bullets = math.min(row_size, clip_to_show + disparity)
+                row1_bullets = (corrected % row_size)
 
-            lastrow = row
-        else
-            row2_bullets = clip_to_show
-        end
+                if row1_bullets == 0 then
+                    row1_bullets = row_size
+                end
 
-        if rackrisetime + 0.2 > CurTime() then
-            local rackrisedelta = ((rackrisetime + 0.2) - CurTime()) / 0.2
-            rackrise = rackrisedelta * (sb + b_m_margin)
-        end
+                if clip_to_show <= row_size + disparity then
+                    row2_bullets = disparity
+                end
 
-        for i = 1, row1_bullets do
-            surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
-            surface.DrawRect(b_m_left + ((sb + b_m_margin) * i) + s_right, b_m_down + rackrise + s_down, sb, sb)
+                if row < lastrow then
+                    rackrisetime = CurTime()
+                end
 
-            if row1_bullets - i < chambered then
-                surface.SetDrawColor(ARC9.GetHUDColor("hi_3d", b_alpha))
+                lastrow = row
             else
-                surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", b_alpha))
+                row2_bullets = clip_to_show
             end
-            surface.DrawRect(b_m_left + ((sb + b_m_margin) * i), b_m_down + rackrise, sb, sb)
-        end
 
-        for i = 1, row2_bullets do
-            surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
-            surface.DrawRect(b_m_left + ((sb + b_m_margin) * i) + s_right, b_m_down + sb + b_m_margin + rackrise + s_down, sb, sb)
-
-            if row2_bullets - i < chambered - row1_bullets then
-                surface.SetDrawColor(ARC9.GetHUDColor("hi_3d", b_alpha))
-            else
-                surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", b_alpha))
+            if rackrisetime + 0.2 > CurTime() then
+                local rackrisedelta = ((rackrisetime + 0.2) - CurTime()) / 0.2
+                rackrise = rackrisedelta * (sb + b_m_margin)
             end
-            surface.DrawRect(b_m_left + ((sb + b_m_margin) * i), b_m_down + sb + b_m_margin + rackrise, sb, sb)
+
+            for i = 1, row1_bullets do
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
+                surface.DrawRect(b_m_left + ((sb + b_m_margin) * i) + s_right, b_m_down + rackrise + s_down, sb, sb)
+
+                if row1_bullets - i < chambered then
+                    surface.SetDrawColor(ARC9.GetHUDColor("hi_3d", b_alpha))
+                else
+                    surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", b_alpha))
+                end
+                surface.DrawRect(b_m_left + ((sb + b_m_margin) * i), b_m_down + rackrise, sb, sb)
+            end
+
+            for i = 1, row2_bullets do
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
+                surface.DrawRect(b_m_left + ((sb + b_m_margin) * i) + s_right, b_m_down + sb + b_m_margin + rackrise + s_down, sb, sb)
+
+                if row2_bullets - i < chambered - row1_bullets then
+                    surface.SetDrawColor(ARC9.GetHUDColor("hi_3d", b_alpha))
+                else
+                    surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", b_alpha))
+                end
+                surface.DrawRect(b_m_left + ((sb + b_m_margin) * i), b_m_down + sb + b_m_margin + rackrise, sb, sb)
+            end
         end
 
     cam.End3D2D()

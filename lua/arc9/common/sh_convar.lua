@@ -1,5 +1,9 @@
 local conVars = {
     {
+        name = "npc_give_weapons",
+        default = "1",
+    },
+    {
         name = "truenames",
         default = "0",
         client = true,
@@ -101,6 +105,11 @@ local conVars = {
     },
     {
         name = "atts_nocustomize",
+        default = "0",
+        replicated = true
+    },
+    {
+        name = "atts_anarchy",
         default = "0",
         replicated = true
     },
@@ -222,7 +231,11 @@ local conVars = {
     {
         name = "hud_always",
         default = "0"
-    },    
+    },
+    {
+        name = "hud_compact",
+        default = "0"
+    },
     {
         name = "hud_arc9",
         default = "1"
@@ -239,6 +252,11 @@ local conVars = {
     },
     {
         name = "tpik",
+        default = "1",
+        client = true
+    },
+    {
+        name = "autoreload",
         default = "1",
         client = true
     },
@@ -373,15 +391,14 @@ local function menu_client_ti(panel)
     })
     panel:ControlHelp( "Reattach your last used attachments." )
     panel:AddControl("checkbox", {
-        label = "Compensate Sensitivity",
-        command = "arc9_compensate_sens"
-    })
-    panel:ControlHelp( "Does this do anything?" )
-    panel:AddControl("checkbox", {
         label = "Draw HUD",
         command = "arc9_hud_arc9"
     })
-    panel:ControlHelp( "HUD on ARC-9 weapons." )
+    panel:AddControl("checkbox", {
+        label = "Compact HUD",
+        command = "arc9_hud_compact"
+    })
+    panel:ControlHelp( "Reduced-size HUD design." )
     panel:AddControl("checkbox", {
         label = "Draw HUD Everywhere",
         command = "arc9_hud_always"
@@ -401,7 +418,26 @@ local function menu_client_ti(panel)
         label = "Toggle ADS",
         command = "arc9_toggleads"
     })
-    panel:ControlHelp( "Toggle ADS is very broken on RT sights. Fix before release." )
+    panel:AddControl("checkbox", {
+        label = "Automatic Reload",
+        command = "arc9_autoreload"
+    })
+
+    // Add a slider for FOV
+    panel:AddControl("slider", {
+        label = "Viewmodel FOV",
+        command = "arc9_fov",
+        min = -45,
+        max = 45,
+    })
+
+    // Add help text for imaginary bullets
+    panel:ControlHelp( "Imaginary bullets appear to travel outside the skybox. There is no gameplay difference to disabling this option." )
+    // Add a toggle for imaginary bullets
+    panel:AddControl("checkbox", {
+        label = "Enable Imaginary Bullets",
+        command = "arc9_bullet_imaginary"
+    })
 end
 
 local function menu_client_customization(panel)
@@ -434,6 +470,64 @@ local function menu_client_customization(panel)
         max = 31,
     })
     panel:ControlHelp( "Fake day to debug and test as, set over 0!!" )
+end
+
+local function menu_client_optics(panel)
+    panel:AddControl("checkbox", {
+        label = "Cheap Scopes",
+        command = "arc9_cheapscopes"
+    })
+    panel:ControlHelp( "Cheap Scopes are practically as good as normal scopes, but substantially improve performance." )
+    panel:AddControl("color", {
+        label = "Reflex Sight Color",
+        red = "arc9_reflex_r",
+        green = "arc9_reflex_g",
+        blue = "arc9_reflex_b"
+    })
+    panel:AddControl("color", {
+        label = "Scope Color",
+        red = "arc9_scope_r",
+        green = "arc9_scope_g",
+        blue = "arc9_scope_b"
+    })
+end
+
+local function menu_server_ballistics(panel)
+    panel:AddControl("checkbox", {
+        label = "Physical Bullets",
+        command = "arc9_bullet_physics"
+    })
+    panel:ControlHelp( "Most weapons are designed for this to be on. Some weapons force physical bullets on. Disabling this will improve server performance." )
+
+    // Add a slider to control bullet gravity
+    panel:AddControl("slider", {
+        label = "Gravity Multiplier",
+        command = "arc9_bullet_gravity",
+        min = 0,
+        max = 100,
+    })
+
+    // Add a slider for bullet drag
+    panel:AddControl("slider", {
+        label = "Drag Multiplier",
+        command = "arc9_bullet_drag",
+        min = 0,
+        max = 100,
+    })
+
+    // Add a toggle for ricochet
+    panel:AddControl("checkbox", {
+        label = "Enable Ricochet",
+        command = "arc9_ricochet"
+    })
+
+    // Add a slider for bullet lifetime
+    panel:AddControl("slider", {
+        label = "Bullet Lifetime",
+        command = "arc9_bullet_lifetime",
+        min = 1,
+        max = 100,
+    })
 end
 
 local function menu_client_controller(panel)
@@ -588,16 +682,19 @@ local function menu_server_ti(panel)
         label = "NPCs Deal Equal Damage",
         command = "arc9_npc_equality"
     })
-    panel:AddControl("label", {
-        text = "Disable body damage cancel only if you have another addon that will override the HL2 limb damage multipliers."
-    })
     panel:AddControl("checkbox", {
         label = "Default Body Damage Cancel",
         command = "arc9_mod_bodydamagecancel"
     })
+    panel:ControlHelp( "Disable body damage cancel only if you have another addon that will override the HL2 limb damage multipliers." )
     panel:AddControl("checkbox", {
         label = "Infinite Ammo",
         command = "arc9_infinite_ammo"
+    })
+    // Add a slider for giving NPCs weapons.
+    panel:AddControl("checkbox", {
+        label = "Allow Giving NPCs Weapons With +USE.",
+        command = "arc9_npc_give_weapons",
     })
 end
 
@@ -606,10 +703,12 @@ local function menu_server_attachments(panel)
         label = "Free Attachments",
         command = "arc9_atts_free"
     })
+    panel:ControlHelp( "Enable this to be able to use all attachments without spawning entities." )
     panel:AddControl("checkbox", {
         label = "Attachment Locking",
         command = "arc9_atts_lock"
     })
+    panel:ControlHelp( "You only need one attachment to be able to use it on all guns." )
     panel:AddControl("checkbox", {
         label = "Lose Attachments On Death",
         command = "arc9_atts_loseondie"
@@ -618,10 +717,16 @@ local function menu_server_attachments(panel)
         label = "Generate Attachment Entities",
         command = "arc9_atts_generateentities"
     })
+    panel:ControlHelp( "Disabling this can save a lot of time on startup." )
     panel:AddControl("checkbox", {
         label = "NPCs Get Random Attachments",
         command = "arc9_atts_npc"
     })
+    panel:AddControl("checkbox", {
+        label = "Total Anarchy Mode",
+        command = "arc9_atts_anarchy"
+    })
+    panel:ControlHelp( "For the love of God, don't enable this." )
 end
 
 c1 = {
@@ -860,10 +965,16 @@ local clientmenus_ti = {
         text = "Client - Controller", func = menu_client_controller
     },
     {
+        text = "Client - Optics", func = menu_client_optics
+    },
+    {
         text = "Server", func = menu_server_ti
     },
     {
         text = "Server - Attachments", func = menu_server_attachments
+    },
+    {
+        text = "Server - Ballistics", func = menu_server_ballistics
     },
     {
         text = "Server - Modifiers", func = menu_server_modifiers

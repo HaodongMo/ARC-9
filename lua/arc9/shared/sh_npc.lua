@@ -20,6 +20,8 @@ if SERVER then
 net.Receive("arc9_givenpcweapon", function(len, ply)
     local ent = net.ReadEntity()
 
+    if !GetConVar("arc9_npc_give_weapons"):GetBool() then return end
+
     if !ent:IsValid() then return end
     if !ent:IsNPC() then return end
 

@@ -127,9 +127,14 @@ function ARC9.GetAttsForCats(cats)
         end
 
         for _, cat in pairs(cats) do
-            if table.HasValue(attcats, cat) then
+            if GetConVar("arc9_atts_anarchy"):GetBool() then
                 table.insert(atts, k.ShortName)
                 break
+            else
+                if table.HasValue(attcats, cat) then
+                    table.insert(atts, k.ShortName)
+                    break
+                end
             end
         end
     end

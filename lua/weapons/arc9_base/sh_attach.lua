@@ -239,6 +239,8 @@ function SWEP:GetAttBlocked(atttbl)
 end
 
 function SWEP:SlotInvalid(slottbl)
+    if GetConVar("arc9_atts_anarchy"):GetBool() then return false end
+
     local eles = self:GetElements()
 
     if slottbl.ExcludeElements then
@@ -367,6 +369,7 @@ function SWEP:GetSlotBlocked(slottbl)
 end
 
 function SWEP:CanAttach(addr, att, slottbl)
+    if GetConVar("arc9_atts_anarchy"):GetBool() then return true end
     if GetConVar("arc9_atts_nocustomize"):GetBool() then return false end
 
     slottbl = slottbl or self:LocateSlotFromAddress(addr)

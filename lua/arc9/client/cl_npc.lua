@@ -1,4 +1,5 @@
 function ARC9.AttemptGiveNPCWeapon()
+    if !GetConVar("arc9_npc_give_weapons"):GetBool() then return end
     local wpn = LocalPlayer():GetActiveWeapon()
 
     if !wpn.ARC9 then return end
