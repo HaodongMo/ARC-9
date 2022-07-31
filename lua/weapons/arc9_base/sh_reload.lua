@@ -357,3 +357,19 @@ function SWEP:DoBulletPose()
 
     vm:SetPoseParameter("bullets", pp)
 end
+
+function SWEP:Ammo1()
+    if self:GetInfiniteAmmo() then
+        return math.huge
+    end
+
+    return self:GetOwner():GetAmmoCount(self:GetProcessedValue("Ammo"))
+end
+
+function SWEP:Ammo2()
+    if self:GetInfiniteAmmo() then
+        return math.huge
+    end
+
+    return self:GetOwner():GetAmmoCount(self:GetProcessedValue("UBGLAmmo"))
+end
