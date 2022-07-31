@@ -127,7 +127,13 @@ function SWEP:LoadPreset(filename)
     local f = file.Open(filename, "r", "DATA")
     if !f then return end
 
-    self:LoadPresetFromTable(self:ImportPresetCode(f:Read()))
+    local str = f:Read()
+
+    if str[1] == "{" then
+        self:LoadPresetFromTable(util.JSONToTable(str))
+    else
+        self:LoadPresetFromTable(self:ImportPresetCode(str))
+    end
 
     f:Close()
 end
