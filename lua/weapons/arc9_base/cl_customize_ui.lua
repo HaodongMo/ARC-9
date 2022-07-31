@@ -91,6 +91,8 @@ end
 
 // Cycle the selected attachment
 function SWEP:CycleSelectedAtt(amt, cyc)
+    if self.CustomizeTab != 1 then return end
+
     cyc = cyc or 0
     if #self.AttachmentAddresses <= 0 then return end
     if cyc > #self.AttachmentAddresses then return end
@@ -135,7 +137,8 @@ SWEP.CustomizeButtons = {
         title = "Inspect",
         func = function(self2)
             self2:ClearTabPanel()
-        end
+        end,
+        hideall = true
     },
     {
         title = "Customize",
@@ -360,7 +363,7 @@ function SWEP:CreateCustomizeHUD()
             gui.EnableScreenClicker(false)
             return
         end
-        
+
         if DevMode then
             surface.SetFont("ARC9_10")
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
@@ -1036,6 +1039,8 @@ function SWEP:CreateCustomizeHUD()
             return
         end
 
+        if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall then return end
+
         surface.SetFont("ARC9_10")
         surface.SetDrawColor(ARC9.GetHUDColor("fg"))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
@@ -1155,6 +1160,8 @@ function SWEP:CreateHUD_RHP()
     nameplate.Paint = function(self2, w, h)
         if !IsValid(self) then return end
 
+        if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall then return end
+
         surface.SetFont("ARC9_24")
         local tw = surface.GetTextSize(self.PrintName)
 
@@ -1204,6 +1211,9 @@ function SWEP:CreateHUD_RHP()
         newbtn:SetText("")
         newbtn.Paint = function(self2, w, h)
             if !IsValid(self) then return end
+
+            if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall and self2.page > 1 then return end
+
             local col1 = Color(0, 0, 0, 0)
             local col2 = ARC9.GetHUDColor("fg")
 

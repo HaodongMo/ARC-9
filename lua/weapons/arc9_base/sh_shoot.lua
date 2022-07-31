@@ -399,6 +399,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     Src = pos,
                     Spread = Vector(spread, spread, spread),
                     IgnoreEntity = self:GetOwner():GetVehicle(),
+                    Distance = self:GetProcessedValue("Distance"),
                     Callback = function(att, btr, dmg)
                         local range = (btr.HitPos - btr.StartPos):Length()
 

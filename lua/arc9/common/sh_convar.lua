@@ -750,6 +750,7 @@ c1 = {
     ["DamageRand"] = true,
     ["RangeMin"] = true,
     ["RangeMax"] = true,
+    ["Distance"] = true,
     ["Num"] = true,
     ["Penetration"] = true,
     ["RicochetAngleMax"] = true,

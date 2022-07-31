@@ -92,7 +92,8 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Size = wep:GetProcessedValue("TracerSize"),
         Guidance = wep:GetProcessedValue("BulletGuidance"),
         GuidanceAmount = wep:GetProcessedValue("BulletGuidanceAmount"),
-        Secondary = wep:GetUBGL()
+        Secondary = wep:GetUBGL(),
+        Distance = wep:GetProcessedValue("Distance")
     }
 
     for i, k in pairs(tbl) do
@@ -498,6 +499,10 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
     local MaxDimensions = 16384 * 4
     local WorldDimensions = 16384
+
+    if bullet.Travelled > bullet.Distance then
+        bullet.Dead = true
+    end
 
     if bullet.StartTime <= (CurTime() - GetConVar("ARC9_bullet_lifetime"):GetFloat()) then
         bullet.Dead = true

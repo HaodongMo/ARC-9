@@ -15,6 +15,7 @@ ARC9.AutoStatsMains = {
     ["DamageRand"] = {true, true},
     ["RangeMin"] = {hutom, false},
     ["RangeMax"] = {hutom, false},
+    ["Distance"] = {hutom, false},
     ["Num"] = {false, false},
     ["Penetration"] = {"HU", false},
     ["RicochetAngleMax"] = {"°", false},
