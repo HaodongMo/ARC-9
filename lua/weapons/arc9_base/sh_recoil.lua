@@ -1,7 +1,7 @@
 function SWEP:ThinkRecoil()
     local rdr = self:GetProcessedValue("RecoilDissipationRate")
 
-    if (self:GetLastRecoilTime() + self:GetProcessedValue("RecoilResetTime")) < CurTime() then
+    if (self:GetNextPrimaryFire() + self:GetProcessedValue("RecoilResetTime")) < CurTime() then
         local rec = self:GetRecoilAmount()
 
         rec = rec - (FrameTime() * rdr)
@@ -67,8 +67,6 @@ function SWEP:GetRecoilPatternDirection(shot)
 
     dir = self:RunHook("Hook_ModifyRecoilDir", dir) or dir
 
-    dir = dir - 90
-
     return dir
 end
 
@@ -86,6 +84,8 @@ function SWEP:ApplyRecoil()
     local shot = math.floor(self:GetRecoilAmount()) + 1
 
     local dir = self:GetRecoilPatternDirection(shot)
+
+    dir = dir - 90
 
     dir = math.rad(dir)
 
@@ -307,8 +307,8 @@ function SWEP:DoVisualRecoil()
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
         local mult = self:GetProcessedValue("VisualRecoil")
-        
-        local up = self:GetProcessedValue("VisualRecoilUp") * mult 
+
+        local up = self:GetProcessedValue("VisualRecoilUp") * mult
 
         if self:GetProcessedValue("RecoilLookupTable") then
             local dir = self:PatternWithRunOff(self:GetProcessedValue("RecoilLookupTable"), self:GetProcessedValue("RecoilLookupTableOverrun") or self:GetProcessedValue("RecoilLookupTable"), math.floor(self:GetRecoilAmount()) + 1) 

@@ -52,8 +52,6 @@ local recoil_hits = {}
 function SWEP:RollRecoilHit(shot, lastx, lasty)
     local dir = self:GetRecoilPatternDirection(shot)
 
-    dir = dir + 90
-
     dir = math.rad(dir)
 
     recoilup = math.sin(dir)
