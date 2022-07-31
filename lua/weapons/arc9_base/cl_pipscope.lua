@@ -34,6 +34,8 @@ function SWEP:DoRT(fov, atttbl)
     local rtpos = self:GetShootPos()
     local rtang = self:GetShootDir()
 
+    local sighttbl = self:GetSight()
+
     local rt = {
         x = 0,
         y = 0,
@@ -54,18 +56,24 @@ function SWEP:DoRT(fov, atttbl)
         render.RenderView(rt)
         ARC9.OverDraw = false
 
-        cam.Start3D(nil, nil, fov, 0, 0, rtsize, rtsize)
-            cam.IgnoreZ(true)
-            self:DrawLasers(false, true)
-            cam.IgnoreZ(false)
-        cam.End3D()
+        cam.IgnoreZ(true)
+        self:DrawLasers(false, true)
+        cam.IgnoreZ(false)
+
+        render.OverrideBlend(false)
     else
         render.Clear(0, 0, 0, 255, true, true)
     end
 
     if atttbl.RTScopeFLIR then
         cam.Start3D(rtpos, rtang, fov, 0, 0, rtsize, rtsize, 16, 30000)
+
+        render.Clear(255, 255, 255, 255, true, true)
+        render.OverrideBlend(true, BLEND_ONE, BLEND_ONE, BLENDFUNC_REVERSE_SUBTRACT)
+
         self:DoFLIR(atttbl)
+
+        render.OverrideBlend(false)
         cam.End3D()
     end
 
@@ -166,13 +174,12 @@ function SWEP:DoRTScopeEffects()
     end
     -- if atttbl.RTScopeMotionBlur then
         -- DrawMotionBlur(0.8, 1, 1/35)
-        
+
         -- It is bad on some maps (gm_eft_customs for example)
         -- Whole screen becomes picture from sights
         -- We should use delayed low fps rendering like on arccw thermals (wait time before next draw call) 
         -- It'll be better for performance and won't cause any issues
     -- end
-
 end
 
 function SWEP:DoRTScope(model, atttbl, active)
@@ -372,9 +379,12 @@ function SWEP:DoCheapScope(fov, atttbl)
     end
     cam.End3D()
 
+    local sighttbl = self:GetSight()
+
     render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
 
     -- cam.Start2D()
+
     render.DrawTextureToScreenRect(screen, scrx, scry, scrw * s, scrh * s)
     -- render.DrawTextureToScreenRect(ITexture tex, number x, number y, number width, number height)
     -- cam.End2D()
@@ -395,4 +405,20 @@ function SWEP:DoCheapScope(fov, atttbl)
 
     render.DrawTextureToScreen(rtmat_spare)
     render.UpdateFullScreenDepthTexture()
+
+    if sighttbl.InvertColors then
+
+        render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
+
+            render.CopyTexture( rtmat, rtmat_spare )
+
+            render.Clear(255, 255, 255, 255, true, true)
+            render.OverrideBlend(true, BLEND_ONE, BLEND_ONE, BLENDFUNC_REVERSE_SUBTRACT)
+
+            render.DrawTextureToScreen(rtmat_spare)
+
+            render.OverrideBlend(false)
+
+        render.PopRenderTarget()
+    end
 end

@@ -169,6 +169,7 @@ function SWEP:BuildMultiSight()
                 end
                 s.slottbl = slottbl
                 s.ViewModelFOV = sight.ViewModelFOV
+                s.InvertColors = sight.InvertColors or false
 
                 if sight.DeferSights then
                     if (slottbl.SubAttachments or {})[1] then

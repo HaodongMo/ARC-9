@@ -83,7 +83,8 @@ ATT.Sights = {
         Magnification = 1,
         Disassociate = false, // don't associate with parent slot
         IsIronSight = false, // disable if another sight is installed
-        KeepBaseIrons = false
+        KeepBaseIrons = false,
+        InvertColors = false
     }
 }
 
