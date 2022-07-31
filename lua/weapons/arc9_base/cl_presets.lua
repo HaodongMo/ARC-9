@@ -280,14 +280,50 @@ end
 
 function SWEP:PruneUnnecessaryAttachmentDataRecursive(tbl)
     for i, k in pairs(tbl) do
-        if i != "Installed" and i != "SubAttachments" and i != "ToggleNum" then
+        if i == "Installed" then
+            tbl["i"] = k
+            tbl["Installed"] = nil
+        elseif i == "SubAttachments" then
+            tbl["s"] = k
+            tbl["SubAttachments"] = nil
+        elseif i == "ToggleNum" then
+            tbl["t"] = k
+            tbl["ToggleNum"] = nil
+        else
             tbl[i] = nil
+        end
+    end
+
+    for i, k in pairs(tbl) do
+        if i != "i" and i != "s" and i != "t" then
+            tbl[i] = nil
+        end
+    end
+
+    if table.Count(tbl.s or {}) > 0 then
+        for i, k in pairs(tbl.s) do
+            self:PruneUnnecessaryAttachmentDataRecursive(k)
+        end
+    end
+end
+
+function SWEP:DecompressTableRecursive(tbl)
+    for i, k in pairs(tbl) do
+        if i == "i" then
+            tbl["i"] = nil
+            tbl["Installed"] = k
+        elseif i == "s" then
+            tbl["s"] = nil
+            tbl["SubAttachments"] = k
+        elseif i == "t" then
+            tbl["t"] = nil
+            tbl["ToggleNum"] = k
         end
     end
 
     if table.Count(tbl.SubAttachments or {}) > 0 then
         for i, k in pairs(tbl.SubAttachments) do
-            self:PruneUnnecessaryAttachmentDataRecursive(k)
+            self:DecompressTableRecursive(k)
         end
     end
 end
@@ -320,6 +356,12 @@ function SWEP:ImportPresetCode(str)
     if !str then return end
 
     local tbl = util.JSONToTable(str)
+
+    if tbl then
+        for i, k in pairs(tbl) do
+            self:DecompressTableRecursive(k)
+        end
+    end
 
     return tbl
 end
