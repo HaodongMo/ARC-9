@@ -1016,7 +1016,13 @@ function SWEP:CreateCustomizeHUD()
                 action = "Cycle Slot",
                 glyph = ARC9.GetBindKey("+showscores"),
                 row2 = true
-            }
+            },
+            {
+                action = "Last Slot",
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("+showscores"),
+                row2 = true
+            },
         }
     end
 
