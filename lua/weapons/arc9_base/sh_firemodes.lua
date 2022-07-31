@@ -120,3 +120,29 @@ function SWEP:ThinkFiremodes()
 
     self:SetFiremodePose()
 end
+
+function SWEP:GetFiremodeName()
+    local arc9_mode = self:GetCurrentFiremodeTable()
+
+    local firemode_text = "UNKNOWN"
+
+    if arc9_mode.PrintName then
+        firemode_text = arc9_mode.PrintName
+    else
+        if arc9_mode.Mode == 1 then
+            firemode_text = "SINGLE"
+        elseif arc9_mode.Mode == 0 then
+            firemode_text = "SAFE"
+        elseif arc9_mode.Mode < 0 then
+            firemode_text = "AUTO"
+        elseif arc9_mode.Mode > 1 then
+            firemode_text = tostring(arc9_mode.Mode) .. "-BURST"
+        end
+    end
+
+    if self:GetSafe() then
+        firemode_text = "SAFE"
+    end
+
+    return firemode_text
+end

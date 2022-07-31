@@ -309,6 +309,8 @@ function ARC9.DrawHUD()
 
         local arc9_mode = weapon:GetCurrentFiremodeTable()
 
+        firemode_text = weapon:GetFiremodeName()
+
         if #weapon:GetValue("Firemodes") > 1 then
             multiple_modes = true
         end
@@ -336,24 +338,10 @@ function ARC9.DrawHUD()
             end
         end
 
-        if arc9_mode.PrintName then
-            firemode_text = arc9_mode.PrintName
-        else
-            if arc9_mode.Mode == 1 then
-                firemode_text = "SINGLE"
-            elseif arc9_mode.Mode == 0 then
-                firemode_text = "SAFE"
-            elseif arc9_mode.Mode < 0 then
-                firemode_text = "AUTO"
-            elseif arc9_mode.Mode > 1 then
-                firemode_text = tostring(arc9_mode.Mode) .. "-BURST"
-            end
-        end
-
         if weapon:GetSafe() then
             firemode_pic = firemode_pics[0]
-            firemode_text = "SAFE"
         end
+
 
         if weapon:GetProcessedValue("BottomlessClip") then
             inf_clip = true
