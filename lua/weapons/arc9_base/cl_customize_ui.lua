@@ -1,6 +1,6 @@
 local mat_grad = Material("arc9/gradient.png")
 
-local DevMode = false 
+local DevMode = false
 
 function SWEP:MultiLineText(text, maxw, font)
     local content = {}
@@ -86,6 +86,42 @@ function SWEP:DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
     else
         surface.SetTextPos(tx, ty)
         surface.DrawText(txt)
+    end
+end
+
+// Cycle the selected attachment
+function SWEP:CycleSelectedAtt(amt, cyc)
+    cyc = cyc or 0
+    if #self.AttachmentAddresses <= 0 then return end
+    if cyc > #self.AttachmentAddresses then return end
+
+    local addr = self.BottomBarAddress
+
+    local newaddr = addr + amt
+
+    if newaddr < 1 then
+        newaddr = #self.AttachmentAddresses
+    elseif newaddr > #self.AttachmentAddresses then
+        newaddr = 1
+    end
+
+    self.BottomBarAddress = newaddr
+
+    self.BottomBarPath = {}
+
+    self.BottomBarMode = 1
+    self.BottomBarFolders = {}
+    self.BottomBarAtts = {}
+    self:CreateHUD_Bottom()
+
+    self.CustomizePanX = 0
+    self.CustomizePanY = 0
+    self.CustomizePitch = 0
+
+    local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
+
+    if slot.Hidden then
+        self:CycleSelectedAtt(1, cyc + 1)
     end
 end
 
@@ -649,7 +685,7 @@ function SWEP:CreateCustomizeHUD()
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
 
                 icon_offset = icon_offset + (atttbl.IconOffset or Vector(0, 0, 0))
-                
+
                 attposOffset = attposOffset + attang:Right() * icon_offset.y
                 attposOffset = attposOffset + attang:Up() * icon_offset.z
                 attposOffset = attposOffset + attang:Forward() * icon_offset.x
@@ -976,6 +1012,11 @@ function SWEP:CreateCustomizeHUD()
                 glyph = ARC9.GetBindKey("+reload"),
                 row2 = true,
             },
+            {
+                action = "Cycle Slot",
+                glyph = ARC9.GetBindKey("+showscores"),
+                row2 = true
+            }
         }
     end
 

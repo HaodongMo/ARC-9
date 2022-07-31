@@ -9,6 +9,18 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
         return ARC9.AttemptGiveNPCWeapon()
     end
 
+
+    if bind == "+showscores" then
+        if wpn:GetCustomize() then
+            if ply:KeyDown(IN_USE) then
+                wpn:CycleSelectedAtt(-1)
+            else
+                wpn:CycleSelectedAtt(1)
+            end
+            return true
+        end
+    end
+
     if bind == "+menu_context" then
         if !wpn:GetInSights() and !LocalPlayer():KeyDown(IN_USE) then
             if wpn:GetCustomize() then
