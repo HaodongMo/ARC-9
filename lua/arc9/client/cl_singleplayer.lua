@@ -77,6 +77,29 @@ concommand.Add("arc9_dev_listatts", function()
     end
 end)
 
+concommand.Add("arc9_dev_getjson", function()
+    local wep = LocalPlayer():GetActiveWeapon()
+    if !wep then return end
+
+    print(wep:GetPresetJSON())
+end)
+
+concommand.Add("arc9_dev_export", function()
+    local wep = LocalPlayer():GetActiveWeapon()
+    if !wep then return end
+    if !wep.ARC9 then return end
+
+    print(wep:GeneratePresetExportCode())
+end)
+
+concommand.Add("arc9_dev_import", function(ply, cmd, args)
+    local wep = LocalPlayer():GetActiveWeapon()
+    if !wep then return end
+    if !wep.ARC9 then return end
+
+    wep:LoadPresetFromCode(args[1] or "")
+end)
+
 concommand.Add("arc9_dev_listbgs", function()
     local wep = LocalPlayer():GetActiveWeapon()
     if !wep then return end
