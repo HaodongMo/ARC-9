@@ -363,8 +363,11 @@ function SWEP:GetViewModelPosition(pos, ang)
         ang.z = ang.z + ( math.sin(CurTime() * math.pi * 0.25) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
     end
     pos, ang = self:GetViewModelRecoil(pos, ang)
-    pos, ang = self:GetViewModelBob(pos, ang)
-    pos, ang = self:GetMidAirBob(pos, ang)
+
+    if !self:GetProcessedValue("NoViewBob") then
+        pos, ang = self:GetViewModelBob(pos, ang)
+        pos, ang = self:GetMidAirBob(pos, ang)
+    end
     -- pos, ang = self:GetViewModelLeftRight(pos, ang)
     pos, ang = self:GetViewModelInertia(pos, ang)
     pos, ang = self:GetViewModelSway(pos, ang)
@@ -397,7 +400,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang
-    
+
     local wm = self:GetWM()
 
     if IsValid(wm) and curvedcustomizedelta == 0 then

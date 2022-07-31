@@ -703,6 +703,8 @@ SWEP.CamOffsetAng = Angle(0, 0, 0)
 
 SWEP.DoFireAnimation = true
 
+SWEP.NoViewBob = false
+
 -------------------------- VISUALS
 
 SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
