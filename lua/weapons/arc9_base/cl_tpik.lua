@@ -8,8 +8,11 @@ function SWEP:ShouldTPIK()
     -- if self:GetBlindFireAmount() > 0 then return false end
     if LocalPlayer() == self:GetOwner() and !self:GetOwner():ShouldDrawLocalPlayer() then return false end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
-    -- return LocalPlayer() == self:GetOwner()
-    return GetConVar("arc9_tpik"):GetBool()
+    if LocalPlayer() != self:GetOwner() then
+        return GetConVar("arc9_tpik_others"):GetBool()
+    else
+        return GetConVar("arc9_tpik"):GetBool()
+    end
     -- return false
 end
 

@@ -256,6 +256,11 @@ local conVars = {
         client = true
     },
     {
+        name = "tpik_others",
+        default = "1",
+        client = true
+    },
+    {
         name = "autoreload",
         default = "1",
         client = true
@@ -409,6 +414,16 @@ local function menu_client_ti(panel)
         command = "arc9_hud_keephints"
     })
     panel:ControlHelp( "Never fade HUD hints." )
+    panel:AddControl("checkbox", {
+        label = "Enable TPIK",
+        command = "arc9_tpik"
+    })
+    panel:ControlHelp( "Use high quality first person animations in third person, where available." )
+    panel:AddControl("checkbox", {
+        label = "Enable TPIK For Others",
+        command = "arc9_tpik_others"
+    })
+    panel:ControlHelp( "Enable TPIK on other players." )
     panel:AddControl("checkbox", {
         label = "Viewmodel Bob Style",
         command = "arc9_vm_bobstyle"
