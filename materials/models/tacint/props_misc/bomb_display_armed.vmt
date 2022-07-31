@@ -1,0 +1,17 @@
+vertexlitgeneric
+{
+ $baseTexture "models/tacint/props_misc/bomb_display_armed"
+ $translucent 1
+
+ Proxies
+ {
+ // This is a sine proxy
+ Sine
+ {
+ resultVar $alpha
+ sineperiod 0.73
+ sinemin 0.06
+ sinemax 1.0
+ }
+ } 
+}

@@ -1,0 +1,5 @@
+vertexlitgeneric
+{
+ $baseTexture "models/tacint/props_misc/bomb_display_safe"
+ $translucent 1
+}
