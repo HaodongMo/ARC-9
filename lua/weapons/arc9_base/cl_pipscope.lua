@@ -1,6 +1,7 @@
 local rtsize = 1024
 
 local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)
+local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)
 
 matproxy.Add({
     name = "arc9_scope_alpha",
@@ -56,11 +57,11 @@ function SWEP:DoRT(fov, atttbl)
         render.RenderView(rt)
         ARC9.OverDraw = false
 
-        cam.IgnoreZ(true)
-        self:DrawLasers(false, true)
-        cam.IgnoreZ(false)
-
-        render.OverrideBlend(false)
+        cam.Start3D(nil, nil, fov, 0, 0, rtsize, rtsize)
+            cam.IgnoreZ(true)
+            self:DrawLasers(false, true)
+            cam.IgnoreZ(false)
+        cam.End3D()
     else
         render.Clear(0, 0, 0, 255, true, true)
     end
@@ -68,12 +69,8 @@ function SWEP:DoRT(fov, atttbl)
     if atttbl.RTScopeFLIR then
         cam.Start3D(rtpos, rtang, fov, 0, 0, rtsize, rtsize, 16, 30000)
 
-        render.Clear(255, 255, 255, 255, true, true)
-        render.OverrideBlend(true, BLEND_ONE, BLEND_ONE, BLENDFUNC_REVERSE_SUBTRACT)
-
         self:DoFLIR(atttbl)
 
-        render.OverrideBlend(false)
         cam.End3D()
     end
 
@@ -84,6 +81,22 @@ function SWEP:DoRT(fov, atttbl)
     self:DoRTScopeEffects()
 
     render.PopRenderTarget()
+
+    if sighttbl.InvertColors then
+
+        render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
+
+            render.CopyTexture( rtmat, rtmat_spare )
+
+            render.Clear(255, 255, 255, 255, true, true)
+            render.OverrideBlend(true, BLEND_ONE, BLEND_ONE, BLENDFUNC_REVERSE_SUBTRACT)
+
+            render.DrawTextureToScreen(rtmat_spare)
+
+            render.OverrideBlend(false)
+
+        render.PopRenderTarget()
+    end
 end
 
 local rtsurf = Material("effects/arc9/rt")
@@ -335,7 +348,6 @@ function SWEP:GetCheapScopeScale(scale)
 end
 
 local hascostscoped = false
-local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)
 
 function SWEP:DoCheapScope(fov, atttbl)
     if !self:ShouldDoScope() then
