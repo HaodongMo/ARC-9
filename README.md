@@ -44,7 +44,7 @@ You could also opt to combine these methods together - it's common for an attach
  - Reworked standardized weapon stat handling
  - Blind fire for all weapons
  - Looping sounds
- - Reworked RHIK system with greater compatibility, better performance, and multiple targets
+ - Reworked RHIK system
  - RHIK supports right hands too
  - Snazzy new UI
  - Better standard weapon ecosystem

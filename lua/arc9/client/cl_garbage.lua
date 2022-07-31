@@ -57,5 +57,5 @@ hook.Add("PostDrawEffects", "ARC9_CleanFlashlights", function()
 
     if GetViewEntity() == LocalPlayer() then return end
 
-    wpn:KillFlashlightsVM()
+    wpn:KillFlashlights()
 end)

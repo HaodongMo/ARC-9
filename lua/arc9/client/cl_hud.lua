@@ -340,13 +340,13 @@ function ARC9.DrawHUD()
             firemode_text = arc9_mode.PrintName
         else
             if arc9_mode.Mode == 1 then
-                firemode_text = "SEMI"
+                firemode_text = "SINGLE"
             elseif arc9_mode.Mode == 0 then
                 firemode_text = "SAFE"
             elseif arc9_mode.Mode < 0 then
                 firemode_text = "AUTO"
             elseif arc9_mode.Mode > 1 then
-                firemode_text = tostring(arc9_mode.Mode) .. "BST"
+                firemode_text = tostring(arc9_mode.Mode) .. "-BURST"
             end
         end
 
@@ -403,17 +403,17 @@ function ARC9.DrawHUD()
     elseif weapon:IsScripted() then
         if !weapon.Primary.Automatic then
             firemode_pic = firemode_pics[1]
-            firemode_text = "SEMI"
+            firemode_text = "SINGLE"
         end
 
         if weapon.ThreeRoundBurst then
             firemode_pic = firemode_pics[3]
-            firemode_text = "3BST"
+            firemode_text = "3-BURST"
         end
 
         if weapon.TwoRoundBurst then
             firemode_pic = firemode_pics[2]
-            firemode_text = "2BST"
+            firemode_text = "2-BURST"
         end
 
         if weapon.GetSafe then
@@ -439,7 +439,7 @@ function ARC9.DrawHUD()
     else
         if !automatics[weapon:GetClass()] then
             firemode_pic = firemode_pics[1]
-            firemode_text = "SEMI"
+            firemode_text = "SINGLE"
         end
     end
 

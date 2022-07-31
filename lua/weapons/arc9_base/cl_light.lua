@@ -11,7 +11,7 @@ function SWEP:GetHasFlashlights()
     return false
 end
 
-function SWEP:CreateFlashlightsVM()
+function SWEP:CreateFlashlights()
     self:KillFlashlights()
     self.Flashlights = {}
 
@@ -66,11 +66,11 @@ function SWEP:CreateFlashlightsVM()
 end
 
 function SWEP:KillFlashlights()
-    self:KillFlashlightsVM()
+    self:KillFlashlights()
     -- self:KillFlashlightsWM()
 end
 
-function SWEP:KillFlashlightsVM()
+function SWEP:KillFlashlights()
     if !self.Flashlights then return end
 
     for i, k in ipairs(self.Flashlights) do
@@ -82,9 +82,37 @@ function SWEP:KillFlashlightsVM()
     self.Flashlights = nil
 end
 
+function SWEP:DrawFlashlightsWM()
+    if !self.Flashlights then
+        self:CreateFlashlights()
+    end
+
+    for i, k in ipairs(self.Flashlights) do
+        local model = (k.slottbl or {}).WModel
+
+        if !model then continue end
+
+        local pos, ang
+
+        if !model then
+            pos = self:GetOwner():EyePos()
+            ang = self:GetOwner():EyeAngles()
+        else
+            pos = model:GetPos()
+            ang = model:GetAngles()
+        end
+
+        -- ang:RotateAroundAxis(ang:Up(), 90)
+
+        k.light:SetPos(pos)
+        k.light:SetAngles(ang)
+        k.light:Update()
+    end
+end
+
 function SWEP:DrawFlashlightsVM()
     if !self.Flashlights then
-        self:CreateFlashlightsVM()
+        self:CreateFlashlights()
     end
 
     for i, k in ipairs(self.Flashlights) do

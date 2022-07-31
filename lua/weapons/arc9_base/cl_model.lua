@@ -406,9 +406,7 @@ function SWEP:SetupModel(wm, lod, cm)
         end
     end
 
-    if !wm then
-        self:CreateFlashlightsVM()
-    end
+    self:CreateFlashlights()
 
     self:DoBodygroups(wm, cm)
 end

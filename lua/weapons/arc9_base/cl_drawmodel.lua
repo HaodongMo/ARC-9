@@ -105,6 +105,8 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
         if !wm then
             self:DrawFlashlightsVM()
+        else
+            self:DrawFlashlightsWM()
         end
     end
 end
