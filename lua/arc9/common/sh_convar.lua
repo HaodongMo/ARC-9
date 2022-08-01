@@ -450,11 +450,6 @@ local function menu_client_ti(panel)
         command = "arc9_hud_arc9"
     })
     panel:AddControl("checkbox", {
-        label = "Compact HUD",
-        command = "arc9_hud_compact"
-    })
-    panel:ControlHelp( "Reduced-size HUD design." )
-    panel:AddControl("checkbox", {
         label = "Draw HUD Everywhere",
         command = "arc9_hud_always"
     })
