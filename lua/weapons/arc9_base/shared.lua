@@ -535,6 +535,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookP_NameChange = function(self, name) return name end
 -- SWEP.HookP_DescriptionChange = function(self, desc) return desc end
 -- SWEP.Hook_BlockAnimation = function(self, anim) return block end -- Return true to block animation from playing.
+-- SWEP.Hook_PrimaryAttack = function(self) return end -- Called when the primary attack is fired.
 
 -------------------------- BLIND FIRE
 
