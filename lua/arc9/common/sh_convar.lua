@@ -994,6 +994,13 @@ local function menu_server_modifiers(panel)
     but_rem:SetText("Remove selected")
     but_upd:SetText("Restore from memory")
     but_app:SetText("Save & apply")
+
+    panel:ControlHelp( "Examples:" )
+    panel:ControlHelp( " - \"Overheat\" \"true\" to disable overheating." )
+    panel:ControlHelp( " - \"BottomlessClip\" \"true\" to enable Bottomless Clip." )
+    panel:ControlHelp( " - \"RecoilMultCrouch\" \"0.1\" to reduce recoil to 10% when crouching." )
+    panel:ControlHelp( " - \"RPMMultOddShot\" \"0.5\" to make every other shot 600RPM." )
+
     
     function but_add:DoClick()
         listview:AddLine( string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue()) )
