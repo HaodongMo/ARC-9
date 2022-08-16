@@ -39,10 +39,16 @@ function SWEP:DoShootSounds()
     local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
 
     local sstr = "ShootSound"
+    local sslr = "LayerSound"
 
     if self:GetProcessedValue("Silencer") and !self:GetUBGL() and self:GetProcessedValue(sstr .. "Silenced") then
         sstr = sstr .. "Silenced"
     end
+
+    if self:GetProcessedValue("Silencer") and !self:GetUBGL() and self:GetProcessedValue(sslr .. "Silenced") then
+        sslr = sslr .. "Silenced"
+    end
+
 
     if self:GetBurstCount() == 0 and self:GetProcessedValue("First" .. sstr) then
         sstr = "First" .. sstr
@@ -50,6 +56,10 @@ function SWEP:DoShootSounds()
 
     if self:GetIndoor() and self:GetProcessedValue(sstr .. "Indoor") then
         sstr = sstr .. "Indoor"
+    end
+
+    if self:GetIndoor() and self:GetProcessedValue(sslr .. "Indoor") then
+        sslr = sslr .. "Indoor"
     end
 
     -- local ss = self:RandomChoice(self:GetProcessedValue("ShootSound")) or ""
@@ -70,7 +80,14 @@ function SWEP:DoShootSounds()
 
     ss = self:RandomChoice(ss)
 
+    local sl = self:GetProcessedValue(sslr)
+
+    sl = self:RandomChoice(sl)
+
+
     self:EmitSound(ss or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, self:GetProcessedValue("ShootVolumeActual") or 1, CHAN_WEAPON)
+    self:EmitSound(sl or "", self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, self:GetProcessedValue("ShootVolumeActual") or 1, CHAN_WEAPON + 4)
+
 
     local dsstr = "DistantShootSound"
 
