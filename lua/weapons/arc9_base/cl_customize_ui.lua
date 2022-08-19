@@ -91,7 +91,7 @@ end
 
 // Cycle the selected attachment
 function SWEP:CycleSelectedAtt(amt, cyc)
-    if self.CustomizeTab != 1 then return end
+    if self.CustomizeTab != 0 then return end
 
     cyc = cyc or 0
     if #self.AttachmentAddresses <= 0 then return end
@@ -130,47 +130,95 @@ end
 SWEP.CustomizeHUD = nil
 SWEP.CustomizeBoxes = nil
 
-SWEP.CustomizeTab = 1
+SWEP.CustomizeTab = 0
 
 SWEP.CustomizeButtons = {
     {
-        title = "Inspect",
-        func = function(self2)
-            self2:ClearTabPanel()
-        end,
-        hideall = true
-    },
-    {
-        title = "Customize",
+        title = "CUSTOMISATION",
         func = function(self2)
             self2:ClearTabPanel()
             self2:CreateHUD_Bottom()
-        end
+            
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74), 0.2, 0, 0.5, nil)
+
+                self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
+            end
+        end,
+        customize = true,
+        cutcorner = 1
     },
     {
-        title = "Stats",
+        title = "STATS",
         func = function(self2)
             self2:CreateHUD_Stats()
+            
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH()-ScreenScale(93+50), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74+50), 0.2, 0, 0.5, nil)
+
+                self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
+            end
         end
     },
     {
-        title = "Trivia",
-        func = function(self2)
-            self2:CreateHUD_Trivia()
-        end
-    },
-    {
-        title = "Bench",
+        title = "BALLISTICS",
         func = function(self2)
             self2:CreateHUD_Bench()
+
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74-55), 0.2, 0, 0.5, nil)
+                -- self2.CustomizeHUD.lowerpanel:SetAlpha(255)
+                
+                self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
+            end
+            -- remove hints here too
         end
     },
     {
-        title = "Credits",
+        title = "TRIVIA",
         func = function(self2)
-            self2:CreateHUD_Credits()
-        end
+            self2:CreateHUD_Trivia()
+            
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH()-ScreenScale(93+50), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74+50), 0.2, 0, 0.5, nil)
+
+                self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
+            end
+        end,
+        cutcorner = 2
     },
+    {
+        title = "INSPECT",
+        func = function(self2)
+            self2:ClearTabPanel()
+
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74-55), 0.2, 0, 0.5, nil) 
+            end
+            -- remove hints here too
+        end,
+        inspect = true,
+        cutcorner = 3
+    },
+    -- {
+    --     title = "Credits",
+    --     func = function(self2)
+    --         self2:CreateHUD_Credits()
+    --     end
+    -- },
 }
 
 SWEP.TabPanel = nil
@@ -327,6 +375,100 @@ local troll = {
 local SeasonalHalloween = {}
 local SeasonalHolidays = {}
 
+
+
+
+
+
+local ARC9TopButton = {}
+ARC9TopButton.Color = ARC9.GetHUDColor("fg")
+ARC9TopButton.ColorClicked = ARC9.GetHUDColor("hi")
+ARC9TopButton.Icon = Material("arc9/ui/settings.png", "mips")
+
+ARC9TopButton.MatIdle = Material("arc9/ui/topbutton2.png", "mips")
+ARC9TopButton.MatHovered = Material("arc9/ui/topbutton_hover2.png", "mips")
+
+ARC9TopButton.MatIdleL = Material("arc9/ui/topbutton_l.png", "mips")
+ARC9TopButton.MatHoveredL = Material("arc9/ui/topbutton_hover_l.png", "mips")
+ARC9TopButton.MatIdleM = Material("arc9/ui/topbutton_m.png", "mips")
+ARC9TopButton.MatHoveredM = Material("arc9/ui/topbutton_hover_m.png", "mips")
+ARC9TopButton.MatIdleR = Material("arc9/ui/topbutton_r.png", "mips")
+ARC9TopButton.MatHoveredR = Material("arc9/ui/topbutton_hover_r.png", "mips")
+
+
+function ARC9TopButton:Init()
+	self:SetText("")
+    self:SetSize(ScreenScale(21), ScreenScale(21))
+end
+
+function ARC9TopButton:Paint(w, h)
+	local color = self.Color
+	local iconcolor = self.Color
+	local icon = self.Icon
+	local text = self.ButtonText
+
+	local mat = self.MatIdle
+	local matl = self.MatIdleL
+	local matm = self.MatIdleM
+	local matr = self.MatIdleR
+
+	if self:IsHovered() then
+		mat = self.MatHovered
+		matl = self.MatHoveredL
+		matm = self.MatHoveredM
+		matr = self.MatHoveredR
+	end
+    
+	if self:IsDown() or (self.Checkbox and self:GetChecked()) then
+		iconcolor = self.ColorClicked
+	end
+
+    surface.SetDrawColor(color)
+
+    if text then -- wide button
+        surface.SetMaterial(matl)
+        surface.DrawTexturedRect(0, 0, h/2, h)
+        surface.SetMaterial(matm)
+        surface.DrawTexturedRect(h/2, 0, w-h, h)
+        surface.SetMaterial(matr)
+        surface.DrawTexturedRect(w-h/2, 0, h/2, h)
+
+        surface.SetFont("ARC9_16")
+        local tw = surface.GetTextSize(text)
+        surface.SetTextColor(iconcolor)
+        surface.SetTextPos(h, h/8)
+        surface.DrawText(text)
+    else
+        surface.SetMaterial(mat)
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+
+	surface.SetDrawColor(iconcolor)
+    surface.SetMaterial(icon)
+    surface.DrawTexturedRect(ScreenScale(4), ScreenScale(4), h-ScreenScale(8), h-ScreenScale(8))
+end
+
+function ARC9TopButton:SetIcon(mat)
+    self.Icon = mat
+end
+
+function ARC9TopButton:SetButtonText(text)
+    self.ButtonText = text
+end
+
+function ARC9TopButton:SetIsCheckbox(bool)
+    self.Checkbox = bool
+end
+
+vgui.Register("ARC9TopButton", ARC9TopButton, "DCheckBox") -- DButton
+
+
+
+
+
+
+
+
 function SWEP:CreateCustomizeHUD()
     if !IsValid(self) then return end
 
@@ -363,6 +505,33 @@ function SWEP:CreateCustomizeHUD()
             gui.EnableScreenClicker(false)
             return
         end
+
+
+
+
+
+
+
+
+
+        surface.SetMaterial(Material( "arc9/debug.png", "noclamp smooth" ))
+        surface.SetDrawColor(255,255,255,122)
+        -- surface.DrawTexturedRect(0, 0, w, h)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         if DevMode then
             surface.SetFont("ARC9_10")
@@ -670,7 +839,7 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
-        if self.CustomizeTab == 1 then
+        if self.CustomizeTab == 0 then
 
             cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()))
 
@@ -1028,7 +1197,7 @@ function SWEP:CreateCustomizeHUD()
             },
         }
     end
-
+--[[
     local help = vgui.Create("DPanel", bg)
     help:SetSize(ScrW(), ScreenScale(16+16))
     help:SetPos(0, ScreenScale(4))--ScrH() - ScreenScale(16+2))
@@ -1083,7 +1252,7 @@ function SWEP:CreateCustomizeHUD()
         CreateControllerKeyLine({x = ScreenScale(8), y = ScreenScale(2), size = ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack(ToAdd2))
         table.Empty(self.CustomizeHints)
     end
-
+]]--
 
     -- self:CreateHUD_Bottom()
 
@@ -1121,12 +1290,27 @@ function SWEP:CreateCustomizeHUD()
 end
 
 function SWEP:RemoveCustomizeHUD()
+    if self.RemovingCustHud then return end
+
+    local bg = self.CustomizeHUD
+    
+    local scrh = ScrH()
+    local scrw = ScrW()
+
     if self.CustomizeHUD then
-        self.CustomizeHUD:Remove()
+        self.RemovingCustHud = true 
+        if bg.nameplate then bg.nameplate:MoveTo(scrw/3, -ScreenScale(64), 0.7, 0, 0.05, nil) end
+        if bg.topleft_panel then bg.topleft_panel:MoveTo(-ScreenScale(70), -ScreenScale(40), 0.7, 0, 0.05, nil) end
+        if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ScreenScale(40), 0.7, 0, 0.05, nil) end
+        if bg.lowerpanel then bg.lowerpanel:MoveTo(ScreenScale(19), scrh, 0.7, 0, 0.05, nil) end
 
         gui.EnableScreenClicker(false)
 
-        self.CustomizeHUD = nil
+        timer.Simple(0.1, function()
+            self.CustomizeHUD:Remove()
+            self.CustomizeHUD = nil
+            self.RemovingCustHud = nil
+        end)
     end
 end
 
@@ -1138,7 +1322,7 @@ function SWEP:DrawCustomizeHUD()
         self:RemoveCustomizeHUD()
     end
 
-    if customize and !self.CustomizeHUD then
+    if customize and !self.CustomizeHUD and !self.RemovingCustHud then
         self:CreateCustomizeHUD()
     elseif !customize and self.CustomizeHUD then
         self:RemoveCustomizeHUD()
@@ -1150,28 +1334,29 @@ end
 function SWEP:CreateHUD_RHP()
     local bg = self.CustomizeHUD
 
-    local gr_h = ScrH()
+
+    local scrh = ScrH()
+    local scrw = ScrW()
+
+    local gr_h = scrh
     local gr_w = gr_h
 
     local nameplate = vgui.Create("DPanel", bg)
-    nameplate:SetPos(0, ScreenScale(8))
-    nameplate:SetSize(ScrW(), ScreenScale(64))
+    self.CustomizeHUD.nameplate = nameplate
+    nameplate:SetPos(scrw/3, -ScreenScale(64)) -- h = ScreenScale(8)
+	nameplate:MoveTo(scrw/3, ScreenScale(8), 1, 0, 0.05, nil)
+    nameplate:SetSize(scrw/3, ScreenScale(64))
     nameplate:MoveToBack()
     nameplate.Paint = function(self2, w, h)
         if !IsValid(self) then return end
 
-        if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall then return end
+        -- if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).inspect then return end
 
         surface.SetFont("ARC9_24")
         local tw = surface.GetTextSize(self.PrintName)
 
         surface.SetFont("ARC9_24")
-        surface.SetTextPos(w - tw - ScreenScale(8) + ScreenScale(1), ScreenScale(1))
-        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        surface.DrawText(self.PrintName)
-
-        surface.SetFont("ARC9_24")
-        surface.SetTextPos(w - tw - ScreenScale(8), 0)
+        surface.SetTextPos(w/2 - tw/2, 0)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.DrawText(self.PrintName)
 
@@ -1180,92 +1365,200 @@ function SWEP:CreateHUD_RHP()
         local tw2 = surface.GetTextSize(self.Class)
 
         surface.SetFont("ARC9_12")
-        surface.SetTextPos(w - tw2 - ScreenScale(10) + ScreenScale(1), ScreenScale(26 + 1))
-        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        surface.DrawText(self.Class)
-
-        surface.SetFont("ARC9_12")
-        surface.SetTextPos(w - tw2 - ScreenScale(10), ScreenScale(26))
+        surface.SetTextPos(w/2 - tw2/2, ScreenScale(25))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.DrawText(self.Class)
 
-        surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-        surface.DrawRect(w - ScreenScale(420 - 1), ScreenScale(42 + 1), ScreenScale(407), ScreenScale(1))
-
-        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-        surface.DrawRect(w - ScreenScale(420), ScreenScale(42), ScreenScale(407), ScreenScale(1))
+        surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+        surface.DrawRect(w/2 - tw2/2, ScreenScale(22), tw2, ScreenScale(1.5))
     end
 
-    if !self.Attachments[1] and self.CustomizeButtons[2].title == "Customize" then 
-        table.remove(self.CustomizeButtons, 2)
+    local inspectalpha = function(self2, panel, minusnum)
+        if self.CustomizeButtons[self.CustomizeTab + 1].inspect then -- probably horrible
+            if self2:IsHovered() then
+                panel:SetAlpha(math.min(panel:GetAlpha() + 25, 255)) 
+            else
+                panel:SetAlpha(math.max(panel:GetAlpha() - minusnum, 0)) -- * number of cust buttons
+            end
+        end
+    end
+
+
+    local topleft_panel = vgui.Create("DPanel", bg)
+    self.CustomizeHUD.topleft_panel = topleft_panel
+    topleft_panel:SetPos(-ScreenScale(70), -ScreenScale(40)) -- w = 0, h = 0
+	topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
+    topleft_panel:SetSize(ScreenScale(70), ScreenScale(40))
+    topleft_panel:MoveToBack()
+    topleft_panel.Paint = function(self2, w, h) end
+
+    local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
+    topleft_settings:SetPos(ScreenScale(19), ScreenScale(19))
+    topleft_settings.DoClick = function(self2)
+        surface.PlaySound("arc9/ubgl_select.wav")
+        ARC9_ClientSettings()
+        
+        -- self:ToggleCustomize(false)
+        bg:SetMouseInputEnabled(false)
+    end
+
+    local topleft_light = vgui.Create("ARC9TopButton", topleft_panel)
+    topleft_light:SetPos(ScreenScale(47.5), ScreenScale(19))
+    topleft_light:SetIcon(Material("arc9/ui/light.png", "mips smooth"))
+    topleft_light:SetIsCheckbox(true)
+    topleft_light:SetConVar("arc9_cust_light")
+
+    topleft_settings.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
+    topleft_light.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
+
+    local topright_panel = vgui.Create("DPanel", bg)
+    self.CustomizeHUD.topright_panel = topright_panel
+    topright_panel:SetPos(scrw, -ScreenScale(40)) -- w = scrw-ScreenScale(170), h = 0
+	topright_panel:MoveTo(scrw-ScreenScale(170), 0, 0.4, 0, 0.1, nil)
+    topright_panel:SetSize(ScreenScale(170), ScreenScale(40))
+    topright_panel:MoveToBack()
+    topright_panel.Paint = function(self2, w, h) end
+
+    local topright_presets = vgui.Create("ARC9TopButton", topright_panel)
+    surface.SetFont("ARC9_16")
+    local tw = surface.GetTextSize("Presets")
+    topright_presets:SetPos(ScreenScale(123)-(ScreenScale(28)+tw), ScreenScale(19))
+    topright_presets:SetSize(ScreenScale(28)+tw, ScreenScale(21))
+    topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
+    topright_presets:SetButtonText("Presets")
+    topright_presets:SetIsCheckbox(true)
+
+    local topright_close = vgui.Create("ARC9TopButton", topright_panel)
+    topright_close:SetPos(ScreenScale(130), ScreenScale(19))
+    topright_close:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
+    topright_close.DoClick = function(self2)
+        -- surface.PlaySound("arc9/ubgl_select.wav")
+        -- self:RemoveCustomizeHUD()
+        self:SetCustomize(false)
+        net.Start("ARC9_togglecustomize")
+        net.WriteBool(false)
+        net.SendToServer()
+    end
+    
+    topright_presets.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
+    topright_close.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
+    
+
+    
+    local lowerpanel = vgui.Create("DPanel", bg)
+    self.CustomizeHUD.lowerpanel = lowerpanel
+    lowerpanel:SetPos(ScreenScale(19), scrh) -- h = scrh-ScreenScale(93)
+	-- lowerpanel:MoveTo(ScreenScale(19), scrh-ScreenScale(93), 0.6, 0, 0.1, nil) -- CustomizeTab does this for us
+    lowerpanel:SetSize(scrw - ScreenScale(38), ScreenScale(74))
+    lowerpanel:MoveToBack()
+
+
+    if !self.Attachments[1] and self.CustomizeButtons[1].customize then  -- NO ATTS CUST PANEL REMOVAL
+        table.remove(self.CustomizeButtons, 1)
+        self.CustomizeButtons[1].cutcorner = 1
         self.CustomizeTab = 0
     end
 
-    for i, btn in ipairs(self.CustomizeButtons) do
-        local newbtn = vgui.Create("DButton", bg)
-        newbtn:SetPos(ScrW() - ScreenScale(6) - (ScreenScale(69) * i), ScreenScale(58))
-        newbtn:SetSize(ScreenScale(64), ScreenScale(12))
+
+
+    local barlength = -ScreenScale(1.5)
+    local cornercut = ScreenScale(3.5)
+    local inspecttextwidth = 0
+
+    for i, btn in pairs(self.CustomizeButtons) do
+        local newbtn = vgui.Create("DButton", lowerpanel)
+        --
+        surface.SetFont("ARC9_12")
+        local titlewidth = surface.GetTextSize(btn.title) + ScreenScale(12.5)
+        --
+        
+        if btn.inspect then 
+            newbtn:SetPos(scrw - ScreenScale(38) - titlewidth, 0)
+            inspecttextwidth = titlewidth
+        else 
+            barlength = barlength + titlewidth + ScreenScale(1.5)
+            newbtn:SetPos(barlength - titlewidth, 0)
+        end
+        
+        newbtn:SetSize(titlewidth, ScreenScale(14.5))
         newbtn.title = btn.title
         newbtn.page = i - 1
         newbtn.func = btn.func
         newbtn:SetText("")
+        
+
         newbtn.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
-            if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall and self2.page > 1 then return end
+            -- if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall and self2.page > 1 then return end
 
-            local col1 = Color(0, 0, 0, 0)
-            local col2 = ARC9.GetHUDColor("fg")
-
-            local noshade = false
+            local mainbuttoncolor = ARC9.GetHUDColor("bg")
+            local barbuttoncolor = ARC9.GetHUDColor("bg")
+            local buttontextcolor = ARC9.GetHUDColor("fg")
 
             if self.CustomizeTab == self2.page then
-                col1 = ARC9.GetHUDColor("fg")
-                col2 = ARC9.GetHUDColor("shadow")
-
-                noshade = true
+                mainbuttoncolor = ARC9.GetHUDColor("hi")
+                barbuttoncolor = ARC9.GetHUDColor("hi")
+                buttontextcolor = ARC9.GetHUDColor("shadow")
             end
 
             if self2:IsHovered() then
-                col1 = ARC9.GetHUDColor("hi")
-                col2 = ARC9.GetHUDColor("shadow")
+                barbuttoncolor = ARC9.GetHUDColor("hi")
                 if self.CustomizeTab != self2.page then self.CustomizeHints["Select"] = "Open" end
-
-                noshade = true
             end
 
-            if noshade then
-                surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-                surface.DrawRect(ScreenScale(1), ScreenScale(1), w, h)
+            surface.SetDrawColor(mainbuttoncolor)
+            draw.NoTexture()
+
+            local hcutted = ScreenScale(11.5)
+            
+            if btn.cutcorner == 1 then
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = w, y = 0}, {x = w, y = hcutted}})
+            elseif btn.cutcorner == 2 then
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = hcutted}})
+            elseif btn.cutcorner == 3 then
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = hcutted}})
+            else
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = 0}, {x = w, y = 0}, {x = w, y = hcutted}})
             end
 
-            surface.SetDrawColor(col1)
-            surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
-
-            surface.SetFont("ARC9_8")
+            surface.SetDrawColor(barbuttoncolor)
+            surface.DrawRect(0, h - ScreenScale(1.5), w, h)
+            
+            surface.SetFont("ARC9_12")
             local tw = surface.GetTextSize(self2.title)
 
-            if !noshade then
-                surface.SetFont("ARC9_8")
-                surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                surface.SetTextPos((w - tw) / 2 + ScreenScale(1), ScreenScale(1 + 1))
-                surface.DrawText(self2.title)
-            end
-
-            surface.SetFont("ARC9_8")
-            surface.SetTextColor(col2)
-            surface.SetTextPos((w - tw) / 2, ScreenScale(1))
+            surface.SetFont("ARC9_12")
+            surface.SetTextColor(buttontextcolor)
+            -- surface.SetTextPos((w - tw) / 2, -ScreenScale(0.75))
+            surface.SetTextPos((w - tw) / 2, 0)
             surface.DrawText(self2.title)
         end
+        newbtn.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
         newbtn.DoClick = function(self2)
             if !ARC9.NoFocus then
                 self.CustomizeTab = self2.page
                 self2.func(self)
             end
         end
-        newbtn.DoRightClick = function(self2)
-            self.CustomizeTab = 0
-            self:ClearTabPanel()
+        -- newbtn.DoRightClick = function(self2)
+        --     self.CustomizeTab = 0
+        --     self:ClearTabPanel()
+        -- end
+
+        
+        lowerpanel.Paint = function(self2, w, h) 
+            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+            surface.DrawRect(barlength + ScreenScale(1.5), ScreenScale(12.75), w - barlength - inspecttextwidth - ScreenScale(3.2), ScreenScale(1.75))
+            
+            draw.NoTexture()
+            surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ScreenScale(15.5)}, {x = w, y = ScreenScale(15.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+
+            -- thingy at bottom
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = cornercut, y = h-cornercut*.5}})
+            surface.DrawPoly({{x = w, y = h-cornercut}, {x = w-cornercut, y = h}, {x = w-cornercut, y = h-cornercut*.5}})
+            surface.DrawPoly({{x = cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h}, {x = cornercut, y = h}, })
         end
     end
 

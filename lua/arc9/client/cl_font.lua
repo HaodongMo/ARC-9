@@ -3,7 +3,7 @@ local fontaddsize_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_fon
 
 function ARC9:GetFont()
     local f = font_cvar and font_cvar:GetString()
-    if !f or f == "" then f = ARC9:GetPhrase("font") or "Exo Regular" end
+    if !f or f == "" then f = ARC9:GetPhrase("font") or "Venryn Sans" end
     return f
 end
 
@@ -39,7 +39,7 @@ local function generatefonts()
         surface.CreateFont( "ARC9_" .. tostring(i), {
             font = font,
             size = ScreenScale(i+addsize),
-            weight = 500,
+            weight = i<16 and 650 or 600,
             antialias = true,
             extended = true, -- Required for non-latin fonts
         } )
@@ -47,7 +47,7 @@ local function generatefonts()
         surface.CreateFont( "ARC9_" .. tostring(i) .. "_Glow", {
             font = font,
             size = ScreenScale(i+addsize),
-            weight = 500,
+            weight = 600,
             antialias = true,
             blursize = ScreenScale(i * 0.2),
             extended = true,
@@ -96,10 +96,11 @@ end
 
 concommand.Add("arc9_font_reload", ARC9.Regen)
 
-hook.Add("OnScreenSizeChanged", "ARC9.Regen", function(oldWidth, oldHeight)
-    ARC9.Regen(true)
+hook.Add("OnScreenSizeChanged", "ARC9.FontRegen", function(oldWidth, oldHeight)
+    print("Warning: Resolution was changed. If ARC9 fonts are too small/big now, try type  arc9_font_reload  in console ")
+    timer.Simple(15, ARC9.Regen)
+    timer.Simple(60, ARC9.Regen) -- trying !!
 end)
-
 cvars.AddChangeCallback("arc9_font", function(cvar, old, new) -- Dont work btw https://github.com/Facepunch/garrysmod-issues/issues/3740
     generatefonts()
 end, "reload_fonts")
