@@ -100,6 +100,8 @@ function SWEP:Holster(wep)
         self:CancelReload()
     end
 
+    self:SetCustomize(false)
+    
     if self:GetHolsterTime() > CurTime() then return false end
 
     if (self:GetHolsterTime() != 0 and self:GetHolsterTime() <= CurTime()) or !IsValid(wep) then
