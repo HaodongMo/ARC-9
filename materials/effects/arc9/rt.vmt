@@ -1,6 +1,4 @@
 "UnlitGeneric"
 {
 	"$baseTexture" "vgui/black"
-	//"$contrast" "12"
-	//"$distance" "2.6"
 }

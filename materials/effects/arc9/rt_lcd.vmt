@@ -1,0 +1,10 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "vgui/black"
+
+	"$detail" "effects/arc9/detail_phosphor"
+	"$detailscale" "3"
+	"$detailblendfactor" "0.1"
+	"$detailblendmode" "0"
+	"$detailtint" "[0.5 0.5 0.5]"
+}
