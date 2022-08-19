@@ -361,6 +361,7 @@ surface.CreateFont( "ARC9_KeybindPreview_Cust", {
 } )
 
 function SWEP:CreateHUD_Bottom()
+    -- if true then return end
     local bg = self.CustomizeHUD
 
     self:ClearBottomBar()

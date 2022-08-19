@@ -134,7 +134,7 @@ SWEP.CustomizeTab = 0
 
 SWEP.CustomizeButtons = {
     {
-        title = "CUSTOMISATION",
+        title = "CUSTOMIZE",
         func = function(self2)
             self2:ClearTabPanel()
             self2:CreateHUD_Bottom()
@@ -142,6 +142,8 @@ SWEP.CustomizeButtons = {
             if self2.CustomizeHUD.lowerpanel then 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74), 0.2, 0, 0.5, nil)
+                -- self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
+                -- self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
 
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
@@ -514,7 +516,7 @@ function SWEP:CreateCustomizeHUD()
 
 
 
-        surface.SetMaterial(Material( "arc9/debug.png", "noclamp smooth" ))
+        surface.SetMaterial(Material( "arc9/debug2.png", "noclamp smooth" ))
         surface.SetDrawColor(255,255,255,122)
         -- surface.DrawTexturedRect(0, 0, w, h)
 
@@ -1439,7 +1441,7 @@ function SWEP:CreateHUD_RHP()
         net.WriteBool(false)
         net.SendToServer()
     end
-    
+
     topright_presets.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
     topright_close.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
     
@@ -1549,10 +1551,32 @@ function SWEP:CreateHUD_RHP()
         
         lowerpanel.Paint = function(self2, w, h) 
             surface.SetDrawColor(ARC9.GetHUDColor("bg"))
-            surface.DrawRect(barlength + ScreenScale(1.5), ScreenScale(12.75), w - barlength - inspecttextwidth - ScreenScale(3.2), ScreenScale(1.75))
+
+            surface.DrawRect(barlength + ScreenScale(1.5), ScreenScale(12.75), w - barlength - inspecttextwidth - ScreenScale(3.2), ScreenScale(1.75)) -- bar spacer
             
             draw.NoTexture()
-            surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ScreenScale(15.5)}, {x = w, y = ScreenScale(15.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+            
+            if self2.Extended then
+                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ScreenScale(15.5+60)}, {x = w*0.5-ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w*0.5-ScreenScale(0.75), y = h}})
+                
+                surface.DrawRect(0, ScreenScale(15.5+60-2.5), w*0.5-ScreenScale(0.5), ScreenScale(1.5))
+
+                surface.DrawRect(0, ScreenScale(15.5), w, ScreenScale(60-3.5))
+
+                surface.SetDrawColor(ARC9.GetHUDColor("bg_pro"))
+                surface.DrawPoly({{x = w*0.5+ScreenScale(0.75), y = h}, {x = w*0.5+ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w*0.75-ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w*0.75-ScreenScale(0.75), y = h}})
+
+                surface.SetDrawColor(ARC9.GetHUDColor("bg_con"))
+                surface.DrawPoly({{x = w*0.75+ScreenScale(0.75), y = h}, {x = w*0.75+ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w, y = ScreenScale(15.5+60)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+                
+                surface.SetDrawColor(ARC9.GetHUDColor("pro"))
+                surface.DrawRect(w*0.5+ScreenScale(0.75), ScreenScale(15.5+60-2.5), w*0.25-ScreenScale(1), ScreenScale(1.5))
+
+                surface.SetDrawColor(ARC9.GetHUDColor("con"))
+                surface.DrawRect(w*0.75+ScreenScale(1), ScreenScale(15.5+60-2.5), w*0.25, ScreenScale(1.5))
+            else
+                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ScreenScale(15.5)}, {x = w, y = ScreenScale(15.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+            end
 
             -- thingy at bottom
             surface.SetDrawColor(ARC9.GetHUDColor("hi"))
