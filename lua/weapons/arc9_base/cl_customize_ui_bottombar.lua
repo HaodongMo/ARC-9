@@ -144,7 +144,9 @@ local function enterfolder(self, scroll, slottbl, fname)
     end
 
     for folder, children in SortedPairs(folders) do
-
+        if !folders then 
+            table.remove(self.BottomBarPath)
+        end
         if isbool(children) then continue end
 
         local folderbtn = iconbutton(self, scroll, ARC9:GetPhrase("folder." .. folder) or folder, foldericon)
