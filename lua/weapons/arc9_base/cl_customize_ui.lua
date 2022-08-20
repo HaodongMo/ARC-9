@@ -500,6 +500,11 @@ ARC9AttButton.MatEmpty = Material("arc9/ui/att_empty.png", "mips")
 ARC9AttButton.MatHover = Material("arc9/ui/att_hover.png", "mips")
 ARC9AttButton.MatBlock = Material("arc9/ui/att_block.png", "mips")
 
+ARC9AttButton.MatMarkerInstalled = Material("arc9/ui/mark_installed.png", "mips smooth")
+ARC9AttButton.MatMarkerLock = Material("arc9/ui/mark_lock.png", "mips smooth")
+ARC9AttButton.MatMarkerModes = Material("arc9/ui/mark_modes.png", "mips smooth")
+ARC9AttButton.MatMarkerSlots = Material("arc9/ui/mark_slots.png", "mips smooth")
+
 function ARC9AttButton:Init()
 	self:SetText("")
     self:SetSize(ScreenScale(42.7), ScreenScale(42.7+14.6))
@@ -510,6 +515,7 @@ function ARC9AttButton:Paint(w, h)
 	local color = self.Color
 	local iconcolor = self.Color
 	local textcolor = self.Color
+	local markercolor = self.Color
 	local icon = self.Icon
 	local text = self.ButtonText
     -- local cornercut = ScreenScale(4.5)
@@ -517,19 +523,30 @@ function ARC9AttButton:Paint(w, h)
     -- local outlineoffset2 = outlineoffset/2
 
 	local mat = self.MatIdle
+	local matmarker = nil
 
 	if self:IsHovered() then
         textcolor = self.ColorClicked
 	end
 
+    if self.HasModes then
+        matmarker = self.MatMarkerModes
+    elseif self.HasSlots then
+        matmarker = self.MatMarkerSlots
+    end
+
     if self.Empty then
 		mat = self.MatEmpty
     elseif !self.CanAttach then
 		mat = self.MatBlock
+        matmarker = self.MatMarkerLock
         textcolor = self.ColorBlock
         iconcolor = self.ColorBlock
+        markercolor = self.ColorBlock
     elseif self:IsDown() or self.Installed then
 		mat = self.MatHover
+        matmarker = self.MatMarkerInstalled
+        markercolor = self.ColorClicked
 	end
 
     surface.SetDrawColor(color)
@@ -560,7 +577,13 @@ function ARC9AttButton:Paint(w, h)
 	surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
     surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w-ScreenScale(4), w-ScreenScale(4))
-
+    
+    if matmarker then
+        surface.SetDrawColor(markercolor)
+        surface.SetMaterial(matmarker)
+        surface.DrawTexturedRect(ScreenScale(3), w - ScreenScale(11), ScreenScale(8), ScreenScale(8))
+        -- surface.DrawTexturedRect(0, 0, w, w)
+    end
 
     if self.FolderContain then
         surface.SetFont("ARC9_12")
@@ -597,6 +620,12 @@ function ARC9AttButton:SetCanAttach(bool)
 end
 function ARC9AttButton:SetFolderContain(num)
     self.FolderContain = num
+end
+function ARC9AttButton:SetHasModes(bool)
+    self.HasModes = bool
+end
+function ARC9AttButton:SetHasSlots(bool)
+    self.HasSlots = bool
 end
 
 vgui.Register("ARC9AttButton", ARC9AttButton, "DCheckBox") -- DButton
@@ -1170,9 +1199,9 @@ function SWEP:CreateCustomizeHUD()
                         self.BottomBarAtts = {}
                         self:CreateHUD_Bottom()
 
-                        self.CustomizePanX = 0
-                        self.CustomizePanY = 0
-                        self.CustomizePitch = 0
+                        -- self.CustomizePanX = 0
+                        -- self.CustomizePanY = 0
+                        -- self.CustomizePitch = 0
                         -- print("hi")
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
                         self:DetachAllFromSubSlot(slot.Address)

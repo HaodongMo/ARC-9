@@ -96,7 +96,7 @@ ARC9.AutoStatsMains = {
 ARC9.AutoStatsOperations = {
     ["Mult"] = function(a, weapon, stat, unit)
         if unit == true then
-            return "×" .. math.Round(a * 100, 2) .. "% ", "", a < 1
+            return "×" .. math.Round(a * 100, 2) .. "%", "", a < 1
         end
 
         local neg = false
@@ -109,9 +109,9 @@ ARC9.AutoStatsOperations = {
         a = math.Round(a, 2)
 
         if neg then
-            return "-" .. tostring(a) .. "% ", "", true
+            return "-" .. tostring(a) .. "%", "", true
         else
-            return "+" .. tostring(a) .. "% ", "", false
+            return "+" .. tostring(a) .. "%", "", false
         end
     end,
     ["Add"] = function(a, weapon, stat, unit)
@@ -158,7 +158,7 @@ ARC9.AutoStatsOperations = {
             str = tostring(a)
         end
 
-        return str .. " ", "", a <= (weapon[stat] or 0)
+        return str, "", a <= (weapon[stat] or 0)
     end,
     ["Hook"] = function(a, weapon, stat)
         return "", "", false

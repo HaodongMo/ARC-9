@@ -190,6 +190,8 @@ local function enterfolder(self, scroll, slottbl, fname)
             end
 
             attbtn2:SetInstalled(slot.Installed == att.att)
+            attbtn2:SetHasModes(!!atttbl.ToggleStats)
+            attbtn2:SetHasSlots(!!atttbl.Attachments)
             attbtn2:SetCanAttach(self:CanAttach(slot.Address, att.att, slot))
 
             if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
@@ -346,12 +348,12 @@ local function enterfolder(self, scroll, slottbl, fname)
     end
 end
 
-surface.CreateFont( "ARC9_KeybindPreview_Cust", {
+surface.CreateFont("ARC9_KeybindPreview_Cust", {
 	font = "Arial",
 	size = ScreenScale(8),
 	weight = 1000,
 	antialias = true,
-} )
+})
 
 function SWEP:CreateHUD_Bottom()
     -- if true then return end
@@ -365,61 +367,29 @@ function SWEP:CreateHUD_Bottom()
     local bp = vgui.Create("DPanel", lowerpanel)
     bp:SetSize(lowerpanel:GetWide(), ScreenScale(62))
     bp:SetPos(0, ScreenScale(15.5))
-    bp.Paint = function(self2, w, h)
-        if !IsValid(self) then
-            self2:Remove()
-            gui.EnableScreenClicker(false)
-        end
-        -- local bartxt = "Presets"
-
-        -- if self.BottomBarMode == 1 then
-        --     local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
-
-        --     if !slot then
-        --         self.BottomBarMode = 0
-        --         self:CreateHUD_Bottom()
-        --         return
-        --     end
-
-        --     bartxt = slot.PrintName or "Attachments"
-        --     if #self.BottomBarPath > 0 then bartxt = bartxt .. "/" .. string.Implode("/", self.BottomBarPath) end
-        -- end
-
-        -- surface.SetFont("ARC9_8")
-        -- surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        -- surface.SetTextPos(ScreenScale(8 + 4), 0)
-        -- surface.DrawText(bartxt)
-    end
+    bp.Paint = function() end
 
     self.BottomBar = bp
 
     scrolleles = {}
     local scroll = vgui.Create("DHorizontalScroller", bp)
-    -- scroll:Dock(FILL)
     scroll:SetPos(0, ScreenScale(3))
     scroll:SetSize(lowerpanel:GetWide(), ScreenScale(57.3))
-    scroll:SetOverlap(-ScreenScale(15)) -- If this is too small, the right side will be cut out. idk why and idk how to fix it elegantly so here you go
+    scroll:SetOverlap(-ScreenScale(7)) -- If this is too small, the right side will be cut out. idk why and idk how to fix it elegantly so here you go
     scroll:MoveToFront()
 
+    -- scroll.btnLeft:SetTall(ScreenScale(12)) -- not posible due to garry newman dhorizontalscroller   we could override it but i too lazyyyy
+
     scroll.btnLeft:SetPos(0, scroll:GetTall() - ScreenScale(12))
-    scroll.btnLeft:SetSize(ScreenScale(12), ScreenScale(12))
-    -- function scroll.btnLeft:Paint( w, h )
-    --     surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-    --     surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
+    function scroll.btnLeft:Paint(w, h)
+        -- surface.SetDrawColor(ARC9.GetHUDColor("fg", 100))
+        -- surface.DrawRect(0, h*0.5, w, h*0.5)
+    end
 
-    --     surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    --     surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
-    -- end
-
-    -- scroll.btnRight:SetPos(scroll:GetWide() - ScreenScale(12), scroll:GetTall() - ScreenScale(12))
-    -- scroll.btnRight:SetSize(ScreenScale(12), ScreenScale(12))
-    -- function scroll.btnRight:Paint( w, h )
-    --     surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-    --     surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
-
-    --     surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    --     surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
-    -- end
+    function scroll.btnRight:Paint(w, h)
+        -- surface.SetDrawColor(ARC9.GetHUDColor("fg", 100))
+        -- surface.DrawRect(0, h*0.5, w, h*0.5)
+    end
 
 
     if self.BottomBarMode == 1 then
@@ -540,17 +510,19 @@ function SWEP:CreateHUD_AttInfo()
 
     local function paintthescroller(scr)
         local scroll_preset = scr:GetVBar()
+        scroll_preset:SetHideButtons(true)
         scroll_preset.Paint = function() end
-        scroll_preset.btnUp.Paint = function() end
-        scroll_preset.btnDown.Paint = function() end
+        scroll_preset:SetWide(ScreenScale(2))
         scroll_preset.btnGrip.Paint = function(panel, w, h)
-            -- surface.SetDrawColor(ARC9.GetHUDColor("fg"))  -- for some reason cause blicking
-            -- surface.DrawRect(ScreenScale(2), 0, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+            surface.DrawRect(0, 0, w, h)
         end
+        scroll_preset:SetAlpha(0) -- to prevent blinking
+        scroll_preset:AlphaTo(255, 0.2, 0, nil)
     end
 
     local descscroller = vgui.Create("DScrollPanel", infopanel)
-    descscroller:SetSize(lowerpanel:GetWide()/2 - ScreenScale(5), infopanel:GetTall()-ScreenScale(8))
+    descscroller:SetSize(lowerpanel:GetWide()/2 - ScreenScale(5), infopanel:GetTall()-ScreenScale(16))
     descscroller:SetPos(ScreenScale(4), ScreenScale(14))
     paintthescroller(descscroller)
 
@@ -572,12 +544,12 @@ function SWEP:CreateHUD_AttInfo()
     end
 
     local prosscroller = vgui.Create("DScrollPanel", infopanel)
-    prosscroller:SetSize(lowerpanel:GetWide()*0.25 - ScreenScale(5), infopanel:GetTall() - ScreenScale(8))
+    prosscroller:SetSize(lowerpanel:GetWide()*0.25 - ScreenScale(3), infopanel:GetTall() - ScreenScale(4))
     prosscroller:SetPos(lowerpanel:GetWide()*0.5 + ScreenScale(3), ScreenScale(3))
     paintthescroller(prosscroller)
 
     local consscroller = vgui.Create("DScrollPanel", infopanel)
-    consscroller:SetSize(lowerpanel:GetWide()*0.25 - ScreenScale(5), infopanel:GetTall() - ScreenScale(8))
+    consscroller:SetSize(lowerpanel:GetWide()*0.25 - ScreenScale(3), infopanel:GetTall() - ScreenScale(4))
     consscroller:SetPos(lowerpanel:GetWide()*0.75 + ScreenScale(3), ScreenScale(3))
     paintthescroller(consscroller)
 
@@ -598,7 +570,7 @@ function SWEP:CreateHUD_AttInfo()
                 self:DrawTextRot(self2, self2.text, 0, 0, ScreenScale(2), 0, w, true)
 
                 local tw = surface.GetTextSize(prosnum[k])
-                self:DrawTextRot(self2, prosnum[k], 0, 0, prosscroller:GetWide()-tw, 0, w, true)
+                self:DrawTextRot(self2, prosnum[k], 0, 0, prosscroller:GetWide()-tw-ScreenScale(6), 0, w, true)
             end
         end
     else
@@ -619,7 +591,7 @@ function SWEP:CreateHUD_AttInfo()
                 self:DrawTextRot(self2, self2.text, 0, 0, ScreenScale(2), 0, w, true)
 
                 local tw = surface.GetTextSize(consnum[k])
-                self:DrawTextRot(self2, consnum[k], 0, 0, consscroller:GetWide()-tw, 0, w, true)
+                self:DrawTextRot(self2, consnum[k], 0, 0, consscroller:GetWide()-tw-ScreenScale(6), 0, w, true)
             end
         end
     else
