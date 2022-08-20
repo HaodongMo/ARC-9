@@ -35,13 +35,13 @@ function SWEP:MultiLineText(text, maxw, font)
     return content
 end
 
-// span: panel that hosts the rotating text
-// txt: the text to draw
-// x: where to start the crop
-// y: where to start the crp
-// tx, ty: where to draw the text
-// maxw: maximum width
-// only: don't advance text
+-- span: panel that hosts the rotating text
+-- txt: the text to draw
+-- x: where to start the crop
+-- y: where to start the crp
+-- tx, ty: where to draw the text
+-- maxw: maximum width
+-- only: don't advance text
 function SWEP:DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
     local tw, th = surface.GetTextSize(txt)
 
@@ -89,7 +89,7 @@ function SWEP:DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
     end
 end
 
-// Cycle the selected attachment
+-- Cycle the selected attachment
 function SWEP:CycleSelectedAtt(amt, cyc)
     if self.CustomizeTab != 0 then return end
 
@@ -132,18 +132,33 @@ SWEP.CustomizeBoxes = nil
 
 SWEP.CustomizeTab = 0
 
+local function swtichtoslotmenu(self)
+    if self.CustomizeHUD.lowerpanel.Extended then
+        self.CustomizeHUD.lowerpanel.Extended = nil
+        self.BottomBarMode = 0
+        self.BottomBarAddress = nil
+        self.BottomBarMode = 0
+        self:CreateHUD_Bottom()
+    end
+end
+
 SWEP.CustomizeButtons = {
     {
         title = "CUSTOMIZE",
         func = function(self2)
             self2:ClearTabPanel()
             self2:CreateHUD_Bottom()
-            
+
+            swtichtoslotmenu(self2)
+
             if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93), 0.2, 0, 0.5, nil)
-                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74), 0.2, 0, 0.5, nil)
-                -- self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
-                -- self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+                if self2.CustomizeHUD.lowerpanel.Extended then 
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+                else
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74), 0.2, 0, 0.5, nil)
+                end
 
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
@@ -159,6 +174,8 @@ SWEP.CustomizeButtons = {
             self2:CreateHUD_Stats()
             
             if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel.Extended = nil 
+
                 self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH()-ScreenScale(93+50), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74+50), 0.2, 0, 0.5, nil)
 
@@ -174,6 +191,8 @@ SWEP.CustomizeButtons = {
             self2:CreateHUD_Bench()
 
             if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel.Extended = nil 
+
                 self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74-55), 0.2, 0, 0.5, nil)
                 -- self2.CustomizeHUD.lowerpanel:SetAlpha(255)
@@ -191,6 +210,8 @@ SWEP.CustomizeButtons = {
             self2:CreateHUD_Trivia()
             
             if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel.Extended = nil 
+
                 self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH()-ScreenScale(93+50), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74+50), 0.2, 0, 0.5, nil)
 
@@ -207,6 +228,8 @@ SWEP.CustomizeButtons = {
             self2:ClearTabPanel()
 
             if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel.Extended = nil 
+
                 self2.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74-55), 0.2, 0, 0.5, nil) 
             end
@@ -463,6 +486,120 @@ function ARC9TopButton:SetIsCheckbox(bool)
 end
 
 vgui.Register("ARC9TopButton", ARC9TopButton, "DCheckBox") -- DButton
+
+
+
+local ARC9AttButton = {}
+ARC9AttButton.Color = ARC9.GetHUDColor("fg")
+ARC9AttButton.ColorClicked = ARC9.GetHUDColor("hi")
+ARC9AttButton.ColorBlock = ARC9.GetHUDColor("con")
+ARC9AttButton.Icon = Material("arc9/ui/settings.png", "mips")
+
+ARC9AttButton.MatIdle = Material("arc9/ui/att.png", "mips")
+ARC9AttButton.MatEmpty = Material("arc9/ui/att_empty.png", "mips")
+ARC9AttButton.MatHover = Material("arc9/ui/att_hover.png", "mips")
+ARC9AttButton.MatBlock = Material("arc9/ui/att_block.png", "mips")
+
+function ARC9AttButton:Init()
+	self:SetText("")
+    self:SetSize(ScreenScale(42.7), ScreenScale(42.7+14.6))
+    -- self:SetSize(ScreenScale(42.7+50), ScreenScale(42.7+14.6+50))
+end
+
+function ARC9AttButton:Paint(w, h)
+	local color = self.Color
+	local iconcolor = self.Color
+	local textcolor = self.Color
+	local icon = self.Icon
+	local text = self.ButtonText
+    -- local cornercut = ScreenScale(4.5)
+    -- local outlineoffset = ScreenScale(1.25)
+    -- local outlineoffset2 = outlineoffset/2
+
+	local mat = self.MatIdle
+
+	if self:IsHovered() then
+        textcolor = self.ColorClicked
+	end
+
+    if self.Empty then
+		mat = self.MatEmpty
+    elseif !self.CanAttach then
+		mat = self.MatBlock
+        textcolor = self.ColorBlock
+        iconcolor = self.ColorBlock
+    elseif self:IsDown() or self.Installed then
+		mat = self.MatHover
+	end
+
+    surface.SetDrawColor(color)
+    surface.SetMaterial(mat)
+    surface.DrawTexturedRect(0, 0, w, w)
+
+    --[[     the x64 branch dont like drawpoly
+    -- bg
+    draw.NoTexture()
+
+    surface.SetDrawColor(bgcolor)
+    surface.DrawPoly({{x = cornercut, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = w-cornercut}, {x = w-cornercut, y = w}, {x = cornercut, y = w}, {x = 0, y = w-cornercut}, {x = 0, y = cornercut} })
+    
+    -- frame   holy shit i wish there was .svg support
+    surface.SetDrawColor(framecolor)
+    surface.DrawPoly({{x = cornercut, y = 0}, {x = w-cornercut, y = 0}, {x = w-cornercut, y = outlineoffset}, {x = cornercut, y = outlineoffset}}) -- top
+    surface.DrawPoly({{x = cornercut, y = w-outlineoffset}, {x = w-cornercut, y = w-outlineoffset}, {x = w-cornercut, y = w}, {x = cornercut, y = w}}) -- bottom
+    surface.DrawPoly({{x = 0, y = cornercut}, {x = outlineoffset, y = cornercut}, {x = outlineoffset, y = w-cornercut}, {x = 0, y = w-cornercut}}) -- left
+    surface.DrawPoly({{x = w-outlineoffset, y = cornercut}, {x = w, y = cornercut}, {x = w, y = w-cornercut}, {x = w-outlineoffset, y = w-cornercut}}) -- right
+    
+    surface.DrawPoly({{x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = cornercut+outlineoffset2, y = outlineoffset}, {x = outlineoffset, y = cornercut+outlineoffset2}}) -- top left
+    surface.DrawPoly({{x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w-outlineoffset, y = cornercut+outlineoffset2}, {x = w-cornercut-outlineoffset2, y = outlineoffset}}) -- top right
+    surface.DrawPoly({{x = 0, y = w-cornercut}, {x = outlineoffset, y = w-cornercut-outlineoffset2}, {x = cornercut+outlineoffset2, y = w-outlineoffset}, {x = cornercut, y = w}}) -- bottom left
+    surface.DrawPoly({{x = w-cornercut, y = w}, {x = w-cornercut-outlineoffset2, y = w-outlineoffset}, {x = w-outlineoffset, y = w-cornercut-outlineoffset2}, {x = w, y = w-cornercut}}) -- bottom right
+    ]]--
+
+    -- icon
+	surface.SetDrawColor(iconcolor)
+    surface.SetMaterial(icon)
+    surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w-ScreenScale(4), w-ScreenScale(4))
+
+
+    if self.FolderContain then
+        surface.SetFont("ARC9_12")
+        local tww = surface.GetTextSize(self.FolderContain)
+        surface.SetTextColor(iconcolor)
+        surface.SetTextPos((w-tww)/2, h-ScreenScale(28))
+        surface.DrawText(self.FolderContain)
+    end
+
+    -- text
+    surface.SetFont("ARC9_9")
+    local tw = surface.GetTextSize(text)
+    surface.SetTextColor(textcolor)
+    surface.SetTextPos((w-tw)/2, h-ScreenScale(13.5))
+    surface.DrawText(text)
+
+    -- self:DrawTextRot(self, text, 0, 0, ScreenScale(2), 0, ScreenScale(42.7), false) ??
+end
+
+function ARC9AttButton:SetIcon(mat)
+    self.Icon = mat
+end
+function ARC9AttButton:SetButtonText(text)
+    self.ButtonText = text
+end
+function ARC9AttButton:SetEmpty(bool)
+    self.Empty = bool
+end
+function ARC9AttButton:SetInstalled(bool)
+    self.Installed = bool
+end
+function ARC9AttButton:SetCanAttach(bool)
+    self.CanAttach = bool
+end
+function ARC9AttButton:SetFolderContain(num)
+    self.FolderContain = num
+end
+
+vgui.Register("ARC9AttButton", ARC9AttButton, "DCheckBox") -- DButton
 
 
 
@@ -1335,7 +1472,7 @@ end
 
 function SWEP:CreateHUD_RHP()
     local bg = self.CustomizeHUD
-
+    if !IsValid(self) then return end
 
     local scrh = ScrH()
     local scrw = ScrW()
@@ -1409,6 +1546,7 @@ function SWEP:CreateHUD_RHP()
     topleft_light:SetIcon(Material("arc9/ui/light.png", "mips smooth"))
     topleft_light:SetIsCheckbox(true)
     topleft_light:SetConVar("arc9_cust_light")
+    topleft_light:SetValue(GetConVar("arc9_cust_light"):GetBool())
 
     topleft_settings.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
     topleft_light.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
@@ -1563,16 +1701,16 @@ function SWEP:CreateHUD_RHP()
 
                 surface.DrawRect(0, ScreenScale(15.5), w, ScreenScale(60-3.5))
 
-                surface.SetDrawColor(ARC9.GetHUDColor("bg_pro"))
+                surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("bg_pro") or ARC9.GetHUDColor("bg"))
                 surface.DrawPoly({{x = w*0.5+ScreenScale(0.75), y = h}, {x = w*0.5+ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w*0.75-ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w*0.75-ScreenScale(0.75), y = h}})
 
-                surface.SetDrawColor(ARC9.GetHUDColor("bg_con"))
-                surface.DrawPoly({{x = w*0.75+ScreenScale(0.75), y = h}, {x = w*0.75+ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w, y = ScreenScale(15.5+60)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
-                
-                surface.SetDrawColor(ARC9.GetHUDColor("pro"))
+                surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("pro") or ARC9.GetHUDColor("bg"))
                 surface.DrawRect(w*0.5+ScreenScale(0.75), ScreenScale(15.5+60-2.5), w*0.25-ScreenScale(1), ScreenScale(1.5))
 
-                surface.SetDrawColor(ARC9.GetHUDColor("con"))
+                surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("bg_con") or ARC9.GetHUDColor("bg"))
+                surface.DrawPoly({{x = w*0.75+ScreenScale(0.75), y = h}, {x = w*0.75+ScreenScale(0.75), y = ScreenScale(15.5+60)}, {x = w, y = ScreenScale(15.5+60)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+
+                surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("con") or ARC9.GetHUDColor("bg"))
                 surface.DrawRect(w*0.75+ScreenScale(1), ScreenScale(15.5+60-2.5), w*0.25, ScreenScale(1.5))
             else
                 surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ScreenScale(15.5)}, {x = w, y = ScreenScale(15.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})

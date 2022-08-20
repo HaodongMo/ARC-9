@@ -269,23 +269,29 @@ function SWEP:GetViewModelPosition(pos, ang)
         extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
         extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))
 
-        if self.BottomBarAddress then
-            local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
+        -- if self.BottomBarAddress then
+        --     local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
 
-            if slot then
-                local apos = self:GetAttPos(slot, false, true, true)
+        --     if slot then
+        --         local apos = self:GetAttPos(slot, false, true, true)
 
-                local opos = (slot.Icon_Offset or Vector(0, 0, 0))
-                local atttbl = self:GetFinalAttTable(slot)
-                opos = opos + (atttbl.IconOffset or Vector(0, 0, 0))
+        --         local opos = (slot.Icon_Offset or Vector(0, 0, 0))
+        --         local atttbl = self:GetFinalAttTable(slot)
+        --         opos = opos + (atttbl.IconOffset or Vector(0, 0, 0))
 
-                apos.x = apos.x + opos.x
-                apos.z = apos.z - opos.z
+        --         apos.x = apos.x + opos.x
+        --         apos.z = apos.z - opos.z
 
-                cpos = cpos + cang:Up() * (apos.x - cpos.x)
-                -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
-                cpos = cpos + cang:Forward() * (apos.z + cpos.z)
-            end
+        --         cpos = cpos + cang:Up() * (apos.x - cpos.x)
+        --         -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
+        --         cpos = cpos + cang:Forward() * (apos.z + cpos.z)
+        --     end
+        
+        if self.BottomBarMode == 1 then
+            cpos = cpos - cang:Forward() * 5 -- extended cust offset
+        else
+            cpos = cpos - cang:Forward() * 1.5 -- idle offset
+            
         end
 
         cpos = cpos + cang:Up() * self.CustomizePanX

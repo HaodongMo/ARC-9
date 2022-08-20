@@ -16,6 +16,7 @@ local sizes_to_make = {
     4,
     6,
     8,
+    9,
     10,
     12,
     16,
@@ -42,6 +43,14 @@ local function generatefonts()
             weight = i<16 and 650 or 600,
             antialias = true,
             extended = true, -- Required for non-latin fonts
+        } )
+
+        surface.CreateFont( "ARC9_" .. tostring(i) .. "_Slim", {
+            font = font,
+            size = ScreenScale(i+addsize),
+            weight = 300,
+            antialias = true,
+            extended = true,
         } )
 
         surface.CreateFont( "ARC9_" .. tostring(i) .. "_Glow", {
@@ -101,6 +110,7 @@ hook.Add("OnScreenSizeChanged", "ARC9.FontRegen", function(oldWidth, oldHeight)
     timer.Simple(15, ARC9.Regen)
     timer.Simple(60, ARC9.Regen) -- trying !!
 end)
+
 cvars.AddChangeCallback("arc9_font", function(cvar, old, new) -- Dont work btw https://github.com/Facepunch/garrysmod-issues/issues/3740
     generatefonts()
 end, "reload_fonts")

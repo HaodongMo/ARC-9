@@ -1,3 +1,5 @@
+--[[ 
+
 local mat_default = Material("arc9/arccw_bird.png")
 local mat_new = Material("arc9/plus.png")
 local mat_reset = Material("arc9/reset.png")
@@ -649,3 +651,4 @@ function SWEP:CreateHUD_Presets(scroll)
         end
     end
 end
+]]--

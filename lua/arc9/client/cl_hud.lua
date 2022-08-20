@@ -16,7 +16,6 @@ end)
 
 ARC9.Colors = {
     bg      = Color(153, 153, 153, 97), --
-    bg2     = Color(97, 97, 97, 130), --
     bg_pro  = Color(53, 179, 53, 97), --
     bg_con  = Color(204, 61, 61, 97), --
     pro  = Color(54, 179, 54), --

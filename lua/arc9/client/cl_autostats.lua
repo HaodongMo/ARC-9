@@ -133,9 +133,9 @@ ARC9.AutoStatsOperations = {
         end
 
         if neg then
-            return "-" .. str .. " ", "", true
+            return "-" .. str, "", true
         else
-            return "+" .. str .. " ", "", false
+            return "+" .. str, "", false
         end
     end,
     ["Override"] = function(a, weapon, stat, unit)
@@ -191,9 +191,15 @@ function ARC9.GetProsAndCons(atttbl, weapon)
     local pros = table.Copy(atttbl.Pros or {})
     local cons = table.Copy(atttbl.Cons or {})
 
+    local prosname = {}
+    local prosnum = {}
+    local consname = {}
+    local consnum = {}
+
     for stat, value in pairs(atttbl) do
         if !isnumber(value) and !isbool(value) then continue end
         local autostat = ""
+        local autostatnum = ""
         local canautostat = false
         local neg = false
         local unit = false
@@ -225,7 +231,8 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         for op, func in pairs(ARC9.AutoStatsOperations) do
             if string.StartWith(stat, op) then
                 local pre, post, isneg = func(value, weapon, asmain, unit)
-                autostat = pre .. autostat .. post
+                autostat = autostat .. post
+                autostatnum = pre
                 neg = isneg
                 foundop = true
                 asop = op
@@ -240,7 +247,8 @@ function ARC9.GetProsAndCons(atttbl, weapon)
 
             -- if isnumber(value) then neg = value <= (weapon[asmain] or 0) else neg = value end
             local pre, post, isneg = ARC9.AutoStatsOperations.Override(value, weapon, asmain, unit)
-            autostat = pre .. autostat .. post
+            autostat = autostat .. post
+            autostatnum = pre
             neg = isneg
             foundop = true
             asop = "Override"
@@ -259,14 +267,15 @@ function ARC9.GetProsAndCons(atttbl, weapon)
             end
         end
 
-        autostat = autostat .. "."
-
         if neg and negisgood or !neg and !negisgood then
-            table.insert(pros, autostat)
+            table.insert(prosname, autostat)
+            table.insert(prosnum, autostatnum)
         else
-            table.insert(cons, autostat)
+            table.insert(consname, autostat)
+            table.insert(consnum, autostatnum)
         end
     end
 
-    return pros, cons
+    return prosname, prosnum, consname, consnum
+    -- return pros, cons
 end
