@@ -457,7 +457,7 @@ function ARC9TopButton:Paint(w, h)
         surface.SetMaterial(matr)
         surface.DrawTexturedRect(w-h/2, 0, h/2, h)
 
-        surface.SetFont("ARC9_16")
+        surface.SetFont(self.Font or "ARC9_16")
         local tw = surface.GetTextSize(text)
         surface.SetTextColor(iconcolor)
         surface.SetTextPos(h, h/8)
@@ -480,8 +480,9 @@ function ARC9TopButton:SetIcon(mat)
     self.Icon = mat
 end
 
-function ARC9TopButton:SetButtonText(text)
+function ARC9TopButton:SetButtonText(text, font)
     self.ButtonText = text
+    self.Font = font 
 end
 
 function ARC9TopButton:SetIsCheckbox(bool)
@@ -1524,7 +1525,7 @@ function SWEP:CreateHUD_RHP()
     topleft_light:SetIsCheckbox(true)
     topleft_light:SetConVar("arc9_cust_light")
     topleft_light:SetValue(GetConVar("arc9_cust_light"):GetBool())
-    local oldlightdoclick = topleft_light.DoClick -- prob cause its
+    local oldlightdoclick = topleft_light.DoClick
     topleft_light.DoClick = function(self2)
         oldlightdoclick(self2)
         surface.PlaySound(self2:GetChecked() and "arc9/dryfire.wav" or "arc9/firemode.wav")
@@ -1549,10 +1550,10 @@ function SWEP:CreateHUD_RHP()
     topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
     topright_presets:SetButtonText("Presets")
     topright_presets:SetIsCheckbox(true)
-    local oldpresetsdoclick = topright_presets.DoClick -- prob cause its
+    local oldpresetsdoclick = topright_presets.DoClick
     topright_presets.DoClick = function(self2)
         surface.PlaySound(clicksound)
-        oldlightdoclick(self2)
+        oldpresetsdoclick(self2)
     end
 
     local topright_close = vgui.Create("ARC9TopButton", topright_panel)

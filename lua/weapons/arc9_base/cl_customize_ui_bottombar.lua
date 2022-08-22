@@ -206,6 +206,7 @@ local function enterfolder(self, scroll, slottbl, fname)
 
             if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
                 self.AttInfoBarAtt = self2.att
+                self.AttInfoBarAttSlot = slot
                 self:CreateHUD_AttInfo()
             end
         end
@@ -413,6 +414,7 @@ function SWEP:CreateHUD_Bottom()
 
         if slottbl.Installed then
             self.AttInfoBarAtt = slottbl.Installed
+            self.AttInfoBarAttSlot = slottbl
             self:CreateHUD_AttInfo()
         else
             self:ClearAttInfoBar()
@@ -552,6 +554,52 @@ function SWEP:CreateHUD_AttInfo()
             surface.DrawText(text)
         end
     end
+    
+
+
+        -- I cant make this work good please help
+
+
+    local slot = self.AttInfoBarAttSlot
+
+    if slot and atttbl.ToggleStats then
+        local mode_toggle = vgui.Create("ARC9TopButton", infopanel)
+        surface.SetFont("ARC9_12")
+        local curmode = atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
+        local tw = surface.GetTextSize(curmode)
+        mode_toggle:SetPos(descscroller:GetWide()/2-(ARC9ScreenScale(24)+tw)/2, ARC9ScreenScale(50))
+        mode_toggle:SetSize(ARC9ScreenScale(24)+tw, ARC9ScreenScale(21*0.75))
+        mode_toggle:SetButtonText(curmode, "ARC9_12")
+        mode_toggle:SetIcon(Material("arc9/ui/modes.png", "mips"))
+        mode_toggle.DoClick = function(self2)
+            -- surface.PlaySound(clicksound)
+            self:PlayAnimation("toggle", 1, false)
+            self:EmitSound(self:RandomChoice(self:GetProcessedValue("ToggleAttSound")), 75, 100, 1, CHAN_ITEM)
+            self:ToggleAllStatsOnF() -- it should toggle only this one, not all of them
+        end
+        
+        mode_toggle.Think = function(self2)
+            slot = self.AttInfoBarAttSlot
+
+            if slot.Installed == self.AttInfoBarAtt then
+                curmode = atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
+                tw = surface.GetTextSize(curmode)
+                mode_toggle:SetPos(descscroller:GetWide()/2-(ARC9ScreenScale(24)+tw)/2, ARC9ScreenScale(50))
+                mode_toggle:SetSize(ARC9ScreenScale(24)+tw, ARC9ScreenScale(21*0.75))
+                mode_toggle:SetButtonText(curmode, "ARC9_12")
+
+            end
+
+        end
+        descscroller:SetSize(lowerpanel:GetWide()/2 - ARC9ScreenScale(5), infopanel:GetTall() - ARC9ScreenScale(38)) -- making desc smaller
+    end
+
+
+
+
+
+
+
 
     local prosscroller = vgui.Create("DScrollPanel", infopanel)
     prosscroller:SetSize(lowerpanel:GetWide()*0.25 - ARC9ScreenScale(3), infopanel:GetTall() - ARC9ScreenScale(4))
