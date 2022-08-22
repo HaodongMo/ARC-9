@@ -6,8 +6,9 @@ local adminicon = Material("arc9/admin.png", "mips smooth")
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
-local clicksound = "arc9/malfunction.wav"
-local backsound = "arc9/melee_hitbody.wav"
+local clicksound = "ui/panorama/generic_press_01.wav"
+local foldersound = "ui/panorama/submenu_dropdown_option_select_01.wav"
+local backsound = "ui/panorama/sidemenu_slideout_01.wav"
 
 local function spacer(self, scroll, margin)
     local spacer = vgui.Create("DPanel", scroll)
@@ -127,7 +128,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         folderbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
                 enterfolder(self, scroll, slottbl, self2.folder)
-                surface.PlaySound(clicksound)
+                surface.PlaySound(foldersound)
             end
         end
     end

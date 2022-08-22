@@ -1,6 +1,6 @@
 local mat_plus = Material("arc9/ui/plus.png")
 
-local clicksound = "arc9/malfunction.wav"
+local clicksound = "ui/panorama/generic_press_01.wav"
 
 local ARC9ScreenScale = ARC9.ScreenScale
 

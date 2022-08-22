@@ -398,8 +398,8 @@ local SeasonalHolidays = {}
 
 
 
-local hoversound = "garrysmod/ui_hover.wav"
-local clicksound = "arc9/malfunction.wav"
+local hoversound = "ui/panorama/itemtile_rollover_09.wav"
+local clicksound = "ui/panorama/itemtile_click_02.wav"
 
 
 
