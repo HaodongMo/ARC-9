@@ -6,6 +6,9 @@ local adminicon = Material("arc9/admin.png", "mips smooth")
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
+local clicksound = "arc9/malfunction.wav"
+local backsound = "arc9/melee_hitbody.wav"
+
 local function spacer(self, scroll, margin)
     local spacer = vgui.Create("DPanel", scroll)
     spacer:DockMargin(ARC9ScreenScale(margin), 0, ARC9ScreenScale(4), 0)
@@ -72,19 +75,21 @@ local function enterfolder(self, scroll, slottbl, fname)
     table.insert(scrolleles, backbtn)
 
     if #self.BottomBarPath > 0 then
-        backbtn:SetButtonText(ARC9:GetPhrase("folder.back") or "BACK")
+        backbtn:SetButtonText(ARC9:GetPhrase("folder.back") or "Back")
         backbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
                 enterfolder(self, scroll, slottbl, nil)
+                surface.PlaySound(backsound)
             end
         end
     else
-        backbtn:SetButtonText(ARC9:GetPhrase("folder.deselect") or "DESELECT")
+        backbtn:SetButtonText(ARC9:GetPhrase("folder.deselect") or "Deselect")
         backbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
                 self.BottomBarAddress = nil
                 self.BottomBarMode = 0
                 self:CreateHUD_Bottom()
+                surface.PlaySound(backsound)
             end
         end
     end
@@ -122,6 +127,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         folderbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
                 enterfolder(self, scroll, slottbl, self2.folder)
+                surface.PlaySound(clicksound)
             end
         end
     end
@@ -195,6 +201,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             attbtn2:SetHasModes(!!atttbl.ToggleStats)
             attbtn2:SetHasSlots(!!atttbl.Attachments)
             attbtn2:SetCanAttach(self:CanAttach(slot.Address, att.att, slot))
+            attbtn2:SetFullColorIcon(atttbl.FullColorIcon)
 
             if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
                 self.AttInfoBarAtt = self2.att

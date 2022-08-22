@@ -15,7 +15,7 @@ hook.Add("HUDShouldDraw", "ARC9_HideHUD", function(name)
 end)
 
 ARC9.ScreenScale = function(size)
-	return size * (ScrW() / 640.0)	* GetConVar("arc9_hud_scale"):GetFloat()
+	return size * (ScrW() / 640) * GetConVar("arc9_hud_scale"):GetFloat()
 end
     
 ARC9.Colors = {

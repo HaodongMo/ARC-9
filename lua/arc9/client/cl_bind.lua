@@ -24,11 +24,13 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     if bind == "+menu_context" then
         if !wpn:GetInSights() and !LocalPlayer():KeyDown(IN_USE) then
             if wpn:GetCustomize() then
+                surface.PlaySound("arc9/close.wav")
                 net.Start("ARC9_togglecustomize")
                 net.WriteBool(false)
                 net.SendToServer()
                 -- wpn:DoIconCapture()
             else
+                surface.PlaySound("arc9/melee_lift.wav")
                 net.Start("ARC9_togglecustomize")
                 net.WriteBool(true)
                 net.SendToServer()

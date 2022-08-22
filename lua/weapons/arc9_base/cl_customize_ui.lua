@@ -268,13 +268,7 @@ local mat_gear = Material("arc9/gear.png", "mips smooth")
 local mat_plus = Material("arc9/ui/plus.png")
 
 local lmbdown = false
-local lmbdowntime = 0
 local rmbdown = false
-local rmbdowntime = 0
-local lmbhold = false
-local lmbclick = false
-local rmbhold = false
-local rmbclick = false
 
 local lastmousex = 0
 local lastmousey = 0
@@ -404,6 +398,8 @@ local SeasonalHolidays = {}
 
 
 
+local hoversound = "garrysmod/ui_hover.wav"
+local clicksound = "arc9/malfunction.wav"
 
 
 
@@ -474,6 +470,10 @@ function ARC9TopButton:Paint(w, h)
 	surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
     surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(4), h-ARC9ScreenScale(8), h-ARC9ScreenScale(8))
+end
+
+function ARC9TopButton:OnCursorEntered() 
+    surface.PlaySound(hoversound)
 end
 
 function ARC9TopButton:SetIcon(mat)
@@ -556,8 +556,12 @@ function ARC9AttButton:Paint(w, h)
     -- icon
 	surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
-    surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w-ARC9ScreenScale(4), w-ARC9ScreenScale(4))
-    
+    if !self.FullColorIcon then
+        surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w-ARC9ScreenScale(4), w-ARC9ScreenScale(4))
+    else
+        surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(4), w-ARC9ScreenScale(8), w-ARC9ScreenScale(8))
+    end
+
     if matmarker then
         surface.SetDrawColor(markercolor)
         surface.SetMaterial(matmarker)
@@ -581,6 +585,10 @@ function ARC9AttButton:Paint(w, h)
     surface.DrawText(text)
 
     -- self:DrawTextRot(self, text, 0, 0, ARC9ScreenScale(2), 0, ARC9ScreenScale(42.7), false) ??
+end
+
+function ARC9AttButton:OnCursorEntered() 
+    surface.PlaySound(hoversound)
 end
 
 function ARC9AttButton:SetIcon(mat)
@@ -609,6 +617,9 @@ function ARC9AttButton:SetHasModes(bool)
 end
 function ARC9AttButton:SetHasSlots(bool)
     self.HasSlots = bool
+end
+function ARC9AttButton:SetFullColorIcon(bool)
+    self.FullColorIcon = bool
 end
 
 vgui.Register("ARC9AttButton", ARC9AttButton, "DCheckBox") -- DButton
@@ -1137,6 +1148,7 @@ function SWEP:CreateCustomizeHUD()
                         -- self.CustomizePanX = 0
                         -- self.CustomizePanY = 0
                         -- self.CustomizePitch = 0
+                        surface.PlaySound(clicksound)
                         
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
                         self:DetachAllFromSubSlot(slot.Address)
@@ -1499,7 +1511,7 @@ function SWEP:CreateHUD_RHP()
     local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
     topleft_settings:SetPos(ARC9ScreenScale(19), ARC9ScreenScale(19))
     topleft_settings.DoClick = function(self2)
-        surface.PlaySound("arc9/ubgl_select.wav")
+        surface.PlaySound(clicksound)
         ARC9_ClientSettings()
         
         -- self:ToggleCustomize(false)
@@ -1512,6 +1524,11 @@ function SWEP:CreateHUD_RHP()
     topleft_light:SetIsCheckbox(true)
     topleft_light:SetConVar("arc9_cust_light")
     topleft_light:SetValue(GetConVar("arc9_cust_light"):GetBool())
+    local oldlightdoclick = topleft_light.DoClick -- prob cause its
+    topleft_light.DoClick = function(self2)
+        oldlightdoclick(self2)
+        surface.PlaySound(self2:GetChecked() and "arc9/dryfire.wav" or "arc9/firemode.wav")
+    end
 
     topleft_settings.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
     topleft_light.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
@@ -1532,13 +1549,17 @@ function SWEP:CreateHUD_RHP()
     topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
     topright_presets:SetButtonText("Presets")
     topright_presets:SetIsCheckbox(true)
+    local oldpresetsdoclick = topright_presets.DoClick -- prob cause its
+    topright_presets.DoClick = function(self2)
+        surface.PlaySound(clicksound)
+        oldlightdoclick(self2)
+    end
 
     local topright_close = vgui.Create("ARC9TopButton", topright_panel)
     topright_close:SetPos(ARC9ScreenScale(130), ARC9ScreenScale(19))
     topright_close:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
     topright_close.DoClick = function(self2)
-        -- surface.PlaySound("arc9/ubgl_select.wav")
-        -- self:RemoveCustomizeHUD()
+        surface.PlaySound(clicksound)
         self:SetCustomize(false)
         net.Start("ARC9_togglecustomize")
         net.WriteBool(false)
@@ -1571,28 +1592,28 @@ function SWEP:CreateHUD_RHP()
     local inspecttextwidth = 0
 
     for i, btn in pairs(self.CustomizeButtons) do
-        local newbtn = vgui.Create("DButton", lowerpanel)
+        local custtabbtn = vgui.Create("DButton", lowerpanel)
         --
         surface.SetFont("ARC9_12")
         local titlewidth = surface.GetTextSize(btn.title) + ARC9ScreenScale(12.5)
         --
         
         if btn.inspect then 
-            newbtn:SetPos(scrw - ARC9ScreenScale(38) - titlewidth, 0)
+            custtabbtn:SetPos(scrw - ARC9ScreenScale(38) - titlewidth, 0)
             inspecttextwidth = titlewidth
         else 
             barlength = barlength + titlewidth + ARC9ScreenScale(1.5)
-            newbtn:SetPos(barlength - titlewidth, 0)
+            custtabbtn:SetPos(barlength - titlewidth, 0)
         end
         
-        newbtn:SetSize(titlewidth, ARC9ScreenScale(14.5))
-        newbtn.title = btn.title
-        newbtn.page = i - 1
-        newbtn.func = btn.func
-        newbtn:SetText("")
+        custtabbtn:SetSize(titlewidth, ARC9ScreenScale(14.5))
+        custtabbtn.title = btn.title
+        custtabbtn.page = i - 1
+        custtabbtn.func = btn.func
+        custtabbtn:SetText("")
         
 
-        newbtn.Paint = function(self2, w, h)
+        custtabbtn.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
             -- if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall and self2.page > 1 then return end
@@ -1639,12 +1660,16 @@ function SWEP:CreateHUD_RHP()
             surface.SetTextPos((w - tw) / 2, 0)
             surface.DrawText(self2.title)
         end
-        newbtn.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
-        newbtn.DoClick = function(self2)
+        custtabbtn.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
+        custtabbtn.DoClick = function(self2)
             self.CustomizeTab = self2.page
             self2.func(self)
+            surface.PlaySound(clicksound)
         end
-        -- newbtn.DoRightClick = function(self2)
+        custtabbtn.OnCursorEntered = function(self2)
+            surface.PlaySound(hoversound)
+        end
+        -- custtabbtn.DoRightClick = function(self2)
         --     self.CustomizeTab = 0
         --     self:ClearTabPanel()
         -- end

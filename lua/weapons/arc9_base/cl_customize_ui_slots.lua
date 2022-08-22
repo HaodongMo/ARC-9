@@ -1,11 +1,6 @@
-local mat_default = Material("arc9/arccw_bird.png")
-local mat_new = Material("arc9/plus.png")
-local mat_reset = Material("arc9/reset.png")
-local mat_export = Material("arc9/arrow_up.png")
-local mat_import = Material("arc9/arrow_down.png")
-local nextpreset = 0
-
 local mat_plus = Material("arc9/ui/plus.png")
+
+local clicksound = "arc9/malfunction.wav"
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
@@ -72,7 +67,8 @@ function SWEP:CreateHUD_Slots(scroll)
         end
 
         slotbtn.OnMousePressed = function(self2, kc)
-            if kc == MOUSE_LEFT then                        
+            if kc == MOUSE_LEFT then       
+                surface.PlaySound(clicksound)                 
                 self.BottomBarMode = 1
                 self.BottomBarAddress = slot.Address
                 self.BottomBarPath = {}

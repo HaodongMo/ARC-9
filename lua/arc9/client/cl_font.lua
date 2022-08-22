@@ -12,6 +12,8 @@ function ARC9:GetUnscaledFont()
     return f
 end
 
+if !ARC9.ScreenScale then ARC9.ScreenScale = function(size) return size * (ScrW() / 640) * GetConVar("arc9_hud_scale"):GetFloat() end end -- idk
+
 local sizes_to_make = {
     4,
     6,
