@@ -39,7 +39,7 @@ local function generatefonts()
 
         surface.CreateFont( "ARC9_" .. tostring(i), {
             font = font,
-            size = ScreenScale(i+addsize),
+            size = ARC9.ScreenScale(i+addsize),
             weight = i<16 and 650 or 600,
             antialias = true,
             extended = true, -- Required for non-latin fonts
@@ -47,7 +47,7 @@ local function generatefonts()
 
         surface.CreateFont( "ARC9_" .. tostring(i) .. "_Slim", {
             font = font,
-            size = ScreenScale(i+addsize),
+            size = ARC9.ScreenScale(i+addsize),
             weight = 300,
             antialias = true,
             extended = true,
@@ -55,10 +55,10 @@ local function generatefonts()
 
         surface.CreateFont( "ARC9_" .. tostring(i) .. "_Glow", {
             font = font,
-            size = ScreenScale(i+addsize),
+            size = ARC9.ScreenScale(i+addsize),
             weight = 600,
             antialias = true,
-            blursize = ScreenScale(i * 0.2),
+            blursize = ARC9.ScreenScale(i * 0.2),
             extended = true,
         } )
 

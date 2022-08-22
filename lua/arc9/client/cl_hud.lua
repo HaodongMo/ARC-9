@@ -14,6 +14,10 @@ hook.Add("HUDShouldDraw", "ARC9_HideHUD", function(name)
     end
 end)
 
+ARC9.ScreenScale = function(size)
+	return size * (ScrW() / 640.0)	* GetConVar("arc9_hud_scale"):GetFloat()
+end
+    
 ARC9.Colors = {
     bg      = Color(153, 153, 153, 97), --
     bg_pro  = Color(53, 179, 53, 97), --
@@ -22,7 +26,10 @@ ARC9.Colors = {
     con  = Color(179, 54, 54), --
     fg      = Color(255, 255, 255), --
     hi      = Color(255, 123, 0), --
+    -- hi      = Color(255, 255, 255), --
 
+    notoccupied      = Color(216, 216, 216, 70), --
+    
     sel     = Color(255, 150, 100),
     occupied= Color(150, 255, 100),
     shadow  = Color(17, 17, 9),

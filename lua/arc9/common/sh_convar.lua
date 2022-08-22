@@ -125,6 +125,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "hud_scale",
+        default = "1",
+        client = true,
+    },
+    {
         name = "autosave",
         default = "1",
         client = true

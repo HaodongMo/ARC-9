@@ -7,9 +7,11 @@ local nextpreset = 0
 
 local mat_plus = Material("arc9/ui/plus.png")
 
+local ARC9ScreenScale = ARC9.ScreenScale
+
 function SWEP:CreateHUD_Slots(scroll)
-    self.CustomizeHUD.lowerpanel:MoveTo(ScreenScale(19), ScrH() - ScreenScale(93), 0.2, 0, 0.5, nil)
-    self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ScreenScale(38), ScreenScale(74), 0.2, 0, 0.5, nil)
+    self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
+    self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
     self.CustomizeHUD.lowerpanel.Extended = nil 
 
 
@@ -27,23 +29,24 @@ function SWEP:CreateHUD_Slots(scroll)
 
         local slotbtn = vgui.Create("ARC9AttButton", scroll)
 
-        -- slotbtn:SetButtonText("slot")
-        -- slotbtn:SetIcon(mat_default)
         slotbtn:SetCanAttach(true)
         slotbtn:SetEmpty(!ms_slot.Installed)
         slotbtn:SetHasModes(!!atttbl.ToggleStats)
         slotbtn:SetHasSlots(!!atttbl.Attachments)
 
-        slotbtn:DockMargin(ScreenScale(5), 0, 0, 0)
+        slotbtn:DockMargin(ARC9ScreenScale(5), 0, 0, 0)
         slotbtn:Dock(LEFT)
     
         scroll:AddPanel(slotbtn)
 
-
+        slotbtn.slot = ms_slot
+        ms_slot.lowerbutton = slotbtn
+        
         if ms_slot.Installed then
             atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
             atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
             slotbtn:SetIcon(atttbl.Icon)
+            -- slotbtn:SetTooltip(ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName").."\n\nLMB - Customisation\nRMB - Remove attachment")
         else
             if ms_slot.DefaultCompactName then
                 atttxt = ARC9:UseTrueNames() and ms_slot.DefaultCompactName_TrueName or ms_slot.DefaultCompactName
@@ -54,9 +57,19 @@ function SWEP:CreateHUD_Slots(scroll)
             else
                 slotbtn:SetIcon(mat_plus)
             end
-        end
 
+            -- slotbtn:SetTooltip(atttxt .. " slot (unoccupied)\n\nLMB - Customisation")
+        end
+        
         slotbtn:SetButtonText(atttxt)
+
+        slotbtn.Think = function(self2)
+            if self2:IsHovered() then
+                self2.slot.hovered = true
+            else
+                self2.slot.hovered = false 
+            end
+        end
 
         slotbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then                        
@@ -81,8 +94,8 @@ function SWEP:CreateHUD_Slots(scroll)
     --     if preset == "autosave" or preset == "default" then continue end
     --     local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. "." .. ARC9.PresetIconFormat
     --     local btn = vgui.Create("DButton", scroll)
-    --     btn:SetSize(ScreenScale(48), ScreenScale(48))
-    --     btn:DockMargin(ScreenScale(2), 0, 0, 0)
+    --     btn:SetSize(ARC9ScreenScale(48), ARC9ScreenScale(48))
+    --     btn:DockMargin(ARC9ScreenScale(2), 0, 0, 0)
     --     btn:Dock(LEFT)
     --     btn:SetText("")
     --     scroll:AddPanel(btn)
@@ -115,7 +128,7 @@ function SWEP:CreateHUD_Slots(scroll)
     --             self.CustomizeHints["Deselect"] = "Delete"
     --             col1 = ARC9.GetHUDColor("shadow")
     --             surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-    --             surface.DrawRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+    --             surface.DrawRect(ARC9ScreenScale(1), ARC9ScreenScale(1), w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
 
     --             if self2:IsHovered() then
     --                 surface.SetDrawColor(ARC9.GetHUDColor("hi"))
@@ -123,7 +136,7 @@ function SWEP:CreateHUD_Slots(scroll)
     --                 surface.SetDrawColor(ARC9.GetHUDColor("fg"))
     --             end
 
-    --             surface.DrawRect(0, 0, w - ScreenScale(1), h - ScreenScale(1))
+    --             surface.DrawRect(0, 0, w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
     --             hasbg = true
     --         else
     --             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
@@ -135,22 +148,22 @@ function SWEP:CreateHUD_Slots(scroll)
     --         if !hasbg then
     --             surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
     --             surface.SetMaterial(icon)
-    --             surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), w - ScreenScale(1), h - ScreenScale(1))
+    --             surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
 
     --             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-    --             surface.SetTextPos(ScreenScale(14), ScreenScale(1))
+    --             surface.SetTextPos(ARC9ScreenScale(14), ARC9ScreenScale(1))
     --             surface.SetFont("ARC9_10")
-    --             self:DrawTextRot(self2, preset, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+    --             self:DrawTextRot(self2, preset, 0, 0, ARC9ScreenScale(3), ARC9ScreenScale(1), ARC9ScreenScale(46), true)
     --         end
 
     --         surface.SetDrawColor(col1)
     --         surface.SetMaterial(icon)
-    --         surface.DrawTexturedRect(ScreenScale(1), ScreenScale(1), w - ScreenScale(1), h - ScreenScale(1))
+    --         surface.DrawTexturedRect(ARC9ScreenScale(1), ARC9ScreenScale(1), w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
 
     --         surface.SetTextColor(col1)
-    --         surface.SetTextPos(ScreenScale(13), 0)
+    --         surface.SetTextPos(ARC9ScreenScale(13), 0)
     --         surface.SetFont("ARC9_10")
-    --         self:DrawTextRot(self2, preset, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+    --         self:DrawTextRot(self2, preset, 0, 0, ARC9ScreenScale(2), 0, ARC9ScreenScale(46), false)
     --     end
     -- end
 end
