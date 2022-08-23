@@ -265,6 +265,29 @@ function SWEP:DoRTScope(model, atttbl, active)
             --     end
             -- end
 
+            if atttbl.RTScopeDrawFunc then
+                atttbl.RTScopeDrawFunc(self, rtsize)
+            end
+
+            if drawfunc then -- doesn't seem to be working
+                drawfunc(self, pos, model)
+            end
+
+            if !atttbl.RTScopeNoShadow then
+                surface.SetDrawColor(0, 0, 0)
+                surface.SetMaterial(shadow)
+                surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
+            end
+
+            if !screenpos.visible then
+                surface.DrawRect(0, 0, rtsize, rtsize)
+            else
+                surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
+                surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
+                surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
+                surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
+            end
+            
             if reticle then
                 local rtr_x = (rtsize - size) / 2 + (-sh_x - sh_s / 2 + rtsize / 2) * 0.2
                 local rtr_y = (rtsize - size) / 2 + (-sh_y - sh_s / 2 + rtsize / 2) * 0.2
@@ -287,29 +310,6 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
                 surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
-            end
-
-            if atttbl.RTScopeDrawFunc then
-                atttbl.RTScopeDrawFunc(self, rtsize)
-            end
-
-            if drawfunc then -- doesn't seem to be working
-                drawfunc(self, pos, model)
-            end
-
-            if !atttbl.RTScopeNoShadow then
-                surface.SetDrawColor(0, 0, 0)
-                surface.SetMaterial(shadow)
-                surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
-            end
-
-            if !screenpos.visible then
-                surface.DrawRect(0, 0, rtsize, rtsize)
-            else
-                surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
-                surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
-                surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
-                surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
             end
         else
             render.PushRenderTarget(rtmat)
