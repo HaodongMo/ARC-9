@@ -383,24 +383,14 @@ function SWEP:CreateHUD_Bottom()
     self.BottomBar = bp
 
     scrolleles = {}
-    local scroll = vgui.Create("DHorizontalScroller", bp)
+    local scroll = vgui.Create("ARC9HorizontalScroller", bp)
     scroll:SetPos(0, ARC9ScreenScale(3))
     scroll:SetSize(lowerpanel:GetWide(), ARC9ScreenScale(57.3))
     scroll:SetOverlap(-ARC9ScreenScale(7)) -- If this is too small, the right side will be cut out. idk why and idk how to fix it elegantly so here you go
     scroll:MoveToFront()
 
-    -- scroll.btnLeft:SetTall(ARC9ScreenScale(12)) -- not posible due to garry newman dhorizontalscroller   we could override it but i too lazyyyy
-
-    scroll.btnLeft:SetPos(0, scroll:GetTall() - ARC9ScreenScale(12))
-    function scroll.btnLeft:Paint(w, h)
-        -- surface.SetDrawColor(ARC9.GetHUDColor("fg", 100))
-        -- surface.DrawRect(0, h*0.5, w, h*0.5)
-    end
-
-    function scroll.btnRight:Paint(w, h)
-        -- surface.SetDrawColor(ARC9.GetHUDColor("fg", 100))
-        -- surface.DrawRect(0, h*0.5, w, h*0.5)
-    end
+    function scroll.btnLeft:Paint(w, h) end
+    function scroll.btnRight:Paint(w, h) end
 
 
     if self.BottomBarMode == 1 then
@@ -521,23 +511,9 @@ function SWEP:CreateHUD_AttInfo()
 
     self.AttInfoBar = infopanel
 
-    local function paintthescroller(scr)
-        local scroll_preset = scr:GetVBar()
-        scroll_preset:SetHideButtons(true)
-        scroll_preset.Paint = function() end
-        scroll_preset:SetWide(ARC9ScreenScale(2))
-        scroll_preset.btnGrip.Paint = function(panel, w, h)
-            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-            surface.DrawRect(0, 0, w, h)
-        end
-        scroll_preset:SetAlpha(0) -- to prevent blinking
-        scroll_preset:AlphaTo(255, 0.2, 0, nil)
-    end
-
-    local descscroller = vgui.Create("DScrollPanel", infopanel)
+    local descscroller = vgui.Create("ARC9ScrollPanel", infopanel)
     descscroller:SetSize(lowerpanel:GetWide()/2 - ARC9ScreenScale(5), infopanel:GetTall()-ARC9ScreenScale(16))
     descscroller:SetPos(ARC9ScreenScale(4), ARC9ScreenScale(14))
-    paintthescroller(descscroller)
 
     local multiline = {}
     local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "Description") or atttbl.Description
@@ -555,9 +531,6 @@ function SWEP:CreateHUD_AttInfo()
             surface.DrawText(text)
         end
     end
-
-        -- I cant make this work good please help
-
 
     local slot = self.AttInfoBarAttSlot
 
@@ -581,7 +554,7 @@ function SWEP:CreateHUD_AttInfo()
 
         mode_toggle.Think = function(self2)
             if !IsValid(self) then return end
-            
+
             slot = self:LocateSlotFromAddress(self2.addr)
 
             if slot.Installed == self.AttInfoBarAtt then
@@ -599,16 +572,13 @@ function SWEP:CreateHUD_AttInfo()
     end
 
 
-    local prosscroller = vgui.Create("DScrollPanel", infopanel)
+    local prosscroller = vgui.Create("ARC9ScrollPanel", infopanel)
     prosscroller:SetSize(lowerpanel:GetWide()*0.25 - ARC9ScreenScale(3), infopanel:GetTall() - ARC9ScreenScale(4))
     prosscroller:SetPos(lowerpanel:GetWide()*0.5 + ARC9ScreenScale(3), ARC9ScreenScale(3))
-    paintthescroller(prosscroller)
 
-    local consscroller = vgui.Create("DScrollPanel", infopanel)
+    local consscroller = vgui.Create("ARC9ScrollPanel", infopanel)
     consscroller:SetSize(lowerpanel:GetWide()*0.25 - ARC9ScreenScale(3), infopanel:GetTall() - ARC9ScreenScale(4))
     consscroller:SetPos(lowerpanel:GetWide()*0.75 + ARC9ScreenScale(3), ARC9ScreenScale(3))
-    paintthescroller(consscroller)
-
 
     local prosname, prosnum, consname, consnum = ARC9.GetProsAndCons(atttbl, self)
 
