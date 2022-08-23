@@ -1531,8 +1531,8 @@ function SWEP:CreateHUD_RHP()
         surface.PlaySound(self2:GetChecked() and "arc9/dryfire.wav" or "arc9/firemode.wav")
     end
 
-    topleft_settings.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
-    topleft_light.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
+    topleft_settings.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
+    topleft_light.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
 
     local topright_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topright_panel = topright_panel
@@ -1567,8 +1567,8 @@ function SWEP:CreateHUD_RHP()
         net.SendToServer()
     end
 
-    topright_presets.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
-    topright_close.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
+    topright_presets.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
+    topright_close.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
     
 
     
@@ -1661,7 +1661,7 @@ function SWEP:CreateHUD_RHP()
             surface.SetTextPos((w - tw) / 2, 0)
             surface.DrawText(self2.title)
         end
-        custtabbtn.Think = function(self2) inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
+        custtabbtn.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
         custtabbtn.DoClick = function(self2)
             self.CustomizeTab = self2.page
             self2.func(self)

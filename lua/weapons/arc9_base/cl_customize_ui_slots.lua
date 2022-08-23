@@ -26,6 +26,7 @@ function SWEP:CreateHUD_Slots(scroll)
         slotbtn:SetEmpty(!ms_slot.Installed)
         slotbtn:SetHasModes(!!atttbl.ToggleStats)
         slotbtn:SetHasSlots(!!atttbl.Attachments)
+        slotbtn:SetFullColorIcon(atttbl.FullColorIcon)
 
         slotbtn:DockMargin(ARC9ScreenScale(5), 0, 0, 0)
         slotbtn:Dock(LEFT)

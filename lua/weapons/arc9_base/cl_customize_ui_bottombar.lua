@@ -512,6 +512,7 @@ function SWEP:CreateHUD_AttInfo()
     infopanel:SetPos(0, ARC9ScreenScale(75.5))
     infopanel.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName")
     infopanel.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
         surface.SetFont("ARC9_10")
         surface.SetTextPos(0, 0)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
@@ -564,10 +565,10 @@ function SWEP:CreateHUD_AttInfo()
         local mode_toggle = vgui.Create("ARC9TopButton", infopanel)
         mode_toggle.addr = slot.Address
         surface.SetFont("ARC9_12")
-        local curmode = atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
+        local curmode = "Togglable"
         local tw = surface.GetTextSize(curmode)
         mode_toggle:SetPos(descscroller:GetWide()/2-(ARC9ScreenScale(24)+tw)/2, ARC9ScreenScale(50))
-        mode_toggle:SetSize(ARC9ScreenScale(24)+tw, ARC9ScreenScale(21*0.75))
+        mode_toggle:SetSize(0, 0) -- ARC9ScreenScale(24)+tw, ARC9ScreenScale(21*0.75)
         mode_toggle:SetButtonText(curmode, "ARC9_12")
         mode_toggle:SetIcon(Material("arc9/ui/modes.png", "mips"))
         mode_toggle.DoClick = function(self2)
@@ -579,6 +580,8 @@ function SWEP:CreateHUD_AttInfo()
         end
 
         mode_toggle.Think = function(self2)
+            if !IsValid(self) then return end
+            
             slot = self:LocateSlotFromAddress(self2.addr)
 
             if slot.Installed == self.AttInfoBarAtt then
@@ -587,6 +590,8 @@ function SWEP:CreateHUD_AttInfo()
                 mode_toggle:SetPos(descscroller:GetWide() / 2-(ARC9ScreenScale(24) + tw) / 2, ARC9ScreenScale(50))
                 mode_toggle:SetSize(ARC9ScreenScale(24) + tw, ARC9ScreenScale(21 * 0.75))
                 mode_toggle:SetButtonText(curmode, "ARC9_12")
+            else
+                mode_toggle:SetSize(0, 0)
             end
 
         end
@@ -615,6 +620,7 @@ function SWEP:CreateHUD_AttInfo()
             pro_stat:Dock(TOP)
             pro_stat.text = stat
             pro_stat.Paint = function(self2, w, h)
+                if !IsValid(self) then return end
                 surface.SetFont("ARC9_9")
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.SetTextPos(ARC9ScreenScale(2), 0)
@@ -636,6 +642,7 @@ function SWEP:CreateHUD_AttInfo()
             con_stat:Dock(TOP)
             con_stat.text = stat
             con_stat.Paint = function(self2, w, h)
+                if !IsValid(self) then return end
                 surface.SetFont("ARC9_9")
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.SetTextPos(ARC9ScreenScale(2), 0)
