@@ -26,7 +26,6 @@ ARC9.Colors = {
     con  = Color(179, 54, 54), --
     fg      = Color(255, 255, 255), --
     hi      = Color(255, 123, 0), --
-    -- hi      = Color(255, 255, 255), --
 
     notoccupied      = Color(216, 216, 216, 70), --
     

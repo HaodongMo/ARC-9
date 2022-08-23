@@ -68,7 +68,7 @@ function ARC9TopButton:Paint(w, h)
 
 	surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
-    surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(4), h-ARC9ScreenScale(8), h-ARC9ScreenScale(8))
+    surface.DrawTexturedRect(h/5, h/5, h-h/2.5, h-h/2.5)
 end
 
 function ARC9TopButton:OnCursorEntered() 
@@ -242,7 +242,7 @@ function ARC9ScrollPanel:Init()
 
     self.VBar.AddScroll = function(self2, dlta)
         local OldScroll = self2:GetScroll()
-        dlta = dlta * 20
+        dlta = dlta * 35
         smoothdlta = Lerp(0.08, smoothdlta, dlta)
         self2:SetScroll(self2:GetScroll() + smoothdlta)
         return OldScroll != self2:GetScroll()

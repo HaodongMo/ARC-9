@@ -1328,6 +1328,7 @@ function SWEP:CreateHUD_RHP()
     topright_presets.DoClick = function(self2)
         surface.PlaySound(clicksound)
         oldpresetsdoclick(self2)
+        self:CreatePresetMenu()
     end
 
     local topright_close = vgui.Create("ARC9TopButton", topright_panel)

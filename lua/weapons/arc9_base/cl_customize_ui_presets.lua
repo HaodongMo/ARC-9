@@ -1,3 +1,141 @@
+
+local ARC9ScreenScale = ARC9.ScreenScale
+local clicksound = "ui/panorama/itemtile_click_02.wav"
+local mat_default = Material("data/arc9_presets/arc9_eft_ak100/ak103.arc9.png", "mips smooth")
+
+function SWEP:CreatePresetMenu()
+    local scrw, scrh = ScrW(), ScrH()
+    local bg = self.CustomizeHUD
+
+    local presetpanel = vgui.Create("DFrame", bg)
+    self.CustomizeHUD.presetpanel = presetpanel
+    presetpanel:SetPos(scrw - ARC9ScreenScale(130+19), ARC9ScreenScale(45))
+    presetpanel:SetSize(ARC9ScreenScale(130), scrh-ARC9ScreenScale(145))
+    presetpanel:SetTitle("")
+    -- presetpanel:SetDraggable(false)
+    presetpanel:ShowCloseButton(false)
+    presetpanel:SetAlpha(0)
+    presetpanel:AlphaTo(255, 0.1, 0, nil)
+
+    local cornercut = ARC9ScreenScale(3.5)
+    presetpanel.Paint = function(self2, w, h) 
+        draw.NoTexture()
+        surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+        surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+        -- thingy at bottom
+        surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+        surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = cornercut, y = h-cornercut*.5}})
+        surface.DrawPoly({{x = w, y = h-cornercut}, {x = w-cornercut, y = h}, {x = w-cornercut, y = h-cornercut*.5}})
+        surface.DrawPoly({{x = cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h}, {x = cornercut, y = h}, })
+        -- same thingy at top
+        surface.DrawPoly({{x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = cornercut, y = cornercut*.5}})
+        surface.DrawPoly({{x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w-cornercut, y = cornercut*.5}})
+        surface.DrawPoly({{x = cornercut, y = 0}, {x = w-cornercut, y = 0}, {x = w-cornercut, y = cornercut*.5}, {x = cornercut, y = cornercut*.5}, })
+    end
+
+    local presetscroller = vgui.Create("ARC9ScrollPanel", presetpanel)
+    presetscroller:SetSize(presetpanel:GetWide() - ARC9ScreenScale(4), presetpanel:GetTall()-ARC9ScreenScale(26))
+    presetscroller:SetPos(ARC9ScreenScale(2), ARC9ScreenScale(4))
+    -- presetscroller.Paint = function(self2, w, h) 
+    --     surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+    --     surface.DrawRect(0, 0, w, h)
+    -- end
+    
+    local savebtn = vgui.Create("ARC9TopButton", presetpanel)
+    surface.SetFont("ARC9_12")
+    local tw = surface.GetTextSize("Save")
+    local tw2 = surface.GetTextSize("Import")
+    local ih8l18n = (presetpanel:GetWide() - tw - tw2) > ARC9ScreenScale(70) and ARC9ScreenScale(10) or 0
+
+    savebtn:SetPos(ARC9ScreenScale(5)+ih8l18n, presetpanel:GetTall() - ARC9ScreenScale(20))
+    savebtn:SetSize(ARC9ScreenScale(22)+tw, ARC9ScreenScale(21*0.75))
+    savebtn:SetButtonText("Save", "ARC9_12")
+    savebtn:SetIcon(Material("arc9/ui/save.png", "mips smooth"))
+    savebtn.DoClick = function(self2)
+        surface.PlaySound(clicksound)
+    end
+
+    local importbtn = vgui.Create("ARC9TopButton", presetpanel)
+    importbtn:SetPos(presetpanel:GetWide()-(ARC9ScreenScale(22)+tw2) - ARC9ScreenScale(5) - ih8l18n , presetpanel:GetTall() - ARC9ScreenScale(20))
+    importbtn:SetSize(ARC9ScreenScale(22)+tw2, ARC9ScreenScale(21*0.75))
+    importbtn:SetButtonText("Import", "ARC9_12")
+    importbtn:SetIcon(Material("arc9/ui/import.png", "mips smooth"))
+    importbtn.DoClick = function(self2)
+        surface.PlaySound(clicksound)
+    end
+
+    for _=1, 34 do
+    -- for _, preset in pairs(presetlist) do
+        -- if preset == "autosave" or preset == "default" then continue end
+        -- local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. "." .. ARC9.PresetIconFormat
+        local preset = vgui.Create("DButton", presetscroller)
+        preset:SetTall(ScreenScale(36))
+        preset:Dock(TOP)
+        preset:DockMargin(0, 0, 5, 5)
+        preset:SetText("")
+        preset.DoClick = function(self2)
+            surface.PlaySound(clicksound)
+        end
+
+        preset.Paint = function(self2, w, h) 
+            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+            surface.DrawRect(0, 0, w, h)
+            if self2:IsHovered() then
+                if self2:IsDown() then 
+                    surface.SetDrawColor(ARC9.GetHUDColor("hi", 100))
+                end
+                surface.DrawRect(0, 0, w, h)
+            end
+            surface.SetDrawColor(20, 20, 20, 120)
+            surface.DrawRect(ARC9ScreenScale(1), ARC9ScreenScale(1), h*1.4, h - ARC9ScreenScale(2))
+
+            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+            surface.SetMaterial(mat_default)
+            surface.DrawTexturedRect(0, -h*0.2, h*1.4, h*1.4)
+            -- surface.DrawTexturedRectUV(0, 0, h*1.4, h, 0, 0.2, 1, 0.8)
+            
+            surface.SetFont("ARC9_12")
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), 0)
+            surface.DrawText("SUPER ak47")
+            surface.SetFont("ARC9_8")
+            surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(11))
+            surface.DrawText("12 attachments")
+        end
+
+        local preset_apply = vgui.Create("ARC9TopButton", preset)
+        surface.SetFont("ARC9_10")
+        local tw3 = surface.GetTextSize("Install")
+        preset_apply:SetPos(presetpanel:GetWide() - ARC9ScreenScale(22) - tw3 - ARC9ScreenScale(4), preset:GetTall() - ARC9ScreenScale(15))
+        preset_apply:SetSize(ARC9ScreenScale(17) + tw3, ARC9ScreenScale(21*0.625))
+        preset_apply:SetButtonText("Install", "ARC9_10")
+        preset_apply:SetIcon(Material("arc9/ui/apply.png", "mips smooth"))
+        preset_apply.DoClick = function(self2)
+            surface.PlaySound(clicksound)
+        end
+
+        if !undeleteablepreset then        
+            local preset_share = vgui.Create("ARC9TopButton", preset)
+            preset_share:SetPos(ScreenScale(69), preset:GetTall() - ARC9ScreenScale(15))
+            preset_share:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
+            preset_share:SetIcon(Material("arc9/ui/share.png", "mips smooth"))
+            preset_share.DoClick = function(self2)
+                surface.PlaySound(clicksound)
+            end
+            
+            local preset_delete = vgui.Create("ARC9TopButton", preset)
+            preset_delete:SetPos(ScreenScale(54), preset:GetTall() - ARC9ScreenScale(15))
+            preset_delete:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
+            preset_delete:SetIcon(Material("arc9/ui/delete.png", "mips smooth"))
+            preset_delete.DoClick = function(self2)
+                surface.PlaySound(clicksound)
+            end
+        end
+    end
+end
+
+
+
 --[[ 
 
 local mat_default = Material("arc9/arccw_bird.png")
