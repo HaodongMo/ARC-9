@@ -7,9 +7,7 @@ local ARC9ScreenScale = ARC9.ScreenScale
 function SWEP:CreateHUD_Slots(scroll)
     self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
     self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
-    self.CustomizeHUD.lowerpanel.Extended = nil 
-
-
+    self.CustomizeHUD.lowerpanel.Extended = nil
 
     for _, slot in ipairs(self:GetSubSlotList()) do
         if slot.Hidden then continue end
@@ -31,12 +29,12 @@ function SWEP:CreateHUD_Slots(scroll)
 
         slotbtn:DockMargin(ARC9ScreenScale(5), 0, 0, 0)
         slotbtn:Dock(LEFT)
-    
+
         scroll:AddPanel(slotbtn)
 
         slotbtn.slot = ms_slot
         ms_slot.lowerbutton = slotbtn
-        
+
         if ms_slot.Installed then
             atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
             atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
@@ -48,14 +46,14 @@ function SWEP:CreateHUD_Slots(scroll)
                 atttxt = atttxt or ms_slot.DefaultName_TrueName or ms_slot.DefaultName or ""
             end
             if ms_slot.DefaultIcon then
-                slotbtn:SetIcon(atttbl.DefaultIcon)
+                slotbtn:SetIcon(ms_slot.DefaultIcon)
             else
                 slotbtn:SetIcon(mat_plus)
             end
 
             -- slotbtn:SetTooltip(atttxt .. " slot (unoccupied)\n\nLMB - Customisation")
         end
-        
+
         slotbtn:SetButtonText(atttxt)
 
         slotbtn.Think = function(self2)
