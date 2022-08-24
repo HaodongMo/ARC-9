@@ -296,8 +296,8 @@ function SWEP:DoRTScope(model, atttbl, active)
                     surface.SetDrawColor(0, 0, 0)
                     surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
                     surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
-                    surface.DrawRect(rtr_x - size * 4, rtr_y + size, size * 8, size * 8) -- bottom
-                    surface.DrawRect(rtr_x + size, rtr_y - size * 4, size * 8, size * 8) -- right
+                    surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
+                    surface.DrawRect(rtr_x + size - 1, rtr_y - size * 4, size * 8, size * 8) -- right
 
                     if atttbl.RTScopeBlackBoxShadow != false then
                         surface.SetMaterial(shadow2)
