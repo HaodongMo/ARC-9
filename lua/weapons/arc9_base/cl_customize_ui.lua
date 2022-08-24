@@ -162,6 +162,7 @@ SWEP.CustomizeButtons = {
                     self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
                 end
 
+                self2:ClosePresetMenu()
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
@@ -177,6 +178,8 @@ SWEP.CustomizeButtons = {
             
             if self2.CustomizeHUD.lowerpanel then 
                 self2.CustomizeHUD.lowerpanel.Extended = nil 
+                
+                self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
@@ -194,6 +197,8 @@ SWEP.CustomizeButtons = {
 
             if self2.CustomizeHUD.lowerpanel then 
                 self2.CustomizeHUD.lowerpanel.Extended = nil 
+                
+                self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
@@ -213,6 +218,8 @@ SWEP.CustomizeButtons = {
             
             if self2.CustomizeHUD.lowerpanel then 
                 self2.CustomizeHUD.lowerpanel.Extended = nil 
+                
+                self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
@@ -231,6 +238,8 @@ SWEP.CustomizeButtons = {
 
             if self2.CustomizeHUD.lowerpanel then 
                 self2.CustomizeHUD.lowerpanel.Extended = nil 
+                
+                self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil) 
@@ -927,7 +936,10 @@ function SWEP:CreateCustomizeHUD()
                         
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
                         self:DetachAllFromSubSlot(slot.Address)
-                        self:CreateHUD_Bottom()
+                        timer.Simple(0, function()
+                            if !IsValid(self) then return end
+                            self:CreateHUD_Bottom()
+                        end)
                     end
                 else
                     if IsValid(ms_slot.lowerbutton) then ms_slot.lowerbutton:SetOverrideHovered(false) end
@@ -1194,10 +1206,13 @@ function SWEP:RemoveCustomizeHUD()
         if bg.topleft_panel then bg.topleft_panel:MoveTo(-ARC9ScreenScale(70), -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) end
         if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) end
         if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) end
+                
+        self:ClosePresetMenu()
 
         gui.EnableScreenClicker(false)
 
         timer.Simple(0.1, function()
+            if !IsValid(self) then return end
             self.CustomizeHUD:Remove()
             self.CustomizeHUD = nil
             self.RemovingCustHud = nil
@@ -1317,6 +1332,7 @@ function SWEP:CreateHUD_RHP()
     topright_panel.Paint = function(self2, w, h) end
 
     local topright_presets = vgui.Create("ARC9TopButton", topright_panel)
+    self.CustomizeHUD.topright_panel.topright_presets = topright_presets
     surface.SetFont("ARC9_16")
     local tw = surface.GetTextSize("Presets")
     topright_presets:SetPos(ARC9ScreenScale(123)-(ARC9ScreenScale(28)+tw), ARC9ScreenScale(19))

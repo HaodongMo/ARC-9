@@ -397,6 +397,8 @@ function SWEP:CreateHUD_Bottom()
         self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
         self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
         self.CustomizeHUD.lowerpanel.Extended = true 
+                
+        self:ClosePresetMenu()
 
         local slottbl = self:LocateSlotFromAddress(self.BottomBarAddress)
 

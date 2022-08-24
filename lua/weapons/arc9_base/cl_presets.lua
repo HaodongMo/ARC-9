@@ -89,11 +89,13 @@ end
 function SWEP:LoadPresetFromCode(str)
     local tbl = self:ImportPresetCode(str)
 
-    if !tbl then print("Invalid export code! Are you sure you copied the full thing correctly?") return end
+    if !tbl then return false end
 
     self:LoadPresetFromTable(tbl)
 
     surface.PlaySound("arc9/preset_install.ogg")
+    
+    return true
 end
 
 function SWEP:LoadPreset(filename)
@@ -118,6 +120,13 @@ function SWEP:LoadPreset(filename)
         self:LoadPresetFromTable(util.JSONToTable(str))
     else
         self:LoadPresetFromTable(self:ImportPresetCode(str))
+    end
+
+    if self.CustomizeHUD and self.CustomizeHUD.lowerpanel then
+        timer.Simple(0, function()
+            if !IsValid(self) then return end
+            self:CreateHUD_Bottom()
+        end)
     end
 
     f:Close()
