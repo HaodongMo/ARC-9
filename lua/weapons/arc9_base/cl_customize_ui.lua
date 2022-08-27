@@ -936,6 +936,9 @@ function SWEP:CreateCustomizeHUD()
                         
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
                         self:DetachAllFromSubSlot(slot.Address)
+                        self.BottomBarPath = {}
+                        self.BottomBarFolders = {}
+                        self.BottomBarAtts = {}
                         timer.Simple(0, function()
                             if !IsValid(self) then return end
                             self:CreateHUD_Bottom()
