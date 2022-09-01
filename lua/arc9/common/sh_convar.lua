@@ -211,7 +211,7 @@ local conVars = {
     },
     {
         name = "mod_freeaim",
-        default = "1",
+        default = "0",
         replicated = true
     },
     {
