@@ -96,6 +96,24 @@ function SWEP:LoadPresetFromCode(str)
     surface.PlaySound("arc9/preset_install.ogg")
 end
 
+function SWEP:GetPresetName(preset)
+    local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. ".txt"
+
+    if !file.Exists(filename, "DATA") then return end
+
+    local f = file.Open(filename, "r", "DATA")
+    if !f then return end
+
+    local str = f:Read()
+
+    if string.sub(str, 1, 5) == "name=" then
+        local strs = string.Split(str, "\n")
+        return string.sub(strs[1], 6)
+    else
+        return preset
+    end
+end
+
 function SWEP:LoadPreset(filename)
     if LocalPlayer() != self:GetOwner() then return end
 
@@ -116,6 +134,10 @@ function SWEP:LoadPreset(filename)
 
     if str[1] == "{" then
         self:LoadPresetFromTable(util.JSONToTable(str))
+    elseif string.sub(str, 1, 5) == "name=" then
+        // first line is name second line is data
+        local strs = string.Split(str, "\n")
+        self:LoadPresetFromTable(self:ImportPresetCode(strs[2]))
     else
         self:LoadPresetFromTable(self:ImportPresetCode(str))
     end
@@ -135,10 +157,16 @@ function SWEP:SavePreset(presetname)
 
     local str = self:GeneratePresetExportCode()
 
-    local filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/" .. presetname
+    local filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/" .. os.time()
+
+    if presetname == "autosave" then
+        filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/autosave"
+    elseif presetname == "default" then
+        filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/default"
+    end
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
-    file.Write(filename .. ".txt", str)
+    file.Write(filename .. ".txt", "name=" .. presetname .. "\n" .. str)
 
     if presetname != "autosave" then
         self:DoPresetCapture(filename)

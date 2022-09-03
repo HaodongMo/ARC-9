@@ -300,14 +300,13 @@ function SWEP:CreateHUD_Presets(scroll)
 
         -- local txt = os.date( "%I.%M%p", os.time() )
         -- if txt:Left(1) == "0" then txt = txt:Right( #txt-1 ) end
-        local txt = "preset "
+        local txt = "PRESET "
         local num = 0
 
         for _, preset in ipairs(presetlist) do
-            if string.StartWith(preset, txt) then
-                local qsnum = tonumber(string.sub(preset, string.len(txt) + 1))
-
-                // print(string.sub(preset, string.len(txt) + 1))
+            local psname = self:GetPresetName(preset)
+            if string.StartWith(psname, txt) then
+                local qsnum = tonumber(string.sub(psname, string.len(txt) + 1))
 
                 if qsnum and qsnum > num then
                     num = qsnum
@@ -581,7 +580,7 @@ function SWEP:CreateHUD_Presets(scroll)
         btn:Dock(LEFT)
         btn:SetText("")
         scroll:AddPanel(btn)
-        btn.preset = preset
+        btn.name = self:GetPresetName(preset)
 
         if file.Exists(filename, "DATA") then
             btn.icon = Material("data/" .. filename, "smooth")
@@ -625,7 +624,7 @@ function SWEP:CreateHUD_Presets(scroll)
                 surface.DrawRect(0, 0, w, h)
             end
 
-            preset = string.upper(preset)
+            local name = self2.name
 
             if !hasbg then
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
@@ -635,7 +634,7 @@ function SWEP:CreateHUD_Presets(scroll)
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.SetTextPos(ScreenScale(14), ScreenScale(1))
                 surface.SetFont("ARC9_10")
-                self:DrawTextRot(self2, preset, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+                self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
             end
 
             surface.SetDrawColor(col1)
@@ -645,7 +644,7 @@ function SWEP:CreateHUD_Presets(scroll)
             surface.SetTextColor(col1)
             surface.SetTextPos(ScreenScale(13), 0)
             surface.SetFont("ARC9_10")
-            self:DrawTextRot(self2, preset, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+            self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
         end
     end
 end
