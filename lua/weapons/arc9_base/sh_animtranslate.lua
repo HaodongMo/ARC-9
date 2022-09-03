@@ -35,6 +35,10 @@ function SWEP:TranslateAnimation(seq)
         if !self:GetProcessedValue("SuppressEmptySuffix") and (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
             seq = seq .. "_empty"
         end
+
+        if self:GetUBGL() and self:HasAnimation(seq .. "_ubgl") then
+            seq = seq .. "_ubgl"
+        end
     end
 
     local traq = self:RunHook("Hook_TranslateAnimation", seq) or seq
@@ -111,6 +115,7 @@ function SWEP:AddProxyToAnimProxyTable(tbl, model, atttbl, address)
         newanimtable.Priority = newanimtable.Priority or 0
         newanimtable.ModelName = atttbl.Model
         newanimtable.Address = address
+        newanimtable.MotionAttachment = atttbl.IKGunMotionQCA
     end
 end
 

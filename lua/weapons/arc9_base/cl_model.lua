@@ -221,10 +221,10 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 end
 
 SWEP.LHIKModel = nil
-SWEP.LHIKModelAddress = 0
+SWEP.LHIKModelAddress = nil
 SWEP.LHIK_Priority = -1000
 SWEP.RHIKModel = nil
-SWEP.RHIKModelAddress = 0
+SWEP.RHIKModelAddress = nil
 SWEP.RHIK_Priority = -1000
 SWEP.LHIKModelWM = nil
 SWEP.RHIKModelWM = nil

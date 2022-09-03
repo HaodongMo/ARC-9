@@ -192,3 +192,8 @@ ATT.IKAnimationProxy = {
         Priority = 1, -- Like _Priority, this determines whether a proxy should override other identical animations.
     }
 } -- When an animation event plays, override it with one based on this LHIK model.
+
+ATT.IKGunMotionQCA = nil -- Make the gun move while in IK animation
+
+ATT.IKGunMotionOffset = Vector(0, 0, 0)
+ATT.IKGunMotionOffsetAngle = Angle(0, 0, 0)

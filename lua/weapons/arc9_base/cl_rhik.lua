@@ -307,3 +307,17 @@ function SWEP:DoRHIK(wm)
         end
     end
 end
+
+function SWEP:GunControllerRHIK(pos, ang)
+    if self:GetSequenceProxy() != 0 then
+        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+        local atttbl = self:GetFinalAttTable(slottbl)
+        local qca = atttbl.IKGunMotionQCA
+
+        -- idk what to do here :|
+
+        return pos, ang
+    else
+        return pos, ang
+    end
+end

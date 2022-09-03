@@ -35,7 +35,11 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
         self:SetSequenceProxy(animation.Address)
 
+        if !IsValid(mdl) then return 0 end
+
         seq = mdl:LookupSequence(source)
+
+        if seq == -1 then return 0 end
     else
         seq = mdl:LookupSequence(source)
 
@@ -57,17 +61,15 @@ function SWEP:PlayAnimation(anim, mult, lock)
     end
 
     if animation.ProxyAnimation then
-        if CLIENT then
-            mdl:SetSequence(seq)
-            mdl:SetCycle(0)
-        end
+        mdl:SetSequence(seq)
+        mdl:SetCycle(0)
     else
         mdl:SendViewModelMatchingSequence(seq)
         mdl:SetPlaybackRate(tmult)
     end
 
     self:SetSequenceIndex(seq)
-    self:SetSequenceSpeed(tmult)
+    self:SetSequenceSpeed((1 / time) / mult)
     self:SetSequenceCycle(0)
 
     mult = math.abs(mult)
@@ -233,5 +235,7 @@ function SWEP:ThinkAnimation()
         end
     end
 
-    self:SetSequenceCycle(self:GetSequenceCycle() + (FrameTime() * self:GetSequenceSpeed()))
+    local mult = self:GetSequenceSpeed()
+
+    self:SetSequenceCycle(self:GetSequenceCycle() + (FrameTime() * mult))
 end

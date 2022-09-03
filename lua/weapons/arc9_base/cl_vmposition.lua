@@ -350,7 +350,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         if !self.CustomizeNoRotate then
             ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
-            
+
             if GetConVar("arc9_cust_roll_unlock"):GetBool() then
                 ang:RotateAroundAxis(EyeAngles():Right(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
             end
@@ -390,6 +390,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     else
         pos, ang = self.ViewModelPos, self.ViewModelAng
     end
+
+    pos, ang = self:GunControllerRHIK(pos, ang)
 
     pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
 
