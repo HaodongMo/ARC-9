@@ -61,6 +61,11 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
             local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or Angle(0, 0, 0))
 
+            if model.IsAnimationProxy then
+                apos = Vector(0, 0, 0)
+                aang = Angle(0, 0, 0)
+            end
+
             model:SetPos(apos)
             model:SetAngles(aang)
             model:SetRenderOrigin(apos)

@@ -363,7 +363,7 @@ SWEP.UBGLInsteadOfSights = false -- Right clicking fires UBGL instead of going i
 SWEP.AmmoPerShotUBGL = 1
 SWEP.SpreadUBGL = 0.0
 SWEP.RecoilUBGL = 1
-SWEP.DoFireAnimationUBGL = false
+SWEP.DoFireAnimationUBGL = true
 SWEP.NoShellEjectUBGL = true
 SWEP.ManualActionUBGL = false
 

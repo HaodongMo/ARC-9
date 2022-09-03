@@ -202,7 +202,7 @@ function SWEP:ThinkAnimation()
         for _, wm in ipairs({true, false}) do
             local mdl = self:GetAnimationProxyModel(wm)
 
-            if !mdl then continue end
+            if !IsValid(mdl) then continue end
 
             mdl:SetSequence(self:GetSequenceIndex())
             mdl:SetCycle(self:GetSequenceCycle())

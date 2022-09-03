@@ -391,14 +391,13 @@ function SWEP:GetViewModelPosition(pos, ang)
         pos, ang = self.ViewModelPos, self.ViewModelAng
     end
 
-    pos, ang = self:GunControllerRHIK(pos, ang)
-
     pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
 
     -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
     -- self.ViewModelAng:Normalize()
 
     pos, ang = self:GunControllerThirdArm(pos, ang)
+    pos, ang = self:GunControllerRHIK(pos, ang)
 
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang

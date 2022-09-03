@@ -314,7 +314,40 @@ function SWEP:GunControllerRHIK(pos, ang)
         local atttbl = self:GetFinalAttTable(slottbl)
         local qca = atttbl.IKGunMotionQCA
 
-        -- idk what to do here :|
+        if !qca then return pos, ang end
+
+        local mdl = slottbl.GunDriverModel
+
+        if !mdl then return pos, ang end
+
+        mdl:SetPos(Vector(0, 0, 0))
+        mdl:SetAngles(Angle(0, 0, 0))
+
+        mdl:SetSequence(self:GetSequenceIndex())
+        mdl:SetCycle(self:GetSequenceCycle())
+
+        local posang = mdl:GetAttachment(qca)
+
+        local attpos = posang.Pos
+        local attang = posang.Ang
+
+        attpos = attpos + (atttbl.IKGunMotionOffset or Vector(0, 0, 0))
+        attang = attang + (atttbl.IKGunMotionOffsetAngle or Angle(0, 0, 0))
+
+        local r = attang.r
+        attang.r = attang.p
+        attang.p = -r
+        attang.y = -attang.y
+
+        local anchor = self:GetAttPos(slottbl, false, true)
+
+        local rap_pos, rap_ang = self:RotateAroundPoint(pos, ang, anchor, attpos, attang)
+
+        rap_pos:Sub(pos)
+        rap_ang:Sub(ang)
+
+        pos:Add(rap_pos * (atttbl.IKGunMotionMult or 1))
+        ang:Add(rap_ang * (atttbl.IKGunMotionAngleMult or 1))
 
         return pos, ang
     else

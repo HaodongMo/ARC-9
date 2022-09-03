@@ -264,6 +264,8 @@ function SWEP:DoPrimaryAttack()
     if self:GetProcessedValue("DoFireAnimation") then
         local anim = "fire"
 
+        print("Yeawhhh")
+
         if self:GetProcessedValue("Akimbo") then
             if bit.band(self:GetNthShot(), 1) == 0 then
                 anim = "fire_left"
