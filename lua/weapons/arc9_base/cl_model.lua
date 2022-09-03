@@ -371,6 +371,11 @@ function SWEP:SetupModel(wm, lod, cm)
         if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice) then
             proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
             proxmodel.NoDraw = true
+
+            local scale = Matrix()
+            local vec = Vector(1, 1, 1) * (slottbl.Scale or 1) * (atttbl.Scale or 1)
+            scale:Scale(vec)
+            proxmodel:EnableMatrix("RenderMultiply", scale)
         end
 
         if atttbl.MuzzleDevice and !cm then
