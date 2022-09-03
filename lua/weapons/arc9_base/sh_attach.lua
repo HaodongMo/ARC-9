@@ -180,6 +180,8 @@ function SWEP:PostModify(toggleonly)
         end
     end
 
+    self:SetupAnimProxy()
+
     self:SetBaseSettings()
 end
 

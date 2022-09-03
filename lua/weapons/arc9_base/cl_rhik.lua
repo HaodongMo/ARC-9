@@ -5,8 +5,6 @@ local function qerp(delta, a, b)
     return Lerp(qdelta, a, b)
 end
 
-local lhik_ts_delta = 0
-
 function SWEP:DoRHIK(wm)
     -- local vm = self:GetOwner():GetHands()
     local vm = self:GetVM()

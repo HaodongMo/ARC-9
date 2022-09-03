@@ -9,9 +9,9 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     if self:RunHook("Hook_BlockAnimation", anim) == true then return 0 end
 
-    local vm = self:GetVM()
+    local mdl = self:GetVM()
 
-    if !IsValid(vm) then return 0 end
+    if !IsValid(mdl) then return 0 end
 
     local animation = self:GetAnimationEntry(anim)
 
@@ -23,22 +23,48 @@ function SWEP:PlayAnimation(anim, mult, lock)
         end
     end
 
-    local seq = vm:LookupSequence(source)
+    local seq = 0
 
-    if seq == -1 then return 0 end
+    if animation.ProxyAnimation then
+        if CLIENT then
+            mdl = animation.Model
+        else
+            mdl = ents.Create("prop_physics")
+            mdl:SetModel(animation.ModelName)
+        end
 
-    local time = animation.Time or vm:SequenceDuration(seq)
+        self:SetSequenceProxy(animation.Address)
+
+        seq = mdl:LookupSequence(source)
+    else
+        seq = mdl:LookupSequence(source)
+
+        if seq == -1 then return 0 end
+
+        self:SetSequenceProxy(0)
+    end
+
+    local time = animation.Time or mdl:SequenceDuration(seq)
 
     mult = mult * (animation.Mult or 1)
 
-    local tmult = (vm:SequenceDuration(seq) / time) / mult
+    local tmult = 1
+
+    tmult = (mdl:SequenceDuration(seq) / time) / mult
 
     if animation.Reverse then
         tmult = tmult * -1
     end
 
-    vm:SendViewModelMatchingSequence(seq)
-    vm:SetPlaybackRate(tmult)
+    if animation.ProxyAnimation then
+        if CLIENT then
+            mdl:SetSequence(seq)
+            mdl:SetCycle(0)
+        end
+    else
+        mdl:SendViewModelMatchingSequence(seq)
+        mdl:SetPlaybackRate(tmult)
+    end
 
     self:SetSequenceIndex(seq)
     self:SetSequenceSpeed(tmult)
@@ -95,14 +121,55 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     self:SetFinishFiremodeAnimTime(CurTime())
 
+    if SERVER and animation.ProxyAnimation then
+        SafeRemoveEntity(mdl)
+    end
+
     return time * mult
 end
 
+function SWEP:GetAnimationProxyModel(wm)
+    local mdl
+    if SERVER then
+        local atttbl = self:GetFinalAttTableFromAddress(self:GetSequenceProxy())
+        local modelname = atttbl.Model
+        mdl = ents.Create("prop_physics")
+        mdl:SetModel(modelname)
+    else
+        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+
+        if wm then
+            mdl = slottbl.WModel
+        else
+            mdl = slottbl.VModel
+        end
+    end
+
+    return mdl
+end
+
 function SWEP:IdleAtEndOfAnimation()
-    local vm = self:GetVM()
-    local cyc = vm:GetCycle()
-    local duration = vm:SequenceDuration()
-    local rate = vm:GetPlaybackRate()
+    local mdl = self:GetVM()
+
+    local cyc
+    local duration
+    local rate
+
+    if self:GetSequenceProxy() == 0 then
+        cyc = mdl:GetCycle()
+        duration = mdl:SequenceDuration()
+        rate = mdl:GetPlaybackRate()
+    else
+        mdl = self:GetAnimationProxyModel()
+
+        cyc = self:GetSequenceCycle()
+        duration = mdl:SequenceDuration(self:GetSequenceIndex())
+        rate = self:GetSequenceSpeed()
+
+        if SERVER then
+            SafeRemoveEntity(mdl)
+        end
+    end
 
     local time = (1 - cyc) * (duration / rate)
 
@@ -129,5 +196,42 @@ function SWEP:DoPoseParams()
 end
 
 function SWEP:ThinkAnimation()
+    if CLIENT and self:GetSequenceProxy() != 0 then
+        for _, wm in ipairs({true, false}) do
+            local mdl = self:GetAnimationProxyModel(wm)
+
+            if !mdl then continue end
+
+            mdl:SetSequence(self:GetSequenceIndex())
+            mdl:SetCycle(self:GetSequenceCycle())
+
+            if self:GetSequenceProxy() == self.LHIKModelAddress then
+                local lhik_mdl
+
+                if wm then
+                    lhik_mdl = self.LHIKModelWM
+                else
+                    lhik_mdl = self.LHIKModel
+                end
+
+                lhik_mdl:SetSequence(self:GetSequenceIndex())
+                lhik_mdl:SetCycle(self:GetSequenceCycle())
+            end
+
+            if self:GetSequenceProxy() == self.RHIKModelAddress then
+                local rhik_mdl
+
+                if wm then
+                    rhik_mdl = self.RHIKModelWM
+                else
+                    rhik_mdl = self.RHIKModel
+                end
+
+                rhik_mdl:SetSequence(self:GetSequenceIndex())
+                rhik_mdl:SetCycle(self:GetSequenceCycle())
+            end
+        end
+    end
+
     self:SetSequenceCycle(self:GetSequenceCycle() + (FrameTime() * self:GetSequenceSpeed()))
 end

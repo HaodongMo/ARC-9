@@ -185,3 +185,10 @@ ATT.LHIK_Priority = 0
 ATT.RHIK = false
 ATT.RHIK_Priority = 0
 
+ATT.IKAnimationProxy = {
+    ["reload_ubgl"] = {
+        -- All standard animation stuff works
+        Source = "",
+        Priority = 1, -- Like _Priority, this determines whether a proxy should override other identical animations.
+    }
+} -- When an animation event plays, override it with one based on this LHIK model.

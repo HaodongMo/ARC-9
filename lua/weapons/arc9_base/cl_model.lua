@@ -221,8 +221,10 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 end
 
 SWEP.LHIKModel = nil
+SWEP.LHIKModelAddress = 0
 SWEP.LHIK_Priority = -1000
 SWEP.RHIKModel = nil
+SWEP.RHIKModelAddress = 0
 SWEP.RHIK_Priority = -1000
 SWEP.LHIKModelWM = nil
 SWEP.RHIKModelWM = nil
@@ -396,6 +398,7 @@ function SWEP:SetupModel(wm, lod, cm)
                     else
                         self.LHIKModel = proxmodel
                     end
+                    self.LHIKModelAddress = slottbl.Address
                 end
             elseif atttbl.RHIK then
                 if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
@@ -405,6 +408,7 @@ function SWEP:SetupModel(wm, lod, cm)
                     else
                         self.RHIKModel = proxmodel
                     end
+                    self.RHIKModelAddress = slottbl.Address
                 end
             end
         end
