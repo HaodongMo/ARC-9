@@ -198,3 +198,6 @@ ATT.IKGunMotionQCA = nil -- Make the gun move while in IK animation
 ATT.IKGunMotionOffset = Vector(0, 0, 0)
 ATT.IKGunMotionOffsetAngle = Angle(0, 0, 0)
 ATT.IKGunMotionMult = 1
+
+ATT.IKCameraMotionQCA = nil
+ATT.IKCameraMotionOffsetAngle = Angle(0, 0, 0)
