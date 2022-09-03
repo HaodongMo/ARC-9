@@ -140,7 +140,7 @@ function SWEP:SavePreset(presetname)
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
     file.Write(filename .. ".txt", str)
 
-    if presetname != "autosave" and presetname != "default" then
+    if presetname != "autosave" then
         self:DoPresetCapture(filename)
     end
 end
