@@ -110,12 +110,58 @@ function SWEP:GetPresetName(preset)
 
     if string.sub(str, 1, 5) == "name=" then
         local strs = string.Split(str, "\n")
+        f:Close()
         return string.sub(strs[1], 6)
     else
+        f:Close()
         return preset
     end
+end
+
+function SWEP:GetPresetData(preset)
+    local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. ".txt"
+
+    if !file.Exists(filename, "DATA") then return end
+
+    local f = file.Open(filename, "r", "DATA")
+    if !f then return end
+
+    local str = f:Read()
+
+    local name = ""
+    local code = ""
+
+    if string.sub(str, 1, 5) == "name=" then
+        local strs = string.Split(str, "\n")
+        name = string.sub(strs[1], 6)
+        code = strs[2]
+    else
+        name = preset
+        code = str
+    end
+
+    local tbl = self:ImportPresetCode(code)
+
+    local count = self:GetAttCountFromTable(tbl)
 
     f:Close()
+
+    return name, count
+end
+
+function SWEP:GetAttCountFromTable(tbl)
+    local count = 0
+    for i, k in pairs(tbl) do
+        if k.Installed then
+            count = count + 1
+        end
+
+        if k.SubAttachments then
+            count = count + self:GetAttCountFromTable(k.SubAttachments)
+        end
+    end
+
+    return count
 end
 
 function SWEP:LoadPreset(filename)

@@ -139,7 +139,7 @@ function SWEP:CreatePresetMenu(reload)
         end
 
         presetbtn.preset = preset
-        presetbtn.name = self:GetPresetName(preset)
+        presetbtn.name, presetbtn.attcount = self:GetPresetData(preset)
 
         if file.Exists(filename, "DATA") then
             presetbtn.icon = Material("data/" .. filename, "smooth")
@@ -161,14 +161,14 @@ function SWEP:CreatePresetMenu(reload)
             surface.SetMaterial(presetbtn.icon or mat_default)
             surface.DrawTexturedRect(0, -h*0.2, h*1.4, h*1.4)
             -- surface.DrawTexturedRectUV(0, 0, h*1.4, h, 0, 0.2, 1, 0.8)
-            
+
             surface.SetFont("ARC9_12")
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), 0)
             surface.DrawText(self2.name)
             surface.SetFont("ARC9_8")
             surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(11))
-            surface.DrawText("12 attachments")
+            surface.DrawText(tostring(self2.attcount) .. " Attachments")
         end
 
         local preset_apply = vgui.Create("ARC9TopButton", presetbtn)

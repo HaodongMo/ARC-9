@@ -57,17 +57,9 @@ function SWEP:CreateHUD_Slots(scroll)
 
         slotbtn:SetButtonText(atttxt)
 
-        slotbtn.Think = function(self2)
-            if self2:IsHovered() then
-                self2.slot.hovered = true
-            else
-                self2.slot.hovered = false 
-            end
-        end
-
         slotbtn.OnMousePressed = function(self2, kc)
-            if kc == MOUSE_LEFT then       
-                surface.PlaySound(clicksound)                 
+            if kc == MOUSE_LEFT then
+                surface.PlaySound(clicksound)
                 self.BottomBarMode = 1
                 self.BottomBarAddress = slot.Address
                 self.BottomBarPath = {}
@@ -76,7 +68,7 @@ function SWEP:CreateHUD_Slots(scroll)
                 self:CreateHUD_Bottom()
             elseif kc == MOUSE_RIGHT then
                 self:DetachAllFromSubSlot(slot.Address)
-                
+
                 timer.Simple(0, function() self:CreateHUD_Bottom() end)
                 -- self:CreateHUD_Bottom()
             end
@@ -89,7 +81,11 @@ function SWEP:CreateHUD_Slots(scroll)
                 if self2.slot.Installed then
                     self.CustomizeHints["Deselect"] = "Unattach"
                 end
+                self2.slot.hovered = true
+            else
+                self2.slot.hovered = false
             end
+
         end
     end
 
