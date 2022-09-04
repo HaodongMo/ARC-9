@@ -140,6 +140,8 @@ function SWEP:GetAnimationProxyModel(wm)
     else
         local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
 
+        if !slottbl then return end
+
         if wm then
             mdl = slottbl.WModel
         else

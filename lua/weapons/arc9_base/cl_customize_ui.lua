@@ -195,15 +195,15 @@ SWEP.CustomizeButtons = {
         func = function(self2)
             self2:CreateHUD_Bench()
 
-            if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel.Extended = nil 
-                
+            if self2.CustomizeHUD.lowerpanel then
+                self2.CustomizeHUD.lowerpanel.Extended = nil
+
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
                 -- self2.CustomizeHUD.lowerpanel:SetAlpha(255)
-                
+
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
@@ -215,10 +215,10 @@ SWEP.CustomizeButtons = {
         title = "TRIVIA",
         func = function(self2)
             self2:CreateHUD_Trivia()
-            
-            if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel.Extended = nil 
-                
+
+            if self2.CustomizeHUD.lowerpanel then
+                self2.CustomizeHUD.lowerpanel.Extended = nil
+
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
@@ -236,9 +236,9 @@ SWEP.CustomizeButtons = {
         func = function(self2)
             self2:ClearTabPanel()
 
-            if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel.Extended = nil 
-                
+            if self2.CustomizeHUD.lowerpanel then
+                self2.CustomizeHUD.lowerpanel.Extended = nil
+
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)

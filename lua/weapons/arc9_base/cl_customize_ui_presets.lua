@@ -141,6 +141,8 @@ function SWEP:CreatePresetMenu(reload)
         presetbtn.preset = preset
         presetbtn.name, presetbtn.attcount = self:GetPresetData(preset)
 
+        if presetbtn.name == "default" then presetbtn.name = "Default" end
+
         if file.Exists(filename, "DATA") then
             presetbtn.icon = Material("data/" .. filename, "smooth")
         end
@@ -233,7 +235,6 @@ function SWEP:CreatePresetMenu(reload)
         end
     end
 
-    
     createpresetbtn("default", true) -- i want not only one default preset
     local presetlist = self:GetPresets()
 
@@ -247,8 +248,10 @@ function SWEP:ClosePresetMenu()
     if self.CustomizeHUD and self.CustomizeHUD.presetpanel then 
         self.CustomizeHUD.topright_panel.topright_presets:SetChecked(false)
         self.CustomizeHUD.presetpanel:AlphaTo(0, 0.1, 0, function()
-            self.CustomizeHUD.presetpanel:Remove() 
-            self.CustomizeHUD.presetpanel = nil 
+            if self.CustomizeHUD.presetpanel then
+                self.CustomizeHUD.presetpanel:Remove()
+            end
+            self.CustomizeHUD.presetpanel = nil
         end)
     end
 end
