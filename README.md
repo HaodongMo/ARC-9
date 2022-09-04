@@ -22,6 +22,8 @@ Read weapons/arc9_base/shared.lua, arc9/common/attachments/default.lua, and this
 ### How do I make underbarrel grenade launchers and other secondary fire modes?
 Making underbarrel grenade launchers is simple! If using integrated animations, you MUST set the animation entry "reload_ubgl" (Plus, most likely, any animationtranslate suffixes you're using to make the rest of the animations work). Other than this, all you need to do is add ATT.UBGL = true - or SWEP.UBGL - and then override the appropriate weapon stats with the UBGL condition. For instance, use ShootEntUBGL to set the gun to fire a different projectile while a UBGL is active.
 
+If you are using a separate UBGL model, you can use IKAnimationProxy in order to make them play animations. See default.lua for more information.
+
 You can ONLY have one UBGL active at any one time. Set up your weapons to accept only one UBGL; otherwise, weird things will probably happen.
 
 ### What's the best way to have a weapon with two modes?
