@@ -94,7 +94,7 @@ function SWEP:LoadPresetFromCode(str)
     self:LoadPresetFromTable(tbl)
 
     surface.PlaySound("arc9/preset_install.ogg")
-    
+
     return true
 end
 
@@ -114,6 +114,8 @@ function SWEP:GetPresetName(preset)
     else
         return preset
     end
+
+    f:Close()
 end
 
 function SWEP:LoadPreset(filename)
@@ -175,7 +177,9 @@ function SWEP:SavePreset(presetname)
     end
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
-    file.Write(filename .. ".txt", "name=" .. presetname .. "\n" .. str)
+    local f = file.Open(filename .. ".txt", "w", "DATA")
+    f:Write("name=" .. presetname .. "\n" .. str)
+    f:Close()
 
     if presetname != "autosave" then
         self:DoPresetCapture(filename)
@@ -316,20 +320,7 @@ function SWEP:DoPresetCapture(filename, foricon)
 end
 
 function SWEP:PruneUnnecessaryAttachmentDataRecursive(tbl)
-    // for i, k in pairs(tbl) do
-    //     if i == "Installed" then
-    //         tbl["i"] = k
-    //         tbl["Installed"] = nil
-    //     elseif i == "SubAttachments" then
-    //         tbl["s"] = k
-    //         tbl["SubAttachments"] = nil
-    //     elseif i == "ToggleNum" then
-    //         tbl["t"] = k
-    //         tbl["ToggleNum"] = nil
-    //     else
-    //         tbl[i] = nil
-    //     end
-    // end
+
     tbl.t = tbl.ToggleNum
     tbl.i = tbl.Installed
     tbl.s = tbl.SubAttachments
