@@ -129,7 +129,7 @@ function SWEP:Holster(wep)
 
         if CLIENT then
             for i = 0, self:GetVM():GetBoneCount() do
-                self:GetVM():ManipulateBoneScale(boneid, v1)
+                self:GetVM():ManipulateBoneScale(i, v1)
             end
         end
 
