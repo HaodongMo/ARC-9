@@ -341,12 +341,12 @@ function SWEP:GunControllerRHIK(pos, ang)
 
         local anchor = self:GetAttPos(slottbl, false, true)
 
-        local rap_pos, rap_ang = self:RotateAroundPoint(pos, ang, anchor, attpos, attang)
+        local rap_pos, rap_ang = self:RotateAroundPoint(Vector(0, 0, 0), Angle(0, 0, 0), anchor, attpos, attang)
 
-        rap_pos:Sub(pos)
-        rap_ang:Sub(ang)
+        pos = pos + (EyeAngles():Right() * rap_pos.x)
+        pos = pos + (EyeAngles():Forward() * rap_pos.y)
+        pos = pos + (EyeAngles():Up() * rap_pos.z)
 
-        pos:Add(rap_pos * (atttbl.IKGunMotionMult or 1))
         ang:Add(rap_ang * (atttbl.IKGunMotionAngleMult or 1))
 
         return pos, ang
