@@ -81,8 +81,9 @@ function SWEP:CreatePresetMenu(reload)
         local num = 0
 
         for _, preset in ipairs(self:GetPresets()) do
-            if string.StartWith(preset, txt) then
-                local qsnum = tonumber(string.sub(preset, string.len(txt) + 1))
+            local psname = self:GetPresetName(preset)
+            if string.StartWith(psname, txt) then
+                local qsnum = tonumber(string.sub(psname, string.len(txt) + 1))
 
                 // print(string.sub(preset, string.len(txt) + 1))
 
@@ -200,7 +201,9 @@ function SWEP:CreatePresetMenu(reload)
                 if !f then return end
                 local str = f:Read()
 
-                self:CreateExportPreset(str)
+                local strs = string.Split(str, "\n")
+
+                self:CreateExportPreset(strs[2])
                 -- self:CreateExportPreset(self:GeneratePresetExportCode())
             end
             preset_share.Think = function(self2)
