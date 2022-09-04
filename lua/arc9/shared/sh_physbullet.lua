@@ -482,21 +482,21 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         end
     end
 
-    if bullet.Guidance and attacker then
-        local tgt_point = attacker:EyePos() + (attacker:EyeAngles():Forward() * 35000)
+    // if bullet.Guidance and attacker then
+    //     local tgt_point = attacker:EyePos() + (attacker:EyeAngles():Forward() * 35000)
 
-        local tgt_dir = (tgt_point - oldpos):GetNormalized()
+    //     local tgt_dir = (tgt_point - oldpos):GetNormalized()
 
-        -- needs work
-        bullet.Vel = bullet.Vel + (tgt_dir * timestep * (bullet.GuidanceAmount or 15000))
+    //     -- needs work
+    //     bullet.Vel = bullet.Vel + (tgt_dir * timestep * (bullet.GuidanceAmount or 15000))
 
-        local bdir = bullet.Vel:Forward()
-        local vel = bullet.Vel:Length()
+    //     local bdir = bullet.Vel:Forward()
+    //     local vel = bullet.Vel:Length()
 
-        vel = math.Clamp(vel, 0, bullet.GuidanceAmount)
+    //     vel = math.Clamp(vel, 0, bullet.GuidanceAmount)
 
-        bullet.Vel = bdir * vel
-    end
+    //     bullet.Vel = bdir * vel
+    // end
 
     local MaxDimensions = 16384 * 4
     local WorldDimensions = 16384
