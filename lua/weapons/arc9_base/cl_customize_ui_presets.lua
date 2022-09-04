@@ -189,14 +189,14 @@ function SWEP:CreatePresetMenu(reload)
             end
         end
 
-        if !undeletable then        
+        if !undeletable then
             local preset_share = vgui.Create("ARC9TopButton", presetbtn)
             preset_share:SetPos(ScreenScale(69), presetbtn:GetTall() - ARC9ScreenScale(15))
             preset_share:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
             preset_share:SetIcon(Material("arc9/ui/share.png", "mips smooth"))
             preset_share.DoClick = function(self2)
                 surface.PlaySound(clicksound)
-                
+
                 local f = file.Open(ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. ".txt", "r", "DATA")
                 if !f then return end
                 local str = f:Read()
@@ -212,7 +212,7 @@ function SWEP:CreatePresetMenu(reload)
                     self.CustomizeHints["Select"] = "Export"
                 end
             end
-            
+
             local preset_delete = vgui.Create("ARC9TopButton", presetbtn)
             preset_delete:SetPos(ScreenScale(54), presetbtn:GetTall() - ARC9ScreenScale(15))
             preset_delete:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))

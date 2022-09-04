@@ -316,20 +316,23 @@ function SWEP:DoPresetCapture(filename, foricon)
 end
 
 function SWEP:PruneUnnecessaryAttachmentDataRecursive(tbl)
-    for i, k in pairs(tbl) do
-        if i == "Installed" then
-            tbl["i"] = k
-            tbl["Installed"] = nil
-        elseif i == "SubAttachments" then
-            tbl["s"] = k
-            tbl["SubAttachments"] = nil
-        elseif i == "ToggleNum" then
-            tbl["t"] = k
-            tbl["ToggleNum"] = nil
-        else
-            tbl[i] = nil
-        end
-    end
+    // for i, k in pairs(tbl) do
+    //     if i == "Installed" then
+    //         tbl["i"] = k
+    //         tbl["Installed"] = nil
+    //     elseif i == "SubAttachments" then
+    //         tbl["s"] = k
+    //         tbl["SubAttachments"] = nil
+    //     elseif i == "ToggleNum" then
+    //         tbl["t"] = k
+    //         tbl["ToggleNum"] = nil
+    //     else
+    //         tbl[i] = nil
+    //     end
+    // end
+    tbl.t = tbl.ToggleNum
+    tbl.i = tbl.Installed
+    tbl.s = tbl.SubAttachments
 
     for i, k in pairs(tbl) do
         if i != "i" and i != "s" and i != "t" then
@@ -341,7 +344,11 @@ function SWEP:PruneUnnecessaryAttachmentDataRecursive(tbl)
         for i, k in pairs(tbl.s) do
             self:PruneUnnecessaryAttachmentDataRecursive(k)
         end
+    else
+        tbl.s = nil
     end
+
+    tbl.BaseClass = nil
 end
 
 function SWEP:DecompressTableRecursive(tbl)
