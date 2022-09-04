@@ -1103,73 +1103,85 @@ function SWEP:CreateCustomizeHUD()
             },
         }
     end
+    
+    if GetConVar("arc9_cust_hints"):GetBool() then
+        local hintspanel = vgui.Create("DPanel", bg)
+        -- hintspanel:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
+        -- hintspanel:SetPos(-ARC9ScreenScale(170), -ARC9ScreenScale(40)) -- w = scrw-ARC9Scr
+        -- hintspanel:MoveTo(0, ARC9ScreenScale(4), 0.4, 0, 0.1, nil)
 
-    local help = vgui.Create("DPanel", bg)
-    help:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
-    help:SetPos(-ARC9ScreenScale(170), -ARC9ScreenScale(40)) -- w = scrw-ARC9Scr
-    help:MoveTo(0, ARC9ScreenScale(4), 0.4, 0, 0.1, nil)
-    help.Paint = function(self2, w, h)
-        if !IsValid(self) then
-            self2:Remove()
-            gui.EnableScreenClicker(false)
-            return
-        end
+        self.CustomizeHUD.hintspanel = hintspanel
+        hintspanel:SetPos(ARC9ScreenScale(19), ScrH())
+        hintspanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(16.5), 0.6, 0, 0.1, nil)
+        hintspanel:SetSize(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(18))
+        hintspanel:MoveToBack()
 
-        if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall then return end
-
-        surface.SetFont("ARC9_8")
-        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-        surface.SetTextColor(ARC9.GetHUDColor("fg"))
-
-        local ToAdd = {}
-        local ToAdd2 = {}
-        local ToAdd3 = {}
-        for _, v in ipairs(trolling) do
-            local act, hid = v.action, v.hidden
-            if self.CustomizeHints[v.action] == "" then continue end
-            if self.CustomizeHints[v.action] then hid = false end
-            if hid then continue end
-            if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
-            if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material("arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth") end
-            if v.glyph2 then 
-                if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
-                if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material("arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth") end
+        hintspanel.Paint = function(self2, w, h)
+            if !IsValid(self) then
+                self2:Remove()
+                gui.EnableScreenClicker(false)
+                return
             end
 
-            if v.row3 then
-                table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(12) })
-                if v.glyph2 then
-                    table.insert(ToAdd3, " ")
-                    table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(12) })
+            if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall then return end
+
+            surface.SetFont("ARC9_10")
+            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+
+            local ToAdd = {}
+            local ToAdd2 = {}
+            local ToAdd3 = {}
+            for _, v in ipairs(trolling) do
+                local act, hid = v.action, v.hidden
+                if self.CustomizeHints[v.action] == "" then continue end
+                if self.CustomizeHints[v.action] then hid = false end
+                if hid then continue end
+                if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
+                if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
+                if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material("arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth") end
+                if v.glyph2 then 
+                    if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
+                    if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
+                    if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material("arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth") end
                 end
-                table.insert(ToAdd3, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
-            elseif v.row2 then
-                table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(12) })
-                if v.glyph2 then
-                    table.insert(ToAdd2, " ")
-                    table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(12) })
+
+                if v.row3 then
+                    table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(12) })
+                    if v.glyph2 then
+                        table.insert(ToAdd3, " ")
+                        table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(12) })
+                    end
+                    table.insert(ToAdd3, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+                elseif v.row2 then
+                    -- table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(12) })
+                    -- if v.glyph2 then
+                    --     table.insert(ToAdd2, " ")
+                    --     table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(12) })
+                    -- end
+                    -- table.insert(ToAdd2, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+                else
+                    table.insert(ToAdd, { v.glyph, ARC9ScreenScale(12) })
+                    if v.glyph2 then
+                        table.insert(ToAdd, " ")
+                        table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(12) })
+                    end
+                    table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
                 end
-                table.insert(ToAdd2, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
-            else
-                table.insert(ToAdd, { v.glyph, ARC9ScreenScale(12) })
-                if v.glyph2 then
-                    table.insert(ToAdd, " ")
-                    table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(12) })
-                end
-                table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
             end
+                
+
+            CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
+            
+            CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(172+8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
+            
+            -- CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd2))
+
+            -- self2:SetX(ScrW()/2-strlength/2)
+
+            table.Empty(self.CustomizeHints)
         end
-        CreateControllerKeyLine({x = ARC9ScreenScale(8+1), y = ARC9ScreenScale(2+32+1), size = ARC9ScreenScale(10), font = "ARC9_8", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack(ToAdd))
-        CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2+32), size = ARC9ScreenScale(10), font = "ARC9_8", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack(ToAdd))
-        CreateControllerKeyLine({x = ARC9ScreenScale(8+1), y = ARC9ScreenScale(2+16+1), size = ARC9ScreenScale(10), font = "ARC9_8", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack(ToAdd2))
-        CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2+16), size = ARC9ScreenScale(10), font = "ARC9_8", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack(ToAdd2))
-        CreateControllerKeyLine({x = ARC9ScreenScale(8+1), y = ARC9ScreenScale(2+1), size = ARC9ScreenScale(10), font = "ARC9_8", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("shadow"), unpack(ToAdd3))
-        CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_8", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("fg"), unpack(ToAdd3))
-        table.Empty(self.CustomizeHints)
     end
-
     -- self:CreateHUD_Bottom()
 
 
@@ -1215,10 +1227,11 @@ function SWEP:RemoveCustomizeHUD()
 
     if self.CustomizeHUD then
         self.RemovingCustHud = true 
-        if bg.nameplate then bg.nameplate:MoveTo(scrw/3, -ARC9ScreenScale(64), 0.7, 0, 0.05, nil) end
-        if bg.topleft_panel then bg.topleft_panel:MoveTo(-ARC9ScreenScale(70), -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) end
-        if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) end
-        if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) end
+        if bg.nameplate then bg.nameplate:MoveTo(scrw/3, -ARC9ScreenScale(64), 0.7, 0, 0.05, nil) bg.nameplate:AlphaTo(0, 0.2, 0) end
+        if bg.topleft_panel then bg.topleft_panel:MoveTo(-ARC9ScreenScale(70), -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topleft_panel:AlphaTo(0, 0.2, 0) end
+        if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topright_panel:AlphaTo(0, 0.2, 0) end
+        if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.lowerpanel:AlphaTo(0, 0.2, 0) end
+        if bg.hintspanel then bg.hintspanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.hintspanel:AlphaTo(0, 0.1, 0) end
                 
         self:ClosePresetMenu()
 
@@ -1303,6 +1316,9 @@ function SWEP:CreateHUD_RHP()
     end
 
 
+
+        --                          I hate stupid hints in top left   fak you!!!!!!!!!!!!!!
+    --[[
     local topleft_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topleft_panel = topleft_panel
     topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
@@ -1311,17 +1327,17 @@ function SWEP:CreateHUD_RHP()
     topleft_panel:MoveToBack()
     topleft_panel.Paint = function(self2, w, h) end
 
-    // local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
-    // topleft_settings:SetPos(ARC9ScreenScale(19), ARC9ScreenScale(19))
-    // topleft_settings.DoClick = function(self2)
-    //     surface.PlaySound(clicksound)
-    //     ARC9_ClientSettings()
+    -- local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
+    -- topleft_settings:SetPos(ARC9ScreenScale(19), ARC9ScreenScale(19))
+    -- topleft_settings.DoClick = function(self2)
+    --     surface.PlaySound(clicksound)
+    --     ARC9_ClientSettings()
         
-    //     -- self:ToggleCustomize(false)
-    //     bg:SetMouseInputEnabled(false)
-    // end
+    --     -- self:ToggleCustomize(false)
+    --     bg:SetMouseInputEnabled(false)
+    -- end
 
-    // topleft_settings.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
+    -- topleft_settings.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
 
     local topright_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topright_panel = topright_panel
@@ -1391,8 +1407,85 @@ function SWEP:CreateHUD_RHP()
         end
         inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8)
     end
+    ]]--
 
-    
+
+
+
+    local topleft_panel = vgui.Create("DPanel", bg)
+    self.CustomizeHUD.topleft_panel = topleft_panel
+    topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
+	topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
+    topleft_panel:SetSize(ARC9ScreenScale(70), ARC9ScreenScale(40))
+    topleft_panel:MoveToBack()
+    topleft_panel.Paint = function(self2, w, h) end
+
+    local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
+    topleft_settings:SetPos(ARC9ScreenScale(19), ARC9ScreenScale(19))
+    topleft_settings.DoClick = function(self2)
+        surface.PlaySound(clicksound)
+        ARC9_ClientSettings()
+        
+        -- self:ToggleCustomize(false)
+        bg:SetMouseInputEnabled(false)
+    end
+
+    local topleft_light = vgui.Create("ARC9TopButton", topleft_panel)
+    topleft_light:SetPos(ARC9ScreenScale(47.5), ARC9ScreenScale(19))
+    topleft_light:SetIcon(Material("arc9/ui/light.png", "mips smooth"))
+    topleft_light:SetIsCheckbox(true)
+    topleft_light:SetConVar("arc9_cust_light")
+    topleft_light:SetValue(GetConVar("arc9_cust_light"):GetBool())
+    local oldlightdoclick = topleft_light.DoClick
+    topleft_light.DoClick = function(self2)
+        oldlightdoclick(self2)
+        surface.PlaySound(self2:GetChecked() and "arc9/dryfire.wav" or "arc9/firemode.wav")
+    end
+
+    topleft_settings.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
+    topleft_light.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
+
+    local topright_panel = vgui.Create("DPanel", bg)
+    self.CustomizeHUD.topright_panel = topright_panel
+    topright_panel:SetPos(scrw, -ARC9ScreenScale(40)) -- w = scrw-ARC9ScreenScale(170), h = 0
+	topright_panel:MoveTo(scrw-ARC9ScreenScale(170), 0, 0.4, 0, 0.1, nil)
+    topright_panel:SetSize(ARC9ScreenScale(170), ARC9ScreenScale(40))
+    topright_panel:MoveToBack()
+    topright_panel.Paint = function(self2, w, h) end
+
+    local topright_presets = vgui.Create("ARC9TopButton", topright_panel)
+    self.CustomizeHUD.topright_panel.topright_presets = topright_presets
+    surface.SetFont("ARC9_16")
+    local tw = surface.GetTextSize("Presets")
+    topright_presets:SetPos(ARC9ScreenScale(123)-(ARC9ScreenScale(28)+tw), ARC9ScreenScale(19))
+    topright_presets:SetSize(ARC9ScreenScale(28)+tw, ARC9ScreenScale(21))
+    topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
+    topright_presets:SetButtonText("Presets")
+    topright_presets:SetIsCheckbox(true)
+    local oldpresetsdoclick = topright_presets.DoClick
+    topright_presets.DoClick = function(self2)
+        surface.PlaySound(clicksound)
+        oldpresetsdoclick(self2)
+        self:CreatePresetMenu()
+    end
+
+    local topright_close = vgui.Create("ARC9TopButton", topright_panel)
+    topright_close:SetPos(ARC9ScreenScale(130), ARC9ScreenScale(19))
+    topright_close:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
+    topright_close.DoClick = function(self2)
+        surface.PlaySound(clicksound)
+        self:SetCustomize(false)
+        net.Start("ARC9_togglecustomize")
+        net.WriteBool(false)
+        net.SendToServer()
+    end
+
+    topright_presets.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
+    topright_close.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
+
+
+
+
     local lowerpanel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.lowerpanel = lowerpanel
     lowerpanel:SetPos(ARC9ScreenScale(19), scrh) -- h = scrh-ARC9ScreenScale(93)

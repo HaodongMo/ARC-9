@@ -94,12 +94,12 @@ local function enterfolder(self, scroll, slottbl, fname)
             end
         end
     end
-    backbtn.Think = function(self2)
-        if !IsValid(self) then return end
-        if self2:IsHovered() then
-            self.CustomizeHints["Select"] = "Return"
-        end
-    end
+    -- backbtn.Think = function(self2)
+    --     if !IsValid(self) then return end
+    --     if self2:IsHovered() then
+    --         self.CustomizeHints["Select"] = "Return"
+    --     end
+    -- end
 
     spacer(self, scroll, 4)
     
@@ -138,12 +138,12 @@ local function enterfolder(self, scroll, slottbl, fname)
             end
         end
 
-        folderbtn.Think = function(self2)
-            if !IsValid(self) then return end
-            if self2:IsHovered() then
-                self.CustomizeHints["Select"] = "Open"
-            end
-        end
+        -- folderbtn.Think = function(self2)
+        --     if !IsValid(self) then return end
+        --     if self2:IsHovered() then
+        --         self.CustomizeHints["Select"] = "Open"
+        --     end
+        -- end
     end
 
     if foldercount>1 then spacer(self, scroll, 0) end
@@ -225,8 +225,9 @@ local function enterfolder(self, scroll, slottbl, fname)
 
             if self2:IsHovered() then
                 if self2:IsHovered() then
-                    self.CustomizeHints["Select"] = "Attach"
-                    if self2.slottbl.Installed then
+                    if slot.Installed != att.att then
+                        self.CustomizeHints["Select"] = "Attach"
+                    elseif self2.slottbl.Installed then
                         self.CustomizeHints["Deselect"] = "Unattach"
                     end
                 end

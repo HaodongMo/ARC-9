@@ -284,6 +284,11 @@ local conVars = {
         client = true
     },
     {
+        name = "cust_hints",
+        default = "1",
+        client = true
+    },
+    {
         name = "cust_roll_unlock",
         default = "0",
         client = true
@@ -521,6 +526,11 @@ local function menu_client_customization(panel)
         command = "arc9_cust_light"
     })
     panel:ControlHelp( "Add a light to the customization screen." )
+    panel:AddControl("checkbox", {
+        label = "Customization Hints",
+        command = "arc9_cust_hints"
+    })
+    panel:ControlHelp( "Show hints in bottom of hud of actions you can do there   please write better string for this" )
     panel:AddControl("checkbox", {
         label = "Disable Holiday Theming",
         command = "arc9_holiday_grinch"
