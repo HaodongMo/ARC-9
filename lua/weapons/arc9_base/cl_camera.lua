@@ -73,7 +73,12 @@ function SWEP:GetSmoothedFOVMag()
         end
         sightdelta = math.ease.InOutQuad(sightdelta)
 
+        if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
+            target = 1
+        end
+
         mag = Lerp(sightdelta, 1, target)
+
         -- mag = target
         speed = Lerp(self:GetSightAmount(), speed, 10)
     end
