@@ -330,6 +330,7 @@ function ARC9.DrawHUD()
                 Mode = weapon:GetCurrentFiremode(),
                 PrintName = weapon:GetProcessedValue("UBGLFiremodeName")
             }
+            firemode_text = arc9_mode.PrintName
             weapon_clipsize = weapon:GetMaxClip2()
             weapon_clip = weapon:Clip2()
             weapon_reserve = LocalPlayer():GetAmmoCount(weapon:GetSecondaryAmmoType())
@@ -351,7 +352,6 @@ function ARC9.DrawHUD()
         if weapon:GetSafe() then
             firemode_pic = firemode_pics[0]
         end
-
 
         if weapon:GetProcessedValue("BottomlessClip") then
             inf_clip = true
@@ -898,7 +898,7 @@ function ARC9.DrawHUD()
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = ARC9.GetBindKey("+reload"),
-                action = "Toggle Weapon"
+                action = "Toggle " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
             })
         end
 
