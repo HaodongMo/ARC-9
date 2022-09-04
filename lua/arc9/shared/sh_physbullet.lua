@@ -525,7 +525,7 @@ function ARC9.DrawPhysBullets()
 
         local pos = i.Pos
 
-        local speedvec = -i.Vel:GetNormalized()
+        local speedvec = i.Vel:GetNormalized()
         local vec = speedvec
         local shoulddraw = true
 
