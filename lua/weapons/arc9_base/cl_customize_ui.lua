@@ -195,15 +195,15 @@ SWEP.CustomizeButtons = {
         func = function(self2)
             self2:CreateHUD_Bench()
 
-            if self2.CustomizeHUD.lowerpanel then
-                self2.CustomizeHUD.lowerpanel.Extended = nil
-
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel.Extended = nil 
+                
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
                 -- self2.CustomizeHUD.lowerpanel:SetAlpha(255)
-
+                
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
@@ -215,10 +215,10 @@ SWEP.CustomizeButtons = {
         title = "TRIVIA",
         func = function(self2)
             self2:CreateHUD_Trivia()
-
-            if self2.CustomizeHUD.lowerpanel then
-                self2.CustomizeHUD.lowerpanel.Extended = nil
-
+            
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel.Extended = nil 
+                
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
@@ -236,9 +236,9 @@ SWEP.CustomizeButtons = {
         func = function(self2)
             self2:ClearTabPanel()
 
-            if self2.CustomizeHUD.lowerpanel then
-                self2.CustomizeHUD.lowerpanel.Extended = nil
-
+            if self2.CustomizeHUD.lowerpanel then 
+                self2.CustomizeHUD.lowerpanel.Extended = nil 
+                
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
@@ -1123,7 +1123,7 @@ function SWEP:CreateCustomizeHUD()
                 return
             end
 
-            if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall then return end
+            if !self.CustomizeButtons[self.CustomizeTab + 1].customize then return end
 
             surface.SetFont("ARC9_10")
             surface.SetDrawColor(ARC9.GetHUDColor("fg"))
@@ -1484,8 +1484,6 @@ function SWEP:CreateHUD_RHP()
     topright_close.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
 
 
-
-
     local lowerpanel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.lowerpanel = lowerpanel
     lowerpanel:SetPos(ARC9ScreenScale(19), scrh) -- h = scrh-ARC9ScreenScale(93)
@@ -1499,7 +1497,6 @@ function SWEP:CreateHUD_RHP()
         self.CustomizeButtons[1].cutcorner = 1
         self.CustomizeTab = 0
     end
-
 
 
     local barlength = -ARC9ScreenScale(1.5)
@@ -1530,8 +1527,6 @@ function SWEP:CreateHUD_RHP()
 
         custtabbtn.Paint = function(self2, w, h)
             if !IsValid(self) then return end
-
-            -- if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).hideall and self2.page > 1 then return end
 
             local mainbuttoncolor = ARC9.GetHUDColor("bg")
             local barbuttoncolor = ARC9.GetHUDColor("bg")
