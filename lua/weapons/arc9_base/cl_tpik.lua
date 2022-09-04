@@ -39,11 +39,7 @@ function SWEP:DoTPIK()
 
     wm:SetSequence(seq)
 
-    local duration = wm:SequenceDuration()
-
-    local cycle = time / duration
-
-    wm:SetCycle(cycle)
+    wm:SetCycle(time)
 
     -- wm:SetSequence(vm:GetSequence())
     -- wm:SetCycle(vm:GetCycle())

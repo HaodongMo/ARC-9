@@ -521,7 +521,7 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in ipairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
+        // if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
 
         local pos = i.Pos
 
@@ -532,7 +532,7 @@ function ARC9.DrawPhysBullets()
         if IsValid(i.Weapon) then
             shoulddraw = i.Weapon:RunHook("HookC_DrawBullet", i)
 
-            local fromvec = (i.Weapon:GetTracerOrigin() - pos):GetNormalized()
+            local fromvec = -(i.Weapon:GetTracerOrigin() - pos):GetNormalized()
 
             local d = math.min(i.Travelled / 1024, 1)
             if i.Indirect then
