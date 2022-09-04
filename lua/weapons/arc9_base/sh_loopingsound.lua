@@ -103,7 +103,7 @@ function SWEP:GetIndoor()
         local tracetable = {
             start = self:GetOwner():EyePos(),
             endpos = self:GetOwner():EyePos() + dir:Forward() * 500 * (i == 1 and 1.5 or 1), -- if first trace (up) then multiplicate length by 1.5
-            mask = MASK_NPCSOLID_BRUSHONLY
+            -- mask = MASK_NPCSOLID_BRUSHONLY
         }
 
         local tr = util.TraceLine(tracetable)
