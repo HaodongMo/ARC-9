@@ -1106,7 +1106,8 @@ function SWEP:CreateCustomizeHUD()
 
     local help = vgui.Create("DPanel", bg)
     help:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
-    help:SetPos(0, ARC9ScreenScale(4))--ScrH() - ARC9ScreenScale(16+2))
+    help:SetPos(-ARC9ScreenScale(170), -ARC9ScreenScale(40)) -- w = scrw-ARC9Scr
+    help:MoveTo(0, ARC9ScreenScale(4), 0.4, 0, 0.1, nil)
     help.Paint = function(self2, w, h)
         if !IsValid(self) then
             self2:Remove()
