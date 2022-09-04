@@ -86,20 +86,47 @@ function SWEP:GetSmoothedFOVMag()
 end
 
 function SWEP:GetCameraControl()
-    local camqca = self:GetProcessedValue("CamQCA")
+    if self:GetSequenceProxy() != 0 then
+        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+        local atttbl = self:GetFinalAttTable(slottbl)
+        local camqca = atttbl.IKCameraMotionQCA
 
-    if !camqca then return end
+        if !camqca then return end
 
-    local vm = self:GetVM()
+        local mdl = slottbl.GunDriverModel
 
-    local ang = (vm:GetAttachment(camqca) or {}).Ang
+        mdl:SetPos(Vector(0, 0, 0))
+        mdl:SetAngles(Angle(0, 0, 0))
 
-    if !ang then return end
+        mdl:SetSequence(self:GetSequenceIndex())
+        mdl:SetCycle(self:GetSequenceCycle())
 
-    ang = vm:WorldToLocalAngles(ang)
-    ang:Sub(self.CamOffsetAng)
-    ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
-    ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
+        local ang = (mdl:GetAttachment(camqca) or {}).Ang
 
-    return ang
+        if !ang then return end
+
+        ang = mdl:WorldToLocalAngles(ang)
+        ang:Sub(atttbl.IKCameraMotionOffsetAngle or Angle(0, 0, 0))
+        ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
+        ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
+
+        return ang
+    else
+        local camqca = self:GetProcessedValue("CamQCA")
+
+        if !camqca then return end
+
+        local vm = self:GetVM()
+
+        local ang = (vm:GetAttachment(camqca) or {}).Ang
+
+        if !ang then return end
+
+        ang = vm:WorldToLocalAngles(ang)
+        ang:Sub(self.CamOffsetAng)
+        ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
+        ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
+
+        return ang
+    end
 end

@@ -221,13 +221,17 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 end
 
 SWEP.LHIKModel = nil
+SWEP.LHIKModelAddress = nil
 SWEP.LHIK_Priority = -1000
 SWEP.RHIKModel = nil
+SWEP.RHIKModelAddress = nil
 SWEP.RHIK_Priority = -1000
 SWEP.LHIKModelWM = nil
 SWEP.RHIKModelWM = nil
 SWEP.MuzzleDeviceVM = nil
 SWEP.MuzzleDeviceWM = nil
+SWEP.MuzzleDeviceUBGLVM = nil
+SWEP.MuzzleDeviceUBGLWM = nil
 
 function SWEP:SetupModel(wm, lod, cm)
     lod = lod or 0
@@ -362,16 +366,26 @@ function SWEP:SetupModel(wm, lod, cm)
 
         local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm)
 
+        local proxmodel
+
+        if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice) then
+            proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
+            proxmodel.NoDraw = true
+
+            local scale = Matrix()
+            local vec = Vector(1, 1, 1) * (slottbl.Scale or 1) * (atttbl.Scale or 1)
+            scale:Scale(vec)
+            proxmodel:EnableMatrix("RenderMultiply", scale)
+        end
+
         if atttbl.MuzzleDevice and !cm then
             if (atttbl.MuzzleDevice_Priority or 0) > self.MuzzleDevice_Priority then
                 self.MuzzleDevice_Priority = atttbl.MuzzleDevice_Priority or 0
-                local slmodel = self:CreateAttachmentModel(wm, atttbl, slottbl)
-                slmodel.IsMuzzleDevice = true
-                slmodel.NoDraw = true
+                proxmodel.IsMuzzleDevice = true
                 if wm then
-                    self.MuzzleDeviceWM = slmodel
+                    self.MuzzleDeviceWM = proxmodel
                 else
-                    self.MuzzleDeviceVM = slmodel
+                    self.MuzzleDeviceVM = proxmodel
                 end
             end
         end
@@ -384,9 +398,18 @@ function SWEP:SetupModel(wm, lod, cm)
             end
         end
 
+        if !cm then
+            if atttbl.IKAnimationProxy then
+                local animproxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
+                animproxmodel.NoDraw = true
+                animproxmodel.IsAnimationProxy = true
+
+                slottbl.GunDriverModel = animproxmodel
+            end
+        end
+
         if !cm and atttbl.LHIK or atttbl.RHIK then
-            local proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
-            proxmodel.NoDraw = true
+            slottbl.IKModel = proxmodel
 
             if atttbl.LHIK then
                 if (atttbl.LHIK_Priority or 0) > self.LHIK_Priority then
@@ -396,6 +419,7 @@ function SWEP:SetupModel(wm, lod, cm)
                     else
                         self.LHIKModel = proxmodel
                     end
+                    self.LHIKModelAddress = slottbl.Address
                 end
             elseif atttbl.RHIK then
                 if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
@@ -405,6 +429,7 @@ function SWEP:SetupModel(wm, lod, cm)
                     else
                         self.RHIKModel = proxmodel
                     end
+                    self.RHIKModelAddress = slottbl.Address
                 end
             end
         end

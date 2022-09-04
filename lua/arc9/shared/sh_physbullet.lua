@@ -482,21 +482,21 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         end
     end
 
-    if bullet.Guidance and attacker then
-        local tgt_point = attacker:EyePos() + (attacker:EyeAngles():Forward() * 35000)
+    // if bullet.Guidance and attacker then
+    //     local tgt_point = attacker:EyePos() + (attacker:EyeAngles():Forward() * 35000)
 
-        local tgt_dir = (tgt_point - oldpos):GetNormalized()
+    //     local tgt_dir = (tgt_point - oldpos):GetNormalized()
 
-        -- needs work
-        bullet.Vel = bullet.Vel + (tgt_dir * timestep * (bullet.GuidanceAmount or 15000))
+    //     -- needs work
+    //     bullet.Vel = bullet.Vel + (tgt_dir * timestep * (bullet.GuidanceAmount or 15000))
 
-        local bdir = bullet.Vel:Forward()
-        local vel = bullet.Vel:Length()
+    //     local bdir = bullet.Vel:Forward()
+    //     local vel = bullet.Vel:Length()
 
-        vel = math.Clamp(vel, 0, bullet.GuidanceAmount)
+    //     vel = math.Clamp(vel, 0, bullet.GuidanceAmount)
 
-        bullet.Vel = bdir * vel
-    end
+    //     bullet.Vel = bdir * vel
+    // end
 
     local MaxDimensions = 16384 * 4
     local WorldDimensions = 16384
@@ -521,18 +521,18 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in ipairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
+        // if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
 
         local pos = i.Pos
 
-        local speedvec = -i.Vel:GetNormalized()
+        local speedvec = i.Vel:GetNormalized()
         local vec = speedvec
         local shoulddraw = true
 
         if IsValid(i.Weapon) then
             shoulddraw = i.Weapon:RunHook("HookC_DrawBullet", i)
 
-            local fromvec = (i.Weapon:GetTracerOrigin() - pos):GetNormalized()
+            local fromvec = -(i.Weapon:GetTracerOrigin() - pos):GetNormalized()
 
             local d = math.min(i.Travelled / 1024, 1)
             if i.Indirect then

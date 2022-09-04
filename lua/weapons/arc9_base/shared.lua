@@ -363,7 +363,7 @@ SWEP.UBGLInsteadOfSights = false -- Right clicking fires UBGL instead of going i
 SWEP.AmmoPerShotUBGL = 1
 SWEP.SpreadUBGL = 0.0
 SWEP.RecoilUBGL = 1
-SWEP.DoFireAnimationUBGL = false
+SWEP.DoFireAnimationUBGL = true
 SWEP.NoShellEjectUBGL = true
 SWEP.ManualActionUBGL = false
 
@@ -1162,6 +1162,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", 6, "BlindFireDirection")
     self:NetworkVar("Int", 7, "HideBoneIndex")
     self:NetworkVar("Int", 8, "SequenceIndex")
+    self:NetworkVar("Int", 9, "SequenceProxy")
 
     self:NetworkVar("Bool", 0, "Customize")
     self:NetworkVar("Bool", 1, "Reloading")

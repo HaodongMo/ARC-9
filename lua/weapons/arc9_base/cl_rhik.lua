@@ -5,8 +5,6 @@ local function qerp(delta, a, b)
     return Lerp(qdelta, a, b)
 end
 
-local lhik_ts_delta = 0
-
 function SWEP:DoRHIK(wm)
     -- local vm = self:GetOwner():GetHands()
     local vm = self:GetVM()
@@ -307,5 +305,52 @@ function SWEP:DoRHIK(wm)
             newtransform:SetAngles(vm_ang)
             vm:SetBoneMatrix(vmbone, newtransform)
         end
+    end
+end
+
+function SWEP:GunControllerRHIK(pos, ang)
+    if self:GetSequenceProxy() != 0 then
+        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+        local atttbl = self:GetFinalAttTable(slottbl)
+        local qca = atttbl.IKGunMotionQCA
+
+        if !qca then return pos, ang end
+
+        local mdl = slottbl.GunDriverModel
+
+        if !mdl then return pos, ang end
+
+        mdl:SetPos(Vector(0, 0, 0))
+        mdl:SetAngles(Angle(0, 0, 0))
+
+        mdl:SetSequence(self:GetSequenceIndex())
+        mdl:SetCycle(self:GetSequenceCycle())
+
+        local posang = mdl:GetAttachment(qca)
+
+        local attpos = posang.Pos
+        local attang = posang.Ang
+
+        attpos = attpos + (atttbl.IKGunMotionOffset or Vector(0, 0, 0))
+        attang = attang + (atttbl.IKGunMotionOffsetAngle or Angle(0, 0, 0))
+
+        local r = attang.r
+        attang.r = attang.p
+        attang.p = -r
+        attang.y = -attang.y
+
+        local anchor = self:GetAttPos(slottbl, false, true)
+
+        local rap_pos, rap_ang = self:RotateAroundPoint(Vector(0, 0, 0), Angle(0, 0, 0), anchor, attpos, attang)
+
+        pos = pos + (EyeAngles():Right() * rap_pos.x)
+        pos = pos + (EyeAngles():Forward() * rap_pos.y)
+        pos = pos + (EyeAngles():Up() * rap_pos.z)
+
+        ang:Add(rap_ang * (atttbl.IKGunMotionAngleMult or 1))
+
+        return pos, ang
+    else
+        return pos, ang
     end
 end
