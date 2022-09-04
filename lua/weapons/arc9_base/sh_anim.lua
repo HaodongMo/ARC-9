@@ -33,7 +33,7 @@ function SWEP:PlayAnimation(anim, mult, lock)
             mdl:SetModel(animation.ModelName)
         end
 
-        self:SetSequenceProxy(animation.Address)
+        self:SetSequenceProxy(animation.Address or 0)
 
         if !IsValid(mdl) then return 0 end
 
@@ -68,7 +68,7 @@ function SWEP:PlayAnimation(anim, mult, lock)
         mdl:SetPlaybackRate(tmult)
     end
 
-    self:SetSequenceIndex(seq)
+    self:SetSequenceIndex(seq or 0)
     self:SetSequenceSpeed((1 / time) / mult)
     self:SetSequenceCycle(0)
 

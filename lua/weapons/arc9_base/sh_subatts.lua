@@ -157,6 +157,7 @@ function SWEP:BuildSubAttachments(tbl)
     end
 
     for i, k in ipairs(tbl) do
+        if !self.Attachments[i] then print("Invalid attachment structure!") return end
         self.Attachments[i].Installed = k.Installed
 
         if !k.Installed then continue end
