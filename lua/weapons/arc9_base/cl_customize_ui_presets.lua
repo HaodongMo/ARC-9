@@ -64,6 +64,42 @@ function SWEP:CreatePresetMenu(reload)
 
         self:CreatePresetName()
     end
+    savebtn.DoRightClick = function(self2)
+        if nextpreset > CurTime() then return end
+        nextpreset = CurTime() + 1
+
+        -- local txt = os.date( "%I.%M%p", os.time() )
+        -- if txt:Left(1) == "0" then txt = txt:Right( #txt-1 ) end
+        local txt = "Preset "
+        local num = 0
+
+        for _, preset in ipairs(self:GetPresets()) do
+            if string.StartWith(preset, txt) then
+                local qsnum = tonumber(string.sub(preset, string.len(txt) + 1))
+
+                // print(string.sub(preset, string.len(txt) + 1))
+
+                if qsnum and qsnum > num then
+                    num = qsnum
+                end
+            end
+        end
+
+        txt = txt .. tostring(num + 1)
+
+        self:SavePreset( txt )
+        surface.PlaySound("arc9/shutter.ogg")
+
+        timer.Simple(0.5, function()
+            if IsValid(self) and IsValid(self:GetOwner()) then
+                self:GetOwner():ScreenFade(SCREENFADE.IN, Color(255, 255, 255, 127), 0.5, 0)
+                if self:GetCustomize() then
+                    self:CreateHUD_Bottom()
+                    self:CreatePresetMenu(true)
+                end
+            end
+        end)
+    end
 
     local importbtn = vgui.Create("ARC9TopButton", presetpanel)
     importbtn:SetPos(presetpanel:GetWide()-(ARC9ScreenScale(22)+tw2) - ARC9ScreenScale(5) - ih8l18n , presetpanel:GetTall() - ARC9ScreenScale(20))
@@ -89,6 +125,7 @@ function SWEP:CreatePresetMenu(reload)
         end
 
         presetbtn.preset = preset
+        presetbtn.name = self:GetPresetName(preset)
 
         if file.Exists(filename, "DATA") then
             presetbtn.icon = Material("data/" .. filename, "smooth")
@@ -114,7 +151,7 @@ function SWEP:CreatePresetMenu(reload)
             surface.SetFont("ARC9_12")
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), 0)
-            surface.DrawText(preset or "Unknown presetc")
+            surface.DrawText(self2.name)
             surface.SetFont("ARC9_8")
             surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(11))
             surface.DrawText("12 attachments")
@@ -253,7 +290,7 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
 end
 
 function SWEP:CreatePresetName()
-    createPopup(self, "Type name of new preset here", "Save", true, nil, function(bg, textentry)
+    createPopup(self, "New Preset Name", "Save", true, nil, function(bg, textentry)
         local txt = textentry:GetText()
         txt = string.sub(txt, 0, 36)
         
@@ -282,13 +319,13 @@ function SWEP:CreatePresetName()
 end
 
 function SWEP:CreateExportPreset(string)
-    createPopup(self, "Share this string (copied to clipboard)", "Back", false, string, function(bg, textentry)
+    createPopup(self, "Preset Code (Copied to Clipboard)", "Back", false, string, function(bg, textentry)
         bg:Remove()
     end)
 end
 
 function SWEP:CreateImportPreset()
-    createPopup(self, "Paste preset share string here", "Import", true, nil, function(bg, textentry)
+    createPopup(self, "Paste Preset Code Here", "Import", true, nil, function(bg, textentry)
         local txt = textentry:GetText()
         
         if self:LoadPresetFromCode(textentry:GetText()) then 
@@ -607,13 +644,14 @@ function SWEP:CreateHUD_Presets(scroll)
 
         -- local txt = os.date( "%I.%M%p", os.time() )
         -- if txt:Left(1) == "0" then txt = txt:Right( #txt-1 ) end
-        local txt = "PRESET "
+        local txt = "preset "
         local num = 0
 
         for _, preset in ipairs(presetlist) do
-            local psname = self:GetPresetName(preset)
-            if string.StartWith(psname, txt) then
-                local qsnum = tonumber(string.sub(psname, string.len(txt) + 1))
+            if string.StartWith(preset, txt) then
+                local qsnum = tonumber(string.sub(preset, string.len(txt) + 1))
+
+                // print(string.sub(preset, string.len(txt) + 1))
 
                 if qsnum and qsnum > num then
                     num = qsnum
@@ -887,7 +925,7 @@ function SWEP:CreateHUD_Presets(scroll)
         btn:Dock(LEFT)
         btn:SetText("")
         scroll:AddPanel(btn)
-        btn.name = self:GetPresetName(preset)
+        btn.preset = preset
 
         if file.Exists(filename, "DATA") then
             btn.icon = Material("data/" .. filename, "smooth")
@@ -931,7 +969,7 @@ function SWEP:CreateHUD_Presets(scroll)
                 surface.DrawRect(0, 0, w, h)
             end
 
-            local name = self2.name
+            preset = string.upper(preset)
 
             if !hasbg then
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
@@ -941,7 +979,7 @@ function SWEP:CreateHUD_Presets(scroll)
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.SetTextPos(ScreenScale(14), ScreenScale(1))
                 surface.SetFont("ARC9_10")
-                self:DrawTextRot(self2, name, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
+                self:DrawTextRot(self2, preset, 0, 0, ScreenScale(3), ScreenScale(1), ScreenScale(46), true)
             end
 
             surface.SetDrawColor(col1)
@@ -951,7 +989,7 @@ function SWEP:CreateHUD_Presets(scroll)
             surface.SetTextColor(col1)
             surface.SetTextPos(ScreenScale(13), 0)
             surface.SetFont("ARC9_10")
-            self:DrawTextRot(self2, name, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
+            self:DrawTextRot(self2, preset, 0, 0, ScreenScale(2), 0, ScreenScale(46), false)
         end
     end
 end
