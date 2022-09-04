@@ -94,6 +94,12 @@ local function enterfolder(self, scroll, slottbl, fname)
             end
         end
     end
+    backbtn.Think = function(self2)
+        if !IsValid(self) then return end
+        if self2:IsHovered() then
+            self.CustomizeHints["Select"] = "Return"
+        end
+    end
 
     spacer(self, scroll, 4)
     
@@ -129,6 +135,13 @@ local function enterfolder(self, scroll, slottbl, fname)
             if kc == MOUSE_LEFT then
                 enterfolder(self, scroll, slottbl, self2.folder)
                 surface.PlaySound(foldersound)
+            end
+        end
+
+        folderbtn.Think = function(self2)
+            if !IsValid(self) then return end
+            if self2:IsHovered() then
+                self.CustomizeHints["Select"] = "Open"
             end
         end
     end
@@ -208,6 +221,15 @@ local function enterfolder(self, scroll, slottbl, fname)
                 self.AttInfoBarAtt = self2.att
                 self.AttInfoBarAttSlot = slot
                 self:CreateHUD_AttInfo()
+            end
+
+            if self2:IsHovered() then
+                if self2:IsHovered() then
+                    self.CustomizeHints["Select"] = "Attach"
+                    if self2.slottbl.Installed then
+                        self.CustomizeHints["Deselect"] = "Unattach"
+                    end
+                end
             end
         end
 
@@ -554,6 +576,14 @@ function SWEP:CreateHUD_AttInfo()
             self:PostModify()
         end
 
+        mode_toggle.DoRightClick = function(self2)
+            -- surface.PlaySound(clicksound)
+            self:PlayAnimation("toggle", 1, false)
+            self:EmitSound(self:RandomChoice(self:GetProcessedValue("ToggleAttSound")), 75, 100, 1, CHAN_ITEM)
+            self:ToggleStat(self2.addr, -1)
+            self:PostModify()
+        end
+
         mode_toggle.Think = function(self2)
             if !IsValid(self) then return end
 
@@ -563,10 +593,15 @@ function SWEP:CreateHUD_AttInfo()
                 curmode = atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
                 tw = surface.GetTextSize(curmode)
                 mode_toggle:SetPos(descscroller:GetWide() / 2-(ARC9ScreenScale(24) + tw) / 2, ARC9ScreenScale(50))
-                mode_toggle:SetSize(ARC9ScreenScale(24) + tw, ARC9ScreenScale(21 * 0.75))
+                mode_toggle:SetSize(ARC9ScreenScale(26) + tw, ARC9ScreenScale(21 * 0.75))
                 mode_toggle:SetButtonText(curmode, "ARC9_12")
             else
                 mode_toggle:SetSize(0, 0)
+            end
+
+            if self2:IsHovered() then
+                self.CustomizeHints["Select"] = "Next Mode"
+                self.CustomizeHints["Deselect"] = "Last Mode"
             end
 
         end

@@ -492,7 +492,8 @@ function SWEP:CanToggleAllStatsOnF()
     return toggled
 end
 
-function SWEP:ToggleStat(addr)
+function SWEP:ToggleStat(addr, val)
+    val = val or 1
     local slottbl = self:LocateSlotFromAddress(addr)
 
     if !slottbl.Installed then return end
@@ -501,9 +502,11 @@ function SWEP:ToggleStat(addr)
 
     if !atttbl.ToggleStats then return end
 
-    slottbl.ToggleNum = (slottbl.ToggleNum or 1) + 1
+    slottbl.ToggleNum = (slottbl.ToggleNum or 1) + val
 
     if slottbl.ToggleNum > #atttbl.ToggleStats then
         slottbl.ToggleNum = 1
+    elseif slottbl.ToggleNum < 1 then
+        slottbl.ToggleNum = #atttbl.ToggleStats
     end
 end

@@ -64,6 +64,13 @@ function SWEP:CreatePresetMenu(reload)
 
         self:CreatePresetName()
     end
+    savebtn.Think = function(self2)
+        if !IsValid(self) then return end
+        if self2:IsHovered() then
+            self.CustomizeHints["Select"] = "Save"
+            self.CustomizeHints["Deselect"] = "Quicksave"
+        end
+    end
     savebtn.DoRightClick = function(self2)
         if nextpreset > CurTime() then return end
         nextpreset = CurTime() + 1
@@ -109,6 +116,12 @@ function SWEP:CreatePresetMenu(reload)
     importbtn.DoClick = function(self2)
         self:CreateImportPreset()
         surface.PlaySound(clicksound)
+    end
+    importbtn.Think = function(self2)
+        if !IsValid(self) then return end
+        if self2:IsHovered() then
+            self.CustomizeHints["Select"] = "Import"
+        end
     end
 
     local function createpresetbtn(preset, undeletable)
@@ -168,6 +181,12 @@ function SWEP:CreatePresetMenu(reload)
             self:LoadPreset(preset)
             surface.PlaySound(clicksound)
         end
+        preset_apply.Think = function(self2)
+            if !IsValid(self) then return end
+            if self2:IsHovered() then
+                self.CustomizeHints["Select"] = "Install"
+            end
+        end
 
         if !undeletable then        
             local preset_share = vgui.Create("ARC9TopButton", presetbtn)
@@ -184,6 +203,12 @@ function SWEP:CreatePresetMenu(reload)
                 self:CreateExportPreset(str)
                 -- self:CreateExportPreset(self:GeneratePresetExportCode())
             end
+            preset_share.Think = function(self2)
+                if !IsValid(self) then return end
+                if self2:IsHovered() then
+                    self.CustomizeHints["Select"] = "Export"
+                end
+            end
             
             local preset_delete = vgui.Create("ARC9TopButton", presetbtn)
             preset_delete:SetPos(ScreenScale(54), presetbtn:GetTall() - ARC9ScreenScale(15))
@@ -195,6 +220,12 @@ function SWEP:CreatePresetMenu(reload)
                 presetbtn = nil
                 -- self:CreatePresetMenu()
                 surface.PlaySound(clicksound)
+            end
+            preset_delete.Think = function(self2)
+                if !IsValid(self) then return end
+                if self2:IsHovered() then
+                    self.CustomizeHints["Select"] = "Delete"
+                end
             end
         end
     end

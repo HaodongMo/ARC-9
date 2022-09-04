@@ -91,6 +91,7 @@ end
 vgui.Register("ARC9TopButton", ARC9TopButton, "DCheckBox") -- DButton
 
 local ARC9AttButton = {}
+
 ARC9AttButton.Color = ARC9.GetHUDColor("fg")
 ARC9AttButton.ColorClicked = ARC9.GetHUDColor("hi")
 ARC9AttButton.ColorBlock = ARC9.GetHUDColor("con")
