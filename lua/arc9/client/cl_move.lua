@@ -24,7 +24,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                 cmd:SetButtons(buttons)
             end
         else
-            if wpn:Clip1() == 0 and wpn:Ammo1() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
+            if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip1() == 0 and wpn:Ammo1() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
                 local buttons = cmd:GetButtons()
 
                 buttons = buttons + IN_RELOAD
