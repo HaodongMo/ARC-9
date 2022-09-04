@@ -668,6 +668,8 @@ function SWEP:ShootRocket()
         spread = self:GetProcessedValue("Spread")
     end
 
+    spread = math.Max(spread, 0)
+
     for i = 1, num do
         local dispersion = Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0)
 
