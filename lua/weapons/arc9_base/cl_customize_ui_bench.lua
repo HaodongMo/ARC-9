@@ -133,8 +133,12 @@ function SWEP:CreateHUD_Bench()
     self:ClearTabPanel()
 
     local tp = vgui.Create("DScrollPanel", bg)
-    tp:SetSize(ScreenScale(550), ScrH() - ScreenScale(76 + 4))
+    tp:SetSize(ScreenScale(550), ScrH() - ScreenScale(126))
     tp:SetPos(ScrW() - ScreenScale(550 + 12), ScreenScale(76))
+    // tp.Paint = function(self2, w, h)
+    //     surface.SetDrawColor(255, 255, 255)
+    //     surface.DrawRect(0, 0, w, h)
+    // end
 
     local scroll_preset = tp:GetVBar()
     scroll_preset.Paint = function() end
