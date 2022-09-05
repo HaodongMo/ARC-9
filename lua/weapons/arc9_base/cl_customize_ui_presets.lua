@@ -129,7 +129,7 @@ function SWEP:CreatePresetMenu(reload)
         local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. "." .. ARC9.PresetIconFormat
 
         local presetbtn = vgui.Create("DButton", presetscroller)
-        presetbtn:SetTall(ScreenScale(36))
+        presetbtn:SetTall(ARC9ScreenScale(36))
         presetbtn:Dock(TOP)
         presetbtn:DockMargin(0, 0, 5, 5)
         presetbtn:SetText("")
@@ -154,6 +154,7 @@ function SWEP:CreatePresetMenu(reload)
                 if self2:IsDown() then 
                     surface.SetDrawColor(ARC9.GetHUDColor("hi", 100))
                 end
+                self.CustomizeHints["Select"] = "Install"
                 surface.DrawRect(0, 0, w, h)
             end
             surface.SetDrawColor(20, 20, 20, 120)
@@ -173,27 +174,27 @@ function SWEP:CreatePresetMenu(reload)
             surface.DrawText(tostring(self2.attcount) .. " Attachments")
         end
 
-        local preset_apply = vgui.Create("ARC9TopButton", presetbtn)
-        surface.SetFont("ARC9_10")
-        local tw3 = surface.GetTextSize("Install")
-        preset_apply:SetPos(presetpanel:GetWide() - ARC9ScreenScale(22) - tw3 - ARC9ScreenScale(4), presetbtn:GetTall() - ARC9ScreenScale(15))
-        preset_apply:SetSize(ARC9ScreenScale(17) + tw3, ARC9ScreenScale(21*0.625))
-        preset_apply:SetButtonText("Install", "ARC9_10")
-        preset_apply:SetIcon(Material("arc9/ui/apply.png", "mips smooth"))
-        preset_apply.DoClick = function(self2)
-            self:LoadPreset(preset)
-            surface.PlaySound(clicksound)
-        end
-        preset_apply.Think = function(self2)
-            if !IsValid(self) then return end
-            if self2:IsHovered() then
-                self.CustomizeHints["Select"] = "Install"
-            end
-        end
+        -- local preset_apply = vgui.Create("ARC9TopButton", presetbtn)
+        -- surface.SetFont("ARC9_10")
+        -- local tw3 = surface.GetTextSize("Install")
+        -- preset_apply:SetPos(presetpanel:GetWide() - ARC9ScreenScale(22) - tw3 - ARC9ScreenScale(4), presetbtn:GetTall() - ARC9ScreenScale(15))
+        -- preset_apply:SetSize(ARC9ScreenScale(17) + tw3, ARC9ScreenScale(21*0.625))
+        -- preset_apply:SetButtonText("Install", "ARC9_10")
+        -- preset_apply:SetIcon(Material("arc9/ui/apply.png", "mips smooth"))
+        -- preset_apply.DoClick = function(self2)
+        --     self:LoadPreset(preset)
+        --     surface.PlaySound(clicksound)
+        -- end
+        -- preset_apply.Think = function(self2)
+        --     if !IsValid(self) then return end
+        --     if self2:IsHovered() then
+        --         self.CustomizeHints["Select"] = "Install"
+        --     end
+        -- end
 
         if !undeletable then
             local preset_share = vgui.Create("ARC9TopButton", presetbtn)
-            preset_share:SetPos(ScreenScale(69), presetbtn:GetTall() - ARC9ScreenScale(15))
+            preset_share:SetPos(ARC9ScreenScale(69), presetbtn:GetTall() - ARC9ScreenScale(15))
             preset_share:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
             preset_share:SetIcon(Material("arc9/ui/share.png", "mips smooth"))
             preset_share.DoClick = function(self2)
@@ -216,7 +217,7 @@ function SWEP:CreatePresetMenu(reload)
             end
 
             local preset_delete = vgui.Create("ARC9TopButton", presetbtn)
-            preset_delete:SetPos(ScreenScale(54), presetbtn:GetTall() - ARC9ScreenScale(15))
+            preset_delete:SetPos(ARC9ScreenScale(54), presetbtn:GetTall() - ARC9ScreenScale(15))
             preset_delete:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
             preset_delete:SetIcon(Material("arc9/ui/delete.png", "mips smooth"))
             preset_delete.DoClick = function(self2)
@@ -282,7 +283,7 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
     bg:MakePopup()
 
     local textentry = vgui.Create("DTextEntry", bg)
-    textentry:SetSize(scrw/3, ScreenScale(24))
+    textentry:SetSize(scrw/3, ARC9ScreenScale(24))
     textentry:Center()
     textentry:SetY(scrh/2 - ARC9ScreenScale(48))
     textentry:RequestFocus()

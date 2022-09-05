@@ -1173,11 +1173,8 @@ function SWEP:CreateCustomizeHUD()
 
             CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
             
-            CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(172+8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
-            
-            -- CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd2))
-
-            -- self2:SetX(ScrW()/2-strlength/2)
+            local strreturn = CreateControllerKeyLine({x = self2:GetWide(), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3)) -- ghost     text only to get width
+            CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(8)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
 
             table.Empty(self.CustomizeHints)
         end
