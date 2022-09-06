@@ -73,17 +73,15 @@ SWEP.IndoorTick = 0
 SWEP.IsIndoors = false
 
 local dirs = {
-    -- Angle(-90, 90, 0), -- Up         angled by 45 degrees
-    -- Angle(-45, 90, 0), -- Up right
-    -- Angle(-135, 90, 0), -- Up left
-    -- Angle(-135, 0, 0), -- Up front
-    -- Angle(-135, 180, 0), -- Up back
-
     Angle(-90, 90, 0), -- Up            angled by 15 degrees + diagonal direction
     Angle(-75, 135, 0), -- Up right
     Angle(-105, 135, 0), -- Up left
     Angle(-105, 45, 0), -- Up front
     Angle(-105, 225, 0), -- Up back
+
+    Angle(-15, 0, 0), -- side
+    Angle(-15, 120, 0), -- side
+    Angle(-15, 240, 0), -- side
 }
 
 function SWEP:GetIndoor()
@@ -96,30 +94,38 @@ function SWEP:GetIndoor()
     local isindoors = false
 
     local hits = 0
-    
-    local multlength = 1
+    local endmult = 0
 
     for i, dir in ipairs(dirs) do
         local tracetable = {
             start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() + dir:Forward() * 500 * (i == 1 and 1.5 or 1), -- if first trace (up) then multiplicate length by 1.5
-            -- mask = MASK_NPCSOLID_BRUSHONLY
+            endpos = self:GetOwner():EyePos() + dir:Forward() * 500 * (i == 1 and 2 or 1), -- if first trace (up) then multiplicate length by 1.5
+            mask = 16513
         }
 
         local tr = util.TraceLine(tracetable)
-
-        if ARC9.Dev(2) then debugoverlay.Line(tracetable.start, tracetable.endpos, 3, color_white, true) end
         
         if tr.Hit and !tr.HitSky then
             hits = hits + 1
+            
+            endmult = endmult + math.exp(math.min(math.ease.InExpo(1-tr.Fraction), 0.4)) / 10
+        end
+        
+        if ARC9.Dev(2) then 
+            debugoverlay.Line(tracetable.start, tracetable.endpos, 3, (tr.Hit and !tr.HitSky) and Color(255,0,0) or color_white, true)
+            if i == 8 then
+                print(hits.."/8 indoor trace hits, fraction "..endmult) 
+                -- print(1-tr.Fraction, math.exp(1-tr.Fraction)) 
+            end
         end
     end
 
-    if hits >= #dirs * 0.5 then
+    if hits > 0 then
+    -- if hits >= #dirs * 0.5 then
         isindoors = true
     end
-
+    
     self.IsIndoors = isindoors
 
-    return isindoors
+    return isindoors and endmult or false
 end
