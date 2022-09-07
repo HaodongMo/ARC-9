@@ -769,7 +769,7 @@ function SWEP:CreateCustomizeHUD()
             for _, slot in ipairs(self:GetSubSlotList()) do
                 if slot.Hidden then continue end
                 local ms_slot = self:GetFilledMergeSlot(slot.Address)
-
+                
                 if !ms_slot.Installed and self:GetSlotBlocked(slot) then continue end
 
                 local atttbl = self:GetFinalAttTable(ms_slot)
@@ -883,7 +883,7 @@ function SWEP:CreateCustomizeHUD()
                         atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
                         atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
 
-                        surface.SetMaterial(atttbl.Icon)
+                        surface.SetMaterial(atttbl.Icon or mat_3dslot)
                         surface.SetDrawColor(ARC9.GetHUDColor("fg"))
                         if !atttbl.FullColorIcon then
                             surface.DrawTexturedRect(x + ARC9ScreenScale(1), y + ARC9ScreenScale(1), s - ARC9ScreenScale(2), s - ARC9ScreenScale(2))

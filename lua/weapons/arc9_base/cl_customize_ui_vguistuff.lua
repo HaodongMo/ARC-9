@@ -117,7 +117,7 @@ function ARC9AttButton:Paint(w, h)
 	local iconcolor = self.Color
 	local textcolor = self.Color
 	local markercolor = self.Color
-	local icon = self.Icon
+	local icon = self.Icon or ARC9TopButton.MatIdle
 	local text = self.ButtonText
 
 	local mat = self.MatIdle
