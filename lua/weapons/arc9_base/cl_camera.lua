@@ -18,10 +18,10 @@ function SWEP:CalcView(ply, pos, ang, fov)
     end
 
     -- EFT like recoil
-    if self.EFTRecoil then
+    if self.ViewRecoil then
         local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
-        local srupmult = self:GetProcessedValue("RecoilUp") * (self:GetProcessedValue("EFTRecoilUpMult") or 50)
-        local srsidemult = self:GetProcessedValue("RecoilSide") * (self:GetProcessedValue("EFTRecoilSideMult") or 2)
+        local srupmult = self:GetProcessedValue("RecoilUp") * (self:GetProcessedValue("ViewRecoilUpMult") or 50)
+        local srsidemult = self:GetProcessedValue("RecoilSide") * (self:GetProcessedValue("ViewRecoilSideMult") or 2)
 
         srupmult = srupmult - 10
         ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
