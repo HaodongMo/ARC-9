@@ -289,6 +289,11 @@ local conVars = {
         client = true
     },
     {
+        name = "cust_exit_reset_sel",
+        default = "0",
+        client = true
+    },
+    {
         name = "cust_roll_unlock",
         default = "0",
         client = true
@@ -531,6 +536,11 @@ local function menu_client_customization(panel)
         command = "arc9_cust_hints"
     })
     panel:ControlHelp( "Show hints in bottom of hud of actions you can do there   please write better string for this" )
+    panel:AddControl("checkbox", {
+        label = "Reset attachment selection on exit",
+        command = "arc9_cust_exit_reset_sel"
+    })
+    panel:ControlHelp( "Reset last selected attachment and its folder on exit from customisation menu  (maybe write about it making you go back to slots selection?) please write better string for this" )
     panel:AddControl("checkbox", {
         label = "Disable Holiday Theming",
         command = "arc9_holiday_grinch"

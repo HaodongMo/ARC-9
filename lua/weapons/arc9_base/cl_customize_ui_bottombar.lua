@@ -217,19 +217,17 @@ local function enterfolder(self, scroll, slottbl, fname)
             attbtn2:SetCanAttach(self:CanAttach(slot.Address, att.att, slot))
             attbtn2:SetFullColorIcon(atttbl.FullColorIcon)
 
-            if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
-                self.AttInfoBarAtt = self2.att
-                self.AttInfoBarAttSlot = slot
-                self:CreateHUD_AttInfo()
-            end
-
             if self2:IsHovered() then
-                if self2:IsHovered() then
-                    if slot.Installed != att.att then
-                        self.CustomizeHints["Select"] = "Attach"
-                    elseif self2.slottbl.Installed then
-                        self.CustomizeHints["Deselect"] = "Unattach"
-                    end
+                if slot.Installed != att.att then
+                    self.CustomizeHints["Select"] = "Attach"
+                elseif self2.slottbl.Installed then
+                    self.CustomizeHints["Deselect"] = "Unattach"
+                end
+                
+                if self.AttInfoBarAtt != self2.att then
+                    self.AttInfoBarAtt = self2.att
+                    self.AttInfoBarAttSlot = slot
+                    self:CreateHUD_AttInfo()
                 end
             end
         end

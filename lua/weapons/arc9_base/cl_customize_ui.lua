@@ -124,7 +124,7 @@ function SWEP:CycleSelectedAtt(amt, cyc)
 
     local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
 
-    if slot.Hidden then
+    if slot.Hidden or self:GetSlotBlocked(slot) then
         self:CycleSelectedAtt(1, cyc + 1)
     end
 end
@@ -135,7 +135,7 @@ SWEP.CustomizeBoxes = nil
 SWEP.CustomizeTab = 0
 
 local function swtichtoslotmenu(self)
-    if self.CustomizeHUD.lowerpanel.Extended then
+    if GetConVar("arc9_cust_exit_reset_sel"):GetBool() and self.CustomizeHUD.lowerpanel.Extended then
         self.CustomizeHUD.lowerpanel.Extended = nil
         self.BottomBarMode = 0
         self.BottomBarAddress = nil
