@@ -59,9 +59,10 @@ function SWEP:DoShootSounds()
     ss = self:RandomChoice(ss)
     local sl = self:GetProcessedValue(sslr)
     sl = self:RandomChoice(sl)
+
+    local dss
     if havedistant then
-        local dss = self:GetProcessedValue(dsstr)
-        dss = self:RandomChoice(dss)
+        dss = self:RandomChoice(self:GetProcessedValue(dsstr))
     end
 
     local svolume, spitch, svolumeactual = self:GetProcessedValue("ShootVolume"), self:GetProcessedValue("ShootPitch") + pvrand, (self:GetProcessedValue("ShootVolumeActual") or 1)
