@@ -3,7 +3,8 @@ local fontaddsize_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_fon
 
 function ARC9:GetFont()
     local f = font_cvar and font_cvar:GetString()
-    if !f or f == "" then f = ARC9:GetPhrase("font") or "Venryn Sans" end
+    --if !f or f == "" then f = ARC9:GetPhrase("font") or "Venryn Sans" end
+    if !f or f == "" then f = "Venryn Sans" end
     return f
 end
 
