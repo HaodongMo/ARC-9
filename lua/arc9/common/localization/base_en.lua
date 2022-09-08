@@ -1,6 +1,6 @@
 L = {}
 
-L["font"] = "Exo Regular"
+--L["font"] = "Exo Regular"
 
 L["autostat.damagemax"] = "Close Range Damage"
 L["autostat.damagemin"] = "Long Range Damage"
