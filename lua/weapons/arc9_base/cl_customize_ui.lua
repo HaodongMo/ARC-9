@@ -1463,6 +1463,10 @@ function SWEP:CreateHUD_RHP()
     topright_presets.DoClick = function(self2)
         surface.PlaySound(clicksound)
         oldpresetsdoclick(self2)
+
+        self.CustomizeHUD.lowerpanel.Extended = nil
+        self.BottomBarMode = 0
+
         self:CreatePresetMenu()
     end
 
