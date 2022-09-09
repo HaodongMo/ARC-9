@@ -184,7 +184,8 @@ ARC9.AutoStatsConditions = {
     ["Shooting"] = "While Shooting",
     ["Recoil"] = "With Each Shot",
     ["Move"] = "While Moving",
-    ["BlindFire"] = "While Blind Firing"
+    ["BlindFire"] = "While Blind Firing",
+    ["UBGL"] = "In UBGL"
 }
 
 function ARC9.GetProsAndCons(atttbl, weapon)
@@ -261,7 +262,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         if string.len(stat) > 0 then
             for cond, postfix in pairs(ARC9.AutoStatsConditions) do
                 if string.StartWith(stat, cond) then
-                    autostat = ARC9:GetPhrase("autostat.secondary." .. string.lower(cond), {autostat}) or ""
+                    autostat = autostat .. " " .. (ARC9:GetPhrase("autostat.secondary." .. string.lower(cond)) or "")
                     break
                 end
             end
