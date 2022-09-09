@@ -1,13 +1,14 @@
 // third person inverse kinematics
 
 function SWEP:ShouldTPIK()
-    if render.GetDXLevel() < 90 then return false end
-    if !self:GetOwner():IsPlayer() then return false end
+    if self.NoTPIK then return end
+    if render.GetDXLevel() < 90 then return end
+    if !self:GetOwner():IsPlayer() then return end
     if self:GetOwner():InVehicle() then return end
     if !self.MirrorVMWM then return end
-    if self:GetSafe() then return false end
+    if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
-    if LocalPlayer() == self:GetOwner() and !self:GetOwner():ShouldDrawLocalPlayer() then return false end
+    if LocalPlayer() == self:GetOwner() and !self:GetOwner():ShouldDrawLocalPlayer() then return end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
     if LocalPlayer() != self:GetOwner() then
         return GetConVar("arc9_tpik_others"):GetBool()
