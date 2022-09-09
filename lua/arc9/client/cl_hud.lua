@@ -161,24 +161,24 @@ ARC9.ActiveHolidays = {}
 
 local holidayscolors = {
     ["Christmas"] = {
-        fg     = Color(184, 210, 160),
-        shadow = Color(33, 11, 9),
+        -- fg     = Color(184, 210, 160),
+        -- shadow = Color(33, 11, 9),
     },
     ["Halloween"] = {
-        fg     = Color(255, 187, 132),
-        shadow = Color(14, 6, 37),
+        -- fg     = Color(255, 187, 132),
+        -- shadow = Color(14, 6, 37),
     },
     ["Thanksgiving"] = {
-        fg     = Color(240, 195, 172),
-        shadow = Color(38, 34, 27),
+        -- fg     = Color(240, 195, 172),
+        -- shadow = Color(38, 34, 27),
     },
     ["Summer Break"] = {
-        fg     = Color(255, 255, 200),
-        shadow = Color(30, 30, 40, 255*0.6),
+        -- fg     = Color(255, 255, 200),
+        -- shadow = Color(30, 30, 40, 255*0.6),
     },
     ["Birthday - Arctic"] = {
-        fg     = Color(210, 235, 255),
-        shadow = Color(40, 40, 30, 255*0.6),
+        -- fg     = Color(210, 235, 255),
+        -- shadow = Color(40, 40, 30, 255*0.6),
     }
 }
 
