@@ -86,13 +86,15 @@ function SWEP:LoadPresetFromTable(tbl)
     self:PostModify()
 end
 
-function SWEP:LoadPresetFromCode(str)
-    local tbl = self:ImportPresetCode(str)
+function SWEP:LoadPresetFromCode(str, name)
+    local name = string.sub(string.Split(str, "]")[1], 2)
+    local tbl = self:ImportPresetCode(string.Split(str, "]")[2])
 
     if !tbl then return false end
 
     self:LoadPresetFromTable(tbl)
-
+    self:SavePreset(name)
+    
     surface.PlaySound("arc9/preset_install.ogg")
 
     return true
