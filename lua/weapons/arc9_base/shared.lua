@@ -251,6 +251,7 @@ SWEP.ManualActionChamber = 1 -- How many shots we go between needing to cycle ag
 SWEP.ManualAction = false -- Pump/bolt action. Play the "cycle" animation after firing, when the trigger is released.
 SWEP.ManualActionNoLastCycle = false -- Do not cycle on the last shot.
 SWEP.ManualActionEjectAnyway = false -- Eject a shell when firing anyway.
+SWEP.EjectDelay = 0 -- When eject shell on cycle (pretty dumb, better'd just use EjectAt)
 
 SWEP.ReloadWhileSprint = true -- This weapon can reload while the user is sprinting.
 SWEP.ReloadInSights = true -- This weapon can aim down sights while reloading.
@@ -676,8 +677,6 @@ SWEP.ShellModel = "models/shells/shell_556.mdl"
 SWEP.ShellMaterial = nil -- string
 
 SWEP.ShellSmoke = true
-
-SWEP.EjectDelay = 0
 
 SWEP.NoShellEject = false -- Don't eject shell on fire
 SWEP.ManualActionEjectAnyway = false -- Overrides standard behaviour to eject a shell when a shot is fired and manual action is on.
