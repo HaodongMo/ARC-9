@@ -1,5 +1,6 @@
 function SWEP:RollJam()
     if !self:GetProcessedValue("Malfunction") then return end
+    if self:Clip1() == 0 and self.MalfunctionNeverLastShoot then return end
 
     local chance = 1 / self:GetProcessedValue("MalfunctionMeanShotsToFail")
 
@@ -12,6 +13,7 @@ function SWEP:RollJam()
         self:PlayAnimation("jam", 1, true)
         self:EmitSound(self:GetProcessedValue("MalfunctionSound"), 75, 100, 1, CHAN_ITEM)
         self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("MalfunctionWait"))
+        self:SetNeedsCycle(false)
 
         return true
     end
@@ -71,7 +73,6 @@ end
 
 function SWEP:UnJam()
     if self:StillWaiting() then return end
-
     self:SetJammed(false)
     self:PlayAnimation("fix", 1, true)
 end

@@ -323,7 +323,8 @@ function SWEP:EndReload()
 
             local res = math.min(math.min(attempt_to_restore, self:GetCapacity(self:GetUBGL()) - clip), ammo)
 
-            self:SetLoadedRounds(res)
+            -- self:SetLoadedRounds(res)
+            self:SetLoadedRounds(math.max(1, self:Clip1())) -- probably very dumb but idk i just want it work correctly with bullet b ones
 
             self:SetTimer(minprogress * t, function()
                 self:RestoreClip(attempt_to_restore)

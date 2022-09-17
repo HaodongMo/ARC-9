@@ -255,7 +255,9 @@ function SWEP:DoPrimaryAttack()
 
     self:DoVisualRecoil()
 
-    if !self:GetProcessedValue("NoShellEject") and !(self:GetProcessedValue("ManualAction") and !self:GetProcessedValue("ManualActionEjectAnyway")) then
+    local manualaction = self:GetProcessedValue("ManualAction")
+
+    if !self:GetProcessedValue("NoShellEject") and !(manualaction and !self:GetProcessedValue("ManualActionEjectAnyway")) then
         local ejectdelay = self:GetProcessedValue("EjectDelay")
 
         if ejectdelay == 0 then
@@ -306,7 +308,7 @@ function SWEP:DoPrimaryAttack()
 
     self:SetBurstCount(self:GetBurstCount() + 1)
 
-    if self:GetProcessedValue("ManualAction") then
+    if manualaction then
         if self:Clip1() > 0 or !self:GetProcessedValue("ManualActionNoLastCycle") then
             if self:GetNthShot() % self:GetProcessedValue("ManualActionChamber") == 0 then
                 self:SetNeedsCycle(true)
@@ -319,8 +321,11 @@ function SWEP:DoPrimaryAttack()
     end
 
     if IsFirstTimePredicted() then
-        self:RollJam()
         self:DoHeat()
+        
+        if !manualaction or manualaction and !self.MalfunctionCycle then
+            self:RollJam()
+        end
     end
 end
 

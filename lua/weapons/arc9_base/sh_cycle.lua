@@ -3,6 +3,9 @@ function SWEP:ThinkCycle()
 
     if self:GetNeedsCycle() and (!self:GetOwner():KeyDown(IN_ATTACK) or self:GetProcessedValue("SlamFire")) then
         if IsFirstTimePredicted() then
+
+            if self.MalfunctionCycle and self:RollJam() then return end
+
             local t = self:PlayAnimation("cycle", 1, false)
 
             t = t * ((self:GetAnimationEntry(self:TranslateAnimation("cycle")) or {}).MinProgress or 1)

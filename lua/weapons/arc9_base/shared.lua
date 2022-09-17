@@ -509,7 +509,9 @@ SWEP.HeatFix = false -- when the "overheat" animation is played, all heat is res
 -- if no "fix" or "cycle" animations exist, the weapon will reload instead
 -- When the trigger is pressed, the gun will try to play the "jamfire" animation. Otherwise, it will try "dryfire". Otherwise, it will do nothing.
 SWEP.Malfunction = false
-SWEP.MalfunctionJam = true -- After a malfunction happens, the gun will dryfire until reload is pressed. If unset, instead plays animation right after.
+SWEP.MalfunctionJam = true -- After a malfunction happens, the gun will dryfire until reload is pressed. If unset, instead plays animation right after.  -- are you sure? doesnt seem to work
+SWEP.MalfunctionNeverLastShoot = true -- Last round will never cause malfunctions (so guns with empty animations wont be fucky)
+SWEP.MalfunctionCycle = false -- ManualAction = true only: Roll malfunction roullete not after shoot but before every cycle anim
 SWEP.MalfunctionWait = 0 -- The amount of time to wait before playing malfunction animation (or can reload)
 SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfunctions, will be autocalculated if nil
 
