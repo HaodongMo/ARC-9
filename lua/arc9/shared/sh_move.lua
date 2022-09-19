@@ -13,7 +13,7 @@ function ARC9.Move(ply, mv, cmd)
 
     if wpn:GetSightAmount() > 0 then
         if ply:KeyDown(IN_SPEED) then
-            mult = mult / Lerp(wpn:GetSightAmount(), 1, ply:GetRunSpeed() / ply:GetWalkSpeed())
+            mult = mult / Lerp(wpn:GetSightAmount(), 1, ply:GetRunSpeed() / ply:GetWalkSpeed()) * (wpn:HoldingBreath() and 0.5 or 1)
         end
     -- else
     --     if wpn:GetTraversalSprint() then
@@ -85,8 +85,11 @@ function ARC9.StartCommand(ply, cmd)
         -- wpn:SetFreeAimAngle(wpn:GetFreeAimAngle() - Angle(aim_kick_v, aim_kick_h, 0))
     end
 
-    if wpn:GetSightAmount() > 0 then
-        local swayspeed = 1
+    local isScope = wpn:GetSight() and wpn:GetSight().atttbl and wpn:GetSight().atttbl.RTScope
+    local cheap = CLIENT and isScope and GetConVar("ARC9_cheapscopes"):GetBool()
+
+    if wpn:GetSightAmount() > 0.5 and cheap then
+        local swayspeed = 2
         local swayamt = wpn:GetFreeSwayAmount()
         local swayang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
 

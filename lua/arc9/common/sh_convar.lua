@@ -232,6 +232,22 @@ local conVars = {
         default = "",
     },
     {
+        name = "breath_hud",
+        default = "1",
+        client = true,
+        replicated = true
+    },
+    {
+        name = "breath_pp",
+        default = "1",
+        client = true,
+    },
+    {
+        name = "breath_slowmo",
+        default = "0",
+        replicated = true
+    },
+    {
         name = "ricochet",
         default = "1",
         replicated = true

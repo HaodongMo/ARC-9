@@ -48,21 +48,6 @@ local DampAngle = function(a, v1, v2)
     return LerpAngle(a, v2, v1)
 end
 
-local function rotatearound2dpoint(cx, cy, ang, px, py) -- idk how to use it
-    local s = math.sin(math.rad(ang))
-    local c = math.cos(math.rad(ang))
-
-    -- translate point back to origin:
-    px = px - cx
-    py = py - cy
-
-    -- rotate point
-    local xnew = px * c - py * s
-    local ynew = px * s + py * c
-
-    return xnew + cx, ynew + cy
-end
-
 function SWEP:GetViewModelPosition(pos, ang)
     local oldpos = Vector(0, 0, 0)
     local oldang = Angle(0, 0, 0)
@@ -91,7 +76,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- pos = Vector(0, 0, 0)
     -- ang = Angle(0, 0, 0)
 
-    local cor_val = 0.75
+    local cor_val = 0.25
 
     local offsetpos = Vector(0, 0, 0)
     local offsetang = Angle(0, 0, 0)
@@ -213,6 +198,9 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     extra_offsetang.y = extra_offsetang.y - (self:GetFreeSwayAngles().p * cor_val)
     extra_offsetang.p = extra_offsetang.p + (self:GetFreeSwayAngles().y * cor_val)
+
+    extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01
+    extra_offsetpos.z = extra_offsetpos.z + (self:GetFreeSwayAngles().p * cor_val) - 0.05 -- idkkkkkkkk
 
     extra_offsetang.y = extra_offsetang.y - (self:GetFreeAimOffset().p * cor_val)
     extra_offsetang.p = extra_offsetang.p + (self:GetFreeAimOffset().y * cor_val)

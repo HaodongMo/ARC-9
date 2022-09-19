@@ -87,7 +87,7 @@ local function goodassbob(self, pos, ang)
     tv = tv * mulp
     self.BobScale = 0
     local p = math.pi
-    local spe = self:GetOwner():KeyDown(IN_SPEED)
+    local spe = self:GetIsSprinting()
 
     local grounded = (self:GetOwner():IsOnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP)
     airtime = math.Approach(airtime, (grounded and 0 or 1), FrameTime()*5*(grounded and 10 or 1))
@@ -152,7 +152,7 @@ local function goodassbob(self, pos, ang)
     ang:RotateAroundAxis( ang:Up(),             stammertime_ang.z * elistam )
     ang:RotateAroundAxis( ang:Up(),             (pe:KeyDown(IN_MOVELEFT) and 2 or pe:KeyDown(IN_MOVERIGHT) and -2 or 0) * tv )
 
-    ang:RotateAroundAxis( ang:Forward(),          math.sin( ct * p * 1 ) * airtime*-5 * mulp )
+    ang:RotateAroundAxis( ang:Forward(),          math.sin( ct * p * 1 ) * airtime*-5 * mulp * 2)
     ang:RotateAroundAxis( ang:Right(),          ( math.sin( ct * p * 1 ) * airtime*3 * mulp ) + ( (3/2) * airtime * mulp ) ) 
     ang:RotateAroundAxis( ang:Up(),          math.sin( ct * p * 2 ) * airtime*2 * mulp )
 
