@@ -1,3 +1,6 @@
+local vignette = Material("arc9/bgvignette.png", "mips smooth")
+-- local vignette2 = Material("arc9/bgvignette2.png", "mips smooth")
+
 function SWEP:PreDrawViewModel()
     if ARC9.PresetCam then
         self:DoBodygroups(false)
@@ -10,8 +13,11 @@ function SWEP:PreDrawViewModel()
         if GetConVar("arc9_cust_blur"):GetBool() then DrawBokehDOF( 10 * custdelta, 1, 0.1 ) end
 
         cam.Start2D()
-            surface.SetDrawColor(0, 0, 0, 220 * custdelta)
+            surface.SetDrawColor(0, 0, 0, 180 * custdelta)
             surface.DrawRect(0, 0, ScrW(), ScrH())
+            surface.SetDrawColor(0, 0, 0, 255 * custdelta)
+            surface.SetMaterial(vignette)
+            surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
         cam.End2D()
     end
 
@@ -85,6 +91,12 @@ function SWEP:ViewModelDrawn()
     -- cam.End3D()
 
     -- cam.IgnoreZ(true)
+    -- local custdelta = self.CustomizeDelta
+    -- cam.Start2D()
+    --     surface.SetDrawColor(0, 0, 0, 230 * custdelta)
+    --     surface.SetMaterial(vignette2)
+    --     surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+    -- cam.End2D()
 end
 
 function SWEP:PostDrawViewModel()
@@ -109,6 +121,8 @@ function SWEP:PostDrawViewModel()
         end
     end
     cam.End3D()
+
+    
 
     -- render.UpdateFullScreenDepthTexture()
 end
