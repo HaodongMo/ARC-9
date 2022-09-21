@@ -2,6 +2,8 @@ SWEP.SetBreathDSP = false
 
 function SWEP:ThinkHoldBreath()
     if !self:GetOwner():IsPlayer() then return end
+    
+    local sfx = GetConVar("arc9_breath_sfx"):GetBool()
 
     local target_ts = 1
 
@@ -10,23 +12,25 @@ function SWEP:ThinkHoldBreath()
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
             self:SetBreath(0)
+            
+            if sfx then 
+                self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")))
 
-            self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")))
-
-            if self.SetBreathDSP then
-                self:GetOwner():SetDSP(0)
-                self.SetBreathDSP = false
+                if self.SetBreathDSP then
+                    self:GetOwner():SetDSP(0)
+                    self.SetBreathDSP = false
+                end
             end
         else
             target_ts = Lerp(1 - (self:GetBreath() / 100), 0.33, 0.25)
-            if !self.SetBreathDSP then
+            if sfx and !self.SetBreathDSP then
                 self:GetOwner():SetDSP(30)
                 self.SetBreathDSP = true
                 self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathInSound")))
             end
         end
     else
-        if self.SetBreathDSP then
+        if sfx and self.SetBreathDSP then
             self:GetOwner():SetDSP(0)
             self.SetBreathDSP = false
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathOutSound")))

@@ -243,6 +243,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "breath_sfx",
+        default = "1",
+        client = true,
+    },
+    {
         name = "breath_slowmo",
         default = "0",
         replicated = true
