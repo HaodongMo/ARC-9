@@ -305,6 +305,11 @@ local conVars = {
         client = true
     },
     {
+        name = "cust_light_brightness",
+        default = "1",
+        client = true
+    },
+    {
         name = "cust_hints",
         default = "1",
         client = true
