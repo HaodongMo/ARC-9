@@ -381,8 +381,8 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 -- local tr = self:GetProcessedValue("TracerNum")
 
                 self:GetOwner():FireBullets({
-                    Damage = self:GetProcessedValue("Damage_Max"),
-                    Force = 8,
+                    Damage = self:GetProcessedValue("DamageMax"),
+                    Force = self:GetProcessedValue("ImpactForce"),
                     Tracer = tr,
                     TracerName = self:GetProcessedValue("TracerEffect"),
                     Num = self:GetProcessedValue("Num"),

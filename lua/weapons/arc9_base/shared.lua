@@ -140,6 +140,8 @@ SWEP.DefaultSkin = 0
 SWEP.DamageMax = 20 -- Damage done at point blank range
 SWEP.DamageMin = 15 -- Damage done at maximum range
 
+SWEP.ImpactForce = 8 -- Force that bullets apply on hit
+
 SWEP.DamageRand = 0 -- Damage varies randomly per shot by this fraction. 0.1 = +- 10% damage per shot.
 
 SWEP.RangeMin = 0 -- How far bullets retain their maximum damage for.

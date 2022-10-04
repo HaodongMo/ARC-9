@@ -400,10 +400,10 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                 bullet.Damaged[eid] = true
                 bullet.Dead = true
 
-                if IsValid(bullet.Attacker) then
+                if IsValid(bullet.Attacker) and IsValid(weapon) then
                     bullet.Attacker:FireBullets({
-                        Damage = weapon:GetProcessedValue("Damage_Max"),
-                        Force = 8,
+                        Damage = weapon:GetProcessedValue("DamageMax"),
+                        Force = weapon:GetProcessedValue("ImpactForce"),
                         Tracer = 0,
                         Num = 1,
                         Dir = bullet.Vel:GetNormalized(),
