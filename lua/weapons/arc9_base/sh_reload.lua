@@ -66,10 +66,25 @@ function SWEP:Reload()
 
     if self:GetShouldShotgunReload() then
         anim = "reload_start"
-
+	
         if self:GetUBGL() then
             anim = "reload_ubgl_start"
         end
+		
+		local nanim = anim
+			
+		for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+            if self:HasAnimation(anim .. "_" .. tostring(i)) then
+                nanim = anim .. "_" .. tostring(i)
+			end
+        end
+			
+		anim = nanim
+		
+    end
+	
+	if !self:GetProcessedValue("ReloadInSights") then
+        self:ExitSights()
     end
 
     anim = self:RunHook("Hook_SelectReloadAnimation", anim) or anim
@@ -119,9 +134,7 @@ function SWEP:Reload()
     self:ToggleBlindFire(false)
     self:SetRequestReload(false)
 
-    if !self:GetProcessedValue("ReloadInSights") then
-        self:ExitSights()
-    end
+    
 
     -- self:SetTimer(t * 0.9, function()
     --     if !IsValid(self) then return end
@@ -291,7 +304,17 @@ function SWEP:EndReload()
             if self:GetUBGL() then
                 anim = "reload_ubgl_finish"
             end
-
+			
+			local canim = anim
+			
+			for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+                if self:HasAnimation(anim .. "_" .. tostring(i)) then
+                    canim = anim .. "_" .. tostring(i)
+				end
+            end
+			
+			anim = canim
+			
             self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
             self:SetReloading(false)
 
@@ -311,6 +334,9 @@ function SWEP:EndReload()
                 if self:HasAnimation(anim .. "_" .. tostring(i)) then
                     banim = anim .. "_" .. tostring(i)
                     attempt_to_restore = i
+				elseif self:HasAnimation(anim .. "_bullet_" .. tostring(i)) then
+                    banim = anim .. "_bullet_" .. tostring(i)
+                    attempt_to_restore = 1
                 end
             end
 
