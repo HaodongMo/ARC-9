@@ -89,7 +89,7 @@ function SWEP:PlayAnimation(anim, mult, lock)
         end)
     end
 
-    if animation.EventTable then
+    if animation.EventTable and IsFirstTimePredicted() then
         self:PlaySoundTable(animation.EventTable or animation.SoundTable, mult)
     end
 
