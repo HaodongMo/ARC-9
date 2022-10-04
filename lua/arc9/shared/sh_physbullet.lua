@@ -93,7 +93,8 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         Guidance = wep:GetProcessedValue("BulletGuidance"),
         GuidanceAmount = wep:GetProcessedValue("BulletGuidanceAmount"),
         Secondary = wep:GetUBGL(),
-        Distance = wep:GetProcessedValue("Distance")
+        Distance = wep:GetProcessedValue("Distance"),
+        FirstTimeProcessed = true
     }
 
     for i, k in pairs(tbl) do
@@ -134,10 +135,12 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
     end
 
     if SERVER then
-        -- ARC9:ProgressPhysBullet(bullet, FrameTime())
+        // ARC9:ProgressPhysBullet(bullet, FrameTime())
 
         ARC9:SendBullet(bullet, wep:GetOwner())
     end
+
+    ARC9:ProgressPhysBullet(bullet, FrameTime())
 end
 
 if CLIENT then
@@ -362,16 +365,16 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
             if CLIENT then
                 -- do an impact effect and forget about it
-                -- if !game.SinglePlayer() then
-                --     attacker:FireBullets({
-                --         Src = oldpos,
-                --         Dir = dir,
-                --         Distance = spd + 16,
-                --         Tracer = 0,
-                --         Damage = 0,
-                --         IgnoreEntity = bullet.Attacker
-                --     })
-                -- end
+                if !game.SinglePlayer() and bullet.FirstTimeProcessed then
+                    attacker:FireBullets({
+                        Src = oldpos,
+                        Dir = dir,
+                        Distance = spd + 16,
+                        Tracer = 0,
+                        Damage = 0,
+                        IgnoreEntity = bullet.Attacker
+                    })
+                end
                 if IsValid(bullet.ClientModel) then
                     local t = weapon:GetProcessedValue("PhysBulletModelStick") or 0
                     if t > 0 then
@@ -512,6 +515,8 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
     elseif !indim(bullet.Pos, WorldDimensions) then
         bullet.Imaginary = true
     end
+
+    bullet.FirstTimeProcessed = false
 end
 
 local head = Material("particle/fire")
