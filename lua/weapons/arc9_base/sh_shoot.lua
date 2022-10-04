@@ -322,7 +322,7 @@ function SWEP:DoPrimaryAttack()
 
     if IsFirstTimePredicted() then
         self:DoHeat()
-        
+
         if !manualaction or manualaction and !self.MalfunctionCycle then
             self:RollJam()
         end
