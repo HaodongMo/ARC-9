@@ -953,6 +953,7 @@ SWEP.Attachments = {
 -- draw
 -- ready
 -- holster
+-- idle_1, idle_2, idle_3...
 -- fire
 -- fire_1, fire_2, fire_3...
 -- dryfire
@@ -961,7 +962,10 @@ SWEP.Attachments = {
 -- trigger Trigger delay
 -- untrigger Let go of trigger before fire
 -- reload_ubgl
+-- reload_start_1, reload_start_2, reload_start_3...: For reloads that require losing the spent shells. For example removing spent shells on a revolver or double barrel shotgun.
 -- reload_insert_1, reload_insert_2, reload_insert_3...: Animation that reloads multiple rounds in at once, such as a stripper clip.
+-- reload_insert_bullet_1, reload_insert_bullet_2, reload_insert_bullet_3...: Animation that reloads one by one at a time, such as a revolver or double barrel shotguns.
+-- reload_finish, reload_finish_1, reload_finish_2...: Animation that finishes the reload based off of how much bullets you insert in your gun. _# prefix is bullets left to full after cancel reload.
 -- enter_bipod, exit_bipod
 -- enter_inspect, exit_inspect, idle_inspect
 -- jam
