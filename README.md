@@ -175,10 +175,11 @@ Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS 
  - **EvenReload**: Enabled on even reloads.
  - **OddReload**: Enabled on odd reloads.
  - **BlindFire**: Enabled while blind firing.
- - **Sights**: Enabled when sighted.
- - **HipFire**: Enabled when not sighted.
+ - **Sights**: Enabled when sighted. Scales.
+ - **HipFire**: Enabled when not sighted. Scales.
+ - **Hot**: Enabled with overheat amount, like with Sights. Scales.
  - **Shooting**: Enabled when constantly shooting.
- - **Recoil**: Scales with bursts.
+ - **Recoil**: Scales with bursts. Unique in that it multiplies with recoil amount.
  - **Move**: Enabled when moving.
 
  ## Tips for Developers

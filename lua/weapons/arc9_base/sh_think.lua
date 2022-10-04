@@ -10,10 +10,6 @@ function SWEP:Think()
         self:Idle()
     end
 
-    if !self:StillWaiting() and (lastwalking != self:GetIsWalking()) then
-        self:Idle()
-    end
-
     if !self.NotAWeapon then
 
         if owner:KeyReleased(IN_ATTACK) or (self:GetUBGL() and owner:KeyReleased(IN_ATTACK2)) then

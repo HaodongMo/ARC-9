@@ -233,7 +233,7 @@ local conVars = {
     },
     {
         name = "breath_hud",
-        default = "1",
+        default = "0",
         client = true,
         replicated = true
     },

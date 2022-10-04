@@ -253,6 +253,22 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
+    if base != "HeatCapacity" and !self.HasNoAffectors[val .. "Hot"] then
+        if self:GetHeatAmount() > 0 then
+            if isnumber(stat) then
+                local hot = self:GetValue(val, stat, "Hot")
+
+                if isnumber(hot) then
+                    stat = Lerp(self:GetHeatAmount() / self:GetProcessedValue("HeatCapacity"), stat, hot)
+                end
+            else
+                if self:GetHeatAmount() > 0 then
+                    stat = self:GetValue(val, stat, "Hot")
+                end
+            end
+        end
+    end
+
     if !self.HasNoAffectors[val .. "Melee"] then
         if self:GetLastMeleeTime() < CurTime() then
             local d = self.PV_Melee
