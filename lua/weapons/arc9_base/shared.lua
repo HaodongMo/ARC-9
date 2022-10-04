@@ -457,7 +457,7 @@ SWEP.SwayMultSights = 0.5
 SWEP.AimDownSightsTime = 0.25 -- How long it takes to go from hip fire to aiming down sights.
 SWEP.SprintToFireTime = 0.25 -- How long it takes to go from sprinting to being able to fire.
 
-SWEP.NoSprintWhenLocked = true -- You cannot sprint while reloading with this gun
+SWEP.NoSprintWhenLocked = false -- You cannot sprint while reloading with this gun
 
 SWEP.ReloadTime = 1
 SWEP.DeployTime = 1
