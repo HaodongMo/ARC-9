@@ -18,6 +18,7 @@ if !ARC9.ScreenScale then ARC9.ScreenScale = function(size) return size * (ScrW(
 local sizes_to_make = {
     4,
     6,
+    7,
     8,
     9,
     10,

@@ -15,40 +15,38 @@ function SWEP:CreateHUD_Trivia()
 
     local descbg = vgui.Create("DPanel", lowerpanel)
     descbg:SetPos(ARC9ScreenScale(4), ARC9ScreenScale(20))
-    descbg:SetSize(lowerpanel:GetWide(), ARC9ScreenScale(98))
+    descbg:SetSize(lowerpanel:GetWide()-ARC9ScreenScale(4), ARC9ScreenScale(98))
     descbg.Paint = function(self2, w, h)
     end
 
     self.BottomBar = descbg
 
-    local desc = vgui.Create("DScrollPanel", descbg)
+    local desc = vgui.Create("ARC9ScrollPanel", descbg)
     desc:SetPos(0, 0)
-    desc:SetSize(descbg:GetWide() * 0.666, descbg:GetTall())
+    desc:SetSize(descbg:GetWide() * 0.75, descbg:GetTall())
     desc.Paint = function(self2, w, h)
-        // surface.SetDrawColor(255, 255, 255)
-        // surface.DrawRect(0, 0, w, h)
+        -- surface.SetDrawColor(144, 0, 0, 100)
+        -- surface.DrawRect(0, 0, w, h)
     end
 
-    local newbtn = desc:Add("DPanel")
-    newbtn:SetSize(desc:GetWide(), ScreenScale(9))
-    newbtn:Dock(TOP)
-    newbtn.title = "Description"
-    newbtn.Paint = function(self2, w, h)
+    local desctitle = desc:Add("DPanel")
+    desctitle:SetSize(desc:GetWide(), ScreenScale(7))
+    desctitle:Dock(TOP)
+    desctitle.title = "Description"
+    desctitle.Paint = function(self2, w, h)
         if !IsValid(self) then return end
 
-        surface.SetFont("ARC9_6")
+        surface.SetFont("ARC9_7_Slim")
         surface.SetTextPos(ScreenScale(2), ScreenScale(0))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.DrawText(self2.title)
     end
 
-    local multiline = {}
-
-    multiline = self:MultiLineText(self.Description, desc:GetWide(), "ARC9_8")
-
-    for i, text in ipairs(multiline) do
+    local descmultiline = {}
+    descmultiline = self:MultiLineText(self.Description, desc:GetWide() - ARC9ScreenScale(1), "ARC9_8")
+    for i, text in ipairs(descmultiline) do
         local desc_line = vgui.Create("DPanel", desc)
-        desc_line:SetSize(desc:GetWide(), ARC9ScreenScale(9))
+        desc_line:SetSize(desc:GetWide(), ARC9ScreenScale(8))
         desc_line:Dock(TOP)
         desc_line.Paint = function(self2, w, h)
             if !IsValid(self) then return end
@@ -59,99 +57,115 @@ function SWEP:CreateHUD_Trivia()
         end
     end
 
-    local desc2 = vgui.Create("DScrollPanel", descbg)
-    desc2:SetPos(descbg:GetWide() * 0.667, 0)
-    desc2:SetSize(descbg:GetWide() * 0.333, descbg:GetTall())
-    desc2.Paint = function(self2, w, h)
-        // surface.SetDrawColor(255, 255, 255)
-        // surface.DrawRect(0, 0, w, h)
+
+    -- credits
+    local creditsscroll = vgui.Create("ARC9ScrollPanel", descbg)
+    creditsscroll:SetPos(0, desc:GetTall())
+    creditsscroll:SetSize(descbg:GetWide() * 0.75, ARC9ScreenScale(17)) -- descbg:GetTall()
+    creditsscroll.Paint = function(self2, w, h)
+        -- surface.SetDrawColor(0, 144, 0, 100)
+        -- surface.DrawRect(0, 0, w, h)
     end
 
-    for title, trivia in pairs(self:GetValue("Trivia")) do
+    local creditssorted = {}
+    for title, credit in pairs(self:GetValue("Credits")) do
         if title == "BaseClass" then continue end
-        local newbtn2 = desc2:Add("DPanel")
-        newbtn2:SetSize(desc2:GetWide(), ARC9ScreenScale(16))
-        newbtn2:Dock(TOP)
-        newbtn2.title = title
-        newbtn2.trivia = trivia
-        newbtn2.Paint = function(self2, w, h)
+        local credittbl = {}
+        credittbl.credit = credit
+        if tonumber(title[#title]) then
+            credittbl.order = title[#title]
+            credittbl.title = string.sub(title, 0, #title-1)
+        else
+            credittbl.order = 0
+            credittbl.title = title
+        end
+
+        table.insert(creditssorted, credittbl)
+    end
+
+    for _, credittbl in SortedPairsByMemberValue(creditssorted, "order", false) do
+        local creditline = creditsscroll:Add("DPanel")
+
+        local desctall = math.max(descbg:GetTall()*0.5, desc:GetTall()-ARC9ScreenScale(17)) - ARC9ScreenScale(2)
+        local creditstall = math.min(creditsscroll:GetTall()+ARC9ScreenScale(17), descbg:GetTall()*0.5)
+        desc:SetTall(desctall)
+        creditsscroll:SetTall(creditstall)
+        creditsscroll:SetPos(0, desc:GetTall() + ARC9ScreenScale(2))
+
+        creditline:SetSize(creditsscroll:GetWide(), ARC9ScreenScale(17))
+        creditline:Dock(TOP)
+        creditline.title = credittbl.title
+        creditline.credit = credittbl.credit
+        creditline.Paint = function(self2, w, h)
             if !IsValid(self) then return end
-            -- title
 
-            surface.SetFont("ARC9_6")
-            surface.SetTextPos(ScreenScale(0), 0)
+            local titlestring = string.Replace(self2.title, "_", " ") 
+
+            surface.SetFont("ARC9_7_Slim")
+            surface.SetTextPos(ScreenScale(2), 0)
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.DrawText(self2.title)
+            surface.DrawText(titlestring)
 
-            local major = self2.trivia
+            local major = self2.credit
 
-            surface.SetFont("ARC9_8")
+            surface.SetFont("ARC9_9")
             surface.SetTextPos(ScreenScale(2), ScreenScale(6))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(ScreenScale(1), 0), ScreenScale(6), w, true)
+            surface.DrawText(major)
+            -- self:DrawTextRot(self2, major, 0, 0, math.max(ScreenScale(1), 0), ScreenScale(6), w, true)
         end
     end
 
-    // local tp = vgui.Create("DScrollPanel", lowerpanel)
-    // tp:SetSize(ScreenScale(400), ScrH() - ScreenScale(76 + 4))
-    // tp:SetPos(ScrW() - ScreenScale(400 + 12), ScreenScale(76))
-    // tp.Paint = function(self2, w, h)
-    // end
+    -- trivia
+    local triviascroll = vgui.Create("ARC9ScrollPanel", descbg)
+    triviascroll:SetPos(descbg:GetWide() * 0.76, 0)
+    triviascroll:SetSize(descbg:GetWide() * 0.24 - ARC9ScreenScale(4), descbg:GetTall())
+    triviascroll.Paint = function(self2, w, h)
+        -- surface.SetDrawColor(0, 0, 144, 100)
+        -- surface.DrawRect(0, 0, w, h)
+    end
 
-    // local scroll_preset = tp:GetVBar()
-    // scroll_preset.Paint = function() end
-    // scroll_preset.btnUp.Paint = function(span, w, h)
-    // end
-    // scroll_preset.btnDown.Paint = function(span, w, h)
-    // end
-    // scroll_preset.btnGrip.Paint = PaintScrollBar
+    local triviasorted = {}
+    for title, trivia in pairs(self:GetValue("Trivia")) do
+        if title == "BaseClass" then continue end
+        local triviatbl = {}
+        triviatbl.trivia = trivia
+        if tonumber(title[#title]) then
+            triviatbl.order = title[#title]
+            triviatbl.title = string.sub(title, 0, #title-1)
+        else
+            triviatbl.order = 0
+            triviatbl.title = title
+        end
 
-    // self.TabPanel = tp
+        table.insert(triviasorted, triviatbl)
+    end
 
-    // local newbtn = tp:Add("DPanel")
-    // newbtn:SetSize(ScreenScale(400), ScreenScale(9))
-    // newbtn:Dock(TOP)
-    // newbtn.title = "Description"
-    // newbtn.Paint = function(self2, w, h)
-    //     if !IsValid(self) then return end
-    //     -- title
-    //     surface.SetFont("ARC9_6")
-    //     local tw = surface.GetTextSize(self2.title)
+    for _, triviatbl in SortedPairsByMemberValue(triviasorted, "order", false) do
+        local trivialine = triviascroll:Add("DPanel")
+        trivialine:SetSize(triviascroll:GetWide(), ARC9ScreenScale(17))
+        trivialine:Dock(TOP)
+        trivialine.title = triviatbl.title
+        trivialine.trivia = triviatbl.trivia
+        trivialine.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
+            
+            local titlestring = string.Replace(self2.title, "_", " ") 
 
-    //     surface.SetFont("ARC9_6")
-    //     surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(2 + 1))
-    //     surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-    //     surface.DrawText(self2.title)
+            surface.SetFont("ARC9_7_Slim")
+            local tw = surface.GetTextSize(titlestring)
+            surface.SetTextPos(w-tw-ScreenScale(2), 0)
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.DrawText(titlestring)
 
-    //     surface.SetFont("ARC9_6")
-    //     surface.SetTextPos(w - tw - ScreenScale(2), ScreenScale(2))
-    //     surface.SetTextColor(ARC9.GetHUDColor("fg"))
-    //     surface.DrawText(self2.title)
-    // end
+            local major = self2.trivia
 
-    // local multiline = {}
-    // local desc = self.Description
-
-    // multiline = self:MultiLineText(desc, tp:GetWide() - (ScreenScale(4)), "ARC9_8")
-
-    // for i, text in ipairs(multiline) do
-    //     local desc_line = vgui.Create("DPanel", tp)
-    //     desc_line:SetSize(tp:GetWide(), ScreenScale(9))
-    //     desc_line:Dock(TOP)
-    //     desc_line.Paint = function(self2, w, h)
-    //         if !IsValid(self) then return end
-    //         surface.SetFont("ARC9_8")
-    //         local tw = surface.GetTextSize(text)
-
-    //         surface.SetFont("ARC9_8")
-    //         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-    //         surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(1))
-    //         surface.DrawText(text)
-
-    //         surface.SetFont("ARC9_8")
-    //         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-    //         surface.SetTextPos(w - tw - ScreenScale(2), 0)
-    //         surface.DrawText(text)
-    //     end
-    // end
+            surface.SetFont("ARC9_9")
+            local tw = surface.GetTextSize(major)
+            surface.SetTextPos(w-tw-ScreenScale(3), ScreenScale(6))
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.DrawText(major)
+            -- self:DrawTextRot(self2, major, 0, 0, math.max(ScreenScale(1), 0), ScreenScale(6), w, true)
+        end
+    end
 end
