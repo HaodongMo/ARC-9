@@ -1,14 +1,9 @@
-local function PaintScrollBar(panel, w, h)
-    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-    surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
-
-    surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
-end
+local ARC9ScreenScale = ARC9.ScreenScale
 
 function SWEP:CreateHUD_Stats()
-    local bg = self.CustomizeHUD
-
+    local lowerpanel = self.CustomizeHUD.lowerpanel
+    
+    -- if true then return end
     self:ClearTabPanel()
 
     -- {
@@ -27,23 +22,39 @@ function SWEP:CreateHUD_Stats()
             unit = "DMG",
             fifty = 50,
             conv = function(a)
-                local dv = self:GetProcessedValue("DamageMax") * self:GetProcessedValue("Num")
+                local dv = self:GetProcessedValue("DamageMax")
 
                 dv = math.Round(dv, 0)
 
+                if self:GetProcessedValue("Num") > 1 then
+                    dv = dv .. " x " .. tostring(self:GetProcessedValue("Num"))
+                end
+
                 return dv
             end,
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash")
-            end
         },
         {
-            title = "Projectile Count",
-            fifty = 3,
-            stat = "Num",
-            unit = "",
+            title = "Cyclic ROF",
+            stat = "RPM",
+            fifty = 600,
+            unit = "RPM",
+            conv = function(a) return math.Round(a / 50, 0) * 50 end,
+        },
+        {
+            title = "Capacity",
+            stat = "ClipSize",
+            fifty = 20,
             cond = function()
-                return self:GetProcessedValue("Num") <= 1
+                return self:GetProcessedValue("PrimaryBash")
+            end,
+            conv = function(a)
+                a = tostring(a)
+
+                if self:GetProcessedValue("ChamberSize") > 0 then
+                    a = a .. "+" .. tostring(self:GetProcessedValue("ChamberSize"))
+                end
+
+                return a
             end
         },
         {
@@ -54,56 +65,6 @@ function SWEP:CreateHUD_Stats()
             conv = function(a)
                 return a * ARC9.HUToM
             end,
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash")
-            end
-        },
-        {
-            title = "Recoil",
-            unit = "%",
-            fifty = 75,
-            conv = function(a)
-                local recoilup = self:GetProcessedValue("RecoilUp")
-                local recoilside = self:GetProcessedValue("RecoilSide")
-                local recoilrup = self:GetProcessedValue("RecoilRandomUp")
-                local recoilrside = self:GetProcessedValue("RecoilRandomSide")
-
-                local rv = recoilup + (recoilside * 1.5) + (recoilrup * 4) + (recoilrside * 4)
-                rv = rv * self:GetProcessedValue("Recoil")
-
-                rv = rv - (self:GetProcessedValue("RecoilAutoControl") * 0.25)
-
-                rv = rv * 15
-
-                rv = math.Round(rv, 0)
-
-                return rv
-            end,
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash")
-            end
-        },
-        {
-            title = "Cyclic ROF",
-            stat = "RPM",
-            fifty = 600,
-            unit = "RPM",
-            conv = function(a) return math.Round(a / 50, 0) * 50 end,
-        },
-        {
-            title = "Burst Delay",
-            stat = "PostBurstDelay",
-            fifty = 0.1,
-            unit = "s",
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("PostBurstDelay") <= 0
-            end
-        },
-        {
-            title = "Noise",
-            stat = "ShootVolume",
-            fifty = 100,
-            unit = "dB",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end
@@ -128,6 +89,39 @@ function SWEP:CreateHUD_Stats()
                 return self:GetProcessedValue("PrimaryBash")
             end
         },
+
+
+        {
+            title = "Ammo Type",
+            stat = "Ammo",
+            conv = function(a) return language.GetPhrase(a .. "_ammo") end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
+            title = "Penetration",
+            stat = "Penetration",
+            fifty = 50,
+            unit = "mm",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
+            title = "Armor Piercing",
+            stat = "ArmorPiercing",
+            fifty = 25,
+            unit = "%",
+            conv = function(a) return math.Round(a * 100, 0) end,
+        },
+        {
+            title = "Movement Speed",
+            stat = "SpeedMult",
+            fifty = 95,
+            unit = "%",
+            conv = function(a) return math.Round(a * 100, 0) end,
+        },
         {
             title = "Aim Time",
             stat = "AimDownSightsTime",
@@ -143,77 +137,40 @@ function SWEP:CreateHUD_Stats()
             fifty = 0.3,
             unit = "s"
         },
-        {
-            title = "Sway",
-            stat = "Sway",
-            fifty = 95,
-            unit = "%",
-            conv = function(a) return math.Round(a * 60, 0) end,
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash")
-            end
-        },
-        {
-            title = "Free Aim Radius",
-            stat = "FreeAimRadius",
-            fifty = 20,
-            unit = "°",
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash")
-            end
-        },
-        {
-            title = "Movement Speed",
-            stat = "SpeedMult",
-            fifty = 95,
-            unit = "%",
-            conv = function(a) return math.Round(a * 100, 0) end,
-        },
-        {
-            title = "Penetration",
-            stat = "Penetration",
-            fifty = 50,
-            unit = "mm"
-        },
-        {
-            title = "Armor Piercing",
-            stat = "ArmorPiercing",
-            fifty = 25,
-            unit = "%",
-            conv = function(a) return math.Round(a * 100, 0) end,
-        },
-        {
-            title = "Ammo Type",
-            stat = "Ammo",
-            conv = function(a) return language.GetPhrase(a .. "_ammo") end
-        },
-        {
-            title = "Capacity",
-            stat = "ClipSize",
-            fifty = 20,
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash")
-            end,
-            conv = function(a)
-                a = tostring(a)
+        -- {
+        --     title = "Projectile Count",
+        --     fifty = 3,
+        --     stat = "Num",
+        --     unit = "",
+        --     cond = function()
+        --         return self:GetProcessedValue("Num") <= 1
+        --     end
+        -- },
+        -- {
+        --     title = "Recoil",
+        --     unit = "%",
+        --     fifty = 75,
+        --     conv = function(a)
+        --         local recoilup = self:GetProcessedValue("RecoilUp")
+        --         local recoilside = self:GetProcessedValue("RecoilSide")
+        --         local recoilrup = self:GetProcessedValue("RecoilRandomUp")
+        --         local recoilrside = self:GetProcessedValue("RecoilRandomSide")
 
-                if self:GetProcessedValue("ChamberSize") > 0 then
-                    a = a .. "+" .. tostring(self:GetProcessedValue("ChamberSize"))
-                end
+        --         local rv = recoilup + (recoilside * 1.5) + (recoilrup * 4) + (recoilrside * 4)
+        --         rv = rv * self:GetProcessedValue("Recoil")
 
-                return a
-            end
-        },
-        {
-            title = "Supply Limit",
-            stat = "SupplyLimit",
-            fifty = 3,
-            cond = function()
-                return self:GetProcessedValue("PrimaryBash")
-            end,
-            conv = function(a) return math.Round(a, 0) end,
-            unit = ""
-        },
+        --         rv = rv - (self:GetProcessedValue("RecoilAutoControl") * 0.25)
+
+        --         rv = rv * 15
+
+        --         rv = math.Round(rv, 0)
+
+        --         return rv
+        --     end,
+        --     cond = function()
+        --         return self:GetProcessedValue("PrimaryBash")
+        --     end
+        -- },
         {
             title = "Fire Modes",
             conv = function(a)
@@ -241,9 +198,142 @@ function SWEP:CreateHUD_Stats()
 
                 return str
             end
-        }
+        },
+        {
+            title = "Burst Delay",
+            stat = "PostBurstDelay",
+            fifty = 0.1,
+            unit = "s",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("PostBurstDelay") <= 0
+            end
+        },
+        {
+            title = "Noise",
+            stat = "ShootVolume",
+            fifty = 100,
+            unit = "dB",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end
+        },
+        {
+            title = "Sway",
+            stat = "Sway",
+            fifty = 95,
+            unit = "%",
+            conv = function(a) return math.Round(a * 60, 0) end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or !GetConVar("arc9_mod_sway"):GetBool()
+            end
+        },
+        {
+            title = "Free Aim Radius",
+            stat = "FreeAimRadius",
+            fifty = 20,
+            unit = "°",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or !GetConVar("arc9_mod_freeaim"):GetBool()
+            end
+        },
+        {
+            title = "Supply Limit",
+            stat = "SupplyLimit",
+            fifty = 3,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end,
+            conv = function(a) return math.Round(a, 0) end,
+            unit = ""
+        },
     }
 
+
+    local statsspanel = vgui.Create("DPanel", lowerpanel)
+    statsspanel:SetPos(ARC9ScreenScale(60), ARC9ScreenScale(20))
+    statsspanel:SetSize(lowerpanel:GetWide()-ARC9ScreenScale(120), ARC9ScreenScale(98))
+    statsspanel.Paint = function(self2, w, h)
+        -- surface.SetDrawColor(144, 0, 0, 100)
+        -- surface.DrawRect(0, 0, w, h)
+    end
+
+    statsspanel:SetAlpha(0)
+    statsspanel:AlphaTo(255, 0.2, 0, nil)
+
+    self.BottomBar = statsspanel
+
+    local realI = 0
+    
+    local many = false                -- probably not the best way
+    for i, stat in ipairs(stats) do 
+        if stat.cond and stat.cond() then continue end 
+        realI = realI + 1
+        if realI>6 then many = true end 
+    end
+    
+    realI = 0
+    
+    for i, stat in ipairs(stats) do
+        if stat.cond and stat.cond() then continue end
+        realI = realI + 1
+        
+        local statpanel = vgui.Create("DPanel", statsspanel )
+        statpanel:SetSize(ScreenScale(120), ScreenScale(16))
+
+        if !many then 
+            statpanel:SetPos(statsspanel:GetWide()*0.5-ScreenScale(60), ScreenScale(16.5) * realI - ScreenScale(16))
+        else
+            if realI > 12 then
+                statpanel:SetPos(statsspanel:GetWide()-ScreenScale(120), ScreenScale(16.5) * (realI-12) - ScreenScale(16))
+            elseif realI > 6 then
+                statpanel:SetPos(statsspanel:GetWide()*0.5-ScreenScale(60), ScreenScale(16.5) * (realI-6) - ScreenScale(16))
+            else
+                statpanel:SetPos(0, ScreenScale(16.5) * realI - ScreenScale(16))
+            end
+        end
+
+        statpanel.stats = stat
+        statpanel.ri = realI
+        statpanel.Paint = function(self2, w, h)
+            if self2.ri%2==1 then
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+                surface.DrawRect(0, 0, w, h)
+            end
+            surface.SetFont("ARC9_10_Slim")
+            surface.SetTextPos(ScreenScale(2), ScreenScale(2))
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.DrawText(self2.stats.title)
+
+            local tw_u = 0
+            if self2.stats.unit then
+                surface.SetFont("ARC9_8")
+                tw_u = surface.GetTextSize(self2.stats.unit)
+
+                surface.SetTextPos(w - tw_u - ScreenScale(2), ScreenScale(3))
+                surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                surface.DrawText(self2.stats.unit)
+                
+                tw_u = tw_u + ScreenScale(4)
+            else
+                tw_u = ScreenScale(2)
+            end
+
+            local major = ""
+            if self2.stats.stat then major = self:GetValue(self2.stats.stat) end
+            if self2.stats.conv then major = self2.stats.conv(major) end
+            if isnumber(major) then major = math.Round(major, 2) end
+            local oldmajor = major
+            major = tostring(major)
+
+            surface.SetFont("ARC9_10")
+            local tw = surface.GetTextSize(major)
+            surface.SetTextPos(w-tw-tw_u, ScreenScale(2))
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.DrawText(major)
+        end
+    end
+
+    --[[
     local tp = vgui.Create("DScrollPanel", bg)
     tp:SetSize(ScreenScale(150), ScrH() - ScreenScale(76 + 4))
     tp:SetPos(ScrW() - ScreenScale(150 + 12), ScreenScale(76))
@@ -368,4 +458,6 @@ function SWEP:CreateHUD_Stats()
             end
         end
     end
+
+    ]]--
 end

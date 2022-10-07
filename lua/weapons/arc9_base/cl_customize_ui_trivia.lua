@@ -1,11 +1,3 @@
-local function PaintScrollBar(panel, w, h)
-    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-    surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
-
-    surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
-end
-
 local ARC9ScreenScale = ARC9.ScreenScale
 
 function SWEP:CreateHUD_Trivia()
@@ -18,6 +10,9 @@ function SWEP:CreateHUD_Trivia()
     descbg:SetSize(lowerpanel:GetWide()-ARC9ScreenScale(4), ARC9ScreenScale(98))
     descbg.Paint = function(self2, w, h)
     end
+
+    descbg:SetAlpha(0)
+    descbg:AlphaTo(255, 0.2, 0, nil)
 
     self.BottomBar = descbg
 

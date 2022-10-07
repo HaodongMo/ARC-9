@@ -171,27 +171,27 @@ SWEP.CustomizeButtons = {
         customize = true,
         cutcorner = 1
     },
-    {
-        title = "STATS",
-        func = function(self2)
-            self2:CreateHUD_Stats()
+    -- {
+    --     title = "STATS",
+    --     func = function(self2)
+    --         self2:CreateHUD_Stats()
             
-            if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel.Extended = nil 
+    --         if self2.CustomizeHUD.lowerpanel then 
+    --             self2.CustomizeHUD.lowerpanel.Extended = nil 
                 
-                self2:ClosePresetMenu()
+    --             self2:ClosePresetMenu()
 
-                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
-                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
+    --             self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
+    --             self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
 
-                self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
-                self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
-                self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
-            end
-        end
-    },
+    --             self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
+    --             self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
+    --             self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
+    --         end
+    --     end
+    -- },
     {
-        title = "BALLISTICS",
+        title = "STATS & BALLISTICS",
         func = function(self2)
             self2:CreateHUD_Bench()
 
@@ -200,15 +200,16 @@ SWEP.CustomizeButtons = {
                 
                 self2:ClosePresetMenu()
 
-                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
-                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
-                -- self2.CustomizeHUD.lowerpanel:SetAlpha(255)
-                
+                -- self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
+                -- self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
+
+                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
+
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
             end
-            -- remove hints here too
         end
     },
     {
@@ -244,17 +245,10 @@ SWEP.CustomizeButtons = {
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil) 
             end
-            -- remove hints here too
         end,
         inspect = true,
         cutcorner = 3
     },
-    -- {
-    --     title = "Credits",
-    --     func = function(self2)
-    --         self2:CreateHUD_Credits()
-    --     end
-    -- },
 }
 
 SWEP.TabPanel = nil
@@ -1229,6 +1223,7 @@ function SWEP:RemoveCustomizeHUD()
         if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topright_panel:AlphaTo(0, 0.2, 0) end
         if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.lowerpanel:AlphaTo(0, 0.2, 0) end
         if bg.hintspanel then bg.hintspanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.hintspanel:AlphaTo(0, 0.1, 0) end
+        if self.TabPanel then self.TabPanel:AlphaTo(0, 0.1, 0) end
                 
         self:ClosePresetMenu()
 
@@ -1244,7 +1239,6 @@ function SWEP:RemoveCustomizeHUD()
 end
 
 function SWEP:DrawCustomizeHUD()
-
     local customize = self:GetCustomize()
 
     if self.CustomizeHUD and !IsValid(self.CustomizeHUD) then
