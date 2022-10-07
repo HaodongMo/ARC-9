@@ -69,18 +69,18 @@ SWEP.TrueName = nil
 -- TrueName should be something that improves the cross-compatibility of weapon naming.
 
 SWEP.Class = "Unclassified Weapon"
-SWEP.Trivia = {} -- Optional. Any stats you like can be added.
+SWEP.Trivia = {} -- Optional. Any stats you like can be added.  Number in end of title orders line in list (otherwise they will be in alphabet in menus). "_" will be replaced with space
 -- SWEP.Trivia = {
---     Manufacturer = "Arctic Armament International",
---     Calibre = "9x21mm Jager",
---     Mechanism = "Roller-Delayed Blowback",
---     Country = "UK-Australia-China",
---     Year = 2022
+--     Manufacturer1 = "Arctic Armament International",
+--     Calibre2 = "9x21mm Jager",
+--     Mechanism3 = "Roller-Delayed Blowback",
+--     Country4 = "UK-Australia-China",
+--     Year5 = 2022
 -- }
 SWEP.Credits = {}
--- SWEP.Credits = {
---     Author = "Arctic",
---     Contact = "https://steamcommunity.com/id/ArcticWinterZzZ/",
+-- SWEP.Credits = {   -- Number in end of title orders line in list (otherwise they will be in alphabet in menus). "_" will be replaced with space
+--     Author1 = "Arctic",
+--     Contact2 = "https://steamcommunity.com/id/ArcticWinterZzZ/",
 -- }
 
 SWEP.Description = [[Description Unavailable.]]
