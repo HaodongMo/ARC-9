@@ -84,7 +84,9 @@ ATT.Sights = {
         Disassociate = false, // don't associate with parent slot
         IsIronSight = false, // disable if another sight is installed
         KeepBaseIrons = false,
-        InvertColors = false
+        InvertColors = false,
+        OnSwitchToSight = function(self, slottbl) end,
+        OnSwitchFromSight = function(self, slottbl) end,
     }
 }
 

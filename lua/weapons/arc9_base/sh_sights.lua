@@ -157,6 +157,9 @@ function SWEP:BuildMultiSight()
                     s.ExtraSightData = sight.ExtraSightData
                 end
 
+                s.OnSwitchToSight = sight.OnSwitchToSight
+                s.OnSwitchFromSight = sight.OnSwitchFromSight
+
                 if ARC9.Dev(3) then
                     s.OriginalSightTable = {
                         Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
@@ -246,6 +249,14 @@ function SWEP:SwitchMultiSight(amt)
     end
 
     self:SetMultiSight(msi)
+
+    if self.MultiSightTable[msi].OnSwitchToSight then
+        self.MultiSightTable[msi].OnSwitchToSight(self, self.MultiSightTable[msi].slottbl)
+    end
+
+    if self.MultiSightTable[old_msi].OnSwitchFromSight then
+        self.MultiSightTable[old_msi].OnSwitchFromSight(self, self.MultiSightTable[msi].slottbl)
+    end
 
     self:InvalidateCache()
 
