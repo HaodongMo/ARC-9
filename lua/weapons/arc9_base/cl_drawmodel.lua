@@ -35,7 +35,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         end
 
         if lod >= 2 then
-            self:KillModel()
             self:DrawModel()
             return
         end

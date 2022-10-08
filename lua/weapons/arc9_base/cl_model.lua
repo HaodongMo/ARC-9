@@ -471,6 +471,8 @@ function SWEP:KillModel(cmo)
         return
     end
 
+    if !self.VModel and !self.WModel then return end
+
     for _, model in ipairs(self.VModel or {}) do
         SafeRemoveEntity(model)
     end
