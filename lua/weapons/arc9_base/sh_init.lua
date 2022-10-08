@@ -43,11 +43,11 @@ function SWEP:ClientInitialize()
 
     self:BuildSubAttachments(self.DefaultAttachments)
 
-    self:SavePreset("default")
-
     self:InitTimers()
 
-    self:LoadPreset("autosave")
+    self:SetTimer(0.5, function()
+        self:SavePreset("default")
+    end)
 end
 
 function SWEP:SetBaseSettings()

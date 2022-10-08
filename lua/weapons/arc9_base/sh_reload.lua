@@ -66,24 +66,24 @@ function SWEP:Reload()
 
     if self:GetShouldShotgunReload() then
         anim = "reload_start"
-	
+
         if self:GetUBGL() then
             anim = "reload_ubgl_start"
         end
-		
-		local nanim = anim
-			
-		for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+
+        local nanim = anim
+
+        for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
             if self:HasAnimation(anim .. "_" .. tostring(i)) then
                 nanim = anim .. "_" .. tostring(i)
-			end
+            end
         end
-			
-		anim = nanim
-		
+
+        anim = nanim
+
     end
-	
-	if !self:GetProcessedValue("ReloadInSights") then
+
+    if !self:GetProcessedValue("ReloadInSights") then
         self:ExitSights()
     end
 
@@ -133,8 +133,6 @@ function SWEP:Reload()
     self:SetEndReload(false)
     self:ToggleBlindFire(false)
     self:SetRequestReload(false)
-
-    
 
     -- self:SetTimer(t * 0.9, function()
     --     if !IsValid(self) then return end
@@ -297,7 +295,7 @@ function SWEP:EndReload()
             ammo = math.huge
         end
 
-        if clip >= self:GetCapacity(self:GetUBGL()) or ammo == 0 or self:GetEndReload() then
+        if clip >= self:GetCapacity(self:GetUBGL()) or ammo == 0 or (self:GetEndReload() and clip > 0) then
             // finish
             local anim = "reload_finish"
 

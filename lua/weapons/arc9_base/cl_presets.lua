@@ -94,7 +94,7 @@ function SWEP:LoadPresetFromCode(str, name)
 
     self:LoadPresetFromTable(tbl)
     self:SavePreset(name)
-    
+
     surface.PlaySound("arc9/preset_install.ogg")
 
     return true
