@@ -24,11 +24,8 @@ function SWEP:Think()
             if self:GetBurstCount() >= self:GetCurrentFiremode() and self:GetCurrentFiremode() > 0 then
                 self:SetBurstCount(0)
                 self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
-                if !self:GetProcessedValue("AutoBurst") then
-                    self:SetNeedTriggerPress(true)
-                end
             elseif self:GetBurstCount() > 0 and self:GetBurstCount() < self:GetCurrentFiremode() then
-                self:PrimaryAttack()
+                self:DoPrimaryAttack()
             end
         end
 

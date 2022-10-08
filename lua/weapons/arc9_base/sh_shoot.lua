@@ -110,6 +110,8 @@ function SWEP:PrimaryAttack()
         return
     end
 
+    if self:GetNeedTriggerPress() then return end
+
     self:DoPrimaryAttack()
 end
 
@@ -144,8 +146,6 @@ function SWEP:DoPrimaryAttack()
     --         return
     --     end
     -- end
-
-    if self:GetNeedTriggerPress() then return end
 
     if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
         self:MeleeAttack()
@@ -305,6 +305,12 @@ function SWEP:DoPrimaryAttack()
     -- if IsFirstTimePredicted() then
         self:ApplyRecoil()
     -- end
+
+    if self:GetBurstCount() == 0 then
+        if !self:GetProcessedValue("AutoBurst") then
+            self:SetNeedTriggerPress(true)
+        end
+    end
 
     self:SetBurstCount(self:GetBurstCount() + 1)
 
