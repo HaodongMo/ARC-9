@@ -55,7 +55,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
     end
 
     if lod < 2 then
-        for _, model in ipairs(mdl) do
+        for _, model in ipairs(mdl or {}) do
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
 

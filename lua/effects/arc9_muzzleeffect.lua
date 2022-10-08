@@ -26,6 +26,15 @@ function EFFECT:Init(data)
 
     local muz = wpn:GetMuzzleDevice(wm)
 
+    if !IsValid(muz) then
+        muz = wpn
+    end
+
+    if !IsValid(muz) then
+        self:Remove()
+        return
+    end
+
     local pa = muz:GetAttachment(att)
     local pos = pa and pa.Pos or muz:GetPos()
 
