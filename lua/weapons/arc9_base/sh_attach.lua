@@ -470,6 +470,7 @@ function SWEP:ToggleAllStatsOnF()
     end
 
     if toggled then
+        self:RunHook("Hook_ToggleAtts")
         self:PostModify()
         return true
     end
