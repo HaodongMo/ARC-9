@@ -306,7 +306,7 @@ function SWEP:DoPrimaryAttack()
         self:ApplyRecoil()
     -- end
 
-    if self:GetBurstCount() == 0 then
+    if self:GetBurstCount() == 0 and self:GetCurrentFiremode() > 1 and self:GetProcessedValue("RunawayBurst") then
         if !self:GetProcessedValue("AutoBurst") then
             self:SetNeedTriggerPress(true)
         end
