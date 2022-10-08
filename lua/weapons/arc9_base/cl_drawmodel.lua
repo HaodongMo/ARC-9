@@ -78,7 +78,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
             if !ARC9.PresetCam then
                 if !wm and atttbl.RTScope then
-                    local active = slottbl == self:GetActiveSightSlotTable()
+                    local active = slottbl.Address == self:GetActiveSightSlotTable().Address
                     self:DoRTScope(model, atttbl, active)
                 elseif wm and atttbl.RTScope then
                     model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
