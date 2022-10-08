@@ -129,13 +129,15 @@ function ARC9.StartCommand(ply, cmd)
     ARC9.LastEyeAngles = cmd:GetViewAngles()
 
     if cmd:GetImpulse() == 100 and wpn:CanToggleAllStatsOnF() then
-        if SERVER then
+        if !wpn:GetReloading() then
             wpn:PlayAnimation("toggle", 1, false)
             ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound")), 75, 100, 1, CHAN_ITEM)
-            cmd:SetImpulse(0)
-        else
-            wpn:ToggleAllStatsOnF()
+            if CLIENT then
+                wpn:ToggleAllStatsOnF()
+            end
         end
+
+        cmd:SetImpulse(0)
     end
 end
 
