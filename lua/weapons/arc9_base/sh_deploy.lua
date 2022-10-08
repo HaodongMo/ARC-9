@@ -49,6 +49,10 @@ function SWEP:Deploy()
 
     self:SetTriggerDown(self:GetOwner():KeyDown(IN_ATTACK))
 
+    local holsteredtime = CurTime() - self:GetLastHolsterTime()
+
+    self:ThinkHeat(holsteredtime)
+
     if self:GetValue("AnimDraw") then
         self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))
     end
@@ -101,7 +105,7 @@ function SWEP:Holster(wep)
     end
 
     self:SetCustomize(false)
-    
+
     if self:GetHolsterTime() > CurTime() then return false end
 
     if (self:GetHolsterTime() != 0 and self:GetHolsterTime() <= CurTime()) or !IsValid(wep) then
@@ -138,6 +142,8 @@ function SWEP:Holster(wep)
         if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
         end
+
+        self:SetLastHolsterTime(CurTime())
 
         return true
     else

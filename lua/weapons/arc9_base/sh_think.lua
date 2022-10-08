@@ -1,5 +1,3 @@
-local lastwalking = false
-
 function SWEP:Think()
     local owner = self:GetOwner()
 

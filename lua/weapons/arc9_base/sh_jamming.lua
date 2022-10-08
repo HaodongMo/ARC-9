@@ -48,7 +48,8 @@ function SWEP:FixHeat()
     end
 end
 
-function SWEP:ThinkHeat()
+function SWEP:ThinkHeat(dt)
+    dt = dt or FrameTime()
     local heat = self:GetHeatAmount()
 
     if heat <= 0 then return end
@@ -56,7 +57,7 @@ function SWEP:ThinkHeat()
     if !self:GetProcessedValue("Overheat") then return end
 
     if self:GetNextPrimaryFire() + self:GetProcessedValue("HeatDelayTime") < CurTime() then
-        heat = heat - (FrameTime() * self:GetProcessedValue("HeatDissipation"))
+        heat = heat - (dt * self:GetProcessedValue("HeatDissipation"))
         heat = math.Clamp(heat, 0, math.huge)
 
         if heat <= 0 and self:GetHeatLockout() then
