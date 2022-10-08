@@ -42,7 +42,7 @@ function SWEP:DoEject()
     data:SetAttachment(eject_qca)
 
     for i = 1, self:GetProcessedValue("ShellEffectCount") do
-        util.Effect("ARC9_shelleffect", data, true)
+        util.Effect(self:GetProcessedValue("ShellEffect") or "ARC9_shelleffect", data, true)
     end
 end
 
