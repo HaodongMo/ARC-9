@@ -1,10 +1,5 @@
-local function PaintScrollBar(panel, w, h)
-    surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-    surface.DrawRect(ScreenScale(3), 0 + ScreenScale(1), w - ScreenScale(3), h)
 
-    surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-    surface.DrawRect(ScreenScale(2), 0, w - ScreenScale(3), h - ScreenScale(1))
-end
+local ARC9ScreenScale = ARC9.ScreenScale
 
 -- given fov and distance solve apparent size
 local function solvetriangle(angle, dist)
@@ -137,30 +132,36 @@ function SWEP:CreateHUD_Bench()
 
     if !self:GetProcessedValue("PrimaryBash") then -- no ballistics
         local tp = vgui.Create("DScrollPanel", bg)
-        tp:SetSize(ScreenScale(550), ScreenScale(100))
-        tp:SetPos(ScrW()*0.5 - ScreenScale(275), ScreenScale(76))
+        local width = math.min(ARC9ScreenScale(550), ScrW())
+        tp:SetSize(width, ARC9ScreenScale(100))
+        tp:SetPos(ScrW()*0.5 - width*0.5, ScrH()-ARC9ScreenScale(275))
         tp:SetAlpha(0)
         tp:AlphaTo(255, 0.2, 0, nil)
+        
+        local cornercut = ARC9ScreenScale(3.5)
+
         tp.Paint = function(self2, w, h)
-            surface.SetDrawColor(ARC9.GetHUDColor("bg_menu", 120))
-            surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("bg_menu", 200))
+            -- surface.DrawRect(0, 0, w, h)
+            draw.NoTexture()
+            surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
         end
 
-        local scroll_preset = tp:GetVBar()
-        scroll_preset.Paint = function() end
-        scroll_preset.btnUp.Paint = function(span, w, h)
-        end
-        scroll_preset.btnDown.Paint = function(span, w, h)
-        end
-        scroll_preset.btnGrip.Paint = PaintScrollBar
+        -- local scroll_preset = tp:GetVBar()
+        -- scroll_preset.Paint = function() end
+        -- scroll_preset.btnUp.Paint = function(span, w, h)
+        -- end
+        -- scroll_preset.btnDown.Paint = function(span, w, h)
+        -- end
+        -- scroll_preset.btnGrip.Paint = PaintScrollBar
 
         self.TabPanel = tp
 
         -- self:RollRecoil()
 
         -- local recoilchart = vgui.Create("DButton", tp)
-        -- recoilchart:SetSize(ScreenScale(220), ScreenScale(220))
-        -- recoilchart:SetPos(ScreenScale(310), ScreenScale(0))
+        -- recoilchart:SetSize(ARC9ScreenScale(220), ARC9ScreenScale(220))
+        -- recoilchart:SetPos(ARC9ScreenScale(310), ARC9ScreenScale(0))
         -- recoilchart:SetText("")
         -- recoilchart.DoClick = function(self2)
         --     self:RollRecoil()
@@ -173,14 +174,14 @@ function SWEP:CreateHUD_Bench()
         --     surface.SetDrawColor(ARC9.GetHUDColor("fg", 75))
         --     surface.DrawTexturedRect(0, 0, w, h)
 
-        --     local scale = ScreenScale(8)
+        --     local scale = ARC9ScreenScale(8)
 
         --     for i = 1, math.min(self:GetMaxClip1(), 100) do
         --         local hit = recoil_hits[i]
         --         local x = -hit.x * scale + (w / 2)
         --         local y = -hit.y * scale + (h / 2)
 
-        --         local s = ScreenScale(12)
+        --         local s = ARC9ScreenScale(12)
 
         --         surface.SetMaterial(mat_hit)
         --         surface.SetDrawColor(ARC9.GetHUDColor("fg", 75))
@@ -202,18 +203,20 @@ function SWEP:CreateHUD_Bench()
         --     surface.SetFont("ARC9_6")
         --     local tbw = surface.GetTextSize(txt_bottom)
         --     surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        --     surface.SetTextPos((w - tbw) / 2, h - ScreenScale(12))
+        --     surface.SetTextPos((w - tbw) / 2, h - ARC9ScreenScale(12))
         --     surface.DrawText(txt_bottom)
         -- end
 
         local dmgpanel = vgui.Create("DPanel", tp)
-        dmgpanel:SetSize(ScreenScale(100), ScreenScale(100))
+        dmgpanel:SetSize(ARC9ScreenScale(100), ARC9ScreenScale(100))
         dmgpanel:SetPos(0, 0)
         dmgpanel.Paint = function(span, w, h)
             if !IsValid(self) then return end
 
-            surface.SetDrawColor(ARC9.GetHUDColor("bg", 50))
-            surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+            -- surface.DrawRect(0, 0, w, h)
+            draw.NoTexture()
+            surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
 
             local dmgv = self:GetDamageAtRange(ranger_range)
             local bodydamage = self:GetProcessedValue("BodyDamageMults")
@@ -232,8 +235,8 @@ function SWEP:CreateHUD_Bench()
     
             // draw the body
 
-            local body_w = ScreenScale(30)
-            local body_h = ScreenScale(80)
+            local body_w = ARC9ScreenScale(30)
+            local body_h = ARC9ScreenScale(80)
             local body_x = (w - body_w) / 2
             local body_y = (h - body_h) / 2
 
@@ -271,55 +274,58 @@ function SWEP:CreateHUD_Bench()
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetDrawColor(ARC9.GetHUDColor("fg"))
 
-            surface.SetTextPos(ScreenScale(4), ScreenScale(12))
+            surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(12))
             surface.DrawText(txt_dmg_head)
 
-            surface.DrawLine(ScreenScale(4), ScreenScale(18), ScreenScale(38+8), ScreenScale(18))
+            surface.DrawLine(ARC9ScreenScale(4), ARC9ScreenScale(18), ARC9ScreenScale(38+8), ARC9ScreenScale(18))
 
-            surface.SetTextPos(ScreenScale(4), ScreenScale(25))
+            surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(25))
             surface.DrawText(txt_dmg_chest)
 
-            surface.DrawLine(ScreenScale(4), ScreenScale(25 + 6), ScreenScale(35+8), ScreenScale(25 + 6))
+            surface.DrawLine(ARC9ScreenScale(4), ARC9ScreenScale(25 + 6), ARC9ScreenScale(35+8), ARC9ScreenScale(25 + 6))
 
-            surface.SetTextPos(ScreenScale(4), ScreenScale(35))
+            surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(35))
             surface.DrawText(txt_dmg_stomach)
 
-            surface.DrawLine(ScreenScale(4), ScreenScale(35 + 6), ScreenScale(40+8), ScreenScale(35 + 6))
+            surface.DrawLine(ARC9ScreenScale(4), ARC9ScreenScale(35 + 6), ARC9ScreenScale(40+8), ARC9ScreenScale(35 + 6))
 
-            surface.SetTextPos(ScreenScale(4), ScreenScale(50))
+            surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(50))
             surface.DrawText(txt_dmg_arms)
 
-            surface.DrawLine(ScreenScale(4), ScreenScale(50 + 6), ScreenScale(27+8), ScreenScale(50 + 6))
+            surface.DrawLine(ARC9ScreenScale(4), ARC9ScreenScale(50 + 6), ARC9ScreenScale(27+8), ARC9ScreenScale(50 + 6))
 
-            surface.SetTextPos(ScreenScale(4), ScreenScale(70))
+            surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(70))
             surface.DrawText(txt_dmg_legs)
 
-            surface.DrawLine(ScreenScale(4), ScreenScale(70 + 6), ScreenScale(30+8), ScreenScale(70 + 6))
+            surface.DrawLine(ARC9ScreenScale(4), ARC9ScreenScale(70 + 6), ARC9ScreenScale(30+8), ARC9ScreenScale(70 + 6))
 
             local txt_tr = tostring(self:GetProcessedValue("Num")) .. "x PROJ"
             local trw = surface.GetTextSize(txt_tr)
-            surface.SetTextPos(w - trw - ScreenScale(2), ScreenScale(10))
+            surface.SetTextPos(w - trw - ARC9ScreenScale(2), ARC9ScreenScale(10))
             surface.DrawText(txt_tr)
 
             local txt_corner = "BALLISTICS DUMMY TEST"
             local tw = surface.GetTextSize(txt_corner)
-            surface.SetTextPos((w - tw) / 2, ScreenScale(1))
+            surface.SetTextPos((w - tw) / 2, ARC9ScreenScale(1))
             surface.DrawText(txt_corner)
 
             local txt_bottom = "EFFECT AT RANGE " .. tostring(math.Round(ARC9.HUToM * ranger_range, 0)) .. "m"
             local tbw = surface.GetTextSize(txt_bottom)
-            surface.SetTextPos((w - tbw) / 2, h - ScreenScale(8))
+            surface.SetTextPos((w - tbw) / 2, h - ARC9ScreenScale(8))
             surface.DrawText(txt_bottom)
         end
 
         local ranger = vgui.Create("DPanel", tp)
-        ranger:SetPos(ScreenScale(125), 0)
-        ranger:SetSize(ScreenScale(200), ScreenScale(100))
+        local width2 = math.min(ARC9ScreenScale(200), ScrW()/3)
+        ranger:SetSize(width2, ARC9ScreenScale(100))
+        ranger:SetPos(ARC9ScreenScale(100)+width/22, 0)
         ranger.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
-            surface.SetDrawColor(ARC9.GetHUDColor("bg", 50))
-            surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+            -- surface.DrawRect(0, 0, w, h)
+            draw.NoTexture()
+            surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
 
             local dmg_max = self:GetValue("DamageMax")
             local dmg_min = self:GetValue("DamageMin")
@@ -401,13 +407,13 @@ function SWEP:CreateHUD_Bench()
                     surface.SetFont("ARC9_8")
                     surface.SetTextColor(ARC9.GetHUDColor("fg"))
                     local txt_dmg1_w = surface.GetTextSize(txt_dmg1)
-                    surface.SetTextPos((w / 5) - txt_dmg1_w - (ScreenScale(2)), ScreenScale(1))
+                    surface.SetTextPos((w / 5) - txt_dmg1_w - (ARC9ScreenScale(2)), ARC9ScreenScale(1))
                     surface.DrawText(txt_dmg1)
 
                     local txt_range1 = self:RangeUnitize(range)
 
                     local txt_range1_w = surface.GetTextSize(txt_range1)
-                    surface.SetTextPos((w / 5) - txt_range1_w - (ScreenScale(2)), ScreenScale(1 + 8))
+                    surface.SetTextPos((w / 5) - txt_range1_w - (ARC9ScreenScale(2)), ARC9ScreenScale(1 + 8))
                     surface.DrawText(txt_range1)
 
                     draw_rangetext = false
@@ -425,13 +431,13 @@ function SWEP:CreateHUD_Bench()
                 surface.SetFont("ARC9_8")
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 local txt_dmg1_w = surface.GetTextSize(txt_dmg1)
-                surface.SetTextPos((w / 5) - txt_dmg1_w - (ScreenScale(2)), ScreenScale(1))
+                surface.SetTextPos((w / 5) - txt_dmg1_w - (ARC9ScreenScale(2)), ARC9ScreenScale(1))
                 surface.DrawText(txt_dmg1)
 
                 local txt_range1 = self:RangeUnitize(range_min)
 
                 local txt_range1_w = surface.GetTextSize(txt_range1)
-                surface.SetTextPos((w / 5) - txt_range1_w - (ScreenScale(2)), ScreenScale(1 + 8))
+                surface.SetTextPos((w / 5) - txt_range1_w - (ARC9ScreenScale(2)), ARC9ScreenScale(1 + 8))
                 surface.DrawText(txt_range1)
 
                 local txt_dmg2 = tostring(math.Round(dmg_min)) .. " DAMAGE"
@@ -440,12 +446,12 @@ function SWEP:CreateHUD_Bench()
                     txt_dmg2 = math.Round(dmg_min * self:GetValue("Num")) .. "-" .. txt_dmg2
                 end
 
-                surface.SetTextPos(4 * (w / 5) + (ScreenScale(2)), ScreenScale(1))
+                surface.SetTextPos(4 * (w / 5) + (ARC9ScreenScale(2)), ARC9ScreenScale(1))
                 surface.DrawText(txt_dmg2)
 
                 local txt_range2 = self:RangeUnitize(range_max)
 
-                surface.SetTextPos(4 * (w / 5) + (ScreenScale(2)), ScreenScale(1 + 8))
+                surface.SetTextPos(4 * (w / 5) + (ARC9ScreenScale(2)), ARC9ScreenScale(1 + 8))
                 surface.DrawText(txt_range2)
             end
 
@@ -453,7 +459,7 @@ function SWEP:CreateHUD_Bench()
             surface.SetFont("ARC9_6")
             local tw = surface.GetTextSize(txt_corner)
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos((w - tw) / 2, h - ScreenScale(8))
+            surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(8))
             surface.DrawText(txt_corner)
         end
 
@@ -467,8 +473,8 @@ function SWEP:CreateHUD_Bench()
         rollallhits(self, range_3, range_1)
 
         local ballisticchart = vgui.Create("DButton", tp)
-        ballisticchart:SetSize(ScreenScale(200), ScreenScale(100))
-        ballisticchart:SetPos(tp:GetWide()-ScreenScale(200), ScreenScale(0))
+        ballisticchart:SetSize(ARC9ScreenScale(200), ARC9ScreenScale(100))
+        ballisticchart:SetPos(tp:GetWide()-ARC9ScreenScale(200), ARC9ScreenScale(0))
         ballisticchart:SetText("")
         ballisticchart.DoClick = function(self2)
             rollallhits(self, range_3, range_1)
@@ -476,31 +482,19 @@ function SWEP:CreateHUD_Bench()
         ballisticchart.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
-            local col = ARC9.GetHUDColor("bg", 50)
+            local col = ARC9.GetHUDColor("bg")
             if self2:IsHovered() then
                 self.CustomizeHints["Select"] = "Recalculate"
-                col = ARC9.GetHUDColor("hi", 50)
-            end
-
-            if self:GetValue("PrimaryBash") then
-                surface.SetDrawColor(col)
-                surface.DrawRect(0, 0, w, h)
-
-                local txt = "No Data"
-
-                surface.SetTextColor(ARC9.GetHUDColor("fg"))
-                surface.SetFont("ARC9_24")
-                local tw, th = surface.GetTextSize(txt)
-                surface.SetTextPos((w - tw) / 2, (h - th) / 2)
-                surface.DrawText(txt)
-                return
+                col = ARC9.GetHUDColor("hi", 70)
             end
 
             surface.SetDrawColor(col)
-            surface.DrawRect(0, 0, w, h)
+            -- surface.DrawRect(0, 0, w, h)
+            draw.NoTexture()
+            surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
 
             local s = w / 2
-            local s2 = ScreenScale(10)
+            local s2 = ARC9ScreenScale(10)
 
             local range_1_txt = self:RangeUnitize(range_1)
             local range_3_txt = self:RangeUnitize(range_3)
@@ -529,7 +523,7 @@ function SWEP:CreateHUD_Bench()
             -- local range_1_txtw = surface.GetTextSize(range_1_txt)
 
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos(ScreenScale(2), h - ScreenScale(16))
+            surface.SetTextPos(ARC9ScreenScale(4), h - ARC9ScreenScale(16))
             surface.DrawText(range_1_txt)
 
             surface.SetMaterial(bullseye)
@@ -553,15 +547,13 @@ function SWEP:CreateHUD_Bench()
             surface.SetFont("ARC9_10")
             local range_3_txtw = surface.GetTextSize(range_3_txt)
 
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos(w - range_3_txtw - ScreenScale(2), h - ScreenScale(16))
+            surface.SetTextPos(w - range_3_txtw - ARC9ScreenScale(2), h - ARC9ScreenScale(16))
             surface.DrawText(range_3_txt)
 
             local txt_corner = "MECHANICAL PRECISION TEST"
             surface.SetFont("ARC9_6")
             local tw = surface.GetTextSize(txt_corner)
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos((w - tw) / 2, h - ScreenScale(8))
+            surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(8))
             surface.DrawText(txt_corner)
         end
     end
