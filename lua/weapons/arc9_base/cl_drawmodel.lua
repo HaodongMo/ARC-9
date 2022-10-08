@@ -80,7 +80,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                     local active = slottbl.Address == self:GetActiveSightSlotTable().Address
                     self:DoRTScope(model, atttbl, active)
                 elseif wm and atttbl.RTScope then
-                    model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
+                    self:DoRTScope(model, atttbl, false)
                 end
             end
 
