@@ -366,6 +366,10 @@ function SWEP:SetupModel(wm, lod, cm)
 
         local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm)
 
+        if csmodel.DrawFunc then
+            csmodel.DrawFunc(self, csmodel, wm)
+        end
+
         local proxmodel
 
         if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice) then
