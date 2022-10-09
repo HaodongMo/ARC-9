@@ -63,7 +63,6 @@ function SWEP:EnterBipod()
 
     self:SetBipod(true)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterBipodSound")))
-    self:CancelReload()
     self:PlayAnimation("enter_bipod", 1, true)
     self:SetEnterBipodTime(CurTime())
 end
@@ -73,8 +72,10 @@ function SWEP:ExitBipod()
 
     self:SetBipod(false)
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitBipodSound")))
-    self:CancelReload()
-    self:PlayAnimation("exit_bipod", 1, true)
+
+    if self:GetAnimLockTime() <= CurTime() then
+        self:PlayAnimation("exit_bipod", 1, true)
+    end
 end
 
 SWEP.BipodTime = 0.5
