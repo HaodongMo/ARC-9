@@ -251,8 +251,8 @@ function SWEP:CreateHUD_Stats()
 
     local statsspanel = vgui.Create("DPanel", lowerpanel)
     statsspanel:SetPos(ARC9ScreenScale(60), ARC9ScreenScale(20))
-    statsspanel:SetSize(lowerpanel:GetWide()-ARC9ScreenScale(120), ARC9ScreenScale(98))
-    statsspanel.Paint = function(self2, w, h)
+    statsspanel:SetSize(lowerpanel:GetWide()*0.8, ARC9ScreenScale(98))
+    statsspanel.Paint = function(self2, w, h)   
         -- surface.SetDrawColor(144, 0, 0, 100)
         -- surface.DrawRect(0, 0, w, h)
     end
@@ -278,17 +278,17 @@ function SWEP:CreateHUD_Stats()
         realI = realI + 1
         
         local statpanel = vgui.Create("DPanel", statsspanel )
-        statpanel:SetSize(ScreenScale(120), ScreenScale(16))
+        statpanel:SetSize(ARC9ScreenScale(120), ARC9ScreenScale(16))
 
         if !many then 
-            statpanel:SetPos(statsspanel:GetWide()*0.5-ScreenScale(60), ScreenScale(16.5) * realI - ScreenScale(16))
+            statpanel:SetPos(statsspanel:GetWide()*0.5-ARC9ScreenScale(60), ARC9ScreenScale(16.5) * realI - ARC9ScreenScale(16))
         else
             if realI > 12 then
-                statpanel:SetPos(statsspanel:GetWide()-ScreenScale(120), ScreenScale(16.5) * (realI-12) - ScreenScale(16))
+                statpanel:SetPos(statsspanel:GetWide()-ARC9ScreenScale(120), ARC9ScreenScale(16.5) * (realI-12) - ARC9ScreenScale(16))
             elseif realI > 6 then
-                statpanel:SetPos(statsspanel:GetWide()*0.5-ScreenScale(60), ScreenScale(16.5) * (realI-6) - ScreenScale(16))
+                statpanel:SetPos(statsspanel:GetWide()*0.5-ARC9ScreenScale(60), ARC9ScreenScale(16.5) * (realI-6) - ARC9ScreenScale(16))
             else
-                statpanel:SetPos(0, ScreenScale(16.5) * realI - ScreenScale(16))
+                statpanel:SetPos(0, ARC9ScreenScale(16.5) * realI - ARC9ScreenScale(16))
             end
         end
 
@@ -300,7 +300,7 @@ function SWEP:CreateHUD_Stats()
                 surface.DrawRect(0, 0, w, h)
             end
             surface.SetFont("ARC9_10_Slim")
-            surface.SetTextPos(ScreenScale(2), ScreenScale(2))
+            surface.SetTextPos(ARC9ScreenScale(2), ARC9ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(self2.stats.title)
 
@@ -309,13 +309,13 @@ function SWEP:CreateHUD_Stats()
                 surface.SetFont("ARC9_8")
                 tw_u = surface.GetTextSize(self2.stats.unit)
 
-                surface.SetTextPos(w - tw_u - ScreenScale(2), ScreenScale(3))
+                surface.SetTextPos(w - tw_u - ARC9ScreenScale(2), ARC9ScreenScale(3))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(self2.stats.unit)
                 
-                tw_u = tw_u + ScreenScale(4)
+                tw_u = tw_u + ARC9ScreenScale(4)
             else
-                tw_u = ScreenScale(2)
+                tw_u = ARC9ScreenScale(2)
             end
 
             local major = ""
@@ -327,7 +327,7 @@ function SWEP:CreateHUD_Stats()
 
             surface.SetFont("ARC9_10")
             local tw = surface.GetTextSize(major)
-            surface.SetTextPos(w-tw-tw_u, ScreenScale(2))
+            surface.SetTextPos(w-tw-tw_u, ARC9ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(major)
         end
@@ -335,8 +335,8 @@ function SWEP:CreateHUD_Stats()
 
     --[[
     local tp = vgui.Create("DScrollPanel", bg)
-    tp:SetSize(ScreenScale(150), ScrH() - ScreenScale(76 + 4))
-    tp:SetPos(ScrW() - ScreenScale(150 + 12), ScreenScale(76))
+    tp:SetSize(ARC9ScreenScale(150), ScrH() - ARC9ScreenScale(76 + 4))
+    tp:SetPos(ScrW() - ARC9ScreenScale(150 + 12), ARC9ScreenScale(76))
     tp.Paint = function(self2, w, h)
     end
 
@@ -354,7 +354,7 @@ function SWEP:CreateHUD_Stats()
         if stat.cond and stat.cond() then continue end
 
         local newbtn = tp:Add("DPanel")
-        newbtn:SetSize(ScreenScale(150), ScreenScale(27))
+        newbtn:SetSize(ARC9ScreenScale(150), ARC9ScreenScale(27))
         newbtn:Dock(TOP)
         newbtn.stats = stat
         newbtn.Paint = function(self2, w, h)
@@ -364,12 +364,12 @@ function SWEP:CreateHUD_Stats()
             local tw = surface.GetTextSize(self2.stats.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw - ScreenScale(1), ScreenScale(2 + 1))
+            surface.SetTextPos(w - tw - ARC9ScreenScale(1), ARC9ScreenScale(2 + 1))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
             surface.DrawText(self2.stats.title)
 
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(w - tw - ScreenScale(2), ScreenScale(2))
+            surface.SetTextPos(w - tw - ARC9ScreenScale(2), ARC9ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(self2.stats.title)
 
@@ -380,12 +380,12 @@ function SWEP:CreateHUD_Stats()
                 tw_u = surface.GetTextSize(self2.stats.unit)
 
                 surface.SetFont("ARC9_8")
-                surface.SetTextPos(w - tw_u - ScreenScale(2) + ScreenScale(1), ScreenScale(16 + 1))
+                surface.SetTextPos(w - tw_u - ARC9ScreenScale(2) + ARC9ScreenScale(1), ARC9ScreenScale(16 + 1))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(self2.stats.unit)
 
                 surface.SetFont("ARC9_8")
-                surface.SetTextPos(w - tw_u - ScreenScale(2), ScreenScale(16))
+                surface.SetTextPos(w - tw_u - ARC9ScreenScale(2), ARC9ScreenScale(16))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(self2.stats.unit)
             end
@@ -412,47 +412,47 @@ function SWEP:CreateHUD_Stats()
             tw_p = surface.GetTextSize(major) + tw_u
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p - ScreenScale(2), ScreenScale(12 + 1))
+            surface.SetTextPos(w - tw_p - ARC9ScreenScale(2), ARC9ScreenScale(12 + 1))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12 + 1), w)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ARC9ScreenScale(2), 0), ARC9ScreenScale(12 + 1), w)
 
             surface.SetFont("ARC9_12")
-            surface.SetTextPos(w - tw_p - ScreenScale(3), ScreenScale(12))
+            surface.SetTextPos(w - tw_p - ARC9ScreenScale(3), ARC9ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(3), 0), ScreenScale(12), w, true)
+            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ARC9ScreenScale(3), 0), ARC9ScreenScale(12), w, true)
 
             if self2.stats.fifty and isnumber(oldmajor) then
                 local mapped = -(1 / ((oldmajor / self2.stats.fifty) + 1)) + 1
 
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-                surface.DrawRect(ScreenScale(1), ScreenScale(12 + 1), ScreenScale(1), ScreenScale(13))
+                surface.DrawRect(ARC9ScreenScale(1), ARC9ScreenScale(12 + 1), ARC9ScreenScale(1), ARC9ScreenScale(13))
 
                 surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-                surface.DrawRect(0, ScreenScale(12), ScreenScale(1), ScreenScale(13))
+                surface.DrawRect(0, ARC9ScreenScale(12), ARC9ScreenScale(1), ARC9ScreenScale(13))
 
-                local shortw = w - ScreenScale(1)
+                local shortw = w - ARC9ScreenScale(1)
 
                 local barw = mapped * shortw
 
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-                surface.DrawRect(shortw - barw + ScreenScale(1), ScreenScale(12 + 1), barw, ScreenScale(13))
+                surface.DrawRect(shortw - barw + ARC9ScreenScale(1), ARC9ScreenScale(12 + 1), barw, ARC9ScreenScale(13))
 
                 surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-                surface.DrawRect(shortw - barw, ScreenScale(12), barw, ScreenScale(13))
+                surface.DrawRect(shortw - barw, ARC9ScreenScale(12), barw, ARC9ScreenScale(13))
 
-                local screenx, screeny = self2:LocalToScreen(shortw - barw, ScreenScale(12 + 1))
+                local screenx, screeny = self2:LocalToScreen(shortw - barw, ARC9ScreenScale(12 + 1))
 
-                render.SetScissorRect(screenx, screeny, screenx + barw, screeny + ScreenScale(12), true)
+                render.SetScissorRect(screenx, screeny, screenx + barw, screeny + ARC9ScreenScale(12), true)
 
                 surface.SetFont("ARC9_8")
-                surface.SetTextPos(w - tw_u - ScreenScale(2), ScreenScale(16))
+                surface.SetTextPos(w - tw_u - ARC9ScreenScale(2), ARC9ScreenScale(16))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
                 surface.DrawText(self2.stats.unit)
 
                 surface.SetFont("ARC9_12")
-                surface.SetTextPos(w - tw_p - ScreenScale(2), ScreenScale(12))
+                surface.SetTextPos(w - tw_p - ARC9ScreenScale(2), ARC9ScreenScale(12))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12), w, true)
+                self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ARC9ScreenScale(2), 0), ARC9ScreenScale(12), w, true)
 
                 render.SetScissorRect(0, 0, 0, 0, false)
             end
