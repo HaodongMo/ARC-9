@@ -53,6 +53,8 @@ function SWEP:ThinkHoldBreath()
 end
 
 function SWEP:CanHoldBreath()
+    if !GetConVar("arc9_mod_sway"):GetBool() then return false end
+
     return self:GetBreath() > 0 and !self:GetOutOfBreath()
 end
 
@@ -98,7 +100,7 @@ function SWEP:HoldBreathHUD()
     if !GetConVar("arc9_breath_hud"):GetBool() then return end
 
     local amt = self:GetBreath() / 100
-    
+
     if amt == 1 then return end
 
     local bar_w = ScreenScale(48)
@@ -144,7 +146,7 @@ function SWEP:GetFreeSwayAmount()
     local sway = self:GetProcessedValue("Sway")
 
     sway = math.Max(sway, 0)
-    
+
     if self:HoldingBreath() then return sway * 0.15 end
 
     if self:GetOutOfBreath() then
