@@ -47,7 +47,9 @@ function SWEP:ClientInitialize()
 
     self:InitTimers()
 
-    self:SavePreset("default")
+    if self:GetOwner() == LocalPlayer() then
+        self:SavePreset("default")
+    end
 end
 
 function SWEP:SetBaseSettings()
