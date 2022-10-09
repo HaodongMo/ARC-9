@@ -2,9 +2,10 @@ local v0 = Vector(0, 0, 0)
 local v1 = Vector(1, 1, 1)
 
 function SWEP:DoBodygroups(wm, cm)
+    if cm then wm = true end
+
     if !wm and !IsValid(self:GetOwner()) then return end
     if !wm and self:GetOwner():IsNPC() then return end
-    if cm then wm = true end
 
     local dbg = self:GetValue("DefaultBodygroups")
 

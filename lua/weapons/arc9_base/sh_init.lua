@@ -29,6 +29,8 @@ function SWEP:Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
     self:BuildSubAttachments(self.DefaultAttachments)
+
+    self:PostModify()
 end
 
 function SWEP:ClientInitialize()
@@ -45,9 +47,7 @@ function SWEP:ClientInitialize()
 
     self:InitTimers()
 
-    self:SetTimer(0.5, function()
-        self:SavePreset("default")
-    end)
+    self:SavePreset("default")
 end
 
 function SWEP:SetBaseSettings()
