@@ -90,7 +90,7 @@ SWEP.UseHands = true -- Same as weapon_base
 SWEP.DefaultSelectIcon = nil -- Material(), use if auto select icons aren't generated yet or in case player has it turned off
 
 SWEP.ViewModel = ""
-SWEP.WorldModel = ""
+SWEP.WorldModel = "" -- If you are going to MirrorVMWM: Put here some optimized model with collisions. Css/hl2 weapon worldmodels that are included in gmod are great for it - like "models/weapons/w_rif_m4a1.mdl"
 
 SWEP.MirrorVMWM = false -- Use this to use the viewmodel as a worldmodel.
 -- Highly recommended to save effort!

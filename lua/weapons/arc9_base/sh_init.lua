@@ -48,7 +48,9 @@ function SWEP:ClientInitialize()
     self:InitTimers()
 
     if self:GetOwner() == LocalPlayer() then
-        self:SavePreset("default")
+        self:SetTimer(0, function() -- to make default icon     not suck
+            self:SavePreset("default")
+        end)
     end
 end
 
