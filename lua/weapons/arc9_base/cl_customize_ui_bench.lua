@@ -395,7 +395,7 @@ function SWEP:CreateHUD_Bench()
 
                     local dmg = self:GetDamageAtRange(range)
 
-                    local txt_dmg1 = tostring(math.Round(dmg)) .. " DAMAGE"
+                    local txt_dmg1 = tostring(math.Round(dmg)) .. " DMG"
 
                     if self:GetValue("Num") > 1 then
                         txt_dmg1 = math.Round(dmg * self:GetValue("Num")) .. "-" .. txt_dmg1
@@ -422,7 +422,7 @@ function SWEP:CreateHUD_Bench()
 
 
             if draw_rangetext then
-                local txt_dmg1 = tostring(math.Round(dmg_max)) .. " DAMAGE"
+                local txt_dmg1 = tostring(math.Round(dmg_max)) .. " DMG"
 
                 if self:GetValue("Num") > 1 then
                     txt_dmg1 = math.Round(dmg_max * self:GetValue("Num")) .. "-" .. txt_dmg1
@@ -440,7 +440,7 @@ function SWEP:CreateHUD_Bench()
                 surface.SetTextPos((w / 5) - txt_range1_w - (ARC9ScreenScale(2)), ARC9ScreenScale(1 + 8))
                 surface.DrawText(txt_range1)
 
-                local txt_dmg2 = tostring(math.Round(dmg_min)) .. " DAMAGE"
+                local txt_dmg2 = tostring(math.Round(dmg_min)) .. " DMG"
 
                 if self:GetValue("Num") > 1 then
                     txt_dmg2 = math.Round(dmg_min * self:GetValue("Num")) .. "-" .. txt_dmg2
