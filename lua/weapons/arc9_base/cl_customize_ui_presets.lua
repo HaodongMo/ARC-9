@@ -8,7 +8,11 @@ function SWEP:CreatePresetMenu(reload)
     if reload and self.CustomizeHUD and self.CustomizeHUD.presetpanel then self.CustomizeHUD.presetpanel:Remove() end
     if !reload and self.CustomizeHUD and self.CustomizeHUD.presetpanel then self:ClosePresetMenu() return end
 
-    self.CustomizeButtons[self.CustomizeTab + 1].func(self)
+    -- self.CustomizeButtons[self.CustomizeTab + 1].func(self)
+    if !self.CustomizeButtons[self.CustomizeTab + 1].inspect then
+        self.CustomizeButtons[1].func(self)
+        self.CustomizeTab = 0
+    end
 
     local scrw, scrh = ScrW(), ScrH()
     local bg = self.CustomizeHUD
