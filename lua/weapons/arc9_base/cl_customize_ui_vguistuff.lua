@@ -270,3 +270,20 @@ function ARC9HorizontalScroller:Init()
 end
 
 vgui.Register("ARC9HorizontalScroller", ARC9HorizontalScroller, "DHorizontalScroller")
+
+
+local ARC9ColumnSheet = {}
+
+function ARC9ColumnSheet:Init()
+	self.Navigation = vgui.Create( "ARC9ScrollPanel", self )
+	self.Navigation:Dock( LEFT )
+	self.Navigation:SetWidth( 100 )
+	self.Navigation:DockMargin( 10, 10, 10, 0 )
+
+	self.Content = vgui.Create( "Panel", self )
+	self.Content:Dock( FILL )
+
+	self.Items = {}
+end
+
+vgui.Register("ARC9ColumnSheet", ARC9ColumnSheet, "DColumnSheet")
