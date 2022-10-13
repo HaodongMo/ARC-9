@@ -11,16 +11,18 @@
 local settingstable = {
     {
         TabName = "Tab name 1",
-        { type = "l", text = "header" },
-        { type = "b", text = "bool" },
-        { type = "s", text = "slide me" },
-        { type = "c", text = "color yeah" },
-        { type = "t", text = "print the " },
+        { type = "l", text = "Header" },
+        { type = "b", text = "Booling" },
+        { type = "b", text = "Booling 2" },
+        { type = "s", text = "Slide me" },
+        -- { type = "c", text = "Color yeah" },
+        -- { type = "t", text = "Yrint the " },
     },
     {
         TabName = "Tab name 2",
         { type = "b", text = "bool 2" },
-        { type = "l", text = "Header 2" },
+        -- { type = "l", text = "Header 2" },
+        { type = "s", text = "Slide me" },
     },
     
 }
@@ -33,38 +35,52 @@ local function DrawSettings(bg)
     
     local buttontalling = 0
 
-    local sheet = vgui.Create( "ARC9ColumnSheet", bg )
-    sheet:Dock( FILL )
-    sheet:DockMargin( 0, 0, ARC9ScreenScale(77), ARC9ScreenScale(1.7) )
-    sheet.Navigation:DockMargin( -120, 0, 0, ARC9ScreenScale(5) ) -- idk why -120
+    local sheet = vgui.Create("ARC9ColumnSheet", bg)
+    sheet:Dock(FILL)
+    sheet:DockMargin(0, 0, ARC9ScreenScale(77), ARC9ScreenScale(1.7))
+    sheet.Navigation:DockMargin(-120, 0, 0, ARC9ScreenScale(5)) -- idk why -120
     sheet.Navigation:SetWidth(ARC9ScreenScale(77))
 
     for _, v in pairs(settingstable) do
-        local newpanel = vgui.Create( "DPanel", sheet )
-        newpanel:Dock( FILL )
-        newpanel.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, ARC9.GetHUDColor("bg") ) end 
-        local newpanelscroll = vgui.Create( "ARC9ScrollPanel", newpanel )
-        newpanelscroll:Dock( FILL )
+        local newpanel = vgui.Create("DPanel", sheet)
+        newpanel:Dock(FILL)
+        newpanel.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, ARC9.GetHUDColor("bg")) end 
+        local newpanelscroll = vgui.Create("ARC9ScrollPanel", newpanel)
+        newpanelscroll:Dock(FILL)
+        newpanelscroll:DockMargin(ARC9ScreenScale(4), ARC9ScreenScale(4), ARC9ScreenScale(4), 0)
 
         for k2, v2 in ipairs(v) do
+            local elpanel = vgui.Create("DPanel", newpanelscroll)
+            elpanel:SetTall(ARC9ScreenScale(21))
+            elpanel:Dock(TOP)
+            elpanel.Paint = function(self2, w, h) 
+                -- surface.SetDrawColor(20,20,20,44*k2) 
+                -- surface.DrawRect(0, 0, w, h) 
+            
+                surface.SetFont("ARC9_12_Slim")
+                surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(4))
+                surface.DrawText(v2.text or "Owo")
+            end
+            local elpw, elph = ARC9ScreenScale(168), ARC9ScreenScale(21)
+
             if v2.type == "l" then
-                local newheader = vgui.Create( "DLabel", newpanelscroll )
-                newheader:SetPos(20, k2*20)
-                newheader:SetText(v2.text)
+                
             elseif v2.type == "b" then
-                local newbool = vgui.Create( "DCheckBoxLabel", newpanelscroll )
-                newbool:SetPos(20, k2*20)
-                newbool:SetText(v2.text)
+                local newel = vgui.Create("ARC9Checkbox", elpanel)
+                newel:SetPos(elpw-ARC9ScreenScale(4+13), ARC9ScreenScale(4))
             elseif v2.type == "s" then
-                local newslider = vgui.Create( "DNumSlider", newpanelscroll )
-                newslider:SetPos(20, k2*20)
-                newslider:SetSize(400, 30)
+                local newslider = vgui.Create("ARC9NumSlider", elpanel)
+                -- local newslider = vgui.Create("DNumSlider", newpanelscroll)
+                newslider:SetPos(0, ARC9ScreenScale(5))
+                newslider:SetSize(elpw, 30)
                 newslider:SetDecimals(0)
                 newslider:SetMin(0)
                 newslider:SetMax(256)
-                newslider:SetText(v2.text)
+                newslider:SetValue(128)
+                -- newslider:SetText(v2.text)
             elseif v2.type == "c" then
-                local newcolor = vgui.Create( "DColorPalette", newpanelscroll )
+                local newcolor = vgui.Create("DColorPalette", newpanelscroll)
                 newcolor:SetPos(20, 10+k2*20)
                 newcolor:SetSize(400, 30)
                 newcolor:SetColorButtons({
@@ -82,7 +98,7 @@ local function DrawSettings(bg)
                     Color(255,0,149),
                 })
             elseif v2.type == "t" then
-                local newtext = vgui.Create( "DTextEntry", newpanelscroll )
+                local newtext = vgui.Create("DTextEntry", newpanelscroll)
                 newtext:SetPos(20, 10+k2*20)
                 newtext:SetText(v2.text)
             end
@@ -90,7 +106,7 @@ local function DrawSettings(bg)
 
         local thatsheet = sheet:AddSheet(v.TabName, newpanel)
 
-        thatsheet.Button:DockMargin( 0, 0, ARC9ScreenScale(1.5), ARC9ScreenScale(1.7))
+        thatsheet.Button:DockMargin(0, 0, ARC9ScreenScale(1.5), ARC9ScreenScale(1.7))
         thatsheet.Button:SetTall(ARC9ScreenScale(19))
         thatsheet.Button:SetText("")
 
@@ -180,7 +196,7 @@ local function OpenSettings()
     panel:AlphaTo(255, 0.2, 0, nil)
     panel:Center()
     panel:SetTitle("")
-    panel:DockPadding( 0, ARC9ScreenScale(25.7), 0, 0 )
+    panel:DockPadding(0, ARC9ScreenScale(25.7), 0, 0)
     DrawSettings(panel)
 
     panel.OnRemove = function() bg:Remove() end

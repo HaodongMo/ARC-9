@@ -287,3 +287,85 @@ function ARC9ColumnSheet:Init()
 end
 
 vgui.Register("ARC9ColumnSheet", ARC9ColumnSheet, "DColumnSheet")
+
+
+local ARC9Checkbox = {}
+ARC9Checkbox.Color = ARC9.GetHUDColor("fg")
+ARC9Checkbox.ColorClicked = ARC9.GetHUDColor("hi")
+
+ARC9Checkbox.MatIdle = Material("arc9/ui/checkbox.png", "mips")
+ARC9Checkbox.MatToggled = Material("arc9/ui/checkbox_toggled.png", "mips")
+
+function ARC9Checkbox:Init()
+    self:SetSize(ARC9ScreenScale(13), ARC9ScreenScale(13))
+end
+
+function ARC9Checkbox:Paint(w, h)
+	local color = self.Color
+	local color2 = self.ColorClicked
+
+	if self:IsHovered() then
+        color = color2
+	end
+
+    surface.SetDrawColor(color)
+    surface.SetMaterial(self.MatIdle)
+    surface.DrawTexturedRect(0, 0, w, w)
+
+    if self:GetChecked() then
+        surface.SetDrawColor(color2)
+        surface.SetMaterial(self.MatToggled)
+        surface.DrawTexturedRect(0, 0, w, w)
+    end
+end
+
+
+vgui.Register("ARC9Checkbox", ARC9Checkbox, "DCheckBox")
+
+
+local ARC9NumSlider = {}
+ARC9NumSlider.Color = ARC9.GetHUDColor("fg")
+ARC9NumSlider.ColorClicked = ARC9.GetHUDColor("hi")
+ARC9NumSlider.ColorNo = ARC9.GetHUDColor("bg")
+
+function ARC9NumSlider:Init()
+    local color = self.Color
+    local color2 = self.ColorClicked
+    local color3 = self.ColorNo
+    
+    self.Slider.Knob:SetSize(ARC9ScreenScale(1.7), ARC9ScreenScale(7))
+    self.Slider.Knob.Paint = function( panel, w, h ) 
+        surface.SetDrawColor(color)
+        surface.DrawRect(0, 0, w, h) 
+    end    
+    
+    self.Slider.Paint = function( panel, w, h ) 
+        surface.SetDrawColor(color3)
+        surface.DrawRect(0, h/3, w, h/4) 
+        surface.SetDrawColor(color)
+        surface.DrawRect(0, h/3, w*self.Scratch:GetFraction(), h/4) 
+    end
+	self.TextArea:SetWide(ARC9ScreenScale(20))
+	self.TextArea:DockMargin(ARC9ScreenScale(3), 0, 0, 0)
+	self.TextArea:SetHighlightColor(color2)
+	self.TextArea:SetCursorColor(color2)
+	self.TextArea:SetTextColor(color)
+    self.TextArea:SetFont("ARC9_10_Slim")
+    -- self.TextArea.Paint = function( panel, w, h ) 
+    --     surface.SetFont("ARC9_10_Slim")
+    --     local text = panel:GetValue() or "Owo"
+    --     local tw = surface.GetTextSize(text)
+    --     surface.SetTextColor(color)
+    --     surface.SetTextPos(w-tw, ARC9ScreenScale(0))
+    --     surface.DrawText(text)
+    -- end
+end
+
+-- function ARC9NumSlider:Paint(w, h)
+-- 	local color = self.Color
+-- 	local color2 = self.ColorClicked
+
+-- end
+
+
+vgui.Register("ARC9NumSlider", ARC9NumSlider, "DNumSlider")
