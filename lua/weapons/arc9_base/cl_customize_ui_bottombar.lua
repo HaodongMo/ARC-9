@@ -589,7 +589,7 @@ function SWEP:CreateHUD_AttInfo()
             slot = self:LocateSlotFromAddress(self2.addr)
 
             if slot.Installed == self.AttInfoBarAtt then
-                curmode = atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
+                curmode = atttbl.ToggleStats[slot.ToggleNum] and atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
                 tw = surface.GetTextSize(curmode)
                 mode_toggle:SetPos(descscroller:GetWide() / 2-(ARC9ScreenScale(24) + tw) / 2, ARC9ScreenScale(50))
                 mode_toggle:SetSize(ARC9ScreenScale(26) + tw, ARC9ScreenScale(21 * 0.75))
