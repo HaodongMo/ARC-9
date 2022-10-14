@@ -5,6 +5,7 @@
     s - slider
     c - color
     t - text input
+    d - dropdown menu
     
 ]]--
 
@@ -15,6 +16,7 @@ local settingstable = {
         { type = "b", text = "Booling" },
         { type = "b", text = "Booling 2" },
         { type = "s", text = "Slide me" },
+        { type = "d", text = "Yayay" },
         -- { type = "c", text = "Color yeah" },
         -- { type = "t", text = "Yrint the " },
     },
@@ -70,15 +72,15 @@ local function DrawSettings(bg)
                 local newel = vgui.Create("ARC9Checkbox", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(4+13), ARC9ScreenScale(4))
             elseif v2.type == "s" then
-                local newslider = vgui.Create("ARC9NumSlider", elpanel)
+                local newel = vgui.Create("ARC9NumSlider", elpanel)
                 -- local newslider = vgui.Create("DNumSlider", newpanelscroll)
-                newslider:SetPos(0, ARC9ScreenScale(5))
-                newslider:SetSize(elpw, 30)
-                newslider:SetDecimals(0)
-                newslider:SetMin(0)
-                newslider:SetMax(256)
-                newslider:SetValue(128)
-                -- newslider:SetText(v2.text)
+                newel:SetPos(0, ARC9ScreenScale(6))
+                newel:SetSize(elpw, 30)
+                newel:SetDecimals(0)
+                newel:SetMin(0)
+                newel:SetMax(256)
+                newel:SetValue(128)
+                -- newel:SetText(v2.text)
             elseif v2.type == "c" then
                 local newcolor = vgui.Create("DColorPalette", newpanelscroll)
                 newcolor:SetPos(20, 10+k2*20)
@@ -101,6 +103,12 @@ local function DrawSettings(bg)
                 local newtext = vgui.Create("DTextEntry", newpanelscroll)
                 newtext:SetPos(20, 10+k2*20)
                 newtext:SetText(v2.text)
+            elseif v2.type == "d" then
+                local newel = vgui.Create("ARC9ComboBox", elpanel)
+                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:AddChoice("option A")
+                newel:AddChoice("option AAA")
+                newel:AddChoice("option AAAAAAA")
             end
         end
 

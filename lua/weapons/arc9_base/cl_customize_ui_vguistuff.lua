@@ -294,6 +294,7 @@ ARC9Checkbox.Color = ARC9.GetHUDColor("fg")
 ARC9Checkbox.ColorClicked = ARC9.GetHUDColor("hi")
 
 ARC9Checkbox.MatIdle = Material("arc9/ui/checkbox.png", "mips")
+ARC9Checkbox.MatSel = Material("arc9/ui/checkbox_sel.png", "mips")
 ARC9Checkbox.MatToggled = Material("arc9/ui/checkbox_toggled.png", "mips")
 
 function ARC9Checkbox:Init()
@@ -304,10 +305,6 @@ function ARC9Checkbox:Paint(w, h)
 	local color = self.Color
 	local color2 = self.ColorClicked
 
-	if self:IsHovered() then
-        color = color2
-	end
-
     surface.SetDrawColor(color)
     surface.SetMaterial(self.MatIdle)
     surface.DrawTexturedRect(0, 0, w, w)
@@ -317,8 +314,13 @@ function ARC9Checkbox:Paint(w, h)
         surface.SetMaterial(self.MatToggled)
         surface.DrawTexturedRect(0, 0, w, w)
     end
-end
 
+    if self:IsHovered() then
+        surface.SetDrawColor(color2)
+        surface.SetMaterial(self.MatSel)
+        surface.DrawTexturedRect(0, 0, w, w)
+    end
+end
 
 vgui.Register("ARC9Checkbox", ARC9Checkbox, "DCheckBox")
 
@@ -361,11 +363,104 @@ function ARC9NumSlider:Init()
     -- end
 end
 
--- function ARC9NumSlider:Paint(w, h)
--- 	local color = self.Color
--- 	local color2 = self.ColorClicked
-
--- end
-
-
 vgui.Register("ARC9NumSlider", ARC9NumSlider, "DNumSlider")
+
+
+local ARC9ComboBox = {}
+ARC9ComboBox.Color = ARC9.GetHUDColor("fg")
+ARC9ComboBox.ColorClicked = ARC9.GetHUDColor("hi")
+
+ARC9ComboBox.MatIdle = Material("arc9/ui/dd.png", "mips")
+ARC9ComboBox.MatSel = Material("arc9/ui/dd_sel.png", "mips")
+ARC9ComboBox.MatOpened = Material("arc9/ui/dd_opened.png", "mips")
+ARC9ComboBox.MatOpenedSel = Material("arc9/ui/dd_opened_sel.png", "mips")
+ARC9ComboBox.MatSingle = Material("arc9/ui/dd_option.png", "mips")
+ARC9ComboBox.MatSingleSel = Material("arc9/ui/dd_option_sel.png", "mips")
+ARC9ComboBox.MatLast = Material("arc9/ui/dd_option_last.png", "mips")
+ARC9ComboBox.MatLastSel = Material("arc9/ui/dd_option_last_sel.png", "mips")
+
+function ARC9ComboBox:Init()
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(13))
+    self.DropButton:Remove()
+end
+
+function ARC9ComboBox:PerformLayout() -- to fix button we removed
+	DButton.PerformLayout( self, w, h )
+end
+
+function ARC9ComboBox:OnSelect(index, value, data)
+    self.text = self:GetText()
+    self:SetText("")
+end
+
+function ARC9ComboBox:OnMenuOpened(menu)
+    menu.Paint = function(panel, w, h) end
+    
+    menu:SetAlpha(0)
+    menu:AlphaTo(255, 0.1, 0, nil)
+	-- local mat = self.MatIdle
+
+    for i=1, menu:ChildCount() do
+        local child = menu:GetChild(i)
+
+        child.PerformLayout = function(self22, w22, h22) DButton.PerformLayout(self22, w22, h22) end
+
+        child:SetSize(ARC9ScreenScale(84),ARC9ScreenScale(13))
+        child.id = i
+        child.last = i==menu:ChildCount()
+        child.text = child:GetText()
+        child:SetText("")
+        
+        child.Paint = function(self2, w, h)
+            local mat = self.MatSingle
+            local mat2 = self.MatSingleSel
+            local mat3 = self.MatLast
+            local mat4 = self.MatLastSel
+            local color = self.Color
+            local color2 = self.ColorClicked
+            
+            surface.SetDrawColor(color)
+            surface.SetMaterial(self2.last and mat3 or mat)
+            surface.DrawTexturedRect(0, 0, w, h)
+            
+            local active = self:GetSelectedID() == self2.id
+
+            if active or self2:IsHovered() then
+                surface.SetDrawColor(color2)
+                surface.SetMaterial(self2.last and mat4 or mat2)
+                surface.DrawTexturedRect(0, 0, w, h)
+            end
+             
+            surface.SetFont("ARC9_10")
+            surface.SetTextColor(active and color2 or color)
+            surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
+            surface.DrawText(child.text or "Owo")
+        end
+    end
+end
+
+function ARC9ComboBox:Paint(w, h)
+	local color = self.Color
+	local color2 = self.ColorClicked
+	local mat = self.MatIdle
+	local mat2 = self.MatSel
+	local mat3 = self.MatOpened
+	local mat4 = self.MatOpenedSel
+
+    surface.SetDrawColor(color)
+    surface.SetMaterial(self:IsMenuOpen() and mat3 or mat)
+    surface.DrawTexturedRect(0, 0, w, h)
+
+    if self:IsHovered() then
+        surface.SetDrawColor(color2)
+        surface.SetMaterial(self:IsMenuOpen() and mat4 or mat2)
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+    
+    surface.SetFont("ARC9_10")
+    surface.SetTextColor(color)
+    surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
+    surface.DrawText(self.text or "unselected")
+end
+
+vgui.Register("ARC9ComboBox", ARC9ComboBox, "DComboBox")
