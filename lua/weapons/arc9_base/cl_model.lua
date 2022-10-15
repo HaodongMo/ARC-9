@@ -425,7 +425,8 @@ function SWEP:SetupModel(wm, lod, cm)
                     end
                     self.LHIKModelAddress = slottbl.Address
                 end
-            elseif atttbl.RHIK then
+            end
+            if atttbl.RHIK then
                 if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
                     self.RHIK_Priority = atttbl.RHIK_Priority or 0
                     if wm then
