@@ -270,6 +270,8 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
     bg:SetTitle("")
     bg:SetDraggable(false)
     bg:ShowCloseButton(false)
+    bg:SetAlpha(0)
+    bg:AlphaTo(255, 0.1, 0, nil)
     bg.Paint = function(self2, w, h)
         if !IsValid(self) then return end
         surface.SetDrawColor(31, 31, 31, 235)
@@ -319,7 +321,9 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
         cancelbtn:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
         cancelbtn.DoClick = function(self2)
             surface.PlaySound(clicksound)
-            bg:Remove()
+            bg:AlphaTo(0, 0.1, 0, function()
+                bg:Remove()
+            end)
         end
     else
         savebtn:SetPos(scrw/3 + scrw/6 - (ARC9ScreenScale(29)+tw)/2, scrh/2 - ARC9ScreenScale(12))
@@ -352,7 +356,9 @@ function SWEP:CreatePresetName()
                 end
             end)
 
-            bg:Remove()
+            bg:AlphaTo(0, 0.1, 0, function()
+                bg:Remove()
+            end)
         else
             textentry:SetText("")
             textentry:SetPlaceholderText("You are bad")
@@ -362,22 +368,26 @@ end
 
 function SWEP:CreateExportPreset(string)
     createPopup(self, "Preset Code (Copied to Clipboard)", "Back", false, string, function(bg, textentry)
-        bg:Remove()
+        bg:AlphaTo(0, 0.1, 0, function()
+            bg:Remove()
+        end)
     end)
 end
 
 function SWEP:CreateImportPreset()
     createPopup(self, "Paste Preset Code Here", "Import", true, nil, function(bg, textentry)
         local txt = textentry:GetText()
+
+        if txt == "" then textentry:SetPlaceholderText("Are you dumb") return end
         
-        if self:LoadPresetFromCode(textentry:GetText()) then 
-            bg:Remove()
+        if self:LoadPresetFromCode(txt) then 
+            bg:AlphaTo(0, 0.1, 0, function()
+                bg:Remove()
+            end)
             self:CreatePresetMenu(true)
         else
             textentry:SetText("")
             textentry:SetPlaceholderText("Invalid string!")
         end
-
-        if txt == "" then textentry:SetPlaceholderText("Are you dumb") end
     end)
 end

@@ -1286,10 +1286,10 @@ function SWEP:CreateHUD_RHP()
     topleft_settings:SetPos(ARC9ScreenScale(19), ARC9ScreenScale(19))
     topleft_settings.DoClick = function(self2)
         surface.PlaySound(clicksound)
-        ARC9_ClientSettings()
+        ARC9_OpenSettings()
         
         -- self:ToggleCustomize(false)
-        bg:SetMouseInputEnabled(false)
+        -- bg:SetMouseInputEnabled(false)
     end
 
     local topleft_light = vgui.Create("ARC9TopButton", topleft_panel)
@@ -1430,7 +1430,6 @@ function SWEP:CreateHUD_RHP()
             surface.SetFont("ARC9_12")
             local tw = surface.GetTextSize(self2.title)
 
-            surface.SetFont("ARC9_12")
             surface.SetTextColor(buttontextcolor)
             -- surface.SetTextPos((w - tw) / 2, -ARC9ScreenScale(0.75))
             surface.SetTextPos((w - tw) / 2, 0)

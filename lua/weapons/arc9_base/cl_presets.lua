@@ -86,7 +86,10 @@ function SWEP:LoadPresetFromTable(tbl)
     self:PostModify()
 end
 
-function SWEP:LoadPresetFromCode(str, name)
+function SWEP:LoadPresetFromCode(str)
+    if str[1] != "[" then return end
+    if !string.find(str, "]X") then return end
+
     local name = string.sub(string.Split(str, "]")[1], 2)
     local tbl = self:ImportPresetCode(string.Split(str, "]")[2])
 

@@ -81,8 +81,8 @@ function SWEP:CreateHUD_Trivia()
     for _, credittbl in SortedPairsByMemberValue(creditssorted, "order", false) do
         local creditline = creditsscroll:Add("DPanel")
 
-        local desctall = math.max(descbg:GetTall()*0.5, desc:GetTall()-ARC9ScreenScale(17)) - ARC9ScreenScale(2)
-        local creditstall = math.min(creditsscroll:GetTall()+ARC9ScreenScale(17), descbg:GetTall()*0.5)
+        local desctall = math.max(descbg:GetTall()*0.45, desc:GetTall()-ARC9ScreenScale(17)) - ARC9ScreenScale(2)
+        local creditstall = math.min(creditsscroll:GetTall()+ARC9ScreenScale(17), descbg:GetTall()*0.55)
         desc:SetTall(desctall)
         creditsscroll:SetTall(creditstall)
         creditsscroll:SetPos(0, desc:GetTall() + ARC9ScreenScale(2))
