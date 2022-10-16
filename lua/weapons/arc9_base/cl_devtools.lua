@@ -230,7 +230,7 @@ function SWEP:DevStuffAnims()
 
 	local CurFrame = Controls:Add("DLabel")
 	CurFrame:Dock(LEFT)
-	CurFrame:SetWide(32)
+	CurFrame:SetWide(64)
     CurFrame:SetText("  " .. 0)
 
 
@@ -390,8 +390,8 @@ function SWEP:DevStuffAnims()
         AnimTrack:SetSlideX(devplaybackcycle)
         
         local cursec = math.Round(length*devplaybackcycle/devplaybackmult, 2)
-        -- local cursec = math.Round(devplaybackcycle, 2)
-        CurFrame:SetText("   " .. cursec)
+        local curfrac = math.Round(devplaybackcycle, 2)
+        CurFrame:SetText("   " .. cursec .. " / ".. curfrac)
     end
 end
 
