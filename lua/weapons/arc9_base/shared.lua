@@ -799,6 +799,11 @@ SWEP.TraversalSprintAng = Angle(0, 75, 0)
 SWEP.HolsterPos = Vector(0, 0, -5)
 SWEP.HolsterAng = Angle(0, -15, 25)
 
+SWEP.MovingMidPoint = {
+    Pos = Vector(4, 8, -4),
+    Ang = Angle(0, 5, -25)
+}
+
 SWEP.SprintMidPoint = {
     Pos = Vector(4, 8, -4),
     Ang = Angle(0, 5, -25)
