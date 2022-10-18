@@ -418,7 +418,11 @@ function ARC9ComboBox:OnMenuOpened(menu)
             local mat4 = self.MatLastSel
             local color = self.Color
             local color2 = self.ColorClicked
-            
+                    
+            if self2:IsDown() then
+                color = color2
+            end
+
             surface.SetDrawColor(color)
             surface.SetMaterial(self2.last and mat3 or mat)
             surface.DrawTexturedRect(0, 0, w, h)
@@ -464,3 +468,183 @@ function ARC9ComboBox:Paint(w, h)
 end
 
 vgui.Register("ARC9ComboBox", ARC9ComboBox, "DComboBox")
+
+
+local ARC9Button = {}
+ARC9Button.Color = ARC9.GetHUDColor("fg")
+ARC9Button.ColorClicked = ARC9.GetHUDColor("hi")
+
+ARC9Button.MatIdle = Material("arc9/ui/button.png", "mips")
+ARC9Button.MatSel = Material("arc9/ui/button_sel.png", "mips")
+
+function ARC9Button:Init()
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(13))
+    self.text = self:GetText()
+    self:SetText("")
+end
+
+function ARC9Button:Paint(w, h)
+	local color = self.Color
+	local color2 = self.ColorClicked
+
+    if self:IsDown() then
+        color = color2
+    end
+
+    surface.SetDrawColor(color)
+    surface.SetMaterial(self.MatIdle)
+    surface.DrawTexturedRect(0, 0, w, h)
+
+    if self:IsHovered() then
+        surface.SetDrawColor(color2)
+        surface.SetMaterial(self.MatSel)
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+    
+    local text = self.text or "owo"
+    surface.SetFont("ARC9_10")
+    local tw = surface.GetTextSize(text)
+    surface.SetTextColor(color)
+    surface.SetTextPos(w/2-tw/2, ARC9ScreenScale(1.5))
+    surface.DrawText(text)
+end
+
+vgui.Register("ARC9Button", ARC9Button, "DButton")
+
+
+local ARC9ColorPanel = {}
+ARC9ColorPanel.Color = ARC9.GetHUDColor("fg")
+ARC9ColorPanel.ColorClicked = ARC9.GetHUDColor("hi")
+
+ARC9ColorPanel.MatIdle = Material("arc9/ui/colorpanel2.png", "mips")
+
+function ARC9ColorPanel:Init()
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(108)) --96
+
+    self:MakePopup()
+    self:Center()
+    self:Center()
+    self:SetDraggable(true)
+    self:ShowCloseButton(true)
+
+    local huepanel = vgui.Create("DPanel", self)
+    huepanel:SetPos(ARC9ScreenScale(2.5), ARC9ScreenScale(82+12))
+    huepanel:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(12))
+    huepanel.LastX = 0
+    -- local hueslider = vgui.Create("DPanel", huepanel)
+    -- hueslider:SetPos(0, 0)
+    -- hueslider:SetSize(ARC9ScreenScale(1), ARC9ScreenScale(11))
+
+    huepanel.OnCursorMoved =  function( self2, x, y )
+        if !input.IsMouseDown(MOUSE_LEFT) then return end
+    
+        -- local col = self:GetPosColor(x, y)
+    
+        -- if col then
+        --     self.m_RGB = col
+        --     self.m_RGB.a = 255
+        --     self:OnChange( self.m_RGB )
+        -- end
+        x = math.Clamp(x, 0, self2:GetWide()) -- -ARC9ScreenScale(1))
+        self2.LastX = x
+        
+    end
+
+    huepanel.OnMousePressed =  function(self2, mcode)
+        self2:MouseCapture(true)
+        self2:OnCursorMoved( self2:CursorPos() )
+    end
+    huepanel.OnMouseReleased =  function(self2, mcode)
+        self2:MouseCapture(false)
+        self2:OnCursorMoved(self2:CursorPos())
+    end
+    
+    huepanel.Paint =  function(self2, w, h)
+        -- surface.SetDrawColor( 255, 255, 255, 255 )
+        -- surface.SetMaterial( self.Material )
+        -- surface.DrawTexturedRect( 0, 0, w, h )
+    
+        -- surface.SetDrawColor( 0, 0, 0, 250 )
+        -- self:DrawOutlinedRect()
+    
+        -- surface.DrawRect( 0, self.LastY - 2, w, 3 )
+    
+        surface.SetDrawColor( 255, 255, 255, 250 )
+        surface.DrawRect( self2.LastX-ARC9ScreenScale(0.5),  0, ARC9ScreenScale(1), h )
+    
+    end
+
+    local cube = vgui.Create( "DColorCube", self)
+    cube:SetPos( 50, 50 )
+    cube:SetSize( 200, 200 )
+    cube:SetBaseRGB( Color( 0, 255, 0 ) )
+end
+
+function ARC9ColorPanel:Paint(w, h)
+	local color = self.Color
+
+
+    surface.SetDrawColor(color)
+    surface.SetMaterial(self.MatIdle)
+    surface.DrawTexturedRect(0, 0, w, h)
+    
+    -- surface.SetDrawColor(color)
+    -- surface.SetMaterial(self.MatIcon)
+    -- surface.DrawTexturedRect(w/2-h*0.35, h/2-h*0.35, h*0.7, h*0.7)
+
+    -- if self:IsHovered() then
+    --     surface.SetDrawColor(color2)
+    -- end
+
+    -- surface.SetMaterial(self.MatSel)
+    -- surface.DrawTexturedRect(0, 0, w, h)
+    
+end
+
+vgui.Register("ARC9ColorPanel", ARC9ColorPanel, "DFrame")
+
+
+local ARC9ColorButton = {}
+ARC9ColorButton.Color = ARC9.GetHUDColor("fg")
+ARC9ColorButton.ColorClicked = ARC9.GetHUDColor("hi")
+
+ARC9ColorButton.MatIdle = Material("arc9/ui/button_color.png", "mips")
+ARC9ColorButton.MatSel = Material("arc9/ui/button_sel.png", "mips")
+ARC9ColorButton.MatIcon = Material("arc9/ui/paint.png", "mips smooth")
+
+function ARC9ColorButton:Init()
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(13))
+    self:SetText("")
+end
+
+function ARC9ColorButton:DoClick()
+    local newel = vgui.Create("ARC9ColorPanel")
+end
+
+function ARC9ColorButton:Paint(w, h)
+	local color = self.Color
+	local color2 = self.ColorClicked
+	local color3 = self.rgbcolor or self.Color
+
+
+    if self:IsDown() then
+        color = color2
+    end
+
+    surface.SetDrawColor(color3)
+    surface.SetMaterial(self.MatIdle)
+    surface.DrawTexturedRect(0, 0, w, h)
+    
+    surface.SetDrawColor(color)
+    surface.SetMaterial(self.MatIcon)
+    surface.DrawTexturedRect(w/2-h*0.35, h/2-h*0.35, h*0.7, h*0.7)
+
+    if self:IsHovered() then
+        surface.SetDrawColor(color2)
+    end
+
+    surface.SetMaterial(self.MatSel)
+    surface.DrawTexturedRect(0, 0, w, h)
+end
+
+vgui.Register("ARC9ColorButton", ARC9ColorButton, "DButton")

@@ -1,30 +1,33 @@
 --[[
 
-    l - label
-    b - bool
-    s - slider
-    c - color
-    t - text input
-    d - dropdown menu
+    label - label
+    bool - bool
+    button - button
+    slider - slider
+    color - color
+    input - text input
+    combo - dropdown menu
     
 ]]--
 
 local settingstable = {
     {
         TabName = "Tab name 1",
-        { type = "l", text = "Header" },
-        { type = "b", text = "Booling" },
-        { type = "b", text = "Booling 2" },
-        { type = "s", text = "Slide me" },
-        { type = "d", text = "Yayay" },
+        { type = "label", text = "Header" },
+        { type = "bool", text = "Booling" },
+        { type = "slider", text = "Booling 2" },
+        { type = "slider", text = "Slide me" },
+        { type = "combo", text = "Yayay" },
+        { type = "button", text = "Uhhh" },
+        { type = "color", text = "Coloringa" },
         -- { type = "c", text = "Color yeah" },
         -- { type = "t", text = "Yrint the " },
     },
     {
         TabName = "Tab name 2",
-        { type = "b", text = "bool 2" },
+        { type = "bool", text = "bool 2" },
         -- { type = "l", text = "Header 2" },
-        { type = "s", text = "Slide me" },
+        { type = "slider", text = "Slide me" },
     },
     
 }
@@ -66,12 +69,12 @@ local function DrawSettings(bg)
             end
             local elpw, elph = ARC9ScreenScale(168), ARC9ScreenScale(21)
 
-            if v2.type == "l" then
+            if v2.type == "label" then
                 
-            elseif v2.type == "b" then
+            elseif v2.type == "bool" then
                 local newel = vgui.Create("ARC9Checkbox", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(4+13), ARC9ScreenScale(4))
-            elseif v2.type == "s" then
+            elseif v2.type == "slider" then
                 local newel = vgui.Create("ARC9NumSlider", elpanel)
                 -- local newslider = vgui.Create("DNumSlider", newpanelscroll)
                 newel:SetPos(0, ARC9ScreenScale(6))
@@ -81,34 +84,24 @@ local function DrawSettings(bg)
                 newel:SetMax(256)
                 newel:SetValue(128)
                 -- newel:SetText(v2.text)
-            elseif v2.type == "c" then
-                local newcolor = vgui.Create("DColorPalette", newpanelscroll)
-                newcolor:SetPos(20, 10+k2*20)
-                newcolor:SetSize(400, 30)
-                newcolor:SetColorButtons({
-                    Color(255,255,255),
-                    Color(0,0,0),
-                    Color(80,80,80),
-                    Color(255,0,0),
-                    Color(255,136,0),
-                    Color(255,238,0),
-                    Color(72,255,0),
-                    Color(0,255,242),
-                    Color(0,4,255),
-                    Color(98,0,255),
-                    Color(174,0,255),
-                    Color(255,0,149),
-                })
-            elseif v2.type == "t" then
+            elseif v2.type == "color" then
+                local newel = vgui.Create("ARC9ColorButton", elpanel)
+                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel.rgbcolor = Color(255,0,0)
+            elseif v2.type == "input" then
                 local newtext = vgui.Create("DTextEntry", newpanelscroll)
                 newtext:SetPos(20, 10+k2*20)
                 newtext:SetText(v2.text)
-            elseif v2.type == "d" then
+            elseif v2.type == "combo" then
                 local newel = vgui.Create("ARC9ComboBox", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
                 newel:AddChoice("option A")
                 newel:AddChoice("option AAA")
                 newel:AddChoice("option AAAAAAA")
+            elseif v2.type == "button" then
+                local newel = vgui.Create("ARC9Button", elpanel)
+                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel.text = v2.text
             end
         end
 
