@@ -784,6 +784,10 @@ SWEP.HasSights = true
 SWEP.ActivePos = Vector(0, 0, 0)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
+-- Position while walking/running (no sprint)
+SWEP.MovingPos = Vector(0, 0, 0)
+SWEP.MovingAng = Angle(0, 0, 0)
+
 -- Position when crouching
 SWEP.CrouchPos = Vector(-4, 1, -4)
 SWEP.CrouchAng = Angle(0, 0, -30)
@@ -801,6 +805,11 @@ SWEP.TraversalSprintAng = Angle(0, 75, 0)
 
 SWEP.HolsterPos = Vector(0, 0, -5)
 SWEP.HolsterAng = Angle(0, -15, 25)
+
+SWEP.MovingMidPoint = {
+    Pos = Vector(0, 0, 0),
+    Ang = Angle(0, 0, 0)
+}
 
 SWEP.SprintMidPoint = {
     Pos = Vector(4, 8, -4),

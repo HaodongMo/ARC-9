@@ -32,9 +32,9 @@ end
 --     return a1
 -- end
 
-local Damp = function(a, v1, v2)
-    return Lerp(1 - math.pow(a, FrameTime()), v2, v1)
-end
+-- local Damp = function(a, v1, v2)
+--     return Lerp(1 - math.pow(a, FrameTime()), v2, v1)
+-- end
 
 local DampVector = function(a, v1, v2)
     a = 1 - math.pow(a, FrameTime())
@@ -88,6 +88,38 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     offsetpos:Set(self:GetProcessedValue("ActivePos"))
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
+
+    local movingpv = self.PV_Move
+
+    if movingpv > 0.125 then
+        local ts_movingpv = 0 -- self:GetTraversalSprintAmount()
+        movingpv = math.ease.InOutQuad(movingpv)
+        ts_movingpv = math.ease.InOutSine(ts_movingpv)
+
+        movingpv = math.max(movingpv, ts_movingpv)
+
+        local mvpos = self:GetProcessedValue("MovingPos")
+        local mvang = self:GetProcessedValue("MovingAng")
+
+        offsetpos = LerpVector(movingpv, offsetpos, mvpos)
+        offsetang = LerpAngle(movingpv, offsetang, mvang)
+
+        extra_offsetang = LerpAngle(movingpv, extra_offsetang, Angle(0, 0, 0))
+
+        local wim = self:GetProcessedValue("MovingMidPoint")
+
+        local mv_midpoint = movingpv * math.cos(movingpv * (math.pi / 2))
+        local mv_joffset = (wim and wim.Pos or Vector(0, 0, 0)) * mv_midpoint
+        local mv_jaffset = (wim and wim.Ang or Angle(0, 0, 0)) * mv_midpoint
+
+        extra_offsetpos = extra_offsetpos + mv_joffset
+        extra_offsetang = extra_offsetang + mv_jaffset
+    end
+
+    -- if self.PV_Move > 0.2 and self:GetSprintDelta() == 0 then
+    --     offsetpos:Set(self:GetProcessedValue("MovingPos"))
+    --     offsetang:Set(self:GetProcessedValue("MovingAng"))
+    -- end
 
     if !self:GetReloading() and !self:GetBipod() and self:GetOwner():Crouching() then
         local crouchpos = self:GetProcessedValue("CrouchPos")
@@ -223,7 +255,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     local sprintdelta = self:GetSprintDelta()
 
     if sprintdelta > 0 then
-        local ts_sprintdelta = 0 // self:GetTraversalSprintAmount()
+        local ts_sprintdelta = 0 -- self:GetTraversalSprintAmount()
         sprintdelta = math.ease.InOutQuad(sprintdelta) - curvedcustomizedelta
         ts_sprintdelta = math.ease.InOutSine(ts_sprintdelta)
 
@@ -274,12 +306,12 @@ function SWEP:GetViewModelPosition(pos, ang)
         --         -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
         --         cpos = cpos + cang:Forward() * (apos.z + cpos.z)
         --     end
-        
+
         if self.BottomBarMode == 1 then
             cpos = cpos - cang:Forward() * 5 -- extended cust offset
         else
             cpos = cpos - cang:Forward() * 1.5 -- idle offset
-            
+
         end
 
         cpos = cpos + cang:Up() * self.CustomizePanX
