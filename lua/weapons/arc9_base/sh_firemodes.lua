@@ -28,8 +28,6 @@ function SWEP:SwitchFiremode()
 
     self:SetFiremode(fm)
 
-    self:InvalidateCache()
-
     if self:HasAnimation(anim) then
         local t = self:PlayAnimation(anim, 1, false)
 
@@ -40,6 +38,10 @@ function SWEP:SwitchFiremode()
 
         self:SetFinishFiremodeAnimTime(CurTime() + t)
     end
+
+    self:SetTimer(0, function()
+        self:InvalidateCache()
+    end)
 end
 
 function SWEP:SetFiremodePose(wm)
