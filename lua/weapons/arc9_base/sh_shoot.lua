@@ -269,6 +269,8 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
+    self:SetAfterShot(true)
+
     self:DoShootSounds()
 
     self:RunHook("Hook_PrimaryAttack")

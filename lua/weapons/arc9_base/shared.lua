@@ -675,6 +675,8 @@ SWEP.MuzzleParticle = nil -- Used for some muzzle effects.
 SWEP.MuzzleEffect = "MuzzleFlash"
 SWEP.FastMuzzleEffect = nil
 
+SWEP.AfterShotParticle = nil -- Particle to spawn after shooting
+
 SWEP.ImpactEffect = nil
 SWEP.ImpactDecal = nil
 
@@ -701,6 +703,7 @@ SWEP.ShellVelocity = nil -- nothing for random, otherwise keep this 0 - 2
 SWEP.ShellTime = 0.5 -- Extra time these shells stay on the ground for.
 
 SWEP.MuzzleEffectQCA = 1 -- QC Attachment that controls muzzle effect.
+SWEP.AfterShotQCA = nil -- QC Attachment that controls after shot particle.
 SWEP.CaseEffectQCA = 2 -- QC Attachment for shell ejection.
 SWEP.CamQCA = nil -- QC Attachment for camera movement.
 SWEP.CamQCA_Mult = nil -- Intensity for QC camera movement.
@@ -1197,6 +1200,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 18, "InMeleeAttack")
     self:NetworkVar("Bool", 19, "OutOfBreath")
     self:NetworkVar("Bool", 20, "Inspecting")
+    self:NetworkVar("Bool", 21, "AfterShot")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
@@ -1213,6 +1217,7 @@ function SWEP:SetupDataTables()
     self:SetBreath(100)
     self:SetOutOfBreath(false)
     self:SetFiremode(1)
+    self:SetAfterShot(false)
 
     self:SetRecoilUp(0)
     self:SetRecoilSide(0)

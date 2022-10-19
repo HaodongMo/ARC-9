@@ -39,9 +39,11 @@ function SWEP:SwitchFiremode()
         self:SetFinishFiremodeAnimTime(CurTime() + t)
     end
 
-    self:SetTimer(0, function()
-        self:InvalidateCache()
-    end)
+    self:InvalidateCache()
+
+    if game.SinglePlayer() then
+        self:CallOnClient("InvalidateCache")
+    end
 end
 
 function SWEP:SetFiremodePose(wm)

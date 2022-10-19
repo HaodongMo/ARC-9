@@ -44,6 +44,20 @@ function SWEP:Think()
             end
         end
 
+        // If we have stopped shooting, play the aftershotparticle
+        if self:GetAfterShot() and (IsFirstTimePredicted() or game.SinglePlayer()) then
+            local delay = 60 / self:GetProcessedValue("RPM")
+
+            if self:GetNextPrimaryFire() + (delay * 2) < CurTime() then
+                self:SetAfterShot(false)
+                if self:GetProcessedValue("AfterShotParticle") then
+                    local att = self:GetProcessedValue("AfterShotQCA") or self:GetProcessedValue("MuzzleEffectQCA")
+
+                    ParticleEffectAttach(self:GetProcessedValue("AfterShotParticle"), PATTACH_POINT_FOLLOW, self:GetVM(), att)
+                end
+            end
+        end
+
         self:ThinkCycle()
 
         self:ThinkRecoil()
