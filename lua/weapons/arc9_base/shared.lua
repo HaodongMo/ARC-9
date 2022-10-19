@@ -1107,6 +1107,8 @@ SWEP.DrawCrosshair = true
 
 SWEP.ARC9 = true
 
+SWEP.m_bPlayPickupSound = false
+
 local searchdir = "weapons/arc9_base"
 
 local function autoinclude(dir)
