@@ -74,7 +74,7 @@ local airtime = 0
 local stammer = 0
 local stammer_moving = false
 
-local function goodassbob(self, pos, ang)
+local function FesiugBob(self, pos, ang)
     if self:GetCustomize() then return pos, ang end
     local cv = self:GetOwner():GetVelocity():Length()
     v = math.Approach(v, cv, FrameTime()*400/0.4)
@@ -159,7 +159,7 @@ local function goodassbob(self, pos, ang)
     return pos, ang
 end
 
-local function goofyassbob(self, pos, ang)
+local function ArcticBob(self, pos, ang)
     local step = 10
     local mag = 1
     local ts = 0 -- self:GetTraversalSprintAmount()
@@ -195,11 +195,60 @@ local function goofyassbob(self, pos, ang)
     return pos, ang
 end
 
+local smoothsidemove = 0
+local smoothjumpmove = 0
+local notonground = 0
+
+local function DarsuBob(self, pos, ang)
+    self.BobScale = 0 -- hl2 bob removal
+    if self:GetCustomize() then return pos, ang end
+
+    local owner = self:GetOwner()
+    local velocityangle = owner:GetVelocity()
+    local sightamount = self:GetSightAmount()
+
+    local velocity = math.Clamp(velocityangle:Length(), 0, 350)
+
+    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, velocity, FrameTime() * 10000)
+    
+    local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
+
+    notonground = math.Approach(notonground, (owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP) and 0 or 1, FrameTime() / 0.1)
+    local steprate = Lerp(d, 1, 2.5)
+    steprate = Lerp(notonground, steprate, 0.5)
+
+
+    local jumpmove = math.Clamp(math.ease.InExpo(math.Clamp(velocityangle.z, -350, 0)/-350)*25 + math.ease.InExpo(math.Clamp(velocityangle.z, 0, 350)/350)*-60, -5, 3.5) * (1.5-sightamount) -- crazy math for jump movement
+    smoothjumpmove = Lerp(FrameTime()*8, smoothjumpmove, jumpmove)
+
+
+    if IsFirstTimePredicted() or game.SinglePlayer() then self.BobCT = self.BobCT + (FrameTime() * steprate) end
+    
+    d = d * Lerp(sightamount, 1, 0.65) -- If we in sights make less moves
+
+    local d2 = math.ease.InQuart(d)
+    local d3 = math.ease.InQuad(d)
+    local speedmult = 1.3
+
+    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.3-sightamount)
+    smoothsidemove = Lerp(FrameTime()*8, smoothsidemove, sidemove)
+
+    pos = pos - (ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1) -- X 
+    pos = pos - (ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3) -- Y
+    pos = pos - (ang:Forward() *        math.sin(speedmult * self.BobCT * 4.5)  * d2 * 0.75) -- Z
+    ang:RotateAroundAxis(ang:Right(),   math.cos(speedmult * self.BobCT * 6)    * d3 * 2 + smoothjumpmove) -- X/P
+    ang:RotateAroundAxis(ang:Up(),      math.cos(speedmult * self.BobCT * 3.3)  * d3 * 2) -- Y/Y
+    ang:RotateAroundAxis(ang:Forward(), math.sin(speedmult * self.BobCT * 6)    * d3 * 3.5 + smoothsidemove) -- Z/R
+
+    return pos, ang
+end
+
 function SWEP:GetViewModelBob(pos, ang)
     if GetConVar("arc9_vm_bobstyle"):GetBool() then
-        return goofyassbob(self, pos, ang)
+        return FesiugBob(self, pos, ang)
+        -- return ArcticBob(self, pos, ang) -- arctic got cancelled
     else
-        return goodassbob(self, pos, ang)
+        return DarsuBob(self, pos, ang)
     end
 end
 
