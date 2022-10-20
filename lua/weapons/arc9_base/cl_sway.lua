@@ -1,42 +1,40 @@
-SWEP.ViewModelVelocityPos = Vector(0, 0, 0)
-SWEP.ViewModelVelocityAng = Angle(0, 0, 0)
-SWEP.ViewModelPos = Vector(0, 0, 0)
-SWEP.ViewModelAng = Angle(0, 0, 0)
+SWEP.ViewModelVelocityPos = Vector()
+SWEP.ViewModelVelocityAng = Angle()
+SWEP.ViewModelPos = Vector()
+SWEP.ViewModelAng = Angle()
 SWEP.SwayCT = 0
-local lasteyeang = Angle(0, 0, 0)
-local smootheyeang = Angle(0, 0, 0)
-local pos_offset = Vector(0, 0, 0)
-local ang_offset = Angle(0, 0, 0)
 
--- local look_lerp = Angle(0, 0, 0)
 
-local lookxmult = 1
-local lookymult = 1
+local lasteyeang = Angle()
+local smootheyeang = Angle()
+local posoffset = Vector()
+local smoothswayroll = 0
+local smoothswaypitch = 0
 
 function SWEP:GetViewModelSway(pos, ang)
-    local sightedmult = Lerp(self:GetSightAmount(), 1, 0.25)
-    smootheyeang = LerpAngle(0.05, smootheyeang, EyeAngles() - lasteyeang)
-    pos_offset.x = -smootheyeang.x * -0.5 * sightedmult * lookxmult
-    pos_offset.y = smootheyeang.y * 0.5 * sightedmult * lookymult
-    ang_offset.x = pos_offset.x * 2.5
-    ang_offset.y = pos_offset.y * 2.5
-    ang_offset.r = (pos_offset.x * 2) + (pos_offset.y * -2)
-    -- local a1 = look_lerp.y
-    -- local a2 = ang_offset.y * -3 + smootheyeang.y
-    -- look_lerp.y = math.ApproachAngle(a1, a2, FrameTime() * math.abs(math.AngleDifference(a1, a2)) * 50)
-    -- look_lerp.y = 0
-    -- ang.y = ang.y - look_lerp.y
-    -- ang = ang - look_lerp
-    pos:Add(ang:Up() * pos_offset.x)
-    pos:Add(ang:Right() * pos_offset.y)
-    ang:Add(ang_offset)
+    local sightmult = Lerp(self:GetSightAmount(), 1, 0.5)
+    smootheyeang = LerpAngle(math.Clamp(FrameTime() * 8, 0, 0.04), smootheyeang, EyeAngles() - lasteyeang)
     lasteyeang = EyeAngles()
+
+    smoothswayroll = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -2)
+    smoothswaypitch = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
+
+    posoffset.x = math.Clamp(smoothswayroll * 0.1,  -1.5, 1.5)
+    posoffset.y = math.Clamp(smoothswaypitch * 0.5, -1.5, 1.5)
+    posoffset.z = math.Clamp(smoothswayroll * 0.03, -1.5, 1.5)
+
+    smootheyeang.p = math.Clamp(smootheyeang.p * 0.95, -7, 7)
+    smootheyeang.y = math.Clamp(smootheyeang.y * 0.9, -7, 7)
+    smootheyeang.r = math.Clamp(smoothswayroll + smoothswaypitch * -2, -15, 15)
+
+    ang = ang + smootheyeang * sightmult
+    pos = pos + posoffset * sightmult
 
     return pos, ang
 end
 
-SWEP.ViewModelLastEyeAng = Angle(0, 0, 0)
-SWEP.ViewModelSwayInertia = Angle(0, 0, 0)
+SWEP.ViewModelLastEyeAng = Angle()
+SWEP.ViewModelSwayInertia = Angle()
 
 function SWEP:GetViewModelInertia(pos, ang)
     local d = 1 - self:GetSightAmount()
@@ -219,7 +217,7 @@ local function DarsuBob(self, pos, ang)
 
 
     local jumpmove = math.Clamp(math.ease.InExpo(math.Clamp(velocityangle.z, -350, 0)/-350)*25 + math.ease.InExpo(math.Clamp(velocityangle.z, 0, 350)/350)*-60, -5, 3.5) * (1.5-sightamount) -- crazy math for jump movement
-    smoothjumpmove = Lerp(FrameTime()*8, smoothjumpmove, jumpmove)
+    smoothjumpmove = Lerp(math.Clamp(FrameTime()*8, 0, 1), smoothjumpmove, jumpmove)
 
 
     if IsFirstTimePredicted() or game.SinglePlayer() then self.BobCT = self.BobCT + (FrameTime() * steprate) end
@@ -231,14 +229,17 @@ local function DarsuBob(self, pos, ang)
     local speedmult = 1.3
 
     local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.3-sightamount)
-    smoothsidemove = Lerp(FrameTime()*8, smoothsidemove, sidemove)
+    smoothsidemove = Lerp(math.Clamp(FrameTime()*8, 0, 1), smoothsidemove, sidemove)
 
-    pos = pos - (ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1) -- X 
-    pos = pos - (ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3) -- Y
-    pos = pos - (ang:Forward() *        math.sin(speedmult * self.BobCT * 4.5)  * d2 * 0.75) -- Z
-    ang:RotateAroundAxis(ang:Right(),   math.cos(speedmult * self.BobCT * 6)    * d3 * 2 + smoothjumpmove) -- X/P
-    ang:RotateAroundAxis(ang:Up(),      math.cos(speedmult * self.BobCT * 3.3)  * d3 * 2) -- Y/Y
-    ang:RotateAroundAxis(ang:Forward(), math.sin(speedmult * self.BobCT * 6)    * d3 * 3.5 + smoothsidemove) -- Z/R
+    local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5 or 1
+
+    pos = pos - (ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 
+    pos = pos - (ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3 * crouchmult)                     -- Y
+    pos = pos - (ang:Forward() *        math.sin(speedmult * self.BobCT * 4.5)  * d2 * 0.75 * crouchmult)                   -- Z
+
+    ang:RotateAroundAxis(ang:Right(),   math.cos(speedmult * self.BobCT * 6)    * d3 * 2 + smoothjumpmove)                  -- P
+    ang:RotateAroundAxis(ang:Up(),      math.cos(speedmult * self.BobCT * 3.3)  * d3 * 2)                                   -- Y
+    ang:RotateAroundAxis(ang:Forward(), math.sin(speedmult * self.BobCT * 6)    * d3 * 3.5 * crouchmult + smoothsidemove)   -- R
 
     return pos, ang
 end
@@ -285,7 +286,7 @@ function SWEP:GetViewModelLeftRight(pos, ang)
     if self:GetCustomize() then return pos, ang end
     local v = self:GetOwner():GetVelocity()
     local d = Lerp(self:GetSightDelta(), 1, 0)
-    v, _ = WorldToLocal(v, Angle(0, 0, 0), Vector(0, 0, 0), self:GetOwner():EyeAngles())
+    v, _ = WorldToLocal(v, Angle(), Vector(), self:GetOwner():EyeAngles())
     local vx = math.Clamp(v.x / 200, -1, 1)
     local vy = math.Clamp(v.y / 200, -1, 1)
     self.ViewModelInertiaX = math.Approach(self.ViewModelInertiaX, vx, math.abs(vx) * FrameTime() / 0.1)

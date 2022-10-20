@@ -94,7 +94,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     if mvpos and movingpv > 0.125 then
         local mvang = self:GetProcessedValue("MovingAng")
-        
+
         local ts_movingpv = 0 -- self:GetTraversalSprintAmount()
         movingpv = math.ease.InOutQuad(movingpv)
         ts_movingpv = math.ease.InOutSine(ts_movingpv)
@@ -225,8 +225,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         extra_offsetpos = LerpVector(sightdelta, extra_offsetpos, -eepos + joffset)
         extra_offsetang = LerpAngle(sightdelta, extra_offsetang, -eeang + jaffset)
 
-        self.BobScale = 0
-        self.SwayScale = Lerp(sightdelta, 1, 0.1)
+        -- self.BobScale = 0
+        -- self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
 
     extra_offsetang.y = extra_offsetang.y - (self:GetFreeSwayAngles().p * cor_val)
