@@ -8,6 +8,13 @@ function SWEP:CreateHUD_Slots(scroll)
     self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
     self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
     self.CustomizeHUD.lowerpanel.Extended = nil
+    
+    local spacer = vgui.Create("DPanel", scroll)
+    spacer:DockMargin(ARC9ScreenScale(5), 0, 0, 0)
+    spacer:Dock(LEFT)
+    spacer:SetSize(0, 0)
+
+    scroll:AddPanel(spacer)
 
     for _, slot in ipairs(self:GetSubSlotList()) do
         if slot.Hidden then continue end
@@ -28,7 +35,8 @@ function SWEP:CreateHUD_Slots(scroll)
         slotbtn:SetHasSlots(!!atttbl.Attachments)
         slotbtn:SetFullColorIcon(atttbl.FullColorIcon)
 
-        slotbtn:DockMargin(ARC9ScreenScale(5), 0, 0, 0)
+        -- slotbtn:DockMargin(ARC9ScreenScale(5), 0, 0, 0)
+        slotbtn:DockMargin(0, 0, ARC9ScreenScale(4), 0)
         slotbtn:Dock(LEFT)
 
         scroll:AddPanel(slotbtn)
