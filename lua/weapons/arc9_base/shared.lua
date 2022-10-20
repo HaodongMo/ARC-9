@@ -785,8 +785,8 @@ SWEP.ActivePos = Vector(0, 0, 0)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
 -- Position while walking/running (no sprint)
-SWEP.MovingPos = Vector(0, 0, 0)
-SWEP.MovingAng = Angle(0, 0, 0)
+SWEP.MovingPos = nil -- Vector(0, 0, 0)
+SWEP.MovingAng = nil -- Angle(0, 0, 0)
 
 -- Position when crouching
 SWEP.CrouchPos = Vector(-4, 1, -4)
