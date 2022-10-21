@@ -16,7 +16,7 @@ function SWEP:GetViewModelSway(pos, ang)
     smootheyeang = LerpAngle(math.Clamp(FrameTime() * 8, 0, 0.04), smootheyeang, EyeAngles() - lasteyeang)
     lasteyeang = EyeAngles()
 
-    smoothswayroll = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -2)
+    smoothswayroll = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -3.5)
     smoothswaypitch = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
 
     posoffset.x = math.Clamp(smoothswayroll * 0.1,  -1.5, 1.5)
@@ -27,8 +27,8 @@ function SWEP:GetViewModelSway(pos, ang)
     smootheyeang.y = math.Clamp(smootheyeang.y * 0.9, -7, 7)
     smootheyeang.r = math.Clamp(smoothswayroll + smoothswaypitch * -2, -15, 15)
 
-    ang = ang + smootheyeang * sightmult
-    pos = pos + posoffset * sightmult
+    ang:Add(smootheyeang * sightmult)
+    pos:Add(posoffset * sightmult)
 
     return pos, ang
 end
@@ -233,9 +233,9 @@ local function DarsuBob(self, pos, ang)
 
     local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5 or 1
 
-    pos = pos - (ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 
-    pos = pos - (ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3 * crouchmult)                     -- Y
-    pos = pos - (ang:Forward() *        math.sin(speedmult * self.BobCT * 4.5)  * d2 * 0.75 * crouchmult)                   -- Z
+    pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 
+    pos:Sub(ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3 * crouchmult)                     -- Y
+    pos:Sub(ang:Forward() *        math.sin(speedmult * self.BobCT * 4.5)  * d2 * 0.75 * crouchmult)                   -- Z
 
     ang:RotateAroundAxis(ang:Right(),   math.cos(speedmult * self.BobCT * 6)    * d3 * 2 + smoothjumpmove)                  -- P
     ang:RotateAroundAxis(ang:Up(),      math.cos(speedmult * self.BobCT * 3.3)  * d3 * 2)                                   -- Y

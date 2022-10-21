@@ -383,12 +383,19 @@ function SWEP:GetViewModelPosition(pos, ang)
             end
         end
     else
-        pos:Add( ang:Up() * math.sin(CurTime() * math.pi) * 0.02 * Lerp(self:GetSightDelta(), 1, 0.05) )
-        pos:Add( ang:Right() * math.sin(CurTime() * math.pi * 0.5) * 0.04 * Lerp(self:GetSightDelta(), 1, 0.05) )
-        ang.x = ang.x + math.pow( math.sin(CurTime() * math.pi * 0.5) * 0.3 * Lerp(self:GetSightDelta(), 1, 0.05), 2 )
-        ang.y = ang.y + ( math.sin(CurTime() * math.pi * 1) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
-        ang.z = ang.z + ( math.sin(CurTime() * math.pi * 0.25) * 0.1 * Lerp(self:GetSightDelta(), 1, 0.05) )
+        -- idle breath
+        local sighted = Lerp(sightdelta, 1, 0.1)
+        local ct = CurTime() * math.pi * Lerp(sightdelta, 1, 0.5)
+
+        pos:Sub(ang:Right() *               sighted * math.sin(ct * 0.8)   * 0.01)    -- X 
+        pos:Sub(ang:Up() *                  sighted * math.cos(ct * 0.84)  * 0.02)    -- Y
+        pos:Sub(ang:Forward() *             sighted * math.cos(ct * 0.84)  * 0.02)    -- Z
+
+        ang:RotateAroundAxis(ang:Right(),   sighted * math.sin(ct * 0.84)  * -0.07)   -- P
+        ang:RotateAroundAxis(ang:Up(),      sighted * math.cos(ct * -0.65) * -0.07)   -- Y
+        ang:RotateAroundAxis(ang:Forward(), sighted * math.sin(ct * 0.5)   *  0.25)    -- R
     end
+    
     pos, ang = self:GetViewModelRecoil(pos, ang)
 
     if !self:GetProcessedValue("NoViewBob") then
