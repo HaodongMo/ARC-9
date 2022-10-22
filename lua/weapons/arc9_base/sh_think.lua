@@ -105,9 +105,11 @@ function SWEP:Think()
     if CLIENT then
         if !self.LoadedPreset then
             self.LoadedPreset = true
-
             if GetConVar("arc9_autosave"):GetBool() then
-                self:LoadPreset()
+                self:LoadPreset("autosave")
+                self:DoDeployAnimation()
+            else
+                self:LoadPreset("default")
                 self:DoDeployAnimation()
             end
         end
