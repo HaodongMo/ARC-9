@@ -464,6 +464,8 @@ local function deletefolder(path)
 end
 
 concommand.Add("arc9_presets_clear", function(ply)
+    if !IsValid(ply) then return end
+    
     local weapon = ply:GetActiveWeapon()
 
     if IsValid(weapon) and weapon.ARC9 then
