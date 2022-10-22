@@ -146,7 +146,7 @@ function SWEP:CreatePresetMenu(reload)
         presetbtn.name, presetbtn.attcount = self:GetPresetData(preset)
 
         if presetbtn.name == "default" then presetbtn.name = "Default" end
-
+        
         if file.Exists(filename, "DATA") then
             presetbtn.icon = Material("data/" .. filename, "smooth")
         end
@@ -180,6 +180,12 @@ function SWEP:CreatePresetMenu(reload)
             surface.SetFont("ARC9_8")
             surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(11))
             surface.DrawText(tostring(self2.attcount) .. " Attachments")
+
+            if undeletable then
+                surface.SetTextColor(ARC9.GetHUDColor("fg", 75))
+                surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(19))
+                surface.DrawText("Default preset")
+            end
         end
 
         -- local preset_apply = vgui.Create("ARC9TopButton", presetbtn)
@@ -249,7 +255,8 @@ function SWEP:CreatePresetMenu(reload)
 
     for _, preset in ipairs(presetlist) do
         if preset == "autosave" or preset == "default" then continue end
-        createpresetbtn(preset, false)
+        
+        createpresetbtn(preset, !tonumber(preset)) -- if preset is a number then it's a user generated, if no - standard
     end
 end
 

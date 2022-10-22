@@ -864,6 +864,12 @@ SWEP.TTTAmmoType = nil
 
 -------------------------- ATTACHMENTS
 
+SWEP.StandardPresets = nil -- A table of standard presets, that would be in every player preset menu, undeletable. Just put preset codes in ""
+-- {
+--     "[Compact]XQAA... regular preset code here",
+--     "[Magpul kit]XQAA... regular preset code here",
+-- }
+
 SWEP.AttachmentBodygroups = {
     -- ["name"] = {
     --     VM = {

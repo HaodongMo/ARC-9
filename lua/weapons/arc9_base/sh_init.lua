@@ -55,6 +55,8 @@ function SWEP:ClientInitialize()
             self:PostModify()
             self:SavePreset("default", true)
         end
+        
+        self:CreateStandardPresets()
     end
 end
 

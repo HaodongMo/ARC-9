@@ -86,21 +86,24 @@ function SWEP:LoadPresetFromTable(tbl)
     self:PostModify()
 end
 
-function SWEP:LoadPresetFromCode(str)
-    if str[1] != "[" then return end
-    if !string.find(str, "]X") then return end
+function SWEP:LoadPresetFromCode(str, standard)
+    onlysave = onlysave or false 
 
-    local name = string.sub(string.Split(str, "]")[1], 2)
-    local tbl = self:ImportPresetCode(string.Split(str, "]")[2])
+    local name, tblstr = self:SplitPresetContents(str)
+    local tbl = self:ImportPresetCode(tblstr)
 
     if !tbl then return false end
 
     self:LoadPresetFromTable(tbl)
-    self:SavePreset(name)
 
-    surface.PlaySound("arc9/preset_install.ogg")
+    if !standard then 
+        surface.PlaySound("arc9/preset_install.ogg")
+    end
 
-    return true
+    self:SavePreset(name, false, (standard and name))
+
+
+    return (name or true)
 end
 
 function SWEP:GetPresetName(preset)
@@ -214,13 +217,14 @@ local cammat = GetRenderTarget("arc9_cammat", pr_w, pr_h, false)
 
 SWEP.PresetCapture = nil
 
-function SWEP:SavePreset(presetname, nooverride)
+function SWEP:SavePreset(presetname, nooverride, forcedname)
     presetname = presetname or "autosave"
-    nooverride = nooverride or false 
 
     local str = self:GeneratePresetExportCode()
 
-    local filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/" .. os.time()
+    local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. os.time()
+
+    if forcedname then filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. forcedname end
 
     if presetname == "autosave" then
         filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/autosave"
@@ -453,6 +457,36 @@ function SWEP:ImportPresetCode(str)
     end
 
     return tbl
+end
+
+function SWEP:SplitPresetContents(str)
+    if str[1] != "[" then return end
+    if !string.find(str, "]X") then return end
+    local name = string.sub(string.Split(str, "]")[1], 2)
+    local tbl = string.Split(str, "]")[2]
+
+    return name, tbl
+end
+
+function SWEP:CreateStandardPresets()
+    local newloaded
+
+    if self.StandardPresets then
+        for _, v in ipairs(self.StandardPresets) do
+            local name = self:SplitPresetContents(v)
+            if !name then continue end
+
+            if file.Exists(ARC9.PresetPath .. self:GetPresetBase() .. "/" .. name .. ".txt", "DATA") then continue end
+
+            if !self:LoadPresetFromCode(v, true) then print("Something gone wrong with standard preset!") continue end
+            
+            newloaded = true
+        end
+
+        if newloaded then
+            self:LoadPreset("default")
+        end
+    end 
 end
 
 local function deletefolder(path)
