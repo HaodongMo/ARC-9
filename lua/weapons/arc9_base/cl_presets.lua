@@ -454,3 +454,21 @@ function SWEP:ImportPresetCode(str)
 
     return tbl
 end
+
+local function deletefolder(path)
+	local files, folders = file.Find(path .. "*", "DATA")
+    for _, v in ipairs(files) do file.Delete(path .. v) end
+    for _, v in ipairs(folders) do deletefolder(path .. v .. "/") end
+
+	file.Delete(path)
+end
+
+concommand.Add("arc9_presets_clear", function(ply)
+    local weapon = ply:GetActiveWeapon()
+
+    if IsValid(weapon) and weapon.ARC9 then
+        deletefolder(ARC9.PresetPath .. (weapon.SaveBase or weapon:GetClass()) .. "/")
+    else
+        deletefolder(ARC9.PresetPath)
+    end
+end)
