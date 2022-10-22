@@ -151,9 +151,9 @@ function SWEP:CreatePresetMenu(reload)
             presetbtn.icon = Material("data/" .. filename, "smooth")
         end
 
-        if presetbtn.name == "Default" then
-            presetbtn.icon = Material("materials/arc9/arc9_sus.png")
-        end
+        -- if presetbtn.name == "Default" then
+        --     presetbtn.icon = Material("materials/arc9/arc9_sus.png")
+        -- end
 
         presetbtn.Paint = function(self2, w, h) 
             surface.SetDrawColor(ARC9.GetHUDColor("bg"))

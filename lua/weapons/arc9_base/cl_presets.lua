@@ -214,8 +214,9 @@ local cammat = GetRenderTarget("arc9_cammat", pr_w, pr_h, false)
 
 SWEP.PresetCapture = nil
 
-function SWEP:SavePreset(presetname)
+function SWEP:SavePreset(presetname, nooverride)
     presetname = presetname or "autosave"
+    nooverride = nooverride or false 
 
     local str = self:GeneratePresetExportCode()
 
@@ -226,6 +227,8 @@ function SWEP:SavePreset(presetname)
     elseif presetname == "default" then
         filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/default"
     end
+    
+    if nooverride and file.Exists(filename .. ".txt", "DATA") then return end
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
     local f = file.Open(filename .. ".txt", "w", "DATA")

@@ -7,6 +7,7 @@ function SWEP:Initialize()
     self:SetShouldHoldType()
 
     if self:GetOwner():IsNPC() then
+        self:PostModify()
         self:NPC_Initialize()
         return
     end
@@ -29,8 +30,10 @@ function SWEP:Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
     self:BuildSubAttachments(self.DefaultAttachments)
-
-    -- self:PostModify() --PostModify conflicts with autosaves as it keeps loading the default preset
+    
+    if !IsValid(self:GetOwner()) then -- dropped on ground
+        self:PostModify()
+    end
 end
 
 function SWEP:ClientInitialize()
@@ -48,9 +51,10 @@ function SWEP:ClientInitialize()
     self:InitTimers()
 
     if self:GetOwner() == LocalPlayer() then
-        self:SetTimer(0, function() -- to make default icon     not suck
-            self:SavePreset("default")
-        end)
+        if !file.Exists(ARC9.PresetPath .. (self.SaveBase or self:GetClass()) .. "/default.txt", "DATA") then -- im sorry for that
+            self:PostModify()
+            self:SavePreset("default", true)
+        end
     end
 end
 
