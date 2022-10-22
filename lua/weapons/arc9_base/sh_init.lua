@@ -30,7 +30,7 @@ function SWEP:Initialize()
 
     self:BuildSubAttachments(self.DefaultAttachments)
 
-    self:PostModify() --PostModify conflicts with autosaves as it keeps loading the default preset
+    -- self:PostModify() --PostModify conflicts with autosaves as it keeps loading the default preset
 end
 
 function SWEP:ClientInitialize()
