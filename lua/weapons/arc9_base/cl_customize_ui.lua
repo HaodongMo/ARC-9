@@ -1191,7 +1191,7 @@ function SWEP:RemoveCustomizeHUD()
         if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topright_panel:AlphaTo(0, 0.2, 0) end
         if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.lowerpanel:AlphaTo(0, 0.2, 0) end
         if bg.hintspanel then bg.hintspanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.hintspanel:AlphaTo(0, 0.1, 0) end
-        if self.TabPanel then self.TabPanel:AlphaTo(0, 0.1, 0) end
+        -- if self.TabPanel then self.TabPanel:AlphaTo(0, 0.1, 0) end
                 
         self:ClosePresetMenu()
 
