@@ -1362,6 +1362,9 @@ function SWEP:CreateHUD_RHP()
         table.remove(self.CustomizeButtons, 1)
         self.CustomizeButtons[1].cutcorner = 1
         self.CustomizeTab = 0
+        if IsValid(topright_presets) then
+            topright_presets:Remove()
+        end
     end
 
 
