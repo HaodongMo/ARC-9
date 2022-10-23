@@ -49,6 +49,10 @@ local DampAngle = function(a, v1, v2)
 end
 
 function SWEP:GetViewModelPosition(pos, ang)
+    if !IsValid(self:GetOwner()) then return end
+    -- if self:GetOwner() != LocalPlayer() then return end
+    if CLIENT and self:GetOwner() != LocalPlayer() then return end
+
     local oldpos = Vector(0, 0, 0)
     local oldang = Angle(0, 0, 0)
 
