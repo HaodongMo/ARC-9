@@ -153,6 +153,8 @@ function SWEP:CreatePresetMenu(reload)
                 net.SendToServer()
 
                 surface.PlaySound(clicksound)
+                
+                timer.Simple(0.1, function() if IsValid(self) then self:CreateHUD_Bottom() end end)
             end
         else
             presetbtn.preset = preset
