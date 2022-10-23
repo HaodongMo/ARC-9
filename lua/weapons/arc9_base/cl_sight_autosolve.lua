@@ -96,7 +96,7 @@ function SWEP:AdjustMouseSensitivity()
     end
 
     if atttbl and atttbl.RTScope and !sight.Disassociate then
-        mag = mag + (fov / self:GetRTScopeFOV())
+        mag = mag + (fov / (self:GetRTScopeFOV() or 90))
     end
 
     if mag > 0 then
