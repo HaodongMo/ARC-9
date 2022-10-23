@@ -114,6 +114,7 @@ function EFFECT:Init(data)
     phys:SetDamping(0, 0)
     phys:SetMass(1)
     phys:SetMaterial("gmod_silent")
+    -- phys:SetMaterial("default_silent")
 
     local velocity = ent:GetProcessedValue("ShellVelocity") or math.Rand(1, 2)
 
@@ -151,6 +152,9 @@ end
 
 function EFFECT:PhysicsCollide()
     if self.AlreadyPlayedSound then return end
+    local phys = self:GetPhysicsObject()
+    phys:SetVelocityInstantaneous(Vector(0, 0, 180))
+    self:StopSound("Default.ImpactHard")
 
     sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1)
 
@@ -158,8 +162,9 @@ function EFFECT:PhysicsCollide()
 end
 
 function EFFECT:Think()
-    if self:GetVelocity():Length() > 0 then self.SpawnTime = CurTime() end
-
+    if self:GetVelocity():Length() > 200 then self.SpawnTime = CurTime() end
+    self:StopSound("Default.ScrapeRough")
+    
     if (self.SpawnTime + self.ShellTime) <= CurTime() then
         if !IsValid(self) then return end
         self:SetRenderFX( kRenderFxFadeFast )
