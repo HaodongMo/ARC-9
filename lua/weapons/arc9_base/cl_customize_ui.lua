@@ -1315,24 +1315,28 @@ function SWEP:CreateHUD_RHP()
     topright_panel:MoveToBack()
     topright_panel.Paint = function(self2, w, h) end
 
-    local topright_presets = vgui.Create("ARC9TopButton", topright_panel)
-    self.CustomizeHUD.topright_panel.topright_presets = topright_presets
-    surface.SetFont("ARC9_16")
-    local tw = surface.GetTextSize("Presets")
-    topright_presets:SetPos(ARC9ScreenScale(123)-(ARC9ScreenScale(28)+tw), ARC9ScreenScale(19))
-    topright_presets:SetSize(ARC9ScreenScale(28)+tw, ARC9ScreenScale(21))
-    topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
-    topright_presets:SetButtonText("Presets")
-    topright_presets:SetIsCheckbox(true)
-    local oldpresetsdoclick = topright_presets.DoClick
-    topright_presets.DoClick = function(self2)
-        surface.PlaySound(clicksound)
-        oldpresetsdoclick(self2)
+    if self.Attachments[1] then -- no presets if no atts
+        local topright_presets = vgui.Create("ARC9TopButton", topright_panel)
+        self.CustomizeHUD.topright_panel.topright_presets = topright_presets
+        surface.SetFont("ARC9_16")
+        local tw = surface.GetTextSize("Presets")
+        topright_presets:SetPos(ARC9ScreenScale(123)-(ARC9ScreenScale(28)+tw), ARC9ScreenScale(19))
+        topright_presets:SetSize(ARC9ScreenScale(28)+tw, ARC9ScreenScale(21))
+        topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
+        topright_presets:SetButtonText("Presets")
+        topright_presets:SetIsCheckbox(true)
+        local oldpresetsdoclick = topright_presets.DoClick
+        topright_presets.DoClick = function(self2)
+            surface.PlaySound(clicksound)
+            oldpresetsdoclick(self2)
 
-        self.CustomizeHUD.lowerpanel.Extended = nil
-        self.BottomBarMode = 0
+            self.CustomizeHUD.lowerpanel.Extended = nil
+            self.BottomBarMode = 0
 
-        self:CreatePresetMenu()
+            self:CreatePresetMenu()
+        end
+
+        topright_presets.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
     end
 
     local topright_close = vgui.Create("ARC9TopButton", topright_panel)
@@ -1346,7 +1350,6 @@ function SWEP:CreateHUD_RHP()
         net.SendToServer()
     end
 
-    topright_presets.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
     topright_close.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topright_panel, 8) end
 
 
@@ -1362,9 +1365,6 @@ function SWEP:CreateHUD_RHP()
         table.remove(self.CustomizeButtons, 1)
         self.CustomizeButtons[1].cutcorner = 1
         self.CustomizeTab = 0
-        if IsValid(topright_presets) then
-            topright_presets:Remove()
-        end
     end
 
 
