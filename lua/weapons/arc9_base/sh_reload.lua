@@ -120,7 +120,7 @@ function SWEP:Reload()
     end
 
     if SERVER then
-        if clip == 0 then
+        if self:GetProcessedValue("ShouldDropMag") or self:GetProcessedValue("ShouldDropMagEmpty") and clip == 0 then
             self:SetTimer(self:GetProcessedValue("DropMagazineTime"), function()
                 self:DropMagazine()
             end)
@@ -185,7 +185,7 @@ end
 
 function SWEP:DropMagazine()
     -- if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
-    if !self:GetProcessedValue("ShouldDropMag") then return end
+    -- if !self:GetProcessedValue("ShouldDropMag") then return end
 
     if self:GetProcessedValue("DropMagazineModel") then
         for i = 1, self:GetProcessedValue("DropMagazineAmount") do
