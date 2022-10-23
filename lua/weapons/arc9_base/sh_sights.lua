@@ -234,6 +234,9 @@ function SWEP:BuildMultiSight()
 end
 
 function SWEP:SwitchMultiSight(amt)
+    if self.NextSightSwitch and self.NextSightSwitch > CurTime() then return end
+    self.NextSightSwitch = CurTime() + 0.25
+
     if game.SinglePlayer() then
         self:CallOnClient("InvalidateCache")
     end
@@ -265,6 +268,7 @@ function SWEP:SwitchMultiSight(amt)
 
     if msi != old_msi then
         if self:StillWaiting() then return end
+
         if (self.MultiSightTable[old_msi].atttbl or {}).ID == (self.MultiSightTable[msi].atttbl or {}).ID then
             self:PlayAnimation("switchsights", 1, false)
         end
