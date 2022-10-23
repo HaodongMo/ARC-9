@@ -93,7 +93,9 @@ function ARC9.CalcView( ply, pos, angles, fov )
     local view = {}
     local origin, viewang
 
+    if !wpn.CalcView then return end
     origin, viewang, fov = wpn:CalcView(ply, pos, angles, fov)
+    if !origin or !viewang or !fov then return end
 
     view.origin = origin
     view.angles = viewang
@@ -119,7 +121,7 @@ function ARC9.CalcView( ply, pos, angles, fov )
     end
 
     view.origin = vorigin
-    view.angles = view.angles + cam_angoffset + LocalPlayer():GetViewPunchAngles()
+    view.angles:Add(cam_angoffset + LocalPlayer():GetViewPunchAngles())
 
     ARC9.RealCamPos = view.origin
     ARC9.RealCamAng = view.angles
