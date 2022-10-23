@@ -7,6 +7,8 @@ util.AddNetworkString("arc9_givenpcweapon")
 util.AddNetworkString("arc9_reloadatts")
 util.AddNetworkString("arc9_reloadlangs")
 
+util.AddNetworkString("arc9_randomizeatts")
+
 if game.SinglePlayer() then
 
 util.AddNetworkString("arc9_sp_health")
@@ -29,4 +31,15 @@ net.Receive("arc9_networkweapon", function(len, ply)
     if !wpn.ARC9 then return end
 
     wpn:ReceiveWeapon()
+end)
+
+net.Receive("arc9_randomizeatts", function(len, ply)
+    local wpn = ply:GetActiveWeapon()
+
+    if !wpn.ARC9 then return end
+
+    if wpn.NextRandomize and wpn.NextRandomize > CurTime() then return end
+    wpn.NextRandomize = CurTime() + 0.055
+
+    wpn:NPC_Initialize()
 end)

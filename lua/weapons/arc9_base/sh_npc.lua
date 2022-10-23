@@ -103,7 +103,7 @@ function SWEP:NPC_Initialize()
 
     self:PostModify()
 
-    timer.Simple(0.25, function()
+    timer.Simple(0.05, function()
         self:PruneAttachments()
         self:SendWeapon()
     end)
@@ -121,7 +121,7 @@ function SWEP:RollRandomAtts(tree)
 
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
 
-        if math.Rand(0, 100) > 100 / (table.Count(atts) + 1) then slottbl.Installed = nil continue end
+        -- if math.Rand(0, 100) > 100 / (table.Count(atts) + 1) then slottbl.Installed = nil continue end
 
         local att = table.Random(atts)
 

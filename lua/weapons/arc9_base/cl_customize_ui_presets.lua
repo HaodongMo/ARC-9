@@ -2,6 +2,7 @@
 local ARC9ScreenScale = ARC9.ScreenScale
 local clicksound = "ui/panorama/itemtile_click_02.wav"
 local mat_default = Material("arc9/arc9_sus.png", "mips smooth")
+local mat_random = Material("arc9/ui/random.png", "mips smooth")
 local nextpreset = 0
 
 function SWEP:CreatePresetMenu(reload)
@@ -142,8 +143,21 @@ function SWEP:CreatePresetMenu(reload)
             surface.PlaySound(clicksound)
         end
 
-        presetbtn.preset = preset
-        presetbtn.name, presetbtn.attcount = self:GetPresetData(preset)
+        if preset == "random" then 
+            presetbtn.name = "Random" 
+            presetbtn.attcount = "?"
+            presetbtn.icon = mat_random
+            presetbtn.DoClick = function(self2)
+                -- self:NPC_Initialize()        
+                net.Start("arc9_randomizeatts")
+                net.SendToServer()
+
+                surface.PlaySound(clicksound)
+            end
+        else
+            presetbtn.preset = preset
+            presetbtn.name, presetbtn.attcount = self:GetPresetData(preset)
+        end
 
         if presetbtn.name == "default" then presetbtn.name = "Default" end
         
@@ -258,6 +272,8 @@ function SWEP:CreatePresetMenu(reload)
         
         createpresetbtn(preset, !tonumber(preset)) -- if preset is a number then it's a user generated, if no - standard
     end
+
+    createpresetbtn("random", true)
 end
 
 function SWEP:ClosePresetMenu()

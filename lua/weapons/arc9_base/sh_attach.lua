@@ -174,6 +174,7 @@ function SWEP:PostModify(toggleonly)
             end
         else
             if self.LastUBGLAmmo and SERVER then
+                if !IsValid(self:GetOwner()) or !self:GetOwner():IsPlayer() then return end
                 self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
                 self:SetClip2(0)
             end
