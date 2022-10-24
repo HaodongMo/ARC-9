@@ -162,7 +162,7 @@ function EFFECT:PhysicsCollide()
 end
 
 function EFFECT:Think()
-    if self:GetVelocity():Length() > 200 then self.SpawnTime = CurTime() end
+    if self:GetVelocity():Length() > 20 then self.SpawnTime = CurTime() end
     self:StopSound("Default.ScrapeRough")
     
     if (self.SpawnTime + self.ShellTime) <= CurTime() then
