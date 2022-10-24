@@ -112,7 +112,7 @@ function SWEP:NPC_Initialize()
 end
 
 function SWEP:RollRandomAtts(tree)
-    local attchance = 40
+    local attchance = 66
 
     for i, slottbl in pairs(tree) do
         if slottbl.MergeSlots then

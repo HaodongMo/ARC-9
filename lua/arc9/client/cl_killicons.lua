@@ -1,25 +1,36 @@
--- TODO: in singleplayer make it reload dynamicly, so if player changed atts it will be drawn there
-
-OLDKilliconDraw = OLDKilliconDraw or killicon.Draw
+ARC9OLDKilliconDraw = ARC9OLDKilliconDraw or killicon.Draw
 local killicons_cachednames = {}
 local killicons_cachedicons = {}
+local killicons_cachedtimes = {}
 local killiconmat = Material("arc9/arc9_sus.png", "mips smooth")
 
-NEWKillicondraw = function(x, y, name, alpha)
+ARC9NEWKillicondraw = function(x, y, name, alpha)
+    if !GetConVar("arc9_killfeed_enable"):GetBool() then
+        return ARC9OLDKilliconDraw(x, y, name, alpha)
+    end
+
     if killicons_cachednames[name] == true then
         local w, h = 96, 96
         x = x - 48
         y = y - 34
 
         cam.Start2D()
+        
 
         local selecticon = killicons_cachedicons[name]
 
+        if GetConVar("arc9_killfeed_dynamic"):GetBool() and (!killicons_cachedtimes[name] or (killicons_cachedtimes[name] and killicons_cachedtimes[name] < CurTime())) then -- dynamic
+            killicons_cachedtimes[name] = CurTime() + 5
+            killicons_cachedicons[name] = nil
+            -- print("RESET")
+        end 
+
         if !selecticon then -- not cached
             local filename = ARC9.PresetPath .. name .. "_icon." .. ARC9.PresetIconFormat
-            local loadedmat = Material("data/" .. filename, "smooth")
+            -- local loadedmat = Material("data/" .. filename, "smooth")
+            local loadedmat
 
-            if loadedmat:IsError() then -- there is no fucking icon in data folder!!!!
+            -- if !loadedmat or loadedmat:IsError() then -- there is no fucking icon in data folder!!!!
                 local found
 
                 if game.SinglePlayer() then -- trying find in your hands
@@ -38,7 +49,9 @@ NEWKillicondraw = function(x, y, name, alpha)
                         end
                     end
                 end
-            end
+            -- end
+
+            loadedmat = Material("data/" .. filename, "smooth")
 
             killicons_cachedicons[name] = loadedmat
             selecticon = loadedmat
@@ -52,11 +65,11 @@ NEWKillicondraw = function(x, y, name, alpha)
         if killicons_cachednames[name] == nil then -- not cached yet, checking for arc9
             killicons_cachednames[name] = (weapons.Get(name) and weapons.Get(name).ARC9) or false -- weapons.get() will return nil for any hl2 base gun
         else -- we know it is totally not arc9 gun
-            return OLDKilliconDraw(x, y, name, alpha)
+            return ARC9OLDKilliconDraw(x, y, name, alpha)
         end
     end
 end
 
 timer.Simple(5, function() -- to make Autoicons addon not override our stuff
-    killicon.Draw = NEWKillicondraw
+    killicon.Draw = ARC9NEWKillicondraw
 end)

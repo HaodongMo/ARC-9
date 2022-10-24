@@ -325,6 +325,16 @@ local conVars = {
         client = true
     },
     {
+        name = "killfeed_enable",
+        default = "1",
+        client = true
+    },
+    {
+        name = "killfeed_dynamic",
+        default = "1",
+        client = true
+    },
+    {
         name = "hud_always",
         default = "0"
     },
