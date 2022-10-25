@@ -80,6 +80,7 @@ ARC9.AutoStatsMains = {
     ["Bash"] = {false, true},
     ["Overheat"] = {false, false},
     ["Malfunction"] = {false, false},
+    ["MalfunctionWait"] = {"s", true},
     ["Bipod"] = {false, true},
     ["NoFlash"] = {false, true},
     ["BulletGuidance"] = {false, true},
