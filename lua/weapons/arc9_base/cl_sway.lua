@@ -19,6 +19,12 @@ function SWEP:GetViewModelSway(pos, ang)
     smoothswayroll = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -3.5)
     smoothswaypitch = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
 
+    if self.SprintVerticalOffset then
+        local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1) 
+        pos:Add(ang:Up() * sprintoffset)
+        pos:Add(ang:Forward() * sprintoffset)
+    end
+
     posoffset.x = math.Clamp(smoothswayroll * 0.1,  -1.5, 1.5)
     posoffset.y = math.Clamp(smoothswaypitch * 0.5, -1.5, 1.5)
     posoffset.z = math.Clamp(smoothswayroll * 0.03, -1.5, 1.5)

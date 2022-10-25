@@ -799,9 +799,7 @@ SWEP.RestAng = Angle(-4.633, 36.881, 0)
 -- Overrides RestPos/Ang but only for sprinting
 SWEP.SprintPos = nil
 SWEP.SprintAng = nil
-
-SWEP.TraversalSprintPos = Vector(2, 3, -13)
-SWEP.TraversalSprintAng = Angle(0, 75, 0)
+SWEP.SprintVerticalOffset = true -- Moves vm when looking up/down while sprinting (set to false if gun clips into camera)
 
 SWEP.HolsterPos = Vector(0, 0, -5)
 SWEP.HolsterAng = Angle(0, -15, 25)

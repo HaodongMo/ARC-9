@@ -99,11 +99,11 @@ function SWEP:GetViewModelPosition(pos, ang)
     if mvpos and movingpv > 0.125 then
         local mvang = self:GetProcessedValue("MovingAng")
 
-        local ts_movingpv = 0 -- self:GetTraversalSprintAmount()
+        -- local ts_movingpv = 0 -- self:GetTraversalSprintAmount()
         movingpv = math.ease.InOutQuad(movingpv)
-        ts_movingpv = math.ease.InOutSine(ts_movingpv)
+        -- ts_movingpv = math.ease.InOutSine(ts_movingpv)
 
-        movingpv = math.max(movingpv, ts_movingpv)
+        -- movingpv = math.max(movingpv, ts_movingpv)
 
 
         offsetpos = LerpVector(movingpv, offsetpos, mvpos)
@@ -260,17 +260,17 @@ function SWEP:GetViewModelPosition(pos, ang)
     local sprintdelta = self:GetSprintDelta()
 
     if sprintdelta > 0 then
-        local ts_sprintdelta = 0 -- self:GetTraversalSprintAmount()
+        -- local ts_sprintdelta = 0 -- self:GetTraversalSprintAmount()
         sprintdelta = math.ease.InOutQuad(sprintdelta) - curvedcustomizedelta
-        ts_sprintdelta = math.ease.InOutSine(ts_sprintdelta)
+        -- ts_sprintdelta = math.ease.InOutSine(ts_sprintdelta)
 
-        sprintdelta = math.max(sprintdelta, ts_sprintdelta)
+        -- sprintdelta = math.max(sprintdelta, ts_sprintdelta)
 
         local sprpos = self:GetProcessedValue("SprintPos") or self:GetProcessedValue("RestPos")
         local sprang = self:GetProcessedValue("SprintAng") or self:GetProcessedValue("RestAng")
 
-        sprpos = LerpVector(ts_sprintdelta, sprpos, self:GetProcessedValue("TraversalSprintPos"))
-        sprang = LerpAngle(ts_sprintdelta, sprang, self:GetProcessedValue("TraversalSprintAng"))
+        -- sprpos = LerpVector(ts_sprintdelta, sprpos, self:GetProcessedValue("TraversalSprintPos"))
+        -- sprang = LerpAngle(ts_sprintdelta, sprang, self:GetProcessedValue("TraversalSprintAng"))
 
         offsetpos = LerpVector(sprintdelta, offsetpos, sprpos)
         offsetang = LerpAngle(sprintdelta, offsetang, sprang)
