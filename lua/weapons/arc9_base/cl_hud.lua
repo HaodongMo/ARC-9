@@ -29,6 +29,11 @@ local gaA = 0
 function SWEP:DoDrawCrosshair(x, y)
     if !GetConVar("arc9_cross_enable"):GetBool() then return end
 
+    if GetConVar("arc9_crosshair_static"):GetBool() then
+        x = ScrW() / 2
+        y = ScrH() / 2
+    end
+
     local dotsize = ScreenScale(1)
     local prong = ScreenScale(4)
     local minigap = ScreenScale(2)
