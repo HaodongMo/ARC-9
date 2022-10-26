@@ -17,7 +17,7 @@ matproxy.Add({
             if IsValid(weapon) and weapon.ARC9 then
                 local amt = 1 - weapon:GetSightAmount() / 3
 
-                mat:SetVector(self.ResultTo, Vector(amt,amt,amt))
+                mat:SetVector(self.ResultTo, Vector(amt, amt, amt))
             end
         end
    end
@@ -83,9 +83,7 @@ function SWEP:DoRT(fov, atttbl)
     render.PopRenderTarget()
 
     if sighttbl.InvertColors then
-
         render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
-
             render.CopyTexture( rtmat, rtmat_spare )
 
             render.Clear(255, 255, 255, 255, true, true)
@@ -94,7 +92,6 @@ function SWEP:DoRT(fov, atttbl)
             render.DrawTextureToScreen(rtmat_spare)
 
             render.OverrideBlend(false)
-
         render.PopRenderTarget()
     end
 end
@@ -269,9 +266,9 @@ function SWEP:DoRTScope(model, atttbl, active)
                 atttbl.RTScopeDrawFunc(self, rtsize)
             end
 
-            if drawfunc then -- doesn't seem to be working
-                drawfunc(self, pos, model)
-            end
+            -- if drawfunc then -- doesn't seem to be working
+            --     drawfunc(self, pos, model)
+            -- end
 
             if !atttbl.RTScopeNoShadow then
                 surface.SetDrawColor(0, 0, 0)
