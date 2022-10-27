@@ -3,17 +3,17 @@ ARC9.Blacklist = {}
 // ["att"] = true
 
 function ARC9:SaveBlacklist()
-    local f = file.Open("blacklist.txt", "w", "DATA")
+    local f = file.Open("arc9_blacklist.txt", "w", "DATA")
 
     for i, k in pairs(ARC9.Blacklist) do
-        f.Write(i)
+        f:Write(i)
     end
 
-    f.Close()
+    f:Close()
 end
 
 function ARC9:LoadBlacklist()
-    local f = file.Open("blacklist.txt", "w", "DATA")
+    local f = file.Open("arc9_blacklist.txt", "w", "DATA")
 
     ARC9.Blacklist = {}
 
@@ -25,7 +25,7 @@ function ARC9:LoadBlacklist()
         ARC9.Blacklist[line] = true
     end
 
-    f.Close()
+    f:Close()
 end
 
 function ARC9:SendBlacklist(ply)
@@ -60,6 +60,8 @@ net.Receive("arc9_sendblacklist", function(len, ply)
         local attid = net.ReadUInt(ARC9.Attachments_Bits)
 
         local atttbl = ARC9.GetAttTable(attid)
+
+        if !atttbl then continue end
 
         local shortname = atttbl.ShortName
 
