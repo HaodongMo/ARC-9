@@ -1,5 +1,9 @@
+EFFECT.Weapon = nil
+
 function EFFECT:Init(data)
     local wpn = data:GetEntity()
+
+    self.Weapon = wpn
 
     if !IsValid(wpn) then self:Remove() return end
 

@@ -97,6 +97,17 @@ function SWEP:ViewModelDrawn()
     --     surface.SetMaterial(vignette2)
     --     surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
     -- cam.End2D()
+
+    local newpcfs = {}
+
+    for _, pcf in ipairs(self.PCFs) do
+        if IsValid(pcf) then
+            pcf:Render()
+            table.insert(newpcfs, pcf)
+        end
+    end
+
+    self.PCFs = newpcfs
 end
 
 function SWEP:PostDrawViewModel()
@@ -121,8 +132,6 @@ function SWEP:PostDrawViewModel()
         end
     end
     cam.End3D()
-
-    
 
     -- render.UpdateFullScreenDepthTexture()
 end

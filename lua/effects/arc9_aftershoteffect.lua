@@ -46,9 +46,11 @@ function EFFECT:Init(data)
 
 		if IsValid(pcf) then
 			pcf:StartEmission()
+			pcf:SetShouldDraw(false)
 		end
 
 		wpn.ActiveAfterShotPCF = pcf
+		table.insert(wpn.PCFs, pcf)
 	end
 end
 
