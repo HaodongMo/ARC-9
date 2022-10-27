@@ -18,6 +18,10 @@ function SWEP:DoEffects()
     end
 
     util.Effect(muzzle, data, true)
+
+    if IsValid(self.ActiveAfterShotPCF) then
+        self.ActiveAfterShotPCF:StopEmission()
+    end
 end
 
 function SWEP:GetQCAMuzzle()
