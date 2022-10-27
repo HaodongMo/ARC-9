@@ -7,6 +7,7 @@ function ARC9:SaveBlacklist()
 
     for i, k in pairs(ARC9.Blacklist) do
         f:Write(i)
+        f:Write("\n")
     end
 
     f:Close()
