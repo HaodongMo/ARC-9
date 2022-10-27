@@ -14,7 +14,7 @@ function ARC9:SaveBlacklist()
 end
 
 function ARC9:LoadBlacklist()
-    local f = file.Open("arc9_blacklist.txt", "w", "DATA")
+    local f = file.Open("arc9_blacklist.txt", "r", "DATA")
 
     ARC9.Blacklist = {}
 
