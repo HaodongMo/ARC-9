@@ -9,6 +9,8 @@ util.AddNetworkString("arc9_reloadlangs")
 
 util.AddNetworkString("arc9_randomizeatts")
 
+util.AddNetworkString("arc9_sendblacklist")
+
 if game.SinglePlayer() then
 
 util.AddNetworkString("arc9_sp_health")
