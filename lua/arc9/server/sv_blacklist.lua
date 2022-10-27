@@ -2,6 +2,32 @@ ARC9.Blacklist = {}
 
 // ["att"] = true
 
+function ARC9:SaveBlacklist()
+    local f = file.Open("blacklist.txt", "w", "DATA")
+
+    for i, k in pairs(ARC9.Blacklist) do
+        f.Write(i)
+    end
+
+    f.Close()
+end
+
+function ARC9:LoadBlacklist()
+    local f = file.Open("blacklist.txt", "w", "DATA")
+
+    ARC9.Blacklist = {}
+
+    while !f:EndOfFile() do
+        local line = f:ReadLine()
+
+        line = string.Trim(line, "\n")
+
+        ARC9.Blacklist[line] = true
+    end
+
+    f.Close()
+end
+
 function ARC9:SendBlacklist(ply)
     net.Start("arc9_sendblacklist")
 
@@ -40,9 +66,14 @@ net.Receive("arc9_sendblacklist", function(len, ply)
         ARC9.Blacklist[shortname] = true
     end
 
+    ARC9:SaveBlacklist()
     ARC9:SendBlacklist()
 end)
 
 hook.Add("PlayerConnect", "ARC9_PlayerConnect_SendBlacklist", function(ply, ip)
     ARC9:SendBlacklist(ply)
+end)
+
+hook.Add("PreGamemodeLoaded", "ARC9_PreGamemodeLoaded_LoadBlacklist", function()
+    ARC9:LoadBlacklist()
 end)
