@@ -53,7 +53,13 @@ function SWEP:Think()
                 if self:GetProcessedValue("AfterShotParticle") then
                     local att = self:GetProcessedValue("AfterShotQCA") or self:GetProcessedValue("MuzzleEffectQCA")
 
-                    ParticleEffectAttach(self:GetProcessedValue("AfterShotParticle"), PATTACH_POINT_FOLLOW, self:GetVM(), att)
+                    local data = EffectData()
+                    data:SetEntity(self)
+                    data:SetAttachment(att)
+
+                    local effect = self:GetProcessedValue("AfterShotEffect")
+
+                    util.Effect(effect, data, true)
                 end
             end
         end

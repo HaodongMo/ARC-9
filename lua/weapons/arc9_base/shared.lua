@@ -677,6 +677,7 @@ SWEP.MuzzleParticle = nil -- Used for some muzzle effects.
 SWEP.MuzzleEffect = "MuzzleFlash"
 SWEP.FastMuzzleEffect = nil
 
+SWEP.AfterShotEffect = "arc9_aftershoteffect"
 SWEP.AfterShotParticle = nil -- Particle to spawn after shooting
 
 SWEP.ImpactEffect = nil
