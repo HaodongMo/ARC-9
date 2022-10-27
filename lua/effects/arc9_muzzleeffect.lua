@@ -44,8 +44,19 @@ function EFFECT:Init(data)
 
     -- if !IsValid(parent) then return end
 
+    // if muzzle then
+    //     ParticleEffectAttach(muzzle, PATTACH_POINT_FOLLOW, muz or parent, att)
+    // end
+
     if muzzle then
-        ParticleEffectAttach(muzzle, PATTACH_POINT_FOLLOW, muz or parent, att)
+        local pcf = CreateParticleSystem(muz or parent, muzzle, PATTACH_POINT_FOLLOW, att)
+
+        if IsValid(pcf) then
+            pcf:StartEmission()
+            pcf:SetShouldDraw(false)
+        end
+
+        table.insert(wpn.PCFs, pcf)
     end
 
     if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash") then
