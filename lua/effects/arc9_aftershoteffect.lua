@@ -46,11 +46,13 @@ function EFFECT:Init(data)
 
 		if IsValid(pcf) then
 			pcf:StartEmission()
-			pcf:SetShouldDraw(false)
-		end
 
-		wpn.ActiveAfterShotPCF = pcf
-		table.insert(wpn.PCFs, pcf)
+			wpn.ActiveAfterShotPCF = pcf
+			if (muz or parent) != vm then
+				pcf:SetShouldDraw(false)
+				table.insert(wpn.PCFs, pcf)
+			end
+		end
 	end
 end
 

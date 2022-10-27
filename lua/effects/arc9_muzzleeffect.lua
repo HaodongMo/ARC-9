@@ -53,10 +53,12 @@ function EFFECT:Init(data)
 
         if IsValid(pcf) then
             pcf:StartEmission()
-            pcf:SetShouldDraw(false)
-        end
 
-        table.insert(wpn.PCFs, pcf)
+            if (muz or parent) != vm then
+                pcf:SetShouldDraw(false)
+                table.insert(wpn.PCFs, pcf)
+            end
+        end
     end
 
     if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash") then
