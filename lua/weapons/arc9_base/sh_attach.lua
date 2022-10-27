@@ -372,6 +372,8 @@ function SWEP:GetSlotBlocked(slottbl)
 end
 
 function SWEP:CanAttach(addr, att, slottbl)
+    if ARC9.Blacklist[att] then return false end
+
     if GetConVar("arc9_atts_anarchy"):GetBool() then return true end
     if GetConVar("arc9_atts_nocustomize"):GetBool() then return false end
 

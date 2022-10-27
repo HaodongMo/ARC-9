@@ -122,6 +122,7 @@ function ARC9.GetAttsForCats(cats)
     local atts = {}
 
     for i, k in pairs(ARC9.Attachments) do
+        if ARC9.Blacklist[k] then continue end
         local attcats = k.Category
         if !istable(attcats) then
             attcats = {attcats}
