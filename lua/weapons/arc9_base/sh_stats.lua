@@ -196,6 +196,10 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
+    if self:GetReloading() then
+        stat = self:GetValue(val, stat, "Reload")
+    end
+
     if self:GetBurstCount() == 0 then
         stat = self:GetValue(val, stat, "FirstShot")
     end

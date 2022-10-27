@@ -16,6 +16,7 @@ SWEP.AdminOnly = false
 -- UBGL (Enabled when UBGL is active)
 -- MidAir
 -- Crouch
+-- Reload (While reloading)
 -- FirstShot
 -- Empty
 -- EvenShot
@@ -25,6 +26,7 @@ SWEP.AdminOnly = false
 -- BlindFire
 -- Sights
 -- HipFire
+-- Hot (Scales with overheat)
 -- Shooting (Enabled when constantly shooting)
 -- Recoil (Scales with long bursts)
 -- Move (Scaled with move speed)
