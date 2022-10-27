@@ -61,6 +61,8 @@ concommand.Add("arc9_blacklist_add", function(ply, cmd, args)
 
         ARC9:AddAttToBlacklist(i)
     end
+
+    ARC9:SendClientBlacklist()
 end)
 
 concommand.Add("arc9_blacklist_remove", function(ply, cmd, args)
@@ -74,4 +76,6 @@ concommand.Add("arc9_blacklist_remove", function(ply, cmd, args)
 
         ARC9:RemoveAttFromBlacklist(i)
     end
+
+    ARC9:SendClientBlacklist()
 end)
