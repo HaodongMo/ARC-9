@@ -15,6 +15,8 @@ ATT.Ignore = true
 ATT.Model = ""
 ATT.WorldModel = "" -- optional
 ATT.BoxModel = nil --"models/items/arc9/att_plastic_box.mdl" 
+--                                          ^ Use att_plastic_box (modern middle sized container), att_wooden_box (old big box) or att_cardboard_box (cheap small box)
+-- If nil, will use slot defined ATT.Pack
 
 -- Used to attach another model to a bone of this model.
 ATT.CharmModel = ""
@@ -25,8 +27,6 @@ ATT.CharmMaterial = nil
 ATT.CharmBodygroups = ""
 ATT.CharmScale = 1
 
---                                          ^ Use att_plastic_box (modern middle sized container), att_wooden_box (old big box) or att_cardboard_box (cheap small box)
--- If nil, will use slot defined ATT.Pack
 ATT.Scale = 1
 ATT.ModelOffset = Vector(0, 0, 0)
 ATT.ModelAngleOffset = Angle(0, 0, 0)
@@ -117,6 +117,7 @@ ATT.RTScopeRes = 512
 ATT.RTScopeReticle = Material("")
 ATT.RTScopeReticleScale = 1
 ATT.RTScopeShadowIntensity = 1.5
+ATT.RTCollimator = false -- Disables cheap scopes fov boost, disables sensivity adjustements
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
 ATT.RTScopeBlackBox = false

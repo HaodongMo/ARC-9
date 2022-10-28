@@ -64,7 +64,7 @@ function SWEP:GetMagnification()
             atttbl = self:GetTable()
         end
 
-        if atttbl and atttbl.RTScope then
+        if atttbl and atttbl.RTScope and !atttbl.RTCollimator then
             -- target = (self:GetOwner():GetFOV() / self:GetRTScopeFOV())
 
             local realfov = self:GetOwner():GetFOV()
@@ -95,7 +95,7 @@ function SWEP:AdjustMouseSensitivity()
         atttbl = self:GetTable()
     end
 
-    if atttbl and atttbl.RTScope and !sight.Disassociate then
+    if atttbl and atttbl.RTScope and !sight.Disassociate and !atttbl.RTCollimator then
         mag = mag + (fov / (self:GetRTScopeFOV() or 90))
     end
 
