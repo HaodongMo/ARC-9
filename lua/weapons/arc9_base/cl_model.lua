@@ -183,6 +183,44 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
     csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
 
+    if atttbl.CharmModel then
+        local charmmodel = ClientsideModel(atttbl.CharmModel)
+
+        csmodel.charmmdl = charmmodel
+        charmmodel.charmparent = csmodel
+
+        charmmodel.atttbl = atttbl
+        charmmodel.slottbl = slottbl
+        charmmodel.weapon = self
+
+        charmmodel:SetBodyGroups(atttbl.CharmBodygroups)
+        charmmodel:SetMaterial(atttbl.CharmMaterial)
+        charmmodel:SetNoDraw(true)
+
+        local scale = Matrix()
+        local vec = Vector(1, 1, 1) * (atttbl.CharmScale or 1) * (atttbl.Scale or 1)
+        vec = vec * (slottbl.Scale or 1)
+        scale:Scale(vec)
+        charmmodel:EnableMatrix("RenderMultiply", scale)
+
+        local charmtbl = {
+            Model = charmmodel,
+            Weapon = self
+        }
+
+        table.insert(ARC9.CSModelPile, charmtbl)
+
+        if cm then
+            table.insert(self.CModel, charmmodel)
+        else
+            if wm then
+                table.insert(self.WModel, charmmodel)
+            else
+                table.insert(self.VModel, charmmodel)
+            end
+        end
+    end
+
     if atttbl.Flare then
         csmodel.Flare = {
             Color = atttbl.FlareColor or Color(255, 255, 255),

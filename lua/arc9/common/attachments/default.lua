@@ -15,6 +15,16 @@ ATT.Ignore = true
 ATT.Model = ""
 ATT.WorldModel = "" -- optional
 ATT.BoxModel = nil --"models/items/arc9/att_plastic_box.mdl" 
+
+-- Used to attach another model to a bone of this model.
+ATT.CharmModel = ""
+ATT.CharmBone = ""
+ATT.CharmOffset = Vector(0, 0, 0)
+ATT.CharmAngle = Angle(0, 0, 0)
+ATT.CharmMaterial = nil
+ATT.CharmBodygroups = ""
+ATT.CharmScale = 1
+
 --                                          ^ Use att_plastic_box (modern middle sized container), att_wooden_box (old big box) or att_cardboard_box (cheap small box)
 -- If nil, will use slot defined ATT.Pack
 ATT.Scale = 1

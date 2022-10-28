@@ -58,18 +58,55 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
 
-            local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or Angle(0, 0, 0))
+            if model.charmparent then
+                continue
+            else
+                local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or Angle(0, 0, 0))
 
-            if model.IsAnimationProxy then
-                apos = Vector(0, 0, 0)
-                aang = Angle(0, 0, 0)
+                if model.IsAnimationProxy then
+                    apos = Vector(0, 0, 0)
+                    aang = Angle(0, 0, 0)
+                end
+
+                model:SetPos(apos)
+                model:SetAngles(aang)
+                model:SetRenderOrigin(apos)
+                model:SetRenderAngles(aang)
+                model:SetupBones()
+
+                if model.charmmdl then
+                    local bpos, bang
+
+                    local bonename = atttbl.CharmBone
+                    local boneindex = model:LookupBone(bonename)
+
+                    local bonemat = model:GetBoneMatrix(boneindex)
+                    if bonemat then
+                        bpos = bonemat:GetTranslation()
+                        bang = bonemat:GetAngles()
+                    end
+
+                    if bpos and bang then
+                        local coffset = atttbl.CharmOffset or Vector(0, 0, 0)
+                        local cangle = atttbl.CharmAngle or Angle(0, 0, 0)
+
+                        bpos = bpos + bang:Forward() * coffset.y
+                        bpos = bpos + bang:Up() * coffset.z
+                        bpos = bpos + bang:Right() * coffset.x
+
+                        local up, right, forward = bang:Up(), bang:Right(), bang:Forward()
+
+                        bang:RotateAroundAxis(up, cangle.p)
+                        bang:RotateAroundAxis(right, cangle.y)
+                        bang:RotateAroundAxis(forward, cangle.r)
+
+                        model.charmmdl:SetPos(bpos)
+                        model.charmmdl:SetAngles(bang)
+                        model.charmmdl:SetupBones()
+                        model.charmmdl:DrawModel()
+                    end
+                end
             end
-
-            model:SetPos(apos)
-            model:SetAngles(aang)
-            model:SetRenderOrigin(apos)
-            model:SetRenderAngles(aang)
-            model:SetupBones()
 
             -- if !wm and atttbl.HoloSight then
             --     self:DoHolosight(model, atttbl)
