@@ -69,8 +69,8 @@ function SWEP:ToggleBoneMods(on, dir)
 
                 if !boneindex then continue end
 
-                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
-                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
+                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or vector_origin)
+                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or angle_zero)
             end
         elseif dir > 0 then
             for i, k in pairs(self:GetValue("BlindFireRightBoneMods")) do
@@ -78,8 +78,8 @@ function SWEP:ToggleBoneMods(on, dir)
 
                 if !boneindex then continue end
 
-                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
-                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
+                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or vector_origin)
+                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or angle_zero)
             end
         else
             for i, k in pairs(self:GetValue("BlindFireBoneMods")) do
@@ -87,8 +87,8 @@ function SWEP:ToggleBoneMods(on, dir)
 
                 if !boneindex then continue end
 
-                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
-                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
+                self:GetOwner():ManipulateBonePosition(boneindex, k.pos or vector_origin)
+                self:GetOwner():ManipulateBoneAngles(boneindex, k.ang or angle_zero)
             end
         end
     else
@@ -97,8 +97,8 @@ function SWEP:ToggleBoneMods(on, dir)
 
             if !boneindex then continue end
 
-            self:GetOwner():ManipulateBonePosition(boneindex, Vector(0, 0, 0))
-            self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
+            self:GetOwner():ManipulateBonePosition(boneindex, vector_origin)
+            self:GetOwner():ManipulateBoneAngles(boneindex, angle_zero)
         end
 
         for i, k in pairs(self:GetValue("BlindFireRightBoneMods")) do
@@ -106,8 +106,8 @@ function SWEP:ToggleBoneMods(on, dir)
 
             if !boneindex then continue end
 
-            self:GetOwner():ManipulateBonePosition(boneindex, Vector(0, 0, 0))
-            self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
+            self:GetOwner():ManipulateBonePosition(boneindex, vector_origin)
+            self:GetOwner():ManipulateBoneAngles(boneindex, angle_zero)
         end
 
         for i, k in pairs(self:GetValue("BlindFireLeftBoneMods")) do
@@ -115,8 +115,8 @@ function SWEP:ToggleBoneMods(on, dir)
 
             if !boneindex then continue end
 
-            self:GetOwner():ManipulateBonePosition(boneindex, Vector(0, 0, 0))
-            self:GetOwner():ManipulateBoneAngles(boneindex, Angle(0, 0, 0))
+            self:GetOwner():ManipulateBonePosition(boneindex, vector_origin)
+            self:GetOwner():ManipulateBoneAngles(boneindex, angle_zero)
         end
     end
 end

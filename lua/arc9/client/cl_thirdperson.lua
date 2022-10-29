@@ -185,7 +185,7 @@ function ARC9.InputMouseApply( cmd, x, y, ang )
 
             local movevec = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), cmd:GetUpMove())
 
-            movevec = LocalToWorld(movevec, Angle(0, 0, 0), Vector(0, 0, 0), targetplayerangles - ARC9.RealCamAng)
+            movevec = LocalToWorld(movevec, angle_zero, vector_origin, targetplayerangles - ARC9.RealCamAng)
 
             cmd:SetForwardMove(movevec.x)
             cmd:SetSideMove(movevec.y)

@@ -53,7 +53,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
         if mod.time_end < CurTime() then self.FOV_RecoilMods[_] = nil end
     end
 
-    ang = ang + (self:GetCameraControl() or Angle(0, 0, 0))
+    ang = ang + (self:GetCameraControl() or angle_zero)
 
     return pos, ang, fov
 end
@@ -100,8 +100,8 @@ function SWEP:GetCameraControl()
 
         local mdl = slottbl.GunDriverModel
 
-        mdl:SetPos(Vector(0, 0, 0))
-        mdl:SetAngles(Angle(0, 0, 0))
+        mdl:SetPos(vector_origin)
+        mdl:SetAngles(angle_zero)
 
         mdl:SetSequence(self:GetSequenceIndex())
         mdl:SetCycle(self:GetSequenceCycle())
@@ -111,7 +111,7 @@ function SWEP:GetCameraControl()
         if !ang then return end
 
         ang = mdl:WorldToLocalAngles(ang)
-        ang:Sub(atttbl.IKCameraMotionOffsetAngle or Angle(0, 0, 0))
+        ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
         ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
         ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
 

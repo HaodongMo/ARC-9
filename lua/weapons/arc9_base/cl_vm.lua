@@ -50,9 +50,9 @@ function SWEP:PreDrawViewModel()
 
         if !boneindex then continue end
 
-        self:GetVM():ManipulateBonePosition(boneindex, k.pos or Vector(0, 0, 0))
-        self:GetVM():ManipulateBoneAngles(boneindex, k.ang or Angle(0, 0, 0))
-        self:GetVM():ManipulateBoneScale(boneindex, k.scale or Vector(0, 0, 0))
+        self:GetVM():ManipulateBonePosition(boneindex, k.pos or vector_origin)
+        self:GetVM():ManipulateBoneAngles(boneindex, k.ang or angle_zero)
+        self:GetVM():ManipulateBoneScale(boneindex, k.scale or vector_origin)
     end end
     self:GetVM():InvalidateBoneCache()
 

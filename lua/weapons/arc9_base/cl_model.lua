@@ -28,8 +28,8 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
 
     if idle then
         parentmdl = ClientsideModel(self.ViewModel)
-        parentmdl:SetPos(Vector(0, 0, 0))
-        parentmdl:SetAngles(Angle(0, 0, 0))
+        parentmdl:SetPos(vector_origin)
+        parentmdl:SetAngles(angle_zero)
         parentmdl:SetNoDraw(true)
 
         local anim = self:TranslateAnimation("idle")
@@ -67,7 +67,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     if parentmdl and bone then
         local boneindex = parentmdl:LookupBone(bone)
 
-        if !boneindex then return Vector(0, 0, 0), Angle(0, 0, 0) end
+        if !boneindex then return vector_origin, angle_zero end
 
         if parentmdl == self:GetOwner() then
             parentmdl:SetupBones()
@@ -117,7 +117,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     apos = apos + aang:Up() * offset_pos.z
 
     if !nomodeloffset then
-        offset_ang = offset_ang + (atttbl.ModelAngleOffset or Angle(0, 0, 0))
+        offset_ang = offset_ang + (atttbl.ModelAngleOffset or angle_zero)
     end
 
     aang:Set(bang)

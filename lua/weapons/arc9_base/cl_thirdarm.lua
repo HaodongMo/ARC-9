@@ -75,8 +75,8 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
 
     self.ThirdArmPersist = persist
 
-    self.ThirdArmModel:SetPos(Vector(0, 0, 0))
-    self.ThirdArmModel:SetAngles(Angle(0, 0, 0))
+    self.ThirdArmModel:SetPos(vector_origin)
+    self.ThirdArmModel:SetAngles(angle_zero)
 
     self.ThirdArmModel:SetupBones()
     self.ThirdArmModel:InvalidateBoneCache()

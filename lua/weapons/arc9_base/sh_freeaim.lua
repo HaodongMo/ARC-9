@@ -33,7 +33,7 @@ function SWEP:ThinkFreeAim()
 end
 
 function SWEP:GetFreeAimOffset()
-    if !GetConVar("arc9_mod_freeaim"):GetBool() then return Angle(0, 0, 0) end
+    if !GetConVar("arc9_mod_freeaim"):GetBool() then return angle_zero end
     if CLIENT then
         return self.ClientFreeAimAng
     else
@@ -44,7 +44,7 @@ end
 
 local smoothswayamt = 0
 function SWEP:GetFreeSwayAngles()
-    if !GetConVar("arc9_mod_sway"):GetBool() then return Angle(0, 0, 0) end
+    if !GetConVar("arc9_mod_sway"):GetBool() then return angle_zero end
     local swayamt = self:GetFreeSwayAmount()
 
     local swayspeed = 2

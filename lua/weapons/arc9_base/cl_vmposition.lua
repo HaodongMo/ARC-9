@@ -109,7 +109,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         offsetpos = LerpVector(movingpv, offsetpos, mvpos)
         offsetang = LerpAngle(movingpv, offsetang, mvang)
 
-        extra_offsetang = LerpAngle(movingpv, extra_offsetang, Angle(0, 0, 0))
+        extra_offsetang = LerpAngle(movingpv, extra_offsetang, angle_zero)
 
         local wim = self:GetProcessedValue("MovingMidPoint")
 
@@ -201,7 +201,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         if sight.GeneratedSight then
             local t_sightpos = LerpVector(sightdelta, Vector(0, 0 ,0), sightpos)
-            local t_sightang = LerpAngle(sightdelta, Angle(0, 0, 0), sightang)
+            local t_sightang = LerpAngle(sightdelta, angle_zero, sightang)
 
             ang:RotateAroundAxis(oldang:Up(), t_sightang.p)
             ang:RotateAroundAxis(oldang:Right(), t_sightang.y)
@@ -211,11 +211,11 @@ function SWEP:GetViewModelPosition(pos, ang)
             pos = pos + (ang:Forward() * t_sightpos.y)
             pos = pos + (ang:Up() * t_sightpos.z)
 
-            offsetpos = LerpVector(sightdelta, offsetpos, Vector(0, 0, 0))
-            offsetang = LerpAngle(sightdelta, offsetang, Angle(0, 0, 0))
+            offsetpos = LerpVector(sightdelta, offsetpos, vector_origin)
+            offsetang = LerpAngle(sightdelta, offsetang, angle_zero)
         else
-            offsetpos = LerpVector(sightdelta, offsetpos or Vector(0, 0 ,0), sightpos or Vector(0, 0 ,0))
-            offsetang = LerpAngle(sightdelta, offsetang or Angle(0, 0 ,0), sightang or Angle(0, 0, 0))
+            offsetpos = LerpVector(sightdelta, offsetpos or Vector(0, 0 ,0), sightpos or vector_origin)
+            offsetang = LerpAngle(sightdelta, offsetang or Angle(0, 0 ,0), sightang or angle_zero)
         end
 
         -- local eepos, eeang = Vector(0, 0, 0), Angle(0, 0, 0)
@@ -275,7 +275,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         offsetpos = LerpVector(sprintdelta, offsetpos, sprpos)
         offsetang = LerpAngle(sprintdelta, offsetang, sprang)
 
-        extra_offsetang = LerpAngle(sprintdelta, extra_offsetang, Angle(0, 0, 0))
+        extra_offsetang = LerpAngle(sprintdelta, extra_offsetang, angle_zero)
 
         local sim = self:GetProcessedValue("SprintMidPoint")
 
@@ -291,8 +291,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         local cpos = self:GetProcessedValue("CustomizePos")
         local cang = self:GetProcessedValue("CustomizeAng")
 
-        extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, Vector(0, 0, 0))
-        extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, Angle(0, 0, 0))
+        extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, vector_origin)
+        extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, angle_zero)
 
         -- if self.BottomBarAddress then
         --     local slot = self:LocateSlotFromAddress(self.BottomBarAddress)

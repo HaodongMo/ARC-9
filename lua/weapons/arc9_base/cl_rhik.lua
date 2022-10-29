@@ -320,8 +320,8 @@ function SWEP:GunControllerRHIK(pos, ang)
 
         if !mdl then return pos, ang end
 
-        mdl:SetPos(Vector(0, 0, 0))
-        mdl:SetAngles(Angle(0, 0, 0))
+        mdl:SetPos(vector_origin)
+        mdl:SetAngles(angle_zero)
 
         mdl:SetSequence(self:GetSequenceIndex())
         mdl:SetCycle(self:GetSequenceCycle())
@@ -331,8 +331,8 @@ function SWEP:GunControllerRHIK(pos, ang)
         local attpos = posang.Pos
         local attang = posang.Ang
 
-        attpos = attpos + (atttbl.IKGunMotionOffset or Vector(0, 0, 0))
-        attang = attang + (atttbl.IKGunMotionOffsetAngle or Angle(0, 0, 0))
+        attpos = attpos + (atttbl.IKGunMotionOffset or vector_origin)
+        attang = attang + (atttbl.IKGunMotionOffsetAngle or angle_zero)
 
         local r = attang.r
         attang.r = attang.p
@@ -341,7 +341,7 @@ function SWEP:GunControllerRHIK(pos, ang)
 
         local anchor = self:GetAttPos(slottbl, false, true)
 
-        local rap_pos, rap_ang = self:RotateAroundPoint(Vector(0, 0, 0), Angle(0, 0, 0), anchor, attpos, attang)
+        local rap_pos, rap_ang = self:RotateAroundPoint(vector_origin, angle_zero, anchor, attpos, attang)
 
         pos = pos + (EyeAngles():Right() * rap_pos.x)
         pos = pos + (EyeAngles():Forward() * rap_pos.y)

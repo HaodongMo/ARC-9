@@ -51,7 +51,7 @@ function ARC9.HUDSway(pos, ang)
     pos = pos + ang:Right() * hudsway[1]
     pos = pos + ang:Forward() * -hudsway[2] * 1.25
 
-    hudsway = LerpAngle(0.2, hudsway, Angle(0, 0, 0))
+    hudsway = LerpAngle(0.2, hudsway, angle_zero)
 
     lasteyeangles = EyeAngles()
 

@@ -408,7 +408,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                         Num = 1,
                         Dir = bullet.Vel:GetNormalized(),
                         Src = oldpos,
-                        Spread = Vector(0, 0, 0),
+                        Spread = vector_origin,
                         Callback = function(att, btr, dmg)
                             local range = bullet.Travelled
 
