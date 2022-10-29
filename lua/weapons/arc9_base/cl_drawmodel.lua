@@ -10,9 +10,9 @@ function SWEP:ShouldLOD()
         dsquared = EyePos():DistToSqr(self:GetPos())
     end
 
-    if dsquared >= 25000000 then
+    if dsquared >= 300000 then
         return 2
-    elseif dsquared >= 4000000 then
+    elseif dsquared >= 150000 then
         return 1
     else
         return 0
@@ -64,7 +64,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             else
                 local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or Angle(0, 0, 0))
 
-                if model.IsAnimationProxy then
+                if !wm and model.IsAnimationProxy then
                     apos = Vector(0, 0, 0)
                     aang = Angle(0, 0, 0)
                 end

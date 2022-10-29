@@ -4,8 +4,11 @@ function SWEP:DrawWorldModel()
         return
     end
 
-    self:DoBodygroups(true)
     self:DrawCustomModel(true)
-    self:DrawLasers(true)
-    self:DoTPIK()
+
+    if IsValid(self:GetOwner()) then
+        self:DoBodygroups(true)
+        self:DrawLasers(true)
+        self:DoTPIK()
+    end
 end
