@@ -104,7 +104,7 @@ function EFFECT:Init(data)
 
     local phys = self:GetPhysicsObject()
 
-    local plyvel = Vector(0, 0, 0)
+    local plyvel = vector_origin
 
     if IsValid(ent.Owner) then
         plyvel = ent.Owner:GetAbsVelocity()

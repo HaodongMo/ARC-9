@@ -48,6 +48,12 @@ local DampAngle = function(a, v1, v2)
     return LerpAngle(a, v2, v1)
 end
 
+local somevector = Vector(-1, 0, 1)
+local somevector2 = Vector(0, 1, 0)
+local somevector3 = Vector(-1, -1, 1)
+local cangup = Vector(1, 0, 0)
+local cangforward = Vector(0, 0, -1)
+
 function SWEP:GetViewModelPosition(pos, ang)
     if !IsValid(self:GetOwner()) then return end
     -- if self:GetOwner() != LocalPlayer() then return end
@@ -70,7 +76,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
             pos, ang = Vector(bgc[1], bgc[2], bgc[3]), Angle(bgc[4], bgc[5], bgc[6])
     else
-        return Vector(), Angle()
+        return vector_origin, angle_zero
     end
     elseif ARC9.Dev(3) then
         pos = self:GetOwner():EyePos()
@@ -196,11 +202,11 @@ function SWEP:GetViewModelPosition(pos, ang)
         local eepos, eeang = self:GetExtraSightPositions()
 
         if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
-            eepos = eepos + Vector(-1, 0, 1)
+            eepos = eepos + somevector
         end
 
         if sight.GeneratedSight then
-            local t_sightpos = LerpVector(sightdelta, Vector(0, 0 ,0), sightpos)
+            local t_sightpos = LerpVector(sightdelta, vector_origin, sightpos)
             local t_sightang = LerpAngle(sightdelta, angle_zero, sightang)
 
             ang:RotateAroundAxis(oldang:Up(), t_sightang.p)
@@ -214,8 +220,8 @@ function SWEP:GetViewModelPosition(pos, ang)
             offsetpos = LerpVector(sightdelta, offsetpos, vector_origin)
             offsetang = LerpAngle(sightdelta, offsetang, angle_zero)
         else
-            offsetpos = LerpVector(sightdelta, offsetpos or Vector(0, 0 ,0), sightpos or vector_origin)
-            offsetang = LerpAngle(sightdelta, offsetang or Angle(0, 0 ,0), sightang or angle_zero)
+            offsetpos = LerpVector(sightdelta, offsetpos or vector_origin, sightpos or vector_origin)
+            offsetang = LerpAngle(sightdelta, offsetang or angle_zero, sightang or angle_zero)
         end
 
         -- local eepos, eeang = Vector(0, 0, 0), Angle(0, 0, 0)
@@ -309,19 +315,19 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         --         cpos = cpos + cang:Up() * (apos.x - cpos.x)
         --         -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
-        --         cpos = cpos + cang:Forward() * (apos.z + cpos.z)
+        --         cpos = cpos + cangforward * (apos.z + cpos.z)
         --     end
 
         if self.BottomBarMode == 1 then
-            cpos = cpos - cang:Forward() * 5 -- extended cust offset
+            cpos = cpos - cangforward * 5 -- extended cust offset
         else
-            cpos = cpos - cang:Forward() * 1.5 -- idle offset
+            cpos = cpos - cangforward * 1.5 -- idle offset
 
         end
 
-        cpos = cpos + cang:Up() * self.CustomizePanX
-        cpos = cpos + cang:Forward() * (self.CustomizePanY - 0.7)
-        cpos = cpos + Vector(0, 1, 0) * (self.CustomizeZoom + 10)
+        cpos = cpos + cangup * self.CustomizePanX
+        cpos = cpos + cangforward * (self.CustomizePanY - 0.7)
+        cpos = cpos + somevector2 * (self.CustomizeZoom + 10)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
@@ -345,21 +351,27 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     lht = ht
 
-    pos = pos + (ang:Right() * offsetpos.x)
-    pos = pos + (ang:Forward() * offsetpos.y)
-    pos = pos + (ang:Up() * offsetpos.z)
+    local angup, angright, angforward = ang:Up(), ang:Right(), ang:Forward()
+    local oldangup, oldangright, oldangforward = oldang:Up(), oldang:Right(), oldang:Forward()
 
-    ang:RotateAroundAxis(oldang:Up(), offsetang.p)
-    ang:RotateAroundAxis(oldang:Right(), offsetang.y)
-    ang:RotateAroundAxis(oldang:Forward(), offsetang.r)
+    pos = pos + (angright * offsetpos.x)
+    pos = pos + (angforward * offsetpos.y)
+    pos = pos + (angup * offsetpos.z)
 
-    pos = pos + (oldang:Right() * extra_offsetpos[1])
-    pos = pos + (oldang:Forward() * extra_offsetpos[2])
-    pos = pos + (oldang:Up() * extra_offsetpos[3])
 
-    ang:RotateAroundAxis(oldang:Up(), extra_offsetang[1])
-    ang:RotateAroundAxis(oldang:Right(), extra_offsetang[2])
-    ang:RotateAroundAxis(oldang:Forward(), extra_offsetang[3])
+    ang:RotateAroundAxis(oldangup, offsetang.p)
+    ang:RotateAroundAxis(oldangright, offsetang.y)
+    ang:RotateAroundAxis(oldangforward, offsetang.r)
+
+    angup, angright, angforward = ang:Up(), ang:Right(), ang:Forward()
+
+    pos = pos + (oldangright * extra_offsetpos[1])
+    pos = pos + (oldangforward * extra_offsetpos[2])
+    pos = pos + (oldangup * extra_offsetpos[3])
+
+    ang:RotateAroundAxis(oldangup, extra_offsetang[1])
+    ang:RotateAroundAxis(oldangright, extra_offsetang[2])
+    ang:RotateAroundAxis(oldangforward, extra_offsetang[3])
 
     if curvedcustomizedelta > 0 then
         if !self.CustomizeNoRotate then
@@ -372,12 +384,12 @@ function SWEP:GetViewModelPosition(pos, ang)
             -- local px, py = rotatearound2dpoint(pos.x - 4, pos.y - 15, self.CustomizePitch, pos.x, pos.y)
             -- i have no fucking ideaaaaa im bad at trigonometry
 
-            pos = pos + (ang:Right() * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-            pos = pos + (ang:Forward() * math.cos(math.rad(self.CustomizePitch)) * -18) * curvedcustomizedelta ^ 2
+            pos = pos + (angright * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
+            pos = pos + (angforward * math.cos(math.rad(self.CustomizePitch)) * -18) * curvedcustomizedelta ^ 2
         end
 
-        pos = pos + (ang:Right() * -18) * curvedcustomizedelta ^ 2
-        pos = pos + (ang:Forward() * 18) * curvedcustomizedelta ^ 2
+        pos = pos + (angright * -18) * curvedcustomizedelta ^ 2
+        pos = pos + (angforward * 18) * curvedcustomizedelta ^ 2
 
         if !self.CustomizeNoRotate then
             ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
@@ -391,13 +403,13 @@ function SWEP:GetViewModelPosition(pos, ang)
         local sighted = Lerp(sightdelta, 1, 0.1)
         local ct = CurTime() * math.pi * Lerp(sightdelta, 1, 0.5)
 
-        pos:Sub(ang:Right() *               sighted * math.sin(ct * 0.8)   * 0.01)    -- X 
-        pos:Sub(ang:Up() *                  sighted * math.cos(ct * 0.84)  * 0.02)    -- Y
-        pos:Sub(ang:Forward() *             sighted * math.cos(ct * 0.84)  * 0.02)    -- Z
+        pos:Sub(angright *               sighted * math.sin(ct * 0.8)   * 0.01)    -- X 
+        pos:Sub(angup *                  sighted * math.cos(ct * 0.84)  * 0.02)    -- Y
+        pos:Sub(angforward *             sighted * math.cos(ct * 0.84)  * 0.02)    -- Z
 
-        ang:RotateAroundAxis(ang:Right(),   sighted * math.sin(ct * 0.84)  * -0.07)   -- P
-        ang:RotateAroundAxis(ang:Up(),      sighted * math.cos(ct * -0.65) * -0.07)   -- Y
-        ang:RotateAroundAxis(ang:Forward(), sighted * math.sin(ct * 0.5)   *  0.25)    -- R
+        ang:RotateAroundAxis(angright,   sighted * math.sin(ct * 0.84)  * -0.07)   -- P
+        ang:RotateAroundAxis(angup,      sighted * math.cos(ct * -0.65) * -0.07)   -- Y
+        ang:RotateAroundAxis(angforward, sighted * math.sin(ct * 0.5)   *  0.25)    -- R
     end
     
     pos, ang = self:GetViewModelRecoil(pos, ang)
@@ -448,7 +460,7 @@ function SWEP:GetViewModelPosition(pos, ang)
             wm.slottbl.Ang = self.WorldModelOffset.Ang
         else
             if LocalPlayer() == self:GetOwner() then
-                wm.slottbl.Pos = (self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos) - self.ViewModelPos * Vector(-1, -1, 1)
+                wm.slottbl.Pos = (self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos) - self.ViewModelPos * somevector3
                 wm.slottbl.Ang = (self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
             end
         end
@@ -472,18 +484,22 @@ function SWEP:WidescreenFix(target)
 end
 
 function SWEP:GetViewModelFOV()
-    -- local target = self:GetOwner():GetFOV() + GetConVar("arc9_fov"):GetInt()
     local owner = self:GetOwner()
-    local target = (self:GetProcessedValue("ViewModelFOVBase") or owner:GetFOV()) + (self:GetCustomize() and 0 or GetConVar("arc9_fov"):GetInt())
+    local ownerfov = owner:GetFOV()
+    local convarfov = GetConVar("arc9_fov"):GetInt()
+    local curtime = CurTime()
+
+    -- local target = owner:GetFOV() + convarfov
+    local target = (self:GetProcessedValue("ViewModelFOVBase") or ownerfov) + (self:GetCustomize() and 0 or convarfov)
 
     if self:GetInSights() then
         -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
-        target = self:GetSight().ViewModelFOV or (75 + GetConVar("arc9_fov"):GetInt())
+        target = self:GetSight().ViewModelFOV or (75 + convarfov)
     end
 
     for _, mod in pairs(self.FOV_RecoilMods) do
-        local per_pre = math.TimeFraction( mod.realstart, mod.time_start, CurTime() )
-        local per_act = math.TimeFraction( mod.time_start, mod.time_end, CurTime() )
+        local per_pre = math.TimeFraction( mod.realstart, mod.time_start, curtime)
+        local per_act = math.TimeFraction( mod.time_start, mod.time_end, curtime)
         if per_act < 0 then
             per_act = per_pre
             if mod.func_pre then per_act = mod.func_pre(per_act) end
@@ -494,8 +510,8 @@ function SWEP:GetViewModelFOV()
         per_act = math.Clamp(per_act, 0, 1)
         local satarget = 0
         satarget = satarget + (mod.amount * per_act)
-        target = target + satarget * ( target / (owner:GetFOV() + GetConVar("arc9_fov"):GetInt() ) )
-        if mod.time_end < CurTime() then self.FOV_RecoilMods[_] = nil end
+        target = target + satarget * ( target / (ownerfov + convarfov) )
+        if mod.time_end < curtime then self.FOV_RecoilMods[_] = nil end
     end
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
@@ -505,5 +521,5 @@ function SWEP:GetViewModelFOV()
     return self.SmoothedViewModelFOV
     -- return 60 * self:GetSmoothedFOVMag()
     -- return 150
-    -- return self:GetOwner():GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)
+    -- return owner:GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)
 end

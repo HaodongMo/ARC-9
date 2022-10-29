@@ -233,7 +233,7 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     if !ignorescale then
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
-        vec = vec * (slottbl.Scale or 1)
+        vec:Mul(slottbl.Scale or 1)
         scale:Scale(vec)
         csmodel:EnableMatrix("RenderMultiply", scale)
     end

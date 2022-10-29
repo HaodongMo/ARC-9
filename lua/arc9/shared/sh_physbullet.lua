@@ -292,7 +292,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
     local newpos = oldpos + (oldvel * timestep)
     local newvel = oldvel - (dir * drag)
-    newvel = newvel - (Vector(0, 0, 1) * gravity)
+    newvel = newvel - (vector_up * gravity)
 
     if bullet.Imaginary then
         -- the bullet has exited the map, but will continue being visible.
