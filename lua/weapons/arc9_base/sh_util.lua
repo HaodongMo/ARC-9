@@ -110,3 +110,22 @@ function SWEP:RotateAroundPoint(pos, ang, point, offset, offset_ang)
 
     return pos, newang
 end
+
+
+
+if CLIENT then
+
+    function SWEP:ScaleFOVByWidthRatio( fovDegrees, ratio )
+        local halfAngleRadians = fovDegrees * ( 0.5 * math.pi / 180 )
+        local t = math.tan( halfAngleRadians )
+        t = t * ratio
+        local retDegrees = ( 180 / math.pi ) * math.atan( t )
+        return retDegrees * 2
+    end
+
+
+    function SWEP:WidescreenFix(target)
+        return self:ScaleFOVByWidthRatio(target, ((ScrW and ScrW() or 4) / (ScrH and ScrH() or 3)) / (4 / 3))
+    end
+
+end

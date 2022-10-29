@@ -1,3 +1,6 @@
+
+local vmaxs, vmins = Vector(2, 2, 2), Vector(-2, -2, -2)
+
 function SWEP:MeleeAttack(bypass)
     if !bypass then
         if self:StillWaiting() then return end
@@ -22,13 +25,15 @@ function SWEP:MeleeAttack(bypass)
 
     self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeSwingSound")) or "", 75, 100, 1, CHAN_VOICE)
 
+    local owner = self:GetOwner()
+
     local tr = util.TraceHull({
-        start = self:GetOwner():EyePos(),
-        endpos = self:GetOwner():EyePos() + (self:GetOwner():EyeAngles():Forward() * self:GetProcessedValue("BashLungeRange")),
+        start = owner:EyePos(),
+        endpos = owner:EyePos() + (owner:EyeAngles():Forward() * self:GetProcessedValue("BashLungeRange")),
         mask = MASK_SHOT,
-        filter = self:GetOwner(),
-        maxs = Vector(16, 16, 16),
-        mins = Vector(-16, -16, -16)
+        filter = owner,
+        maxs = vmaxs,
+        mins = vmins
     })
 
     if tr.Hit then
@@ -37,7 +42,7 @@ function SWEP:MeleeAttack(bypass)
         end
     end
 
-    self:SetFreeAimAngle(Angle(0, 0, 0))
+    self:SetFreeAimAngle(angle_zero)
 
     self:SetInMeleeAttack(true)
 
@@ -45,14 +50,18 @@ function SWEP:MeleeAttack(bypass)
     self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PreBashTime") + self:GetProcessedValue("PostBashTime"))
 end
 
+local vmaxs2, vmins2 = Vector(2, 2, 2), Vector(-2, -2, -2)
+
 function SWEP:MeleeAttackShoot()
+    local owner = self:GetOwner()
+
     local tr = util.TraceHull({
-        start = self:GetOwner():EyePos(),
-        endpos = self:GetOwner():EyePos() + (self:GetOwner():EyeAngles():Forward() * self:GetProcessedValue("BashRange")),
+        start = owner:EyePos(),
+        endpos = owner:EyePos() + (owner:EyeAngles():Forward() * self:GetProcessedValue("BashRange")),
         mask = MASK_SHOT,
-        filter = self:GetOwner(),
-        maxs = Vector(2, 2, 2),
-        mins = Vector(-2, -2, -2)
+        filter = owner,
+        maxs = vmaxs2,
+        mins = vmins2
     })
 
     if tr.Hit then
@@ -70,7 +79,7 @@ function SWEP:MeleeAttackShoot()
             end
         else
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound")) or "", 75, 100, 1, CHAN_VOICE)
-            util.Decal(self:GetProcessedValue("BashDecal"), tr.HitPos + (tr.HitNormal * 8), tr.HitPos - (tr.HitNormal * 8), self:GetOwner())
+            util.Decal(self:GetProcessedValue("BashDecal"), tr.HitPos + (tr.HitNormal * 8), tr.HitPos - (tr.HitNormal * 8), owner)
 
             if IsFirstTimePredicted() then
                 local fx = EffectData()
@@ -91,9 +100,9 @@ function SWEP:MeleeAttackShoot()
             local dmg = DamageInfo()
 
             dmg:SetDamage(self:GetProcessedValue("BashDamage"))
-            dmg:SetDamageForce(self:GetOwner():GetAimVector() * 32)
+            dmg:SetDamageForce(owner:GetAimVector() * 32)
             dmg:SetDamageType(DMG_CLUB)
-            dmg:SetAttacker(self:GetOwner())
+            dmg:SetAttacker(owner)
             dmg:SetInflictor(self)
 
             tr.Entity:TakeDamageInfo(dmg)

@@ -1,10 +1,11 @@
 function SWEP:ShouldLOD()
-    if LocalPlayer() == self:GetOwner() then return 0 end
+    local owner = self:GetOwner()
+    if LocalPlayer() == owner then return 0 end
 
     local dsquared
 
-    if IsValid(self:GetOwner()) then
-        dsquared = EyePos():DistToSqr(self:GetOwner():GetPos())
+    if IsValid(owner) then
+        dsquared = EyePos():DistToSqr(owner:GetPos())
     else
         dsquared = EyePos():DistToSqr(self:GetPos())
     end
