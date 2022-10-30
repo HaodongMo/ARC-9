@@ -409,7 +409,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         ang:RotateAroundAxis(angright,   sighted * math.sin(ct * 0.84)  * -0.07)   -- P
         ang:RotateAroundAxis(angup,      sighted * math.cos(ct * -0.65) * -0.07)   -- Y
-        ang:RotateAroundAxis(angforward, sighted * math.sin(ct * 0.5)   *  0.25)    -- R
+        ang:RotateAroundAxis(angforward, sighted * math.sin(ct * 0.5)   *  0.25)   -- R
     end
     
     pos, ang = self:GetViewModelRecoil(pos, ang)

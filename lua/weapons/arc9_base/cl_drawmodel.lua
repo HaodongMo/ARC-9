@@ -126,19 +126,19 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 model:DrawModel()
             end
 
-            if model.Flare and !self:GetCustomize() then
-                if model.Flare.Attachment then
-                    local attpos = model:GetAttachment(model.Flare.Attachment)
+            -- if model.Flare and !self:GetCustomize() then
+            --     if model.Flare.Attachment then
+            --         local attpos = model:GetAttachment(model.Flare.Attachment)
 
-                    if attpos then
-                        self:DrawLightFlare(attpos.Pos, -attpos.Ang:Right(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
-                    else
-                        self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
-                    end
-                else
-                    self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
-                end
-            end
+            --         if attpos then
+            --             self:DrawLightFlare(attpos.Pos, -attpos.Ang:Right(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
+            --         else
+            --             self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
+            --         end
+            --     else
+            --         self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
+            --     end
+            -- end
 
             if atttbl.DrawFunc then
                 atttbl.DrawFunc(self, model, wm)

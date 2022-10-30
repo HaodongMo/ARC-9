@@ -221,8 +221,8 @@ function SWEP:ThinkVisualRecoil()
         self.VisualRecoilPos = vpa
         self.VisualRecoilPosVel = vpv
     else
-        self.VisualRecoilPos = vec0
-        self.VisualRecoilPosVel = vec0
+        self.VisualRecoilPos = Vector()
+        self.VisualRecoilPosVel = self.VisualRecoilPos
     end
 
     local vaa = self.VisualRecoilAng
