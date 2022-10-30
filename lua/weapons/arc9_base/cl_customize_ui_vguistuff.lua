@@ -99,7 +99,7 @@ ARC9AttButton.Icon = Material("arc9/ui/settings.png", "mips")
 
 ARC9AttButton.MatIdle = Material("arc9/ui/att.png", "mips")
 ARC9AttButton.MatEmpty = Material("arc9/ui/att_empty.png", "mips")
-ARC9AttButton.MatHover = Material("arc9/ui/att_hover.png", "mips")
+-- ARC9AttButton.MatHover = Material("arc9/ui/att_hover.png", "mips")
 ARC9AttButton.MatBlock = Material("arc9/ui/att_block.png", "mips")
 
 ARC9AttButton.MatMarkerInstalled = Material("arc9/ui/mark_installed.png", "mips smooth")
