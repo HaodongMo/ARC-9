@@ -871,11 +871,12 @@ local function menu_server_attachments(panel)
         label = "NPCs Get Random Attachments",
         command = "arc9_atts_npc"
     })
-    panel:AddControl("checkbox", {
-        label = "Total Anarchy Mode",
-        command = "arc9_atts_anarchy"
-    })
-    panel:ControlHelp( "For the love of God, don't enable this." )
+    --Removed Anarchy Mode from menu to prevent inexperienced users from activating it
+    -- panel:AddControl("checkbox", {
+    --     label = "Total Anarchy Mode",
+    --     command = "arc9_atts_anarchy"
+    -- })
+    -- panel:ControlHelp( "For the love of God, don't enable this." )
 end
 
 c1 = {
@@ -1068,7 +1069,6 @@ local function menu_server_modifiers(panel)
     panel:ControlHelp( " - \"RecoilMultCrouch\" \"0.1\" to reduce recoil to 10% when crouching." )
     panel:ControlHelp( " - \"RPMMultOddShot\" \"0.5\" to make every other shot 600RPM." )
 
-    
     function but_add:DoClick()
         listview:AddLine( string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue()) )
     end
