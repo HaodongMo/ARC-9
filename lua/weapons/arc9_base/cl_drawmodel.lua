@@ -20,8 +20,10 @@ function SWEP:ShouldLOD()
 end
 
 function SWEP:DrawCustomModel(wm, custompos, customang)
-    if !wm and !IsValid(self:GetOwner()) then return end
-    if !wm and self:GetOwner():IsNPC() then return end
+    local owner = self:GetOwner()
+
+    if !wm and !IsValid(owner) then return end
+    if !wm and owner:IsNPC() then return end
     if custompos then wm = true end
 
     local mdl = self.VModel
@@ -54,91 +56,99 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         end
     end
 
+    local onground = wm and !IsValid(owner)
+
     if lod < 2 then
         for _, model in ipairs(mdl or {}) do
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
 
-            if model.charmparent then
-                continue
-            else
-                local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or Angle(0, 0, 0))
 
-                if !wm and model.IsAnimationProxy then
-                    apos = Vector(0, 0, 0)
-                    aang = Angle(0, 0, 0)
-                end
-
-                model:SetPos(apos)
-                model:SetAngles(aang)
-                model:SetRenderOrigin(apos)
-                model:SetRenderAngles(aang)
-                model:SetupBones()
-
-                if model.charmmdl then
-                    local bpos, bang
-
-                    local bonename = atttbl.CharmBone
-                    local boneindex = model:LookupBone(bonename)
-
-                    local bonemat = model:GetBoneMatrix(boneindex)
-                    if bonemat then
-                        bpos = bonemat:GetTranslation()
-                        bang = bonemat:GetAngles()
+            if !onground or model.OptimizPrevWMPos != self:GetPos() then -- mega optimiz
+                model.OptimizPrevWMPos = onground and self:GetPos() or nil
+                    
+                if model.charmparent then
+                    continue
+                else
+                    if !onground and model.IsAnimationProxy then
+                        apos = Vector(0, 0, 0)
+                        aang = Angle(0, 0, 0)
                     end
 
-                    if bpos and bang then
-                        local coffset = atttbl.CharmOffset or Vector(0, 0, 0)
-                        local cangle = atttbl.CharmAngle or Angle(0, 0, 0)
+                    local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or angle_zero)
+                    model:SetPos(apos)
+                    model:SetAngles(aang)
+                    model:SetRenderOrigin(apos)
+                    model:SetRenderAngles(aang)
+                    model:SetupBones()
 
-                        bpos = bpos + bang:Forward() * coffset.y
-                        bpos = bpos + bang:Up() * coffset.z
-                        bpos = bpos + bang:Right() * coffset.x
+                    
+                    if model.charmmdl then
+                        local bpos, bang
 
-                        local up, right, forward = bang:Up(), bang:Right(), bang:Forward()
+                        local bonename = atttbl.CharmBone
+                        local boneindex = model:LookupBone(bonename)
 
-                        bang:RotateAroundAxis(up, cangle.p)
-                        bang:RotateAroundAxis(right, cangle.y)
-                        bang:RotateAroundAxis(forward, cangle.r)
+                        local bonemat = model:GetBoneMatrix(boneindex)
+                        if bonemat then
+                            bpos = bonemat:GetTranslation()
+                            bang = bonemat:GetAngles()
+                        end
 
-                        model.charmmdl:SetPos(bpos)
-                        model.charmmdl:SetAngles(bang)
-                        model.charmmdl:SetupBones()
-                        model.charmmdl:DrawModel()
+                        if bpos and bang then
+                            local coffset = atttbl.CharmOffset or Vector(0, 0, 0)
+                            local cangle = atttbl.CharmAngle or Angle(0, 0, 0)
+
+                            bpos = bpos + bang:Forward() * coffset.y
+                            bpos = bpos + bang:Up() * coffset.z
+                            bpos = bpos + bang:Right() * coffset.x
+
+                            local up, right, forward = bang:Up(), bang:Right(), bang:Forward()
+
+                            bang:RotateAroundAxis(up, cangle.p)
+                            bang:RotateAroundAxis(right, cangle.y)
+                            bang:RotateAroundAxis(forward, cangle.r)
+
+                            model.charmmdl:SetPos(bpos)
+                            model.charmmdl:SetAngles(bang)
+                            model.charmmdl:SetupBones()
+                            model.charmmdl:DrawModel()
+                        end
+                    end
+                end
+
+                -- if !wm and atttbl.HoloSight then
+                --     self:DoHolosight(model, atttbl)
+                -- end
+
+                if !ARC9.PresetCam then
+                    if !wm and atttbl.RTScope then
+                        local active = slottbl.Address == self:GetActiveSightSlotTable().Address
+                        self:DoRTScope(model, atttbl, active)
+                    elseif wm and atttbl.RTScope then
+                        self:DoRTScope(model, atttbl, false)
                     end
                 end
             end
 
-            -- if !wm and atttbl.HoloSight then
-            --     self:DoHolosight(model, atttbl)
-            -- end
-
-            if !ARC9.PresetCam then
-                if !wm and atttbl.RTScope then
-                    local active = slottbl.Address == self:GetActiveSightSlotTable().Address
-                    self:DoRTScope(model, atttbl, active)
-                elseif wm and atttbl.RTScope then
-                    self:DoRTScope(model, atttbl, false)
-                end
-            end
 
             if !model.NoDraw then
                 model:DrawModel()
             end
 
-            -- if model.Flare and !self:GetCustomize() then
-            --     if model.Flare.Attachment then
-            --         local attpos = model:GetAttachment(model.Flare.Attachment)
+        --     -- if model.Flare and !self:GetCustomize() then
+        --     --     if model.Flare.Attachment then
+        --     --         local attpos = model:GetAttachment(model.Flare.Attachment)
 
-            --         if attpos then
-            --             self:DrawLightFlare(attpos.Pos, -attpos.Ang:Right(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
-            --         else
-            --             self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
-            --         end
-            --     else
-            --         self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
-            --     end
-            -- end
+        --     --         if attpos then
+        --     --             self:DrawLightFlare(attpos.Pos, -attpos.Ang:Right(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
+        --     --         else
+        --     --             self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
+        --     --         end
+        --     --     else
+        --     --         self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
+        --     --     end
+        --     -- end
 
             if atttbl.DrawFunc then
                 atttbl.DrawFunc(self, model, wm)
