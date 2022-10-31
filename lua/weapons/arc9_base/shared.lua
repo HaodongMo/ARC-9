@@ -259,6 +259,7 @@ SWEP.EjectDelay = 0 -- When eject shell on cycle (pretty dumb, better'd just use
 
 SWEP.ReloadWhileSprint = true -- This weapon can reload while the user is sprinting.
 SWEP.ReloadInSights = true -- This weapon can aim down sights while reloading.
+SWEP.PartialReloadCountsTowardsNthReload = true -- If the gun is not empty, it counts towards the Nth reload. Useful for guns with spare magazine animations.
 
 SWEP.CanFireUnderwater = false -- This weapon can shoot while underwater.
 
@@ -1255,6 +1256,7 @@ function SWEP:SetupDataTables()
     self:SetFinishFiremodeAnimTime(0)
     self:SetReloadFinishTime(0)
     self:SetLastHolsterTime(0)
+    self:SetNthReload(0)
 end
 
 function SWEP:SecondaryAttack()

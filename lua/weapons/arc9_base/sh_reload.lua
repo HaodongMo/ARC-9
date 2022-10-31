@@ -303,22 +303,26 @@ function SWEP:EndReload()
             if self:GetUBGL() then
                 anim = "reload_ubgl_finish"
             end
-			
-			local canim = anim
-			
-			for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+            
+            local canim = anim
+            
+            for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
                 if self:HasAnimation(anim .. "_" .. tostring(i)) then
                     canim = anim .. "_" .. tostring(i)
-				end
+                end
             end
-			
-			anim = canim
-			
+            
+            anim = canim
+            
             self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
             self:SetReloading(false)
 
             self:SetNthShot(0)
-            self:SetNthReload(self:GetNthReload() + 1)
+
+            if self:GetEmptyReload() or self:GetProcessedValue("PartialReloadCountsTowardsNthReload") then
+                self:SetNthReload(self:GetNthReload() + 1)
+            end
+
             self:SetEmptyReload(false)
         else
             local anim = "reload_insert"
@@ -333,7 +337,7 @@ function SWEP:EndReload()
                 if self:HasAnimation(anim .. "_" .. tostring(i)) then
                     banim = anim .. "_" .. tostring(i)
                     attempt_to_restore = i
-				elseif self:HasAnimation(anim .. "_bullet_" .. tostring(i)) then
+                elseif self:HasAnimation(anim .. "_bullet_" .. tostring(i)) then
                     banim = anim .. "_bullet_" .. tostring(i)
                     attempt_to_restore = 1
                 end
@@ -346,7 +350,7 @@ function SWEP:EndReload()
 
             local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
 
-            local res = math.min(math.min(attempt_to_restore, self:GetCapacity(self:GetUBGL()) - clip), ammo)
+            -- local res = math.min(math.min(attempt_to_restore, self:GetCapacity(self:GetUBGL()) - clip), ammo)
 
             -- self:SetLoadedRounds(res)
             self:SetLoadedRounds(math.max(1, self:Clip1())) -- probably very dumb but idk i just want it work correctly with bullet b ones
@@ -367,7 +371,10 @@ function SWEP:EndReload()
         self:SetReloading(false)
 
         self:SetNthShot(0)
-        self:SetNthReload(self:GetNthReload() + 1)
+
+        if self:GetEmptyReload() or self:GetProcessedValue("PartialReloadCountsTowardsNthReload") then
+            self:SetNthReload(self:GetNthReload() + 1)
+        end
         -- self:SetLoadedRounds(self:Clip1())
 
         self:SetEmptyReload(false)

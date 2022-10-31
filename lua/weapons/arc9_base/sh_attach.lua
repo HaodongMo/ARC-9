@@ -84,6 +84,7 @@ function SWEP:PostModify(toggleonly)
     if !toggleonly then
         self:CancelReload()
         -- self:PruneAttachments()
+        self:SetNthReload(0)
     end
 
     local base = baseclass.Get(self:GetClass())
