@@ -939,6 +939,14 @@ SWEP.Attachments = {
     --     Ang = Angle(0, 0, 0),
     --     CorrectiveAng = Angle(0, 0, 0), -- sometimes, the autosolver needs a little help. Try (-1, -1, 0)
     --     Scale = 1,
+    --     DuplicateModels = { -- For guns that require duplicating attachment models, e.g. akimbo
+    --          {
+    --              Bone = "",
+    --              Pos = Vector(0, 0, 0),
+    --              Ang = Angle(0, 0, 0),
+    --              Scale = 1,
+    --          }
+    --     },
     --     Icon_Offset = Vector(0, 0, 0),
     --     KeepBaseIrons = false,
     --     ExtraSightDistance = 0,

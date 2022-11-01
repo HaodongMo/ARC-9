@@ -78,14 +78,22 @@ function SWEP:GetMuzzleDevice(wm)
         muzz = self:GetWM()
 
         if self.MuzzleDeviceWM then
-            return self.MuzzleDeviceWM
+            if istable(self.MuzzleDeviceWM) then
+                return self.MuzzleDeviceWM[(self:GetNthShot() % #self.MuzzleDeviceWM) + 1]
+            else
+                return self.MuzzleDeviceWM
+            end
         end
     else
         model = self.VModel
         muzz = self:GetVM()
 
         if self.MuzzleDeviceVM then
-            return self.MuzzleDeviceVM
+            if istable(self.MuzzleDeviceVM) then
+                return self.MuzzleDeviceVM[(self:GetNthShot() % #self.MuzzleDeviceVM) + 1]
+            else
+                return self.MuzzleDeviceVM
+            end
         end
     end
 

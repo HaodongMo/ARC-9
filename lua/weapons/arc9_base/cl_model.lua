@@ -1,4 +1,5 @@
-function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
+function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, dupli)
+    dupli = dupli or 0
     idle = idle or false
     local parentmdl = nil
     if custompos then wm = true end
@@ -63,6 +64,13 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang)
     local offset_pos = slottbl.Pos or Vector(0, 0, 0)
     local offset_ang = slottbl.Ang or Angle(0, 0, 0)
     local bpos, bang
+
+    if dupli > 0 then
+        offset_pos = slottbl.DuplicateModels[dupli].Pos or offset_pos
+        offset_ang = slottbl.DuplicateModels[dupli].Ang or offset_ang
+
+        bone = slottbl.DuplicateModels[dupli].Bone or bone
+    end
 
     if parentmdl and bone then
         local boneindex = parentmdl:LookupBone(bone)
@@ -402,77 +410,111 @@ function SWEP:SetupModel(wm, lod, cm)
 
         if !atttbl.Model then continue end
 
-        local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm)
+        local dupli = slottbl.DuplicateModels or {}
 
-        if csmodel.DrawFunc then
-            csmodel.DrawFunc(self, csmodel, wm)
-        end
+        for i = 0, #dupli do
+            local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm, dupli)
 
-        local proxmodel
+            csmodel.Duplicate = i
 
-        if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice) then
-            proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
-            proxmodel.NoDraw = true
+            if csmodel.DrawFunc then
+                csmodel.DrawFunc(self, csmodel, wm)
+            end
 
-            local scale = Matrix()
-            local vec = Vector(1, 1, 1) * (slottbl.Scale or 1) * (atttbl.Scale or 1)
-            scale:Scale(vec)
-            proxmodel:EnableMatrix("RenderMultiply", scale)
-        end
+            local proxmodel
 
-        if atttbl.MuzzleDevice and !cm then
-            if (atttbl.MuzzleDevice_Priority or 0) > self.MuzzleDevice_Priority then
-                self.MuzzleDevice_Priority = atttbl.MuzzleDevice_Priority or 0
-                proxmodel.IsMuzzleDevice = true
+            if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice) then
+                proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
+                proxmodel.NoDraw = true
+                proxmodel.Duplicate = i
+
+                local scale = Matrix()
+                local vec = Vector(1, 1, 1) * (slottbl.Scale or 1) * (atttbl.Scale or 1)
+                if i > 0 then
+                    vec = vec * (slottbl.DuplicateModels[i].Scale or 1)
+                end
+                scale:Scale(vec)
+                proxmodel:EnableMatrix("RenderMultiply", scale)
+
+                local tbl = {
+                    Model = proxmodel,
+                    Weapon = self
+                }
+
+                table.insert(ARC9.CSModelPile, tbl)
+            end
+
+            if atttbl.MuzzleDevice and !cm then
+                if (atttbl.MuzzleDevice_Priority or 0) > self.MuzzleDevice_Priority or ((atttbl.MuzzleDevice_Priority or 0) == self.MuzzleDevice_Priority and i > 0) then
+                    self.MuzzleDevice_Priority = atttbl.MuzzleDevice_Priority or 0
+                    proxmodel.IsMuzzleDevice = true
+
+                    if #dupli > 0 then
+                        if i == 0 then
+                            if wm then
+                                self.MuzzleDeviceWM = {proxmodel}
+                            else
+                                self.MuzzleDeviceVM = {proxmodel}
+                            end
+                        else
+                            if wm then
+                                table.insert(self.MuzzleDeviceWM, proxmodel)
+                            else
+                                table.insert(self.MuzzleDeviceVM, proxmodel)
+                            end
+                        end
+                    else
+                        if wm then
+                            self.MuzzleDeviceWM = proxmodel
+                        else
+                            self.MuzzleDeviceVM = proxmodel
+                        end
+                    end
+                end
+            end
+
+            if !cm and i == 0 then
                 if wm then
-                    self.MuzzleDeviceWM = proxmodel
+                    slottbl.WModel = csmodel
                 else
-                    self.MuzzleDeviceVM = proxmodel
+                    slottbl.VModel = csmodel
                 end
             end
-        end
 
-        if !cm then
-            if wm then
-                slottbl.WModel = csmodel
-            else
-                slottbl.VModel = csmodel
-            end
-        end
+            if !cm and i == 0 then
+                if atttbl.IKAnimationProxy then
+                    local animproxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
+                    animproxmodel.NoDraw = true
+                    animproxmodel.IsAnimationProxy = true
 
-        if !cm then
-            if atttbl.IKAnimationProxy then
-                local animproxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
-                animproxmodel.NoDraw = true
-                animproxmodel.IsAnimationProxy = true
-
-                slottbl.GunDriverModel = animproxmodel
-            end
-        end
-
-        if !cm and atttbl.LHIK or atttbl.RHIK then
-            slottbl.IKModel = proxmodel
-
-            if atttbl.LHIK then
-                if (atttbl.LHIK_Priority or 0) > self.LHIK_Priority then
-                    self.LHIK_Priority = atttbl.LHIK_Priority or 0
-                    if wm then
-                        self.LHIKModelWM = proxmodel
-                    else
-                        self.LHIKModel = proxmodel
-                    end
-                    self.LHIKModelAddress = slottbl.Address
+                    slottbl.GunDriverModel = animproxmodel
                 end
             end
-            if atttbl.RHIK then
-                if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
-                    self.RHIK_Priority = atttbl.RHIK_Priority or 0
-                    if wm then
-                        self.RHIKModelWM = proxmodel
-                    else
-                        self.RHIKModel = proxmodel
+
+            if !cm and i == 0 and atttbl.LHIK or atttbl.RHIK then
+                slottbl.IKModel = proxmodel
+
+                if atttbl.LHIK then
+                    if (atttbl.LHIK_Priority or 0) > self.LHIK_Priority then
+                        self.LHIK_Priority = atttbl.LHIK_Priority or 0
+                        if wm then
+                            self.LHIKModelWM = proxmodel
+                        else
+                            self.LHIKModel = proxmodel
+                        end
+                        self.LHIKModelAddress = slottbl.Address
                     end
-                    self.RHIKModelAddress = slottbl.Address
+                end
+                if atttbl.RHIK then
+                    if (atttbl.RHIK_Priority or 0) > self.RHIK_Priority then
+                        self.RHIK_Priority = atttbl.RHIK_Priority or 0
+                        if wm then
+                            self.RHIKModelWM = proxmodel
+                        else
+                            self.RHIKModel = proxmodel
+                        end
+                        self.RHIKModelAddress = slottbl.Address
+                    end
                 end
             end
         end

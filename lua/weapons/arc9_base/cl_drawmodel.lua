@@ -66,7 +66,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
             if !onground or model.OptimizPrevWMPos != self:GetPos() then -- mega optimiz
                 model.OptimizPrevWMPos = onground and self:GetPos() or nil
-                    
+
                 if model.charmparent then
                     continue
                 else
@@ -75,14 +75,13 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                         aang = Angle(0, 0, 0)
                     end
 
-                    local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or angle_zero)
+                    local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or angle_zero, model.Duplicate)
                     model:SetPos(apos)
                     model:SetAngles(aang)
                     model:SetRenderOrigin(apos)
                     model:SetRenderAngles(aang)
                     model:SetupBones()
 
-                    
                     if model.charmmdl then
                         local bpos, bang
 
