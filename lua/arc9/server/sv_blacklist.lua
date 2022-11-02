@@ -18,6 +18,8 @@ function ARC9:LoadBlacklist()
 
     ARC9.Blacklist = {}
 
+    if !f then return end
+
     while !f:EndOfFile() do
         local line = f:ReadLine()
 
