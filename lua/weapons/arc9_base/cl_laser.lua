@@ -1,5 +1,5 @@
-local defaulttracemat = Material("effects/laser1")
-local defaultflaremat = Material("effects/arc9_lensflare", "mips smooth")
+local defaulttracemat = Material("arc9/laser1")
+local defaultflaremat = Material("arc9/laser_glow", "mips smooth")
 local lasercolorred = Color(255, 0, 0)
 local lasercolor200 = Color(200, 200, 200)
 
