@@ -238,6 +238,8 @@ local function DarsuBob(self, pos, ang)
     smoothsidemove = Lerp(math.Clamp(FrameTime()*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5*(1.3-sightamount)  or 1
+    
+    if owner.GetSliding then if owner:GetSliding() then speedmult = 0.01 d3 = 0 smoothsidemove = -10 end end
 
     pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 
     pos:Sub(ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3 * crouchmult)                     -- Y
