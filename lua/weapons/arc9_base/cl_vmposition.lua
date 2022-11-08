@@ -411,7 +411,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         ang:RotateAroundAxis(angup,      sighted * math.cos(ct * -0.65) * -0.07)   -- Y
         ang:RotateAroundAxis(angforward, sighted * math.sin(ct * 0.5)   *  0.25)   -- R
     end
-    
+
     pos, ang = self:GetViewModelRecoil(pos, ang)
 
     if !self:GetProcessedValue("NoViewBob") then
@@ -455,7 +455,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     local wm = self:GetWM()
 
     if IsValid(wm) and curvedcustomizedelta == 0 then
-        if !self:ShouldTPIK() then
+        if !self:ShouldTPIK() or self.NoTPIKVMPos then
             wm.slottbl.Pos = self.WorldModelOffset.Pos
             wm.slottbl.Ang = self.WorldModelOffset.Ang
         else

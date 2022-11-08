@@ -106,6 +106,7 @@ SWEP.WorldModelOffset = nil
 --     Scale = 1
 -- }
 SWEP.NoTPIK = false
+SWEP.NoTPIKVMPos = false -- TPIK position is not affected by viewmodel position
 SWEP.Material = ""
 
 SWEP.Crosshair = false
