@@ -367,6 +367,11 @@ local conVars = {
         client = true
     },
     {
+        name = "tpik_framerate",
+        default = "0",
+        client = true
+    },
+    {
         name = "autoreload",
         default = "1",
         client = true

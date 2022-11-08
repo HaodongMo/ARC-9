@@ -32,12 +32,16 @@ function SWEP:DoTPIK()
 
     local dist = (ply:GetPos() - EyePos()):LengthSqr()
 
-    if dist > 25000000 then
-        tpikdelay = RealFrameTime() * 4
-    elseif dist > 6250000 then
-        tpikdelay = RealFrameTime() * 3
+    if dist > 6250000 then
+        tpikdelay = 1 / 30
     elseif dist > 1000000 then
-        tpikdelay = RealFrameTime() * 2
+        tpikdelay = tpikdelay * 3
+    end
+
+    local convartpiktime = GetConVar("arc9_tpik_framerate"):GetFloat()
+
+    if convartpiktime > 0 then
+        tpikdelay = 1 / convartpiktime
     end
 
     local shouldfulltpik = true
