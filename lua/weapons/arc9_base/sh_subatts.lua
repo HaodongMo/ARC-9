@@ -139,6 +139,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 -- subatts[i].MergeSlots = subatts[i].MergeSlots
                 subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
                 subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
+                subatts[i].LaserCorrectionAngle = parenttbl.LaserCorrectionAngle
                 if subatts[i].Installed then
                     subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
                 end
