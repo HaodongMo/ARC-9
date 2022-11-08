@@ -30,7 +30,7 @@ function SWEP:Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
     self:BuildSubAttachments(self.DefaultAttachments)
-    
+
     if !IsValid(self:GetOwner()) then -- dropped on ground
         self:PostModify()
     end
@@ -55,7 +55,7 @@ function SWEP:ClientInitialize()
             self:PostModify()
             self:SavePreset("default", true)
         end
-        
+
         self:CreateStandardPresets()
     end
 end

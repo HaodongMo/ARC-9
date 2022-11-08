@@ -180,6 +180,10 @@ function SWEP:PostModify(toggleonly)
                 self:SetClip2(0)
             end
         end
+
+        if self:GetProcessedValue("BottomlessClip") then
+            self:RestoreClip()
+        end
     end
 
     self:SetupAnimProxy()

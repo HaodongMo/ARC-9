@@ -84,6 +84,8 @@ function SWEP:Think()
 
         self:ThinkUBGL()
 
+        self:ThinkGrenade()
+
     end
 
     self:ThinkSprint()

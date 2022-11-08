@@ -201,6 +201,20 @@ SWEP.ShootEnt = nil -- Set to an entity to launch it out of this weapon.
 SWEP.ShootEntForce = 10000
 SWEP.ShootEntityData = {} -- Extra data that can be given to a projectile. Sets SENT.WeaponDataLink with this table.
 
+SWEP.Throwable = false -- Set to true to give this weapon throwing capabilities.
+SWEP.Tossable = true -- When grenade is enabled, right click will toss. Set to false to disable, allowing you to aim down sights.
+SWEP.ThrowAnimSpeed = 1
+
+SWEP.FuseTimer = -1 -- Length of time that the grenade will take to explode in your hands. -1 = Won't explode.
+
+SWEP.ThrowForceMin = 3000 -- Minimum force that the grenade will be thrown with.
+SWEP.ThrowForceMax = 5000 -- Maximum force that the grenade will be thrown with.
+SWEP.TossForce = 500 -- Force that the grenade will be thrown with when right clicked.
+
+SWEP.ThrowChargeTime = 1 -- How long it takes to charge the grenade to its maximum throw force.
+
+SWEP.ThrowTumble = true -- Grenade tumbles when thrown.
+
 -------------------------- PHYS BULLET BALLISTICS
 
 -- These settings override the player's physical bullet options.
@@ -1011,6 +1025,12 @@ SWEP.Attachments = {
 -- enter_sprint, exit_sprint, idle_sprint
 -- toggle (F)
 -- switchsights (alt+e)
+
+-- pinpull (for grenades)
+-- throw
+-- toss
+-- explodeinhands
+
 -- Suffixes (Must be in this order):
 -- _iron (When sighted)
 -- _sights (Alternative to _iron)
@@ -1195,6 +1215,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 21, "SequenceCycle")
     self:NetworkVar("Float", 22, "SequenceSpeed")
     self:NetworkVar("Float", 23, "LastHolsterTime")
+    self:NetworkVar("Float", 24, "GrenadePrimedTime")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
@@ -1231,6 +1252,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 19, "OutOfBreath")
     self:NetworkVar("Bool", 20, "Inspecting")
     self:NetworkVar("Bool", 21, "AfterShot")
+    self:NetworkVar("Bool", 22, "GrenadePrimed")
+    self:NetworkVar("Bool", 23, "GrenadeTossing")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
@@ -1248,6 +1271,7 @@ function SWEP:SetupDataTables()
     self:SetOutOfBreath(false)
     self:SetFiremode(1)
     self:SetAfterShot(false)
+    self:SetGrenadePrimed(false)
 
     self:SetRecoilUp(0)
     self:SetRecoilSide(0)

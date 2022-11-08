@@ -94,6 +94,10 @@ end
 function SWEP:PrimaryAttack()
     if self.NotAWeapon then return end
 
+    if self:GetProcessedValue("Throwable") then
+        return
+    end
+
     if self:GetProcessedValue("PrimaryBash") then
         self:MeleeAttack()
         self:SetNeedTriggerPress(true)
@@ -155,23 +159,13 @@ function SWEP:DoPrimaryAttack()
 
     if self:GetCurrentFiremode() > 0 and self:GetBurstCount() >= self:GetCurrentFiremode() then return end
 
-    local clip = self:Clip1()
+    local clip = self:GetLoadedClip()
 
     if self:GetProcessedValue("BottomlessClip") then
-        clip = self:Ammo1()
         self:RestoreClip(math.huge)
     end
 
-    if self:GetUBGL() then
-        clip = self:Clip2()
-
-        if self:GetProcessedValue("BottomlessClip") then
-            clip = self:Ammo2()
-            self:RestoreClip(math.huge)
-        end
-    end
-
-    if clip < self:GetProcessedValue("AmmoPerShot") then
+    if !self:HasAmmoInClip() then
         if self:GetUBGL() and !self:GetProcessedValue("UBGLInsteadOfSights") then
             self:ToggleUBGL(false)
             self:SetNeedTriggerPress(true)
@@ -206,26 +200,7 @@ function SWEP:DoPrimaryAttack()
         return
     end
 
-    if IsFirstTimePredicted() then
-        if self:GetUBGL() then
-            self:TakeSecondaryAmmo(self:GetProcessedValue("AmmoPerShot"))
-        else
-            if self:GetValue("BottomlessClip") then
-                if !self:GetInfiniteAmmo() then
-                    self:RestoreClip(self:GetValue("ClipSize"))
-
-                    if self:Ammo1() > 0 then
-                        local ammotype = self:GetValue("Ammo")
-                        self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
-                    else
-                        self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
-                    end
-                end
-            else
-                self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
-            end
-        end
-    end
+    self:TakeAmmo()
 
     if self:GetProcessedValue("DoFireAnimation") then
         local anim = "fire"
@@ -669,7 +644,7 @@ function SWEP:ShootRocket()
         local phys = rocket:GetPhysicsObject()
 
         if phys:IsValid() then
-            phys:ApplyForceCenter((dir + dispersion):Forward() * self:GetProcessedValue("ShootEntForce"))
+            phys:AddVelocity((dir + dispersion):Forward() * self:GetProcessedValue("ShootEntForce"))
         end
     end
 end

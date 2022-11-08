@@ -354,17 +354,20 @@ function ARC9.DrawHUD()
             firemode_pic = firemode_pics[0]
         end
 
+        if weapon:GetInfiniteAmmo() then
+            inf_reserve = true
+            weapon_reserve = 2147483640
+        end
+
         if weapon:GetProcessedValue("BottomlessClip") then
             inf_clip = true
             weapon_reserve = weapon_reserve + weapon_clip
             clip_to_show = weapon_reserve
-            weapon_clipsize = 30
+            weapon_clip = weapon_reserve
+            weapon_clipsize = 1
             chambered = 0
-        end
 
-        if weapon:GetInfiniteAmmo() then
-            inf_reserve = true
-            if inf_clip then
+            if inf_reserve then
                 clip_to_show = 2147483640 - weapon:GetNthShot() % 2147483640
             end
         end

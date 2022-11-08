@@ -1,0 +1,121 @@
+function SWEP:ThinkGrenade()
+    if !self:GetProcessedValue("Throwable") then return end
+
+    local fuse = self:GetProcessedValue("FuseTimer")
+
+    if fuse >= 0 and self:GetGrenadePrimed() then
+        local time = CurTime() - self:GetGrenadePrimedTime()
+
+        if time >= fuse then
+            self:ThrowGrenade(ARC9.NADETHROWTYPE_EXPLODEINHANDS)
+
+            if self:HasAnimation("explodeinhands") then
+                self:PlayAnimation("explodeinhands", 1, true)
+            else
+                self:PlayAnimation("throw", 1, true)
+            end
+        end
+    end
+
+    if self:GetAnimLockTime() > CurTime() then return end
+
+    local tossable = self:GetProcessedValue("Tossable") and self:HasAnimation("toss")
+
+    if !self:GetGrenadePrimed() then
+        if (tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
+            self:GetOwner():KeyDown(IN_ATTACK) and
+            self:HasAmmoInClip()
+            then
+            self:SetGrenadePrimed(true)
+            self:SetGrenadePrimedTime(CurTime())
+
+            self:PlayAnimation("pullpin", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            self:SetGrenadeTossing(false)
+        end
+    else
+        if self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK2) then
+            self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS)
+            self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
+        elseif !self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK) then
+            self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL)
+            self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+        end
+    end
+end
+
+function SWEP:ThrowGrenade(nttype)
+    self:SetGrenadePrimed(false)
+
+    self:TakeAmmo()
+
+    if CLIENT then return end
+
+    local time = math.huge
+    local fusetimer = self:GetProcessedValue("FuseTimer")
+    local forcemax = self:GetProcessedValue("ThrowForceMax")
+    local forcemin = self:GetProcessedValue("ThrowForceMin")
+    local forcetime = self:GetProcessedValue("ThrowChargeTime")
+
+    time = CurTime() - self:GetGrenadePrimedTime()
+
+    local force = forcemax
+
+    if forcetime > 0 then
+        force = forcemin + (forcemax - forcemin) * math.Clamp(time / forcetime, 0, 1)
+    end
+
+    local src = self:GetShootPos()
+    local dir = self:GetShootDir()
+
+    local num = self:GetProcessedValue("Num")
+    local ent = self:GetProcessedValue("ShootEnt")
+
+    if self:GetOwner():IsNPC() then
+        -- ang = self:GetOwner():GetAimVector():Angle()
+        spread = self:GetNPCBulletSpread()
+    else
+        spread = self:GetProcessedValue("Spread")
+    end
+
+    spread = math.Max(spread, 0)
+
+    for i = 1, num do
+        local nade = ents.Create(ent)
+
+        if !IsValid(nade) then return end
+        local dispersion = Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0)
+
+        dispersion = dispersion * spread * 36
+
+        nade:SetPos(src)
+        nade:SetAngles(dir)
+        nade:SetOwner(self:GetOwner())
+        nade:Spawn()
+
+        if fusetimer >= 0 then
+            nade.LifeTime = fusetimer - time
+        end
+
+        if nttype  == ARC9.NADETHROWTYPE_TOSS then
+            force = self:GetProcessedValue("TossForce")
+        elseif nttype == ARC9.NADETHROWTYPE_EXPLODEINHANDS then
+            force = 0
+            time = 0
+            nade:Detonate()
+        end
+
+        local phys = nade:GetPhysicsObject()
+
+        if IsValid(phys) then
+            if self:GetProcessedValue("ThrowTumble") then
+                nade:SetAngles(Angle(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))
+
+                phys:AddAngleVelocity(Vector(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))
+            end
+
+            phys:SetVelocity(self:GetOwner():GetVelocity())
+
+            phys:AddVelocity((dir + dispersion):Forward() * force)
+        end
+    end
+end

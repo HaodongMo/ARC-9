@@ -45,6 +45,8 @@ function SWEP:Deploy()
     self:SetInspecting(false)
     self:SetLoadedRounds(self:Clip1())
 
+    self:SetGrenadePrimed(false)
+
     self:SetBipod(false)
 
     self:SetTriggerDown(self:GetOwner():KeyDown(IN_ATTACK))

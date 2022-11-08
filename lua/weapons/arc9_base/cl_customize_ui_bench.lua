@@ -128,16 +128,15 @@ function SWEP:CreateHUD_Bench()
     self:ClearTabPanel()
 
     self:CreateHUD_Stats()
-    
 
-    if !self:GetProcessedValue("PrimaryBash") then -- no ballistics
+    if !self:GetProcessedValue("PrimaryBash") and !self:GetProcessedValue("Throwable") then -- no ballistics
         local tp = vgui.Create("DScrollPanel", bg)
         local width = math.min(ARC9ScreenScale(550), ScrW())
         tp:SetSize(width, ARC9ScreenScale(100))
         tp:SetPos(ScrW()*0.5 - width*0.5, ScrH()-ARC9ScreenScale(275))
         tp:SetAlpha(0)
         tp:AlphaTo(255, 0.2, 0, nil)
-        
+
         local cornercut = ARC9ScreenScale(3.5)
 
         tp.Paint = function(self2, w, h)
@@ -232,7 +231,7 @@ function SWEP:CreateHUD_Bench()
             local stk_stomach = math.ceil(100 / dmg_stomach)
             local stk_legs = math.ceil(100 / dmg_legs)
             local stk_arms = math.ceil(100 / dmg_arms)
-    
+
             // draw the body
 
             local body_w = ARC9ScreenScale(30)

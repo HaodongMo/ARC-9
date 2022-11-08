@@ -211,6 +211,29 @@ function SWEP:DropMagazine()
     end
 end
 
+function SWEP:TakeAmmo()
+    if IsFirstTimePredicted() then
+        if self:GetUBGL() then
+            self:TakeSecondaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+        else
+            if self:GetValue("BottomlessClip") then
+                if !self:GetInfiniteAmmo() then
+                    self:RestoreClip(self:GetValue("ClipSize"))
+
+                    if self:Ammo1() > 0 then
+                        local ammotype = self:GetValue("Ammo")
+                        self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
+                    else
+                        self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+                    end
+                end
+            else
+                self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+            end
+        end
+    end
+end
+
 function SWEP:GetCapacity(ubgl)
     if ubgl then
         return self:GetValue("UBGLClipSize") + self:GetValue("UBGLChamberSize")
@@ -221,6 +244,8 @@ end
 
 function SWEP:RestoreClip(amt)
     if CLIENT then return end
+
+    amt = amt or math.huge
 
     local inf = self:GetInfiniteAmmo()
     local clip = self:Clip1()
@@ -243,7 +268,9 @@ function SWEP:RestoreClip(amt)
         reserve = reserve - self:Clip2()
 
         if !inf then
-            self:GetOwner():SetAmmo(reserve, self.Secondary.Ammo)
+            if IsValid(self:GetOwner()) then
+                self:GetOwner():SetAmmo(reserve, self.Secondary.Ammo)
+            end
         end
 
         clip = self:Clip2()
@@ -255,7 +282,9 @@ function SWEP:RestoreClip(amt)
         reserve = reserve - self:Clip1()
 
         if !inf then
-            self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
+            if IsValid(self:GetOwner()) then
+                self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
+            end
         end
 
         clip = self:Clip1()
@@ -387,6 +416,35 @@ function SWEP:ThinkReload()
     end
 end
 
+function SWEP:GetLoadedClip()
+    local clip = self:Clip1()
+    local ammo = self:Ammo1()
+    local ammo2 = self:Ammo2()
+
+    if self:GetInfiniteAmmo() then
+        ammo = math.huge
+    end
+
+    if self:GetProcessedValue("BottomlessClip") then
+        clip = ammo
+        self:RestoreClip(math.huge)
+    end
+
+    if self:GetUBGL() then
+        clip = self:Clip2()
+
+        if self:GetProcessedValue("BottomlessClip") then
+            clip = ammo2
+        end
+    end
+
+    return clip
+end
+
+function SWEP:HasAmmoInClip()
+    return self:GetLoadedClip() >= self:GetProcessedValue("AmmoPerShot")
+end
+
 function SWEP:DoBulletPose()
     local pp = self:Clip1()
 
@@ -398,6 +456,8 @@ function SWEP:DoBulletPose()
 end
 
 function SWEP:Ammo1()
+    if !IsValid(self:GetOwner()) then return math.huge end
+
     if self:GetInfiniteAmmo() then
         return math.huge
     end
@@ -406,6 +466,8 @@ function SWEP:Ammo1()
 end
 
 function SWEP:Ammo2()
+    if !IsValid(self:GetOwner()) then return math.huge end
+
     if self:GetInfiniteAmmo() then
         return math.huge
     end

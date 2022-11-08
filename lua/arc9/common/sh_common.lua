@@ -201,6 +201,10 @@ ARC9.MOAToAcc = 10 / 360 / 60
 
 ARC9.Version = "1.0"
 
+ARC9.NADETHROWTYPE_NORMAL = 0
+ARC9.NADETHROWTYPE_TOSS = 1
+ARC9.NADETHROWTYPE_EXPLODEINHANDS = 2
+
 function ARC9.Dev(level)
     return GetConVar("developer"):GetInt() >= level
 end

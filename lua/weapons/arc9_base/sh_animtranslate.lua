@@ -39,6 +39,10 @@ function SWEP:TranslateAnimation(seq)
         if self:GetUBGL() and self:HasAnimation(seq .. "_ubgl") then
             seq = seq .. "_ubgl"
         end
+
+        if self:GetGrenadePrimed() and self:HasAnimation(seq .. "_primed") then
+            seq = seq .. "_primed"
+        end
     end
 
     local traq = self:RunHook("Hook_TranslateAnimation", seq) or seq
