@@ -18,12 +18,33 @@ function SWEP:ShouldTPIK()
     -- return false
 end
 
+SWEP.TPIKCache = {}
+SWEP.LastTPIKTime = 0
+
 function SWEP:DoTPIK()
     if !self:ShouldTPIK() then return end
 
     -- local vm = self:GetVM()
     local wm = self:GetWM()
     local ply = self:GetOwner()
+
+    local tpikdelay = RealFrameTime()
+
+    local dist = (ply:GetPos() - EyePos()):LengthSqr()
+
+    if dist > 25000000 then
+        tpikdelay = RealFrameTime() * 4
+    elseif dist > 6250000 then
+        tpikdelay = RealFrameTime() * 3
+    elseif dist > 1000000 then
+        tpikdelay = RealFrameTime() * 2
+    end
+
+    local shouldfulltpik = true
+
+    if self.LastTPIKTime + tpikdelay > CurTime() then
+        shouldfulltpik = false
+    end
 
     -- if !IsValid(vm) then return end
     if !IsValid(wm) then return end
@@ -99,7 +120,7 @@ function SWEP:DoTPIK()
     local ply_r_elbow_index = ply:LookupBone("ValveBiped.Bip01_R_Forearm")
     local ply_l_hand_index = ply:LookupBone("ValveBiped.Bip01_L_Hand")
     local ply_r_hand_index = ply:LookupBone("ValveBiped.Bip01_R_Hand")
-    
+
     local ply_l_HELPERelbow_index = ply:LookupBone("ValveBiped.Bip01_L_Elbow")
     if ply_l_HELPERelbow_index and !ply:BoneHasFlag(ply_l_HELPERelbow_index, 524032) then ply_l_HELPERelbow_index = nil end -- ply:GetBoneName(ply_l_HELPERelbow_index) == "__INVALIDBONE__" can work too, same performance hit
 
@@ -130,7 +151,18 @@ function SWEP:DoTPIK()
     local l_upperarm_length = 12
     local l_forearm_length = 12
 
-    local ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
+    local ply_r_upperarm_pos, ply_r_forearm_pos
+
+    if shouldfulltpik then
+        ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
+        self.LastTPIKTime = CurTime()
+
+        self.TPIKCache.r_upperarm_pos = WorldToLocal(ply_r_upperarm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        self.TPIKCache.r_forearm_pos = WorldToLocal(ply_r_forearm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+    else
+        ply_r_upperarm_pos = LocalToWorld(self.TPIKCache.r_upperarm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        ply_r_forearm_pos = LocalToWorld(self.TPIKCache.r_forearm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+    end
 
     debugoverlay.Line(ply_r_shoulder_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1, Color(255, 255, 255), true)
     debugoverlay.Line(ply_r_upperarm_pos, ply_r_forearm_pos, 0.1, Color(255, 255, 255), true)
@@ -166,7 +198,29 @@ function SWEP:DoTPIK()
     local ply_r_ulna_matrix = ply_r_ulna_index and ply:GetBoneMatrix(ply_r_ulna_index)
     local ply_r_wrist_matrix = ply_r_wrist_index and ply:GetBoneMatrix(ply_r_wrist_index)
 
-    local ply_l_upperarm_pos, ply_l_forearm_pos = self:Solve2PartIK(ply_l_shoulder_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 35)
+    // local ply_r_upperarm_pos = ply:LocalToWorld(self.TPIKCache.r_upperarm_pos)
+    // local ply_r_forearm_pos = ply:LocalToWorld(self.TPIKCache.r_forearm_pos)
+
+    // if shouldfulltpik then
+    //     ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
+    //     self.LastTPIKTime = CurTime()
+
+    //     self.TPIKCache.r_upperarm_pos = ply:WorldToLocal(ply_r_upperarm_pos)
+    //     self.TPIKCache.r_forearm_pos = ply:WorldToLocal(ply_r_forearm_pos)
+    // end
+
+    local ply_l_upperarm_pos, ply_l_forearm_pos
+
+    if shouldfulltpik then
+        ply_l_upperarm_pos, ply_l_forearm_pos = self:Solve2PartIK(ply_l_shoulder_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 35)
+
+        self.LastTPIKTime = CurTime()
+        self.TPIKCache.l_upperarm_pos = WorldToLocal(ply_l_upperarm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        self.TPIKCache.l_forearm_pos = WorldToLocal(ply_l_forearm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+    else
+        ply_l_upperarm_pos = LocalToWorld(self.TPIKCache.l_upperarm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        ply_l_forearm_pos = LocalToWorld(self.TPIKCache.l_forearm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+    end
 
     debugoverlay.Line(ply_l_shoulder_matrix:GetTranslation(), ply_l_upperarm_pos, 0.1, Color(255, 255, 255), true)
     debugoverlay.Line(ply_l_upperarm_pos, ply_l_forearm_pos, 0.1, Color(255, 255, 255), true)
@@ -185,7 +239,7 @@ function SWEP:DoTPIK()
     if ply_r_bicep_index then ply_r_bicep_matrix:SetTranslation(ply_r_forearm_pos) end
     if ply_r_ulna_index then ply_r_ulna_matrix:SetTranslation(ply_r_forearm_pos) end
     if ply_r_wrist_index then ply_r_wrist_matrix:SetTranslation(ply_r_forearm_pos) end
-    
+
     -- print(ply:GetBoneName(ply_l_ulna_index), ply:GetBoneName(ply_l_wrist_index))
 
     local ply_l_shoulder_angle = (ply_l_upperarm_pos - ply_l_shoulder_matrix:GetTranslation()):GetNormalized():Angle()
