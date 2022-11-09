@@ -7,12 +7,12 @@ ENT.PrintName 			= "Base Projectile"
 ENT.Spawnable 			= false
 ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
 
-ENT.Model = "models/weapons/arc9/item/bo1_40mm.mdl"
+ENT.Model = "models/Items/grenadeAmmo.mdl"
 ENT.Ticks = 0
 ENT.FuseTime = 0
 ENT.Defused = false
 ENT.SphereSize = 2
-ENT.PhysMat = "weapon"
+ENT.PhysMat = "grenade"
 ENT.SmokeTrail = true
 ENT.SmokeTrailMat = "trails/smoke"
 ENT.SmokeTrailSize = 6
@@ -38,6 +38,7 @@ ENT.ExplosionEffect = "explosion"
 
 ENT.Dead = false
 ENT.DieTime = 0
+ENT.BounceSounds = {}
 
 ENT.SteerSpeed = 60 -- The maximum amount of degrees per second the missile can steer.
 ENT.SeekerAngle = math.cos(35) -- The missile will lose tracking outside of this angle.
@@ -293,6 +294,10 @@ if SERVER then
                 else
                     break
                 end
+            end
+        else
+            if colData.DeltaTime > 0.1 then
+                self:EmitSound(self.BounceSounds[math.random(1, #self.BounceSounds)], 75)
             end
         end
 
