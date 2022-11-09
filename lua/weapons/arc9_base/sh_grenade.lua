@@ -30,7 +30,7 @@ function SWEP:ThinkGrenade()
             self:SetGrenadePrimedTime(CurTime())
 
             self:PlayAnimation("pullpin", self:GetProcessedValue("ThrowAnimSpeed"), true)
-            self:SetGrenadeTossing(false)
+            self:SetGrenadeTossing(self:GetOwner():KeyDown(IN_ATTACK2))
         end
     else
         if self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK2) then

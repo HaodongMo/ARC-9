@@ -12,7 +12,7 @@ ENT.Ticks = 0
 ENT.FuseTime = 0
 ENT.Defused = false
 ENT.SphereSize = 2
-ENT.PhysMat = "metal_bouncy"
+ENT.PhysMat = "weapon"
 ENT.SmokeTrail = true
 ENT.SmokeTrailSize = 6
 ENT.SmokeTrailTime = 0.5
@@ -215,12 +215,18 @@ if SERVER then
         util.BlastDamage(self, IsValid(self:GetOwner()) and self:GetOwner() or self, self:GetPos(), self.Radius, self.DamageOverride or self.Damage)
 
         if SERVER then
+            local dir = self.HitVelocity or self:GetVelocity()
+
+            if self:IsOnGround() then
+                dir = Vector(0, 0, -1)
+            end
+
             self:FireBullets({
                 Attacker = self,
                 Damage = 0,
                 Tracer = 0,
                 Distance = 256,
-                Dir = self.HitVelocity or self:GetVelocity(),
+                Dir = dir,
                 Src = self:GetPos(),
                 Callback = function(att, tr, dmg)
                     util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
