@@ -469,6 +469,10 @@ function SWEP:GetViewModelPosition(pos, ang)
     return pos, ang
 end
 
+local Damp = function(a, v1, v2)
+    return Lerp(1 - math.pow(a, FrameTime()), v2, v1)
+end
+
 SWEP.SmoothedViewModelFOV = nil
 
 function SWEP:GetViewModelFOV()
@@ -504,7 +508,9 @@ function SWEP:GetViewModelFOV()
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
 
-    self.SmoothedViewModelFOV = Lerp(0.1, self.SmoothedViewModelFOV, target)
+    local diff = math.abs(target - self.SmoothedViewModelFOV)
+
+    self.SmoothedViewModelFOV = math.Approach(self.SmoothedViewModelFOV, target, diff * FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
 
     return self.SmoothedViewModelFOV
     -- return 60 * self:GetSmoothedFOVMag()
