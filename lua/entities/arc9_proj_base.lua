@@ -33,6 +33,9 @@ ENT.Radius = 300
 ENT.ImpactDamage = nil
 ENT.ExplodeOnImpact = false
 
+ENT.Scorch = true
+ENT.ExplosionEffect = "explosion"
+
 ENT.Dead = false
 ENT.DieTime = 0
 
@@ -209,7 +212,7 @@ if SERVER then
             util.Effect( "WaterSurfaceExplosion", effectdata )
             --self:EmitSound("weapons/underwater_explode3.wav", 125, 100, 1, CHAN_AUTO)
         else
-            util.Effect( "Explosion", effectdata)
+            util.Effect( self.ExplosionEffect, effectdata)
             --self:EmitSound("phx/kaboom.wav", 125, 100, 1, CHAN_AUTO)
         end
 
@@ -230,7 +233,9 @@ if SERVER then
                 Dir = dir,
                 Src = self:GetPos(),
                 Callback = function(att, tr, dmg)
-                    util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
+                    if self.Scorch then
+                        util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
+                    end
                 end
             })
         end

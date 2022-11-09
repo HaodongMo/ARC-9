@@ -33,13 +33,19 @@ function SWEP:ThinkGrenade()
             self:SetGrenadeTossing(self:GetOwner():KeyDown(IN_ATTACK2))
         end
     else
+        local t = 0
+
         if self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK2) then
             self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS)
-            self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            t = self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
         elseif !self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK) then
             self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL)
-            self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            t = self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
         end
+
+        self:SetTimer(t, function()
+            self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+        end)
     end
 end
 
