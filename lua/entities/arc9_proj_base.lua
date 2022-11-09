@@ -14,6 +14,7 @@ ENT.Defused = false
 ENT.SphereSize = 2
 ENT.PhysMat = "weapon"
 ENT.SmokeTrail = true
+ENT.SmokeTrailMat = "trails/smoke"
 ENT.SmokeTrailSize = 6
 ENT.SmokeTrailTime = 0.5
 ENT.Flare = false
@@ -70,7 +71,7 @@ if SERVER then
         self.SpawnTime = CurTime()
 
         if self.SmokeTrail then
-            util.SpriteTrail(self, 0, Color( 255 , 255 , 255 ), false, self.SmokeTrailSize, 0, self.SmokeTrailTime, 1 / self.SmokeTrailSize * 0.5, "particle/particle_smokegrenade")
+            util.SpriteTrail(self, 0, Color( 255 , 255 , 255 ), false, self.SmokeTrailSize, 0, self.SmokeTrailTime, 1 / self.SmokeTrailSize * 0.5, self.SmokeTrailMat)
         end
     end
 
@@ -217,7 +218,7 @@ if SERVER then
         if SERVER then
             local dir = self.HitVelocity or self:GetVelocity()
 
-            if self:IsOnGround() then
+            if self.Boost <= 0 then
                 dir = Vector(0, 0, -1)
             end
 
