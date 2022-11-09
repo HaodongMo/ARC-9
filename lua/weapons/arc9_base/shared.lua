@@ -1041,7 +1041,10 @@ SWEP.Attachments = {
 -- _blindfire
 -- _bipod
 -- _sprint
+-- _walk
 -- _empty
+-- _ubgl
+-- _primed
 
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
