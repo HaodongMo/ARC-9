@@ -1259,6 +1259,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 21, "AfterShot")
     self:NetworkVar("Bool", 22, "GrenadePrimed")
     self:NetworkVar("Bool", 23, "GrenadeTossing")
+    self:NetworkVar("Bool", 24, "GrenadeRecovering")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")

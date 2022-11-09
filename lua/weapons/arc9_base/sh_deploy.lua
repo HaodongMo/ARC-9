@@ -44,6 +44,7 @@ function SWEP:Deploy()
     self:SetBreath(100)
     self:SetInspecting(false)
     self:SetLoadedRounds(self:Clip1())
+    self:SetGrenadeRecovering(false)
 
     self:SetGrenadePrimed(false)
 

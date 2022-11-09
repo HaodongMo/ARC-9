@@ -22,7 +22,10 @@ function SWEP:ThinkGrenade()
     local tossable = self:GetProcessedValue("Tossable") and self:HasAnimation("toss")
 
     if !self:GetGrenadePrimed() then
-        if (tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
+        if self:GetGrenadeRecovering() then
+            self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            self:SetGrenadeRecovering(false)
+        elseif (tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
             self:GetOwner():KeyDown(IN_ATTACK) and
             self:HasAmmoInClip()
             then
@@ -33,19 +36,15 @@ function SWEP:ThinkGrenade()
             self:SetGrenadeTossing(self:GetOwner():KeyDown(IN_ATTACK2))
         end
     else
-        local t = 0
-
         if self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK2) then
             self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS)
-            t = self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
         elseif !self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK) then
             self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL)
-            t = self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
         end
 
-        self:SetTimer(t, function()
-            self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
-        end)
+        self:SetGrenadeRecovering(true)
     end
 end
 
