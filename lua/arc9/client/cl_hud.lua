@@ -612,7 +612,7 @@ function ARC9.DrawHUD()
         local healthtext = "♥"
 
         if overheal then
-            healthtext = "♥:" .. tostring(health * 100) .. "%"
+            healthtext = "♥:" .. tostring(math.ceil(health * 100)) .. "%"
         end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
@@ -629,7 +629,7 @@ function ARC9.DrawHUD()
             local armor_x = 250
             local armor_y = 9
             local armor = math.Round((LocalPlayer():Armor() / 100) * 100)
-            armor = "⌂:" .. tostring(armor) .. "%"
+            armor = "⌂:" .. tostring(math.ceil(armor)) .. "%"
 
             surface.SetFont("ARC9_24_Unscaled")
             armor_x = armor_x - surface.GetTextSize(armor)
