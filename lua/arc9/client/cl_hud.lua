@@ -612,7 +612,7 @@ function ARC9.DrawHUD()
         local healthtext = "♥"
 
         if overheal then
-            healthtext = "♥:" .. tostring(health * 100) .. "%"
+            healthtext = "♥:" .. tostring(math.floor(health * 100)) .. "%"
         end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
