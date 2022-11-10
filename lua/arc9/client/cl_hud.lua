@@ -628,8 +628,8 @@ function ARC9.DrawHUD()
         if overheal then
             local armor_x = 250
             local armor_y = 9
-            local armor = math.ceil((LocalPlayer():Armor() / 100) * 100)
-            armor = "⌂:" .. tostring(math.floor(armor)) .. "%"
+            local armor = math.Round((LocalPlayer():Armor() / 100) * 100)
+            armor = "⌂:" .. tostring(math.ceil(armor)) .. "%"
 
             surface.SetFont("ARC9_24_Unscaled")
             armor_x = armor_x - surface.GetTextSize(armor)
