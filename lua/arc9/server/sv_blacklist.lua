@@ -75,7 +75,7 @@ net.Receive("arc9_sendblacklist", function(len, ply)
     ARC9:SendBlacklist()
 end)
 
-hook.Add("PlayerConnect", "ARC9_PlayerConnect_SendBlacklist", function(ply, ip)
+hook.Add("PlayerInitialSpawn", "ARC9_PlayerInitialSpawn_SendBlacklist", function(ply)
     ARC9:SendBlacklist(ply)
 end)
 
