@@ -858,7 +858,7 @@ SWEP.HoldTypeBlindfire = "pistol"
 SWEP.HoldTypeNPC = nil
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
-SWEP.AnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- While in TPIK only
+SWEP.AnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- While in TPIK only -- Tip: if you dont want any additional anim put ACT_HL2MP_GESTURE_RELOAD_MAGIC here instead!
 SWEP.NonTPIKAnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- Non TPIK
 SWEP.AnimDraw = false
 SWEP.AnimMelee = ACT_GMOD_GESTURE_MELEE_SHOVE_2HAND
@@ -954,7 +954,7 @@ SWEP.Attachments = {
     --     Ang = Angle(0, 0, 0),
     --     CorrectiveAng = Angle(0, 0, 0), -- sometimes, the autosolver needs a little help. Try (-1, -1, 0)
     --     Scale = 1,
-    --     DuplicateModels = { -- For guns that require duplicating attachment models, e.g. akimbo
+    --     DuplicateModels = { -- For guns that require duplicating attachment models, e.g. akimbo or guns with 2 mags on model
     --          {
     --              Bone = "",
     --              Pos = Vector(0, 0, 0),

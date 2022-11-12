@@ -118,6 +118,7 @@ ATT.RTScopeReticle = Material("")
 ATT.RTScopeReticleScale = 1
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTCollimator = false -- Disables cheap scopes fov boost, disables sensivity adjustements
+ATT.RTBlurAdsAnyway = false -- If arc9_fx_adsblur 1 then blur gun anyway (as on non-rt sights). Disabled by default because it can blur and distort rt image
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
 ATT.RTScopeBlackBox = false

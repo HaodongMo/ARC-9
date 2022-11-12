@@ -1,0 +1,21 @@
+"Refract"
+{
+	"$basetexture" "_rt_FullFrameFB"
+ 	"$normalmap" "pp/arc9/adsblur"
+	"$fbtexture" "_rt_FullFrameFB"
+ 	"$refractamount" "0"
+	"$vertexalpha" "0"
+	"$vertexcolor" "0"
+	"$translucent" "0"
+	"$forcerefract" "1"
+	"$bluramount" "1"
+	"$nofog" "0"
+	"$ignorez" "1"
+	"$nocull" "1"
+//	"$model" "1"
+
+	"Refract_DX60"
+	{
+		"$fallbackmaterial" "null"
+	}
+}

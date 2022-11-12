@@ -453,6 +453,16 @@ local conVars = {
         default = "0",
         client = true
     },
+    {
+        name = "fx_rtblur",
+        default = "1",
+        client = true
+    },
+    {
+        name = "fx_adsblur",
+        default = "1",
+        client = true
+    },
 }
 
 local prefix = "arc9_"
