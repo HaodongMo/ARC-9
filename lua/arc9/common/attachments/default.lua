@@ -119,6 +119,7 @@ ATT.RTScopeReticle = Material("")
 ATT.RTScopeReticleScale = 1
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTCollimator = false -- Disables cheap scopes fov boost, disables sensivity adjustements
+ATT.RTScopeNoBlur = false -- By default, if arc9_fx_rtblur 1 then world behind gun wil be blurred. Enable if your "scope" is not so scope.
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
 ATT.RTScopeBlackBox = false

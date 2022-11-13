@@ -29,7 +29,7 @@ function SWEP:PreDrawViewModel()
     local getsights = self:GetSight()
     local sightamount = self:GetSightAmount()
 
-    local shouldrtblur = sightamount > 0 and GetConVar("arc9_fx_rtblur"):GetBool() and getsights.atttbl and getsights.atttbl.RTScopeFOV and getsights.atttbl.RTScopeFOV > 4.5 and !getsights.Disassociate and !getsights.atttbl.RTCollimator
+    local shouldrtblur = sightamount > 0 and GetConVar("arc9_fx_rtblur"):GetBool() and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
     if shouldrtblur then DrawBokehDOF(2 * sightamount, 1, 0) end
     
     local custdelta = self.CustomizeDelta
