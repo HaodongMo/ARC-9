@@ -783,6 +783,7 @@ SWEP.IronSights = {
     Magnification = 1,
     AssociatedSlot = 0, -- Attachment slot to associate the sights with. Causes RT scopes to render.
     CrosshairInSights = false,
+    Blur = true, -- If arc9_fx_adsblur 1 then blur gun in that ironsights. Disable if your "ironsights" are not real ironsights 
     ---- FLAT SCOPES
     -- These don't look very good; please use actual RT scopes if possible.
     FlatScope = false,
