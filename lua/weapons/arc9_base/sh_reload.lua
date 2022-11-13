@@ -235,11 +235,14 @@ function SWEP:TakeAmmo()
 end
 
 function SWEP:GetCapacity(ubgl)
+    local cap = 0
     if ubgl then
-        return self:GetValue("UBGLClipSize") + self:GetValue("UBGLChamberSize")
+        cap = self:GetValue("UBGLClipSize") + self:GetValue("UBGLChamberSize")
     else
-        return self:GetValue("ClipSize") + self:GetValue("ChamberSize")
+        cap = self:GetValue("ClipSize") + self:GetValue("ChamberSize")
     end
+
+    return math.ceil(cap)
 end
 
 function SWEP:RestoreClip(amt)
