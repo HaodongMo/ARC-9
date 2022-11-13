@@ -35,6 +35,18 @@ function SWEP:KillTimer(id)
     self.ActiveTimers = keeptimers
 end
 
+function SWEP:KillSoundTable()
+    local keeptimers = {}
+
+    for _, v in pairs(self.ActiveTimers) do
+        if string.sub(v[2], string.len("soundtable_")) != "soundtable_" then
+            table.insert(keeptimers, v)
+        end
+    end
+
+    self.ActiveTimers = keeptimers
+end
+
 function SWEP:KillTimers()
     self.ActiveTimers = {}
 end
