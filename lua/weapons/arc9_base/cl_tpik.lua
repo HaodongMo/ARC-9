@@ -6,7 +6,7 @@ function SWEP:ShouldTPIK()
     if !self:GetOwner():IsPlayer() then return end
     if self:GetOwner():InVehicle() then return end
     if !self.MirrorVMWM then return end
-    if self:GetSafe() then return end
+    // if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
     if LocalPlayer() == self:GetOwner() and !self:GetOwner():ShouldDrawLocalPlayer() then return end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
