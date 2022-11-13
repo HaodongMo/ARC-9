@@ -236,19 +236,22 @@ end
 
 function SWEP:GetCapacity(ubgl)
     local cap = 0
+
     if ubgl then
-        cap = self:GetValue("UBGLClipSize") + self:GetValue("UBGLChamberSize")
+        cap = math.Round(self:GetValue("UBGLClipSize")) + math.Round(self:GetValue("UBGLChamberSize"))
     else
-        cap = self:GetValue("ClipSize") + self:GetValue("ChamberSize")
+        cap = math.Round(self:GetValue("ClipSize")) + math.Round(self:GetValue("ChamberSize"))
     end
 
-    return math.ceil(cap)
+    return cap
 end
 
 function SWEP:RestoreClip(amt)
     if CLIENT then return end
 
     amt = amt or math.huge
+
+    amt = math.Round(amt)
 
     local inf = self:GetInfiniteAmmo()
     local clip = self:Clip1()
