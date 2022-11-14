@@ -109,6 +109,11 @@ function SWEP:DoTPIK()
     if lod == 1.5 then -- hackkkkk
         bones = ARC9.LHIKHandBones
     end
+    
+    local ply_spine_index = ply:LookupBone("ValveBiped.Bip01_L_UpperArm")
+    if !ply_spine_index then return end
+    local ply_spine_matrix = ply:GetBoneMatrix(ply_spine_index)
+    local wmpos = ply_spine_matrix:GetTranslation()
 
     for _, bone in ipairs(bones) do
         local wm_boneindex = wm:LookupBone(bone)
@@ -123,6 +128,10 @@ function SWEP:DoTPIK()
 
         local bonepos = wm_bonematrix:GetTranslation()
         local boneang = wm_bonematrix:GetAngles()
+
+        bonepos.x = math.Clamp(bonepos.x, wmpos.x - 20, wmpos.x + 20) -- clamping if something gone wrong so no stretching
+        bonepos.y = math.Clamp(bonepos.y, wmpos.y - 20, wmpos.y + 20)
+        bonepos.z = math.Clamp(bonepos.z, wmpos.z - 20, wmpos.z + 20)
 
         ply_bonematrix:SetTranslation(bonepos)
         ply_bonematrix:SetAngles(boneang)
@@ -174,16 +183,16 @@ function SWEP:DoTPIK()
         ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
         self.LastTPIKTime = CurTime()
 
-        self.TPIKCache.r_upperarm_pos = WorldToLocal(ply_r_upperarm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
-        self.TPIKCache.r_forearm_pos = WorldToLocal(ply_r_forearm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        self.TPIKCache.r_upperarm_pos = WorldToLocal(ply_r_upperarm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        self.TPIKCache.r_forearm_pos = WorldToLocal(ply_r_forearm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
     else
-        ply_r_upperarm_pos = LocalToWorld(self.TPIKCache.r_upperarm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
-        ply_r_forearm_pos = LocalToWorld(self.TPIKCache.r_forearm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        ply_r_upperarm_pos = LocalToWorld(self.TPIKCache.r_upperarm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        ply_r_forearm_pos = LocalToWorld(self.TPIKCache.r_forearm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
     end
 
-    debugoverlay.Line(ply_r_shoulder_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1, Color(255, 255, 255), true)
-    debugoverlay.Line(ply_r_upperarm_pos, ply_r_forearm_pos, 0.1, Color(255, 255, 255), true)
-    -- debugoverlay.Line(ply_r_forearm_pos, ply_r_hand_matrix:GetTranslation(), 0.1, Color(255, 255, 255), true)
+    debugoverlay.Line(ply_r_shoulder_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1)
+    debugoverlay.Line(ply_r_upperarm_pos, ply_r_forearm_pos, 0.1)
+    -- debugoverlay.Line(ply_r_forearm_pos, ply_r_hand_matrix:GetTranslation(), 0.1)
 
     -- ply_r_shoulder_matrix:SetTranslation(ply_r_upperarm_pos)
     ply_r_elbow_matrix:SetTranslation(ply_r_upperarm_pos)
@@ -232,11 +241,11 @@ function SWEP:DoTPIK()
         ply_l_upperarm_pos, ply_l_forearm_pos = self:Solve2PartIK(ply_l_shoulder_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 35)
 
         self.LastTPIKTime = CurTime()
-        self.TPIKCache.l_upperarm_pos = WorldToLocal(ply_l_upperarm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
-        self.TPIKCache.l_forearm_pos = WorldToLocal(ply_l_forearm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        self.TPIKCache.l_upperarm_pos = WorldToLocal(ply_l_upperarm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        self.TPIKCache.l_forearm_pos = WorldToLocal(ply_l_forearm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
     else
-        ply_l_upperarm_pos = LocalToWorld(self.TPIKCache.l_upperarm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
-        ply_l_forearm_pos = LocalToWorld(self.TPIKCache.l_forearm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        ply_l_upperarm_pos = LocalToWorld(self.TPIKCache.l_upperarm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        ply_l_forearm_pos = LocalToWorld(self.TPIKCache.l_forearm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
     end
 
     debugoverlay.Line(ply_l_shoulder_matrix:GetTranslation(), ply_l_upperarm_pos, 0.1, Color(255, 255, 255), true)
