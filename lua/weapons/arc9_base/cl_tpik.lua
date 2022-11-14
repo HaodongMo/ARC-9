@@ -25,11 +25,12 @@ SWEP.LastTPIKTime = 0
 function SWEP:DoTPIK()
     if !self:ShouldTPIK() then return end
 
-    -- local vm = self:GetVM()
     local wm = self:GetWM()
     local ply = self:GetOwner()
 
     local tpikdelay = RealFrameTime()
+    
+    local lod
 
     if ply != LocalPlayer() then
         local dist = EyePos():DistToSqr(ply:GetPos())
@@ -38,11 +39,11 @@ function SWEP:DoTPIK()
         convartpiktime = (convartpiktime == 0) and 250 or math.Clamp(convartpiktime, 5, 250)
         tpikdelay = 1 / convartpiktime
 
-        local lod = self:ShouldLOD()
+        lod = self:ShouldLOD()
 
         if lod == 1 then
             tpikdelay = 1 / 20 -- 20 fps if lodding
-        elseif lod == 2 then
+        elseif lod == 1.5 then
             tpikdelay = 1 / 10
         end
     end
@@ -93,11 +94,14 @@ function SWEP:DoTPIK()
     self:SetFiremodePose(true)
 
     ply:SetupBones()
-
     local bones = ARC9.TPIKBones
-
+    
     if nolefthand then
         bones = ARC9.RHIKHandBones
+    end
+    
+    if lod == 1.5 then -- hackkkkk
+        bones = ARC9.LHIKHandBones
     end
 
     for _, bone in ipairs(bones) do
