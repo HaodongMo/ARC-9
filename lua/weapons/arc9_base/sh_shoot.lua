@@ -43,7 +43,9 @@ function SWEP:DoShootSounds()
     local dsstr = "DistantShootSound"
 
     local silenced = self:GetProcessedValue("Silencer") and !self:GetUBGL()
+    
     local indoor = self:GetIndoor()
+    if isbool(indoor) then indoor = indoor and 1 or 0 end -- crazy shit i got error randomly
     local indoormix = math.max(0, 1 - (indoor or 0))
     
     local havedistant = self:GetProcessedValue(dsstr)
