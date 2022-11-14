@@ -22,10 +22,15 @@ end
 SWEP.TPIKCache = {}
 SWEP.LastTPIKTime = 0
 
-function SWEP:DoTPIK()
-    if !self:ShouldTPIK() then return end
+local cachelastcycle = 0 -- probably bad
 
+function SWEP:DoTPIK()
     local wm = self:GetWM()
+    if !self:ShouldTPIK() then 
+        if cachelastcycle > 0 then wm:SetCycle(0) cachelastcycle = 0 end
+        return
+     end
+
     local ply = self:GetOwner()
 
     local tpikdelay = RealFrameTime()
@@ -71,6 +76,7 @@ function SWEP:DoTPIK()
     wm:SetSequence(seq)
 
     wm:SetCycle(time)
+    cachelastcycle = time
 
     -- wm:SetSequence(vm:GetSequence())
     -- wm:SetCycle(vm:GetCycle())
