@@ -7,12 +7,12 @@ function SWEP:ShouldLOD()
     if IsValid(owner) then
         dsquared = EyePos():DistToSqr(owner:GetPos())
     else
-        dsquared = EyePos():DistToSqr(self:GetPos())
+        dsquared = EyePos():DistToSqr(self:GetPos()) * 2 -- make lod appear sooner on dropped gunss
     end
 
-    if dsquared >= 300000 then
+    if dsquared >= 600000 then
         return 2
-    elseif dsquared >= 150000 then
+    elseif dsquared >= 400000 then
         return 1
     else
         return 0

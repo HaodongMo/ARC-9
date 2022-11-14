@@ -1,4 +1,4 @@
-// third person inverse kinematics
+-- third person inverse kinematics
 
 function SWEP:ShouldTPIK()
     if self.NoTPIK then return end
@@ -6,7 +6,8 @@ function SWEP:ShouldTPIK()
     if !self:GetOwner():IsPlayer() then return end
     if self:GetOwner():InVehicle() then return end
     if !self.MirrorVMWM then return end
-    // if self:GetSafe() then return end
+    if self:ShouldLOD() == 2 then return end
+    -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
     if LocalPlayer() == self:GetOwner() and !self:GetOwner():ShouldDrawLocalPlayer() then return end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
@@ -30,18 +31,20 @@ function SWEP:DoTPIK()
 
     local tpikdelay = RealFrameTime()
 
-    local dist = (ply:GetPos() - EyePos()):LengthSqr()
+    if ply != LocalPlayer() then
+        local dist = EyePos():DistToSqr(ply:GetPos())
 
-    if dist > 6250000 then
-        tpikdelay = 1 / 30
-    elseif dist > 1000000 then
-        tpikdelay = tpikdelay * 3
-    end
-
-    local convartpiktime = GetConVar("arc9_tpik_framerate"):GetFloat()
-
-    if convartpiktime > 0 then
+        local convartpiktime = GetConVar("arc9_tpik_framerate"):GetFloat()
+        convartpiktime = (convartpiktime == 0) and 250 or math.Clamp(convartpiktime, 5, 250)
         tpikdelay = 1 / convartpiktime
+
+        local lod = self:ShouldLOD()
+
+        if lod == 1 then
+            tpikdelay = 1 / 20 -- 20 fps if lodding
+        elseif lod == 2 then
+            tpikdelay = 1 / 10
+        end
     end
 
     local shouldfulltpik = true

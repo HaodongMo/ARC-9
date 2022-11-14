@@ -368,7 +368,7 @@ local conVars = {
     },
     {
         name = "tpik_framerate",
-        default = "0",
+        default = "60",
         client = true
     },
     {
