@@ -190,26 +190,36 @@ end
 function SWEP:DropMagazine()
     -- if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
     -- if !self:GetProcessedValue("ShouldDropMag") then return end
+    local mdl = self:GetProcessedValue("DropMagazineModel")
 
-    if self:GetProcessedValue("DropMagazineModel") then
+    if mdl then
+        util.PrecacheModel(mdl) -- garry newman moment
+
         for i = 1, self:GetProcessedValue("DropMagazineAmount") do
-            local mag = ents.Create("ARC9_droppedmag")
+            local drop_qca = self:GetQCAMagdrop()
 
-            if mag then
-                mag:SetPos(self:GetOwner():EyePos() - (self:GetOwner():EyeAngles():Up() * 8))
-                mag:SetAngles(self:GetOwner():EyeAngles())
-                mag.Model = self:GetProcessedValue("DropMagazineModel")
-                mag.ImpactSounds = self:GetProcessedValue("DropMagazineSounds")
-                mag:SetOwner(self:GetOwner())
-                mag:Spawn()
-                mag:SetSkin(self:GetProcessedValue("DropMagazineSkin"))
+            local data = EffectData()
+            data:SetEntity(self)
+            data:SetAttachment(drop_qca)
 
-                local phys = mag:GetPhysicsObject()
+            util.Effect("arc9_magdropeffect", data, true)
+            -- local mag = ents.Create("ARC9_droppedmag")
 
-                if IsValid(phys) then
-                    phys:AddAngleVelocity(Vector(math.Rand(-300, 300), math.Rand(-300, 300), math.Rand(-300, 300)))
-                end
-            end
+            -- if mag then
+            --     mag:SetPos(self:GetOwner():EyePos() - (self:GetOwner():EyeAngles():Up() * 8))
+            --     mag:SetAngles(self:GetOwner():EyeAngles())
+            --     mag.Model = self:GetProcessedValue("DropMagazineModel")
+            --     mag.ImpactSounds = self:GetProcessedValue("DropMagazineSounds")
+            --     mag:SetOwner(self:GetOwner())
+            --     mag:Spawn()
+            --     mag:SetSkin(self:GetProcessedValue("DropMagazineSkin"))
+
+            --     local phys = mag:GetPhysicsObject()
+
+            --     if IsValid(phys) then
+            --         phys:AddAngleVelocity(Vector(math.Rand(-300, 300), math.Rand(-300, 300), math.Rand(-300, 300)))
+            --     end
+            -- end
         end
     end
 end

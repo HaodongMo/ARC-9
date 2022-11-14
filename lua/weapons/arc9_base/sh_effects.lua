@@ -32,6 +32,10 @@ function SWEP:GetQCAEject()
     return self:GetProcessedValue("CaseEffectQCA")
 end
 
+function SWEP:GetQCAMagdrop()
+    return self:GetProcessedValue("DropMagazineQCA") or self:GetProcessedValue("CaseEffectQCA")
+end
+
 SWEP.EjectedShells = {}
 
 function SWEP:DoEject()

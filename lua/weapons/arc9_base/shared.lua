@@ -292,6 +292,10 @@ SWEP.DropMagazineSounds = {} -- Table of sounds a dropped magazine should play.
 SWEP.DropMagazineAmount = 1 -- Amount of mags to drop.
 SWEP.DropMagazineSkin = 0 -- Model skin of mag.
 SWEP.DropMagazineTime = 0.25
+SWEP.DropMagazineQCA = nil -- QC Attachment drop mag from, would drop from shell port if not defined
+SWEP.DropMagazinePos = Vector(0, 0, 0) -- offsets
+SWEP.DropMagazineAng = Angle(0, 0, 0)
+SWEP.DropMagazineVelocity = Vector(0, 0, 0) -- Put something here if your anim throws the mag with force
 
 -------------------------- FIREMODES
 
