@@ -527,6 +527,14 @@ local function menu_client_ti(panel)
     })
     panel:ControlHelp( "HUD on all weapons." )
     panel:AddControl("checkbox", {
+        label = "ADS Blur",
+        command = "arc9_fx_adsblur"
+    })
+    panel:AddControl("checkbox", {
+        label = "ADS Blur on RT Scopes",
+        command = "arc9_fx_rtblur"
+    })
+    panel:AddControl("checkbox", {
         label = "Keep HUD Hints",
         command = "arc9_hud_keephints"
     })

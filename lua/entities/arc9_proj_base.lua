@@ -38,7 +38,7 @@ ENT.ExplosionEffect = "explosion"
 
 ENT.Dead = false
 ENT.DieTime = 0
-ENT.BounceSounds = {}
+ENT.BounceSounds = {""}
 
 ENT.SteerSpeed = 60 -- The maximum amount of degrees per second the missile can steer.
 ENT.SeekerAngle = math.cos(35) -- The missile will lose tracking outside of this angle.
