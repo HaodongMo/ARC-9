@@ -6,7 +6,7 @@ function SWEP:DrawWorldModel()
 
     self:DrawCustomModel(true)
 
-    if IsValid(self:GetOwner()) then
+    if IsValid(self:GetOwner()) and self:GetOwner():GetActiveWeapon() == self then -- gravgun moment
         self:DoBodygroups(true)
         self:DrawLasers(true)
         self:DoTPIK()
