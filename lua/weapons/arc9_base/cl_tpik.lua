@@ -110,7 +110,7 @@ function SWEP:DoTPIK()
         bones = ARC9.LHIKHandBones
     end
     
-    local ply_spine_index = ply:LookupBone("ValveBiped.Bip01_L_UpperArm")
+    local ply_spine_index = ply:LookupBone("ValveBiped.Bip01_Spine4")
     if !ply_spine_index then return end
     local ply_spine_matrix = ply:GetBoneMatrix(ply_spine_index)
     local wmpos = ply_spine_matrix:GetTranslation()
@@ -129,9 +129,9 @@ function SWEP:DoTPIK()
         local bonepos = wm_bonematrix:GetTranslation()
         local boneang = wm_bonematrix:GetAngles()
 
-        bonepos.x = math.Clamp(bonepos.x, wmpos.x - 20, wmpos.x + 20) -- clamping if something gone wrong so no stretching
-        bonepos.y = math.Clamp(bonepos.y, wmpos.y - 20, wmpos.y + 20)
-        bonepos.z = math.Clamp(bonepos.z, wmpos.z - 20, wmpos.z + 20)
+        bonepos.x = math.Clamp(bonepos.x, wmpos.x - 38, wmpos.x + 38) -- clamping if something gone wrong so no stretching (or animator is fleshy)
+        bonepos.y = math.Clamp(bonepos.y, wmpos.y - 38, wmpos.y + 38)
+        bonepos.z = math.Clamp(bonepos.z, wmpos.z - 38, wmpos.z + 38)
 
         ply_bonematrix:SetTranslation(bonepos)
         ply_bonematrix:SetAngles(boneang)
