@@ -43,11 +43,14 @@ function SWEP:Reload()
         return
     end
 
-    if CLIENT and !self:ShouldTPIK() then
-        self:DoPlayerAnimationEvent(self:GetProcessedValue("NonTPIKAnimReload"))
-    else
-        self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
-    end
+
+    -- if CLIENT and !self:ShouldTPIK() then
+        -- self:DoPlayerAnimationEvent(self:GetProcessedValue("NonTPIKAnimReload"))
+    -- else
+        -- self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
+    -- end
+
+    self:CallOnClient("CallNonTPIKReloadAnim", "")
 
     -- self:ScopeToggle(0)
     -- self:ToggleCustomize(false)
@@ -479,4 +482,14 @@ function SWEP:Ammo2()
     end
 
     return self:GetOwner():GetAmmoCount(self:GetProcessedValue("UBGLAmmo"))
+end
+
+if CLIENT then
+    function SWEP:CallNonTPIKReloadAnim()
+        if !self:ShouldTPIK() then
+            self:DoPlayerAnimationEvent(self:GetProcessedValue("NonTPIKAnimReload"))
+        else
+            self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
+        end
+    end
 end
