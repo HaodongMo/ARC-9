@@ -233,9 +233,8 @@ local conVars = {
     },
     {
         name = "breath_hud",
-        default = "0",
+        default = "1",
         client = true,
-        replicated = true
     },
     {
         name = "breath_pp",
@@ -249,7 +248,7 @@ local conVars = {
     },
     {
         name = "breath_slowmo",
-        default = "0",
+        default = "1",
         replicated = true
     },
     {
