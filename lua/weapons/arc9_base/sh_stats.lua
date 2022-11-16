@@ -142,10 +142,12 @@ local Lerp = function(a, v1, v2)
     return v1 + (a * d)
 end
 
--- // local pvtick = 0
--- // local pv_move = 0
--- // local pv_shooting = 0
--- // local pv_melee = 0
+-- local pvtick = 0
+-- local pv_move = 0
+-- local pv_shooting = 0
+-- local pv_melee = 0
+
+local singleplayer = game.SinglePlayer()
 
 SWEP.PV_Tick = 0
 SWEP.PV_Move = 0
@@ -154,12 +156,16 @@ SWEP.PV_Melee = 0
 
 SWEP.PV_Cache = {}
 
+
 function SWEP:GetProcessedValue(val, base)
-    if CLIENT and self.PV_Cache[tostring(val) .. tostring(base)] != nil and self.PV_Tick == UnPredictedCurTime() then
+    local ct = CurTime()
+    local upct = UnPredictedCurTime()
+
+    if CLIENT and self.PV_Cache[tostring(val) .. tostring(base)] != nil and self.PV_Tick == upct then
         return self.PV_Cache[tostring(val) .. tostring(base)]
     end
 
-    if self.PV_Tick != UnPredictedCurTime() then
+    if self.PV_Tick != upct then
         self.PV_Cache = {}
     end
 
@@ -273,12 +279,14 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
+    local getlastmeleetime = self:GetLastMeleeTime()
+
     if !self.HasNoAffectors[val .. "Melee"] then
-        if self:GetLastMeleeTime() < CurTime() then
+        if getlastmeleetime < ct then
             local d = self.PV_Melee
 
-            if self.PV_Tick != UnPredictedCurTime() then
-                local pft = CurTime() - self:GetLastMeleeTime()
+            if self.PV_Tick != upct then
+                local pft = ct - getlastmeleetime
                 d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
                 d = math.Clamp(d, 0, 1)
@@ -298,12 +306,15 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
+
     if !self.HasNoAffectors[val .. "Shooting"] then
-        if self:GetNextPrimaryFire() + 0.1 > CurTime() then
+        local getnextprimaryfire = self:GetNextPrimaryFire()
+
+        if getnextprimaryfire + 0.1 > ct then
             local d = self.PV_Shooting
 
-            if self.PV_Tick != UnPredictedCurTime() then
-                local pft = CurTime() - self:GetNextPrimaryFire() + 0.1
+            if self.PV_Tick != upct then
+                local pft = ct - getnextprimaryfire + 0.1
                 d = pft / 0.1
 
                 d = math.Clamp(d, 0, 1)
@@ -322,18 +333,17 @@ function SWEP:GetProcessedValue(val, base)
     end
 
     if !self.HasNoAffectors[val .. "Recoil"] then
-        if self:GetRecoilAmount() > 0 then
-            stat = self:GetValue(val, stat, "Recoil", self:GetRecoilAmount())
+        local getrecoilamount = self:GetRecoilAmount()
+        if getrecoilamount > 0 then
+            stat = self:GetValue(val, stat, "Recoil", getrecoilamount)
         end
     end
 
     if !self.HasNoAffectors[val .. "Move"] then
         if owner:IsValid() then
             local spd = self.PV_Move
-            if game.SinglePlayer() or self.PV_Tick != UnPredictedCurTime() then
-                spd = math.min(owner:GetAbsVelocity():Length(), 250)
-
-                spd = spd / 250
+            if singleplayer or self.PV_Tick != upct then
+                spd = math.min(owner:GetAbsVelocity():Length(), 250) / 250
 
                 self.PV_Move = spd
             end
@@ -348,7 +358,7 @@ function SWEP:GetProcessedValue(val, base)
         end
     end
 
-    self.PV_Tick = UnPredictedCurTime()
+    self.PV_Tick = upct
     self.PV_Cache[tostring(val) .. tostring(base)] = stat
 
     return stat
@@ -393,8 +403,10 @@ function SWEP:GetValue(val, base, condition, amount)
 
     local priority = 0
 
+    local getallaffectors = self:GetAllAffectors()
+
     if !self.ExcludeFromRawStats[val] then
-        for _, tbl in ipairs(self:GetAllAffectors()) do
+        for _, tbl in ipairs(getallaffectors) do
             local att_priority = tbl[val .. condition .. "_Priority"] or 1
 
             if tbl[val .. condition] != nil and att_priority >= priority then
@@ -405,7 +417,7 @@ function SWEP:GetValue(val, base, condition, amount)
         end
     end
 
-    for _, tbl in ipairs(self:GetAllAffectors()) do
+    for _, tbl in ipairs(getallaffectors) do
         local att_priority = tbl[val .. "Override" .. condition .. "_Priority"] or 1
 
         if tbl[val .. "Override" .. condition] != nil and att_priority >= priority then
@@ -416,8 +428,7 @@ function SWEP:GetValue(val, base, condition, amount)
     end
 
     if isnumber(stat) then
-
-        for _, tbl in ipairs(self:GetAllAffectors()) do
+        for _, tbl in ipairs(getallaffectors) do
             if tbl[val .. "Add" .. condition] != nil then
                 -- if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
                 --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
@@ -429,7 +440,7 @@ function SWEP:GetValue(val, base, condition, amount)
             end
         end
 
-        for _, tbl in ipairs(self:GetAllAffectors()) do
+        for _, tbl in ipairs(getallaffectors) do
             if tbl[val .. "Mult" .. condition] != nil then
                 -- if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
                 --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
@@ -444,7 +455,6 @@ function SWEP:GetValue(val, base, condition, amount)
                 unaffected = false
             end
         end
-
     end
 
     self.StatCache[tostring(base) .. val .. condition] = stat
