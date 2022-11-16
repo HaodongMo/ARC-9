@@ -26,22 +26,28 @@ local lasthelperalpha = 0
 
 local gaA = 0
 
+local lerp = Lerp
+local arcticcolor = Color(255, 255, 255, 100)
+local ARC9ScreenScale = ARC9.ScreenScale
+
 function SWEP:DoDrawCrosshair(x, y)
     if !GetConVar("arc9_cross_enable"):GetBool() then return end
+    local scrw, scrh = ScrW(), ScrH()
+    local owner = self:GetOwner()
 
     if GetConVar("arc9_crosshair_static"):GetBool() then
-        x = ScrW() / 2
-        y = ScrH() / 2
+        x = scrw / 2
+        y = scrh / 2
     end
 
-    local dotsize = ScreenScale(1)
-    local prong = ScreenScale(4)
-    local minigap = ScreenScale(2)
-    local miniprong_1 = ScreenScale(4)
-    local miniprong_2 = ScreenScale(2)
+    local dotsize = ARC9ScreenScale(1)
+    local prong = ARC9ScreenScale(4)
+    local minigap = ARC9ScreenScale(2)
+    local miniprong_1 = ARC9ScreenScale(4)
+    local miniprong_2 = ARC9ScreenScale(2)
     local gap = 0
-    local staticgap = ScreenScale(4)
-    local col = Color(255, 255, 255, 100)
+    local staticgap = ARC9ScreenScale(4)
+    local col = arcticcolor
 
     col.r = GetConVar("arc9_cross_r"):GetFloat()
     col.g = GetConVar("arc9_cross_g"):GetFloat()
@@ -49,16 +55,16 @@ function SWEP:DoDrawCrosshair(x, y)
 
     local d = self:GetSightDelta()
 
-    prong = Lerp(d, prong, ScreenScale(6))
-    gap = Lerp(d, gap, 0)
-    minigap = Lerp(d, minigap, ScreenScale(1))
-    miniprong_1 = Lerp(d, miniprong_1, ScreenScale(3))
-    miniprong_2 = Lerp(d, miniprong_2, ScreenScale(1))
+    prong = lerp(d, prong, ARC9ScreenScale(6))
+    gap = lerp(d, gap, 0)
+    minigap = lerp(d, minigap, ARC9ScreenScale(1))
+    miniprong_1 = lerp(d, miniprong_1, ARC9ScreenScale(3))
+    miniprong_2 = lerp(d, miniprong_2, ARC9ScreenScale(1))
 
-    if self:GetOwner():IsAdmin() and ARC9.Dev(2) and self:GetInSights() then
+    if owner:IsAdmin() and ARC9.Dev(2) and self:GetInSights() then
         surface.SetDrawColor(255, 0, 0, 150)
-        surface.DrawLine(ScrW() / 2, 0, ScrW() / 2, ScrH())
-        surface.DrawLine(0, ScrH() / 2, ScrW(), ScrH() / 2)
+        surface.DrawLine(scrw / 2, 0, scrw / 2, scrh)
+        surface.DrawLine(0, scrh / 2, scrw, scrh / 2)
     end
 
     local helpertarget = 0
@@ -66,7 +72,7 @@ function SWEP:DoDrawCrosshair(x, y)
     col.a = lasthelperalpha * col.a
 
     if !self:ShouldDrawCrosshair() then
-        if self:GetOwner():KeyDown(IN_USE) then
+        if owner:KeyDown(IN_USE) then
             helpertarget = 1
         end
 
@@ -75,10 +81,10 @@ function SWEP:DoDrawCrosshair(x, y)
         drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col)
 
         return true
-    else
-        helpertarget = 1
+    -- else
+        -- helpertarget = 1
 
-        lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
+        -- lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
     end
 
     local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
@@ -89,7 +95,7 @@ function SWEP:DoDrawCrosshair(x, y)
             start = self:GetShootPos(),
             endpos = endpos,
             mask = MASK_SHOT,
-            filter = self:GetOwner()
+            filter = owner
         })
 
         toscreen = tr.HitPos:ToScreen()
@@ -109,14 +115,14 @@ function SWEP:DoDrawCrosshair(x, y)
     cam.End3D()
 
     local gau = 0
-    gau = ( (ScrH() / 2) - lool.y )
+    gau = ( (scrh / 2) - lool.y )
 
     gap = gap + gau
 
-    gap = math.max(ScreenScale(4), gap)
-    gap = gap + (shoottimegap * ScreenScale(8))
+    gap = math.max(ARC9ScreenScale(4), gap)
+    gap = gap + (shoottimegap * ARC9ScreenScale(8))
 
-    lastgap = Lerp(0.5, gap, lastgap)
+    lastgap = lerp(0.5, gap, lastgap)
 
     gap = lastgap
 
@@ -169,7 +175,7 @@ function SWEP:DoDrawCrosshair(x, y)
                 drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) - gap - miniprong_2 - minigap - miniprong_1, dotsize, miniprong_1, col)
             end
         elseif mode < 0 then
-            // Auto crosshair
+            -- Auto crosshair
             drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) - gap - prong, dotsize, prong, col)
         else
             drawshadowrect(x - (dotsize / 2) - gap - prong, y - (dotsize / 2), prong, dotsize, col)
@@ -206,7 +212,7 @@ function SWEP:DoDrawCrosshair(x, y)
         end
     else
         if mode > 1 then
-            // Burst crosshair
+            -- Burst crosshair
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2, y - (dotsize / 2), miniprong_2, dotsize, col)
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2 - minigap - miniprong_1, y - (dotsize / 2), miniprong_1, dotsize, col)
 
@@ -226,7 +232,7 @@ function SWEP:DoDrawCrosshair(x, y)
             drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) + gap, dotsize, prong, col)
 
             if mode < 0 then
-                // Auto crosshair
+                -- Auto crosshair
                 drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) - gap - prong, dotsize, prong, col)
             end
         end
@@ -247,20 +253,22 @@ end
 
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
+    local scrw, scrh = ScrW(), ScrH()
+    local getsight = self:GetSight()
 
-    if self:GetSightAmount() > 0.75 and self:GetSight().FlatScope and self:GetSight().FlatScopeOverlay then
-        if self:GetSight().FlatScopeBlackBox then
-            surface.SetMaterial(self:GetSight().FlatScopeOverlay)
+    if self:GetSightAmount() > 0.75 and getsight.FlatScope and getsight.FlatScopeOverlay then
+        if getsight.FlatScopeBlackBox then
+            surface.SetMaterial(getsight.FlatScopeOverlay)
             surface.SetDrawColor(255, 255, 255)
-            surface.DrawTexturedRect((ScrW() - ScrH()) / 2, 0, ScrH(), ScrH())
+            surface.DrawTexturedRect((scrw - scrh) / 2, 0, scrh, scrh)
 
             surface.SetDrawColor(0, 0, 0)
-            surface.DrawRect(0, 0, (ScrW() - ScrH()) / 2, ScrH())
-            surface.DrawRect(ScrW() - (ScrW() - ScrH()) / 2, 0, (ScrW() - ScrH()) / 2, ScrH())
+            surface.DrawRect(0, 0, (scrw - scrh) / 2, scrh)
+            surface.DrawRect(scrw - (scrw - scrh) / 2, 0, (scrw - scrh) / 2, scrh)
         else
-            surface.SetMaterial(self:GetSight().FlatScopeOverlay)
+            surface.SetMaterial(getsight.FlatScopeOverlay)
             surface.SetDrawColor(255, 255, 255)
-            surface.DrawTexturedRect(0, (ScrH() - ScrW()) / 2, ScrW(), ScrW())
+            surface.DrawTexturedRect(0, (scrh - scrw) / 2, scrw, scrw)
         end
     end
 
@@ -305,7 +313,7 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
         y = y - ((w - h) / 2)
     end
     -- surface.DrawTexturedRect(x, y, w, w)
-     surface.DrawTexturedRectUV(x, y, w, w, 1, 0, 0, 1)
+    surface.DrawTexturedRectUV(x, y, w, w, 1, 0, 0, 1)
 end
 
 SWEP.AutoSelectIcon = nil

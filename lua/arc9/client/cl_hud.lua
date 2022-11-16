@@ -277,20 +277,23 @@ end
 function ARC9.DrawHUD()
     if !ARC9.ShouldDrawHUD() then return end
 
-    local weapon = LocalPlayer():GetActiveWeapon()
+    local localplayer = LocalPlayer()
+    local weapon = localplayer:GetActiveWeapon()
 
     if !IsValid(weapon) then return end
 
+    local ct = CurTime()
+
     if lastweapon != weapon then
-        rackrisetime = CurTime()
+        rackrisetime = ct
         lastrow = 0
-        hidefadetime = CurTime()
+        hidefadetime = ct
     end
 
     -- local weapon_printname = weapon:GetPrintName()
     local weapon_clipsize = weapon:GetMaxClip1()
     local weapon_clip = weapon:Clip1()
-    local weapon_reserve = LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType())
+    local weapon_reserve = localplayer:GetAmmoCount(weapon:GetPrimaryAmmoType())
 
     local flash_period = 3
 
@@ -334,7 +337,7 @@ function ARC9.DrawHUD()
             firemode_text = arc9_mode.PrintName
             weapon_clipsize = weapon:GetMaxClip2()
             weapon_clip = weapon:Clip2()
-            weapon_reserve = LocalPlayer():GetAmmoCount(weapon:GetSecondaryAmmoType())
+            weapon_reserve = localplayer:GetAmmoCount(weapon:GetSecondaryAmmoType())
             multiple_modes = false
         end
 
@@ -386,7 +389,7 @@ function ARC9.DrawHUD()
         local arccw_mode = weapon:GetCurrentFiremode()
 
         firemode_text = weapon:GetFiremodeName()
-        // there was a reason I kept it to 4 letters you assholes
+        -- there was a reason I kept it to 4 letters you assholes
 
         firemode_text = string.Replace(firemode_text, "-", "")
         firemode_text = string.Replace(firemode_text, " ", "")
@@ -473,13 +476,13 @@ function ARC9.DrawHUD()
 
     local heat_col = ARC9.GetHUDColor("fg_3d", 200)
 
-    if (flashheatbar and math.floor(CurTime() * flash_period) % 2 == 0) then
+    if (flashheatbar and math.floor(ct * flash_period) % 2 == 0) then
         heat_col = ARC9.GetHUDColor("hi_3d", 200)
     end
 
     local am_col = ARC9.GetHUDColor("fg_3d", 255)
 
-    if (flashammowidgets and math.floor(CurTime() * flash_period) % 2 == 0) or (weapon_clip == 0 and !melee) then
+    if (flashammowidgets and math.floor(ct * flash_period) % 2 == 0) or (weapon_clip == 0 and !melee) then
         am_col = ARC9.GetHUDColor("hi_3d", 255)
     end
 
@@ -562,19 +565,19 @@ function ARC9.DrawHUD()
 
         local health_x = 8
         local health_y = 9
-        local health = math.Clamp(LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), 0, 99.99)
-        local overheal = LocalPlayer():Health() > LocalPlayer():GetMaxHealth() or LocalPlayer():Armor() > 100
+        local health = math.Clamp(localplayer:Health() / localplayer:GetMaxHealth(), 0, 99.99)
+        local overheal = localplayer:Health() > localplayer:GetMaxHealth() or localplayer:Armor() > 100
 
         local flashhealthwidgets = false
 
-        if LocalPlayer():Health() <= 10 then
+        if localplayer:Health() <= 10 then
             flashhealthwidgets = true
         end
 
         local hb_col = ARC9.GetHUDColor("fg_3d", 225)
         local hw_col = ARC9.GetHUDColor("fg_3d", 255)
 
-        if (flashhealthwidgets and math.floor(CurTime() * flash_period) % 2 == 0) then
+        if (flashhealthwidgets and math.floor(ct * flash_period) % 2 == 0) then
             hw_col = ARC9.GetHUDColor("hi_3d", 255)
             hb_col = ARC9.GetHUDColor("hi_3d", 170)
         end
@@ -584,10 +587,10 @@ function ARC9.DrawHUD()
         local hb_wide = 209
 
         if !overheal then
-            if LocalPlayer():Armor() > 0 then
+            if localplayer:Armor() > 0 then
                 hb_tall = 18
 
-                local armor = math.min(LocalPlayer():Armor() / 100, 1)
+                local armor = math.min(localplayer:Armor() / 100, 1)
 
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
                 surface.DrawRect(hb_left + s_right, 32 + s_down, hb_wide * armor, 3)
@@ -628,7 +631,7 @@ function ARC9.DrawHUD()
         if overheal then
             local armor_x = 250
             local armor_y = 9
-            local armor = math.Round((LocalPlayer():Armor() / 100) * 100)
+            local armor = math.Round((localplayer:Armor() / 100) * 100)
             armor = "⌂:" .. tostring(math.ceil(armor)) .. "%"
 
             surface.SetFont("ARC9_24_Unscaled")
@@ -788,7 +791,7 @@ function ARC9.DrawHUD()
         end
 
         if !GetConVar("arc9_hud_compact"):GetBool() then
-            // bullet fields
+            -- bullet fields
 
             local b_alpha = 225
 
@@ -833,7 +836,7 @@ function ARC9.DrawHUD()
                 end
 
                 if row < lastrow then
-                    rackrisetime = CurTime()
+                    rackrisetime = ct
                 end
 
                 lastrow = row
@@ -841,8 +844,8 @@ function ARC9.DrawHUD()
                 row2_bullets = clip_to_show
             end
 
-            if rackrisetime + 0.2 > CurTime() then
-                local rackrisedelta = ((rackrisetime + 0.2) - CurTime()) / 0.2
+            if rackrisetime + 0.2 > ct then
+                local rackrisedelta = ((rackrisetime + 0.2) - ct) / 0.2
                 rackrise = rackrisedelta * (sb + b_m_margin)
             end
 
@@ -1004,16 +1007,16 @@ function ARC9.DrawHUD()
             end
         end
 
-        if lasthintcount != #hints and hidefadetime + 1.5 < CurTime() then
-            hidefadetime = CurTime()
+        if lasthintcount != #hints and hidefadetime + 1.5 < ct then
+            hidefadetime = ct
         end
 
-        if weapon:GetInSights() and hidefadetime + 1.5 < CurTime() then
-            hidefadetime = CurTime()
+        if weapon:GetInSights() and hidefadetime + 1.5 < ct then
+            hidefadetime = ct
         end
 
         if first then
-            hidefadetime = CurTime() + 10
+            hidefadetime = ct + 10
             first = false
         end
 
@@ -1023,7 +1026,7 @@ function ARC9.DrawHUD()
         local hy = 0
         local SIZE = 16
 
-        if hidefadetime + 1.5 > CurTime() then
+        if hidefadetime + 1.5 > ct then
             hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
         else
             hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)

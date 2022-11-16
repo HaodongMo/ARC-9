@@ -48,6 +48,8 @@ local DampAngle = function(a, v1, v2)
     return LerpAngle(a, v2, v1)
 end
 
+local singleplayer = game.SinglePlayer()
+
 local somevector = Vector(-1, 0, 1)
 local somevector2 = Vector(0, 1, 0)
 local somevector3 = Vector(-1, -1, 1)
@@ -55,9 +57,11 @@ local cangup = Vector(1, 0, 0)
 local cangforward = Vector(0, 0, -1)
 
 function SWEP:GetViewModelPosition(pos, ang)
-    if !IsValid(self:GetOwner()) then return end
-    -- if self:GetOwner() != LocalPlayer() then return end
-    if CLIENT and self:GetOwner() != LocalPlayer() then return end
+    local owner = self:GetOwner()
+
+    if !IsValid(owner) then return end
+    -- if owner != LocalPlayer() then return end
+    if CLIENT and owner != LocalPlayer() then return end
 
     local oldpos = Vector(0, 0, 0)
     local oldang = Angle(0, 0, 0)
@@ -79,8 +83,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         return vector_origin, angle_zero
     end
     elseif ARC9.Dev(3) then
-        pos = self:GetOwner():EyePos()
-        ang = self:GetOwner():EyeAngles()
+        pos = owner:EyePos()
+        ang = owner:EyeAngles()
     end
 
     -- pos = Vector(0, 0, 0)
@@ -131,8 +135,9 @@ function SWEP:GetViewModelPosition(pos, ang)
     --     offsetpos:Set(self:GetProcessedValue("MovingPos"))
     --     offsetang:Set(self:GetProcessedValue("MovingAng"))
     -- end
-
-    if !self:GetReloading() and !self:GetBipod() and self:GetOwner():Crouching() then
+    local getbipod = self:GetBipod()
+    
+    if !self:GetReloading() and !getbipod and owner:Crouching() then
         local crouchpos = self:GetProcessedValue("CrouchPos")
         local crouchang = self:GetProcessedValue("CrouchAng")
         if crouchpos then
@@ -143,7 +148,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
-    if self:GetBipod() then
+    if getbipod then
         local bipodamount = self:GetBipodAmount()
 
         bipodamount = math.ease.InOutQuad(bipodamount)
@@ -238,17 +243,17 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- self.BobScale = 0
         -- self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
-
-    extra_offsetang.y = extra_offsetang.y - (self:GetFreeSwayAngles().p * cor_val)
-    extra_offsetang.p = extra_offsetang.p + (self:GetFreeSwayAngles().y * cor_val)
+    local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * cor_val)
 
     -- extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01
     -- extra_offsetpos.z = extra_offsetpos.z + (self:GetFreeSwayAngles().p * cor_val) - 0.05 -- idkkkkkkkk
 
-    extra_offsetang.y = extra_offsetang.y - (self:GetFreeAimOffset().p * cor_val)
-    extra_offsetang.p = extra_offsetang.p + (self:GetFreeAimOffset().y * cor_val)
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayoffset.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayoffset.y * cor_val)
 
-    if game.SinglePlayer() or IsFirstTimePredicted() then
+    if singleplayer or IsFirstTimePredicted() then
         if self:GetCustomize() then
             if self.CustomizeDelta < 1 then
                 self.CustomizeDelta = math.Approach(self.CustomizeDelta, 1, FrameTime() * 1 / 0.15)
@@ -423,10 +428,10 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos, ang = self:GetViewModelSway(pos, ang)
     pos, ang = self:GetViewModelSmooth(pos, ang)
 
-    -- if game.SinglePlayer() or IsFirstTimePredicted() then
+    -- if singleplayer or IsFirstTimePredicted() then
     pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
-    if game.SinglePlayer() or IsFirstTimePredicted() then
+    if singleplayer or IsFirstTimePredicted() then
         pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
         ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
 
@@ -459,7 +464,7 @@ function SWEP:GetViewModelPosition(pos, ang)
             wm.slottbl.Pos = self.WorldModelOffset.Pos
             wm.slottbl.Ang = self.WorldModelOffset.Ang
         else
-            if LocalPlayer() == self:GetOwner() then
+            if LocalPlayer() == owner then
                 wm.slottbl.Pos = (self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos) - self.ViewModelPos * somevector3
                 wm.slottbl.Ang = (self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
             end
