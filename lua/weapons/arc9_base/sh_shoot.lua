@@ -209,9 +209,9 @@ function SWEP:DoPrimaryAttack()
 
         if self:GetProcessedValue("Akimbo") then
             if bit.band(self:GetNthShot(), 1) == 0 then
-                anim = "fire_left"
-            else
                 anim = "fire_right"
+            else
+                anim = "fire_left"
             end
         end
 
@@ -264,6 +264,8 @@ function SWEP:DoPrimaryAttack()
     end
 
     self:SetNextPrimaryFire(curatt + delay)
+
+    self:SetNthShot(self:GetNthShot() + 1)
 
     self:DoEffects()
 
@@ -352,8 +354,6 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
         end
 
         bullettbl.Size = self:GetProcessedValue("TracerSize")
-
-        self:SetNthShot(self:GetNthShot() + 1)
 
         if IsFirstTimePredicted() then
             if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
