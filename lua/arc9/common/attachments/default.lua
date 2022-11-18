@@ -89,6 +89,7 @@ ATT.Sights = {
         ExtraSightData = {
             // like an atttbl, only works for sight related data
         },
+        Blur = true, -- If arc9_fx_adsblur 1 then blur gun in that sight. Disable if your sights have a big field of view and the blur distorts picture
         DeferSights = false, // the first parent sight will be used for sight data instead. Use for magnifiers
         Magnification = 1,
         Disassociate = false, // don't associate with parent slot
@@ -118,7 +119,7 @@ ATT.RTScopeReticle = Material("")
 ATT.RTScopeReticleScale = 1
 ATT.RTScopeShadowIntensity = 1.5
 ATT.RTCollimator = false -- Disables cheap scopes fov boost, disables sensivity adjustements
-ATT.RTBlurAdsAnyway = false -- If arc9_fx_adsblur 1 then blur gun anyway (as on non-rt sights). Disabled by default because it can blur and distort rt image
+ATT.RTScopeNoBlur = false -- By default, if arc9_fx_rtblur 1 then world behind gun wil be blurred. Enable if your "scope" is not so scope.
 ATT.RTScopeNoPP = false
 ATT.RTScopeNoShadow = false
 ATT.RTScopeBlackBox = false

@@ -12,3 +12,7 @@ hook.Add("EntityTakeDamage", "ARC9_ETD", function(npc, dmg)
 end)
 
 end
+
+hook.Add("AllowPlayerPickup", "ARC9_NoPropPickup", function(ply, ent) -- probably bad
+    return !(ply:GetActiveWeapon() and ply:GetActiveWeapon().ARC9)
+end)

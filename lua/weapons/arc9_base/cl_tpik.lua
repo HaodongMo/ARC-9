@@ -1,4 +1,4 @@
-// third person inverse kinematics
+-- third person inverse kinematics
 
 function SWEP:ShouldTPIK()
     if self.NoTPIK then return end
@@ -6,7 +6,8 @@ function SWEP:ShouldTPIK()
     if !self:GetOwner():IsPlayer() then return end
     if self:GetOwner():InVehicle() then return end
     if !self.MirrorVMWM then return end
-    // if self:GetSafe() then return end
+    if self:ShouldLOD() == 2 then return end
+    -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
     if LocalPlayer() == self:GetOwner() and !self:GetOwner():ShouldDrawLocalPlayer() then return end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
@@ -21,27 +22,35 @@ end
 SWEP.TPIKCache = {}
 SWEP.LastTPIKTime = 0
 
-function SWEP:DoTPIK()
-    if !self:ShouldTPIK() then return end
+local cachelastcycle = 0 -- probably bad
 
-    -- local vm = self:GetVM()
+function SWEP:DoTPIK()
     local wm = self:GetWM()
+    if !self:ShouldTPIK() then 
+        if cachelastcycle > 0 then wm:SetCycle(0) cachelastcycle = 0 end
+        return
+     end
+
     local ply = self:GetOwner()
 
     local tpikdelay = RealFrameTime()
+    
+    local lod
 
-    local dist = (ply:GetPos() - EyePos()):LengthSqr()
+    if ply != LocalPlayer() then
+        local dist = EyePos():DistToSqr(ply:GetPos())
 
-    if dist > 6250000 then
-        tpikdelay = 1 / 30
-    elseif dist > 1000000 then
-        tpikdelay = tpikdelay * 3
-    end
-
-    local convartpiktime = GetConVar("arc9_tpik_framerate"):GetFloat()
-
-    if convartpiktime > 0 then
+        local convartpiktime = GetConVar("arc9_tpik_framerate"):GetFloat()
+        convartpiktime = (convartpiktime == 0) and 250 or math.Clamp(convartpiktime, 5, 250)
         tpikdelay = 1 / convartpiktime
+
+        lod = self:ShouldLOD()
+
+        if lod == 1 then
+            tpikdelay = 1 / 20 -- 20 fps if lodding
+        elseif lod == 1.5 then
+            tpikdelay = 1 / 10
+        end
     end
 
     local shouldfulltpik = true
@@ -67,6 +76,7 @@ function SWEP:DoTPIK()
     wm:SetSequence(seq)
 
     wm:SetCycle(time)
+    cachelastcycle = time
 
     -- wm:SetSequence(vm:GetSequence())
     -- wm:SetCycle(vm:GetCycle())
@@ -90,12 +100,20 @@ function SWEP:DoTPIK()
     self:SetFiremodePose(true)
 
     ply:SetupBones()
-
     local bones = ARC9.TPIKBones
-
+    
     if nolefthand then
         bones = ARC9.RHIKHandBones
     end
+    
+    if lod == 1.5 then -- hackkkkk
+        bones = ARC9.LHIKHandBones
+    end
+    
+    local ply_spine_index = ply:LookupBone("ValveBiped.Bip01_Spine4")
+    if !ply_spine_index then return end
+    local ply_spine_matrix = ply:GetBoneMatrix(ply_spine_index)
+    local wmpos = ply_spine_matrix:GetTranslation()
 
     for _, bone in ipairs(bones) do
         local wm_boneindex = wm:LookupBone(bone)
@@ -110,6 +128,10 @@ function SWEP:DoTPIK()
 
         local bonepos = wm_bonematrix:GetTranslation()
         local boneang = wm_bonematrix:GetAngles()
+
+        bonepos.x = math.Clamp(bonepos.x, wmpos.x - 38, wmpos.x + 38) -- clamping if something gone wrong so no stretching (or animator is fleshy)
+        bonepos.y = math.Clamp(bonepos.y, wmpos.y - 38, wmpos.y + 38)
+        bonepos.z = math.Clamp(bonepos.z, wmpos.z - 38, wmpos.z + 38)
 
         ply_bonematrix:SetTranslation(bonepos)
         ply_bonematrix:SetAngles(boneang)
@@ -161,16 +183,16 @@ function SWEP:DoTPIK()
         ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
         self.LastTPIKTime = CurTime()
 
-        self.TPIKCache.r_upperarm_pos = WorldToLocal(ply_r_upperarm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
-        self.TPIKCache.r_forearm_pos = WorldToLocal(ply_r_forearm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        self.TPIKCache.r_upperarm_pos = WorldToLocal(ply_r_upperarm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        self.TPIKCache.r_forearm_pos = WorldToLocal(ply_r_forearm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
     else
-        ply_r_upperarm_pos = LocalToWorld(self.TPIKCache.r_upperarm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
-        ply_r_forearm_pos = LocalToWorld(self.TPIKCache.r_forearm_pos, Angle(0, 0, 0), ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        ply_r_upperarm_pos = LocalToWorld(self.TPIKCache.r_upperarm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        ply_r_forearm_pos = LocalToWorld(self.TPIKCache.r_forearm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
     end
 
-    debugoverlay.Line(ply_r_shoulder_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1, Color(255, 255, 255), true)
-    debugoverlay.Line(ply_r_upperarm_pos, ply_r_forearm_pos, 0.1, Color(255, 255, 255), true)
-    -- debugoverlay.Line(ply_r_forearm_pos, ply_r_hand_matrix:GetTranslation(), 0.1, Color(255, 255, 255), true)
+    debugoverlay.Line(ply_r_shoulder_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1)
+    debugoverlay.Line(ply_r_upperarm_pos, ply_r_forearm_pos, 0.1)
+    -- debugoverlay.Line(ply_r_forearm_pos, ply_r_hand_matrix:GetTranslation(), 0.1)
 
     -- ply_r_shoulder_matrix:SetTranslation(ply_r_upperarm_pos)
     ply_r_elbow_matrix:SetTranslation(ply_r_upperarm_pos)
@@ -219,11 +241,11 @@ function SWEP:DoTPIK()
         ply_l_upperarm_pos, ply_l_forearm_pos = self:Solve2PartIK(ply_l_shoulder_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 35)
 
         self.LastTPIKTime = CurTime()
-        self.TPIKCache.l_upperarm_pos = WorldToLocal(ply_l_upperarm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
-        self.TPIKCache.l_forearm_pos = WorldToLocal(ply_l_forearm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        self.TPIKCache.l_upperarm_pos = WorldToLocal(ply_l_upperarm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        self.TPIKCache.l_forearm_pos = WorldToLocal(ply_l_forearm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
     else
-        ply_l_upperarm_pos = LocalToWorld(self.TPIKCache.l_upperarm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
-        ply_l_forearm_pos = LocalToWorld(self.TPIKCache.l_forearm_pos, Angle(0, 0, 0), ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        ply_l_upperarm_pos = LocalToWorld(self.TPIKCache.l_upperarm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        ply_l_forearm_pos = LocalToWorld(self.TPIKCache.l_forearm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
     end
 
     debugoverlay.Line(ply_l_shoulder_matrix:GetTranslation(), ply_l_upperarm_pos, 0.1, Color(255, 255, 255), true)

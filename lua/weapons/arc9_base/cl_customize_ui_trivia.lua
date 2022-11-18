@@ -6,8 +6,8 @@ function SWEP:CreateHUD_Trivia()
     self:ClearTabPanel()
 
     local descbg = vgui.Create("DPanel", lowerpanel)
-    descbg:SetPos(ARC9ScreenScale(4), ARC9ScreenScale(20))
-    descbg:SetSize(lowerpanel:GetWide()-ARC9ScreenScale(4), ARC9ScreenScale(98))
+    descbg:SetPos(ARC9ScreenScale(4), ARC9ScreenScale(19))
+    descbg:SetSize(lowerpanel:GetWide()-ARC9ScreenScale(4), ARC9ScreenScale(100))
     descbg.Paint = function(self2, w, h)
     end
 
@@ -114,7 +114,7 @@ function SWEP:CreateHUD_Trivia()
     -- trivia
     local triviascroll = vgui.Create("ARC9ScrollPanel", descbg)
     triviascroll:SetPos(descbg:GetWide() * 0.76, 0)
-    triviascroll:SetSize(descbg:GetWide() * 0.24 - ARC9ScreenScale(4), descbg:GetTall())
+    triviascroll:SetSize(descbg:GetWide() * 0.24 - ARC9ScreenScale(4), descbg:GetTall() + ARC9ScreenScale(8))
     triviascroll.Paint = function(self2, w, h)
         -- surface.SetDrawColor(0, 0, 144, 100)
         -- surface.DrawRect(0, 0, w, h)

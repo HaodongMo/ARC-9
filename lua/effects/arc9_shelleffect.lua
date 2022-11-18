@@ -69,11 +69,13 @@ function EFFECT:Init(data)
     local physbox = ent:GetProcessedValue("ShellPhysBox")
     local pitch = ent:GetProcessedValue("ShellPitch")
     local sounds = ent:GetProcessedValue("ShellSounds")
-
+    
     local dir = ang:Forward()
 
-    ang:RotateAroundAxis(ang:Forward(), 90)
-    ang:RotateAroundAxis(ang:Up(), 0)
+    local correctang = ent:GetProcessedValue("ShellCorrectAng") or angle_zero
+    ang:RotateAroundAxis(ang:Forward(), 90 + correctang.p)
+    ang:RotateAroundAxis(ang:Right(), correctang.y)
+    ang:RotateAroundAxis(ang:Up(), correctang.r)
 
     self:SetPos(origin)
     self:SetModel(model or "")

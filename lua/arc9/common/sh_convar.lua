@@ -233,9 +233,8 @@ local conVars = {
     },
     {
         name = "breath_hud",
-        default = "0",
+        default = "1",
         client = true,
-        replicated = true
     },
     {
         name = "breath_pp",
@@ -249,7 +248,7 @@ local conVars = {
     },
     {
         name = "breath_slowmo",
-        default = "0",
+        default = "1",
         replicated = true
     },
     {
@@ -368,7 +367,7 @@ local conVars = {
     },
     {
         name = "tpik_framerate",
-        default = "0",
+        default = "60",
         client = true
     },
     {
@@ -526,6 +525,14 @@ local function menu_client_ti(panel)
         command = "arc9_hud_always"
     })
     panel:ControlHelp( "HUD on all weapons." )
+    panel:AddControl("checkbox", {
+        label = "ADS Blur",
+        command = "arc9_fx_adsblur"
+    })
+    panel:AddControl("checkbox", {
+        label = "ADS Blur on RT Scopes",
+        command = "arc9_fx_rtblur"
+    })
     panel:AddControl("checkbox", {
         label = "Keep HUD Hints",
         command = "arc9_hud_keephints"

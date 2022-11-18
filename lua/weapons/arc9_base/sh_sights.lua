@@ -188,6 +188,8 @@ function SWEP:BuildMultiSight()
                     table.insert(self.MultiSightTable, s)
                 end
 
+                if sight.Blur == false then s.Blur = false end -- false exactly, not nil because nil is yes
+
                 if sight.KeepBaseIrons then
                     kbi = true
                 end

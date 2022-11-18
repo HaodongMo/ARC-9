@@ -29,10 +29,8 @@ function SWEP:PreDrawViewModel()
     local getsights = self:GetSight()
     local sightamount = self:GetSightAmount()
 
-    -- global for accessing later
-    ARC9.ShouldRTBlur = sightamount > 0 and GetConVar("arc9_fx_rtblur"):GetBool() and getsights.atttbl and getsights.atttbl.RTScopeFOV and getsights.atttbl.RTScopeFOV > 4.5 and !getsights.Disassociate and !getsights.atttbl.RTCollimator
-    if ARC9.ShouldRTBlur then DrawBokehDOF(2 * sightamount, 1, 0) end
-    ARC9.ShouldRTBlur = ARC9.ShouldRTBlur and !(getsights.atttbl and getsights.atttbl.RTBlurAdsAnyway) or false
+    local shouldrtblur = sightamount > 0 and GetConVar("arc9_fx_rtblur"):GetBool() and !input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
+    if shouldrtblur then DrawBokehDOF(2 * sightamount, 1, 0) end
     
     local custdelta = self.CustomizeDelta
 
@@ -162,8 +160,7 @@ function SWEP:PostDrawViewModel()
         end
     end
     cam.End3D()
-
     
-    if !ARC9.ShouldRTBlur and GetConVar("arc9_fx_adsblur"):GetBool() then arc9toytown(self:GetSightAmount()) end -- cool ass blur
+    if GetConVar("arc9_fx_adsblur"):GetBool() and self:GetSight().Blur != false then arc9toytown(self:GetSightAmount()) end -- cool ass blur
     -- render.UpdateFullScreenDepthTexture()
 end

@@ -38,7 +38,7 @@ end
 function SWEP:KillSoundTable()
     local keeptimers = {}
 
-    for _, v in pairs(self.ActiveTimers) do
+    for _, v in ipairs(self.ActiveTimers) do
         if string.sub(v[2], string.len("soundtable_")) != "soundtable_" then
             table.insert(keeptimers, v)
         end
