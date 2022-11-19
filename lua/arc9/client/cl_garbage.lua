@@ -20,9 +20,13 @@ function ARC9.CollectGarbage()
     end
 
     ARC9.CSModelPile = newpile
-
-    if ARC9.Dev(2) and removed > 0 then
-        print("Removed " .. tostring(removed) .. " CSModels")
+    
+    if ARC9.Dev(2) then
+        if removed > 0 then
+            print("ARC9 GC: Removed " .. tostring(removed) .. " CSModels")
+        else
+            -- print("ARC9 GC: Nothing removed")
+        end
     end
 end
 
