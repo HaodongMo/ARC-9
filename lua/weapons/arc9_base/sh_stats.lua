@@ -106,6 +106,13 @@ function SWEP:GetAllAffectors()
         local atttbl = self:GetFinalAttTable(slot)
 
         if atttbl then
+
+            local att = slot.Installed
+
+            if self.AttachmentTableOverrides and self.AttachmentTableOverrides[att] then
+                atttbl = table.Merge(atttbl, self.AttachmentTableOverrides[att])
+            end
+
             table.insert(aff, atttbl)
         end
     end

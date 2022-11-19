@@ -60,11 +60,12 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
     local onground = wm and !IsValid(owner)
 
+    local hidebones = self:GetHiddenBones(wm)
+
     if lod < 2 then
         for _, model in ipairs(mdl or {}) do
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
-
 
             if !onground or model.OptimizPrevWMPos != self:GetPos() then -- mega optimiz
                 model.OptimizPrevWMPos = onground and self:GetPos() or nil
@@ -75,6 +76,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                     if !onground and model.IsAnimationProxy then
                         apos = Vector(0, 0, 0)
                         aang = Angle(0, 0, 0)
+                    end
+
+                    if hidebones[slottbl.Bone or -1] then
+                        continue
                     end
 
                     local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or angle_zero, model.Duplicate)

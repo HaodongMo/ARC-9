@@ -76,49 +76,15 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
-    local hide = false
+    local hidebones = self:GetHiddenBones(wm)
 
-    if self.CustomizeDelta > 0 then
-        hide = true
-    end
+    for bone, a in pairs(hidebones) do
+        if !a then continue end
+        local boneid = mdl:LookupBone(bone)
 
-    if wm then
-        hide = true
-    end
+        if !boneid then continue end
 
-    if clear then hide = false end
-
-    local hidebones = self:GetProcessedValue("HideBones")
-    local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables")
-
-    if self:GetReloading() then
-        hide = false
-    end
-
-    if self:GetReloading() and reloadhidebones and self:ShouldTPIK() and wm then
-        local index = self:GetHideBoneIndex()
-
-        if index != 0 then
-            for _, bone in ipairs(reloadhidebones[index] or {}) do
-                local boneid = mdl:LookupBone(bone)
-
-                if !boneid then continue end
-
-                mdl:ManipulateBoneScale(boneid, v0)
-            end
-        end
-    else
-        if hidebones then
-            for _, bone in ipairs(hidebones) do
-                local boneid = mdl:LookupBone(bone)
-
-                if !boneid then continue end
-
-                if hide then
-                    mdl:ManipulateBoneScale(boneid, v0)
-                end
-            end
-        end
+        mdl:ManipulateBoneScale(boneid, v0)
     end
 
     local bulletbones = self:GetProcessedValue("BulletBones")
@@ -140,6 +106,47 @@ function SWEP:DoBodygroups(wm, cm)
     -- PrintTable(mdl:GetMaterials())
 
     self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = eles})
+end
+
+function SWEP:GetHiddenBones(wm)
+    local hide = false
+
+    if self.CustomizeDelta > 0 then
+        hide = true
+    end
+
+    if wm then
+        hide = true
+    end
+
+    if clear then hide = false end
+
+    local hidebones = self:GetProcessedValue("HideBones")
+    local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables")
+
+    local bones = {}
+
+    if self:GetReloading() then
+        hide = false
+    end
+
+    if self:GetReloading() and reloadhidebones and self:ShouldTPIK() and wm then
+        local index = self:GetHideBoneIndex()
+
+        if index != 0 then
+            for _, bone in ipairs(reloadhidebones[index] or {}) do
+                bones[bone] = true
+            end
+        end
+    else
+        if hidebones and hide then
+            for _, bone in ipairs(hidebones) do
+                bones[bone] = true
+            end
+        end
+    end
+
+    return bones
 end
 
 -- function SWEP:GetElements()
