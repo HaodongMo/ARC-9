@@ -10,6 +10,8 @@ util.AddNetworkString("arc9_reloadlangs")
 util.AddNetworkString("arc9_randomizeatts")
 
 util.AddNetworkString("arc9_sendblacklist")
+util.AddNetworkString("arc9_proppickup")
+util.AddNetworkString("arc9_stoppickup")
 
 if game.SinglePlayer() then
 

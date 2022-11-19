@@ -6,3 +6,13 @@ net.Receive("ARC9_networkweapon", function(len, ply)
 
     wpn:ReceiveWeapon()
 end)
+
+net.Receive("arc9_proppickup", function(len)
+    local ent = net.ReadEntity()
+    if !IsValid(ent) then return end
+    LocalPlayer().ARC9_HoldingProp = ent
+end)
+
+net.Receive("arc9_stoppickup", function(len)
+    LocalPlayer().ARC9_HoldingProp = nil
+end)

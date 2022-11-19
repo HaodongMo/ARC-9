@@ -13,6 +13,14 @@ end)
 
 end
 
-hook.Add("AllowPlayerPickup", "ARC9_NoPropPickup", function(ply, ent) -- probably bad
-    return !(ply:GetActiveWeapon() and ply:GetActiveWeapon().ARC9)
+hook.Add("OnPlayerPhysicsPickup", "ARC9_PropPickup", function(ply, ent)
+    ply.ARC9_HoldingProp = ent
+    local gun = ply:GetActiveWeapon()
+    if gun.ARC9 then
+        gun:SetHoldType("duel")
+        ply:DoAnimationEvent(ACT_FLINCH_BACK)
+    end
+    net.Start("arc9_proppickup")
+    net.WriteEntity(ent)
+    net.Send(ply)
 end)

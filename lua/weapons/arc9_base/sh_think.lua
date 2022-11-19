@@ -9,7 +9,6 @@ function SWEP:Think()
     end
 
     if !self.NotAWeapon then
-
         if owner:KeyReleased(IN_ATTACK) or (self:GetUBGL() and owner:KeyReleased(IN_ATTACK2)) then
             self:SetNeedTriggerPress(false)
             if !self:GetProcessedValue("RunawayBurst") then
@@ -44,7 +43,7 @@ function SWEP:Think()
             end
         end
 
-        // If we have stopped shooting, play the aftershotparticle
+        -- If we have stopped shooting, play the aftershotparticle
         if self:GetAfterShot() and (IsFirstTimePredicted() or game.SinglePlayer()) then
             local delay = 60 / self:GetProcessedValue("RPM")
 
@@ -109,6 +108,15 @@ function SWEP:Think()
     self:ProcessTimers()
 
     lastwalking = self:GetIsWalking()
+
+    if SERVER and owner.ARC9_HoldingProp then
+        if !IsValid(owner.ARC9_HoldingProp) or !owner.ARC9_HoldingProp:IsPlayerHolding() then
+            owner.ARC9_HoldingProp = nil    
+            net.Start("arc9_stoppickup")
+            net.Send(owner)
+            owner:DoAnimationEvent(ACT_FLINCH_BACK)
+        end
+    end
 
     if CLIENT then
         if !self.LoadedPreset then

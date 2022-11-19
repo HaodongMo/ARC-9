@@ -2,16 +2,20 @@
 
 function SWEP:ShouldTPIK()
     if self.NoTPIK then return end
+    local owner = self:GetOwner()
+    local lp = LocalPlayer()
+
     if render.GetDXLevel() < 90 then return end
-    if !self:GetOwner():IsPlayer() then return end
-    if self:GetOwner():InVehicle() then return end
+    if !owner:IsPlayer() then return end
+    if owner:InVehicle() then return end
+    if owner.ARC9_HoldingProp then return end
     if !self.MirrorVMWM then return end
     if self:ShouldLOD() == 2 then return end
     -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
-    if LocalPlayer() == self:GetOwner() and !self:GetOwner():ShouldDrawLocalPlayer() then return end
+    if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
-    if LocalPlayer() != self:GetOwner() then
+    if lp != owner then
         return GetConVar("arc9_tpik_others"):GetBool()
     else
         return GetConVar("arc9_tpik"):GetBool()
