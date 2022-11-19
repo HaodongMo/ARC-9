@@ -71,7 +71,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
     if !self:ShouldDrawCrosshair() then
         if owner:KeyDown(IN_USE) then
-            helpertarget = 1
+            -- helpertarget = 1
         end
 
         lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
@@ -79,10 +79,10 @@ function SWEP:DoDrawCrosshair(x, y)
         drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col)
 
         return true
-    -- else
-    --     helpertarget = 1
+    else
+        helpertarget = 1
 
-    --     lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
+        lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
     end
 
     local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
