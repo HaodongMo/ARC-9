@@ -13,11 +13,9 @@ function SWEP:ShouldDrawCrosshair()
 end
 
 local function drawshadowrect(x, y, w, h, col)
-    local shadow = Color(0, 0, 0, col.a * 100 / 150)
-
     surface.SetDrawColor(col)
     surface.DrawRect(x, y, w, h)
-    surface.SetDrawColor(shadow)
+    surface.SetDrawColor(0, 0, 0, col.a * 100 / 150)
     surface.DrawOutlinedRect(x - 1, y - 1, w + 2, h + 2)
 end
 
@@ -27,7 +25,7 @@ local lasthelperalpha = 0
 local gaA = 0
 
 local lerp = Lerp
-local arcticcolor = Color(255, 255, 255, 100)
+-- local arcticcolor = Color(255, 255, 255, 100)
 local ARC9ScreenScale = ARC9.ScreenScale
 
 function SWEP:DoDrawCrosshair(x, y)
@@ -47,7 +45,7 @@ function SWEP:DoDrawCrosshair(x, y)
     local miniprong_2 = ARC9ScreenScale(2)
     local gap = 0
     local staticgap = ARC9ScreenScale(4)
-    local col = arcticcolor
+    local col = Color(255, 255, 255, 100)
 
     col.r = GetConVar("arc9_cross_r"):GetFloat()
     col.g = GetConVar("arc9_cross_g"):GetFloat()
@@ -82,9 +80,9 @@ function SWEP:DoDrawCrosshair(x, y)
 
         return true
     -- else
-        -- helpertarget = 1
+    --     helpertarget = 1
 
-        -- lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
+    --     lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
     end
 
     local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
