@@ -218,6 +218,11 @@ function SWEP:CreateHUD_Bench()
             surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
 
             local dmgv = self:GetDamageAtRange(ranger_range)
+
+            if self:GetProcessedValue("DistributeDamage") then
+                dmgv = dmgv
+            end
+
             local bodydamage = self:GetProcessedValue("BodyDamageMults")
 
             local dmg_head = dmgv * self:GetProcessedValue("HeadshotDamage") * (bodydamage[HITGROUP_HEAD] or 2)
@@ -328,6 +333,12 @@ function SWEP:CreateHUD_Bench()
 
             local dmg_max = self:GetValue("DamageMax")
             local dmg_min = self:GetValue("DamageMin")
+            local num = self:GetValue("Num")
+
+            if self:GetProcessedValue("DistributeDamage") then
+                dmg_max = dmg_max / num
+                dmg_min = dmg_min / num
+            end
 
             local range_min = self:GetValue("RangeMin")
             local range_max = self:GetValue("RangeMax")
