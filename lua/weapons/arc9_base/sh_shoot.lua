@@ -551,6 +551,10 @@ function SWEP:GetDamageAtRange(range)
 
     dmgv = self:GetProcessedValue("Damage", dmgv)
 
+    if self:GetProcessedValue("DistributeDamage") then
+        dmgv = dmgv / self:GetProcessedValue("Num")
+    end
+
     dmgv = math.ceil(dmgv)
 
     return dmgv

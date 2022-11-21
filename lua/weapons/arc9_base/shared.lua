@@ -152,7 +152,8 @@ SWEP.RangeMax = 5000 -- In Hammer units, how far bullets can travel before deali
 SWEP.Distance = 33000 -- In Hammer units, how far bullets can travel, period.
 
 SWEP.Num = 1 -- Number of bullets to shoot
--- Bear in mind: Damage is divided by Num
+
+SWEP.DistributeDamage = false -- If true, damage is distributed evenly across all bullets. If false, damage is dealt to the first bullet only.
 
 SWEP.Penetration = 5 -- Units of wood that can be penetrated by this gun.
 
