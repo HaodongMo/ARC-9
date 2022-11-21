@@ -58,7 +58,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, 
     end
 
     if slottbl.Installed then
-        atttbl = ARC9.GetAttTable(slottbl.Installed)
+        atttbl = self:GetFinalAttTable(slottbl)
     end
 
     local offset_pos = slottbl.Pos or Vector(0, 0, 0)

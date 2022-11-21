@@ -3,7 +3,7 @@ SWEP.Flashlights = {} -- tracks projectedlights
 
 function SWEP:GetHasFlashlights()
     for i, k in ipairs(self:GetAttachmentList()) do
-        local atttbl = ARC9.GetAttTable(k)
+        local atttbl = self:GetFinalAttTable(k)
 
         if atttbl.Flashlight then return true end
     end

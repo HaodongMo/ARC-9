@@ -299,13 +299,13 @@ function SWEP:SlotInvalid(slottbl)
         cat = {cat}
     end
 
-    local atttbl = ARC9.GetAttTable(att)
+    local atttbl = self:GetFinalAttTable(slottbl)
 
     if atttbl.Max then
         local count = self:CountAttachments(att)
 
         if slottbl.Installed then
-            local installed_atttbl = ARC9.GetAttTable(slottbl.Installed)
+            local installed_atttbl = self:GetFinalAttTable(slottbl)
 
             if slottbl.Installed == installed_atttbl.InvAtt then
                 count = count - 1
@@ -396,13 +396,13 @@ function SWEP:CanAttach(addr, att, slottbl)
         cat = {cat}
     end
 
-    local atttbl = ARC9.GetAttTable(att)
+    local atttbl = self:GetFinalAttTable(slottbl)
 
     if atttbl.Max then
         local count = self:CountAttachments(att)
 
         if slottbl.Installed then
-            local installed_atttbl = ARC9.GetAttTable(slottbl.Installed)
+            local installed_atttbl = self:GetFinalAttTable(slottbl)
 
             if slottbl.Installed == installed_atttbl.InvAtt then
                 count = count - 1
