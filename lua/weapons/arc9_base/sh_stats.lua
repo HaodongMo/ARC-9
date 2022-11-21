@@ -68,9 +68,11 @@ function SWEP:GetFinalAttTable(slot)
     if !slot then return {} end
     if !slot.Installed then return {} end
 
-    local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed))
+    local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed) or {})
 
-    if !atttbl then return {} end
+    if self.AttachmentTableOverrides and self.AttachmentTableOverrides[slot.Installed] then
+        atttbl = table.Merge(atttbl, self.AttachmentTableOverrides[slot.Installed])
+    end
 
     if atttbl.ToggleStats then
         local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
@@ -103,13 +105,6 @@ function SWEP:GetAllAffectors()
         local atttbl = self:GetFinalAttTable(slot)
 
         if atttbl then
-
-            local att = slot.Installed
-
-            if self.AttachmentTableOverrides and self.AttachmentTableOverrides[att] then
-                atttbl = table.Merge(atttbl, self.AttachmentTableOverrides[att])
-            end
-
             table.insert(aff, atttbl)
         end
     end
