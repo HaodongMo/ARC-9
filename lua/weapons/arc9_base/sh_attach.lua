@@ -396,7 +396,7 @@ function SWEP:CanAttach(addr, att, slottbl)
         cat = {cat}
     end
 
-    local atttbl = self:GetFinalAttTable(slottbl)
+    local atttbl = ARC9.GetAttTable(att)
 
     if atttbl.Max then
         local count = self:CountAttachments(att)
