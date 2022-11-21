@@ -165,6 +165,11 @@ function SWEP:DoTPIK()
     local ply_r_ulna_index = ply:LookupBone("ValveBiped.Bip01_R_Ulna") or ply:LookupBone("HumanRForearm2")
     local ply_r_wrist_index = ply:LookupBone("ValveBiped.Bip01_R_Wrist") or ply:LookupBone("HumanRForearm3")
 
+    if ply_l_bicep_index and !ply:BoneHasFlag(ply_l_bicep_index, 524032) then ply_l_bicep_index = nil end
+    if ply_l_ulna_index and !ply:BoneHasFlag(ply_l_ulna_index, 524032) then ply_l_ulna_index = nil end
+    if ply_r_bicep_index and !ply:BoneHasFlag(ply_r_bicep_index, 524032) then ply_r_bicep_index = nil end
+    if ply_r_ulna_index and !ply:BoneHasFlag(ply_r_ulna_index, 524032) then ply_r_ulna_index = nil end
+    
     if !ply_l_shoulder_index then return end
     if !ply_r_shoulder_index then return end
     if !ply_l_elbow_index then return end
@@ -228,16 +233,16 @@ function SWEP:DoTPIK()
     local ply_r_ulna_matrix = ply_r_ulna_index and ply:GetBoneMatrix(ply_r_ulna_index)
     local ply_r_wrist_matrix = ply_r_wrist_index and ply:GetBoneMatrix(ply_r_wrist_index)
 
-    // local ply_r_upperarm_pos = ply:LocalToWorld(self.TPIKCache.r_upperarm_pos)
-    // local ply_r_forearm_pos = ply:LocalToWorld(self.TPIKCache.r_forearm_pos)
+    -- local ply_r_upperarm_pos = ply:LocalToWorld(self.TPIKCache.r_upperarm_pos)
+    -- local ply_r_forearm_pos = ply:LocalToWorld(self.TPIKCache.r_forearm_pos)
 
-    // if shouldfulltpik then
-    //     ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
-    //     self.LastTPIKTime = CurTime()
+    -- if shouldfulltpik then
+    --     ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
+    --     self.LastTPIKTime = CurTime()
 
-    //     self.TPIKCache.r_upperarm_pos = ply:WorldToLocal(ply_r_upperarm_pos)
-    //     self.TPIKCache.r_forearm_pos = ply:WorldToLocal(ply_r_forearm_pos)
-    // end
+    --     self.TPIKCache.r_upperarm_pos = ply:WorldToLocal(ply_r_upperarm_pos)
+    --     self.TPIKCache.r_forearm_pos = ply:WorldToLocal(ply_r_forearm_pos)
+    -- end
 
     local ply_l_upperarm_pos, ply_l_forearm_pos
 
@@ -260,15 +265,15 @@ function SWEP:DoTPIK()
     ply_l_hand_matrix:SetTranslation(ply_l_forearm_pos)
     ply_l_elbow_matrix:SetTranslation(ply_l_upperarm_pos)
 
-    if ply_l_HELPERelbow_index then ply_l_HELPERelbow_matrix:SetTranslation(ply_l_forearm_pos) end
-    if ply_l_bicep_index then ply_l_bicep_matrix:SetTranslation(ply_l_forearm_pos) end
-    if ply_l_ulna_index then ply_l_ulna_matrix:SetTranslation(ply_l_forearm_pos) end
-    if ply_l_wrist_index then ply_l_wrist_matrix:SetTranslation(ply_l_forearm_pos) end
+    if ply_l_HELPERelbow_matrix then ply_l_HELPERelbow_matrix:SetTranslation(ply_l_forearm_pos) end
+    if ply_l_bicep_matrix then ply_l_bicep_matrix:SetTranslation(ply_l_forearm_pos) end
+    if ply_l_ulna_matrix then ply_l_ulna_matrix:SetTranslation(ply_l_forearm_pos) end
+    if ply_l_wrist_matrix then ply_l_wrist_matrix:SetTranslation(ply_l_forearm_pos) end
 
-    if ply_r_HELPERelbow_index then ply_r_HELPERelbow_matrix:SetTranslation(ply_r_forearm_pos) end
-    if ply_r_bicep_index then ply_r_bicep_matrix:SetTranslation(ply_r_forearm_pos) end
-    if ply_r_ulna_index then ply_r_ulna_matrix:SetTranslation(ply_r_forearm_pos) end
-    if ply_r_wrist_index then ply_r_wrist_matrix:SetTranslation(ply_r_forearm_pos) end
+    if ply_r_HELPERelbow_matrix then ply_r_HELPERelbow_matrix:SetTranslation(ply_r_forearm_pos) end
+    if ply_r_bicep_matrix then ply_r_bicep_matrix:SetTranslation(ply_r_forearm_pos) end
+    if ply_r_ulna_matrix then ply_r_ulna_matrix:SetTranslation(ply_r_forearm_pos) end
+    if ply_r_wrist_matrix then ply_r_wrist_matrix:SetTranslation(ply_r_forearm_pos) end
 
     -- print(ply:GetBoneName(ply_l_ulna_index), ply:GetBoneName(ply_l_wrist_index))
 
