@@ -68,20 +68,17 @@ function SWEP:GetFinalAttTable(slot)
     if !slot then return {} end
     if !slot.Installed then return {} end
 
-    local atttbl = ARC9.GetAttTable(slot.Installed)
+    local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed))
 
     if !atttbl then return {} end
 
     if atttbl.ToggleStats then
-        local tbl = table.Copy(atttbl)
         local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
 
-        table.Merge(tbl, toggletbl)
-
-        return tbl
-    else
-        return atttbl
+        table.Merge(atttbl, toggletbl)
     end
+
+    return atttbl
 end
 
 function SWEP:GetAllAffectors()
