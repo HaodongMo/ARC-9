@@ -65,10 +65,10 @@ function ARC9.LoadAtts()
     for _, filename in pairs(files) do
         if filename == "default.lua" then continue end
 
+        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
+
         local shortname = string.sub(filename, 1, -5)
         local attid = ARC9.Attachments_Count
-
-        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
 
         // include(searchdir .. filename)
 
