@@ -7,14 +7,16 @@ ARC9.Attachments_Bits = 16
 
 local defaulticon = Material("arc9/arccw_bird.png", "mips smooth")
 
-function ARC9.LoadAttachment(atttbl, shortname)
+function ARC9.LoadAttachment(atttbl, shortname, id)
     if atttbl.Ignore then return end
     shortname = shortname or "default"
 
-    ARC9.Attachments_Count = ARC9.Attachments_Count + 1
+    if !id then
+        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
+    end
 
     atttbl.ShortName = shortname
-    atttbl.ID = ARC9.Attachments_Count
+    atttbl.ID = id or ARC9.Attachments_Count
     atttbl.Icon = atttbl.Icon or defaulticon
 
     -- for stat, val in ipairs(atttbl) do
@@ -23,7 +25,7 @@ function ARC9.LoadAttachment(atttbl, shortname)
     -- end
 
     ARC9.Attachments[shortname] = atttbl
-    ARC9.Attachments_Index[ARC9.Attachments_Count] = shortname
+    ARC9.Attachments_Index[atttbl.ID] = shortname
 
     if GetConVar("arc9_atts_generateentities"):GetBool() and !atttbl.DoNotRegister and !atttbl.InvAtt and !atttbl.Free then
         local attent = {}
@@ -63,13 +65,25 @@ function ARC9.LoadAtts()
     for _, filename in pairs(files) do
         if filename == "default.lua" then continue end
 
-        ATT = {}
-
         local shortname = string.sub(filename, 1, -5)
+        local attid = ARC9.Attachments_Count
 
-        include(searchdir .. filename)
+        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
 
-        ARC9.LoadAttachment(ATT, shortname)
+        // include(searchdir .. filename)
+
+        file.AsyncRead(searchdir .. filename, "LUA", function(fileName, gamePath, status, data)
+            ATT = {}
+
+            local thrownerror = RunString(data, "ARC9AsyncLoad", true)
+
+            if thrownerror then
+                print("ARC9: Error loading attachment " .. shortname .. "!")
+                print(thrownerror)
+            else
+                ARC9.LoadAttachment(ATT, shortname, attid)
+            end
+        end)
     end
 
     local bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
