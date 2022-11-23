@@ -157,6 +157,9 @@ SWEP.VisualRecoilVel = Angle(0, 0, 0)
 
 function SWEP:ThinkVisualRecoil()
     if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
+    if !game.SinglePlayer() and SERVER then return end
+
+    local ft = FrameTime()
 
     -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
     -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
@@ -177,12 +180,22 @@ function SWEP:ThinkVisualRecoil()
     PUNCH_SPRING_CONSTANT = self.VisualRecoilDampingConst or 120
     VisualRecoilSpringMagnitude = self.VisualRecoilSpringMagnitude or 1
 
+
+    -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    if !game.SinglePlayer() then -- please ARCTIC fix visual recoil in multiplayer this is very garbage awful attempt to "fix" it
+        PUNCH_DAMPING = 3.7
+        PUNCH_SPRING_CONSTANT = PUNCH_SPRING_CONSTANT * 0.9
+        ft = ft * 3
+    end
+
+    -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
     if lensqr(vpa) + lensqr(vpv) > 0.000001 then
         -- {
         --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
         --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
-
-        local ft = FrameTime()
 
         vpa = vpa + (vpv * ft)
         local damping = 1 - (POS_PUNCH_DAMPING * ft)
@@ -233,7 +246,6 @@ function SWEP:ThinkVisualRecoil()
         --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
         --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
 
-        local ft = FrameTime()
 
         vaa = vaa + (vav * ft)
         local damping = 1 - (PUNCH_DAMPING * ft)
@@ -292,6 +304,7 @@ function SWEP:CreateFOVEvent( fov, start, endt, fpre, fact )
 end
 
 function SWEP:DoVisualRecoil()
+    if !game.SinglePlayer() and SERVER then return end
     if !self:GetProcessedValue("UseVisualRecoil") then return end
 
     if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
@@ -339,7 +352,8 @@ function SWEP:DoVisualRecoil()
     end
 end
 
-function SWEP:GetViewModelRecoil(pos, ang)
+function SWEP:GetViewModelRecoil(pos, ang)    
+    if !game.SinglePlayer() and SERVER then return end
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
