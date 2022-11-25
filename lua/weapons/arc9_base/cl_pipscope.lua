@@ -267,6 +267,33 @@ function SWEP:DoRTScope(model, atttbl, active)
             --     end
             -- end
 
+            if reticle then
+                // local rtr_x = (rtsize - size) / 2 - (-ret_x - sh_s / 2 + rtsize / 2) * 0.25
+                // local rtr_y = (rtsize - size) / 2 - (-ret_y - sh_s / 2 + rtsize / 2) * 0.25
+
+                local rtr_x = (rtsize - size) / 2
+                local rtr_y = (rtsize - size) / 2
+
+                if atttbl.RTScopeBlackBox != false then
+                    surface.SetDrawColor(0, 0, 0)
+                    surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
+                    surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
+                    surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
+                    surface.DrawRect(rtr_x + size - 1, rtr_y - size * 4, size * 8, size * 8) -- right
+
+                    if atttbl.RTScopeBlackBoxShadow != false then
+                        surface.SetMaterial(shadow2)
+                        surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
+                    end
+                end
+                -- surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
+                -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
+
+                surface.SetDrawColor(color)
+                surface.SetMaterial(reticle)
+                surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
+            end
+
             if atttbl.RTScopeDrawFunc then
                 atttbl.RTScopeDrawFunc(self, rtsize)
             end
@@ -288,30 +315,6 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
                 surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
                 surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
-            end
-
-            if reticle then
-                local rtr_x = (rtsize - size) / 2 - (-ret_x - sh_s / 2 + rtsize / 2) * 0.25
-                local rtr_y = (rtsize - size) / 2 - (-ret_y - sh_s / 2 + rtsize / 2) * 0.25
-
-                if atttbl.RTScopeBlackBox != false then
-                    surface.SetDrawColor(0, 0, 0)
-                    surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
-                    surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
-                    surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
-                    surface.DrawRect(rtr_x + size - 1, rtr_y - size * 4, size * 8, size * 8) -- right
-
-                    if atttbl.RTScopeBlackBoxShadow != false then
-                        surface.SetMaterial(shadow2)
-                        surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
-                    end
-                end
-                -- surface.DrawTexturedRect((rtsize - size) / 2, (rtsize - size) / 2, size, size)
-                -- surface.DrawTexturedRectUV((rtsize - size) / 2, (rtsize - size) / 2, size, size, 1, 0, 0, 1)
-
-                surface.SetDrawColor(color)
-                surface.SetMaterial(reticle)
-                surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
             end
         else
             render.PushRenderTarget(rtmat)
