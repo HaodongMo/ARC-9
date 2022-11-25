@@ -397,6 +397,8 @@ SWEP.ManualActionUBGL = false
 
 SWEP.UseVisualRecoil = false
 
+SWEP.PhysicalVisualRecoil = true -- Visual recoil actually affects your aim point.
+
 SWEP.VisualRecoilUp = 0.01 -- Vertical tilt for visual recoil.F
 SWEP.VisualRecoilSide = 0.05 -- Horizontal tilt for visual recoil.
 SWEP.VisualRecoilRoll = 0.23 -- Roll tilt for visual recoil.
@@ -1272,11 +1274,22 @@ function SWEP:SetupDataTables()
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
     self:NetworkVar("Angle", 1, "LastAimAngle")
+    self:NetworkVar("Angle", 2, "VisualRecoilAng")
+    self:NetworkVar("Angle", 3, "VisualRecoilVel")
+
+    self:NetworkVar("Vector", 0, "VisualRecoilPos")
+    self:NetworkVar("Vector", 1, "VisualRecoilPosVel")
 
     self:NetworkVar("String", 0, "IKAnimation")
 
     self:NetworkVar("Entity", 0, "Holster_Entity")
     self:NetworkVar("Entity", 1, "LungeEntity")
+
+    self:SetVisualRecoilAng(Angle(0, 0 ,0))
+    self:SetVisualRecoilVel(Angle(0, 0, 0))
+
+    self:SetVisualRecoilPos(Vector(0, 0, 0))
+    self:SetVisualRecoilPosVel(Vector(0, 0, 0))
 
     self:SetMultiSight(1)
     self:SetLastWasSprinting(false)

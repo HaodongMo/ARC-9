@@ -144,21 +144,22 @@ end
 -- scraped from source SDK 2013, just like this viewpunch damping code
 local PUNCH_DAMPING = 5
 local PUNCH_SPRING_CONSTANT = 120
-local POS_PUNCH_DAMPING = 6
+local POS_PUNCH_DAMPING = 20
 local POS_PUNCH_CONSTANT = 90
 
 local ang0 = Angle(0, 0, 0)
 local vec0 = Vector(0, 0, 0)
+
+if CLIENT then
 
 SWEP.VisualRecoilPos = Vector(0, 0, 0)
 SWEP.VisualRecoilPosVel = Vector(0, 0, 0)
 SWEP.VisualRecoilAng = Angle(0, 0, 0)
 SWEP.VisualRecoilVel = Angle(0, 0, 0)
 
-function SWEP:ThinkVisualRecoil()
-    if game.SinglePlayer() and SERVER then self:CallOnClient("ThinkVisualRecoil") end
-    if !game.SinglePlayer() and SERVER then return end
+end
 
+function SWEP:ThinkVisualRecoil()
     local ft = FrameTime()
 
     -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
@@ -175,22 +176,15 @@ function SWEP:ThinkVisualRecoil()
     -- self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
     -- self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
 
-    local vpa = self.VisualRecoilPos
-    local vpv = self.VisualRecoilPosVel
-    PUNCH_SPRING_CONSTANT = self.VisualRecoilDampingConst or 120
-    VisualRecoilSpringMagnitude = self.VisualRecoilSpringMagnitude or 1
+    local vpa = self:GetVisualRecoilPos()
+    local vpv = self:GetVisualRecoilPosVel()
+    local springconstant = self:GetProcessedValue("VisualRecoilDampingConst") or 120
+    local VisualRecoilSpringMagnitude = self:GetProcessedValue("VisualRecoilSpringMagnitude") or 1
 
-
-    -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    if !game.SinglePlayer() then -- please ARCTIC fix visual recoil in multiplayer this is very garbage awful attempt to "fix" it
-        PUNCH_DAMPING = 3.7
-        PUNCH_SPRING_CONSTANT = PUNCH_SPRING_CONSTANT * 0.9
-        ft = ft * 3
+    if CLIENT then
+        vpa = self.VisualRecoilPos
+        vpv = self.VisualRecoilPosVel
     end
-
-    -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
     if lensqr(vpa) + lensqr(vpv) > 0.000001 then
         -- {
@@ -231,15 +225,30 @@ function SWEP:ThinkVisualRecoil()
         vpa[2] = math.Clamp(vpa[2], -179.9, 179.9)
         vpa[3] = math.Clamp(vpa[3], -89.9, 89.9)
 
-        self.VisualRecoilPos = vpa
-        self.VisualRecoilPosVel = vpv
+        self:SetVisualRecoilPos(vpa)
+        self:SetVisualRecoilPosVel(vpv)
+
+        if CLIENT then
+            self.VisualRecoilPos = vpa
+            self.VisualRecoilPosVel = vpv
+        end
     else
-        self.VisualRecoilPos = Vector()
-        self.VisualRecoilPosVel = self.VisualRecoilPos
+        self:SetVisualRecoilPos(Vector())
+        self:SetVisualRecoilPosVel(self:GetVisualRecoilPos())
+
+        if CLIENT then
+            self.VisualRecoilPos = Vector()
+            self.VisualRecoilPosVel = self.VisualRecoilPos
+        end
     end
 
-    local vaa = self.VisualRecoilAng
-    local vav = self.VisualRecoilVel
+    local vaa = self:GetVisualRecoilAng()
+    local vav = self:GetVisualRecoilVel()
+
+    if CLIENT then
+        vaa = self.VisualRecoilAng
+        vav = self.VisualRecoilVel
+    end
 
     if lensqr(vaa) + lensqr(vav) > 0.000001 then
         -- {
@@ -264,7 +273,7 @@ function SWEP:ThinkVisualRecoil()
         --     // torsional spring
         --     // UNDONE: Per-axis spring constant?
         --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
-        local springforcemagnitude = PUNCH_SPRING_CONSTANT * ft
+        local springforcemagnitude = springconstant * ft
         --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
         springforcemagnitude = math.Clamp(springforcemagnitude, 0, 2)
         --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
@@ -281,11 +290,21 @@ function SWEP:ThinkVisualRecoil()
         vaa[2] = math.Clamp(vaa[2], -179.9, 179.9)
         vaa[3] = math.Clamp(vaa[3], -89.9, 89.9)
 
-        self.VisualRecoilAng = vaa
-        self.VisualRecoilVel = vav
+        self:SetVisualRecoilAng(vaa)
+        self:SetVisualRecoilVel(vav)
+
+        if CLIENT then
+            self.VisualRecoilAng = vaa
+            self.VisualRecoilVel = vav
+        end
     else
-        self.VisualRecoilAng = Angle(ang0)
-        self.VisualRecoilVel = Angle(ang0)
+        self:SetVisualRecoilAng(Angle(ang0))
+        self:SetVisualRecoilVel(Angle(ang0))
+
+        if CLIENT then
+            self.VisualRecoilAng = Angle(ang0)
+            self.VisualRecoilVel = Angle(ang0)
+        end
     end
 end
 
@@ -304,7 +323,6 @@ function SWEP:CreateFOVEvent( fov, start, endt, fpre, fact )
 end
 
 function SWEP:DoVisualRecoil()
-    if !game.SinglePlayer() and SERVER then return end
     if !self:GetProcessedValue("UseVisualRecoil") then return end
 
     if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
@@ -328,18 +346,9 @@ function SWEP:DoVisualRecoil()
             up = self:GetProcessedValue("VisualRecoilUp") * mult * self:GetRecoilUp() * -20 * (math.sin(math.rad(dir-90)) * -1)
         end
 
-        -- local side = self:GetProcessedValue("VisualRecoilSide") * math.Rand(-1, 1) * mult
         local side = self:GetProcessedValue("VisualRecoilSide") * mult * self:GetRecoilSide()
-        local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * mult
+        local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 0.1 * mult
         local punch = self:GetProcessedValue("VisualRecoilPunch") * mult * (self.ViewRecoil and math.Min(0.3, self:GetBurstCount() * 0.1) or 1)
-        -- self.VisualRecoilPos = self.VisualRecoilPos + Vector(side, -punch, up)
-        -- self.VisualRecoilAng = self.VisualRecoilAng + Angle(0, 0, roll)
-
-        -- if self:GetSightAmount() > 0 then
-        --     self.VisualRecoilPos.x = math.Clamp(self.VisualRecoilPos.x, -0.1, 0.1)
-        --     self.VisualRecoilPos.y = math.Clamp(self.VisualRecoilPos.y, -0.5, 0)
-        --     self.VisualRecoilPos.z = math.Clamp(self.VisualRecoilPos.z, 0, 0.25)
-        -- end
 
         local fake = 0
 
@@ -347,36 +356,37 @@ function SWEP:DoVisualRecoil()
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
-        self.VisualRecoilAng:Add(Angle(up, side * 15, roll))
-        self.VisualRecoilPos:Sub((Vector(0, punch, up/12.5) * fake) - Vector(side, 0, 0))
+        self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
+        self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0)))
+
+        if CLIENT then
+            self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
+            self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0))
+        end
     end
 end
 
-function SWEP:GetViewModelRecoil(pos, ang)    
+function SWEP:GetViewModelRecoil(pos, ang)
     if !game.SinglePlayer() and SERVER then return end
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
-    -- v = v + (vrc.x * ang:Right())
-    -- v = v + (vrc.y * ang:Forward())
-    -- v = v + (vrc.z * ang:Up())
-
-    -- ang:RotateAroundAxis(ang:Right(), self.VisualRecoilAng.p)
-    -- ang:RotateAroundAxis(ang:Forward(), self.VisualRecoilAng.r)
-
-    -- v = v + ang:Right() * self.VisualRecoilPos.x
-    -- v = v + ang:Forward() * self.VisualRecoilPos.y
-    -- v = v + ang:Up() * self.VisualRecoilPos.z
-
-    -- v:Rotate(self.VisualRecoilAng)
-
-    -- v = v - (vrc.x * ang:Right())
-    -- v = v - (vrc.y * ang:Forward())
-    -- v = v - (vrc.z * ang:Up())
-
-    -- pos = pos + v
-
     pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng)
+
+    return pos, ang
+end
+
+function SWEP:GetRecoilOffset(pos, ang)
+    if !GetConVar("arc9_realrecoil"):GetBool() then return pos, ang end
+    if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
+
+    local vra = self:GetVisualRecoilAng()
+
+    local up, forward, right = ang:Up(), ang:Forward(), ang:Right()
+
+    ang:RotateAroundAxis(up, vra.y)
+    ang:RotateAroundAxis(right, vra.p)
+    ang:RotateAroundAxis(forward, vra.r)
 
     return pos, ang
 end

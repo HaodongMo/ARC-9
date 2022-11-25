@@ -32,8 +32,7 @@ end
 function SWEP:DoRT(fov, atttbl)
     if ARC9.OverDraw then return end
 
-    local rtpos = self:GetShootPos()
-    local rtang = self:GetShootDir()
+    local rtpos, rtang = self:GetShootPos()
 
     local sighttbl = self:GetSight()
 

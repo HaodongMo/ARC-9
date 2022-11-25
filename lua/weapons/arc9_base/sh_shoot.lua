@@ -230,8 +230,6 @@ function SWEP:DoPrimaryAttack()
 
     self:SetLoadedRounds(self:Clip1())
 
-    self:DoVisualRecoil()
-
     local manualaction = self:GetProcessedValue("ManualAction")
 
     if !self:GetProcessedValue("NoShellEject") and !(manualaction and !self:GetProcessedValue("ManualActionEjectAnyway")) then
@@ -279,13 +277,14 @@ function SWEP:DoPrimaryAttack()
 
     spread = math.Max(spread, 0)
 
-    local dir = self:GetShootDir()
+    local sp, sa = self:GetShootPos()
 
-    self:DoProjectileAttack(self:GetShootPos(), dir, spread)
+    self:DoProjectileAttack(sp, sa, spread)
 
-    -- if IsFirstTimePredicted() then
+    if IsFirstTimePredicted() then
         self:ApplyRecoil()
-    -- end
+        self:DoVisualRecoil()
+    end
 
     if self:GetBurstCount() == 0 and self:GetCurrentFiremode() > 1 and self:GetProcessedValue("RunawayBurst") then
         if !self:GetProcessedValue("AutoBurst") then
@@ -590,7 +589,9 @@ function SWEP:GetShootPos()
 
     pos = pos + (ang:Up() * -self:GetProcessedValue("HeightOverBore"))
 
-    return pos
+    pos, ang = self:GetRecoilOffset(pos, ang)
+
+    return pos, ang
 end
 
 function SWEP:GetShootDir()

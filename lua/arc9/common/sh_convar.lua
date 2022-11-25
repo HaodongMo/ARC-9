@@ -462,6 +462,10 @@ local conVars = {
         default = "1",
         client = true
     },
+    {
+        name = "realrecoil",
+        default = "1",
+    }
 }
 
 local prefix = "arc9_"

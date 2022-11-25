@@ -72,8 +72,7 @@ function SWEP:ThrowGrenade(nttype, delaytime)
         force = forcemin + (forcemax - forcemin) * math.Clamp(time / forcetime, 0, 1)
     end
 
-    local src = self:GetShootPos()
-    local dir = self:GetShootDir()
+    local src, dir = self:GetShootPos()
 
     local num = self:GetProcessedValue("Num")
     local ent = self:GetProcessedValue("ShootEnt")

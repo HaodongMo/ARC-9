@@ -36,6 +36,14 @@ function SWEP:DoDrawCrosshair(x, y)
     if GetConVar("arc9_crosshair_static"):GetBool() then
         x = scrw / 2
         y = scrh / 2
+    else
+        local sp, sa = self:GetShootPos()
+
+        local endpos = sp + (sa:Forward() * 9000)
+        local toscreen = endpos:ToScreen()
+
+        x = toscreen.x
+        y = toscreen.y
     end
 
     local dotsize = ARC9ScreenScale(1)
@@ -85,12 +93,14 @@ function SWEP:DoDrawCrosshair(x, y)
         lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
     end
 
-    local endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 9000)
+    local sp, sa = self:GetShootPos()
+
+    local endpos = sp + (sa:Forward() * 9000)
     local toscreen = endpos:ToScreen()
 
     if ARC9.ShouldThirdPerson() then
         local tr = util.TraceLine({
-            start = self:GetShootPos(),
+            start = sp,
             endpos = endpos,
             mask = MASK_SHOT,
             filter = owner
