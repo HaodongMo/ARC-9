@@ -162,7 +162,7 @@ function SWEP:PostDrawViewModel()
         end
     end
     cam.End3D()
-    
+
     if GetConVar("arc9_fx_adsblur"):GetBool() and self:GetSight().Blur != false then arc9toytown(self:GetSightAmount()) end -- cool ass blur
     -- render.UpdateFullScreenDepthTexture()
 end

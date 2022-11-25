@@ -1,4 +1,4 @@
-function SWEP:PlayAnimation(anim, mult, lock)
+function SWEP:PlayAnimation(anim, mult, lock, isfiremodeanim)
     mult = mult or 1
     lock = lock or false
     anim = self:TranslateAnimation(anim)
@@ -123,11 +123,13 @@ function SWEP:PlayAnimation(anim, mult, lock)
         end
     end
 
-    self:SetFinishFiremodeAnimTime(CurTime())
+    self:SetFinishFiremodeAnimTime(0)
 
     if SERVER and animation.ProxyAnimation then
         SafeRemoveEntity(mdl)
     end
+
+    self:SetFiremodePose()
 
     return (time * mult), minprogress
 end
