@@ -105,15 +105,15 @@ function SWEP:DoTPIK()
 
     ply:SetupBones()
     local bones = ARC9.TPIKBones
-    
+
     if nolefthand then
         bones = ARC9.RHIKHandBones
     end
-    
+
     if lod == 1.5 then -- hackkkkk
         bones = ARC9.LHIKHandBones
     end
-    
+
     local ply_spine_index = ply:LookupBone("ValveBiped.Bip01_Spine4")
     if !ply_spine_index then return end
     local ply_spine_matrix = ply:GetBoneMatrix(ply_spine_index)

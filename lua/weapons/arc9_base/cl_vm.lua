@@ -101,7 +101,9 @@ function SWEP:PreDrawViewModel()
     vm:SetMaterial(self:GetProcessedValue("Material"))
 
     cam.IgnoreZ(true)
-    
+
+    self:SetFiremodePose()
+
     if sightamount > 0.75 and getsights.FlatScope and !getsights.FlatScopeKeepVM then
         render.SetBlend(0)
     end

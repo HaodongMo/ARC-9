@@ -60,6 +60,12 @@ function SWEP:SetFiremodePose(wm)
         self:SetFiremode(pp)
     end
 
+    local fmt = self:GetCurrentFiremodeTable()
+
+    if fmt.PoseParam then
+        pp = fmt.PoseParam
+    end
+
     pp = self:RunHook("HookP_ModifyFiremodePoseParam", pp) or pp
 
     if self:GetFinishFiremodeAnimTime() < CurTime() then
@@ -121,8 +127,6 @@ function SWEP:ThinkFiremodes()
     if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ZOOM) then
         self:SwitchFiremode()
     end
-
-    self:SetFiremodePose()
 end
 
 function SWEP:GetFiremodeName()
