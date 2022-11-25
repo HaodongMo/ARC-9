@@ -17,6 +17,12 @@ function SWEP:CalcView(ply, pos, ang, fov)
         ang.r = ang.r + (math.sin(CurTime() * self:GetProcessedValue("RecoilKickDamping")) * rec)
     end
 
+    if self:IsScoping() and GetConVar("arc9_cheapscopes"):GetBool() then
+        local _, shootang = self:GetShootPos()
+
+        ang = LerpAngle(self:GetSightAmount(), ang, shootang)
+    end
+
     -- EFT like recoil
     if self.ViewRecoil then
         local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
