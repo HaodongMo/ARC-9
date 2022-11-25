@@ -74,6 +74,10 @@ function SWEP:GetTracerOrigin()
 end
 
 function SWEP:GetMuzzleDevice(wm)
+    if self:GetProcessedValue("IgnoreMuzzleDevice") then
+        if wm then return self:GetWM() else return self:GetVM() end
+    end
+
     local model
     local muzz
 

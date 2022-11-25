@@ -726,6 +726,8 @@ SWEP.ShellCorrectAng = Angle(0, 0, 0)
 SWEP.ShellVelocity = nil -- nothing for random, otherwise keep this 0 - 2
 SWEP.ShellTime = 0.5 -- Extra time these shells stay on the ground for.
 
+SWEP.IgnoreMuzzleDevice = false -- Do not use the attachment muzzle device, use QCA muzzle instead.
+
 SWEP.MuzzleEffectQCA = 1 -- QC Attachment that controls muzzle effect.
 SWEP.AfterShotQCA = nil -- QC Attachment that controls after shot particle.
 SWEP.CaseEffectQCA = 2 -- QC Attachment for shell ejection.
