@@ -332,3 +332,22 @@ function SWEP:Scroll(amt)
         self:EmitSound(atttbl.ZoomSound or "arc9/useatt.wav", 75, math.Rand(95, 105), 1, CHAN_ITEM)
     end
 end
+
+function SWEP:IsScoping()
+    local sight = self:GetSight()
+
+    local atttbl
+
+    if sight.BaseSight then
+        atttbl = self:GetTable()
+    else
+        atttbl = self:GetFinalAttTable(sight.slottbl)
+    end
+
+    if sight.ExtraSightData then
+        atttbl = table.Copy(atttbl)
+        table.Merge(atttbl, sight.ExtraSightData)
+    end
+
+    return self:GetSightAmount() > 0 and atttbl.RTScope and atttbl
+end

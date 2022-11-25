@@ -223,10 +223,16 @@ function SWEP:DoRTScope(model, atttbl, active)
             local sh_x = ((screenpos.x - (ScrW() / 2)) * shadow_intensity)
             local sh_y = ((screenpos.y - (ScrH() / 2)) * shadow_intensity)
 
+            local ret_x = (screenpos.x - (ScrW() / 2)) * 10
+            local ret_y = (screenpos.y - (ScrH() / 2)) * 10
+
             local sh_s = math.floor(rtsize * 1.3)
 
             sh_x = sh_x - ((sh_s-rtsize) / 2)
             sh_y = sh_y - ((sh_s-rtsize) / 2)
+
+            ret_x = ret_x - ((sh_s-rtsize) / 2)
+            ret_y = ret_y - ((sh_s-rtsize) / 2)
 
             render.PushRenderTarget(rtmat)
 
@@ -283,10 +289,10 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
                 surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
             end
-            
+
             if reticle then
-                local rtr_x = (rtsize - size) / 2 + (-sh_x - sh_s / 2 + rtsize / 2) * 0.2
-                local rtr_y = (rtsize - size) / 2 + (-sh_y - sh_s / 2 + rtsize / 2) * 0.2
+                local rtr_x = (rtsize - size) / 2 - (-ret_x - sh_s / 2 + rtsize / 2) * 0.25
+                local rtr_y = (rtsize - size) / 2 - (-ret_y - sh_s / 2 + rtsize / 2) * 0.25
 
                 if atttbl.RTScopeBlackBox != false then
                     surface.SetDrawColor(0, 0, 0)

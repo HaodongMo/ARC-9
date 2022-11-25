@@ -380,13 +380,12 @@ function SWEP:GetRecoilOffset(pos, ang)
     if !GetConVar("arc9_realrecoil"):GetBool() then return pos, ang end
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
 
+    local vrp = self:GetVisualRecoilPos()
     local vra = self:GetVisualRecoilAng()
 
-    local up, forward, right = ang:Up(), ang:Forward(), ang:Right()
+    local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
-    ang:RotateAroundAxis(up, vra.y)
-    ang:RotateAroundAxis(right, vra.p)
-    ang:RotateAroundAxis(forward, vra.r)
+    pos, ang = self:RotateAroundPoint(pos, ang, vrc, vrp, vra)
 
     return pos, ang
 end
