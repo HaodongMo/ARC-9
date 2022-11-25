@@ -189,7 +189,8 @@ end
 
 function SWEP:DropMagazine()
     -- if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
-    -- if !self:GetProcessedValue("ShouldDropMag") then return end
+    if !self:GetProcessedValue("ShouldDropMag") then return end
+
     local mdl = self:GetProcessedValue("DropMagazineModel")
 
     if mdl then
@@ -351,17 +352,17 @@ function SWEP:EndReload()
             if self:GetUBGL() then
                 anim = "reload_ubgl_finish"
             end
-            
+
             local canim = anim
-            
+
             for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
                 if self:HasAnimation(anim .. "_" .. tostring(i)) then
                     canim = anim .. "_" .. tostring(i)
                 end
             end
-            
+
             anim = canim
-            
+
             self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
             self:SetReloading(false)
 

@@ -392,6 +392,7 @@ SWEP.RecoilUBGL = 1
 SWEP.DoFireAnimationUBGL = true
 SWEP.NoShellEjectUBGL = true
 SWEP.ManualActionUBGL = false
+SWEP.ShouldDropMagUBGL = false
 
 -------------------------- VISUAL RECOIL
 
