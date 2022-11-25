@@ -187,7 +187,7 @@ function SWEP:PostModify(toggleonly)
     end
 
     if self:GetUBGL() and !self:GetProcessedValue("UBGL") then
-        self:SetUBGL(false)
+        self:ToggleUBGL(false)
     end
 
     self:SetupAnimProxy()
