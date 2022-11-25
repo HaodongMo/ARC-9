@@ -365,7 +365,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
             if CLIENT then
                 -- do an impact effect and forget about it
-                if !game.SinglePlayer() and bullet.FirstTimeProcessed then
+                if !game.SinglePlayer() and bullet.FirstTimeProcessed and !ARC9.IsPointOutOfBounds(oldpos) then
                     attacker:FireBullets({
                         Src = oldpos,
                         Dir = dir,
@@ -400,7 +400,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                 bullet.Damaged[eid] = true
                 bullet.Dead = true
 
-                if IsValid(bullet.Attacker) and IsValid(weapon) then
+                if IsValid(bullet.Attacker) and IsValid(weapon) and !ARC9.IsPointOutOfBounds(oldpos) then
                     bullet.Attacker:FireBullets({
                         Damage = weapon:GetProcessedValue("DamageMax"),
                         Force = weapon:GetProcessedValue("ImpactForce"),

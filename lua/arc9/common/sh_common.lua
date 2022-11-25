@@ -222,3 +222,11 @@ function math.Approach(cur, target, inc)
     -- return target
     return ((cur < target) and math.min(cur + inc, target)) or ((cur > target) and math.max(cur - inc, target)) or target
 end
+
+function ARC9.IsPointOutOfBounds(vec)
+    local v1, v2, v3 = vec:Unpack()
+
+    if math.abs(v1) > 16384 or math.abs(v2) > 16384 or math.abs(v3) > 16384 then
+        return true
+    end
+end
