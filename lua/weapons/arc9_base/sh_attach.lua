@@ -186,6 +186,10 @@ function SWEP:PostModify(toggleonly)
         end
     end
 
+    if self:GetUBGL() and !self:GetProcessedValue("UBGL") then
+        self:SetUBGL(false)
+    end
+
     self:SetupAnimProxy()
 
     self:SetBaseSettings()
