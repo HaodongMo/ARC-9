@@ -5,13 +5,13 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
     mult = self:RunHook("Hook_TranslateAnimSpeed", {mult = mult, anim = anim}).Mult or mult
 
-    if !self:HasAnimation(anim) then return 0 end
+    if !self:HasAnimation(anim) then return 0, 1 end
 
-    if self:RunHook("Hook_BlockAnimation", anim) == true then return 0 end
+    if self:RunHook("Hook_BlockAnimation", anim) == true then return 0, 1 end
 
     local mdl = self:GetVM()
 
-    if !IsValid(mdl) then return 0 end
+    if !IsValid(mdl) then return 0, 1 end
 
     local animation = self:GetAnimationEntry(anim)
 
@@ -35,15 +35,15 @@ function SWEP:PlayAnimation(anim, mult, lock)
 
         self:SetSequenceProxy(animation.Address or 0)
 
-        if !IsValid(mdl) then return 0 end
+        if !IsValid(mdl) then return 0, 1 end
 
         seq = mdl:LookupSequence(source)
 
-        if seq == -1 then return 0 end
+        if seq == -1 then return 0, 1 end
     else
         seq = mdl:LookupSequence(source)
 
-        if seq == -1 then return 0 end
+        if seq == -1 then return 0, 1 end
 
         self:SetSequenceProxy(0)
     end
@@ -129,7 +129,7 @@ function SWEP:PlayAnimation(anim, mult, lock)
         SafeRemoveEntity(mdl)
     end
 
-    return time * mult
+    return (time * mult), minprogress
 end
 
 function SWEP:GetAnimationProxyModel(wm)
