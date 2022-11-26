@@ -61,6 +61,19 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         ang = ang + (AngleRand() * (1 - degree) * 15 / 360)
         dir = ang:Forward()
 
+        if self:GetProcessedValue("RicochetSeeking") then
+            local tgt = nil
+            for _, e in pairs(ents.FindInCone(tr.StartPos, dir, self:GetProcessedValue("RicochetSeekingRange"), math.cos(math.rad(self:GetProcessedValue("RicochetSeekingAngle"))))) do
+                if (e:IsNPC() or e:IsPlayer() or e:IsNextBot()) and e:Health() > 0 and e ~= self:GetOwner() then
+                    tgt = e
+                    break
+                end
+            end
+            if tgt then
+                dir = (tgt:WorldSpaceCenter() + (VectorRand() * 8) - tr.StartPos):GetNormalized()
+            end
+        end
+
         local d = math.Rand(0.25, 0.95)
 
         penleft = penleft * d
