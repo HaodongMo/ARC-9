@@ -979,6 +979,7 @@ SWEP.Attachments = {
     --     ExtraSightDistance = 0,
     --     Installed = nil,
     --     MergeSlots = {}, // merge this slot with another
+    --     StickerModel = "", // This is the model that will be used for the sticker
     --     SubAttachments = {
     --         {
     --             Installed = "att_with_sub_atts",

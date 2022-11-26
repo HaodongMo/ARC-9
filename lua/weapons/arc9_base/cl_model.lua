@@ -279,6 +279,7 @@ SWEP.MuzzleDeviceWM = nil
 SWEP.MuzzleDeviceUBGLVM = nil
 SWEP.MuzzleDeviceUBGLWM = nil
 
+-- An important function
 function SWEP:SetupModel(wm, lod, cm)
     lod = lod or 0
     if !wm then lod = 0 end
@@ -298,6 +299,8 @@ function SWEP:SetupModel(wm, lod, cm)
     self.RHIK_Priority = -1000
     self.MuzzleDevice_Priority = -1000
 
+    local basemodel = nil
+
     local mdl = {}
 
     if !wm then
@@ -305,6 +308,8 @@ function SWEP:SetupModel(wm, lod, cm)
         self.LHIKModel = nil
         self.RHIKModel = nil
         self.MuzzleDeviceVM = nil
+
+        basemodel = self:GetOwner():GetViewModel()
 
         -- local RenderOverrideFunction = function(self2)
         --     if LocalPlayer():GetActiveWeapon() != self then LocalPlayer():GetViewModel().RenderOverride = nil return end
@@ -328,6 +333,8 @@ function SWEP:SetupModel(wm, lod, cm)
         end
 
         local csmodel = ClientsideModel(self.WorldModelMirror or self.ViewModel)
+
+        basemodel = csmodel
 
         if !IsValid(csmodel) then return end
 
@@ -407,6 +414,30 @@ function SWEP:SetupModel(wm, lod, cm)
 
         -- local atttbl = ARC9.GetAttTable(slottbl.Installed)
         local atttbl = self:GetFinalAttTable(slottbl)
+
+        if slottbl.StickerModel and atttbl.StickerMaterial then
+            local stickermodel = ClientsideModel(slottbl.StickerModel)
+
+            if !IsValid(stickermodel) then continue end
+
+            stickermodel:SetNoDraw(true)
+            stickermodel.atttbl = {}
+            stickermodel.slottbl = slottbl
+
+            stickermodel:AddEffects(EF_BONEMERGE)
+            stickermodel:SetParent(basemodel)
+
+            stickermodel:SetMaterial(atttbl.StickerMaterial)
+
+            local tbl = {
+                Model = stickermodel,
+                Weapon = self
+            }
+
+            table.insert(ARC9.CSModelPile, tbl)
+
+            table.insert(mdl, stickermodel)
+        end
 
         if !atttbl.Model then continue end
 

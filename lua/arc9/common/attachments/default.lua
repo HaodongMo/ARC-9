@@ -18,6 +18,9 @@ ATT.BoxModel = nil --"models/items/arc9/att_plastic_box.mdl"
 --                                          ^ Use att_plastic_box (modern middle sized container), att_wooden_box (old big box) or att_cardboard_box (cheap small box)
 -- If nil, will use slot defined ATT.Pack
 
+-- Material for stickers
+ATT.StickerMaterial = ""
+
 -- Used to attach another model to a bone of this model.
 ATT.CharmModel = ""
 ATT.CharmBone = ""
