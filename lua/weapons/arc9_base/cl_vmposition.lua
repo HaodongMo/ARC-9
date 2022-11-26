@@ -445,8 +445,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- if singleplayer or IsFirstTimePredicted() then
     pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
-    print(ang)
-
     if singleplayer or IsFirstTimePredicted() then
         pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
         ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
