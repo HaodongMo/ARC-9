@@ -19,9 +19,23 @@ local LerpVector = function(a, v1, v2)
 end
 
 local LerpAngle = function(a, v1, v2)
-    local d = v2 - v1
+    // angle aware lerp with Angles()
 
-    return v1 + (a * d)
+    local v11 = v1[1]
+    local v12 = v1[2]
+    local v13 = v1[3]
+
+    local v21 = v2[1]
+    local v22 = v2[2]
+    local v23 = v2[3]
+
+    local d1 = math.AngleDifference(v21, v11)
+    local d2 = math.AngleDifference(v22, v12)
+    local d3 = math.AngleDifference(v23, v13)
+
+    local v3 = Angle(v11 + (a * d1), v12 + (a * d2), v13 + (a * d3))
+
+    return v3
 end
 
 -- local ApproachVector = function(a1, a2, d)
@@ -136,7 +150,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     --     offsetang:Set(self:GetProcessedValue("MovingAng"))
     -- end
     local getbipod = self:GetBipod()
-    
+
     if !self:GetReloading() and !getbipod and owner:Crouching() then
         local crouchpos = self:GetProcessedValue("CrouchPos")
         local crouchang = self:GetProcessedValue("CrouchAng")
@@ -430,6 +444,8 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     -- if singleplayer or IsFirstTimePredicted() then
     pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
+
+    print(ang)
 
     if singleplayer or IsFirstTimePredicted() then
         pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
