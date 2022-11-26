@@ -70,7 +70,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                 end
             end
             if tgt then
-                dir = (tgt:WorldSpaceCenter() + (VectorRand() * 8) - tr.StartPos):GetNormalized()
+                dir = (tgt:WorldSpaceCenter() + (VectorRand() * 2) - tr.StartPos):GetNormalized()
             end
         end
 

@@ -445,7 +445,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     local pendelta = penleft / self:GetProcessedValue("Penetration")
 
-    pendelta = math.Clamp(pendelta, 0.1, 1)
+    pendelta = Lerp(math.Clamp(pendelta, 0, 1), self:GetProcessedValue("PenetrationDelta"), 1)
 
     dmgv = dmgv * pendelta
 
