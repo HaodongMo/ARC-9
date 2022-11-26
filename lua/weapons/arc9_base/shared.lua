@@ -156,9 +156,13 @@ SWEP.Num = 1 -- Number of bullets to shoot
 SWEP.DistributeDamage = false -- If true, damage is distributed evenly across all bullets. If false, damage is dealt to the first bullet only.
 
 SWEP.Penetration = 5 -- Units of wood that can be penetrated by this gun.
+SWEP.PenetrationDelta = 0.1 -- The damage multiplier after all penetration distance is spent.
 
 SWEP.RicochetAngleMax = 45 -- Maximum angle at which a ricochet can occur. Between 1 and 90. Angle of 0 is impossible but would theoretically always ricochet.
 SWEP.RicochetChance = 0.5 -- If the angle is right, what is the chance that a ricochet can occur?
+SWEP.RicochetSeeking = false -- Whether ricochet bullets will seek living targets in a cone.
+SWEP.RicochetSeekingAngle = 30
+SWEP.RicochetSeekingRange = 1024
 
 SWEP.DamageType = DMG_BULLET -- The damage type of the gun.
 -- DMG_BLAST will create explosive effects and create AOE damage.
