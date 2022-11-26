@@ -33,6 +33,8 @@ function SWEP:RunHook(val, data)
             any = true
         end
 
+        data = hook.Run("ARC9_" .. val, self, data) or data
+
         return data, any
     end
 
@@ -56,6 +58,8 @@ function SWEP:RunHook(val, data)
             end
         end
     end
+
+    data = hook.Run("ARC9_" .. val, self, data) or data
 
     return data, any
 end
