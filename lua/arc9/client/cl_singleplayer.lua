@@ -52,6 +52,30 @@ concommand.Add("arc9_dev_listanims", function()
     end
 end)
 
+local function printattsintable(tbl, depth)
+    for k, v in pairs(tbl) do
+        if istable(v) and isnumber(k) or k == "SubAttachments" then
+            MsgC(clr_b, string.rep("\t", depth), k, " = {\n")
+            printattsintable(v, depth + 1)
+            MsgC(clr_b, string.rep("\t", depth), "},\n")
+        elseif k == "Installed" then
+            MsgC(clr_b, string.rep("\t", depth), k, " = ")
+            MsgC(clr_r, tostring(v), "\n")
+        end
+    end
+end
+
+concommand.Add("arc9_dev_printatts", function()
+    local wep = LocalPlayer():GetActiveWeapon()
+    if !wep then return end
+    local vm = LocalPlayer():GetViewModel()
+    if !vm then return end
+
+    MsgC(clr_b, "{\n")
+    printattsintable(wep.Attachments, 1)
+    MsgC(clr_b, "}\n")
+end)
+
 concommand.Add("arc9_dev_listbones", function()
     local wep = LocalPlayer():GetActiveWeapon()
     if !wep then return end

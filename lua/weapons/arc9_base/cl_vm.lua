@@ -127,7 +127,9 @@ function SWEP:ViewModelDrawn()
     --     surface.SetMaterial(vignette2)
     --     surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
     -- cam.End2D()
+end
 
+function SWEP:PostDrawViewModel()
     local newpcfs = {}
 
     for _, pcf in ipairs(self.PCFs) do
@@ -138,9 +140,7 @@ function SWEP:ViewModelDrawn()
     end
 
     self.PCFs = newpcfs
-end
 
-function SWEP:PostDrawViewModel()
     if ARC9.PresetCam then return end
 
     cam.IgnoreZ(false)

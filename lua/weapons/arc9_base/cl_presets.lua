@@ -87,7 +87,7 @@ function SWEP:LoadPresetFromTable(tbl)
 end
 
 function SWEP:LoadPresetFromCode(str, standard)
-    onlysave = onlysave or false 
+    onlysave = onlysave or false
 
     local name, tblstr = self:SplitPresetContents(str)
     local tbl = self:ImportPresetCode(tblstr)

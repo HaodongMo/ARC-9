@@ -159,6 +159,7 @@ function SWEP:BuildSubAttachments(tbl)
 
     for i, k in ipairs(tbl) do
         if !self.Attachments[i] then print("Invalid attachment structure!") return end
+        if ARC9.Blacklist[k.Installed] then continue end
         self.Attachments[i].Installed = k.Installed
 
         if !k.Installed then continue end
