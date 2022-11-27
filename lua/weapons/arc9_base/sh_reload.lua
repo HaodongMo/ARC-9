@@ -328,7 +328,7 @@ function SWEP:GetShouldShotgunReload()
 end
 
 function SWEP:GetInfiniteAmmo()
-    return self:GetValue("InfiniteAmmo") or GetConVar("arc9_infinite_ammo"):GetBool()
+    return self:GetProcessedValue("InfiniteAmmo") or GetConVar("arc9_infinite_ammo"):GetBool()
 end
 
 function SWEP:EndReload()

@@ -38,9 +38,9 @@ function ARC9:SendBlacklist(ply)
 
     for attname, i in pairs(ARC9.Blacklist) do
         if !i then continue end
-        local atttbl = ARC9.GetAttTable(attname)
+        local atttbl = ARC9.GetAttTable(attname) or {}
 
-        local id = atttbl.ID
+        local id = atttbl.ID or 0
 
         net.WriteUInt(id, ARC9.Attachments_Bits)
     end

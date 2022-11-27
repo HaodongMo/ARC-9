@@ -13,6 +13,8 @@ net.Receive("arc9_sendblacklist", function(len, ply)
 
         local atttbl = ARC9.GetAttTable(attid)
 
+        if !atttbl then continue end
+
         local shortname = atttbl.ShortName
 
         ARC9.Blacklist[shortname] = true
