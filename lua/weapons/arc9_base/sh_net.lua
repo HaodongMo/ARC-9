@@ -20,8 +20,8 @@ end
 
 function SWEP:SendAttachmentTree(tree)
     if tree and tree.Installed then
-        local atttbl = ARC9.GetAttTable(tree.Installed)
-        local id = atttbl.ID
+        local atttbl = ARC9.GetAttTable(tree.Installed) or {}
+        local id = atttbl.ID or 0
 
         if !atttbl then
             net.WriteUInt(0, ARC9.Attachments_Bits)
