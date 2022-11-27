@@ -142,7 +142,7 @@ function SWEP:Holster(wep)
             end
         end
 
-        if self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
+        if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
         end
 

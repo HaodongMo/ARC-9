@@ -72,18 +72,26 @@ function ARC9.LoadAtts()
 
         // include(searchdir .. filename)
 
-        file.AsyncRead(searchdir .. filename, "LUA", function(fileName, gamePath, status, data)
+        if game.SinglePlayer() then
+            file.AsyncRead(searchdir .. filename, "LUA", function(fileName, gamePath, status, data)
+                ATT = {}
+
+                local thrownerror = RunString(data, "ARC9AsyncLoad", true)
+
+                if thrownerror then
+                    print("ARC9: Error loading attachment " .. shortname .. "!")
+                    print(thrownerror)
+                else
+                    ARC9.LoadAttachment(ATT, shortname, attid)
+                end
+            end)
+        else
             ATT = {}
 
-            local thrownerror = RunString(data, "ARC9AsyncLoad", true)
+            include(searchdir .. filename)
 
-            if thrownerror then
-                print("ARC9: Error loading attachment " .. shortname .. "!")
-                print(thrownerror)
-            else
-                ARC9.LoadAttachment(ATT, shortname, attid)
-            end
-        end)
+            ARC9.LoadAttachment(ATT, shortname, attid)
+        end
     end
 
     local bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
