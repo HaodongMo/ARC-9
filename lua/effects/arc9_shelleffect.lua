@@ -152,10 +152,10 @@ function EFFECT:Init(data)
     self.SpawnTime = CurTime()
 end
 
-function EFFECT:PhysicsCollide()
+function EFFECT:PhysicsCollide(colData)
     if self.AlreadyPlayedSound then return end
     local phys = self:GetPhysicsObject()
-    phys:SetVelocityInstantaneous(Vector(0, 0, 180))
+    phys:SetVelocityInstantaneous(colData.HitNormal * -150)
     self:StopSound("Default.ImpactHard")
 
     sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1)
