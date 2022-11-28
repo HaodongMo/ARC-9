@@ -1,6 +1,6 @@
 
 local ARC9ScreenScale = ARC9.ScreenScale
-local clicksound = "ui/panorama/itemtile_click_02.wav"
+local clicksound = "arc9/newui/uimouse_click_return.ogg"
 local mat_default = Material("arc9/arc9_sus.png", "mips smooth")
 local mat_random = Material("arc9/ui/random.png", "mips smooth")
 local nextpreset = 0

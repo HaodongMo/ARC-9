@@ -399,8 +399,15 @@ local troll = {
 local SeasonalHalloween = {}
 local SeasonalHolidays = {}
 
-local hoversound = "ui/panorama/itemtile_rollover_09.wav"
-local clicksound = "ui/panorama/itemtile_click_02.wav"
+local hoversound = "arc9/newui/uimouse_hover.ogg"
+local clicksound = "arc9/newui/uimouse_click.ogg"
+local opensound = "arc9/newui/uimouse_click_forward.ogg"
+local backsound = "arc9/newui/uimouse_click_return.ogg"
+local popupsound = "arc9/newui/uimouse_click_popup.ogg"
+local closesound = "arc9/newui/ui_close.ogg"
+local lightonsound = "arc9/newui/ui_light_on.ogg"
+local lightoffsound = "arc9/newui/ui_light_off.ogg"
+local tabsound = "arc9/newui/uimouse_click_tab.ogg"
 
 
 function SWEP:CreateCustomizeHUD()
@@ -1285,7 +1292,7 @@ function SWEP:CreateHUD_RHP()
     local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
     topleft_settings:SetPos(ARC9ScreenScale(19), ARC9ScreenScale(19))
     topleft_settings.DoClick = function(self2)
-        surface.PlaySound(clicksound)
+        surface.PlaySound(popupsound)
         ARC9_OpenSettings()
         
         -- self:ToggleCustomize(false)
@@ -1301,7 +1308,7 @@ function SWEP:CreateHUD_RHP()
     local oldlightdoclick = topleft_light.DoClick
     topleft_light.DoClick = function(self2)
         oldlightdoclick(self2)
-        surface.PlaySound(self2:GetChecked() and "arc9/dryfire.wav" or "arc9/firemode.wav")
+        surface.PlaySound(self2:GetChecked() and lightoffsound or lightonsound)
     end
 
     topleft_settings.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
@@ -1327,7 +1334,8 @@ function SWEP:CreateHUD_RHP()
         topright_presets:SetIsCheckbox(true)
         local oldpresetsdoclick = topright_presets.DoClick
         topright_presets.DoClick = function(self2)
-            surface.PlaySound(clicksound)
+            surface.PlaySound(self2:GetChecked() and backsound or opensound)
+
             oldpresetsdoclick(self2)
 
             self.CustomizeHUD.lowerpanel.Extended = nil
@@ -1344,6 +1352,7 @@ function SWEP:CreateHUD_RHP()
     topright_close:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
     topright_close.DoClick = function(self2)
         surface.PlaySound(clicksound)
+        surface.PlaySound(closesound)
         self:SetCustomize(false)
         net.Start("ARC9_togglecustomize")
         net.WriteBool(false)
@@ -1442,7 +1451,7 @@ function SWEP:CreateHUD_RHP()
         custtabbtn.DoClick = function(self2)
             self.CustomizeTab = self2.page
             self2.func(self)
-            surface.PlaySound(clicksound)
+            surface.PlaySound(tabsound)
         end
         custtabbtn.OnCursorEntered = function(self2)
             surface.PlaySound(hoversound)

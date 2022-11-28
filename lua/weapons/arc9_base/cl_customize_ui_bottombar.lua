@@ -6,9 +6,9 @@ local adminicon = Material("arc9/admin.png", "mips smooth")
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
-local clicksound = "ui/panorama/generic_press_01.wav"
-local foldersound = "ui/panorama/submenu_dropdown_option_select_01.wav"
-local backsound = "ui/panorama/sidemenu_slideout_01.wav"
+local clicksound = "arc9/newui/uimouse_click.ogg"
+local foldersound = "arc9/newui/uimouse_click_forward.ogg"
+local backsound = "arc9/newui/uimouse_click_return.ogg"
 
 local function spacer(self, scroll, margin)
     local spacer = vgui.Create("DPanel", scroll)
@@ -173,7 +173,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         table.insert(scrolleles, attbtn2)
         attbtn2.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
-                self:Attach(self2.attslot, self2.att)
+                self:Attach(self2.attslot, self2.att, self2.slottbl.Installed == self2.att) -- third parameter is Silent, so sound won't be played twice though att will updated (might be helpful)
                 self.CustomizeSelectAddr = self2.address
             elseif kc == MOUSE_RIGHT then
                 self:DetachAllFromSubSlot(self2.address)

@@ -11,7 +11,7 @@ function SWEP:Attach(addr, att, silent)
     slottbl.ToggleNum = 1
 
     if !silent then
-        self:EmitSound(slottbl.InstallSound or "arc9/install.wav")
+        self:EmitSound(slottbl.InstallSound or "arc9/newui/ui_part_install.ogg")
     end
 
     self:PruneAttachments()
@@ -31,7 +31,7 @@ function SWEP:Detach(addr, silent)
     slottbl.Installed = nil
 
     if !silent then
-        self:EmitSound(slottbl.UninstallSound or "arc9/uninstall.wav")
+        self:EmitSound(slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg")
     end
 
     self:PruneAttachments()
