@@ -53,6 +53,8 @@ concommand.Add("arc9_blacklist_show", function()
 end)
 
 concommand.Add("arc9_blacklist_add", function(ply, cmd, args)
+    if !ply:IsAdmin() then return end
+
     for _, i in ipairs(args) do
         local atttbl = ARC9.GetAttTable(i)
 
@@ -68,6 +70,8 @@ concommand.Add("arc9_blacklist_add", function(ply, cmd, args)
 end)
 
 concommand.Add("arc9_blacklist_remove", function(ply, cmd, args)
+    if !ply:IsAdmin() then return end
+
     for _, i in ipairs(args) do
         local atttbl = ARC9.GetAttTable(i)
 
@@ -83,11 +87,15 @@ concommand.Add("arc9_blacklist_remove", function(ply, cmd, args)
 end)
 
 concommand.Add("arc9_blacklist_clear", function()
+    if !ply:IsAdmin() then return end
+
     ARC9.Blacklist = {}
 
     ARC9:SendClientBlacklist()
 end)
 
 concommand.Add("arc9_blacklist_send", function()
+    if !ply:IsAdmin() then return end
+
     ARC9:SendClientBlacklist()
 end)
