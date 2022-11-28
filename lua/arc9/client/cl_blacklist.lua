@@ -81,3 +81,13 @@ concommand.Add("arc9_blacklist_remove", function(ply, cmd, args)
 
     ARC9:SendClientBlacklist()
 end)
+
+concommand.Add("arc9_blacklist_clear", function()
+    ARC9.Blacklist = {}
+
+    ARC9:SendClientBlacklist()
+end)
+
+concommand.Add("arc9_blacklist_send", function()
+    ARC9:SendClientBlacklist()
+end)
