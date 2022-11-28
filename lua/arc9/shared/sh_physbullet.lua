@@ -132,15 +132,21 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
             table.insert(ARC9.CSModelPile, {Model = bullet.ClientModel, Weapon = wep})
         end
+
+        if SERVER then
+            // ARC9:ProgressPhysBullet(bullet, FrameTime())
+
+            ARC9:SendBullet(bullet, wep:GetOwner())
+        end
+    else
+        if SERVER then
+            // ARC9:ProgressPhysBullet(bullet, FrameTime())
+
+            ARC9:SendBullet(bullet, wep:GetOwner())
+        end
+
+        ARC9:ProgressPhysBullet(bullet, FrameTime())
     end
-
-    if SERVER then
-        // ARC9:ProgressPhysBullet(bullet, FrameTime())
-
-        ARC9:SendBullet(bullet, wep:GetOwner())
-    end
-
-    ARC9:ProgressPhysBullet(bullet, FrameTime())
 end
 
 if CLIENT then

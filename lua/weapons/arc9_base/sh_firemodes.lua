@@ -130,6 +130,10 @@ function SWEP:ThinkFiremodes()
 end
 
 function SWEP:GetFiremodeName()
+    if self:GetUBGL() then
+        return self:GetProcessedValue("UBGLFiremodeName")
+    end
+
     local arc9_mode = self:GetCurrentFiremodeTable()
 
     local firemode_text = "UNKNOWN"
