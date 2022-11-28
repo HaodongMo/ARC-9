@@ -52,6 +52,11 @@ function ARC9:SendBlacklist(ply)
     end
 end
 
+concommand.Add("arc9_blacklist_refresh_sv", function()
+    ARC9:LoadBlacklist()
+    ARC9:SendBlacklist()
+end)
+
 net.Receive("arc9_sendblacklist", function(len, ply)
     if !ply:IsAdmin() then return end
 
