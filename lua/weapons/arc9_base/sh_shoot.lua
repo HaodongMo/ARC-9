@@ -652,6 +652,9 @@ function SWEP:ShootRocket()
 
         if phys:IsValid() then
             phys:AddVelocity((dir + dispersion):Forward() * self:GetProcessedValue("ShootEntForce"))
+            if self:GetProcessedValue("ShootEntInheritPlayerVelocity") then
+                phys:AddVelocity(self:GetOwner():GetVelocity())
+            end
         end
     end
 end
