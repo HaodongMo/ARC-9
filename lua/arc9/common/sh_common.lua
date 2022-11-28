@@ -57,11 +57,21 @@ ARC9.ShotgunShellSoundsTable = {
 }
 
 ARC9.RicochetSounds = {
-    "arc9/ricochet01.wav",
-    "arc9/ricochet02.wav",
-    "arc9/ricochet03.wav",
-    "arc9/ricochet04.wav",
-    "arc9/ricochet05.wav"
+    "arc9/fx/ricochet_01.ogg",
+	"arc9/fx/ricochet_02.ogg",
+	"arc9/fx/ricochet_03.ogg",
+	"arc9/fx/ricochet_04.ogg",
+	"arc9/fx/ricochet_05.ogg",
+	"arc9/fx/ricochet_06.ogg",
+	"arc9/fx/ricochet_07.ogg",
+	"arc9/fx/ricochet_08.ogg",
+	"arc9/fx/ricochet_09.ogg",
+	"arc9/fx/ricochet_10.ogg",
+	"arc9/fx/ricochet_11.ogg",
+	"arc9/fx/ricochet_12.ogg",
+	"arc9/fx/ricochet_13.ogg",
+	"arc9/fx/ricochet_14.ogg",
+	"arc9/fx/ricochet_15.ogg"
  }
 
 ARC9.PresetPath = "ARC9_presets/"
