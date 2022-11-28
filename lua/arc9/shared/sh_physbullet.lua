@@ -111,20 +111,6 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
     table.insert(ARC9.PhysBullets, bullet)
 
     if !game.SinglePlayer() then
-        local owner = wep:GetOwner()
-        if owner:IsPlayer() and SERVER and !owner:IsListenServerHost() then
-            -- local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
-            local ping = owner:Ping() / 1000
-            local timestep = 0.2
-
-            ping = math.min(ping, 0.25) // can't let people cheat TOO hard
-
-            while ping > 0 do
-                ARC9:ProgressPhysBullet(bullet, timestep)
-                ping = ping - timestep
-            end
-        end
-
         if CLIENT and mdlindex > 0 then
             local mdl = ARC9.PhysBulletModels[mdlindex]
             bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
@@ -138,6 +124,22 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
             ARC9:SendBullet(bullet, wep:GetOwner())
         end
+
+        ARC9:ProgressPhysBullet(bullet, FrameTime())
+
+        // local owner = wep:GetOwner()
+        // if owner:IsPlayer() and (CLIENT or !owner:IsListenServerHost()) then
+        //     -- local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
+        //     local ping = owner:Ping() / 1000
+        //     local timestep = 0.2
+
+        //     ping = math.min(ping, 0.25) // can't let people cheat TOO hard
+
+        //     while ping > 0 do
+        //         ARC9:ProgressPhysBullet(bullet, timestep)
+        //         ping = ping - timestep
+        //     end
+        // end
     else
         if SERVER then
             // ARC9:ProgressPhysBullet(bullet, FrameTime())
