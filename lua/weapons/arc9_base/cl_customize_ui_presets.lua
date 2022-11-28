@@ -1,6 +1,12 @@
 
 local ARC9ScreenScale = ARC9.ScreenScale
+
 local clicksound = "arc9/newui/uimouse_click_return.ogg"
+local removesound = "arc9/newui/presets/paper_scrawl1.ogg"
+local savesound = "arc9/newui/presets/paper_write1.ogg"
+local applysound = "arc9/newui/presets/paper_search1.ogg"
+local randomizesound = "arc9/newui/presets/paper_search1.ogg"
+
 local mat_default = Material("arc9/arc9_sus.png", "mips smooth")
 local mat_random = Material("arc9/ui/random.png", "mips smooth")
 local nextpreset = 0
@@ -63,7 +69,7 @@ function SWEP:CreatePresetMenu(reload)
     savebtn:SetButtonText("Save", "ARC9_12")
     savebtn:SetIcon(Material("arc9/ui/save.png", "mips smooth"))
     savebtn.DoClick = function(self2)
-        surface.PlaySound(clicksound)
+        surface.PlaySound(savesound)
         if nextpreset > CurTime() then return end
         nextpreset = CurTime() + 1
 
@@ -140,7 +146,7 @@ function SWEP:CreatePresetMenu(reload)
         presetbtn:SetText("")
         presetbtn.DoClick = function(self2)
             self:LoadPreset(preset)
-            surface.PlaySound(clicksound)
+            surface.PlaySound(applysound)
         end
 
         if preset == "random" then 
@@ -152,7 +158,7 @@ function SWEP:CreatePresetMenu(reload)
                 net.Start("arc9_randomizeatts")
                 net.SendToServer()
 
-                surface.PlaySound(clicksound)
+                surface.PlaySound(randomizesound)
                 
                 timer.Simple(0.1, function() if IsValid(self) then self:CreateHUD_Bottom() end end)
             end
@@ -255,7 +261,7 @@ function SWEP:CreatePresetMenu(reload)
                 presetbtn:Remove()
                 presetbtn = nil
                 -- self:CreatePresetMenu()
-                surface.PlaySound(clicksound)
+                surface.PlaySound(removesound)
             end
             preset_delete.Think = function(self2)
                 if !IsValid(self) then return end
