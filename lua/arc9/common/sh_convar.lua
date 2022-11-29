@@ -586,6 +586,10 @@ local function menu_client_ti(panel)
         label = "Enable Imaginary Bullets",
         command = "arc9_bullet_imaginary"
     })
+    panel:AddControl("checkbox", {
+        label = "ADS Sensitivity Compensation",
+        command = "arc9_compensate_sens"
+    })
 end
 
 local function menu_client_customization(panel)
