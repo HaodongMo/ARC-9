@@ -65,7 +65,7 @@ function SWEP:PlayAnimation(anim, mult, lock, isfiremodeanim)
         mdl:SetCycle(0)
     else
         mdl:SendViewModelMatchingSequence(seq)
-        mdl:SetPlaybackRate(tmult)
+        mdl:SetPlaybackRate(math.Clamp(tmult, -12, 12)) // It doesn't like it if you go higher
     end
 
     self:SetSequenceIndex(seq or 0)
