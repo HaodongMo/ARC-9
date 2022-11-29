@@ -80,6 +80,7 @@ end
 
 function SWEP:AdjustMouseSensitivity()
     if !self:GetInSights() then return end
+    if !GetConVar("arc9_compensate_sens"):GetBool() then return end
 
     if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
         return
