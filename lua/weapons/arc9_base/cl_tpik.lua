@@ -30,6 +30,8 @@ local cachelastcycle = 0 -- probably bad
 
 function SWEP:DoTPIK()
     local wm = self:GetWM()
+    if !IsValid(wm) then return end
+
     if !self:ShouldTPIK() then 
         if cachelastcycle > 0 then wm:SetCycle(0) cachelastcycle = 0 end
         return
@@ -62,9 +64,6 @@ function SWEP:DoTPIK()
     if self.LastTPIKTime + tpikdelay > CurTime() then
         shouldfulltpik = false
     end
-
-    -- if !IsValid(vm) then return end
-    if !IsValid(wm) then return end
 
     local nolefthand = false
 
