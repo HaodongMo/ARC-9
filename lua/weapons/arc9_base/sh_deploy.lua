@@ -86,7 +86,7 @@ end
 
 function SWEP:GiveDefaultAmmo()
     self:SetClip1(self:GetValue("ClipSize"))
-    self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * 2, self:GetValue("Ammo"))
+    --self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * 2, self:GetValue("Ammo"))
 end
 
 local v0 = Vector(0, 0, 0)
