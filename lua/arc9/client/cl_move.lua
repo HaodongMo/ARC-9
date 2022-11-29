@@ -1,5 +1,5 @@
 hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
-    local wpn = LocalPlayer():GetActiveWeapon()
+    --[[local wpn = LocalPlayer():GetActiveWeapon()
 
     if !IsValid(wpn) then return end
     if !wpn.ARC9 then return end
@@ -32,5 +32,5 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                 cmd:SetButtons(buttons)
             end
         end
-    end
+    end--]]
 end)
