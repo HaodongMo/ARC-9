@@ -680,8 +680,8 @@ SWEP.ToggleAttSound = "items/flashlight1.wav"
 SWEP.EnterSightsSound = ""
 SWEP.ExitSightsSound = ""
 
-SWEP.EnterBipodSound = "arc9/bipod_down.wav"
-SWEP.ExitBipodSound = "arc9/bipod_up.wav"
+SWEP.EnterBipodSound = ""
+SWEP.ExitBipodSound = ""
 
 SWEP.EnterUBGLSound = ""
 SWEP.ExitUBGLSound = ""
