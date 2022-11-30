@@ -101,6 +101,10 @@ function SWEP:AdjustMouseSensitivity()
     end
 
     if mag > 0 then
-        return 1 / (1 - (self:GetSightAmount() * (1 - mag)))
+        local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
+
+        amt = self:WidescreenFix(amt)
+
+        return amt
     end
 end
