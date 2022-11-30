@@ -67,13 +67,13 @@ function EFFECT:Init(data)
     -- self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 
     local phys = self:GetPhysicsObject()
+    if !IsValid(phys) then self:Remove() end --hhh
 
     local plyvel = vector_origin
 
     if IsValid(ent.Owner) then
         plyvel = ent.Owner:GetAbsVelocity()
     end
-
     phys:Wake()
     -- phys:SetDamping(0, 0)
     -- phys:SetMass(1)

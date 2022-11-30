@@ -291,7 +291,9 @@ function SWEP:SetupModel(wm, lod, cm)
         self:KillSpecificModel(wm)
     end
 
-    if !wm and !IsValid(self:GetOwner()) then return end
+    local owner = self:GetOwner()
+
+    if !wm and !IsValid(owner) then return end
 
     if wm and !self.MirrorVMWM then return end
 
@@ -309,7 +311,9 @@ function SWEP:SetupModel(wm, lod, cm)
         self.RHIKModel = nil
         self.MuzzleDeviceVM = nil
 
-        basemodel = self:GetOwner():GetViewModel()
+        if !owner.GetViewModel then return end -- safe check to fix random mp error
+
+        basemodel = owner:GetViewModel()
 
         -- local RenderOverrideFunction = function(self2)
         --     if LocalPlayer():GetActiveWeapon() != self then LocalPlayer():GetViewModel().RenderOverride = nil return end
@@ -370,7 +374,7 @@ function SWEP:SetupModel(wm, lod, cm)
         table.insert(mdl, 1, csmodel)
     end
 
-    if !wm and self:GetOwner() != LocalPlayer() then return end
+    if !wm and owner != LocalPlayer() then return end
     if lod > 0 then return end
 
     for e, _ in pairs(self:GetElements()) do
