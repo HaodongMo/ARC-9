@@ -112,7 +112,7 @@ function SWEP:PlayAnimation(anim, mult, lock, isfiremodeanim)
     end
 
     if !animation.NoIdle then
-        self:SetNextIdle(CurTime() + (time * mult))
+        self:SetNextIdle(CurTime() + (animation.ImmediateIdle and 0 or 1) + (time * mult))
     else
         self:SetNextIdle(math.huge)
     end
