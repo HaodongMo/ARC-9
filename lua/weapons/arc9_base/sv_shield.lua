@@ -44,6 +44,8 @@ function SWEP:CreateShield()
     shield:Spawn()
     shield:SetModelScale(self:GetProcessedValue("ShieldScale") or 1, 0.1)
     shield:Activate()
+
+    self:SetShieldEntity(shield)
 end
 
 function SWEP:KillShield()

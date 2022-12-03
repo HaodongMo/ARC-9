@@ -31,7 +31,7 @@ function SWEP:MeleeAttack(bypass)
         start = owner:EyePos(),
         endpos = owner:EyePos() + (owner:EyeAngles():Forward() * self:GetProcessedValue("BashLungeRange")),
         mask = MASK_SHOT,
-        filter = owner,
+        filter = {owner, self:GetShieldEntity(), self.ShieldProp},
         maxs = vmaxs,
         mins = vmins
     })
@@ -59,7 +59,7 @@ function SWEP:MeleeAttackShoot()
         start = owner:EyePos(),
         endpos = owner:EyePos() + (owner:EyeAngles():Forward() * self:GetProcessedValue("BashRange")),
         mask = MASK_SHOT,
-        filter = owner,
+        filter = {owner, self:GetShieldEntity(), self.ShieldProp},
         maxs = vmaxs2,
         mins = vmins2
     })

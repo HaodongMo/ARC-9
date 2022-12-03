@@ -1303,6 +1303,7 @@ function SWEP:SetupDataTables()
 
     self:NetworkVar("Entity", 0, "Holster_Entity")
     self:NetworkVar("Entity", 1, "LungeEntity")
+    self:NetworkVar("Entity", 2, "ShieldEntity")
 
     self:SetVisualRecoilAng(Angle(0, 0 ,0))
     self:SetVisualRecoilVel(Angle(0, 0, 0))
