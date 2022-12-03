@@ -225,7 +225,7 @@ function SWEP:DoPrimaryAttack()
             end
         end
 
-        self:PlayAnimation(banim, 1, false)
+        self:PlayAnimation(banim, 1, false, true)
     end
 
     self:SetLoadedRounds(self:Clip1())

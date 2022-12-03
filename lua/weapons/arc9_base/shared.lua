@@ -1078,7 +1078,7 @@ SWEP.Animations = {
     --     Mult = 1, -- multiplies time
     --     Reverse = false, -- Reverse the animation
     --     EjectAt = 0, -- Eject a shell at this time
-    --     ImmediateIdle = false, -- Idle immediately after playing this animation
+    --     DelayedIdle = false, -- Idle immediately after playing this animation
     --     IKTimeLine = { -- t is in fraction of animation
     --         {
     --             t = 0.1,
