@@ -204,7 +204,7 @@ function SWEP:DoPrimaryAttack()
 
     self:TakeAmmo()
 
-    if self:GetProcessedValue("DoFireAnimation") and SERVER then
+    if self:GetProcessedValue("DoFireAnimation") then
         local anim = "fire"
 
         if self:GetProcessedValue("Akimbo") then
