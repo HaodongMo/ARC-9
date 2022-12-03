@@ -6,7 +6,7 @@ ATT.Description = [[Collimated red dot optic sight.]]
 ATT.Pros = {}
 ATT.Cons = {}
 ATT.SortOrder = 0
-ATT.MenuCategory = "ARC-9 - Attachments"
+ATT.MenuCategory = "ARC9 - Attachments"
 
 ATT.AdminOnly = false
 ATT.Free = false
