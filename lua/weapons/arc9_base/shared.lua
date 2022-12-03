@@ -879,6 +879,17 @@ SWEP.NonTPIKAnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- Non TPIK
 SWEP.AnimDraw = false
 SWEP.AnimMelee = ACT_GMOD_GESTURE_MELEE_SHOVE_2HAND
 
+-------------------------- Shields
+
+SWEP.ShieldModel = nil
+
+SWEP.ShieldOffset = Vector(0, 0, 0)
+SWEP.ShieldAngle = Angle(0, 0, 0)
+
+SWEP.ShieldBone = "ValveBiped.Bip01_R_Hand"
+
+SWEP.ShieldScale = 1
+
 -------------------------- TTT
 
 -- No free attachments when this gun is purchased

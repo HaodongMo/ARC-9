@@ -71,6 +71,8 @@ function SWEP:Deploy()
             self:SetLoadedRounds(self:Clip1())
         end
 
+        self:CreateShield()
+
         -- self:NetworkWeapon()
         self:SetTimer(0.25, function()
             self:SendWeapon()
@@ -139,6 +141,10 @@ function SWEP:Holster(wep)
             for i = 0, self:GetVM():GetBoneCount() do
                 self:GetVM():ManipulateBoneScale(i, v1)
             end
+        end
+
+        if SERVER then
+            self:KillShield()
         end
 
         if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
