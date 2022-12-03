@@ -286,18 +286,12 @@ function SWEP:GetProcessedValue(val, base, cmd)
 
     if !self.HasNoAffectors[val .. "Melee"] then
         if getlastmeleetime < ct then
-            local d = self.PV_Melee
+            local pft = ct - getlastmeleetime
+            local d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
-            if self.PV_Tick != upct then
-                local pft = ct - getlastmeleetime
-                d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
+            d = math.Clamp(d, 0, 1)
 
-                d = math.Clamp(d, 0, 1)
-
-                d = 1 - d
-
-                self.PV_Melee = d
-            end
+            d = 1 - d
 
             if isnumber(stat) then
                 stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
