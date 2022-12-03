@@ -1,5 +1,5 @@
 prefix = "eft_charge_ak_*"   # Atts with this prefix in lua name will be packed. Uses wildcards ( *_ak_* )
-arc = 1                      # 0 for ArcCW bulk atts, 1 for ARC-9 bulk atts
+arc = 1                      # 0 for ArcCW bulk atts, 1 for ARC9 bulk atts
 
 import glob
 import os

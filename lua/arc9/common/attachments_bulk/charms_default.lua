@@ -7,7 +7,7 @@ ATT.Ignore = true -- Remove to use
 
 ATT.Description = [[Baby wants a nap-nap.]]
 
-ATT.MenuCategory = "ARC-9 - Charms"
+ATT.MenuCategory = "ARC9 - Charms"
 
 ATT.Model = "models/items/arc9/att_charmbase.mdl"
 ATT.BoxModel = "models/items/arc9/att_cardboard_box.mdl"

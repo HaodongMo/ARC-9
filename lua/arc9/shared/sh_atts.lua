@@ -40,7 +40,7 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
         attent.GiveAttachments = {
             [shortname] = 1
         }
-        attent.Category =  atttbl.MenuCategory or "ARC-9 - Attachments"
+        attent.Category =  atttbl.MenuCategory or "ARC9 - Attachments"
 
         scripted_ents.Register(attent, "arc9_att_" .. shortname)
     end

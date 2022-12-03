@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.Spawnable = false
-SWEP.Category = "ARC-9"
+SWEP.Category = "ARC9"
 SWEP.AdminOnly = false
 
 -- IMPORTANT:
@@ -259,7 +259,7 @@ SWEP.Ammo = "pistol" -- What ammo type this gun uses.
 
 SWEP.ChamberSize = 1 -- The amount of rounds this gun can chamber.
 SWEP.ClipSize = 25 -- Self-explanatory.
-SWEP.SupplyLimit = 5 -- Amount of magazines of ammo this gun can take from an ARC-9 supply crate.
+SWEP.SupplyLimit = 5 -- Amount of magazines of ammo this gun can take from an ARC9 supply crate.
 SWEP.SecondarySupplyLimit = 2 -- Amount of reserve UBGL magazines you can take.
 
 SWEP.ForceDefaultClip = nil -- Set to force a default amount of ammo this gun can have. Otherwise, this is controlled by console variables.

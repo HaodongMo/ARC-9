@@ -712,9 +712,9 @@ end
 local function menu_client_controller(panel)
     panel:AddControl( "header", { description = "Replace key names with controller glyphs." } )
     panel:CheckBox("Engage Super Controller Mode", "arc9_controller")
-    panel:ControlHelp( "Activate controller-focused features in ARC-9.\n- Keys are replaced with their bindnames.\n- Jump and reload are used as Select and Deselect, respectively." )
+    panel:ControlHelp( "Activate controller-focused features in ARC9.\n- Keys are replaced with their bindnames.\n- Jump and reload are used as Select and Deselect, respectively." )
     panel:CheckBox("Controller Rumble w/ SInput", "arc9_controller_rumble")
-    panel:ControlHelp( "Use Fesiug's SInput to interact with ARC-9.\nFound at github.com/Fesiug/gmod-sinput" )
+    panel:ControlHelp( "Use Fesiug's SInput to interact with ARC9.\nFound at github.com/Fesiug/gmod-sinput" )
     local listview = vgui.Create("DListView", panel)
     listview:SetSize( 99, 200 )
     panel:AddItem( listview )
@@ -1173,7 +1173,7 @@ local clientmenus_ti = {
 
 hook.Add("PopulateToolMenu", "ARC9_MenuOptions", function()
     for smenu, data in pairs(clientmenus_ti) do
-        spawnmenu.AddToolMenuOption("Options", "ARC-9", "ARC9_" .. tostring(smenu), data.text, "", "", data.func)
+        spawnmenu.AddToolMenuOption("Options", "ARC9", "ARC9_" .. tostring(smenu), data.text, "", "", data.func)
     end
 end)
 
