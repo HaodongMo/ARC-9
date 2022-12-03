@@ -78,7 +78,7 @@ function SWEP:ApplyRecoil()
     rec = rec + rps
     -- local delay = 60 / self:GetProcessedValue("RPM")
 
-    local recoilup = 1
+    local recoilup = 0
     local recoilside = 0
 
     local shot = math.floor(self:GetRecoilAmount()) + 1
@@ -111,7 +111,9 @@ function SWEP:ApplyRecoil()
     self:SetRecoilSide(recoilside)
 
     -- self:SetRecoilDirection(-90)
-    self:SetRecoilAmount(rec)
+    if IsFirstTimePredicted() then
+        self:SetRecoilAmount(rec)
+    end
 
     self:SetLastRecoilTime(CurTime())
 
