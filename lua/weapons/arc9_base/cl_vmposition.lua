@@ -474,11 +474,14 @@ function SWEP:GetViewModelPosition(pos, ang)
     local wm = self:GetWM()
 
     if IsValid(wm) and curvedcustomizedelta == 0 then
-        if !self:ShouldTPIK() or self.NoTPIKVMPos then
+        if !self:ShouldTPIK() then
             wm.slottbl.Pos = self.WorldModelOffset.Pos
             wm.slottbl.Ang = self.WorldModelOffset.Ang
         else
-            if LocalPlayer() == owner then
+            if self.NoTPIKVMPos then
+                wm.slottbl.Pos = (self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos)
+                wm.slottbl.Ang = (self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang)         
+            elseif LocalPlayer() == owner then
                 wm.slottbl.Pos = (self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos) - self.ViewModelPos * somevector3
                 wm.slottbl.Ang = (self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
             end

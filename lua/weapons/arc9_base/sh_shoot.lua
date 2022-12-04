@@ -204,7 +204,7 @@ function SWEP:DoPrimaryAttack()
 
     self:TakeAmmo()
 
-    if self:GetProcessedValue("DoFireAnimation") and SERVER then
+    if self:GetProcessedValue("DoFireAnimation") then
         local anim = "fire"
 
         if self:GetProcessedValue("Akimbo") then
@@ -225,7 +225,7 @@ function SWEP:DoPrimaryAttack()
             end
         end
 
-        self:PlayAnimation(banim, 1, false)
+        self:PlayAnimation(banim, 1, false, true)
     end
 
     self:SetLoadedRounds(self:Clip1())
@@ -281,10 +281,8 @@ function SWEP:DoPrimaryAttack()
 
     self:DoProjectileAttack(sp, sa, spread)
 
-    if IsFirstTimePredicted() then
-        self:ApplyRecoil()
-        self:DoVisualRecoil()
-    end
+    self:ApplyRecoil()
+    self:DoVisualRecoil()
 
     if self:GetBurstCount() == 0 and self:GetCurrentFiremode() > 1 and self:GetProcessedValue("RunawayBurst") then
         if !self:GetProcessedValue("AutoBurst") then
@@ -306,12 +304,10 @@ function SWEP:DoPrimaryAttack()
         self:SetNeedTriggerPress(true)
     end
 
-    if IsFirstTimePredicted() then
-        self:DoHeat()
+    self:DoHeat()
 
-        if !manualaction or manualaction and !self.MalfunctionCycle then
-            self:RollJam()
-        end
+    if !manualaction or manualaction and !self.MalfunctionCycle then
+        self:RollJam()
     end
 end
 
@@ -354,44 +350,44 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
 
         bullettbl.Size = self:GetProcessedValue("TracerSize")
 
-        if IsFirstTimePredicted() then
-            if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
+        if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
+            if IsFirstTimePredicted() then
                 for i = 1, self:GetProcessedValue("Num") do
                     local newang = ang + (spread * AngleRand() / 3.6)
                     ARC9:ShootPhysBullet(self, pos, newang:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
                 end
-            else
-                self:GetOwner():LagCompensation(true)
-                -- local tr = self:GetProcessedValue("TracerNum")
+            end
+        else
+            self:GetOwner():LagCompensation(true)
+            -- local tr = self:GetProcessedValue("TracerNum")
 
-                self:GetOwner():FireBullets({
-                    Damage = self:GetProcessedValue("DamageMax"),
-                    Force = self:GetProcessedValue("ImpactForce"),
-                    Tracer = tr,
-                    TracerName = self:GetProcessedValue("TracerEffect"),
-                    Num = self:GetProcessedValue("Num"),
-                    Dir = ang:Forward(),
-                    Src = pos,
-                    Spread = Vector(spread, spread, spread),
-                    IgnoreEntity = self:GetOwner():GetVehicle(),
-                    Distance = self:GetProcessedValue("Distance"),
-                    Callback = function(att, btr, dmg)
-                        local range = (btr.HitPos - btr.StartPos):Length()
+            self:GetOwner():FireBullets({
+                Damage = self:GetProcessedValue("DamageMax"),
+                Force = self:GetProcessedValue("ImpactForce"),
+                Tracer = tr,
+                TracerName = self:GetProcessedValue("TracerEffect"),
+                Num = self:GetProcessedValue("Num"),
+                Dir = ang:Forward(),
+                Src = pos,
+                Spread = Vector(spread, spread, spread),
+                IgnoreEntity = self:GetOwner():GetVehicle(),
+                Distance = self:GetProcessedValue("Distance"),
+                Callback = function(att, btr, dmg)
+                    local range = (btr.HitPos - btr.StartPos):Length()
 
-                        self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
+                    self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
 
-                        if ARC9.Dev(2) then
-                            if SERVER then
-                                debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
-                            else
-                                debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
-                            end
+                    if ARC9.Dev(2) then
+                        if SERVER then
+                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
+                        else
+                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
                         end
                     end
-                })
+                end
+            })
 
-                self:GetOwner():LagCompensation(false)
-            end
+            self:GetOwner():LagCompensation(false)
         end
     end
 end

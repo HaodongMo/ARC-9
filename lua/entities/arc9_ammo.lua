@@ -5,7 +5,7 @@ ENT.Base                     = "base_entity"
 ENT.RenderGroup              = RENDERGROUP_TRANSLUCENT
 
 ENT.PrintName                = "Ammo Pickup"
-ENT.Category                 = "ARC-9 - Ammo"
+ENT.Category                 = "ARC9 - Ammo"
 
 ENT.Spawnable                = true
 ENT.Model                    = "models/weapons/tacint/ammoboxes/ammo_bag-1.mdl"

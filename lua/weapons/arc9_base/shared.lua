@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.Spawnable = false
-SWEP.Category = "ARC-9"
+SWEP.Category = "ARC9"
 SWEP.AdminOnly = false
 
 -- IMPORTANT:
@@ -259,7 +259,7 @@ SWEP.Ammo = "pistol" -- What ammo type this gun uses.
 
 SWEP.ChamberSize = 1 -- The amount of rounds this gun can chamber.
 SWEP.ClipSize = 25 -- Self-explanatory.
-SWEP.SupplyLimit = 5 -- Amount of magazines of ammo this gun can take from an ARC-9 supply crate.
+SWEP.SupplyLimit = 5 -- Amount of magazines of ammo this gun can take from an ARC9 supply crate.
 SWEP.SecondarySupplyLimit = 2 -- Amount of reserve UBGL magazines you can take.
 
 SWEP.ForceDefaultClip = nil -- Set to force a default amount of ammo this gun can have. Otherwise, this is controlled by console variables.
@@ -879,6 +879,17 @@ SWEP.NonTPIKAnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- Non TPIK
 SWEP.AnimDraw = false
 SWEP.AnimMelee = ACT_GMOD_GESTURE_MELEE_SHOVE_2HAND
 
+-------------------------- Shields
+
+SWEP.ShieldModel = nil
+
+SWEP.ShieldOffset = Vector(0, 0, 0)
+SWEP.ShieldAngle = Angle(0, 0, 0)
+
+SWEP.ShieldBone = "ValveBiped.Bip01_R_Hand"
+
+SWEP.ShieldScale = 1
+
 -------------------------- TTT
 
 -- No free attachments when this gun is purchased
@@ -1078,6 +1089,7 @@ SWEP.Animations = {
     --     Mult = 1, -- multiplies time
     --     Reverse = false, -- Reverse the animation
     --     EjectAt = 0, -- Eject a shell at this time
+    --     DelayedIdle = false, -- Idle immediately after playing this animation
     --     IKTimeLine = { -- t is in fraction of animation
     --         {
     --             t = 0.1,
@@ -1291,6 +1303,7 @@ function SWEP:SetupDataTables()
 
     self:NetworkVar("Entity", 0, "Holster_Entity")
     self:NetworkVar("Entity", 1, "LungeEntity")
+    self:NetworkVar("Entity", 2, "ShieldEntity")
 
     self:SetVisualRecoilAng(Angle(0, 0 ,0))
     self:SetVisualRecoilVel(Angle(0, 0, 0))

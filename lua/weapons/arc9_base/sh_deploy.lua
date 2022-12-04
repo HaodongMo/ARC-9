@@ -71,6 +71,8 @@ function SWEP:Deploy()
             self:SetLoadedRounds(self:Clip1())
         end
 
+        self:CreateShield()
+
         -- self:NetworkWeapon()
         self:SetTimer(0.25, function()
             self:SendWeapon()
@@ -97,7 +99,6 @@ function SWEP:Holster(wep)
     if game.SinglePlayer() and CLIENT then return end
 
     if CLIENT and self:GetOwner() != LocalPlayer() then return end
-    // Really stupid that this happens
 
     if self:GetOwner():IsNPC() then
         return
@@ -142,6 +143,10 @@ function SWEP:Holster(wep)
             end
         end
 
+        if SERVER then
+            self:KillShield()
+        end
+
         if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
             self:Remove()
         end
@@ -166,6 +171,8 @@ function SWEP:Holster(wep)
     end
 end
 
+local holsteranticrash = false
+
 hook.Add("StartCommand", "ARC9_Holster", function(ply, ucmd)
     local wep = ply:GetActiveWeapon()
 
@@ -173,7 +180,12 @@ hook.Add("StartCommand", "ARC9_Holster", function(ply, ucmd)
         if wep:GetHolsterTime() != 0 and wep:GetHolsterTime() <= CurTime() then
             if IsValid(wep:GetHolster_Entity()) then
                 wep:SetHolsterTime(-math.huge) -- Pretty much force it to work
-                ucmd:SelectWeapon(wep:GetHolster_Entity()) -- Call the final holster request
+
+                if !holsteranticrash then
+                    holsteranticrash = true
+                    ucmd:SelectWeapon(wep:GetHolster_Entity()) -- Call the final holster request
+                    holsteranticrash = false
+                end
             end
         end
     end
