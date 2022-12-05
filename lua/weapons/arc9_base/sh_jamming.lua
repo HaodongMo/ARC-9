@@ -11,7 +11,12 @@ function SWEP:RollJam()
 
         self:ExitSights()
         self:PlayAnimation("jam", 1, true)
-        self:EmitSound(self:GetProcessedValue("MalfunctionSound"), 75, 100, 1, CHAN_ITEM)
+        local soundtab1 = {
+            name = "jam",
+            sound = self:RandomChoice(self:GetProcessedValue("MalfunctionSound")),
+            channel = CHAN_ITEM
+        }
+        self:PlayTranslatedSound(soundtab1)
         self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("MalfunctionWait"))
         self:SetNeedsCycle(false)
 

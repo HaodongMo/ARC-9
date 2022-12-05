@@ -29,7 +29,15 @@ end
 
 function SWEP:DryFire()
     self:PlayAnimation("dryfire")
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("DryFireSound")), 75, 100, 1, CHAN_BODY)
+    local soundtab = {
+        name = "dryfire",
+        sound = self:RandomChoice(self:GetProcessedValue("DryFireSound")),
+        level = 75,
+        pitch = 100,
+        volume = 1,
+        channel = CHAN_BODY
+    }
+    self:PlayTranslatedSound(soundtab)
     self:SetBurstCount(0)
     self:SetNeedTriggerPress(true)
 end
@@ -72,9 +80,36 @@ function SWEP:DoShootSounds()
     if havedistant then dvolume, dpitch, dvolumeactual = math.min(149, (self:GetProcessedValue("DistantShootVolume") or svolume) * 2), (self:GetProcessedValue("DistantShootPitch") or spitch) + pvrand, self:GetProcessedValue("DistantShootVolumeActual") or svolumeactual or 1 end
 
     if indoormix > 0 then
-        self:EmitSound(ss or "", svolume, spitch, svolumeactual * indoormix, CHAN_WEAPON)
-        self:EmitSound(sl or "", svolume, spitch, svolumeactual * indoormix, CHAN_WEAPON + 4)
-        if havedistant then self:EmitSound(dss or "", dvolume, dpitch, dvolume * indoormix, CHAN_WEAPON + 1) end
+        local soundtab1 = {
+            name = "shootsound",
+            sound = ss or "",
+            level = svolume,
+            pitch = spitch,
+            volume = svolumeactual * indoormix,
+            channel = CHAN_WEAPON
+        }
+        self:PlayTranslatedSound(soundtab1)
+
+        local soundtab2 = {
+            name = "shootlayer",
+            sound = ss or "",
+            level = svolume,
+            pitch = spitch,
+            volume = svolumeactual * indoormix,
+            channel = CHAN_WEAPON + 4
+        }
+        self:PlayTranslatedSound(soundtab2)
+        if havedistant then
+            local soundtab3 = {
+                name = "shootdistant",
+                sound = dss or "",
+                level = dvolume,
+                pitch = dpitch,
+                volume = dvolume * indoormix,
+                channel = CHAN_WEAPON + 1
+            }
+            self:PlayTranslatedSound(soundtab)
+        end
     end
 
     if indoor then
@@ -85,9 +120,36 @@ function SWEP:DoShootSounds()
         if havedistant then local dssIN = self:GetProcessedValue(dsstr .. "Indoor")
         dssIN = self:RandomChoice(dssIN) end
 
-        self:EmitSound(ssIN or "", svolume, spitch, svolumeactual * indoor, CHAN_WEAPON + 5)
-        self:EmitSound(slIN or "", svolume, spitch, svolumeactual * indoor, CHAN_WEAPON + 6)
-        if havedistant then self:EmitSound(dssIN or "", dvolume, dpitch, dvolume * indoor, CHAN_WEAPON + 7) end
+        local soundtab1 = {
+            name = "shootsoundindoor",
+            sound = ssIN or "",
+            level = svolume,
+            pitch = spitch,
+            volume = svolumeactual * indoor,
+            channel = CHAN_WEAPON + 5
+        }
+        self:PlayTranslatedSound(soundtab1)
+
+        local soundtab2 = {
+            name = "shootlayerindoor",
+            sound = slIN or "",
+            level = svolume,
+            pitch = spitch,
+            volume = svolumeactual * indoor,
+            channel = CHAN_WEAPON + 6
+        }
+        self:PlayTranslatedSound(soundtab2)
+        if havedistant then
+            local soundtab3 = {
+                name = "shootdistantindoor",
+                sound = dssIN or "",
+                level = dvolume,
+                pitch = dpitch,
+                volume = dvolume * indoor,
+                channel = CHAN_WEAPON + 7
+            }
+            self:PlayTranslatedSound(soundtab3)
+        end
     end
 
     self:StartLoop()

@@ -576,6 +576,37 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_PrimaryAttack = function(self) return end -- Called when the primary attack is fired.
 -- SWEP.Hook_SwitchSight = function(self, newsight) return end -- Called when a sight is switched.
 -- SWEP.Hook_ToggleAtts = function(self) return end -- Called when attachments are toggled with F.
+-- SWEP.HookP_TranslateSound = function(self, data) return data end # data = {sound = "sound", name = "fire", volume = 1, pitch = 100, level = 100, channel = CHAN_AUTO, volume = 100, flags = SND_NOFLAGS, dsp = 0}
+
+-- SOUND NAMES FOR TRANSLATESOUND:
+-- install
+-- uninstall
+-- enterbipod
+-- exitbipod
+-- firemode
+-- safety
+-- jam
+-- shootlooptailindoor
+-- shootlooptail
+-- meleeswing
+-- meleehit
+-- meleehitwall
+-- dryfire
+-- shootsound
+-- shootlayer
+-- shootdistant
+-- shootsoundindoor
+-- shootlayerindoor
+-- shootdistantindoor
+-- entersights
+-- exitsights
+-- zoom
+-- breathrunout
+-- breathin
+-- breathout
+-- soundtable_1, soundtable_2...
+-- enterubgl
+-- exitubgl
 
 -------------------------- BLIND FIRE
 
@@ -1119,6 +1150,8 @@ SWEP.Animations = {
     --             pp = "", -- pose parameter name
     --             ppv = 0, -- pose parameter value, set to nil to reset
     --             hide = 1, -- hide reloadhidebonetables table, 0 for none
+    --             fl = 0, -- sound flags
+    --             dsp = 0, -- dsp preset
     --             FOV = -3, -- change fov in anim, see SWEP.FOV_Recoil_x for detials
     --             FOV_Start = 0.2,
     --             FOV_End = 0.4,

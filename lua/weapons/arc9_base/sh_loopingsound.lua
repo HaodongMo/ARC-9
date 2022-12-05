@@ -38,12 +38,24 @@ function SWEP:EndLoop()
         self.LoopingSoundIndoor = nil
 
         if self:GetIndoor() then
-            self:EmitSound(self:GetProcessedValue("ShootSoundTailIndoor") or self:GetProcessedValue("ShootSoundWindDownIndoor") or "")
+            local soundtab1 = {
+                name = "shootlooptailindoor",
+                sound = self:GetProcessedValue("ShootSoundTailIndoor") or self:GetProcessedValue("ShootSoundWindDownIndoor") or "",
+            }
+            self:PlayTranslatedSound(soundtab1)
         else
-            self:EmitSound(self:GetProcessedValue("ShootSoundTail") or self:GetProcessedValue("ShootSoundWindDown") or "")
+            local soundtab1 = {
+                name = "shootlooptail",
+                sound = self:GetProcessedValue("ShootSoundTail") or self:GetProcessedValue("ShootSoundWindDown") or "",
+            }
+            self:PlayTranslatedSound(soundtab1)
         end
     else
-        self:EmitSound(self:GetProcessedValue("ShootSoundTail") or self:GetProcessedValue("ShootSoundWindDown") or "")
+        local soundtab1 = {
+            name = "shootlooptail",
+            sound = self:GetProcessedValue("ShootSoundTail") or self:GetProcessedValue("ShootSoundWindDown") or "",
+        }
+        self:PlayTranslatedSound(soundtab1)
     end
 end
 

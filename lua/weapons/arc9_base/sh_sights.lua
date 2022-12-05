@@ -15,7 +15,12 @@ function SWEP:EnterSights()
     self:ToggleBlindFire(false)
     self:SetInSights(true)
     if IsFirstTimePredicted() then
-        self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)
+        local soundtab1 = {
+            name = "entersights",
+            sound = self:RandomChoice(self:GetProcessedValue("EnterSightsSound"))
+        }
+
+        self:PlayTranslatedSound(soundtab1)
     end
 
     self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
@@ -27,7 +32,12 @@ function SWEP:ExitSights()
     self:SetInSights(false)
 
     if IsFirstTimePredicted() then
-        self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitSightsSound")), 100, 75)
+        local soundtab1 = {
+            name = "exitsights",
+            sound = self:RandomChoice(self:GetProcessedValue("ExitSightsSound"))
+        }
+
+        self:PlayTranslatedSound(soundtab1)
     end
 
     self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
@@ -332,7 +342,15 @@ function SWEP:Scroll(amt)
     self.ScrollLevels[self:GetMultiSight()] = sights.ScrollLevel
 
     if old != sights.ScrollLevel then
-        self:EmitSound(atttbl.ZoomSound or "arc9/useatt.wav", 75, math.Rand(95, 105), 1, CHAN_ITEM)
+        local soundtab1 = {
+            name = "zoom",
+            sound = atttbl.ZoomSound or "arc9/useatt.wav",
+            pitch = math.Rand(95, 105),
+            vol = 1,
+            chan = CHAN_ITEM
+        }
+
+        self:PlayTranslatedSound(soundtab1)
     end
 end
 

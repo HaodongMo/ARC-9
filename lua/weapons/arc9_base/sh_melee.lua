@@ -23,7 +23,13 @@ function SWEP:MeleeAttack(bypass)
 
     self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimMelee"))
 
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeSwingSound")) or "", 75, 100, 1, CHAN_VOICE)
+    local soundtab1 = {
+        name = "meleeswing",
+        sound = self:RandomChoice(self:GetProcessedValue("MeleeSwingSound")),
+        channel = CHAN_VOICE
+    }
+
+    self:PlayTranslatedSound(soundtab1)
 
     local owner = self:GetOwner()
 
@@ -66,7 +72,13 @@ function SWEP:MeleeAttackShoot()
 
     if tr.Hit then
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
-            self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeHitSound")) or "", 75, 100, 1, CHAN_VOICE)
+            local soundtab = {
+                name = "meleehit",
+                sound = self:RandomChoice(self:GetProcessedValue("MeleeHitSound")),
+                channel = CHAN_VOICE
+            }
+
+            self:PlayTranslatedSound(soundtab)
 
             if IsFirstTimePredicted() then
                 local fx = EffectData()
@@ -78,7 +90,14 @@ function SWEP:MeleeAttackShoot()
                 util.Effect("BloodImpact", fx, true)
             end
         else
-            self:EmitSound(self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound")) or "", 75, 100, 1, CHAN_VOICE)
+            local soundtab1 = {
+                name = "meleehitwall",
+                sound = self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound")),
+                channel = CHAN_VOICE
+            }
+
+            self:PlayTranslatedSound(soundtab1)
+
             util.Decal(self:GetProcessedValue("BashDecal"), tr.HitPos + (tr.HitNormal * 8), tr.HitPos - (tr.HitNormal * 8), owner)
 
             if IsFirstTimePredicted() then

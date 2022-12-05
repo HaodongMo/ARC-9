@@ -11,7 +11,11 @@ function SWEP:Attach(addr, att, silent)
     slottbl.ToggleNum = 1
 
     if !silent then
-        self:EmitSound(slottbl.InstallSound or "arc9/newui/ui_part_install.ogg")
+        local soundtab1 = {
+            name = "install",
+            sound = slottbl.InstallSound or "arc9/newui/ui_part_install.ogg"
+        }
+        self:PlayTranslatedSound(soundtab1)
     end
 
     self:PruneAttachments()
@@ -31,7 +35,11 @@ function SWEP:Detach(addr, silent)
     slottbl.Installed = nil
 
     if !silent then
-        self:EmitSound(slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg")
+        local soundtab1 = {
+            name = "uninstall",
+            sound = slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg"
+        }
+        self:PlayTranslatedSound(soundtab1)
     end
 
     self:PruneAttachments()

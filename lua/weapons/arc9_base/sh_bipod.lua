@@ -62,7 +62,11 @@ function SWEP:EnterBipod()
     if self:GetBipod() then return end
 
     self:SetBipod(true)
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterBipodSound")))
+    local soundtab1 = {
+        name = "enterbipod",
+        sound = self:RandomChoice(self:GetProcessedValue("EnterBipodSound"))
+    }
+    self:PlayTranslatedSound(soundtab1)
     self:PlayAnimation("enter_bipod", 1, true)
     self:SetEnterBipodTime(CurTime())
 end
@@ -71,7 +75,11 @@ function SWEP:ExitBipod()
     if !self:GetBipod() then return end
 
     self:SetBipod(false)
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitBipodSound")))
+    local soundtab1 = {
+        name = "exitbipod",
+        sound = self:RandomChoice(self:GetProcessedValue("ExitBipodSound"))
+    }
+    self:PlayTranslatedSound(soundtab1)
 
     if self:GetAnimLockTime() <= CurTime() then
         self:PlayAnimation("exit_bipod", 1, true)

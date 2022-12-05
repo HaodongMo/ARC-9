@@ -9,6 +9,20 @@ function SWEP:DoPlayerAnimationEvent(event)
     if event then self:GetOwner():DoAnimationEvent(event) end
 end
 
+function SWEP:PlayTranslatedSound(soundtab)
+    soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
+
+    if soundtab then
+        self:EmitSound(
+            soundtab.sound,
+            soundtab.level,
+            soundtab.pitch,
+            soundtab.volume,
+            soundtab.channel
+        )
+    end
+end
+
 function SWEP:GetWM()
     if self.WModel then
         return self.WModel[1]

@@ -24,11 +24,25 @@ function SWEP:ToggleUBGL(on)
     self:SetUBGL(on)
 
     if on then
-        self:EmitSound(self:GetProcessedValue("EnterUBGLSound"), 75, 100, 1, CHAN_AUTO)
+        local soundtab = {
+            name = "enterubgl",
+            sound = self:RandomChoice(self:GetProcessedValue("EnterUBGLSound")),
+            channel = CHAN_AUTO
+        }
+
+        self:PlayTranslatedSound(soundtab)
+
         self:PlayAnimation("enter_ubgl", 1, true)
         self:ExitSights()
     else
-        self:EmitSound(self:GetProcessedValue("ExitUBGLSound"), 75, 100, 1, CHAN_AUTO)
+        local soundtab = {
+            name = "exitubgl",
+            sound = self:RandomChoice(self:GetProcessedValue("ExitUBGLSound")),
+            channel = CHAN_AUTO
+        }
+
+        self:PlayTranslatedSound(soundtab)
+
         self:PlayAnimation("exit_ubgl", 1, true)
     end
 end

@@ -14,7 +14,12 @@ function SWEP:ThinkHoldBreath()
             self:SetBreath(0)
             
             if sfx then 
-                self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")))
+                local soundtab = {
+                    name = "breathrunout",
+                    sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")),
+                    channel = CHAN_STATIC
+                }
+                self:PlayTranslatedSound(soundtab)
 
                 if self.SetBreathDSP then
                     self:GetOwner():SetDSP(0)
@@ -26,14 +31,25 @@ function SWEP:ThinkHoldBreath()
             if sfx and !self.SetBreathDSP then
                 self:GetOwner():SetDSP(30)
                 self.SetBreathDSP = true
-                self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathInSound")))
+                local soundtab = {
+                    name = "breathin",
+                    sound = self:RandomChoice(self:GetProcessedValue("BreathInSound")),
+                    channel = CHAN_STATIC
+                }
+
+                self:PlayTranslatedSound(soundtab)
             end
         end
     else
         if sfx and self.SetBreathDSP then
             self:GetOwner():SetDSP(0)
             self.SetBreathDSP = false
-            self:EmitSound(self:RandomChoice(self:GetProcessedValue("BreathOutSound")))
+            local soundtab = {
+                name = "breathout",
+                sound = self:RandomChoice(self:GetProcessedValue("BreathOutSound")),
+                channel = CHAN_STATIC
+            }
+            self:PlayTranslatedSound(soundtab)
         end
 
         self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime")))

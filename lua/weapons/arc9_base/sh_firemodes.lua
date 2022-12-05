@@ -23,7 +23,12 @@ function SWEP:SwitchFiremode()
     end
 
     if IsFirstTimePredicted() then
-        self:EmitSound(self:RandomChoice(self:GetProcessedValue("FiremodeSound")), 75, 100, 1, CHAN_ITEM)
+        local soundtab1 = {
+            name = "firemode",
+            sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound")),
+            channel = CHAN_ITEM
+        }
+        self:PlayTranslatedSound(soundtab1)
     end
 
     self:SetFiremode(fm)
@@ -109,7 +114,12 @@ function SWEP:ToggleSafety(onoff)
 
     if onoff != last then
         if IsFirstTimePredicted() then
-            self:EmitSound(self:RandomChoice(self:GetProcessedValue("FiremodeSound")), 75, 100, 1, CHAN_ITEM)
+            local soundtab1 = {
+                name = "safety",
+                sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound")),
+                channel = CHAN_ITEM
+            }
+            self:PlayTranslatedSound(soundtab1)
         end
 
         if onoff == false then
