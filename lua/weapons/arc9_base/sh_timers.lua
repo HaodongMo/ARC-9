@@ -84,6 +84,8 @@ function SWEP:PlaySoundTable(soundtable, mult)
     start = start or 0
     mult = mult
 
+    self:KillSoundTable()
+
     for i, v in pairs(soundtable) do
         local ttime
 
