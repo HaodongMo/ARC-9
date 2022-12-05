@@ -123,16 +123,21 @@ function SWEP:PostModify(toggleonly)
                 end
             end
 
-            if self.LastAmmo != self:GetValue("Ammo") then
-                self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
-                self:SetClip1(0)
-                self:SetRequestReload(true)
-            end
+            if self.AlreadyGaveAmmo or self.SpawnTime + 0.25 <= CurTime() then
+                if self.LastAmmo != self:GetValue("Ammo") then
+                    self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
+                    self:SetClip1(0)
+                    self:SetRequestReload(true)
+                end
 
-            if self.LastClipSize != self:GetValue("ClipSize") then
-                self:GetOwner():GiveAmmo(self:Clip1(), self:GetValue("Ammo"))
-                self:SetClip1(0)
-                self:SetRequestReload(true)
+                if self.LastClipSize != self:GetValue("ClipSize") then
+                    self:GetOwner():GiveAmmo(self:Clip1(), self:GetValue("Ammo"))
+                    self:SetClip1(0)
+                    self:SetRequestReload(true)
+                end
+            else
+                self:GiveDefaultAmmo()
+                self.AlreadyGaveAmmo = true
             end
 
             self.LastAmmo = self:GetValue("Ammo")
@@ -162,7 +167,7 @@ function SWEP:PostModify(toggleonly)
         end
 
         if self:GetValue("UBGL") then
-            if !self.AlreadyGaveUBGLAmmo or self.SpawnTime + 0.25 > CurTime() then
+            if !self.AlreadyGaveUBGLAmmo then
                 self:SetClip2(self:GetMaxClip2())
                 self.AlreadyGaveUBGLAmmo = true
             end

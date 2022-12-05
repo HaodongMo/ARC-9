@@ -65,12 +65,6 @@ function SWEP:Deploy()
     end
 
     if SERVER then
-        if !self.GaveDefaultAmmo then
-            self:GiveDefaultAmmo()
-            self.GaveDefaultAmmo = true
-            self:SetLoadedRounds(self:Clip1())
-        end
-
         self:CreateShield()
 
         -- self:NetworkWeapon()
