@@ -40,8 +40,6 @@ function SWEP:Initialize()
     self:SetClip1(self.Primary.DefaultClip)
 
     self.LastAmmo = self.Primary.Ammo
-
-    print(self.Primary.DefaultClip)
 end
 
 function SWEP:ClientInitialize()
