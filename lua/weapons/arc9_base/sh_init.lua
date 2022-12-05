@@ -31,11 +31,17 @@ function SWEP:Initialize()
 
     self:BuildSubAttachments(self.DefaultAttachments)
 
+    self:PostModify()
+
+    self.LastClipSize = self:GetProcessedValue("ClipSize")
+
     self.Primary.Ammo = self:GetProcessedValue("Ammo")
-    self.Primary.DefaultClip = self:GetProcessedValue("ClipSize") * (self:GetProcessedValue("SupplyLimit") + 1)
+    self.Primary.DefaultClip = self.LastClipSize * (self:GetProcessedValue("SupplyLimit") + 1)
     self:SetClip1(self.Primary.DefaultClip)
 
-    self:PostModify()
+    self.LastAmmo = self.Primary.Ammo
+
+    print(self.Primary.DefaultClip)
 end
 
 function SWEP:ClientInitialize()
