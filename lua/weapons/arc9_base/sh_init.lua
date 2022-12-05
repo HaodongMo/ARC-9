@@ -35,10 +35,7 @@ function SWEP:Initialize()
     self.Primary.DefaultClip = self:GetProcessedValue("ClipSize") * (self:GetProcessedValue("SupplyLimit") + 1)
     self:SetClip1(self.Primary.DefaultClip)
 
-    if !IsValid(self:GetOwner()) then -- dropped on ground
-        self:PostModify()
-        self:SetClip1(self:GetProcessedValue("ClipSize"))
-    end
+    self:PostModify()
 end
 
 function SWEP:ClientInitialize()
