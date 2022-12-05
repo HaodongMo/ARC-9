@@ -1,4 +1,6 @@
 function SWEP:CreateShield()
+    self:KillShield()
+
     local model = self:GetProcessedValue("ShieldModel")
 
     if !model then return end
@@ -35,19 +37,27 @@ function SWEP:CreateShield()
     shield:SetSolid(SOLID_NONE)
     shield:SetMoveType(MOVETYPE_NONE)
 
-    shield:SetRenderMode(RENDERMODE_TRANSALPHA)
+    if GetConVar("arc9_dev_show_shield"):GetBool() then
+        shield:SetColor(Color(0, 0, 0, 255))
+    else
+        shield:SetNoDraw(true)
+    end
 
-    // shield:SetNoDraw(true)
-
-    shield:SetColor(Color(0, 0, 0, 0))
+    shield.ARC9IsShield = true
 
     shield:Spawn()
     shield:SetModelScale(self:GetProcessedValue("ShieldScale") or 1, 0.1)
     shield:Activate()
 
+    function shield:OnTakeDamage(damage)
+        print(damage)
+    end
+
     self:SetShieldEntity(shield)
+    self:GetOwner().ARC9ShieldEntity = shield
 end
 
 function SWEP:KillShield()
     SafeRemoveEntity(self.ShieldProp)
+    SafeRemoveEntity(self:GetOwner().ARC9ShieldEntity)
 end

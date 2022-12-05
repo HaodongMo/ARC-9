@@ -453,6 +453,11 @@ local conVars = {
         client = true
     },
     {
+        name = "dev_show_shield",
+        default = "0",
+        client = true
+    },
+    {
         name = "fx_rtblur",
         default = "1",
         client = true
