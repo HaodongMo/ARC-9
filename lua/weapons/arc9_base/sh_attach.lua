@@ -123,21 +123,15 @@ function SWEP:PostModify(toggleonly)
                 end
             end
 
-            if self.AlreadyGaveAmmo or self.SpawnTime + 1 > CurTime() then
-                if self.LastAmmo != self:GetValue("Ammo") then
+            if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
+                if self.AlreadyGaveAmmo then
                     self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
                     self:SetClip1(0)
                     self:SetRequestReload(true)
+                else
+                    self:SetClip1(self:GetProcessedValue("ClipSize"))
+                    self.AlreadyGaveAmmo = true
                 end
-
-                if self.LastClipSize != self:GetValue("ClipSize") then
-                    self:GetOwner():GiveAmmo(self:Clip1(), self:GetValue("Ammo"))
-                    self:SetClip1(0)
-                    self:SetRequestReload(true)
-                end
-            else
-                self:GiveDefaultAmmo()
-                self.AlreadyGaveAmmo = true
             end
 
             self.LastAmmo = self:GetValue("Ammo")
