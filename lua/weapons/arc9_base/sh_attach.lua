@@ -123,7 +123,7 @@ function SWEP:PostModify(toggleonly)
                 end
             end
 
-            if self.AlreadyGaveAmmo or self.SpawnTime + 0.25 > CurTime() then
+            if self.AlreadyGaveAmmo or self.SpawnTime + 1 > CurTime() then
                 if self.LastAmmo != self:GetValue("Ammo") then
                     self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
                     self:SetClip1(0)
