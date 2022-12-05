@@ -44,6 +44,7 @@ function SWEP:CreateShield()
     end
 
     shield.ARC9IsShield = true
+    shield.ARC9Weapon = self
 
     shield:Spawn()
     shield:SetModelScale(self:GetProcessedValue("ShieldScale") or 1, 0.1)
