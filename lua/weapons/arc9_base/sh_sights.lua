@@ -14,7 +14,9 @@ function SWEP:EnterSights()
 
     self:ToggleBlindFire(false)
     self:SetInSights(true)
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)
+    if IsFirstTimePredicted() then
+        self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)
+    end
 
     self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
 
@@ -23,7 +25,10 @@ end
 
 function SWEP:ExitSights()
     self:SetInSights(false)
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitSightsSound")), 100, 75)
+
+    if IsFirstTimePredicted() then
+        self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitSightsSound")), 100, 75)
+    end
 
     self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
 
@@ -66,15 +71,13 @@ function SWEP:ThinkSights()
     local pratt = owner:KeyPressed(IN_ATTACK2)
 
     if toggle then
-        if IsFirstTimePredicted() then
-            if sighted and pratt then
-                self:ExitSights()
-            elseif !sighted and pratt then
-                -- if self:GetOwner():KeyDown(IN_USE) then
-                    -- return
-                -- end why was this here?
-                self:EnterSights()
-            end
+        if sighted and pratt then
+            self:ExitSights()
+        elseif !sighted and pratt then
+            -- if self:GetOwner():KeyDown(IN_USE) then
+                -- return
+            -- end why was this here?
+            self:EnterSights()
         end
 
         if pratt then
@@ -93,7 +96,7 @@ function SWEP:ThinkSights()
     end
 
     if sighted then
-        if owner:KeyPressed(IN_USE) and owner:KeyDown(IN_WALK) and IsFirstTimePredicted() then
+        if owner:KeyPressed(IN_USE) and owner:KeyDown(IN_WALK) then
             -- if CurTime() - self:GetLastPressedETime() < 0.33 then
             if owner:KeyDown(IN_SPEED) then
                 self:SwitchMultiSight(-1)

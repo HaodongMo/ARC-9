@@ -29,7 +29,7 @@ function SWEP:Think()
         end
 
         if !self:StillWaiting() and self:GetProcessedValue("TriggerDelay") then
-            local check = (game.SinglePlayer() and SERVER or CLIENT and IsFirstTimePredicted())
+            local check = (game.SinglePlayer() and SERVER) or CLIENT
             if owner:KeyDown(IN_ATTACK) and !self:SprintLock() then
                 if check and self:GetTriggerDelay() <= 0 then
                     self:PlayAnimation("trigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)

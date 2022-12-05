@@ -226,24 +226,22 @@ function SWEP:DropMagazine()
 end
 
 function SWEP:TakeAmmo()
-    if IsFirstTimePredicted() then
-        if self:GetUBGL() then
-            self:TakeSecondaryAmmo(self:GetProcessedValue("AmmoPerShot"))
-        else
-            if self:GetValue("BottomlessClip") then
-                if !self:GetInfiniteAmmo() then
-                    self:RestoreClip(self:GetValue("ClipSize"))
+    if self:GetUBGL() then
+        self:TakeSecondaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+    else
+        if self:GetValue("BottomlessClip") then
+            if !self:GetInfiniteAmmo() then
+                self:RestoreClip(self:GetValue("ClipSize"))
 
-                    if self:Ammo1() > 0 then
-                        local ammotype = self:GetValue("Ammo")
-                        self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
-                    else
-                        self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
-                    end
+                if self:Ammo1() > 0 then
+                    local ammotype = self:GetValue("Ammo")
+                    self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
+                else
+                    self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
                 end
-            else
-                self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
             end
+        else
+            self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
         end
     end
 end

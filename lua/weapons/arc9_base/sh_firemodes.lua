@@ -119,12 +119,12 @@ function SWEP:ToggleSafety(onoff)
 end
 
 function SWEP:ThinkFiremodes()
-    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ZOOM) and self:GetOwner():KeyDown(IN_USE) then
+    if self:GetOwner():KeyPressed(IN_ZOOM) and self:GetOwner():KeyDown(IN_USE) then
         self:ToggleSafety()
         return
     end
 
-    if IsFirstTimePredicted() and self:GetOwner():KeyPressed(IN_ZOOM) then
+    if self:GetOwner():KeyPressed(IN_ZOOM) then
         self:SwitchFiremode()
     end
 end
