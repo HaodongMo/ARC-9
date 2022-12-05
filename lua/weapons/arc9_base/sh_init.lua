@@ -144,8 +144,10 @@ end
 
 function SWEP:OnDrop()
     self:EndLoop()
+    self:KillShield()
 end
 
 function SWEP:OnRemove()
     self:EndLoop()
+    self:KillShield()
 end
