@@ -31,7 +31,9 @@ function SWEP:Initialize()
 
     self:BuildSubAttachments(self.DefaultAttachments)
 
-    self:PostModify()
+    if !IsValid(self:GetOwner()) then
+        self:PostModify()
+    end
 
     self.LastClipSize = self:GetProcessedValue("ClipSize")
 

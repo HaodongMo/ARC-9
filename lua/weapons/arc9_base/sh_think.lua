@@ -121,7 +121,7 @@ function SWEP:Think()
     if CLIENT then
         if !self.LoadedPreset then
             self.LoadedPreset = true
-            
+
             if GetConVar("arc9_autosave"):GetBool() then
                 self:LoadPreset("autosave")
             else
