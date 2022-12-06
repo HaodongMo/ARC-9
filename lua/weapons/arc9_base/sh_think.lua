@@ -85,6 +85,8 @@ function SWEP:Think()
 
         self:ThinkGrenade()
 
+        self:ThinkLockOn()
+
     end
 
     self:ThinkSprint()

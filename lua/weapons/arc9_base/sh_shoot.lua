@@ -341,6 +341,10 @@ function SWEP:DoPrimaryAttack()
 
     local sp, sa = self:GetShootPos()
 
+    if IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetProcessedValue("LockOnAutoaim") then
+        sa = (self:GetLockOnTarget():EyePos() - sp):Angle()
+    end
+
     self:DoProjectileAttack(sp, sa, spread)
 
     self:ApplyRecoil()
@@ -703,7 +707,9 @@ function SWEP:ShootRocket()
         rocket.Owner = self:GetOwner()
         rocket:SetOwner(self:GetOwner())
         rocket.Weapon = self
-        rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", {})
+        rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", {
+            Target = (IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget())
+        })
         rocket.ARC9Projectile = true
 
         local phys = rocket:GetPhysicsObject()
