@@ -19,12 +19,12 @@ function SWEP:InvalidateCache()
     self:SetBaseSettings()
 end
 
-function SWEP:RunHook(val, ...)
+function SWEP:RunHook(val, data)
     local any = false
 
     if self.HookCache[val] then
         for _, chook in pairs(self.HookCache[val]) do
-            local d = chook(self, ...)
+            local d = chook(self, data)
 
             if d != nil then
                 data = d
@@ -33,7 +33,7 @@ function SWEP:RunHook(val, ...)
             any = true
         end
 
-        data = hook.Run("ARC9_" .. val, self, ...) or data
+        data = hook.Run("ARC9_" .. val, self, data) or data
 
         return data, any
     end
@@ -46,7 +46,7 @@ function SWEP:RunHook(val, ...)
             table.insert(self.HookCache[val], tbl[val])
 
             if !pcall(function()
-                local d = tbl[val](self, ...)
+                local d = tbl[val](self, data)
 
                 if d != nil then
                     data = d
@@ -59,7 +59,7 @@ function SWEP:RunHook(val, ...)
         end
     end
 
-    data = hook.Run("ARC9_" .. val, self, ...) or data
+    data = hook.Run("ARC9_" .. val, self, data) or data
 
     return data, any
 end

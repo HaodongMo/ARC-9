@@ -91,7 +91,7 @@ function SWEP:ThinkLockOn()
 
         score = score + (ent:BoundingRadius() / 10)
 
-        score = self:RunHook("HookS_GetLockOnScore", ent, score) or score
+        score = self:RunHook("HookS_GetLockOnScore", ent) or score
 
         if canlock and score > bestscore then
             bestent = ent
