@@ -529,6 +529,30 @@ SWEP.BashThirdArmAnimation = {
         invisible = false,
     }
 
+-------------------------- LOCKON
+
+SWEP.LockOn = false
+
+-- Use LockOnSights = true to lock only in sights
+-- LockOn will provide targeting data in ENT.ShootEntData
+
+SWEP.LockOnAutoaim = false -- Gun will shoot directly towards lockon target
+
+SWEP.LocksLiving = true -- Locks on to any NPC or player
+SWEP.LocksGround = true -- Will lock on to any entity deemed a ground target and not an air target
+SWEP.LocksAir = true -- Will lock on to any entity deemed an air target, and not a ground target
+
+SWEP.LockOnRange = 100000 -- How far away the lockon can be
+SWEP.LockOnFOV = 10 -- How wide the lockon can be
+SWEP.LockedOnFOV = 20 -- FOV needed to maintain a lock
+
+SWEP.LockOnTime = 0.5 -- How long it takes to lock on, in seconds
+
+SWEP.LockOnSound = nil -- Sound to play when locking on
+SWEP.LockedOnSound = nil -- Sound to play when successfully locked target
+
+SWEP.LockOnHUD = true -- Show a box around locked targets
+
 -------------------------- MALFUNCTIONS
 
 SWEP.Overheat = false -- Weapon will jam when it overheats, playing the "overheat" animation.
@@ -577,6 +601,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_SwitchSight = function(self, newsight) return end -- Called when a sight is switched.
 -- SWEP.Hook_ToggleAtts = function(self) return end -- Called when attachments are toggled with F.
 -- SWEP.HookP_TranslateSound = function(self, data) return data end # data = {sound = "sound", name = "fire", volume = 1, pitch = 100, level = 100, channel = CHAN_AUTO, volume = 100, flags = SND_NOFLAGS, dsp = 0}
+-- SWEP.Hook_BulletImpact = function(self, data) return end # data = {tr, dmg, range, penleft, alreadypenned, dmgv}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
@@ -1338,6 +1363,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Entity", 0, "Holster_Entity")
     self:NetworkVar("Entity", 1, "LungeEntity")
     self:NetworkVar("Entity", 2, "ShieldEntity")
+    self:NetworkVar("Entity", 3, "LockOnTarget")
 
     self:SetVisualRecoilAng(Angle(0, 0 ,0))
     self:SetVisualRecoilVel(Angle(0, 0, 0))

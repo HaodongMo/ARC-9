@@ -68,5 +68,5 @@ function EFFECT:Render()
     render.DrawBeam(endpos, startpos, size, 0, 1, col)
 
     render.SetMaterial(smoke)
-    render.DrawBeam(self.EndPos, endpos, size * 0.5 * d2, 0, 1, col2)
+    render.DrawBeam(self.EndPos, endpos, size * d2, 0, 1, col2)
 end
