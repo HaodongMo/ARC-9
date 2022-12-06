@@ -12,7 +12,7 @@ end
 function SWEP:PlayTranslatedSound(soundtab)
     soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
 
-    if soundtab then
+    if soundtab and soundtab.sound then
         self:EmitSound(
             soundtab.sound,
             soundtab.level,

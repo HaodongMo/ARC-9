@@ -249,6 +249,7 @@ function SWEP:BuildMultiSight()
 end
 
 function SWEP:SwitchMultiSight(amt)
+    if (!game.SinglePlayer() or CLIENT) then return end
     if self.NextSightSwitch and self.NextSightSwitch > CurTime() then return end
     self.NextSightSwitch = CurTime() + 0.25
 

@@ -283,6 +283,8 @@ function SWEP:DrawHUD()
     self:HoldBreathHUD()
     self:DrawCustomizeHUD()
 
+    self:DrawLockOnHUD(false)
+
     self:RunHook("Hook_HUDPaint")
 end
 

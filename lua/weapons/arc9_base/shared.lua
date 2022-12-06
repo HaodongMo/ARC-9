@@ -538,9 +538,9 @@ SWEP.LockOn = false
 
 SWEP.LockOnAutoaim = false -- Gun will shoot directly towards lockon target
 
-SWEP.LocksLiving = true -- Locks on to any NPC or player
-SWEP.LocksGround = true -- Will lock on to any entity deemed a ground target and not an air target
-SWEP.LocksAir = true -- Will lock on to any entity deemed an air target, and not a ground target
+SWEP.LocksLiving = false -- Locks on to any NPC or player
+SWEP.LocksGround = false -- Will lock on to any entity deemed a ground target and not an air target
+SWEP.LocksAir = false -- Will lock on to any entity deemed an air target, and not a ground target
 
 SWEP.LockOnRange = 100000 -- How far away the lockon can be
 SWEP.LockOnFOV = 10 -- How wide the lockon can be

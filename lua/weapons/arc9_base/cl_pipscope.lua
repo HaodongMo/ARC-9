@@ -56,7 +56,7 @@ function SWEP:DoRT(fov, atttbl)
         render.RenderView(rt)
         ARC9.OverDraw = false
 
-        cam.Start3D(nil, nil, fov, 0, 0, rtsize, rtsize)
+        cam.Start3D(rtpos, rtang, fov, 0, 0, rtsize, rtsize)
             cam.IgnoreZ(true)
             self:DrawLasers(false, true)
             cam.IgnoreZ(false)
@@ -76,6 +76,10 @@ function SWEP:DoRT(fov, atttbl)
     if atttbl.RTScopeNightVision then
         self:DoNightScopeEffects(atttbl)
     end
+
+    cam.Start3D(rtpos, rtang, fov, 0, 0, rtsize, rtsize, 16, 30000)
+        self:DrawLockOnHUD(true)
+    cam.End3D()
 
     self:DoRTScopeEffects()
 
@@ -369,6 +373,8 @@ function SWEP:DoCheapScope(fov, atttbl)
     end
 
     ARC9:DrawPhysBullets()
+
+    self:DrawLockOnHUD(true)
 
     render.UpdateScreenEffectTexture()
     render.UpdateFullScreenDepthTexture()
