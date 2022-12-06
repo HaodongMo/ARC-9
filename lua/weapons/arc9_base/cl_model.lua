@@ -523,6 +523,28 @@ function SWEP:SetupModel(wm, lod, cm)
                     animproxmodel.IsAnimationProxy = true
 
                     slottbl.GunDriverModel = animproxmodel
+
+                    local reflectproxmodel = ClientsideModel(self.ViewModel)
+
+                    if !IsValid(reflectproxmodel) then return end
+
+                    reflectproxmodel:SetNoDraw(true)
+                    reflectproxmodel.atttbl = atttbl
+                    reflectproxmodel.slottbl = slottbl
+
+                    local tbl = {
+                        Model = reflectproxmodel,
+                        Weapon = self
+                    }
+
+                    table.insert(ARC9.CSModelPile, tbl)
+
+                    table.insert(mdl, reflectproxmodel)
+
+                    reflectproxmodel.NoDraw = true
+                    reflectproxmodel.IsAnimationProxy = true
+
+                    slottbl.ReflectDriverModel = reflectproxmodel
                 end
             end
 

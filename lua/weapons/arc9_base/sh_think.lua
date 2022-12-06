@@ -29,7 +29,7 @@ function SWEP:Think()
         end
 
         if !self:StillWaiting() and self:GetProcessedValue("TriggerDelay") then
-            local check = (game.SinglePlayer() and SERVER or CLIENT and IsFirstTimePredicted())
+            local check = (game.SinglePlayer() and SERVER) or CLIENT
             if owner:KeyDown(IN_ATTACK) and !self:SprintLock() then
                 if check and self:GetTriggerDelay() <= 0 then
                     self:PlayAnimation("trigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)
@@ -85,6 +85,8 @@ function SWEP:Think()
 
         self:ThinkGrenade()
 
+        self:ThinkLockOn()
+
     end
 
     self:ThinkSprint()
@@ -121,7 +123,7 @@ function SWEP:Think()
     if CLIENT then
         if !self.LoadedPreset then
             self.LoadedPreset = true
-            
+
             if GetConVar("arc9_autosave"):GetBool() then
                 self:LoadPreset("autosave")
             else

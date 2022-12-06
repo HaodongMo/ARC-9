@@ -31,9 +31,17 @@ function SWEP:Initialize()
 
     self:BuildSubAttachments(self.DefaultAttachments)
 
-    if !IsValid(self:GetOwner()) then -- dropped on ground
+    if !IsValid(self:GetOwner()) then
         self:PostModify()
     end
+
+    self.LastClipSize = self:GetProcessedValue("ClipSize")
+
+    self.Primary.Ammo = self:GetProcessedValue("Ammo")
+    self.Primary.DefaultClip = self.LastClipSize * (self:GetProcessedValue("SupplyLimit") + 1)
+    self:SetClip1(self.Primary.DefaultClip)
+
+    self.LastAmmo = self.Primary.Ammo
 end
 
 function SWEP:ClientInitialize()
@@ -144,8 +152,13 @@ end
 
 function SWEP:OnDrop()
     self:EndLoop()
+    self:KillShield()
 end
 
 function SWEP:OnRemove()
     self:EndLoop()
+
+    if SERVER then
+        self:KillShield()
+    end
 end

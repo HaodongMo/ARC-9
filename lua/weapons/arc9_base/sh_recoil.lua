@@ -111,9 +111,7 @@ function SWEP:ApplyRecoil()
     self:SetRecoilSide(recoilside)
 
     -- self:SetRecoilDirection(-90)
-    if IsFirstTimePredicted() then
-        self:SetRecoilAmount(rec)
-    end
+    self:SetRecoilAmount(rec)
 
     self:SetLastRecoilTime(CurTime())
 

@@ -14,7 +14,14 @@ function SWEP:EnterSights()
 
     self:ToggleBlindFire(false)
     self:SetInSights(true)
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("EnterSightsSound")), 100, 75)
+    if IsFirstTimePredicted() then
+        local soundtab1 = {
+            name = "entersights",
+            sound = self:RandomChoice(self:GetProcessedValue("EnterSightsSound"))
+        }
+
+        self:PlayTranslatedSound(soundtab1)
+    end
 
     self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
 
@@ -23,7 +30,15 @@ end
 
 function SWEP:ExitSights()
     self:SetInSights(false)
-    self:EmitSound(self:RandomChoice(self:GetProcessedValue("ExitSightsSound")), 100, 75)
+
+    if IsFirstTimePredicted() then
+        local soundtab1 = {
+            name = "exitsights",
+            sound = self:RandomChoice(self:GetProcessedValue("ExitSightsSound"))
+        }
+
+        self:PlayTranslatedSound(soundtab1)
+    end
 
     self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
 
@@ -66,15 +81,13 @@ function SWEP:ThinkSights()
     local pratt = owner:KeyPressed(IN_ATTACK2)
 
     if toggle then
-        if IsFirstTimePredicted() then
-            if sighted and pratt then
-                self:ExitSights()
-            elseif !sighted and pratt then
-                -- if self:GetOwner():KeyDown(IN_USE) then
-                    -- return
-                -- end why was this here?
-                self:EnterSights()
-            end
+        if sighted and pratt then
+            self:ExitSights()
+        elseif !sighted and pratt then
+            -- if self:GetOwner():KeyDown(IN_USE) then
+                -- return
+            -- end why was this here?
+            self:EnterSights()
         end
 
         if pratt then
@@ -93,7 +106,7 @@ function SWEP:ThinkSights()
     end
 
     if sighted then
-        if owner:KeyPressed(IN_USE) and owner:KeyDown(IN_WALK) and IsFirstTimePredicted() then
+        if owner:KeyPressed(IN_USE) and owner:KeyDown(IN_WALK) then
             -- if CurTime() - self:GetLastPressedETime() < 0.33 then
             if owner:KeyDown(IN_SPEED) then
                 self:SwitchMultiSight(-1)
@@ -236,6 +249,7 @@ function SWEP:BuildMultiSight()
 end
 
 function SWEP:SwitchMultiSight(amt)
+    if (!game.SinglePlayer() or CLIENT) then return end
     if self.NextSightSwitch and self.NextSightSwitch > CurTime() then return end
     self.NextSightSwitch = CurTime() + 0.25
 
@@ -329,7 +343,15 @@ function SWEP:Scroll(amt)
     self.ScrollLevels[self:GetMultiSight()] = sights.ScrollLevel
 
     if old != sights.ScrollLevel then
-        self:EmitSound(atttbl.ZoomSound or "arc9/useatt.wav", 75, math.Rand(95, 105), 1, CHAN_ITEM)
+        local soundtab1 = {
+            name = "zoom",
+            sound = atttbl.ZoomSound or "arc9/useatt.wav",
+            pitch = math.Rand(95, 105),
+            vol = 1,
+            chan = CHAN_ITEM
+        }
+
+        self:PlayTranslatedSound(soundtab1)
     end
 end
 

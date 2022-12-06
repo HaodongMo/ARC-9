@@ -529,6 +529,30 @@ SWEP.BashThirdArmAnimation = {
         invisible = false,
     }
 
+-------------------------- LOCKON
+
+SWEP.LockOn = false
+
+-- Use LockOnSights = true to lock only in sights
+-- LockOn will provide targeting data in ENT.ShootEntData
+
+SWEP.LockOnAutoaim = false -- Gun will shoot directly towards lockon target
+
+SWEP.LocksLiving = false -- Locks on to any NPC or player
+SWEP.LocksGround = false -- Will lock on to any entity deemed a ground target and not an air target
+SWEP.LocksAir = false -- Will lock on to any entity deemed an air target, and not a ground target
+
+SWEP.LockOnRange = 100000 -- How far away the lockon can be
+SWEP.LockOnFOV = 10 -- How wide the lockon can be
+SWEP.LockedOnFOV = 20 -- FOV needed to maintain a lock
+
+SWEP.LockOnTime = 0.5 -- How long it takes to lock on, in seconds
+
+SWEP.LockOnSound = nil -- Sound to play when locking on
+SWEP.LockedOnSound = nil -- Sound to play when successfully locked target
+
+SWEP.LockOnHUD = true -- Show a box around locked targets
+
 -------------------------- MALFUNCTIONS
 
 SWEP.Overheat = false -- Weapon will jam when it overheats, playing the "overheat" animation.
@@ -576,6 +600,44 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_PrimaryAttack = function(self) return end -- Called when the primary attack is fired.
 -- SWEP.Hook_SwitchSight = function(self, newsight) return end -- Called when a sight is switched.
 -- SWEP.Hook_ToggleAtts = function(self) return end -- Called when attachments are toggled with F.
+-- SWEP.HookP_TranslateSound = function(self, data) return data end # data = {sound = "sound", name = "fire", volume = 1, pitch = 100, level = 100, channel = CHAN_AUTO, volume = 100, flags = SND_NOFLAGS, dsp = 0}
+-- SWEP.Hook_BulletImpact = function(self, data) return end # data = {tr, dmg, range, penleft, alreadypenned, dmgv}
+-- SWEP.Hook_LockOn = function(self, ent) return end -- Called when a lock on is made.
+-- SWEP.HookC_CanLockOn = function(self, ent) return true end -- Return true to allow lock on.
+-- SWEP.HookC_CannotLockOn = function(self, ent) return true end -- Return true to disallow lock on. Has priority over CanLockOn.
+-- SWEP.HookS_GetLockOnScore = function(self, ent) return 0 end -- Return new score
+
+-- SOUND NAMES FOR TRANSLATESOUND:
+-- install
+-- uninstall
+-- enterbipod
+-- exitbipod
+-- firemode
+-- safety
+-- jam
+-- shootlooptailindoor
+-- shootlooptail
+-- meleeswing
+-- meleehit
+-- meleehitwall
+-- dryfire
+-- shootsound
+-- shootlayer
+-- shootdistant
+-- shootsoundindoor
+-- shootlayerindoor
+-- shootdistantindoor
+-- entersights
+-- exitsights
+-- zoom
+-- breathrunout
+-- breathin
+-- breathout
+-- soundtable_1, soundtable_2...
+-- enterubgl
+-- exitubgl
+-- lockon
+-- lockedon
 
 -------------------------- BLIND FIRE
 
@@ -1089,6 +1151,7 @@ SWEP.Animations = {
     --     Mult = 1, -- multiplies time
     --     Reverse = false, -- Reverse the animation
     --     EjectAt = 0, -- Eject a shell at this time
+    --     InstantIdle = false, -- For firing animations, do not delay idle. Use only for guns with long shoot animations
     --     DelayedIdle = false, -- Idle immediately after playing this animation
     --     IKTimeLine = { -- t is in fraction of animation
     --         {
@@ -1118,6 +1181,8 @@ SWEP.Animations = {
     --             pp = "", -- pose parameter name
     --             ppv = 0, -- pose parameter value, set to nil to reset
     --             hide = 1, -- hide reloadhidebonetables table, 0 for none
+    --             fl = 0, -- sound flags
+    --             dsp = 0, -- dsp preset
     --             FOV = -3, -- change fov in anim, see SWEP.FOV_Recoil_x for detials
     --             FOV_Start = 0.2,
     --             FOV_End = 0.4,
@@ -1250,6 +1315,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 22, "SequenceSpeed")
     self:NetworkVar("Float", 23, "LastHolsterTime")
     self:NetworkVar("Float", 24, "GrenadePrimedTime")
+    self:NetworkVar("Float", 25, "LockOnStartTime")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
@@ -1289,6 +1355,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 22, "GrenadePrimed")
     self:NetworkVar("Bool", 23, "GrenadeTossing")
     self:NetworkVar("Bool", 24, "GrenadeRecovering")
+    self:NetworkVar("Bool", 25, "LockedOn")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
@@ -1304,6 +1371,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Entity", 0, "Holster_Entity")
     self:NetworkVar("Entity", 1, "LungeEntity")
     self:NetworkVar("Entity", 2, "ShieldEntity")
+    self:NetworkVar("Entity", 3, "LockOnTarget")
 
     self:SetVisualRecoilAng(Angle(0, 0 ,0))
     self:SetVisualRecoilVel(Angle(0, 0, 0))

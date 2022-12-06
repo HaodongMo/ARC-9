@@ -21,9 +21,6 @@ function SWEP:Deploy()
     self:SetEmptyReload(false)
 
     self:GetOwner():SetCanZoom(false)
-
-    self.LastAmmo = self:GetValue("Ammo")
-    self.LastClipSize = self:GetValue("ClipSize")
     -- self:SetTraversalSprint(false)
     -- self:SetLastPressedWTime(0)
 
@@ -65,12 +62,6 @@ function SWEP:Deploy()
     end
 
     if SERVER then
-        if !self.GaveDefaultAmmo then
-            self:GiveDefaultAmmo()
-            self.GaveDefaultAmmo = true
-            self:SetLoadedRounds(self:Clip1())
-        end
-
         self:CreateShield()
 
         -- self:NetworkWeapon()

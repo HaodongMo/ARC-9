@@ -11,7 +11,11 @@ function SWEP:Attach(addr, att, silent)
     slottbl.ToggleNum = 1
 
     if !silent then
-        self:EmitSound(slottbl.InstallSound or "arc9/newui/ui_part_install.ogg")
+        local soundtab1 = {
+            name = "install",
+            sound = slottbl.InstallSound or "arc9/newui/ui_part_install.ogg"
+        }
+        self:PlayTranslatedSound(soundtab1)
     end
 
     self:PruneAttachments()
@@ -31,7 +35,11 @@ function SWEP:Detach(addr, silent)
     slottbl.Installed = nil
 
     if !silent then
-        self:EmitSound(slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg")
+        local soundtab1 = {
+            name = "uninstall",
+            sound = slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg"
+        }
+        self:PlayTranslatedSound(soundtab1)
     end
 
     self:PruneAttachments()
@@ -123,16 +131,15 @@ function SWEP:PostModify(toggleonly)
                 end
             end
 
-            if self.LastAmmo != self:GetValue("Ammo") then
-                self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
-                self:SetClip1(0)
-                self:SetRequestReload(true)
-            end
-
-            if self.LastClipSize != self:GetValue("ClipSize") then
-                self:GetOwner():GiveAmmo(self:Clip1(), self:GetValue("Ammo"))
-                self:SetClip1(0)
-                self:SetRequestReload(true)
+            if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
+                if self.AlreadyGaveAmmo then
+                    self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
+                    self:SetClip1(0)
+                    self:SetRequestReload(true)
+                else
+                    self:SetClip1(self:GetProcessedValue("ClipSize"))
+                    self.AlreadyGaveAmmo = true
+                end
             end
 
             self.LastAmmo = self:GetValue("Ammo")
@@ -162,7 +169,7 @@ function SWEP:PostModify(toggleonly)
         end
 
         if self:GetValue("UBGL") then
-            if !self.AlreadyGaveUBGLAmmo or self.SpawnTime + 0.25 > CurTime() then
+            if !self.AlreadyGaveUBGLAmmo then
                 self:SetClip2(self:GetMaxClip2())
                 self.AlreadyGaveUBGLAmmo = true
             end

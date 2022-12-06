@@ -84,6 +84,8 @@ function SWEP:PlaySoundTable(soundtable, mult)
     start = start or 0
     mult = mult
 
+    self:KillSoundTable()
+
     for i, v in pairs(soundtable) do
         local ttime
 
@@ -98,7 +100,18 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
         self:SetTimer(ttime, function()
             if v.s then
-                self:EmitSound(self:RandomChoice(v.s or ""), v.l or 75, v.p or 100, v.v or 1, v.c or CHAN_AUTO)
+                local soundtab = {
+                    name = "soundtable_" .. i,
+                    sound = self:RandomChoice(v.s or ""),
+                    level = v.l or 75,
+                    pitch = v.p or 100,
+                    volume = v.v or 1,
+                    channel = v.c or CHAN_AUTO,
+                    dsp = v.dsp,
+                    flags = v.fl,
+                }
+
+                self:PlayTranslatedSound(soundtab)
             end
 
             if v.pp then
