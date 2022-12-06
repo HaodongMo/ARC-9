@@ -316,38 +316,42 @@ function SWEP:GunControllerRHIK(pos, ang)
 
         if !qca then return pos, ang end
 
-        local mdl = slottbl.GunDriverModel
+        local anim_mdl = slottbl.GunDriverModel
 
-        if !mdl then return pos, ang end
+        if !anim_mdl then return pos, ang end
 
-        mdl:SetPos(vector_origin)
-        mdl:SetAngles(angle_zero)
+        local refl_mdl = slottbl.ReflectDriverModel
 
-        mdl:SetSequence(self:GetSequenceIndex())
-        mdl:SetCycle(self:GetSequenceCycle())
+        if !refl_mdl then return pos, ang end
 
-        local posang = mdl:GetAttachment(qca)
+        local attpos, attang = anim_mdl:GetAttachment(qca).Pos, anim_mdl:GetAttachment(qca).Ang
 
-        local attpos = posang.Pos
-        local attang = posang.Ang
-
-        attpos = attpos + (atttbl.IKGunMotionOffset or vector_origin)
-        attang = attang + (atttbl.IKGunMotionOffsetAngle or angle_zero)
+        attang:Sub( Angle(0, 90, 90) )
 
         local r = attang.r
         attang.r = attang.p
         attang.p = -r
         attang.y = -attang.y
 
-        local anchor = self:GetAttPos(slottbl, false, true)
+        local anchor = slottbl.Pos
 
-        local rap_pos, rap_ang = self:RotateAroundPoint(vector_origin, angle_zero, anchor, attpos, attang)
+        local bone = refl_mdl:LookupBone( slottbl.Bone )
+        local bonp, bona = refl_mdl:GetBonePosition( bone )
+        if bonp == refl_mdl:GetPos() then
+            bonp = refl_mdl:GetBoneMatrix( bone ):GetTranslation()
+            bona = refl_mdl:GetBoneMatrix( bone ):GetAngles()
+        end
 
-        pos = pos + (EyeAngles():Right() * rap_pos.x)
-        pos = pos + (EyeAngles():Forward() * rap_pos.y)
-        pos = pos + (EyeAngles():Up() * rap_pos.z)
+        if anchor and bonp then
+            anchor = ( bonp + ( (bona:Forward() * anchor.x) + (bona:Right() * anchor.y) + (bona:Up() * anchor.z) ) )
 
-        ang:Add(rap_ang * (atttbl.IKGunMotionAngleMult or 1))
+            rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, anchor, attpos, attang)
+            rap_pos:Sub(pos)
+            rap_ang:Sub(ang)
+
+            pos:Add(rap_pos)
+            ang:Add(rap_ang)
+        end
 
         return pos, ang
     else

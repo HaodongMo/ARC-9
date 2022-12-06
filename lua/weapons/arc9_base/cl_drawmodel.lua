@@ -64,6 +64,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
     if lod < 2 then
         for _, model in ipairs(mdl or {}) do
+            if model.IsAnimationProxy then continue end
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
 
@@ -73,11 +74,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 if model.charmparent then
                     continue
                 else
-                    if !onground and model.IsAnimationProxy then
-                        apos = Vector(0, 0, 0)
-                        aang = Angle(0, 0, 0)
-                    end
-
                     if hidebones[slottbl.Bone or -1] then
                         continue
                     end

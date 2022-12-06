@@ -1,6 +1,6 @@
 function SWEP:ThinkUBGL()
     if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
-        if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_RELOAD) then
+        if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_RELOAD) and (!game.SinglePlayer() or IsFirstTimePredicted()) then
             if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
             self.NextUBGLSwitch = CurTime() + 1
 

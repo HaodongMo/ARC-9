@@ -156,6 +156,42 @@ function SWEP:GetAnimationProxyModel(wm)
     return mdl
 end
 
+function SWEP:GetAnimationProxyGunDriver()
+    local mdl
+    if SERVER then
+        local atttbl = self:GetFinalAttTableFromAddress(self:GetSequenceProxy())
+        local modelname = atttbl.Model
+        mdl = ents.Create("prop_physics")
+        mdl:SetModel(modelname)
+    else
+        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+
+        if !slottbl then return end
+
+        mdl = slottbl.GunDriverModel
+    end
+
+    return mdl
+end
+
+function SWEP:GetAnimationProxyReflectDriver()
+    local mdl
+    if SERVER then
+        local atttbl = self:GetFinalAttTableFromAddress(self:GetSequenceProxy())
+        local modelname = atttbl.Model
+        mdl = ents.Create("prop_physics")
+        mdl:SetModel(modelname)
+    else
+        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+
+        if !slottbl then return end
+
+        mdl = slottbl.ReflectDriverModel
+    end
+
+    return mdl
+end
+
 function SWEP:IdleAtEndOfAnimation()
     local mdl = self:GetVM()
 
@@ -248,6 +284,13 @@ function SWEP:ThinkAnimation()
 
                 rhik_mdl:SetSequence(self:GetSequenceIndex())
                 rhik_mdl:SetCycle(self:GetSequenceCycle())
+            end
+
+            local anim_mdl = self:GetAnimationProxyGunDriver()
+
+            if IsValid(anim_mdl) then
+                anim_mdl:SetSequence(self:GetSequenceIndex())
+                anim_mdl:SetCycle(self:GetSequenceCycle())
             end
         end
     end
