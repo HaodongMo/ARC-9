@@ -21,9 +21,6 @@ function SWEP:Deploy()
     self:SetEmptyReload(false)
 
     self:GetOwner():SetCanZoom(false)
-
-    self.LastAmmo = self:GetValue("Ammo")
-    self.LastClipSize = self:GetValue("ClipSize")
     -- self:SetTraversalSprint(false)
     -- self:SetLastPressedWTime(0)
 

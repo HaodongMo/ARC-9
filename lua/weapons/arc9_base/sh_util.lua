@@ -18,7 +18,9 @@ function SWEP:PlayTranslatedSound(soundtab)
             soundtab.level,
             soundtab.pitch,
             soundtab.volume,
-            soundtab.channel
+            soundtab.channel,
+            soundtab.flags,
+            soundtab.dsp
         )
     end
 end
