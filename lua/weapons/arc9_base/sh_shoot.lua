@@ -108,7 +108,7 @@ function SWEP:DoShootSounds()
                 volume = dvolume * indoormix,
                 channel = CHAN_WEAPON + 1
             }
-            self:PlayTranslatedSound(soundtab)
+            self:PlayTranslatedSound(soundtab3)
         end
     end
 
