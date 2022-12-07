@@ -16,6 +16,9 @@ function SWEP:InvalidateCache()
     self.ScrollLevels = {}
     self.HasNoAffectors = {}
 
+    self.IKGunMotionOffset = nil
+    self.IKGunMotionOffsetAngle = nil
+
     self:SetBaseSettings()
 end
 
