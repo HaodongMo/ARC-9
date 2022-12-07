@@ -150,7 +150,7 @@ function SWEP:ThinkLockOn()
 end
 
 local lockonmat = Material("arc9/lockon.png", "noclamp smooth")
-local rtsize = math.min(1024, ScrW(), ScrH())
+-- local rtsize = math.min(1024, ScrW(), ScrH())
 
 function SWEP:DrawLockOnHUD(iam3d)
     if self:IsScoping() and !iam3d then return end
