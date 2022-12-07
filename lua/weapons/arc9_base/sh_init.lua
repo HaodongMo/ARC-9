@@ -39,7 +39,7 @@ function SWEP:Initialize()
 
     self.Primary.Ammo = self:GetProcessedValue("Ammo")
     self.Primary.DefaultClip = self.LastClipSize * (self:GetProcessedValue("SupplyLimit") + 1)
-    self:SetClip1(self.Primary.DefaultClip)
+    --self:SetClip1(self.Primary.DefaultClip) -- genuinely unfathomable that someone would do this
 
     self.LastAmmo = self.Primary.Ammo
 end
