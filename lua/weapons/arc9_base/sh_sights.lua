@@ -130,6 +130,7 @@ SWEP.MultiSightTable = {
 }
 
 function SWEP:BuildMultiSight()
+    if game.SinglePlayer() then self:CallOnClient("BuildMultiSight", "") end
     self.MultiSightTable = {}
     local modularironsights = {}
 
