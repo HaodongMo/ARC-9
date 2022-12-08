@@ -1,5 +1,4 @@
 function SWEP:ThinkRecoil()
-    if (!game.SinglePlayer() or CLIENT) then return end
     local rdr = self:GetProcessedValue("RecoilDissipationRate")
 
     if (self:GetNextPrimaryFire() + self:GetProcessedValue("RecoilResetTime")) < CurTime() then
