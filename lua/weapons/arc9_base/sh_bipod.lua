@@ -1,5 +1,4 @@
 function SWEP:ThinkBipod()
-    if (!game.SinglePlayer() or CLIENT) then return end
 
     local bip = self:GetBipod()
     local canbip = self:CanBipod()

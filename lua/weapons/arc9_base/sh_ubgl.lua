@@ -16,7 +16,6 @@ function SWEP:ThinkUBGL()
 end
 
 function SWEP:ToggleUBGL(on)
-    --if (!game.SinglePlayer() or CLIENT) then return end
     if on == nil then on = !self:GetUBGL() end
     if self:GetReloading() then on = false end
     if self:GetCustomize() then on = false end
