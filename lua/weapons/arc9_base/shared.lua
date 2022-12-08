@@ -171,15 +171,16 @@ SWEP.DamageType = DMG_BULLET -- The damage type of the gun.
 
 SWEP.ArmorPiercing = 0 -- Between 0-1. A proportion of damage that is done as direct damage, ignoring protection.
 
-SWEP.HeadshotDamage = 1.25
-SWEP.ChestDamage = 1.05
+-- Individual multipliers that can be used with modifiers
+SWEP.HeadshotDamage = 1
+SWEP.ChestDamage = 1
 SWEP.StomachDamage = 1
-SWEP.ArmDamage = 0.9
-SWEP.LegDamage = 0.9
+SWEP.ArmDamage = 1
+SWEP.LegDamage = 1
 
 SWEP.BodyDamageMults = {
     [HITGROUP_HEAD] = 2.5,
-    [HITGROUP_CHEST] = 1.15,
+    [HITGROUP_CHEST] = 1.25,
     [HITGROUP_STOMACH] = 1,
     [HITGROUP_LEFTARM] = 1,
     [HITGROUP_RIGHTARM] = 1,
