@@ -1,4 +1,6 @@
 function SWEP:ThinkCycle()
+    if (!game.SinglePlayer() or CLIENT) then return end
+
     if self:StillWaiting() then return end
 
     if self:GetNeedsCycle() and (!self:GetOwner():KeyDown(IN_ATTACK) or self:GetProcessedValue("SlamFire")) then

@@ -1,6 +1,7 @@
 SWEP.SetBreathDSP = false
 
 function SWEP:ThinkHoldBreath()
+    if (!game.SinglePlayer() or CLIENT) then return end
     if !self:GetOwner():IsPlayer() then return end
     
     local sfx = GetConVar("arc9_breath_sfx"):GetBool()

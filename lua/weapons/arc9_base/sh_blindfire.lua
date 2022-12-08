@@ -153,6 +153,8 @@ function SWEP:ToggleBlindFire(bf, dir)
 end
 
 function SWEP:ThinkBlindFire()
+    if (!game.SinglePlayer() or CLIENT) then return end
+
     local amt = self:GetBlindFireAmount()
     local oldamt = amt
 

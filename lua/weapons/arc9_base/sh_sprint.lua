@@ -92,6 +92,7 @@ function SWEP:ExitSprint()
 end
 
 function SWEP:ThinkSprint()
+    if (!game.SinglePlayer() or CLIENT) then return end
     local sprinting = self:GetSafe() or self:GetIsSprinting()
 
     if self:GetSightAmount() >= 1 or (self:GetProcessedValue("ReloadNoSprintPos") and self:GetReloading()) then

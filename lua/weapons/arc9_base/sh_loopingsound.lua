@@ -60,6 +60,7 @@ function SWEP:EndLoop()
 end
 
 function SWEP:ThinkLoopingSound()
+    if (!game.SinglePlayer() or CLIENT) then return end
     if self.LoopingSound then
         if self:GetNextPrimaryFire() + (60 / self:GetProcessedValue("RPM")) <= CurTime() then
             self:EndLoop()

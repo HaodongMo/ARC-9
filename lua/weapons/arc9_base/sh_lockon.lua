@@ -85,6 +85,7 @@ function SWEP:LockOnTargetInFOV(ent)
 end
 
 function SWEP:ThinkLockOn()
+    if (!game.SinglePlayer() or CLIENT) then return end
     if !self:GetProcessedValue("LockOn") then
         self:SetLockOnTarget(NULL)
         return

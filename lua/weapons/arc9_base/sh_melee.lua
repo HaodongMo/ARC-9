@@ -133,6 +133,7 @@ function SWEP:MeleeAttackShoot()
 end
 
 function SWEP:ThinkMelee()
+    if (!game.SinglePlayer() or CLIENT) then return end
     if self:GetInMeleeAttack() and self:GetLastMeleeTime() + self:GetProcessedValue("PreBashTime") <= CurTime() then
         self:MeleeAttackShoot()
     end

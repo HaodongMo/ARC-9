@@ -54,6 +54,7 @@ function SWEP:FixHeat()
 end
 
 function SWEP:ThinkHeat(dt)
+    if (!game.SinglePlayer() or CLIENT) then return end
     dt = dt or FrameTime()
     local heat = self:GetHeatAmount()
 

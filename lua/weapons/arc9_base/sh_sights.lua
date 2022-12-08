@@ -51,6 +51,7 @@ end
 
 function SWEP:ThinkSights()
     -- if self:GetSafe() then return end
+    if (!game.SinglePlayer() or CLIENT) then return end
 
     local sighted = self:GetInSights()
 
