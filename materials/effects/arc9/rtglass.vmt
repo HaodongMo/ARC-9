@@ -7,10 +7,11 @@
 	"$phongboost" "2"
 	"$phongexponent" 0
 	"$envmap" "env_cubemap"
-	"$envmapfresnel" "1.0"
+	"$envmapfresnel" "-200.0"
 	"$phongfresnelranges" "[0.01 0.35 3.0]"
 	//"$alpha" "0"
-
+	// "$envmaptint" "[2 2 2]"
+	
 	"Proxies"
 	{
 		"arc9_scope_alpha"

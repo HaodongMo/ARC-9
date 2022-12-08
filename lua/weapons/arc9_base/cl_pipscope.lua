@@ -3,26 +3,6 @@ local rtsize = math.min(1024, ScrW(), ScrH())
 local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)
 local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)
 
-matproxy.Add({
-    name = "arc9_scope_alpha",
-    init = function(self, mat, values)
-        self.ResultTo = values.resultvar
-    end,
-    bind = function(self, mat, ent)
-        local ply = LocalPlayer()
-
-        if IsValid(ply) then
-            local weapon = ply:GetActiveWeapon()
-
-            if IsValid(weapon) and weapon.ARC9 then
-                local amt = 1 - weapon:GetSightAmount() / 3
-
-                mat:SetVector(self.ResultTo, Vector(amt, amt, amt))
-            end
-        end
-   end
-})
-
 function SWEP:ShouldDoScope()
     if self:GetSight().Disassociate then return false end
 
