@@ -92,7 +92,7 @@ function SWEP:DoShootSounds()
 
         local soundtab2 = {
             name = "shootlayer",
-            sound = ss or "",
+            sound = sl or "",
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoormix,
