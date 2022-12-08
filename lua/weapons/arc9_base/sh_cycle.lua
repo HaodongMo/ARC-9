@@ -1,5 +1,5 @@
 function SWEP:ThinkCycle()
-    if (!game.SinglePlayer() or CLIENT) then return end
+
 
     if self:StillWaiting() then return end
 

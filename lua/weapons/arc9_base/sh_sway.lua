@@ -1,9 +1,9 @@
 SWEP.SetBreathDSP = false
 
 function SWEP:ThinkHoldBreath()
-    if (!game.SinglePlayer() or CLIENT) then return end
+
     if !self:GetOwner():IsPlayer() then return end
-    
+
     local sfx = GetConVar("arc9_breath_sfx"):GetBool()
 
     local target_ts = 1
@@ -13,8 +13,8 @@ function SWEP:ThinkHoldBreath()
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
             self:SetBreath(0)
-            
-            if sfx then 
+
+            if sfx then
                 local soundtab = {
                     name = "breathrunout",
                     sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")),

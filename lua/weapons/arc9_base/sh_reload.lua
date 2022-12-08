@@ -429,7 +429,7 @@ function SWEP:EndReload()
 end
 
 function SWEP:ThinkReload()
-    if (!game.SinglePlayer() or CLIENT) then return end
+
     if self:GetReloading() and self:GetReloadFinishTime() < CurTime() then
         self:EndReload()
     end

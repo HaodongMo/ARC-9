@@ -1,5 +1,5 @@
 function SWEP:ThinkGrenade()
-    if (!game.SinglePlayer() or CLIENT) then return end
+
     if !self:GetProcessedValue("Throwable") then return end
 
     local fuse = self:GetProcessedValue("FuseTimer")

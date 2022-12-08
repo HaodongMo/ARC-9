@@ -1,5 +1,5 @@
 function SWEP:ThinkUBGL()
-    if (!game.SinglePlayer() or CLIENT) then return end
+
 
     if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
         if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_RELOAD) then
@@ -16,7 +16,7 @@ function SWEP:ThinkUBGL()
 end
 
 function SWEP:ToggleUBGL(on)
-    if (!game.SinglePlayer() or CLIENT) then return end
+    --if (!game.SinglePlayer() or CLIENT) then return end
     if on == nil then on = !self:GetUBGL() end
     if self:GetReloading() then on = false end
     if self:GetCustomize() then on = false end

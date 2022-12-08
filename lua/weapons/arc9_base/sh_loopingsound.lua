@@ -60,7 +60,7 @@ function SWEP:EndLoop()
 end
 
 function SWEP:ThinkLoopingSound()
-    if (!game.SinglePlayer() or CLIENT) then return end
+
     if self.LoopingSound then
         if self:GetNextPrimaryFire() + (60 / self:GetProcessedValue("RPM")) <= CurTime() then
             self:EndLoop()
@@ -117,18 +117,18 @@ function SWEP:GetIndoor()
         }
 
         local tr = util.TraceLine(tracetable)
-        
+
         if tr.Hit and !tr.HitSky then
             hits = hits + 1
-            
+
             endmult = endmult + math.exp(math.min(math.ease.InExpo(1-tr.Fraction), 0.4)) / 10
         end
-        
-        if ARC9.Dev(2) then 
+
+        if ARC9.Dev(2) then
             debugoverlay.Line(tracetable.start, tracetable.endpos, 3, (tr.Hit and !tr.HitSky) and Color(255,0,0) or color_white, true)
             if i == 8 then
-                print(hits.."/8 indoor trace hits, fraction "..endmult) 
-                -- print(1-tr.Fraction, math.exp(1-tr.Fraction)) 
+                print(hits.."/8 indoor trace hits, fraction "..endmult)
+                -- print(1-tr.Fraction, math.exp(1-tr.Fraction))
             end
         end
     end
@@ -137,7 +137,7 @@ function SWEP:GetIndoor()
     -- if hits >= #dirs * 0.5 then
         isindoors = true
     end
-    
+
     self.IsIndoors = isindoors
 
     return isindoors and endmult or false
