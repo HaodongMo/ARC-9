@@ -429,6 +429,7 @@ function SWEP:EndReload()
 end
 
 function SWEP:ThinkReload()
+    if self:PredictionFilter() then return end
 
     if self:GetReloading() and self:GetReloadFinishTime() < CurTime() then
         self:EndReload()

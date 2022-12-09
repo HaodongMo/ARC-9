@@ -1,5 +1,5 @@
 function SWEP:ThinkGrenade()
-
+    if self:PredictionFilter() then return end
     if !self:GetProcessedValue("Throwable") then return end
 
     local fuse = self:GetProcessedValue("FuseTimer")

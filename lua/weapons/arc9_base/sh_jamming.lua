@@ -54,7 +54,7 @@ function SWEP:FixHeat()
 end
 
 function SWEP:ThinkHeat(dt)
-
+    if self:PredictionFilter() then return end
     dt = dt or FrameTime()
     local heat = self:GetHeatAmount()
 

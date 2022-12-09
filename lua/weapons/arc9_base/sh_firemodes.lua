@@ -129,7 +129,7 @@ function SWEP:ToggleSafety(onoff)
 end
 
 function SWEP:ThinkFiremodes()
-
+    if self:PredictionFilter() then return end
 
     if self:GetOwner():KeyPressed(IN_ZOOM) and self:GetOwner():KeyDown(IN_USE) then
         self:ToggleSafety()

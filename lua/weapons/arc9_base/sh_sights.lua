@@ -51,7 +51,7 @@ end
 
 function SWEP:ThinkSights()
     -- if self:GetSafe() then return end
-
+    if self:PredictionFilter() then return end
 
     local sighted = self:GetInSights()
 
