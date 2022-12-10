@@ -607,6 +607,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookC_CanLockOn = function(self, ent) return true end -- Return true to allow lock on.
 -- SWEP.HookC_CannotLockOn = function(self, ent) return true end -- Return true to disallow lock on. Has priority over CanLockOn.
 -- SWEP.HookS_GetLockOnScore = function(self, ent) return 0 end -- Return new score
+-- SWEP.Hook_GetAttPos = function(self, data) return data end -- {att = "attname", slottbl = {}, pos = Vector, ang = Angle}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install

@@ -150,6 +150,18 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, 
         SafeRemoveEntity(parentmdl)
     end
 
+    local data = {
+        pos = apos,
+        ang = aang,
+        atttbl = atttbl,
+        slottbl = slottbl,
+    }
+
+    data = self:RunHook("Hook_GetAttPos", data) or data
+
+    apos = data.pos or apos
+    aang = data.ang or aang
+
     return apos, aang
 end
 
