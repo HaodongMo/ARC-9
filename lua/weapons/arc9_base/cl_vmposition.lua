@@ -203,6 +203,17 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
+    if self:GetReloading() then
+        local reloadpos = self:GetProcessedValue("ReloadPos")
+        local reloadang = self:GetProcessedValue("ReloadAng")
+        if reloadpos then
+            offsetpos:Set(reloadpos)
+        end
+        if reloadang then
+            offsetang:Set(reloadang)
+        end
+    end
+
     local sightdelta = self:GetSightDelta()
 
     -- cor_val = Lerp(sightdelta, cor_val, 1)

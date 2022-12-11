@@ -726,7 +726,6 @@ SWEP.DistantShootSoundSilenced = nil            -- Distant fire silenced
 SWEP.DistantShootSoundIndoorSilenced = nil      -- Distant fire indoors silenced
 SWEP.FirstDistantShootSoundSilenced = nil       -- First distant fire silenced
 
-
 SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil
 SWEP.ShootSoundLoopingIndoor = nil
@@ -738,6 +737,7 @@ SWEP.Silencer = false -- Silencer installed or not?
 SWEP.DistantShootSound = nil
 
 SWEP.DryFireSound = ""
+SWEP.DryFireSingleAction = false -- Play dryfire sound only once
 
 SWEP.FiremodeSound = "arc9/firemode.wav"
 SWEP.ToggleAttSound = "items/flashlight1.wav"
@@ -760,6 +760,9 @@ SWEP.MeleeSwingSound = "arc9/melee_miss.wav"
 SWEP.BreathInSound = "arc9/breath_inhale.wav"
 SWEP.BreathOutSound = "arc9/breath_exhale.wav"
 SWEP.BreathRunOutSound = "arc9/breath_runout.wav"
+
+SWEP.TriggerDownSound = ""
+SWEP.TriggerUpSound = ""
 
 -------------------------- EFFECTS
 
@@ -1207,6 +1210,8 @@ SWEP.SuppressDefaultSuffixes = false -- Animations won't automatically play _iro
 SWEP.SuppressDefaultAnimations = false -- Animations won't automatically generated based on sequences defined in QC
 SWEP.SuppressEmptySuffix = false -- _empty animations won't automatically trigger.
 SWEP.SuppressSprintSuffix = false -- _sprint animations won't automatically trigger.
+SWEP.SuppressDefaultEvents = false -- Animations will not trigger animation events.
+SWEP.SuppressCumulativeShoot = false -- fire_1, fire_2, and fire_3 will not automatically trigger.
 
 --[[
     FOV anim settings

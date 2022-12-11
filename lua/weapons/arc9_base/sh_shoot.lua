@@ -28,6 +28,8 @@ function SWEP:SprintLock()
 end
 
 function SWEP:DryFire()
+    if self:GetNthShot() > 0 and self:GetProcessedValue("DryFireSingleAction") then return end
+
     self:PlayAnimation("dryfire")
     local soundtab = {
         name = "dryfire",
@@ -40,6 +42,8 @@ function SWEP:DryFire()
     self:PlayTranslatedSound(soundtab)
     self:SetBurstCount(0)
     self:SetNeedTriggerPress(true)
+
+    self:SetNthShot(self:GetNthShot() + 1)
 end
 
 function SWEP:DoShootSounds()
@@ -279,11 +283,13 @@ function SWEP:DoPrimaryAttack()
 
         local banim = anim
 
-        for i = 0, self:GetBurstCount() do
-            local b = i + 1
+        if !self.SuppressCumulativeShoot then
+            for i = 0, self:GetBurstCount() do
+                local b = i + 1
 
-            if self:HasAnimation(anim .. "_" .. tostring(b)) then
-                banim = anim .. "_" .. tostring(b)
+                if self:HasAnimation(anim .. "_" .. tostring(b)) then
+                    banim = anim .. "_" .. tostring(b)
+                end
             end
         end
 
@@ -374,6 +380,10 @@ function SWEP:DoPrimaryAttack()
 
     if !manualaction or manualaction and !self.MalfunctionCycle then
         self:RollJam()
+    end
+
+    if self:Clip1() == 0 then
+        self:SetNthShot(0)
     end
 end
 

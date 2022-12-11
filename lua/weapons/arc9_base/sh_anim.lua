@@ -299,3 +299,7 @@ function SWEP:ThinkAnimation()
 
     self:SetSequenceCycle(self:GetSequenceCycle() + (FrameTime() * mult))
 end
+
+function SWEP:FireAnimationEvent(pos, ang, event, options, source)
+    if self.SuppressDefaultEvents then return true end
+end

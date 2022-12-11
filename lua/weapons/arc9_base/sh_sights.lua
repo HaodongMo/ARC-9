@@ -23,7 +23,9 @@ function SWEP:EnterSights()
         self:PlayTranslatedSound(soundtab1)
     end
 
-    self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
+    if self:GetAnimLockTime() < CurTime() then
+        self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
+    end
 
     self:SetShouldHoldType()
 end
@@ -40,7 +42,9 @@ function SWEP:ExitSights()
         self:PlayTranslatedSound(soundtab1)
     end
 
-    self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+    if self:GetAnimLockTime() < CurTime() then
+        self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+    end
 
     self:SetShouldHoldType()
 end

@@ -87,6 +87,8 @@ function SWEP:Think()
 
         self:ThinkLockOn()
 
+        self:ThinkTriggerSounds()
+
     end
 
     self:ThinkSprint()
