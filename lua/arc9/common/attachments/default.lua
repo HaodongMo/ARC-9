@@ -99,6 +99,7 @@ ATT.Sights = {
         IsIronSight = false, // disable if another sight is installed
         KeepBaseIrons = false,
         InvertColors = false,
+        UBGLOnly = false, // Only show this sight when UBGL is equipped
         OnSwitchToSight = function(self, slottbl) end,
         OnSwitchFromSight = function(self, slottbl) end,
     }

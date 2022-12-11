@@ -390,6 +390,7 @@ SWEP.UBGLFiremode = 1
 SWEP.UBGLFiremodeName = "UBGL"
 SWEP.UBGLChamberSize = 0
 SWEP.UBGLInsteadOfSights = false -- Right clicking fires UBGL instead of going into irons.
+SWEP.UBGLExclusiveSights = false -- Enable to allow only UBGLOnly sights to be used.
 
 -- Otherwise, these are just stats that get overwritten when selecting a UBGL.
 SWEP.AmmoPerShotUBGL = 1
@@ -607,7 +608,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookC_CanLockOn = function(self, ent) return true end -- Return true to allow lock on.
 -- SWEP.HookC_CannotLockOn = function(self, ent) return true end -- Return true to disallow lock on. Has priority over CanLockOn.
 -- SWEP.HookS_GetLockOnScore = function(self, ent) return 0 end -- Return new score
--- SWEP.Hook_GetAttPos = function(self, data) return data end -- {att = "attname", slottbl = {}, pos = Vector, ang = Angle}
+-- SWEP.Hook_GetAttPos = function(self, data) return data end -- {atttbl = {}, slottbl = {}, pos = Vector, ang = Angle}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
