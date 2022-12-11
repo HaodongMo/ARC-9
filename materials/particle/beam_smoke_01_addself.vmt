@@ -1,0 +1,12 @@
+"SpriteCard"
+{
+	"$basetexture" "particle/beam_smoke_01.vtf"
+	"$addself" 	"2"
+	$overbrightfactor 6
+	$translucent 	1
+	"$nocull"	1
+	$splinetype	1
+}
+
+
+

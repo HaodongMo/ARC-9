@@ -1,6 +1,7 @@
 
 game.AddParticles( "particles/muzzleflashes_test.pcf" )
 game.AddParticles( "particles/muzzleflashes_test_b.pcf" )
+game.AddParticles( "particles/cs_weapon_fx.pcf" )
 
 PrecacheParticleSystem( "muzzleflash_smg" )
 PrecacheParticleSystem( "muzzleflash_smg_bizon" )
@@ -26,3 +27,7 @@ PrecacheParticleSystem( "muzzleflash_3" )
 PrecacheParticleSystem( "muzzleflash_4" )
 PrecacheParticleSystem( "muzzleflash_5" )
 PrecacheParticleSystem( "muzzleflash_6" )
+
+PrecacheParticleSystem("weapon_muzzle_smoke")
+PrecacheParticleSystem("weapon_muzzle_smoke_long")
+PrecacheParticleSystem("weapon_muzzle_smoke_pistols")
