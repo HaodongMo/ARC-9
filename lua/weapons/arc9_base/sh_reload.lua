@@ -343,7 +343,13 @@ function SWEP:EndReload()
             ammo = math.huge
         end
 
-        if clip >= self:GetCapacity(self:GetUBGL()) or ammo == 0 or (self:GetEndReload() and clip > 0) then
+        local capacity = self:GetProcessedValue("ClipSize")
+
+        if !self:GetEmptyReload() then
+            capacity = capacity + self:GetProcessedValue("ChamberSize")
+        end
+
+        if clip >= capacity or ammo == 0 or (self:GetEndReload() and clip > 0) then
             // finish
             local anim = "reload_finish"
 
