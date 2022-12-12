@@ -272,6 +272,7 @@ SWEP.BottomlessClip = false -- Weapon never has to reload
 SWEP.ShotgunReload = false -- Weapon reloads like shotgun. Uses insert_1, insert_2, etc animations instead.
 SWEP.HybridReload = false -- Enable on top of Shotgun Reload. If the weapon is completely empty, use the normal reload animation.
 -- Use SWEP.Hook_TranslateAnimation in order to do custom animation stuff.
+SWEP.ShotgunReloadIncludesChamber = true -- Shotguns reload to full capacity, assuming that the chamber is loaded as part of the animation.
 
 SWEP.ManualActionChamber = 1 -- How many shots we go between needing to cycle again.
 SWEP.ManualAction = false -- Pump/bolt action. Play the "cycle" animation after firing, when the trigger is released.

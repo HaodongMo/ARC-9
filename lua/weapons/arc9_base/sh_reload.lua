@@ -345,7 +345,7 @@ function SWEP:EndReload()
 
         local capacity = self:GetProcessedValue("ClipSize")
 
-        if !self:GetEmptyReload() then
+        if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber") then
             capacity = capacity + self:GetProcessedValue("ChamberSize")
         end
 

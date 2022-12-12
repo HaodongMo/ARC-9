@@ -137,6 +137,21 @@ function SWEP:GetAllAffectors()
         ARC9.Overrun = false
     end
 
+    if !ARC9.Overrun then
+        ARC9.Overrun = true
+
+        for i, k in pairs(self:GetElements()) do
+            if !k then continue end
+            local ele = self.AttachmentElements[i]
+
+            if ele then
+                table.insert(aff, ele)
+            end
+        end
+
+        ARC9.Overrun = false
+    end
+
     self.AffectorsCache = aff
 
     return aff
