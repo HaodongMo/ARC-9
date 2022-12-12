@@ -97,15 +97,15 @@ function SWEP:GetAllAffectors()
 
     table.insert(aff, self:GetTable())
 
-    if !ARC9.Overrun then
-        ARC9.Overrun = true
+    if !ARC9.OverrunSights then
+        ARC9.OverrunSights = true
         local sight = self:GetSight()
 
         if sight.OriginalSightTable then
             table.insert(aff, sight.OriginalSightTable)
         end
 
-        ARC9.Overrun = false
+        ARC9.OverrunSights = false
     end
 
     for _, slot in ipairs(self:GetSubSlotList()) do
@@ -131,14 +131,14 @@ function SWEP:GetAllAffectors()
     end
     table.insert(aff, c4)
 
-    if !ARC9.Overrun then
-        ARC9.Overrun = true
+    if !ARC9.OverrunFiremodes then
+        ARC9.OverrunFiremodes = true
         table.insert(aff, self:GetCurrentFiremodeTable())
-        ARC9.Overrun = false
+        ARC9.OverrunFiremodes = false
     end
 
-    if !ARC9.Overrun then
-        ARC9.Overrun = true
+    if !ARC9.OverrunAttElements then
+        ARC9.OverrunAttElements = true
 
         for i, k in pairs(self:GetElements()) do
             if !k then continue end
@@ -149,7 +149,7 @@ function SWEP:GetAllAffectors()
             end
         end
 
-        ARC9.Overrun = false
+        ARC9.OverrunAttElements = false
     end
 
     self.AffectorsCache = aff
