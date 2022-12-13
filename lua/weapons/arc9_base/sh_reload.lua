@@ -414,7 +414,7 @@ function SWEP:EndReload()
             local minprogress = (self:GetAnimationEntry(anim) or {}).MinProgress or 0.75
             minprogress = math.min(minprogress, 0.99)
 
-            local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
+            local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true, true)
 
             -- local res = math.min(math.min(attempt_to_restore, self:GetCapacity(self:GetUBGL()) - clip), ammo)
 

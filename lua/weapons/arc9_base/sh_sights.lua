@@ -126,6 +126,13 @@ function SWEP:ThinkSights()
             -- end
         end
     end
+
+    local vm = self:GetVM()
+
+    local sightamount = self:GetSightAmount()
+    local bipodamount = self:GetBipodAmount()
+
+    vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
 end
 
 SWEP.MultiSightTable = {
