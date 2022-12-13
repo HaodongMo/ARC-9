@@ -228,7 +228,7 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilPos(vpa)
         self:SetVisualRecoilPosVel(vpv)
 
-        if CLIENT and self:PredictionFilter() then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
             self.VisualRecoilPos = vpa
             self.VisualRecoilPosVel = vpv
         end
@@ -236,7 +236,7 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilPos(Vector())
         self:SetVisualRecoilPosVel(self:GetVisualRecoilPos())
 
-        if CLIENT and self:PredictionFilter() then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
             self.VisualRecoilPos = Vector()
             self.VisualRecoilPosVel = self.VisualRecoilPos
         end
@@ -245,7 +245,7 @@ function SWEP:ThinkVisualRecoil()
     local vaa = self:GetVisualRecoilAng()
     local vav = self:GetVisualRecoilVel()
 
-    if CLIENT and self:PredictionFilter() then
+    if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
         vaa = self.VisualRecoilAng
         vav = self.VisualRecoilVel
     end
@@ -293,7 +293,7 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilAng(vaa)
         self:SetVisualRecoilVel(vav)
 
-        if CLIENT and self:PredictionFilter() then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
             self.VisualRecoilAng = vaa
             self.VisualRecoilVel = vav
         end
@@ -301,7 +301,7 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilAng(Angle(ang0))
         self:SetVisualRecoilVel(Angle(ang0))
 
-        if CLIENT and self:PredictionFilter() then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted()) then
             self.VisualRecoilAng = Angle(ang0)
             self.VisualRecoilVel = Angle(ang0)
         end
