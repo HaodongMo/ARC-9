@@ -14,7 +14,7 @@ function SWEP:RollJam()
         local soundtab1 = {
             name = "jam",
             sound = self:RandomChoice(self:GetProcessedValue("MalfunctionSound")),
-            channel = CHAN_ITEM
+            channel = ARC9.CHAN_FIDDLE
         }
         self:PlayTranslatedSound(soundtab1)
         self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("MalfunctionWait"))

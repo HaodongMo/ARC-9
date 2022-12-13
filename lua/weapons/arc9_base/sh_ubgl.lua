@@ -29,7 +29,7 @@ function SWEP:ToggleUBGL(on)
         local soundtab = {
             name = "enterubgl",
             sound = self:RandomChoice(self:GetProcessedValue("EnterUBGLSound")),
-            channel = CHAN_AUTO
+            channel = ARC9.CHAN_FIDDLE
         }
 
         self:PlayTranslatedSound(soundtab)
@@ -40,7 +40,7 @@ function SWEP:ToggleUBGL(on)
         local soundtab = {
             name = "exitubgl",
             sound = self:RandomChoice(self:GetProcessedValue("ExitUBGLSound")),
-            channel = CHAN_AUTO
+            channel = ARC9.CHAN_FIDDLE
         }
 
         self:PlayTranslatedSound(soundtab)

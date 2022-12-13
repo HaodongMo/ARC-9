@@ -37,7 +37,7 @@ function SWEP:DryFire()
         level = 75,
         pitch = 100,
         volume = 1,
-        channel = CHAN_BODY
+        channel = ARC9.CHAN_FIDDLE
     }
     self:PlayTranslatedSound(soundtab)
     self:SetBurstCount(0)
@@ -90,7 +90,7 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoormix,
-            channel = CHAN_WEAPON
+            channel = ARC9.CHAN_WEAPON
         }
         self:PlayTranslatedSound(soundtab1)
 
@@ -100,7 +100,7 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoormix,
-            channel = CHAN_WEAPON + 4
+            channel = ARC9.CHAN_LAYER
         }
         self:PlayTranslatedSound(soundtab2)
         if havedistant then
@@ -110,7 +110,7 @@ function SWEP:DoShootSounds()
                 level = dvolume,
                 pitch = dpitch,
                 volume = dvolume * indoormix,
-                channel = CHAN_WEAPON + 1
+                channel = ARC9.CHAN_DISTANT
             }
             self:PlayTranslatedSound(soundtab3)
         end
@@ -130,7 +130,7 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoor,
-            channel = CHAN_WEAPON + 5
+            channel = ARC9.CHAN_INDOOR
         }
         self:PlayTranslatedSound(soundtab1)
 
@@ -140,7 +140,7 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoor,
-            channel = CHAN_WEAPON + 6
+            channel = ARC9.CHAN_INDOORLAYER
         }
         self:PlayTranslatedSound(soundtab2)
         if havedistant then
@@ -150,7 +150,7 @@ function SWEP:DoShootSounds()
                 level = dvolume,
                 pitch = dpitch,
                 volume = dvolume * indoor,
-                channel = CHAN_WEAPON + 7
+                channel = ARC9.CHAN_INDOORDISTANT
             }
             self:PlayTranslatedSound(soundtab3)
         end

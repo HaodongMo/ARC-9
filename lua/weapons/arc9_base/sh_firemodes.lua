@@ -26,7 +26,7 @@ function SWEP:SwitchFiremode()
         local soundtab1 = {
             name = "firemode",
             sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound")),
-            channel = CHAN_ITEM
+            channel = ARC9.CHAN_FIDDLE
         }
         self:PlayTranslatedSound(soundtab1)
     end
@@ -117,7 +117,7 @@ function SWEP:ToggleSafety(onoff)
             local soundtab1 = {
                 name = "safety",
                 sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound")),
-                channel = CHAN_ITEM
+                channel = ARC9.CHAN_FIDDLE
             }
             self:PlayTranslatedSound(soundtab1)
         end

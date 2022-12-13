@@ -18,7 +18,7 @@ function SWEP:EnterSights()
         local soundtab1 = {
             name = "entersights",
             sound = self:RandomChoice(self:GetProcessedValue("EnterSightsSound")),
-            channel = CHAN_VOICE,
+            channel = ARC9.CHAN_FIDDLE,
         }
 
         self:PlayTranslatedSound(soundtab1)
@@ -38,7 +38,7 @@ function SWEP:ExitSights()
         local soundtab1 = {
             name = "exitsights",
             sound = self:RandomChoice(self:GetProcessedValue("ExitSightsSound")),
-            channel = CHAN_VOICE,
+            channel = ARC9.CHAN_FIDDLE,
         }
 
         self:PlayTranslatedSound(soundtab1)

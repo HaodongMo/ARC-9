@@ -9,7 +9,7 @@ function SWEP:ThinkTriggerSounds()
         local soundtab = {
             name = "triggerup",
             sound = self:RandomChoice(self:GetProcessedValue("TriggerUpSound")),
-            channel = CHAN_VOICE_BASE
+            channel = ARC9.CHAN_TRIGGER
         }
 
         self:PlayTranslatedSound(soundtab)
@@ -17,7 +17,7 @@ function SWEP:ThinkTriggerSounds()
         local soundtab = {
             name = "triggerdown",
             sound = self:RandomChoice(self:GetProcessedValue("TriggerDownSound")),
-            channel = CHAN_VOICE_BASE
+            channel = ARC9.CHAN_TRIGGER
         }
 
         self:PlayTranslatedSound(soundtab)

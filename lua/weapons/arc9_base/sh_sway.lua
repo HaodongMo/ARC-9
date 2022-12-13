@@ -18,7 +18,7 @@ function SWEP:ThinkHoldBreath()
                 local soundtab = {
                     name = "breathrunout",
                     sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")),
-                    channel = CHAN_STATIC
+                    channel = ARC9.CHAN_BREATH
                 }
                 self:PlayTranslatedSound(soundtab)
 
@@ -35,7 +35,7 @@ function SWEP:ThinkHoldBreath()
                 local soundtab = {
                     name = "breathin",
                     sound = self:RandomChoice(self:GetProcessedValue("BreathInSound")),
-                    channel = CHAN_STATIC
+                    channel = ARC9.CHAN_BREATH
                 }
 
                 self:PlayTranslatedSound(soundtab)
@@ -48,7 +48,7 @@ function SWEP:ThinkHoldBreath()
             local soundtab = {
                 name = "breathout",
                 sound = self:RandomChoice(self:GetProcessedValue("BreathOutSound")),
-                channel = CHAN_STATIC
+                channel = ARC9.CHAN_BREATH
             }
             self:PlayTranslatedSound(soundtab)
         end
