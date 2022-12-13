@@ -307,36 +307,12 @@ function SWEP:ThinkVisualRecoil()
         end
     end
 end
-
-SWEP.FOV_Recoil = 0
-SWEP.FOV_RecoilMods = {}
-
-function SWEP:CreateFOVEvent( fov, start, endt, fpre, fact )
-    table.insert(self.FOV_RecoilMods, {
-        amount = fov,
-        time_start = CurTime() + start,
-        time_end = CurTime() + endt,
-        func_pre = fpre,
-        func_act = fact,
-        realstart = CurTime(),
-    })
-end
-
 function SWEP:DoVisualRecoil()
     if !self:GetProcessedValue("UseVisualRecoil") then return end
 
     if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
-    if self.FOV_RecoilAdd and self.FOV_RecoilAdd != 0 then
-        self:CreateFOVEvent(
-            self.FOV_RecoilAdd,
-            self.FOV_Recoil_TimeStart,
-            self.FOV_Recoil_TimeEnd,
-            self.FOV_Recoil_FuncStart,
-            self.FOV_Recoil_FuncEnd
-        )
-    end
 
-    if IsFirstTimePredicted() or game.SinglePlayer() then
+    // if IsFirstTimePredicted() or game.SinglePlayer() then
         local mult = self:GetProcessedValue("VisualRecoil")
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
@@ -359,11 +335,13 @@ function SWEP:DoVisualRecoil()
         self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
         self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0)))
 
-        if CLIENT then
-            self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
-            self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0))
+        if IsFirstTimePredicted() or game.SinglePlayer() then
+            if CLIENT then
+                self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
+                self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0))
+            end
         end
-    end
+    // end
 end
 
 function SWEP:GetViewModelRecoil(pos, ang)

@@ -140,20 +140,6 @@ function SWEP:PlaySoundTable(soundtable, mult)
                 util.Effect(v.e, fx)
             end
 
-            if v.FOV then
-                if game.SinglePlayer() then
-                    net.Start("ARC9_SP_FOV")
-                        net.WriteEntity(self)
-                        net.WriteFloat(v.FOV or 0)
-                        net.WriteFloat(v.FOV_Start or 0)
-                        net.WriteFloat(v.FOV_End or 0)
-                        net.WriteUInt(v.FOV_FuncStart or 0, 5)
-                        net.WriteUInt(v.FOV_FuncEnd or 0, 5)
-                    net.Send(self:GetOwner())
-                end
-                --self:CreateFOVEvent( v.FOV, v.FOV_Start, v.FOV_End, v.FOV_FuncStart, v.FOV_FuncEnd )
-            end
-
             if v.hide != nil then
                 self:SetHideBoneIndex(v.hide)
             end

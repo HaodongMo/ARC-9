@@ -44,21 +44,6 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     self.FOV = fov
 
-    for _, mod in pairs(self.FOV_RecoilMods) do
-        local per_pre = math.TimeFraction( mod.realstart, mod.time_start, CurTime() )
-        local per_act = math.TimeFraction( mod.time_start, mod.time_end, CurTime() )
-        if per_act < 0 then
-            per_act = per_pre
-            if mod.func_pre then per_act = mod.func_pre(per_act) end
-        else
-            per_act = 1-per_act
-            if mod.func_act then per_act = mod.func_act(per_act) end
-        end
-        per_act = math.Clamp(per_act, 0, 1)
-        fov = fov + (mod.amount * per_act)
-        if mod.time_end < CurTime() then self.FOV_RecoilMods[_] = nil end
-    end
-
     ang = ang + (self:GetCameraControl() or angle_zero)
 
     return pos, ang, fov
