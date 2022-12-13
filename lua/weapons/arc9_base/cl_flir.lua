@@ -103,6 +103,10 @@ function SWEP:DoFLIR(atttbl)
         atttbl.RTScopeFLIRFunc(self)
     end
 
+    if atttbl.RTScopeFLIRHotOnlyFunc then
+        atttbl.RTScopeFLIRHotOnlyFunc(self)
+    end
+
     render.SetStencilEnable(false)
 end
 
