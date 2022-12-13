@@ -119,7 +119,8 @@ function SWEP:Reload()
                 if self:GetInfiniteAmmo() then
                     ammo1 = math.huge
                 end
-                // self:SetLoadedRounds(math.min((clip == 0 and self:GetValue("ClipSize") or self:GetCapacity(false)), self:Clip1() + ammo1))
+
+                self:SetLoadedRounds(math.min((clip == 0 and self:GetValue("ClipSize") or self:GetCapacity(false)), self:Clip1() + ammo1))
             end)
         end
     end
