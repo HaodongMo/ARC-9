@@ -371,7 +371,7 @@ function SWEP:GetViewModelRecoil(pos, ang)
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
-    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng)
+    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng * 0.25)
 
     return pos, ang
 end

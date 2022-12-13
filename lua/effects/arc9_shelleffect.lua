@@ -69,7 +69,22 @@ function EFFECT:Init(data)
     local physbox = ent:GetProcessedValue("ShellPhysBox")
     local pitch = ent:GetProcessedValue("ShellPitch")
     local sounds = ent:GetProcessedValue("ShellSounds")
-    
+
+    local index = data:GetFlags()
+
+    if index != 0 then
+        local shelldata = ent:GetProcessedValue("ExtraShellModels")[index]
+
+        if shelldata then
+            model = shelldata.model or model
+            mat = shelldata.mat or mat
+            scale = shelldata.scale or scale
+            physbox = shelldata.physbox or physbox
+            pitch = shelldata.pitch or pitch
+            sounds = shelldata.sounds or sounds
+        end
+    end
+
     local dir = ang:Forward()
 
     local correctang = ent:GetProcessedValue("ShellCorrectAng") or angle_zero

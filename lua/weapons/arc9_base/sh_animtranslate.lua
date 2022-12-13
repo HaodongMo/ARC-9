@@ -95,7 +95,7 @@ function SWEP:GetAnimationEntry(seq)
             end
         end
     else
-        return nil
+        return {}
     end
 end
 

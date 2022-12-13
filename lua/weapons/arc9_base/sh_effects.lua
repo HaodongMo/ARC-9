@@ -38,16 +38,17 @@ end
 
 SWEP.EjectedShells = {}
 
-function SWEP:DoEject()
+function SWEP:DoEject(index, attachment)
     if !IsFirstTimePredicted() then return end
 
     -- if self:GetProcessedValue("NoShellEject") then return end
 
-    local eject_qca = self:GetQCAEject()
+    local eject_qca = attachment or self:GetQCAEject()
 
     local data = EffectData()
     data:SetEntity(self)
     data:SetAttachment(eject_qca)
+    data:SetFlags(index or 0)
 
     for i = 1, self:GetProcessedValue("ShellEffectCount") do
         util.Effect(self:GetProcessedValue("ShellEffect") or "ARC9_shelleffect", data, true)

@@ -99,6 +99,18 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
+    local stripperbones = self:GetProcessedValue("StripperClipBones")
+
+    for i, bone in ipairs(stripperbones) do
+        local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
+
+        if !boneid then continue end
+
+        if i > self:GetLoadingIntoClip() and !clear then
+            mdl:ManipulateBoneScale(boneid, v0)
+        end
+    end
+
     mdl.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
     mdl.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
     mdl.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")

@@ -787,6 +787,8 @@ SWEP.ShellEffectCount = 1
 SWEP.ShellModel = "models/shells/shell_556.mdl"
 SWEP.ShellMaterial = nil -- string
 
+SWEP.ExtraShellModels = nil -- For eventtable {{model = "", mat = "", scale = 1, physbox = Vector(1, 1, 1), pitch = 100, sounds = {}}}
+
 SWEP.ShellSmoke = true
 
 SWEP.NoShellEject = false -- Don't eject shell on fire
@@ -1180,6 +1182,7 @@ SWEP.Animations = {
     --                 p = 1 -- sound pitch
     --                 v = 1 -- sound playback volume
     --                 l = 75 -- sound level in db
+    --             shelleject = 1, -- eject a shell, true for regular eject, int for special ejection
     --             e = "", -- effect to emit
     --             att = nil, -- on attachment point X
     --             mag = 100, -- with magnitude whatever this is
@@ -1203,7 +1206,8 @@ SWEP.Animations = {
     --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one. For SWEP.BulletBones
     --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
     --     FireASAP = false, -- allowes to shoot right after clip anim was "done" with MinProgress
-    --     RestoreAmmo = 0 -- Restores ammunition to clip
+    --     RestoreAmmo = 0, -- Restores ammunition to clip
+    --     DumpClip = false -- Dump clip on reload
     -- }
 }
 
