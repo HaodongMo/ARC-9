@@ -65,8 +65,14 @@ function ARC9.StartCommand(ply, cmd)
     if math.abs(wpn:GetRecoilUp()) > 0 or math.abs(wpn:GetRecoilSide()) > 0 then
         local eyeang = cmd:GetViewAngles()
 
-        local uprec = FrameTime() * wpn:GetRecoilUp() * 100
-        local siderec = FrameTime() * wpn:GetRecoilSide() * 100
+        local m = 50
+
+        if game.SinglePlayer() then
+            m = 100
+        end
+
+        local uprec = FrameTime() * wpn:GetRecoilUp() * m
+        local siderec = FrameTime() * wpn:GetRecoilSide() * m
 
         eyeang.p = eyeang.p + uprec
         eyeang.y = eyeang.y + siderec
