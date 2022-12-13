@@ -92,6 +92,11 @@ function SWEP:DoRT(fov, atttbl)
             render.DrawTextureToScreen(rtmat_spare)
 
             render.OverrideBlend(false)
+
+            if atttbl.RTScopePostInvertFunc then
+                atttbl.RTScopePostInvertFunc(self)
+            end
+
         render.PopRenderTarget()
     end
 end
