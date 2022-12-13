@@ -15,12 +15,16 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
 
     local animation = self:GetAnimationEntry(anim)
 
-    local source = self:RandomChoice(animation.Source)
+    local source = animation.Source
 
     if animation.RareSource then
         if util.SharedRandom("ARC9_raresource", 0, 1) <= (animation.RareSourceChance or 0.01) then
-            source = self:RandomChoice(animation.RareSource)
+            source = animation.RareSource
         end
+    end
+
+    if istable(source) then
+        source = source[math.floor(util.SharedRandom("ARC9_animsource", 1, #source, CurTime()))]
     end
 
     local seq = 0
