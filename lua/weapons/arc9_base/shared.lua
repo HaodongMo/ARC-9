@@ -290,8 +290,6 @@ SWEP.Disposable = false -- When all ammo is expended, this gun will remove itsel
 
 SWEP.AutoReload = false -- When the gun is drawn, it will automatically reload.
 
-SWEP.TriggerDelay = 0 -- Set to > 0 to play the "trigger" animation before shooting. Delay time is based on this value.
-
 SWEP.ShouldDropMag = false
 SWEP.ShouldDropMagEmpty = true
 

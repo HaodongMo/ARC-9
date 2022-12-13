@@ -21,7 +21,7 @@ end
 
 function SWEP:SprintLock()
     if self:GetSprintAmount() > 0 then return true end
-    -- if self:GetTraversalSprintAmount() > 0 then return true end
+    -- if self:GetTraversalSprintAmount() > 0 then retur    n true end
     -- if self:GetIsSprinting() then return true end
 
     return false
@@ -184,6 +184,19 @@ function SWEP:PrimaryAttack()
 
     if self:GetNeedTriggerPress() then return end
 
+    if self:GetProcessedValue("TriggerDelay") then
+        if self:GetBurstCount() == 0 and !self:GetPrimedAttack() then
+            self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
+            self:PlayAnimation("trigger")
+            self:SetPrimedAttack(true)
+            return
+        elseif self:GetPrimedAttack() and self:GetTriggerDelay() > CurTime() then
+            return
+        else
+            self:SetPrimedAttack(false)
+        end
+    end
+
     self:DoPrimaryAttack()
 end
 
@@ -251,13 +264,13 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    if self:GetProcessedValue("TriggerDelay") then
-        if self:GetTriggerDelay() != 1 then
-            return
-        elseif self:GetProcessedValue("TriggerDelayRepeat") then
-            self:SetTriggerDelay(0)
-        end
-    end
+    // if self:GetProcessedValue("TriggerDelay") then
+    //     if self:GetTriggerDelay() != 1 then
+    //         return
+    //     elseif self:GetProcessedValue("TriggerDelayRepeat") then
+    //         self:SetTriggerDelay(0)
+    //     end
+    // end
 
     self:SetBaseSettings()
 
@@ -384,6 +397,12 @@ function SWEP:DoPrimaryAttack()
 
     if self:Clip1() == 0 then
         self:SetNthShot(0)
+    end
+
+    if self:GetProcessedValue("TriggerDelayRepeat") then
+        self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
+        self:PlayAnimation("trigger")
+        self:SetPrimedAttack(true)
     end
 end
 
