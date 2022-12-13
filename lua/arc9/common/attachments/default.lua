@@ -176,6 +176,7 @@ ATT.RTScopeFLIRCCCold = { -- Color correction drawn only on FLIR targets
     ["$pp_colour_mulb"] = 0
 }
 ATT.RTScopeFLIRFunc = function(swep) end
+ATT.RTScopeFLIRHotOnlyFunc = function(swep) end -- same but only for hot targets (try `DrawSobel(0.05)` here!!))
 
 ATT.RTScopeMotionBlur = false
 
