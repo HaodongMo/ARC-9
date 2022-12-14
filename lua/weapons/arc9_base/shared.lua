@@ -1136,6 +1136,7 @@ SWEP.Attachments = {
 -- _empty
 -- _ubgl
 -- _primed
+-- _uncycled
 
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
