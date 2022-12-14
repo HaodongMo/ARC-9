@@ -92,6 +92,11 @@ ARC9.AutoStatsMains = {
     ["StomachDamage"] = {false, false},
     ["ArmDamage"] = {false, false},
     ["LegDamage"] = {false, false},
+    ["VisualRecoil"] = {false, false},
+    ["VisualRecoilUp"] = {false, false},
+    ["VisualRecoilSide"] = {false, false},
+    ["VisualRecoilRoll"] = {false, false},
+    ["VisualRecoilPunch"] = {false, false},
 }
 
 ARC9.AutoStatsOperations = {
