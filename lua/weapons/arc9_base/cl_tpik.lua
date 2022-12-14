@@ -73,7 +73,7 @@ function SWEP:DoTPIK()
 
     wm:SetupBones()
 
-    local time = self:GetSequenceCycle()
+    local time = IsValid(self:GetVM()) and self:GetVM():GetCycle() or self:GetSequenceCycle()
     local seq = self:GetSequenceIndex()
 
     wm:SetSequence(seq)
