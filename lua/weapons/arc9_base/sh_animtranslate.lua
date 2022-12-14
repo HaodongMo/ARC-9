@@ -43,6 +43,10 @@ function SWEP:TranslateAnimation(seq)
         if self:GetGrenadePrimed() and self:HasAnimation(seq .. "_primed") then
             seq = seq .. "_primed"
         end
+
+        if self:GetNeedsCycle() and self:HasAnimation(seq .. "_uncycled") then
+            seq = seq .. "_uncycled"
+        end
     end
 
     local traq = self:RunHook("Hook_TranslateAnimation", seq) or seq
