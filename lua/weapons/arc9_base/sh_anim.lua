@@ -227,18 +227,18 @@ end
 function SWEP:Idle()
     if self:GetPrimedAttack() then return end
     if self:GetSafe() then return end
-	
-	local anim = "idle"
-	local clip = self:Clip1()
-	local banim = anim
-	
-	for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+
+    local anim = "idle"
+    local clip = self:Clip1()
+    local banim = anim
+
+    for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
             if self:HasAnimation(anim .. "_" .. tostring(i)) then
                 banim = anim .. "_" .. tostring(i)
-			end
+            end
         end
-	anim = banim
-	
+    anim = banim
+
     self:PlayAnimation(anim)
 end
 
@@ -301,7 +301,11 @@ function SWEP:ThinkAnimation()
 
     local mult = self:GetSequenceSpeed()
 
-    self:SetSequenceCycle(self:GetSequenceCycle() + (FrameTime() * mult))
+    if game.SinglePlayer() and SERVER then
+        self:SetSequenceCycle(self:GetVM():GetCycle())
+    else
+        self:SetSequenceCycle(self:GetSequenceCycle() + (FrameTime() * mult))
+    end
 end
 
 function SWEP:FireAnimationEvent(pos, ang, event, options, source)

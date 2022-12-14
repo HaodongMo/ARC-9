@@ -462,7 +462,7 @@ end
 
 function SWEP:GetLoadingIntoClip()
     local capacity = self:GetCapacity()
-    local ammo = self:Ammo1()
+    local ammo = self:Ammo1() + self:Clip1()
 
     if self:GetInfiniteAmmo() then
         ammo = math.huge

@@ -55,7 +55,7 @@ function SWEP:DoBodygroups(wm, cm)
             amt = self:GetLoadedRounds()
         end
 
-        for c, bgs in ipairs(bbg) do
+        for c, bgs in ipairs(bbg or {}) do
             if !isnumber(c) then continue end
             if amt < c then
                 mdl:SetBodygroup(bgs[1], bgs[2])
@@ -78,7 +78,7 @@ function SWEP:DoBodygroups(wm, cm)
 
     local hidebones = self:GetHiddenBones(wm)
 
-    for bone, a in pairs(hidebones) do
+    for bone, a in pairs(hidebones or {}) do
         if !a then continue end
         local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
 
@@ -89,7 +89,7 @@ function SWEP:DoBodygroups(wm, cm)
 
     local bulletbones = self:GetProcessedValue("BulletBones")
 
-    for i, bone in ipairs(bulletbones) do
+    for i, bone in ipairs(bulletbones or {}) do
         local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
 
         if !boneid then continue end
@@ -101,7 +101,7 @@ function SWEP:DoBodygroups(wm, cm)
 
     local stripperbones = self:GetProcessedValue("StripperClipBones")
 
-    for i, bone in ipairs(stripperbones) do
+    for i, bone in ipairs(stripperbones or {}) do
         local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
 
         if !boneid then continue end

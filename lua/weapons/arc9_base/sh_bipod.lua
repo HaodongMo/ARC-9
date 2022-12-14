@@ -4,7 +4,7 @@ function SWEP:ThinkBipod()
     local bip = self:GetBipod()
 
     if bip then
-        if self:MustExitBipod() or self:GetOwner():KeyPressed(IN_USE) then
+        if self:MustExitBipod() or self:GetOwner():KeyDown(IN_USE) then
             self:ExitBipod()
         end
     else

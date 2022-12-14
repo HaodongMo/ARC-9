@@ -51,3 +51,10 @@ function ARC9.GiveNPCPlayerWeapon(npc, ply)
 
     ply:StripWeapon(weapon:GetClass())
 end
+
+hook.Add("AllowPlayerPickup", "ARC9_AllowPlayerPickup", function(ply, ent)
+    local wep = ply:GetActiveWeapon()
+    if !wep.ARC9 then return end
+
+    if wep:GetBipod() then return false end
+end)
