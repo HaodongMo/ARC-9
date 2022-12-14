@@ -186,7 +186,7 @@ function SWEP:ThinkVisualRecoil()
         vpv = self.VisualRecoilPosVel
     end
 
-    if lensqr(vpa) + lensqr(vpv) > 0.000001 then
+    if lensqr(vpa) + lensqr(vpv) > 0 then
         -- {
         --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
         --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);

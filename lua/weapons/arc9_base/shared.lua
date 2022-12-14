@@ -601,6 +601,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookC_CannotLockOn = function(self, ent) return true end -- Return true to disallow lock on. Has priority over CanLockOn.
 -- SWEP.HookS_GetLockOnScore = function(self, ent) return 0 end -- Return new score
 -- SWEP.Hook_GetAttPos = function(self, data) return data end -- {atttbl = {}, slottbl = {}, pos = Vector, ang = Angle}
+-- SWEP.Hook_HideBones = function(self, bones) return bones end -- {"bone" = true, "bone" = true...}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
@@ -921,7 +922,7 @@ SWEP.CustomizeSnapshotPos = Vector(0, 0, 0)
 SWEP.CustomizeSnapshotAng = Angle(0, 0, 0)
 SWEP.CustomizeNoRotate = false
 
-SWEP.BipodPos = Vector(0, 4, -4)
+SWEP.BipodPos = Vector(0, 0, 0)
 SWEP.BipodAng = Angle(0, 0, 0)
 
 SWEP.HeightOverBore = 1

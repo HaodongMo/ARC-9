@@ -4,7 +4,7 @@ function SWEP:ThinkBipod()
     local bip = self:GetBipod()
 
     if bip then
-        if self:MustExitBipod() or self:GetOwner():KeyDown(IN_USE) then
+        if self:MustExitBipod() or self:GetOwner():KeyDown(IN_BACK) then
             self:ExitBipod()
         end
     else
@@ -101,6 +101,8 @@ function SWEP:ExitBipod()
     if self:GetAnimLockTime() <= CurTime() then
         self:PlayAnimation("exit_bipod", 1, true)
     end
+
+    self:CancelReload()
 
     self:ExitSights()
 end

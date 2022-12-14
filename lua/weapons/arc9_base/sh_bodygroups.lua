@@ -90,24 +90,38 @@ function SWEP:DoBodygroups(wm, cm)
     local bulletbones = self:GetProcessedValue("BulletBones")
 
     for i, bone in ipairs(bulletbones or {}) do
-        local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
+        local bones = bone
+        if !istable(bones) then
+            bones = {bone}
+        end
 
-        if !boneid then continue end
+        for _, bone2 in ipairs(bones) do
+            local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
 
-        if i > self:GetLoadedRounds() and !clear then
-            mdl:ManipulateBoneScale(boneid, v0)
+            if !boneid then continue end
+
+            if i > self:GetLoadedRounds() and !clear then
+                mdl:ManipulateBoneScale(boneid, v0)
+            end
         end
     end
 
     local stripperbones = self:GetProcessedValue("StripperClipBones")
 
     for i, bone in ipairs(stripperbones or {}) do
-        local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
+        local bones = bone
+        if !istable(bones) then
+            bones = {bone}
+        end
 
-        if !boneid then continue end
+        for _, bone2 in ipairs(bones) do
+            local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
 
-        if i > self:GetLoadingIntoClip() and !clear then
-            mdl:ManipulateBoneScale(boneid, v0)
+            if !boneid then continue end
+
+            if i > self:GetLoadingIntoClip() and !clear then
+                mdl:ManipulateBoneScale(boneid, v0)
+            end
         end
     end
 
@@ -155,6 +169,8 @@ function SWEP:GetHiddenBones(wm)
             end
         end
     end
+
+    bones = self:RunHook("Hook_HideBones", bones) or bones
 
     return bones
 end

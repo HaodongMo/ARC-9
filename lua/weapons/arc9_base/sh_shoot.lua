@@ -283,6 +283,8 @@ function SWEP:DoPrimaryAttack()
         return
     end
 
+    self:RunHook("Hook_PrimaryAttack")
+
     self:TakeAmmo()
 
     if self:GetProcessedValue("DoFireAnimation") then
@@ -330,8 +332,6 @@ function SWEP:DoPrimaryAttack()
     self:SetAfterShot(true)
 
     self:DoShootSounds()
-
-    self:RunHook("Hook_PrimaryAttack")
 
     self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimShoot"))
 
