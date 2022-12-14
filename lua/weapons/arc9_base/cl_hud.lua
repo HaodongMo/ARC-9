@@ -259,6 +259,9 @@ function SWEP:GetBinding(bind)
     return string.upper(t_bind)
 end
 
+local bipodhint = 0 -- alpha
+local bipodhintstate = false -- enter or exit
+
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
     local scrw, scrh = ScrW(), ScrH()
@@ -280,39 +283,39 @@ function SWEP:DrawHUD()
         end
     end
 
+    -- Bipod hint
+
+    local ft1000 = RealFrameTime() * 1000
+    bipodhint = math.max(0, bipodhint - ft1000)
+
     if self:GetBipod() then
-        local text = "[" .. ARC9.GetBindKey("+use") .. "]"
-
-        surface.SetFont("ARC9_12")
-        local tw, th = surface.GetTextSize(text)
-        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(24))
-        surface.SetTextColor(255, 255, 255, 255)
-        surface.DrawText(text)
-
-        local text2 = "Exit Bipod"
-
-        surface.SetFont("ARC9_10")
-        local tw2, th2 = surface.GetTextSize(text2)
-        surface.SetTextPos(scrw / 2 - tw2 / 2, scrh / 2 + ScreenScale(36))
-        surface.SetTextColor(255, 255, 255, 255)
-        surface.DrawText(text2)
+        bipodhint = math.min(255, bipodhint + ft1000 * 2)
+        bipodhintstate = true
     elseif self:CanBipod() and self:GetSightAmount() <= 0 then
-        local text = "[" .. ARC9.GetBindKey("+attack2") .. "]"
+        bipodhint = math.min(255, bipodhint + ft1000 * 2)
+        bipodhintstate = false
+    end
 
-        surface.SetFont("ARC9_12")
-        local tw, th = surface.GetTextSize(text)
-        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(24))
-        surface.SetTextColor(255, 255, 255, 255)
-        surface.DrawText(text)
+    if bipodhint > 0 then
+        local glyph = ARC9.GetBindKey(bipodhintstate and "+use" or "+attack2")
+        local text = bipodhintstate and "Exit bipod" or "Enter bipod"
 
-        local text2 = "Enter Bipod"
+        if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
+        if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
+        if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/glyphs_light/" .. glyph .. "_lg" .. ".png", "smooth" ) end
+
+        surface.SetTextColor(255, 255, 255, bipodhint)
+        surface.SetDrawColor(255, 255, 255, bipodhint)
+        surface.SetFont("ARC9_16")
+        local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 + ScreenScale(96), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(8) })
 
         surface.SetFont("ARC9_10")
-        local tw2, th2 = surface.GetTextSize(text2)
-        surface.SetTextPos(scrw / 2 - tw2 / 2, scrh / 2 + ScreenScale(36))
-        surface.SetTextColor(255, 255, 255, 255)
-        surface.DrawText(text2)
+        local tw = surface.GetTextSize(text)
+        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(106))
+        surface.DrawText(text)
     end
+
+    --
 
     self:HoldBreathHUD()
     self:DrawCustomizeHUD()
