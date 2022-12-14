@@ -268,7 +268,8 @@ local function GetWeaponCapabilities(wpn)
         BlindfireRight = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireRight")),
         Firemode = tobool(!wpn:GetUBGL() and #wpn:GetValue("Firemodes") > 1),
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
-        VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable)
+        VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable),
+        ManualCycle = tobool(wpn:GetNeedsCycle() and wpn:ShouldManualCycle())
     }
 
     return cap
@@ -976,6 +977,13 @@ function ARC9.DrawHUD()
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+zoom"),
                 action = "Switch Firemode"
+            })
+        end
+
+        if capabilities.ManualCycle then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+reload"),
+                action = "Cycle"
             })
         end
 

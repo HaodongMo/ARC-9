@@ -470,6 +470,12 @@ local conVars = {
     {
         name = "realrecoil",
         default = "1",
+    },
+    {
+        name = "manualbolt",
+        default = "0",
+        client = true,
+        userinfo = true
     }
 }
 
