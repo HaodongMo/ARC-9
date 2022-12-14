@@ -8,7 +8,7 @@ function SWEP:ThinkBipod()
             self:ExitBipod()
         end
     else
-        if self:CanBipod() and self:GetOwner():KeyPressed(IN_USE) then
+        if self:CanBipod() and self:GetOwner():KeyPressed(IN_ATTACK2) then
             self:EnterBipod()
         end
     end

@@ -34,11 +34,21 @@ function SWEP:CreateHUD_Stats()
             end,
         },
         {
-            title = "Cyclic ROF",
+            title = "ROF",
             stat = "RPM",
             fifty = 600,
             unit = "RPM",
-            conv = function(a) return math.Round(a / 50, 0) * 50 end,
+            conv = function(a)
+                local delay = 60 / a
+
+                if self:GetProcessedValue("ManualAction") then
+                    delay = delay + (self:GetAnimationTime("cycle") * self:GetProcessedValue("CycleTime"))
+                end
+
+                a = 60 / delay
+
+                return math.Round(a / 50, 0) * 50
+            end,
         },
         {
             title = "Capacity",

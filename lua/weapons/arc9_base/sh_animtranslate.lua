@@ -77,6 +77,20 @@ function SWEP:HasAnimation(seq)
     return seq != -1
 end
 
+function SWEP:GetAnimationTime(anim)
+    local entry = self:GetAnimationEntry(anim)
+
+    if !entry then return 0 end
+
+    if entry.Time then return entry.Time end
+
+    local seq = entry.Source
+
+    if istable(seq) then seq = seq[1] end
+
+    return self:GetSequenceTime(seq)
+end
+
 function SWEP:GetSequenceTime(seq)
     local vm = self:GetVM()
     seq = vm:LookupSequence(seq)

@@ -296,8 +296,8 @@ function SWEP:DrawHUD()
         surface.SetTextPos(scrw / 2 - tw2 / 2, scrh / 2 + ScreenScale(36))
         surface.SetTextColor(255, 255, 255, 255)
         surface.DrawText(text2)
-    elseif self:CanBipod() then
-        local text = "[" .. ARC9.GetBindKey("+use") .. "]"
+    elseif self:CanBipod() and self:GetSightAmount() <= 0 then
+        local text = "[" .. ARC9.GetBindKey("+attack2") .. "]"
 
         surface.SetFont("ARC9_12")
         local tw, th = surface.GetTextSize(text)
