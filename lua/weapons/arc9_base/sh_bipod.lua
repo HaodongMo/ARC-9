@@ -1,4 +1,5 @@
 function SWEP:ThinkBipod()
+    if self:PredictionFilter() then return end
 
     local bip = self:GetBipod()
 
@@ -30,8 +31,6 @@ function SWEP:CanBipod(ang)
     if self:GetReloading() and !self:GetBipod() then return end
     if self:GetBlindFireAmount() > 0 then return end
     if self:GetUBGL() then return end
-
-    if self:GetOwner():GetVelocity():LengthSqr() > 100 then return end
 
     local pos = self:GetOwner():EyePos()
     ang = ang or self:GetOwner():EyeAngles()
