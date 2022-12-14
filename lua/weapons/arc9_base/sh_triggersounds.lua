@@ -3,6 +3,7 @@ function SWEP:ThinkTriggerSounds()
 
     if self:GetAnimLockTime() > CurTime() then return end
     if self:StillWaiting() then return end
+    if self:SprintLock() then return end
     if self:GetSafe() then return end
 
     if self:GetOwner():KeyReleased(IN_ATTACK) then

@@ -162,6 +162,11 @@ end
 function SWEP:PrimaryAttack()
     if self.NotAWeapon then return end
 
+    if self:GetOwner():IsNPC() then
+        self:NPC_PrimaryAttack()
+        return
+    end
+
     if self:GetProcessedValue("Throwable") then
         return
     end
@@ -184,6 +189,12 @@ function SWEP:PrimaryAttack()
 
     if self:GetNeedTriggerPress() then return end
 
+    if self:GetNeedsCycle() then return end
+
+    if self:SprintLock() then return end
+
+    if self:GetCustomize() then return end
+
     if self:GetProcessedValue("TriggerDelay") then
         if self:GetBurstCount() == 0 and !self:GetPrimedAttack() then
             self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
@@ -197,12 +208,9 @@ function SWEP:PrimaryAttack()
         end
     end
 
-    self:DoPrimaryAttack()
-end
-
-function SWEP:DoPrimaryAttack()
-    if self:GetOwner():IsNPC() then
-        self:NPC_PrimaryAttack()
+    if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
+        self:MeleeAttack()
+        self:SetNeedTriggerPress(true)
         return
     end
 
@@ -210,12 +218,12 @@ function SWEP:DoPrimaryAttack()
         self:SetEndReload(true)
     end
 
-    if self:SprintLock() then return end
+    self:DoPrimaryAttack()
+end
+
+function SWEP:DoPrimaryAttack()
 
     if self:StillWaiting() then return end
-    if self:GetNeedsCycle() then return end
-
-    if self:GetCustomize() then return end
 
     -- if self:GetProcessedValue("CanQuickNade") then
     --     if self:GetOwner():KeyDown(IN_USE) then
@@ -231,12 +239,6 @@ function SWEP:DoPrimaryAttack()
     --         return
     --     end
     -- end
-
-    if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
-        self:MeleeAttack()
-        self:SetNeedTriggerPress(true)
-        return
-    end
 
     if self:GetCurrentFiremode() > 0 and self:GetBurstCount() >= self:GetCurrentFiremode() then return end
 
