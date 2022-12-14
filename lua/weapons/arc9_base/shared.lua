@@ -1328,10 +1328,11 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Angle", 1, "LastAimAngle")
     self:NetworkVar("Angle", 2, "VisualRecoilAng")
     self:NetworkVar("Angle", 3, "VisualRecoilVel")
-    self:NetworkVar("Angle", 4, "BipodAngle")
+    self:NetworkVar("Angle", 4, "BipodAng")
 
     self:NetworkVar("Vector", 0, "VisualRecoilPos")
     self:NetworkVar("Vector", 1, "VisualRecoilPosVel")
+    self:NetworkVar("Vector", 2, "BipodPos")
 
     self:NetworkVar("String", 0, "IKAnimation")
 

@@ -35,6 +35,14 @@ function ARC9.Move(ply, mv, cmd)
         mv:SetVelocity(lungedir * lungespd)
         -- mv:SetForwardSpeed(lungespd)
     end
+
+    if wpn:GetBipod() then
+        if ply:Crouching() then
+            mv:SetButtons(bit.bor(mv:GetButtons(), IN_DUCK))
+        else
+            mv:SetButtons(bit.band(mv:GetButtons(), bit.bnot(IN_DUCK)))
+        end
+    end
 end
 
 hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)
@@ -43,6 +51,27 @@ function ARC9.StartCommand(ply, cmd)
     local wpn = ply:GetActiveWeapon()
 
     if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
+
+    if wpn:GetBipod() then
+        local bipang = wpn:GetBipodAng()
+
+        local eyeang = cmd:GetViewAngles()
+
+        if math.AngleDifference(bipang.y, eyeang.y) < -40 then
+            eyeang.y = bipang.y + 40
+        elseif math.AngleDifference(bipang.y, eyeang.y) > 40 then
+            eyeang.y = bipang.y - 40
+        end
+
+        if math.AngleDifference(bipang.p, eyeang.p) > 15 then
+            eyeang.p = bipang.p - 15
+        elseif math.AngleDifference(bipang.p, eyeang.p) < -15 then
+            eyeang.p = bipang.p + 15
+        end
+
+        cmd:SetViewAngles(eyeang)
+        ply:SetEyeAngles(eyeang)
+    end
 
     local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
     local recrise = ARC9.RecoilRise

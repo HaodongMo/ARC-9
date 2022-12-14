@@ -280,6 +280,40 @@ function SWEP:DrawHUD()
         end
     end
 
+    if self:GetBipod() then
+        local text = "[" .. ARC9.GetBindKey("+use") .. "]"
+
+        surface.SetFont("ARC9_12")
+        local tw, th = surface.GetTextSize(text)
+        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(24))
+        surface.SetTextColor(255, 255, 255, 255)
+        surface.DrawText(text)
+
+        local text2 = "Exit Bipod"
+
+        surface.SetFont("ARC9_10")
+        local tw2, th2 = surface.GetTextSize(text2)
+        surface.SetTextPos(scrw / 2 - tw2 / 2, scrh / 2 + ScreenScale(36))
+        surface.SetTextColor(255, 255, 255, 255)
+        surface.DrawText(text2)
+    elseif self:CanBipod() then
+        local text = "[" .. ARC9.GetBindKey("+use") .. "]"
+
+        surface.SetFont("ARC9_12")
+        local tw, th = surface.GetTextSize(text)
+        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(24))
+        surface.SetTextColor(255, 255, 255, 255)
+        surface.DrawText(text)
+
+        local text2 = "Enter Bipod"
+
+        surface.SetFont("ARC9_10")
+        local tw2, th2 = surface.GetTextSize(text2)
+        surface.SetTextPos(scrw / 2 - tw2 / 2, scrh / 2 + ScreenScale(36))
+        surface.SetTextColor(255, 255, 255, 255)
+        surface.DrawText(text2)
+    end
+
     self:HoldBreathHUD()
     self:DrawCustomizeHUD()
 

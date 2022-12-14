@@ -1,28 +1,40 @@
 function SWEP:ThinkBipod()
 
     local bip = self:GetBipod()
-    local canbip = self:CanBipod()
 
     if bip then
-        if !canbip then
+        if self:MustExitBipod() or self:GetOwner():KeyPressed(IN_USE) then
             self:ExitBipod()
         end
     else
-        if canbip then
+        if self:CanBipod() and self:GetOwner():KeyPressed(IN_USE) then
             self:EnterBipod()
         end
     end
 end
 
-function SWEP:CanBipod()
+function SWEP:MustExitBipod()
+    if !self:GetProcessedValue("Bipod") then return true end
+    if self:GetSprintAmount() > 0 then return true end
+    if self:GetBlindFireAmount() > 0 then return true end
+    if self:GetUBGL() then return true end
+
+    if self:GetOwner():GetVelocity():LengthSqr() > 100 then return true end
+
+    return false
+end
+
+function SWEP:CanBipod(ang)
     if !self:GetProcessedValue("Bipod") then return end
     if self:GetSprintAmount() > 0 then return end
     if self:GetReloading() and !self:GetBipod() then return end
     if self:GetBlindFireAmount() > 0 then return end
     if self:GetUBGL() then return end
 
+    if self:GetOwner():GetVelocity():LengthSqr() > 100 then return end
+
     local pos = self:GetOwner():EyePos()
-    local ang = self:GetOwner():EyeAngles()
+    ang = ang or self:GetOwner():EyeAngles()
 
     local maxs = Vector(2, 2, 2)
     local mins = Vector(-2, -2, -48)
@@ -34,7 +46,7 @@ function SWEP:CanBipod()
         mask = MASK_PLAYERSOLID
     })
 
-    -- if tr.Hit then return end
+    if tr.Hit then return end
 
     -- ang:RotateAroundAxis(ang:Right(), -30)
 
@@ -70,6 +82,9 @@ function SWEP:EnterBipod()
     self:PlayTranslatedSound(soundtab1)
     self:PlayAnimation("enter_bipod", 1, true)
     self:SetEnterBipodTime(CurTime())
+
+    self:SetBipodAng(self:GetOwner():EyeAngles())
+    self:SetBipodPos(self:GetOwner():EyePos() + (self:GetOwner():EyeAngles():Forward() * 4) - Vector(0, 0, 2))
 
     self:ExitSights()
 end

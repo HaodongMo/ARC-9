@@ -171,11 +171,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         local bipodpos, bipodang = self:GetProcessedValue("BipodPos"), self:GetProcessedValue("BipodAng")
 
         if bipodpos and bipodang then
-            -- LerpVector(bipodamount, sightpos, bipodpos)
-            -- LerpAngle(bipodamount, sightpos, bipodang)
+            pos = LerpVector(math.Clamp(bipodamount - self:GetSightAmount(), 0, 1), pos, self:GetBipodPos())
 
-            -- offsetpos = offsetpos + (bipodpos * bipodamount)
-            -- offsetang = offsetang + (bipodpos * bipodamount)
             offsetpos = LerpVector(bipodamount, offsetpos, bipodpos)
             offsetang = LerpAngle(bipodamount, offsetang, bipodang)
         else
