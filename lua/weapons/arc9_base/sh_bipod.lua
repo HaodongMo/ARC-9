@@ -70,6 +70,8 @@ function SWEP:EnterBipod()
     self:PlayTranslatedSound(soundtab1)
     self:PlayAnimation("enter_bipod", 1, true)
     self:SetEnterBipodTime(CurTime())
+
+    self:ExitSights()
 end
 
 function SWEP:ExitBipod()
@@ -85,6 +87,8 @@ function SWEP:ExitBipod()
     if self:GetAnimLockTime() <= CurTime() then
         self:PlayAnimation("exit_bipod", 1, true)
     end
+
+    self:ExitSights()
 end
 
 SWEP.BipodTime = 0.5

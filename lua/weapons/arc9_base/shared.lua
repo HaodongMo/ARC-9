@@ -771,6 +771,7 @@ SWEP.AfterShotParticle = nil -- Particle to spawn after shooting
 
 SWEP.ImpactEffect = nil
 SWEP.ImpactDecal = nil
+SWEP.ImpactSound = nil
 
 SWEP.ShellEffect = nil -- Override the ARC9 shell eject effect for your own.
 SWEP.ShellEffectCount = 1
@@ -1190,6 +1191,7 @@ SWEP.Animations = {
     --         ["selector"] = 1 -- an application might be to change firemodes.
     --     }, -- relevant pose parameters will be set to default values while the animation is playing, so make sure you take that into consideration for animating.
     --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one. For SWEP.BulletBones
+    --     NoMagSwap = false, -- don't bother with above
     --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
     --     FireASAP = false, -- allowes to shoot right after clip anim was "done" with MinProgress
     --     RestoreAmmo = 0, -- Restores ammunition to clip
@@ -1326,6 +1328,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Angle", 1, "LastAimAngle")
     self:NetworkVar("Angle", 2, "VisualRecoilAng")
     self:NetworkVar("Angle", 3, "VisualRecoilVel")
+    self:NetworkVar("Angle", 4, "BipodAngle")
 
     self:NetworkVar("Vector", 0, "VisualRecoilPos")
     self:NetworkVar("Vector", 1, "VisualRecoilPosVel")

@@ -584,6 +584,17 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         util.Effect(self:GetProcessedValue("ImpactEffect"), fx, true)
     end
 
+    if self:GetProcessedValue("ImpactSound") then
+        local soundtab = {
+            name = "impact",
+            sound = self:GetProcessedValue("ImpactSound")
+        }
+
+        soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
+
+        sound.Play(soundtab.sound, tr.HitPos, soundtab.level, soundtab.pitch, soundtab.volume)
+    end
+
     if self:GetProcessedValue("ExplosionDamage") > 0 then
         util.BlastDamage(self, self:GetOwner(), tr.HitPos, self:GetProcessedValue("ExplosionRadius"), self:GetProcessedValue("ExplosionDamage"))
     end
