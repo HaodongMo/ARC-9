@@ -97,6 +97,7 @@ ARC9.AutoStatsMains = {
     ["VisualRecoilSide"] = {false, false},
     ["VisualRecoilRoll"] = {false, false},
     ["VisualRecoilPunch"] = {false, false},
+    ["BreathHoldTime"] = {false, false},
 }
 
 ARC9.AutoStatsOperations = {

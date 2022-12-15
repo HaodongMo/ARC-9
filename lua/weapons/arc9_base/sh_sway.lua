@@ -70,8 +70,6 @@ function SWEP:ThinkHoldBreath()
 end
 
 function SWEP:CanHoldBreath()
-    if !GetConVar("arc9_mod_sway"):GetBool() then return false end
-
     return self:GetBreath() > 0 and !self:GetOutOfBreath()
 end
 

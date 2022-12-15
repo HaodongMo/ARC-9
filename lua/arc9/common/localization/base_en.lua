@@ -89,6 +89,7 @@ L["autostat.visualrecoilup"] = "Vertical Visual Recoil"
 L["autostat.visualrecoilside"] = "Horizontal Visual Recoil"
 L["autostat.visualrecoilroll"] = "Visual Recoil Roll"
 L["autostat.visualrecoilpunch"] = "Visual Recoil Punch"
+L["autostat.breathholdtime"] = "Focus Time"
 
 L["autostat.secondary.true"] = "when TrueNames is on"
 L["autostat.secondary.silenced"] = "when Silenced"
