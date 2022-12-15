@@ -28,9 +28,12 @@ function SWEP:SprintLock()
 end
 
 function SWEP:DryFire()
+    self:PlayAnimation("dryfire")
+    self:SetBurstCount(0)
+    self:SetNeedTriggerPress(true)
+
     if self:GetNthShot() > 0 and self:GetProcessedValue("DryFireSingleAction") then return end
 
-    self:PlayAnimation("dryfire")
     local soundtab = {
         name = "dryfire",
         sound = self:RandomChoice(self:GetProcessedValue("DryFireSound")),
@@ -40,8 +43,6 @@ function SWEP:DryFire()
         channel = ARC9.CHAN_FIDDLE
     }
     self:PlayTranslatedSound(soundtab)
-    self:SetBurstCount(0)
-    self:SetNeedTriggerPress(true)
 
     self:SetNthShot(self:GetNthShot() + 1)
 end
@@ -195,16 +196,18 @@ function SWEP:PrimaryAttack()
 
     if self:GetCustomize() then return end
 
-    if self:GetProcessedValue("TriggerDelay") then
-        if self:GetBurstCount() == 0 and !self:GetPrimedAttack() and !self:StillWaiting() then
-            self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
-            self:PlayAnimation("trigger")
-            self:SetPrimedAttack(true)
-            return
-        elseif self:GetPrimedAttack() and self:GetTriggerDelay() > CurTime() then
-            return
-        elseif self:GetPrimedAttack() then
-            self:SetPrimedAttack(false)
+    if self:HasAmmoInClip() then
+        if self:GetProcessedValue("TriggerDelay") then
+            if self:GetBurstCount() == 0 and !self:GetPrimedAttack() and !self:StillWaiting() then
+                self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
+                self:PlayAnimation("trigger")
+                self:SetPrimedAttack(true)
+                return
+            elseif self:GetPrimedAttack() and self:GetTriggerDelay() > CurTime() then
+                return
+            elseif self:GetPrimedAttack() then
+                self:SetPrimedAttack(false)
+            end
         end
     end
 
