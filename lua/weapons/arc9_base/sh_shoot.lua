@@ -196,14 +196,14 @@ function SWEP:PrimaryAttack()
     if self:GetCustomize() then return end
 
     if self:GetProcessedValue("TriggerDelay") then
-        if self:GetBurstCount() == 0 and !self:GetPrimedAttack() then
+        if self:GetBurstCount() == 0 and !self:GetPrimedAttack() and !self:StillWaiting() then
             self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
             self:PlayAnimation("trigger")
             self:SetPrimedAttack(true)
             return
         elseif self:GetPrimedAttack() and self:GetTriggerDelay() > CurTime() then
             return
-        else
+        elseif self:GetPrimedAttack() then
             self:SetPrimedAttack(false)
         end
     end

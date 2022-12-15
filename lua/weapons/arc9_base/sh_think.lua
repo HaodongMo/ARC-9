@@ -11,11 +11,11 @@ function SWEP:Think()
     if !self.NotAWeapon then
         if owner:KeyReleased(IN_ATTACK) or (self:GetUBGL() and owner:KeyReleased(IN_ATTACK2)) then
             self:SetNeedTriggerPress(false)
+            if self:GetCurrentFiremode() > 1 and !self:GetProcessedValue("RunawayBurst") and self:GetBurstCount() > 0 then
+                self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
+            end
             if !self:GetProcessedValue("RunawayBurst") then
                 self:SetBurstCount(0)
-            end
-            if self:GetCurrentFiremode() < 0 and !self:GetProcessedValue("RunawayBurst") and self:GetBurstCount() > 0 then
-                self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
             end
         end
 
