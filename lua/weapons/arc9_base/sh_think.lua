@@ -9,7 +9,23 @@ function SWEP:Think()
     end
 
     if !self.NotAWeapon then
-        if owner:KeyReleased(IN_ATTACK) or (self:GetUBGL() and owner:KeyReleased(IN_ATTACK2)) then
+        if self:GetProcessedValue("TriggerDelay") then
+            if self:GetOwner():KeyReleased(IN_ATTACK) and (self:GetTriggerDelay() > CurTime() or self:GetPrimedAttack()) then
+                self:PlayAnimation("untrigger")
+
+                if self:GetProcessedValue("TriggerDelayCancellable") then
+                    self:SetPrimedAttack(false)
+                end
+            end
+
+            if self:GetPrimedAttack() and self:GetTriggerDelay() <= CurTime() and !self:GetOwner():KeyDown(IN_ATTACK) then
+                if !self:PredictionFilter() then
+                    self:PrimaryAttack()
+                end
+            end
+        end
+
+        if !owner:KeyDown(IN_ATTACK) then
             self:SetNeedTriggerPress(false)
             if self:GetCurrentFiremode() > 1 and !self:GetProcessedValue("RunawayBurst") and self:GetBurstCount() > 0 then
                 self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
@@ -25,13 +41,6 @@ function SWEP:Think()
                 self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
             elseif self:GetBurstCount() > 0 and self:GetBurstCount() < self:GetCurrentFiremode() then
                 self:DoPrimaryAttack()
-            end
-        end
-
-        if self:GetProcessedValue("TriggerDelay") then
-            if self:GetOwner():KeyReleased(IN_ATTACK) and (self:GetTriggerDelay() > CurTime() or self:GetPrimedAttack()) then
-                self:PlayAnimation("untrigger")
-                self:SetPrimedAttack(false)
             end
         end
 
