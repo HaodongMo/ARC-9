@@ -1,7 +1,10 @@
 SWEP.ElementsCache = {}
 
 function SWEP:GetElements()
-    if self.ElementsCache then return self.ElementsCache end
+    if self.ElementsCache then
+        local eles = self:RunHook("Hook_ModifyElements", self.ElementsCache) or self.ElementsCache
+        return eles
+    end
 
     local eles = {}
 
@@ -40,6 +43,8 @@ function SWEP:GetElements()
     end
 
     self.ElementsCache = eles2
+
+    eles2 = self:RunHook("Hook_ModifyElements", eles2) or eles2
 
     return eles2
 end
