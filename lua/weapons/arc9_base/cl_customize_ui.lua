@@ -153,8 +153,8 @@ SWEP.CustomizeButtons = {
 
             swtichtoslotmenu(self2)
 
-            if self2.CustomizeHUD.lowerpanel then 
-                if self2.CustomizeHUD.lowerpanel.Extended then 
+            if self2.CustomizeHUD.lowerpanel then
+                if self2.CustomizeHUD.lowerpanel.Extended then
                     self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
                     self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
                 else
@@ -175,10 +175,10 @@ SWEP.CustomizeButtons = {
     --     title = "STATS",
     --     func = function(self2)
     --         self2:CreateHUD_Stats()
-            
-    --         if self2.CustomizeHUD.lowerpanel then 
-    --             self2.CustomizeHUD.lowerpanel.Extended = nil 
-                
+
+    --         if self2.CustomizeHUD.lowerpanel then
+    --             self2.CustomizeHUD.lowerpanel.Extended = nil
+
     --             self2:ClosePresetMenu()
 
     --             self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
@@ -195,9 +195,9 @@ SWEP.CustomizeButtons = {
         func = function(self2)
             self2:CreateHUD_Bench()
 
-            if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel.Extended = nil 
-                
+            if self2.CustomizeHUD.lowerpanel then
+                self2.CustomizeHUD.lowerpanel.Extended = nil
+
                 self2:ClosePresetMenu()
 
                 -- self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
@@ -216,10 +216,10 @@ SWEP.CustomizeButtons = {
         title = "TRIVIA",
         func = function(self2)
             self2:CreateHUD_Trivia()
-            
-            if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel.Extended = nil 
-                
+
+            if self2.CustomizeHUD.lowerpanel then
+                self2.CustomizeHUD.lowerpanel.Extended = nil
+
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
@@ -237,13 +237,15 @@ SWEP.CustomizeButtons = {
         func = function(self2)
             self2:ClearTabPanel()
 
-            if self2.CustomizeHUD.lowerpanel then 
-                self2.CustomizeHUD.lowerpanel.Extended = nil 
-                
+            if self2.CustomizeHUD.lowerpanel then
+                self2.CustomizeHUD.lowerpanel.Extended = nil
+
                 self2:ClosePresetMenu()
 
                 self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
-                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil) 
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
+
+                self2.CustomizeAlphaBuffer = math.max(self2.CustomizeAlphaBuffer or 0, CurTime() + 0.5)
             end
         end,
         inspect = true,
@@ -301,7 +303,7 @@ local setscroll = 0
 hook.Add("StartCommand", "ARC9_GamepadHUD", function(ply, cmd)
     if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon().ARC9 and LocalPlayer():GetActiveWeapon():GetCustomize() then
         local wpn = LocalPlayer():GetActiveWeapon()
-    
+
         local pox = math.Round(math.TimeFraction(-32768, 32767, input.GetAnalogValue(ANALOG_JOY_U))-0.5, 1)*2
         local poy = math.Round(math.TimeFraction(-32768, 32767, input.GetAnalogValue(ANALOG_JOY_R))-0.5, 1)*2
 
@@ -443,7 +445,7 @@ function SWEP:CreateCustomizeHUD()
     if ARC9.ActiveHolidays["Christmas"] then
         bg.Posh = 0
     end
-    
+
     bg.Paint = function(self2, w, h)
         if !IsValid(self) or LocalPlayer():GetActiveWeapon() != self then
             self2:Remove()
@@ -462,13 +464,13 @@ function SWEP:CreateCustomizeHUD()
 
             surface.SetTextColor(255, 174, 0)
             surface.SetTextPos((w/2) - 10, ARC9ScreenScale(16))
-            surface.DrawText("bone pos")    
+            surface.DrawText("bone pos")
             surface.SetTextColor(230, 166, 255)
             surface.SetTextPos((w/2) - 10, ARC9ScreenScale(23))
-            surface.DrawText("icon pos")     
+            surface.DrawText("icon pos")
             surface.SetTextColor(206, 90, 90)
             surface.SetTextPos((w/2) - 10, ARC9ScreenScale(30))
-            surface.DrawText("att pos")    
+            surface.DrawText("att pos")
 
         elseif ARC9.ActiveHolidays["Troll Day"] then
             do  -- nice text
@@ -741,7 +743,7 @@ function SWEP:CreateCustomizeHUD()
             surface.SetDrawColor(0, 0, 0, 250)
             surface.DrawTexturedRect(w - h, 0, h, h)]]--
         end
-        
+
         local bumpy = {}
 
         local anyhovered = false
@@ -770,7 +772,7 @@ function SWEP:CreateCustomizeHUD()
             for _, slot in ipairs(self:GetSubSlotList()) do
                 if slot.Hidden then continue end
                 local ms_slot = self:GetFilledMergeSlot(slot.Address)
-                
+
                 if !ms_slot.Installed and self:GetSlotBlocked(slot) then continue end
 
                 local atttbl = self:GetFinalAttTable(ms_slot)
@@ -824,8 +826,8 @@ function SWEP:CreateCustomizeHUD()
 
                 local col = ARC9.GetHUDColor("notoccupied")
 
-                local showname = false 
-                
+                local showname = false
+
                 if hoveredslot or ms_slot.hovered then
                     col = ARC9.GetHUDColor("hi")
                     showname = true
@@ -841,7 +843,7 @@ function SWEP:CreateCustomizeHUD()
                         self.CustomizeHints["Deselect"] = "Unattach"
                     end
                 end
-                
+
                 if DevMode then
                     -- local bonepos = self:GetVM():GetBonePosition(self:GetVM():LookupBone(slot.Bone))
                     local bonepos =  self:GetVM():GetBoneMatrix(self:GetVM():LookupBone(slot.Bone)):GetTranslation()
@@ -849,7 +851,7 @@ function SWEP:CreateCustomizeHUD()
                     local boneposX, boneposY = bonepostoscreen.x, bonepostoscreen.y
 
                     surface.SetFont("ARC9_4")
-            
+
                     -- att
 
                     surface.SetDrawColor(206, 90, 90)
@@ -858,11 +860,11 @@ function SWEP:CreateCustomizeHUD()
                     surface.SetDrawColor(230, 166, 255)
                     surface.DrawLine(x, y, xUOS, yUOS)
                     surface.DrawRect(x-2.5, y-2.5, 5, 5)
-                    
+
                     surface.SetTextColor(230, 166, 255)
                     surface.SetTextPos(x, y-20)
                     surface.DrawText(slot.PrintName)
-                    
+
                     -- bone
                     surface.SetDrawColor(255, 174, 0)
                     surface.DrawLine(xUOS, yUOS, boneposX, boneposY)
@@ -934,7 +936,7 @@ function SWEP:CreateCustomizeHUD()
                         -- self.CustomizePanY = 0
                         -- self.CustomizePitch = 0
                         surface.PlaySound(clicksound)
-                        
+
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
                         self:DetachAllFromSubSlot(slot.Address)
                         self.BottomBarPath = {}
@@ -986,7 +988,7 @@ function SWEP:CreateCustomizeHUD()
 
                 self.CustomizePitch = self.CustomizePitch - (dx / ARC9ScreenScale(4))*3
                 -- self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
-                self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) 
+                self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8))
 
             end
         elseif self:GetOwner():KeyDown(IN_RELOAD) then
@@ -1104,7 +1106,7 @@ function SWEP:CreateCustomizeHUD()
             },
         }
     end
-    
+
     if GetConVar("arc9_cust_hints"):GetBool() then
         local hintspanel = vgui.Create("DPanel", bg)
         -- hintspanel:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
@@ -1141,7 +1143,7 @@ function SWEP:CreateCustomizeHUD()
                 if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
                 if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
                 if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material("arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth") end
-                if v.glyph2 then 
+                if v.glyph2 then
                     if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
                     if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
                     if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material("arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth") end
@@ -1170,10 +1172,10 @@ function SWEP:CreateCustomizeHUD()
                     table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
                 end
             end
-                
+
 
             CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
-            
+
             local strreturn = CreateControllerKeyLine({x = self2:GetWide(), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3)) -- ghost     text only to get width
             CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(8)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
 
@@ -1187,19 +1189,19 @@ function SWEP:RemoveCustomizeHUD()
     if self.RemovingCustHud then return end
 
     local bg = self.CustomizeHUD
-    
+
     local scrh = ScrH()
     local scrw = ScrW()
 
     if self.CustomizeHUD then
-        self.RemovingCustHud = true 
+        self.RemovingCustHud = true
         if bg.nameplate then bg.nameplate:MoveTo(scrw/3, -ARC9ScreenScale(64), 0.7, 0, 0.05, nil) bg.nameplate:AlphaTo(0, 0.2, 0) end
         if bg.topleft_panel then bg.topleft_panel:MoveTo(-ARC9ScreenScale(70), -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topleft_panel:AlphaTo(0, 0.2, 0) end
         if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topright_panel:AlphaTo(0, 0.2, 0) end
         if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.lowerpanel:AlphaTo(0, 0.2, 0) end
         if bg.hintspanel then bg.hintspanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.hintspanel:AlphaTo(0, 0.1, 0) end
         -- if self.TabPanel then self.TabPanel:AlphaTo(0, 0.1, 0) end
-                
+
         self:ClosePresetMenu()
 
         gui.EnableScreenClicker(false)
@@ -1242,7 +1244,7 @@ function SWEP:CreateHUD_RHP()
     local nameplate = vgui.Create("DPanel", bg)
     self.CustomizeHUD.nameplate = nameplate
     nameplate:SetPos(scrw/3, -ARC9ScreenScale(64)) -- h = ARC9ScreenScale(8)
-	nameplate:MoveTo(scrw/3, ARC9ScreenScale(8), 1, 0, 0.05, nil)
+    nameplate:MoveTo(scrw/3, ARC9ScreenScale(8), 1, 0, 0.05, nil)
     nameplate:SetSize(scrw/3, ARC9ScreenScale(38))
     nameplate:MoveToBack()
     nameplate.Paint = function(self2, w, h)
@@ -1271,10 +1273,12 @@ function SWEP:CreateHUD_RHP()
         surface.DrawRect(w/2 - tw2/2, ARC9ScreenScale(23), tw2, ARC9ScreenScale(1.5))
     end
 
+    self.CustomizeAlphaBuffer = CurTime() + 1
+
     local inspectalpha = function(self2, panel, minusnum)
         if self.CustomizeButtons[self.CustomizeTab + 1].inspect then -- probably horrible
-            if self2:IsHovered() then
-                panel:SetAlpha(math.min(panel:GetAlpha() + 25, 255)) 
+            if self2:IsHovered() or (self.CustomizeAlphaBuffer or 0) > CurTime() then
+                panel:SetAlpha(math.min(panel:GetAlpha() + 25, 255))
             else
                 panel:SetAlpha(math.max(panel:GetAlpha() - minusnum, 0)) -- * number of cust buttons
             end
@@ -1284,7 +1288,7 @@ function SWEP:CreateHUD_RHP()
     local topleft_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topleft_panel = topleft_panel
     topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
-	topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
+    topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
     topleft_panel:SetSize(ARC9ScreenScale(70), ARC9ScreenScale(40))
     topleft_panel:MoveToBack()
     topleft_panel.Paint = function(self2, w, h) end
@@ -1294,7 +1298,7 @@ function SWEP:CreateHUD_RHP()
     topleft_settings.DoClick = function(self2)
         surface.PlaySound(popupsound)
         ARC9_OpenSettings()
-        
+
         -- self:ToggleCustomize(false)
         -- bg:SetMouseInputEnabled(false)
     end
@@ -1317,7 +1321,7 @@ function SWEP:CreateHUD_RHP()
     local topright_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topright_panel = topright_panel
     topright_panel:SetPos(scrw, -ARC9ScreenScale(40)) -- w = scrw-ARC9ScreenScale(170), h = 0
-	topright_panel:MoveTo(scrw-ARC9ScreenScale(170), 0, 0.4, 0, 0.1, nil)
+    topright_panel:MoveTo(scrw-ARC9ScreenScale(170), 0, 0.4, 0, 0.1, nil)
     topright_panel:SetSize(ARC9ScreenScale(170), ARC9ScreenScale(40))
     topright_panel:MoveToBack()
     topright_panel.Paint = function(self2, w, h) end
@@ -1365,7 +1369,7 @@ function SWEP:CreateHUD_RHP()
     local lowerpanel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.lowerpanel = lowerpanel
     lowerpanel:SetPos(ARC9ScreenScale(19), scrh) -- h = scrh-ARC9ScreenScale(93)
-	-- lowerpanel:MoveTo(ARC9ScreenScale(19), scrh-ARC9ScreenScale(93), 0.6, 0, 0.1, nil) -- CustomizeTab does this for us
+    -- lowerpanel:MoveTo(ARC9ScreenScale(19), scrh-ARC9ScreenScale(93), 0.6, 0, 0.1, nil) -- CustomizeTab does this for us
     lowerpanel:SetSize(scrw - ARC9ScreenScale(38), ARC9ScreenScale(74))
     lowerpanel:MoveToBack()
 
@@ -1387,21 +1391,21 @@ function SWEP:CreateHUD_RHP()
         surface.SetFont("ARC9_12")
         local titlewidth = surface.GetTextSize(btn.title) + ARC9ScreenScale(12.5)
         --
-        
-        if btn.inspect then 
+
+        if btn.inspect then
             custtabbtn:SetPos(scrw - ARC9ScreenScale(38) - titlewidth, 0)
             inspecttextwidth = titlewidth
-        else 
+        else
             barlength = barlength + titlewidth + ARC9ScreenScale(1.5)
             custtabbtn:SetPos(barlength - titlewidth, 0)
         end
-        
+
         custtabbtn:SetSize(titlewidth, ARC9ScreenScale(14.5))
         custtabbtn.title = btn.title
         custtabbtn.page = i - 1
         custtabbtn.func = btn.func
         custtabbtn:SetText("")
-        
+
 
         custtabbtn.Paint = function(self2, w, h)
             if !IsValid(self) then return end
@@ -1425,7 +1429,7 @@ function SWEP:CreateHUD_RHP()
             draw.NoTexture()
 
             local hcutted = ARC9ScreenScale(11.5)
-            
+
             if btn.cutcorner == 1 then
                 surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = w, y = 0}, {x = w, y = hcutted}})
             elseif btn.cutcorner == 2 then
@@ -1438,7 +1442,7 @@ function SWEP:CreateHUD_RHP()
 
             surface.SetDrawColor(barbuttoncolor)
             surface.DrawRect(0, h - ARC9ScreenScale(1.5), w, h)
-            
+
             surface.SetFont("ARC9_12")
             local tw = surface.GetTextSize(self2.title)
 
@@ -1461,17 +1465,17 @@ function SWEP:CreateHUD_RHP()
         --     self:ClearTabPanel()
         -- end
 
-        
-        lowerpanel.Paint = function(self2, w, h) 
+
+        lowerpanel.Paint = function(self2, w, h)
             surface.SetDrawColor(ARC9.GetHUDColor("bg"))
 
             surface.DrawRect(barlength + ARC9ScreenScale(1.5), ARC9ScreenScale(12.75), w - barlength - inspecttextwidth - ARC9ScreenScale(3.2), ARC9ScreenScale(1.75)) -- bar spacer
-            
+
             draw.NoTexture()
-            
+
             if self2.Extended then
                 surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = h}})
-                
+
                 surface.DrawRect(0, ARC9ScreenScale(15.5+60-2.5), w*0.5-ARC9ScreenScale(0.5), ARC9ScreenScale(1.5))
 
                 surface.DrawRect(0, ARC9ScreenScale(15.5), w, ARC9ScreenScale(60-3.5))
@@ -1500,7 +1504,7 @@ function SWEP:CreateHUD_RHP()
     end
 
     self.CustomizeButtons[self.CustomizeTab + 1].func(self)
-    
+
     if DevMode then
         self:DevStuffMenu()
     end
