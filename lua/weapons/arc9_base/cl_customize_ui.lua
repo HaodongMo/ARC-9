@@ -234,10 +234,13 @@ SWEP.CustomizeButtons = {
     },
     {
         title = "INSPECT",
-        func = function(self2)
+        func = function(self2, page)
             self2:ClearTabPanel()
 
-            if self2.CustomizeHUD.lowerpanel then
+            if self2.LastCustomizeTab == page then
+                self2.CustomizeTab = 0
+                self2.CustomizeButtons[1].func(self2)
+            elseif self2.CustomizeHUD.lowerpanel then
                 self2.CustomizeHUD.lowerpanel.Extended = nil
 
                 self2:ClosePresetMenu()
@@ -1453,8 +1456,9 @@ function SWEP:CreateHUD_RHP()
         end
         custtabbtn.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
         custtabbtn.DoClick = function(self2)
+            self.LastCustomizeTab = self.CustomizeTab
             self.CustomizeTab = self2.page
-            self2.func(self)
+            self2.func(self, self2.page)
             surface.PlaySound(tabsound)
         end
         custtabbtn.OnCursorEntered = function(self2)
