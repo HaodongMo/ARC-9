@@ -68,6 +68,8 @@ function SWEP:Deploy()
         self:SetTimer(0.25, function()
             self:SendWeapon()
         end)
+
+        self:GetOwner():GetHands():SetLightingOriginEntity(self:GetOwner():GetViewModel())
     end
 
     self:SetShouldHoldType()

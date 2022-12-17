@@ -1,7 +1,16 @@
 function SWEP:ThinkCycle()
+    if self:PredictionFilter() then return end
     if self:StillWaiting() then return end
 
-    if self:GetNeedsCycle() and (!self:GetOwner():KeyDown(IN_ATTACK) or self:GetProcessedValue("SlamFire")) then
+    local manual = self:ShouldManualCycle()
+
+    local cycling = !self:GetOwner():KeyDown(IN_ATTACK)
+
+    if manual then
+        cycling = self:GetOwner():KeyDown(IN_RELOAD)
+    end
+
+    if self:GetNeedsCycle() and (cycling or self:GetProcessedValue("SlamFire")) then
 
         if self.MalfunctionCycle and (IsFirstTimePredicted() and self:RollJam()) then return end
 
@@ -25,4 +34,8 @@ function SWEP:ThinkCycle()
 
         self:SetNeedsCycle(false)
     end
+end
+
+function SWEP:ShouldManualCycle()
+    return self:GetOwner():GetInfoNum("arc9_manualbolt", 0) >= 1
 end

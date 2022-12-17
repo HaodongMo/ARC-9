@@ -16,6 +16,9 @@ function SWEP:InvalidateCache()
     self.ScrollLevels = {}
     self.HasNoAffectors = {}
 
+    self.IKGunMotionOffset = nil
+    self.IKGunMotionOffsetAngle = nil
+
     self:SetBaseSettings()
 end
 
@@ -94,15 +97,15 @@ function SWEP:GetAllAffectors()
 
     table.insert(aff, self:GetTable())
 
-    if !ARC9.Overrun then
-        ARC9.Overrun = true
+    if !ARC9.OverrunSights then
+        ARC9.OverrunSights = true
         local sight = self:GetSight()
 
         if sight.OriginalSightTable then
             table.insert(aff, sight.OriginalSightTable)
         end
 
-        ARC9.Overrun = false
+        ARC9.OverrunSights = false
     end
 
     for _, slot in ipairs(self:GetSubSlotList()) do
@@ -128,10 +131,25 @@ function SWEP:GetAllAffectors()
     end
     table.insert(aff, c4)
 
-    if !ARC9.Overrun then
-        ARC9.Overrun = true
+    if !ARC9.OverrunFiremodes then
+        ARC9.OverrunFiremodes = true
         table.insert(aff, self:GetCurrentFiremodeTable())
-        ARC9.Overrun = false
+        ARC9.OverrunFiremodes = false
+    end
+
+    if !ARC9.OverrunAttElements then
+        ARC9.OverrunAttElements = true
+
+        for i, k in pairs(self:GetElements()) do
+            if !k then continue end
+            local ele = self.AttachmentElements[i]
+
+            if ele then
+                table.insert(aff, ele)
+            end
+        end
+
+        ARC9.OverrunAttElements = false
     end
 
     self.AffectorsCache = aff
@@ -266,39 +284,35 @@ function SWEP:GetProcessedValue(val, base, cmd)
         end
     end
 
-    if base != "HeatCapacity" and !self.HasNoAffectors[val .. "Hot"] then
-        if self:GetHeatAmount() > 0 then
-            if isnumber(stat) then
-                local hot = self:GetValue(val, stat, "Hot")
+    if base != "HeatCapacity" and !self.HasNoAffectors[val .. "Hot"]  and self:GetHeatAmount() > 0 then
+        if isnumber(stat) then
+            local hot = self:GetValue(val, stat, "Hot")
 
-                if isnumber(hot) then
-                    stat = Lerp(self:GetHeatAmount() / self:GetProcessedValue("HeatCapacity"), stat, hot)
-                end
-            else
-                if self:GetHeatAmount() > 0 then
-                    stat = self:GetValue(val, stat, "Hot")
-                end
+            if isnumber(hot) then
+                stat = Lerp(self:GetHeatAmount() / self:GetProcessedValue("HeatCapacity"), stat, hot)
+            end
+        else
+            if self:GetHeatAmount() > 0 then
+                stat = self:GetValue(val, stat, "Hot")
             end
         end
     end
 
     local getlastmeleetime = self:GetLastMeleeTime()
 
-    if !self.HasNoAffectors[val .. "Melee"] then
-        if getlastmeleetime < ct then
-            local pft = ct - getlastmeleetime
-            local d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
+    if !self.HasNoAffectors[val .. "Melee"] and getlastmeleetime < ct then
+        local pft = ct - getlastmeleetime
+        local d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
 
-            d = math.Clamp(d, 0, 1)
+        d = math.Clamp(d, 0, 1)
 
-            d = 1 - d
+        d = 1 - d
 
-            if isnumber(stat) then
-                stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
-            else
-                if d > 0 then
-                    stat = self:GetValue(val, stat, "Melee")
-                end
+        if isnumber(stat) then
+            stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
+        else
+            if d > 0 then
+                stat = self:GetValue(val, stat, "Melee")
             end
         end
     end
@@ -331,21 +345,20 @@ function SWEP:GetProcessedValue(val, base, cmd)
         end
     end
 
-    if !self.HasNoAffectors[val .. "Move"] then
-        if owner:IsValid() then
-            local spd = self.PV_Move
-            if singleplayer or self.PV_Tick != upct then
-                spd = math.min(owner:GetAbsVelocity():Length(), 250) / 250
+    if !self.HasNoAffectors[val .. "Move"] and IsValid(owner) then
+        local spd = self.PV_Move
+        local maxspd = owner:IsPlayer() and owner:GetWalkSpeed() or 250
+        if singleplayer or CLIENT or self.PV_Tick != upct then
+            spd = math.min(owner:GetAbsVelocity():Length(), maxspd) / maxspd
 
-                self.PV_Move = spd
-            end
+            self.PV_Move = spd
+        end
 
-            if isnumber(stat) then
-                stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
-            else
-                if spd > 0 then
-                    stat = self:GetValue(val, stat, "Move")
-                end
+        if isnumber(stat) then
+            stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
+        else
+            if spd > 0 then
+                stat = self:GetValue(val, stat, "Move")
             end
         end
     end

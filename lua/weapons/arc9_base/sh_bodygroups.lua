@@ -55,7 +55,7 @@ function SWEP:DoBodygroups(wm, cm)
             amt = self:GetLoadedRounds()
         end
 
-        for c, bgs in ipairs(bbg) do
+        for c, bgs in ipairs(bbg or {}) do
             if !isnumber(c) then continue end
             if amt < c then
                 mdl:SetBodygroup(bgs[1], bgs[2])
@@ -78,9 +78,9 @@ function SWEP:DoBodygroups(wm, cm)
 
     local hidebones = self:GetHiddenBones(wm)
 
-    for bone, a in pairs(hidebones) do
+    for bone, a in pairs(hidebones or {}) do
         if !a then continue end
-        local boneid = mdl:LookupBone(bone)
+        local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
 
         if !boneid then continue end
 
@@ -89,13 +89,39 @@ function SWEP:DoBodygroups(wm, cm)
 
     local bulletbones = self:GetProcessedValue("BulletBones")
 
-    for i, bone in ipairs(bulletbones) do
-        local boneid = mdl:LookupBone(bone)
+    for i, bone in ipairs(bulletbones or {}) do
+        local bones = bone
+        if !istable(bones) then
+            bones = {bone}
+        end
 
-        if !boneid then continue end
+        for _, bone2 in ipairs(bones) do
+            local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
 
-        if i > self:GetLoadedRounds() and !clear then
-            mdl:ManipulateBoneScale(boneid, v0)
+            if !boneid then continue end
+
+            if i > self:GetLoadedRounds() and !clear then
+                mdl:ManipulateBoneScale(boneid, v0)
+            end
+        end
+    end
+
+    local stripperbones = self:GetProcessedValue("StripperClipBones")
+
+    for i, bone in ipairs(stripperbones or {}) do
+        local bones = bone
+        if !istable(bones) then
+            bones = {bone}
+        end
+
+        for _, bone2 in ipairs(bones) do
+            local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
+
+            if !boneid then continue end
+
+            if i > self:GetLoadingIntoClip() and !clear then
+                mdl:ManipulateBoneScale(boneid, v0)
+            end
         end
     end
 
@@ -119,8 +145,6 @@ function SWEP:GetHiddenBones(wm)
         hide = true
     end
 
-    if clear then hide = false end
-
     local hidebones = self:GetProcessedValue("HideBones")
     local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables")
 
@@ -130,7 +154,7 @@ function SWEP:GetHiddenBones(wm)
         hide = false
     end
 
-    if self:GetReloading() and reloadhidebones and self:ShouldTPIK() and wm then
+    if self:GetAnimLockTime() >= CurTime() and reloadhidebones and self:ShouldTPIK() and wm then
         local index = self:GetHideBoneIndex()
 
         if index != 0 then
@@ -145,6 +169,8 @@ function SWEP:GetHiddenBones(wm)
             end
         end
     end
+
+    bones = self:RunHook("Hook_HideBones", bones) or bones
 
     return bones
 end

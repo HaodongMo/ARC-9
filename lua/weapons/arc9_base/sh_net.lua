@@ -68,8 +68,6 @@ function SWEP:ReceiveWeapon()
         tbl[i] = self:ReceiveAttachmentTree()
     end
 
-    -- PrintTable(tbl)
-
     if SERVER then
         if !self:ValidateInventoryForNewTree(tbl) then
             return

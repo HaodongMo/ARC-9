@@ -43,6 +43,10 @@ function SWEP:TranslateAnimation(seq)
         if self:GetGrenadePrimed() and self:HasAnimation(seq .. "_primed") then
             seq = seq .. "_primed"
         end
+
+        if self:GetNeedsCycle() and self:HasAnimation(seq .. "_uncycled") then
+            seq = seq .. "_uncycled"
+        end
     end
 
     local traq = self:RunHook("Hook_TranslateAnimation", seq) or seq
@@ -73,6 +77,20 @@ function SWEP:HasAnimation(seq)
     return seq != -1
 end
 
+function SWEP:GetAnimationTime(anim)
+    local entry = self:GetAnimationEntry(anim)
+
+    if !entry then return 0 end
+
+    if entry.Time then return entry.Time end
+
+    local seq = entry.Source
+
+    if istable(seq) then seq = seq[1] end
+
+    return self:GetSequenceTime(seq)
+end
+
 function SWEP:GetSequenceTime(seq)
     local vm = self:GetVM()
     seq = vm:LookupSequence(seq)
@@ -95,7 +113,7 @@ function SWEP:GetAnimationEntry(seq)
             end
         end
     else
-        return nil
+        return {}
     end
 end
 

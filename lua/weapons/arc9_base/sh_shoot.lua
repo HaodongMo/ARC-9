@@ -21,7 +21,7 @@ end
 
 function SWEP:SprintLock()
     if self:GetSprintAmount() > 0 then return true end
-    -- if self:GetTraversalSprintAmount() > 0 then return true end
+    -- if self:GetTraversalSprintAmount() > 0 then retur    n true end
     -- if self:GetIsSprinting() then return true end
 
     return false
@@ -29,17 +29,22 @@ end
 
 function SWEP:DryFire()
     self:PlayAnimation("dryfire")
+    self:SetBurstCount(0)
+    self:SetNeedTriggerPress(true)
+
+    if self:GetNthShot() > 0 and self:GetProcessedValue("DryFireSingleAction") then return end
+
     local soundtab = {
         name = "dryfire",
         sound = self:RandomChoice(self:GetProcessedValue("DryFireSound")),
         level = 75,
         pitch = 100,
         volume = 1,
-        channel = CHAN_BODY
+        channel = ARC9.CHAN_FIDDLE
     }
     self:PlayTranslatedSound(soundtab)
-    self:SetBurstCount(0)
-    self:SetNeedTriggerPress(true)
+
+    self:SetNthShot(self:GetNthShot() + 1)
 end
 
 function SWEP:DoShootSounds()
@@ -86,17 +91,17 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoormix,
-            channel = CHAN_WEAPON
+            channel = ARC9.CHAN_WEAPON
         }
         self:PlayTranslatedSound(soundtab1)
 
         local soundtab2 = {
             name = "shootlayer",
-            sound = ss or "",
+            sound = sl or "",
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoormix,
-            channel = CHAN_WEAPON + 4
+            channel = ARC9.CHAN_LAYER
         }
         self:PlayTranslatedSound(soundtab2)
         if havedistant then
@@ -106,7 +111,7 @@ function SWEP:DoShootSounds()
                 level = dvolume,
                 pitch = dpitch,
                 volume = dvolume * indoormix,
-                channel = CHAN_WEAPON + 1
+                channel = ARC9.CHAN_DISTANT
             }
             self:PlayTranslatedSound(soundtab3)
         end
@@ -126,7 +131,7 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoor,
-            channel = CHAN_WEAPON + 5
+            channel = ARC9.CHAN_INDOOR
         }
         self:PlayTranslatedSound(soundtab1)
 
@@ -136,7 +141,7 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoor,
-            channel = CHAN_WEAPON + 6
+            channel = ARC9.CHAN_INDOORLAYER
         }
         self:PlayTranslatedSound(soundtab2)
         if havedistant then
@@ -146,7 +151,7 @@ function SWEP:DoShootSounds()
                 level = dvolume,
                 pitch = dpitch,
                 volume = dvolume * indoor,
-                channel = CHAN_WEAPON + 7
+                channel = ARC9.CHAN_INDOORDISTANT
             }
             self:PlayTranslatedSound(soundtab3)
         end
@@ -157,6 +162,11 @@ end
 
 function SWEP:PrimaryAttack()
     if self.NotAWeapon then return end
+
+    if self:GetOwner():IsNPC() then
+        self:NPC_PrimaryAttack()
+        return
+    end
 
     if self:GetProcessedValue("Throwable") then
         return
@@ -180,12 +190,30 @@ function SWEP:PrimaryAttack()
 
     if self:GetNeedTriggerPress() then return end
 
-    self:DoPrimaryAttack()
-end
+    if self:GetNeedsCycle() then return end
 
-function SWEP:DoPrimaryAttack()
-    if self:GetOwner():IsNPC() then
-        self:NPC_PrimaryAttack()
+    if self:SprintLock() then return end
+
+    if self:GetCustomize() then return end
+
+    if self:HasAmmoInClip() then
+        if self:GetProcessedValue("TriggerDelay") then
+            if self:GetBurstCount() == 0 and !self:GetPrimedAttack() and !self:StillWaiting() then
+                self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
+                self:PlayAnimation("trigger")
+                self:SetPrimedAttack(true)
+                return
+            elseif self:GetPrimedAttack() and self:GetTriggerDelay() > CurTime() then
+                return
+            elseif self:GetPrimedAttack() then
+                self:SetPrimedAttack(false)
+            end
+        end
+    end
+
+    if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
+        self:MeleeAttack()
+        self:SetNeedTriggerPress(true)
         return
     end
 
@@ -193,12 +221,12 @@ function SWEP:DoPrimaryAttack()
         self:SetEndReload(true)
     end
 
-    if self:SprintLock() then return end
+    self:DoPrimaryAttack()
+end
+
+function SWEP:DoPrimaryAttack()
 
     if self:StillWaiting() then return end
-    if self:GetNeedsCycle() then return end
-
-    if self:GetCustomize() then return end
 
     -- if self:GetProcessedValue("CanQuickNade") then
     --     if self:GetOwner():KeyDown(IN_USE) then
@@ -214,12 +242,6 @@ function SWEP:DoPrimaryAttack()
     --         return
     --     end
     -- end
-
-    if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
-        self:MeleeAttack()
-        self:SetNeedTriggerPress(true)
-        return
-    end
 
     if self:GetCurrentFiremode() > 0 and self:GetBurstCount() >= self:GetCurrentFiremode() then return end
 
@@ -247,13 +269,13 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    if self:GetProcessedValue("TriggerDelay") then
-        if self:GetTriggerDelay() != 1 then
-            return
-        elseif self:GetProcessedValue("TriggerDelayRepeat") then
-            self:SetTriggerDelay(0)
-        end
-    end
+    // if self:GetProcessedValue("TriggerDelay") then
+    //     if self:GetTriggerDelay() != 1 then
+    //         return
+    //     elseif self:GetProcessedValue("TriggerDelayRepeat") then
+    //         self:SetTriggerDelay(0)
+    //     end
+    // end
 
     self:SetBaseSettings()
 
@@ -263,6 +285,8 @@ function SWEP:DoPrimaryAttack()
         self:DryFire()
         return
     end
+
+    self:RunHook("Hook_PrimaryAttack")
 
     self:TakeAmmo()
 
@@ -279,11 +303,13 @@ function SWEP:DoPrimaryAttack()
 
         local banim = anim
 
-        for i = 0, self:GetBurstCount() do
-            local b = i + 1
+        if !self.SuppressCumulativeShoot then
+            for i = 0, self:GetBurstCount() do
+                local b = i + 1
 
-            if self:HasAnimation(anim .. "_" .. tostring(b)) then
-                banim = anim .. "_" .. tostring(b)
+                if self:HasAnimation(anim .. "_" .. tostring(b)) then
+                    banim = anim .. "_" .. tostring(b)
+                end
             end
         end
 
@@ -309,8 +335,6 @@ function SWEP:DoPrimaryAttack()
     self:SetAfterShot(true)
 
     self:DoShootSounds()
-
-    self:RunHook("Hook_PrimaryAttack")
 
     self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimShoot"))
 
@@ -374,6 +398,16 @@ function SWEP:DoPrimaryAttack()
 
     if !manualaction or manualaction and !self.MalfunctionCycle then
         self:RollJam()
+    end
+
+    if self:Clip1() == 0 then
+        self:SetNthShot(0)
+    end
+
+    if self:GetProcessedValue("TriggerDelayRepeat") then
+        self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
+        self:PlayAnimation("trigger")
+        self:SetPrimedAttack(true)
     end
 end
 
@@ -553,6 +587,17 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         fx:SetOrigin(tr.HitPos)
         fx:SetNormal(tr.HitNormal)
         util.Effect(self:GetProcessedValue("ImpactEffect"), fx, true)
+    end
+
+    if self:GetProcessedValue("ImpactSound") then
+        local soundtab = {
+            name = "impact",
+            sound = self:GetProcessedValue("ImpactSound")
+        }
+
+        soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
+
+        sound.Play(soundtab.sound, tr.HitPos, soundtab.level, soundtab.pitch, soundtab.volume)
     end
 
     if self:GetProcessedValue("ExplosionDamage") > 0 then

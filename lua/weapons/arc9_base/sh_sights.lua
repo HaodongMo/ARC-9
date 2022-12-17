@@ -17,13 +17,16 @@ function SWEP:EnterSights()
     if IsFirstTimePredicted() then
         local soundtab1 = {
             name = "entersights",
-            sound = self:RandomChoice(self:GetProcessedValue("EnterSightsSound"))
+            sound = self:RandomChoice(self:GetProcessedValue("EnterSightsSound")),
+            channel = ARC9.CHAN_FIDDLE,
         }
 
         self:PlayTranslatedSound(soundtab1)
     end
 
-    self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
+    if self:GetAnimLockTime() < CurTime() then
+        self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
+    end
 
     self:SetShouldHoldType()
 end
@@ -34,13 +37,16 @@ function SWEP:ExitSights()
     if IsFirstTimePredicted() then
         local soundtab1 = {
             name = "exitsights",
-            sound = self:RandomChoice(self:GetProcessedValue("ExitSightsSound"))
+            sound = self:RandomChoice(self:GetProcessedValue("ExitSightsSound")),
+            channel = ARC9.CHAN_FIDDLE,
         }
 
         self:PlayTranslatedSound(soundtab1)
     end
 
-    self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+    if self:GetAnimLockTime() < CurTime() then
+        self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+    end
 
     self:SetShouldHoldType()
 end
@@ -51,6 +57,7 @@ end
 
 function SWEP:ThinkSights()
     -- if self:GetSafe() then return end
+    if self:PredictionFilter() then return end
 
     local sighted = self:GetInSights()
 
@@ -119,6 +126,13 @@ function SWEP:ThinkSights()
             -- end
         end
     end
+
+    local vm = self:GetVM()
+
+    local sightamount = self:GetSightAmount()
+    local bipodamount = self:GetBipodAmount()
+
+    vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
 end
 
 SWEP.MultiSightTable = {
@@ -129,6 +143,7 @@ SWEP.MultiSightTable = {
 }
 
 function SWEP:BuildMultiSight()
+    if game.SinglePlayer() then self:CallOnClient("BuildMultiSight", "") end
     self.MultiSightTable = {}
     local modularironsights = {}
 
@@ -145,6 +160,8 @@ function SWEP:BuildMultiSight()
             local kbi = false
 
             for _, sight in pairs(atttbl.Sights) do
+                if !self:GetUBGL() and sight.UBGLOnly then continue end
+                if self:GetUBGL() and self:GetProcessedValue("UBGLExclusiveSights") then continue end
                 local s = {}
 
                 if CLIENT then
@@ -249,7 +266,7 @@ function SWEP:BuildMultiSight()
 end
 
 function SWEP:SwitchMultiSight(amt)
-    if (!game.SinglePlayer() or CLIENT) then return end
+
     if self.NextSightSwitch and self.NextSightSwitch > CurTime() then return end
     self.NextSightSwitch = CurTime() + 0.25
 

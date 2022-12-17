@@ -1,7 +1,17 @@
 SWEP.ElementsCache = {}
 
 function SWEP:GetElements()
-    if self.ElementsCache then return self.ElementsCache end
+    if self.ElementsCache then
+        local eles = self.ElementsCache
+
+        if !ARC9.ModifyElementsOverrun then
+            ARC9.ModifyElementsOverrun = true
+            eles = self:RunHook("Hook_ModifyElements", eles) or eles
+            ARC9.ModifyElementsOverrun = false
+        end
+
+        return eles
+    end
 
     local eles = {}
 
@@ -40,6 +50,12 @@ function SWEP:GetElements()
     end
 
     self.ElementsCache = eles2
+
+    if !ARC9.ModifyElementsOverrun then
+        ARC9.ModifyElementsOverrun = true
+        eles2 = self:RunHook("Hook_ModifyElements", eles2) or eles2
+        ARC9.ModifyElementsOverrun = false
+    end
 
     return eles2
 end

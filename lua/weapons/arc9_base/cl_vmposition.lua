@@ -171,11 +171,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         local bipodpos, bipodang = self:GetProcessedValue("BipodPos"), self:GetProcessedValue("BipodAng")
 
         if bipodpos and bipodang then
-            -- LerpVector(bipodamount, sightpos, bipodpos)
-            -- LerpAngle(bipodamount, sightpos, bipodang)
+            pos = LerpVector(math.Clamp(bipodamount - self:GetSightAmount(), 0, 1), pos, self:GetBipodPos())
 
-            -- offsetpos = offsetpos + (bipodpos * bipodamount)
-            -- offsetang = offsetang + (bipodpos * bipodamount)
             offsetpos = LerpVector(bipodamount, offsetpos, bipodpos)
             offsetang = LerpAngle(bipodamount, offsetang, bipodang)
         else
@@ -200,6 +197,17 @@ function SWEP:GetViewModelPosition(pos, ang)
         elseif blindfirecornerdelta < 0 then
             offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireLeftPos"))
             offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireLeftAng"))
+        end
+    end
+
+    if self:GetReloading() then
+        local reloadpos = self:GetProcessedValue("ReloadPos")
+        local reloadang = self:GetProcessedValue("ReloadAng")
+        if reloadpos then
+            offsetpos:Set(reloadpos)
+        end
+        if reloadang then
+            offsetang:Set(reloadang)
         end
     end
 
@@ -258,14 +266,14 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
     local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
-    extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * cor_val)
-    extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * cor_val)
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * 0.25)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * 0.25)
 
     -- extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01
     -- extra_offsetpos.z = extra_offsetpos.z + (self:GetFreeSwayAngles().p * cor_val) - 0.05 -- idkkkkkkkk
 
-    extra_offsetang.y = extra_offsetang.y - (getfreeswayoffset.p * cor_val)
-    extra_offsetang.p = extra_offsetang.p + (getfreeswayoffset.y * cor_val)
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayoffset.p * 0.25)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayoffset.y * 0.25)
 
     if singleplayer or IsFirstTimePredicted() then
         if self:GetCustomize() then
@@ -509,23 +517,6 @@ function SWEP:GetViewModelFOV()
     if self:GetInSights() then
         -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
         target = self:GetSight().ViewModelFOV or (75 + convarfov)
-    end
-
-    for _, mod in pairs(self.FOV_RecoilMods) do
-        local per_pre = math.TimeFraction( mod.realstart, mod.time_start, curtime)
-        local per_act = math.TimeFraction( mod.time_start, mod.time_end, curtime)
-        if per_act < 0 then
-            per_act = per_pre
-            if mod.func_pre then per_act = mod.func_pre(per_act) end
-        else
-            per_act = 1-per_act
-            if mod.func_act then per_act = mod.func_act(per_act) end
-        end
-        per_act = math.Clamp(per_act, 0, 1)
-        local satarget = 0
-        satarget = satarget + (mod.amount * per_act)
-        target = target + satarget * ( target / (ownerfov + convarfov) )
-        if mod.time_end < curtime then self.FOV_RecoilMods[_] = nil end
     end
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target

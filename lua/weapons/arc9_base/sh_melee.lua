@@ -26,7 +26,7 @@ function SWEP:MeleeAttack(bypass)
     local soundtab1 = {
         name = "meleeswing",
         sound = self:RandomChoice(self:GetProcessedValue("MeleeSwingSound")),
-        channel = CHAN_VOICE
+        channel = ARC9.CHAN_MELEE
     }
 
     self:PlayTranslatedSound(soundtab1)
@@ -75,7 +75,7 @@ function SWEP:MeleeAttackShoot()
             local soundtab = {
                 name = "meleehit",
                 sound = self:RandomChoice(self:GetProcessedValue("MeleeHitSound")),
-                channel = CHAN_VOICE
+                channel = ARC9.CHAN_MELEE
             }
 
             self:PlayTranslatedSound(soundtab)
@@ -93,7 +93,7 @@ function SWEP:MeleeAttackShoot()
             local soundtab1 = {
                 name = "meleehitwall",
                 sound = self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound")),
-                channel = CHAN_VOICE
+                channel = ARC9.CHAN_MELEE
             }
 
             self:PlayTranslatedSound(soundtab1)
@@ -133,6 +133,7 @@ function SWEP:MeleeAttackShoot()
 end
 
 function SWEP:ThinkMelee()
+    if self:PredictionFilter() then return end
     if self:GetInMeleeAttack() and self:GetLastMeleeTime() + self:GetProcessedValue("PreBashTime") <= CurTime() then
         self:MeleeAttackShoot()
     end

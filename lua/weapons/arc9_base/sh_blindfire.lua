@@ -153,6 +153,8 @@ function SWEP:ToggleBlindFire(bf, dir)
 end
 
 function SWEP:ThinkBlindFire()
+
+
     local amt = self:GetBlindFireAmount()
     local oldamt = amt
 

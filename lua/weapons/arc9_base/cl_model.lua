@@ -113,6 +113,10 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, 
         bpos = self:GetPos()
     end
 
+    if wm then
+        offset_pos = offset_pos * (self.WorldModelOffset.Scale or 1)
+    end
+
     local apos, aang
 
     aang = Angle()
@@ -140,6 +144,9 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, 
 
     if !nomodeloffset then
         local moffset = (atttbl.ModelOffset or Vector(0, 0, 0)) * (slottbl.Scale or 1)
+        if wm then
+            moffset = moffset * (self.WorldModelOffset.Scale or 1)
+        end
 
         apos = apos + aang:Forward() * moffset.x
         apos = apos + aang:Right() * moffset.y
@@ -149,6 +156,18 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, 
     if idle then
         SafeRemoveEntity(parentmdl)
     end
+
+    local data = {
+        pos = apos,
+        ang = aang,
+        atttbl = atttbl,
+        slottbl = slottbl,
+    }
+
+    data = self:RunHook("Hook_GetAttPos", data) or data
+
+    apos = data.pos or apos
+    aang = data.ang or aang
 
     return apos, aang
 end
@@ -207,6 +226,9 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (atttbl.CharmScale or 1) * (atttbl.Scale or 1)
+        if wm then
+            vec = vec * (self.WorldModelOffset.Scale or 1)
+        end
         vec = vec * (slottbl.Scale or 1)
         scale:Scale(vec)
         charmmodel:EnableMatrix("RenderMultiply", scale)
@@ -241,6 +263,9 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     if !ignorescale then
         local scale = Matrix()
         local vec = Vector(1, 1, 1) * (atttbl.Scale or 1)
+        if wm then
+            vec = vec * (self.WorldModelOffset.Scale or 1)
+        end
         vec:Mul(slottbl.Scale or 1)
         scale:Scale(vec)
         csmodel:EnableMatrix("RenderMultiply", scale)
@@ -399,6 +424,9 @@ function SWEP:SetupModel(wm, lod, cm)
 
             local scale = Matrix()
             local vec = model.ScaleVector or (Vector(1, 1, 1) * (model.Scale or 1))
+            if wm then
+                vec = vec * (self.WorldModelOffset.Scale or 1)
+            end
             scale:Scale(vec)
             csmodel:EnableMatrix("RenderMultiply", scale)
 
@@ -465,6 +493,9 @@ function SWEP:SetupModel(wm, lod, cm)
 
                 local scale = Matrix()
                 local vec = Vector(1, 1, 1) * (slottbl.Scale or 1) * (atttbl.Scale or 1)
+                if wm then
+                    vec = vec * (self.WorldModelOffset.Scale or 1)
+                end
                 if i > 0 then
                     vec = vec * (slottbl.DuplicateModels[i].Scale or 1)
                 end

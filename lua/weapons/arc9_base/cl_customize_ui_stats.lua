@@ -1,8 +1,30 @@
 local ARC9ScreenScale = ARC9.ScreenScale
 
+local function GetTrueRPM(self)
+    local a = self:GetProcessedValue("RPM")
+    local delay = 60 / a
+
+    if self:GetProcessedValue("ManualAction") then
+        delay = delay + (self:GetAnimationTime("cycle") * self:GetProcessedValue("CycleTime"))
+    end
+
+    if self:GetCurrentFiremode() > 1 then
+        local pbd = self:GetProcessedValue("PostBurstDelay")
+        local burstlength = self:GetCurrentFiremode()
+
+        delay = delay + (pbd / burstlength)
+    end
+
+    a = 60 / delay
+
+    a = math.Round(a / 50, 0) * 50
+
+    return a
+end
+
 function SWEP:CreateHUD_Stats()
     local lowerpanel = self.CustomizeHUD.lowerpanel
-    
+
     -- if true then return end
     self:ClearTabPanel()
 
@@ -34,11 +56,36 @@ function SWEP:CreateHUD_Stats()
             end,
         },
         {
+            title = "ROF",
+            stat = "RPM",
+            fifty = 600,
+            unit = "RPM",
+            conv = function(a)
+                local cyclic = self:GetProcessedValue("RPM")
+                a = GetTrueRPM(self)
+
+                local str = ""
+
+                if cyclic != a then
+                    str = "~"
+                end
+
+                return str .. tostring(a)
+            end,
+        },
+        {
             title = "Cyclic ROF",
             stat = "RPM",
             fifty = 600,
             unit = "RPM",
-            conv = function(a) return math.Round(a / 50, 0) * 50 end,
+            conv = function(a)
+                a = math.Round(a / 50, 0) * 50
+
+                return a
+            end,
+            cond = function()
+                return self:GetProcessedValue("RPM") == GetTrueRPM(self) or self:GetProcessedValue("ManualAction")
+            end,
         },
         {
             title = "Capacity",

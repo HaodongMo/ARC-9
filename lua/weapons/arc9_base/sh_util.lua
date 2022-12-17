@@ -25,6 +25,11 @@ function SWEP:PlayTranslatedSound(soundtab)
     end
 end
 
+function SWEP:PredictionFilter()
+    if game.SinglePlayer() and CLIENT then return true end
+    return false
+end
+
 function SWEP:GetWM()
     if self.WModel then
         return self.WModel[1]

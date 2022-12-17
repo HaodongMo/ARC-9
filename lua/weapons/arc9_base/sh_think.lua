@@ -9,13 +9,29 @@ function SWEP:Think()
     end
 
     if !self.NotAWeapon then
-        if owner:KeyReleased(IN_ATTACK) or (self:GetUBGL() and owner:KeyReleased(IN_ATTACK2)) then
+        if self:GetProcessedValue("TriggerDelay") then
+            if self:GetOwner():KeyReleased(IN_ATTACK) and (self:GetTriggerDelay() > CurTime() or self:GetPrimedAttack()) then
+                self:PlayAnimation("untrigger")
+
+                if self:GetProcessedValue("TriggerDelayCancellable") then
+                    self:SetPrimedAttack(false)
+                end
+            end
+
+            if self:GetPrimedAttack() and self:GetTriggerDelay() <= CurTime() and !self:GetOwner():KeyDown(IN_ATTACK) then
+                if !self:PredictionFilter() then
+                    self:PrimaryAttack()
+                end
+            end
+        end
+
+        if !owner:KeyDown(IN_ATTACK) then
             self:SetNeedTriggerPress(false)
+            if self:GetCurrentFiremode() > 1 and !self:GetProcessedValue("RunawayBurst") and self:GetBurstCount() > 0 then
+                self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
+            end
             if !self:GetProcessedValue("RunawayBurst") then
                 self:SetBurstCount(0)
-            end
-            if self:GetCurrentFiremode() < 0 and !self:GetProcessedValue("RunawayBurst") and self:GetBurstCount() > 0 then
-                self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
             end
         end
 
@@ -28,20 +44,20 @@ function SWEP:Think()
             end
         end
 
-        if !self:StillWaiting() and self:GetProcessedValue("TriggerDelay") then
-            local check = (game.SinglePlayer() and SERVER) or CLIENT
-            if owner:KeyDown(IN_ATTACK) and !self:SprintLock() then
-                if check and self:GetTriggerDelay() <= 0 then
-                    self:PlayAnimation("trigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)
-                end
-                self:SetTriggerDelay( math.Approach( self:GetTriggerDelay(), 1, FrameTime() * (1 / self:GetProcessedValue("TriggerDelayTime")) ) )
-            else
-                if check and self:GetTriggerDelay() != 1 and self:GetTriggerDelay() != 0 then
-                    self:PlayAnimation("untrigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)
-                end
-                self:SetTriggerDelay(0)
-            end
-        end
+        // if !self:StillWaiting() and self:GetProcessedValue("TriggerDelay") then
+        //     local check = (game.SinglePlayer() and SERVER) or CLIENT
+        //     if owner:KeyDown(IN_ATTACK) and !self:SprintLock() then
+        //         if check and self:GetTriggerDelay() <= 0 then
+        //             self:PlayAnimation("trigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)
+        //         end
+        //         self:SetTriggerDelay( math.Approach( self:GetTriggerDelay(), 1, FrameTime() * (1 / self:GetProcessedValue("TriggerDelayTime")) ) )
+        //     else
+        //         if check and self:GetTriggerDelay() != 1 and self:GetTriggerDelay() != 0 then
+        //             self:PlayAnimation("untrigger", self:GetProcessedValue("TriggerDelayTime") / self.TriggerDelayTime)
+        //         end
+        //         self:SetTriggerDelay(0)
+        //     end
+        // end
 
         -- If we have stopped shooting, play the aftershotparticle
         if self:GetAfterShot() and (IsFirstTimePredicted() or game.SinglePlayer()) then
@@ -86,6 +102,8 @@ function SWEP:Think()
         self:ThinkGrenade()
 
         self:ThinkLockOn()
+
+        self:ThinkTriggerSounds()
 
     end
 

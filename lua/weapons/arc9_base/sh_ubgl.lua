@@ -1,6 +1,8 @@
 function SWEP:ThinkUBGL()
+    if self:PredictionFilter() then return end
+
     if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
-        if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_RELOAD) and (!game.SinglePlayer() or IsFirstTimePredicted()) then
+        if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_RELOAD) then
             if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
             self.NextUBGLSwitch = CurTime() + 1
 
@@ -14,7 +16,6 @@ function SWEP:ThinkUBGL()
 end
 
 function SWEP:ToggleUBGL(on)
-    if (!game.SinglePlayer() or CLIENT) then return end
     if on == nil then on = !self:GetUBGL() end
     if self:GetReloading() then on = false end
     if self:GetCustomize() then on = false end
@@ -28,7 +29,7 @@ function SWEP:ToggleUBGL(on)
         local soundtab = {
             name = "enterubgl",
             sound = self:RandomChoice(self:GetProcessedValue("EnterUBGLSound")),
-            channel = CHAN_AUTO
+            channel = ARC9.CHAN_FIDDLE
         }
 
         self:PlayTranslatedSound(soundtab)
@@ -39,7 +40,7 @@ function SWEP:ToggleUBGL(on)
         local soundtab = {
             name = "exitubgl",
             sound = self:RandomChoice(self:GetProcessedValue("ExitUBGLSound")),
-            channel = CHAN_AUTO
+            channel = ARC9.CHAN_FIDDLE
         }
 
         self:PlayTranslatedSound(soundtab)

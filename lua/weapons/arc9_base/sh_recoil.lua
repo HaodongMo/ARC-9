@@ -121,20 +121,20 @@ function SWEP:ApplyRecoil()
         self:GetOwner():SetVelocity(self:GetShootDir():Forward() * -pbf)
     end
 
-    -- local vis_kick = self:GetProcessedValue("RecoilKick")
-    -- local vis_shake = 0
+    local vis_kick = self:GetProcessedValue("RecoilKick")
+    local vis_shake = 0
 
-    -- vis_kick = vis_kick * rps
-    -- vis_shake = vis_kick * rps
+    vis_kick = vis_kick * rps
+    vis_shake = vis_kick * rps
 
-    -- local vis_kick_v = vis_kick * 0.5
-    -- local vis_kick_h = vis_kick * util.SharedRandom("ARC9_vis_kick_h", -1, 1)
-    -- vis_shake = vis_shake * util.SharedRandom("ARC9_vis_kick_shake", -1, 1)
+    local vis_kick_v = vis_kick * 0.5
+    local vis_kick_h = vis_kick * util.SharedRandom("ARC9_vis_kick_h", -1, 1)
+    vis_shake = vis_shake * util.SharedRandom("ARC9_vis_kick_shake", -1, 1)
 
-    -- self:GetOwner():SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
+    self:GetOwner():SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
 
-    -- self:GetOwner():SetFOV(self:GetOwner():GetFOV() * 0.99, 0)
-    -- self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
+    self:GetOwner():SetFOV(self:GetOwner():GetFOV() * 0.99, 0)
+    self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
 end
 
 local function lensqr(ang)
@@ -186,7 +186,7 @@ function SWEP:ThinkVisualRecoil()
         vpv = self.VisualRecoilPosVel
     end
 
-    if lensqr(vpa) + lensqr(vpv) > 0.000001 then
+    if lensqr(vpa) + lensqr(vpv) > 0 then
         -- {
         --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
         --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
@@ -228,7 +228,7 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilPos(vpa)
         self:SetVisualRecoilPosVel(vpv)
 
-        if CLIENT then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
             self.VisualRecoilPos = vpa
             self.VisualRecoilPosVel = vpv
         end
@@ -236,7 +236,7 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilPos(Vector())
         self:SetVisualRecoilPosVel(self:GetVisualRecoilPos())
 
-        if CLIENT then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
             self.VisualRecoilPos = Vector()
             self.VisualRecoilPosVel = self.VisualRecoilPos
         end
@@ -245,7 +245,7 @@ function SWEP:ThinkVisualRecoil()
     local vaa = self:GetVisualRecoilAng()
     local vav = self:GetVisualRecoilVel()
 
-    if CLIENT then
+    if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
         vaa = self.VisualRecoilAng
         vav = self.VisualRecoilVel
     end
@@ -293,7 +293,7 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilAng(vaa)
         self:SetVisualRecoilVel(vav)
 
-        if CLIENT then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
             self.VisualRecoilAng = vaa
             self.VisualRecoilVel = vav
         end
@@ -301,42 +301,18 @@ function SWEP:ThinkVisualRecoil()
         self:SetVisualRecoilAng(Angle(ang0))
         self:SetVisualRecoilVel(Angle(ang0))
 
-        if CLIENT then
+        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted()) then
             self.VisualRecoilAng = Angle(ang0)
             self.VisualRecoilVel = Angle(ang0)
         end
     end
 end
-
-SWEP.FOV_Recoil = 0
-SWEP.FOV_RecoilMods = {}
-
-function SWEP:CreateFOVEvent( fov, start, endt, fpre, fact )
-    table.insert(self.FOV_RecoilMods, {
-        amount = fov,
-        time_start = CurTime() + start,
-        time_end = CurTime() + endt,
-        func_pre = fpre,
-        func_act = fact,
-        realstart = CurTime(),
-    })
-end
-
 function SWEP:DoVisualRecoil()
     if !self:GetProcessedValue("UseVisualRecoil") then return end
 
     if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
-    if self.FOV_RecoilAdd and self.FOV_RecoilAdd != 0 then
-        self:CreateFOVEvent(
-            self.FOV_RecoilAdd,
-            self.FOV_Recoil_TimeStart,
-            self.FOV_Recoil_TimeEnd,
-            self.FOV_Recoil_FuncStart,
-            self.FOV_Recoil_FuncEnd
-        )
-    end
 
-    if IsFirstTimePredicted() or game.SinglePlayer() then
+    // if IsFirstTimePredicted() or game.SinglePlayer() then
         local mult = self:GetProcessedValue("VisualRecoil")
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
@@ -359,11 +335,13 @@ function SWEP:DoVisualRecoil()
         self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
         self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0)))
 
-        if CLIENT then
-            self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
-            self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0))
+        if IsFirstTimePredicted() or game.SinglePlayer() then
+            if CLIENT then
+                self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
+                self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0))
+            end
         end
-    end
+    // end
 end
 
 function SWEP:GetViewModelRecoil(pos, ang)
@@ -371,7 +349,7 @@ function SWEP:GetViewModelRecoil(pos, ang)
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
-    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng)
+    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng * 0.25)
 
     return pos, ang
 end

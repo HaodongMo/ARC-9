@@ -32,7 +32,7 @@ function SWEP:DoTPIK()
     local wm = self:GetWM()
     if !IsValid(wm) then return end
 
-    if !self:ShouldTPIK() then 
+    if !self:ShouldTPIK() then
         if cachelastcycle > 0 then wm:SetCycle(0) cachelastcycle = 0 end
         return
      end
@@ -40,7 +40,7 @@ function SWEP:DoTPIK()
     local ply = self:GetOwner()
 
     local tpikdelay = RealFrameTime()
-    
+
     local lod
 
     if ply != LocalPlayer() then
@@ -73,7 +73,7 @@ function SWEP:DoTPIK()
 
     wm:SetupBones()
 
-    local time = self:GetSequenceCycle()
+    local time = IsValid(self:GetVM()) and self:GetVM():GetCycle() or self:GetSequenceCycle()
     local seq = self:GetSequenceIndex()
 
     wm:SetSequence(seq)

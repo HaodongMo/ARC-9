@@ -1,8 +1,9 @@
 SWEP.SetBreathDSP = false
 
 function SWEP:ThinkHoldBreath()
+
     if !self:GetOwner():IsPlayer() then return end
-    
+
     local sfx = GetConVar("arc9_breath_sfx"):GetBool()
 
     local target_ts = 1
@@ -12,12 +13,12 @@ function SWEP:ThinkHoldBreath()
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
             self:SetBreath(0)
-            
-            if sfx then 
+
+            if sfx then
                 local soundtab = {
                     name = "breathrunout",
                     sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")),
-                    channel = CHAN_STATIC
+                    channel = ARC9.CHAN_BREATH
                 }
                 self:PlayTranslatedSound(soundtab)
 
@@ -34,7 +35,7 @@ function SWEP:ThinkHoldBreath()
                 local soundtab = {
                     name = "breathin",
                     sound = self:RandomChoice(self:GetProcessedValue("BreathInSound")),
-                    channel = CHAN_STATIC
+                    channel = ARC9.CHAN_BREATH
                 }
 
                 self:PlayTranslatedSound(soundtab)
@@ -47,7 +48,7 @@ function SWEP:ThinkHoldBreath()
             local soundtab = {
                 name = "breathout",
                 sound = self:RandomChoice(self:GetProcessedValue("BreathOutSound")),
-                channel = CHAN_STATIC
+                channel = ARC9.CHAN_BREATH
             }
             self:PlayTranslatedSound(soundtab)
         end
@@ -69,8 +70,6 @@ function SWEP:ThinkHoldBreath()
 end
 
 function SWEP:CanHoldBreath()
-    if !GetConVar("arc9_mod_sway"):GetBool() then return false end
-
     return self:GetBreath() > 0 and !self:GetOutOfBreath()
 end
 

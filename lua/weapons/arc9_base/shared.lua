@@ -171,15 +171,16 @@ SWEP.DamageType = DMG_BULLET -- The damage type of the gun.
 
 SWEP.ArmorPiercing = 0 -- Between 0-1. A proportion of damage that is done as direct damage, ignoring protection.
 
-SWEP.HeadshotDamage = 1.25
-SWEP.ChestDamage = 1.05
+-- Individual multipliers that can be used with modifiers
+SWEP.HeadshotDamage = 1
+SWEP.ChestDamage = 1
 SWEP.StomachDamage = 1
-SWEP.ArmDamage = 0.9
-SWEP.LegDamage = 0.9
+SWEP.ArmDamage = 1
+SWEP.LegDamage = 1
 
 SWEP.BodyDamageMults = {
     [HITGROUP_HEAD] = 2.5,
-    [HITGROUP_CHEST] = 1.15,
+    [HITGROUP_CHEST] = 1.25,
     [HITGROUP_STOMACH] = 1,
     [HITGROUP_LEFTARM] = 1,
     [HITGROUP_RIGHTARM] = 1,
@@ -271,6 +272,7 @@ SWEP.BottomlessClip = false -- Weapon never has to reload
 SWEP.ShotgunReload = false -- Weapon reloads like shotgun. Uses insert_1, insert_2, etc animations instead.
 SWEP.HybridReload = false -- Enable on top of Shotgun Reload. If the weapon is completely empty, use the normal reload animation.
 -- Use SWEP.Hook_TranslateAnimation in order to do custom animation stuff.
+SWEP.ShotgunReloadIncludesChamber = true -- Shotguns reload to full capacity, assuming that the chamber is loaded as part of the animation.
 
 SWEP.ManualActionChamber = 1 -- How many shots we go between needing to cycle again.
 SWEP.ManualAction = false -- Pump/bolt action. Play the "cycle" animation after firing, when the trigger is released.
@@ -287,8 +289,6 @@ SWEP.CanFireUnderwater = false -- This weapon can shoot while underwater.
 SWEP.Disposable = false -- When all ammo is expended, this gun will remove itself from the inventory.
 
 SWEP.AutoReload = false -- When the gun is drawn, it will automatically reload.
-
-SWEP.TriggerDelay = 0 -- Set to > 0 to play the "trigger" animation before shooting. Delay time is based on this value.
 
 SWEP.ShouldDropMag = false
 SWEP.ShouldDropMagEmpty = true
@@ -310,6 +310,7 @@ SWEP.RPM = 750
 SWEP.TriggerDelay = false -- Add a delay before the weapon fires.
 SWEP.TriggerDelayTime = 0.2 -- Time until weapon fires.
 SWEP.TriggerDelayRepeat = false -- Whether to do it for every shot on automatics.
+SWEP.TriggerDelayCancellable = true -- Whether it is possible to cancel trigger delay by releasing the trigger before it is done.
 
 -- Works different to ArcCW
 
@@ -389,6 +390,7 @@ SWEP.UBGLFiremode = 1
 SWEP.UBGLFiremodeName = "UBGL"
 SWEP.UBGLChamberSize = 0
 SWEP.UBGLInsteadOfSights = false -- Right clicking fires UBGL instead of going into irons.
+SWEP.UBGLExclusiveSights = false -- Enable to allow only UBGLOnly sights to be used.
 
 -- Otherwise, these are just stats that get overwritten when selecting a UBGL.
 SWEP.AmmoPerShotUBGL = 1
@@ -429,13 +431,6 @@ SWEP.VisualRecoilSpringMagnitude = 1
 
 SWEP.RecoilKick = 1 -- Camera recoil
 SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
-
-SWEP.FOV_RecoilAdd = 0 -- FOV to increase or decrease by.
-SWEP.FOV_Recoil_TimeStart = 0.05 -- Peak
-SWEP.FOV_Recoil_TimeEnd = 0.15 -- Until dropoff
--- https://wiki.facepunch.com/gmod/math.ease
-SWEP.FOV_Recoil_FuncStart = math.ease.OutCirc -- Function to use
-SWEP.FOV_Recoil_FuncEnd = math.ease.InCirc
 
 -------------------------- SPREAD
 
@@ -606,6 +601,9 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookC_CanLockOn = function(self, ent) return true end -- Return true to allow lock on.
 -- SWEP.HookC_CannotLockOn = function(self, ent) return true end -- Return true to disallow lock on. Has priority over CanLockOn.
 -- SWEP.HookS_GetLockOnScore = function(self, ent) return 0 end -- Return new score
+-- SWEP.Hook_GetAttPos = function(self, data) return data end -- {atttbl = {}, slottbl = {}, pos = Vector, ang = Angle}
+-- SWEP.Hook_HideBones = function(self, bones) return bones end -- {"bone" = true, "bone" = true...}
+-- SWEP.Hook_ModifyElements = function(self, eles) return eles end -- {"ele" = true, "ele" = true...}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
@@ -723,7 +721,6 @@ SWEP.DistantShootSoundSilenced = nil            -- Distant fire silenced
 SWEP.DistantShootSoundIndoorSilenced = nil      -- Distant fire indoors silenced
 SWEP.FirstDistantShootSoundSilenced = nil       -- First distant fire silenced
 
-
 SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil
 SWEP.ShootSoundLoopingIndoor = nil
@@ -735,6 +732,7 @@ SWEP.Silencer = false -- Silencer installed or not?
 SWEP.DistantShootSound = nil
 
 SWEP.DryFireSound = ""
+SWEP.DryFireSingleAction = false -- Play dryfire sound only once
 
 SWEP.FiremodeSound = "arc9/firemode.wav"
 SWEP.ToggleAttSound = "items/flashlight1.wav"
@@ -758,6 +756,9 @@ SWEP.BreathInSound = "arc9/breath_inhale.wav"
 SWEP.BreathOutSound = "arc9/breath_exhale.wav"
 SWEP.BreathRunOutSound = "arc9/breath_runout.wav"
 
+SWEP.TriggerDownSound = ""
+SWEP.TriggerUpSound = ""
+
 -------------------------- EFFECTS
 
 SWEP.NoMuzzleEffect = false -- Disable muzzle effect entirely
@@ -773,12 +774,15 @@ SWEP.AfterShotParticle = nil -- Particle to spawn after shooting
 
 SWEP.ImpactEffect = nil
 SWEP.ImpactDecal = nil
+SWEP.ImpactSound = nil
 
 SWEP.ShellEffect = nil -- Override the ARC9 shell eject effect for your own.
 SWEP.ShellEffectCount = 1
 
 SWEP.ShellModel = "models/shells/shell_556.mdl"
 SWEP.ShellMaterial = nil -- string
+
+SWEP.ExtraShellModels = nil -- For eventtable {{model = "", mat = "", scale = 1, physbox = Vector(1, 1, 1), pitch = 100, sounds = {}}}
 
 SWEP.ShellSmoke = true
 
@@ -920,7 +924,7 @@ SWEP.CustomizeSnapshotPos = Vector(0, 0, 0)
 SWEP.CustomizeSnapshotAng = Angle(0, 0, 0)
 SWEP.CustomizeNoRotate = false
 
-SWEP.BipodPos = Vector(0, 4, -4)
+SWEP.BipodPos = Vector(0, 0, 0)
 SWEP.BipodAng = Angle(0, 0, 0)
 
 SWEP.HeightOverBore = 1
@@ -1135,6 +1139,7 @@ SWEP.Attachments = {
 -- _empty
 -- _ubgl
 -- _primed
+-- _uncycled
 
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
@@ -1173,6 +1178,7 @@ SWEP.Animations = {
     --                 p = 1 -- sound pitch
     --                 v = 1 -- sound playback volume
     --                 l = 75 -- sound level in db
+    --             shelleject = 1, -- eject a shell, true for regular eject, int for special ejection
     --             e = "", -- effect to emit
     --             att = nil, -- on attachment point X
     --             mag = 100, -- with magnitude whatever this is
@@ -1183,20 +1189,17 @@ SWEP.Animations = {
     --             hide = 1, -- hide reloadhidebonetables table, 0 for none
     --             fl = 0, -- sound flags
     --             dsp = 0, -- dsp preset
-    --             FOV = -3, -- change fov in anim, see SWEP.FOV_Recoil_x for detials
-    --             FOV_Start = 0.2,
-    --             FOV_End = 0.4,
-    --             FOV_FuncStart = ARC9.Ease.OutCirc,
-    --             FOV_FuncEnd = ARC9.Ease.InCirc,
     --         }
     --     },
     --     PoseParamChanges = { -- pose parameters to change after this animation is done.
     --         ["selector"] = 1 -- an application might be to change firemodes.
     --     }, -- relevant pose parameters will be set to default values while the animation is playing, so make sure you take that into consideration for animating.
     --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one. For SWEP.BulletBones
+    --     NoMagSwap = false, -- don't bother with above
     --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
     --     FireASAP = false, -- allowes to shoot right after clip anim was "done" with MinProgress
-    --     RestoreAmmo = 0 -- Restores ammunition to clip
+    --     RestoreAmmo = 0, -- Restores ammunition to clip
+    --     DumpClip = false -- Dump clip on reload
     -- }
 }
 
@@ -1204,41 +1207,8 @@ SWEP.SuppressDefaultSuffixes = false -- Animations won't automatically play _iro
 SWEP.SuppressDefaultAnimations = false -- Animations won't automatically generated based on sequences defined in QC
 SWEP.SuppressEmptySuffix = false -- _empty animations won't automatically trigger.
 SWEP.SuppressSprintSuffix = false -- _sprint animations won't automatically trigger.
-
---[[
-    FOV anim settings
-        for use in FOV_FuncStart, FOV_FuncEnd
-    ARC9.Ease.InBack
-    ARC9.Ease.InBounce
-    ARC9.Ease.InCirc
-    ARC9.Ease.InCubic
-    ARC9.Ease.InElastic
-    ARC9.Ease.InExpo
-    ARC9.Ease.InOutBack
-    ARC9.Ease.InOutBounce
-    ARC9.Ease.InOutCirc
-    ARC9.Ease.InOutCubic
-    ARC9.Ease.InOutElastic
-    ARC9.Ease.InOutExpo
-    ARC9.Ease.InOutQuad
-    ARC9.Ease.InOutQuart
-    ARC9.Ease.InOutQuint
-    ARC9.Ease.InOutSine
-    ARC9.Ease.InQuad
-    ARC9.Ease.InQuart
-    ARC9.Ease.InQuint
-    ARC9.Ease.InSine
-    ARC9.Ease.OutBack
-    ARC9.Ease.OutBounce
-    ARC9.Ease.OutCirc
-    ARC9.Ease.OutCubic
-    ARC9.Ease.OutElastic
-    ARC9.Ease.OutExpo
-    ARC9.Ease.OutQuad
-    ARC9.Ease.OutQuart
-    ARC9.Ease.OutQuint
-    ARC9.Ease.OutSine
-]]
+SWEP.SuppressDefaultEvents = false -- Animations will not trigger animation events.
+SWEP.SuppressCumulativeShoot = false -- fire_1, fire_2, and fire_3 will not automatically trigger.
 
 SWEP.Primary.Automatic = true
 SWEP.Primary.DefaultClip = -1
@@ -1362,9 +1332,11 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Angle", 1, "LastAimAngle")
     self:NetworkVar("Angle", 2, "VisualRecoilAng")
     self:NetworkVar("Angle", 3, "VisualRecoilVel")
+    self:NetworkVar("Angle", 4, "BipodAng")
 
     self:NetworkVar("Vector", 0, "VisualRecoilPos")
     self:NetworkVar("Vector", 1, "VisualRecoilPosVel")
+    self:NetworkVar("Vector", 2, "BipodPos")
 
     self:NetworkVar("String", 0, "IKAnimation")
 

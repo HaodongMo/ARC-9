@@ -324,9 +324,33 @@ function SWEP:GunControllerRHIK(pos, ang)
 
         if !refl_mdl then return pos, ang end
 
+        anim_mdl:SetPos(Vector(0, 0, 0))
+        anim_mdl:SetAngles(Angle(0, 0, 0))
+
+        refl_mdl:SetPos(Vector(0, 0, 0))
+        refl_mdl:SetAngles(Angle(0, 0, 0))
+
+        if !self.IKGunMotionOffset then
+            local oldseq = anim_mdl:GetSequence()
+            local oldcycle = anim_mdl:GetCycle()
+            anim_mdl:ResetSequence(0)
+            anim_mdl:SetCycle(0)
+
+            local idleattpos = anim_mdl:GetAttachment(qca).Pos
+            local idleattang = anim_mdl:GetAttachment(qca).Ang
+
+            self.IKGunMotionOffset = idleattpos
+            self.IKGunMotionOffsetAngle = idleattang
+
+            anim_mdl:ResetSequence(oldseq)
+            anim_mdl:SetCycle(oldcycle)
+        end
+
         local attpos, attang = anim_mdl:GetAttachment(qca).Pos, anim_mdl:GetAttachment(qca).Ang
 
-        attang:Sub( Angle(0, 90, 90) )
+        attang:Sub( self.IKGunMotionOffsetAngle )
+
+        attpos = attpos - self.IKGunMotionOffset
 
         local r = attang.r
         attang.r = attang.p

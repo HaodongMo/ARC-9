@@ -103,6 +103,7 @@ function SWEP:PreDrawViewModel()
     cam.IgnoreZ(true)
 
     self:SetFiremodePose()
+    vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
 
     if sightamount > 0.75 and getsights.FlatScope and !getsights.FlatScopeKeepVM then
         render.SetBlend(0)

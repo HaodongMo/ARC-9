@@ -51,7 +51,7 @@ function SWEP:CreateShield()
     shield:Activate()
 
     function shield:OnTakeDamage(damage)
-        print(damage)
+        self:PlayAnimation("blowback")
     end
 
     self:SetShieldEntity(shield)
