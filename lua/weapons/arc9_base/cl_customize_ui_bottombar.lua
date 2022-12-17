@@ -437,6 +437,7 @@ function SWEP:CreateHUD_Bottom()
         local atts_slots = {}
 
         for _, att in pairs(atts) do
+            if (slottbl.RejectAttachments or {})[att] then continue end
             table.insert(atts_slots, {
                 att = att,
                 slot = self.BottomBarAddress
@@ -450,6 +451,7 @@ function SWEP:CreateHUD_Bottom()
                 local atts2 = ARC9.GetAttsForCats(slottbl2.Category or "")
                 table.Add(atts, atts2)
                 for _, att in pairs(atts2) do
+                    if (slottbl2.RejectAttachments or {})[att] then continue end
                     table.insert(atts_slots, {
                         att = att,
                         slot = addr
