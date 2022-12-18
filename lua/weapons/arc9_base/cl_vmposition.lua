@@ -104,7 +104,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- pos = Vector(0, 0, 0)
     -- ang = Angle(0, 0, 0)
 
-    local cor_val = 0.5
+    local cor_val = self:GetCorVal()
 
     local offsetpos = Vector(0, 0, 0)
     local offsetang = Angle(0, 0, 0)
