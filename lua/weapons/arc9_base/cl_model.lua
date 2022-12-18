@@ -480,6 +480,10 @@ function SWEP:SetupModel(wm, lod, cm)
 
             csmodel.Duplicate = i
 
+            if atttbl.NoDraw then
+                csmodel.NoDraw = true
+            end
+
             if csmodel.DrawFunc then
                 csmodel.DrawFunc(self, csmodel, wm)
             end

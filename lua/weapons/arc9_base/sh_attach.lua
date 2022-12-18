@@ -199,6 +199,10 @@ function SWEP:PostModify(toggleonly)
     self:SetupAnimProxy()
 
     self:SetBaseSettings()
+
+    if self:GetAnimLockTime() <= CurTime() then
+        self:Idle()
+    end
 end
 
 function SWEP:ToggleCustomize(on)

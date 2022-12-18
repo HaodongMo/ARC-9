@@ -72,6 +72,8 @@ function SWEP:HasAnimation(seq)
     end
 
     local vm = self:GetVM()
+
+    if !IsValid(vm) then return true end
     seq = vm:LookupSequence(seq)
 
     return seq != -1

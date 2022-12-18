@@ -104,7 +104,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- pos = Vector(0, 0, 0)
     -- ang = Angle(0, 0, 0)
 
-    local cor_val = 0.25
+    local cor_val = 0.5
 
     local offsetpos = Vector(0, 0, 0)
     local offsetang = Angle(0, 0, 0)
@@ -266,14 +266,14 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
     local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
-    extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * 0.25)
-    extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * 0.25)
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * cor_val)
 
     -- extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01
     -- extra_offsetpos.z = extra_offsetpos.z + (self:GetFreeSwayAngles().p * cor_val) - 0.05 -- idkkkkkkkk
 
-    extra_offsetang.y = extra_offsetang.y - (getfreeswayoffset.p * 0.25)
-    extra_offsetang.p = extra_offsetang.p + (getfreeswayoffset.y * 0.25)
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayoffset.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayoffset.y * cor_val)
 
     if singleplayer or IsFirstTimePredicted() then
         if self:GetCustomize() then

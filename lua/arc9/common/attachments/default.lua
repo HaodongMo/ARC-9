@@ -37,6 +37,7 @@ ATT.DrawFunc = function(swep, model, wm) end
 ATT.ModelSkin = 0
 ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
+ATT.NoDraw = false
 
 ATT.Material = ""
 
