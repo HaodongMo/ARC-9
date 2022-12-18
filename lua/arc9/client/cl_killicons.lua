@@ -9,13 +9,18 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
         return ARC9OLDKilliconDraw(x, y, name, alpha)
     end
 
+    local wpn = weapons.Get(name)
+
+    if wpn and wpn.ARC9 and wpn.NoDynamicKillIcon then
+        return ARC9OLDKilliconDraw(x, y, name, alpha)
+    end
+
     if killicons_cachednames[name] == true then
         local w, h = 96, 96
         x = x - 48
         y = y - 34
 
         cam.Start2D()
-        
 
         local selecticon = killicons_cachedicons[name]
 
@@ -23,7 +28,7 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
             killicons_cachedtimes[name] = CurTime() + 5
             killicons_cachedicons[name] = nil
             -- print("RESET")
-        end 
+        end
 
         if !selecticon then -- not cached
             local filename = ARC9.PresetPath .. name .. "_icon." .. ARC9.PresetIconFormat

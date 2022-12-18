@@ -115,6 +115,8 @@ SWEP.MissileCrosshair = false -- Force the missile launcher crosshair
 
 SWEP.ViewModelFOVBase = nil -- Set to override viewmodel FOV
 
+SWEP.NoDynamicKillIcon = false
+
 SWEP.NotAWeapon = false -- Set to true to indicate that this is not a weapon.
 -- Disables pretty much all base features except for controls and aesthetics, allowing for custom weapons to be implemented.
 
