@@ -27,6 +27,12 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
         source = source[math.floor(util.SharedRandom("ARC9_animsource", 1, #source, CurTime()))]
     end
 
+    local tsource = self:RunHook("Hook_TranslateSource", source) or source
+
+    if mdl:LookupSequence(tsource) != -1 then
+        source = tsource
+    end
+
     local seq = 0
 
     if animation.ProxyAnimation then
