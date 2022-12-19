@@ -327,24 +327,6 @@ function SWEP:GetViewModelPosition(pos, ang)
         extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, vector_origin)
         extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, angle_zero)
 
-        -- if self.BottomBarAddress then
-        --     local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
-
-        --     if slot then
-        --         local apos = self:GetAttPos(slot, false, true, true)
-
-        --         local opos = (slot.Icon_Offset or Vector(0, 0, 0))
-        --         local atttbl = self:GetFinalAttTable(slot)
-        --         opos = opos + (atttbl.IconOffset or Vector(0, 0, 0))
-
-        --         apos.x = apos.x + opos.x
-        --         apos.z = apos.z - opos.z
-
-        --         cpos = cpos + cang:Up() * (apos.x - cpos.x)
-        --         -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
-        --         cpos = cpos + cangforward * (apos.z + cpos.z)
-        --     end
-
         if self.BottomBarMode == 1 then
             cpos = cpos - cangforward * 5 -- extended cust offset
         else
@@ -517,6 +499,10 @@ function SWEP:GetViewModelFOV()
     if self:GetInSights() then
         -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
         target = self:GetSight().ViewModelFOV or (75 + convarfov)
+    end
+
+    if self:GetCustomize() then
+        target = self.CustomizeSnapshotFOV or 90
     end
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
