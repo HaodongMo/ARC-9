@@ -348,7 +348,7 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
 
         h = w / 2
 
-        y = y + (h / 2)
+        y = y - (h / 2)
 
         surface.DrawTexturedRect(x, y, w, h)
         return
