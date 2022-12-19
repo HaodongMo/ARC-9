@@ -70,7 +70,10 @@ function ARC9.StartCommand(ply, cmd)
         end
 
         cmd:SetViewAngles(eyeang)
-        ply:SetEyeAngles(eyeang)
+
+        if game.SinglePlayer() then
+            ply:SetEyeAngles(eyeang)
+        end
     end
 
     local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
