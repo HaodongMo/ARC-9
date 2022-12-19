@@ -333,7 +333,7 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
             self.Mat_Select = Material("entities/" .. self:GetClass() .. ".png")
         end
 
-        surface.SetDrawColor(255, 255, 255, 255)
+        surface.SetDrawColor(255, 255, 255, a)
         surface.SetMaterial(self.Mat_Select)
 
         if w > h then
@@ -343,8 +343,12 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
         surface.DrawTexturedRect(x, y, w, w)
         return
     elseif self.CustomSelectIcon then
-        surface.SetDrawColor(255, 255, 255, 255)
+        surface.SetDrawColor(255, 255, 255, a)
         surface.SetMaterial(self.CustomSelectIcon)
+
+        h = w / 2
+
+        y = y + (h / 2)
 
         surface.DrawTexturedRect(x, y, w, h)
         return
@@ -363,7 +367,7 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
 
     self.WepSelectIcon = selecticon:GetTexture("$basetexture")
 
-    surface.SetDrawColor(255, 255, 255, 255)
+    surface.SetDrawColor(255, 255, 255, a)
     surface.SetMaterial(selecticon)
     if w > h then
         y = y - ((w - h) / 2)
