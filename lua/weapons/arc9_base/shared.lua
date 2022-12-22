@@ -314,6 +314,7 @@ SWEP.TriggerDelay = false -- Add a delay before the weapon fires.
 SWEP.TriggerDelayTime = 0.2 -- Time until weapon fires.
 SWEP.TriggerDelayRepeat = false -- Whether to do it for every shot on automatics.
 SWEP.TriggerDelayCancellable = true -- Whether it is possible to cancel trigger delay by releasing the trigger before it is done.
+SWEP.TriggerStartFireAnim = false -- Whether trigger begins the firing animation
 
 -- Works different to ArcCW
 
@@ -515,6 +516,7 @@ SWEP.BashLungeRange = 64
 SWEP.BashRange = 64
 SWEP.PreBashTime = 0.5
 SWEP.PostBashTime = 0.5
+SWEP.BashDamageType = DMG_CLUB
 SWEP.BashDecal = "ManhackCut"
 
 SWEP.BashThirdArmAnimation = {
@@ -526,6 +528,34 @@ SWEP.BashThirdArmAnimation = {
         mult = 1,
         invisible = false,
     }
+
+SWEP.SecondaryBash = false
+
+SWEP.Bash2Damage = 50
+SWEP.Bash2LungeRange = 64
+SWEP.Bash2Range = 64
+SWEP.PreBash2Time = 0.5
+SWEP.PostBash2Time = 0.5
+SWEP.Bash2DamageType = DMG_CLUB
+SWEP.Bash2Decal = "ManhackCut"
+
+SWEP.Bash2ThirdArmAnimation = {
+    rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",
+    sequence = {"melee1", "melee2"},
+    -- sequence = "melee1",
+    gun_controller_attachment = 1,
+    -- offsetang = Angle(90, 180, 90),
+    mult = 1,
+    invisible = false,
+}
+
+SWEP.Backstab = false
+SWEP.BackstabDamage = 100
+SWEP.BackstabRange = 64
+SWEP.PreBackstabTime = 0.5
+SWEP.PostBackstabTime = 0.5
+SWEP.BackstabDamageType = DMG_CLUB
+SWEP.BackstabDecal = "ManhackCut"
 
 -------------------------- LOCKON
 
@@ -755,6 +785,7 @@ SWEP.MalfunctionSound = ""
 SWEP.MeleeHitSound = "arc9/melee_hitbody.wav"
 SWEP.MeleeHitWallSound = "arc9/melee_hitworld.wav"
 SWEP.MeleeSwingSound = "arc9/melee_miss.wav"
+SWEP.BackstabSound = "weapons/knife/knife_stab.wav"
 
 SWEP.BreathInSound = "arc9/breath_inhale.wav"
 SWEP.BreathOutSound = "arc9/breath_exhale.wav"
@@ -1290,6 +1321,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 23, "LastHolsterTime")
     self:NetworkVar("Float", 24, "GrenadePrimedTime")
     self:NetworkVar("Float", 25, "LockOnStartTime")
+    self:NetworkVar("Float", 26, "MeleeAttackTime")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
@@ -1330,6 +1362,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 23, "GrenadeTossing")
     self:NetworkVar("Bool", 24, "GrenadeRecovering")
     self:NetworkVar("Bool", 25, "LockedOn")
+    self:NetworkVar("Bool", 26, "MidMeleeAttack")
+    self:NetworkVar("Bool", 27, "Bash2")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")

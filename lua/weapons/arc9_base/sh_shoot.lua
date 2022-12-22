@@ -173,8 +173,6 @@ function SWEP:PrimaryAttack()
     end
 
     if self:GetProcessedValue("PrimaryBash") then
-        self:MeleeAttack()
-        self:SetNeedTriggerPress(true)
         return
     end
 
@@ -200,7 +198,11 @@ function SWEP:PrimaryAttack()
         if self:GetProcessedValue("TriggerDelay") then
             if self:GetBurstCount() == 0 and !self:GetPrimedAttack() and !self:StillWaiting() then
                 self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
-                self:PlayAnimation("trigger")
+                if self:GetProcessedValue("TriggerStartFireAnim") then
+                    self:PlayAnimation("fire")
+                else
+                    self:PlayAnimation("trigger")
+                end
                 self:SetPrimedAttack(true)
                 return
             elseif self:GetPrimedAttack() and self:GetTriggerDelay() > CurTime() then
@@ -209,6 +211,8 @@ function SWEP:PrimaryAttack()
                 self:SetPrimedAttack(false)
             end
         end
+    else
+        self:SetPrimedAttack(false)
     end
 
     if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
@@ -290,7 +294,7 @@ function SWEP:DoPrimaryAttack()
 
     self:TakeAmmo()
 
-    if self:GetProcessedValue("DoFireAnimation") then
+    if self:GetProcessedValue("DoFireAnimation") and !self:GetProcessedValue("TriggerStartFireAnim") then
         local anim = "fire"
 
         if self:GetProcessedValue("Akimbo") then
@@ -404,9 +408,13 @@ function SWEP:DoPrimaryAttack()
         self:SetNthShot(0)
     end
 
-    if self:GetProcessedValue("TriggerDelayRepeat") then
+    if self:GetProcessedValue("TriggerDelayRepeat") and self:GetOwner():KeyDown(IN_ATTACK) and self:GetCurrentFiremode() != 1 then
         self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
-        self:PlayAnimation("trigger")
+        if self:GetProcessedValue("TriggerStartFireAnim") then
+            self:PlayAnimation("fire")
+        else
+            self:PlayAnimation("trigger")
+        end
         self:SetPrimedAttack(true)
     end
 end

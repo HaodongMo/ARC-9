@@ -439,7 +439,7 @@ function SWEP:CreateCustomizeHUD()
 
         self.CustomizeZoom = self.CustomizeZoom - (sd * 2)
 
-        self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -16, 16)
+        self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -64, 64)
     end
     bg:SetMouseInputEnabled(true)
 
