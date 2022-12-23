@@ -507,10 +507,18 @@ function SWEP:GetLoadedClip()
 end
 
 function SWEP:HasAmmoInClip()
-    if self:GetUBGL() then
-        return self:Clip2() >= self:GetProcessedValue("AmmoPerShot")
+    if self:GetProcessedValue("BottomlessClip") then
+        if self:GetUBGL() then
+            return self:Clip2() + self:Ammo2() >= self:GetProcessedValue("AmmoPerShot")
+        else
+            return self:Clip1() + self:Ammo1() >= self:GetProcessedValue("AmmoPerShot")
+        end
     else
-        return self:Clip1() >= self:GetProcessedValue("AmmoPerShot")
+        if self:GetUBGL() then
+            return self:Clip2() >= self:GetProcessedValue("AmmoPerShot")
+        else
+            return self:Clip1() >= self:GetProcessedValue("AmmoPerShot")
+        end
     end
 end
 
