@@ -18,6 +18,7 @@ local function arc9toytown(amount) -- cool ass blur
     end
 end
 
+local bluramt = 0
 
 function SWEP:PreDrawViewModel()
     if ARC9.PresetCam then
@@ -29,13 +30,32 @@ function SWEP:PreDrawViewModel()
     local getsights = self:GetSight()
     local sightamount = self:GetSightAmount()
 
-    local shouldrtblur = sightamount > 0 and GetConVar("arc9_fx_rtblur"):GetBool() and !input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
-    if shouldrtblur then DrawBokehDOF(2 * sightamount, 1, 0) end
-    
+    local blurtarget = 0
+
+    local blurenable = GetConVar("arc9_fx_rtblur"):GetBool()
+
+    local shouldrtblur = sightamount > 0 and blurenable and !input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
+
+    if shouldrtblur then
+        blurtarget = 2 * sightamount
+    end
+
+    if GetConVar("arc9_fx_reloadblur"):GetBool() then
+        if self:GetReloading() then
+            blurtarget = 1.5
+        elseif !self:GetReady() then
+            blurtarget = 1.5
+        elseif self:GetAnimLockTime() > CurTime() then
+            blurtarget = 1
+        end
+    end
+
     local custdelta = self.CustomizeDelta
 
     if custdelta > 0 then
-        if GetConVar("arc9_cust_blur"):GetBool() then DrawBokehDOF(5 * custdelta, 1, 0.1) end
+        if GetConVar("arc9_cust_blur"):GetBool() then
+            blurtarget = 5 * custdelta
+        end
 
         cam.Start2D()
             surface.SetDrawColor(0, 0, 0, 180 * custdelta)
@@ -45,6 +65,12 @@ function SWEP:PreDrawViewModel()
             surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
         cam.End2D()
     end
+
+    if blurenable then
+        DrawBokehDOF(bluramt, 1, 0.1)
+    end
+
+    bluramt = math.Approach(bluramt, blurtarget, FrameTime() * 10)
 
     if GetConVar("arc9_cust_light"):GetBool() and self:GetCustomize() then
         -- render.SuppressEngineLighting(true)
