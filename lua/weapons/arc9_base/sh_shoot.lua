@@ -704,6 +704,12 @@ function SWEP:GetShootPos()
 
     pos = pos + (ang:Up() * -self:GetProcessedValue("HeightOverBore"))
 
+    local shootposoffset = self:GetProcessedValue("ShootPosOffset")
+
+    pos = pos + (ang:Right() * shootposoffset.x)
+    pos = pos + (ang:Forward() * shootposoffset.y)
+    pos = pos + (ang:Up() * shootposoffset.z)
+
     pos, ang = self:GetRecoilOffset(pos, ang)
 
     return pos, ang
@@ -713,11 +719,17 @@ function SWEP:GetShootDir()
     if !self:GetOwner():IsValid() then return self:GetAngles() end
     local dir = self:GetOwner():EyeAngles()
 
+    local shootangoffset = self:GetProcessedValue("ShootAngOffset")
+
     if self:GetBlindFireDirection() < 0 then
         dir:RotateAroundAxis(dir:Up(), 90)
     elseif self:GetBlindFireDirection() > 0 then
         dir:RotateAroundAxis(dir:Up(), -90)
     end
+
+    dir:RotateAroundAxis(dir:Right(), shootangoffset.p)
+    dir:RotateAroundAxis(dir:Up(), shootangoffset.y)
+    dir:RotateAroundAxis(dir:Forward(), shootangoffset.r)
 
     dir = dir + self:GetFreeAimOffset()
 

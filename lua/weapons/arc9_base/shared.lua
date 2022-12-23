@@ -259,6 +259,11 @@ SWEP.TracerEffect = "ARC9_tracer" -- The effect to use for hitscan tracers
 SWEP.TracerColor = Color(255, 255, 255) -- Color of tracers. Only works if tracer effect supports it. For physical bullets, this is compressed down to 9-bit color.
 SWEP.TracerSize = 1
 
+-------------------------- SHOOTPOS
+
+SWEP.ShootPosOffset = Vector(0, 0, 0)
+SWEP.ShootAngOffset = Angle(0, 0, 0)
+
 -------------------------- MAGAZINE
 
 SWEP.Ammo = "pistol" -- What ammo type this gun uses.
