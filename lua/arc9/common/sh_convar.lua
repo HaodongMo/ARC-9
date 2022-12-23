@@ -469,7 +469,7 @@ local conVars = {
     },
     {
         name = "fx_reloadblur",
-        default = "1",
+        default = "0",
         client = true
     },
     {
