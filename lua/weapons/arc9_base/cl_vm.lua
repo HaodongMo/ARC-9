@@ -45,7 +45,7 @@ function SWEP:PreDrawViewModel()
             blurtarget = 1.5
         elseif !self:GetReady() then
             blurtarget = 1.5
-        elseif self:GetAnimLockTime() > CurTime() then
+        elseif self:GetAnimLockTime() > CurTime() and GetConVar("arc9_fx_animblur"):GetBool() then
             blurtarget = 1
         end
     end
@@ -67,7 +67,7 @@ function SWEP:PreDrawViewModel()
     end
 
     if blurenable then
-        DrawBokehDOF(bluramt, 1, 0.1)
+        DrawBokehDOF(bluramt, 1, 0)
     end
 
     bluramt = math.Approach(bluramt, blurtarget, FrameTime() * 10)
