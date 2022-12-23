@@ -133,8 +133,7 @@ function SWEP:PostModify(toggleonly)
 
             if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
                 if self.AlreadyGaveAmmo then
-                    self:GetOwner():GiveAmmo(self:Clip1(), self.LastAmmo)
-                    self:SetClip1(0)
+                    self:Unload()
                     self:SetRequestReload(true)
                 else
                     self:SetClip1(self:GetProcessedValue("ClipSize"))
@@ -197,9 +196,17 @@ function SWEP:PostModify(toggleonly)
         self:ToggleUBGL(false)
     end
 
+    if game.SinglePlayer() then
+        self:CallOnClient("RecalculateIKGunMotionOffset")
+    end
+
     self:SetupAnimProxy()
 
     self:SetBaseSettings()
+
+    if self:GetAnimLockTime() <= CurTime() then
+        self:Idle()
+    end
 end
 
 function SWEP:ToggleCustomize(on)

@@ -308,6 +308,30 @@ function SWEP:DoRHIK(wm)
     end
 end
 
+function SWEP:RecalculateIKGunMotionOffset()
+    if self:GetSequenceProxy() != 0 then
+        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+        local atttbl = self:GetFinalAttTable(slottbl)
+        local qca = atttbl.IKGunMotionQCA
+
+        local anim_mdl = slottbl.GunDriverModel
+
+        local oldseq = anim_mdl:GetSequence()
+        local oldcycle = anim_mdl:GetCycle()
+        anim_mdl:ResetSequence(0)
+        anim_mdl:SetCycle(0)
+
+        local idleattpos = anim_mdl:GetAttachment(qca).Pos
+        local idleattang = anim_mdl:GetAttachment(qca).Ang
+
+        self.IKGunMotionOffset = idleattpos
+        self.IKGunMotionOffsetAngle = idleattang
+
+        anim_mdl:ResetSequence(oldseq)
+        anim_mdl:SetCycle(oldcycle)
+    end
+end
+
 function SWEP:GunControllerRHIK(pos, ang)
     if self:GetSequenceProxy() != 0 then
         local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
@@ -331,19 +355,7 @@ function SWEP:GunControllerRHIK(pos, ang)
         refl_mdl:SetAngles(Angle(0, 0, 0))
 
         if !self.IKGunMotionOffset then
-            local oldseq = anim_mdl:GetSequence()
-            local oldcycle = anim_mdl:GetCycle()
-            anim_mdl:ResetSequence(0)
-            anim_mdl:SetCycle(0)
-
-            local idleattpos = anim_mdl:GetAttachment(qca).Pos
-            local idleattang = anim_mdl:GetAttachment(qca).Ang
-
-            self.IKGunMotionOffset = idleattpos
-            self.IKGunMotionOffsetAngle = idleattang
-
-            anim_mdl:ResetSequence(oldseq)
-            anim_mdl:SetCycle(oldcycle)
+            self:RecalculateIKGunMotionOffset()
         end
 
         local attpos, attang = anim_mdl:GetAttachment(qca).Pos, anim_mdl:GetAttachment(qca).Ang

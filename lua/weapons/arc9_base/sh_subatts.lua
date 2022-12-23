@@ -105,7 +105,6 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
 
             subatts[i].Scale = (subatts[i].Scale or 1) * scale
 
-            -- local pos, _ = LocalToWorld((subatts[i].Pos or Vector(0, 0, 0)) * scale, subatts[i].Ang or Angle(0, 0, 0), att_pos, att_ang)
             local pos = Vector(0, 0, 0)
             pos:Set(att_pos)
 
@@ -121,8 +120,6 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
             pos = pos + (forward * -subatts[i].Pos.x)
             pos = pos + (right * -subatts[i].Pos.y)
             pos = pos + (up * -subatts[i].Pos.z)
-
-            -- print(subatts[i].Pos)
 
             subatts[i].Pos = pos
             subatts[i].Ang = att_ang + subatts[i].Ang
@@ -140,6 +137,39 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
             subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
             subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
             subatts[i].LaserCorrectionAngle = parenttbl.LaserCorrectionAngle
+            if parenttbl.DuplicateModels then
+                subatts[i].DuplicateModels = table.Copy(parenttbl.DuplicateModels)
+
+                for j, dupli in pairs(subatts[i].DuplicateModels) do
+                    dupli.Scale = (dupli.Scale or 1) * (atttbl.Attachments[i].Scale or 1)
+                    dupli.Pos = Vector(0, 0, 0)
+                    dupli.Ang = Angle(0, 0, 0)
+
+                    dupli.Pos:Set(parenttbl.DuplicateModels[j].Pos or parenttbl.Pos or Vector(0, 0, 0))
+                    dupli.Ang:Set(parenttbl.DuplicateModels[j].Ang or parenttbl.Ang or Angle(0, 0, 0))
+
+                    local pos2 = dupli.Pos
+
+                    local off_ang2 = Angle(0, 0, 0)
+                    local forward2, up2, right2 = off_ang2:Forward(), off_ang2:Up(), off_ang2:Right()
+
+                    forward2:Rotate(-att_ang)
+                    up2:Rotate(-att_ang)
+                    right2:Rotate(-att_ang)
+
+                    local newpos2 = Vector()
+                    newpos2:Set(atttbl.Attachments[i].Pos or Vector(0, 0, 0))
+                    newpos2 = newpos2 * (atttbl.Attachments[i].Scale or 1)
+
+                    pos2 = pos2 + (forward2 * -newpos2.x)
+                    pos2 = pos2 + (right2 * -newpos2.y)
+                    pos2 = pos2 + (up2 * -newpos2.z)
+
+                    dupli.Pos = pos2
+                    dupli.Ang = att_ang + (atttbl.Attachments[i].Ang or Angle(0, 0, 0))
+                    dupli.Ang:Normalize()
+                end
+            end
             if subatts[i].Installed then
                 subatts[i].SubAttachments = self:BuildSubAttachmentTree(k, subatts[i])
             end

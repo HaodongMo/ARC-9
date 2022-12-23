@@ -1,25 +1,39 @@
 local ARC9ScreenScale = ARC9.ScreenScale
 
 local function GetTrueRPM(self)
-    local a = self:GetProcessedValue("RPM")
-    local delay = 60 / a
+    if self:GetCapacity() == 1 then
+        local reloadtime = self:GetProcessedValue("ReloadTime") * self:GetAnimationTime("reload")
 
-    if self:GetProcessedValue("ManualAction") then
-        delay = delay + (self:GetAnimationTime("cycle") * self:GetProcessedValue("CycleTime"))
+        local a = 60 / reloadtime
+
+        a = math.Round(a, 0)
+
+        return a
+    else
+        local a = self:GetProcessedValue("RPM")
+        local delay = 60 / a
+
+        if self:GetProcessedValue("TriggerDelayRepeat") then
+            delay = math.max(self:GetProcessedValue("TriggerDelayTime"), delay)
+        end
+
+        if self:GetProcessedValue("ManualAction") then
+            delay = delay + (self:GetAnimationTime("cycle") * self:GetProcessedValue("CycleTime"))
+        end
+
+        if self:GetCurrentFiremode() > 1 then
+            local pbd = self:GetProcessedValue("PostBurstDelay")
+            local burstlength = self:GetCurrentFiremode()
+
+            delay = delay + (pbd / burstlength)
+        end
+
+        a = 60 / delay
+
+        a = math.Round(a / 50, 0) * 50
+
+        return a
     end
-
-    if self:GetCurrentFiremode() > 1 then
-        local pbd = self:GetProcessedValue("PostBurstDelay")
-        local burstlength = self:GetCurrentFiremode()
-
-        delay = delay + (pbd / burstlength)
-    end
-
-    a = 60 / delay
-
-    a = math.Round(a / 50, 0) * 50
-
-    return a
 end
 
 function SWEP:CreateHUD_Stats()
@@ -54,6 +68,9 @@ function SWEP:CreateHUD_Stats()
 
                 return dv
             end,
+            cond = function()
+                return self:GetProcessedValue("ShootEnt")
+            end,
         },
         {
             title = "ROF",
@@ -72,6 +89,9 @@ function SWEP:CreateHUD_Stats()
 
                 return str .. tostring(a)
             end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end,
         },
         {
             title = "Cyclic ROF",
@@ -84,7 +104,7 @@ function SWEP:CreateHUD_Stats()
                 return a
             end,
             cond = function()
-                return self:GetProcessedValue("RPM") == GetTrueRPM(self) or self:GetProcessedValue("ManualAction")
+                return self:GetProcessedValue("RPM") == GetTrueRPM(self) or self:GetProcessedValue("ManualAction") or self:GetCapacity() == 1
             end,
         },
         {
@@ -113,7 +133,7 @@ function SWEP:CreateHUD_Stats()
                 return a * ARC9.HUToM
             end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash")
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
             end
         },
         {
@@ -123,7 +143,7 @@ function SWEP:CreateHUD_Stats()
             unit = "MoA",
             conv = function(a) return math.Round(a * 360 * 60 / 10, 1) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash")
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("Spread") == 0
             end
         },
         {
@@ -133,7 +153,7 @@ function SWEP:CreateHUD_Stats()
             unit = "m/s",
             conv = function(a) return math.Round(a * ARC9.HUToM) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash")
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
             end
         },
 
@@ -152,7 +172,17 @@ function SWEP:CreateHUD_Stats()
             fifty = 50,
             unit = "mm",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash")
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
+            end
+        },
+        {
+            title = "Ricochet Chance",
+            stat = "RicochetChance",
+            fifty = 50,
+            unit = "%",
+            conv = function(a) return math.Round(a * 100, 0) end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
             end
         },
         {
@@ -161,6 +191,19 @@ function SWEP:CreateHUD_Stats()
             fifty = 25,
             unit = "%",
             conv = function(a) return math.Round(a * 100, 0) end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
+            end
+        },
+        {
+            title = "Explosive Damage",
+            stat = "ExplosionDamage",
+            fifty = 50,
+            unit = "DMG",
+            conv = function(a) return math.Round(a, 0) end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("ExplosionDamage") <= 0
+            end
         },
         {
             title = "Movement Speed",
@@ -252,7 +295,16 @@ function SWEP:CreateHUD_Stats()
             fifty = 0.1,
             unit = "s",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("PostBurstDelay") <= 0
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("PostBurstDelay") <= 0 or self:GetCapacity() == 0
+            end
+        },
+        {
+            title = "Trigger Delay",
+            stat = "TriggerDelayTime",
+            fifty = 0.1,
+            unit = "s",
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("TriggerDelayTime") <= 0 or !self:GetProcessedValue("TriggerDelay")
             end
         },
         {

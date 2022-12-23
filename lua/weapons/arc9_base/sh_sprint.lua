@@ -57,6 +57,10 @@ function SWEP:GetIsSprintingCheck()
         end
     end
 
+    if self:GetGrenadePrimed() then
+        return false
+    end
+
     if owner:Crouching() then return false end
     -- if owner:KeyDown(IN_WALK) then return false end
     local curspeed = owner:GetVelocity():LengthSqr()

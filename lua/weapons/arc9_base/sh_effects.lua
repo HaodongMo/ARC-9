@@ -82,11 +82,19 @@ function SWEP:GetMuzzleDevice(wm)
     local model
     local muzz
 
+    local ubgl = self:GetUBGL()
+
     if wm then
         model = self.WModel
         muzz = self:GetWM()
 
-        if self.MuzzleDeviceWM then
+        if ubgl and self.MuzzleDeviceUBGLWM then
+            if istable(self.MuzzleDeviceUBGLWM) then
+                return self.MuzzleDeviceUBGLWM[(self:GetNthShot() % #self.MuzzleDeviceUBGLWM) + 1]
+            else
+                return self.MuzzleDeviceUBGLWM
+            end
+        elseif self.MuzzleDeviceWM then
             if istable(self.MuzzleDeviceWM) then
                 return self.MuzzleDeviceWM[(self:GetNthShot() % #self.MuzzleDeviceWM) + 1]
             else
@@ -97,7 +105,13 @@ function SWEP:GetMuzzleDevice(wm)
         model = self.VModel
         muzz = self:GetVM()
 
-        if self.MuzzleDeviceVM then
+        if ubgl and self.MuzzleDeviceUBGLVM then
+            if istable(self.MuzzleDeviceUBGLVM) then
+                return self.MuzzleDeviceUBGLVM[(self:GetNthShot() % #self.MuzzleDeviceUBGLVM) + 1]
+            else
+                return self.MuzzleDeviceUBGLVM
+            end
+        elseif self.MuzzleDeviceVM then
             if istable(self.MuzzleDeviceVM) then
                 return self.MuzzleDeviceVM[(self:GetNthShot() % #self.MuzzleDeviceVM) + 1]
             else

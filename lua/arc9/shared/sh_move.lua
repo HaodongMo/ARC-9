@@ -30,10 +30,9 @@ function ARC9.Move(ply, mv, cmd)
         local targetpos = (wpn:GetLungeEntity():EyePos() + wpn:GetLungeEntity():EyePos()) / 2
         local lungevec = targetpos - ply:EyePos()
         local lungedir = lungevec:GetNormalized()
-        local lungespd = (2 * (lungevec:Length() / math.Max(0.01, wpn:GetProcessedValue("PreBashTime")))) + 100
-        ply:SetEyeAngles(lungedir:Angle())
+        local lungedist = lungevec:Length()
+        local lungespd = (2 * (lungedist / math.Max(0.01, wpn:GetProcessedValue("PreBashTime"))))
         mv:SetVelocity(lungedir * lungespd)
-        -- mv:SetForwardSpeed(lungespd)
     end
 
     if wpn:GetBipod() then
@@ -70,7 +69,10 @@ function ARC9.StartCommand(ply, cmd)
         end
 
         cmd:SetViewAngles(eyeang)
-        ply:SetEyeAngles(eyeang)
+
+        if game.SinglePlayer() then
+            ply:SetEyeAngles(eyeang)
+        end
     end
 
     local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()

@@ -37,6 +37,7 @@ ATT.DrawFunc = function(swep, model, wm) end
 ATT.ModelSkin = 0
 ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
+ATT.NoDraw = false
 
 ATT.Material = ""
 
@@ -216,8 +217,6 @@ ATT.IKAnimationProxy = {
 
 ATT.IKGunMotionQCA = nil -- Make the gun move while in IK animation
 
-ATT.IKGunMotionOffset = Vector(0, 0, 0)
-ATT.IKGunMotionOffsetAngle = Angle(0, 0, 0)
 ATT.IKGunMotionMult = 1
 
 ATT.IKCameraMotionQCA = nil

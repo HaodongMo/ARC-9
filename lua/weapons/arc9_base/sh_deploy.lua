@@ -42,6 +42,7 @@ function SWEP:Deploy()
     self:SetInspecting(false)
     self:SetLoadedRounds(self:Clip1())
     self:SetGrenadeRecovering(false)
+    self:SetUBGL(false)
 
     self:SetGrenadePrimed(false)
 
@@ -59,6 +60,10 @@ function SWEP:Deploy()
 
     if self:GetProcessedValue("AutoReload") then
         self:RestoreClip(math.huge)
+    end
+
+    if game.SinglePlayer() then
+        self:CallOnClient("RecalculateIKGunMotionOffset")
     end
 
     if SERVER then
@@ -140,7 +145,7 @@ function SWEP:Holster(wep)
             self:KillShield()
         end
 
-        if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
+        if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 and !IsValid(self:GetDetonatorEntity()) then
             self:Remove()
         end
 
@@ -192,6 +197,10 @@ function SWEP:DoDeployAnimation()
             self:SetReady(true)
         end)
     else
-        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)
+        local t = self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)
+
+        self:SetTimer(t, function()
+            self:SetReady(true)
+        end)
     end
 end

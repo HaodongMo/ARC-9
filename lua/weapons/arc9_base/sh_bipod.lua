@@ -88,7 +88,7 @@ function SWEP:EnterBipod()
     self:ExitSights()
 end
 
-function SWEP:ExitBipod()
+function SWEP:ExitBipod(force)
     if !self:GetBipod() then return end
 
     self:SetBipod(false)
@@ -98,9 +98,7 @@ function SWEP:ExitBipod()
     }
     self:PlayTranslatedSound(soundtab1)
 
-    if self:GetAnimLockTime() <= CurTime() then
-        self:PlayAnimation("exit_bipod", 1, true)
-    end
+    self:PlayAnimation("exit_bipod", 1, true)
 
     self:CancelReload()
 

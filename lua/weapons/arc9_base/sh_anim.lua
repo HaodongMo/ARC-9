@@ -24,7 +24,13 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
     end
 
     if istable(source) then
-        source = source[math.floor(util.SharedRandom("ARC9_animsource", 1, #source, CurTime()))]
+        source = source[math.Round(util.SharedRandom("ARC9_animsource", 1, #source, CurTime()))]
+    end
+
+    local tsource = self:RunHook("Hook_TranslateSource", source) or source
+
+    if mdl:LookupSequence(tsource) != -1 then
+        source = tsource
     end
 
     local seq = 0
@@ -227,18 +233,18 @@ end
 function SWEP:Idle()
     if self:GetPrimedAttack() then return end
     if self:GetSafe() then return end
-	
-	local anim = "idle"
-	local clip = self:Clip1()
-	local banim = anim
-	
-	for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
-            if self:HasAnimation(anim .. "_" .. tostring(i)) then
-                banim = anim .. "_" .. tostring(i)
-			end
+
+    local anim = "idle"
+    local clip = self:Clip1()
+    local banim = anim
+
+    for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+        if self:HasAnimation(anim .. "_" .. tostring(i)) then
+            banim = anim .. "_" .. tostring(i)
         end
-	anim = banim
-	
+    end
+    anim = banim
+
     self:PlayAnimation(anim)
 end
 
@@ -305,5 +311,9 @@ function SWEP:ThinkAnimation()
 end
 
 function SWEP:FireAnimationEvent(pos, ang, event, options, source)
+    if self.SuppressDefaultEvents then return true end
+end
+
+function SWEP:HandleAnimEvent(event, eventtime, cycle, type, options)
     if self.SuppressDefaultEvents then return true end
 end

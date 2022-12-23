@@ -325,6 +325,7 @@ function SWEP:SetupModel(wm, lod, cm)
     self.LHIK_Priority = -1000
     self.RHIK_Priority = -1000
     self.MuzzleDevice_Priority = -1000
+    self.MuzzleDeviceUBGL_Priority = -1000
 
     local basemodel = nil
 
@@ -335,6 +336,7 @@ function SWEP:SetupModel(wm, lod, cm)
         self.LHIKModel = nil
         self.RHIKModel = nil
         self.MuzzleDeviceVM = nil
+        self.MuzzleDeviceUBGLVM = nil
 
         if !owner.GetViewModel then return end -- safe check to fix random mp error
 
@@ -358,6 +360,7 @@ function SWEP:SetupModel(wm, lod, cm)
             self.LHIKModelWM = nil
             self.RHIKModelWM = nil
             self.MuzzleDeviceWM = nil
+            self.MuzzleDeviceUBGLWM = nil
             self.WModel = mdl
         end
 
@@ -480,13 +483,17 @@ function SWEP:SetupModel(wm, lod, cm)
 
             csmodel.Duplicate = i
 
+            if atttbl.NoDraw then
+                csmodel.NoDraw = true
+            end
+
             if csmodel.DrawFunc then
                 csmodel.DrawFunc(self, csmodel, wm)
             end
 
             local proxmodel
 
-            if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice) then
+            if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice or atttbl.MuzzleDeviceUBGL) then
                 proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
                 proxmodel.NoDraw = true
                 proxmodel.Duplicate = i
@@ -510,30 +517,60 @@ function SWEP:SetupModel(wm, lod, cm)
                 table.insert(ARC9.CSModelPile, tbl)
             end
 
-            if atttbl.MuzzleDevice and !cm then
-                if (atttbl.MuzzleDevice_Priority or 0) > self.MuzzleDevice_Priority or ((atttbl.MuzzleDevice_Priority or 0) == self.MuzzleDevice_Priority and i > 0) then
-                    self.MuzzleDevice_Priority = atttbl.MuzzleDevice_Priority or 0
-                    proxmodel.IsMuzzleDevice = true
+            if (atttbl.MuzzleDevice or atttbl.MuzzleDeviceUBGL) and !cm then
+                local priority = atttbl.MuzzleDevice_Priority or 0
+                local totalpriority = self.MuzzleDevice_Priority or 0
+
+                if atttbl.MuzzleDeviceUBGL then
+                    priority = atttbl.MuzzleDeviceUBGL_Priority or 0
+                    totalpriority = self.MuzzleDeviceUBGL_Priority or 0
+                end
+
+                if priority > totalpriority or (priority == totalpriority and i > 0) then
+                    if atttbl.MuzzleDeviceUBGL then
+                        self.MuzzleDeviceUBGL_Priority = priority
+                    else
+                        self.MuzzleDevice_Priority = priority
+                        proxmodel.IsMuzzleDevice = true
+                    end
+
+                    local tbl
+
+                    if atttbl.MuzzleDeviceUBGL then
+                        tbl = self.MuzzleDeviceUBGLVM
+
+                        if wm then
+                            tbl = self.MuzzleDeviceUBGLWM
+                        end
+                    else
+                        tbl = self.MuzzleDeviceVM
+
+                        if wm then
+                            tbl = self.MuzzleDeviceWM
+                        end
+                    end
 
                     if #dupli > 0 then
                         if i == 0 then
-                            if wm then
-                                self.MuzzleDeviceWM = {proxmodel}
-                            else
-                                self.MuzzleDeviceVM = {proxmodel}
-                            end
+                            tbl = {proxmodel}
                         else
-                            if wm then
-                                table.insert(self.MuzzleDeviceWM, proxmodel)
-                            else
-                                table.insert(self.MuzzleDeviceVM, proxmodel)
-                            end
+                            table.insert(tbl, proxmodel)
                         end
                     else
+                        tbl = proxmodel
+                    end
+
+                    if atttbl.MuzzleDeviceUBGL then
+                        self.MuzzleDeviceUBGLVM = tbl
+
                         if wm then
-                            self.MuzzleDeviceWM = proxmodel
-                        else
-                            self.MuzzleDeviceVM = proxmodel
+                            self.MuzzleDeviceUBGLWM = tbl
+                        end
+                    else
+                        self.MuzzleDeviceVM = tbl
+
+                        if wm then
+                            self.MuzzleDeviceWM = tbl
                         end
                     end
                 end

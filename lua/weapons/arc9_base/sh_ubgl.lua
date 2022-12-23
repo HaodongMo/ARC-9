@@ -36,6 +36,10 @@ function SWEP:ToggleUBGL(on)
 
         self:PlayAnimation("enter_ubgl", 1, true)
         self:ExitSights()
+
+        if game.SinglePlayer() then
+            self:CallOnClient("RecalculateIKGunMotionOffset")
+        end
     else
         local soundtab = {
             name = "exitubgl",

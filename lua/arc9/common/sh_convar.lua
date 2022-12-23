@@ -468,6 +468,16 @@ local conVars = {
         client = true
     },
     {
+        name = "fx_reloadblur",
+        default = "0",
+        client = true
+    },
+    {
+        name = "fx_animblur",
+        default = "1",
+        client = true
+    },
+    {
         name = "realrecoil",
         default = "1",
     },

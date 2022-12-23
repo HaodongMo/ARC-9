@@ -64,7 +64,7 @@ function EFFECT:Init(data)
     -- ang:RotateAroundAxis(ang:Forward(), (ent.ShellRotateAngle or Angle(0, 0, 0))[3])
 
     local model = ent:GetProcessedValue("ShellModel")
-    local mat = ent:GetProcessedValue("ShellMaterial")
+    local material = ent:GetProcessedValue("ShellMaterial")
     local scale = ent:GetProcessedValue("ShellScale")
     local physbox = ent:GetProcessedValue("ShellPhysBox")
     local pitch = ent:GetProcessedValue("ShellPitch")
@@ -77,7 +77,7 @@ function EFFECT:Init(data)
 
         if shelldata then
             model = shelldata.model or model
-            mat = shelldata.mat or mat
+            material = shelldata.material or material
             scale = shelldata.scale or scale
             physbox = shelldata.physbox or physbox
             pitch = shelldata.pitch or pitch
@@ -94,7 +94,7 @@ function EFFECT:Init(data)
 
     self:SetPos(origin)
     self:SetModel(model or "")
-    self:SetMaterial(mat or "")
+    self:SetMaterial(material or "")
     self:DrawShadow(true)
     self:SetAngles(ang)
     self:SetModelScale(scale or 1)

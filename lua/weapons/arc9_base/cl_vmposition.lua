@@ -104,7 +104,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- pos = Vector(0, 0, 0)
     -- ang = Angle(0, 0, 0)
 
-    local cor_val = 0.25
+    local cor_val = self:GetCorVal()
 
     local offsetpos = Vector(0, 0, 0)
     local offsetang = Angle(0, 0, 0)
@@ -266,14 +266,14 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
     local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
-    extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * 0.25)
-    extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * 0.25)
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * cor_val)
 
     -- extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01
     -- extra_offsetpos.z = extra_offsetpos.z + (self:GetFreeSwayAngles().p * cor_val) - 0.05 -- idkkkkkkkk
 
-    extra_offsetang.y = extra_offsetang.y - (getfreeswayoffset.p * 0.25)
-    extra_offsetang.p = extra_offsetang.p + (getfreeswayoffset.y * 0.25)
+    extra_offsetang.y = extra_offsetang.y - (getfreeswayoffset.p * cor_val)
+    extra_offsetang.p = extra_offsetang.p + (getfreeswayoffset.y * cor_val)
 
     if singleplayer or IsFirstTimePredicted() then
         if self:GetCustomize() then
@@ -326,24 +326,6 @@ function SWEP:GetViewModelPosition(pos, ang)
 
         extra_offsetpos = LerpVector(curvedcustomizedelta, extra_offsetpos, vector_origin)
         extra_offsetang = LerpAngle(curvedcustomizedelta, extra_offsetang, angle_zero)
-
-        -- if self.BottomBarAddress then
-        --     local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
-
-        --     if slot then
-        --         local apos = self:GetAttPos(slot, false, true, true)
-
-        --         local opos = (slot.Icon_Offset or Vector(0, 0, 0))
-        --         local atttbl = self:GetFinalAttTable(slot)
-        --         opos = opos + (atttbl.IconOffset or Vector(0, 0, 0))
-
-        --         apos.x = apos.x + opos.x
-        --         apos.z = apos.z - opos.z
-
-        --         cpos = cpos + cang:Up() * (apos.x - cpos.x)
-        --         -- cpos = cpos + cang:Right() * (apos.y - cpos.y)
-        --         cpos = cpos + cangforward * (apos.z + cpos.z)
-        --     end
 
         if self.BottomBarMode == 1 then
             cpos = cpos - cangforward * 5 -- extended cust offset
@@ -517,6 +499,10 @@ function SWEP:GetViewModelFOV()
     if self:GetInSights() then
         -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
         target = self:GetSight().ViewModelFOV or (75 + convarfov)
+    end
+
+    if self:GetCustomize() then
+        target = self.CustomizeSnapshotFOV or 90
     end
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target

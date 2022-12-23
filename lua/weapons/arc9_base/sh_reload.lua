@@ -187,6 +187,7 @@ function SWEP:Unload()
         self:GetOwner():GiveAmmo(self:Clip1(), self.Ammo, true)
     end
     self:SetClip1(0)
+    self:SetLoadedRounds(0)
 end
 
 function SWEP:CancelReload()
@@ -492,7 +493,6 @@ function SWEP:GetLoadedClip()
 
     if self:GetProcessedValue("BottomlessClip") then
         clip = ammo
-        self:RestoreClip(math.huge)
     end
 
     if self:GetUBGL() then
@@ -507,7 +507,19 @@ function SWEP:GetLoadedClip()
 end
 
 function SWEP:HasAmmoInClip()
-    return self:GetLoadedClip() >= self:GetProcessedValue("AmmoPerShot")
+    if self:GetProcessedValue("BottomlessClip") then
+        if self:GetUBGL() then
+            return self:Clip2() + self:Ammo2() >= self:GetProcessedValue("AmmoPerShot")
+        else
+            return self:Clip1() + self:Ammo1() >= self:GetProcessedValue("AmmoPerShot")
+        end
+    else
+        if self:GetUBGL() then
+            return self:Clip2() >= self:GetProcessedValue("AmmoPerShot")
+        else
+            return self:Clip1() >= self:GetProcessedValue("AmmoPerShot")
+        end
+    end
 end
 
 function SWEP:DoBulletPose()

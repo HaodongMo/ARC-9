@@ -78,6 +78,14 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                         continue
                     end
 
+                    if model.Duplicate then
+                        local duplitbl = (slottbl.DuplicateModels or {})[model.Duplicate]
+
+                        if hidebones[(duplitbl or {}).Bone or -1] then
+                            continue
+                        end
+                    end
+
                     local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or angle_zero, model.Duplicate)
                     model:SetPos(apos)
                     model:SetAngles(aang)

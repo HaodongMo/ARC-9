@@ -55,6 +55,8 @@ ENT.ShootEntData = {}
 
 ENT.IsProjectile = true
 
+ENT.LastHitNormal = Vector(0, 0, 0)
+
 if SERVER then
     local gunship = {["npc_combinegunship"] = true, ["npc_combinedropship"] = true}
 
@@ -251,6 +253,8 @@ if SERVER then
 
     function ENT:PhysicsCollide(colData, physobj)
         if !self:IsValid() then return end
+
+        self.LastHitNormal = colData.HitNormal
 
         if self.ExplodeOnImpact then
             if CurTime() - self.SpawnTime < self.FuseTime then
