@@ -81,6 +81,11 @@ function SWEP:GetSmoothedFOVMag()
     return self.SmoothedMagnification
 end
 
+SWEP.LastMuzzleAngle = Angle(0, 0, 0)
+SWEP.MuzzleAngleVelocity = Angle(0, 0, 0)
+SWEP.ProceduralViewOffset = Angle(0, 0, 0)
+SWEP.ProceduralSpeedLimit = 5
+
 function SWEP:GetCameraControl()
     if self:GetSequenceProxy() != 0 then
         local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
@@ -120,8 +125,44 @@ function SWEP:GetCameraControl()
 
         ang = vm:WorldToLocalAngles(ang)
         ang:Sub(self.CamOffsetAng)
-        ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
-        ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
+
+        if self:GetProcessedValue("CamCoolView") then
+            self.ProceduralViewOffset:Normalize()
+
+            ang:Normalize()
+            local delta = self.LastMuzzleAngle - ang
+            delta:Normalize()
+
+            local targeting = self:GetNextPrimaryFire() - .1 > CurTime()
+            local target = targeting and 1 or 0
+            target = math.min(target, 1 - math.pow( vm:GetCycle(), 2 ) )
+            local progress = Lerp(FrameTime() * 15, progress or 0, target)
+
+            self.MuzzleAngleVelocity = self.MuzzleAngleVelocity + delta * 2
+            self.MuzzleAngleVelocity.p = math.Approach(self.MuzzleAngleVelocity.p, -self.ProceduralViewOffset.p * 2, FrameTime() * 20)
+            self.MuzzleAngleVelocity.p = math.Clamp(self.MuzzleAngleVelocity.p, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
+            self.ProceduralViewOffset.p = self.ProceduralViewOffset.p + self.MuzzleAngleVelocity.p * FrameTime()
+            self.ProceduralViewOffset.p = math.Clamp(self.ProceduralViewOffset.p, -90, 90)
+            self.MuzzleAngleVelocity.y = math.Approach(self.MuzzleAngleVelocity.y, -self.ProceduralViewOffset.y * 2, FrameTime() * 20)
+            self.MuzzleAngleVelocity.y = math.Clamp(self.MuzzleAngleVelocity.y, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
+            self.ProceduralViewOffset.y = self.ProceduralViewOffset.y + self.MuzzleAngleVelocity.y * FrameTime()
+            self.ProceduralViewOffset.y = math.Clamp(self.ProceduralViewOffset.y, -90, 90)
+            self.MuzzleAngleVelocity.r = math.Approach(self.MuzzleAngleVelocity.r, -self.ProceduralViewOffset.r * 2, FrameTime() * 20)
+            self.MuzzleAngleVelocity.r = math.Clamp(self.MuzzleAngleVelocity.r, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
+            self.ProceduralViewOffset.r = self.ProceduralViewOffset.r + self.MuzzleAngleVelocity.r * FrameTime()
+            self.ProceduralViewOffset.r = math.Clamp(self.ProceduralViewOffset.r, -90, 90)
+
+            self.ProceduralViewOffset.p = math.Approach(self.ProceduralViewOffset.p, 0, (1 - progress) * FrameTime() * -self.ProceduralViewOffset.p)
+            self.ProceduralViewOffset.y = math.Approach(self.ProceduralViewOffset.y, 0, (1 - progress) * FrameTime() * -self.ProceduralViewOffset.y)
+            self.ProceduralViewOffset.r = math.Approach(self.ProceduralViewOffset.r, 0, (1 - progress) * FrameTime() * -self.ProceduralViewOffset.r)
+
+            self.LastMuzzleAngle = ang
+
+            return self.ProceduralViewOffset
+        else
+            ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
+            ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
+        end
 
         return ang
     end
