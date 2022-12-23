@@ -493,7 +493,6 @@ function SWEP:GetLoadedClip()
 
     if self:GetProcessedValue("BottomlessClip") then
         clip = ammo
-        self:RestoreClip(math.huge)
     end
 
     if self:GetUBGL() then
@@ -508,7 +507,7 @@ function SWEP:GetLoadedClip()
 end
 
 function SWEP:HasAmmoInClip()
-    return self:GetLoadedClip() >= self:GetProcessedValue("AmmoPerShot")
+    return self:Clip1() >= self:GetProcessedValue("AmmoPerShot")
 end
 
 function SWEP:DoBulletPose()

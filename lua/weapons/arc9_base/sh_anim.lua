@@ -313,3 +313,7 @@ end
 function SWEP:FireAnimationEvent(pos, ang, event, options, source)
     if self.SuppressDefaultEvents then return true end
 end
+
+function SWEP:HandleAnimEvent(event, eventtime, cycle, type, options)
+    if self.SuppressDefaultEvents then return true end
+end

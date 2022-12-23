@@ -17,6 +17,7 @@ ENT.Flare = false
 ENT.PhysBoxSize = nil -- Vector(1, 1, 1)
 ENT.SphereSize = nil -- number
 ENT.PhysMat = "grenade"
+ENT.TruePhys = false
 
 ENT.Drag = true
 ENT.Gravity = true

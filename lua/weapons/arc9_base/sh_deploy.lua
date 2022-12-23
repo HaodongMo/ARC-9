@@ -140,7 +140,7 @@ function SWEP:Holster(wep)
             self:KillShield()
         end
 
-        if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 then
+        if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 and !IsValid(self:GetDetonatorEntity()) then
             self:Remove()
         end
 

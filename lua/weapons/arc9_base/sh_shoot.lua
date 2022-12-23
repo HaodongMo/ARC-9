@@ -56,11 +56,11 @@ function SWEP:DoShootSounds()
     local dsstr = "DistantShootSound"
 
     local silenced = self:GetProcessedValue("Silencer") and !self:GetUBGL()
-    
+
     local indoor = self:GetIndoor()
     if isbool(indoor) then indoor = indoor and 1 or 0 end -- crazy shit i got error randomly
     local indoormix = math.max(0, 1 - (indoor or 0))
-    
+
     local havedistant = self:GetProcessedValue(dsstr)
 
     if silenced and self:GetProcessedValue(sstr .. "Silenced") then sstr = sstr .. "Silenced" end
@@ -194,6 +194,12 @@ function SWEP:PrimaryAttack()
 
     if self:GetCustomize() then return end
 
+    if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
+        self:MeleeAttack()
+        self:SetNeedTriggerPress(true)
+        return
+    end
+
     if self:HasAmmoInClip() then
         if self:GetProcessedValue("TriggerDelay") then
             if self:GetBurstCount() == 0 and !self:GetPrimedAttack() and !self:StillWaiting() then
@@ -213,12 +219,6 @@ function SWEP:PrimaryAttack()
         end
     else
         self:SetPrimedAttack(false)
-    end
-
-    if self:GetProcessedValue("Bash") and self:GetOwner():KeyDown(IN_USE) and !self:GetInSights() then
-        self:MeleeAttack()
-        self:SetNeedTriggerPress(true)
-        return
     end
 
     if self:GetReloading() then
@@ -764,6 +764,10 @@ function SWEP:ShootRocket()
             Target = (IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget())
         })
         rocket.ARC9Projectile = true
+
+        if self:GetProcessedValue("Detonator") then
+            self:SetDetonatorEntity(rocket)
+        end
 
         local phys = rocket:GetPhysicsObject()
 

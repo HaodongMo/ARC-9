@@ -2,6 +2,13 @@ function SWEP:ThinkGrenade()
     if self:PredictionFilter() then return end
     if !self:GetProcessedValue("Throwable") then return end
 
+    if IsValid(self:GetDetonatorEntity()) and self:GetOwner():KeyDown(IN_ATTACK) then
+        if self:GetOwner():KeyPressed(IN_ATTACK) then
+            self:TouchOff()
+        end
+        return
+    end
+
     local fuse = self:GetProcessedValue("FuseTimer")
 
     if fuse >= 0 and self:GetGrenadePrimed() then
@@ -24,10 +31,14 @@ function SWEP:ThinkGrenade()
 
     if !self:GetGrenadePrimed() then
         if self:GetGrenadeRecovering() then
-            self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
-            self:SetGrenadeRecovering(false)
-        elseif (tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
-            self:GetOwner():KeyDown(IN_ATTACK) and
+            if self:GetProcessedValue("Disposable") and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) then
+                self:Remove()
+            else
+                self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+                self:SetGrenadeRecovering(false)
+            end
+        elseif ((tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
+            self:GetOwner():KeyDown(IN_ATTACK)) and
             self:HasAmmoInClip()
             then
             self:SetGrenadePrimed(true)
@@ -117,6 +128,10 @@ function SWEP:ThrowGrenade(nttype, delaytime)
                 nade:Detonate()
             end
 
+            if self:GetProcessedValue("Detonator") then
+                self:SetDetonatorEntity(nade)
+            end
+
             local phys = nade:GetPhysicsObject()
 
             if IsValid(phys) then
@@ -132,4 +147,12 @@ function SWEP:ThrowGrenade(nttype, delaytime)
             end
         end
     end)
+end
+
+function SWEP:TouchOff()
+    self:PlayAnimation("touchoff", 1, true)
+
+    self:SetGrenadeRecovering(true)
+
+    self:GetDetonatorEntity():Detonate()
 end

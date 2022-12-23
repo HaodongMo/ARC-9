@@ -226,6 +226,8 @@ SWEP.ThrowChargeTime = 1 -- How long it takes to charge the grenade to its maxim
 
 SWEP.ThrowTumble = true -- Grenade tumbles when thrown.
 
+SWEP.Detonator = false -- Set to true to give this weapon a detonator. After throwing out a grenade, you enter detonator mode.
+
 -------------------------- PHYS BULLET BALLISTICS
 
 -- These settings override the player's physical bullet options.
@@ -1161,6 +1163,7 @@ SWEP.Attachments = {
 -- throw
 -- toss
 -- explodeinhands
+-- touchoff (for C4)
 
 -- Suffixes (Must be in this order):
 -- _iron (When sighted)
@@ -1175,6 +1178,7 @@ SWEP.Attachments = {
 -- _ubgl
 -- _primed
 -- _uncycled
+-- _detonator
 
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
@@ -1382,6 +1386,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Entity", 1, "LungeEntity")
     self:NetworkVar("Entity", 2, "ShieldEntity")
     self:NetworkVar("Entity", 3, "LockOnTarget")
+    self:NetworkVar("Entity", 4, "DetonatorEntity")
 
     self:SetVisualRecoilAng(Angle(0, 0 ,0))
     self:SetVisualRecoilVel(Angle(0, 0, 0))

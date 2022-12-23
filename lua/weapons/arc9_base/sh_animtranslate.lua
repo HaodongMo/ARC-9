@@ -47,6 +47,10 @@ function SWEP:TranslateAnimation(seq)
         if self:GetNeedsCycle() and self:HasAnimation(seq .. "_uncycled") then
             seq = seq .. "_uncycled"
         end
+
+        if IsValid(self:GetDetonatorEntity()) and self:HasAnimation(seq .. "_detonator") then
+            seq = seq .. "_detonator"
+        end
     end
 
     local traq = self:RunHook("Hook_TranslateAnimation", seq) or seq
@@ -95,7 +99,7 @@ end
 
 function SWEP:GetSequenceTime(seq)
     local vm = self:GetVM()
-    seq = vm:LookupSequence(seq)
+    seq = vm:LookupSequence(seq or "")
 
     return vm:SequenceDuration(seq)
 end
