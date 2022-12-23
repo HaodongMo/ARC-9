@@ -197,6 +197,10 @@ function SWEP:DoDeployAnimation()
             self:SetReady(true)
         end)
     else
-        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)
+        local t = self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)
+
+        self:SetTimer(t, function()
+            self:SetReady(true)
+        end)
     end
 end
