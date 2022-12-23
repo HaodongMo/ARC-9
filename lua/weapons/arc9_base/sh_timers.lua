@@ -79,7 +79,7 @@ SWEP.SoundTableBodygroups = {}
 SWEP.SoundTablePoseParams = {}
 
 function SWEP:PlaySoundTable(soundtable, mult)
-    --if CLIENT and game.SinglePlayer() then return end
+    if self:PredictionFilter() then return end
     local owner = self:GetOwner()
     start = start or 0
     mult = mult

@@ -33,15 +33,19 @@ function SWEP:ThinkGrenade()
             self:SetGrenadePrimed(true)
             self:SetGrenadePrimedTime(CurTime())
 
-            self:PlayAnimation("pullpin", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            if self:GetOwner():KeyDown(IN_ATTACK2) and self:HasAnimation("pullpin_toss") then
+                self:PlayAnimation("pullpin_toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            else
+                self:PlayAnimation("pullpin", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            end
             self:SetGrenadeTossing(self:GetOwner():KeyDown(IN_ATTACK2))
         end
     else
-        if self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK2) then
+        if self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly")) then
             local t = self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
             local mp = self:GetAnimationEntry("toss").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS, t * mp)
-        elseif !self:GetGrenadeTossing() and !self:GetOwner():KeyDown(IN_ATTACK) then
+        elseif !self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK) or self:GetProcessedValue("ThrowInstantly")) then
             local t = self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
             local mp = self:GetAnimationEntry("throw").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL, t * mp)

@@ -89,6 +89,9 @@ function SWEP:CreateHUD_Stats()
 
                 return str .. tostring(a)
             end,
+            cond = function()
+                return self:GetProcessedValue("PrimaryBash")
+            end,
         },
         {
             title = "Cyclic ROF",
