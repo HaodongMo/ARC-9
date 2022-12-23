@@ -196,6 +196,10 @@ function SWEP:PostModify(toggleonly)
         self:ToggleUBGL(false)
     end
 
+    if game.SinglePlayer() then
+        self:CallOnClient("RecalculateIKGunMotionOffset")
+    end
+
     self:SetupAnimProxy()
 
     self:SetBaseSettings()

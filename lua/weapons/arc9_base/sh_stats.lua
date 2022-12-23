@@ -8,6 +8,9 @@ SWEP.ExcludeFromRawStats = {
 }
 
 function SWEP:InvalidateCache()
+    if game.SinglePlayer() then
+        self:CallOnClient("InvalidateCache")
+    end
     self.StatCache = {}
     self.HookCache = {}
     self.AffectorsCache = nil
@@ -15,9 +18,6 @@ function SWEP:InvalidateCache()
     self.RecoilPatternCache = {}
     self.ScrollLevels = {}
     self.HasNoAffectors = {}
-
-    self.IKGunMotionOffset = nil
-    self.IKGunMotionOffsetAngle = nil
 
     self:SetBaseSettings()
 end

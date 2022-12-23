@@ -42,6 +42,7 @@ function SWEP:Deploy()
     self:SetInspecting(false)
     self:SetLoadedRounds(self:Clip1())
     self:SetGrenadeRecovering(false)
+    self:SetUBGL(false)
 
     self:SetGrenadePrimed(false)
 
@@ -59,6 +60,10 @@ function SWEP:Deploy()
 
     if self:GetProcessedValue("AutoReload") then
         self:RestoreClip(math.huge)
+    end
+
+    if game.SinglePlayer() then
+        self:CallOnClient("RecalculateIKGunMotionOffset")
     end
 
     if SERVER then

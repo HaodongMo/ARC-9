@@ -507,7 +507,11 @@ function SWEP:GetLoadedClip()
 end
 
 function SWEP:HasAmmoInClip()
-    return self:Clip1() >= self:GetProcessedValue("AmmoPerShot")
+    if self:GetUBGL() then
+        return self:Clip2() >= self:GetProcessedValue("AmmoPerShot")
+    else
+        return self:Clip1() >= self:GetProcessedValue("AmmoPerShot")
+    end
 end
 
 function SWEP:DoBulletPose()

@@ -233,18 +233,18 @@ end
 function SWEP:Idle()
     if self:GetPrimedAttack() then return end
     if self:GetSafe() then return end
-	
-	local anim = "idle"
-	local clip = self:Clip1()
-	local banim = anim
-	
-	for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
-            if self:HasAnimation(anim .. "_" .. tostring(i)) then
-                banim = anim .. "_" .. tostring(i)
-			end
+
+    local anim = "idle"
+    local clip = self:Clip1()
+    local banim = anim
+
+    for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
+        if self:HasAnimation(anim .. "_" .. tostring(i)) then
+            banim = anim .. "_" .. tostring(i)
         end
-	anim = banim
-	
+    end
+    anim = banim
+
     self:PlayAnimation(anim)
 end
 
