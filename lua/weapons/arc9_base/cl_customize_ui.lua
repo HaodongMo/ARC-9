@@ -1230,8 +1230,6 @@ function SWEP:DrawCustomizeHUD()
     elseif !customize and self.CustomizeHUD then
         self:RemoveCustomizeHUD()
     end
-
-    lastcustomize = self:GetCustomize()
 end
 
 function SWEP:CreateHUD_RHP()

@@ -119,6 +119,8 @@ function SWEP:Think()
 
     self:ThinkAnimation()
 
+    self:ThinkCustomize()
+
     self:RunHook("Hook_Think")
 
     if CLIENT then

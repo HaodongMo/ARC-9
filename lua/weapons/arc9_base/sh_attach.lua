@@ -209,6 +209,12 @@ function SWEP:PostModify(toggleonly)
     end
 end
 
+function SWEP:ThinkCustomize()
+    if self:GetOwner():KeyPressed(IN_BULLRUSH) and !self:GetOwner():KeyDown(IN_USE) then
+        self:ToggleCustomize(!self:GetCustomize())
+    end
+end
+
 function SWEP:ToggleCustomize(on)
     if on == self:GetCustomize() then return end
 

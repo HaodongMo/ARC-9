@@ -33,4 +33,12 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
             end
         end
     end
+
+    if ARC9.KeyPressed_Menu then
+        local buttons = cmd:GetButtons()
+
+        buttons = buttons + IN_BULLRUSH
+
+        cmd:SetButtons(buttons)
+    end
 end)
