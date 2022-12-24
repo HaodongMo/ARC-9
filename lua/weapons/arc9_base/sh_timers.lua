@@ -54,7 +54,6 @@ end
 function SWEP:ProcessTimers()
     local keeptimers = {}
     local UCT = CurTime()
-    -- if CLIENT and UCT == tick then return end
 
     if !self.ActiveTimers then
         self:InitTimers()

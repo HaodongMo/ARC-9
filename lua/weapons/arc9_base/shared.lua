@@ -815,6 +815,7 @@ SWEP.FastMuzzleEffect = nil
 
 SWEP.AfterShotEffect = "arc9_aftershoteffect"
 SWEP.AfterShotParticle = nil -- Particle to spawn after shooting
+SWEP.AfterShotParticleDelay = 0.01 -- Delay before spawning the particle
 
 SWEP.ImpactEffect = nil
 SWEP.ImpactDecal = nil

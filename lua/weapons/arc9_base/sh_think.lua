@@ -63,7 +63,7 @@ function SWEP:Think()
         if self:GetAfterShot() and (IsFirstTimePredicted() or game.SinglePlayer()) then
             local delay = 60 / self:GetProcessedValue("RPM")
 
-            if self:GetNextPrimaryFire() + (delay * 2) < CurTime() then
+            if self:GetNextPrimaryFire() + delay + self:GetProcessedValue("AfterShotParticleDelay") < CurTime() then
                 self:SetAfterShot(false)
                 if self:GetProcessedValue("AfterShotParticle") then
                     local att = self:GetProcessedValue("AfterShotQCA") or self:GetProcessedValue("MuzzleEffectQCA")
