@@ -1173,6 +1173,7 @@ SWEP.Attachments = {
 -- touchoff (for C4)
 
 -- Suffixes (Must be in this order):
+-- _primed (Grenade primed)
 -- _iron (When sighted)
 -- _sights (Alternative to _iron)
 -- _blindfire_left
@@ -1183,7 +1184,6 @@ SWEP.Attachments = {
 -- _walk
 -- _empty
 -- _ubgl
--- _primed
 -- _uncycled
 -- _detonator
 

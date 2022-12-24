@@ -2,6 +2,10 @@ function SWEP:TranslateAnimation(seq)
     local sds = self:GetProcessedValue("SuppressDefaultSuffixes")
 
     if !sds then
+        if self:GetGrenadePrimed() and self:HasAnimation(seq .. "_primed") then
+            seq = seq .. "_primed"
+        end
+
         if self:GetInSights() and self:HasAnimation(seq .. "_iron") then
             seq = seq .. "_iron"
         end
@@ -38,10 +42,6 @@ function SWEP:TranslateAnimation(seq)
 
         if self:GetUBGL() and self:HasAnimation(seq .. "_ubgl") then
             seq = seq .. "_ubgl"
-        end
-
-        if self:GetGrenadePrimed() and self:HasAnimation(seq .. "_primed") then
-            seq = seq .. "_primed"
         end
 
         if self:GetNeedsCycle() and self:HasAnimation(seq .. "_uncycled") then
