@@ -26,11 +26,18 @@ local ricochetsounds = {
     "arc9/ricochet05.wav",
 }
 
+SWEP.MaxPenetrationLayers = 5
+SWEP.Penned = 0
+
 function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     if !GetConVar("arc9_mod_penetration"):GetBool() then return end
 
     if !IsValid(self) then return end
     if !IsValid(self:GetOwner()) then return end
+
+    if self.Penned > self.MaxPenetrationLayers then return end
+
+    self.Penned = self.Penned + 1
 
     local hitpos, startpos = tr.HitPos, tr.StartPos
     local dir    = (hitpos - startpos):GetNormalized()

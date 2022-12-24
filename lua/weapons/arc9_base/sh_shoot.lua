@@ -630,6 +630,8 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         alreadypenned[tr.Entity] = true
     end
 
+    self.Penned = 0
+
     self:Penetrate(tr, range, penleft, alreadypenned)
 
     self:SetUBGL(lastsecondary)
