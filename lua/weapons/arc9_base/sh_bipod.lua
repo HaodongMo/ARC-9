@@ -31,6 +31,7 @@ function SWEP:CanBipod(ang)
     if self:GetReloading() and !self:GetBipod() then return end
     if self:GetBlindFireAmount() > 0 then return end
     if self:GetUBGL() then return end
+    if self:GetAnimLockTime() > CurTime() then return end
 
     if self:GetEnterBipodTime() + 1 > CurTime() then return end
 
