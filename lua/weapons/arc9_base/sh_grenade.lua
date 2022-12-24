@@ -39,7 +39,8 @@ function SWEP:ThinkGrenade()
             end
         elseif ((tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
             self:GetOwner():KeyDown(IN_ATTACK)) and
-            self:HasAmmoInClip()
+            self:HasAmmoInClip() and
+            (!self:GetOwner():KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash"))
             then
             self:SetGrenadePrimed(true)
             self:SetGrenadePrimedTime(CurTime())

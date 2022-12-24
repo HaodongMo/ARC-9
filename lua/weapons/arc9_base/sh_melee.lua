@@ -184,12 +184,16 @@ end
 function SWEP:ThinkMelee()
     if self:PredictionFilter() then return end
 
-    if self:GetOwner():KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash") then
-        self:MeleeAttack()
-    end
+    if !self:GetGrenadePrimed() then
 
-    if self:GetOwner():KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash") then
-        self:MeleeAttack(false, true)
+        if self:GetOwner():KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash") then
+            self:MeleeAttack()
+        end
+
+        if self:GetOwner():KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash") then
+            self:MeleeAttack(false, true)
+        end
+
     end
 
     local prebash = self:GetProcessedValue("PreBashTime")
