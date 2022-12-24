@@ -153,6 +153,7 @@ function ARC9AttButton:Paint(w, h)
     surface.DrawTexturedRect(0, 0, w, w)
 
     -- icon
+    render.SuppressEngineLighting(true)
 	surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
     if !self.FullColorIcon then
@@ -160,6 +161,7 @@ function ARC9AttButton:Paint(w, h)
     else
         surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(4), w-ARC9ScreenScale(8), w-ARC9ScreenScale(8))
     end
+    render.SuppressEngineLighting(false)
 
     if matmarker then
         surface.SetDrawColor(markercolor)
