@@ -272,6 +272,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
                     if atttbl.RTScopeBlackBoxShadow != false then
                         surface.SetMaterial(shadow2)
+                        surface.SetDrawColor(0, 0, 0)
                         surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
                     end
                 end
@@ -295,15 +296,17 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.SetDrawColor(0, 0, 0)
                 surface.SetMaterial(shadow)
                 surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
-            end
 
-            if !screenpos.visible then
-                surface.DrawRect(0, 0, rtsize, rtsize)
-            else
-                surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
-                surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
-                surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
-                surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
+                if !screenpos.visible then
+                    surface.SetDrawColor(0, 0, 0)
+                    surface.DrawRect(0, 0, rtsize, rtsize)
+                else
+                    surface.SetDrawColor(0, 0, 0)
+                    surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
+                    surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
+                    surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
+                    surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
+                end
             end
         else
             render.PushRenderTarget(rtmat)
