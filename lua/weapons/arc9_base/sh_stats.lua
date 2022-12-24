@@ -95,7 +95,7 @@ function SWEP:GetAllAffectors()
 
     local aff = {}
 
-    table.insert(aff, self:GetTable())
+    table.insert(aff, table.Copy(self:GetTable()))
 
     if !ARC9.OverrunSights then
         ARC9.OverrunSights = true
