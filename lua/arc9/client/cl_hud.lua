@@ -262,7 +262,7 @@ local function GetWeaponCapabilities(wpn)
         UBGL = tobool(!wpn:GetInSights() and wpn:GetValue("UBGL")),
         Bash = tobool(!wpn:GetInSights() and wpn:GetValue("Bash")),
         SwitchSights = tobool(wpn:GetInSights() and #wpn.MultiSightTable > 1),
-        Inspect = tobool(!wpn:GetInSights() and wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("enter_inspect")),
+        Inspect = tobool(!wpn:GetInSights() and wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("inspect")),
         Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
         BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
         BlindfireRight = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireRight")),
@@ -943,8 +943,8 @@ function ARC9.DrawHUD()
 
         if capabilities.Inspect then
             table.insert(hints, {
-                glyph = ARC9.GetBindKey("+use"),
-                glyph2 = ARC9.GetBindKey("+reload"),
+                glyph2 = ARC9.GetBindKey("+use"),
+                glyph = ARC9.GetBindKey("+reload"),
                 action = "Inspect"
             })
         end
