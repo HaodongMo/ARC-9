@@ -2,11 +2,11 @@ function SWEP:ThinkGrenade()
     if self:PredictionFilter() then return end
     if !self:GetProcessedValue("Throwable") then return end
 
-    if IsValid(self:GetDetonatorEntity()) and self:GetOwner():KeyDown(IN_ATTACK) then
+    if IsValid(self:GetDetonatorEntity()) then
         if self:GetOwner():KeyPressed(IN_ATTACK) then
             self:TouchOff()
+            return
         end
-        return
     end
 
     local fuse = self:GetProcessedValue("FuseTimer")
@@ -40,7 +40,8 @@ function SWEP:ThinkGrenade()
         elseif ((tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
             self:GetOwner():KeyDown(IN_ATTACK)) and
             self:HasAmmoInClip() and
-            (!self:GetOwner():KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash"))
+            (!self:GetOwner():KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash")) and
+            !IsValid(self:GetDetonatorEntity())
             then
             self:SetGrenadePrimed(true)
             self:SetGrenadePrimedTime(CurTime())
