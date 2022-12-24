@@ -45,11 +45,13 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
 
         self:SetSequenceProxy(animation.Address or 0)
 
-        if !IsValid(mdl) then return 0, 1 end
+        if IsValid(mdl) then
 
-        seq = mdl:LookupSequence(source)
+            seq = mdl:LookupSequence(source)
 
-        if seq == -1 then return 0, 1 end
+            if seq == -1 then return 0, 1 end
+
+        end
     else
         seq = mdl:LookupSequence(source)
 
@@ -58,45 +60,55 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
         self:SetSequenceProxy(0)
     end
 
-    local time = animation.Time or mdl:SequenceDuration(seq)
+    local time = 0.1
 
-    mult = mult * (animation.Mult or 1)
+    if IsValid(mdl) then
+        time = animation.Time or mdl:SequenceDuration(seq)
 
-    local tmult = 1
+        mult = mult * (animation.Mult or 1)
 
-    tmult = (mdl:SequenceDuration(seq) / time) / mult
+        local tmult = 1
 
-    if animation.Reverse then
-        tmult = tmult * -1
-    end
+        tmult = (mdl:SequenceDuration(seq) / time) / mult
 
-    if animation.ProxyAnimation then
-        mdl:SetSequence(seq)
-        mdl:SetCycle(0)
-    else
-        mdl:SendViewModelMatchingSequence(seq)
-        mdl:SetPlaybackRate(math.Clamp(tmult, -12, 12)) // It doesn't like it if you go higher
-    end
+        if animation.Reverse then
+            tmult = tmult * -1
+        end
 
-    self:SetSequenceIndex(seq or 0)
-    self:SetSequenceSpeed((1 / time) / mult)
-    self:SetSequenceCycle(0)
+        if animation.ProxyAnimation then
+            mdl:SetSequence(seq)
+            mdl:SetCycle(0)
+        else
+            mdl:SendViewModelMatchingSequence(seq)
+            mdl:SetPlaybackRate(math.Clamp(tmult, -12, 12)) // It doesn't like it if you go higher
+        end
 
-    mult = math.abs(mult)
+        self:SetSequenceIndex(seq or 0)
+        self:SetSequenceSpeed((1 / time) / mult)
+        self:SetSequenceCycle(0)
 
-    if animation.EjectAt then
-        self:SetTimer(animation.EjectAt * mult, function()
-            self:DoEject()
-        end)
-    end
+        mult = math.abs(mult)
 
-    local minprogress = animation.MinProgress or 0.8
-    minprogress = math.min(minprogress, 1)
+        if animation.EjectAt then
+            self:SetTimer(animation.EjectAt * mult, function()
+                self:DoEject()
+            end)
+        end
 
-    if animation.RestoreAmmo then
-        self:SetTimer(time * mult * minprogress, function()
-            self:RestoreClip(animation.RestoreAmmo)
-        end)
+        local minprogress = animation.MinProgress or 0.8
+        minprogress = math.min(minprogress, 1)
+
+        if animation.RestoreAmmo then
+            self:SetTimer(time * mult * minprogress, function()
+                self:RestoreClip(animation.RestoreAmmo)
+            end)
+        end
+
+        if animation.IKTimeLine then
+            self:SetIKAnimation(anim)
+            self:SetIKTimeLineStart(CurTime())
+            self:SetIKTime(time * mult)
+        end
     end
 
     self:KillSoundTable()
@@ -106,12 +118,6 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
     end
 
     self:SetHideBoneIndex(animation.HideBoneIndex or 0)
-
-    if animation.IKTimeLine then
-        self:SetIKAnimation(anim)
-        self:SetIKTimeLineStart(CurTime())
-        self:SetIKTime(time * mult)
-    end
 
     if lock then
         if !animation.FireASAP then minprogress = 1 end

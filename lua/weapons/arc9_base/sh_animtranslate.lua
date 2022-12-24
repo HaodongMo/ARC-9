@@ -154,7 +154,7 @@ function SWEP:SetupAnimProxy()
         local atttbl = self:GetFinalAttTable(slottbl)
 
         if atttbl.IKAnimationProxy then
-            self:AddProxyToAnimProxyTable(atttbl.IKAnimationProxy, slottbl.VModel or slottbl.WModel, atttbl, slottbl.Address)
+            self:AddProxyToAnimProxyTable(atttbl.IKAnimationProxy, slottbl.GunDriverModel or slottbl.VModel or slottbl.WModel, atttbl, slottbl.Address)
         end
     end
 end
