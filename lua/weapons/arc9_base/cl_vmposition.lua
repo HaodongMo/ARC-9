@@ -164,8 +164,6 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
-    print(self:GetOwner():GetHull())
-
     if getbipod then
         local bipodamount = self:GetBipodAmount()
 
