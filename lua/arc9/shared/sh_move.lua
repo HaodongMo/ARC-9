@@ -105,6 +105,12 @@ function ARC9.StartCommand(ply, cmd)
         local uprec = FrameTime() * wpn:GetRecoilUp() * m
         local siderec = FrameTime() * wpn:GetRecoilSide() * m
 
+        uprec = math.min(uprec, wpn:GetRecoilUp())
+        siderec = math.min(siderec, wpn:GetRecoilSide())
+
+        wpn:SetRecoilUp(wpn:GetRecoilUp() - uprec)
+        wpn:SetRecoilSide(wpn:GetRecoilSide() - siderec)
+
         eyeang.p = eyeang.p + uprec
         eyeang.y = eyeang.y + siderec
 
@@ -147,6 +153,9 @@ function ARC9.StartCommand(ply, cmd)
     recrise = ARC9.RecoilRise
 
     local recreset = recrise * FrameTime() * wpn:GetProcessedValue("RecoilAutoControl")
+
+    recreset.p = math.max(recreset.p, recrise.p)
+    recreset.y = math.max(recreset.y, recrise.y)
 
     recrise = recrise - recreset
 

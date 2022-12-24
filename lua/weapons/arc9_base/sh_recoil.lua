@@ -10,16 +10,16 @@ function SWEP:ThinkRecoil()
         -- print(math.Round(rec))
     end
 
-    local ru = self:GetRecoilUp()
-    local rs = self:GetRecoilSide()
+    // local ru = self:GetRecoilUp()
+    // local rs = self:GetRecoilSide()
 
-    if math.abs(ru) > 0 or math.abs(rs) > 0 then
-        local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
-        local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
+    // if math.abs(ru) > 0 or math.abs(rs) > 0 then
+    //     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
+    //     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
 
-        self:SetRecoilUp(new_ru)
-        self:SetRecoilSide(new_rs)
-    end
+    //     self:SetRecoilUp(new_ru)
+    //     self:SetRecoilSide(new_rs)
+    // end
 
     self:ThinkVisualRecoil()
 end
