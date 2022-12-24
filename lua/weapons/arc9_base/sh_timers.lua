@@ -39,7 +39,7 @@ function SWEP:KillSoundTable()
     local keeptimers = {}
 
     for _, v in ipairs(self.ActiveTimers) do
-        if string.sub(v[2], string.len("soundtable_")) != "soundtable_" then
+        if v[2] != "soundtable" then
             table.insert(keeptimers, v)
         end
     end
@@ -101,7 +101,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
         self:SetTimer(ttime, function()
             if v.s then
                 local soundtab = {
-                    name = "soundtable_" .. i,
+                    name = "soundtable",
                     sound = self:RandomChoice(v.s or ""),
                     level = v.l or 75,
                     pitch = v.p or 100,
