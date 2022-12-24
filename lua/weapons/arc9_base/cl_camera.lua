@@ -138,7 +138,13 @@ function SWEP:GetCameraControl()
             target = math.min(target, 1 - math.pow( vm:GetCycle(), 2 ) )
             local progress = Lerp(FrameTime() * 15, progress or 0, target)
 
-            self.MuzzleAngleVelocity = self.MuzzleAngleVelocity + delta * 2
+            local mult = 1
+
+            if self:GetAnimLockTime() < CurTime() then
+                mult = 0
+            end
+
+            self.MuzzleAngleVelocity = self.MuzzleAngleVelocity + delta * 2 * mult
             self.MuzzleAngleVelocity.p = math.Approach(self.MuzzleAngleVelocity.p, -self.ProceduralViewOffset.p * 2, FrameTime() * 20)
             self.MuzzleAngleVelocity.p = math.Clamp(self.MuzzleAngleVelocity.p, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
             self.ProceduralViewOffset.p = self.ProceduralViewOffset.p + self.MuzzleAngleVelocity.p * FrameTime()
