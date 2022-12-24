@@ -66,6 +66,7 @@ function ENT:Initialize()
                 local alph = 0
 
                 if pa.ft < CurTime() then
+                    pa:SetDieTime(0)
                     return
                 elseif pa.dt < CurTime() then
                     local d = (CurTime() - pa.dt) / (pa.ft - pa.dt)

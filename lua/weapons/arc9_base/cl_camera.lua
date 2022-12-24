@@ -109,7 +109,6 @@ function SWEP:GetCameraControl()
         ang = mdl:WorldToLocalAngles(ang)
         ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
         ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
-        ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
 
         return ang
     else
@@ -138,7 +137,7 @@ function SWEP:GetCameraControl()
             target = math.min(target, 1 - math.pow( vm:GetCycle(), 2 ) )
             local progress = Lerp(FrameTime() * 15, progress or 0, target)
 
-            local mult = 1
+            local mult = self:GetProcessedValue("CamQCA_Mult") or 1
 
             if self:GetAnimLockTime() < CurTime() then
                 mult = 0
@@ -167,7 +166,6 @@ function SWEP:GetCameraControl()
             return self.ProceduralViewOffset
         else
             ang:Mul(self:GetProcessedValue("CamQCA_Mult") or 1)
-            ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS") or 0.5)))
         end
 
         return ang

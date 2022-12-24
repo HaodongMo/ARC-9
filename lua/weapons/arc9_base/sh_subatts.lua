@@ -137,6 +137,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
             subatts[i].ToggleNum = tbl.SubAttachments[i].ToggleNum or 1
             subatts[i].CorrectiveAng = parenttbl.CorrectiveAng
             subatts[i].LaserCorrectionAngle = parenttbl.LaserCorrectionAngle
+            subatts[i].UBGLSlot = subatts[i].UBGLSlot or parenttbl.UBGLSlot
             if parenttbl.DuplicateModels then
                 subatts[i].DuplicateModels = table.Copy(parenttbl.DuplicateModels)
 

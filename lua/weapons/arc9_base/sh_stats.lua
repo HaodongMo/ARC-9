@@ -1,6 +1,7 @@
 SWEP.StatCache = {}
 SWEP.HookCache = {}
 SWEP.AffectorsCache = nil
+SWEP.UBGLAffectorsCache = nil
 SWEP.HasNoAffectors = {}
 
 SWEP.ExcludeFromRawStats = {
@@ -14,6 +15,7 @@ function SWEP:InvalidateCache()
     self.StatCache = {}
     self.HookCache = {}
     self.AffectorsCache = nil
+    self.UBGLAffectorsCache = nil
     self.ElementsCache = nil
     self.RecoilPatternCache = {}
     self.ScrollLevels = {}
@@ -94,6 +96,7 @@ function SWEP:GetAllAffectors()
     if self.AffectorsCache then return self.AffectorsCache end
 
     local aff = {}
+    local ubgl_aff = {}
 
     table.insert(aff, self:GetTable())
 
@@ -112,7 +115,11 @@ function SWEP:GetAllAffectors()
         local atttbl = self:GetFinalAttTable(slot)
 
         if atttbl then
-            table.insert(aff, atttbl)
+            if slot.UBGLSlot then
+                table.insert(ubgl_aff, atttbl)
+            else
+                table.insert(aff, atttbl)
+            end
         end
     end
 
@@ -153,6 +160,7 @@ function SWEP:GetAllAffectors()
     end
 
     self.AffectorsCache = aff
+    self.UBGLAffectorsCache = ubgl_aff
 
     return aff
 end
@@ -409,6 +417,7 @@ function SWEP:GetValue(val, base, condition, amount)
     local priority = 0
 
     local getallaffectors = self:GetAllAffectors()
+    local ubgl_affectors = self.UBGLAffectorsCache or {}
 
     if !self.ExcludeFromRawStats[val] then
         for _, tbl in ipairs(getallaffectors) do
@@ -418,6 +427,18 @@ function SWEP:GetValue(val, base, condition, amount)
                 stat = tbl[val .. condition]
                 priority = att_priority
                 unaffected = false
+            end
+        end
+
+        if self:GetUBGL() then
+            for _, tbl in ipairs(ubgl_affectors) do
+                local att_priority = tbl[val .. condition .. "_Priority"] or 1
+
+                if tbl[val .. condition] != nil and att_priority >= priority then
+                    stat = tbl[val .. condition]
+                    priority = att_priority
+                    unaffected = false
+                end
             end
         end
     end
@@ -432,12 +453,33 @@ function SWEP:GetValue(val, base, condition, amount)
         end
     end
 
+    if self:GetUBGL() then
+        for _, tbl in ipairs(ubgl_affectors) do
+            local att_priority = tbl[val .. "Override" .. condition .. "_Priority"] or 1
+
+            if tbl[val .. "Override" .. condition] != nil and att_priority >= priority then
+                stat = tbl[val .. "Override" .. condition]
+                priority = att_priority
+                unaffected = false
+            end
+        end
+    end
+
     if isnumber(stat) then
         for _, tbl in ipairs(getallaffectors) do
             if tbl[val .. "Add" .. condition] != nil then
                 -- if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
                 --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
                 -- end
+                if type(tbl[val .. "Add" .. condition]) == type(stat) then
+                    stat = stat + (tbl[val .. "Add" .. condition] * amount)
+                end
+                unaffected = false
+            end
+        end
+
+        if self:GetUBGL() then
+            for _, tbl in ipairs(ubgl_affectors) do
                 if type(tbl[val .. "Add" .. condition]) == type(stat) then
                     stat = stat + (tbl[val .. "Add" .. condition] * amount)
                 end
@@ -458,6 +500,21 @@ function SWEP:GetValue(val, base, condition, amount)
                     end
                 end
                 unaffected = false
+            end
+        end
+
+        if self:GetUBGL() then
+            for _, tbl in ipairs(ubgl_affectors) do
+                if tbl[val .. "Mult" .. condition] != nil then
+                    if type(tbl[val .. "Mult" .. condition]) == type(stat) then
+                        if amount > 1 then
+                            stat = stat * (math.pow(tbl[val .. "Mult" .. condition], amount))
+                        else
+                            stat = stat * tbl[val .. "Mult" .. condition]
+                        end
+                    end
+                    unaffected = false
+                end
             end
         end
     end
