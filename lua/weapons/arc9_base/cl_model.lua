@@ -382,9 +382,24 @@ function SWEP:SetupModel(wm, lod, cm)
         else
             csmodel.slottbl = {
                 WMBase = true,
-                Pos = self.WorldModelOffset.Pos,
-                Ang = self.WorldModelOffset.Ang
+                Pos = self.WorldModelOffset.Pos or Vector(0, 0, 0),
+                Ang = self.WorldModelOffset.Ang or Angle(-5, 0, 180)
             }
+        end
+
+        local animentry = self:GetAnimationEntry("idle")
+        local source = animentry and animentry.Source or "idle"
+
+        if istable(source) then
+            source = source[1]
+        end
+
+        if !isnumber(source) then
+            source = csmodel:LookupSequence(source)
+        end
+
+        if source >= 0 then
+            csmodel:ResetSequence(source)
         end
 
         local scale = Matrix()
