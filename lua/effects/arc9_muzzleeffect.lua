@@ -54,7 +54,7 @@ function EFFECT:Init(data)
         if IsValid(pcf) then
             pcf:StartEmission()
 
-            if (muz or parent) != vm then
+            if (muz or parent) != vm and !wm then
                 pcf:SetShouldDraw(false)
                 table.insert(wpn.PCFs, pcf)
             end
