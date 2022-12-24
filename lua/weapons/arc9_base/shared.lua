@@ -411,6 +411,8 @@ SWEP.DoFireAnimationUBGL = true
 SWEP.NoShellEjectUBGL = true
 SWEP.ManualActionUBGL = false
 SWEP.ShouldDropMagUBGL = false
+SWEP.ShotgunReloadUBGL = false
+SWEP.HybridReloadUBGL = false
 
 -------------------------- VISUAL RECOIL
 
