@@ -12,7 +12,7 @@ function SWEP:EnterSights()
     if self:GetSafe() then return end
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
 
-    self:ToggleBlindFire(false)
+    // self:ToggleBlindFire(false)
     self:SetInSights(true)
     if IsFirstTimePredicted() then
         local soundtab1 = {

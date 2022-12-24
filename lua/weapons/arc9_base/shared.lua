@@ -681,6 +681,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- lockedon
 
 -------------------------- BLIND FIRE
+-- This feature has been removed pending rework, and these functions do not work.
 
 SWEP.CanBlindFire = true -- This weapon is capable of blind firing.
 SWEP.BlindFireLHIK = true -- Hide the left hand while blind firing forward.
@@ -1319,7 +1320,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 10, "ReloadFinishTime")
     self:NetworkVar("Float", 11, "SightAmount")
     self:NetworkVar("Float", 12, "HeatAmount")
-    self:NetworkVar("Float", 13, "BlindFireAmount")
+    self:NetworkVar("Float", 13, "MeleeAttackTime")
+    // self:NetworkVar("Float", 13, "BlindFireAmount")
     -- self:NetworkVar("Float", 14, "LastPressedETime")
     self:NetworkVar("Float", 14, "FinishFiremodeAnimTime")
     self:NetworkVar("Float", 15, "IKTimeLineStart")
@@ -1333,7 +1335,6 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 23, "LastHolsterTime")
     self:NetworkVar("Float", 24, "GrenadePrimedTime")
     self:NetworkVar("Float", 25, "LockOnStartTime")
-    self:NetworkVar("Float", 26, "MeleeAttackTime")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
@@ -1343,10 +1344,10 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", 3, "Firemode")
     self:NetworkVar("Int", 4, "NthReload")
     self:NetworkVar("Int", 5, "MultiSight")
-    self:NetworkVar("Int", 6, "BlindFireDirection")
+    self:NetworkVar("Int", 6, "SequenceProxy")
+    // self:NetworkVar("Int", 6, "BlindFireDirection")
     self:NetworkVar("Int", 7, "HideBoneIndex")
     self:NetworkVar("Int", 8, "SequenceIndex")
-    self:NetworkVar("Int", 9, "SequenceProxy")
 
     self:NetworkVar("Bool", 0, "Customize")
     self:NetworkVar("Bool", 1, "Reloading")
@@ -1360,7 +1361,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 9, "EmptyReload")
     self:NetworkVar("Bool", 10, "InSights")
     self:NetworkVar("Bool", 11, "PrimedAttack")
-    self:NetworkVar("Bool", 12, "BlindFire")
+    // self:NetworkVar("Bool", 12, "BlindFire")
+    self:NetworkVar("Bool", 12, "Bash2")
     self:NetworkVar("Bool", 13, "NeedsCycle")
     self:NetworkVar("Bool", 14, "Bipod")
     self:NetworkVar("Bool", 15, "HeatLockout")
@@ -1375,7 +1377,6 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 24, "GrenadeRecovering")
     self:NetworkVar("Bool", 25, "LockedOn")
     self:NetworkVar("Bool", 26, "MidMeleeAttack")
-    self:NetworkVar("Bool", 27, "Bash2")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")

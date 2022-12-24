@@ -89,7 +89,7 @@ function SWEP:Think()
 
         self:ThinkSights()
 
-        self:ThinkBlindFire()
+        // self:ThinkBlindFire()
 
         self:ThinkBipod()
 

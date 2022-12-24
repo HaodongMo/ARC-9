@@ -683,24 +683,24 @@ function SWEP:GetShootPos()
 
     local pos = self:GetOwner():EyePos()
 
-    if self:GetBlindFire() then
-        pos = self:GetOwner():EyePos()
-        local eyeang = self:GetOwner():EyeAngles()
+    // if self:GetBlindFire() then
+    //     pos = self:GetOwner():EyePos()
+    //     local eyeang = self:GetOwner():EyeAngles()
 
-        local testpos = pos + eyeang:Up() * 24
+    //     local testpos = pos + eyeang:Up() * 24
 
-        if self:GetBlindFireDirection() != 0 then
-            testpos = pos + eyeang:Forward() * 24
-        end
+    //     if self:GetBlindFireDirection() != 0 then
+    //         testpos = pos + eyeang:Forward() * 24
+    //     end
 
-        local tr = util.TraceLine({
-            start = pos,
-            endpos = testpos,
-            filter = self:GetOwner()
-        })
+    //     local tr = util.TraceLine({
+    //         start = pos,
+    //         endpos = testpos,
+    //         filter = self:GetOwner()
+    //     })
 
-        pos = tr.HitPos + (tr.HitNormal * 2)
-    end
+    //     pos = tr.HitPos + (tr.HitNormal * 2)
+    // end
 
     local ang = self:GetShootDir()
 
@@ -723,11 +723,11 @@ function SWEP:GetShootDir()
 
     local shootangoffset = self:GetProcessedValue("ShootAngOffset")
 
-    if self:GetBlindFireDirection() < 0 then
-        dir:RotateAroundAxis(dir:Up(), 90)
-    elseif self:GetBlindFireDirection() > 0 then
-        dir:RotateAroundAxis(dir:Up(), -90)
-    end
+    // if self:GetBlindFireDirection() < 0 then
+    //     dir:RotateAroundAxis(dir:Up(), 90)
+    // elseif self:GetBlindFireDirection() > 0 then
+    //     dir:RotateAroundAxis(dir:Up(), -90)
+    // end
 
     dir:RotateAroundAxis(dir:Right(), shootangoffset.p)
     dir:RotateAroundAxis(dir:Up(), shootangoffset.y)

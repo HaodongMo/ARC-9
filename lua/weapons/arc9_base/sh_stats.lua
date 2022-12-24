@@ -259,9 +259,9 @@ function SWEP:GetProcessedValue(val, base, cmd)
         stat = self:GetValue(val, stat, "OddReload")
     end
 
-    if self:GetBlindFire() then
-        stat = self:GetValue(val, stat, "BlindFire")
-    end
+    // if self:GetBlindFire() then
+    //     stat = self:GetValue(val, stat, "BlindFire")
+    // end
 
     if self:GetBipod() then
         stat = self:GetValue(val, stat, "Bipod")

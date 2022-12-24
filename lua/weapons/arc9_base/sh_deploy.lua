@@ -24,8 +24,8 @@ function SWEP:Deploy()
     -- self:SetTraversalSprint(false)
     -- self:SetLastPressedWTime(0)
 
-    self:SetBlindFire(false)
-    self:SetBlindFireDirection(0)
+    // self:SetBlindFire(false)
+    // self:SetBlindFireDirection(0)
 
     self:SetHolster_Entity(NULL)
     self:SetHolsterTime(0)
@@ -163,7 +163,7 @@ function SWEP:Holster(wep)
             self:SetHolster_Entity(wep)
         end
 
-        self:ToggleBlindFire(false)
+        // self:ToggleBlindFire(false)
         self:SetInSights(false)
         self:ToggleUBGL(false)
     end

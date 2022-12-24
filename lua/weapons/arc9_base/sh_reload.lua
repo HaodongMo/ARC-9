@@ -147,7 +147,7 @@ function SWEP:Reload()
 
     self:SetReloading(true)
     self:SetEndReload(false)
-    self:ToggleBlindFire(false)
+    // self:ToggleBlindFire(false)
     self:SetRequestReload(false)
     self:SetRecoilAmount(0)
 
