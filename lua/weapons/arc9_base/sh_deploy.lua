@@ -190,7 +190,7 @@ hook.Add("StartCommand", "ARC9_Holster", function(ply, ucmd)
 end)
 
 function SWEP:DoDeployAnimation()
-    if GetConVar("arc9_dev_always_ready"):GetBool() or !self:GetReady() and self:HasAnimation("ready") then
+    if (GetConVar("arc9_dev_always_ready"):GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
         local t = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true) or 0.25
 
         self:SetTimer(t, function()
