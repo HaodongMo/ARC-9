@@ -154,13 +154,17 @@ function SWEP:GetViewModelPosition(pos, ang)
     if !self:GetReloading() and !getbipod and owner:Crouching() then
         local crouchpos = self:GetProcessedValue("CrouchPos")
         local crouchang = self:GetProcessedValue("CrouchAng")
+        local crouchdelta =  math.Clamp(math.ease.InOutSine((owner:GetViewOffset().z - owner:GetCurrentViewOffset().z) / (owner:GetViewOffset().z - owner:GetViewOffsetDucked().z)),0,1)
+
         if crouchpos then
-            offsetpos:Set(crouchpos)
+            offsetpos:Set(LerpVector(crouchdelta, offsetpos, crouchpos))
         end
         if crouchang then
-            offsetang:Set(crouchang)
+            offsetang:Set(LerpAngle(crouchdelta, offsetang, crouchang))
         end
     end
+
+    print(self:GetOwner():GetHull())
 
     if getbipod then
         local bipodamount = self:GetBipodAmount()
