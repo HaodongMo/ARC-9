@@ -32,6 +32,10 @@ function SWEP:CanBipod(ang)
     if self:GetBlindFireAmount() > 0 then return end
     if self:GetUBGL() then return end
 
+    if self:GetEnterBipodTime() + 1 > CurTime() then return end
+
+    if self:GetOwner():KeyDown(IN_FORWARD) or self:GetOwner():KeyDown(IN_BACK) or self:GetOwner():KeyDown(IN_MOVELEFT) or self:GetOwner():KeyDown(IN_MOVERIGHT) then return end
+
     local pos = self:GetOwner():EyePos()
     ang = ang or self:GetOwner():EyeAngles()
 
@@ -97,6 +101,7 @@ function SWEP:ExitBipod(force)
         sound = self:RandomChoice(self:GetProcessedValue("ExitBipodSound"))
     }
     self:PlayTranslatedSound(soundtab1)
+    self:SetEnterBipodTime(CurTime())
 
     self:PlayAnimation("exit_bipod", 1, true)
 
