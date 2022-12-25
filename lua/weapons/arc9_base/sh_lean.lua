@@ -4,6 +4,12 @@ SWEP.MaxLeanAngle = 15
 function SWEP:ThinkLean()
     if self:PredictionFilter() then return end
 
+    if !GetConVar("arc9_lean"):GetBool() then
+        self:SetLeanState(0)
+        self:SetLeanAmount(0)
+        return
+    end
+
     if self:GetOwner():KeyDown(IN_ALT1) then
         self:SetLeanState(-1)
     elseif self:GetOwner():KeyDown(IN_ALT2) then
@@ -82,7 +88,7 @@ end
 local leanbone = "ValveBiped.Bip01_Spine1"
 
 local leanang_left = Angle(3.5, 3.5, 0)
-local leanang_right = Angle(3.5, 1, 0)
+local leanang_right = Angle(3.5, 1.5, 1.5)
 
 function SWEP:DoPlayerModelLean()
     local amt = self:GetLeanDelta()

@@ -491,6 +491,10 @@ local conVars = {
         name = "autolean",
         default = "1",
         client = true,
+    },
+    {
+        name = "lean",
+        default = "1",
     }
 }
 
