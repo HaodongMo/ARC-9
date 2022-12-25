@@ -616,6 +616,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         local fx = EffectData()
         fx:SetOrigin(tr.HitPos)
         fx:SetNormal(tr.HitNormal)
+        fx:SetAngles(tr.HitNormal:Angle())
 
         if bit.band(util.PointContents(tr.HitPos), CONTENTS_WATER) == CONTENTS_WATER then
             util.Effect("WaterSurfaceExplosion", fx, true)
