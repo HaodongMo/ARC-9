@@ -4,6 +4,31 @@ local clicksound = "arc9/newui/uimouse_click.ogg"
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
+function SWEP:SlotIsCosmetic(slottbl)
+    if slottbl.CosmeticOnly == nil then
+        local hasnoncosmeticslot = false
+
+        local cats = slottbl.Category
+
+        if !istable(cats) then
+            cats = {cats}
+        end
+
+        for _, cat in ipairs(cats) do
+            if !ARC9.CosmeticCategories[cat] then
+                hasnoncosmeticslot = true
+                break
+            end
+        end
+
+        slottbl.CosmeticOnly = !hasnoncosmeticslot
+
+        return !hasnoncosmeticslot
+    else
+        return slottbl.CosmeticOnly
+    end
+end
+
 function SWEP:CreateHUD_Slots(scroll)
     self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
     self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
@@ -20,25 +45,8 @@ function SWEP:CreateHUD_Slots(scroll)
         if slot.Hidden then continue end
         local ms_slot = self:GetFilledMergeSlot(slot.Address)
 
-        if self.BottomBarCategory == 0 and ms_slot.CosmeticOnly then continue end
-
-        local hasnoncosmeticslot = false
-
-        local cats = ms_slot.Category
-
-        if !istable(cats) then
-            cats = {cats}
-        end
-
-        for _, cat in ipairs(cats) do
-            if !ARC9.CosmeticCategories[cat] then
-                hasnoncosmeticslot = true
-                break
-            end
-        end
-
-        if self.BottomBarCategory == 0 and !hasnoncosmeticslot then continue end
-        if self.BottomBarCategory == 1 and hasnoncosmeticslot then continue end
+        if self.BottomBarCategory == 0 and self:SlotIsCosmetic(ms_slot) then continue end
+        if self.BottomBarCategory == 1 and !self:SlotIsCosmetic(ms_slot) then continue end
 
         if !ms_slot.Installed and self:GetSlotBlocked(slot) then continue end
 

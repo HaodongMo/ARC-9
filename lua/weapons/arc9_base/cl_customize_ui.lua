@@ -798,13 +798,16 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
-        if self.CustomizeTab == 0 then
+        if self.CustomizeTab == 0 or self.CustomizeTab == 1 then
 
             cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()))
 
             for _, slot in ipairs(self:GetSubSlotList()) do
                 if slot.Hidden then continue end
                 local ms_slot = self:GetFilledMergeSlot(slot.Address)
+
+                if self.BottomBarCategory == 0 and self:SlotIsCosmetic(ms_slot) then continue end
+                if self.BottomBarCategory == 1 and !self:SlotIsCosmetic(ms_slot) then continue end
 
                 if !ms_slot.Installed and self:GetSlotBlocked(slot) then continue end
 
