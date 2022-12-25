@@ -1,4 +1,5 @@
 local arc9_lean_direction = nil
+local lastdidreload = false
 
 hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     local wpn = LocalPlayer():GetActiveWeapon()
@@ -14,14 +15,20 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     end
 
     if GetConVar("arc9_autoreload"):GetBool() then
-        if wpn:GetUBGL() then
-            if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip2() == 0 and wpn:Ammo2() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
-                cmd:AddKey(IN_RELOAD)
+        if !lastdidreload then
+            if wpn:GetUBGL() then
+                if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip2() == 0 and wpn:Ammo2() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
+                    cmd:AddKey(IN_RELOAD)
+                end
+            else
+                if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip1() == 0 and wpn:Ammo1() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
+                    cmd:AddKey(IN_RELOAD)
+                end
             end
+
+            lastdidreload = true
         else
-            if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip1() == 0 and wpn:Ammo1() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
-                cmd:AddKey(IN_RELOAD)
-            end
+            lastdidreload = false
         end
     end
 

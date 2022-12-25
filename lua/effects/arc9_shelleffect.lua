@@ -91,7 +91,7 @@ function EFFECT:Init(data)
             physbox = shelldata.physbox or physbox
             pitch = shelldata.pitch or pitch
             sounds = shelldata.sounds or sounds
-            smoke = shelldata.smoke or smoke
+            smoke = shelldata.smoke != nil and shelldata.smoke or smoke
         end
     end
 
