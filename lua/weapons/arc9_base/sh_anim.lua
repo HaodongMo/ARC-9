@@ -61,6 +61,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
     end
 
     local time = 0.1
+    local minprogress
 
     if IsValid(mdl) then
         time = animation.Time or mdl:SequenceDuration(seq)
@@ -95,7 +96,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
             end)
         end
 
-        local minprogress = animation.MinProgress or 0.8
+        minprogress = animation.MinProgress or 0.8
         minprogress = math.min(minprogress, 1)
 
         if animation.RestoreAmmo then
@@ -120,6 +121,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
     self:SetHideBoneIndex(animation.HideBoneIndex or 0)
 
     if lock then
+        PrintTable(animation)
         if !animation.FireASAP then minprogress = 1 end
 
         self:SetAnimLockTime(CurTime() + (time * mult * minprogress))
