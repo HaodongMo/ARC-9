@@ -36,12 +36,34 @@ function SWEP:GetIsWalking()
     return true
 end
 
+SWEP.NearWallTick = 0
+SWEP.NearWallCached = false
+
+function SWEP:GetIsNearWall()
+    if self.NearWallTick == CurTime() then
+        return self.NearWallCached
+    end
+
+    local tr = util.TraceLine({
+        start = self:GetShootPos(),
+        endpos = self:GetShootPos() + self:GetShootDir():Forward() * self:GetProcessedValue("BarrelLength"),
+        filter = self:GetOwner(),
+        mask = MASK_SHOT_HULL
+    })
+
+    self.NearWallCached = tr.Hit
+    self.NearWallTick = CurTime()
+
+    return tr.Hit
+end
+
 function SWEP:GetIsSprintingCheck()
     local owner = self:GetOwner()
 
     if !self:GetOwner():IsValid() or self:GetOwner():IsNPC() then
         return false
     end
+    if self:GetIsNearWall() then return true end
     if self:GetSightAmount() > 0.5 then return false end
     if !owner:KeyDown(IN_SPEED) then return false end
     if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then return false end

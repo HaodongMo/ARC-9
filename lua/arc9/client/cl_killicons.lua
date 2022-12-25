@@ -2,7 +2,7 @@ ARC9OLDKilliconDraw = ARC9OLDKilliconDraw or killicon.Draw
 local killicons_cachednames = {}
 local killicons_cachedicons = {}
 local killicons_cachedtimes = {}
-local killiconmat = Material("arc9/arc9_sus.png", "mips smooth")
+local killiconmat = Material("arc9/arc9_logo.png", "mips smooth")
 
 ARC9NEWKillicondraw = function(x, y, name, alpha)
     if !GetConVar("arc9_killfeed_enable"):GetBool() then

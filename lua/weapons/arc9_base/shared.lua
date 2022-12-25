@@ -313,6 +313,8 @@ SWEP.DropMagazinePos = Vector(0, 0, 0) -- offsets
 SWEP.DropMagazineAng = Angle(0, 0, 0)
 SWEP.DropMagazineVelocity = Vector(0, 0, 0) -- Put something here if your anim throws the mag with force
 
+SWEP.BarrelLength = 24 -- Distance for nearwalling
+
 -------------------------- FIREMODES
 
 SWEP.RPM = 750

@@ -7,7 +7,7 @@ local savesound = "arc9/newui/presets/paper_write1.ogg"
 local applysound = "arc9/newui/presets/paper_search1.ogg"
 local randomizesound = "arc9/newui/presets/paper_search1.ogg"
 
-local mat_default = Material("arc9/arc9_sus.png", "mips smooth")
+local mat_default = Material("arc9/arc9_logo.png", "mips smooth")
 local mat_random = Material("arc9/ui/random.png", "mips smooth")
 local nextpreset = 0
 
@@ -159,7 +159,7 @@ function SWEP:CreatePresetMenu(reload)
                 net.SendToServer()
 
                 surface.PlaySound(randomizesound)
-                
+
                 timer.Simple(0.1, function() if IsValid(self) then self:CreateHUD_Bottom() end end)
             end
         else
@@ -168,7 +168,7 @@ function SWEP:CreatePresetMenu(reload)
         end
 
         if presetbtn.name == "default" then presetbtn.name = "Default" end
-        
+
         if file.Exists(filename, "DATA") then
             presetbtn.icon = Material("data/" .. filename, "smooth")
         end

@@ -58,7 +58,7 @@ local settingstable = {
 }
 
 local ARC9ScreenScale = ARC9.ScreenScale
-local mat_icon = Material("arc9/arc9_sus.png", "mips smooth")
+local mat_icon = Material("arc9/arc9_logo.png", "mips smooth")
 
 local function DrawSettings(bg)
     local cornercut = ARC9ScreenScale(3.5)
@@ -101,6 +101,7 @@ local function DrawSettings(bg)
             elseif v2.type == "bool" then
                 local newel = vgui.Create("ARC9Checkbox", elpanel)
                 newel:SetPos(elpw - ARC9ScreenScale(4 + 13), ARC9ScreenScale(4))
+                newel.Command = v2.cmd
             elseif v2.type == "slider" then
                 local newel = vgui.Create("ARC9NumSlider", elpanel)
                 -- local newslider = vgui.Create("DNumSlider", newpanelscroll)
@@ -110,6 +111,7 @@ local function DrawSettings(bg)
                 newel:SetMin(0)
                 newel:SetMax(256)
                 newel:SetValue(128)
+                newel.Command = v2.cmd
             elseif v2.type == "color" then
                 -- newel:SetText(v2.text)
                 local newel = vgui.Create("ARC9ColorButton", elpanel)

@@ -46,7 +46,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     end
 
     if GetConVar("arc9_autolean") then
-        if wpn:GetInSights() then
+        if cmd:KeyDown(IN_ATTACK2) then
             if arc9_lean_direction != nil and arc9_lean_direction != 0 then
                 local eyepos = ply:EyePos()
                 local forward = ply:EyeAngles():Forward()
