@@ -285,6 +285,8 @@ function SWEP:ThinkAnimation()
                     lhik_mdl = self.LHIKModel
                 end
 
+                if !lhik_mdl then return end
+
                 lhik_mdl:SetSequence(self:GetSequenceIndex())
                 lhik_mdl:SetCycle(self:GetSequenceCycle())
             end
