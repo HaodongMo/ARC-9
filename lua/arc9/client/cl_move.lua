@@ -14,7 +14,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
         end
     end
 
-    if GetConVar("arc9_autoreload"):GetBool() then
+    if GetConVar("arc9_autoreload"):GetBool() and !wpn:GetCustomize() then
         if !lastdidreload then
             if wpn:GetUBGL() then
                 if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip2() == 0 and wpn:Ammo2() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
