@@ -117,6 +117,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     offsetpos:Set(self:GetProcessedValue("ActivePos"))
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
 
+    pos, ang = self:DoCameraLean(pos, Angle(ang))
+
     local movingpv = self.PV_Move
     local mvpos = self:GetProcessedValue("MovingPos")
 
@@ -481,8 +483,6 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang
-
-    pos, ang = self:DoWeaponLean(pos, Angle(ang))
 
     local wm = self:GetWM()
 
