@@ -9,40 +9,24 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
 
     if wpn:GetRequestReload() and !wpn:GetCustomize() and wpn:CanReload() then
         if cmd:TickCount() % 2 == 0 then
-            local buttons = cmd:GetButtons()
-
-            buttons = buttons + IN_RELOAD
-
-            cmd:SetButtons(buttons)
+            cmd:AddKey(IN_RELOAD)
         end
     end
 
     if GetConVar("arc9_autoreload"):GetBool() then
         if wpn:GetUBGL() then
             if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip2() == 0 and wpn:Ammo2() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
-                local buttons = cmd:GetButtons()
-
-                buttons = buttons + IN_RELOAD
-
-                cmd:SetButtons(buttons)
+                cmd:AddKey(IN_RELOAD)
             end
         else
             if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip1() == 0 and wpn:Ammo1() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
-                local buttons = cmd:GetButtons()
-
-                buttons = buttons + IN_RELOAD
-
-                cmd:SetButtons(buttons)
+                cmd:AddKey(IN_RELOAD)
             end
         end
     end
 
     if ARC9.KeyPressed_Menu then
-        local buttons = cmd:GetButtons()
-
-        buttons = buttons + IN_BULLRUSH
-
-        cmd:SetButtons(buttons)
+        cmd:AddKey(IN_BULLRUSH)
     end
 
     if GetConVar("arc9_autolean") then
@@ -62,13 +46,11 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                     return
                 end
 
-                local buttons = cmd:GetButtons()
                 if arc9_lean_direction > 0 then
-                    buttons = buttons + IN_ALT2
+                    cmd:AddKey(IN_ALT2)
                 elseif arc9_lean_direction < 0 then
-                    buttons = buttons + IN_ALT1
+                    cmd:AddKey(IN_ALT1)
                 end
-                cmd:SetButtons(buttons)
             elseif arc9_lean_direction == nil then
                 local eyepos = ply:EyePos()
                 local right = ply:EyeAngles():Right()
