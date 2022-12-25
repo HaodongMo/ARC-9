@@ -65,6 +65,7 @@ You could also opt to combine these methods together - it's common for an attach
  - Exportable and easy to share presets
  - Reload/Customize blur
  - "Third Arm" procedural animation system
+ - Visual firemode switch system
 
 **Returning and Improved from ArcCW:**
  - Cheap Scopes, new and improved
@@ -90,6 +91,8 @@ Weapons can be set with a Recoil Seed, unique to that gun, or a lookup table of 
 Weapons also have an amount of random recoil, which is added onto the predictible recoil. Random recoil cannot be predicted, meaning the pattern will vary a little bit every time.
 
 Visual recoil has been totally reworked from the ground up using springs, which look much better than the previous system.
+
+**Physical Visual Recoil** allows guns to truly shoot when the viewmodel is pointing, as seen in games such as Phantom Forces and Escape From Tarkov.
 
 ### Supply Limit
 
@@ -153,14 +156,6 @@ Some applications of this include the new built-in system for toggleable hybrid 
 ### New UI
 
 A new heads-up display with cooler design.
-
-### New Weapon Ecosystem
-
-Designed from the ground up to be extensible and standardized, so that creators can work together better. New slots better represent what they are meant to accomplish.
-
-### Pose Parameter Handler
-
-Allows animations to alter pose param values and keep them there. Several other weapon statistics are also directly tied to pose parameters, allowing for greater animation-based control.
 
 ## How To Contribute
 
