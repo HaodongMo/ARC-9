@@ -131,7 +131,7 @@ function SWEP:ApplyRecoil()
     local vis_kick_h = vis_kick * util.SharedRandom("ARC9_vis_kick_h", -1, 1)
     vis_shake = vis_shake * util.SharedRandom("ARC9_vis_kick_shake", -1, 1)
 
-    self:GetOwner():SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
+    // self:GetOwner():SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
 
     self:GetOwner():SetFOV(self:GetOwner():GetFOV() * 0.99, 0)
     self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
