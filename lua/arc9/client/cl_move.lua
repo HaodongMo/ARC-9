@@ -85,9 +85,12 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
 
                     arc9_lean_direction = 0
 
+                    local leftleanamt = 0
+                    local rightleanamt = 0
+
                     local leftleantrace = util.TraceLine({
                         start = eyepos,
-                        endpos = eyepos + right * -16,
+                        endpos = eyepos + right * -wpn.MaxLeanOffset,
                         filter = ply,
                     })
 
@@ -101,34 +104,50 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                         })
 
                         if !leftleantrace2.Hit then
-                            arc9_lean_direction = -1
-                        end
-                    end
-
-                    if arc9_lean_direction == 0 then
-
-                        // See if it's valid to lean right
-
-                        local rightleantrace = util.TraceLine({
-                            start = eyepos,
-                            endpos = eyepos + right * 16,
-                            filter = ply,
-                        })
-
-                        if !rightleantrace.Hit then
-                            // see if it's possible to lean in this direction
-
-                            local rightleantrace2 = util.TraceLine({
-                                start = rightleantrace.HitPos,
-                                endpos = rightleantrace.HitPos + (forward * 32),
+                            local leftleantrace3 = util.TraceLine({
+                                start = leftleantrace2.HitPos,
+                                endpos = leftleantrace2.HitPos + (right * wpn.MaxLeanOffset),
                                 filter = ply,
                             })
 
-                            if !rightleantrace2.Hit then
-                                arc9_lean_direction = 1
-                            end
+                            leftleanamt = leftleantrace3.Fraction * wpn.MaxLeanOffset
                         end
+                    end
 
+                    // See if it's valid to lean right
+
+                    local rightleantrace = util.TraceLine({
+                        start = eyepos,
+                        endpos = eyepos + right * wpn.MaxLeanOffset,
+                        filter = ply,
+                    })
+
+                    if !rightleantrace.Hit then
+                        // see if it's possible to lean in this direction
+
+                        local rightleantrace2 = util.TraceLine({
+                            start = rightleantrace.HitPos,
+                            endpos = rightleantrace.HitPos + (forward * 32),
+                            filter = ply,
+                        })
+
+                        if !rightleantrace2.Hit then
+                            local rightleantrace3 = util.TraceLine({
+                                start = rightleantrace2.HitPos,
+                                endpos = rightleantrace2.HitPos + (right * -wpn.MaxLeanOffset),
+                                filter = ply,
+                            })
+
+                            rightleanamt = rightleantrace3.Fraction * wpn.MaxLeanOffset
+                        end
+                    end
+
+                    if leftleanamt > rightleanamt then
+                        arc9_lean_direction = -1
+                    elseif rightleanamt > leftleanamt then
+                        arc9_lean_direction = 1
+                    else
+                        arc9_lean_direction = 0
                     end
                 end
             end
