@@ -87,8 +87,8 @@ end
 
 local leanbone = "ValveBiped.Bip01_Spine1"
 
-local leanang_left = Angle(3.5, 3.5, 0)
-local leanang_right = Angle(3.5, 1.5, 1.5)
+local leanang_left = Angle(3.5, 1.75, 2)
+local leanang_right = Angle(3.5, 1.75, 0)
 
 function SWEP:DoPlayerModelLean()
     local amt = self:GetLeanDelta()
