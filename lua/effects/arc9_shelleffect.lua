@@ -57,6 +57,14 @@ function EFFECT:Init(data)
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
 
+    local vm = LocalPlayer():GetViewModel()
+
+    local wm = false
+
+    if (LocalPlayer():ShouldDrawLocalPlayer() or ent.Owner != LocalPlayer()) then
+        wm = true
+    end
+
     -- ang:RotateAroundAxis(ang:Up(), -90)
 
     -- ang:RotateAroundAxis(ang:Right(), (ent.ShellRotateAngle or Angle(0, 0, 0))[1])
@@ -69,6 +77,7 @@ function EFFECT:Init(data)
     local physbox = ent:GetProcessedValue("ShellPhysBox")
     local pitch = ent:GetProcessedValue("ShellPitch")
     local sounds = ent:GetProcessedValue("ShellSounds")
+    local smoke = ent:GetProcessedValue("ShellSmoke")
 
     local index = data:GetFlags()
 
@@ -82,6 +91,7 @@ function EFFECT:Init(data)
             physbox = shelldata.physbox or physbox
             pitch = shelldata.pitch or pitch
             sounds = shelldata.sounds or sounds
+            smoke = shelldata.smoke or smoke
         end
     end
 
@@ -138,28 +148,17 @@ function EFFECT:Init(data)
     phys:SetVelocity((dir * mag * velocity) + plyvel)
 
     phys:AddAngleVelocity(VectorRand() * 100)
-    phys:AddAngleVelocity(ang:Up() * 2500 * velocity/0.75)
+    phys:AddAngleVelocity(ang:Up() * 2500 * velocity / 0.75)
 
-    if ent:GetProcessedValue("ShellSmoke") then
-        local emitter = ParticleEmitter(origin)
+    if smoke then
+        local pcf = CreateParticleSystem(mdl, "port_smoke", PATTACH_POINT_FOLLOW, att)
 
-        for i = 1, 3 do
-            local particle = emitter:Add("particles/smokey", origin + (dir * 2))
+        if IsValid(pcf) then
+            pcf:StartEmission()
 
-            if (particle) then
-                particle:SetVelocity(VectorRand() * 10 + (dir * i * math.Rand(48, 64)) + plyvel)
-                particle:SetLifeTime(0)
-                particle:SetDieTime(math.Rand(0.05, 0.15))
-                particle:SetStartAlpha(math.Rand(40, 60))
-                particle:SetEndAlpha(0)
-                particle:SetStartSize(0)
-                particle:SetEndSize(math.Rand(18, 24))
-                particle:SetRoll(math.rad(math.Rand(0, 360)))
-                particle:SetRollDelta(math.Rand(-1, 1))
-                particle:SetLighting(true)
-                particle:SetAirResistance(96)
-                particle:SetGravity(Vector(-7, 3, 20))
-                particle:SetColor(150, 150, 150)
+            if (muz or parent) != vm and !wm then
+                pcf:SetShouldDraw(false)
+                table.insert(ent.PCFs, pcf)
             end
         end
     end
