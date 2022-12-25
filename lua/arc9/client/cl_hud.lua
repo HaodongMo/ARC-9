@@ -1004,11 +1004,13 @@ function ARC9.DrawHUD()
             action = "Toggle Safe"
         })
 
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+alt1"),
-            glyph2 = ARC9.GetBindKey("+alt2"),
-            action = "Lean"
-        })
+        if input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+alt1"),
+                glyph2 = ARC9.GetBindKey("+alt2"),
+                action = "Lean"
+            })
+        end
 
         for i, v in ipairs(hints) do
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
