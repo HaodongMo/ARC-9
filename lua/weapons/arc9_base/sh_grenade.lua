@@ -54,7 +54,6 @@ function SWEP:ThinkGrenade()
             self:SetGrenadeTossing(self:GetOwner():KeyDown(IN_ATTACK2))
         end
     else
-        print("Yeah")
         if self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly")) then
             local t = self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
             local mp = self:GetAnimationEntry("toss").MinProgress or 0
