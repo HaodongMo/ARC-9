@@ -2,6 +2,8 @@ SWEP.MaxLeanOffset = 16
 SWEP.MaxLeanAngle = 15
 
 function SWEP:ThinkLean()
+    if self:PredictionFilter() then return end
+
     if self:GetOwner():KeyDown(IN_ALT1) then
         self:SetLeanState(-1)
     elseif self:GetOwner():KeyDown(IN_ALT2) then
@@ -15,7 +17,7 @@ function SWEP:ThinkLean()
     if self:GetLeanState() != 0 then
         local tr = util.TraceHull({
             start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() + self:GetOwner():EyeAngles():Right() * self.MaxLeanOffset * self:GetLeanState(),
+            endpos = self:GetOwner():EyePos() + self:GetOwner():EyeAngles():Right() * (self.MaxLeanOffset - 2) * self:GetLeanState(),
             filter = self:GetOwner(),
             maxs = Vector(1, 1, 1) * 4,
             mins = Vector(-1, -1, -1) * 4,
@@ -37,6 +39,10 @@ function SWEP:ThinkLean()
     amt = math.Clamp(amt, -maxleanfrac, maxleanfrac)
 
     self:SetLeanAmount(amt)
+
+    if amt != 0 then
+        self:GetOwner():SetCollisionBounds(Vector(-32, -32, 0), Vector(32, 32, 64))
+    end
 
     self:DoPlayerModelLean()
 end

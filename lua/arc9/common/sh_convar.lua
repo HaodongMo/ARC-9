@@ -486,6 +486,11 @@ local conVars = {
         default = "0",
         client = true,
         userinfo = true
+    },
+    {
+        name = "autolean",
+        default = "1",
+        client = true,
     }
 }
 
