@@ -93,10 +93,10 @@ function ARC9.StartCommand(ply, cmd)
     recrise:Normalize()
     ARC9.RecoilRise = recrise
 
-    if math.abs(wpn:GetRecoilUp()) > 0 or math.abs(wpn:GetRecoilSide()) > 0 then
+    if math.abs(wpn:GetRecoilUp()) > 1e-9 or math.abs(wpn:GetRecoilSide()) > 1e-9 then
         local eyeang = cmd:GetViewAngles()
 
-        local m = 50
+        local m = 10
 
         if game.SinglePlayer() then
             m = 100
@@ -105,8 +105,8 @@ function ARC9.StartCommand(ply, cmd)
         local uprec = FrameTime() * wpn:GetRecoilUp() * m
         local siderec = FrameTime() * wpn:GetRecoilSide() * m
 
-        uprec = math.min(uprec, wpn:GetRecoilUp())
-        siderec = math.min(siderec, wpn:GetRecoilSide())
+        uprec = math.Clamp(uprec, -math.abs(wpn:GetRecoilUp()), math.abs(wpn:GetRecoilUp()))
+        siderec = math.Clamp(siderec, -math.abs(wpn:GetRecoilSide()), math.abs(wpn:GetRecoilSide()))
 
         wpn:SetRecoilUp(wpn:GetRecoilUp() - uprec)
         wpn:SetRecoilSide(wpn:GetRecoilSide() - siderec)
