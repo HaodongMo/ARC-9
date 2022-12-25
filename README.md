@@ -39,14 +39,19 @@ You could also opt to combine these methods together - it's common for an attach
 
 **New features include:**
  - Overhauled standardized recoil mechanics
+ - Recoil patterns
  - Magazine dropping
- - Attachments on top of attachments
+ - Attachments on top of attachments (SubAttachments)
  - Free aim
  - Free sway
+ - Physical visual recoil (Tarkov style)
+ - Lock-on system
  - Reworked standardized weapon stat handling
  - Integrated leaning system with autolean 
  - Looping sounds
  - Reworked LHIK system
+ - Melee lunge
+ - NPC support
  - LHIK supports right hands too (RHIK)
  - Snazzy new UI
  - Better standard weapon ecosystem
@@ -58,6 +63,25 @@ You could also opt to combine these methods together - it's common for an attach
  - Controller support
  - Dynamic selecticon, preset and kill icon generation
  - Exportable and easy to share presets
+ - Reload/Customize blur
+ - "Third Arm" procedural animation system
+
+**Returning and Improved from ArcCW:**
+ - Cheap Scopes, new and improved
+ - Thermal/NV/Smart Optics
+ - Jamming/malfunction/overheat system
+ - Bipod system
+ - Riot shield system
+ - Universal underbarrel weapon system
+ - Physical bullets
+ - Bullet penetration
+ - Ricochet
+ - EventTable animation event system
+ - Grenade system
+ - Manual action system (R to pump/bolt)
+ - Sight autosolver
+ - Multi-function laser/light modules
+ - Lens flare on enemies
 
 ### New Recoil
 
