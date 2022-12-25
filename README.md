@@ -57,7 +57,7 @@ You could also opt to combine these methods together - it's common for an attach
  - CS:GO-like sticker system
  - Controller support
  - Dynamic selecticon, preset and kill icon generation
- - Exportable and easy to sharable presets
+ - Exportable and easy to share presets
 
 ### New Recoil
 
