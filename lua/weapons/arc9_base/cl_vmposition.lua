@@ -267,6 +267,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- self.BobScale = 0
         -- self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
+
     local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
     extra_offsetang.y = extra_offsetang.y - (getfreeswayang.p * cor_val)
     extra_offsetang.p = extra_offsetang.p + (getfreeswayang.y * cor_val)
@@ -369,7 +370,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos = pos + (angforward * offsetpos.y)
     pos = pos + (angup * offsetpos.z)
 
-
     ang:RotateAroundAxis(oldangup, offsetang.p)
     ang:RotateAroundAxis(oldangright, offsetang.y)
     ang:RotateAroundAxis(oldangforward, offsetang.r)
@@ -438,8 +438,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
     if singleplayer or IsFirstTimePredicted() then
-        pos = DampVector(1 / 10000000000, pos, self.ViewModelPos)
-        ang = DampAngle(1 / 10000000000, ang, self.ViewModelAng)
+        pos = DampVector(0.00001, pos, self.ViewModelPos)
+        ang = DampAngle(0.00001, ang, self.ViewModelAng)
 
         -- pos = DampVector(0, pos, self.ViewModelPos)
         -- ang = DampAngle(0, ang, self.ViewModelAng)
@@ -462,6 +462,8 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang
+
+    pos, _ = self:DoCameraLean(pos, Angle(ang))
 
     local wm = self:GetWM()
 

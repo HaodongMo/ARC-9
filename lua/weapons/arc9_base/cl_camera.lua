@@ -46,6 +46,8 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     ang = ang + (self:GetCameraControl() or angle_zero)
 
+    pos, ang = self:DoCameraLean(pos, ang)
+
     return pos, ang, fov
 end
 

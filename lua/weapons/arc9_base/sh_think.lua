@@ -107,6 +107,8 @@ function SWEP:Think()
 
     end
 
+    self:ThinkLean()
+
     self:ThinkSprint()
 
     self:ThinkFiremodes()

@@ -706,6 +706,8 @@ function SWEP:GetShootPos()
 
     pos = pos + (ang:Up() * -self:GetProcessedValue("HeightOverBore"))
 
+    pos = pos + (self:GetOwner():EyeAngles():Right() * self:GetLeanOffset())
+
     local shootposoffset = self:GetProcessedValue("ShootPosOffset")
 
     pos = pos + (ang:Right() * shootposoffset.x)
