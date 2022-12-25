@@ -161,6 +161,12 @@ function EFFECT:Init(data)
                 table.insert(ent.PCFs, pcf)
             end
         end
+
+        local smkpcf = CreateParticleSystem(self, "shellsmoke", PATTACH_ABSORIGIN_FOLLOW, 0)
+
+        if IsValid(smkpcf) then
+            smkpcf:StartEmission()
+        end
     end
 
     self.SpawnTime = CurTime()
