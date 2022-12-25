@@ -80,6 +80,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     local oldpos = Vector(0, 0, 0)
     local oldang = Angle(0, 0, 0)
 
+    pos, ang = self:DoCameraLean(pos, Angle(ang))
+
     oldpos:Set(pos)
     oldang:Set(ang)
 
@@ -116,8 +118,6 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     offsetpos:Set(self:GetProcessedValue("ActivePos"))
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
-
-    pos, ang = self:DoCameraLean(pos, Angle(ang))
 
     local movingpv = self.PV_Move
     local mvpos = self:GetProcessedValue("MovingPos")
