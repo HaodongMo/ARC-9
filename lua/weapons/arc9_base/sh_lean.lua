@@ -93,5 +93,5 @@ function SWEP:DoPlayerModelLean()
 
     if !bone then return end
 
-    self:GetOwner():ManipulateBoneAngles(bone, (amt < 0 and leanang_left or leanang_right) * amt * self.MaxLeanAngle, false)
+    self:GetOwner():ManipulateBoneAngles(bone, (amt < 0 and leanang_left or leanang_right) * amt * self.MaxLeanAngle, game.SinglePlayer())
 end

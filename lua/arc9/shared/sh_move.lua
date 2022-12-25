@@ -37,9 +37,9 @@ function ARC9.Move(ply, mv, cmd)
 
     if wpn:GetBipod() then
         if ply:Crouching() then
-            mv:SetButtons(bit.bor(mv:GetButtons(), IN_DUCK))
+            cmd:AddKey(IN_DUCK)
         else
-            mv:SetButtons(bit.band(mv:GetButtons(), bit.bnot(IN_DUCK)))
+            cmd:RemoveKey(IN_DUCK)
         end
     end
 end

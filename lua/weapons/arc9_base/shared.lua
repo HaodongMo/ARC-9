@@ -991,7 +991,7 @@ SWEP.HoldTypeBlindfire = "pistol"
 SWEP.HoldTypeNPC = nil
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
-SWEP.AnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- While in TPIK only -- Tip: if you dont want any additional anim put ACT_HL2MP_GESTURE_RELOAD_MAGIC here instead!
+SWEP.AnimReload = ACT_HL2MP_GESTURE_RELOAD_MAGIC -- While in TPIK only -- Tip: if you dont want any additional anim put ACT_HL2MP_GESTURE_RELOAD_MAGIC here instead!
 SWEP.NonTPIKAnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- Non TPIK
 SWEP.AnimDraw = false
 SWEP.AnimMelee = ACT_GMOD_GESTURE_MELEE_SHOVE_2HAND
@@ -1113,6 +1113,7 @@ SWEP.Attachments = {
     --     Installed = nil,
     --     MergeSlots = {}, // merge this slot with another
     --     StickerModel = "", // This is the model that will be used for the sticker
+    --     CosmeticOnly = false, // This attachment is cosmetic only, and will be placed in the Personalization tab.
     --     SubAttachments = {
     --         {
     --             Installed = "att_with_sub_atts",

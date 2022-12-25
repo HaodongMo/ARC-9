@@ -148,6 +148,8 @@ SWEP.CustomizeButtons = {
     {
         title = "CUSTOMIZE",
         func = function(self2)
+            self2.BottomBarCategory = 0
+
             self2:ClearTabPanel()
             self2:CreateHUD_Bottom()
 
@@ -170,6 +172,34 @@ SWEP.CustomizeButtons = {
         end,
         customize = true,
         cutcorner = 1
+    },
+    {
+        title = "PERSONALIZE",
+        func = function(self2)
+            self2.BottomBarCategory = 1
+
+            self2:ClearTabPanel()
+            self2:CreateHUD_Bottom()
+
+            swtichtoslotmenu(self2)
+
+            if self2.CustomizeHUD.lowerpanel then
+                if self2.CustomizeHUD.lowerpanel.Extended then
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+                else
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
+                end
+
+                self2:ClosePresetMenu()
+                self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
+                self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
+            end
+        end,
+        customize = true,
+        cutcorner = 0
     },
     -- {
     --     title = "STATS",

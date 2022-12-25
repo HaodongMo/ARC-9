@@ -38,6 +38,10 @@ SWEP.BottomBarFolders = {}
 SWEP.BottomBarPath = {}
 SWEP.BottomBarAtts = {}
 
+-- 0: Customization
+-- 1: Personalization
+SWEP.BottomBarCategory = 0
+
 function SWEP:ClearBottomBar()
     if self.BottomBar then
         self.BottomBar:Remove()
@@ -102,7 +106,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     -- end
 
     spacer(self, scroll, 4)
-    
+
     local foldercount = 0
 
     for folder, children in SortedPairs(folders) do
@@ -121,7 +125,7 @@ local function enterfolder(self, scroll, slottbl, fname)
 
         folderbtn:DockMargin(0, 0, ARC9ScreenScale(4), 0)
         folderbtn:Dock(LEFT)
-    
+
         scroll:AddPanel(folderbtn)
         table.insert(scrolleles, folderbtn)
         folderbtn.folder = folder
@@ -417,8 +421,8 @@ function SWEP:CreateHUD_Bottom()
     if self.BottomBarMode == 1 then
         self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
         self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
-        self.CustomizeHUD.lowerpanel.Extended = true 
-                
+        self.CustomizeHUD.lowerpanel.Extended = true
+
         self:ClosePresetMenu()
 
         local slottbl = self:LocateSlotFromAddress(self.BottomBarAddress)
