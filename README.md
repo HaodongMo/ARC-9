@@ -55,7 +55,7 @@ You could also opt to combine these methods together - it's common for an attach
  - LHIK supports right hands too (RHIK)
  - Snazzy new UI
  - Better standard weapon ecosystem
- - Third Person IK animations
+ - Third Person IK animations (Supports Neco-Arc playermodel)
  - New and improved Modifier system
  - New RT scopes
  - Dynamic camo support
