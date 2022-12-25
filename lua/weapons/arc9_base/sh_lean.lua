@@ -62,9 +62,19 @@ function SWEP:DoCameraLean(pos, ang)
 
     if amt == 0 then return pos, ang end
 
-    local newpos = pos + ang:Right() * self:GetLeanOffset()
+    local newpos = pos + self:GetOwner():EyeAngles():Right() * self:GetLeanOffset()
 
     ang:RotateAroundAxis(ang:Forward(), amt * self.MaxLeanAngle)
+
+    return newpos, ang
+end
+
+function SWEP:DoWeaponLean(pos, ang)
+    local amt = self:GetLeanDelta()
+
+    if amt == 0 then return pos, ang end
+
+    local newpos = pos + self:GetOwner():EyeAngles():Right() * self:GetLeanOffset()
 
     return newpos, ang
 end

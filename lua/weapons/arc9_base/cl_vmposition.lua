@@ -463,7 +463,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     self.LastViewModelPos = pos
     self.LastViewModelAng = ang
 
-    pos, _ = self:DoCameraLean(pos, Angle(ang))
+    pos, ang = self:DoWeaponLean(pos, Angle(ang))
 
     local wm = self:GetWM()
 
