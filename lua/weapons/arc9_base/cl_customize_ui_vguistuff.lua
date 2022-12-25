@@ -299,8 +299,6 @@ ARC9Checkbox.MatIdle = Material("arc9/ui/checkbox.png", "mips")
 ARC9Checkbox.MatSel = Material("arc9/ui/checkbox_sel.png", "mips")
 ARC9Checkbox.MatToggled = Material("arc9/ui/checkbox_toggled.png", "mips")
 
-ARC9Checkbox.Command = ""
-
 function ARC9Checkbox:Init()
     self:SetSize(ARC9ScreenScale(13), ARC9ScreenScale(13))
 end
@@ -326,12 +324,6 @@ function ARC9Checkbox:Paint(w, h)
     end
 end
 
-function ARC9Checkbox:OnChange(bVal)
-    if self.Command != "" then
-        RunConsoleCommand(self.Command, bVal and "1" or "0")
-    end
-end
-
 vgui.Register("ARC9Checkbox", ARC9Checkbox, "DCheckBox")
 
 
@@ -339,8 +331,6 @@ local ARC9NumSlider = {}
 ARC9NumSlider.Color = ARC9.GetHUDColor("fg")
 ARC9NumSlider.ColorClicked = ARC9.GetHUDColor("hi")
 ARC9NumSlider.ColorNo = ARC9.GetHUDColor("bg")
-
-ARC9NumSlider.Command = ""
 
 function ARC9NumSlider:Init()
     local color = self.Color
@@ -375,12 +365,6 @@ function ARC9NumSlider:Init()
     -- end
 end
 
-function ARC9NumSlider:OnValueChanged(val)
-    if self.Command != "" then
-        RunConsoleCommand(self.Command, val)
-    end
-end
-
 vgui.Register("ARC9NumSlider", ARC9NumSlider, "DNumSlider")
 
 
@@ -396,8 +380,6 @@ ARC9ComboBox.MatSingle = Material("arc9/ui/dd_option.png", "mips")
 ARC9ComboBox.MatSingleSel = Material("arc9/ui/dd_option_sel.png", "mips")
 ARC9ComboBox.MatLast = Material("arc9/ui/dd_option_last.png", "mips")
 ARC9ComboBox.MatLastSel = Material("arc9/ui/dd_option_last_sel.png", "mips")
-
-ARC9ComboBox.Command = ""
 
 function ARC9ComboBox:Init()
     self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(13))
@@ -486,13 +468,6 @@ function ARC9ComboBox:Paint(w, h)
     surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
     surface.DrawText(self.text or "unselected")
 end
-
-function ARC9ComboBox:OnSelect(index, value, data)
-    if self.Command != "" then
-        RunConsoleCommand(self.Command, value)
-    end
-end
-
 
 vgui.Register("ARC9ComboBox", ARC9ComboBox, "DComboBox")
 
