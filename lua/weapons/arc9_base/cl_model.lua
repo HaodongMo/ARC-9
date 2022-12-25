@@ -628,6 +628,12 @@ function SWEP:SetupModel(wm, lod, cm)
                     reflectproxmodel.IsAnimationProxy = true
 
                     slottbl.ReflectDriverModel = reflectproxmodel
+
+                    local anim = self:TranslateAnimation("idle")
+                    local ae = self:GetAnimationEntry(anim)
+                    local seq = reflectproxmodel:LookupSequence(self:RandomChoice(ae.Source))
+
+                    reflectproxmodel:ResetSequence(seq)
                 end
             end
 
