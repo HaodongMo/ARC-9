@@ -495,7 +495,17 @@ local conVars = {
     {
         name = "lean",
         default = "1",
-    }
+    },
+    {
+        name = "eject_fx",
+        default = "1",
+        client = true
+    },
+    {
+        name = "eject_time",
+        default = "0",
+        client = true
+    },
 }
 
 local prefix = "arc9_"

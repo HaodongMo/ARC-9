@@ -95,6 +95,8 @@ function EFFECT:Init(data)
         end
     end
 
+    self.ShellTime = self.ShellTime + GetConVar("arc9_eject_time"):GetFloat()
+
     local dir = ang:Forward()
 
     local correctang = ent:GetProcessedValue("ShellCorrectAng") or angle_zero
@@ -150,6 +152,10 @@ function EFFECT:Init(data)
     phys:AddAngleVelocity(VectorRand() * 100)
     phys:AddAngleVelocity(ang:Up() * 2500 * velocity / 0.75)
 
+    if !GetConVar("arc9_eject_fx"):GetBool() then
+        smoke = false
+    end
+
     if smoke then
         local pcf = CreateParticleSystem(mdl, "port_smoke", PATTACH_POINT_FOLLOW, att)
 
@@ -186,7 +192,7 @@ end
 function EFFECT:Think()
     if self:GetVelocity():Length() > 20 then self.SpawnTime = CurTime() end
     self:StopSound("Default.ScrapeRough")
-    
+
     if (self.SpawnTime + self.ShellTime) <= CurTime() then
         if !IsValid(self) then return end
         self:SetRenderFX( kRenderFxFadeFast )
