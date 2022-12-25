@@ -111,6 +111,8 @@ function SWEP:Think()
 
     self:ThinkSprint()
 
+    self:ThinkNearWall()
+
     self:ThinkFiremodes()
 
     self:ThinkFreeAim()

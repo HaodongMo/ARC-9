@@ -323,6 +323,25 @@ function SWEP:GetViewModelPosition(pos, ang)
         extra_offsetang = extra_offsetang + spr_jaffset
     end
 
+    local nearwalldelta = self:GetNearWallAmount()
+
+    if nearwalldelta > 0 then
+        nearwalldelta = math.ease.InOutQuad(nearwalldelta) - curvedcustomizedelta
+
+        -- sprintdelta = math.max(sprintdelta, ts_sprintdelta)
+
+        local sprpos = self:GetProcessedValue("NearWallPos") or self:GetProcessedValue("SprintPos") or self:GetProcessedValue("RestPos")
+        local sprang = self:GetProcessedValue("NearWallAng") or self:GetProcessedValue("SprintAng") or self:GetProcessedValue("RestAng")
+
+        -- sprpos = LerpVector(ts_sprintdelta, sprpos, self:GetProcessedValue("TraversalSprintPos"))
+        -- sprang = LerpAngle(ts_sprintdelta, sprang, self:GetProcessedValue("TraversalSprintAng"))
+
+        offsetpos = LerpVector(nearwalldelta, offsetpos, sprpos)
+        offsetang = LerpAngle(nearwalldelta, offsetang, sprang)
+
+        extra_offsetang = LerpAngle(nearwalldelta, extra_offsetang, angle_zero)
+    end
+
     if curvedcustomizedelta > 0 then
         local cpos = self:GetProcessedValue("CustomizePos")
         local cang = self:GetProcessedValue("CustomizeAng")

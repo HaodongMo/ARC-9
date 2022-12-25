@@ -313,7 +313,7 @@ SWEP.DropMagazinePos = Vector(0, 0, 0) -- offsets
 SWEP.DropMagazineAng = Angle(0, 0, 0)
 SWEP.DropMagazineVelocity = Vector(0, 0, 0) -- Put something here if your anim throws the mag with force
 
-SWEP.BarrelLength = 24 -- Distance for nearwalling
+SWEP.BarrelLength = 0 -- Distance for nearwalling
 
 -------------------------- FIREMODES
 
@@ -951,6 +951,9 @@ SWEP.SprintAng = nil
 SWEP.SprintVerticalOffset = true -- Moves vm when looking up/down while sprinting (set to false if gun clips into camera)
 SWEP.ReloadNoSprintPos = true -- No sprintpos during reloads
 
+SWEP.NearWallPos = nil
+SWEP.NearWallAng = nil
+
 SWEP.HolsterPos = Vector(0, 0, -5)
 SWEP.HolsterAng = Angle(0, -15, 25)
 
@@ -1338,6 +1341,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 24, "GrenadePrimedTime")
     self:NetworkVar("Float", 25, "LockOnStartTime")
     self:NetworkVar("Float", 26, "LeanAmount")
+    self:NetworkVar("Float", 27, "NearWallAmount")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 
