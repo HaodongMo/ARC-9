@@ -24,6 +24,12 @@ ARC9.PenTable = {
     [MAT_WARPSHIELD]  = 1,
 }
 
+ARC9.CosmeticCategories = {
+    ["charm"] = true,
+    ["camo"] = true,
+    ["stickers"] = true,
+}
+
 ARC9.ShellSoundsTable = {
     "arc9/casings/casing_556_1.wav",
     "arc9/casings/casing_556_2.wav",
@@ -231,10 +237,9 @@ ARC9.WEAPON_PISTOL = 1
 ARC9.WEAPON_SHOTGUN = 2
 ARC9.WEAPON_SMG = 3
 ARC9.WEAPON_AR = 4
-ARC9.WEAPON_MARKSMAN = 5
-ARC9.WEAPON_SNIPER = 6
-ARC9.WEAPON_RPG = 7
-ARC9.WEAPON_MELEE = 8
+ARC9.WEAPON_SNIPER = 5
+ARC9.WEAPON_RPG = 6
+ARC9.WEAPON_MELEE = 7
 ARC9.WEAPON_MISC = 0
 
 function ARC9.Dev(level)

@@ -1113,6 +1113,7 @@ SWEP.Attachments = {
     --     Installed = nil,
     --     MergeSlots = {}, // merge this slot with another
     --     StickerModel = "", // This is the model that will be used for the sticker
+    --     CosmeticOnly = false, // This attachment is cosmetic only, and will be placed in the Personalization tab.
     --     SubAttachments = {
     --         {
     --             Installed = "att_with_sub_atts",
