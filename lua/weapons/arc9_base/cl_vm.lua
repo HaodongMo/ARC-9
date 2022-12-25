@@ -45,7 +45,7 @@ function SWEP:PreDrawViewModel()
             blurtarget = 1.5
         elseif !self:GetReady() then
             blurtarget = 1.5
-        elseif self:GetAnimLockTime() > CurTime() and GetConVar("arc9_fx_animblur"):GetBool() then
+        elseif self:GetAnimLockTime() > CurTime() and !self:GetUBGL() and GetConVar("arc9_fx_animblur"):GetBool() then
             blurtarget = 1
         end
     end
