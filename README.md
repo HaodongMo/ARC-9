@@ -10,7 +10,7 @@ ARC9 is so called for being the ninth public Arctic base. It is designed to be a
 ### Why should I use this over ArcCW?
 It's far better designed, better networked, and in the long run, will be more sustainable. It is easier to develop for, easier to use, has more features, and is more comfortable to use in multiplayer.
 
-### Why ARC9? Where's ARC2-8? Why not just ArcCW 2?
+### Why ARC9? Where's ARC 2 - 8? Why not just ArcCW 2?
 Because "CW 2" is a substring of "ArcCW 2" and I don't want people to think it has anything to do with CW 2.0. Just ask the creator of TeamDeathMatch Cars. ARC1-8 are my other bases. In order: ASTW, ASTW2, ACT3, ArcVR, ArcCW, TacInt, Neotokyo, TacRP.
 
 ### Are ArcCW 1 weapons compatible with this?
@@ -44,19 +44,20 @@ You could also opt to combine these methods together - it's common for an attach
  - Free aim
  - Free sway
  - Reworked standardized weapon stat handling
- - Blind fire for all weapons
+ - Integrated leaning system with autolean 
  - Looping sounds
- - Reworked RHIK system
- - RHIK supports right hands too
+ - Reworked LHIK system
+ - LHIK supports right hands too (RHIK)
  - Snazzy new UI
  - Better standard weapon ecosystem
  - Third Person IK animations
  - New and improved Modifier system
  - New RT scopes
  - Dynamic camo support
+ - CS:GO-like sticker system
  - Controller support
- - Dynamic selecticon and preset icon generation
- - Exportable presets
+ - Dynamic selecticon, preset and kill icon generation
+ - Exportable and easy to share presets
 
 ### New Recoil
 
