@@ -25,20 +25,20 @@ function SWEP:CreateHUD_Trivia()
     end
 
     local desctitle = desc:Add("DPanel")
-    desctitle:SetSize(desc:GetWide(), ScreenScale(7))
+    desctitle:SetSize(desc:GetWide(), ARC9ScreenScale(7))
     desctitle:Dock(TOP)
     desctitle.title = "Description"
     desctitle.Paint = function(self2, w, h)
         if !IsValid(self) then return end
 
         surface.SetFont("ARC9_7_Slim")
-        surface.SetTextPos(ScreenScale(2), ScreenScale(0))
+        surface.SetTextPos(ARC9ScreenScale(2), ARC9ScreenScale(0))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.DrawText(self2.title)
     end
 
     local descmultiline = {}
-    descmultiline = self:MultiLineText(self.Description, desc:GetWide() - ARC9ScreenScale(1), "ARC9_8")
+    descmultiline = ARC9MultiLineText(self.Description, desc:GetWide() - ARC9ScreenScale(1), "ARC9_8")
     for i, text in ipairs(descmultiline) do
         local desc_line = vgui.Create("DPanel", desc)
         desc_line:SetSize(desc:GetWide(), ARC9ScreenScale(8))
@@ -97,17 +97,17 @@ function SWEP:CreateHUD_Trivia()
             local titlestring = string.Replace(self2.title, "_", " ") 
 
             surface.SetFont("ARC9_7_Slim")
-            surface.SetTextPos(ScreenScale(2), 0)
+            surface.SetTextPos(ARC9ScreenScale(2), 0)
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(titlestring)
 
             local major = self2.credit
 
             surface.SetFont("ARC9_9")
-            surface.SetTextPos(ScreenScale(2), ScreenScale(6))
+            surface.SetTextPos(ARC9ScreenScale(2), ARC9ScreenScale(6))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(major)
-            -- self:DrawTextRot(self2, major, 0, 0, math.max(ScreenScale(1), 0), ScreenScale(6), w, true)
+            -- self:DrawTextRot(self2, major, 0, 0, math.max(ARC9ScreenScale(1), 0), ARC9ScreenScale(6), w, true)
         end
     end
 
@@ -149,7 +149,7 @@ function SWEP:CreateHUD_Trivia()
 
             surface.SetFont("ARC9_7_Slim")
             local tw = surface.GetTextSize(titlestring)
-            surface.SetTextPos(w-tw-ScreenScale(2), 0)
+            surface.SetTextPos(w-tw-ARC9ScreenScale(2), 0)
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(titlestring)
 
@@ -157,10 +157,10 @@ function SWEP:CreateHUD_Trivia()
 
             surface.SetFont("ARC9_9")
             local tw = surface.GetTextSize(major)
-            surface.SetTextPos(w-tw-ScreenScale(3), ScreenScale(6))
+            surface.SetTextPos(w-tw-ARC9ScreenScale(3), ARC9ScreenScale(6))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.DrawText(major)
-            -- self:DrawTextRot(self2, major, 0, 0, math.max(ScreenScale(1), 0), ScreenScale(6), w, true)
+            -- self:DrawTextRot(self2, major, 0, 0, math.max(ARC9ScreenScale(1), 0), ARC9ScreenScale(6), w, true)
         end
     end
 end

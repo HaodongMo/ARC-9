@@ -277,13 +277,13 @@ vgui.Register("ARC9HorizontalScroller", ARC9HorizontalScroller, "DHorizontalScro
 local ARC9ColumnSheet = {}
 
 function ARC9ColumnSheet:Init()
-	self.Navigation = vgui.Create( "ARC9ScrollPanel", self )
-	self.Navigation:Dock( LEFT )
-	self.Navigation:SetWidth( 100 )
-	self.Navigation:DockMargin( 10, 10, 10, 0 )
+	self.Navigation = vgui.Create("ARC9ScrollPanel", self)
+	self.Navigation:Dock(LEFT)
+	self.Navigation:SetWidth(100)
+	self.Navigation:DockMargin(10, 10, 10, 0)
 
-	self.Content = vgui.Create( "Panel", self )
-	self.Content:Dock( FILL )
+	self.Content = vgui.Create("Panel", self)
+	self.Content:Dock(FILL)
 
 	self.Items = {}
 end
@@ -338,12 +338,12 @@ function ARC9NumSlider:Init()
     local color3 = self.ColorNo
     
     self.Slider.Knob:SetSize(ARC9ScreenScale(1.7), ARC9ScreenScale(7))
-    self.Slider.Knob.Paint = function( panel, w, h ) 
+    self.Slider.Knob.Paint = function(panel, w, h) 
         surface.SetDrawColor(color)
         surface.DrawRect(0, 0, w, h) 
     end    
     
-    self.Slider.Paint = function( panel, w, h ) 
+    self.Slider.Paint = function(panel, w, h) 
         surface.SetDrawColor(color3)
         surface.DrawRect(0, h/3, w, h/4) 
         surface.SetDrawColor(color)
@@ -355,7 +355,7 @@ function ARC9NumSlider:Init()
 	self.TextArea:SetCursorColor(color2)
 	self.TextArea:SetTextColor(color)
     self.TextArea:SetFont("ARC9_10_Slim")
-    -- self.TextArea.Paint = function( panel, w, h ) 
+    -- self.TextArea.Paint = function(panel, w, h) 
     --     surface.SetFont("ARC9_10_Slim")
     --     local text = panel:GetValue() or "Owo"
     --     local tw = surface.GetTextSize(text)
@@ -387,7 +387,7 @@ function ARC9ComboBox:Init()
 end
 
 function ARC9ComboBox:PerformLayout() -- to fix button we removed
-	DButton.PerformLayout( self, w, h )
+	DButton.PerformLayout(self, w, h)
 end
 
 function ARC9ComboBox:OnSelect(index, value, data)
@@ -518,89 +518,177 @@ local ARC9ColorPanel = {}
 ARC9ColorPanel.Color = ARC9.GetHUDColor("fg")
 ARC9ColorPanel.ColorClicked = ARC9.GetHUDColor("hi")
 
-ARC9ColorPanel.MatIdle = Material("arc9/ui/colorpanel2.png", "mips")
+ARC9ColorPanel.MatIdle = Material("arc9/ui/colorpanel.png", "mips")
+ARC9ColorPanel.MatIdle2 = Material("arc9/ui/colorpanel2.png", "mips")
+ARC9ColorPanel.MatCubeR = Material("arc9/ui/colorcube_r")
+ARC9ColorPanel.MatCubeD = Material("arc9/ui/colorcube_d")
+ARC9ColorPanel.MatCubeF = Material("arc9/ui/colorcube_full")
+ARC9ColorPanel.MatSelect = Material("arc9/ui/circle128.png", "mips smooth")
+ARC9ColorPanel.MatSelect2 = Material("arc9/ui/circle128_2.png", "mips smooth")
 
 function ARC9ColorPanel:Init()
-    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(108)) --96
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(96)) --108
 
     self:MakePopup()
-    self:Center()
-    self:Center()
     self:SetDraggable(true)
-    self:ShowCloseButton(true)
+    self:ShowCloseButton(true)        -- set to false when done please!!
+    self:SetAlpha(0)
+    self:AlphaTo(255, 0.15, 0, nil)
+    
+    self.hsvHUE, self.hsvSAT, self.hsvVAL = ColorToHSV(self.startcolor or Color(255, 0, 0))
+    
+    self.hsvHUEonly = {r=self.hsvHUE, g=1, b=1}
+    self.ResultColor = self.startcolor or Color(255, 0, 0)
 
     local huepanel = vgui.Create("DPanel", self)
-    huepanel:SetPos(ARC9ScreenScale(2.5), ARC9ScreenScale(82+12))
-    huepanel:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(12))
+    huepanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(13))
+    huepanel:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(10.5))
+    huepanel:NoClipping(true)
     huepanel.LastX = 0
-    -- local hueslider = vgui.Create("DPanel", huepanel)
-    -- hueslider:SetPos(0, 0)
-    -- hueslider:SetSize(ARC9ScreenScale(1), ARC9ScreenScale(11))
+    self.huepanel = huepanel -- for later integration
 
-    huepanel.OnCursorMoved =  function( self2, x, y )
+    huepanel.OnCursorMoved =  function(self2, x, y)
         if !input.IsMouseDown(MOUSE_LEFT) then return end
     
-        -- local col = self:GetPosColor(x, y)
-    
-        -- if col then
-        --     self.m_RGB = col
-        --     self.m_RGB.a = 255
-        --     self:OnChange( self.m_RGB )
-        -- end
-        x = math.Clamp(x, 0, self2:GetWide()) -- -ARC9ScreenScale(1))
+        x = math.Clamp(x, 0, self2:GetWide())
         self2.LastX = x
-        
+        self.hsvHUE = (x / self2:GetWide()) * 360
+        self.ResultColor = HSVToColor(self.hsvHUE, self.hsvSAT, self.hsvVAL)
+        self.hsvHUEonly = HSVToColor(self.hsvHUE, 1, 1)
     end
 
     huepanel.OnMousePressed =  function(self2, mcode)
         self2:MouseCapture(true)
-        self2:OnCursorMoved( self2:CursorPos() )
+        self2:OnCursorMoved(self2:CursorPos())
+        self2:SetCursor("blank")
     end
     huepanel.OnMouseReleased =  function(self2, mcode)
         self2:MouseCapture(false)
         self2:OnCursorMoved(self2:CursorPos())
+        self2:SetCursor("none")
     end
     
     huepanel.Paint =  function(self2, w, h)
-        -- surface.SetDrawColor( 255, 255, 255, 255 )
-        -- surface.SetMaterial( self.Material )
-        -- surface.DrawTexturedRect( 0, 0, w, h )
-    
-        -- surface.SetDrawColor( 0, 0, 0, 250 )
-        -- self:DrawOutlinedRect()
-    
-        -- surface.DrawRect( 0, self.LastY - 2, w, 3 )
-    
-        surface.SetDrawColor( 255, 255, 255, 250 )
-        surface.DrawRect( self2.LastX-ARC9ScreenScale(0.5),  0, ARC9ScreenScale(1), h )
-    
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.DrawRect(self2.LastX-ARC9ScreenScale(0.5), -ARC9ScreenScale(1), ARC9ScreenScale(1), h + ARC9ScreenScale(2))
     end
 
-    local cube = vgui.Create( "DColorCube", self)
-    cube:SetPos( 50, 50 )
-    cube:SetSize( 200, 200 )
-    cube:SetBaseRGB( Color( 0, 255, 0 ) )
+    local cube = vgui.Create("DPanel", self)
+    cube:SetPos(ARC9ScreenScale(2.5), ARC9ScreenScale(2.5))
+    cube:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(79))
+    cube:NoClipping(true)
+    self.cube = cube -- for later integration
+    cube.LastX = 0
+    cube.LastY = 0
+
+    cube.Paint =  function(self2, w, h)
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.SetMaterial(self.MatCubeF)
+        surface.DrawTexturedRect(0, 0, w, h)
+        surface.SetDrawColor(self.hsvHUEonly, 255)
+        surface.SetMaterial(self.MatCubeR)
+        surface.DrawTexturedRect(0, 0, w, h)
+        surface.SetDrawColor(0, 0, 0, 255)
+        surface.SetMaterial(self.MatCubeD)
+        surface.DrawTexturedRect(0, 0, w, h)
+
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.SetMaterial(self.MatSelect)
+        surface.DrawTexturedRect(self2.LastX - ARC9ScreenScale(4), self2.LastY - ARC9ScreenScale(4), ARC9ScreenScale(8), ARC9ScreenScale(8))
+        surface.SetDrawColor(self.ResultColor, 255)
+        surface.SetMaterial(self.MatSelect2)
+        surface.DrawTexturedRect(self2.LastX - ARC9ScreenScale(4), self2.LastY - ARC9ScreenScale(4), ARC9ScreenScale(8), ARC9ScreenScale(8))
+    end
+
+    cube.OnCursorMoved =  function(self2, x, y)
+        if !input.IsMouseDown(MOUSE_LEFT) then return end
+    
+        x = math.Clamp(x, 0, self2:GetWide())
+        y = math.Clamp(y, 0, self2:GetTall())
+        self2.LastX = x
+        self2.LastY = y
+
+        self.hsvSAT = x / self2:GetWide()
+        self.hsvVAL = 1 - y / self2:GetTall()
+        self.ResultColor = HSVToColor(self.hsvHUE, self.hsvSAT, self.hsvVAL)
+    end
+
+    cube.OnMousePressed =  function(self2, mcode)
+        self2:MouseCapture(true)
+        self2:OnCursorMoved(self2:CursorPos())
+        self2:SetCursor("blank")
+    end
+    cube.OnMouseReleased =  function(self2, mcode)
+        self2:MouseCapture(false)
+        self2:OnCursorMoved(self2:CursorPos())
+        self2:SetCursor("none")
+    end
 end
 
 function ARC9ColorPanel:Paint(w, h)
 	local color = self.Color
 
-
     surface.SetDrawColor(color)
     surface.SetMaterial(self.MatIdle)
     surface.DrawTexturedRect(0, 0, w, h)
-    
-    -- surface.SetDrawColor(color)
-    -- surface.SetMaterial(self.MatIcon)
-    -- surface.DrawTexturedRect(w/2-h*0.35, h/2-h*0.35, h*0.7, h*0.7)
+end
 
-    -- if self:IsHovered() then
-    --     surface.SetDrawColor(color2)
-    -- end
+function ARC9ColorPanel:UpdateColor(clr)
+    local hsvh, hsvs, hsvv = ColorToHSV(clr)
+    self.hsvHUE, self.hsvSAT, self.hsvVAL = hsvh, hsvs, hsvv
+    self.hsvHUEonly = HSVToColor(hsvh, 1, 1)
+    self.ResultColor = clr    
+    self.cube.LastX = self.cube:GetWide() * hsvs
+    self.cube.LastY = self.cube:GetTall() * (1-hsvv)
+    self.huepanel.LastX = self.huepanel:GetWide() * hsvh / 360
 
-    -- surface.SetMaterial(self.MatSel)
-    -- surface.DrawTexturedRect(0, 0, w, h)
+    if self.Alpha then
+        self.Alpha = clr.a
+        self.alphapanel.LastX = self.alphapanel:GetWide() * clr.a / 255
+    end
+end
+
+function ARC9ColorPanel:EnableAlpha()
+    self.Alpha = 255 
+
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(108)) --108
+    self.huepanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(13))
+    self.MatIdle = self.MatIdle2
+
+    local alphapanel = vgui.Create("DPanel", self)
+    alphapanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(25.05))
+    alphapanel:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(10.5))
+    alphapanel:NoClipping(true)
+    alphapanel.LastX = ARC9ScreenScale(79)
+    self.alphapanel = alphapanel -- for later integration
+
+    alphapanel.OnCursorMoved =  function(self2, x, y)
+        if !input.IsMouseDown(MOUSE_LEFT) then return end
     
+        x = math.Clamp(x, 0, self2:GetWide())
+        self2.LastX = x
+        self.Alpha = (x / self2:GetWide()) * 255
+    end
+
+    alphapanel.OnMousePressed =  function(self2, mcode)
+        self2:MouseCapture(true)
+        self2:OnCursorMoved(self2:CursorPos())
+        self2:SetCursor("blank")
+    end
+    alphapanel.OnMouseReleased =  function(self2, mcode)
+        self2:MouseCapture(false)
+        self2:OnCursorMoved(self2:CursorPos())
+        self2:SetCursor("none")
+    end
+    
+    alphapanel.Paint =  function(self2, w, h)
+        surface.SetDrawColor(self.ResultColor, 255)
+        surface.SetMaterial(self.MatCubeR)
+        surface.DrawTexturedRect(0, 0, w, h)
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.DrawRect(self2.LastX-ARC9ScreenScale(0.5), -ARC9ScreenScale(1), ARC9ScreenScale(1), h + ARC9ScreenScale(2))
+    end
+
 end
 
 vgui.Register("ARC9ColorPanel", ARC9ColorPanel, "DFrame")
@@ -620,7 +708,44 @@ function ARC9ColorButton:Init()
 end
 
 function ARC9ColorButton:DoClick()
-    local newel = vgui.Create("ARC9ColorPanel")
+    local bg = vgui.Create("DFrame")
+    bg:SetPos(0, 0)
+    bg:SetSize(ScrW(), ScrH())
+    bg:SetTitle("")
+    bg:SetDraggable(false)
+    -- bg:ShowCloseButton(false)        -- set to false when done please!!
+    bg:SetBackgroundBlur(true)
+    bg:MakePopup()
+
+    bg.ParentButton = self
+
+    local newel = vgui.Create("ARC9ColorPanel", bg)
+    if self.AlphaEnabled then newel:EnableAlpha() end
+    newel:SetPos(self:LocalToScreen(self:GetX() - ARC9ScreenScale(80), self:GetY() - ARC9ScreenScale(48)))
+    newel:UpdateColor(self.rgbcolor)
+    
+    bg.Paint = function(self2, w, h)
+        surface.SetDrawColor(0, 0, 0, 0) 
+        surface.DrawRect(0, 0, w, h)
+        if !IsValid(self2.ParentButton) then
+            bg:Remove()
+            newel:Remove()
+        end
+    end
+
+    bg.OnMousePressed = function(self2, keycode)
+        if newel.Alpha then newel.ResultColor.a = newel.Alpha end
+
+        self.rgbcolor = newel.ResultColor
+        -- self:ApplyConvar or something idk () 
+        newel:Remove()
+        bg:Remove()
+    end
+
+end
+
+function ARC9ColorButton:EnableAlpha()
+    self.AlphaEnabled = true
 end
 
 function ARC9ColorButton:Paint(w, h)
@@ -639,7 +764,7 @@ function ARC9ColorButton:Paint(w, h)
     
     surface.SetDrawColor(color)
     surface.SetMaterial(self.MatIcon)
-    surface.DrawTexturedRect(w/2-h*0.35, h/2-h*0.35, h*0.7, h*0.7)
+    surface.DrawTexturedRect(w/2 - h*0.35, h/2 - h*0.35, h*0.7, h*0.7)
 
     if self:IsHovered() then
         surface.SetDrawColor(color2)

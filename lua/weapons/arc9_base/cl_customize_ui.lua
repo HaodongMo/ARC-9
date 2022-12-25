@@ -4,39 +4,6 @@ local DevMode = false
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
-function SWEP:MultiLineText(text, maxw, font)
-    local content = {}
-    local tline = ""
-    local x = 0
-    surface.SetFont(font)
-
-    local newlined = string.Split(text, "\n")
-
-    for _, line in ipairs(newlined) do
-        local words = string.Split(line, " ")
-
-        for _, word in ipairs(words) do
-            local tx = surface.GetTextSize(word)
-
-            if x + tx >= maxw then
-                table.insert(content, tline)
-                tline = ""
-                x = surface.GetTextSize(word)
-            end
-
-            tline = tline .. word .. " "
-
-            x = x + surface.GetTextSize(word .. " ")
-        end
-
-        table.insert(content, tline)
-        tline = ""
-        x = 0
-    end
-
-    return content
-end
-
 -- span: panel that hosts the rotating text
 -- txt: the text to draw
 -- x: where to start the crop
@@ -1346,7 +1313,7 @@ function SWEP:CreateHUD_RHP()
     local oldlightdoclick = topleft_light.DoClick
     topleft_light.DoClick = function(self2)
         oldlightdoclick(self2)
-        surface.PlaySound(self2:GetChecked() and lightoffsound or lightonsound)
+        surface.PlaySound(self2:GetChecked() and lightonsound or lightoffsound)
     end
 
     topleft_settings.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end

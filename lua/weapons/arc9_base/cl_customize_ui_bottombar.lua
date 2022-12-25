@@ -547,7 +547,7 @@ function SWEP:CreateHUD_AttInfo()
     local multiline = {}
     local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "Description") or atttbl.Description
 
-    multiline = self:MultiLineText(desc, descscroller:GetWide() - (ARC9ScreenScale(3.5)), "ARC9_9_Slim")
+    multiline = ARC9MultiLineText(desc, descscroller:GetWide() - (ARC9ScreenScale(3.5)), "ARC9_9_Slim")
 
     for i, text in ipairs(multiline) do
         local desc_line = vgui.Create("DPanel", descscroller)

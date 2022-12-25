@@ -1649,6 +1649,41 @@ function GetControllerKeyLineSize( info, ... )
     return strlength
 end
 
+
+
+
+function ARC9MultiLineText(text, maxw, font)
+    local content = {}
+    local tline = ""
+    local x = 0
+    surface.SetFont(font)
+
+    local newlined = string.Split(text, "\n")
+
+    for _, line in ipairs(newlined) do
+        local words = string.Split(line, " ")
+
+        for _, word in ipairs(words) do
+            local tx = surface.GetTextSize(word)
+
+            if x + tx >= maxw then
+                table.insert(content, tline)
+                tline = ""
+                x = surface.GetTextSize(word)
+            end
+
+            tline = tline .. word .. " "
+
+            x = x + surface.GetTextSize(word .. " ")
+        end
+
+        table.insert(content, tline)
+        tline = ""
+        x = 0
+    end
+
+    return content
+end
 --[[
 
 ps4
