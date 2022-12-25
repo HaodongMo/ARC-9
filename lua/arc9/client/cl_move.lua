@@ -74,10 +74,12 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                 local right = ply:EyeAngles():Right()
                 local forward = ply:EyeAngles():Forward()
 
-                local covertrace = util.TraceLine({
+                local covertrace = util.TraceHull({
                     start = eyepos,
                     endpos = eyepos + forward * 32,
                     filter = ply,
+                    mins = Vector(-1, -1, -1) * 4,
+                    maxs = Vector(1, 1, 1) * 4
                 })
 
                 if covertrace.Hit then
