@@ -43,6 +43,7 @@ function SWEP:Deploy()
     self:SetLoadedRounds(self:Clip1())
     self:SetGrenadeRecovering(false)
     self:SetUBGL(false)
+    self:SetLeanAmount(0)
 
     self:SetGrenadePrimed(false)
 

@@ -684,6 +684,10 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- lockon
 -- lockedon
 
+-------------------------- LEAN
+
+SWEP.CanLean = true
+
 -------------------------- BLIND FIRE
 -- This feature has been removed pending rework, and these functions do not work.
 
