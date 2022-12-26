@@ -153,6 +153,8 @@ end
 function SWEP:OnDrop()
     self:EndLoop()
     self:KillShield()
+    self:InvalidateCache()
+    self:SetReady(false)
 end
 
 function SWEP:OnRemove()

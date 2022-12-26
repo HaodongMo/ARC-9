@@ -1,4 +1,6 @@
 function SWEP:TranslateAnimation(seq)
+    if self:GetOwner():IsNPC() then return seq end
+
     local sds = self:GetProcessedValue("SuppressDefaultSuffixes")
 
     if !sds then
@@ -98,6 +100,8 @@ function SWEP:GetAnimationTime(anim)
 end
 
 function SWEP:GetSequenceTime(seq)
+    if self:GetOwner():IsNPC() then return seq end
+
     local vm = self:GetVM()
     seq = vm:LookupSequence(seq or "")
 
@@ -105,6 +109,13 @@ function SWEP:GetSequenceTime(seq)
 end
 
 function SWEP:GetAnimationEntry(seq)
+    if self:GetOwner():IsNPC() then
+        return {
+            Source = seq,
+            Time = 1
+        }
+    end
+
     if self:HasAnimation(seq) then
         if self.IKAnimationProxy[seq] then
             return self.IKAnimationProxy[seq]
