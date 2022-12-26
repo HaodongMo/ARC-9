@@ -60,7 +60,8 @@ end
 
 -- Cycle the selected attachment
 function SWEP:CycleSelectedAtt(amt, cyc)
-    if self.CustomizeTab != 0 then return end
+    local activetab = self.CustomizeButtons[self.CustomizeTab + 1]
+    if !(activetab.customize or activetab.personalize) then return end 
 
     cyc = cyc or 0
     if #self.AttachmentAddresses <= 0 then return end
@@ -91,7 +92,7 @@ function SWEP:CycleSelectedAtt(amt, cyc)
 
     local slot = self:LocateSlotFromAddress(self.BottomBarAddress)
 
-    if slot.Hidden or self:GetSlotBlocked(slot) then
+    if (activetab.customize and self:SlotIsCosmetic(slot)) or (activetab.personalize and !self:SlotIsCosmetic(slot)) or slot.Hidden or self:GetSlotBlocked(slot) then
         self:CycleSelectedAtt(1, cyc + 1)
     end
 end
@@ -777,7 +778,7 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
-        if self.CustomizeTab == 0 or self.CustomizeTab == 1 then
+        if self.CustomizeButtons[self.CustomizeTab + 1].customize or self.CustomizeButtons[self.CustomizeTab + 1].personalize then
 
             cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()))
 
@@ -1141,7 +1142,7 @@ function SWEP:CreateCustomizeHUD()
                 return
             end
 
-            if !self.CustomizeButtons[self.CustomizeTab + 1].customize then return end
+            if !(self.CustomizeButtons[self.CustomizeTab + 1].customize or self.CustomizeButtons[self.CustomizeTab + 1].personalize) then return end
 
             surface.SetFont("ARC9_10")
             surface.SetDrawColor(ARC9.GetHUDColor("fg"))
