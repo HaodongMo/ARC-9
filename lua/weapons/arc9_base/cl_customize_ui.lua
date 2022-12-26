@@ -1069,80 +1069,79 @@ function SWEP:CreateCustomizeHUD()
         }
     end
 
-    if GetConVar("arc9_cust_hints"):GetBool() then
-        local hintspanel = vgui.Create("DPanel", bg)
-        -- hintspanel:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
-        -- hintspanel:SetPos(-ARC9ScreenScale(170), -ARC9ScreenScale(40)) -- w = scrw-ARC9Scr
-        -- hintspanel:MoveTo(0, ARC9ScreenScale(4), 0.4, 0, 0.1, nil)
+    local hintspanel = vgui.Create("DPanel", bg)
+    -- hintspanel:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
+    -- hintspanel:SetPos(-ARC9ScreenScale(170), -ARC9ScreenScale(40)) -- w = scrw-ARC9Scr
+    -- hintspanel:MoveTo(0, ARC9ScreenScale(4), 0.4, 0, 0.1, nil)
 
-        self.CustomizeHUD.hintspanel = hintspanel
-        hintspanel:SetPos(ARC9ScreenScale(19), ScrH())
-        hintspanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(16.5), 0.6, 0, 0.1, nil)
-        hintspanel:SetSize(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(18))
-        hintspanel:MoveToBack()
+    self.CustomizeHUD.hintspanel = hintspanel
+    hintspanel:SetPos(ARC9ScreenScale(19), ScrH())
+    hintspanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(16.5), 0.6, 0, 0.1, nil)
+    hintspanel:SetSize(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(18))
+    hintspanel:MoveToBack()
 
-        hintspanel.Paint = function(self2, w, h)
-            if !IsValid(self) then
-                self2:Remove()
-                gui.EnableScreenClicker(false)
-                return
-            end
-
-            if !(self.CustomizeButtons[self.CustomizeTab + 1].customize or self.CustomizeButtons[self.CustomizeTab + 1].personalize) then return end
-
-            surface.SetFont("ARC9_10")
-            surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
-
-            local ToAdd = {}
-            local ToAdd2 = {}
-            local ToAdd3 = {}
-            for _, v in ipairs(trolling) do
-                local act, hid = v.action, v.hidden
-                if self.CustomizeHints[v.action] == "" then continue end
-                if self.CustomizeHints[v.action] then hid = false end
-                if hid then continue end
-                if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
-                if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-                if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material("arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth") end
-                if v.glyph2 then
-                    if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
-                    if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-                    if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material("arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth") end
-                end
-
-                if v.row3 then
-                    table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(12) })
-                    if v.glyph2 then
-                        table.insert(ToAdd3, " ")
-                        table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(12) })
-                    end
-                    table.insert(ToAdd3, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
-                elseif v.row2 then
-                    -- table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(12) })
-                    -- if v.glyph2 then
-                    --     table.insert(ToAdd2, " ")
-                    --     table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(12) })
-                    -- end
-                    -- table.insert(ToAdd2, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
-                else
-                    table.insert(ToAdd, { v.glyph, ARC9ScreenScale(12) })
-                    if v.glyph2 then
-                        table.insert(ToAdd, " ")
-                        table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(12) })
-                    end
-                    table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
-                end
-            end
-
-
-            CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
-
-            local strreturn = CreateControllerKeyLine({x = self2:GetWide(), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3)) -- ghost     text only to get width
-            CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(8)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
-
-            table.Empty(self.CustomizeHints)
+    hintspanel.Paint = function(self2, w, h)
+        if !GetConVar("arc9_cust_hints"):GetBool() then return end
+        if !IsValid(self) then
+            self2:Remove()
+            gui.EnableScreenClicker(false)
+            return
         end
+
+        if !(self.CustomizeButtons[self.CustomizeTab + 1].customize or self.CustomizeButtons[self.CustomizeTab + 1].personalize) then return end
+
+        surface.SetFont("ARC9_10")
+        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+
+        local ToAdd = {}
+        local ToAdd2 = {}
+        local ToAdd3 = {}
+        for _, v in ipairs(trolling) do
+            local act, hid = v.action, v.hidden
+            if self.CustomizeHints[v.action] == "" then continue end
+            if self.CustomizeHints[v.action] then hid = false end
+            if hid then continue end
+            if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
+            if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material("arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth") end
+            if v.glyph2 then
+                if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
+                if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material("arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth") end
+            end
+
+            if v.row3 then
+                table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(12) })
+                if v.glyph2 then
+                    table.insert(ToAdd3, " ")
+                    table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(12) })
+                end
+                table.insert(ToAdd3, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+            elseif v.row2 then
+                -- table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(12) })
+                -- if v.glyph2 then
+                --     table.insert(ToAdd2, " ")
+                --     table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(12) })
+                -- end
+                -- table.insert(ToAdd2, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+            else
+                table.insert(ToAdd, { v.glyph, ARC9ScreenScale(12) })
+                if v.glyph2 then
+                    table.insert(ToAdd, " ")
+                    table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(12) })
+                end
+                table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+            end
+        end
+
+
+        CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
+
+        local strreturn = CreateControllerKeyLine({x = self2:GetWide(), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3)) -- ghost     text only to get width
+        CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(8)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
+
+        table.Empty(self.CustomizeHints)
     end
     -- self:CreateHUD_Bottom()
 end

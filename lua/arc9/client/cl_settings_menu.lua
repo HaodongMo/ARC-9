@@ -484,6 +484,7 @@ function ARC9_OpenSettings(page)
     panel:Center()
     panel:SetTitle("")
     panel:DockPadding(0, ARC9ScreenScale(25.7), 0, 0)
+    panel:ShowCloseButton(false)
     DrawSettings(panel, page)
 
     panel.OnRemove = function() bg:Remove() end
