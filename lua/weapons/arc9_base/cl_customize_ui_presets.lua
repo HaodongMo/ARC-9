@@ -139,6 +139,8 @@ function SWEP:CreatePresetMenu(reload)
     local function createpresetbtn(preset, undeletable)
         local filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. preset .. "." .. ARC9.PresetIconFormat
 
+        if !file.Exists(filename, "DATA") then return end
+
         local presetbtn = vgui.Create("DButton", presetscroller)
         presetbtn:SetTall(ARC9ScreenScale(36))
         presetbtn:Dock(TOP)
