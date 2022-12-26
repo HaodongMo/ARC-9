@@ -6,7 +6,5 @@ hook.Add("EntityTakeDamage", "ARC9_ShieldTakeDamage", function(ent, dmg)
     if !IsValid(ent.ARC9Weapon:GetOwner()) then return end
     if !ent.ARC9Weapon:GetOwner():IsPlayer() then return end
 
-    print(ent.ARC9Weapon)
-
     ent.ARC9Weapon:PlayAnimation("blowback")
 end)
