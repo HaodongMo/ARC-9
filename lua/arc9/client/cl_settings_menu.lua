@@ -169,13 +169,13 @@ local settingstable = {
         TabName = "Attachments",
         { type = "label", text = "Customization"},
         { type = "bool", text = "Disable Customization", convar = "atts_nocustomize", desc = "Disallow all customization via the customization menu."},
-        { type = "slider", text = "Max Attachments", convar = "atts_max", min = 0, max = 1000, decimals = 0, desc = "The maximum number of attachments that can be put on a weapon, including cosmetic attachments."},
+        { type = "slider", text = "Max Attachments", convar = "atts_max", min = 0, max = 1000, decimals = 0, desc = "The maximum number of attachments that can be put on a weapon, including cosmetic attachments.\n\nThis is a server variable."},
         { type = "bool", text = "Autosave", convar = "autosave", desc = "Your last weapon customization options will be saved and automatically applied the next time you spawn that weapon."},
-        { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on."},
+        { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
         { type = "label", text = "Inventory"},
-        { type = "bool", text = "One For All", convar = "atts_lock", desc = "Picking up one instance of an attachments allows you to use it infinite times on all your guns."},
-        { type = "bool", text = "Lose On Death", convar = "atts_loseondie", desc = "Your attachment inventory will be lost when you die."},
-        { type = "bool", text = "Generate Entities", convar = "atts_generateentities", desc = "Generate entities that can be spawned, allowing you to pick up attachments when free attachments is off."},
+        { type = "bool", text = "One For All", convar = "atts_lock", desc = "Picking up one instance of an attachments allows you to use it infinite times on all your guns.\n\nThis is a server variable."},
+        { type = "bool", text = "Lose On Death", convar = "atts_loseondie", desc = "Your attachment inventory will be lost when you die.\n\nThis is a server variable."},
+        { type = "bool", text = "Generate Entities", convar = "atts_generateentities", desc = "Generate entities that can be spawned, allowing you to pick up attachments when free attachments is off.\n\nThis is a server variable."},
     },
     {
         TabName = "Controller",
@@ -186,7 +186,7 @@ local settingstable = {
     {
         TabName = "Developer",
         { type = "label", text = "Developer Options"},
-        { type = "bool", text = "Always Ready", convar = "dev_always_ready", desc = "Always play \"ready\" animation when deploying a weapon."},
+        { type = "bool", text = "Always Ready", convar = "dev_always_ready", desc = "Always play \"ready\" animation when deploying a weapon.\n\nThis is a server variable."},
         { type = "bool", text = "Benchgun", convar = "dev_benchgun", desc = "Set weapon to world origin.\nOnly really useful on gm_construct."},
         { type = "bool", text = "Show Shield", convar = "dev_show_shield", desc = "Show the model for the player's shield."},
         { type = "button", text = "List Anims", content = "Print to Console", func = function(self2)
