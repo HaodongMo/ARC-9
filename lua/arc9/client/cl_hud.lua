@@ -222,6 +222,21 @@ function ARC9.GetHUDColor(part, alpha)
 
     alpha = alpha or 255
     local col = event_holiday[part] or ARC9.Colors[part] or ARC9.Colors.hi
+
+    if part == "hi" then
+        col = Color(
+            GetConVar("arc9_hud_color_r"):GetInt(),
+            GetConVar("arc9_hud_color_g"):GetInt(),
+            GetConVar("arc9_hud_color_b"):GetInt()
+        )
+    elseif part == "hi_3d" then
+        col = Color(
+            GetConVar("arc9_hud_color_r"):GetInt(),
+            GetConVar("arc9_hud_color_g"):GetInt(),
+            GetConVar("arc9_hud_color_b"):GetInt()
+        )
+    end
+
     if alpha < 255 then
         col = Color(col.r, col.g, col.b)
         col.a = alpha or 255

@@ -51,31 +51,6 @@ local conVars = {
         client = true
     },
     {
-        name = "cross_out_r",
-        default = "255",
-        client = true
-    },
-    {
-        name = "cross_out_g",
-        default = "255",
-        client = true
-    },
-    {
-        name = "cross_out_b",
-        default = "255",
-        client = true
-    },
-    {
-        name = "cross_out_a",
-        default = "150",
-        client = true
-    },
-    {
-        name = "cross_out_thickness",
-        default = "1",
-        client = true
-    },
-    {
         name = "reflex_r",
         default = "255",
         client = true
@@ -102,6 +77,21 @@ local conVars = {
     },
     {
         name = "scope_b",
+        default = "0",
+        client = true
+    },
+    {
+        name = "hud_color_r",
+        default = "255",
+        client = true
+    },
+    {
+        name = "hud_color_g",
+        default = "123",
+        client = true
+    },
+    {
+        name = "hud_color_b",
         default = "0",
         client = true
     },
@@ -392,21 +382,6 @@ local conVars = {
         default = "0",
         client = true,
         userinfo = true
-    },
-    {
-        name = "holiday_grinch",
-        default = "0",
-        client = true,
-    },
-    {
-        name = "holiday_month",
-        default = "0",
-        client = true,
-    },
-    {
-        name = "holiday_day",
-        default = "0",
-        client = true,
     },
     {
         name = "crosshair_force",

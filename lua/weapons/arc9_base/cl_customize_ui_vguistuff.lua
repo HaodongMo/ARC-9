@@ -35,7 +35,7 @@ function ARC9TopButton:Paint(w, h)
 	local matr = self.MatIdleR
 
 	if self:IsHovered() then
-		color = self.ColorClicked
+		color = ARC9.GetHUDColor("hi")
 		mat = self.MatHovered
 		matl = self.MatHoveredL
 		matm = self.MatHoveredM
@@ -43,7 +43,7 @@ function ARC9TopButton:Paint(w, h)
 	end
     
 	if self:IsDown() or (self.Checkbox and self:GetChecked()) then
-		iconcolor = self.ColorClicked
+		iconcolor = ARC9.GetHUDColor("hi")
 	end
 
     surface.SetDrawColor(color)
@@ -93,7 +93,6 @@ vgui.Register("ARC9TopButton", ARC9TopButton, "DCheckBox") -- DButton
 local ARC9AttButton = {}
 
 ARC9AttButton.Color = ARC9.GetHUDColor("fg")
-ARC9AttButton.ColorClicked = ARC9.GetHUDColor("hi")
 ARC9AttButton.ColorBlock = ARC9.GetHUDColor("con")
 ARC9AttButton.Icon = Material("arc9/ui/settings.png", "mips")
 
@@ -108,7 +107,7 @@ ARC9AttButton.MatMarkerModes = Material("arc9/ui/mark_modes.png", "mips smooth")
 ARC9AttButton.MatMarkerSlots = Material("arc9/ui/mark_slots.png", "mips smooth")
 
 function ARC9AttButton:Init()
-	self:SetText("")
+    self:SetText("")
     self:SetSize(ARC9ScreenScale(42.7), ARC9ScreenScale(42.7+14.6))
 end
 
@@ -119,12 +118,13 @@ function ARC9AttButton:Paint(w, h)
     local markercolor = self.Color
     local icon = self.Icon or ARC9TopButton.MatIdle
     local text = self.ButtonText
+    local colorclicked =  ARC9.GetHUDColor("hi")
 
     local mat = self.MatIdle
     local matmarker = nil
 
     if self:IsHovered() or self.OverrideHovered then
-        textcolor = self.ColorClicked
+        textcolor = colorclicked
     end
 
     if self.HasModes then
@@ -143,9 +143,9 @@ function ARC9AttButton:Paint(w, h)
         markercolor = self.ColorBlock
     elseif self:IsDown() or self.Installed then
         -- mat = self.MatHover
-        color = self.ColorClicked
+        color = colorclicked
         matmarker = self.MatMarkerInstalled
-        markercolor = self.ColorClicked
+        markercolor = colorclicked
     end
 
     surface.SetDrawColor(color)
@@ -308,7 +308,7 @@ end
 
 function ARC9Checkbox:Paint(w, h)
 	local color = self.Color
-	local color2 = self.ColorClicked
+	local color2 = ARC9.GetHUDColor("hi")
 
     surface.SetDrawColor(color)
     surface.SetMaterial(self.MatIdle)
@@ -337,7 +337,7 @@ ARC9NumSlider.ColorNo = ARC9.GetHUDColor("bg")
 
 function ARC9NumSlider:Init()
     local color = self.Color
-    local color2 = self.ColorClicked
+    local color2 = ARC9.GetHUDColor("hi")
     local color3 = self.ColorNo
     
     self.Slider.Knob:SetSize(ARC9ScreenScale(1.7), ARC9ScreenScale(7))
@@ -428,7 +428,7 @@ function ARC9ComboBox:OnMenuOpened(menu)
             local mat3 = self.MatLast
             local mat4 = self.MatLastSel
             local color = self.Color
-            local color2 = self.ColorClicked
+            local color2 = ARC9.GetHUDColor("hi")
                     
             if self2:IsDown() then
                 color = color2
@@ -456,7 +456,7 @@ end
 
 function ARC9ComboBox:Paint(w, h)
 	local color = self.Color
-	local color2 = self.ColorClicked
+	local color2 = ARC9.GetHUDColor("hi")
 	local mat = self.MatIdle
 	local mat2 = self.MatSel
 	local mat3 = self.MatOpened
@@ -496,7 +496,7 @@ end
 
 function ARC9Button:Paint(w, h)
 	local color = self.Color
-	local color2 = self.ColorClicked
+	local color2 = ARC9.GetHUDColor("hi")
 
     if self:IsDown() then
         color = color2
@@ -769,7 +769,7 @@ end
 
 function ARC9ColorButton:Paint(w, h)
 	local color = self.Color
-	local color2 = self.ColorClicked
+	local color2 = ARC9.GetHUDColor("hi")
 	local color3 = self.rgbcolor or self.Color
 
 

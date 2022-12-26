@@ -253,9 +253,10 @@ local function DarsuBob(self, pos, ang)
 end
 
 function SWEP:GetViewModelBob(pos, ang)
-    if GetConVar("arc9_vm_bobstyle"):GetBool() then
+    if GetConVar("arc9_vm_bobstyle"):GetInt() == 1 then
         return FesiugBob(self, pos, ang)
-        -- return ArcticBob(self, pos, ang) -- arctic got cancelled
+    elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 2 then
+        return ArcticBob(self, pos, ang)
     else
         return DarsuBob(self, pos, ang)
     end
