@@ -648,6 +648,17 @@ local function menu_client_ti(panel)
     })
 end
 
+local function menu_arc9_settings(panel)
+    local butt = vgui.Create( "DButton", panel )
+
+    butt:SetText("Open settings panel!")
+    butt:SetPos(20, 50)
+    butt:SetSize(300, 50)
+    function butt:DoClick()
+        ARC9_OpenSettings()
+    end
+end
+
 local function menu_client_customization(panel)
     panel:AddControl("checkbox", {
         label = "Customization Blur",
@@ -1198,6 +1209,9 @@ concommand.Add( "arc9_modifiers_invalidateall", function( ply, cmd, args )
 end )
 
 local clientmenus_ti = {
+    {
+        text = "REAL SETTINGS here", func = menu_arc9_settings
+    },
     {
         text = "Client", func = menu_client_ti
     },

@@ -102,20 +102,15 @@ surface.CreateFont( "ARC9_Deco_8_Unscaled", {
 
 generatefonts()
 
-function ARC9.Regen(full)
-    if full then
-        generatefonts()
-    end
+function ARC9.Regen()
+    generatefonts()
 end
 
 concommand.Add("arc9_font_reload", ARC9.Regen)
 
 hook.Add("OnScreenSizeChanged", "ARC9.FontRegen", function(oldWidth, oldHeight)
     print("Warning: Resolution was changed. If ARC9 fonts are too small/big now, try type  arc9_font_reload  in console ")
-    timer.Simple(15, ARC9.Regen)
-    timer.Simple(60, ARC9.Regen) -- trying !!
+    timer.Simple(5, ARC9.Regen)
 end)
 
-cvars.AddChangeCallback("arc9_font", function(cvar, old, new) -- Dont work btw https://github.com/Facepunch/garrysmod-issues/issues/3740
-    generatefonts()
-end, "reload_fonts")
+-- cvars.AddChangeCallback("arc9_font", ARC9.Regen, "reload_fonts")

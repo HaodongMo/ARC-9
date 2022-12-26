@@ -4,15 +4,18 @@
         bool
         button: 
             content - text in button
-            func - function() end
+            func - function(self2) end
         slider:
             min
             max
+            decimals
+            convar2 - same as convar, but only for input, not follow always
+            func - function(self2) end   after action
         color
         coloralpha - with transparency slider
         input - text input, NOT IMPLEMENTED
         combo - dropdown menu:
-            content - {"table of thingies", "there"}
+            content - {"1table of thingies", "2there", "3for some reason you need put number at start so it will be properly sorted", "4though it will be not drawn in ui"}
     title,
     convar to follow, (without arc9_; color selectors will automatically use _r/_g/_b)
     description to show on right
@@ -25,14 +28,36 @@ local settingstable = {
         { type = "bool", text = "Booling", convar = "cust_blur", desc = "TEST DESCRIPTION" },
         { type = "slider", text = "Booling 2", min = -2, max = 2, desc = "f DESCRIPTION" },
         { type = "slider", text = "Slide me", min = -45, max = 45, convar = "fov", desc = "balls" },
-        { type = "combo", text = "Yayay", content = {"table of thingies", "there"}, desc = "hhhhhhhhhhhhhhhhh" },
-        { type = "button", text = "Uhhh", content = "Boop", func = function() print("wa") end, desc = "TEST DESCRIPTION" },
-        { type = "color", text = "Coloringa", desc = "This color is very important. \n\nClient-only.\nConvar: arc9_sdfjidojgoidfjgoidfg_r/g/b/a" },
-        { type = "coloralpha", text = "Color alpha", desc = "g" },
+        { type = "combo", text = "Yayay", convar = "arccw_attinv_loseondie", content = {"1table of thingies", "2there", "3ooo"}, desc = "hhhhhhhhhhhhhhhhh" },
+        { type = "button", text = "Uhhh", content = "Boop", func = function(self2) print("wa") end, desc = "TEST DESCRIPTION" },
+        { type = "color", text = "Coloringa", convar = "reflex", desc = "This color is very important. \n\nClient-only.\nConvar: arc9_sdfjidojgoidfjgoidfg_r/g/b/a" },
+        -- { type = "coloralpha", text = "Color alpha", desc = "g" },
+        -- { type = "input", text = "Color alpha", desc = "g" },
     },
     {
         TabName = "Tab name 2",
         { type = "bool", text = "bool 2" },
+        -- crazy hacks to make hud scale work "almost dynamicly"
+        { type = "slider", text = "HUD SCAle", min = 0.5, max = 1.5, decimals = 2, desc = "Awesome", convar2 = "hud_scale", func = function(self2, self3, settingspanel) 
+            if IsValid(LocalPlayer()) then -- uncust the gun
+                local wep = LocalPlayer():GetActiveWeapon()
+                if IsValid(wep) and wep.ARC9 then
+                    if wep.CustomizeHUD then
+                        wep:SetCustomize(false)
+                        net.Start("ARC9_togglecustomize")
+                        net.WriteBool(false)
+                        net.SendToServer()
+                    end
+                end
+            end
+            RunConsoleCommand("arc9_hud_scale", self3:GetValue())
+
+            settingspanel:Remove() -- rebuilding
+            timer.Simple(0, function()
+                ARC9.Regen() -- reload fonts with new scale
+                ARC9_OpenSettings(2) -- open settings on current page (set number to tab number)
+            end)
+        end },
         -- { type = "slider", text = "Slide me" },
     },
     
@@ -41,7 +66,7 @@ local settingstable = {
 local ARC9ScreenScale = ARC9.ScreenScale
 local mat_icon = Material("arc9/arc9_logo_ui.png", "mips smooth")
 
-local function DrawSettings(bg)
+local function DrawSettings(bg, page)
     local cornercut = ARC9ScreenScale(3.5)
     
     local buttontalling = 0
@@ -53,7 +78,7 @@ local function DrawSettings(bg)
     sheet.Navigation:DockMargin(-120, 0, 0, ARC9ScreenScale(5)) -- idk why -120
     sheet.Navigation:SetWidth(ARC9ScreenScale(77))
 
-    for _, v in pairs(settingstable) do
+    for k, v in pairs(settingstable) do
         local newpanel = vgui.Create("DPanel", sheet)
         newpanel:Dock(FILL)
         newpanel.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, ARC9.GetHUDColor("bg")) end 
@@ -109,52 +134,90 @@ local function DrawSettings(bg)
             local elpw, elph = ARC9ScreenScale(168), ARC9ScreenScale(21)
 
             if v2.type == "label" then
-                
+                -- woopsie
             elseif v2.type == "bool" then
                 local newel = vgui.Create("ARC9Checkbox", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(4+13), ARC9ScreenScale(4))
-                newel:SetConVar("arc9_" .. (v2.convar or "ya_dumbass"))
+                if v2.convar then newel:SetConVar("arc9_" .. v2.convar) end
+                
             elseif v2.type == "slider" then
                 local newel = vgui.Create("ARC9NumSlider", elpanel)
                 newel:SetPos(0, ARC9ScreenScale(6))
                 newel:SetSize(elpw, 30)
-                newel:SetDecimals(0)
+                newel:SetDecimals(v2.decimals or 0)
                 newel:SetMin(v2.min or 0)
                 newel:SetMax(v2.max or 255)
-                -- newel:SetValue(128)
-                newel:SetConVar("arc9_" .. (v2.convar or "ya_dumbass"))
+                if v2.convar then newel:SetConVar("arc9_" .. v2.convar) end
+                if v2.convar2 then newel:SetValue(GetConVar("arc9_" .. v2.convar2):GetFloat()) end
+
+                local oldmousereleased = newel.Slider.OnMouseReleased
+                newel.Slider.OnMouseReleased = function(self2, kc)
+                    oldmousereleased(self2, kc)
+                    if v2.func then v2.func(self2, newel, bg) end
+                end
             elseif v2.type == "color" then
                 local newel = vgui.Create("ARC9ColorButton", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
-                newel.rgbcolor = Color(255, 0, 0)
-                -- newel:CustomSetConvar("arc9_" .. (v2.convar or "ya_dumbass"))                
-                -- newel.rgbcolor = Color(GetConVar("arc9_" .. (v2.convar or "ya_dumbass") .. "_r"):GetInt(), GetConVar("arc9_" .. (v2.convar or "ya_dumbass") .. "_g"):GetInt(), GetConVar("arc9_" .. (v2.convar or "ya_dumbass") .. "_b"):GetInt())
+
+                local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
+                newel:CustomSetConvar(cvar)
+
+                if GetConVar(cvar .. "_r") then 
+                    newel.rgbcolor = Color(GetConVar(cvar .. "_r"):GetInt() or 255, GetConVar(cvar .. "_g"):GetInt() or 0, GetConVar(cvar .. "_b"):GetInt() or 0) 
+                else 
+                    newel.rgbcolor = Color(255, 0, 0)
+                    print("you are dumb, missing color convar")
+                end
+
             elseif v2.type == "coloralpha" then
                 local newel = vgui.Create("ARC9ColorButton", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
                 newel:EnableAlpha()
-                newel.rgbcolor = Color(255, 0, 0)
-                -- newel:CustomSetConvar("arc9_" .. (v2.convar or "ya_dumbass"))
-                -- newel.rgbcolor = Color(GetConVar("arc9_" .. (v2.convar or "ya_dumbass") .. "_r"):GetInt(), GetConVar("arc9_" .. (v2.convar or "ya_dumbass") .. "_g"):GetInt(), GetConVar("arc9_" .. (v2.convar or "ya_dumbass") .. "_b"):GetInt(), GetConVar("arc9_" .. (v2.convar or "ya_dumbass") .. "_a"):GetInt())
+
+                local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
+                newel:CustomSetConvar(cvar)
+
+                if GetConVar(cvar .. "_a") then 
+                    newel.rgbcolor = Color(GetConVar(cvar .. "_r"):GetInt() or 255, GetConVar(cvar .. "_g"):GetInt() or 0, GetConVar(cvar .. "_b"):GetInt() or 0, GetConVar(cvar .. "_a"):GetInt() or 255) 
+                else 
+                    newel.rgbcolor = Color(255, 0, 0)
+                    print("you are dumb, missing color convar (or its _alpha)")
+                end
+
             elseif v2.type == "input" then
-                local newtext = vgui.Create("DTextEntry", newpanelscroll)
-                newtext:SetPos(20, 10+k2*20)
-                newtext:SetText(v2.text)
+                local newel = vgui.Create("DTextEntry", elpanel)
+                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:SetText(v2.text)
             elseif v2.type == "combo" then
                 local newel = vgui.Create("ARC9ComboBox", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
-                newel:SetConVar("arc9_" .. (v2.convar or "ya_dumbass"))
                 for _, choice in pairs(v2.content) do
                     newel:AddChoice(choice)
                 end
+
+                local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
+                if GetConVar(cvar) then
+                    newel:CustomSetConvar(cvar)
+                    newel:ChooseOptionID(GetConVar(cvar):GetInt())
+                else
+                    print("invalid combobox convar")
+                end
+
             elseif v2.type == "button" then
                 local newel = vgui.Create("ARC9Button", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
-                newel.text = v2.text
+                newel.text = v2.content
+
+                local oldmousepressed = newel.OnMousePressed
+                newel.OnMousePressed = function(self2, kc)
+                    oldmousepressed(self2, kc)
+                    if kc == MOUSE_LEFT and v2.func then v2.func(self2) end
+                end
             end
         end
 
         local thatsheet = sheet:AddSheet(v.TabName, newpanel)
+        thatsheet.PageID = k
 
         thatsheet.Button:DockMargin(0, 0, ARC9ScreenScale(1.5), ARC9ScreenScale(1.7))
         thatsheet.Button:SetTall(ARC9ScreenScale(19))
@@ -223,13 +286,21 @@ local function DrawSettings(bg)
         surface.SetTextPos(ARC9ScreenScale(30), ARC9ScreenScale(4))
         surface.DrawText("ARC9 Settings")
     end
+
+    if page then 
+        for k, v in pairs(sheet.Items) do
+            if v.PageID == page then
+                v.Button:DoClick()
+            end
+        end
+    end
 end
 
 local hoversound = "arc9/newui/uimouse_hover.ogg"
 local clicksound = "arc9/newui/uimouse_click_return.ogg"
 
 
-local function OpenSettings()
+function ARC9_OpenSettings(page)
     local bg = vgui.Create("DFrame")
     bg:SetPos(0, 0)
     bg:SetSize(ScrW(), ScrH())
@@ -256,7 +327,7 @@ local function OpenSettings()
     panel:Center()
     panel:SetTitle("")
     panel:DockPadding(0, ARC9ScreenScale(25.7), 0, 0)
-    DrawSettings(panel)
+    DrawSettings(panel, page)
 
     panel.OnRemove = function() bg:Remove() end
 
@@ -298,8 +369,3 @@ local function OpenSettings()
         panel:Remove()
     end)
 end
-
-function ARC9_OpenSettings()
-    OpenSettings()
-end
- 

@@ -114,7 +114,7 @@ if CLIENT then
 
     net.Receive("arc9_reloadlangs", function(len, ply)
         ARC9:LoadLanguage()
-        ARC9.Regen(true)
+        ARC9.Regen()
     end)
 
 elseif SERVER then
