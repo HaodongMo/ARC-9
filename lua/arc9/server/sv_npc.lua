@@ -17,7 +17,7 @@ local sniperammotypes = {
 function ARC9.GuessWeaponType(swep)
     if swep.ARC9WeaponCategory then return swep.ARC9WeaponCategory end
 
-    if swep.NotAWeapon then
+    if swep.NotAWeapon or swep.Throwable then
         return ARC9.WEAPON_MISC
     elseif swep.PrimaryBash then
         return ARC9.WEAPON_MELEE
