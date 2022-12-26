@@ -38,8 +38,10 @@ function ARC9.Move(ply, mv, cmd)
     if wpn:GetBipod() then
         if ply:Crouching() then
             cmd:AddKey(IN_DUCK)
+            mv:AddKey(IN_DUCK)
         else
             cmd:RemoveKey(IN_DUCK)
+            mv:RemoveKey(IN_DUCK)
         end
     end
 end
