@@ -58,12 +58,12 @@ function SWEP:CreateHUD_Credits()
             surface.SetFont("ARC9_12")
             surface.SetTextPos(w - tw_p - ScreenScale(1), ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(1), ScreenScale(1)), ScreenScale(12 + 1), w)
+            ARC9.DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(1), ScreenScale(1)), ScreenScale(12 + 1), w)
 
             surface.SetFont("ARC9_12")
             surface.SetTextPos(w - tw_p - ScreenScale(2), ScreenScale(12))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            self:DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12), w, true)
+            ARC9.DrawTextRot(self2, major, 0, 0, math.max(w - tw_p - ScreenScale(2), 0), ScreenScale(12), w, true)
         end
     end
 end

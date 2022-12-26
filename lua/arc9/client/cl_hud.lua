@@ -18,6 +18,8 @@ ARC9.ScreenScale = function(size)
     return size * (ScrW() / 640) * GetConVar("arc9_hud_scale"):GetFloat()
 end
 
+local ARC9ScreenScale = ARC9.ScreenScale
+
 ARC9.Colors = {
     bg      = Color(153, 153, 153, 97), --
     bg_pro  = Color(53, 179, 53, 97), --
@@ -1683,6 +1685,61 @@ function ARC9MultiLineText(text, maxw, font)
     end
 
     return content
+end
+
+
+-- span: panel that hosts the rotating text
+-- txt: the text to draw
+-- x: where to start the crop
+-- y: where to start the crp
+-- tx, ty: where to draw the text
+-- maxw: maximum width
+-- only: don't advance text
+function ARC9.DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
+    local tw, th = surface.GetTextSize(txt)
+
+    span.TextRot = span.TextRot or {}
+
+    if tw > maxw then
+        local realx, realy = span:LocalToScreen(x, y)
+        render.SetScissorRect(realx, realy, realx + maxw, realy + (th * 2), true)
+
+        span.TextRot[txt] = span.TextRot[txt] or 0
+
+        if !only then
+            span.StartTextRot = span.StartTextRot or CurTime()
+            span.TextRotState = span.TextRotState or 0 -- 0: start, 1: moving, 2: end
+            if span.TextRotState == 0 then
+                span.TextRot[txt] = 0
+                if span.StartTextRot < CurTime() - 2 then
+                    span.TextRotState = 1
+                end
+            elseif span.TextRotState == 1 then
+                span.TextRot[txt] = span.TextRot[txt] + (FrameTime() * ARC9ScreenScale(16))
+                if span.TextRot[txt] >= (tw - maxw) + ARC9ScreenScale(8) then
+                    span.StartTextRot = CurTime()
+                    span.TextRotState = 2
+                end
+            elseif span.TextRotState == 2 then
+                if span.StartTextRot < CurTime() - 2 then
+                    span.TextRotState = 3
+                    span.StartTextRot = CurTime()
+                end
+            elseif span.TextRotState == 3 then
+                span.TextRot[txt] = span.TextRot[txt] - (FrameTime() * ARC9ScreenScale(16))
+                if span.TextRot[txt] <= 0 then
+                    span.StartTextRot = CurTime()
+                    span.TextRotState = 0
+                end
+            end
+        end
+        surface.SetTextPos(tx - span.TextRot[txt], ty)
+        surface.DrawText(txt)
+        render.SetScissorRect(0, 0, 0, 0, false)
+    else
+        surface.SetTextPos(tx, ty)
+        surface.DrawText(txt)
+    end
 end
 --[[
 
