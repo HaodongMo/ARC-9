@@ -238,10 +238,16 @@ local function DrawSettings(bg, page)
 
         for k2, v2 in ipairs(v) do
             local elpanel = vgui.Create("DPanel", newpanelscroll)
-            elpanel:SetTall(ARC9ScreenScale(21))
+            
+            elpanel:SetTall(ARC9ScreenScale(v2.type == "label" and 14 or 21))
+            elpanel:DockMargin(0, (k2 != 1 and v2.type == "label") and ARC9ScreenScale(4) or 0, 0, 0)
             elpanel:Dock(TOP)
-            elpanel.Paint = function(self2, w, h)  
-                
+
+            elpanel.Paint = function(self2, w, h)
+                if v2.type == "label" then
+                    surface.SetDrawColor(0, 0, 0, 75)
+                    surface.DrawRect(0, 0, w, h)
+                end
                 -- desc!!!!!!!!
 
                 if self2:IsHovered() then
@@ -276,8 +282,9 @@ local function DrawSettings(bg, page)
 
 
                 surface.SetFont("ARC9_12_Slim")
+                local tw, th = surface.GetTextSize(v2.text or "Owo")
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
-                surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(4))
+                surface.SetTextPos(ARC9ScreenScale(4), h/2 - th/2)
                 surface.DrawText(v2.text or "Owo")
             end
 
@@ -514,8 +521,8 @@ function ARC9_OpenSettings(page)
         close.DoClick()
     end
 
-    timer.Simple(33, function()
-        bg:Remove()
-        panel:Remove()
-    end)
+    -- timer.Simple(33, function()
+    --     bg:Remove()
+    --     panel:Remove()
+    -- end)
 end
