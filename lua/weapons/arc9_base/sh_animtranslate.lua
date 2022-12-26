@@ -100,22 +100,14 @@ function SWEP:GetAnimationTime(anim)
 end
 
 function SWEP:GetSequenceTime(seq)
-    if self:GetOwner():IsNPC() then return seq end
-
     local vm = self:GetVM()
+    if !IsValid(vm) then return 1 end
     seq = vm:LookupSequence(seq or "")
 
     return vm:SequenceDuration(seq)
 end
 
 function SWEP:GetAnimationEntry(seq)
-    if self:GetOwner():IsNPC() then
-        return {
-            Source = seq,
-            Time = 1
-        }
-    end
-
     if self:HasAnimation(seq) then
         if self.IKAnimationProxy[seq] then
             return self.IKAnimationProxy[seq]

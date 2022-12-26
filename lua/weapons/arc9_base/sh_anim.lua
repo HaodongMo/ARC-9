@@ -3,6 +3,8 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
     lock = lock or false
     anim = self:TranslateAnimation(anim)
 
+    print(anim)
+
     mult = self:RunHook("Hook_TranslateAnimSpeed", {mult = mult, anim = anim}).Mult or mult
 
     if !self:HasAnimation(anim) then return 0, 1 end
