@@ -41,7 +41,7 @@ function SWEP:ThinkLean()
         tgt = 0
     end
 
-    amt = math.Approach(amt, tgt, FrameTime() * 10)
+    amt = math.Approach(amt, tgt, FrameTime() * 7)
     amt = math.Clamp(amt, -maxleanfrac, maxleanfrac)
 
     self:SetLeanAmount(amt)
