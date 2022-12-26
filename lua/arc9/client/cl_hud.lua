@@ -194,12 +194,6 @@ function ARC9.GetHUDColor(part, alpha)
             GetConVar("arc9_hud_color_g"):GetInt(),
             GetConVar("arc9_hud_color_b"):GetInt()
         )
-    elseif part == "hi_3d" then
-        col = Color(
-            GetConVar("arc9_hud_color_r"):GetInt(),
-            GetConVar("arc9_hud_color_g"):GetInt(),
-            GetConVar("arc9_hud_color_b"):GetInt()
-        )
     end
 
     if alpha < 255 then
