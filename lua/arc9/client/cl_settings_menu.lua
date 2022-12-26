@@ -22,45 +22,55 @@
 ]]--
 
 local settingstable = {
-    {
-        TabName = "Tab name 1",
-        { type = "label", text = "Header" },
-        { type = "bool", text = "Booling", convar = "cust_blur", desc = "TEST DESCRIPTION" },
-        { type = "slider", text = "Booling 2", min = -2, max = 2, desc = "f DESCRIPTION" },
-        { type = "slider", text = "Slide me", min = -45, max = 45, convar = "fov", desc = "balls" },
-        { type = "combo", text = "Yayay", convar = "arccw_attinv_loseondie", content = {"1table of thingies", "2there", "3ooo"}, desc = "hhhhhhhhhhhhhhhhh" },
-        { type = "button", text = "Uhhh", content = "Boop", func = function(self2) print("wa") end, desc = "TEST DESCRIPTION" },
-        { type = "color", text = "Coloringa", convar = "reflex", desc = "This color is very important. \n\nClient-only.\nConvar: arc9_sdfjidojgoidfjgoidfg_r/g/b/a" },
-        -- { type = "coloralpha", text = "Color alpha", desc = "g" },
-        -- { type = "input", text = "Color alpha", desc = "g" },
-    },
-    {
-        TabName = "Tab name 2",
-        { type = "bool", text = "bool 2" },
-        -- crazy hacks to make hud scale work "almost dynamicly"
-        { type = "slider", text = "HUD SCAle", min = 0.5, max = 1.5, decimals = 2, desc = "Awesome", convar2 = "hud_scale", func = function(self2, self3, settingspanel) 
-            if IsValid(LocalPlayer()) then -- uncust the gun
-                local wep = LocalPlayer():GetActiveWeapon()
-                if IsValid(wep) and wep.ARC9 then
-                    if wep.CustomizeHUD then
-                        wep:SetCustomize(false)
-                        net.Start("ARC9_togglecustomize")
-                        net.WriteBool(false)
-                        net.SendToServer()
-                    end
-                end
-            end
-            RunConsoleCommand("arc9_hud_scale", self3:GetValue())
+    // {
+    //     TabName = "Tab name 1",
+    //     { type = "label", text = "Header" },
+    //     { type = "bool", text = "Booling", convar = "cust_blur", desc = "TEST DESCRIPTION" },
+    //     { type = "slider", text = "Booling 2", min = -2, max = 2, desc = "f DESCRIPTION" },
+    //     { type = "slider", text = "Slide me", min = -45, max = 45, convar = "fov", desc = "balls" },
+    //     { type = "combo", text = "Yayay", convar = "arccw_attinv_loseondie", content = {"1table of thingies", "2there", "3ooo"}, desc = "hhhhhhhhhhhhhhhhh" },
+    //     { type = "button", text = "Uhhh", content = "Boop", func = function(self2) print("wa") end, desc = "TEST DESCRIPTION" },
+    //     { type = "color", text = "Coloringa", convar = "reflex", desc = "This color is very important. \n\nClient-only.\nConvar: arc9_sdfjidojgoidfjgoidfg_r/g/b/a" },
+    //     -- { type = "coloralpha", text = "Color alpha", desc = "g" },
+    //     -- { type = "input", text = "Color alpha", desc = "g" },
+    // },
+    // {
+    //     TabName = "Tab name 2",
+    //     { type = "bool", text = "bool 2" },
+    //     -- crazy hacks to make hud scale work "almost dynamicly"
+    //     { type = "slider", text = "HUD SCAle", min = 0.5, max = 1.5, decimals = 2, desc = "Awesome", convar2 = "hud_scale", func = function(self2, self3, settingspanel) 
+    //         if IsValid(LocalPlayer()) then -- uncust the gun
+    //             local wep = LocalPlayer():GetActiveWeapon()
+    //             if IsValid(wep) and wep.ARC9 then
+    //                 if wep.CustomizeHUD then
+    //                     wep:SetCustomize(false)
+    //                     net.Start("ARC9_togglecustomize")
+    //                     net.WriteBool(false)
+    //                     net.SendToServer()
+    //                 end
+    //             end
+    //         end
+    //         RunConsoleCommand("arc9_hud_scale", self3:GetValue())
 
-            settingspanel:Remove() -- rebuilding
-            timer.Simple(0, function()
-                ARC9.Regen() -- reload fonts with new scale
-                ARC9_OpenSettings(2) -- open settings on current page (set number to tab number)
-            end)
-        end },
-        -- { type = "slider", text = "Slide me" },
-    },
-    
+    //         settingspanel:Remove() -- rebuilding
+    //         timer.Simple(0, function()
+    //             ARC9.Regen() -- reload fonts with new scale
+    //             ARC9_OpenSettings(2) -- open settings on current page (set number to tab number)
+    //         end)
+    //     end },
+    //     -- { type = "slider", text = "Slide me" },
+    // },
+    {
+        TabName = "Optics",
+        { type = "label", text = "Color" },
+        { type = "color", text = "Reflex Sights", convar = "reflex", desc = "Color to use for reflex/holographic sights. Not all optics support this feature." },
+        { type = "color", text = "Scopes", convar = "scope", desc = "Color to use for magnified scopes. Not all optics support this feature." },
+        { type = "label", text = "Performance" },
+        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation. Significantly reduces lag while using RT scopes while losing very little."},
+        { type = "label", text = "Control" },
+        { type = "bool", text = "Compensate Sensitivity", convar = "compensate_sens", desc = "Compensate sensitivity for magnification." },
+        { type = "bool", text = "Toggle ADS", convar = "toggleads", desc = "Aiming will toggle sights." },
+    }
 }
 
 local ARC9ScreenScale = ARC9.ScreenScale

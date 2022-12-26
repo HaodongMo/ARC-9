@@ -1,9 +1,5 @@
 local conVars = {
     {
-        name = "npc_give_weapons",
-        default = "1",
-    },
-    {
         name = "allflash",
         default = "0",
         client = true
