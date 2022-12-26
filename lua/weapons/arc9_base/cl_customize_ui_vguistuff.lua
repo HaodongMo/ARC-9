@@ -113,19 +113,19 @@ function ARC9AttButton:Init()
 end
 
 function ARC9AttButton:Paint(w, h)
-	local color = self.Color
-	local iconcolor = self.Color
-	local textcolor = self.Color
-	local markercolor = self.Color
-	local icon = self.Icon or ARC9TopButton.MatIdle
-	local text = self.ButtonText
+    local color = self.Color
+    local iconcolor = self.Color
+    local textcolor = self.Color
+    local markercolor = self.Color
+    local icon = self.Icon or ARC9TopButton.MatIdle
+    local text = self.ButtonText
 
-	local mat = self.MatIdle
-	local matmarker = nil
+    local mat = self.MatIdle
+    local matmarker = nil
 
-	if self:IsHovered() or self.OverrideHovered then
+    if self:IsHovered() or self.OverrideHovered then
         textcolor = self.ColorClicked
-	end
+    end
 
     if self.HasModes then
         matmarker = self.MatMarkerModes
@@ -134,19 +134,19 @@ function ARC9AttButton:Paint(w, h)
     end
 
     if self.Empty then
-		mat = self.MatEmpty
+        mat = self.MatEmpty
     elseif !self.CanAttach then
-		mat = self.MatBlock
+        mat = self.MatBlock
         matmarker = self.MatMarkerLock
         textcolor = self.ColorBlock
         iconcolor = self.ColorBlock
         markercolor = self.ColorBlock
     elseif self:IsDown() or self.Installed then
-		-- mat = self.MatHover
+        -- mat = self.MatHover
         color = self.ColorClicked
         matmarker = self.MatMarkerInstalled
         markercolor = self.ColorClicked
-	end
+    end
 
     surface.SetDrawColor(color)
     surface.SetMaterial(mat)
@@ -154,7 +154,7 @@ function ARC9AttButton:Paint(w, h)
 
     -- icon
     render.SuppressEngineLighting(true)
-	surface.SetDrawColor(iconcolor)
+    surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
     if !self.FullColorIcon then
         surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w-ARC9ScreenScale(4), w-ARC9ScreenScale(4))
@@ -182,10 +182,13 @@ function ARC9AttButton:Paint(w, h)
     surface.SetFont("ARC9_9")
     local tw = surface.GetTextSize(text)
     surface.SetTextColor(textcolor)
-    surface.SetTextPos((w-tw)/2, h-ARC9ScreenScale(13.5))
-    surface.DrawText(text)
 
-    -- self:DrawTextRot(self, text, 0, 0, ARC9ScreenScale(2), 0, ARC9ScreenScale(42.7), false) ??
+    if tw > w then
+        ARC9.DrawTextRot(self, text, 0, h-ARC9ScreenScale(13.5), 0, h-ARC9ScreenScale(13.5), w, false)
+    else
+        surface.SetTextPos((w-tw)/2, h-ARC9ScreenScale(13.5))
+        surface.DrawText(text)
+    end
 end
 
 function ARC9AttButton:OnCursorEntered() 

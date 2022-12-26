@@ -4,60 +4,6 @@ local DevMode = false
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
--- span: panel that hosts the rotating text
--- txt: the text to draw
--- x: where to start the crop
--- y: where to start the crp
--- tx, ty: where to draw the text
--- maxw: maximum width
--- only: don't advance text
-function SWEP:DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
-    local tw, th = surface.GetTextSize(txt)
-
-    span.TextRot = span.TextRot or {}
-
-    if tw > maxw then
-        local realx, realy = span:LocalToScreen(x, y)
-        render.SetScissorRect(realx, realy, realx + maxw, realy + (th * 2), true)
-
-        span.TextRot[txt] = span.TextRot[txt] or 0
-
-        if !only then
-            span.StartTextRot = span.StartTextRot or CurTime()
-            span.TextRotState = span.TextRotState or 0 -- 0: start, 1: moving, 2: end
-            if span.TextRotState == 0 then
-                span.TextRot[txt] = 0
-                if span.StartTextRot < CurTime() - 2 then
-                    span.TextRotState = 1
-                end
-            elseif span.TextRotState == 1 then
-                span.TextRot[txt] = span.TextRot[txt] + (FrameTime() * ARC9ScreenScale(16))
-                if span.TextRot[txt] >= (tw - maxw) + ARC9ScreenScale(8) then
-                    span.StartTextRot = CurTime()
-                    span.TextRotState = 2
-                end
-            elseif span.TextRotState == 2 then
-                if span.StartTextRot < CurTime() - 2 then
-                    span.TextRotState = 3
-                    span.StartTextRot = CurTime()
-                end
-            elseif span.TextRotState == 3 then
-                span.TextRot[txt] = span.TextRot[txt] - (FrameTime() * ARC9ScreenScale(16))
-                if span.TextRot[txt] <= 0 then
-                    span.StartTextRot = CurTime()
-                    span.TextRotState = 0
-                end
-            end
-        end
-        surface.SetTextPos(tx - span.TextRot[txt], ty)
-        surface.DrawText(txt)
-        render.SetScissorRect(0, 0, 0, 0, false)
-    else
-        surface.SetTextPos(tx, ty)
-        surface.DrawText(txt)
-    end
-end
-
 -- Cycle the selected attachment
 function SWEP:CycleSelectedAtt(amt, cyc)
     local activetab = self.CustomizeButtons[self.CustomizeTab + 1]
@@ -1257,9 +1203,9 @@ function SWEP:CreateHUD_RHP()
 
     local nameplate = vgui.Create("DPanel", bg)
     self.CustomizeHUD.nameplate = nameplate
-    nameplate:SetPos(scrw/3, -ARC9ScreenScale(64)) -- h = ARC9ScreenScale(8)
-    nameplate:MoveTo(scrw/3, ARC9ScreenScale(8), 1, 0, 0.05, nil)
-    nameplate:SetSize(scrw/3, ARC9ScreenScale(38))
+    nameplate:SetPos(0, -ARC9ScreenScale(64)) -- h = ARC9ScreenScale(8)
+    nameplate:MoveTo(0, ARC9ScreenScale(8), 1, 0, 0.05, nil)
+    nameplate:SetSize(scrw, ARC9ScreenScale(38))
     nameplate:MoveToBack()
     nameplate.Paint = function(self2, w, h)
         if !IsValid(self) then return end
@@ -1304,7 +1250,7 @@ function SWEP:CreateHUD_RHP()
     topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
     topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
     topleft_panel:SetSize(ARC9ScreenScale(70), ARC9ScreenScale(40))
-    topleft_panel:MoveToBack()
+    topleft_panel:MoveToFront()
     topleft_panel.Paint = function(self2, w, h) end
 
     local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
@@ -1337,7 +1283,7 @@ function SWEP:CreateHUD_RHP()
     topright_panel:SetPos(scrw, -ARC9ScreenScale(40)) -- w = scrw-ARC9ScreenScale(170), h = 0
     topright_panel:MoveTo(scrw-ARC9ScreenScale(170), 0, 0.4, 0, 0.1, nil)
     topright_panel:SetSize(ARC9ScreenScale(170), ARC9ScreenScale(40))
-    topright_panel:MoveToBack()
+    topright_panel:MoveToFront()
     topright_panel.Paint = function(self2, w, h) end
 
     if self.Attachments[1] then -- no presets if no atts

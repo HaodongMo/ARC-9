@@ -110,7 +110,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     local foldercount = 0
 
     for folder, children in SortedPairs(folders) do
-        if !folders then 
+        if !folders then
             table.remove(self.BottomBarPath)
         end
         if isbool(children) then continue end
@@ -535,7 +535,7 @@ function SWEP:CreateHUD_AttInfo()
         surface.SetFont("ARC9_10")
         surface.SetTextPos(0, 0)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        self:DrawTextRot(self2, self2.title, 0, 0, ARC9ScreenScale(6), ARC9ScreenScale(3), w, true)
+        ARC9.DrawTextRot(self2, self2.title, 0, 0, ARC9ScreenScale(6), ARC9ScreenScale(3), w, true)
     end
 
     self.AttInfoBar = infopanel
@@ -636,10 +636,10 @@ function SWEP:CreateHUD_AttInfo()
                 surface.SetFont("ARC9_9")
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.SetTextPos(ARC9ScreenScale(2), 0)
-                self:DrawTextRot(self2, self2.text, 0, 0, ARC9ScreenScale(2), 0, w, true)
+                ARC9.DrawTextRot(self2, self2.text, 0, 0, ARC9ScreenScale(2), 0, w, true)
 
                 local tw = surface.GetTextSize(prosnum[k])
-                self:DrawTextRot(self2, prosnum[k], 0, 0, prosscroller:GetWide()-tw-ARC9ScreenScale(6), 0, w, true)
+                ARC9.DrawTextRot(self2, prosnum[k], 0, 0, prosscroller:GetWide()-tw-ARC9ScreenScale(6), 0, w, true)
             end
         end
     else
@@ -658,10 +658,10 @@ function SWEP:CreateHUD_AttInfo()
                 surface.SetFont("ARC9_9")
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.SetTextPos(ARC9ScreenScale(2), 0)
-                self:DrawTextRot(self2, self2.text, 0, 0, ARC9ScreenScale(2), 0, w, true)
+                ARC9.DrawTextRot(self2, self2.text, 0, 0, ARC9ScreenScale(2), 0, w, true)
 
                 local tw = surface.GetTextSize(consnum[k])
-                self:DrawTextRot(self2, consnum[k], 0, 0, consscroller:GetWide()-tw-ARC9ScreenScale(6), 0, w, true)
+                ARC9.DrawTextRot(self2, consnum[k], 0, 0, consscroller:GetWide()-tw-ARC9ScreenScale(6), 0, w, true)
             end
         end
     else
