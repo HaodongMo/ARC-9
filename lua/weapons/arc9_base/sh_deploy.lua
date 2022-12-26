@@ -151,6 +151,8 @@ function SWEP:Holster(wep)
 
         self:SetLastHolsterTime(CurTime())
 
+        self:DoPlayerModelLean(true)
+
         return true
     else
         -- Prepare the holster and set up the timer

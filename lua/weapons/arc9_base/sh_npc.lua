@@ -104,7 +104,7 @@ function SWEP:NPC_Initialize()
     self:PostModify()
 
     timer.Simple(0.05, function()
-        if IsValid(self) then 
+        if IsValid(self) then
             self:PruneAttachments()
             self:SendWeapon()
         end

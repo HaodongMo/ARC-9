@@ -90,10 +90,12 @@ local leanbone = "ValveBiped.Bip01_Spine1"
 local leanang_left = Angle(3.5, 1.75, 2)
 local leanang_right = Angle(3.5, 1.75, 0)
 
-function SWEP:DoPlayerModelLean()
+function SWEP:DoPlayerModelLean(cancel)
     local amt = self:GetLeanDelta()
 
     if amt == 0 then return end
+
+    if cancel then amt = 0 end
 
     local bone = self:GetOwner():LookupBone(leanbone)
 
