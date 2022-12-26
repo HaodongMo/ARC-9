@@ -1203,9 +1203,9 @@ function SWEP:CreateHUD_RHP()
 
     local nameplate = vgui.Create("DPanel", bg)
     self.CustomizeHUD.nameplate = nameplate
-    nameplate:SetPos(scrw/3, -ARC9ScreenScale(64)) -- h = ARC9ScreenScale(8)
-    nameplate:MoveTo(scrw/3, ARC9ScreenScale(8), 1, 0, 0.05, nil)
-    nameplate:SetSize(scrw/3, ARC9ScreenScale(38))
+    nameplate:SetPos(0, -ARC9ScreenScale(64)) -- h = ARC9ScreenScale(8)
+    nameplate:MoveTo(0, ARC9ScreenScale(8), 1, 0, 0.05, nil)
+    nameplate:SetSize(scrw, ARC9ScreenScale(38))
     nameplate:MoveToBack()
     nameplate.Paint = function(self2, w, h)
         if !IsValid(self) then return end
@@ -1250,7 +1250,7 @@ function SWEP:CreateHUD_RHP()
     topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
     topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
     topleft_panel:SetSize(ARC9ScreenScale(70), ARC9ScreenScale(40))
-    topleft_panel:MoveToBack()
+    topleft_panel:MoveToFront()
     topleft_panel.Paint = function(self2, w, h) end
 
     local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
@@ -1283,7 +1283,7 @@ function SWEP:CreateHUD_RHP()
     topright_panel:SetPos(scrw, -ARC9ScreenScale(40)) -- w = scrw-ARC9ScreenScale(170), h = 0
     topright_panel:MoveTo(scrw-ARC9ScreenScale(170), 0, 0.4, 0, 0.1, nil)
     topright_panel:SetSize(ARC9ScreenScale(170), ARC9ScreenScale(40))
-    topright_panel:MoveToBack()
+    topright_panel:MoveToFront()
     topright_panel.Paint = function(self2, w, h) end
 
     if self.Attachments[1] then -- no presets if no atts
