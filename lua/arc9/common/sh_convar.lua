@@ -203,6 +203,10 @@ local conVars = {
         default = ""
     },
     {
+        name = "npc_give_weapons",
+        default = "0"
+    },
+    {
         name = "replace_spawned",
         default = "1"
     },

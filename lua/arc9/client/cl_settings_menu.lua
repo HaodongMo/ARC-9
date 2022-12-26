@@ -127,6 +127,7 @@ local settingstable = {
         { type = "bool", text = "Give Attachments", convar = "npc_atts", desc = "Spawned or given ARC9 weapons receive a random set of attachments.\n\nThis is a server variable." },
         { type = "bool", text = "Replace NPC Weapons", convar = "npc_autoreplace", desc = "Replace NPC weapons with randomly chosen ARC9 weapons.\n\nThis is a server variable." },
         { type = "bool", text = "Replace Ground Weapons", convar = "replace_spawned", desc = "Replace map/spawned weapons with randomly chosen ARC9 weapons.\n\nThis is a server variable." },
+        { type = "bool", text = "Players Can Give Weapons", convar = "npc_give_weapons", desc = "Players are able to press E on NPCs to give them their weapon.\n\nThis is a server variable." },
     },
     {
         TabName = "Gameplay",
