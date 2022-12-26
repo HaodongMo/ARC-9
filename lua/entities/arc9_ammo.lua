@@ -8,7 +8,7 @@ ENT.PrintName                = "Ammo Pickup"
 ENT.Category                 = "ARC9 - Ammo"
 
 ENT.Spawnable                = true
-ENT.Model                    = "models/weapons/tacint/ammoboxes/ammo_bag-1.mdl"
+ENT.Model                    = "models/items/arc9/ammo_pistol_box.mdl"
 ENT.ModelOptions = nil
 
 ENT.InfiniteUse = false
