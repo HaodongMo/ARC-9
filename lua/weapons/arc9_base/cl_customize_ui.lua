@@ -177,7 +177,7 @@ SWEP.CustomizeButtons = {
                 self2.CustomizeHUD.topleft_panel:AlphaTo(255, 0.2, 0, nil)
             end
         end,
-        customize = true,
+        personalize = true,
         cutcorner = 0
     },
     -- {
@@ -1386,8 +1386,23 @@ function SWEP:CreateHUD_RHP()
     lowerpanel:SetSize(scrw - ARC9ScreenScale(38), ARC9ScreenScale(74))
     lowerpanel:MoveToBack()
 
+    local hascosmetic = false
+    local onlycosmetic = true
 
-    if !self.Attachments[1] and self.CustomizeButtons[1].customize then  -- NO ATTS CUST PANEL REMOVAL
+    for _, slottbl in pairs(self:GetSubSlotList()) do
+        if hascosmetic and !onlycosmetic then break end
+        if self:SlotIsCosmetic(slottbl) then
+            hascosmetic = true
+        else
+            onlycosmetic = false
+        end
+    end
+
+    if !hascosmetic and self.CustomizeButtons[2].personalize then
+        table.remove(self.CustomizeButtons, 2)
+    end
+
+    if (onlycosmetic or !self.Attachments[1]) and self.CustomizeButtons[1].customize then  -- NO ATTS CUST PANEL REMOVAL
         table.remove(self.CustomizeButtons, 1)
         self.CustomizeButtons[1].cutcorner = 1
         self.CustomizeTab = 0
