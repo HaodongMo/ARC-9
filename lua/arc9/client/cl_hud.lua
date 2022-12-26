@@ -184,44 +184,9 @@ local holidayscolors = {
     }
 }
 
-local lastholidaycheck = -math.huge
-
 function ARC9.GetHUDColor(part, alpha)
-    if GetConVar("arc9_holiday_month"):GetInt() > 0 and GetConVar("arc9_holiday_day"):GetInt() > 0 then
-        lastholidaycheck = -math.huge
-    end
-    if GetConVar("arc9_holiday_grinch"):GetBool() then
-        table.Empty(ARC9.ActiveHolidays)
-        lastholidaycheck = -math.huge
-    else
-        if lastholidaycheck + 300 < CurTime() then
-            -- print("holiday check", CurTime())
-            table.Empty(ARC9.ActiveHolidays)
-            for _, event in SortedPairs(events) do
-                local d = ARC9.GetHoliday()
-                if event.months[d.month] and event.days[d.day] then
-                    ARC9.ActiveHolidays[_] = true
-                end
-            end
-            lastholidaycheck = CurTime()
-        end
-    end
-
-    local event_holiday = {}
-    if ARC9.ActiveHolidays["Christmas"] then
-        event_holiday = holidayscolors["Christmas"]
-    elseif ARC9.ActiveHolidays["Halloween"] then
-        event_holiday = holidayscolors["Halloween"]
-    elseif ARC9.ActiveHolidays["Thanksgiving"] then
-        event_holiday = holidayscolors["Thanksgiving"]
-    elseif ARC9.ActiveHolidays["Birthday - Arctic"] then
-        event_holiday = holidayscolors["Birthday - Arctic"]
-    elseif ARC9.ActiveHolidays["Summer Break"] then
-        event_holiday = holidayscolors["Summer Break"]
-    end
-
     alpha = alpha or 255
-    local col = event_holiday[part] or ARC9.Colors[part] or ARC9.Colors.hi
+    local col = ARC9.Colors[part] or ARC9.Colors.hi
 
     if part == "hi" then
         col = Color(
