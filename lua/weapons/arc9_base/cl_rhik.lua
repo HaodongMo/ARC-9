@@ -316,6 +316,8 @@ function SWEP:RecalculateIKGunMotionOffset()
 
         local anim_mdl = slottbl.GunDriverModel
 
+        if !anim_mdl then return end
+
         local oldseq = anim_mdl:GetSequence()
         local oldcycle = anim_mdl:GetCycle()
         anim_mdl:ResetSequence(0)
