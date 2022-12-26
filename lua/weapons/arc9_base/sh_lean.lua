@@ -4,26 +4,29 @@ SWEP.MaxLeanAngle = 15
 function SWEP:ThinkLean()
     if self:PredictionFilter() then return end
 
+    local leanstate = 0
+
     if !GetConVar("arc9_lean"):GetBool() or !self:GetProcessedValue("CanLean") then
-        self:SetLeanState(0)
         self:SetLeanAmount(0)
         return
     end
 
-    if self:GetOwner():KeyDown(IN_ALT1) then
-        self:SetLeanState(-1)
-    elseif self:GetOwner():KeyDown(IN_ALT2) then
-        self:SetLeanState(1)
-    else
-        self:SetLeanState(0)
+    if !self:GetIsSprinting() then
+        if self:GetOwner():KeyDown(IN_ALT1) then
+            leanstate = -1
+        elseif self:GetOwner():KeyDown(IN_ALT2) then
+            leanstate = 1
+        else
+            leanstate = 0
+        end
     end
 
     local maxleanfrac = 1
 
-    if self:GetLeanState() != 0 then
+    if leanstate != 0 then
         local tr = util.TraceHull({
             start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() + self:GetOwner():EyeAngles():Right() * (self.MaxLeanOffset - 2) * self:GetLeanState(),
+            endpos = self:GetOwner():EyePos() + self:GetOwner():EyeAngles():Right() * (self.MaxLeanOffset - 2) * leanstate,
             filter = self:GetOwner(),
             maxs = Vector(1, 1, 1) * 4,
             mins = Vector(-1, -1, -1) * 4,
@@ -35,7 +38,7 @@ function SWEP:ThinkLean()
     end
 
     local amt = self:GetLeanAmount()
-    local tgt = self:GetLeanState()
+    local tgt = leanstate
 
     if maxleanfrac < 1 then
         tgt = 0
