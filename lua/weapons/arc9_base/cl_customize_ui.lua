@@ -115,6 +115,12 @@ SWEP.CustomizeButtons = {
     {
         title = "CUSTOMIZE",
         func = function(self2)
+            if self2.BottomBarCategory == 1 then
+                self2.BottomBarAddress = nil
+                self2.BottomBarMode = 0
+                self2:CreateHUD_Bottom()
+            end
+
             self2.BottomBarCategory = 0
 
             self2:ClearTabPanel()
@@ -143,6 +149,12 @@ SWEP.CustomizeButtons = {
     {
         title = "PERSONALIZE",
         func = function(self2)
+            if self2.BottomBarCategory == 0 then
+                self2.BottomBarAddress = nil
+                self2.BottomBarMode = 0
+                self2:CreateHUD_Bottom()
+            end
+
             self2.BottomBarCategory = 1
 
             self2:ClearTabPanel()
