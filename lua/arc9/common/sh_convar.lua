@@ -209,6 +209,14 @@ local conVars = {
         default = "0"
     },
     {
+        name = "npc_blacklist",
+        default = ""
+    },
+    {
+        name = "npc_whitelist",
+        default = ""
+    },
+    {
         name = "replace_spawned",
         default = "1"
     },

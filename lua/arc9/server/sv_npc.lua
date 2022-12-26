@@ -93,7 +93,7 @@ function ARC9.ReplaceSpawnedWeapon(ent)
             if ARC9.HL2Replacements[class] then
                 local weptbl = ARC9.HL2Replacements[class]
                 local wepcategory = table.Random(weptbl)
-                local wepclass = ARC9.WeaponClasses[wepcategory] and table.Random(ARC9.WeaponClasses[wepcategory])
+                local wepclass = table.Random(ARC9.GetWeaponClasses(wepcategory))
 
                 if wepclass then
                     ent:Give(wepclass)
@@ -112,7 +112,7 @@ function ARC9.ReplaceSpawnedWeapon(ent)
             if ARC9.HL2Replacements[class] then
                 local weptbl = ARC9.HL2Replacements[class]
                 local wepcategory = table.Random(weptbl)
-                local wepclass = ARC9.WeaponClasses[wepcategory] and table.Random(ARC9.WeaponClasses[wepcategory])
+                local wepclass = table.Random(ARC9.GetWeaponClasses(wepcategory))
 
                 if wepclass then
                     local wpnent = ents.Create(wepclass)
@@ -135,3 +135,51 @@ function ARC9.ReplaceSpawnedWeapon(ent)
 end
 
 hook.Add("OnEntityCreated", "ARC9_ReplaceSpawnedWeapons", ARC9.ReplaceSpawnedWeapon)
+
+function ARC9.WeaponIsAllowed(class)
+    local blacklist = GetConVar("arc9_npc_blacklist"):GetString()
+    local whitelist = GetConVar("arc9_npc_whitelist"):GetString()
+
+    if whitelist == "" then
+        // Check blacklist
+
+        local blacklist_tbl = {}
+
+        for _, v in ipairs(string.Explode(" ", blacklist)) do
+            blacklist_tbl[v] = true
+        end
+
+        if blacklist_tbl[class] then
+            return false
+        end
+
+        return true
+    else
+        // Check whitelist
+
+        local whitelist_tbl = {}
+
+        for _, v in ipairs(string.Explode(" ", whitelist)) do
+            whitelist_tbl[v] = true
+        end
+
+        if whitelist_tbl[class] then
+            return true
+        end
+
+        return false
+    end
+end
+
+function ARC9.GetWeaponClasses(weptype)
+    local weptbl = ARC9.WeaponClasses[weptype]
+    local wepclasses = {}
+
+    for _, class in ipairs(weptbl) do
+        if ARC9.WeaponIsAllowed(class) then
+            table.insert(wepclasses, class)
+        end
+    end
+
+    return wepclasses
+end
