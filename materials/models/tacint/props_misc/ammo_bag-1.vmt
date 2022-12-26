@@ -1,5 +1,0 @@
-vertexlitgeneric
-{
- $baseTexture "models/tacint/props_misc/ammo_bag-1"
- $bumpmap "models/tacint/props_misc/ammo_bag-1_normal"
-}

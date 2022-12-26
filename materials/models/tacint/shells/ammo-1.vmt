@@ -1,5 +1,0 @@
-vertexlitgeneric
-{
- $baseTexture "models/tacint/shells/ammo-1"
- $DISABLECSMLOOKUP 1
-}
