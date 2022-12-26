@@ -41,7 +41,9 @@ function ARC9.Move(ply, mv, cmd)
             mv:AddKey(IN_DUCK)
         else
             cmd:RemoveKey(IN_DUCK)
-            mv:RemoveKey(IN_DUCK)
+            local buttons = mv:GetButtons()
+            buttons = bit.band(buttons, bit.bnot(IN_DUCK))
+            mv:SetButtons(buttons)
         end
     end
 end
