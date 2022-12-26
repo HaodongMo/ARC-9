@@ -1,6 +1,6 @@
 ATT.PrintName = [[ARCTICTHRON 9.000 WEAPON BASE]]
 ATT.CompactName = "A9K"
-ATT.Description = [[ARCTICTHRON 9.000 WEAPON BASE
+ATT.Description = [[this is what "arc9" actually means
 
 Sticker included in ARC9 Base.]]
 ATT.Icon = Material("stickers/a9k")
