@@ -395,7 +395,13 @@ end
 
 function ARC9ComboBox:OnSelect(index, value, data)
     self.text = self:GetText()
+    
+    if self.Convar then RunConsoleCommand(self.Convar, index) end
     self:SetText("")
+end
+
+function ARC9ComboBox:CustomSetConvar(cvar)
+    self.Convar = cvar
 end
 
 function ARC9ComboBox:OnMenuOpened(menu)
@@ -410,9 +416,9 @@ function ARC9ComboBox:OnMenuOpened(menu)
 
         child.PerformLayout = function(self22, w22, h22) DButton.PerformLayout(self22, w22, h22) end
 
-        child:SetSize(ARC9ScreenScale(84),ARC9ScreenScale(13))
+        child:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(13))
         child.id = i
-        child.last = i==menu:ChildCount()
+        child.last = i == menu:ChildCount()
         child.text = child:GetText()
         child:SetText("")
         
@@ -443,7 +449,7 @@ function ARC9ComboBox:OnMenuOpened(menu)
             surface.SetFont("ARC9_10")
             surface.SetTextColor(active and color2 or color)
             surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
-            surface.DrawText(child.text or "Owo")
+            surface.DrawText(string.sub(child.text or "Owo", 2))
         end
     end
 end
@@ -469,7 +475,7 @@ function ARC9ComboBox:Paint(w, h)
     surface.SetFont("ARC9_10")
     surface.SetTextColor(color)
     surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
-    surface.DrawText(self.text or "unselected")
+    surface.DrawText(string.sub(self.text or "unselected", 2))
 end
 
 vgui.Register("ARC9ComboBox", ARC9ComboBox, "DComboBox")
@@ -740,6 +746,12 @@ function ARC9ColorButton:DoClick()
         if newel.Alpha then newel.ResultColor.a = newel.Alpha end
 
         self.rgbcolor = newel.ResultColor
+        
+	    RunConsoleCommand(self.Convar .. "_r", self.rgbcolor.r)
+	    RunConsoleCommand(self.Convar .. "_g", self.rgbcolor.g)
+	    RunConsoleCommand(self.Convar .. "_b", self.rgbcolor.b)
+	    if newel.Alpha then RunConsoleCommand(self.Convar .. "_a", self.rgbcolor.a) end
+
         -- self:ApplyConvar or something idk () 
         newel:Remove()
         bg:Remove()
@@ -749,6 +761,10 @@ end
 
 function ARC9ColorButton:EnableAlpha()
     self.AlphaEnabled = true
+end
+
+function ARC9ColorButton:CustomSetConvar(cvar)
+    self.Convar = cvar
 end
 
 function ARC9ColorButton:Paint(w, h)
