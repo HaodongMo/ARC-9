@@ -242,6 +242,17 @@ ARC9.WEAPON_RPG = 6
 ARC9.WEAPON_MELEE = 7
 ARC9.WEAPON_MISC = 0
 
+ARC9.HL2Replacements = {
+    ["weapon_pistol"] = {ARC9.WEAPON_PISTOL},
+    ["weapon_357"] = {ARC9.WEAPON_PISTOL, ARC9.WEAPON_SNIPER},
+    ["weapon_smg1"] = {ARC9.WEAPON_SMG},
+    ["weapon_ar2"] = {ARC9.WEAPON_AR},
+    ["weapon_shotgun"] = {ARC9.WEAPON_SHOTGUN},
+    ["weapon_crossbow"] = {ARC9.WEAPON_SNIPER},
+    ["weapon_crowbar"] = {ARC9.WEAPON_MELEE},
+    ["weapon_rpg"] = {ARC9.WEAPON_RPG}
+}
+
 function ARC9.Dev(level)
     return GetConVar("developer"):GetInt() >= level
 end

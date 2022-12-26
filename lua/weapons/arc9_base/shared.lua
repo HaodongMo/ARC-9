@@ -121,6 +121,8 @@ SWEP.NoDynamicKillIcon = false
 SWEP.NotAWeapon = false -- Set to true to indicate that this is not a weapon.
 -- Disables pretty much all base features except for controls and aesthetics, allowing for custom weapons to be implemented.
 
+SWEP.ARC9WeaponCategory = nil -- See sh_common.lua
+
 -------------------------- SAVING
 
 SWEP.SaveBase = nil -- set to a weapon class to make this weapon share saves with it.
@@ -738,7 +740,6 @@ SWEP.BlindFireRightBoneMods = {
 -------------------------- NPC
 
 SWEP.NotForNPCs = false -- Won't be given to NPCs.
-SWEP.NPCWeight = 100 -- How likely it is for an NPC to get this weapon as opposed to other weapons.
 
 -------------------------- BIPOD
 

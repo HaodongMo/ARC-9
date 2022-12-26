@@ -205,6 +205,14 @@ local conVars = {
         default = "1",
     },
     {
+        name = "npc_autoreplace",
+        default = "0"
+    },
+    {
+        name = "replace_spawned",
+        default = "1"
+    },
+    {
         name = "mod_penetration",
         default = "1",
         replicated = true
