@@ -98,7 +98,7 @@ function ARC9.StartCommand(ply, cmd)
     if math.abs(wpn:GetRecoilUp()) > 1e-9 or math.abs(wpn:GetRecoilSide()) > 1e-9 then
         local eyeang = cmd:GetViewAngles()
 
-        local m = 10
+        local m = 50
 
         if game.SinglePlayer() then
             m = 100
