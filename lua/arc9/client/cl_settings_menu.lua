@@ -16,10 +16,14 @@
         input - text input, NOT IMPLEMENTED
         combo - dropdown menu:
             content - {"1table of thingies", "2there", "3for some reason you need put number at start so it will be properly sorted", "4though it will be not drawn in ui"}
+            minvalue - type -1 or 1 if your convar starts from it
     title,
     convar to follow, (without arc9_; color selectors will automatically use _r/_g/_b)
     description to show on right
 ]]--
+
+local languages = {"1GMod Language", "2English"} -- done something here oka ? 
+-- new convar: arc9_language_id   -1 should use gmod lang (fallback to 0 if no such), 0 english, 1 ru, get people to localize other langs later
 
 local settingstable = {
     // {
@@ -36,35 +40,44 @@ local settingstable = {
     // },
     {
         TabName = "Performance",
-        { type = "label", text = "Blur" },
-        { type = "bool", text = "In Scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
-        { type = "bool", text = "In Sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
-        { type = "bool", text = "While Reloading", convar = "fx_reloadblur", desc = "Blurs the world while reloading."},
-        { type = "bool", text = "While Readying", convar = "fx_animblur", desc = "Blurs the world while deploying a weapon for the first time."},
+        { type = "label", text = "Important" },        
+        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."},
+        { type = "bool", text = "All Flashlights", convar = "allflash", desc = "Fully render all flashlights from other players.\n\nVery expensive."},
+        { type = "bool", text = "TPIK", convar = "tpik", desc = "TPIK (Third Person Inverse Kinematics) is a system that allows most weapons display detailed and same as in first person hands positions, reload and firing animations in third person.\n\nConfigure it in Visuals tab."},
+
+        { type = "label", text = "Blur" },        
+        { type = "bool", text = "Customization background", convar = "cust_blur", desc = "Blurs customization background."},
+        { type = "bool", text = "While reloading", convar = "fx_reloadblur", desc = "Blurs the world while reloading."},
+        { type = "bool", text = "While readying", convar = "fx_animblur", desc = "Blurs the world while deploying a weapon for the first time."},
+        { type = "bool", text = "In scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
+        { type = "bool", text = "In sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
+
         { type = "label", text = "Shell Eject" },
         { type = "bool", text = "Smoke Effects", convar = "eject_fx", desc = "Produce smoke effects from ejected shell casings, where the weapon supports this feature."},
         { type = "slider", text = "Add Life Time", convar = "eject_time", min = -1, max = 60, decimals = 0, desc = "Allow shell casings to stay in the world for longer. Can be expensive."},
-        { type = "label", text = "Misc" },
-        { type = "bool", text = "All Flashlights", convar = "allflash", desc = "Fully render all flashlights from other players.\n\nVery expensive."},
     },
     {
         TabName = "Optics",
-        { type = "label", text = "Color" },
-        { type = "color", text = "Reflex Sights", convar = "reflex", desc = "Color to use for reflex/holographic sights. Not all optics support this feature." },
-        { type = "color", text = "Scopes", convar = "scope", desc = "Color to use for magnified scopes. Not all optics support this feature." },
-        { type = "label", text = "Performance" },
-        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation. Significantly reduces lag while using RT scopes while losing very little."},
+        -- { type = "label", text = "Performance" }, -- fine here but they are already in first tab
+        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."},
+        -- { type = "bool", text = "Blur in Scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
+        -- { type = "bool", text = "Blur in Sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
+        
         { type = "label", text = "Control" },
         { type = "bool", text = "Compensate Sensitivity", convar = "compensate_sens", desc = "Compensate sensitivity for magnification." },
         { type = "bool", text = "Toggle ADS", convar = "toggleads", desc = "Aiming will toggle sights." },
+        
+        { type = "label", text = "Color" },
+        { type = "color", text = "Reflex Sights", convar = "reflex", desc = "Color to use for reflex/holographic sights.\n\nNot all optics support this feature." },
+        { type = "color", text = "Scopes", convar = "scope", desc = "Color to use for magnified scopes.\n\nNot all optics support this feature." },
     },
     {
         TabName = "Crosshair",
         { type = "label", text = "Crosshair" },
-        { type = "bool", text = "Enable Crosshair", convar = "cross_enable", desc = "Enable crosshair. Does not work on all guns, which may not allow the crosshair to be used." },
-        { type = "coloralpha", text = "Crosshair Color", convar = "cross", desc = "The crosshair's color. Some guns do not allow you to use the crosshair."},
-        { type = "bool", text = "Force Crosshair", convar = "crosshair_force", desc = "Force crosshair enabled, even on guns that do not support it\nServer setting." },
-        { type = "bool", text = "Static Crosshair", convar = "crosshair_static", desc = "Enable static crosshair, which does not move when shooting." }
+        { type = "bool", text = "Enable Crosshair", convar = "cross_enable", desc = "Enable crosshair. Some guns do not allow you to use the crosshair." },
+        { type = "coloralpha", text = "Crosshair Color", convar = "cross", desc = "The color of crosshair."},
+        { type = "bool", text = "Static Crosshair", convar = "crosshair_static", desc = "Enable static crosshair, which does not move when shooting." },
+        { type = "bool", text = "Force Crosshair", convar = "crosshair_force", desc = "Force the crosshair even on guns that don't want you to see it.\n\nServer setting." },
     },
     {
         TabName = "Customize HUD",
@@ -90,31 +103,36 @@ local settingstable = {
                 ARC9_OpenSettings(3) -- open settings on current page (set number to tab number)
             end)
         end },
-        { type = "input", text = "Font", convar = "font", desc = "Font replacement for ARC9. Set empty to use default font." },
-        { type = "slider", min = -16, max = 16, decimals = 0, text = "Font Add Size", convar = "font_addsize", desc = "Increase text size.", func = function(self2, self3, settingspanel) 
-            timer.Simple(0, function()
-                ARC9.Regen() -- reload fonts with new scale
-            end)
-        end },
-        { type = "color", text = "HUD Color", convar = "hud_color", desc = "Highlight color for the HUD."},
-        { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "Light Brightness", convar = "cust_light_brightness", desc = "How bright the light in the customization panel is." },
+        -- { type = "input", text = "Font", convar = "font", desc = "Font replacement for ARC9. Set empty to use default font." },
+        -- { type = "slider", min = -16, max = 16, decimals = 0, text = "Font Add Size", convar = "font_addsize", desc = "Increase text size.", func = function(self2, self3, settingspanel) 
+        --     timer.Simple(0, function()
+        --         ARC9.Regen() -- reload fonts with new scale
+        --     end)
+        -- end },
+        { type = "color", text = "HUD Color", convar = "hud_color", desc = "Highlight color for the HUD.\n\nThe accent color."},
+        -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
+        { type = "combo", text = "Language", convar = "language_id", content = languages, minvalue = -1, desc = "Language pack to use for ARC9.\n\nNot done yet, Arctic, please, implement before release!" },
+        { type = "bool", text = "Enable Light", convar = "cust_light", desc = "Enables gun lighting in the customization menu.\n\nSame thing as button near settings button."},
+        { type = "slider", min = -20, max = 30, decimals = 1, text = "Light Brightness", convar = "cust_light_brightness", desc = "How bright that light in the customization panel will be.\n\nDon't forget to turn it on first though!" },
+        
         { type = "label", text = "Customization" },
-        { type = "bool", text = "Background Blur", convar = "cust_blur", desc = "Blurs customization background.\n\nRequires DX9."},
-        { type = "bool", text = "Hints", convar = "cust_hints", desc = "Enable hints for the customization menu."},
-        { type = "bool", text = "Unlock Roll", convar = "cust_roll_unlock", desc = "Allow weapon roll in the customization menu."},
-        { type = "bool", text = "Exit Resets Selection", convar = "cust_exit_reset_sel", desc = "Exiting customization menu resets customization selection."}
+        -- { type = "bool", text = "Background Blur", convar = "cust_blur", desc = "Blurs customization background.\n\nRequires DX9."},
+        { type = "bool", text = "Hints", convar = "cust_hints", desc = "Enable hints in the customization menu."},
+        { type = "bool", text = "Unlock Roll", convar = "cust_roll_unlock", desc = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way."},
+        { type = "bool", text = "Exit Resets Selection", convar = "cust_exit_reset_sel", desc = "Exiting customization menu resets the active slot selection."}
     },
     {
         TabName = "Game HUD",
         { type = "label", text = "LCD Panel" },
         { type = "bool", text = "Enable HUD", convar = "hud_arc9", desc = "Enable HUD for ARC9 weapons." },
-        { type = "bool", text = "Always HUD", convar = "hud_always", desc = "Enable HUD on all weapons." },
+        { type = "bool", text = "Always HUD", convar = "hud_always", desc = "Enable that HUD on all weapons." },
         { type = "bool", text = "Compact Mode", convar = "hud_compact", desc = "Compact appearance for the HUD panel." },
-        { type = "bool", text = "Keep Hints", convar = "hud_keephints", desc = "Always show ARC9 control hints." },
+        { type = "bool", text = "Keep Hints", convar = "hud_keephints", desc = "Show the ARC9 control hints on top on HUD panel." },
+
         { type = "label", text = "Killfeed" },
-        { type = "bool", text = "Killfeed Icons", convar = "killfeed_enable", desc = "Enable ARC9-generated killfeed icons." },
-        { type = "bool", text = "Dynamic Killfeed Icons", convar = "killfeed_dynamic", desc = "Killfeed icons are dynamically generated for each weapon." },
+        { type = "bool", text = "Killfeed Icons", convar = "killfeed_enable", desc = "Enable auto-generation of killfeed icons for ARC9 guns." },
+        { type = "bool", text = "Dynamic Killfeed Icons", convar = "killfeed_dynamic", desc = "Killfeed icons will be regenerated after each kill.\n\nTurn off if you want get that 0.1 fps." },
+
         { type = "label", text = "Breath" },
         { type = "bool", text = "Breath HUD", convar = "breath_hud", desc = "Show a bar that displays your remaining breath while stabilizing your gun in sights." },
         { type = "bool", text = "Breath Post-Process", convar = "breath_pp", desc = "Holding breath will also add post-processing effects to your screen." },
@@ -133,25 +151,33 @@ local settingstable = {
         TabName = "Gameplay",
         { type = "label", text = "Controls" },
         { type = "bool", text = "Toggle ADS", convar = "toggleads", desc = "Aiming will toggle sights." },
-        { type = "bool", text = "Automatic Lean", convar = "autolean", desc = "Aiming will try to automatically lean if this is possible." },
+            { type = "bool", text = "Automatic Lean", convar = "autolean", desc = "Aiming will try to automatically lean if this is possible." },
         { type = "bool", text = "Automatic Reload", convar = "autoreload", desc = "Empty ARC9 weapons will reload automatically." },
+
         { type = "label", text = "Game Mechanics" },
+        -- { type = "combo", text = "Lean style", convar = "vm_bobstyle", content = {"1Disabled", "2Only manual", "3Manual + auto", "4Auto only"}, desc = "Select style of leaning.\n\nWhether players can lean with +alt1 and +alt2 or with automatic near-wall lean.\n\nThis is a server variable." },
+ 
         { type = "bool", text = "Infinite Ammo", convar = "infinite_ammo", desc = "Weapons have infinite ammunition.\n\nThis is a server variable." },
         { type = "bool", text = "Physical Visual Recoil", convar = "realrecoil", desc = "Select weapons set up for this feature experience physical muzzle rise, meaning they will fire where their viewmodel shows it rather than at the center of the screen. Very important for some weapon packs' balancing schemes.\n\nThis is a server variable." },
-        { type = "bool", text = "Leaning", convar = "lean", desc = "Whether players can lean with +alt1 and +alt2, including automatic lean.\n\nThis is a server variable." },
+            { type = "bool", text = "Leaning", convar = "lean", desc = "Whether players can lean with +alt1 and +alt2, including automatic lean.\n\nThis is a server variable." },
         { type = "bool", text = "Sway", convar = "mod_sway", desc = "Weapons will have sway, if they are set up to use it.\n\nThis is a server variable." },
         { type = "bool", text = "Free Aim", convar = "mod_freeaim", desc = "Weapons will have free aim, and will not always shoot in the middle of the screen.\n\nThis is a server variable." },
         { type = "bool", text = "Body Damage Cancel", convar = "mod_bodydamagecancel", desc = "Cancel out default body damage multiplier. Only disable if using another mod that provides this type of functionality.\ne.g. Mods which change the default limb multipliers.\n\nThis is a server variable." },
         { type = "bool", text = "Slow-Mo Breath", convar = "breath_slowmo", desc = "Holding breath slows time.\n\nSingleplayer only." },
         { type = "bool", text = "Manual Cycling", convar = "manualbolt", desc = "Bolt-action weapons configured for this feature will only bolt when R is pressed, and not when the attack key is released." },
+        -- { type = "bool", text = "Near-walling", convar = "nearwall", desc = "Not allow gun shoot when you standing too close to wall or any obstacle." },
+        -- random jams
+        -- overheating
     },
     {
         TabName = "Visuals",
         { type = "label", text = "Viewmodel" },
-        { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
-        { type = "slider", text = "FOV", convar = "fov", min = -50, max = 50, decimals = 0, desc = "Add viewmodel FOV. Makes the viewmodel bigger or smaller. Use responsibly."},
+        { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {"1Darsu style", "2Fesiug style", "3Arctic style"}, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
+        -- { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
+        { type = "slider", text = "FOV", convar = "fov", min = -40, max = 40, decimals = 0, desc = "Add viewmodel FOV. Makes the viewmodel bigger or smaller. Use responsibly."},
+        
         { type = "label", text = "TPIK" },
-        { type = "bool", text = "Enable TPIK", convar = "tpik", desc = "TPIK (Third Person Inverse Kinematics) is a system that allows select weapons that support the feature to display detailed reload and firing animations in third person." },
+        { type = "bool", text = "Enable TPIK", convar = "tpik", desc = "TPIK (Third Person Inverse Kinematics) is a system that allows most weapons display detailed and same as in first person hands positions, reload and firing animations in third person." },
         { type = "bool", text = "Other Players TPIK", convar = "tpik_others", desc = "Show TPIK for players other than yourself. Negatively impacts performance." },
         { type = "slider", text = "TPIK Framerate", convar = "tpik_framerate", min = 0, max = 200, decimals = 0, desc = "Maximum framerate at which TPIK can run. Set to 0 for unlimited." },
     },
@@ -170,26 +196,48 @@ local settingstable = {
         TabName = "Attachments",
         { type = "label", text = "Customization"},
         { type = "bool", text = "Disable Customization", convar = "atts_nocustomize", desc = "Disallow all customization via the customization menu."},
-        { type = "slider", text = "Max Attachments", convar = "atts_max", min = 0, max = 1000, decimals = 0, desc = "The maximum number of attachments that can be put on a weapon, including cosmetic attachments.\n\nThis is a server variable."},
+        { type = "slider", text = "Max Attachments", convar = "atts_max", min = 0, max = 250, decimals = 0, desc = "The maximum number of attachments that can be put on a weapon, including cosmetic attachments.\n\nThis is a server variable."},
         { type = "bool", text = "Autosave", convar = "autosave", desc = "Your last weapon customization options will be saved and automatically applied the next time you spawn that weapon."},
-        { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
+        -- { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
         { type = "label", text = "Inventory"},
         { type = "bool", text = "One For All", convar = "atts_lock", desc = "Picking up one instance of an attachments allows you to use it infinite times on all your guns.\n\nThis is a server variable."},
         { type = "bool", text = "Lose On Death", convar = "atts_loseondie", desc = "Your attachment inventory will be lost when you die.\n\nThis is a server variable."},
-        { type = "bool", text = "Generate Entities", convar = "atts_generateentities", desc = "Generate entities that can be spawned, allowing you to pick up attachments when free attachments is off.\n\nThis is a server variable."},
+        { type = "bool", text = "Generate Entities", convar = "atts_generateentities", desc = "Generate entities that can be spawned, allowing you to pick up attachments when free attachments is off.\n\nMight increase load time.\n\nThis is a server variable."},
+    },
+    {
+        TabName = "Modifiers",
+        { type = "label", text = "Quick Stats Modifiers"},
+        -- { type = "slider", text = "Damage", convar = "wawa", min = 0, max = 10, decimals = 0, desc = "The     Damage\n\nThis is a server variable."},
+
+        { type = "button", text = "Advanced modifiers", content = "Open panel", func = function(self2)
+            -- RunConsoleCommand("arc9_reloadatts")
+            print("lol")
+            -- put here default derma panel with stuff from fesiug's spawmenu modifier panel
+        end},    
     },
     {
         TabName = "Controller",
-        { type = "label", text = "Controller"},
+        -- { type = "label", text = "Controller"},
         { type = "bool", text = "Controller Glyphs", convar = "controller", desc = "Enable custom controller-compatible glyphs, showing controller buttons instead of the default keys."},
         { type = "bool", text = "Rumble", convar = "controller_rumble", desc = "Enable controller rumble as long as Fesiug's DLL mod is loaded."},
+        { type = "button", text = "Advanced config", content = "Open panel", func = function(self2)
+            -- RunConsoleCommand("arc9_reloadatts")
+            print("lol")
+            -- put here default derma panel with stuff from fesiug's spawmenu controller panel
+        end},    
     },
     {
         TabName = "Developer",
         { type = "label", text = "Developer Options"},
         { type = "bool", text = "Always Ready", convar = "dev_always_ready", desc = "Always play \"ready\" animation when deploying a weapon.\n\nThis is a server variable."},
-        { type = "bool", text = "Benchgun", convar = "dev_benchgun", desc = "Set weapon to world origin.\nOnly really useful on gm_construct."},
+        { type = "bool", text = "Benchgun", convar = "dev_benchgun", desc = "Set weapon to world origin.\nOnly really useful on gm_construct.\n\nSomeone please make it act like MW base benchgun (save the pos where gun was on moment that toggle was pressed and use it) :pleading_face:"},
         { type = "bool", text = "Show Shield", convar = "dev_show_shield", desc = "Show the model for the player's shield."},
+        { type = "button", text = "Reload Attachments", content = "Reload", func = function(self2)
+            RunConsoleCommand("arc9_reloadatts")
+        end},             
+        { type = "button", text = "Reload Languages", content = "Reload", func = function(self2)
+            RunConsoleCommand("arc9_reloadlangs")
+        end},        
         { type = "button", text = "List Anims", content = "Print to Console", func = function(self2)
             RunConsoleCommand("arc9_dev_listanims")
         end},
@@ -355,8 +403,8 @@ local function DrawSettings(bg, page)
 
                 local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
                 if GetConVar(cvar) then
-                    newel:CustomSetConvar(cvar)
-                    newel:ChooseOptionID(GetConVar(cvar):GetInt())
+                    newel:CustomSetConvar(cvar, v2.minvalue or 0)
+                    newel:ChooseOptionID(GetConVar(cvar):GetInt() + 1 - (v2.minvalue or 0))
                 else
                     print("invalid combobox convar")
                 end

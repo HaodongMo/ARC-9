@@ -396,12 +396,13 @@ end
 function ARC9ComboBox:OnSelect(index, value, data)
     self.text = self:GetText()
     
-    if self.Convar then RunConsoleCommand(self.Convar, index) end
+    if self.Convar then RunConsoleCommand(self.Convar, index - 1 + self.MinValue) end
     self:SetText("")
 end
 
-function ARC9ComboBox:CustomSetConvar(cvar)
+function ARC9ComboBox:CustomSetConvar(cvar, minval)
     self.Convar = cvar
+    self.MinValue = minval
 end
 
 function ARC9ComboBox:OnMenuOpened(menu)

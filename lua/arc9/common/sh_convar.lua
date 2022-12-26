@@ -101,6 +101,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "language_id",
+        default = -1,
+        client = true,
+    },
+    {
         name = "font",
         default = "",
         client = true,
