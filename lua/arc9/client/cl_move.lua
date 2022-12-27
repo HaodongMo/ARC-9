@@ -31,20 +31,6 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     if GetConVar("arc9_autolean") then
         if cmd:KeyDown(IN_ATTACK2) then
             if arc9_lean_direction != nil and arc9_lean_direction != 0 then
-                local eyepos = ply:EyePos()
-                local forward = ply:EyeAngles():Forward()
-
-                local covertrace = util.TraceLine({
-                    start = eyepos,
-                    endpos = eyepos + forward * 32,
-                    filter = ply,
-                })
-
-                if !covertrace.Hit then
-                    arc9_lean_direction = 0
-                    return
-                end
-
                 if arc9_lean_direction > 0 then
                     cmd:AddKey(IN_ALT2)
                 elseif arc9_lean_direction < 0 then
