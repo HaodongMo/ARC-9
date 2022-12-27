@@ -175,6 +175,9 @@ local settingstable = {
         { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {"1Darsu", "2Fesiug", "3Arctic"}, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
         -- { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
         { type = "slider", text = "FOV", convar = "fov", min = -40, max = 40, decimals = 0, desc = "Add viewmodel FOV. Makes the viewmodel bigger or smaller. Use responsibly."},
+        { type = "slider", min = -16, max = 16, decimals = 1, text = "Add X", convar = "vm_addx", desc = "Shift the viewmodel to the right or left." },
+        { type = "slider", min = -16, max = 16, decimals = 1, text = "Add Y", convar = "vm_addy", desc = "Shift the viewmodel forwards and backwards." },
+        { type = "slider", min = -16, max = 16, decimals = 1, text = "Add Z", convar = "vm_addz", desc = "Shift the viewmodel up and down." },
 
         { type = "label", text = "TPIK" },
         { type = "bool", text = "Enable TPIK", convar = "tpik", desc = "TPIK (Third Person Inverse Kinematics) is a system that allows most weapons display detailed and same as in first person hands positions, reload and firing animations in third person." },

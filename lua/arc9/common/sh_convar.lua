@@ -285,6 +285,22 @@ local conVars = {
     {
         name = "vm_bobstyle",
         default = "0",
+        client = true,
+    },
+    {
+        name = "vm_addx",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "vm_addy",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "vm_addz",
+        default = "0",
+        client = true,
     },
     {
         name = "bullet_imaginary",
