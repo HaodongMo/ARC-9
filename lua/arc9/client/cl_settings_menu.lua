@@ -39,25 +39,25 @@ local settingstable = {
     //     -- { type = "input", text = "Color alpha", desc = "g" },
     // },
     {
-        TabName = "Performance",
-        { type = "label", text = "Important" },
-        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."},
-        { type = "bool", text = "All Flashlights", convar = "allflash", desc = "Fully render all flashlights from other players.\n\nVery expensive."},
-        { type = "bool", text = "TPIK", convar = "tpik", desc = "TPIK (Third Person Inverse Kinematics) is a system that allows most weapons display detailed and same as in first person hands positions, reload and firing animations in third person.\n\nConfigure it in Visuals tab."},
+        TabName = "settings.tabname.performance",
+        { type = "label", text = "settings.performance.important" },
+        { type = "bool", text = "settings.performance.cheapscopes.title", convar = "cheapscopes", desc = "settings.performance.cheapscopes.desc"},
+        { type = "bool", text = "settings.performance.allflash.title", convar = "allflash", desc = "settings.performance.allflash.desc"},
+        { type = "bool", text = "settings.performance.tpik.title", convar = "tpik", desc = "settings.performance.tpik.desc"},
 
-        { type = "label", text = "Blur" },
-        { type = "bool", text = "Customization background", convar = "cust_blur", desc = "Blurs customization background."},
-        { type = "bool", text = "While reloading", convar = "fx_reloadblur", desc = "Blurs the world while reloading."},
-        { type = "bool", text = "While readying", convar = "fx_animblur", desc = "Blurs the world while deploying a weapon for the first time."},
-        { type = "bool", text = "In scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
-        { type = "bool", text = "In sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
+        { type = "label", text = "settings.performance.blur.title" },
+        { type = "bool", text = "settings.performance.cust_blur.title", convar = "cust_blur", desc = "settings.performance.cust_blur.desc"},
+        { type = "bool", text = "settings.performance.fx_reloadblur.title", convar = "fx_reloadblur", desc = "settings.performance.fx_reloadblur.desc"},
+        { type = "bool", text = "settings.performance.fx_animblur.title", convar = "fx_animblur", desc = "settings.performance.fx_animblur.desc"},
+        { type = "bool", text = "settings.performance.fx_rtblur.title", convar = "fx_rtblur", desc = "settings.performance.fx_rtblur.desc"},
+        { type = "bool", text = "settings.performance.fx_adsblur.title", convar = "fx_adsblur", desc = "settings.performance.fx_adsblur.desc"},
 
-        { type = "label", text = "Shell Eject" },
-        { type = "bool", text = "Smoke Effects", convar = "eject_fx", desc = "Produce smoke effects from ejected shell casings, where the weapon supports this feature."},
-        { type = "slider", text = "Add Life Time", convar = "eject_time", min = -1, max = 60, decimals = 0, desc = "Allow shell casings to stay in the world for longer. Can be expensive."},
+        { type = "label", text = "settings.performance.shelleject.title" },
+        { type = "bool", text = "settings.performance.eject_fx.title", convar = "eject_fx", desc = "settings.performance.eject_fx.desc"},
+        { type = "slider", text = "settings.performance.eject_time.title", convar = "eject_time", min = -1, max = 60, decimals = 0, desc = "settings.performance.eject_time.desc"},
     },
     {
-        TabName = "Optics",
+        TabName = "settings.tabname.optics",
         -- { type = "label", text = "Performance" }, -- fine here but they are already in first tab
         { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."},
         -- { type = "bool", text = "Blur in Scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
@@ -72,7 +72,7 @@ local settingstable = {
         { type = "color", text = "Scopes", convar = "scope", desc = "Color to use for magnified scopes.\n\nNot all optics support this feature." },
     },
     {
-        TabName = "Crosshair",
+        TabName = "settings.tabname.crosshair",
         { type = "label", text = "Crosshair" },
         { type = "bool", text = "Enable Crosshair", convar = "cross_enable", desc = "Enable crosshair. Some guns do not allow you to use the crosshair." },
         { type = "coloralpha", text = "Crosshair Color", convar = "cross", desc = "The color of crosshair."},
@@ -80,7 +80,7 @@ local settingstable = {
         { type = "bool", text = "Force Crosshair", convar = "crosshair_force", desc = "Force the crosshair even on guns that don't want you to see it.\n\nServer setting." },
     },
     {
-        TabName = "Customize HUD",
+        TabName = "settings.tabname.hud_cust",
         { type = "label", text = "HUD" },
         -- crazy hacks to make hud scale work "almost dynamicly"
         { type = "slider", text = "HUD Scale", min = 0.5, max = 1.5, decimals = 2, desc = "Scale multiplier for ARC9's HUD.", convar2 = "hud_scale", func = function(self2, self3, settingspanel) 
@@ -122,7 +122,7 @@ local settingstable = {
         { type = "bool", text = "Exit Resets Selection", convar = "cust_exit_reset_sel", desc = "Exiting customization menu resets the active slot selection."}
     },
     {
-        TabName = "Game HUD",
+        TabName = "settings.tabname.hud_game",
         { type = "label", text = "LCD Panel" },
         { type = "bool", text = "Enable HUD", convar = "hud_arc9", desc = "Enable HUD for ARC9 weapons." },
         { type = "bool", text = "Always HUD", convar = "hud_always", desc = "Enable that HUD on all weapons." },
@@ -139,7 +139,7 @@ local settingstable = {
         { type = "bool", text = "Breath SFX", convar = "breath_sfx", desc = "Holding breath will play associated sound effects." },
     },
     {
-        TabName = "NPCs",
+        TabName = "settings.tabname.npc",
         { type = "label", text = "NPC Weapons" },
         { type = "bool", text = "Damage Equality", convar = "npc_equality", desc = "NPCs do just as much damage as players do.\n\nThis is a server variable." },
         { type = "bool", text = "Give Attachments", convar = "npc_atts", desc = "Spawned or given ARC9 weapons receive a random set of attachments.\n\nThis is a server variable." },
@@ -148,7 +148,7 @@ local settingstable = {
         { type = "bool", text = "Players Can Give Weapons", convar = "npc_give_weapons", desc = "Players are able to press E on NPCs to give them their weapon.\n\nThis is a server variable." },
     },
     {
-        TabName = "Gameplay",
+        TabName = "settings.tabname.gameplay",
         { type = "label", text = "Controls" },
         { type = "bool", text = "Toggle ADS", convar = "toggleads", desc = "Aiming will toggle sights." },
             { type = "bool", text = "Automatic Lean", convar = "autolean", desc = "Aiming will try to automatically lean if this is possible." },
@@ -170,7 +170,7 @@ local settingstable = {
         -- overheating
     },
     {
-        TabName = "Visuals",
+        TabName = "settings.tabname.visuals",
         { type = "label", text = "Viewmodel" },
         { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {"1Darsu", "2Fesiug", "3Arctic"}, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
         -- { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
@@ -182,7 +182,7 @@ local settingstable = {
         { type = "slider", text = "TPIK Framerate", convar = "tpik_framerate", min = 0, max = 200, decimals = 0, desc = "Maximum framerate at which TPIK can run. Set to 0 for unlimited." },
     },
     {
-        TabName = "Bullet Physics",
+        TabName = "settings.tabname.bullets",
         { type = "label", text = "Bullet Physics"},
         { type = "bool", text = "Physical Bullets", convar = "bullet_physics", desc = "Weapons that support this feature will fire physical bullets, which have drop, travel time, and drag.\n\nThis is a server variable." },
         { type = "slider", text = "Gravity", convar = "bullet_gravity", min = 0, max = 10, decimals = 1, desc = "Multiplier for bullet gravity.\n\nThis is a server variable." },
@@ -193,7 +193,7 @@ local settingstable = {
         { type = "bool", text = "Imaginary Bullets", convar = "bullet_imaginary", desc = "Bullets will appear to travel into the skybox, beyond the map's bounds." },
     },
     {
-        TabName = "Attachments",
+        TabName = "settings.tabname.attachments",
         { type = "label", text = "Customization"},
         { type = "bool", text = "Disable Customization", convar = "atts_nocustomize", desc = "Disallow all customization via the customization menu.\n\nThis is a server variable."},
         { type = "slider", text = "Max Attachments", convar = "atts_max", min = 0, max = 250, decimals = 0, desc = "The maximum number of attachments that can be put on a weapon, including cosmetic attachments.\n\nThis is a server variable."},
@@ -205,7 +205,7 @@ local settingstable = {
         { type = "bool", text = "Generate Entities", convar = "atts_generateentities", desc = "Generate entities that can be spawned, allowing you to pick up attachments when free attachments is off.\n\nMight increase load time.\n\nThis is a server variable."},
     },
     {
-        TabName = "Modifiers",
+        TabName = "settings.tabname.modifiers",
         { type = "label", text = "Quick Stats Modifiers"},
         -- { type = "slider", text = "Damage", convar = "wawa", min = 0, max = 10, decimals = 0, desc = "The     Damage\n\nThis is a server variable."},
 
@@ -216,7 +216,7 @@ local settingstable = {
         end},    
     },
     {
-        TabName = "Controller",
+        TabName = "settings.tabname.controller",
         -- { type = "label", text = "Controller"},
         { type = "bool", text = "Controller Glyphs", convar = "controller", desc = "Enable custom controller-compatible glyphs, showing controller buttons instead of the default keys."},
         { type = "bool", text = "Rumble", convar = "controller_rumble", desc = "Enable controller rumble as long as Fesiug's DLL mod is loaded."},
@@ -227,7 +227,7 @@ local settingstable = {
         end},
     },
     {
-        TabName = "Developer",
+        TabName = "settings.tabname.developer",
         { type = "label", text = "Developer Options"},
         { type = "bool", text = "Always Ready", convar = "dev_always_ready", desc = "Always play \"ready\" animation when deploying a weapon.\n\nThis is a server variable."},
         { type = "bool", text = "Benchgun", convar = "dev_benchgun", desc = "Keep the weapon where it currently is."},
@@ -297,8 +297,8 @@ local function DrawSettings(bg, page)
                 -- desc!!!!!!!!
 
                 if self2:IsHovered() then
-                    if activedesc != (v2.desc or "") then
-                        activedesc = (v2.desc or "")
+                    if activedesc != (ARC9:GetPhrase(v2.desc) or v2.desc or "") then
+                        activedesc = (ARC9:GetPhrase(v2.desc) or v2.desc or "")
                         if bg.desc then bg.desc:Remove() end
 
                         local desc = vgui.Create("ARC9ScrollPanel", bg)
@@ -328,10 +328,10 @@ local function DrawSettings(bg, page)
 
 
                 surface.SetFont("ARC9_12_Slim")
-                local tw, th = surface.GetTextSize(v2.text or "Owo")
+                local tw, th = surface.GetTextSize(ARC9:GetPhrase(v2.text) or v2.text or "")
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.SetTextPos(ARC9ScreenScale(4), h/2 - th/2)
-                surface.DrawText(v2.text or "Owo")
+                surface.DrawText(ARC9:GetPhrase(v2.text) or v2.text or "")
             end
 
             local elpw, elph = ARC9ScreenScale(168), ARC9ScreenScale(21)
@@ -447,11 +447,11 @@ local function DrawSettings(bg, page)
             surface.DrawRect(ARC9ScreenScale(3.4), 0, w-ARC9ScreenScale(3.4), h)         
             
             surface.SetFont("ARC9_12")
-            local tw = surface.GetTextSize(v.TabName)
+            local tw = surface.GetTextSize(ARC9:GetPhrase(v.TabName))
 
             surface.SetTextColor(buttontextcolor)
             surface.SetTextPos((w - tw) / 2 + ARC9ScreenScale(1.7), ARC9ScreenScale(3))
-            surface.DrawText(v.TabName)
+            surface.DrawText(ARC9:GetPhrase(v.TabName))
         end
         buttontalling = buttontalling + ARC9ScreenScale(19+1.7)
     end
