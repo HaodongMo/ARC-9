@@ -383,5 +383,5 @@ function SWEP:DoIconCapture()
 end
 
 function SWEP:RangeUnitize(range)
-    return tostring(math.Round(range * ARC9.HUToM)) .. "M"
+    return tostring(math.Round(range * ARC9.HUToM)) .. ARC9:GetPhrase("unit.meter")
 end

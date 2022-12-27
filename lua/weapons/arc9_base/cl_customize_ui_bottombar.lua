@@ -101,7 +101,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     -- backbtn.Think = function(self2)
     --     if !IsValid(self) then return end
     --     if self2:IsHovered() then
-    --         self.CustomizeHints["Select"] = "Return"
+    --         self.CustomizeHints["customize.hint.select"] = "Return"
     --     end
     -- end
 
@@ -145,7 +145,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         -- folderbtn.Think = function(self2)
         --     if !IsValid(self) then return end
         --     if self2:IsHovered() then
-        --         self.CustomizeHints["Select"] = "Open"
+        --         self.CustomizeHints["customize.hint.select"] = "Open"
         --     end
         -- end
     end
@@ -223,9 +223,9 @@ local function enterfolder(self, scroll, slottbl, fname)
 
             if self2:IsHovered() then
                 if slot.Installed != att.att then
-                    self.CustomizeHints["Select"] = "Attach"
+                    self.CustomizeHints["customize.hint.select"] = "customize.hint.attach"
                 elseif self2.slottbl.Installed then
-                    self.CustomizeHints["Deselect"] = "Unattach"
+                    self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
                 end
                 
                 if self.AttInfoBarAtt != self2.att then
@@ -275,9 +275,9 @@ local function enterfolder(self, scroll, slottbl, fname)
         --     local hasbg = false
 
         --     if self2:IsHovered() then
-        --         if !attached then self.CustomizeHints["Select"]  = "Attach" end
-        --         -- if attached then self.CustomizeHints["Deselect"] = "Unattach" end
-        --         if slot.Installed then self.CustomizeHints["Deselect"] = "Unattach" end
+        --         if !attached then self.CustomizeHints["customize.hint.select"]  = "Attach" end
+        --         -- if attached then self.CustomizeHints["customize.hint.deselect"] = "Unattach" end
+        --         if slot.Installed then self.CustomizeHints["customize.hint.deselect"] = "Unattach" end
         --     end
 
         --     if self2:IsHovered() or attached then
@@ -605,8 +605,8 @@ function SWEP:CreateHUD_AttInfo()
             end
 
             if self2:IsHovered() then
-                self.CustomizeHints["Select"] = "Next Mode"
-                self.CustomizeHints["Deselect"] = "Last Mode"
+                self.CustomizeHints["customize.hint.select"] = "customize.hint.nextmode"
+                self.CustomizeHints["customize.hint.deselect"] = "customize.hint.lastmode"
             end
 
         end

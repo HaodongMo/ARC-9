@@ -248,11 +248,11 @@ function SWEP:CreateHUD_Bench()
             surface.SetMaterial(mat_body)
             surface.DrawTexturedRect(body_x, body_y, body_w, body_h)
 
-            local txt_dmg_head = tostring(math.Round(dmg_head, 0)) .. " DMG"
-            local txt_dmg_chest = tostring(math.Round(dmg_chest, 0)) .. " DMG"
-            local txt_dmg_stomach = tostring(math.Round(dmg_stomach, 0)) .. " DMG"
-            local txt_dmg_legs = tostring(math.Round(dmg_legs, 0)) .. " DMG"
-            local txt_dmg_arms = tostring(math.Round(dmg_arms, 0)) .. " DMG"
+            local txt_dmg_head = tostring(math.Round(dmg_head, 0)) .. " " .. ARC9:GetPhrase("unit.dmg")
+            local txt_dmg_chest = tostring(math.Round(dmg_chest, 0)) .. " " .. ARC9:GetPhrase("unit.dmg")
+            local txt_dmg_stomach = tostring(math.Round(dmg_stomach, 0)) .. " " .. ARC9:GetPhrase("unit.dmg")
+            local txt_dmg_legs = tostring(math.Round(dmg_legs, 0)) .. " " .. ARC9:GetPhrase("unit.dmg")
+            local txt_dmg_arms = tostring(math.Round(dmg_arms, 0)) .. " " .. ARC9:GetPhrase("unit.dmg")
 
             surface.SetDrawColor(getstkcolor(stk_head))
             surface.SetMaterial(mat_body_head)
@@ -303,17 +303,17 @@ function SWEP:CreateHUD_Bench()
 
             surface.DrawLine(ARC9ScreenScale(4), ARC9ScreenScale(70 + 6), ARC9ScreenScale(30+8), ARC9ScreenScale(70 + 6))
 
-            local txt_tr = tostring(self:GetProcessedValue("Num")) .. "x PROJ"
+            local txt_tr = tostring(self:GetProcessedValue("Num")) .. "x " .. ARC9:GetPhrase("unit.projectiles")
             local trw = surface.GetTextSize(txt_tr)
             surface.SetTextPos(w - trw - ARC9ScreenScale(2), ARC9ScreenScale(10))
             surface.DrawText(txt_tr)
 
-            local txt_corner = "BALLISTICS DUMMY TEST"
+            local txt_corner = ARC9:GetPhrase("customize.bench.dummy") or ""
             local tw = surface.GetTextSize(txt_corner)
             surface.SetTextPos((w - tw) / 2, ARC9ScreenScale(1))
             surface.DrawText(txt_corner)
 
-            local txt_bottom = "EFFECT AT RANGE " .. tostring(math.Round(ARC9.HUToM * ranger_range, 0)) .. "m"
+            local txt_bottom = (ARC9:GetPhrase("customize.bench.effect") or "") .. " " .. tostring(math.Round(ARC9.HUToM * ranger_range, 0)) .. ARC9:GetPhrase("unit.meter")
             local tbw = surface.GetTextSize(txt_bottom)
             surface.SetTextPos((w - tbw) / 2, h - ARC9ScreenScale(8))
             surface.DrawText(txt_bottom)
@@ -405,7 +405,7 @@ function SWEP:CreateHUD_Bench()
 
                     local dmg = self:GetDamageAtRange(range)
 
-                    local txt_dmg1 = tostring(math.Round(dmg)) .. " DMG"
+                    local txt_dmg1 = tostring(math.Round(dmg)) .. " " .. ARC9:GetPhrase("unit.dmg")
 
                     if self:GetValue("Num") > 1 then
                         txt_dmg1 = math.Round(dmg * self:GetValue("Num")) .. "-" .. txt_dmg1
@@ -432,7 +432,7 @@ function SWEP:CreateHUD_Bench()
 
 
             if draw_rangetext then
-                local txt_dmg1 = tostring(math.Round(dmg_max)) .. " DMG"
+                local txt_dmg1 = tostring(math.Round(dmg_max)) .. " " .. ARC9:GetPhrase("unit.dmg")
 
                 if self:GetValue("Num") > 1 then
                     txt_dmg1 = math.Round(dmg_max * self:GetValue("Num")) .. "-" .. txt_dmg1
@@ -450,7 +450,7 @@ function SWEP:CreateHUD_Bench()
                 surface.SetTextPos((w / 5) - txt_range1_w - (ARC9ScreenScale(2)), ARC9ScreenScale(1 + 8))
                 surface.DrawText(txt_range1)
 
-                local txt_dmg2 = tostring(math.Round(dmg_min)) .. " DMG"
+                local txt_dmg2 = tostring(math.Round(dmg_min)) .. " " .. ARC9:GetPhrase("unit.dmg")
 
                 if self:GetValue("Num") > 1 then
                     txt_dmg2 = math.Round(dmg_min * self:GetValue("Num")) .. "-" .. txt_dmg2
@@ -465,7 +465,7 @@ function SWEP:CreateHUD_Bench()
                 surface.DrawText(txt_range2)
             end
 
-            local txt_corner = "TERMINAL BALLISTICS PERFORMANCE EVALUATION"
+            local txt_corner = ARC9:GetPhrase("customize.bench.ballistics") or ""
             surface.SetFont("ARC9_6")
             local tw = surface.GetTextSize(txt_corner)
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
@@ -494,7 +494,7 @@ function SWEP:CreateHUD_Bench()
 
             local col = ARC9.GetHUDColor("bg")
             if self2:IsHovered() then
-                self.CustomizeHints["Select"] = "Recalculate"
+                self.CustomizeHints["customize.hint.select"] = "customize.hint.recalculate"
                 col = ARC9.GetHUDColor("hi", 70)
             end
 
@@ -560,7 +560,7 @@ function SWEP:CreateHUD_Bench()
             surface.SetTextPos(w - range_3_txtw - ARC9ScreenScale(2), h - ARC9ScreenScale(16))
             surface.DrawText(range_3_txt)
 
-            local txt_corner = "MECHANICAL PRECISION TEST"
+            local txt_corner = ARC9:GetPhrase("customize.bench.precision")
             surface.SetFont("ARC9_6")
             local tw = surface.GetTextSize(txt_corner)
             surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(8))

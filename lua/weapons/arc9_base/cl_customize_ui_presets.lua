@@ -78,8 +78,8 @@ function SWEP:CreatePresetMenu(reload)
     savebtn.Think = function(self2)
         if !IsValid(self) then return end
         if self2:IsHovered() then
-            self.CustomizeHints["Select"] = "Save"
-            self.CustomizeHints["Deselect"] = "Quicksave"
+            self.CustomizeHints["customize.hint.select"] = "customize.hint.save"
+            self.CustomizeHints["customize.hint.deselect"] = "customize.hint.quicksave"
         end
     end
     savebtn.DoRightClick = function(self2)
@@ -132,7 +132,7 @@ function SWEP:CreatePresetMenu(reload)
     importbtn.Think = function(self2)
         if !IsValid(self) then return end
         if self2:IsHovered() then
-            self.CustomizeHints["Select"] = "Import"
+            self.CustomizeHints["customize.hint.select"] = "customize.hint.import"
         end
     end
 
@@ -186,7 +186,7 @@ function SWEP:CreatePresetMenu(reload)
                 if self2:IsDown() then 
                     surface.SetDrawColor(ARC9.GetHUDColor("hi", 100))
                 end
-                self.CustomizeHints["Select"] = "Install"
+                self.CustomizeHints["customize.hint.select"] = "customize.hint.install"
                 surface.DrawRect(0, 0, w, h)
             end
             surface.SetDrawColor(20, 20, 20, 120)
@@ -226,7 +226,7 @@ function SWEP:CreatePresetMenu(reload)
         -- preset_apply.Think = function(self2)
         --     if !IsValid(self) then return end
         --     if self2:IsHovered() then
-        --         self.CustomizeHints["Select"] = "Install"
+        --         self.CustomizeHints["customize.hint.select"] = "Install"
         --     end
         -- end
 
@@ -250,7 +250,7 @@ function SWEP:CreatePresetMenu(reload)
             preset_share.Think = function(self2)
                 if !IsValid(self) then return end
                 if self2:IsHovered() then
-                    self.CustomizeHints["Select"] = "Export"
+                    self.CustomizeHints["customize.hint.select"] = "customize.hint.export"
                 end
             end
 
@@ -268,7 +268,7 @@ function SWEP:CreatePresetMenu(reload)
             preset_delete.Think = function(self2)
                 if !IsValid(self) then return end
                 if self2:IsHovered() then
-                    self.CustomizeHints["Select"] = "Delete"
+                    self.CustomizeHints["customize.hint.select"] = "customize.hint.delete"
                 end
             end
         end

@@ -513,7 +513,7 @@ function ARC9Button:Paint(w, h)
         surface.DrawTexturedRect(0, 0, w, h)
     end
     
-    local text = self.text or "owo"
+    local text = self.text or ""
     surface.SetFont("ARC9_10")
     local tw = surface.GetTextSize(text)
     surface.SetTextColor(color)

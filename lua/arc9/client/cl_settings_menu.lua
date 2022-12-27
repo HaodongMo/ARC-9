@@ -40,12 +40,12 @@ local settingstable = {
     // },
     {
         TabName = "Performance",
-        { type = "label", text = "Important" },        
+        { type = "label", text = "Important" },
         { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."},
         { type = "bool", text = "All Flashlights", convar = "allflash", desc = "Fully render all flashlights from other players.\n\nVery expensive."},
         { type = "bool", text = "TPIK", convar = "tpik", desc = "TPIK (Third Person Inverse Kinematics) is a system that allows most weapons display detailed and same as in first person hands positions, reload and firing animations in third person.\n\nConfigure it in Visuals tab."},
 
-        { type = "label", text = "Blur" },        
+        { type = "label", text = "Blur" },
         { type = "bool", text = "Customization background", convar = "cust_blur", desc = "Blurs customization background."},
         { type = "bool", text = "While reloading", convar = "fx_reloadblur", desc = "Blurs the world while reloading."},
         { type = "bool", text = "While readying", convar = "fx_animblur", desc = "Blurs the world while deploying a weapon for the first time."},
@@ -62,11 +62,11 @@ local settingstable = {
         { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."},
         -- { type = "bool", text = "Blur in Scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
         -- { type = "bool", text = "Blur in Sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
-        
+
         { type = "label", text = "Control" },
         { type = "bool", text = "Compensate Sensitivity", convar = "compensate_sens", desc = "Compensate sensitivity for magnification." },
         { type = "bool", text = "Toggle ADS", convar = "toggleads", desc = "Aiming will toggle sights." },
-        
+
         { type = "label", text = "Color" },
         { type = "color", text = "Reflex Sights", convar = "reflex", desc = "Color to use for reflex/holographic sights.\n\nNot all optics support this feature." },
         { type = "color", text = "Scopes", convar = "scope", desc = "Color to use for magnified scopes.\n\nNot all optics support this feature." },

@@ -112,9 +112,9 @@ function SWEP:CreateHUD_Slots(scroll)
         slotbtn.Think = function(self2)
             if !IsValid(self) then return end
             if self2:IsHovered() then
-                self.CustomizeHints["Select"] = "Expand"
+                self.CustomizeHints["customize.hint.select"] = "customize.hint.expand"
                 if self2.slot.Installed then
-                    self.CustomizeHints["Deselect"] = "Unattach"
+                    self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
                 end
                 self2.slot.hovered = true
             else

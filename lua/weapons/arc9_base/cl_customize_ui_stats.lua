@@ -54,8 +54,8 @@ function SWEP:CreateHUD_Stats()
 
     local stats = {
         {
-            title = "Firepower",
-            unit = "DMG",
+            title = "customize.stats.firepower",
+            unit = "unit.dmg",
             fifty = 50,
             conv = function(a)
                 local dv = self:GetProcessedValue("DamageMax")
@@ -73,10 +73,10 @@ function SWEP:CreateHUD_Stats()
             end,
         },
         {
-            title = "ROF",
+            title = "customize.stats.rof",
             stat = "RPM",
             fifty = 600,
-            unit = "RPM",
+            unit = "unit.rpm",
             conv = function(a)
                 local cyclic = self:GetProcessedValue("RPM")
                 a = GetTrueRPM(self)
@@ -94,10 +94,10 @@ function SWEP:CreateHUD_Stats()
             end,
         },
         {
-            title = "Cyclic ROF",
+            title = "customize.stats.cyclic",
             stat = "RPM",
             fifty = 600,
-            unit = "RPM",
+            unit = "unit.rpm",
             conv = function(a)
                 a = math.Round(a / 50, 0) * 50
 
@@ -108,7 +108,7 @@ function SWEP:CreateHUD_Stats()
             end,
         },
         {
-            title = "Capacity",
+            title = "customize.stats.capacity",
             stat = "ClipSize",
             fifty = 20,
             cond = function()
@@ -125,8 +125,8 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Range",
-            unit = "M",
+            title = "customize.stats.range",
+            unit = "unit.meter",
             fifty = 500,
             stat = "RangeMax",
             conv = function(a)
@@ -137,20 +137,20 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Precision",
+            title = "customize.stats.precision",
             stat = "Spread",
             fifty = 5,
-            unit = "MoA",
+            unit = "unit.moa",
             conv = function(a) return math.Round(a * 360 * 60 / 10, 1) end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("Spread") == 0
             end
         },
         {
-            title = "Muzzle Velocity",
+            title = "customize.stats.muzzlevelocity",
             stat = "PhysBulletMuzzleVelocity",
             fifty = 500,
-            unit = "m/s",
+            unit = "unit.meterpersecond",
             conv = function(a) return math.Round(a * ARC9.HUToM) end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
@@ -159,7 +159,7 @@ function SWEP:CreateHUD_Stats()
 
 
         {
-            title = "Ammo Type",
+            title = "customize.stats.ammo",
             stat = "Ammo",
             conv = function(a) return language.GetPhrase(a .. "_ammo") end,
             cond = function()
@@ -167,16 +167,16 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Penetration",
+            title = "customize.stats.penetration",
             stat = "Penetration",
             fifty = 50,
-            unit = "mm",
+            unit = "unit.millimeter",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
             end
         },
         {
-            title = "Ricochet Chance",
+            title = "customize.stats.ricochet",
             stat = "RicochetChance",
             fifty = 50,
             unit = "%",
@@ -186,7 +186,7 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Armor Piercing",
+            title = "customize.stats.armorpiercing",
             stat = "ArmorPiercing",
             fifty = 25,
             unit = "%",
@@ -196,36 +196,36 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Explosive Damage",
+            title = "customize.stats.explosive",
             stat = "ExplosionDamage",
             fifty = 50,
-            unit = "DMG",
+            unit = "unit.dmg",
             conv = function(a) return math.Round(a, 0) end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("ExplosionDamage") <= 0
             end
         },
         {
-            title = "Movement Speed",
+            title = "customize.stats.speed",
             stat = "SpeedMult",
             fifty = 95,
             unit = "%",
             conv = function(a) return math.Round(a * 100, 0) end,
         },
         {
-            title = "Aim Time",
+            title = "customize.stats.aimtime",
             stat = "AimDownSightsTime",
             fifty = 0.3,
-            unit = "s",
+            unit = "unit.second",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end
         },
         {
-            title = "Sprint To Fire Time",
+            title = "customize.stats.sprinttofire",
             stat = "SprintToFireTime",
             fifty = 0.3,
-            unit = "s"
+            unit = "unit.second"
         },
         -- {
         --     title = "Projectile Count",
@@ -262,7 +262,7 @@ function SWEP:CreateHUD_Stats()
         --     end
         -- },
         {
-            title = "Fire Modes",
+            title = "customize.stats.firemodes",
             conv = function(a)
                 str = ""
 
@@ -290,34 +290,34 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Burst Delay",
+            title = "customize.stats.burstdelay",
             stat = "PostBurstDelay",
             fifty = 0.1,
-            unit = "s",
+            unit = "unit.second",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("PostBurstDelay") <= 0 or self:GetCapacity() == 0
             end
         },
         {
-            title = "Trigger Delay",
+            title = "customize.stats.triggerdelay",
             stat = "TriggerDelayTime",
             fifty = 0.1,
-            unit = "s",
+            unit = "unit.second",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("TriggerDelayTime") <= 0 or !self:GetProcessedValue("TriggerDelay")
             end
         },
         {
-            title = "Noise",
+            title = "customize.stats.noise",
             stat = "ShootVolume",
             fifty = 100,
-            unit = "dB",
+            unit = "unit.decibel",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end
         },
         {
-            title = "Sway",
+            title = "customize.stats.sway",
             stat = "Sway",
             fifty = 95,
             unit = "%",
@@ -327,7 +327,7 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Free Aim Radius",
+            title = "customize.stats.freeaim",
             stat = "FreeAimRadius",
             fifty = 20,
             unit = "°",
@@ -336,7 +336,7 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "Supply Limit",
+            title = "customize.stats.supplylimit",
             stat = "SupplyLimit",
             fifty = 3,
             cond = function()
@@ -351,7 +351,7 @@ function SWEP:CreateHUD_Stats()
     local statsspanel = vgui.Create("DPanel", lowerpanel)
     statsspanel:SetPos(ARC9ScreenScale(60), ARC9ScreenScale(20))
     statsspanel:SetSize(lowerpanel:GetWide()*0.8, ARC9ScreenScale(98))
-    statsspanel.Paint = function(self2, w, h)   
+    statsspanel.Paint = function(self2, w, h)
         -- surface.SetDrawColor(144, 0, 0, 100)
         -- surface.DrawRect(0, 0, w, h)
     end
@@ -401,16 +401,16 @@ function SWEP:CreateHUD_Stats()
             surface.SetFont("ARC9_10_Slim")
             surface.SetTextPos(ARC9ScreenScale(2), ARC9ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.DrawText(self2.stats.title)
+            surface.DrawText(ARC9:GetPhrase(self2.stats.title) or self2.stats.title)
 
             local tw_u = 0
             if self2.stats.unit then
                 surface.SetFont("ARC9_8")
-                tw_u = surface.GetTextSize(self2.stats.unit)
+                tw_u = surface.GetTextSize(ARC9:GetPhrase(self2.stats.unit) or self2.stats.unit)
 
                 surface.SetTextPos(w - tw_u - ARC9ScreenScale(2), ARC9ScreenScale(3))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
-                surface.DrawText(self2.stats.unit)
+                surface.DrawText(ARC9:GetPhrase(self2.stats.unit) or self2.stats.unit)
                 
                 tw_u = tw_u + ARC9ScreenScale(4)
             else

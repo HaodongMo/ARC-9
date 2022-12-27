@@ -60,7 +60,7 @@ end
 
 SWEP.CustomizeButtons = {
     {
-        title = "CUSTOMIZE",
+        title = "customize.panel.customize",
         func = function(self2)
             if self2.BottomBarCategory == 1 then
                 self2.BottomBarAddress = nil
@@ -94,7 +94,7 @@ SWEP.CustomizeButtons = {
         cutcorner = 1
     },
     {
-        title = "PERSONALIZE",
+        title = "customize.panel.personalize",
         func = function(self2)
             if self2.BottomBarCategory == 0 then
                 self2.BottomBarAddress = nil
@@ -147,7 +147,7 @@ SWEP.CustomizeButtons = {
     --     end
     -- },
     {
-        title = "STATS & BALLISTICS",
+        title = "customize.panel.stats",
         func = function(self2)
             self2:CreateHUD_Bench()
 
@@ -169,7 +169,7 @@ SWEP.CustomizeButtons = {
         end
     },
     {
-        title = "TRIVIA",
+        title = "customize.panel.trivia",
         func = function(self2)
             self2:CreateHUD_Trivia()
 
@@ -189,7 +189,7 @@ SWEP.CustomizeButtons = {
         cutcorner = 2
     },
     {
-        title = "INSPECT",
+        title = "customize.panel.inspect",
         func = function(self2, page)
             self2:ClearTabPanel()
 
@@ -682,7 +682,7 @@ function SWEP:CreateCustomizeHUD()
             surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(4))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetFont("ARC9_8")
-            surface.DrawText("Controller mode is on.")
+            surface.DrawText(ARC9.GetPhrase("customize.hint.controller"))
 
             --[[surface.SetMaterial(Material("arc9/gamepad/corner.png", ""))
             surface.SetDrawColor(255, 255, 255, 255)
@@ -800,9 +800,9 @@ function SWEP:CreateCustomizeHUD()
                 end
 
                 if hoveredslot then
-                    self.CustomizeHints["Select"] = "Expand"
+                    self.CustomizeHints["customize.hint.select"] = "customize.hint.expand"
                     if slot.Installed then
-                        self.CustomizeHints["Deselect"] = "Unattach"
+                        self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
                     end
                 end
 
@@ -988,34 +988,34 @@ function SWEP:CreateCustomizeHUD()
     if ARC9.ControllerMode() then
         trolling = {
             {
-                action = "Select",
+                action = "customize.hint.select",
                 glyph = ARC9.GetBindKey("+jump"),
                 hidden = true,
             },
             {
-                action = "Deselect",
+                action = "customize.hint.deselect",
                 glyph = ARC9.GetBindKey("+reload"),
                 hidden = true,
             },
             {
-                action = "Zoom",
+                action = "customize.hint.zoom",
                 glyph = ARC9.GetBindKey("invprev"),
                 glyph2 = ARC9.GetBindKey("invnext"),
                 row2 = true,
             },
             {
-                action = "Pan",
+                action = "customize.hint.pan",
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = "shared_lstick",
                 row2 = true,
             },
             {
-                action = "Rotate",
+                action = "customize.hint.rotate",
                 glyph = "shared_lstick",
                 row2 = true,
             },
             {
-                action = "Cursor",
+                action = "customize.hint.cursor",
                 glyph = "shared_rstick",
                 row2 = true,
             },
@@ -1023,45 +1023,45 @@ function SWEP:CreateCustomizeHUD()
     else
         trolling = {
             {
-                action = "Select",
+                action = "customize.hint.select",
                 glyph = ARC9.GetBindKey("+attack"),
                 hidden = true,
             },
             {
-                action = "Deselect",
+                action = "customize.hint.deselect",
                 glyph = ARC9.GetBindKey("+attack2"),
                 hidden = true,
             },
             {
-                action = "Zoom",
+                action = "customize.hint.zoom",
                 glyph = ARC9.GetBindKey("invprev"),
                 glyph2 = ARC9.GetBindKey("invnext"),
                 row2 = true,
             },
             {
-                action = "Pan",
+                action = "customize.hint.pan",
                 glyph = ARC9.GetBindKey("+attack"),
                 glyph2 = "shared_touch",
                 row2 = true,
             },
             {
-                action = "Rotate",
+                action = "customize.hint.rotate",
                 glyph = ARC9.GetBindKey("+attack2"),
                 glyph2 = "shared_touch",
                 row2 = true,
             },
             {
-                action = "Recenter",
+                action = "customize.hint.recenter",
                 glyph = ARC9.GetBindKey("+reload"),
                 row3 = true,
             },
             {
-                action = "Cycle Slot",
+                action = "customize.hint.cycle",
                 glyph = ARC9.GetBindKey("+showscores"),
                 row3 = true,
             },
             {
-                action = "Last Slot",
+                action = "customize.hint.last",
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = ARC9.GetBindKey("+showscores"),
                 row3 = true,
@@ -1117,7 +1117,7 @@ function SWEP:CreateCustomizeHUD()
                     table.insert(ToAdd3, " ")
                     table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(12) })
                 end
-                table.insert(ToAdd3, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+                table.insert(ToAdd3, " " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             elseif v.row2 then
                 -- table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(12) })
                 -- if v.glyph2 then
@@ -1131,7 +1131,7 @@ function SWEP:CreateCustomizeHUD()
                     table.insert(ToAdd, " ")
                     table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(12) })
                 end
-                table.insert(ToAdd, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+                table.insert(ToAdd, " " .. ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             end
         end
 
@@ -1293,7 +1293,7 @@ function SWEP:CreateHUD_RHP()
         topright_presets:SetPos(ARC9ScreenScale(123)-(ARC9ScreenScale(28)+tw), ARC9ScreenScale(19))
         topright_presets:SetSize(ARC9ScreenScale(28)+tw, ARC9ScreenScale(21))
         topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
-        topright_presets:SetButtonText("Presets")
+        topright_presets:SetButtonText(ARC9:GetPhrase("customize.panel.presets"))
         topright_presets:SetIsCheckbox(true)
         local oldpresetsdoclick = topright_presets.DoClick
         topright_presets.DoClick = function(self2)
@@ -1363,7 +1363,7 @@ function SWEP:CreateHUD_RHP()
         local custtabbtn = vgui.Create("DButton", lowerpanel)
         --
         surface.SetFont("ARC9_12")
-        local titlewidth = surface.GetTextSize(btn.title) + ARC9ScreenScale(12.5)
+        local titlewidth = surface.GetTextSize(ARC9:GetPhrase(btn.title)) + ARC9ScreenScale(12.5)
         --
 
         if btn.inspect then
@@ -1375,7 +1375,7 @@ function SWEP:CreateHUD_RHP()
         end
 
         custtabbtn:SetSize(titlewidth, ARC9ScreenScale(14.5))
-        custtabbtn.title = btn.title
+        custtabbtn.title = ARC9:GetPhrase(btn.title)
         custtabbtn.page = i - 1
         custtabbtn.func = btn.func
         custtabbtn:SetText("")
@@ -1396,7 +1396,7 @@ function SWEP:CreateHUD_RHP()
 
             if self2:IsHovered() then
                 barbuttoncolor = ARC9.GetHUDColor("hi")
-                if self.CustomizeTab != self2.page then self.CustomizeHints["Select"] = "Open" end
+                if self.CustomizeTab != self2.page then self.CustomizeHints["customize.hint.select"] = "customize.hint.open" end
             end
 
             surface.SetDrawColor(mainbuttoncolor)

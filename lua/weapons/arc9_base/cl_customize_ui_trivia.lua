@@ -27,14 +27,14 @@ function SWEP:CreateHUD_Trivia()
     local desctitle = desc:Add("DPanel")
     desctitle:SetSize(desc:GetWide(), ARC9ScreenScale(7))
     desctitle:Dock(TOP)
-    desctitle.title = "Description"
+    desctitle.title = "customize.trivia.description"
     desctitle.Paint = function(self2, w, h)
         if !IsValid(self) then return end
 
         surface.SetFont("ARC9_7_Slim")
         surface.SetTextPos(ARC9ScreenScale(2), ARC9ScreenScale(0))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.DrawText(self2.title)
+        surface.DrawText(ARC9:GetPhrase(self2.title) or self2.title)
     end
 
     local descmultiline = {}
