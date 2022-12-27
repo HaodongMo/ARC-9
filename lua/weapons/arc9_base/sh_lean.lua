@@ -57,7 +57,7 @@ function SWEP:ThinkLean()
 end
 
 function SWEP:GetLeanDelta()
-    return self:GetLeanAmount()
+    return math.ease.InSine(self:GetLeanAmount()) * (self:GetLeanAmount() > 0 and 1 or -1)
 end
 
 function SWEP:GetLeanOffset()
