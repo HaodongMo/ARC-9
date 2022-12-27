@@ -51,6 +51,21 @@ local conVars = {
         client = true
     },
     {
+        name = "cross_size_mult",
+        default = "1",
+        client = true
+    },
+    {
+        name = "cross_size_dot",
+        default = "1",
+        client = true
+    },
+    {
+        name = "cross_size_prong",
+        default = "1",
+        client = true
+    },
+    {
         name = "reflex_r",
         default = "255",
         client = true

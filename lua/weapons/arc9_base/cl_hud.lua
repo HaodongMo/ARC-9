@@ -46,8 +46,10 @@ function SWEP:DoDrawCrosshair(x, y)
         y = toscreen.y
     end
 
-    local dotsize = ARC9ScreenScale(1)
-    local prong = ARC9ScreenScale(4)
+    local m = GetConVar("arc9_cross_size_mult"):GetFloat()
+
+    local dotsize = ARC9ScreenScale(1) * m * GetConVar("arc9_cross_size_dot"):GetFloat()
+    local prong = ARC9ScreenScale(4) * m * GetConVar("arc9_cross_size_prong"):GetFloat()
     local minigap = ARC9ScreenScale(2)
     local miniprong_1 = ARC9ScreenScale(4)
     local miniprong_2 = ARC9ScreenScale(2)
@@ -224,11 +226,11 @@ function SWEP:DoDrawCrosshair(x, y)
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2, y - (dotsize / 2), miniprong_2, dotsize, col)
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2 - minigap - miniprong_1, y - (dotsize / 2), miniprong_1, dotsize, col)
 
-            drawshadowrect(x - (dotsize / 2) + gap, y - (dotsize / 2), miniprong_2, dotsize, col)
-            drawshadowrect(x - (dotsize / 2) + gap + miniprong_2 + minigap, y - (dotsize / 2), miniprong_1, dotsize, col)
+            drawshadowrect(x + (dotsize / 2) + gap, y - (dotsize / 2), miniprong_2, dotsize, col)
+            drawshadowrect(x + (dotsize / 2) + gap + miniprong_2 + minigap, y - (dotsize / 2), miniprong_1, dotsize, col)
 
-            drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) + gap, dotsize, miniprong_2, col)
-            drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) + gap + miniprong_2 + minigap, dotsize, miniprong_1, col)
+            drawshadowrect(x - (dotsize / 2), y + (dotsize / 2) + gap, dotsize, miniprong_2, col)
+            drawshadowrect(x - (dotsize / 2), y + (dotsize / 2) + gap + miniprong_2 + minigap, dotsize, miniprong_1, col)
 
             if mode > 2 then
                 drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) - gap - miniprong_2, dotsize, miniprong_2, col)
@@ -236,8 +238,8 @@ function SWEP:DoDrawCrosshair(x, y)
             end
         elseif mode != 0 then
             drawshadowrect(x - (dotsize / 2) - gap - prong, y - (dotsize / 2), prong, dotsize, col)
-            drawshadowrect(x - (dotsize / 2) + gap, y - (dotsize / 2), prong, dotsize, col)
-            drawshadowrect(x - (dotsize / 2), y - (dotsize / 2) + gap, dotsize, prong, col)
+            drawshadowrect(x + (dotsize / 2) + gap, y - (dotsize / 2), prong, dotsize, col)
+            drawshadowrect(x - (dotsize / 2), y + (dotsize / 2) + gap, dotsize, prong, col)
 
             if mode < 0 then
                 -- Auto crosshair
