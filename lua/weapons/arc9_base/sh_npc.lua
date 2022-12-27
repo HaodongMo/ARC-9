@@ -97,14 +97,14 @@ function SWEP:NPC_Initialize()
 
     if CLIENT then return end
 
-    if !self.WeaponWasGiven then
-        self:RollRandomAtts(self.Attachments)
-    end
-
-    self:PostModify()
-
-    timer.Simple(0.05, function()
+    timer.Simple(0.25, function()
         if IsValid(self) then
+            if !self.WeaponWasGiven then
+                self:RollRandomAtts(self.Attachments)
+            end
+
+            self:PostModify()
+
             self:PruneAttachments()
             self:SendWeapon()
         end
