@@ -9,7 +9,6 @@ ATT.Icon = Material("stickers/spray")
 ATT.SortOrder = 0
 ATT.Free = true
 
-ATT.Folder = "Stickers"
 ATT.Category = "stickers"
 
 -- ATT.StickerMaterial = "decals/playerlogo01"

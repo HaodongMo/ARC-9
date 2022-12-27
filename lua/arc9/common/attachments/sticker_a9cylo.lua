@@ -8,7 +8,6 @@ ATT.Icon = Material("stickers/a9cylo")
 ATT.SortOrder = 0
 ATT.Free = true
 
-ATT.Folder = "Stickers"
 ATT.Category = "stickers"
 
 ATT.StickerMaterial = "stickers/a9cylo"
