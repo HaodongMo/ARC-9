@@ -114,7 +114,7 @@ local settingstable = {
         { type = "combo", text = "Language", convar = "language_id", content = languages, minvalue = -1, desc = "Language pack to use for ARC9.\n\nNot done yet, Arctic, please, implement before release!" },
         { type = "bool", text = "Enable Light", convar = "cust_light", desc = "Enables gun lighting in the customization menu.\n\nSame thing as button near settings button."},
         { type = "slider", min = -20, max = 30, decimals = 1, text = "Light Brightness", convar = "cust_light_brightness", desc = "How bright that light in the customization panel will be.\n\nDon't forget to turn it on first though!" },
-        
+
         { type = "label", text = "Customization" },
         -- { type = "bool", text = "Background Blur", convar = "cust_blur", desc = "Blurs customization background.\n\nRequires DX9."},
         { type = "bool", text = "Hints", convar = "cust_hints", desc = "Enable hints in the customization menu."},
@@ -172,10 +172,10 @@ local settingstable = {
     {
         TabName = "Visuals",
         { type = "label", text = "Viewmodel" },
-        { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {"1Darsu style", "2Fesiug style", "3Arctic style"}, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
+        { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {"1Darsu", "2Fesiug", "3Arctic"}, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
         -- { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
         { type = "slider", text = "FOV", convar = "fov", min = -40, max = 40, decimals = 0, desc = "Add viewmodel FOV. Makes the viewmodel bigger or smaller. Use responsibly."},
-        
+
         { type = "label", text = "TPIK" },
         { type = "bool", text = "Enable TPIK", convar = "tpik", desc = "TPIK (Third Person Inverse Kinematics) is a system that allows most weapons display detailed and same as in first person hands positions, reload and firing animations in third person." },
         { type = "bool", text = "Other Players TPIK", convar = "tpik_others", desc = "Show TPIK for players other than yourself. Negatively impacts performance." },
@@ -195,7 +195,7 @@ local settingstable = {
     {
         TabName = "Attachments",
         { type = "label", text = "Customization"},
-        { type = "bool", text = "Disable Customization", convar = "atts_nocustomize", desc = "Disallow all customization via the customization menu."},
+        { type = "bool", text = "Disable Customization", convar = "atts_nocustomize", desc = "Disallow all customization via the customization menu.\n\nThis is a server variable."},
         { type = "slider", text = "Max Attachments", convar = "atts_max", min = 0, max = 250, decimals = 0, desc = "The maximum number of attachments that can be put on a weapon, including cosmetic attachments.\n\nThis is a server variable."},
         { type = "bool", text = "Autosave", convar = "autosave", desc = "Your last weapon customization options will be saved and automatically applied the next time you spawn that weapon."},
         -- { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
@@ -224,20 +224,20 @@ local settingstable = {
             -- RunConsoleCommand("arc9_reloadatts")
             print("lol")
             -- put here default derma panel with stuff from fesiug's spawmenu controller panel
-        end},    
+        end},
     },
     {
         TabName = "Developer",
         { type = "label", text = "Developer Options"},
         { type = "bool", text = "Always Ready", convar = "dev_always_ready", desc = "Always play \"ready\" animation when deploying a weapon.\n\nThis is a server variable."},
-        { type = "bool", text = "Benchgun", convar = "dev_benchgun", desc = "Set weapon to world origin.\nOnly really useful on gm_construct.\n\nSomeone please make it act like MW base benchgun (save the pos where gun was on moment that toggle was pressed and use it) :pleading_face:"},
+        { type = "bool", text = "Benchgun", convar = "dev_benchgun", desc = "Keep the weapon where it currently is."},
         { type = "bool", text = "Show Shield", convar = "dev_show_shield", desc = "Show the model for the player's shield."},
         { type = "button", text = "Reload Attachments", content = "Reload", func = function(self2)
             RunConsoleCommand("arc9_reloadatts")
-        end},             
+        end},
         { type = "button", text = "Reload Languages", content = "Reload", func = function(self2)
             RunConsoleCommand("arc9_reloadlangs")
-        end},        
+        end},
         { type = "button", text = "List Anims", content = "Print to Console", func = function(self2)
             RunConsoleCommand("arc9_dev_listanims")
         end},
@@ -255,9 +255,6 @@ local settingstable = {
         end},
         { type = "button", text = "Get Weapon JSON", content = "Print to Console", func = function(self2)
             RunConsoleCommand("arc9_dev_getjson")
-        end},
-        { type = "button", text = "List Anims", content = "Print to Console", func = function(self2)
-            RunConsoleCommand("arc9_dev_listanims")
         end},
     },
 }

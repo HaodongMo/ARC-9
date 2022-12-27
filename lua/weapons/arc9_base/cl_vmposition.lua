@@ -3,6 +3,9 @@ SWEP.CustomizeDelta = 0
 SWEP.ViewModelPos = Vector(0, 0, 0)
 SWEP.ViewModelAng = Angle(0, 0, 0)
 
+SWEP.BenchGunViewModelPos = Vector(0, 0, 0)
+SWEP.BenchGunViewModelAng = Angle(0, 0, 0)
+
 local lht = 0
 local sht = 0
 
@@ -86,21 +89,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     oldang:Set(ang)
 
     if GetConVar("arc9_dev_benchgun"):GetBool() then
-        if GetConVar("arc9_dev_benchgun_custom"):GetString() then
-            local bgc = GetConVar("arc9_dev_benchgun_custom"):GetString()
-            if string.Left(bgc, 6) != "setpos" then return vector_origin, angle_zero end
-
-            bgc = string.TrimLeft(bgc, "setpos ")
-            bgc = string.Replace(bgc, ";setang", "")
-            bgc = string.Explode(" ", bgc)
-
-            pos, ang = Vector(bgc[1], bgc[2], bgc[3]), Angle(bgc[4], bgc[5], bgc[6])
-    else
-        return vector_origin, angle_zero
-    end
-    elseif ARC9.Dev(3) then
-        pos = owner:EyePos()
-        ang = owner:EyeAngles()
+        return self.BenchGunViewModelPos, self.BenchGunViewModelAng
     end
 
     -- pos = Vector(0, 0, 0)
@@ -500,6 +489,9 @@ function SWEP:GetViewModelPosition(pos, ang)
             end
         end
     end
+
+    self.BenchGunViewModelPos = pos
+    self.BenchGunViewModelAng = ang
 
     return pos, ang
 end
