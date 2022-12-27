@@ -385,43 +385,43 @@ function ARC9.DrawHUD()
     elseif weapon:IsScripted() then
         if !weapon.Primary.Automatic then
             firemode_pic = firemode_pics[1]
-            firemode_text = "SINGLE"
+            firemode_text = ARC9:GetPhrase("hud.firemode.single")
         end
 
         if weapon.ThreeRoundBurst then
             firemode_pic = firemode_pics[3]
-            firemode_text = "3-BURST"
+            firemode_text = "3-" .. ARC9:GetPhrase("hud.firemode.burst")
         end
 
         if weapon.TwoRoundBurst then
             firemode_pic = firemode_pics[2]
-            firemode_text = "2-BURST"
+            firemode_text = "2-" .. ARC9:GetPhrase("hud.firemode.burst")
         end
 
         if weapon.GetSafe then
             if weapon:GetSafe() then
                 firemode_pic = firemode_pics[0]
-                firemode_text = "SAFE"
+                firemode_text = ARC9:GetPhrase("hud.firemode.safe")
             end
         end
 
         if isfunction(weapon.Safe) then
             if weapon:Safe() then
                 firemode_pic = firemode_pics[0]
-                firemode_text = "SAFE"
+                firemode_text = ARC9:GetPhrase("hud.firemode.safe")
             end
         end
 
         if isfunction(weapon.Safety) then
             if weapon:Safety() then
                 firemode_pic = firemode_pics[0]
-                firemode_text = "SAFE"
+                firemode_text = ARC9:GetPhrase("hud.firemode.safe")
             end
         end
     else
         if !automatics[weapon:GetClass()] then
             firemode_pic = firemode_pics[1]
-            firemode_text = "SINGLE"
+            firemode_text = ARC9:GetPhrase("hud.firemode.single")
         end
     end
 
@@ -528,7 +528,7 @@ function ARC9.DrawHUD()
 
         local deco_x = 6
         local deco_y = 2
-        local deco = "ARCTIC SYSTEMS HUD v" .. ARC9.Version
+        local deco = ARC9:GetPhrase("hud.version") .. ARC9.Version
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
         surface.SetFont("ARC9_Deco_8_Unscaled")
@@ -646,7 +646,7 @@ function ARC9.DrawHUD()
 
             local therm_deco_x = 190
             local therm_deco_y = 97
-            local therm_deco = "BARREL TEMP"
+            local therm_deco = ARC9:GetPhrase("hud.therm_deco")
 
             surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetFont("ARC9_Deco_8_Unscaled")
@@ -701,7 +701,7 @@ function ARC9.DrawHUD()
         end
 
         if jammed then
-            ammo_text = "JAMMED!"
+            ammo_text = ARC9:GetPhrase("hud.jammed")
         end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
@@ -882,7 +882,7 @@ function ARC9.DrawHUD()
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = ARC9.GetBindKey("+reload"),
-                action = "Toggle " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
+                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
             })
         end
 
@@ -890,7 +890,7 @@ function ARC9.DrawHUD()
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+walk"),
                 glyph2 = ARC9.GetBindKey("+use"),
-                action = "Switch Sights"
+                action = ARC9:GetPhrase("hud.hint.switchsights")
             })
         end
 
@@ -898,14 +898,14 @@ function ARC9.DrawHUD()
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("invnext"),
                 glyph2 = ARC9.GetBindKey("invprev"),
-                action = "Change Zoom"
+                action = ARC9:GetPhrase("hud.hint.zoom")
             })
         end
 
         if capabilities.HoldBreath then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+speed"),
-                action = "Hold Breath"
+                action = ARC9:GetPhrase("hud.hint.breath")
             })
         end
 
@@ -913,7 +913,7 @@ function ARC9.DrawHUD()
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = ARC9.GetBindKey("+attack"),
-                action = "Bash"
+                action = ARC9:GetPhrase("hud.hint.bash")
             })
         end
 
@@ -921,70 +921,46 @@ function ARC9.DrawHUD()
             table.insert(hints, {
                 glyph2 = ARC9.GetBindKey("+use"),
                 glyph = ARC9.GetBindKey("+reload"),
-                action = "Inspect"
-            })
-        end
-
-        if capabilities.Blindfire then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+alt1"),
-                glyph2 = ARC9.GetBindKey("+forward"),
-                action = "Blindfire"
-            })
-        end
-
-        if capabilities.BlindfireLeft then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+alt1"),
-                glyph2 = ARC9.GetBindKey("+moveleft"),
-                action = "Blindfire Left"
-            })
-        end
-
-        if capabilities.BlindfireRight then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+alt1"),
-                glyph2 = ARC9.GetBindKey("+moveright"),
-                action = "Blindfire Right"
+                action = ARC9:GetPhrase("hud.hint.inspect")
             })
         end
 
         if capabilities.Firemode then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+zoom"),
-                action = "Switch Firemode"
+                action = ARC9:GetPhrase("hud.hint.firemode")
             })
         end
 
         if capabilities.ManualCycle then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+reload"),
-                action = "Cycle"
+                action = ARC9:GetPhrase("hud.hint.cycle")
             })
         end
 
         if weapon:CanToggleAllStatsOnF() then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("impulse 100"),
-                action = "Toggle Attachments"
+                action = ARC9:GetPhrase("hud.hint.toggleatts")
             })
         end
 
         table.insert(hints, {
             glyph = ARC9.GetBindKey("+menu_context"),
-            action = weapon:GetInSights() and "Peek" or "Customize" })
+            action = weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") })
 
         table.insert(hints, {
             glyph = ARC9.GetBindKey("+use"),
             glyph2 = ARC9.GetBindKey("+zoom"),
-            action = "Toggle Safe"
+            action = ARC9:GetPhrase("hud.hint.safe")
         })
 
         if input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+alt1"),
                 glyph2 = ARC9.GetBindKey("+alt2"),
-                action = "Lean"
+                action = ARC9:GetPhrase("hud.hint.lean")
             })
         end
 
