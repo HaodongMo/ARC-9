@@ -101,7 +101,7 @@ function SWEP:DoShootSounds()
             level = svolume,
             pitch = spitch,
             volume = svolumeactual * indoormix,
-            channel = ARC9.CHAN_LAYER
+            channel = ARC9.CHAN_LAYER+2
         }
         self:PlayTranslatedSound(soundtab2)
         if havedistant then
