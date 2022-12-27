@@ -50,9 +50,9 @@ function SWEP:DoDrawCrosshair(x, y)
 
     local dotsize = ARC9ScreenScale(1) * m * GetConVar("arc9_cross_size_dot"):GetFloat()
     local prong = ARC9ScreenScale(4) * m * GetConVar("arc9_cross_size_prong"):GetFloat()
-    local minigap = ARC9ScreenScale(2)
-    local miniprong_1 = ARC9ScreenScale(4)
-    local miniprong_2 = ARC9ScreenScale(2)
+    local minigap = ARC9ScreenScale(2) * m
+    local miniprong_1 = ARC9ScreenScale(4) * m * GetConVar("arc9_cross_size_prong"):GetFloat()
+    local miniprong_2 = ARC9ScreenScale(2) * m * GetConVar("arc9_cross_size_prong"):GetFloat()
     local gap = 0
     local staticgap = ARC9ScreenScale(4)
     local col = Color(255, 255, 255, 100)
