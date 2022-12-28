@@ -261,6 +261,10 @@ L["settings.eject_fx.desc"] = "Produce smoke effects from ejected shell casings,
 L["settings.eject_time.title"] = "Add Life Time"
 L["settings.eject_time.desc"] = "Allow shell casings to stay in the world for longer. Can be expensive."
 
+-- Use this method to localize convars in settings menu:
+-- settings.convar.title = "Convar Title"
+-- settings.convar.desc = "Convar Description"
+
 L["settings.developer.developer"] = "Developer Options"
 L["settings.attachments.inventory"] = "Inventory"
 L["settings.attachments.customization"] = "Customization"
