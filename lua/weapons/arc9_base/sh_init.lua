@@ -66,6 +66,11 @@ function SWEP:ClientInitialize()
 
         self:CreateStandardPresets()
     end
+
+    if LocalPlayer().ARC9_IncompatibilityCheck != true and game.SinglePlayer() then
+        LocalPlayer().ARC9_IncompatibilityCheck = true
+        ARC9.DoCompatibilityCheck()
+    end
 end
 
 function SWEP:SetBaseSettings()

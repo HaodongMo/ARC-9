@@ -1,0 +1,1 @@
+// Stub file, add ammo functions here later
