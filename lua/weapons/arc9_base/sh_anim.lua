@@ -45,8 +45,6 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
 
         self:SetSequenceProxy(animation.Address or 0)
 
-        print(source)
-
         if IsValid(mdl) then
 
             seq = mdl:LookupSequence(source)
