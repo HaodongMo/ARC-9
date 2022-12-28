@@ -234,6 +234,7 @@ local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
 local hud_t_full = Material("arc9/thermometer_full.png", "mips")
 local hud_t_empty = Material("arc9/thermometer_empty.png", "mips")
 local hud_bigblur = Material("arc9/bigblur.png", "mips")
+local hud_logo_lowvis = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 
 local firemode_pics = {
     [-1] = Material("arc9/fs_auto.png", "mips smooth"),
@@ -530,6 +531,10 @@ function ARC9.DrawHUD()
             surface.DrawTexturedRect(0, 0, 254, 80)
 
             surface.DrawLine(0, 85, 254, 85)
+
+            surface.SetDrawColor(Color(0, 0, 0, 50))
+            surface.SetMaterial(hud_logo_lowvis)
+            surface.DrawTexturedRect((254 - 80) / 2, 0, 80, 80)
         else
             surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
             surface.DrawRect( 0, 0, 254, 110 )
@@ -539,6 +544,10 @@ function ARC9.DrawHUD()
             surface.DrawTexturedRect(0, 0, 254, 110)
 
             surface.DrawLine(0, 115, 254, 115)
+
+            surface.SetDrawColor(Color(0, 0, 0, 50))
+            surface.SetMaterial(hud_logo_lowvis)
+            surface.DrawTexturedRect((254 - 110) / 2, 0, 110, 110)
         end
 
         -- surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
