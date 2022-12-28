@@ -848,6 +848,8 @@ SWEP.ShellPhysBox = Vector(0.5, 0.5, 2)
 SWEP.ShellPitch = 100 -- for shell sounds
 SWEP.ShellSounds = ARC9.ShellSoundsTable
 
+SWEP.RicochetSounds = ARC9.RicochetSounds
+
 SWEP.ShellCorrectPos = Vector(0, 0, 0)
 SWEP.ShellCorrectAng = Angle(0, 0, 0)
 SWEP.ShellVelocity = nil -- nothing for random, otherwise keep this 0 - 2

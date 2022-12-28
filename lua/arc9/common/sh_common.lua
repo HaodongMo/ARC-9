@@ -29,7 +29,6 @@ ARC9.CosmeticCategories = {
     ["camo"] = true,
     ["stickers"] = true,
 }
-
 ARC9.ShellSoundsTable = {
     "arc9/casings/casing_556_1.wav",
     "arc9/casings/casing_556_2.wav",
