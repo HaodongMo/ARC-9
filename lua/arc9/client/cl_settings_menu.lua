@@ -518,7 +518,7 @@ function ARC9_OpenSettings(page)
     bg:SetSize(ScrW(), ScrH())
     bg:SetTitle("")
     bg:SetDraggable(false)
-    -- bg:ShowCloseButton(false)        -- set to false when done please!!
+    bg:ShowCloseButton(false)        -- set to false when done please!!
     bg:SetAlpha(0)
     bg:AlphaTo(255, 0.2, 0, nil)
     bg:SetBackgroundBlur(true)

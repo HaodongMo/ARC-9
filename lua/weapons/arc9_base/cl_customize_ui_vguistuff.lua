@@ -544,6 +544,7 @@ function ARC9ColorPanel:Init()
     self:ShowCloseButton(true)        -- set to false when done please!!
     self:SetAlpha(0)
     self:AlphaTo(255, 0.15, 0, nil)
+    self:ShowCloseButton(false)
     
     self.hsvHUE, self.hsvSAT, self.hsvVAL = ColorToHSV(self.startcolor or Color(255, 0, 0))
     
@@ -723,7 +724,7 @@ function ARC9ColorButton:DoClick()
     bg:SetSize(ScrW(), ScrH())
     bg:SetTitle("")
     bg:SetDraggable(false)
-    -- bg:ShowCloseButton(false)        -- set to false when done please!!
+    bg:ShowCloseButton(false)        -- set to false when done please!!
     bg:SetBackgroundBlur(true)
     bg:MakePopup()
 
@@ -733,6 +734,7 @@ function ARC9ColorButton:DoClick()
     if self.AlphaEnabled then newel:EnableAlpha() end
     newel:SetPos(self:LocalToScreen(self:GetX() - ARC9ScreenScale(80), self:GetY() - ARC9ScreenScale(48)))
     newel:UpdateColor(self.rgbcolor)
+    newel:ShowCloseButton(false)
     
     bg.Paint = function(self2, w, h)
         surface.SetDrawColor(0, 0, 0, 0) 
