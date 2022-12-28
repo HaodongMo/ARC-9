@@ -786,7 +786,11 @@ SWEP.DryFireSound = ""
 SWEP.DryFireSingleAction = false -- Play dryfire sound only once
 
 SWEP.FiremodeSound = "arc9/firemode.wav"
-SWEP.ToggleAttSound = "items/flashlight1.wav"
+SWEP.ToggleAttSound = {
+    "arc9/toggles/flashlight_laser_toggle_on_01.ogg",
+    "arc9/toggles/flashlight_laser_toggle_on_02.ogg",
+    "arc9/toggles/flashlight_laser_toggle_on_03.ogg",
+}
 
 SWEP.EnterSightsSound = ""
 SWEP.ExitSightsSound = ""
