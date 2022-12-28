@@ -216,6 +216,9 @@ L["customize.hint.open"] = "Open"
 
 L["customize.trivia.description"] = "Description"
 
+L["folder.deselect"] = "Deselect"
+L["folder.select"] = "Select"
+
 L["customize.bench.dummy"] = "BALLISTICS DUMMY TEST"
 L["customize.bench.effect"] = "EFFECT AT RANGE"
 L["customize.bench.ballistics"] = "TERMINAL BALLISTICS PERFORMANCE EVALUATION"

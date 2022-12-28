@@ -80,7 +80,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     table.insert(scrolleles, backbtn)
 
     if #self.BottomBarPath > 0 then
-        backbtn:SetButtonText(ARC9:GetPhrase("folder.back") or "Back")
+        backbtn:SetButtonText(ARC9:GetPhrase("folder.back"))
         backbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
                 enterfolder(self, scroll, slottbl, nil)
@@ -88,7 +88,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             end
         end
     else
-        backbtn:SetButtonText(ARC9:GetPhrase("folder.deselect") or "Deselect")
+        backbtn:SetButtonText(ARC9:GetPhrase("folder.deselect"))
         backbtn.OnMousePressed = function(self2, kc)
             if kc == MOUSE_LEFT then
                 self.BottomBarAddress = nil

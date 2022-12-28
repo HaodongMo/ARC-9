@@ -38,7 +38,7 @@ function ARC9:GetPhrase(phrase, format)
         end
         return str
     end
-    return phrase
+    return nil
 end
 
 --[[
@@ -49,17 +49,21 @@ function ARC9:GetPhraseForAtt(att, phrase, format)
     local atttbl = ARC9.Attachments[att]
     if !atttbl then return "" end
 
+    local attphrase = att .. "." .. phrase
+
     local tn = ARC9:UseTrueNames()
     if tn then
-        local p = ARC9:GetPhrase(att .. "." .. phrase .. ".true")
-        if p then return p end
-        if atttbl[phrase .. "_TrueName"] then return atttbl[phrase .. "_TrueName"] end
+        attphrase = attphrase .. ".true"
     end
 
-    local p = ARC9:GetPhrase(att .. "." .. phrase)
+    local p = ARC9:GetPhrase(attphrase)
     if p then return p end
 
-    return atttbl[phrase]
+    if tn then
+        if atttbl[phrase .. "_TrueName"] then return atttbl[phrase .. "_TrueName"] end
+    else
+        return atttbl[phrase]
+    end
 end
 
 -- client languages aren't loaded through lua anymore. use gmod's stock localization system instead
