@@ -332,8 +332,10 @@ function SWEP:DoVisualRecoil()
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
-        self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
-        self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0)))
+        if GetConVar("arc9_realrecoil"):GetBool() then
+            self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
+            self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0)))
+        end
 
         if IsFirstTimePredicted() or game.SinglePlayer() then
             if CLIENT then
