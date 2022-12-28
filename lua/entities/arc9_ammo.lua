@@ -16,6 +16,8 @@ ENT.OpeningAnim = false
 ENT.NextUse = 0
 ENT.Open = false
 
+ENT.Supply = 1
+
 function ENT:Initialize()
     local model = self.Model
 

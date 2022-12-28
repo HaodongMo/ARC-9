@@ -529,7 +529,7 @@ function SWEP:CreateHUD_AttInfo()
     local infopanel = vgui.Create("DPanel", lowerpanel)
     infopanel:SetSize(lowerpanel:GetWide(), ARC9ScreenScale(70))
     infopanel:SetPos(0, ARC9ScreenScale(75.5))
-    infopanel.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName")
+    infopanel.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName") or atttbl.PrintName
     infopanel.Paint = function(self2, w, h)
         if !IsValid(self) then return end
         surface.SetFont("ARC9_10")
