@@ -88,10 +88,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     oldpos:Set(pos)
     oldang:Set(ang)
 
-    if GetConVar("arc9_dev_benchgun"):GetBool() then
-        return self.BenchGunViewModelPos, self.BenchGunViewModelAng
-    end
-
     -- pos = Vector(0, 0, 0)
     -- ang = Angle(0, 0, 0)
 
@@ -494,6 +490,9 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
+        return self.BenchGunViewModelPos, self.BenchGunViewModelAng
+    end
+
     self.BenchGunViewModelPos = pos
     self.BenchGunViewModelAng = ang
 
@@ -522,6 +521,10 @@ function SWEP:GetViewModelFOV()
 
     if self:GetCustomize() then
         target = self.CustomizeSnapshotFOV or 90
+    end
+
+    if GetConVar("arc9_dev_benchgun"):GetBool() then
+        target = self:GetOwner():GetFOV()
     end
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
