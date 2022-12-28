@@ -26,7 +26,7 @@ local ricochetsounds = {
     "arc9/ricochet05.wav",
 }
 
-SWEP.MaxPenetrationLayers = 5
+SWEP.MaxPenetrationLayers = 3
 SWEP.Penned = 0
 
 function SWEP:Penetrate(tr, range, penleft, alreadypenned)
