@@ -20,6 +20,8 @@ ATT.BoxModel = nil --"models/items/arc9/att_plastic_box.mdl"
 
 -- Material for stickers
 ATT.StickerMaterial = ""
+ATT.StickerDrawFunc = function(swep, model, wm)
+end
 
 -- Used to attach another model to a bone of this model.
 ATT.CharmModel = ""

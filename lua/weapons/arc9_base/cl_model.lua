@@ -471,7 +471,9 @@ function SWEP:SetupModel(wm, lod, cm)
             if !IsValid(stickermodel) then continue end
 
             stickermodel:SetNoDraw(true)
-            stickermodel.atttbl = {}
+            stickermodel.atttbl = {
+                DrawFunc = atttbl.StickerDrawFunc
+            }
             stickermodel.slottbl = slottbl
 
             stickermodel:AddEffects(EF_BONEMERGE)
