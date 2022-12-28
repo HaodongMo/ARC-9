@@ -38,7 +38,7 @@ function ARC9:GetPhrase(phrase, format)
         end
         return str
     end
-    return nil
+    return phrase
 end
 
 --[[
@@ -64,10 +64,10 @@ end
 
 -- client languages aren't loaded through lua anymore. use gmod's stock localization system instead
 
-function ARC9:LoadLanguage()
+function ARC9:LoadLanguage(lang)
     ARC9.PhraseTable = {}
 
-    local cur_lang = ARC9:GetLanguage()
+    local cur_lang = lang or ARC9:GetLanguage()
 
     for _, v in pairs(file.Find("arc9/common/localization/*_" .. cur_lang .. ".lua", "LUA")) do
 
@@ -101,6 +101,7 @@ function ARC9:LoadLanguage()
 end
 
 ARC9:LoadLanguage()
+ARC9:LoadLanguage("en")
 
 
 if CLIENT then
@@ -114,6 +115,7 @@ if CLIENT then
 
     net.Receive("arc9_reloadlangs", function(len, ply)
         ARC9:LoadLanguage()
+        ARC9:LoadLanguage("en")
         ARC9.Regen()
     end)
 
@@ -123,6 +125,7 @@ elseif SERVER then
         if !ply:IsSuperAdmin() then return end
 
         ARC9:LoadLanguage()
+        ARC9:LoadLanguage("en")
 
         net.Start("arc9_reloadlangs")
         net.Broadcast()
