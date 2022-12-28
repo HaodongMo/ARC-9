@@ -1673,7 +1673,7 @@ end
 -- maxw: maximum width
 -- only: don't advance text
 function ARC9.DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
-    local tw, th = surface.GetTextSize(txt)
+    local tw, th = surface.GetTextSize(txt or "")
 
     span.TextRot = span.TextRot or {}
 
