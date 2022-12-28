@@ -114,7 +114,7 @@ local settingstable = {
         -- end },
         { type = "color", text = "HUD Color", convar = "hud_color", desc = "Highlight color for the HUD.\n\nThe accent color."},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        { type = "combo", text = "Language", convar = "language_id", content = languages, minvalue = -1, desc = "Language pack to use for ARC9.\n\nNot done yet, Arctic, please, implement before release!" },
+        { type = "combo", text = "Language", convar = "language_id", content = languages, minvalue = -1, desc = "Language pack to use for ARC9." },
         { type = "bool", text = "Enable Light", convar = "cust_light", desc = "Enables gun lighting in the customization menu.\n\nSame thing as button near settings button."},
         { type = "slider", min = -20, max = 30, decimals = 1, text = "Light Brightness", convar = "cust_light_brightness", desc = "How bright that light in the customization panel will be.\n\nDon't forget to turn it on first though!" },
 
