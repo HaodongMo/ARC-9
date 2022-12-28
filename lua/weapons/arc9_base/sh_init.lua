@@ -68,7 +68,7 @@ function SWEP:ClientInitialize()
     end
 
     if LocalPlayer().ARC9_IncompatibilityCheck != true and game.SinglePlayer() then
-        LocalPlayer().ARC9_IncompatibilityCheck = tru
+        LocalPlayer().ARC9_IncompatibilityCheck = true
 
         ARC9.DoCompatibilityCheck()
     end
