@@ -183,3 +183,21 @@ function ARC9.GetWeaponClasses(weptype)
 
     return wepclasses
 end
+
+ARC9.RandomizeQueue = {}
+
+function ARC9.TryRandomize()
+    for _, wpn in ipairs(ARC9.RandomizeQueue) do
+        if IsValid(wpn) then
+            wpn:RollRandomAtts(wpn.Attachments)
+
+            wpn:PostModify()
+            wpn:PruneAttachments()
+            wpn:SendWeapon()
+        end
+    end
+
+    ARC9.RandomizeQueue = {}
+end
+
+hook.Add("Think", "ARC9_Think_TryRandomize", ARC9.TryRandomize)
