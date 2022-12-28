@@ -245,7 +245,7 @@ function SWEP:DoTPIK()
 
     local ply_l_upperarm_pos, ply_l_forearm_pos
 
-    if shouldfulltpik then
+    if shouldfulltpik or !(self.TPIKCache.l_upperarm_pos and self.TPIKCache.l_forearm_pos) then
         ply_l_upperarm_pos, ply_l_forearm_pos = self:Solve2PartIK(ply_l_shoulder_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 35)
 
         self.LastTPIKTime = CurTime()
