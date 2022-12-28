@@ -482,9 +482,11 @@ local function DrawSettings(bg, page)
         surface.DrawPoly({{x = cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h}, {x = cornercut, y = h}, })
         
         
-        surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-        surface.SetMaterial(mat_icon)
-        surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9ScreenScale(20))
+        // surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+        // surface.SetMaterial(mat_icon)
+        // surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9ScreenScale(20))
+
+        ARC9.DrawColoredARC9Logo(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9.GetHUDColor("hi"))
 
         surface.SetFont("ARC9_8_Slim")
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
