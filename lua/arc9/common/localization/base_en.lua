@@ -286,6 +286,110 @@ L["settings.performance.important"] = "Important"
 L["settings.performance.blur.title"] = "Blur"
 L["settings.performance.shelleject.title"] = "Shell Eject"
 
+L["settings.optics.cheapscopes.title"] = "Cheap Scopes"
+L["settings.optics.cheapscopes.desc"] = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."
+L["settings.optics.compensate_sens.title"] = "Compensate Sensitivity"
+L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity for magnification."
+L["settings.optics.toggleads.title"] = "Toggle ADS"
+L["settings.optics.toggleads.desc"] = "Aiming will toggle sights."
+L["settings.optics.reflex.title"] = "Reflex Sights"
+L["settings.optics.reflex.desc"] = "Color to use for reflex/holographic sights.\n\nNot all optics support this feature."
+L["settings.optics.scope.title"] = "Scopes"
+L["settings.optics.scope.desc"] = "Color to use for magnified scopes.\n\nNot all optics support this feature."
+
+L["settings.crosshair.cross_enable.title"] = "Enable Crosshair"
+L["settings.crosshair.cross_enable.desc"] = "Enable crosshair. Some guns do not allow you to use the crosshair."
+L["settings.crosshair.cross.title"] = "Crosshair Color"
+L["settings.crosshair.cross.desc"] = "The color of your crosshair."
+L["settings.crosshair.cross_size_mult.title"] = "Crosshair Size"
+L["settings.crosshair.cross_size_mult.desc"] = "Multiply the size of your crosshair."
+L["settings.crosshair.cross_size_dot.title"] = "Dot Size"
+L["settings.crosshair.cross_size_dot.desc"] = "Multiply the size of the middle dot."
+L["settings.crosshair.cross_size_prong.title"] = "Prong Size"
+L["settings.crosshair.cross_size_prong.desc"] = "Multiply the size of the outer prongs."
+L["settings.crosshair.crosshair_static.title"] = "Static Crosshair"
+L["settings.crosshair.crosshair_static.desc"] = "Enable static crosshair, which does not move when shooting."
+L["settings.crosshair.crosshair_force.title"] = "Force Crosshair"
+L["settings.crosshair.crosshair_force.desc"] = "Force the crosshair even on guns that don't want you to see it.\n\nServer setting."
+
+L["settings.hud_cust.hud_scale.title"] = "HUD Scale"
+L["settings.hud_cust.hud_scale.desc"] = "Scale multiplier for ARC9's HUD."
+L["settings.hud_cust.hud_color.title"] = "HUD Color"
+L["settings.hud_cust.hud_color.desc"] = "Highlight color for the HUD.\nThe accent color."
+L["settings.hud_cust.language_id.title"] = "Language"
+L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
+L["settings.hud_cust.cust_light.title"] = "Enable Light"
+L["settings.hud_cust.cust_light.desc"] = "Enables gun lighting in the customization menu.\n\nSame thing as button near settings button."
+L["settings.hud_cust.cust_light_brightness.title"] = "Light Brightness"
+L["settings.hud_cust.cust_light_brightness.desc"] = "How bright that light in the customization panel will be.\n\nDon't forget to turn it on first though!"
+L["settings.hud_cust.cust_hints.title"] = "Hints"
+L["settings.hud_cust.cust_hints.desc"] = "Enable hints in the customization menu."
+L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll"
+L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way."
+L["settings.hud_cust.cust_exit_reset_sel.title"] = "Exit Resets Selection"
+L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Exiting customization menu resets the active slot selection."
+
+L["settings.hud_game.hud_arc9.title"] = "AAAAAAAA"
+L["settings.hud_game.hud_arc9.desc"] = "AAAAAAAA"
+L["settings.hud_game.hud_always.title"] = "AAAAAAAA"
+L["settings.hud_game.hud_always.desc"] = "AAAAAAAA"
+L["settings.hud_game.hud_compact.title"] = "AAAAAAAA"
+L["settings.hud_game.hud_compact.desc"] = "AAAAAAAA"
+L["settings.hud_game.hud_keephints.title"] = "AAAAAAAA"
+L["settings.hud_game.hud_keephints.desc"] = "AAAAAAAA"
+L["settings.hud_game.killfeed_enable.title"] = "AAAAAAAA"
+L["settings.hud_game.killfeed_enable.desc"] = "AAAAAAAA"
+L["settings.hud_game.killfeed_dynamic.title"] = "AAAAAAAA"
+L["settings.hud_game.killfeed_dynamic.desc"] = "AAAAAAAA"
+L["settings.hud_game.breath_hud.title"] = "AAAAAAAA"
+L["settings.hud_game.breath_hud.desc"] = "AAAAAAAA"
+L["settings.hud_game.breath_pp.title"] = "AAAAAAAA"
+L["settings.hud_game.breath_pp.desc"] = "AAAAAAAA"
+L["settings.hud_game.breath_sfx.title"] = "AAAAAAAA"
+L["settings.hud_game.breath_sfx.desc"] = "AAAAAAAA"
+
+L["settings.npc.npc_equality.title"] = "AAAAAAAA"
+L["settings.npc.npc_equality.desc"] = "AAAAAAAA"
+L["settings.npc.npc_atts.title"] = "AAAAAAAA"
+L["settings.npc.npc_atts.desc"] = "AAAAAAAA"
+L["settings.npc.npc_autoreplace.title"] = "AAAAAAAA"
+L["settings.npc.npc_autoreplace.desc"] = "AAAAAAAA"
+L["settings.npc.replace_spawned.title"] = "AAAAAAAA"
+L["settings.npc.replace_spawned.desc"] = "AAAAAAAA"
+L["settings.npc.npc_give_weapons.title"] = "AAAAAAAA"
+L["settings.npc.npc_give_weapons.desc"] = "AAAAAAAA"
+
+L["settings.gameplay.toggleads.desc"] = "AAAAAAAA"
+L["settings.gameplay.toggleads.title"] = "AAAAAAAA"
+L["settings.gameplay.autolean.desc"] = "AAAAAAAA"
+L["settings.gameplay.autolean.title"] = "AAAAAAAA"
+L["settings.gameplay.autoreload.desc"] = "AAAAAAAA"
+L["settings.gameplay.autoreload.title"] = "AAAAAAAA"
+L["settings.gameplay.infinite_ammo.desc"] = "AAAAAAAA"
+L["settings.gameplay.infinite_ammo.title"] = "AAAAAAAA"
+L["settings.gameplay.AAAAAAAAAAA.desc"] = "AAAAAAAA"
+L["settings.hud_game.AAAAAAAAAAA.title"] = "AAAAAAAA"
+L["settings.hud_game.AAAAAAAAAAA.desc"] = "AAAAAAAA"
+
+
+
+
+
+L["settings.hud_game.AAAAAAAAAAA.title"] = "AAAAAAAA"
+L["settings.hud_game.AAAAAAAAAAA.desc"] = "AAAAAAAA"
+
+
+
+
+
+
+
+
+
+
+
+
+
 L["incompatible.title"] = "ARC9: INCOMPATIBLE ADDONS"
 L["incompatible.line1"] = "You have some addons that are known to not work with ARC9."
 L["incompatible.line2"] = "Disable them or expect broken behavior!"

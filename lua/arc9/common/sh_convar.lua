@@ -486,7 +486,7 @@ local conVars = {
     },
     {
         name = "fx_rtblur",
-        default = "1",
+        default = "0",
         client = true
     },
     {
@@ -501,7 +501,7 @@ local conVars = {
     },
     {
         name = "fx_animblur",
-        default = "1",
+        default = "0",
         client = true
     },
     {

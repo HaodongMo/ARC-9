@@ -59,34 +59,34 @@ local settingstable = {
     {
         TabName = "settings.tabname.optics",
         -- { type = "label", text = "Performance" }, -- fine here but they are already in first tab
-        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."},
+        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "settings.optics.cheapscopes.desc"},
         -- { type = "bool", text = "Blur in Scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
         -- { type = "bool", text = "Blur in Sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
 
         { type = "label", text = "settings.optics.control" },
-        { type = "bool", text = "Compensate Sensitivity", convar = "compensate_sens", desc = "Compensate sensitivity for magnification." },
-        { type = "bool", text = "Toggle ADS", convar = "toggleads", desc = "Aiming will toggle sights." },
+        { type = "bool", text = "settings.optics.compensate_sen.titles", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
+        { type = "bool", text = "settings.optics.toggleads.title", convar = "toggleads", desc = "settings.optics.toggleads.desc" },
 
-        { type = "label", text = "settings.optics.color" },
-        { type = "color", text = "Reflex Sights", convar = "reflex", desc = "Color to use for reflex/holographic sights.\n\nNot all optics support this feature." },
-        { type = "color", text = "Scopes", convar = "scope", desc = "Color to use for magnified scopes.\n\nNot all optics support this feature." },
+        { type = "label", text = "settings.optics.color.title" },
+        { type = "color", text = "settings.optics.reflex.title", convar = "reflex", desc = "settings.optics.reflex.desc" },
+        { type = "color", text = "settings.optics.scope.title", convar = "scope", desc = "settings.optics.scope.desc" },
     },
     {
         TabName = "settings.tabname.crosshair",
         { type = "label", text = "settings.crosshair.crosshair" },
-        { type = "bool", text = "Enable Crosshair", convar = "cross_enable", desc = "Enable crosshair. Some guns do not allow you to use the crosshair." },
-        { type = "coloralpha", text = "Crosshair Color", convar = "cross", desc = "The color of your crosshair."},
-        { type = "slider", text = "Crosshair Size", min = 0.01, max = 10, decimals = 2, convar = "cross_size_mult", desc = "Multiply the size of your crosshair." },
-        { type = "slider", text = "Dot Size", min = 0.01, max = 10, decimals = 2, convar = "cross_size_dot", desc = "Multiply the size of the middle dot." },
-        { type = "slider", text = "Prong Size", min = 0.01, max = 10, decimals = 2, convar = "cross_size_prong", desc = "Multiply the size of the outer prongs." },
-        { type = "bool", text = "Static Crosshair", convar = "crosshair_static", desc = "Enable static crosshair, which does not move when shooting." },
-        { type = "bool", text = "Force Crosshair", convar = "crosshair_force", desc = "Force the crosshair even on guns that don't want you to see it.\n\nServer setting." },
+        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
+        { type = "coloralpha", text = "settings.crosshair.cross.title", convar = "cross", desc = "settings.crosshair.cross.desc"},
+        { type = "slider", text = "settings.crosshair.cross_size_mult.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_mult", desc = "settings.crosshair.cross_size_mult.desc" },
+        { type = "slider", text = "settings.crosshair.cross_size_dot.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_dot", desc = "settings.crosshair.cross_size_dot.desc." },
+        { type = "slider", text = "settings.crosshair.cross_size_prong.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_prong", desc = "settings.crosshair.cross_size_prong.desc" },
+        { type = "bool", text = "settings.crosshaircrosshair_static.title", convar = "crosshair_static", desc = "settings.crosshair.crosshair_static.desc" },
+        { type = "bool", text = "settings.crosshair.crosshair_force.title", convar = "crosshair_force", desc = "settings.crosshair.crosshair_force.desc" },
     },
     {
         TabName = "settings.tabname.hud_cust",
         { type = "label", text = "settings.hud_cust.hud" },
         -- crazy hacks to make hud scale work "almost dynamicly"
-        { type = "slider", text = "HUD Scale", min = 0.5, max = 1.5, decimals = 2, desc = "Scale multiplier for ARC9's HUD.", convar2 = "hud_scale", func = function(self2, self3, settingspanel) 
+        { type = "slider", text = "settings.hud_cust.hud_scale.title", min = 0.5, max = 1.5, decimals = 2, desc = "settings.hud_cust.hud_scale.desc", convar2 = "hud_scale", func = function(self2, self3, settingspanel) 
             if IsValid(LocalPlayer()) then -- uncust the gun
                 local wep = LocalPlayer():GetActiveWeapon()
                 if IsValid(wep) and wep.ARC9 then
@@ -112,17 +112,17 @@ local settingstable = {
         --         ARC9.Regen() -- reload fonts with new scale
         --     end)
         -- end },
-        { type = "color", text = "HUD Color", convar = "hud_color", desc = "Highlight color for the HUD.\n\nThe accent color."},
+        { type = "color", text = "settings.hud_cust.hud_scale.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        { type = "combo", text = "Language", convar = "language_id", content = languages, minvalue = -1, desc = "Language pack to use for ARC9." },
-        { type = "bool", text = "Enable Light", convar = "cust_light", desc = "Enables gun lighting in the customization menu.\n\nSame thing as button near settings button."},
-        { type = "slider", min = -20, max = 30, decimals = 1, text = "Light Brightness", convar = "cust_light_brightness", desc = "How bright that light in the customization panel will be.\n\nDon't forget to turn it on first though!" },
+        { type = "combo", text = "settings.hud_cust.hud_scale.title", convar = "language_id", content = languages, minvalue = -1, desc = "settings.hud_cust.language_id.desc" },
+        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_light", desc = "settings.hud_cust.hud_scale.desc"},
+        { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.hud_scale.title", convar = "cust_light_brightness", desc = "settings.hud_cust.hud_scale.desc" },
 
         { type = "label", text = "settings.hud_cust.customization" },
         -- { type = "bool", text = "Background Blur", convar = "cust_blur", desc = "Blurs customization background.\n\nRequires DX9."},
-        { type = "bool", text = "Hints", convar = "cust_hints", desc = "Enable hints in the customization menu."},
-        { type = "bool", text = "Unlock Roll", convar = "cust_roll_unlock", desc = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way."},
-        { type = "bool", text = "Exit Resets Selection", convar = "cust_exit_reset_sel", desc = "Exiting customization menu resets the active slot selection."}
+        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_hints", desc = "settings.hud_cust.hud_scale.desc"},
+        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_roll_unlock", desc = "settings.hud_cust.hud_scale.desc"},
+        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_exit_reset_sel", desc = "settings.hud_cust.hud_scale.desc"}
     },
     {
         TabName = "settings.tabname.hud_game",
@@ -518,7 +518,7 @@ function ARC9_OpenSettings(page)
     bg:SetSize(ScrW(), ScrH())
     bg:SetTitle("")
     bg:SetDraggable(false)
-    bg:ShowCloseButton(false)        -- set to false when done please!!
+    bg:ShowCloseButton(true)        -- set to false when done please!!
     bg:SetAlpha(0)
     bg:AlphaTo(255, 0.2, 0, nil)
     bg:SetBackgroundBlur(true)
@@ -539,7 +539,7 @@ function ARC9_OpenSettings(page)
     panel:Center()
     panel:SetTitle("")
     panel:DockPadding(0, ARC9ScreenScale(25.7), 0, 0)
-    panel:ShowCloseButton(false)
+    panel:ShowCloseButton(true)
     DrawSettings(panel, page)
 
     panel.OnRemove = function() bg:Remove() end
