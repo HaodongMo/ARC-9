@@ -490,6 +490,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
+    if GetConVar("arc9_dev_benchgun"):GetBool() then
         return self.BenchGunViewModelPos, self.BenchGunViewModelAng
     end
 
