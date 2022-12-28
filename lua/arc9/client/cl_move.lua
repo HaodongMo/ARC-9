@@ -29,14 +29,32 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     end
 
     if GetConVar("arc9_autolean") then
-        if cmd:KeyDown(IN_ATTACK2) then
+        if cmd:KeyDown(IN_ATTACK2) or (wpn:ToggleADS() and arc9_lean_direction != nil and arc9_lean_direction != 0) then
             if arc9_lean_direction != nil and arc9_lean_direction != 0 then
+                if wpn:ToggleADS() then
+                    local eyepos = ply:EyePos()
+                    local forward = ply:EyeAngles():Forward()
+
+                    local covertrace = util.TraceHull({
+                        start = eyepos,
+                        endpos = eyepos + forward * 32,
+                        filter = ply,
+                        mins = Vector(-1, -1, -1) * 4,
+                        maxs = Vector(1, 1, 1) * 4
+                    })
+
+                    if !covertrace.Hit then
+                        arc9_lean_direction = 0
+                        return
+                    end
+                end
+
                 if arc9_lean_direction > 0 then
                     cmd:AddKey(IN_ALT2)
                 elseif arc9_lean_direction < 0 then
                     cmd:AddKey(IN_ALT1)
                 end
-            elseif arc9_lean_direction == nil then
+            elseif arc9_lean_direction == nil and cmd:KeyDown(IN_ATTACK2) then
                 local eyepos = ply:EyePos()
                 local right = ply:EyeAngles():Right()
                 local forward = ply:EyeAngles():Forward()
