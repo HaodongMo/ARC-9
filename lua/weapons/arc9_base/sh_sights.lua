@@ -181,6 +181,8 @@ function SWEP:BuildMultiSight()
                     s.Disassociate = true
                 end
 
+                s.CrosshairInSights = sight.CrosshairInSights
+
                 s.atttbl = atttbl
                 if sight.ExtraSightData then
                     s.atttbl = table.Copy(atttbl)

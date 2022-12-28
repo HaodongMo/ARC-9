@@ -1,10 +1,6 @@
 function SWEP:ShouldDrawCrosshair()
     if self:GetInSights() then
-        if self:GetSight().CrosshairInSights then
-            return true
-        else
-            return false
-        end
+        return self:GetSight().CrosshairInSights
     end
     if (!self:GetProcessedValue("Crosshair") and !GetConVar("arc9_crosshair_force"):GetBool()) and !ARC9.ShouldThirdPerson() then return false end
     if self:GetCustomize() then return false end
@@ -21,8 +17,6 @@ end
 
 local lastgap = 0
 local lasthelperalpha = 0
-
-local gaA = 0
 
 local lerp = Lerp
 -- local arcticcolor = Color(255, 255, 255, 100)
