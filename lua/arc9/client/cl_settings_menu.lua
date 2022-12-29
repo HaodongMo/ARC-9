@@ -16,6 +16,7 @@
         input - text input, NOT IMPLEMENTED
         combo - dropdown menu:
             content - {"1table of thingies", "2there", "3for some reason you need put number at start so it will be properly sorted", "4though it will be not drawn in ui"}
+            options - {"blah", "two", "three"}, optional, if not set, will use content; will be used for convar. make sure it matches the indices above.
             minvalue - type -1 or 1 if your convar starts from it
     title,
     convar to follow, (without arc9_; color selectors will automatically use _r/_g/_b)
@@ -23,7 +24,6 @@
 ]]--
 
 local languages = {"1GMod Language", "2English"} -- done something here oka ? 
--- new convar: arc9_language_id   -1 should use gmod lang (fallback to 0 if no such), 0 english, 1 ru, get people to localize other langs later
 
 local settingstable = {
     // {
@@ -175,7 +175,12 @@ local settingstable = {
     {
         TabName = "settings.tabname.visuals",
         { type = "label", text = "settings.visuals.viewmodel" },
-        { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {"1Darsu", "2Fesiug", "3Arctic"}, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
+        { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {
+            {"1Darsu", "1"},
+            {"2Fesiug", "2"},
+            {"3Arctic", "3"},
+        },
+        desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
         -- { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
         { type = "slider", text = "FOV", convar = "fov", min = -40, max = 40, decimals = 0, desc = "Add viewmodel FOV. Makes the viewmodel bigger or smaller. Use responsibly."},
         { type = "slider", min = -16, max = 16, decimals = 1, text = "Add X", convar = "vm_addx", desc = "Shift the viewmodel to the right or left." },
@@ -389,7 +394,7 @@ local function DrawSettings(bg, page)
 
                 if GetConVar(cvar .. "_a") then 
                     newel.rgbcolor = Color(GetConVar(cvar .. "_r"):GetInt() or 255, GetConVar(cvar .. "_g"):GetInt() or 0, GetConVar(cvar .. "_b"):GetInt() or 0, GetConVar(cvar .. "_a"):GetInt() or 255) 
-                else 
+                else
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar (or its _alpha)")
                 end
@@ -401,18 +406,17 @@ local function DrawSettings(bg, page)
             elseif v2.type == "combo" then
                 local newel = vgui.Create("ARC9ComboBox", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:CustomSetConvar("arc9_" .. v2.convar)
+
+                local cvdata = GetConVar("arc9_" .. v2.convar):GetString()
+
                 for _, choice in pairs(v2.content) do
-                    newel:AddChoice(choice)
+                    if tostring(choice[2]) == cvdata then
+                        newel:AddChoice(choice[1], choice[2], true)
+                    else
+                        newel:AddChoice(choice[1], choice[2])
+                    end
                 end
-
-                local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
-                if GetConVar(cvar) then
-                    newel:CustomSetConvar(cvar, v2.minvalue or 0)
-                    newel:ChooseOptionID(GetConVar(cvar):GetInt() + 1 - (v2.minvalue or 0))
-                else
-                    print("invalid combobox convar")
-                end
-
             elseif v2.type == "button" then
                 local newel = vgui.Create("ARC9Button", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))

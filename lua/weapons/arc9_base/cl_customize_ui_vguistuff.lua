@@ -1,16 +1,12 @@
 local ARC9ScreenScale = ARC9.ScreenScale
-
 local hoversound = "arc9/newui/uimouse_hover.ogg"
 local clicksound = "arc9/newui/uimouse_click_forward.ogg"
-
 local ARC9TopButton = {}
 ARC9TopButton.Color = ARC9.GetHUDColor("fg")
 ARC9TopButton.ColorClicked = ARC9.GetHUDColor("hi")
 ARC9TopButton.Icon = Material("arc9/ui/settings.png", "mips")
-
 ARC9TopButton.MatIdle = Material("arc9/ui/topbutton.png", "mips")
 ARC9TopButton.MatHovered = Material("arc9/ui/topbutton_hover.png", "mips")
-
 ARC9TopButton.MatIdleL = Material("arc9/ui/topbutton_l.png", "mips")
 ARC9TopButton.MatHoveredL = Material("arc9/ui/topbutton_hover_l.png", "mips")
 ARC9TopButton.MatIdleM = Material("arc9/ui/topbutton_m.png", "mips")
@@ -19,59 +15,58 @@ ARC9TopButton.MatIdleR = Material("arc9/ui/topbutton_r.png", "mips")
 ARC9TopButton.MatHoveredR = Material("arc9/ui/topbutton_hover_r.png", "mips")
 
 function ARC9TopButton:Init()
-	self:SetText("")
+    self:SetText("")
     self:SetSize(ARC9ScreenScale(21), ARC9ScreenScale(21))
 end
 
 function ARC9TopButton:Paint(w, h)
-	local color = self.Color
-	local iconcolor = self.Color
-	local icon = self.Icon
-	local text = self.ButtonText
+    local color = self.Color
+    local iconcolor = self.Color
+    local icon = self.Icon
+    local text = self.ButtonText
+    local mat = self.MatIdle
+    local matl = self.MatIdleL
+    local matm = self.MatIdleM
+    local matr = self.MatIdleR
 
-	local mat = self.MatIdle
-	local matl = self.MatIdleL
-	local matm = self.MatIdleM
-	local matr = self.MatIdleR
+    if self:IsHovered() then
+        color = ARC9.GetHUDColor("hi")
+        mat = self.MatHovered
+        matl = self.MatHoveredL
+        matm = self.MatHoveredM
+        matr = self.MatHoveredR
+    end
 
-	if self:IsHovered() then
-		color = ARC9.GetHUDColor("hi")
-		mat = self.MatHovered
-		matl = self.MatHoveredL
-		matm = self.MatHoveredM
-		matr = self.MatHoveredR
-	end
-    
-	if self:IsDown() or (self.Checkbox and self:GetChecked()) then
-		iconcolor = ARC9.GetHUDColor("hi")
-	end
+    if self:IsDown() or (self.Checkbox and self:GetChecked()) then
+        iconcolor = ARC9.GetHUDColor("hi")
+    end
 
     surface.SetDrawColor(color)
 
-    if text then -- wide button
+    -- wide button
+    if text then
         surface.SetMaterial(matl)
-        surface.DrawTexturedRect(0, 0, h/2, h)
+        surface.DrawTexturedRect(0, 0, h / 2, h)
         surface.SetMaterial(matm)
-        surface.DrawTexturedRect(h/2, 0, w-h, h)
+        surface.DrawTexturedRect(h / 2, 0, w - h, h)
         surface.SetMaterial(matr)
-        surface.DrawTexturedRect(w-h/2, 0, h/2, h)
-
+        surface.DrawTexturedRect(w - h / 2, 0, h / 2, h)
         surface.SetFont(self.Font or "ARC9_16")
         local tw = surface.GetTextSize(text)
         surface.SetTextColor(iconcolor)
-        surface.SetTextPos(h, h/8)
+        surface.SetTextPos(h, h / 8)
         surface.DrawText(text)
     else
         surface.SetMaterial(mat)
         surface.DrawTexturedRect(0, 0, w, h)
     end
 
-	surface.SetDrawColor(iconcolor)
+    surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
-    surface.DrawTexturedRect(h/5, h/5, h-h/2.5, h-h/2.5)
+    surface.DrawTexturedRect(h / 5, h / 5, h - h / 2.5, h - h / 2.5)
 end
 
-function ARC9TopButton:OnCursorEntered() 
+function ARC9TopButton:OnCursorEntered()
     surface.PlaySound(hoversound)
 end
 
@@ -81,7 +76,7 @@ end
 
 function ARC9TopButton:SetButtonText(text, font)
     self.ButtonText = text
-    self.Font = font 
+    self.Font = font
 end
 
 function ARC9TopButton:SetIsCheckbox(bool)
@@ -89,18 +84,14 @@ function ARC9TopButton:SetIsCheckbox(bool)
 end
 
 vgui.Register("ARC9TopButton", ARC9TopButton, "DCheckBox") -- DButton
-
 local ARC9AttButton = {}
-
 ARC9AttButton.Color = ARC9.GetHUDColor("fg")
 ARC9AttButton.ColorBlock = ARC9.GetHUDColor("con")
 ARC9AttButton.Icon = Material("arc9/ui/settings.png", "mips")
-
 ARC9AttButton.MatIdle = Material("arc9/ui/att.png", "mips")
 ARC9AttButton.MatEmpty = Material("arc9/ui/att_empty.png", "mips")
 -- ARC9AttButton.MatHover = Material("arc9/ui/att_hover.png", "mips")
 ARC9AttButton.MatBlock = Material("arc9/ui/att_block.png", "mips")
-
 ARC9AttButton.MatMarkerInstalled = Material("arc9/ui/mark_installed.png", "mips smooth")
 ARC9AttButton.MatMarkerLock = Material("arc9/ui/mark_lock.png", "mips smooth")
 ARC9AttButton.MatMarkerModes = Material("arc9/ui/mark_modes.png", "mips smooth")
@@ -108,7 +99,7 @@ ARC9AttButton.MatMarkerSlots = Material("arc9/ui/mark_slots.png", "mips smooth")
 
 function ARC9AttButton:Init()
     self:SetText("")
-    self:SetSize(ARC9ScreenScale(42.7), ARC9ScreenScale(42.7+14.6))
+    self:SetSize(ARC9ScreenScale(42.7), ARC9ScreenScale(42.7 + 14.6))
 end
 
 function ARC9AttButton:Paint(w, h)
@@ -118,8 +109,7 @@ function ARC9AttButton:Paint(w, h)
     local markercolor = self.Color
     local icon = self.Icon or ARC9TopButton.MatIdle
     local text = self.ButtonText
-    local colorclicked =  ARC9.GetHUDColor("hi")
-
+    local colorclicked = ARC9.GetHUDColor("hi")
     local mat = self.MatIdle
     local matmarker = nil
 
@@ -135,7 +125,7 @@ function ARC9AttButton:Paint(w, h)
 
     if self.Empty then
         mat = self.MatEmpty
-    elseif !self.CanAttach then
+    elseif not self.CanAttach then
         mat = self.MatBlock
         matmarker = self.MatMarkerLock
         textcolor = self.ColorBlock
@@ -151,16 +141,17 @@ function ARC9AttButton:Paint(w, h)
     surface.SetDrawColor(color)
     surface.SetMaterial(mat)
     surface.DrawTexturedRect(0, 0, w, w)
-
     -- icon
     render.SuppressEngineLighting(true)
     surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
-    if !self.FullColorIcon then
-        surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w-ARC9ScreenScale(4), w-ARC9ScreenScale(4))
+
+    if not self.FullColorIcon then
+        surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w - ARC9ScreenScale(4), w - ARC9ScreenScale(4))
     else
-        surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(4), w-ARC9ScreenScale(8), w-ARC9ScreenScale(8))
+        surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(4), w - ARC9ScreenScale(8), w - ARC9ScreenScale(8))
     end
+
     render.SuppressEngineLighting(false)
 
     if matmarker then
@@ -174,7 +165,7 @@ function ARC9AttButton:Paint(w, h)
         surface.SetFont("ARC9_12")
         local tww = surface.GetTextSize(self.FolderContain)
         surface.SetTextColor(iconcolor)
-        surface.SetTextPos((w-tww)/2, h-ARC9ScreenScale(28))
+        surface.SetTextPos((w - tww) / 2, h - ARC9ScreenScale(28))
         surface.DrawText(self.FolderContain)
     end
 
@@ -184,50 +175,58 @@ function ARC9AttButton:Paint(w, h)
     surface.SetTextColor(textcolor)
 
     if tw > w then
-        ARC9.DrawTextRot(self, text, 0, h-ARC9ScreenScale(13.5), 0, h-ARC9ScreenScale(13.5), w, false)
+        ARC9.DrawTextRot(self, text, 0, h - ARC9ScreenScale(13.5), 0, h - ARC9ScreenScale(13.5), w, false)
     else
-        surface.SetTextPos((w-tw)/2, h-ARC9ScreenScale(13.5))
+        surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(13.5))
         surface.DrawText(text)
     end
 end
 
-function ARC9AttButton:OnCursorEntered() 
+function ARC9AttButton:OnCursorEntered()
     surface.PlaySound(hoversound)
 end
 
 function ARC9AttButton:SetIcon(mat)
     self.Icon = mat
 end
+
 function ARC9AttButton:SetButtonText(text)
     self.ButtonText = text
 end
+
 function ARC9AttButton:SetEmpty(bool)
     self.Empty = bool
 end
+
 function ARC9AttButton:SetOverrideHovered(bool)
     self.OverrideHovered = bool
 end
+
 function ARC9AttButton:SetInstalled(bool)
     self.Installed = bool
 end
+
 function ARC9AttButton:SetCanAttach(bool)
     self.CanAttach = bool
 end
+
 function ARC9AttButton:SetFolderContain(num)
     self.FolderContain = num
 end
+
 function ARC9AttButton:SetHasModes(bool)
     self.HasModes = bool
 end
+
 function ARC9AttButton:SetHasSlots(bool)
     self.HasSlots = bool
 end
+
 function ARC9AttButton:SetFullColorIcon(bool)
     self.FullColorIcon = bool
 end
 
 vgui.Register("ARC9AttButton", ARC9AttButton, "DCheckBox") -- DButton
-
 local ARC9ScrollPanel = {}
 
 function ARC9ScrollPanel:Init()
@@ -235,10 +234,12 @@ function ARC9ScrollPanel:Init()
     self.VBar:SetWide(ARC9ScreenScale(2))
     self.VBar:SetAlpha(0) -- to prevent blinking
     self.VBar:AlphaTo(255, 0.2, 0, nil)
+
     self.VBar.Paint = function(panel, w, h)
         surface.SetDrawColor(ARC9.GetHUDColor("bg"))
         surface.DrawRect(0, 0, w, h)
     end
+
     self.VBar.btnGrip.Paint = function(panel, w, h)
         surface.SetDrawColor(ARC9.GetHUDColor("fg"))
         surface.DrawRect(0, 0, w, h)
@@ -251,13 +252,15 @@ function ARC9ScrollPanel:Init()
         dlta = dlta * 35
         smoothdlta = Lerp(0.08, smoothdlta, dlta)
         self2:SetScroll(self2:GetScroll() + smoothdlta)
-        return OldScroll != self2:GetScroll()
+
+        return OldScroll ~= self2:GetScroll()
     end
 end
-function ARC9ScrollPanel:Paint(w, h) end
+
+function ARC9ScrollPanel:Paint(w, h)
+end
 
 vgui.Register("ARC9ScrollPanel", ARC9ScrollPanel, "DScrollPanel")
-
 local ARC9HorizontalScroller = {}
 
 function ARC9HorizontalScroller:Init()
@@ -266,7 +269,6 @@ function ARC9HorizontalScroller:Init()
     self.OnMouseWheeled = function(self2, dlta)
         dlta = dlta * -55
         smoothdlta = Lerp(0.08, smoothdlta, dlta)
-        
         self2.OffsetX = self2.OffsetX + smoothdlta
         self2:InvalidateLayout(true)
 
@@ -275,29 +277,22 @@ function ARC9HorizontalScroller:Init()
 end
 
 vgui.Register("ARC9HorizontalScroller", ARC9HorizontalScroller, "DHorizontalScroller")
-
-
 local ARC9ColumnSheet = {}
 
 function ARC9ColumnSheet:Init()
-	self.Navigation = vgui.Create("ARC9ScrollPanel", self)
-	self.Navigation:Dock(LEFT)
-	self.Navigation:SetWidth(100)
-	self.Navigation:DockMargin(10, 10, 10, 0)
-
-	self.Content = vgui.Create("Panel", self)
-	self.Content:Dock(FILL)
-
-	self.Items = {}
+    self.Navigation = vgui.Create("ARC9ScrollPanel", self)
+    self.Navigation:Dock(LEFT)
+    self.Navigation:SetWidth(100)
+    self.Navigation:DockMargin(10, 10, 10, 0)
+    self.Content = vgui.Create("Panel", self)
+    self.Content:Dock(FILL)
+    self.Items = {}
 end
 
 vgui.Register("ARC9ColumnSheet", ARC9ColumnSheet, "DColumnSheet")
-
-
 local ARC9Checkbox = {}
 ARC9Checkbox.Color = ARC9.GetHUDColor("fg")
 ARC9Checkbox.ColorClicked = ARC9.GetHUDColor("hi")
-
 ARC9Checkbox.MatIdle = Material("arc9/ui/checkbox.png", "mips")
 ARC9Checkbox.MatSel = Material("arc9/ui/checkbox_sel.png", "mips")
 ARC9Checkbox.MatToggled = Material("arc9/ui/checkbox_toggled.png", "mips")
@@ -307,9 +302,8 @@ function ARC9Checkbox:Init()
 end
 
 function ARC9Checkbox:Paint(w, h)
-	local color = self.Color
-	local color2 = ARC9.GetHUDColor("hi")
-
+    local color = self.Color
+    local color2 = ARC9.GetHUDColor("hi")
     surface.SetDrawColor(color)
     surface.SetMaterial(self.MatIdle)
     surface.DrawTexturedRect(0, 0, w, w)
@@ -328,8 +322,6 @@ function ARC9Checkbox:Paint(w, h)
 end
 
 vgui.Register("ARC9Checkbox", ARC9Checkbox, "DCheckBox")
-
-
 local ARC9NumSlider = {}
 ARC9NumSlider.Color = ARC9.GetHUDColor("fg")
 ARC9NumSlider.ColorClicked = ARC9.GetHUDColor("hi")
@@ -339,24 +331,25 @@ function ARC9NumSlider:Init()
     local color = self.Color
     local color2 = ARC9.GetHUDColor("hi")
     local color3 = self.ColorNo
-    
     self.Slider.Knob:SetSize(ARC9ScreenScale(1.7), ARC9ScreenScale(7))
-    self.Slider.Knob.Paint = function(panel, w, h) 
+
+    self.Slider.Knob.Paint = function(panel, w, h)
         surface.SetDrawColor(color)
-        surface.DrawRect(0, 0, w, h) 
-    end    
-    
-    self.Slider.Paint = function(panel, w, h) 
-        surface.SetDrawColor(color3)
-        surface.DrawRect(0, h/3, w, h/4) 
-        surface.SetDrawColor(color)
-        surface.DrawRect(0, h/3, w*self.Scratch:GetFraction(), h/4) 
+        surface.DrawRect(0, 0, w, h)
     end
-	self.TextArea:SetWide(ARC9ScreenScale(20))
-	self.TextArea:DockMargin(ARC9ScreenScale(3), 0, 0, 0)
-	self.TextArea:SetHighlightColor(color2)
-	self.TextArea:SetCursorColor(color2)
-	self.TextArea:SetTextColor(color)
+
+    self.Slider.Paint = function(panel, w, h)
+        surface.SetDrawColor(color3)
+        surface.DrawRect(0, h / 3, w, h / 4)
+        surface.SetDrawColor(color)
+        surface.DrawRect(0, h / 3, w * self.Scratch:GetFraction(), h / 4)
+    end
+
+    self.TextArea:SetWide(ARC9ScreenScale(20))
+    self.TextArea:DockMargin(ARC9ScreenScale(3), 0, 0, 0)
+    self.TextArea:SetHighlightColor(color2)
+    self.TextArea:SetCursorColor(color2)
+    self.TextArea:SetTextColor(color)
     self.TextArea:SetFont("ARC9_10_Slim")
     -- self.TextArea.Paint = function(panel, w, h) 
     --     surface.SetFont("ARC9_10_Slim")
@@ -369,12 +362,9 @@ function ARC9NumSlider:Init()
 end
 
 vgui.Register("ARC9NumSlider", ARC9NumSlider, "DNumSlider")
-
-
 local ARC9ComboBox = {}
 ARC9ComboBox.Color = ARC9.GetHUDColor("fg")
 ARC9ComboBox.ColorClicked = ARC9.GetHUDColor("hi")
-
 ARC9ComboBox.MatIdle = Material("arc9/ui/dd.png", "mips")
 ARC9ComboBox.MatSel = Material("arc9/ui/dd_sel.png", "mips")
 ARC9ComboBox.MatOpened = Material("arc9/ui/dd_opened.png", "mips")
@@ -389,40 +379,48 @@ function ARC9ComboBox:Init()
     self.DropButton:Remove()
 end
 
-function ARC9ComboBox:PerformLayout() -- to fix button we removed
-	DButton.PerformLayout(self, w, h)
+-- to fix button we removed
+function ARC9ComboBox:PerformLayout()
+    DButton.PerformLayout(self, w, h)
 end
 
 function ARC9ComboBox:OnSelect(index, value, data)
     self.text = self:GetText()
-    
-    if self.Convar then RunConsoleCommand(self.Convar, index - 1 + self.MinValue) end
+
+    if self.Convar then
+        RunConsoleCommand(self.Convar, data)
+    end
+
     self:SetText("")
 end
 
-function ARC9ComboBox:CustomSetConvar(cvar, minval)
+function ARC9ComboBox:CustomSetConvar(cvar)
     self.Convar = cvar
-    self.MinValue = minval
+end
+
+function ARC9ComboBox:SetOptions(opt)
+    self.IndexToOptions = opt
 end
 
 function ARC9ComboBox:OnMenuOpened(menu)
     menu.Paint = function(panel, w, h) end
-    
     menu:SetAlpha(0)
     menu:AlphaTo(255, 0.1, 0, nil)
-	-- local mat = self.MatIdle
 
-    for i=1, menu:ChildCount() do
+    -- local mat = self.MatIdle
+    for i = 1, menu:ChildCount() do
         local child = menu:GetChild(i)
 
-        child.PerformLayout = function(self22, w22, h22) DButton.PerformLayout(self22, w22, h22) end
+        child.PerformLayout = function(self22, w22, h22)
+            DButton.PerformLayout(self22, w22, h22)
+        end
 
         child:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(13))
         child.id = i
         child.last = i == menu:ChildCount()
         child.text = child:GetText()
         child:SetText("")
-        
+
         child.Paint = function(self2, w, h)
             local mat = self.MatSingle
             local mat2 = self.MatSingleSel
@@ -430,7 +428,7 @@ function ARC9ComboBox:OnMenuOpened(menu)
             local mat4 = self.MatLastSel
             local color = self.Color
             local color2 = ARC9.GetHUDColor("hi")
-                    
+
             if self2:IsDown() then
                 color = color2
             end
@@ -438,7 +436,6 @@ function ARC9ComboBox:OnMenuOpened(menu)
             surface.SetDrawColor(color)
             surface.SetMaterial(self2.last and mat3 or mat)
             surface.DrawTexturedRect(0, 0, w, h)
-            
             local active = self:GetSelectedID() == self2.id
 
             if active or self2:IsHovered() then
@@ -446,7 +443,7 @@ function ARC9ComboBox:OnMenuOpened(menu)
                 surface.SetMaterial(self2.last and mat4 or mat2)
                 surface.DrawTexturedRect(0, 0, w, h)
             end
-             
+
             surface.SetFont("ARC9_10")
             surface.SetTextColor(active and color2 or color)
             surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
@@ -456,13 +453,12 @@ function ARC9ComboBox:OnMenuOpened(menu)
 end
 
 function ARC9ComboBox:Paint(w, h)
-	local color = self.Color
-	local color2 = ARC9.GetHUDColor("hi")
-	local mat = self.MatIdle
-	local mat2 = self.MatSel
-	local mat3 = self.MatOpened
-	local mat4 = self.MatOpenedSel
-
+    local color = self.Color
+    local color2 = ARC9.GetHUDColor("hi")
+    local mat = self.MatIdle
+    local mat2 = self.MatSel
+    local mat3 = self.MatOpened
+    local mat4 = self.MatOpenedSel
     surface.SetDrawColor(color)
     surface.SetMaterial(self:IsMenuOpen() and mat3 or mat)
     surface.DrawTexturedRect(0, 0, w, h)
@@ -472,7 +468,7 @@ function ARC9ComboBox:Paint(w, h)
         surface.SetMaterial(self:IsMenuOpen() and mat4 or mat2)
         surface.DrawTexturedRect(0, 0, w, h)
     end
-    
+
     surface.SetFont("ARC9_10")
     surface.SetTextColor(color)
     surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
@@ -480,12 +476,9 @@ function ARC9ComboBox:Paint(w, h)
 end
 
 vgui.Register("ARC9ComboBox", ARC9ComboBox, "DComboBox")
-
-
 local ARC9Button = {}
 ARC9Button.Color = ARC9.GetHUDColor("fg")
 ARC9Button.ColorClicked = ARC9.GetHUDColor("hi")
-
 ARC9Button.MatIdle = Material("arc9/ui/button.png", "mips")
 ARC9Button.MatSel = Material("arc9/ui/button_sel.png", "mips")
 
@@ -496,8 +489,8 @@ function ARC9Button:Init()
 end
 
 function ARC9Button:Paint(w, h)
-	local color = self.Color
-	local color2 = ARC9.GetHUDColor("hi")
+    local color = self.Color
+    local color2 = ARC9.GetHUDColor("hi")
 
     if self:IsDown() then
         color = color2
@@ -512,22 +505,19 @@ function ARC9Button:Paint(w, h)
         surface.SetMaterial(self.MatSel)
         surface.DrawTexturedRect(0, 0, w, h)
     end
-    
+
     local text = self.text or ""
     surface.SetFont("ARC9_10")
     local tw = surface.GetTextSize(text)
     surface.SetTextColor(color)
-    surface.SetTextPos(w/2-tw/2, ARC9ScreenScale(1.5))
+    surface.SetTextPos(w / 2 - tw / 2, ARC9ScreenScale(1.5))
     surface.DrawText(text)
 end
 
 vgui.Register("ARC9Button", ARC9Button, "DButton")
-
-
 local ARC9ColorPanel = {}
 ARC9ColorPanel.Color = ARC9.GetHUDColor("fg")
 ARC9ColorPanel.ColorClicked = ARC9.GetHUDColor("hi")
-
 ARC9ColorPanel.MatIdle = Material("arc9/ui/colorpanel.png", "mips")
 ARC9ColorPanel.MatIdle2 = Material("arc9/ui/colorpanel2.png", "mips")
 ARC9ColorPanel.MatCubeR = Material("arc9/ui/colorcube_r")
@@ -538,19 +528,21 @@ ARC9ColorPanel.MatSelect2 = Material("arc9/ui/circle128_2.png", "mips smooth")
 
 function ARC9ColorPanel:Init()
     self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(96)) --108
-
     self:MakePopup()
     self:SetDraggable(true)
-    self:ShowCloseButton(true)        -- set to false when done please!!
+    self:ShowCloseButton(true) -- set to false when done please!!
     self:SetAlpha(0)
     self:AlphaTo(255, 0.15, 0, nil)
     self:ShowCloseButton(false)
-    
     self.hsvHUE, self.hsvSAT, self.hsvVAL = ColorToHSV(self.startcolor or Color(255, 0, 0))
-    
-    self.hsvHUEonly = {r=self.hsvHUE, g=1, b=1}
-    self.ResultColor = self.startcolor or Color(255, 0, 0)
 
+    self.hsvHUEonly = {
+        r = self.hsvHUE,
+        g = 1,
+        b = 1
+    }
+
+    self.ResultColor = self.startcolor or Color(255, 0, 0)
     local huepanel = vgui.Create("DPanel", self)
     huepanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(13))
     huepanel:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(10.5))
@@ -558,9 +550,8 @@ function ARC9ColorPanel:Init()
     huepanel.LastX = 0
     self.huepanel = huepanel -- for later integration
 
-    huepanel.OnCursorMoved =  function(self2, x, y)
-        if !input.IsMouseDown(MOUSE_LEFT) then return end
-    
+    huepanel.OnCursorMoved = function(self2, x, y)
+        if not input.IsMouseDown(MOUSE_LEFT) then return end
         x = math.Clamp(x, 0, self2:GetWide())
         self2.LastX = x
         self.hsvHUE = (x / self2:GetWide()) * 360
@@ -568,20 +559,21 @@ function ARC9ColorPanel:Init()
         self.hsvHUEonly = HSVToColor(self.hsvHUE, 1, 1)
     end
 
-    huepanel.OnMousePressed =  function(self2, mcode)
+    huepanel.OnMousePressed = function(self2, mcode)
         self2:MouseCapture(true)
         self2:OnCursorMoved(self2:CursorPos())
         self2:SetCursor("blank")
     end
-    huepanel.OnMouseReleased =  function(self2, mcode)
+
+    huepanel.OnMouseReleased = function(self2, mcode)
         self2:MouseCapture(false)
         self2:OnCursorMoved(self2:CursorPos())
         self2:SetCursor("none")
     end
-    
-    huepanel.Paint =  function(self2, w, h)
+
+    huepanel.Paint = function(self2, w, h)
         surface.SetDrawColor(255, 255, 255, 255)
-        surface.DrawRect(self2.LastX-ARC9ScreenScale(0.5), -ARC9ScreenScale(1), ARC9ScreenScale(1), h + ARC9ScreenScale(2))
+        surface.DrawRect(self2.LastX - ARC9ScreenScale(0.5), -ARC9ScreenScale(1), ARC9ScreenScale(1), h + ARC9ScreenScale(2))
     end
 
     local cube = vgui.Create("DPanel", self)
@@ -592,7 +584,7 @@ function ARC9ColorPanel:Init()
     cube.LastX = 0
     cube.LastY = 0
 
-    cube.Paint =  function(self2, w, h)
+    cube.Paint = function(self2, w, h)
         surface.SetDrawColor(255, 255, 255, 255)
         surface.SetMaterial(self.MatCubeF)
         surface.DrawTexturedRect(0, 0, w, h)
@@ -602,7 +594,6 @@ function ARC9ColorPanel:Init()
         surface.SetDrawColor(0, 0, 0, 255)
         surface.SetMaterial(self.MatCubeD)
         surface.DrawTexturedRect(0, 0, w, h)
-
         surface.SetDrawColor(255, 255, 255, 255)
         surface.SetMaterial(self.MatSelect)
         surface.DrawTexturedRect(self2.LastX - ARC9ScreenScale(4), self2.LastY - ARC9ScreenScale(4), ARC9ScreenScale(8), ARC9ScreenScale(8))
@@ -611,25 +602,24 @@ function ARC9ColorPanel:Init()
         surface.DrawTexturedRect(self2.LastX - ARC9ScreenScale(4), self2.LastY - ARC9ScreenScale(4), ARC9ScreenScale(8), ARC9ScreenScale(8))
     end
 
-    cube.OnCursorMoved =  function(self2, x, y)
-        if !input.IsMouseDown(MOUSE_LEFT) then return end
-    
+    cube.OnCursorMoved = function(self2, x, y)
+        if not input.IsMouseDown(MOUSE_LEFT) then return end
         x = math.Clamp(x, 0, self2:GetWide())
         y = math.Clamp(y, 0, self2:GetTall())
         self2.LastX = x
         self2.LastY = y
-
         self.hsvSAT = x / self2:GetWide()
         self.hsvVAL = 1 - y / self2:GetTall()
         self.ResultColor = HSVToColor(self.hsvHUE, self.hsvSAT, self.hsvVAL)
     end
 
-    cube.OnMousePressed =  function(self2, mcode)
+    cube.OnMousePressed = function(self2, mcode)
         self2:MouseCapture(true)
         self2:OnCursorMoved(self2:CursorPos())
         self2:SetCursor("blank")
     end
-    cube.OnMouseReleased =  function(self2, mcode)
+
+    cube.OnMouseReleased = function(self2, mcode)
         self2:MouseCapture(false)
         self2:OnCursorMoved(self2:CursorPos())
         self2:SetCursor("none")
@@ -637,8 +627,7 @@ function ARC9ColorPanel:Init()
 end
 
 function ARC9ColorPanel:Paint(w, h)
-	local color = self.Color
-
+    local color = self.Color
     surface.SetDrawColor(color)
     surface.SetMaterial(self.MatIdle)
     surface.DrawTexturedRect(0, 0, w, h)
@@ -648,9 +637,9 @@ function ARC9ColorPanel:UpdateColor(clr)
     local hsvh, hsvs, hsvv = ColorToHSV(clr)
     self.hsvHUE, self.hsvSAT, self.hsvVAL = hsvh, hsvs, hsvv
     self.hsvHUEonly = HSVToColor(hsvh, 1, 1)
-    self.ResultColor = clr    
+    self.ResultColor = clr
     self.cube.LastX = self.cube:GetWide() * hsvs
-    self.cube.LastY = self.cube:GetTall() * (1-hsvv)
+    self.cube.LastY = self.cube:GetTall() * (1 - hsvv)
     self.huepanel.LastX = self.huepanel:GetWide() * hsvh / 360
 
     if self.Alpha then
@@ -660,12 +649,10 @@ function ARC9ColorPanel:UpdateColor(clr)
 end
 
 function ARC9ColorPanel:EnableAlpha()
-    self.Alpha = 255 
-
+    self.Alpha = 255
     self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(108)) --108
     self.huepanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(13))
     self.MatIdle = self.MatIdle2
-
     local alphapanel = vgui.Create("DPanel", self)
     alphapanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(25.05))
     alphapanel:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(10.5))
@@ -673,42 +660,38 @@ function ARC9ColorPanel:EnableAlpha()
     alphapanel.LastX = ARC9ScreenScale(79)
     self.alphapanel = alphapanel -- for later integration
 
-    alphapanel.OnCursorMoved =  function(self2, x, y)
-        if !input.IsMouseDown(MOUSE_LEFT) then return end
-    
+    alphapanel.OnCursorMoved = function(self2, x, y)
+        if not input.IsMouseDown(MOUSE_LEFT) then return end
         x = math.Clamp(x, 0, self2:GetWide())
         self2.LastX = x
         self.Alpha = (x / self2:GetWide()) * 255
     end
 
-    alphapanel.OnMousePressed =  function(self2, mcode)
+    alphapanel.OnMousePressed = function(self2, mcode)
         self2:MouseCapture(true)
         self2:OnCursorMoved(self2:CursorPos())
         self2:SetCursor("blank")
     end
-    alphapanel.OnMouseReleased =  function(self2, mcode)
+
+    alphapanel.OnMouseReleased = function(self2, mcode)
         self2:MouseCapture(false)
         self2:OnCursorMoved(self2:CursorPos())
         self2:SetCursor("none")
     end
-    
-    alphapanel.Paint =  function(self2, w, h)
+
+    alphapanel.Paint = function(self2, w, h)
         surface.SetDrawColor(self.ResultColor, 255)
         surface.SetMaterial(self.MatCubeR)
         surface.DrawTexturedRect(0, 0, w, h)
         surface.SetDrawColor(255, 255, 255, 255)
-        surface.DrawRect(self2.LastX-ARC9ScreenScale(0.5), -ARC9ScreenScale(1), ARC9ScreenScale(1), h + ARC9ScreenScale(2))
+        surface.DrawRect(self2.LastX - ARC9ScreenScale(0.5), -ARC9ScreenScale(1), ARC9ScreenScale(1), h + ARC9ScreenScale(2))
     end
-
 end
 
 vgui.Register("ARC9ColorPanel", ARC9ColorPanel, "DFrame")
-
-
 local ARC9ColorButton = {}
 ARC9ColorButton.Color = ARC9.GetHUDColor("fg")
 ARC9ColorButton.ColorClicked = ARC9.GetHUDColor("hi")
-
 ARC9ColorButton.MatIdle = Material("arc9/ui/button_color.png", "mips")
 ARC9ColorButton.MatSel = Material("arc9/ui/button_sel.png", "mips")
 ARC9ColorButton.MatIcon = Material("arc9/ui/paint.png", "mips smooth")
@@ -724,42 +707,48 @@ function ARC9ColorButton:DoClick()
     bg:SetSize(ScrW(), ScrH())
     bg:SetTitle("")
     bg:SetDraggable(false)
-    bg:ShowCloseButton(false)        -- set to false when done please!!
+    bg:ShowCloseButton(false) -- set to false when done please!!
     bg:SetBackgroundBlur(true)
     bg:MakePopup()
-
     bg.ParentButton = self
-
     local newel = vgui.Create("ARC9ColorPanel", bg)
-    if self.AlphaEnabled then newel:EnableAlpha() end
+
+    if self.AlphaEnabled then
+        newel:EnableAlpha()
+    end
+
     newel:SetPos(self:LocalToScreen(self:GetX() - ARC9ScreenScale(80), self:GetY() - ARC9ScreenScale(48)))
     newel:UpdateColor(self.rgbcolor)
     newel:ShowCloseButton(false)
-    
+
     bg.Paint = function(self2, w, h)
-        surface.SetDrawColor(0, 0, 0, 0) 
+        surface.SetDrawColor(0, 0, 0, 0)
         surface.DrawRect(0, 0, w, h)
-        if !IsValid(self2.ParentButton) then
+
+        if not IsValid(self2.ParentButton) then
             bg:Remove()
             newel:Remove()
         end
     end
 
     bg.OnMousePressed = function(self2, keycode)
-        if newel.Alpha then newel.ResultColor.a = newel.Alpha end
+        if newel.Alpha then
+            newel.ResultColor.a = newel.Alpha
+        end
 
         self.rgbcolor = newel.ResultColor
-        
-	    RunConsoleCommand(self.Convar .. "_r", self.rgbcolor.r)
-	    RunConsoleCommand(self.Convar .. "_g", self.rgbcolor.g)
-	    RunConsoleCommand(self.Convar .. "_b", self.rgbcolor.b)
-	    if newel.Alpha then RunConsoleCommand(self.Convar .. "_a", self.rgbcolor.a) end
+        RunConsoleCommand(self.Convar .. "_r", self.rgbcolor.r)
+        RunConsoleCommand(self.Convar .. "_g", self.rgbcolor.g)
+        RunConsoleCommand(self.Convar .. "_b", self.rgbcolor.b)
+
+        if newel.Alpha then
+            RunConsoleCommand(self.Convar .. "_a", self.rgbcolor.a)
+        end
 
         -- self:ApplyConvar or something idk () 
         newel:Remove()
         bg:Remove()
     end
-
 end
 
 function ARC9ColorButton:EnableAlpha()
@@ -771,10 +760,9 @@ function ARC9ColorButton:CustomSetConvar(cvar)
 end
 
 function ARC9ColorButton:Paint(w, h)
-	local color = self.Color
-	local color2 = ARC9.GetHUDColor("hi")
-	local color3 = self.rgbcolor or self.Color
-
+    local color = self.Color
+    local color2 = ARC9.GetHUDColor("hi")
+    local color3 = self.rgbcolor or self.Color
 
     if self:IsDown() then
         color = color2
@@ -783,10 +771,9 @@ function ARC9ColorButton:Paint(w, h)
     surface.SetDrawColor(color3)
     surface.SetMaterial(self.MatIdle)
     surface.DrawTexturedRect(0, 0, w, h)
-    
     surface.SetDrawColor(color)
     surface.SetMaterial(self.MatIcon)
-    surface.DrawTexturedRect(w/2 - h*0.35, h/2 - h*0.35, h*0.7, h*0.7)
+    surface.DrawTexturedRect(w / 2 - h * 0.35, h / 2 - h * 0.35, h * 0.7, h * 0.7)
 
     if self:IsHovered() then
         surface.SetDrawColor(color2)
