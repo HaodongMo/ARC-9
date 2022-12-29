@@ -104,10 +104,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     offsetpos:Set(self:GetProcessedValue("ActivePos"))
     offsetang:Set(self:GetProcessedValue("ActiveAng"))
 
-    offsetpos = offsetpos + offsetang:Right() * GetConVar("arc9_vm_addy"):GetFloat()
-    offsetpos = offsetpos + offsetang:Forward() * GetConVar("arc9_vm_addx"):GetFloat()
-    offsetpos = offsetpos + offsetang:Up() * GetConVar("arc9_vm_addz"):GetFloat()
-
     local movingpv = self.PV_Move
     local mvpos = self:GetProcessedValue("MovingPos")
 
@@ -203,6 +199,10 @@ function SWEP:GetViewModelPosition(pos, ang)
             offsetang:Set(reloadang)
         end
     end
+
+    offsetpos = offsetpos + offsetang:Right() * GetConVar("arc9_vm_addy"):GetFloat()
+    offsetpos = offsetpos + offsetang:Forward() * GetConVar("arc9_vm_addx"):GetFloat()
+    offsetpos = offsetpos + offsetang:Up() * GetConVar("arc9_vm_addz"):GetFloat()
 
     local sightdelta = self:GetSightDelta()
 
