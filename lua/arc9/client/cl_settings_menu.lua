@@ -64,10 +64,10 @@ local settingstable = {
         -- { type = "bool", text = "Blur in Sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
 
         { type = "label", text = "settings.optics.control" },
-        { type = "bool", text = "settings.optics.compensate_sen.titles", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
+        { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
         { type = "bool", text = "settings.optics.toggleads.title", convar = "toggleads", desc = "settings.optics.toggleads.desc" },
 
-        { type = "label", text = "settings.optics.color.title" },
+        { type = "label", text = "settings.optics.color" },
         { type = "color", text = "settings.optics.reflex.title", convar = "reflex", desc = "settings.optics.reflex.desc" },
         { type = "color", text = "settings.optics.scope.title", convar = "scope", desc = "settings.optics.scope.desc" },
     },
@@ -77,9 +77,9 @@ local settingstable = {
         { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
         { type = "coloralpha", text = "settings.crosshair.cross.title", convar = "cross", desc = "settings.crosshair.cross.desc"},
         { type = "slider", text = "settings.crosshair.cross_size_mult.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_mult", desc = "settings.crosshair.cross_size_mult.desc" },
-        { type = "slider", text = "settings.crosshair.cross_size_dot.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_dot", desc = "settings.crosshair.cross_size_dot.desc." },
+        { type = "slider", text = "settings.crosshair.cross_size_dot.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_dot", desc = "settings.crosshair.cross_size_dot.desc" },
         { type = "slider", text = "settings.crosshair.cross_size_prong.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_prong", desc = "settings.crosshair.cross_size_prong.desc" },
-        { type = "bool", text = "settings.crosshaircrosshair_static.title", convar = "crosshair_static", desc = "settings.crosshair.crosshair_static.desc" },
+        { type = "bool", text = "settings.crosshair.crosshair_static.title", convar = "crosshair_static", desc = "settings.crosshair.crosshair_static.desc" },
         { type = "bool", text = "settings.crosshair.crosshair_force.title", convar = "crosshair_force", desc = "settings.crosshair.crosshair_force.desc" },
     },
     {
@@ -112,17 +112,17 @@ local settingstable = {
         --         ARC9.Regen() -- reload fonts with new scale
         --     end)
         -- end },
-        { type = "color", text = "settings.hud_cust.hud_scale.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
+        { type = "color", text = "settings.hud_cust.hud_color.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        { type = "combo", text = "settings.hud_cust.hud_scale.title", convar = "language_id", content = languages, minvalue = -1, desc = "settings.hud_cust.language_id.desc" },
-        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_light", desc = "settings.hud_cust.hud_scale.desc"},
-        { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.hud_scale.title", convar = "cust_light_brightness", desc = "settings.hud_cust.hud_scale.desc" },
+        { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language_id", content = languages, minvalue = -1, desc = "settings.hud_cust.language_id.desc" },
+        { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},
+        { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.cust_light_brightness.title", convar = "cust_light_brightness", desc = "settings.hud_cust.cust_light_brightness.desc" },
 
         { type = "label", text = "settings.hud_cust.customization" },
         -- { type = "bool", text = "Background Blur", convar = "cust_blur", desc = "Blurs customization background.\n\nRequires DX9."},
-        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_hints", desc = "settings.hud_cust.hud_scale.desc"},
-        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_roll_unlock", desc = "settings.hud_cust.hud_scale.desc"},
-        { type = "bool", text = "settings.hud_cust.hud_scale.title", convar = "cust_exit_reset_sel", desc = "settings.hud_cust.hud_scale.desc"}
+        { type = "bool", text = "settings.hud_cust.cust_hints.title", convar = "cust_hints", desc = "settings.hud_cust.cust_hints.desc"},
+        { type = "bool", text = "settings.hud_cust.cust_roll_unlock.title", convar = "cust_roll_unlock", desc = "settings.hud_cust.cust_roll_unlock.desc"},
+        { type = "bool", text = "settings.hud_cust.cust_exit_reset_sel.title", convar = "cust_exit_reset_sel", desc = "settings.hud_cust.cust_exit_reset_sel.desc"}
     },
     {
         TabName = "settings.tabname.hud_game",
