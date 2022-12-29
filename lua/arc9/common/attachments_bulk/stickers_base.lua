@@ -13,6 +13,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Base"
 
 ATT.StickerMaterial = "stickers/arc9_lowvis"
 
@@ -31,6 +32,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Base"
 
 ATT.StickerMaterial = "stickers/arc9"
 
@@ -49,6 +51,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Base"
 
 ATT.StickerMaterial = "stickers/a9k"
 
@@ -68,6 +71,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Base"
 
 ATT.StickerMaterial = "stickers/a9cylo"
 
@@ -87,6 +91,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/alien_lean"
 
@@ -127,6 +132,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/tomatocat"
 
@@ -146,6 +152,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/actionbird"
 
@@ -165,6 +172,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/warcrimes"
 
@@ -184,6 +192,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/sillycat"
 
@@ -203,6 +212,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/muertosskull"
 
@@ -222,6 +232,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/bandaid"
 
@@ -241,6 +252,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/peacedove"
 
@@ -260,6 +272,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/borntomodify"
 
@@ -279,6 +292,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/cad"
 
@@ -298,6 +312,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/fumo"
 
@@ -317,6 +332,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/hotlead"
 
@@ -336,6 +352,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Base"
 
 ATT.StickerMaterial = "stickers/sus9"
 
@@ -355,6 +372,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/steamhappy"
 
@@ -374,6 +392,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/amidstus"
 
@@ -393,25 +412,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-
-ATT.StickerMaterial = "stickers/arcglory"
-
-ARC9.LoadAttachment(ATT, "sticker_arcglory")
-
-ATT = {}
-
-ATT.PrintName = [[Glory!]]
-ATT.CompactName = "Glory!"
-ATT.Description = [[Took nine brain cells to scribble this
-Design from Optica.
-
-Sticker included in ARC9 Base.]]
-ATT.Icon = Material("stickers/arcglory")
-
-ATT.SortOrder = 0
-ATT.Free = true
-
-ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/arcglory"
 
@@ -431,25 +432,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-
-ATT.StickerMaterial = "stickers/wp"
-
-ARC9.LoadAttachment(ATT, "sticker_wp")
-
-ATT = {}
-
-ATT.PrintName = [[World Peace!]]
-ATT.CompactName = "World Peace"
-ATT.Description = [[A delusion!
-Design from Fidget.
-
-Sticker included in ARC9 Base.]]
-ATT.Icon = Material("stickers/wp")
-
-ATT.SortOrder = 0
-ATT.Free = true
-
-ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/wp"
 
@@ -469,25 +452,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-
-ATT.StickerMaterial = "stickers/tonkr"
-
-ARC9.LoadAttachment(ATT, "sticker_tonkr")
-
-ATT = {}
-
-ATT.PrintName = [[Send It]]
-ATT.CompactName = "Send It"
-ATT.Description = [[Yeah, it's that heavy. Yeah, it's that powerful.
-Design from CyloWalker.
-
-Sticker included in ARC9 Base.]]
-ATT.Icon = Material("stickers/tonkr")
-
-ATT.SortOrder = 0
-ATT.Free = true
-
-ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/tonkr"
 
@@ -507,6 +472,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/s6amblem"
 
@@ -526,6 +492,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/babies"
 
