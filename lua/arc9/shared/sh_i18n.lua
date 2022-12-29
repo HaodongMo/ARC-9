@@ -68,7 +68,6 @@ end
 
 function ARC9:LoadLanguage(lang)
     local cur_lang = lang or ARC9:GetLanguage()
-    local hasany = false
 
     for _, v in pairs(file.Find("arc9/common/localization/*_" .. cur_lang .. ".lua", "LUA")) do
 
@@ -103,17 +102,16 @@ function ARC9:LoadLanguage(lang)
         L = nil
         STL = nil
     end
-
-    if hasany then
-        table.Add(ARC9.LanguagesTable, source)
-    end
 end
 
-ARC9.PhraseTable = {}
-ARC9.LanguagesTable = {}
+function ARC9:LoadLanguages()
+    ARC9.PhraseTable = {}
 
-ARC9:LoadLanguage()
-ARC9:LoadLanguage("en")
+    ARC9:LoadLanguage()
+    ARC9:LoadLanguage(GetConVar("gmod_language"):GetString())
+    ARC9:LoadLanguage("en")
+end
+
 
 if CLIENT then
 
@@ -125,10 +123,7 @@ if CLIENT then
     end)
 
     net.Receive("arc9_reloadlangs", function(len, ply)
-        ARC9.PhraseTable = {}
-
-        ARC9:LoadLanguage()
-        ARC9:LoadLanguage("en")
+        ARC9:LoadLanguages()
         ARC9.Regen()
     end)
 
@@ -137,10 +132,7 @@ elseif SERVER then
     net.Receive("arc9_reloadlangs", function(len, ply)
         if !ply:IsSuperAdmin() then return end
 
-        ARC9.PhraseTable = {}
-
-        ARC9:LoadLanguage()
-        ARC9:LoadLanguage("en")
+        ARC9:LoadLanguages()
 
         net.Start("arc9_reloadlangs")
         net.Broadcast()

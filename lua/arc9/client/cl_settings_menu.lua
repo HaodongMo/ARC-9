@@ -112,7 +112,7 @@ local settingstable = {
         -- end },
         { type = "color", text = "settings.hud_cust.hud_color.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language", content = ARC9.LanguagesTable, desc = "settings.hud_cust.language_id.desc" },
+        // { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language", content = ARC9.LanguagesTable, desc = "settings.hud_cust.language_id.desc" },
         { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},
         { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.cust_light_brightness.title", convar = "cust_light_brightness", desc = "settings.hud_cust.cust_light_brightness.desc" },
 
