@@ -51,6 +51,26 @@ function SWEP:ClearBottomBar()
     self:ClearAttInfoBar()
 end
 
+local function recursivefoldercount(folder)
+    local count = 0
+
+    for i, k in pairs(folder) do
+        if istable(k) then
+            count = count + recursivefoldercount(k)
+        else
+            local atttbl = ARC9.GetAttTable(i)
+
+            if !atttbl then continue end
+
+            if atttbl.Free then count = count + 1 continue end
+            if GetConVar("arc9_atts_free"):GetBool() then count = count + 1 continue end
+            if ARC9:PlayerGetAtts(i) > 0 then count = count + 1 continue end
+        end
+    end
+
+    return count
+end
+
 local function enterfolder(self, scroll, slottbl, fname)
     if fname != true then
         if fname == nil then
@@ -115,17 +135,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         end
         if isbool(children) then continue end
 
-        local count = 0
-
-        for i, k in pairs(children) do
-            local atttbl = ARC9.GetAttTable(i)
-
-            if !atttbl then continue end
-
-            if atttbl.Free then count = count + 1 continue end
-            if GetConVar("arc9_atts_free"):GetBool() then count = count + 1 continue end
-            if ARC9:PlayerGetAtts(i) > 0 then count = count + 1 continue end
-        end
+        local count = recursivefoldercount(children)
 
         if count > 99 then count = "99+" end
 
@@ -173,7 +183,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         local atttbl = ARC9.GetAttTable(att.att)
         local aslottbl = self:LocateSlotFromAddress(att.slot)
 
-        if qty <= 0 and !atttbl.Free and (aslottbl.Installed != att.att) then continue end
+        if qty <= 0 and !atttbl.Free and (aslottbl.Installed != att.att) and !GetConVar("arc9_atts_free"):GetBool() then continue end
 
         if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then continue end
 
