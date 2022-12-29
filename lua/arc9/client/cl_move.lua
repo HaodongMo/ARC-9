@@ -25,7 +25,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     end
 
     if ARC9.KeyPressed_Menu then
-        cmd:AddKey(IN_BULLRUSH)
+        cmd:AddKey(IN_WEAPON1)
     end
 
     if GetConVar("arc9_autolean") then
