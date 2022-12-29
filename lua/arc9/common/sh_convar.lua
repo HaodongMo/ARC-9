@@ -1223,32 +1223,32 @@ local clientmenus_ti = {
     {
         text = "REAL SETTINGS here", func = menu_arc9_settings
     },
+    // {
+    //     text = "Client", func = menu_client_ti
+    // },
+    // {
+    //     text = "Client - Customization", func = menu_client_customization
+    // },
     {
-        text = "Client", func = menu_client_ti
+        text = "Controller", func = menu_client_controller
     },
+    // {
+    //     text = "Client - Crosshair", func = menu_client_crosshair
+    // },
+    // {
+    //     text = "Client - Optics", func = menu_client_optics
+    // },
+    // {
+    //     text = "Server", func = menu_server_ti
+    // },
+    // {
+    //     text = "Server - Attachments", func = menu_server_attachments
+    // },
+    // {
+    //     text = "Server - Ballistics", func = menu_server_ballistics
+    // },
     {
-        text = "Client - Customization", func = menu_client_customization
-    },
-    {
-        text = "Client - Controller", func = menu_client_controller
-    },
-    {
-        text = "Client - Crosshair", func = menu_client_crosshair
-    },
-    {
-        text = "Client - Optics", func = menu_client_optics
-    },
-    {
-        text = "Server", func = menu_server_ti
-    },
-    {
-        text = "Server - Attachments", func = menu_server_attachments
-    },
-    {
-        text = "Server - Ballistics", func = menu_server_ballistics
-    },
-    {
-        text = "Server - Modifiers", func = menu_server_modifiers
+        text = "Modifiers", func = menu_server_modifiers
     },
 }
 
