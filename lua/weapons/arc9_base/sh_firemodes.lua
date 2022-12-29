@@ -154,18 +154,18 @@ function SWEP:GetFiremodeName()
         firemode_text = arc9_mode.PrintName
     else
         if arc9_mode.Mode == 1 then
-            firemode_text = "SINGLE"
+            firemode_text = ARC9:GetPhrase("hud.firemode.single")
         elseif arc9_mode.Mode == 0 then
-            firemode_text = "SAFE"
+            firemode_text = ARC9:GetPhrase("hud.firemode.safe")
         elseif arc9_mode.Mode < 0 then
-            firemode_text = "AUTO"
+            firemode_text = ARC9:GetPhrase("hud.firemode.auto")
         elseif arc9_mode.Mode > 1 then
-            firemode_text = tostring(arc9_mode.Mode) .. "-BURST"
+            firemode_text = tostring(arc9_mode.Mode) .. "-" .. ARC9:GetPhrase("hud.firemode.burst")
         end
     end
 
     if self:GetSafe() then
-        firemode_text = "SAFE"
+        firemode_text = ARC9:GetPhrase("hud.firemode.safe")
     end
 
     return firemode_text
