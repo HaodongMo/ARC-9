@@ -530,7 +530,6 @@ function ARC9ColorPanel:Init()
     self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(96)) --108
     self:MakePopup()
     self:SetDraggable(true)
-    self:ShowCloseButton(true) -- set to false when done please!!
     self:SetAlpha(0)
     self:AlphaTo(255, 0.15, 0, nil)
     self:ShowCloseButton(false)
@@ -707,7 +706,7 @@ function ARC9ColorButton:DoClick()
     bg:SetSize(ScrW(), ScrH())
     bg:SetTitle("")
     bg:SetDraggable(false)
-    bg:ShowCloseButton(false) -- set to false when done please!!
+    bg:ShowCloseButton(false)
     bg:SetBackgroundBlur(true)
     bg:MakePopup()
     bg.ParentButton = self

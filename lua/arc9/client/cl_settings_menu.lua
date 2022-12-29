@@ -521,7 +521,7 @@ function ARC9_OpenSettings(page)
     bg:SetSize(ScrW(), ScrH())
     bg:SetTitle("")
     bg:SetDraggable(false)
-    bg:ShowCloseButton(true)        -- set to false when done please!!
+    bg:ShowCloseButton(false)        -- set to false when done please!!
     bg:SetAlpha(0)
     bg:AlphaTo(255, 0.2, 0, nil)
     bg:SetBackgroundBlur(true)
@@ -542,7 +542,7 @@ function ARC9_OpenSettings(page)
     panel:Center()
     panel:SetTitle("")
     panel:DockPadding(0, ARC9ScreenScale(25.7), 0, 0)
-    panel:ShowCloseButton(true)
+    panel:ShowCloseButton(false)
     DrawSettings(panel, page)
 
     panel.OnRemove = function() bg:Remove() end
