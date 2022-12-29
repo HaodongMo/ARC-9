@@ -68,6 +68,7 @@ end
 
 function ARC9:LoadLanguage(lang)
     local cur_lang = lang or ARC9:GetLanguage()
+    local hasany = false
 
     for _, v in pairs(file.Find("arc9/common/localization/*_" .. cur_lang .. ".lua", "LUA")) do
 
@@ -94,13 +95,22 @@ function ARC9:LoadLanguage(lang)
             ARC9:AddSTP(str, phrase)
         end
 
+        if table.Count(L) > 0 then
+            hasany = true
+        end
+
         print("Loaded ARC9 language file " .. v .. " with " .. table.Count(L) .. " strings.")
         L = nil
         STL = nil
     end
+
+    if hasany then
+        table.Add(ARC9.LanguagesTable, source)
+    end
 end
 
 ARC9.PhraseTable = {}
+ARC9.LanguagesTable = {}
 
 ARC9:LoadLanguage()
 ARC9:LoadLanguage("en")
