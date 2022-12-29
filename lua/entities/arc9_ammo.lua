@@ -62,7 +62,7 @@ function ENT:ApplyAmmo(ply)
 
     local ammotype = wpn:GetPrimaryAmmoType()
     local clipsize = wpn:GetMaxClip1()
-    local supplyamount = clipsize * 1
+    local supplyamount = clipsize * self.Supply
     local max = clipsize * 6
 
     local t2
