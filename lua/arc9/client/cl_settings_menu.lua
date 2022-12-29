@@ -101,7 +101,7 @@ local settingstable = {
             settingspanel:Remove() -- rebuilding
             timer.Simple(0, function()
                 ARC9.Regen() -- reload fonts with new scale
-                ARC9_OpenSettings(3) -- open settings on current page (set number to tab number)
+                ARC9_OpenSettings(4) -- open settings on current page (set number to tab number)
             end)
         end },
         -- { type = "input", text = "Font", convar = "font", desc = "Font replacement for ARC9. Set empty to use default font." },
