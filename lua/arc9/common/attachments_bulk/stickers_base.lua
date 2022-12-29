@@ -514,7 +514,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Base"
+ATT.Folder = "Com. wave 1"
 
 ATT.StickerMaterial = "stickers/drawberf"
 
