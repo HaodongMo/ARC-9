@@ -259,7 +259,7 @@ function SWEP:GetViewModelBob(pos, ang)
         return FesiugBob(self, pos, ang)
     elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 2 then
         return ArcticBob(self, pos, ang)
-    elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 3 then
+    elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 0 then
         return DarsuBob(self, pos, ang)
     else
         self.SwayScale = 1
