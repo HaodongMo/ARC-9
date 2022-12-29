@@ -174,9 +174,10 @@ local settingstable = {
         TabName = "settings.tabname.visuals",
         { type = "label", text = "settings.visuals.viewmodel" },
         { type = "combo", text = "Bob Style", convar = "vm_bobstyle", content = {
-            {"1Darsu", "1"},
-            {"2Fesiug", "2"},
-            {"3Arctic", "3"},
+            {"1Darsu", "3"},
+            {"2Fesiug", "1"},
+            {"3Arctic", "2"},
+            {"4Half-Life 2", "0"},
         },
         desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team, going from most newest style to oldest one." },
         -- { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
