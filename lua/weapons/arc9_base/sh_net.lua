@@ -75,6 +75,41 @@ function SWEP:ReceiveWeapon()
             self:SendWeapon()
             return
         end
+
+        local oldcount = self:CountAttsInTree(self.Attachments)
+        local newcount = self:CountAttsInTree(tbl)
+
+        for att, attc in pairs(newcount) do
+            local atttbl = ARC9.GetAttTable(att)
+
+            if atttbl.Free then continue end
+
+            local has = oldcount[att] or 0
+            local need = attc
+
+            if has < need then
+                local diff = need - has
+
+                ARC9:PlayerTakeAtt(self:GetOwner(), att, diff)
+            end
+        end
+
+        for att, attc in pairs(oldcount) do
+            local atttbl = ARC9.GetAttTable(att)
+
+            if atttbl.Free then continue end
+
+            local has = attc
+            local need = newcount[att] or 0
+
+            if has > need then
+                local diff = has - need
+
+                ARC9:PlayerGiveAtt(self:GetOwner(), att, diff)
+            end
+        end
+
+        ARC9:PlayerSendAttInv(self:GetOwner())
     end
 
     self:BuildSubAttachments(tbl)
