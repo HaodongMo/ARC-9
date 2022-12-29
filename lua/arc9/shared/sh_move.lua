@@ -46,6 +46,13 @@ function ARC9.Move(ply, mv, cmd)
             mv:SetButtons(buttons)
         end
     end
+
+    if cmd:GetImpulse() == ARC9.IMPULSE_TOGGLEATTS then
+        if !wpn:GetReloading() and !wpn:GetUBGL() then
+            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound")), 75, 100, 1, CHAN_ITEM)
+            wpn:PlayAnimation("toggle")
+        end
+    end
 end
 
 hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)
@@ -186,7 +193,7 @@ function ARC9.StartCommand(ply, cmd)
             end
         end
 
-        cmd:SetImpulse(0)
+        cmd:SetImpulse(ARC9.IMPULSE_TOGGLEATTS)
     end
 end
 
