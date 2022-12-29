@@ -19,6 +19,8 @@ function SWEP:ThinkLean()
         else
             self.LeanState = 0
         end
+    else
+        self.LeanState = 0
     end
 
     local maxleanfrac = 1
