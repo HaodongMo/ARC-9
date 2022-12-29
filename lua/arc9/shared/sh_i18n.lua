@@ -111,6 +111,7 @@ function ARC9:LoadLanguages()
     ARC9:LoadLanguage("en")
 end
 
+ARC9:LoadLanguages()
 
 if CLIENT then
 
