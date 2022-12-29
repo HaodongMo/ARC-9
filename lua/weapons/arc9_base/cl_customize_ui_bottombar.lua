@@ -115,6 +115,21 @@ local function enterfolder(self, scroll, slottbl, fname)
         end
         if isbool(children) then continue end
 
+        local count = 0
+
+        for i, k in pairs(children) do
+            local atttbl = ARC9:GetAttTable(i)
+
+            if !atttbl then continue end
+
+            if atttbl.Free then count = count + 1 continue end
+            if ARC9:PlayerGetAtts(i) > 0 then count = count + 1 continue end
+        end
+
+        if count > 99 then count = "99+" end
+
+        if count == 0 then continue end
+
         foldercount = foldercount + 1
 
         local folderbtn = vgui.Create("ARC9AttButton", scroll)
@@ -129,9 +144,6 @@ local function enterfolder(self, scroll, slottbl, fname)
         scroll:AddPanel(folderbtn)
         table.insert(scrolleles, folderbtn)
         folderbtn.folder = folder
-
-        local count = table.Count(children)
-        if count > 99 then count = "99+" end
 
         folderbtn:SetFolderContain(tostring(count))
 
