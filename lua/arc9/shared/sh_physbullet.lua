@@ -421,6 +421,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                         Callback = function(att, btr, dmg)
                             local range = bullet.Travelled
 
+                            self.Penned = 0
                             weapon:AfterShotFunction(btr, dmg, range, bullet.Penleft, bullet.Damaged, bullet.Secondary)
                         end
                     })

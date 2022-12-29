@@ -483,6 +483,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 Callback = function(att, btr, dmg)
                     local range = (btr.HitPos - btr.StartPos):Length()
 
+                    self.Penned = 0
                     self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
 
                     if ARC9.Dev(2) then
@@ -630,8 +631,6 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     elseif tr.Entity then
         alreadypenned[tr.Entity] = true
     end
-
-    self.Penned = 0
 
     self:Penetrate(tr, range, penleft, alreadypenned)
 
