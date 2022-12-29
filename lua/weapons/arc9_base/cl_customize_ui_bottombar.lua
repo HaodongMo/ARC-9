@@ -118,11 +118,12 @@ local function enterfolder(self, scroll, slottbl, fname)
         local count = 0
 
         for i, k in pairs(children) do
-            local atttbl = ARC9:GetAttTable(i)
+            local atttbl = ARC9.GetAttTable(i)
 
             if !atttbl then continue end
 
             if atttbl.Free then count = count + 1 continue end
+            if GetConVar("arc9_atts_free"):GetBool() then count = count + 1 continue end
             if ARC9:PlayerGetAtts(i) > 0 then count = count + 1 continue end
         end
 
