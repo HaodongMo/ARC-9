@@ -51,7 +51,7 @@ function SWEP:CountAttsInTree(tree)
 
     local count = {}
 
-    for _, i in ipairs(flattree) do
+    for _, i in pairs(flattree[1]) do
         if i.Installed then
             local att = i.Installed
             count[att] = (count[att] or 0) + 1
@@ -72,6 +72,7 @@ function SWEP:ReceiveWeapon()
 
     if SERVER then
         if !self:ValidateInventoryForNewTree(tbl) then
+            self:SendWeapon()
             return
         end
     end

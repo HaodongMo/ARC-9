@@ -1,16 +1,9 @@
 {
-    "title": "ARC9",
-    "description": "",
-    "type": "weapon",
-    "tags": [
-        "roleplay",
-        "realism"
-    ],
-    "ignore": [
-        ".git/*",
-        "README.md",
-        ".py/*",
-        ".blend/*",
-        ".pdn/*"
-    ]
+	"title": "ARC9 Weapon Base",
+	"type": "weapon",
+	"tags": 
+	[
+		"roleplay",
+		"realism"
+	]
 }

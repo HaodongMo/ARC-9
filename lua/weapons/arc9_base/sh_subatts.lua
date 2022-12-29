@@ -214,7 +214,7 @@ function SWEP:ValidateInventoryForNewTree(tree)
 
     local currcount = self:CountAttsInTree(self.Attachments)
 
-    for att, attc in ipairs(count) do
+    for att, attc in pairs(count) do
         local atttbl = ARC9.GetAttTable(att)
 
         if atttbl.Free then continue end
