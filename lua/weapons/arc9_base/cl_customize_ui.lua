@@ -1291,7 +1291,7 @@ function SWEP:CreateHUD_RHP()
         local topright_presets = vgui.Create("ARC9TopButton", topright_panel)
         self.CustomizeHUD.topright_panel.topright_presets = topright_presets
         surface.SetFont("ARC9_16")
-        local tw = surface.GetTextSize("Presets")
+        local tw = surface.GetTextSize(ARC9:GetPhrase("customize.panel.presets"))
         topright_presets:SetPos(ARC9ScreenScale(123)-(ARC9ScreenScale(28)+tw), ARC9ScreenScale(19))
         topright_presets:SetSize(ARC9ScreenScale(28)+tw, ARC9ScreenScale(21))
         topright_presets:SetIcon(Material("arc9/ui/presets.png", "mips"))
