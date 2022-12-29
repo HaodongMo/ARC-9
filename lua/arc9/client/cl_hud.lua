@@ -333,6 +333,7 @@ function ARC9.DrawHUD()
             firemode_text = arc9_mode.PrintName
             weapon_clipsize = weapon:GetMaxClip2()
             weapon_clip = weapon:Clip2()
+            clip_to_show = weapon_clip
             weapon_reserve = localplayer:GetAmmoCount(weapon:GetSecondaryAmmoType())
             multiple_modes = false
         end

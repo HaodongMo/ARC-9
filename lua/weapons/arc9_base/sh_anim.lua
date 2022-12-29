@@ -38,6 +38,10 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
     if animation.ProxyAnimation then
         if CLIENT then
             mdl = animation.Model
+
+            if !mdl then
+                mdl = self:LocateSlotFromAddress(animation.Address).GunDriverModel
+            end
         else
             mdl = ents.Create("prop_physics")
             mdl:SetModel(animation.ModelName)
