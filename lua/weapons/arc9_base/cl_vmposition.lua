@@ -138,7 +138,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- end
     local getbipod = self:GetBipod()
 
-    if !self:GetReloading() and !getbipod and owner:Crouching() then
+    if !self:GetReloading() and !getbipod then
         local crouchpos = self:GetProcessedValue("CrouchPos")
         local crouchang = self:GetProcessedValue("CrouchAng")
         local crouchdelta =  math.Clamp(math.ease.InOutSine((owner:GetViewOffset().z - owner:GetCurrentViewOffset().z) / (owner:GetViewOffset().z - owner:GetViewOffsetDucked().z)),0,1)
