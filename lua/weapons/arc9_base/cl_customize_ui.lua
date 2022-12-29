@@ -1287,7 +1287,7 @@ function SWEP:CreateHUD_RHP()
     topright_panel:MoveToFront()
     topright_panel.Paint = function(self2, w, h) end
 
-    if self.Attachments[1] then -- no presets if no atts
+    if self.Attachments[1] and !GetConVar("arc9_atts_nocustomize"):GetBool() then -- no presets if no atts
         local topright_presets = vgui.Create("ARC9TopButton", topright_panel)
         self.CustomizeHUD.topright_panel.topright_presets = topright_presets
         surface.SetFont("ARC9_16")

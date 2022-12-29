@@ -12,6 +12,7 @@ local mat_random = Material("arc9/ui/random.png", "mips smooth")
 local nextpreset = 0
 
 function SWEP:CreatePresetMenu(reload)
+    if GetConVar("arc9_atts_nocustomize"):GetBool() then return end
     if reload and self.CustomizeHUD and self.CustomizeHUD.presetpanel then self.CustomizeHUD.presetpanel:Remove() end
     if !reload and self.CustomizeHUD and self.CustomizeHUD.presetpanel then self:ClosePresetMenu() return end
 
@@ -147,6 +148,7 @@ function SWEP:CreatePresetMenu(reload)
         presetbtn:DockMargin(0, 0, 5, 5)
         presetbtn:SetText("")
         presetbtn.DoClick = function(self2)
+            if GetConVar("arc9_atts_nocustomize"):GetBool() then return end
             self:LoadPreset(preset)
             surface.PlaySound(applysound)
         end
@@ -156,6 +158,7 @@ function SWEP:CreatePresetMenu(reload)
             presetbtn.attcount = "?"
             presetbtn.icon = mat_random
             presetbtn.DoClick = function(self2)
+                if GetConVar("arc9_atts_nocustomize"):GetBool() then return end
                 -- self:NPC_Initialize()        
                 net.Start("arc9_randomizeatts")
                 net.SendToServer()
@@ -186,7 +189,9 @@ function SWEP:CreatePresetMenu(reload)
                 if self2:IsDown() then 
                     surface.SetDrawColor(ARC9.GetHUDColor("hi", 100))
                 end
-                self.CustomizeHints["customize.hint.select"] = "customize.hint.install"
+                if !GetConVar("arc9_atts_nocustomize"):GetBool() then
+                    self.CustomizeHints["customize.hint.select"] = "customize.hint.install"
+                end
                 surface.DrawRect(0, 0, w, h)
             end
             surface.SetDrawColor(20, 20, 20, 120)

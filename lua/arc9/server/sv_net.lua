@@ -34,6 +34,8 @@ net.Receive("arc9_networkweapon", function(len, ply)
 
     if !wpn.ARC9 then return end
 
+    if GetConVar("arc9_atts_nocustomize"):GetBool() then return end
+
     wpn:ReceiveWeapon()
 end)
 

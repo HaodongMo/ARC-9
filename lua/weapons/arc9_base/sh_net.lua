@@ -62,6 +62,8 @@ function SWEP:CountAttsInTree(tree)
 end
 
 function SWEP:ReceiveWeapon()
+    if SERVER and GetConVar("arc9_atts_nocustomize"):GetBool() then return end
+
     local tbl = {}
 
     for i, k in pairs(self.Attachments or {}) do
