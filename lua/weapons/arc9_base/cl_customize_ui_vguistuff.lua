@@ -112,6 +112,10 @@ function ARC9AttButton:Paint(w, h)
     local colorclicked = ARC9.GetHUDColor("hi")
     local mat = self.MatIdle
     local matmarker = nil
+    local att = self.att
+
+    local qty = 0
+    local free_or_lock = false
 
     if self:IsHovered() or self.OverrideHovered then
         textcolor = colorclicked
@@ -179,6 +183,31 @@ function ARC9AttButton:Paint(w, h)
     else
         surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(13.5))
         surface.DrawText(text)
+    end
+
+    if att then
+        local atttbl = ARC9.GetAttTable(att)
+
+        if atttbl.Free or GetConVar("arc9_atts_free"):GetBool() then
+            free_or_lock = true
+        end
+
+        if GetConVar("arc9_atts_lock"):GetBool() then
+            free_or_lock = true
+        end
+
+        if not free_or_lock then
+            qty = ARC9:PlayerGetAtts(LocalPlayer(), att)
+
+            local qtext = "x" .. tostring(qty)
+
+            surface.SetFont("ARC9_9")
+            local qtw = surface.GetTextSize(qtext)
+            surface.SetTextColor(textcolor)
+
+            surface.SetTextPos(w - qtw - ARC9ScreenScale(4), ARC9ScreenScale(1))
+            surface.DrawText(qtext)
+        end
     end
 end
 

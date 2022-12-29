@@ -155,7 +155,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     local strpath = string.Implode("/", self.BottomBarPath)
 
     for _, att in pairs(self.BottomBarAtts) do
-        local qty = ARC9:PlayerGetAtts(self:GetOwner(), att)
+        local qty = ARC9:PlayerGetAtts(self:GetOwner(), att.att)
 
         local atttbl = ARC9.GetAttTable(att.att)
 

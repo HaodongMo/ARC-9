@@ -219,7 +219,10 @@ function SWEP:ValidateInventoryForNewTree(tree)
 
         if atttbl.Free then continue end
 
-        if (currcount[att] or 0) + ARC9:PlayerGetAtts(self:GetOwner(), att) > count[att] then
+        local has = (currcount[att] or 0) + ARC9:PlayerGetAtts(self:GetOwner(), att)
+        local need = attc
+
+        if has >= need then
             continue
         end
 
