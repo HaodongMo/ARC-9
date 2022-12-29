@@ -380,6 +380,8 @@ function SWEP:CreateCustomizeHUD()
 
     gui.EnableScreenClicker(true)
 
+    surface.PlaySound("arc9/newui/ui_open.ogg") -- w
+
     gpX = ScrW()/2
     gpY = ScrH()/2
 
@@ -1169,6 +1171,8 @@ function SWEP:RemoveCustomizeHUD()
 
         gui.EnableScreenClicker(false)
 
+        surface.PlaySound(closesound)
+
         timer.Simple(0.1, function()
             if !IsValid(self) then return end
             self.CustomizeHUD:Remove()
@@ -1317,7 +1321,6 @@ function SWEP:CreateHUD_RHP()
     topright_close:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
     topright_close.DoClick = function(self2)
         surface.PlaySound(clicksound)
-        surface.PlaySound(closesound)
         self:SetCustomize(false)
         net.Start("ARC9_togglecustomize")
         net.WriteBool(false)
