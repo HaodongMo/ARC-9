@@ -5,6 +5,7 @@ ATT = {}
 ATT.PrintName = [[ARC9 Logo (Low Vis)]]
 ATT.CompactName = "ARC9 LOWVIS"
 ATT.Description = [[Dark version of the ARC9 Logo.
+Design by The Villain.
 
 Sticker included in ARC9 Base.]]
 ATT.Icon = Material("stickers/arc9_lowvis")
@@ -24,6 +25,7 @@ ATT = {}
 ATT.PrintName = [[ARC9 Logo]]
 ATT.CompactName = "ARC9"
 ATT.Description = [[Here's to you.
+Design by The Villain.
 
 Sticker included in ARC9 Base.]]
 ATT.Icon = Material("stickers/arc9")
@@ -497,3 +499,23 @@ ATT.Folder = "Com. wave 1"
 ATT.StickerMaterial = "stickers/babies"
 
 ARC9.LoadAttachment(ATT, "sticker_babies")
+
+ATT = {}
+
+ATT.PrintName = [[Berf]]
+ATT.CompactName = "Berf"
+ATT.Description = [[Draw Berf.
+Design by The Villain.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/drawberf")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+ATT.Folder = "Base"
+
+ATT.StickerMaterial = "stickers/drawberf"
+
+ARC9.LoadAttachment(ATT, "sticker_drawberf")
