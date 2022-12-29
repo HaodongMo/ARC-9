@@ -19,6 +19,7 @@ function EFFECT:Init(data)
     local wep = data:GetEntity()
 
     if !IsValid(wep) then return end
+    if !wep.ARC9 then return end
 
     local speed = data:GetScale()
     local start = (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart()
@@ -34,9 +35,13 @@ function EFFECT:Init(data)
 
     self.StartPos = start
     self.EndPos = hit
-    self.Color = wep:GetProcessedValue("TracerColor")
 
-    self.Size = wep:GetProcessedValue("TracerSize")
+    // Sometimes it freaks out and, I dunno, gets invalid
+    if wep.GetProcessedValue then
+        self.Color = wep:GetProcessedValue("TracerColor")
+
+        self.Size = wep:GetProcessedValue("TracerSize")
+    end
 end
 
 function EFFECT:Think()
