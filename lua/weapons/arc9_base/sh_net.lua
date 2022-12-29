@@ -76,40 +76,42 @@ function SWEP:ReceiveWeapon()
             return
         end
 
-        local oldcount = self:CountAttsInTree(self.Attachments)
-        local newcount = self:CountAttsInTree(tbl)
+        if !GetConVar("arc9_atts_lock"):GetBool() then
+            local oldcount = self:CountAttsInTree(self.Attachments)
+            local newcount = self:CountAttsInTree(tbl)
 
-        for att, attc in pairs(newcount) do
-            local atttbl = ARC9.GetAttTable(att)
+            for att, attc in pairs(newcount) do
+                local atttbl = ARC9.GetAttTable(att)
 
-            if atttbl.Free then continue end
+                if atttbl.Free then continue end
 
-            local has = oldcount[att] or 0
-            local need = attc
+                local has = oldcount[att] or 0
+                local need = attc
 
-            if has < need then
-                local diff = need - has
+                if has < need then
+                    local diff = need - has
 
-                ARC9:PlayerTakeAtt(self:GetOwner(), att, diff)
+                    ARC9:PlayerTakeAtt(self:GetOwner(), att, diff)
+                end
             end
-        end
 
-        for att, attc in pairs(oldcount) do
-            local atttbl = ARC9.GetAttTable(att)
+            for att, attc in pairs(oldcount) do
+                local atttbl = ARC9.GetAttTable(att)
 
-            if atttbl.Free then continue end
+                if atttbl.Free then continue end
 
-            local has = attc
-            local need = newcount[att] or 0
+                local has = attc
+                local need = newcount[att] or 0
 
-            if has > need then
-                local diff = has - need
+                if has > need then
+                    local diff = has - need
 
-                ARC9:PlayerGiveAtt(self:GetOwner(), att, diff)
+                    ARC9:PlayerGiveAtt(self:GetOwner(), att, diff)
+                end
             end
-        end
 
-        ARC9:PlayerSendAttInv(self:GetOwner())
+            ARC9:PlayerSendAttInv(self:GetOwner())
+        end
     end
 
     self:BuildSubAttachments(tbl)
