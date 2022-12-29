@@ -1,11 +1,11 @@
 ARC9.PhraseTable = ARC9.PhraseTable or {}
 ARC9.STPTable = ARC9.STPTable or {}
 
-local lang_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_language")
+local lang_cvar = GetConVar("arc9_language")
 
 function ARC9:GetLanguage()
-    local l = lang_cvar and lang_cvar:GetString()
-    if !l or l == "" then l = GetConVar("gmod_language"):GetString() end
+    local l = lang_cvar:GetString()
+    if !l then l = GetConVar("gmod_language"):GetString() end
     return string.lower(l)
 end
 
@@ -67,8 +67,6 @@ end
 -- client languages aren't loaded through lua anymore. use gmod's stock localization system instead
 
 function ARC9:LoadLanguage(lang)
-    ARC9.PhraseTable = {}
-
     local cur_lang = lang or ARC9:GetLanguage()
 
     for _, v in pairs(file.Find("arc9/common/localization/*_" .. cur_lang .. ".lua", "LUA")) do
@@ -89,7 +87,7 @@ function ARC9:LoadLanguage(lang)
         end
 
         for phrase, str in pairs(L) do
-            ARC9:AddPhrase(phrase, str, lang)
+            ARC9:AddPhrase(phrase, str, cur_lang)
         end
 
         for str, phrase in pairs(STL) do
@@ -102,9 +100,10 @@ function ARC9:LoadLanguage(lang)
     end
 end
 
+ARC9.PhraseTable = {}
+
 ARC9:LoadLanguage()
 ARC9:LoadLanguage("en")
-
 
 if CLIENT then
 
@@ -116,6 +115,8 @@ if CLIENT then
     end)
 
     net.Receive("arc9_reloadlangs", function(len, ply)
+        ARC9.PhraseTable = {}
+
         ARC9:LoadLanguage()
         ARC9:LoadLanguage("en")
         ARC9.Regen()
@@ -125,6 +126,8 @@ elseif SERVER then
 
     net.Receive("arc9_reloadlangs", function(len, ply)
         if !ply:IsSuperAdmin() then return end
+
+        ARC9.PhraseTable = {}
 
         ARC9:LoadLanguage()
         ARC9:LoadLanguage("en")
