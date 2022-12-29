@@ -359,3 +359,174 @@ ATT.Category = "stickers"
 ATT.StickerMaterial = "stickers/steamhappy"
 
 ARC9.LoadAttachment(ATT, "sticker_steamhappy")
+
+ATT = {}
+
+ATT.PrintName = [[Amidstus]]
+ATT.CompactName = "Amidstus"
+ATT.Description = [[Why settle for the original when you could have a cheap knockoff?!
+Design from Optica.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/amidstus")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/amidstus"
+
+ARC9.LoadAttachment(ATT, "sticker_amidstus")
+
+ATT = {}
+
+ATT.PrintName = [[Glory!]]
+ATT.CompactName = "Glory!"
+ATT.Description = [[Took nine brain cells to scribble this
+Design from Optica.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/arcglory")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/arcglory"
+
+ARC9.LoadAttachment(ATT, "sticker_arcglory")
+
+ATT = {}
+
+ATT.PrintName = [[Glory!]]
+ATT.CompactName = "Glory!"
+ATT.Description = [[Took nine brain cells to scribble this
+Design from Optica.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/arcglory")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/arcglory"
+
+ARC9.LoadAttachment(ATT, "sticker_arcglory")
+
+ATT = {}
+
+ATT.PrintName = [[World Peace!]]
+ATT.CompactName = "World Peace"
+ATT.Description = [[A delusion!
+Design from Fidget.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/wp")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/wp"
+
+ARC9.LoadAttachment(ATT, "sticker_wp")
+
+ATT = {}
+
+ATT.PrintName = [[World Peace!]]
+ATT.CompactName = "World Peace"
+ATT.Description = [[A delusion!
+Design from Fidget.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/wp")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/wp"
+
+ARC9.LoadAttachment(ATT, "sticker_wp")
+
+ATT = {}
+
+ATT.PrintName = [[Send It]]
+ATT.CompactName = "Send It"
+ATT.Description = [[Yeah, it's that heavy. Yeah, it's that powerful.
+Design from CyloWalker.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/tonkr")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/tonkr"
+
+ARC9.LoadAttachment(ATT, "sticker_tonkr")
+
+ATT = {}
+
+ATT.PrintName = [[Send It]]
+ATT.CompactName = "Send It"
+ATT.Description = [[Yeah, it's that heavy. Yeah, it's that powerful.
+Design from CyloWalker.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/tonkr")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/tonkr"
+
+ARC9.LoadAttachment(ATT, "sticker_tonkr")
+
+ATT = {}
+
+ATT.PrintName = [[Section 6]]
+ATT.CompactName = "Section 6"
+ATT.Description = [[Reach for the stars. Forward to Glory!
+Design from CyloWalker.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/s6amblem")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/s6amblem"
+
+ARC9.LoadAttachment(ATT, "sticker_s6amblem")
+
+ATT = {}
+
+ATT.PrintName = [[Baby Hazard]]
+ATT.CompactName = "Baby Hazard"
+ATT.Description = [[Children ages 0-3 should be kept away from this.. firearm.
+Design from Itzal.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/babies")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/babies"
+
+ARC9.LoadAttachment(ATT, "sticker_babies")
