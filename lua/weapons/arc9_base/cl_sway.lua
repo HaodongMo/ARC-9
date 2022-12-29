@@ -262,7 +262,7 @@ function SWEP:GetViewModelBob(pos, ang)
     elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 0 then
         return DarsuBob(self, pos, ang)
     else
-        self.SwayScale = 1
+        self.SwayScale = Lerp(self:GetSightDelta(), 1, 0.1)
         self.BobScale = 1
 
         return pos, ang
