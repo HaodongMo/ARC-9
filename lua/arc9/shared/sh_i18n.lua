@@ -4,8 +4,7 @@ ARC9.STPTable = ARC9.STPTable or {}
 local lang_cvar = GetConVar("arc9_language")
 
 function ARC9:GetLanguage()
-    local l = lang_cvar:GetString()
-    if !l then l = GetConVar("gmod_language"):GetString() end
+    local l = GetConVar("gmod_language"):GetString()
     return string.lower(l)
 end
 
