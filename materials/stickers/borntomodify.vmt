@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture"	"stickers\borntomodify"
+     // "$bumpmap" 	"stickers\a9k"
+     // "$phong" "1"
+     "$alphatest"	"1"
+     "$decal"		"1"
+}

@@ -1,0 +1,16 @@
+"vertexlitgeneric"
+{
+	"$basetexture"	"stickers/steamhappy"
+	"$alphatest"	"1"
+	"$decal"		"1"
+
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedTextureVar" "$basetexture"
+			"animatedTextureFrameNumVar" "$frame"
+			"animatedTextureFrameRate" "20"
+		}
+	} 
+}

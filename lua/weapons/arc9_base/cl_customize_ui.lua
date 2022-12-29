@@ -730,6 +730,8 @@ function SWEP:CreateCustomizeHUD()
 
             for _, slot in ipairs(self:GetSubSlotList()) do
                 if slot.Hidden then continue end
+                if !slot.Pos then continue end
+                if !slot.Bone then continue end
                 local ms_slot = self:GetFilledMergeSlot(slot.Address)
 
                 if self.BottomBarCategory == 0 and self:SlotIsCosmetic(ms_slot) then continue end

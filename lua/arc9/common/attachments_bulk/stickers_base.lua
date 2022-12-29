@@ -112,3 +112,250 @@ ATT.Category = "stickers"
 ATT.StickerMaterial = "stickers/spray"
 
 ARC9.LoadAttachment(ATT, "sticker_spray")
+
+ATT = {}
+
+ATT.PrintName = [[Tomato Cat]]
+ATT.CompactName = "Tomato Cat"
+ATT.Description = [[Sometimes people ask whether tomatoes are fruits or vegetables... This one might be a tougher question.
+Design by Ender2Point0.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/tomatocat")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/tomatocat"
+
+ARC9.LoadAttachment(ATT, "sticker_tomatocat")
+
+ATT = {}
+
+ATT.PrintName = [[Action Bird]]
+ATT.CompactName = "Action Bird"
+ATT.Description = [[This is what Arctic looks like in real life.
+Design by CyloWalker.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/actionbird")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/actionbird"
+
+ARC9.LoadAttachment(ATT, "sticker_actionbird")
+
+ATT = {}
+
+ATT.PrintName = [[War Crimes]]
+ATT.CompactName = "War Crimes"
+ATT.Description = [[You're already doing them, so why not shout it out loud? Who's gonna stop you, the UN?
+Design by Rimuchii. Made using Project Sekai sticker base.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/warcrimes")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/warcrimes"
+
+ARC9.LoadAttachment(ATT, "sticker_warcrimes")
+
+ATT = {}
+
+ATT.PrintName = [[Silly Cat]]
+ATT.CompactName = "Silly Cat"
+ATT.Description = [[imsillyimsillyimsillyimsillyimsillyimsillyimsillyimsilly
+Design by Stan_Jacobs.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/sillycat")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/sillycat"
+
+ARC9.LoadAttachment(ATT, "sticker_sillycat")
+
+ATT = {}
+
+ATT.PrintName = [[Dia De Los Muertos Calavera]]
+ATT.CompactName = "Dia De Los Muertos Calavera"
+ATT.Description = [["this should be my final version i think, unless anyone gives me suggestions to change it, the name: "Dia de los muertos calavera" the description: i cant think of one, something about day of the dead skull mexico blah blah blah"
+Design by rooneyviz.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/muertosskull")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/muertosskull"
+
+ARC9.LoadAttachment(ATT, "sticker_muertosskull")
+
+ATT = {}
+
+ATT.PrintName = [[Band-Aid]]
+ATT.CompactName = "Band-Aid"
+ATT.Description = [[Put it on your boo-boo and kiss it all better.
+Design by Itzal.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/bandaid")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/bandaid"
+
+ARC9.LoadAttachment(ATT, "sticker_bandaid")
+
+ATT = {}
+
+ATT.PrintName = [[Peace Through Superior Firepower]]
+ATT.CompactName = "Peace Through Superior Firepower"
+ATT.Description = [[The dove brings peace, but the gun brings peace through superior firepower.
+Design by Xipil.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/peacedove")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/peacedove"
+
+ARC9.LoadAttachment(ATT, "sticker_peacedove")
+
+ATT = {}
+
+ATT.PrintName = [[Born To Modify]]
+ATT.CompactName = "Born To Modify"
+ATT.Description = [[Another sight - another scope - a grenade launcher, here and there...
+Design by Duck.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/borntomodify")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/borntomodify"
+
+ARC9.LoadAttachment(ATT, "sticker_borntomodify")
+
+ATT = {}
+
+ATT.PrintName = [[cad]]
+ATT.CompactName = "cad"
+ATT.Description = [[cad
+Design by Opt1ca.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/cad")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/cad"
+
+ARC9.LoadAttachment(ATT, "sticker_cad")
+
+ATT = {}
+
+ATT.PrintName = [[Fumo]]
+ATT.CompactName = "Fumo"
+ATT.Description = [[D-don't look at me like that, raifu-kun...
+Design by Itzal.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/fumo")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/fumo"
+
+ARC9.LoadAttachment(ATT, "sticker_fumo")
+
+ATT = {}
+
+ATT.PrintName = [[Hot Lead]]
+ATT.CompactName = "Hot Lead"
+ATT.Description = [[Careful! It's hot!
+Design by Arqu.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/hotlead")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/hotlead"
+
+ARC9.LoadAttachment(ATT, "sticker_hotlead")
+
+ATT = {}
+
+ATT.PrintName = [[Sus 9]]
+ATT.CompactName = "Sus 9"
+ATT.Description = [[The impostor could be anywhere among us...
+Design by Darsu.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/sus9")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/sus9"
+
+ARC9.LoadAttachment(ATT, "sticker_sus9")
+
+ATT = {}
+
+ATT.PrintName = [[:steamhappy:]]
+ATT.CompactName = ":steamhappy:"
+ATT.Description = [[Happy about it
+Design from Steam.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/steamhappy")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+
+ATT.StickerMaterial = "stickers/steamhappy"
+
+ARC9.LoadAttachment(ATT, "sticker_steamhappy")
