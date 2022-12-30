@@ -444,6 +444,7 @@ function SWEP:GeneratePresetExportCode()
 end
 
 function SWEP:ImportPresetCode(str)
+    if !str then return end
     str = util.Base64Decode(str)
     str = util.Decompress(str)
 
