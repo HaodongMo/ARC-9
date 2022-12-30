@@ -42,6 +42,7 @@ local settingstable = {
         { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
         { type = "bool", text = "settings.allflash.title", convar = "allflash", desc = "settings.allflash.desc"},
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
+        { type = "bool", text = "Free Attachments", convar = "free_atts", desc = "Attachments can be used without being picked up first.\n\nThis is a server variable."},
 
         { type = "label", text = "settings.performance.blur.title" },
         { type = "bool", text = "settings.cust_blur.title", convar = "cust_blur", desc = "settings.cust_blur.desc"},
@@ -210,7 +211,7 @@ local settingstable = {
         { type = "bool", text = "Autosave", convar = "autosave", desc = "Your last weapon customization options will be saved and automatically applied the next time you spawn that weapon."},
         -- { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
         { type = "label", text = "settings.attachments.inventory"},
-        { type = "bool", text = "Free Attachments", convar = "atts_free", desc = "Attachments can be used without being picked up first.\n\nThis is a server variable."},
+        { type = "bool", text = "Free Attachments", convar = "free_atts", desc = "Attachments can be used without being picked up first.\n\nThis is a server variable."},
         { type = "bool", text = "One For All", convar = "atts_lock", desc = "Picking up one instance of an attachments allows you to use it infinite times on all your guns.\n\nThis is a server variable."},
         { type = "bool", text = "Lose On Death", convar = "atts_loseondie", desc = "Your attachment inventory will be lost when you die.\n\nThis is a server variable."},
         { type = "bool", text = "Generate Entities", convar = "atts_generateentities", desc = "Generate entities that can be spawned, allowing you to pick up attachments when free attachments is off.\n\nMight increase load time.\n\nThis is a server variable."},

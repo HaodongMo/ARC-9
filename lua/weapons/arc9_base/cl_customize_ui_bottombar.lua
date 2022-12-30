@@ -63,7 +63,7 @@ local function recursivefoldercount(folder)
             if !atttbl then continue end
 
             if atttbl.Free then count = count + 1 continue end
-            if GetConVar("arc9_atts_free"):GetBool() then count = count + 1 continue end
+            if GetConVar("arc9_free_atts"):GetBool() then count = count + 1 continue end
             if ARC9:PlayerGetAtts(i) > 0 then count = count + 1 continue end
         end
     end
@@ -183,7 +183,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         local atttbl = ARC9.GetAttTable(att.att)
         local aslottbl = self:LocateSlotFromAddress(att.slot)
 
-        if qty <= 0 and !atttbl.Free and (aslottbl.Installed != att.att) and !GetConVar("arc9_atts_free"):GetBool() then continue end
+        if qty <= 0 and !atttbl.Free and (aslottbl.Installed != att.att) and !GetConVar("arc9_free_atts"):GetBool() then continue end
 
         if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then continue end
 

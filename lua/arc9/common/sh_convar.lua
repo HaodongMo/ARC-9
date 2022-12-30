@@ -180,8 +180,8 @@ local conVars = {
         replicated = true
     },
     {
-        name = "atts_free",
-        default = "0",
+        name = "free_atts",
+        default = "1",
         replicated = true
     },
     {
@@ -958,7 +958,7 @@ end
 local function menu_server_attachments(panel)
     panel:AddControl("checkbox", {
         label = "Free Attachments",
-        command = "arc9_atts_free"
+        command = "arc9_free_atts"
     })
     panel:ControlHelp( "Enable this to be able to use all attachments without spawning entities." )
     panel:AddControl("checkbox", {

@@ -1,6 +1,6 @@
 function ARC9:PlayerGetAtts(ply, att)
     if !IsValid(ply) then return 0 end
-    if GetConVar("arc9_atts_free"):GetBool() then return 999 end
+    if GetConVar("arc9_free_atts"):GetBool() then return 999 end
 
     if att == "" then return 999 end
 
@@ -105,7 +105,7 @@ hook.Add("PlayerDeath", "ARC9_DeathAttInv", function(ply)
     -- end
     -- if table.Count(ply.ARC9_AttInv) > 0
     --         and GetConVar("arc9_atts_loseondie"):GetInt() >= 2
-    --         and !GetConVar("arc9_atts_free"):GetBool() then
+    --         and !GetConVar("arc9_free_atts"):GetBool() then
     --     local boxEnt = ents.Create("ARC9_att_dropped")
     --     boxEnt:SetPos(ply:GetPos() + Vector(0, 0, 4))
     --     boxEnt.GiveAttachments = ply.ARC9_AttInv
@@ -128,7 +128,7 @@ hook.Add("PlayerSpawn", "ARC9_SpawnAttInv", function(ply, trans)
 end)
 
 function ARC9:PlayerSendAttInv(ply)
-    if GetConVar("arc9_atts_free"):GetBool() then return end
+    if GetConVar("arc9_free_atts"):GetBool() then return end
 
     if !IsValid(ply) then return end
 

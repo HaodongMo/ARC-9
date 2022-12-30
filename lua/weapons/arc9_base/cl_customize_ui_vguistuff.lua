@@ -188,7 +188,7 @@ function ARC9AttButton:Paint(w, h)
     if att then
         local atttbl = ARC9.GetAttTable(att)
 
-        if atttbl.Free or GetConVar("arc9_atts_free"):GetBool() then
+        if atttbl.Free or GetConVar("arc9_free_atts"):GetBool() then
             free_or_lock = true
         end
 
