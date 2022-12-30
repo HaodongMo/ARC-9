@@ -366,7 +366,7 @@ L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Exiting customization menu re
 
 L["settings.hud_game.hud_arc9.title"] = "Enable HUD"
 L["settings.hud_game.hud_arc9.desc"] = "Enable HUD for ARC9 weapons."
-L["settings.hud_game.hud_always.title"] = "Always HUD"
+L["settings.hud_game.hud_always.title"] = "On all weapons"
 L["settings.hud_game.hud_always.desc"] = "Enable that HUD on all weapons."
 L["settings.hud_game.hud_compact.title"] = "Compact Mode"
 L["settings.hud_game.hud_compact.desc"] = "Compact appearance for the HUD panel."
@@ -390,7 +390,7 @@ L["settings.npc.npc_atts.desc"] = "Spawned or given ARC9 weapons receive a rando
 L["settings.npc.npc_autoreplace.title"] = "Replace NPC Weapons"
 L["settings.npc.npc_autoreplace.desc"] = "Replace NPC weapons with randomly chosen ARC9 weapons.\n\nThis is a server variable."
 L["settings.npc.replace_spawned.title"] = "Replace Ground Weapons"
-L["settings.npc.replace_spawned.desc"] = "Replace map/spawned weapons with randomly chosen ARC9 weapons.\n\nThis is a server variable."
+L["settings.npc.replace_spawned.desc"] = "Replace map/spawned HL2 weapons with randomly chosen ARC9 weapons.\n\nThis is a server variable."
 L["settings.npc.npc_give_weapons.title"] = "Players Can Give Weapons"
 L["settings.npc.npc_give_weapons.desc"] = "Players are able to press E on NPCs to give them their weapon.\n\nThis is a server variable."
 
@@ -469,10 +469,10 @@ L["settings.attachments.atts_generateentities.desc"] = "Generate entities that c
 
 L["settings.modifiers.quick.title"] = "Quick Stats Modifiers"
 -- wawa
-L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Settings > ARC9 > Modifiers  for now."
+L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Options > ARC9 > Modifiers  for now."
 
 L["settings.controller.misc"] = "Misc"
-L["settings.controller.misc.desc"] = "There should be button that will open panel with advanced controller config, but for now it is in  spawnmenu > Settings > ARC9 > Controller."
+L["settings.controller.misc.desc"] = "There should be button that will open panel with advanced controller config, but for now it is in  spawnmenu > Options > ARC9 > Controller."
 L["settings.controller.controller.title"] = "Controller Glyphs"
 L["settings.controller.controller.desc"] = "Enable custom controller-compatible glyphs, showing controller buttons instead of the default keys."
 L["settings.controller.controller_rumble.title"] = "Rumble"
