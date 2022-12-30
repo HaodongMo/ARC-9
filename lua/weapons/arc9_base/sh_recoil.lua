@@ -329,18 +329,19 @@ function SWEP:DoVisualRecoil()
         local fake = 0
 
         fake = self:GetProcessedValue("VisualRecoilPositionBump") or 1.5
+        local bumpup = self:GetProcessedValue("VisualRecoilPositionBumpUp") or 12.5
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
         if GetConVar("arc9_realrecoil"):GetBool() then
             self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
-            self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0)))
+            self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up / bumpup) * fake) - Vector(side, 0, 0)))
         end
 
         if IsFirstTimePredicted() or game.SinglePlayer() then
             if CLIENT then
                 self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
-                self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up / 12.5) * fake) - Vector(side, 0, 0))
+                self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up / bumpup) * fake) - Vector(side, 0, 0))
             end
         end
     // end
