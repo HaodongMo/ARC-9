@@ -414,7 +414,7 @@ local conVars = {
     },
     {
         name = "autoreload",
-        default = "1",
+        default = "0",
         client = true
     },
     {
