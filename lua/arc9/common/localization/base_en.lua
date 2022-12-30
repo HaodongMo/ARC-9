@@ -504,13 +504,6 @@ L["settings.developer.dev_export.title"] = "Get Export Code"
 L["settings.developer.dev_getjson.title"] = "Get Weapon JSON"
 
 
-
-
-
-
-
-
-
 L["incompatible.title"] = "ARC9: INCOMPATIBLE ADDONS"
 L["incompatible.line1"] = "You have some addons that are known to not work with ARC9."
 L["incompatible.line2"] = "Disable them or expect broken behavior!"
@@ -519,3 +512,19 @@ L["incompatible.wait"] = "Wait {time}s"
 L["incompatible.never"] = "Never warn me again"
 L["incompatible.never.hover"] = "Are you absolutely sure you understand the consequences?"
 L["incompatible.never.confirm"] = "You have chosen to never show incompatiblity warnings again. If you encounter errors or broken behaviour, it is your own responsibility."
+
+
+L["customize.presets.default"] = "Default"
+L["customize.presets.default.long"] = "Default preset"
+L["customize.presets.random"] = "Random"
+L["customize.presets.atts"] = " Attachments"
+L["customize.presets.save"] = "Save"
+L["customize.presets.import"] = "Import"
+L["customize.presets.new"] = "New Preset Name"
+L["customize.presets.code"] = "Preset Code (Copied to Clipboard)"
+L["customize.presets.paste"] = "Paste Preset Code Here"
+L["customize.presets.back"] = "Back"
+L["customize.presets.cancel"] = "Cancel"
+L["customize.presets.dumb"] = "Are you dumb"
+L["customize.presets.invalid"] = "Invalid string!"
+

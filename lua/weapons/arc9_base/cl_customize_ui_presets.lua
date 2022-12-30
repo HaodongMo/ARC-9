@@ -61,13 +61,15 @@ function SWEP:CreatePresetMenu(reload)
     
     local savebtn = vgui.Create("ARC9TopButton", presetpanel)
     surface.SetFont("ARC9_12")
-    local tw = surface.GetTextSize("Save")
-    local tw2 = surface.GetTextSize("Import")
+    local savetxt = ARC9:GetPhrase("customize.presets.save")
+    local importtxt = ARC9:GetPhrase("customize.presets.import")
+    local tw = surface.GetTextSize(savetxt)
+    local tw2 = surface.GetTextSize(importtxt)
     local ih8l18n = (presetpanel:GetWide() - tw - tw2) > ARC9ScreenScale(70) and ARC9ScreenScale(10) or 0
 
     savebtn:SetPos(ARC9ScreenScale(5)+ih8l18n, presetpanel:GetTall() - ARC9ScreenScale(20))
     savebtn:SetSize(ARC9ScreenScale(22)+tw, ARC9ScreenScale(21*0.75))
-    savebtn:SetButtonText("Save", "ARC9_12")
+    savebtn:SetButtonText(savetxt, "ARC9_12")
     savebtn:SetIcon(Material("arc9/ui/save.png", "mips smooth"))
     savebtn.DoClick = function(self2)
         surface.PlaySound(savesound)
@@ -124,7 +126,7 @@ function SWEP:CreatePresetMenu(reload)
     local importbtn = vgui.Create("ARC9TopButton", presetpanel)
     importbtn:SetPos(presetpanel:GetWide()-(ARC9ScreenScale(22)+tw2) - ARC9ScreenScale(5) - ih8l18n , presetpanel:GetTall() - ARC9ScreenScale(20))
     importbtn:SetSize(ARC9ScreenScale(22)+tw2, ARC9ScreenScale(21*0.75))
-    importbtn:SetButtonText("Import", "ARC9_12")
+    importbtn:SetButtonText(importtxt, "ARC9_12")
     importbtn:SetIcon(Material("arc9/ui/import.png", "mips smooth"))
     importbtn.DoClick = function(self2)
         self:CreateImportPreset()
@@ -154,7 +156,7 @@ function SWEP:CreatePresetMenu(reload)
         end
 
         if preset == "random" then 
-            presetbtn.name = "Random" 
+            presetbtn.name = ARC9:GetPhrase("customize.presets.random")
             presetbtn.attcount = "?"
             presetbtn.icon = mat_random
             presetbtn.DoClick = function(self2)
@@ -172,7 +174,7 @@ function SWEP:CreatePresetMenu(reload)
             presetbtn.name, presetbtn.attcount = self:GetPresetData(preset)
         end
 
-        if presetbtn.name == "default" then presetbtn.name = "Default" end
+        if presetbtn.name == "default" then presetbtn.name = ARC9:GetPhrase("customize.presets.default") end
 
         if file.Exists(filename, "DATA") then
             presetbtn.icon = Material("data/" .. filename, "smooth")
@@ -208,12 +210,12 @@ function SWEP:CreatePresetMenu(reload)
             surface.DrawText(self2.name)
             surface.SetFont("ARC9_8")
             surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(11))
-            surface.DrawText(tostring(self2.attcount) .. " Attachments")
+            surface.DrawText(tostring(self2.attcount) .. ARC9:GetPhrase("customize.presets.atts"))
 
             if undeletable then
                 surface.SetTextColor(ARC9.GetHUDColor("fg", 75))
                 surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(19))
-                surface.DrawText("Default preset")
+                surface.DrawText(ARC9:GetPhrase("customize.presets.default.long"))
             end
         end
 
@@ -345,7 +347,7 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
     local savebtn = vgui.Create("ARC9TopButton", bg)
     surface.SetFont("ARC9_16")
     local tw = surface.GetTextSize(buttontext)
-    local tw2 = surface.GetTextSize("Cancel")
+    local tw2 = surface.GetTextSize(ARC9:GetPhrase("customize.presets.cancel"))
     savebtn:SetPos(scrw/3 + scrw/12 - (ARC9ScreenScale(29)+tw)/2, scrh/2 - ARC9ScreenScale(12))
     savebtn:SetSize(ARC9ScreenScale(29)+tw, ARC9ScreenScale(22))
     savebtn:SetButtonText(buttontext, "ARC9_16")
@@ -359,7 +361,7 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
         local cancelbtn = vgui.Create("ARC9TopButton", bg)
         cancelbtn:SetPos(scrw/3 + scrw/4.5 - (ARC9ScreenScale(29)+tw2)/2, scrh/2 - ARC9ScreenScale(12))
         cancelbtn:SetSize(ARC9ScreenScale(29)+tw2, ARC9ScreenScale(22))
-        cancelbtn:SetButtonText("Cancel", "ARC9_16")
+        cancelbtn:SetButtonText(ARC9:GetPhrase("customize.presets.cancel"), "ARC9_16")
         cancelbtn:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
         cancelbtn.DoClick = function(self2)
             surface.PlaySound(clicksound)
@@ -378,7 +380,7 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
 end
 
 function SWEP:CreatePresetName()
-    createPopup(self, "New Preset Name", "Save", true, nil, function(bg, textentry)
+    createPopup(self, ARC9:GetPhrase("customize.presets.new"), ARC9:GetPhrase("customize.presets.save"), true, nil, function(bg, textentry)
         local txt = textentry:GetText()
         txt = string.sub(txt, 0, 36)
         
@@ -409,7 +411,7 @@ function SWEP:CreatePresetName()
 end
 
 function SWEP:CreateExportPreset(string)
-    createPopup(self, "Preset Code (Copied to Clipboard)", "Back", false, string, function(bg, textentry)
+    createPopup(self, ARC9:GetPhrase("customize.presets.code"), ARC9:GetPhrase("customize.presets.back"), false, string, function(bg, textentry)
         bg:AlphaTo(0, 0.1, 0, function()
             bg:Remove()
         end)
@@ -417,10 +419,10 @@ function SWEP:CreateExportPreset(string)
 end
 
 function SWEP:CreateImportPreset()
-    createPopup(self, "Paste Preset Code Here", "Import", true, nil, function(bg, textentry)
+    createPopup(self, ARC9:GetPhrase("customize.presets.paste"), ARC9:GetPhrase("customize.presets.import"), true, nil, function(bg, textentry)
         local txt = textentry:GetText()
 
-        if txt == "" then textentry:SetPlaceholderText("Are you dumb") return end
+        if txt == "" then textentry:SetPlaceholderText(ARC9:GetPhrase("customize.presets.dumb")) return end
         
         if self:LoadPresetFromCode(txt) then 
             bg:AlphaTo(0, 0.1, 0, function()
@@ -429,7 +431,7 @@ function SWEP:CreateImportPreset()
             self:CreatePresetMenu(true)
         else
             textentry:SetText("")
-            textentry:SetPlaceholderText("Invalid string!")
+            textentry:SetPlaceholderText(ARC9:GetPhrase("customize.presets.invalid"))
         end
     end)
 end
