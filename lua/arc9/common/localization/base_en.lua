@@ -260,6 +260,9 @@ L["customize.bench.effect"] = "EFFECT AT RANGE"
 L["customize.bench.ballistics"] = "TERMINAL BALLISTICS PERFORMANCE EVALUATION"
 L["customize.bench.precision"] = "MECHANICAL PRECISION TEST"
 
+L["settings.title"] = "ARC9 Settings"
+L["settings.desc"] = "Description"
+
 L["settings.tabname.performance"] = "Performance"
 L["settings.tabname.optics"] = "Optics"
 L["settings.tabname.crosshair"] = "Crosshair"

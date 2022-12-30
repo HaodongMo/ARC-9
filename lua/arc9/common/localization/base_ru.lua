@@ -221,6 +221,9 @@ L["customize.bench.effect"] = "ЭФФЕКТ НА ДАЛЬНОСТИ"
 L["customize.bench.ballistics"] = "ОЦЕНКА БАЛЛИСТИЧЕСКИХ ХАРАКТЕРИСТИК"
 L["customize.bench.precision"] = "ИСПЫТАНИЕ ТОЧНОСТИ"
 
+L["settings.title"] = "Настройки ARC9"
+L["settings.desc"] = "Описание"
+
 L["settings.tabname.performance"] = "Производ-сть"
 L["settings.tabname.optics"] = "Оптика"
 L["settings.tabname.crosshair"] = "Перекрестие"

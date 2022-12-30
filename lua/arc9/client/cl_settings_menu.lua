@@ -420,7 +420,7 @@ local function DrawSettings(bg, page)
             elseif v2.type == "button" then
                 local newel = vgui.Create("ARC9Button", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
-                newel.text = ARC9:GetPhrase(v2.content)
+                newel.text = v2.content
 
                 local oldmousepressed = newel.OnMousePressed
                 newel.OnMousePressed = function(self2, kc)
@@ -495,12 +495,12 @@ local function DrawSettings(bg, page)
         surface.SetFont("ARC9_8_Slim")
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.SetTextPos(w-ARC9ScreenScale(73), ARC9ScreenScale(26))
-        surface.DrawText(activedesc != "" and "Description" or "") -- no title if no desc
+        surface.DrawText(activedesc != "" and ARC9:GetPhrase("settings.desc") or "") -- no title if no desc
 
         surface.SetFont("ARC9_16")
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.SetTextPos(ARC9ScreenScale(30), ARC9ScreenScale(4))
-        surface.DrawText("ARC9 Settings")
+        surface.DrawText(ARC9:GetPhrase("settings.title"))
     end
 
     if page then 
