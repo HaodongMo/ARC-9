@@ -255,6 +255,10 @@ ARC9.HL2Replacements = {
 }
 
 function ARC9.Dev(level)
+    if CLIENT and !game.SinglePlayer() then
+        return LocalPlayer():IsSuperAdmin() and GetConVar("developer"):GetInt() >= level
+    end
+    
     return GetConVar("developer"):GetInt() >= level
 end
 
