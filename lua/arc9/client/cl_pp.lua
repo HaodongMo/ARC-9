@@ -25,7 +25,7 @@ hook.Add("RenderScreenspaceEffects", "ARC9_SSE_PP", function()
         -- render.SetMaterial(flaremat)
         -- render.DrawSprite(flare.pos, flare.size, flare.size, flare.col)
         surface.SetMaterial(flaremat)
-        surface.SetDrawColor(Color(255, 255, 255))
+        surface.SetDrawColor(255, 255, 255)
         local s = flare.size * 0.25 * r
         surface.DrawTexturedRect(flare.x - (s / 2), flare.y - (s / 2), s, s)
     end
