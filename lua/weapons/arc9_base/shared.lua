@@ -440,6 +440,7 @@ SWEP.VisualRecoilPunchMultSights = 0.1
 SWEP.VisualRecoil = 1
 SWEP.VisualRecoilMultSights = 0.1
 SWEP.VisualRecoilPositionBump = 1.5
+SWEP.VisualRecoilPositionBumpUp = 0.08 -- its a mult
 
 SWEP.VisualRecoilHipFire = 1
 
