@@ -243,28 +243,28 @@ local settingstable = {
         { type = "bool", text = "settings.developer.dev_always_ready.title", convar = "dev_always_ready", desc = "settings.developer.dev_always_ready.desc"},
         { type = "bool", text = "settings.developer.dev_benchgun.title", convar = "dev_benchgun", desc = "settings.developer.dev_benchgun.desc"},
         { type = "bool", text = "settings.developer.dev_show_shield.title", convar = "dev_show_shield", desc = "settings.developer.dev_show_shield.desc"},
-        { type = "button", text = "settings.developer.reloadatts.title", content = "settings.developer.reload", func = function(self2)
+        { type = "button", text = "settings.developer.reloadatts.title", content = ARC9:GetPhrase("settings.developer.reload"), func = function(self2)
             RunConsoleCommand("arc9_reloadatts")
         end},
-        { type = "button", text = "settings.developer.reloadlangs.title", content = "settings.developer.reload", func = function(self2)
+        { type = "button", text = "settings.developer.reloadlangs.title", content = ARC9:GetPhrase("settings.developer.reload"), func = function(self2)
             RunConsoleCommand("arc9_reloadlangs")
         end},
-        { type = "button", text = "settings.developer.dev_listanims.title", content = "settings.developer.print", func = function(self2)
+        { type = "button", text = "settings.developer.dev_listanims.title", content = ARC9:GetPhrase("settings.developer.print"), func = function(self2)
             RunConsoleCommand("arc9_dev_listanims")
         end},
-        { type = "button", text = "settings.developer.dev_listbones.title", content = "settings.developer.print", func = function(self2)
+        { type = "button", text = "settings.developer.dev_listbones.title", content = ARC9:GetPhrase("settings.developer.print"), func = function(self2)
             RunConsoleCommand("arc9_dev_listbones")
         end},
-        { type = "button", text = "settings.developer.dev_listbgs.title", content = "settings.developer.print", func = function(self2)
+        { type = "button", text = "settings.developer.dev_listbgs.title", content = ARC9:GetPhrase("settings.developer.print"), func = function(self2)
             RunConsoleCommand("arc9_dev_listbgs")
         end},
-        { type = "button", text = "settings.developer.dev_listatts.title", content = "settings.developer.print", func = function(self2)
+        { type = "button", text = "settings.developer.dev_listatts.title", content = ARC9:GetPhrase("settings.developer.print"), func = function(self2)
             RunConsoleCommand("arc9_dev_listatts")
         end},
-        { type = "button", text = "settings.developer.dev_export.title", content = "settings.developer.print", func = function(self2)
+        { type = "button", text = "settings.developer.dev_export.title", content = ARC9:GetPhrase("settings.developer.print"), func = function(self2)
             RunConsoleCommand("arc9_dev_export")
         end},
-        { type = "button", text = "settings.developer.dev_getjson.title", content = "settings.developer.print", func = function(self2)
+        { type = "button", text = "settings.developer.dev_getjson.title", content = ARC9:GetPhrase("settings.developer.print"), func = function(self2)
             RunConsoleCommand("arc9_dev_getjson")
         end},
     },
