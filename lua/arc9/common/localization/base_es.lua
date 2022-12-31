@@ -390,7 +390,7 @@ L["settings.npc.npc_atts.desc"] = "Las armas ARC9 creadas o entregadas reciben u
 L["settings.npc.npc_autoreplace.title"] = "Remplacar armas de PNJs"
 L["settings.npc.npc_autoreplace.desc"] = "Reemplazar armas PNJs con armas ARC9 elegidas al azar.\n\nEsta es una variable del servidor."
 L["settings.npc.replace_spawned.title"] = "Sustituir armas terrestres"
-L["settings.npc.replace_spawned.desc"] = "Reemplazar armas del mapa/generadas con armas ARC9 elegidos al azar.\n\nEsta es una variable de servidor."
+L["settings.npc.replace_spawned.desc"] = "Reemplazar armas de HL2 del mapa/generadas con armas ARC9 elegidos al azar.\n\nEsta es una variable de servidor."
 L["settings.npc.npc_give_weapons.title"] = "Jugadores pueden dar armas"
 L["settings.npc.npc_give_weapons.desc"] = "Los jugadores pueden pulsar E en los PNJs para darles su arma.\n\nEsta es una variable del servidor."
 
