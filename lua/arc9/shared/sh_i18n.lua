@@ -127,6 +127,14 @@ if CLIENT then
         ARC9.Regen()
     end)
 
+    local ARC9OldLanguageChanged = LanguageChanged
+    function LanguageChanged(lang) -- MIGHT BE VERY BAD
+        -- print("New language: " .. lang)
+        ARC9:LoadLanguages()
+        ARC9.Regen()
+        if isfunction(ARC9OldLanguageChanged) then ARC9OldLanguageChanged(lang) end
+    end
+
 elseif SERVER then
 
     net.Receive("arc9_reloadlangs", function(len, ply)
