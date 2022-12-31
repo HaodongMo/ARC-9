@@ -500,14 +500,6 @@ L["settings.developer.dev_listatts.title"] = "List de QCAttachments"
 L["settings.developer.dev_export.title"] = "Obtener Export Code"
 L["settings.developer.dev_getjson.title"] = "Obtener Weapon JSON"
 
-
-
-
-
-
-
-
-
 L["incompatible.title"] = "ARC9: ADDONS NO COMPATIBLES"
 L["incompatible.line1"] = "Usted tiene algunos addons que se sabe que no funcionan con ARC9."
 L["incompatible.line2"] = "Desactívelos o espere un comportamiento defectuoso."
@@ -516,3 +508,20 @@ L["incompatible.wait"] = "Esperar {time}s"
 L["incompatible.never"] = "No advertirme de vuelta."
 L["incompatible.never.hover"] = "Estás completamente seguro de que entiendes las consecuencias?"
 L["incompatible.never.confirm"] = "Ha elegido no volver a mostrar advertencias de incompatibilidad. Si encuentras errores o comportamientos rotos, es tu responsabilidad."
+
+
+L["customize.presets.default"] = "Por Defecto"
+L["customize.presets.default.long"] = "Preajuste Por Defecto"
+L["customize.presets.random"] = "Aleatorio"
+L["customize.presets.atts"] = " Accesorios"
+L["customize.presets.save"] = "Guardar"
+L["customize.presets.import"] = "Importar"
+L["customize.presets.new"] = "Nuevo Nombre de Preajuste"
+L["customize.presets.code"] = "Codigo de Preajuste (Copiado a Portapapeles)"
+L["customize.presets.paste"] = "Pega Codigo de Preajuste Aqui"
+L["customize.presets.back"] = "Atras"
+L["customize.presets.cancel"] = "Cancelar"
+L["customize.presets.dumb"] = "Eres tonto"
+L["customize.presets.invalid"] = "Cadena no valida!"
+
+-- spanish translation by NeonX :3
