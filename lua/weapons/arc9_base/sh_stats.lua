@@ -96,6 +96,8 @@ do
     local CURRENT_SWEP
     local CURRENT_IS_ANY
 
+    local swepGetAllAffectors = SWEP.GetAllAffectors
+
     local function affectorCall()
         local d = CURRENT_AFFECTOR[CURRENT_VAL](CURRENT_SWEP, CURRENT_DATA)
     
@@ -133,7 +135,10 @@ do
 
         local i = 0
         local newCache = {}
-        for _, tbl in ipairs(self:GetAllAffectors()) do
+        local affectors = swepGetAllAffectors(self)
+        local affectorsCount = #affectors
+        for j = 1, affectorsCount do
+            local tbl = affectors[j]
             if tbl[val] then
     
                 i = i + 1
