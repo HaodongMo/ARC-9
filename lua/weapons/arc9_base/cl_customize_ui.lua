@@ -684,7 +684,7 @@ function SWEP:CreateCustomizeHUD()
             surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(4))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
             surface.SetFont("ARC9_8")
-            surface.DrawText(ARC9.GetPhrase("customize.hint.controller"))
+            surface.DrawText(ARC9:GetPhrase("customize.hint.controller"))
 
             --[[surface.SetMaterial(Material("arc9/gamepad/corner.png", ""))
             surface.SetDrawColor(255, 255, 255, 255)
