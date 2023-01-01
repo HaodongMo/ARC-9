@@ -562,7 +562,7 @@ function ARC9_OpenSettings(page)
     steam:SetIcon(Material("arc9/ui/steam.png", "mips smooth"))
     steam.DoClick = function(self2)
         surface.PlaySound(clicksound)
-        gui.OpenURL("https:--steamcommunity.com/sharedfiles/filedetails/?id=2131057232") -- dont forget to change to arc9 page when it release
+        gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=2910505837") -- dont forget to change to arc9 page when it release
     end
 
     local close = vgui.Create("ARC9TopButton", panel)
