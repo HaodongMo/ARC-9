@@ -196,115 +196,138 @@ SWEP.PV_Melee = 0
 
 SWEP.PV_Cache = {}
 
-function SWEP:GetValue(val, base, condition, amount)
-    condition = condition or ""
-    amount = amount or 1
-    local stat = base
+do
+    local swepRunHook = SWEP.RunHook
+    local swepGetAllAffectors = SWEP.GetAllAffectors
 
-    if stat == nil then
-        stat = self:GetTable()[val]
-    end
-
-    if self.HasNoAffectors[val .. condition] == true then
-        return stat
-    end
-
-    local unaffected = true
-
-    if istable(stat) then
-        stat.BaseClass = nil
-    end
-
-    if self.StatCache[tostring(base) .. val .. condition] != nil then
-        -- stat = self.StatCache[tostring(base) .. val .. condition]
-        stat = self.StatCache[tostring(base) .. val .. condition]
-
-        local oldstat = stat
-        stat = self:RunHook(val .. "Hook" .. condition, stat)
-
+    function SWEP:GetValue(val, base, condition, amount)
+        condition = condition or ""
+        amount = amount or 1
+        local stat = base
+    
         if stat == nil then
-            stat = oldstat
+            stat = self[val]
         end
 
-        -- if istable(stat) then
-        --     stat.BaseClass = nil
-        -- end
+        local valContCondition = val .. condition
+    
+        if self.HasNoAffectors[valContCondition] == true then
+            return stat
+        end
+    
+        local unaffected = true
+        local statType = type(stat)
+        local baseStr = tostring(base)
 
-        return stat
-    end
+        -- damn
+        local baseContValContCondition = baseStr .. valContCondition
+    
+        if statType == 'table' then
+            stat.BaseClass = nil
+        end
 
-    local priority = 0
-
-    local getallaffectors = self:GetAllAffectors()
-
-    if !self.ExcludeFromRawStats[val] then
-        for _, tbl in ipairs(getallaffectors) do
-            local att_priority = tbl[val .. condition .. "_Priority"] or 1
-
-            if tbl[val .. condition] != nil and att_priority >= priority then
-                stat = tbl[val .. condition]
+        local statCache = self.StatCache
+    
+        local cacheAvailable = statCache[baseContValContCondition]
+        if cacheAvailable != nil then
+            -- stat = self.StatCache[tostring(base) .. valContCondition]
+            stat = cacheAvailable
+    
+            local oldstat = stat
+            stat = swepRunHook(self, val .. "Hook" .. condition, stat)
+    
+            if stat == nil then
+                stat = oldstat
+            end
+    
+            -- if istable(stat) then
+            --     stat.BaseClass = nil
+            -- end
+    
+            return stat
+        end
+    
+        local priority = 0
+    
+        local allAffectors = swepGetAllAffectors(self)
+        local affectorsCount = #allAffectors
+    
+        if !self.ExcludeFromRawStats[val] then
+            for i = 1, affectorsCount do
+                local tbl = allAffectors[i]
+                local att_priority = tbl[valContCondition .. "_Priority"] or 1
+    
+                if att_priority >= priority and tbl[valContCondition] != nil then
+                    stat = tbl[valContCondition]
+                    priority = att_priority
+                    unaffected = false
+                end
+            end
+        end
+    
+        for i = 1, affectorsCount do
+            local tbl = allAffectors[i]
+            local att_priority = tbl[val .. "Override" .. condition .. "_Priority"] or 1
+    
+            local keyName = val .. "Override" .. condition
+            if att_priority >= priority and tbl[keyName] != nil then
+                stat = tbl[keyName]
                 priority = att_priority
                 unaffected = false
             end
         end
-    end
-
-    for _, tbl in ipairs(getallaffectors) do
-        local att_priority = tbl[val .. "Override" .. condition .. "_Priority"] or 1
-
-        if tbl[val .. "Override" .. condition] != nil and att_priority >= priority then
-            stat = tbl[val .. "Override" .. condition]
-            priority = att_priority
-            unaffected = false
-        end
-    end
-
-    if isnumber(stat) then
-        for _, tbl in ipairs(getallaffectors) do
-            if tbl[val .. "Add" .. condition] != nil then
-                -- if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
-                --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
-                -- end
-                if type(tbl[val .. "Add" .. condition]) == type(stat) then
-                    stat = stat + (tbl[val .. "Add" .. condition] * amount)
-                end
-                unaffected = false
-            end
-        end
-
-        for _, tbl in ipairs(getallaffectors) do
-            if tbl[val .. "Mult" .. condition] != nil then
-                -- if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
-                --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
-                -- end
-                if type(tbl[val .. "Mult" .. condition]) == type(stat) then
-                    if amount > 1 then
-                        stat = stat * (math.pow(tbl[val .. "Mult" .. condition], amount))
-                    else
-                        stat = stat * tbl[val .. "Mult" .. condition]
+    
+        if statType == 'number' then
+            for i = 1, affectorsCount do
+                local tbl = allAffectors[i]
+                local keyName = val .. "Add" .. condition 
+                if tbl[keyName] != nil then
+                    -- if !pcall(function() stat = stat + (tbl[val .. "Add" .. condition] * amount) end) then
+                    --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO ADD INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
+                    -- end
+                    if type(tbl[keyName]) == type(stat) then
+                        stat = stat + (tbl[keyName] * amount)
                     end
+                    unaffected = false
                 end
-                unaffected = false
+            end
+    
+            for i = 1, affectorsCount do
+                local tbl = allAffectors[i]
+                local keyName = val .. "Mult" .. condition
+                if tbl[keyName] != nil then
+                    -- if !pcall(function() stat = stat * math.pow(tbl[val .. "Mult" .. condition], amount) end) then
+                    --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO MULTIPLY INVALID VALUE: (" .. tbl[val .. "Add" .. condition] .. ") TO " .. val .. "!")
+                    -- end
+                    if type(tbl[keyName]) == type(stat) then
+                        if amount > 1 then
+                            stat = stat * (math.pow(tbl[keyName], amount))
+                        else
+                            stat = stat * tbl[keyName]
+                        end
+                    end
+                    unaffected = false
+                end
             end
         end
+    
+        statCache[baseContValContCondition] = stat
+        -- self.StatCache[tostring(base) .. valContCondition] = stat
+    
+        local newstat, any = swepRunHook(self, val .. "Hook" .. condition, stat)
+    
+        stat = newstat or stat
+    
+        if any then unaffected = false end
+    
+        self.HasNoAffectors[valContCondition] = unaffected
+    
+        if statType == 'table' then
+            stat.BaseClass = nil
+        end
+    
+        return stat
     end
-
-    self.StatCache[tostring(base) .. val .. condition] = stat
-    -- self.StatCache[tostring(base) .. val .. condition] = stat
-
-    local newstat, any = self:RunHook(val .. "Hook" .. condition, stat)
-
-    stat = newstat or stat
-
-    if any then unaffected = false end
-
-    self.HasNoAffectors[val .. condition] = unaffected
-
-    if istable(stat) then
-        stat.BaseClass = nil
-    end
-
-    return stat
 end
 
 do
