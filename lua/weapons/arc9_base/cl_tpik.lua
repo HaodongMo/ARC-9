@@ -169,6 +169,8 @@ function SWEP:DoTPIK()
     if ply_l_ulna_index and !ply:BoneHasFlag(ply_l_ulna_index, 524032) then ply_l_ulna_index = nil end
     if ply_r_bicep_index and !ply:BoneHasFlag(ply_r_bicep_index, 524032) then ply_r_bicep_index = nil end
     if ply_r_ulna_index and !ply:BoneHasFlag(ply_r_ulna_index, 524032) then ply_r_ulna_index = nil end
+    if ply_l_wrist_index and !ply:BoneHasFlag(ply_l_wrist_index, 524032) then ply_l_wrist_index = nil end
+    if ply_r_wrist_index and !ply:BoneHasFlag(ply_r_wrist_index, 524032) then ply_r_wrist_index = nil end
     
     if !ply_l_shoulder_index then return end
     if !ply_r_shoulder_index then return end
