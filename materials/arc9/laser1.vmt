@@ -1,6 +1,6 @@
 UnLitGeneric
 {
-	"$basetexture"	"arc9/laser1"
+	"$basetexture"	"arc9/laser2"
 	"$additive" 	"1"
 	"$translucent" "1"
 	"$vertexcolor" 	"1"
