@@ -22,49 +22,68 @@ function SWEP:InvalidateCache()
     self:SetBaseSettings()
 end
 
-function SWEP:RunHook(val, data)
-    local any = false
+do
+    local CURRENT_AFFECTOR
+    local CURRENT_VAL
+    local CURRENT_DATA
+    local CURRENT_SWEP
+    local CURRENT_IS_ANY
 
-    if self.HookCache[val] then
-        for _, chook in pairs(self.HookCache[val]) do
-            local d = chook(self, data)
-
-            if d != nil then
-                data = d
-            end
-
-            any = true
+    local function affectorCall()
+        local d = CURRENT_AFFECTOR[CURRENT_VAL](CURRENT_SWEP, CURRENT_DATA)
+    
+        if d != nil then
+            CURRENT_DATA = d
         end
 
-        data = hook.Run("ARC9_" .. val, self, data) or data
-
-        return data, any
+        CURRENT_IS_ANY = true
     end
 
-    self.HookCache[val] = {}
+    function SWEP:RunHook(val, data)
+        CURRENT_IS_ANY = false
 
-    for _, tbl in ipairs(self:GetAllAffectors()) do
-        if tbl[val] then
+        local hookCache = self.HookCache[val]
+        if hookCache then
+            local len = #hookCache
 
-            table.insert(self.HookCache[val], tbl[val])
-
-            if !pcall(function()
-                local d = tbl[val](self, data)
-
+            for i = 1, len do
+                local d = hookCache[i](self, data)
+    
                 if d != nil then
                     data = d
                 end
-
+    
                 any = true
-            end) then
-                print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
+            end
+    
+            data = hook.Run("ARC9_" .. val, self, data) or data
+            return data, any
+        end
+    
+        CURRENT_SWEP = self
+        CURRENT_DATA = data
+        CURRENT_VAL = val
+
+        local i = 0
+        local newCache = {}
+        for _, tbl in ipairs(self:GetAllAffectors()) do
+            if tbl[val] then
+    
+                i = i + 1
+                newCache[i] = tbl[val]
+    
+                CURRENT_AFFECTOR = tbl
+                if !pcall(affectorCall) then
+                    print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
+                end
             end
         end
+    
+        self.HookCache[val] = newCache
+        data = hook.Run("ARC9_" .. val, self, data) or data
+    
+        return data, any
     end
-
-    data = hook.Run("ARC9_" .. val, self, data) or data
-
-    return data, any
 end
 
 function SWEP:GetFinalAttTableFromAddress(address)
