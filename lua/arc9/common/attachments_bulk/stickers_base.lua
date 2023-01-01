@@ -519,3 +519,23 @@ ATT.Folder = "Com. wave 1"
 ATT.StickerMaterial = "stickers/drawberf"
 
 ARC9.LoadAttachment(ATT, "sticker_drawberf")
+
+ATT = {}
+
+ATT.PrintName = [[Arc Bird]]
+ATT.CompactName = "Arc Bird"
+ATT.Description = [[Arc Bird.
+Design by Nori/Chewable.
+
+Sticker included in ARC9 Base.]]
+ATT.Icon = Material("stickers/arc_bird")
+
+ATT.SortOrder = 0
+ATT.Free = true
+
+ATT.Category = "stickers"
+ATT.Folder = "Com. wave 1"
+
+ATT.StickerMaterial = "stickers/arc_bird"
+
+ARC9.LoadAttachment(ATT, "sticker_arcbird")
