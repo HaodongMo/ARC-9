@@ -1,3 +1,5 @@
+local ENTITY = FindMetaTable("Entity")
+
 SWEP.StatCache = {}
 SWEP.HookCache = {}
 SWEP.AffectorsCache = nil
@@ -22,71 +24,92 @@ function SWEP:InvalidateCache()
     self:SetBaseSettings()
 end
 
-function SWEP:GetAllAffectors()
-    if self.AffectorsCache then return self.AffectorsCache end
+do
+    local entityGetTable = ENTITY.GetTable
 
-    local aff = {}
+    local swepGetCurrentFiremodeTable = SWEP.GetCurrentFiremodeTable
+    local swepGetElements = SWEP.GetElements
 
-    table.insert(aff, table.Copy(self:GetTable()))
+    local cvarArcModifiers = GetConVar("arc9_modifiers")
+    local cvarGetString = FindMetaTable("ConVar").GetString
 
-    if !ARC9.OverrunSights then
-        ARC9.OverrunSights = true
-        local sight = self:GetSight()
+    function SWEP:GetAllAffectors()
+        if self.AffectorsCache then return self.AffectorsCache end
+    
+        local aff = {table.Copy(entityGetTable(self))}
+        local affLength = 1
+    
+        if !ARC9.OverrunSights then
+            ARC9.OverrunSights = true
+            local originalSightTable = self:GetSight().OriginalSightTable
 
-        if sight.OriginalSightTable then
-            table.insert(aff, sight.OriginalSightTable)
+            if originalSightTable then
+                affLength = affLength + 1
+                aff[affLength] = originalSightTable
+            end
+    
+            ARC9.OverrunSights = false
         end
+    
+        local subSlotList = self:GetSubSlotList()
+        local subSlotListLength = #subSlotList
 
-        ARC9.OverrunSights = false
-    end
-
-    for _, slot in ipairs(self:GetSubSlotList()) do
-        local atttbl = self:GetFinalAttTable(slot)
-
-        if atttbl then
-            table.insert(aff, atttbl)
+        for i = 1, subSlotListLength do
+            local atttbl = self:GetFinalAttTable(subSlotList[i])
+    
+            if atttbl then
+                affLength = affLength + 1
+                aff[affLength] = atttbl
+            end
         end
-    end
+    
+        local config = string.Split( cvarGetString(cvarArcModifiers), "\\n" )
+        local configLength = #config
+        local c4 = {}
 
-    local config = string.Split( GetConVar("arc9_modifiers"):GetString(), "\\n" )
-    local c4 = {}
-    for i, v in ipairs(config) do
-        local swig = string.Split( v, "\\t" )
-        -- local c2 = c4[swig[1]]
-        if tonumber(swig[2]) then
-            c4[swig[1]] = tonumber(swig[2])
-        elseif swig[2] == "true" or swig[2] == "false" then
-            c4[swig[1]] = swig[2] == "true"
-        else
-            c4[swig[1]] = swig[2]
-        end
-    end
-    table.insert(aff, c4)
-
-    if !ARC9.OverrunFiremodes then
-        ARC9.OverrunFiremodes = true
-        table.insert(aff, self:GetCurrentFiremodeTable())
-        ARC9.OverrunFiremodes = false
-    end
-
-    if !ARC9.OverrunAttElements then
-        ARC9.OverrunAttElements = true
-
-        for i, k in pairs(self:GetElements()) do
-            if !k then continue end
-            local ele = self.AttachmentElements[i]
-
-            if ele then
-                table.insert(aff, ele)
+        for i = 1, configLength do
+            local swig = string.Split( config[i], "\\t" )
+            local swig1, swig2 = swig[1], swig[2]
+            -- local c2 = c4[swig[1]]
+            if tonumber(swig2) then
+                c4[swig1] = tonumber(swig2)
+            elseif swig2 == "true" or swig2 == "false" then
+                c4[swig1] = swig2 == "true"
+            else
+                c4[swig1] = swig2
             end
         end
 
-        ARC9.OverrunAttElements = false
+        affLength = affLength + 1
+        aff[affLength] = c4
+    
+        if !ARC9.OverrunFiremodes then
+            ARC9.OverrunFiremodes = true
+            affLength = affLength + 1
+            aff[affLength] = swepGetCurrentFiremodeTable(self)
+            ARC9.OverrunFiremodes = false
+        end
+    
+        if !ARC9.OverrunAttElements then
+            ARC9.OverrunAttElements = true
+
+            for i, k in pairs(swepGetElements(self)) do
+                if !k then continue end
+                local ele = self.AttachmentElements[i]
+    
+                if ele then
+                    affLength = affLength + 1
+                    aff[affLength] = ele
+                end
+            end
+    
+            ARC9.OverrunAttElements = false
+        end
+    
+        self.AffectorsCache = aff
+    
+        return aff
     end
-
-    self.AffectorsCache = aff
-
-    return aff
 end
 
 do
@@ -340,7 +363,6 @@ do
     local playerCrouching = PLAYER.Crouching
     local playerGetWalkSpeed = PLAYER.GetWalkSpeed
 
-    local ENTITY = FindMetaTable("Entity")
     local entityOwner = ENTITY.GetOwner
     local entityIsNPC = ENTITY.IsNPC
     local entityOnGround = ENTITY.OnGround
