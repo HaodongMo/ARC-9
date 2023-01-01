@@ -22,6 +22,73 @@ function SWEP:InvalidateCache()
     self:SetBaseSettings()
 end
 
+function SWEP:GetAllAffectors()
+    if self.AffectorsCache then return self.AffectorsCache end
+
+    local aff = {}
+
+    table.insert(aff, table.Copy(self:GetTable()))
+
+    if !ARC9.OverrunSights then
+        ARC9.OverrunSights = true
+        local sight = self:GetSight()
+
+        if sight.OriginalSightTable then
+            table.insert(aff, sight.OriginalSightTable)
+        end
+
+        ARC9.OverrunSights = false
+    end
+
+    for _, slot in ipairs(self:GetSubSlotList()) do
+        local atttbl = self:GetFinalAttTable(slot)
+
+        if atttbl then
+            table.insert(aff, atttbl)
+        end
+    end
+
+    local config = string.Split( GetConVar("arc9_modifiers"):GetString(), "\\n" )
+    local c4 = {}
+    for i, v in ipairs(config) do
+        local swig = string.Split( v, "\\t" )
+        -- local c2 = c4[swig[1]]
+        if tonumber(swig[2]) then
+            c4[swig[1]] = tonumber(swig[2])
+        elseif swig[2] == "true" or swig[2] == "false" then
+            c4[swig[1]] = swig[2] == "true"
+        else
+            c4[swig[1]] = swig[2]
+        end
+    end
+    table.insert(aff, c4)
+
+    if !ARC9.OverrunFiremodes then
+        ARC9.OverrunFiremodes = true
+        table.insert(aff, self:GetCurrentFiremodeTable())
+        ARC9.OverrunFiremodes = false
+    end
+
+    if !ARC9.OverrunAttElements then
+        ARC9.OverrunAttElements = true
+
+        for i, k in pairs(self:GetElements()) do
+            if !k then continue end
+            local ele = self.AttachmentElements[i]
+
+            if ele then
+                table.insert(aff, ele)
+            end
+        end
+
+        ARC9.OverrunAttElements = false
+    end
+
+    self.AffectorsCache = aff
+
+    return aff
+end
+
 do
     local CURRENT_AFFECTOR
     local CURRENT_VAL
@@ -107,73 +174,6 @@ function SWEP:GetFinalAttTable(slot)
     end
 
     return atttbl
-end
-
-function SWEP:GetAllAffectors()
-    if self.AffectorsCache then return self.AffectorsCache end
-
-    local aff = {}
-
-    table.insert(aff, table.Copy(self:GetTable()))
-
-    if !ARC9.OverrunSights then
-        ARC9.OverrunSights = true
-        local sight = self:GetSight()
-
-        if sight.OriginalSightTable then
-            table.insert(aff, sight.OriginalSightTable)
-        end
-
-        ARC9.OverrunSights = false
-    end
-
-    for _, slot in ipairs(self:GetSubSlotList()) do
-        local atttbl = self:GetFinalAttTable(slot)
-
-        if atttbl then
-            table.insert(aff, atttbl)
-        end
-    end
-
-    local config = string.Split( GetConVar("arc9_modifiers"):GetString(), "\\n" )
-    local c4 = {}
-    for i, v in ipairs(config) do
-        local swig = string.Split( v, "\\t" )
-        -- local c2 = c4[swig[1]]
-        if tonumber(swig[2]) then
-            c4[swig[1]] = tonumber(swig[2])
-        elseif swig[2] == "true" or swig[2] == "false" then
-            c4[swig[1]] = swig[2] == "true"
-        else
-            c4[swig[1]] = swig[2]
-        end
-    end
-    table.insert(aff, c4)
-
-    if !ARC9.OverrunFiremodes then
-        ARC9.OverrunFiremodes = true
-        table.insert(aff, self:GetCurrentFiremodeTable())
-        ARC9.OverrunFiremodes = false
-    end
-
-    if !ARC9.OverrunAttElements then
-        ARC9.OverrunAttElements = true
-
-        for i, k in pairs(self:GetElements()) do
-            if !k then continue end
-            local ele = self.AttachmentElements[i]
-
-            if ele then
-                table.insert(aff, ele)
-            end
-        end
-
-        ARC9.OverrunAttElements = false
-    end
-
-    self.AffectorsCache = aff
-
-    return aff
 end
 
 local Lerp = function(a, v1, v2)
