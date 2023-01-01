@@ -456,7 +456,8 @@ do
             stat = arcGetValue(self, val, stat, "Bipod")
         end
     
-        if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
+        local hasNoAffectors = self.HasNoAffectors
+        if !hasNoAffectors[val .. "Sights"] or !hasNoAffectors[val .. "HipFire"] then
             local sightAmount = swepDt.SightAmount
 
             if isnumber(stat) then
@@ -477,7 +478,7 @@ do
     
         local heatAmount = swepDt.HeatAmount
         local hasHeat = heatAmount > 0
-        if hasHeat and base != "HeatCapacity" and !self.HasNoAffectors[val .. "Hot"] then
+        if hasHeat and base != "HeatCapacity" and !hasNoAffectors[val .. "Hot"] then
             if isnumber(stat) then
                 local hot = arcGetValue(self, val, stat, "Hot")
     
@@ -493,7 +494,7 @@ do
     
         local getlastmeleetime = swepDt.LastMeleeTime
     
-        if !self.HasNoAffectors[val .. "Melee"] and getlastmeleetime < ct then
+        if !hasNoAffectors[val .. "Melee"] and getlastmeleetime < ct then
             local pft = ct - getlastmeleetime
             local d = pft / (arcGetValue(self, "PreBashTime") + arcGetValue(self, "PostBashTime"))
     
@@ -509,7 +510,7 @@ do
         end
     
     
-        if !self.HasNoAffectors[val .. "Shooting"] then
+        if !hasNoAffectors[val .. "Shooting"] then
             local nextPrimaryFire = weaponGetNextPrimaryFire(self)
     
             if nextPrimaryFire + 0.1 > ct then
@@ -526,14 +527,14 @@ do
             end
         end
     
-        if !self.HasNoAffectors[val .. "Recoil"] then
+        if !hasNoAffectors[val .. "Recoil"] then
             local recoilAmount = swepDt.RecoilAmount
             if recoilAmount > 0 then
                 stat = arcGetValue(self, val, stat, "Recoil", recoilAmount)
             end
         end
     
-        if !self.HasNoAffectors[val .. "Move"] and IsValid(owner) then
+        if !hasNoAffectors[val .. "Move"] and IsValid(owner) then
             local spd = self.PV_Move
             local maxspd = entityIsPlayer(owner) and playerGetWalkSpeed(owner) or 250
             if singleplayer or CLIENT or self.PV_Tick != upct then
