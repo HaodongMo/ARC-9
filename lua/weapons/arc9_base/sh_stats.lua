@@ -177,198 +177,6 @@ SWEP.PV_Melee = 0
 
 SWEP.PV_Cache = {}
 
-
-function SWEP:GetProcessedValue(val, base, cmd)
-    local ct = CurTime()
-    local upct = UnPredictedCurTime()
-
-    if CLIENT and self.PV_Cache[tostring(val) .. tostring(base)] != nil and self.PV_Tick == upct then
-        return self.PV_Cache[tostring(val) .. tostring(base)]
-    end
-
-    if self.PV_Tick != upct then
-        self.PV_Cache = {}
-    end
-
-    local stat = self:GetValue(val, base)
-
-    local ubgl = self:GetUBGL()
-    local owner = self:GetOwner()
-
-    -- if true then return stat end
-
-    if self:GetJammed() and val == "Malfunction" then
-        return true
-    end
-
-    if self:GetHeatLockout() and val == "Overheat" then
-        return true
-    end
-
-    if owner:IsNPC() then
-        stat = self:GetValue(val, stat, "NPC")
-    end
-
-    if GetConVar("arc9_truenames"):GetBool() then
-        stat = self:GetValue(val, stat, "True")
-    end
-
-    if owner:IsValid() and !owner:IsNPC() then
-        if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then
-            stat = self:GetValue(val, stat, "MidAir")
-        end
-
-        if owner:Crouching() and owner:OnGround() then
-            stat = self:GetValue(val, stat, "Crouch")
-        end
-    end
-
-    if self:GetReloading() then
-        stat = self:GetValue(val, stat, "Reload")
-    end
-
-    if self:GetBurstCount() == 0 then
-        stat = self:GetValue(val, stat, "FirstShot")
-    end
-
-    if self:Clip1() == 0 then
-        stat = self:GetValue(val, stat, "Empty")
-    end
-
-    if !ubgl and self:GetValue("Silencer") then
-        stat = self:GetValue(val, stat, "Silenced")
-    end
-
-    if ubgl then
-        stat = self:GetValue(val, stat, "UBGL")
-
-        if self:Clip2() == 0 then
-            stat = self:GetValue(val, stat, "EmptyUBGL")
-        end
-    end
-
-    if bit.band(self:GetNthShot(), 1) == 0 then
-        stat = self:GetValue(val, stat, "EvenShot")
-    else
-        stat = self:GetValue(val, stat, "OddShot")
-    end
-
-    if bit.band(self:GetNthReload(), 1) == 0  then
-        stat = self:GetValue(val, stat, "EvenReload")
-    else
-        stat = self:GetValue(val, stat, "OddReload")
-    end
-
-    // if self:GetBlindFire() then
-    //     stat = self:GetValue(val, stat, "BlindFire")
-    // end
-
-    if self:GetBipod() then
-        stat = self:GetValue(val, stat, "Bipod")
-    end
-
-    if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
-        if isnumber(stat) then
-            local hipfire = self:GetValue(val, stat, "HipFire")
-            local sights = self:GetValue(val, stat, "Sights")
-
-            if isnumber(hipfire) and isnumber(sights) then
-                stat = Lerp(self:GetSightAmount(), hipfire, sights)
-            end
-        else
-            if self:GetSightAmount() >= 1 then
-                stat = self:GetValue(val, stat, "Sights")
-            else
-                stat = self:GetValue(val, stat, "HipFire")
-            end
-        end
-    end
-
-    if base != "HeatCapacity" and !self.HasNoAffectors[val .. "Hot"]  and self:GetHeatAmount() > 0 then
-        if isnumber(stat) then
-            local hot = self:GetValue(val, stat, "Hot")
-
-            if isnumber(hot) then
-                stat = Lerp(self:GetHeatAmount() / self:GetProcessedValue("HeatCapacity"), stat, hot)
-            end
-        else
-            if self:GetHeatAmount() > 0 then
-                stat = self:GetValue(val, stat, "Hot")
-            end
-        end
-    end
-
-    local getlastmeleetime = self:GetLastMeleeTime()
-
-    if !self.HasNoAffectors[val .. "Melee"] and getlastmeleetime < ct then
-        local pft = ct - getlastmeleetime
-        local d = pft / (self:GetValue("PreBashTime") + self:GetValue("PostBashTime"))
-
-        d = math.Clamp(d, 0, 1)
-
-        d = 1 - d
-
-        if isnumber(stat) then
-            stat = Lerp(d, stat, self:GetValue(val, stat, "Melee"))
-        else
-            if d > 0 then
-                stat = self:GetValue(val, stat, "Melee")
-            end
-        end
-    end
-
-
-    if !self.HasNoAffectors[val .. "Shooting"] then
-        local getnextprimaryfire = self:GetNextPrimaryFire()
-
-        if getnextprimaryfire + 0.1 > ct then
-            local d
-            local pft = ct - getnextprimaryfire + 0.1
-            d = pft / 0.1
-
-            d = math.Clamp(d, 0, 1)
-
-            if isnumber(stat) then
-                stat = Lerp(d, stat, self:GetValue(val, stat, "Shooting"))
-            else
-                if d > 0 then
-                    stat = self:GetValue(val, stat, "Shooting")
-                end
-            end
-        end
-    end
-
-    if !self.HasNoAffectors[val .. "Recoil"] then
-        local getrecoilamount = self:GetRecoilAmount()
-        if getrecoilamount > 0 then
-            stat = self:GetValue(val, stat, "Recoil", getrecoilamount)
-        end
-    end
-
-    if !self.HasNoAffectors[val .. "Move"] and IsValid(owner) then
-        local spd = self.PV_Move
-        local maxspd = owner:IsPlayer() and owner:GetWalkSpeed() or 250
-        if singleplayer or CLIENT or self.PV_Tick != upct then
-            spd = math.min(owner:GetAbsVelocity():Length(), maxspd) / maxspd
-
-            self.PV_Move = spd
-        end
-
-        if isnumber(stat) then
-            stat = Lerp(spd, stat, self:GetValue(val, stat, "Move"))
-        else
-            if spd > 0 then
-                stat = self:GetValue(val, stat, "Move")
-            end
-        end
-    end
-
-    self.PV_Tick = upct
-    self.PV_Cache[tostring(val) .. tostring(base)] = stat
-
-    return stat
-end
-
 function SWEP:GetValue(val, base, condition, amount)
     condition = condition or ""
     amount = amount or 1
@@ -478,4 +286,232 @@ function SWEP:GetValue(val, base, condition, amount)
     end
 
     return stat
+end
+
+do
+    local PLAYER = FindMetaTable("Player")
+    local playerCrouching = PLAYER.Crouching
+    local playerGetWalkSpeed = PLAYER.GetWalkSpeed
+
+    local ENTITY = FindMetaTable("Entity")
+    local entityOwner = ENTITY.GetOwner
+    local entityIsNPC = ENTITY.IsNPC
+    local entityOnGround = ENTITY.OnGround
+    local entityIsValid = ENTITY.IsValid
+    local entityGetMoveType = ENTITY.GetMoveType
+    local entityIsPlayer = ENTITY.IsPlayer
+    local entityGetAbsVelocity = ENTITY.GetAbsVelocity
+
+    local WEAPON = FindMetaTable("Weapon")
+    local weaponClip1 = WEAPON.Clip1
+    local weaponClip2 = WEAPON.Clip2
+    local weaponGetNextPrimaryFire = WEAPON.GetNextPrimaryFire
+
+    local arcGetValue = SWEP.GetValue
+
+    local cvarArc9Truenames = GetConVar("arc9_truenames")
+    local cvarGetBool = FindMetaTable("ConVar").GetBool
+
+    local vectorLength = FindMetaTable("Vector").Length
+
+    function SWEP:GetProcessedValue(val, base, cmd)
+        local swepDt = self.dt
+
+        -- From now on, we will not call `self:GetJammed()`, `self:GetHeatLockout()`
+        -- and similar functions, because all they do is just return `self.dt[thing]`
+        -- We can (and should, if we want "PERFORMANCE :tm:") do this manually
+
+        if swepDt.Jammed and val == "Malfunction" then
+            return true
+        end
+    
+        if swepDt.HeatLockout and val == "Overheat" then
+            return true
+        end
+
+        local ct = CurTime()
+        local upct = UnPredictedCurTime()
+
+        local processedValueName = tostring(val) .. tostring(base)
+    
+        if CLIENT and self.PV_Cache[processedValueName] != nil and self.PV_Tick == upct then
+            return self.PV_Cache[processedValueName]
+        end
+    
+        if self.PV_Tick != upct then
+            self.PV_Cache = {}
+        end
+        
+        local stat = arcGetValue(self, val, base)
+    
+        local ubgl = swepDt.UBGL
+        local owner = entityOwner(self)
+    
+        -- if true then return stat end
+
+        local ownerIsNPC = entityIsNPC(owner)
+    
+        if ownerIsNPC then
+            stat = arcGetValue(self, val, stat, "NPC")
+        end
+    
+        if cvarGetBool(cvarArc9Truenames) then
+            stat = arcGetValue(self, val, stat, "True")
+        end
+    
+        if !ownerIsNPC and entityIsValid(owner) then
+            local ownerOnGround = entityOnGround(owner)
+
+            if !ownerOnGround or entityGetMoveType(owner) == MOVETYPE_NOCLIP then
+                stat = arcGetValue(self, val, stat, "MidAir")
+            end
+    
+            if ownerOnGround and playerCrouching(owner) then
+                stat = arcGetValue(self, val, stat, "Crouch")
+            end
+        end
+    
+        if swepDt.Reloading then
+            stat = arcGetValue(self, val, stat, "Reload")
+        end
+    
+        if swepDt.BurstCount == 0 then
+            stat = arcGetValue(self, val, stat, "FirstShot")
+        end
+    
+        if weaponClip1(self) == 0 then
+            stat = arcGetValue(self, val, stat, "Empty")
+        end
+    
+        -- !! changed the order
+        if ubgl then
+            stat = arcGetValue(self, val, stat, "UBGL")
+    
+            if weaponClip2(self) == 0 then
+                stat = arcGetValue(self, val, stat, "EmptyUBGL")
+            end
+        elseif arcGetValue(self, "Silencer") then
+            stat = arcGetValue(self, val, stat, "Silenced")
+        end
+    
+        if bit.band(swepDt.NthShot, 1) == 0 then
+            stat = arcGetValue(self, val, stat, "EvenShot")
+        else
+            stat = arcGetValue(self, val, stat, "OddShot")
+        end
+    
+        if bit.band(swepDt.NthReload, 1) == 0  then
+            stat = arcGetValue(self, val, stat, "EvenReload")
+        else
+            stat = arcGetValue(self, val, stat, "OddReload")
+        end
+    
+        // if self:GetBlindFire() then
+        //     stat = arcGetValue(self, val, stat, "BlindFire")
+        // end
+    
+        if swepDt.Bipod then
+            stat = arcGetValue(self, val, stat, "Bipod")
+        end
+    
+        if !self.HasNoAffectors[val .. "Sights"] or !self.HasNoAffectors[val .. "HipFire"] then
+            local sightAmount = swepDt.SightAmount
+
+            if isnumber(stat) then
+                local hipfire = arcGetValue(self, val, stat, "HipFire")
+                local sights = arcGetValue(self, val, stat, "Sights")
+    
+                if isnumber(hipfire) and isnumber(sights) then
+                    stat = Lerp(sightAmount, hipfire, sights)
+                end
+            else
+                if sightAmount >= 1 then
+                    stat = arcGetValue(self, val, stat, "Sights")
+                else
+                    stat = arcGetValue(self, val, stat, "HipFire")
+                end
+            end
+        end
+    
+        local heatAmount = swepDt.HeatAmount
+        local hasHeat = heatAmount > 0
+        if hasHeat and base != "HeatCapacity" and !self.HasNoAffectors[val .. "Hot"] then
+            if isnumber(stat) then
+                local hot = arcGetValue(self, val, stat, "Hot")
+    
+                if isnumber(hot) then
+                    stat = Lerp(heatAmount / self:GetProcessedValue("HeatCapacity"), stat, hot)
+                end
+            else
+                if hasHeat then
+                    stat = arcGetValue(self, val, stat, "Hot")
+                end
+            end
+        end
+    
+        local getlastmeleetime = swepDt.LastMeleeTime
+    
+        if !self.HasNoAffectors[val .. "Melee"] and getlastmeleetime < ct then
+            local pft = ct - getlastmeleetime
+            local d = pft / (arcGetValue(self, "PreBashTime") + arcGetValue(self, "PostBashTime"))
+    
+            d = 1 - math.Clamp(d, 0, 1)
+    
+            if isnumber(stat) then
+                stat = Lerp(d, stat, arcGetValue(self, val, stat, "Melee"))
+            else
+                if d > 0 then
+                    stat = arcGetValue(self, val, stat, "Melee")
+                end
+            end
+        end
+    
+    
+        if !self.HasNoAffectors[val .. "Shooting"] then
+            local nextPrimaryFire = weaponGetNextPrimaryFire(self)
+    
+            if nextPrimaryFire + 0.1 > ct then
+                local pft = ct - nextPrimaryFire + 0.1
+                local d = math.Clamp(pft / 0.1, 0, 1)
+    
+                if isnumber(stat) then
+                    stat = Lerp(d, stat, arcGetValue(self, val, stat, "Shooting"))
+                else
+                    if d > 0 then
+                        stat = arcGetValue(self, val, stat, "Shooting")
+                    end
+                end
+            end
+        end
+    
+        if !self.HasNoAffectors[val .. "Recoil"] then
+            local recoilAmount = swepDt.RecoilAmount
+            if recoilAmount > 0 then
+                stat = arcGetValue(self, val, stat, "Recoil", recoilAmount)
+            end
+        end
+    
+        if !self.HasNoAffectors[val .. "Move"] and IsValid(owner) then
+            local spd = self.PV_Move
+            local maxspd = entityIsPlayer(owner) and playerGetWalkSpeed(owner) or 250
+            if singleplayer or CLIENT or self.PV_Tick != upct then
+                spd = math.min(vectorLength(entityGetAbsVelocity(owner)), maxspd) / maxspd
+    
+                self.PV_Move = spd
+            end
+    
+            if isnumber(stat) then
+                stat = Lerp(spd, stat, arcGetValue(self, val, stat, "Move"))
+            else
+                if spd > 0 then
+                    stat = arcGetValue(self, val, stat, "Move")
+                end
+            end
+        end
+    
+        self.PV_Tick = upct
+        self.PV_Cache[processedValueName] = stat
+    
+        return stat
+    end
 end
