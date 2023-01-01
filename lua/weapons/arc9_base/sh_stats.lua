@@ -451,16 +451,17 @@ do
         if weaponClip1(self) == 0 then
             stat = arcGetValue(self, val, stat, "Empty")
         end
+
+        if !ubgl and arcGetValue(self, "Silencer") then
+            stat = arcGetValue(self, val, stat, "Silenced")
+        end
     
-        -- !! changed the order
         if ubgl then
             stat = arcGetValue(self, val, stat, "UBGL")
     
             if weaponClip2(self) == 0 then
                 stat = arcGetValue(self, val, stat, "EmptyUBGL")
             end
-        elseif arcGetValue(self, "Silencer") then
-            stat = arcGetValue(self, val, stat, "Silenced")
         end
     
         if bit.band(swepDt.NthShot, 1) == 0 then
