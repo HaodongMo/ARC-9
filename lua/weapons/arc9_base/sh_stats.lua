@@ -139,69 +139,65 @@ end
 
 do
     local CURRENT_AFFECTOR
-    local CURRENT_VAL
     local CURRENT_DATA
     local CURRENT_SWEP
-    local CURRENT_IS_ANY
     local swepGetAllAffectors = SWEP.GetAllAffectors
 
     local function affectorCall()
-        local d = CURRENT_AFFECTOR[CURRENT_VAL](CURRENT_SWEP, CURRENT_DATA)
-
-        if d ~= nil then
-            CURRENT_DATA = d
-        end
-
-        CURRENT_IS_ANY = true
+        return CURRENT_AFFECTOR(CURRENT_SWEP, CURRENT_DATA)
     end
 
     function SWEP:RunHook(val, data)
-        CURRENT_IS_ANY = false
+        local any = false
         local hookCache = self.HookCache[val]
-
+    
         if hookCache then
-            local len = #hookCache
-
-            for i = 1, len do
-                local d = hookCache[i](self, data)
-
+            -- I'm not sure if `hookCache` is always sequential so 
+            for _, chook in pairs(hookCache) do
+                local d = chook(self, data)
+    
                 if d ~= nil then
                     data = d
                 end
-
+    
                 any = true
             end
-
+    
             data = hook.Run("ARC9_" .. val, self, data) or data
-
+    
             return data, any
         end
 
         CURRENT_SWEP = self
-        CURRENT_DATA = data
-        CURRENT_VAL = val
-        local i = 0
+        
+        local cacheLen = 0
         local newCache = {}
         local affectors = swepGetAllAffectors(self)
         local affectorsCount = #affectors
 
-        for j = 1, affectorsCount do
-            local tbl = affectors[j]
-
+        for i = 1, affectorsCount do
+            local tbl = affectors[i]
             if tbl[val] then
-                i = i + 1
-                newCache[i] = tbl[val]
-                CURRENT_AFFECTOR = tbl
+                local tblVal = tbl[val]
+    
+                cacheLen = cacheLen + 1
+                newCache[cacheLen] = tblVal
 
-                if not pcall(affectorCall) then
+                CURRENT_AFFECTOR = tblVal
+                CURRENT_DATA = data
+                local succ, returnedData = pcall(affectorCall)
+                if succ then
+                    data = returnedData
+                    any = true
+                else
                     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
                 end
             end
         end
-
+    
         self.HookCache[val] = newCache
-        data = hook.Run("ARC9_" .. val, self, CURRENT_DATA) or CURRENT_DATA
-
+        data = hook.Run("ARC9_" .. val, self, data) or data
+    
         return data, any
     end
 end
