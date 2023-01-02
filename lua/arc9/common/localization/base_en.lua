@@ -529,3 +529,11 @@ L["customize.presets.cancel"] = "Cancel"
 L["customize.presets.dumb"] = "Are you dumb"
 L["customize.presets.invalid"] = "Invalid string!"
 
+-- Added 02-JAN-2023
+
+L["settings.gameplay.togglelean.title"] = "Toggle Lean"
+L["settings.gameplay.togglelean.desc"] = "Pressing the lean keys will toggle leaning instead of needing to be held down."
+
+L["settings.gameplay.togglepeek.title"] = "Toggle Peek"
+L["settings.gameplay.togglepeek.desc"] = "Pressing the peek key will toggle peeking instead of needing to be held down."
+
