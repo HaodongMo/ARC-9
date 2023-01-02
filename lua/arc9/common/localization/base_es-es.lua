@@ -527,3 +527,13 @@ L["customize.presets.dumb"] = "Eres tonto"
 L["customize.presets.invalid"] = "Cadena no valida!"
 
 -- spanish translation by NeonX :3
+
+
+L["settings.gameplay.togglelean.title"] = "Alternar Inclinicacion"
+L["settings.gameplay.togglelean.desc"] = "Al pulsar las teclas de inclinación se alternará la inclinación en lugar de tener que mantenerlas pulsadas."
+
+L["settings.gameplay.togglepeek.title"] = "Alternar Vistazo"
+L["settings.gameplay.togglepeek.desc"] = "Al pulsar la tecla Vistazo se activará el Vistazo en lugar de tener que mantenerla pulsada."
+
+L["settings.npc.npc_spread.title"] = "Esparcion de PNJs"
+L["settings.npc.npc_spread.desc"] = "Multiplicador de la imprecisión de los PNJs al disparar."
