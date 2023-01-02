@@ -54,6 +54,7 @@ do
 
     local swepGetCurrentFiremodeTable = SWEP.GetCurrentFiremodeTable
     local swepGetElements = SWEP.GetElements
+    local swepGetFinalAttTable = SWEP.GetFinalAttTable
 
     local cvarArcModifiers = GetConVar("arc9_modifiers")
     local cvarGetString = FindMetaTable("ConVar").GetString
@@ -80,7 +81,7 @@ do
         local subSlotListLength = #subSlotList
 
         for i = 1, subSlotListLength do
-            local atttbl = self:GetFinalAttTable(subSlotList[i])
+            local atttbl = swepGetFinalAttTable(self, subSlotList[i])
     
             if atttbl then
                 affLength = affLength + 1
@@ -96,8 +97,10 @@ do
             local swig = string.Split( config[i], "\\t" )
             local swig1, swig2 = swig[1], swig[2]
             -- local c2 = c4[swig[1]]
-            if tonumber(swig2) then
-                c4[swig1] = tonumber(swig2)
+
+            local swig2Num = tonumber(swig2)
+            if swig2Num then
+                c4[swig1] = swig2Num
             elseif swig2 == "true" or swig2 == "false" then
                 c4[swig1] = swig2 == "true"
             else
