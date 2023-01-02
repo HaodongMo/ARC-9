@@ -187,10 +187,11 @@ do
                 CURRENT_DATA = data
                 local succ, returnedData = pcall(affectorCall)
                 if succ then
-                    data = returnedData
+                    data = returnedData ~= nil and returnedData or data
                     any = true
                 else
                     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
+                    print(returnedData, '\n')
                 end
             end
         end
