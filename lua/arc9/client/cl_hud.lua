@@ -264,7 +264,8 @@ local function GetWeaponCapabilities(wpn)
         Firemode = tobool(!wpn:GetUBGL() and #wpn:GetValue("Firemodes") > 1),
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
         VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable),
-        ManualCycle = tobool(wpn:GetNeedsCycle() and wpn:ShouldManualCycle())
+        ManualCycle = tobool(wpn:GetNeedsCycle() and wpn:ShouldManualCycle()),
+        Lean = tobool(wpn:GetProcessedValue("CanLean") and GetConVar("arc9_lean"):GetBool()),
     }
 
     return cap
@@ -984,7 +985,7 @@ function ARC9.DrawHUD()
             action = ARC9:GetPhrase("hud.hint.safe")
         })
 
-        if input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
+        if capabilities.Lean and input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+alt1"),
                 glyph2 = ARC9.GetBindKey("+alt2"),

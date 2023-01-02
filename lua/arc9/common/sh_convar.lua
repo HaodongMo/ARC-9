@@ -1065,9 +1065,7 @@ c1 = {
     ["ExplosionDamage"] = true,
     ["ExplosionRadius"] = true,
 
-    ["CanBlindFire"] = true,
-    ["BlindFireLeft"] = true,
-    ["BlindFireRight"] = true,
+    ["CanLean"] = true,
     ["PushBackForce"] = true,
 
     ["HoldBreathTime"] = true,
@@ -1103,7 +1101,6 @@ c3 = {
     ["OddShot"] = true,
     ["EvenReload"] = true,
     ["OddReload"] = true,
-    ["BlindFire"] = true,
     ["Sights"] = true,
     ["HipFire"] = true,
     ["Shooting"] = true,

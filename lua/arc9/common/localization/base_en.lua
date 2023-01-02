@@ -2,6 +2,7 @@ L = {}
 
 --L["font"] = "Exo Regular"
 
+-- Language loc is actually unused so you can feel free to skip these
 L["bg"] = "Bulgarian"
 L["cs"] = "Czech"
 L["da"] = "Danish"
@@ -144,7 +145,7 @@ L["autostat.secondary.hipfire"] = "in Hipfire"
 L["autostat.secondary.shooting"] = "while Shooting"
 L["autostat.secondary.recoil"] = "from Recoil" --"With Each Shot"
 L["autostat.secondary.move"] = "while Moving"
-L["autostat.secondary.blindfire"] = "while Blind-Firing"
+L["autostat.secondary.blindfire"] = "while Blind-Firing" -- No longer exists, you can skip this line
 L["autostat.secondary.ubgl"] = "in UBGL"
 
 L["unit.second"] = "s"
