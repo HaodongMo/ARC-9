@@ -500,4 +500,4 @@ L["settings.gameplay.togglepeek.title"] = "Spähen umschalten"
 L["settings.gameplay.togglepeek.desc"] = "Das Drücken der Spähen-Taste schaltet das Spähen um, anstatt gedrückt gehalten werden zu müssen."
 
 L["settings.npc.npc_spread.title"] = "NPC-Streuung"
-L["settings.npc.npc_spread.desc"] = "Multiplier for how inaccurate NPCs will be when firing." "Multiplikator für wie ungenau NPCs beim Feuern sein sollen."
+L["settings.npc.npc_spread.desc"] = "Multiplikator für wie ungenau NPCs beim Feuern sein sollen."
