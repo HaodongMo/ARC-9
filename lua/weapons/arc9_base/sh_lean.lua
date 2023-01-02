@@ -1,6 +1,8 @@
 SWEP.MaxLeanOffset = 16
 SWEP.MaxLeanAngle = 15
 
+SWEP.LastLeanAmountSERVER = 0
+
 function SWEP:ThinkLean()
     if self:PredictionFilter() then return end
 
@@ -79,7 +81,11 @@ function SWEP:ThinkLean()
         self:GetOwner():SetCollisionBounds(Vector(-32, -32, 0), Vector(32, 32, 64))
     end
 
-    self:DoPlayerModelLean()
+    local force = SERVER and math.abs(amt) == 1 and self.LastLeanAmountSERVER != amt
+
+    self:DoPlayerModelLean(false, force)
+
+    self.LastLeanAmountSERVER = amt
 end
 
 function SWEP:GetLeanDelta()
@@ -119,7 +125,7 @@ local leanbone = "ValveBiped.Bip01_Spine1"
 local leanang_left = Angle(3.5, 1.75, 2)
 local leanang_right = Angle(3.5, 1.75, 0)
 
-function SWEP:DoPlayerModelLean(cancel)
+function SWEP:DoPlayerModelLean(cancel, forceupdate)
     local amt = self:GetLeanDelta()
 
     if amt == 0 then return end
@@ -130,5 +136,5 @@ function SWEP:DoPlayerModelLean(cancel)
 
     if !bone then return end
 
-    self:GetOwner():ManipulateBoneAngles(bone, (amt < 0 and leanang_left or leanang_right) * amt * self.MaxLeanAngle, game.SinglePlayer())
+    self:GetOwner():ManipulateBoneAngles(bone, (amt < 0 and leanang_left or leanang_right) * amt * self.MaxLeanAngle, game.SinglePlayer() or forceupdate)
 end
