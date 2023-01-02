@@ -467,13 +467,13 @@ do
             end
         end
     
-        if bit.band(swepDt.NthShot, 1) == 0 then
+        if swepDt.NthShot % 2 == 0 then
             stat = arcGetValue(self, val, stat, "EvenShot")
         else
             stat = arcGetValue(self, val, stat, "OddShot")
         end
     
-        if bit.band(swepDt.NthReload, 1) == 0  then
+        if swepDt.NthReload % 2 == 0 then
             stat = arcGetValue(self, val, stat, "EvenReload")
         else
             stat = arcGetValue(self, val, stat, "OddReload")
