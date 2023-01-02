@@ -142,7 +142,7 @@ local function lensqr(ang)
 end
 
 -- scraped from source SDK 2013, just like this viewpunch damping code
-local PUNCH_DAMPING = 7.1
+-- local PUNCH_DAMPING = 6
 local PUNCH_SPRING_CONSTANT = 120
 local POS_PUNCH_DAMPING = 20
 local POS_PUNCH_CONSTANT = 90
@@ -180,6 +180,7 @@ function SWEP:ThinkVisualRecoil()
     local vpv = self:GetVisualRecoilPosVel()
     local springconstant = self:GetProcessedValue("VisualRecoilDampingConst") or 120
     local VisualRecoilSpringMagnitude = self:GetProcessedValue("VisualRecoilSpringMagnitude") or 1
+    local PUNCH_DAMPING = self:GetProcessedValue("VisualRecoilSpringPunchDamping") or 6
 
     if CLIENT then
         vpa = self.VisualRecoilPos

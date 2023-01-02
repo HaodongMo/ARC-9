@@ -446,6 +446,7 @@ SWEP.VisualRecoilPositionBumpUp = 0.08 -- its a mult
 SWEP.VisualRecoilHipFire = 1
 
 SWEP.VisualRecoilDampingConst = nil -- How spring will be visual recoil, 120 is default
+SWEP.VisualRecoilSpringPunchDamping = nil -- ehh another val for "eft" recoil, 6 is default
 SWEP.VisualRecoilSpringMagnitude = 1
 
 SWEP.RecoilKick = 1 -- Camera recoil
