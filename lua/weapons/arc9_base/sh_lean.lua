@@ -1,8 +1,6 @@
 SWEP.MaxLeanOffset = 16
 SWEP.MaxLeanAngle = 15
 
-SWEP.LeanState = 0
-
 function SWEP:ThinkLean()
     if self:PredictionFilter() then return end
 
@@ -11,24 +9,50 @@ function SWEP:ThinkLean()
         return
     end
 
+    local leanstate = self:GetLeanState()
+
     if !(self:GetOwner():KeyDown(IN_SPEED) and (self:GetOwner():KeyDown(IN_FORWARD) or self:GetOwner():KeyDown(IN_BACK) or self:GetOwner():KeyDown(IN_MOVELEFT) or self:GetOwner():KeyDown(IN_MOVERIGHT))) then
-        if self:GetOwner():KeyDown(IN_ALT1) then
-            self.LeanState = -1
-        elseif self:GetOwner():KeyDown(IN_ALT2) then
-            self.LeanState = 1
+        if self:GetOwner():GetInfoNum("arc9_togglelean", 0) >= 1 then
+            if leanstate == -1 then
+                if self:GetOwner():KeyPressed(IN_ALT1) then
+                    leanstate = 0
+                elseif self:GetOwner():KeyPressed(IN_ALT2) then
+                    leanstate = 1
+                end
+            elseif leanstate == 1 then
+                if self:GetOwner():KeyPressed(IN_ALT2) then
+                    leanstate = 0
+                elseif self:GetOwner():KeyPressed(IN_ALT1) then
+                    leanstate = -1
+                end
+            else
+                if self:GetOwner():KeyPressed(IN_ALT1) then
+                    leanstate = -1
+                elseif self:GetOwner():KeyPressed(IN_ALT2) then
+                    leanstate = 1
+                end
+            end
         else
-            self.LeanState = 0
+            if self:GetOwner():KeyDown(IN_ALT1) then
+                leanstate = -1
+            elseif self:GetOwner():KeyDown(IN_ALT2) then
+                leanstate = 1
+            else
+                leanstate = 0
+            end
         end
     else
-        self.LeanState = 0
+        leanstate = 0
     end
+
+    self:SetLeanState(leanstate)
 
     local maxleanfrac = 1
 
-    if self.LeanState != 0 then
+    if leanstate != 0 then
         local tr = util.TraceHull({
             start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() + self:GetOwner():EyeAngles():Right() * (self.MaxLeanOffset - 2) * self.LeanState,
+            endpos = self:GetOwner():EyePos() + self:GetOwner():EyeAngles():Right() * (self.MaxLeanOffset - 2) * leanstate,
             filter = self:GetOwner(),
             maxs = Vector(1, 1, 1) * 4,
             mins = Vector(-1, -1, -1) * 4,
@@ -40,7 +64,7 @@ function SWEP:ThinkLean()
     end
 
     local amt = self:GetLeanAmount()
-    local tgt = self.LeanState
+    local tgt = leanstate
 
     if maxleanfrac < 1 then
         tgt = 0

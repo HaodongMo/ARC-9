@@ -524,6 +524,17 @@ local conVars = {
         default = "1",
     },
     {
+        name = "togglelean",
+        default = "0",
+        client = true,
+        userinfo = true
+    },
+    {
+        name = "togglepeek",
+        default = "0",
+        client = true,
+    },
+    {
         name = "eject_fx",
         default = "1",
         client = true

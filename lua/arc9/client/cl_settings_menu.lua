@@ -155,6 +155,8 @@ local settingstable = {
         { type = "bool", text = "settings.gameplay.toggleads.title", convar = "toggleads", desc = "settings.gameplay.toggleads.desc" },
         { type = "bool", text = "settings.gameplay.autolean.title", convar = "autolean", desc = "settings.gameplay.autolean.desc" },
         { type = "bool", text = "settings.gameplay.autoreload.title", convar = "autoreload", desc = "settings.gameplay.autoreload.desc" },
+        { type = "bool", text = "settings.gameplay.togglelean.title", convar = "togglelean", desc = "settings.gameplay.togglelean.desc" },
+        { type = "bool", text = "settings.gameplay.togglepeek.title", convar = "togglepeek", desc = "settings.gameplay.togglepeek.desc" },
 
         { type = "label", text = "settings.gameplay.mechanics" },
         -- { type = "combo", text = "Lean style", convar = "vm_bobstyle", content = {"1Disabled", "2Only manual", "3Manual + auto", "4Auto only"}, desc = "Select style of leaning.\n\nWhether players can lean with +alt1 and +alt2 or with automatic near-wall lean.\n\nThis is a server variable." },
