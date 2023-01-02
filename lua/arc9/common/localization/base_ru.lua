@@ -491,3 +491,12 @@ L["customize.presets.back"] = "Назад"
 L["customize.presets.cancel"] = "Отмена"
 L["customize.presets.dumb"] = "Ты ебнутый?"
 L["customize.presets.invalid"] = "Неправильная строка!"
+
+L["settings.gameplay.togglelean.title"] = "Наклон по нажатию"
+L["settings.gameplay.togglelean.desc"] = "Вместо удерживания кнопки наклона достаточно нажать один раз."
+
+L["settings.gameplay.togglepeek.title"] = "Выглядывание по нажатию"
+L["settings.gameplay.togglepeek.desc"] = "Вместо удерживания кнопки выглядывания достаточно нажать один раз."
+
+L["settings.npc.npc_spread.title"] = "Разброс у NPC"
+L["settings.npc.npc_spread.desc"] = "Множитель неточности выстрелов ARC9 пушек у NPC."
