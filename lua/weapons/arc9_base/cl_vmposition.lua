@@ -221,8 +221,10 @@ function SWEP:GetViewModelPosition(pos, ang)
         local sight = self:GetSight()
         local eepos, eeang = self:GetExtraSightPositions()
 
-        if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
-            eepos = eepos + somevector
+        // if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
+        if self.Peeking then
+            eepos = eepos + self:GetProcessedValue("PeekPos")
+            eeang = eeang + self:GetProcessedValue("PeekAng")
         end
 
         if sight.GeneratedSight then
