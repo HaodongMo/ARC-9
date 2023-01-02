@@ -66,7 +66,7 @@ function SWEP:GetSmoothedFOVMag()
         end
         sightdelta = math.ease.InOutQuad(sightdelta)
 
-        if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
+        if self.Peeking then
             target = 1
         end
 

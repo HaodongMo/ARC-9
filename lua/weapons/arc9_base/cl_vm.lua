@@ -34,7 +34,7 @@ function SWEP:PreDrawViewModel()
 
     local blurenable = GetConVar("arc9_fx_rtblur"):GetBool()
 
-    local shouldrtblur = sightamount > 0 and blurenable and !input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
+    local shouldrtblur = sightamount > 0 and blurenable and !self.Peeking and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
 
     if shouldrtblur then
         blurtarget = 2 * sightamount
