@@ -10,6 +10,7 @@ SWEP.ExcludeFromRawStats = {
 }
 
 local singleplayer = game.SinglePlayer()
+local ARC9HeatCapacityGPVOverflow = false
 
 function SWEP:InvalidateCache()
     if singleplayer then
@@ -507,18 +508,22 @@ do
             end
         end
     
-        local heatAmount = swepDt.HeatAmount
-        local hasHeat = heatAmount > 0
-        if hasHeat and base != "HeatCapacity" and !hasNoAffectors[val .. "Hot"] then
-            if isnumber(stat) then
-                local hot = arcGetValue(self, val, stat, "Hot")
-    
-                if isnumber(hot) then
-                    stat = Lerp(heatAmount / self:GetProcessedValue("HeatCapacity"), stat, hot)
-                end
-            else
-                if hasHeat then
-                    stat = arcGetValue(self, val, stat, "Hot")
+        if !ARC9HeatCapacityGPVOverflow then
+            local heatAmount = swepDt.HeatAmount
+            local hasHeat = heatAmount > 0
+            if hasHeat and base != "HeatCapacity" and !hasNoAffectors[val .. "Hot"] then
+                if isnumber(stat) then
+                    local hot = arcGetValue(self, val, stat, "Hot")
+        
+                    if isnumber(hot) then
+                        ARC9HeatCapacityGPVOverflow = true
+                        stat = Lerp(heatAmount / self:GetProcessedValue("HeatCapacity"), stat, hot)
+                        ARC9HeatCapacityGPVOverflow = false
+                    end
+                else
+                    if hasHeat then
+                        stat = arcGetValue(self, val, stat, "Hot")
+                    end
                 end
             end
         end
