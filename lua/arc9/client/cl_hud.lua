@@ -595,6 +595,10 @@ function ARC9.DrawHUD()
         local hb_tall = 24
         local hb_wide = 209
 
+        if GetConVar("arc9_hud_compact"):GetBool() and showheat then
+            hb_wide = 140
+        end
+
         if !overheal then
             if localplayer:Armor() > 0 then
                 hb_tall = 18
@@ -679,6 +683,16 @@ function ARC9.DrawHUD()
             local therm_deco_x = 190
             local therm_deco_y = 97
             local therm_deco = ARC9:GetPhrase("hud.therm_deco")
+
+            if GetConVar("arc9_hud_compact"):GetBool() then
+                therm_x = 174
+                therm_y = 6
+                therm_w = 70
+                therm_h = 35
+
+                therm_deco_x = 190
+                therm_deco_y = 5
+            end
 
             surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetFont("ARC9_Deco_8_Unscaled")
