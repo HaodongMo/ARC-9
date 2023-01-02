@@ -258,9 +258,9 @@ local function GetWeaponCapabilities(wpn)
         Bash = tobool(!wpn:GetInSights() and wpn:GetValue("Bash")),
         SwitchSights = tobool(wpn:GetInSights() and #wpn.MultiSightTable > 1),
         Inspect = tobool(!wpn:GetInSights() and wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("inspect")),
-        // Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
-        // BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
-        // BlindfireRight = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireRight")),
+        -- Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
+        -- BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
+        -- BlindfireRight = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireRight")),
         Firemode = tobool(!wpn:GetUBGL() and #wpn:GetValue("Firemodes") > 1),
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
         VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable),
@@ -272,6 +272,9 @@ local function GetWeaponCapabilities(wpn)
 end
 
 function ARC9.DrawHUD()
+    EyeAngles() -- This, for some ungodly reason, allows sway to work when the HUD is off.
+    EyePos()
+
     if !ARC9.ShouldDrawHUD() then return end
 
     local localplayer = LocalPlayer()
