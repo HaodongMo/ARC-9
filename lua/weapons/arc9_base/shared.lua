@@ -2,6 +2,7 @@ AddCSLuaFile()
 
 SWEP.Spawnable = false
 SWEP.Category = "ARC9"
+SWEP.SubCategory = nil
 SWEP.AdminOnly = false
 
 -- IMPORTANT:
