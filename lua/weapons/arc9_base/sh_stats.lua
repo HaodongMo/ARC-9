@@ -341,7 +341,8 @@ do
 
         self.HasNoAffectors[valContCondition] = unaffected
 
-        if statType == 'table' then
+        -- if statType == 'table' then
+        if istable(stat) then
             stat.BaseClass = nil
         end
 
