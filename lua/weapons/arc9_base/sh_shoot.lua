@@ -466,7 +466,9 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 end
             end
         else
-            self:GetOwner():LagCompensation(true)
+            if self:GetOwner():IsPlayer() then
+                self:GetOwner():LagCompensation(true)
+            end
             -- local tr = self:GetProcessedValue("TracerNum")
 
             self:GetOwner():FireBullets({
@@ -496,7 +498,9 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 end
             })
 
-            self:GetOwner():LagCompensation(false)
+            if self:GetOwner():IsPlayer() then
+                self:GetOwner():LagCompensation(false)
+            end
         end
     end
 end
