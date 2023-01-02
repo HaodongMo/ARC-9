@@ -39,7 +39,7 @@ function SWEP:KillSoundTable()
     local keeptimers = {}
 
     for _, v in ipairs(self.ActiveTimers or {}) do
-        if v[2] != "soundtable" then
+        if string.sub(v[2] or "", 1, 10) == "soundtable" then
             table.insert(keeptimers, v)
         end
     end
@@ -154,7 +154,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
             elseif !game.SinglePlayer() and CLIENT then
                 SInputAnimRumble(v.v1 or 0, v.v2 or 0, v.vt or 0.1)
             end
-        end, "soundtable")
+        end, "soundtable_" .. tostring(i))
     end
 end
 
