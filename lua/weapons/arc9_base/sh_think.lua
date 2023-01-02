@@ -129,6 +129,8 @@ function SWEP:Think()
 
     if CLIENT then
         self:ThinkThirdArm()
+
+        self:ThinkPeek()
     end
 
     self:ProcessTimers()
