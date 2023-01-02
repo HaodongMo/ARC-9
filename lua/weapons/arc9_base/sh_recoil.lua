@@ -142,7 +142,7 @@ local function lensqr(ang)
 end
 
 -- scraped from source SDK 2013, just like this viewpunch damping code
-local PUNCH_DAMPING = 5
+local PUNCH_DAMPING = 7.1
 local PUNCH_SPRING_CONSTANT = 120
 local POS_PUNCH_DAMPING = 20
 local POS_PUNCH_CONSTANT = 90
