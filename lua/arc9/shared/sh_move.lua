@@ -107,11 +107,15 @@ function ARC9.StartCommand(ply, cmd)
     if math.abs(wpn:GetRecoilUp()) > 1e-9 or math.abs(wpn:GetRecoilSide()) > 1e-9 then
         local eyeang = cmd:GetViewAngles()
 
-        local m = 50
+        local m = 100
 
         if game.SinglePlayer() then
             m = 100
         end
+
+        local timescalefactor = 5 / (ply:Ping() or 5)
+
+        m = m * timescalefactor
 
         local uprec = FrameTime() * wpn:GetRecoilUp() * m
         local siderec = FrameTime() * wpn:GetRecoilSide() * m
