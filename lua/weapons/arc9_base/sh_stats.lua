@@ -9,8 +9,10 @@ SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
 }
 
+local singleplayer = game.SinglePlayer()
+
 function SWEP:InvalidateCache()
-    if game.SinglePlayer() then
+    if singleplayer then
         self:CallOnClient("InvalidateCache")
     end
     self.StatCache = {}
@@ -214,8 +216,6 @@ end
 -- local pv_move = 0
 -- local pv_shooting = 0
 -- local pv_melee = 0
-
-local singleplayer = game.SinglePlayer()
 
 SWEP.PV_Tick = 0
 SWEP.PV_Move = 0
