@@ -12,6 +12,16 @@
 -- category, then it doesn't print any subtitle as it's redundant.
 -- Writted by Buu342, Still a work in progress.
 
+
+-- PLEASE
+-- I HAVE ZERO IDEA
+-- THIRD EVEN FUCKING EMPTY POPULATEWEAPONS HOOK BREAKS OTHER HOOKS
+-- URBAN COALITION AND MODERN WARFARE
+-- PLEASE       FIX
+-- I HATE GARRY NEWMAN
+
+if false then
+
 hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, node)
 
     -- Loop through the weapons and add them to the menu
@@ -99,3 +109,6 @@ hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, nod
         FirstNode:InternalDoClick()
     end
 end)
+
+
+end
