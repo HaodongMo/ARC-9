@@ -8,8 +8,8 @@ hook.Add("InitPostEntity", "ARC9_NPCRegister", function()
 
         list.Add("NPCUsableWeapons",
             {
-                class = wpn.ClassName,
-                title = wpn.PrintName
+                class = wpn.ClassName or "Missing ARC9 ClassName",
+                title = wpn.PrintName or "Missing ARC9 PrintName"
             }
         )
     end
