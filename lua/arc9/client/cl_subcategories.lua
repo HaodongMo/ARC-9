@@ -51,6 +51,8 @@ hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, nod
         -- Get the subcategories registered in this category
         local catSubcats = Categorised[node:GetText()]
 
+        if !catSubcats then continue end
+
         -- Overwrite the icon populate function with a custom one
         node.DoPopulate = function(self)
 
