@@ -529,7 +529,7 @@ L["customize.presets.invalid"] = "Cadena no valida!"
 -- spanish translation by NeonX :3
 
 
-L["settings.gameplay.togglelean.title"] = "Alternar Inclinicacion"
+L["settings.gameplay.togglelean.title"] = "Alternar Inclinación"
 L["settings.gameplay.togglelean.desc"] = "Al pulsar las teclas de inclinación se alternará la inclinación en lugar de tener que mantenerlas pulsadas."
 
 L["settings.gameplay.togglepeek.title"] = "Alternar Vistazo"
