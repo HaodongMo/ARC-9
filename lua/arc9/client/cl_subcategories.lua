@@ -20,7 +20,7 @@
 -- PLEASE       FIX
 -- I HATE GARRY NEWMAN
 
-if false then
+--if false then -- Re-enabled for now, mushroom said it was ok as he will try to find a solution for MWB
 
 hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, node)
 
@@ -111,4 +111,4 @@ hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, nod
 end)
 
 
-end
+--end
