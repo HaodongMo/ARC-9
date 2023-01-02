@@ -357,7 +357,6 @@ do
     local playerCrouching = PLAYER.Crouching
     local playerGetWalkSpeed = PLAYER.GetWalkSpeed
     local entityOwner = ENTITY.GetOwner
-    local entityIsNPC = ENTITY.IsNPC
     local entityOnGround = ENTITY.OnGround
     local entityIsValid = ENTITY.IsValid
     local entityGetMoveType = ENTITY.GetMoveType
@@ -392,7 +391,7 @@ do
         local ubgl = swepDt.UBGL
         local owner = entityOwner(self)
         -- if true then return stat end
-        local ownerIsNPC = entityIsNPC(owner)
+        local ownerIsNPC = owner:IsNPC()
 
         if ownerIsNPC then
             stat = arcGetValue(self, val, stat, "NPC")
