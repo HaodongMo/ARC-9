@@ -186,7 +186,7 @@ function EFFECT:PhysicsCollide(colData)
     phys:SetVelocityInstantaneous(colData.HitNormal * -150)
     self:StopSound("Default.ImpactHard")
 
-    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1)
+    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1, CHAN_WEAPON)
 
     self.AlreadyPlayedSound = true
 end
