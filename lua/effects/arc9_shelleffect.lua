@@ -164,10 +164,10 @@ function EFFECT:Init(data)
         if IsValid(pcf) then
             pcf:StartEmission()
 
-            // if (muz or parent) != vm and !wm then
-            //     pcf:SetShouldDraw(false)
-            //     table.insert(ent.PCFs, pcf)
-            // end
+            -- if (muz or parent) != vm and !wm then
+            --     pcf:SetShouldDraw(false)
+            --     table.insert(ent.PCFs, pcf)
+            -- end
         end
 
         local smkpcf = CreateParticleSystem(self, "shellsmoke", PATTACH_ABSORIGIN_FOLLOW, 0)

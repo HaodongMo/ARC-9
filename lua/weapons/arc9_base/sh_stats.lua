@@ -480,9 +480,9 @@ do
             stat = arcGetValue(self, val, stat, "OddReload")
         end
     
-        // if self:GetBlindFire() then
-        //     stat = arcGetValue(self, val, stat, "BlindFire")
-        // end
+        -- if self:GetBlindFire() then
+        --     stat = arcGetValue(self, val, stat, "BlindFire")
+        -- end
     
         if swepDt.Bipod then
             stat = arcGetValue(self, val, stat, "Bipod")

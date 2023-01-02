@@ -120,29 +120,29 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         end
 
         if SERVER then
-            // ARC9:ProgressPhysBullet(bullet, FrameTime())
+            -- ARC9:ProgressPhysBullet(bullet, FrameTime())
 
             ARC9:SendBullet(bullet, wep:GetOwner())
         end
 
         ARC9:ProgressPhysBullet(bullet, FrameTime())
 
-        // local owner = wep:GetOwner()
-        // if owner:IsPlayer() and (CLIENT or !owner:IsListenServerHost()) then
-        //     -- local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
-        //     local ping = owner:Ping() / 1000
-        //     local timestep = 0.2
+        -- local owner = wep:GetOwner()
+        -- if owner:IsPlayer() and (CLIENT or !owner:IsListenServerHost()) then
+        --     -- local latency = engine.TickCount() - owner:GetCurrentCommand():TickCount()
+        --     local ping = owner:Ping() / 1000
+        --     local timestep = 0.2
 
-        //     ping = math.min(ping, 0.25) // can't let people cheat TOO hard
+        --     ping = math.min(ping, 0.25) -- can't let people cheat TOO hard
 
-        //     while ping > 0 do
-        //         ARC9:ProgressPhysBullet(bullet, timestep)
-        //         ping = ping - timestep
-        //     end
-        // end
+        --     while ping > 0 do
+        --         ARC9:ProgressPhysBullet(bullet, timestep)
+        --         ping = ping - timestep
+        --     end
+        -- end
     else
         if SERVER then
-            // ARC9:ProgressPhysBullet(bullet, FrameTime())
+            -- ARC9:ProgressPhysBullet(bullet, FrameTime())
 
             ARC9:SendBullet(bullet, wep:GetOwner())
         end
@@ -536,7 +536,7 @@ function ARC9.DrawPhysBullets()
     cam.Start3D()
     for _, i in ipairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
-        // if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
+        -- if i.Travelled <= (i.ModelIndex == 0 and 512 or 64) then continue end
 
         local pos = i.Pos
 
@@ -589,7 +589,7 @@ function ARC9.DrawPhysBullets()
         dot = math.Clamp(((dot * dot) - 0.5) * 5, 0, 1)
 
         headsize = headsize * dot * 2
-        // size = size * (1 - dot)
+        -- size = size * (1 - dot)
 
         -- cam.Start3D()
 

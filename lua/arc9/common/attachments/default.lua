@@ -93,16 +93,16 @@ ATT.Sights = {
         Ang = Angle(0, 0, 0),
         Reticle = nil, -- Same as ATT.RTScopeReticle or HoloSightReticle but this sight only. Better cache material somewhere outside this structure: local Reticle1 = Material("reticle1.png", "mips smooth") and here you type only Reticle1). If not defined, will use ATT.RTScopeReticle/HoloSightReticle
         ExtraSightData = {
-            // like an atttbl, only works for sight related data
+            -- like an atttbl, only works for sight related data
         },
         Blur = true, -- If arc9_fx_adsblur 1 then blur gun in that sight. Disable if your sights have a big field of view and the blur distorts picture
-        DeferSights = false, // the first parent sight will be used for sight data instead. Use for magnifiers
+        DeferSights = false, -- the first parent sight will be used for sight data instead. Use for magnifiers
         Magnification = 1,
-        Disassociate = false, // don't associate with parent slot
-        IsIronSight = false, // disable if another sight is installed
+        Disassociate = false, -- don't associate with parent slot
+        IsIronSight = false, -- disable if another sight is installed
         KeepBaseIrons = false,
         InvertColors = false,
-        UBGLOnly = false, // Only show this sight when UBGL is equipped
+        UBGLOnly = false, -- Only show this sight when UBGL is equipped
         OnSwitchToSight = function(self, slottbl) end,
         OnSwitchFromSight = function(self, slottbl) end,
     }

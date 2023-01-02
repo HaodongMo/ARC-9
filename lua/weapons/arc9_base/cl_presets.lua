@@ -194,7 +194,7 @@ function SWEP:LoadPreset(filename)
     if str[1] == "{" then
         self:LoadPresetFromTable(util.JSONToTable(str))
     elseif string.sub(str, 1, 5) == "name=" then
-        // first line is name second line is data
+        -- first line is name second line is data
         local strs = string.Split(str, "\n")
         self:LoadPresetFromTable(self:ImportPresetCode(strs[2]))
     else
@@ -360,7 +360,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     local x = (pr_w - 256) / 2
 
     local data = render.Capture( {
-        // format = ARC9.PresetIconFormat,
+        -- format = ARC9.PresetIconFormat,
         format = "png",
         x = x,
         y = 0,

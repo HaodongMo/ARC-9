@@ -2,8 +2,6 @@ SWEP.ViewModelVelocityPos = Vector()
 SWEP.ViewModelVelocityAng = Angle()
 SWEP.ViewModelPos = Vector()
 SWEP.ViewModelAng = Angle()
-SWEP.SwayCT = 0
-
 
 local lasteyeang = Angle()
 local smootheyeang = Angle()
@@ -20,7 +18,7 @@ function SWEP:GetViewModelSway(pos, ang)
     smoothswaypitch = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
 
     if self.SprintVerticalOffset then
-        local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1) 
+        local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1)
         pos:Add(ang:Up() * sprintoffset)
         pos:Add(ang:Forward() * sprintoffset)
     end

@@ -258,8 +258,8 @@ function SWEP:DoRTScope(model, atttbl, active)
             -- end
 
             if reticle then
-                // local rtr_x = (rtsize - size) / 2 - (-ret_x - sh_s / 2 + rtsize / 2) * 0.25
-                // local rtr_y = (rtsize - size) / 2 - (-ret_y - sh_s / 2 + rtsize / 2) * 0.25
+                -- local rtr_x = (rtsize - size) / 2 - (-ret_x - sh_s / 2 + rtsize / 2) * 0.25
+                -- local rtr_y = (rtsize - size) / 2 - (-ret_y - sh_s / 2 + rtsize / 2) * 0.25
 
                 local rtr_x = (rtsize - size) / 2
                 local rtr_y = (rtsize - size) / 2

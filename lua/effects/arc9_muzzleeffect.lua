@@ -44,9 +44,9 @@ function EFFECT:Init(data)
 
     -- if !IsValid(parent) then return end
 
-    // if muzzle then
-    //     ParticleEffectAttach(muzzle, PATTACH_POINT_FOLLOW, muz or parent, att)
-    // end
+    -- if muzzle then
+    --     ParticleEffectAttach(muzzle, PATTACH_POINT_FOLLOW, muz or parent, att)
+    -- end
 
     if muzzle then
         if !istable(muzzle) then

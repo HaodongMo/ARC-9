@@ -1,6 +1,6 @@
 ARC9.Blacklist = {}
 
-// CLIENT
+-- CLIENT
 
 net.Receive("arc9_sendblacklist", function(len, ply)
 

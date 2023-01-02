@@ -36,7 +36,7 @@ function EFFECT:Init(data)
     self.StartPos = start
     self.EndPos = hit
 
-    // Sometimes it freaks out and, I dunno, gets invalid
+    -- Sometimes it freaks out and, I dunno, gets invalid
     if wep.GetProcessedValue then
         self.Color = wep:GetProcessedValue("TracerColor")
 

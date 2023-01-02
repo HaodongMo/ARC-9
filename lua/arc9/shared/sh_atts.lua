@@ -70,7 +70,7 @@ function ARC9.LoadAtts()
         local shortname = string.sub(filename, 1, -5)
         local attid = ARC9.Attachments_Count
 
-        // include(searchdir .. filename)
+        -- include(searchdir .. filename)
 
         if game.SinglePlayer() then
             file.AsyncRead(searchdir .. filename, "LUA", function(fileName, gamePath, status, data)

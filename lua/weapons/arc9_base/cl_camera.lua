@@ -175,11 +175,11 @@ function SWEP:GetCameraControl()
     end
 end
 
-// 100, 100 = 1
-// 100, 90 = 0.8
-// 100, 70 = 0.6
-// 100, 60 = 0.5
-// 100, 40 = 0.3
+-- 100, 100 = 1
+-- 100, 90 = 0.8
+-- 100, 70 = 0.6
+-- 100, 60 = 0.5
+-- 100, 40 = 0.3
 
 function SWEP:GetCorVal()
     local vmfov = self.ViewModelFOV

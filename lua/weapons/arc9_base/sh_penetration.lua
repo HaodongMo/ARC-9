@@ -84,7 +84,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         skip = true
     end
 
-    // if !tr.HitWorld then penmult = penmult * 0.5 end
+    -- if !tr.HitWorld then penmult = penmult * 0.5 end
 
     local endpos = hitpos
     local dist = 8
@@ -97,7 +97,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         penmult = penmult * math.Rand(0.9, 1.1) * math.Rand(0.9, 1.1)
 
         if tr.HitWorld and tr.HitBox > 0 then
-            // Revert to burrowing behaviour to penetrate props.
+            -- Revert to burrowing behaviour to penetrate props.
             local pentracelen = math.min(math.max(penleft * penmult / 8, 1), 4)
 
             local ptrent = tr.Entity
@@ -116,12 +116,12 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                     mask   = MASK_SHOT
                 })
 
-                // if ARC9.Dev(2) then
-                //     local pdeltap = penleft / self:GetValue("Penetration")
-                //     local colorlr = Lerp(pdeltap, 0, 255)
+                -- if ARC9.Dev(2) then
+                --     local pdeltap = penleft / self:GetValue("Penetration")
+                --     local colorlr = Lerp(pdeltap, 0, 255)
 
-                //     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
-                // end
+                --     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
+                -- end
 
                 if ARC9.Dev(1) then
                     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, 0, 0), true)
@@ -146,12 +146,12 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 
             local ptr = util.TraceLine(td)
 
-            // Penetrate through to whatever the next thing is
+            -- Penetrate through to whatever the next thing is
 
             if !ptr.Hit then return end
             if ptr.HitSky then return end
 
-            // If we'd shoot through to the sky, then we don't really care if we can penetrate or not.
+            -- If we'd shoot through to the sky, then we don't really care if we can penetrate or not.
 
             local ntr = util.TraceLine({
                 start = ptr.HitPos,
@@ -159,7 +159,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                 mask = MASK_SHOT
             })
 
-            // Go backwards to find out where this thing ends
+            -- Go backwards to find out where this thing ends
             
             if ARC9.Dev(1) then
                 debugoverlay.Line(endpos, ntr.HitPos, 10, Color(255, 0, 0), true)

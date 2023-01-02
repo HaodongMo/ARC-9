@@ -237,7 +237,7 @@ function SWEP:CreateHUD_Bench()
             local stk_legs = math.ceil(100 / dmg_legs)
             local stk_arms = math.ceil(100 / dmg_arms)
 
-            // draw the body
+            -- draw the body
 
             local body_w = ARC9ScreenScale(30)
             local body_h = ARC9ScreenScale(80)

@@ -5,7 +5,7 @@ local bobct = 0
 function ARC9.HUDBob(pos, ang)
     local step = 10
     local mag = 0.25
-    local ts = 0 // self:GetTraversalSprintAmount()
+    local ts = 0 -- self:GetTraversalSprintAmount()
     -- ts = 1
 
     local v = LocalPlayer():GetVelocity():Length()

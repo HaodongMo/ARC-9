@@ -1,6 +1,6 @@
 ARC9.Blacklist = {}
 
-// ["att"] = true
+-- ["att"] = true
 
 function ARC9:SaveBlacklist()
     local f = file.Open("arc9_blacklist.txt", "w", "DATA")

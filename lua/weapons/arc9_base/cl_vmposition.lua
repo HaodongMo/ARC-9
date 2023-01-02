@@ -22,7 +22,7 @@ local LerpVector = function(a, v1, v2)
 end
 
 local LerpAngle = function(a, v1, v2)
-    // angle aware lerp with Angles()
+    -- angle aware lerp with Angles()
 
     local v11 = v1[1]
     local v12 = v1[2]
@@ -170,24 +170,24 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
     end
 
-    // local blindfiredelta = self:GetBlindFireAmount()
-    // local blindfirecornerdelta = self:GetBlindFireCornerAmount()
+    -- local blindfiredelta = self:GetBlindFireAmount()
+    -- local blindfirecornerdelta = self:GetBlindFireCornerAmount()
 
-    // local curvedblindfiredelta = self:Curve(blindfiredelta)
-    // local curvedblindfirecornerdelta = self:Curve(math.abs(blindfirecornerdelta))
+    -- local curvedblindfiredelta = self:Curve(blindfiredelta)
+    -- local curvedblindfirecornerdelta = self:Curve(math.abs(blindfirecornerdelta))
 
-    // if blindfiredelta > 0 then
-    //     offsetpos = LerpVector(curvedblindfiredelta, offsetpos, self:GetValue("BlindFirePos"))
-    //     offsetang = LerpAngle(curvedblindfiredelta, offsetang, self:GetValue("BlindFireAng"))
+    -- if blindfiredelta > 0 then
+    --     offsetpos = LerpVector(curvedblindfiredelta, offsetpos, self:GetValue("BlindFirePos"))
+    --     offsetang = LerpAngle(curvedblindfiredelta, offsetang, self:GetValue("BlindFireAng"))
 
-    //     if blindfirecornerdelta > 0 then
-    //         offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireRightPos"))
-    //         offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireRightAng"))
-    //     elseif blindfirecornerdelta < 0 then
-    //         offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireLeftPos"))
-    //         offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireLeftAng"))
-    //     end
-    // end
+    --     if blindfirecornerdelta > 0 then
+    --         offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireRightPos"))
+    --         offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireRightAng"))
+    --     elseif blindfirecornerdelta < 0 then
+    --         offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireLeftPos"))
+    --         offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireLeftAng"))
+    --     end
+    -- end
 
     if self:GetReloading() then
         local reloadpos = self:GetProcessedValue("ReloadPos")
@@ -221,7 +221,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         local sight = self:GetSight()
         local eepos, eeang = self:GetExtraSightPositions()
 
-        // if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
+        -- if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
         if self.Peeking then
             eepos = eepos + self:GetProcessedValue("PeekPos")
             eeang = eeang + self:GetProcessedValue("PeekAng")

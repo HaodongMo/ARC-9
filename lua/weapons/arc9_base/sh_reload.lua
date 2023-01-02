@@ -147,7 +147,7 @@ function SWEP:Reload()
 
     self:SetReloading(true)
     self:SetEndReload(false)
-    // self:ToggleBlindFire(false)
+    -- self:ToggleBlindFire(false)
     self:SetRequestReload(false)
     self:SetRecoilAmount(0)
 
@@ -383,7 +383,7 @@ function SWEP:EndReload()
         end
 
         if clip >= capacity or ammo == 0 or (self:GetEndReload() and clip > 0) then
-            // finish
+            -- finish
             local anim = "reload_finish"
 
             if self:GetUBGL() then

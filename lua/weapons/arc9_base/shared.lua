@@ -1127,9 +1127,9 @@ SWEP.Attachments = {
     --     KeepBaseIrons = false,
     --     ExtraSightDistance = 0,
     --     Installed = nil,
-    --     MergeSlots = {}, // merge this slot with another
-    --     StickerModel = "", // This is the model that will be used for the sticker
-    --     CosmeticOnly = false, // This attachment is cosmetic only, and will be placed in the Personalization tab.
+    --     MergeSlots = {}, -- merge this slot with another
+    --     StickerModel = "", -- This is the model that will be used for the sticker
+    --     CosmeticOnly = false, -- This attachment is cosmetic only, and will be placed in the Personalization tab.
     --     SubAttachments = {
     --         {
     --             Installed = "att_with_sub_atts",
@@ -1344,7 +1344,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 11, "SightAmount")
     self:NetworkVar("Float", 12, "HeatAmount")
     self:NetworkVar("Float", 13, "MeleeAttackTime")
-    // self:NetworkVar("Float", 13, "BlindFireAmount")
+    -- self:NetworkVar("Float", 13, "BlindFireAmount")
     -- self:NetworkVar("Float", 14, "LastPressedETime")
     self:NetworkVar("Float", 14, "FinishFiremodeAnimTime")
     self:NetworkVar("Float", 15, "IKTimeLineStart")
@@ -1370,7 +1370,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", 4, "NthReload")
     self:NetworkVar("Int", 5, "MultiSight")
     self:NetworkVar("Int", 6, "SequenceProxy")
-    // self:NetworkVar("Int", 6, "BlindFireDirection")
+    -- self:NetworkVar("Int", 6, "BlindFireDirection")
     self:NetworkVar("Int", 7, "HideBoneIndex")
     self:NetworkVar("Int", 8, "SequenceIndex")
     self:NetworkVar("Int", 9, "LeanState")
@@ -1387,7 +1387,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 9, "EmptyReload")
     self:NetworkVar("Bool", 10, "InSights")
     self:NetworkVar("Bool", 11, "PrimedAttack")
-    // self:NetworkVar("Bool", 12, "BlindFire")
+    -- self:NetworkVar("Bool", 12, "BlindFire")
     self:NetworkVar("Bool", 12, "Bash2")
     self:NetworkVar("Bool", 13, "NeedsCycle")
     self:NetworkVar("Bool", 14, "Bipod")

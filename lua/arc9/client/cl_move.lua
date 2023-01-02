@@ -68,7 +68,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                 })
 
                 if covertrace.Hit then
-                    // See if it's valid to lean left
+                    -- See if it's valid to lean left
 
                     arc9_lean_direction = 0
 
@@ -82,7 +82,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                     })
 
                     if !leftleantrace.Hit then
-                        // see if it's possible to lean in this direction
+                        -- see if it's possible to lean in this direction
 
                         local leftleantrace2 = util.TraceLine({
                             start = leftleantrace.HitPos,
@@ -101,7 +101,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                         end
                     end
 
-                    // See if it's valid to lean right
+                    -- See if it's valid to lean right
 
                     local rightleantrace = util.TraceLine({
                         start = eyepos,
@@ -110,7 +110,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
                     })
 
                     if !rightleantrace.Hit then
-                        // see if it's possible to lean in this direction
+                        -- see if it's possible to lean in this direction
 
                         local rightleantrace2 = util.TraceLine({
                             start = rightleantrace.HitPos,

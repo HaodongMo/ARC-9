@@ -1,5 +1,5 @@
 function SWEP:GetCCIP(pos, ang)
-    // get calculated point of impact
+    -- get calculated point of impact
 
     local sp, sa = self:GetShootPos()
 

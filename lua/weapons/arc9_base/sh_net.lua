@@ -8,7 +8,7 @@ function SWEP:SendWeapon(rec)
 
     if SERVER then
         if rec then
-            // send to just this one person
+            -- send to just this one person
             net.Send(rec)
         else
             net.Broadcast()

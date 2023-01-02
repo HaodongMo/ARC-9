@@ -1,1 +1,1 @@
-// Stub file, add ammo functions here later
+-- Stub file, add ammo functions here later

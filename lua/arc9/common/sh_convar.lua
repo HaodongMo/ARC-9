@@ -653,7 +653,7 @@ local function menu_client_ti(panel)
     })
     panel:ControlHelp( "Other players have proper, visible flashlights in third person. Extremely expensive." )
 
-    // Add a slider for FOV
+    -- Add a slider for FOV
     panel:AddControl("slider", {
         label = "Viewmodel FOV",
         command = "arc9_fov",
@@ -661,9 +661,9 @@ local function menu_client_ti(panel)
         max = 45,
     })
 
-    // Add help text for imaginary bullets
+    -- Add help text for imaginary bullets
     panel:ControlHelp( "Imaginary bullets appear to travel outside the skybox. There is no gameplay difference to disabling this option." )
-    // Add a toggle for imaginary bullets
+    -- Add a toggle for imaginary bullets
     panel:AddControl("checkbox", {
         label = "Enable Imaginary Bullets",
         command = "arc9_bullet_imaginary"
@@ -771,7 +771,7 @@ local function menu_server_ballistics(panel)
     })
     panel:ControlHelp( "Most weapons are designed for this to be on. Some weapons force physical bullets on. Disabling this will improve server performance." )
 
-    // Add a slider to control bullet gravity
+    -- Add a slider to control bullet gravity
     panel:AddControl("slider", {
         label = "Gravity Multiplier",
         command = "arc9_bullet_gravity",
@@ -779,7 +779,7 @@ local function menu_server_ballistics(panel)
         max = 100,
     })
 
-    // Add a slider for bullet drag
+    -- Add a slider for bullet drag
     panel:AddControl("slider", {
         label = "Drag Multiplier",
         command = "arc9_bullet_drag",
@@ -787,13 +787,13 @@ local function menu_server_ballistics(panel)
         max = 100,
     })
 
-    // Add a toggle for ricochet
+    -- Add a toggle for ricochet
     panel:AddControl("checkbox", {
         label = "Enable Ricochet",
         command = "arc9_ricochet"
     })
 
-    // Add a slider for bullet lifetime
+    -- Add a slider for bullet lifetime
     panel:AddControl("slider", {
         label = "Bullet Lifetime",
         command = "arc9_bullet_lifetime",
@@ -963,7 +963,7 @@ local function menu_server_ti(panel)
         label = "Infinite Ammo",
         command = "arc9_infinite_ammo"
     })
-    // Add a slider for giving NPCs weapons.
+    -- Add a slider for giving NPCs weapons.
     panel:AddControl("checkbox", {
         label = "Allow Giving NPCs Weapons With +USE.",
         command = "arc9_npc_give_weapons",
@@ -1235,30 +1235,30 @@ local clientmenus_ti = {
     {
         text = "REAL SETTINGS here", func = menu_arc9_settings
     },
-    // {
-    //     text = "Client", func = menu_client_ti
-    // },
-    // {
-    //     text = "Client - Customization", func = menu_client_customization
-    // },
+    -- {
+    --     text = "Client", func = menu_client_ti
+    -- },
+    -- {
+    --     text = "Client - Customization", func = menu_client_customization
+    -- },
     {
         text = "Controller", func = menu_client_controller
     },
-    // {
-    //     text = "Client - Crosshair", func = menu_client_crosshair
-    // },
-    // {
-    //     text = "Client - Optics", func = menu_client_optics
-    // },
-    // {
-    //     text = "Server", func = menu_server_ti
-    // },
-    // {
-    //     text = "Server - Attachments", func = menu_server_attachments
-    // },
-    // {
-    //     text = "Server - Ballistics", func = menu_server_ballistics
-    // },
+    -- {
+    --     text = "Client - Crosshair", func = menu_client_crosshair
+    -- },
+    -- {
+    --     text = "Client - Optics", func = menu_client_optics
+    -- },
+    -- {
+    --     text = "Server", func = menu_server_ti
+    -- },
+    -- {
+    --     text = "Server - Attachments", func = menu_server_attachments
+    -- },
+    -- {
+    --     text = "Server - Ballistics", func = menu_server_ballistics
+    -- },
     {
         text = "Modifiers", func = menu_server_modifiers
     },

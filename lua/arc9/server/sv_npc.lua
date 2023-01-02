@@ -141,7 +141,7 @@ function ARC9.WeaponIsAllowed(class)
     local whitelist = GetConVar("arc9_npc_whitelist"):GetString()
 
     if whitelist == "" then
-        // Check blacklist
+        -- Check blacklist
 
         local blacklist_tbl = {}
 
@@ -155,7 +155,7 @@ function ARC9.WeaponIsAllowed(class)
 
         return true
     else
-        // Check whitelist
+        -- Check whitelist
 
         local whitelist_tbl = {}
 

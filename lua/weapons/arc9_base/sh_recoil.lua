@@ -10,16 +10,16 @@ function SWEP:ThinkRecoil()
         -- print(math.Round(rec))
     end
 
-    // local ru = self:GetRecoilUp()
-    // local rs = self:GetRecoilSide()
+    -- local ru = self:GetRecoilUp()
+    -- local rs = self:GetRecoilSide()
 
-    // if math.abs(ru) > 0 or math.abs(rs) > 0 then
-    //     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
-    //     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
+    -- if math.abs(ru) > 0 or math.abs(rs) > 0 then
+    --     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
+    --     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
 
-    //     self:SetRecoilUp(new_ru)
-    //     self:SetRecoilSide(new_rs)
-    // end
+    --     self:SetRecoilUp(new_ru)
+    --     self:SetRecoilSide(new_rs)
+    -- end
 
     self:ThinkVisualRecoil()
 end
@@ -131,7 +131,7 @@ function SWEP:ApplyRecoil()
     local vis_kick_h = vis_kick * util.SharedRandom("ARC9_vis_kick_h", -1, 1)
     vis_shake = vis_shake * util.SharedRandom("ARC9_vis_kick_shake", -1, 1)
 
-    // self:GetOwner():SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
+    -- self:GetOwner():SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
 
     self:GetOwner():SetFOV(self:GetOwner():GetFOV() * 0.99, 0)
     self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
@@ -205,8 +205,8 @@ function SWEP:ThinkVisualRecoil()
 
         vpv = vpv * damping
 
-        --     // torsional spring
-        --     // UNDONE: Per-axis spring constant?
+        --     -- torsional spring
+        --     -- UNDONE: Per-axis spring constant?
         --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
         local springforcemagnitude = POS_PUNCH_CONSTANT * ft * VisualRecoilSpringMagnitude
         --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
@@ -214,7 +214,7 @@ function SWEP:ThinkVisualRecoil()
         --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
         vpv = vpv - (vpa * springforcemagnitude)
 
-        --     // don't wrap around
+        --     -- don't wrap around
         --     player->m_Local.m_vecPunchAngle.Init( 
         --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
         --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
@@ -270,8 +270,8 @@ function SWEP:ThinkVisualRecoil()
 
         vav = vav * damping
 
-        --     // torsional spring
-        --     // UNDONE: Per-axis spring constant?
+        --     -- torsional spring
+        --     -- UNDONE: Per-axis spring constant?
         --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
         local springforcemagnitude = springconstant * ft
         --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
@@ -279,7 +279,7 @@ function SWEP:ThinkVisualRecoil()
         --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
         vav = vav - (vaa * springforcemagnitude)
 
-        --     // don't wrap around
+        --     -- don't wrap around
         --     player->m_Local.m_vecPunchAngle.Init( 
         --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
         --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
@@ -312,7 +312,7 @@ function SWEP:DoVisualRecoil()
 
     if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
 
-    // if IsFirstTimePredicted() or game.SinglePlayer() then
+    -- if IsFirstTimePredicted() or game.SinglePlayer() then
         local mult = self:GetProcessedValue("VisualRecoil")
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
@@ -344,7 +344,7 @@ function SWEP:DoVisualRecoil()
                 self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0))
             end
         end
-    // end
+    -- end
 end
 
 function SWEP:GetViewModelRecoil(pos, ang)

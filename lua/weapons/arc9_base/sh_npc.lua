@@ -98,14 +98,14 @@ function SWEP:NPC_Initialize()
 
     if IsValid(self) then
         if !self.WeaponWasGiven then
-            // self:RollRandomAtts(self.Attachments)
+            -- self:RollRandomAtts(self.Attachments)
             self:QueueForRandomize()
         end
 
-        // self:PostModify()
+        -- self:PostModify()
 
-        // self:PruneAttachments()
-        // self:SendWeapon()
+        -- self:PruneAttachments()
+        -- self:SendWeapon()
     end
 end
 
