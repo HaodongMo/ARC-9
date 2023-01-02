@@ -198,7 +198,7 @@ function SWEP:DoRHIK(wm)
         -- larm_start = EyePos() + (EyeAngles():Right() * -6) + (EyeAngles():Up() * -8) + (EyeAngles():Forward() * -1)
         local rupperarm_position, rforearm_position = self:Solve2PartIK(rarm_start, rhand_end, rupperarm_length, rarm_length, 0)
         local lupperarm_position, lforearm_position = self:Solve2PartIK(larm_start, lhand_end, lupperarm_length, larm_length, 0)
-        
+
         debugoverlay.Line(rarm_start, rupperarm_position, 0.1, Color(255, 255, 255), true)
         debugoverlay.Line(rforearm_position, rupperarm_position, 0.1, Color(255, 255, 255), true)
         debugoverlay.Line(rforearm_position, rhand_end, 0.1, Color(255, 255, 255), true)

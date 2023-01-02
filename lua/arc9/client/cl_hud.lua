@@ -31,7 +31,7 @@ ARC9.Colors = {
     hint    = Color(200, 200, 200, 120), --
 
     notoccupied      = Color(216, 216, 216, 70), --
-    
+
     sel     = Color(255, 150, 100),
     occupied= Color(150, 255, 100),
     shadow  = Color(17, 17, 9),
@@ -1014,7 +1014,7 @@ function ARC9.DrawHUD()
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
             if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
             if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
-            if v.glyph2 then 
+            if v.glyph2 then
                 if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
                 if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
                 if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
@@ -1587,7 +1587,7 @@ end
 
 function CreateControllerKeyLine( info, ... )
     UpdateGlyphs()
-    local args = { ... } 
+    local args = { ... }
     local strlength = 0
 
     for i, v in ipairs( args ) do
@@ -1625,7 +1625,7 @@ end
 -- Gets the size of the controller key line.
 function GetControllerKeyLineSize( info, ... )
     UpdateGlyphs()
-    local args = { ... } 
+    local args = { ... }
     local strlength = 0
 
     for i, v in ipairs( args ) do

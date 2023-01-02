@@ -30,7 +30,7 @@ function EFFECT:Init(data)
     local model = ent:GetProcessedValue("DropMagazineModel")
     local skinn = ent:GetProcessedValue("DropMagazineSkin")
     local sounds = ent:GetProcessedValue("DropMagazineSounds")
-    
+
     local dir = ang:Forward()
 
     local correctpos = ent:GetProcessedValue("DropMagazinePos") or vector_origin
@@ -109,7 +109,7 @@ end
 function EFFECT:Think()
     if self:GetVelocity():Length() > 20 then self.SpawnTime = CurTime() end
     self:StopSound("Default.ScrapeRough")
-    
+
     if (self.SpawnTime + self.LifeTime) <= CurTime() then
         if !IsValid(self) then return end
         self:SetRenderFX( kRenderFxFadeFast )

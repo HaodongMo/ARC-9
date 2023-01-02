@@ -139,7 +139,7 @@ function SWEP:Think()
 
     if SERVER and owner.ARC9_HoldingProp then
         if !IsValid(owner.ARC9_HoldingProp) or !owner.ARC9_HoldingProp:IsPlayerHolding() then
-            owner.ARC9_HoldingProp = nil    
+            owner.ARC9_HoldingProp = nil
             net.Start("arc9_stoppickup")
             net.Send(owner)
             owner:DoAnimationEvent(ACT_FLINCH_BACK)

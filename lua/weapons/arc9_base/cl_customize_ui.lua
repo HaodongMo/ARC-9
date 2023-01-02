@@ -7,7 +7,7 @@ local ARC9ScreenScale = ARC9.ScreenScale
 -- Cycle the selected attachment
 function SWEP:CycleSelectedAtt(amt, cyc)
     local activetab = self.CustomizeButtons[self.CustomizeTab + 1]
-    if !(activetab.customize or activetab.personalize) then return end 
+    if !(activetab.customize or activetab.personalize) then return end
 
     cyc = cyc or 0
     if #self.AttachmentAddresses <= 0 then return end

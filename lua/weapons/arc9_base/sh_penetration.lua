@@ -160,7 +160,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             })
 
             -- Go backwards to find out where this thing ends
-            
+
             if ARC9.Dev(1) then
                 debugoverlay.Line(endpos, ntr.HitPos, 10, Color(255, 0, 0), true)
             end

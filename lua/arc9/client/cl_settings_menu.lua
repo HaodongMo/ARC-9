@@ -85,7 +85,7 @@ local settingstable = {
         TabName = "settings.tabname.hud_cust",
         { type = "label", text = "settings.hud_cust.hud" },
         -- crazy hacks to make hud scale work "almost dynamicly"
-        { type = "slider", text = "settings.hud_cust.hud_scale.title", min = 0.5, max = 1.5, decimals = 2, desc = "settings.hud_cust.hud_scale.desc", convar2 = "hud_scale", func = function(self2, self3, settingspanel) 
+        { type = "slider", text = "settings.hud_cust.hud_scale.title", min = 0.5, max = 1.5, decimals = 2, desc = "settings.hud_cust.hud_scale.desc", convar2 = "hud_scale", func = function(self2, self3, settingspanel)
             if IsValid(LocalPlayer()) then -- uncust the gun
                 local wep = LocalPlayer():GetActiveWeapon()
                 if IsValid(wep) and wep.ARC9 then
@@ -278,7 +278,7 @@ local ARC9ScreenScale = ARC9.ScreenScale
 
 local function DrawSettings(bg, page)
     local cornercut = ARC9ScreenScale(3.5)
-    
+
     local buttontalling = 0
     local activedesc = ""
 
@@ -291,7 +291,7 @@ local function DrawSettings(bg, page)
     for k, v in pairs(settingstable) do
         local newpanel = vgui.Create("DPanel", sheet)
         newpanel:Dock(FILL)
-        newpanel.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, ARC9.GetHUDColor("bg")) end 
+        newpanel.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, ARC9.GetHUDColor("bg")) end
         local newpanelscroll = vgui.Create("ARC9ScrollPanel", newpanel)
         newpanelscroll:Dock(FILL)
         newpanelscroll:DockMargin(ARC9ScreenScale(4), ARC9ScreenScale(4), ARC9ScreenScale(4), 0)
@@ -300,7 +300,7 @@ local function DrawSettings(bg, page)
 
         for k2, v2 in ipairs(v) do
             local elpanel = vgui.Create("DPanel", newpanelscroll)
-            
+
             elpanel:SetTall(ARC9ScreenScale(v2.type == "label" and 14 or 21))
             elpanel:DockMargin(0, (k2 != 1 and v2.type == "label") and ARC9ScreenScale(4) or 0, 0, 0)
             elpanel:Dock(TOP)
@@ -380,9 +380,9 @@ local function DrawSettings(bg, page)
                 local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
                 newel:CustomSetConvar(cvar)
 
-                if GetConVar(cvar .. "_r") then 
-                    newel.rgbcolor = Color(GetConVar(cvar .. "_r"):GetInt() or 255, GetConVar(cvar .. "_g"):GetInt() or 0, GetConVar(cvar .. "_b"):GetInt() or 0) 
-                else 
+                if GetConVar(cvar .. "_r") then
+                    newel.rgbcolor = Color(GetConVar(cvar .. "_r"):GetInt() or 255, GetConVar(cvar .. "_g"):GetInt() or 0, GetConVar(cvar .. "_b"):GetInt() or 0)
+                else
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar")
                 end
@@ -395,8 +395,8 @@ local function DrawSettings(bg, page)
                 local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
                 newel:CustomSetConvar(cvar)
 
-                if GetConVar(cvar .. "_a") then 
-                    newel.rgbcolor = Color(GetConVar(cvar .. "_r"):GetInt() or 255, GetConVar(cvar .. "_g"):GetInt() or 0, GetConVar(cvar .. "_b"):GetInt() or 0, GetConVar(cvar .. "_a"):GetInt() or 255) 
+                if GetConVar(cvar .. "_a") then
+                    newel.rgbcolor = Color(GetConVar(cvar .. "_r"):GetInt() or 255, GetConVar(cvar .. "_g"):GetInt() or 0, GetConVar(cvar .. "_b"):GetInt() or 0, GetConVar(cvar .. "_a"):GetInt() or 255)
                 else
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar (or its _alpha)")
@@ -455,11 +455,11 @@ local function DrawSettings(bg, page)
                 barbuttoncolor = ARC9.GetHUDColor("hi")
             end
 
-            surface.SetDrawColor(barbuttoncolor)        
+            surface.SetDrawColor(barbuttoncolor)
             surface.DrawRect(0, 0, ARC9ScreenScale(1.7), h)
-            surface.SetDrawColor(mainbuttoncolor)        
-            surface.DrawRect(ARC9ScreenScale(3.4), 0, w-ARC9ScreenScale(3.4), h)         
-            
+            surface.SetDrawColor(mainbuttoncolor)
+            surface.DrawRect(ARC9ScreenScale(3.4), 0, w-ARC9ScreenScale(3.4), h)
+
             surface.SetFont("ARC9_12")
             local tw = surface.GetTextSize(ARC9:GetPhrase(v.TabName))
 
@@ -476,7 +476,7 @@ local function DrawSettings(bg, page)
 
     bg.Paint = function(self2, w, h)
         draw.NoTexture()
-        
+
         surface.SetDrawColor(ARC9.GetHUDColor("bg"))
         local talll = sheet.Navigation:GetTall() + ARC9ScreenScale(6.7)
         surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = 0, y = h-math.max(ARC9ScreenScale(5), talll-buttontalling)}, {x = ARC9ScreenScale(75.4), y = h-math.max(ARC9ScreenScale(5), talll-buttontalling)}, {x = ARC9ScreenScale(75.4), y = h}}) -- left bottom panel
@@ -487,8 +487,8 @@ local function DrawSettings(bg, page)
         surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = cornercut, y = h-cornercut*.5}})
         surface.DrawPoly({{x = w, y = h-cornercut}, {x = w-cornercut, y = h}, {x = w-cornercut, y = h-cornercut*.5}})
         surface.DrawPoly({{x = cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h}, {x = cornercut, y = h}, })
-        
-        
+
+
         -- surface.SetDrawColor(ARC9.GetHUDColor("fg"))
         -- surface.SetMaterial(mat_icon)
         -- surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9ScreenScale(20))
@@ -506,7 +506,7 @@ local function DrawSettings(bg, page)
         surface.DrawText(ARC9:GetPhrase("settings.title"))
     end
 
-    if page then 
+    if page then
         for k, v in pairs(sheet.Items) do
             if v.PageID == page then
                 v.Button:DoClick()
@@ -558,7 +558,7 @@ function ARC9_OpenSettings(page)
     discord.DoClick = function(self2)
         surface.PlaySound(clicksound)
         gui.OpenURL("https:--discord.gg/wkafWps44a")
-    end    
+    end
 
     local steam = vgui.Create("ARC9TopButton", panel)
     steam:SetPos(panel:GetWide() - ARC9ScreenScale(21*2 + 7), ARC9ScreenScale(2))
@@ -578,8 +578,8 @@ function ARC9_OpenSettings(page)
             bg:Remove()
             panel:Remove()
         end)
-    end    
-    
+    end
+
     bg.OnMousePressed = function(self2, keycode)
         close.DoClick()
     end

@@ -150,26 +150,26 @@ do
     function SWEP:RunHook(val, data)
         local any = false
         local hookCache = self.HookCache[val]
-    
+
         if hookCache then
             -- I'm not sure if `hookCache` is always sequential so 
             for _, chook in pairs(hookCache) do
                 local d = chook(self, data)
-    
+
                 if d ~= nil then
                     data = d
                 end
-    
+
                 any = true
             end
-    
+
             data = hook.Run("ARC9_" .. val, self, data) or data
-    
+
             return data, any
         end
 
         CURRENT_SWEP = self
-        
+
         local cacheLen = 0
         local newCache = {}
         local affectors = swepGetAllAffectors(self)
@@ -179,7 +179,7 @@ do
             local tbl = affectors[i]
             if tbl[val] then
                 local tblVal = tbl[val]
-    
+
                 cacheLen = cacheLen + 1
                 newCache[cacheLen] = tblVal
 
@@ -195,10 +195,10 @@ do
                 end
             end
         end
-    
+
         self.HookCache[val] = newCache
         data = hook.Run("ARC9_" .. val, self, data) or data
-    
+
         return data, any
     end
 end

@@ -155,7 +155,7 @@ local function FesiugBob(self, pos, ang)
     ang:RotateAroundAxis( ang:Up(),             (pe:KeyDown(IN_MOVELEFT) and 2 or pe:KeyDown(IN_MOVERIGHT) and -2 or 0) * tv )
 
     ang:RotateAroundAxis( ang:Forward(),          math.sin( ct * p * 1 ) * airtime*-5 * mulp * 2)
-    ang:RotateAroundAxis( ang:Right(),          ( math.sin( ct * p * 1 ) * airtime*3 * mulp ) + ( (3/2) * airtime * mulp ) ) 
+    ang:RotateAroundAxis( ang:Right(),          ( math.sin( ct * p * 1 ) * airtime*3 * mulp ) + ( (3/2) * airtime * mulp ) )
     ang:RotateAroundAxis( ang:Up(),          math.sin( ct * p * 2 ) * airtime*2 * mulp )
 
     return pos, ang
@@ -186,7 +186,7 @@ local function ArcticBob(self, pos, ang)
     pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.1 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
     pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 1.615) * 0.2) + 1) * mag)
     pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.15) + (math.cos(self.BobCT * step * 0.3332))) * 0.16 * mag)
-    
+
     local steprate = Lerp(d, 1, 2.5)
     steprate = Lerp(self.ViewModelNotOnGround, steprate, 0.25)
 
@@ -212,7 +212,7 @@ local function DarsuBob(self, pos, ang)
     local velocity = math.Clamp(velocityangle:Length(), 0, 350)
 
     self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, velocity, FrameTime() * 10000)
-    
+
     local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
 
     notonground = math.Approach(notonground, (owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP) and 0 or 1, FrameTime() / 0.1)
@@ -225,7 +225,7 @@ local function DarsuBob(self, pos, ang)
 
 
     if IsFirstTimePredicted() or game.SinglePlayer() then self.BobCT = self.BobCT + (FrameTime() * steprate) end
-    
+
     d = d * Lerp(sightamount, 1, 0.65) -- If we in sights make less moves
 
     local d2 = math.ease.InQuart(d)
@@ -236,7 +236,7 @@ local function DarsuBob(self, pos, ang)
     smoothsidemove = Lerp(math.Clamp(FrameTime()*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5*(1.3-sightamount)  or 1
-    
+
     if owner.GetSliding then if owner:GetSliding() then speedmult = 0.01 d3 = 0 smoothsidemove = -10 end end
 
     pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 

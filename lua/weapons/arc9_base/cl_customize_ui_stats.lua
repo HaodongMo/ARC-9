@@ -362,24 +362,24 @@ function SWEP:CreateHUD_Stats()
     self.BottomBar = statsspanel
 
     local realI = 0
-    
+
     local many = false                -- probably not the best way
-    for i, stat in ipairs(stats) do 
-        if stat.cond and stat.cond() then continue end 
-        realI = realI + 1
-        if realI>6 then many = true end 
-    end
-    
-    realI = 0
-    
     for i, stat in ipairs(stats) do
         if stat.cond and stat.cond() then continue end
         realI = realI + 1
-        
+        if realI>6 then many = true end
+    end
+
+    realI = 0
+
+    for i, stat in ipairs(stats) do
+        if stat.cond and stat.cond() then continue end
+        realI = realI + 1
+
         local statpanel = vgui.Create("DPanel", statsspanel )
         statpanel:SetSize(ARC9ScreenScale(120), ARC9ScreenScale(16))
 
-        if !many then 
+        if !many then
             statpanel:SetPos(statsspanel:GetWide()*0.5-ARC9ScreenScale(60), ARC9ScreenScale(16.5) * realI - ARC9ScreenScale(16))
         else
             if realI > 12 then
@@ -411,7 +411,7 @@ function SWEP:CreateHUD_Stats()
                 surface.SetTextPos(w - tw_u - ARC9ScreenScale(2), ARC9ScreenScale(3))
                 surface.SetTextColor(ARC9.GetHUDColor("fg"))
                 surface.DrawText(ARC9:GetPhrase(self2.stats.unit) or self2.stats.unit)
-                
+
                 tw_u = tw_u + ARC9ScreenScale(4)
             else
                 tw_u = ARC9ScreenScale(2)

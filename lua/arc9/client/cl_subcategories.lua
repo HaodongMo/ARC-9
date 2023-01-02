@@ -36,8 +36,8 @@ hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, nod
         -- Get the weapon category as a string
         local Category = weapon.Category or "Other2"
         local WepTable = weapons.Get(weapon.ClassName)
-        if (!isstring(Category)) then 
-            Category = tostring(Category) 
+        if (!isstring(Category)) then
+            Category = tostring(Category)
         end
 
         -- Get the weapon subcategory as a string

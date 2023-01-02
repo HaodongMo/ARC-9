@@ -94,7 +94,7 @@ function SWEP:CreateHUD_Trivia()
         creditline.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
-            local titlestring = string.Replace(self2.title, "_", " ") 
+            local titlestring = string.Replace(self2.title, "_", " ")
 
             surface.SetFont("ARC9_7_Slim")
             surface.SetTextPos(ARC9ScreenScale(2), 0)
@@ -144,8 +144,8 @@ function SWEP:CreateHUD_Trivia()
         trivialine.trivia = triviatbl.trivia
         trivialine.Paint = function(self2, w, h)
             if !IsValid(self) then return end
-            
-            local titlestring = string.Replace(self2.title, "_", " ") 
+
+            local titlestring = string.Replace(self2.title, "_", " ")
 
             surface.SetFont("ARC9_7_Slim")
             local tw = surface.GetTextSize(titlestring)

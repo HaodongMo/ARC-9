@@ -48,7 +48,7 @@ function ENT:PhysicsCollide(colData, collider)
     if tbl then
         snd = table.Random(tbl)
     end
-    
+
     if snd then
         self:EmitSound(snd)
     end

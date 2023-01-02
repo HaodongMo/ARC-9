@@ -9,7 +9,7 @@ local function arc9toytown(amount) -- cool ass blur
         cam.Start2D()
             surface.SetMaterial(adsblur)
             surface.SetDrawColor(255, 255, 255, 255)
-            
+
             for i = 1, 5 * amount do -- 5 looking pretty cool
                 render.CopyRenderTargetToTexture(render.GetScreenEffectTexture())
                 surface.DrawTexturedRect(scrw*.5-scrh*.5, scrh*.58, scrh, scrh*0.42)

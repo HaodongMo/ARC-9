@@ -319,7 +319,7 @@ function SWEP:DoVisualRecoil()
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
 
         if self:GetProcessedValue("RecoilLookupTable") then
-            local dir = self:PatternWithRunOff(self:GetProcessedValue("RecoilLookupTable"), self:GetProcessedValue("RecoilLookupTableOverrun") or self:GetProcessedValue("RecoilLookupTable"), math.floor(self:GetRecoilAmount()) + 1) 
+            local dir = self:PatternWithRunOff(self:GetProcessedValue("RecoilLookupTable"), self:GetProcessedValue("RecoilLookupTableOverrun") or self:GetProcessedValue("RecoilLookupTable"), math.floor(self:GetRecoilAmount()) + 1)
             up = self:GetProcessedValue("VisualRecoilUp") * mult * self:GetRecoilUp() * -20 * (math.sin(math.rad(dir-90)) * -1)
         end
 

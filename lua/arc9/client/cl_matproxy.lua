@@ -101,7 +101,7 @@ matproxy.Add({
             local weapon = ply:GetActiveWeapon()
 
             if IsValid(weapon) and weapon.ARC9 then
-                local amt = 1 - weapon:GetSightAmount() / 1 
+                local amt = 1 - weapon:GetSightAmount() / 1
                 amt = amt * 0.2
                 mat:SetVector(self.ResultTo, Vector(amt*1.1, amt*0.9, amt*1.3))
             end

@@ -212,7 +212,7 @@ local function enterfolder(self, scroll, slottbl, fname)
                 self.CustomizeSelectAddr = self2.address
             end
         end
-        
+
         attbtn2.Think = function(self2)
             if !IsValid(self) then return end
 
@@ -255,7 +255,7 @@ local function enterfolder(self, scroll, slottbl, fname)
                 elseif self2.slottbl.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
                 end
-                
+
                 if self.AttInfoBarAtt != self2.att then
                     self.AttInfoBarAtt = self2.att
                     self.AttInfoBarAttSlot = slot
@@ -671,7 +671,7 @@ function SWEP:CreateHUD_AttInfo()
             end
         end
     else
-        lowerpanel.HasPros = nil 
+        lowerpanel.HasPros = nil
     end
 
     if table.Count(consname) > 0 then
@@ -693,6 +693,6 @@ function SWEP:CreateHUD_AttInfo()
             end
         end
     else
-        lowerpanel.HasCons = nil 
+        lowerpanel.HasCons = nil
     end
 end

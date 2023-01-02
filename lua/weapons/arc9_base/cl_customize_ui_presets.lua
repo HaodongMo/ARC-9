@@ -36,7 +36,7 @@ function SWEP:CreatePresetMenu(reload)
     presetpanel:AlphaTo(255, 0.1, 0, nil)
 
     local cornercut = ARC9ScreenScale(3.5)
-    presetpanel.Paint = function(self2, w, h) 
+    presetpanel.Paint = function(self2, w, h)
         draw.NoTexture()
         surface.SetDrawColor(ARC9.GetHUDColor("bg"))
         surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
@@ -58,7 +58,7 @@ function SWEP:CreatePresetMenu(reload)
     --     surface.SetDrawColor(ARC9.GetHUDColor("bg"))
     --     surface.DrawRect(0, 0, w, h)
     -- end
-    
+
     local savebtn = vgui.Create("ARC9TopButton", presetpanel)
     surface.SetFont("ARC9_12")
     local savetxt = ARC9:GetPhrase("customize.presets.save")
@@ -155,7 +155,7 @@ function SWEP:CreatePresetMenu(reload)
             surface.PlaySound(applysound)
         end
 
-        if preset == "random" then 
+        if preset == "random" then
             presetbtn.name = ARC9:GetPhrase("customize.presets.random")
             presetbtn.attcount = "?"
             presetbtn.icon = mat_random
@@ -184,11 +184,11 @@ function SWEP:CreatePresetMenu(reload)
         --     presetbtn.icon = Material("materials/arc9/arc9_sus.png")
         -- end
 
-        presetbtn.Paint = function(self2, w, h) 
+        presetbtn.Paint = function(self2, w, h)
             surface.SetDrawColor(ARC9.GetHUDColor("bg"))
             surface.DrawRect(0, 0, w, h)
             if self2:IsHovered() then
-                if self2:IsDown() then 
+                if self2:IsDown() then
                     surface.SetDrawColor(ARC9.GetHUDColor("hi", 100))
                 end
                 if !GetConVar("arc9_atts_nocustomize"):GetBool() then
@@ -286,7 +286,7 @@ function SWEP:CreatePresetMenu(reload)
 
     for _, preset in ipairs(presetlist) do
         if preset == "autosave" or preset == "default" then continue end
-        
+
         createpresetbtn(preset, !tonumber(preset)) -- if preset is a number then it's a user generated, if no - standard
     end
 
@@ -294,7 +294,7 @@ function SWEP:CreatePresetMenu(reload)
 end
 
 function SWEP:ClosePresetMenu()
-    if self.CustomizeHUD and self.CustomizeHUD.presetpanel then 
+    if self.CustomizeHUD and self.CustomizeHUD.presetpanel then
         self.CustomizeHUD.topright_panel.topright_presets:SetChecked(false)
         self.CustomizeHUD.presetpanel:AlphaTo(0, 0.1, 0, function()
             if self.CustomizeHUD.presetpanel then
@@ -320,7 +320,7 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
         if !IsValid(self) then return end
         surface.SetDrawColor(31, 31, 31, 235)
         surface.DrawRect(0, 0, scrw, scrh)
-        
+
         surface.SetFont("ARC9_20")
         local tw = surface.GetTextSize(title)
         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
@@ -383,7 +383,7 @@ function SWEP:CreatePresetName()
     createPopup(self, ARC9:GetPhrase("customize.presets.new"), ARC9:GetPhrase("customize.presets.save"), true, nil, function(bg, textentry)
         local txt = textentry:GetText()
         txt = string.sub(txt, 0, 36)
-        
+
         if txt == "" then txt = "Unnamed" end
 
         if txt != "autosave" and txt != "default" then
@@ -423,8 +423,8 @@ function SWEP:CreateImportPreset()
         local txt = textentry:GetText()
 
         if txt == "" then textentry:SetPlaceholderText(ARC9:GetPhrase("customize.presets.dumb")) return end
-        
-        if self:LoadPresetFromCode(txt) then 
+
+        if self:LoadPresetFromCode(txt) then
             bg:AlphaTo(0, 0.1, 0, function()
                 bg:Remove()
             end)

@@ -1,33 +1,33 @@
-local DevMode = false 
+local DevMode = false
 
 local devselectedatt = 0
 local devoffsetmode = false
 local selectedbonename = "None"
 
-SWEP.devlockeddrag = false 
+SWEP.devlockeddrag = false
 
 function SWEP:DevStuffMenu()
     print("Developers developers developers developers developers developers developers developers developers developers developers developers developers ")
-    
+
     local DevFrame = vgui.Create("DFrame")
-    DevFrame:SetPos(ScrW()-1015, ScrH()-315) 
-    DevFrame:SetSize(1000, 300) 
-    DevFrame:SetTitle("Dev stuff") 
-    DevFrame:SetVisible(true) 
-    DevFrame:SetDraggable(true) 
-    DevFrame:ShowCloseButton(true) 
+    DevFrame:SetPos(ScrW()-1015, ScrH()-315)
+    DevFrame:SetSize(1000, 300)
+    DevFrame:SetTitle("Dev stuff")
+    DevFrame:SetVisible(true)
+    DevFrame:SetDraggable(true)
+    DevFrame:ShowCloseButton(true)
     DevFrame:MakePopup()
 
     self.DevFrame = DevFrame
 
-	local LockDragToggle = DevFrame:Add("DCheckBoxLabel") 
+	local LockDragToggle = DevFrame:Add("DCheckBoxLabel")
 	LockDragToggle:SetPos(400, 273)
 	LockDragToggle:SetText("Lock dragging")
     LockDragToggle.OnChange = function(non, val)
         self.devlockeddrag = val
     end
 
-    
+
     local function makecoolslider(y, min, max, text, dec, func)
         local itis = vgui.Create("DNumSlider", DevFrame)
         itis:SetPos(10, y)
@@ -50,12 +50,12 @@ function SWEP:DevStuffMenu()
     local SliderYaw = makecoolslider(160, -180, 180, "Y", 0, function(no, value) self:PostModify(true) devselectedatt.Ang.y = value end)
     local SliderRoll = makecoolslider(190, -180, 180, "R", 0, function(no, value) self:PostModify(true) devselectedatt.Ang.r = value end)
 
-	local OffsetModeToggle = DevFrame:Add("DCheckBoxLabel") 
+	local OffsetModeToggle = DevFrame:Add("DCheckBoxLabel")
 	OffsetModeToggle:SetPos(200, 273)
 	OffsetModeToggle:SetText("Icon offset mode")
     OffsetModeToggle.OnChange = function(non, val)
         devoffsetmode = val
-        
+
         if val then
             if !devselectedatt.Icon_Offset then devselectedatt.Icon_Offset = Vector() end
 
@@ -76,7 +76,7 @@ function SWEP:DevStuffMenu()
     for i, slot in ipairs(self:GetSubSlotList()) do
         AttSelector:AddChoice(i.." - "..slot.PrintName)
     end
-    
+
     AttSelector.OnSelect = function(no, index, value)
         print(value .. " was selected")
         devselectedatt = self:GetSubSlotList()[tonumber(value[1]..value[2])]
@@ -96,7 +96,7 @@ function SWEP:DevStuffMenu()
             SliderX:SetValue(devselectedatt.Pos.x)
             SliderY:SetValue(devselectedatt.Pos.y)
             SliderZ:SetValue(devselectedatt.Pos.z)
-            
+
             SliderX:SetMin(devselectedatt.Pos.x-3)
             SliderX:SetMax(devselectedatt.Pos.x+3)
             SliderY:SetMin(devselectedatt.Pos.y-10)
@@ -124,7 +124,7 @@ function SWEP:DevStuffMenu()
         print(ExportAtt())
         print("\n\n---------")
     end
-    
+
     local ClipboardButton = vgui.Create("DButton", DevFrame)
     ClipboardButton:SetText("To clipboard")
     ClipboardButton:SetPos(760, 260)
@@ -132,7 +132,7 @@ function SWEP:DevStuffMenu()
     ClipboardButton.DoClick = function()
         SetClipboardText(ExportAtt())
     end
-    
+
     local ResetButton = vgui.Create("DButton", DevFrame)
     ResetButton:SetText("Reload atts")
     ResetButton:SetPos(880, 260)
@@ -141,7 +141,7 @@ function SWEP:DevStuffMenu()
         RunConsoleCommand("arc9_reloadatts")
         timer.Simple(0, function() self:PostModify(true) end)
     end
-    
+
 
     -- local AppList = vgui.Create("DListView", DevFrame)
     -- AppList:Dock(FILL)
@@ -167,12 +167,12 @@ local devplaybackcycle = 0
 
 function SWEP:DevStuffAnims()
     local DevFrame = vgui.Create("DFrame")
-    DevFrame:SetPos(ScrW()/2-(ScrW()-200)/2, 50) 
-    DevFrame:SetSize(ScrW()-200, 300) 
-    DevFrame:SetTitle("ARC9 Animation table editor - works only in singleplayer in pause menu") 
-    DevFrame:SetVisible(true) 
-    DevFrame:SetDraggable(true) 
-    DevFrame:ShowCloseButton(true) 
+    DevFrame:SetPos(ScrW()/2-(ScrW()-200)/2, 50)
+    DevFrame:SetSize(ScrW()-200, 300)
+    DevFrame:SetTitle("ARC9 Animation table editor - works only in singleplayer in pause menu")
+    DevFrame:SetVisible(true)
+    DevFrame:SetDraggable(true)
+    DevFrame:ShowCloseButton(true)
     DevFrame:MakePopup()
 
 
@@ -241,7 +241,7 @@ function SWEP:DevStuffAnims()
     Animations:Dock(TOP)
     Animations:DockMargin(ScrW()/2.5, 0, ScrW()/2.5, 4)
     Animations:MoveToBack()
-    
+
     local AnimSelector = Animations:Add("DComboBox")
     AnimSelector:SetValue("Select animation")
 	AnimSelector:Dock(FILL)
@@ -251,7 +251,7 @@ function SWEP:DevStuffAnims()
         AnimSelector:AddChoice(k)
         AnimSelector:ChooseOptionID(1)
     end
-    
+
     local AddAnimButton = Animations:Add("DImageButton")
     AddAnimButton:SetImage( "icon16/add.png" )
     AddAnimButton:SetSize( 20, 20 )
@@ -268,11 +268,11 @@ function SWEP:DevStuffAnims()
 
 	EditorPanelEventTable = EditorPanel:Add("DPanel")
     -- EditorPanelEventTable.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255 ) ) end 
-    
+
 	local Keyframes = EditorPanelEventTable:Add("DHorizontalScroller")
     Keyframes:Dock( FILL )
     Keyframes:SetOverlap( -8 )
-    
+
     local KeyframesCount = 0
 
     local function makekf(time, path, pitch, volume)
@@ -302,7 +302,7 @@ function SWEP:DevStuffAnims()
         Keyframes[KeyframesCount].Snd:SetWidth(120)
         Keyframes[KeyframesCount].Snd:SetPlaceholderText("garrysmod/content_downloaded.wav")
         Keyframes[KeyframesCount].Snd:SetText(path)
-        
+
         Keyframes[KeyframesCount].PitchWangLabel = Keyframes[KeyframesCount]:Add("DLabel")
         Keyframes[KeyframesCount].PitchWangLabel:SetPos( 15, 95 )
         Keyframes[KeyframesCount].PitchWangLabel:SetText("Pitch")
@@ -324,7 +324,7 @@ function SWEP:DevStuffAnims()
         Keyframes[KeyframesCount].VolumeWang:SetValue(volume)
         Keyframes[KeyframesCount].VolumeWang:SetMax(2)
         Keyframes[KeyframesCount].VolumeWang:SetInterval(0.05)
-        
+
         Keyframes[KeyframesCount].DeleteButton = Keyframes[KeyframesCount]:Add("DButton")
         Keyframes[KeyframesCount].DeleteButton:SetText("Delete")
         Keyframes[KeyframesCount].DeleteButton:SetHeight(16)
@@ -338,13 +338,13 @@ function SWEP:DevStuffAnims()
     end
 
     -- makekf(0.1, "wawa/hi.wav", 1, 1)
-    
+
     local function makekfsforanim(animname)
         Keyframes:Remove()
         Keyframes = EditorPanelEventTable:Add("DHorizontalScroller") -- resetting
         Keyframes:Dock( FILL )
         Keyframes:SetOverlap( -8 )
-        
+
         local et = self.Animations[animname].EventTable
 
         if et then -- we will clear and just add a plus button if no eventtable
@@ -388,7 +388,7 @@ function SWEP:DevStuffAnims()
 
         vm:SetCycle(devplaybackcycle)
         AnimTrack:SetSlideX(devplaybackcycle)
-        
+
         local cursec = math.Round(length*devplaybackcycle/devplaybackmult, 2)
         local curfrac = math.Round(devplaybackcycle, 2)
         CurFrame:SetText("   " .. cursec .. " / ".. curfrac)
@@ -401,7 +401,7 @@ concommand.Add("arc9_dev_togglemenu", function(ply, cmd, args)
 
     local wep = ply:GetActiveWeapon()
 
-    if wep.ARC9 then 
+    if wep.ARC9 then
         DevMode = !DevMode
         if DevMode then ply:GetActiveWeapon():DevStuffMenu() elseif IsValid(wep.DevFrame) then wep.DevFrame:Close() end
     end
@@ -413,7 +413,7 @@ concommand.Add("arc9_dev_toggleanimsmenu", function(ply, cmd, args)
 
     local wep = ply:GetActiveWeapon()
 
-    if wep.ARC9 then 
+    if wep.ARC9 then
         -- DevMode = !DevMode
         ply:GetActiveWeapon():DevStuffAnims()
     end
