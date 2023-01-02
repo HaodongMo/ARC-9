@@ -26,6 +26,29 @@ function SWEP:InvalidateCache()
     self:SetBaseSettings()
 end
 
+function SWEP:GetFinalAttTableFromAddress(address)
+    return self:GetFinalAttTable(self:LocateSlotFromAddress(address))
+end
+
+function SWEP:GetFinalAttTable(slot)
+    if !slot then return {} end
+    if !slot.Installed then return {} end
+
+    local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed) or {})
+
+    if self.AttachmentTableOverrides and self.AttachmentTableOverrides[slot.Installed] then
+        atttbl = table.Merge(atttbl, self.AttachmentTableOverrides[slot.Installed])
+    end
+
+    if atttbl.ToggleStats then
+        local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
+
+        table.Merge(atttbl, toggletbl)
+    end
+
+    return atttbl
+end
+
 do
     local entityGetTable = ENTITY.GetTable
 
@@ -181,29 +204,6 @@ do
     
         return data, any
     end
-end
-
-function SWEP:GetFinalAttTableFromAddress(address)
-    return self:GetFinalAttTable(self:LocateSlotFromAddress(address))
-end
-
-function SWEP:GetFinalAttTable(slot)
-    if !slot then return {} end
-    if !slot.Installed then return {} end
-
-    local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed) or {})
-
-    if self.AttachmentTableOverrides and self.AttachmentTableOverrides[slot.Installed] then
-        atttbl = table.Merge(atttbl, self.AttachmentTableOverrides[slot.Installed])
-    end
-
-    if atttbl.ToggleStats then
-        local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
-
-        table.Merge(atttbl, toggletbl)
-    end
-
-    return atttbl
 end
 
 local Lerp = function(a, v1, v2)
