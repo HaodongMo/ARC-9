@@ -31,6 +31,10 @@ ARC9.IncompatibleAddons = {
 
     -- VTools
     ["DisplayDistancePlane"] = "Tool contains faulty hook.",
+
+    -- TFA's Tactical Lean
+
+    ["TacticalLean"] = "Mod is old, buggy, laggy, and interferes with ARC9 lean.",
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale
@@ -207,6 +211,15 @@ function ARC9.DoCompatibilityCheck()
         incompatList["DisplayDistancePlane"] = {
             title = "Light Sprayer / Scenic Dispenser tool",
             wsid = "DisplayDistancePlane",
+            nourl = true,
+        }
+    end
+
+    local playerspawnhooks = hook.GetTable().PlayerSpawn
+    if playerspawnhooks and (playerspawnhooks.PlayerSpawn) then
+        incompatList["TacticalLean"] = {
+            title = "Tactical Leaning",
+            wsid = "TacticalLean",
             nourl = true,
         }
     end
