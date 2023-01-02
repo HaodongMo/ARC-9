@@ -527,3 +527,12 @@ L["customize.presets.back"] = "Tillbaka"
 L["customize.presets.cancel"] = "Avbryt"
 L["customize.presets.dumb"] = "Är du korkad"
 L["customize.presets.invalid"] = "Ogiltig sträng!"
+
+L["settings.gameplay.togglelean.title"] = "Växla Lutning"
+L["settings.gameplay.togglelean.desc"] = "Tryck på luta-knapparna kommer växla lutningen istället för att den behövs hållas inne."
+
+L["settings.gameplay.togglepeek.title"] = "Växla Kikande"
+L["settings.gameplay.togglepeek.desc"] = "Tryck på kika-knapparna kommer växla kikandet istället för att den behövs hållas inne."
+
+L["settings.npc.npc_spread.title"] = "NPC Spridning"
+L["settings.npc.npc_spread.desc"] = "Multiplikator för hur oträffsäkra NPC:er är när de skjuter."
