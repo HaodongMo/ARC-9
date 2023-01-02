@@ -352,7 +352,7 @@ function SWEP:GetViewModelRecoil(pos, ang)
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
-    pos, ang = self:RotateAroundPoint2(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng * self:GetCorVal())
+    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, self.VisualRecoilAng * self:GetCorVal())
 
     if ARC9.Dev(2) then
         debugoverlay.Axis(self:GetVM():LocalToWorld(self:GetProcessedValue("VisualRecoilCenter")), ang, 2, 0.1, true)
