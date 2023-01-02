@@ -144,7 +144,7 @@ L["hud.hint.cycle"] = "Repetieren"
 L["hud.hint.toggleatts"] = "Aufsätze umschalten"
 L["hud.hint.peek"] = "Spähen"
 L["hud.hint.customize"] = "Anpassen"
-L["hud.hint.safe"] = "Sicherung umschalten"
+L["hud.hint.safe"] = "Sicherung"
 L["hud.hint.lean"] = "Lehnen"
 
 L["autostat.enable.pre"] = "Aktivierungen"
@@ -493,3 +493,11 @@ L["customize.presets.cancel"] = "Abbrechen"
 L["customize.presets.dumb"] = "Bist du dumm"
 L["customize.presets.invalid"] = "Ungültiger String!"
 
+L["settings.gameplay.togglelean.title"] = "Lehnen umschalten"
+L["settings.gameplay.togglelean.desc"] = "Das Drücken der Lehnen-Tasten schaltet die Lehn-Richtung um, anstatt gedrückt gehalten werden zu müssen."
+
+L["settings.gameplay.togglepeek.title"] = "Spähen umschalten"
+L["settings.gameplay.togglepeek.desc"] = "Das Drücken der Spähen-Taste schaltet das Spähen um, anstatt gedrückt gehalten werden zu müssen."
+
+L["settings.npc.npc_spread.title"] = "NPC-Streuung"
+L["settings.npc.npc_spread.desc"] = "Multiplier for how inaccurate NPCs will be when firing." "Multiplikator für wie ungenau NPCs beim Feuern sein sollen."
