@@ -26,30 +26,29 @@ end
 
 function SWEP:GetNPCBulletSpread(prof)
     local mode = self:GetCurrentFiremode()
+    local mult = GetConVar("arc9_npc_spread"):GetFloat()
+
+    mult = mult * 0.5
 
     if mode < 0 then
-        return 10 / (prof + 1)
+        return mult * 10 / (prof + 1)
     elseif mode == 0 then
-        return 20 / (prof + 1)
+        return mult * 20 / (prof + 1)
     elseif mode == 1 then
         if math.Rand(0, 100) < (prof + 1) * 5 then
-            return 10 / (prof + 1)
+            return mult * 1 / (prof + 1)
         else
-            return 25 / (prof + 1)
+            return mult * 25 / (prof + 1)
         end
     elseif mode >= 2 then
-        return 20 / (prof + 1)
+        return mult * 20 / (prof + 1)
     end
 
-    return 15
+    return mult * 15
 end
 
 function SWEP:GetNPCSpread()
     local spread = self:GetValue("Spread")
-
-    local spd = math.min(self:GetOwner():GetAbsVelocity():Length(), 250)
-
-    spd = spd / 250
 
     spread = math.max(spread, 0)
 
@@ -97,18 +96,20 @@ function SWEP:NPC_Initialize()
 
     if CLIENT then return end
 
-    timer.Simple(0.25, function()
-        if IsValid(self) then
-            if !self.WeaponWasGiven then
-                self:RollRandomAtts(self.Attachments)
-            end
-
-            self:PostModify()
-
-            self:PruneAttachments()
-            self:SendWeapon()
+    if IsValid(self) then
+        if !self.WeaponWasGiven then
+            // self:RollRandomAtts(self.Attachments)
+            self:QueueForRandomize()
         end
-    end)
+
+        // self:PostModify()
+
+        // self:PruneAttachments()
+        // self:SendWeapon()
+    end
+end
+
+function SWEP:QueueForRandomize()
 end
 
 function SWEP:RollRandomAtts(tree)

@@ -537,3 +537,5 @@ L["settings.gameplay.togglelean.desc"] = "Pressing the lean keys will toggle lea
 L["settings.gameplay.togglepeek.title"] = "Toggle Peek"
 L["settings.gameplay.togglepeek.desc"] = "Pressing the peek key will toggle peeking instead of needing to be held down."
 
+L["settings.npc.npc_spread.title"] = "NPC Spread"
+L["settings.npc.npc_spread.desc"] = "Multiplier for how inaccurate NPCs will be when firing."

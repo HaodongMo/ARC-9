@@ -227,6 +227,10 @@ local conVars = {
         default = "0"
     },
     {
+        name = "npc_spread",
+        default = "1"
+    },
+    {
         name = "replace_spawned",
         default = "1"
     },
