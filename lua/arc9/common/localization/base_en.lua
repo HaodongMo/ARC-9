@@ -531,11 +531,13 @@ L["customize.presets.invalid"] = "Invalid string!"
 
 -- Added 02-JAN-2023
 
-L["settings.gameplay.togglelean.title"] = "Toggle Lean"
-L["settings.gameplay.togglelean.desc"] = "Pressing the lean keys will toggle leaning instead of needing to be held down."
-
 L["settings.gameplay.togglepeek.title"] = "Toggle Peek"
 L["settings.gameplay.togglepeek.desc"] = "Pressing the peek key will toggle peeking instead of needing to be held down."
 
 L["settings.npc.npc_spread.title"] = "NPC Spread"
 L["settings.npc.npc_spread.desc"] = "Multiplier for how inaccurate NPCs will be when firing."
+
+-- Modified 03-JAN-2023
+
+L["settings.gameplay.togglelean.title"] = "Toggle Lean"
+L["settings.gameplay.togglelean.desc"] = "Pressing the lean keys will toggle leaning instead of needing to be held down.\n\nWorks poorly in conjunction with autolean. If using toggle lean, you should disable autolean."
