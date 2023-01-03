@@ -20,12 +20,13 @@
 -- PLEASE       FIX
 -- I HATE GARRY NEWMAN
 
+if false then -- Re-enabled for now, mushroom said it was ok as he will try to find a solution for MWB
+
 hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, node)
 
     -- Loop through the weapons and add them to the menu
     local Weapons = list.Get("Weapon")
     local Categorised = {}
-    local ARC9Cats = {}
 
     -- Build into categories + subcategories
     for k, weapon in pairs(Weapons) do
@@ -52,14 +53,10 @@ hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, nod
         Categorised[Category] = Categorised[Category] or {}
         Categorised[Category][SubCategory] = Categorised[Category][SubCategory] or {}
         table.insert(Categorised[Category][SubCategory], weapon)
-        ARC9Cats[Category] = true
     end
 
     -- Iterate through each category in the weapons table
     for _, node in pairs(tree:Root():GetChildNodes()) do
-
-        -- If it's not an ARC9 category, skip it
-        if !ARC9Cats[node:GetText()] then continue end
 
         -- Get the subcategories registered in this category
         local catSubcats = Categorised[node:GetText()]
@@ -112,3 +109,6 @@ hook.Add("PopulateWeapons", "ARC9_SubCategories", function(pnlContent, tree, nod
         FirstNode:InternalDoClick()
     end
 end)
+
+
+end
