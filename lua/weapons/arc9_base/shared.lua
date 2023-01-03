@@ -157,6 +157,8 @@ SWEP.RangeMin = 0 -- How far bullets retain their maximum damage for.
 SWEP.RangeMax = 5000 -- In Hammer units, how far bullets can travel before dealing DamageMin.
 SWEP.Distance = 33000 -- In Hammer units, how far bullets can travel, period.
 
+SWEP.CurvedDamageScaling = true -- If true, damage will scale in a quadratic curve between RangeMin and RangeMax. If false, damage will scale linearly.
+
 SWEP.Num = 1 -- Number of bullets to shoot
 
 SWEP.DistributeDamage = false -- If true, damage is distributed evenly across all bullets. If false, damage is dealt to the first bullet only.
@@ -653,7 +655,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_HideBones = function(self, bones) return bones end -- {"bone" = true, "bone" = true...}
 -- SWEP.Hook_ModifyElements = function(self, eles) return eles end -- {"ele" = true, "ele" = true...}
 -- SWEP.Hook_TranslateSource = function(self, source) return source end -- String, use this to modify source strings directly
--- SWEP.Hook_GetDamageAtRange(self, data) return data end -- {range = range, dmg = dmg}
+-- SWEP.Hook_GetDamageAtRange(self, data) return data end -- {range = range, dmg = dmg, d = delta}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install

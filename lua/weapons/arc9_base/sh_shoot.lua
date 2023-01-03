@@ -673,7 +673,13 @@ function SWEP:GetDamageAtRange(range)
         d = (range - r_min) / (r_max - r_min)
     end
 
-    local dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), self:GetProcessedValue("DamageMin"))
+    local dmgv
+
+    if self:GetProcessedValue("CurvedDamageScaling") then
+        d = math.cos((d + 1) * math.pi) / 2 + 0.5
+    end
+
+    dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), self:GetProcessedValue("DamageMin"))
 
     dmgv = self:GetProcessedValue("Damage", dmgv)
 
@@ -683,12 +689,13 @@ function SWEP:GetDamageAtRange(range)
 
     local data = self:RunHook("Hook_GetDamageAtRange", {
         dmg = dmgv,
-        range = range
+        range = range,
+        d = d
     }) or {}
 
     dmgv = data.dmg or dmgv
 
-    dmgv = math.ceil(dmgv)
+    // dmgv = math.ceil(dmgv)
 
     return dmgv
 end
