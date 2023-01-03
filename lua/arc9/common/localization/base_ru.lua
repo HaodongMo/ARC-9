@@ -500,3 +500,16 @@ L["settings.gameplay.togglepeek.desc"] = "Вместо удерживания к
 
 L["settings.npc.npc_spread.title"] = "Разброс у NPC"
 L["settings.npc.npc_spread.desc"] = "Множитель неточности выстрелов ARC9 пушек у NPC."
+
+
+-- Added 03-JAN-2023
+L["settings.gameplay.togglelean.desc"] = "Вместо удерживания кнопки наклона достаточно нажать один раз.\n\nРаботает плохо со включенным автонаклоном. Если вы используете наклон по нажатию, отключите автонаклон."
+
+L["settings.developer.presets_clear.title"] = "Очистить данные"
+L["settings.developer.presets_clear.desc"] = "Удалить все пресеты, иконки и дефолтный пресет для оружия, что вы сейчас держете в руках.\n\nВнимание: если у вас сейчас нет ARC9 пушки в руках, это удалит всю данные всех пушек!"
+L["settings.developer.clear"] = "Очистить"
+
+L["atts.favourites"] = "Избранное"
+L["atts.filter"] = "Фильтр"
+L["customize.hint.favorite"] = "Добавить в избранное"
+L["customize.hint.unfavorite"] = "Убрать из избранного"

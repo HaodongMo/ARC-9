@@ -270,6 +270,9 @@ local settingstable = {
         { type = "button", text = "settings.developer.dev_getjson.title", content = "settings.developer.print", func = function(self2)
             RunConsoleCommand("arc9_dev_getjson")
         end},
+        { type = "button", text = "settings.developer.presets_clear.title", content = "settings.developer.clear", desc = "settings.developer.presets_clear.desc", func = function(self2)
+            RunConsoleCommand("arc9_presets_clear")
+        end},
     },
 }
 
