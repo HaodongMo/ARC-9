@@ -537,7 +537,16 @@ L["settings.gameplay.togglepeek.desc"] = "Pressing the peek key will toggle peek
 L["settings.npc.npc_spread.title"] = "NPC Spread"
 L["settings.npc.npc_spread.desc"] = "Multiplier for how inaccurate NPCs will be when firing."
 
--- Modified 03-JAN-2023
+-- Modified/Added 03-JAN-2023
 
 L["settings.gameplay.togglelean.title"] = "Toggle Lean"
 L["settings.gameplay.togglelean.desc"] = "Pressing the lean keys will toggle leaning instead of needing to be held down.\n\nWorks poorly in conjunction with autolean. If using toggle lean, you should disable autolean."
+
+L["settings.developer.presets_clear.title"] = "Clear weapon data"
+L["settings.developer.presets_clear.desc"] = "Clear presets, all icons and default preset for weapon you currently holding.\n\nWarning: if menu opened without ARC9 weapon in hands it will delete all existing ARC9 presets and icons!"
+L["settings.developer.clear"] = "Clear"
+
+L["atts.favourites"] = "Favourites"
+L["atts.filter"] = "Filter"
+L["customize.hint.favorite"] = "Favorite"
+L["customize.hint.unfavorite"] = "Remove Favorite"
