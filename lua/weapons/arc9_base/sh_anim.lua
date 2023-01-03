@@ -305,6 +305,8 @@ function SWEP:ThinkAnimation()
                     rhik_mdl = self.RHIKModel
                 end
 
+                if !rhik_mdl then return end
+
                 rhik_mdl:SetSequence(self:GetSequenceIndex())
                 rhik_mdl:SetCycle(self:GetSequenceCycle())
             end
