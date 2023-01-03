@@ -81,7 +81,7 @@ function SWEP:ThinkLean()
         self:GetOwner():SetCollisionBounds(Vector(-32, -32, 0), Vector(32, 32, 64))
     end
 
-    local force = SERVER and math.abs(amt) == 1 and self.LastLeanAmountSERVER != amt
+    local force = SERVER and (math.abs(amt) == 1 or math.abs(amt) == 0) and self.LastLeanAmountSERVER != amt
 
     self:DoPlayerModelLean(false, force)
 
