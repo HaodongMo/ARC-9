@@ -530,10 +530,13 @@ L["customize.presets.invalid"] = "Cadena no valida!"
 
 
 L["settings.gameplay.togglelean.title"] = "Alternar Inclinación"
-L["settings.gameplay.togglelean.desc"] = "Al pulsar las teclas de inclinación se alternará la inclinación en lugar de tener que mantenerlas pulsadas."
+L["settings.gameplay.togglelean.desc"] = "Al pulsar las teclas de inclinación se alternará la inclinación en lugar de tener que mantenerlas pulsadas.\n\nFunciona mal en conjunto a autoinclinacion. Si se utiliza la alternacion de inclinación, debe desactivar autoinclinacion"
 
-L["settings.gameplay.togglepeek.title"] = "Alternar Vistazo"
-L["settings.gameplay.togglepeek.desc"] = "Al pulsar la tecla Vistazo se activará el Vistazo en lugar de tener que mantenerla pulsada."
+L["settings.developer.presets_clear.title"] = "Limpiar datos de armas"
+L["settings.developer.presets_clear.desc"] = "Borrar preajustes, todos los iconos y preajustes por defecto para el arma que actualmente sostiene.\n\nAdvertencia: Si el menú se abre sin el arma ARC9 en las manos, se borrarán todos los preajustes e iconos ARC9 existentes!"
+L["settings.developer.clear"] = "Limpiar"
 
-L["settings.npc.npc_spread.title"] = "Esparcion de PNJs"
-L["settings.npc.npc_spread.desc"] = "Multiplicador de la imprecisión de los PNJs al disparar."
+L["atts.favourites"] = "Favoritos"
+L["atts.filter"] = "Filtrar"
+L["customize.hint.favorite"] = "Favorito"
+L["customize.hint.unfavorite"] = "Remover favorito"
