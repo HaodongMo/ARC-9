@@ -159,6 +159,14 @@ SWEP.Distance = 33000 -- In Hammer units, how far bullets can travel, period.
 
 SWEP.CurvedDamageScaling = true -- If true, damage will scale in a quadratic curve between RangeMin and RangeMax. If false, damage will scale linearly.
 
+--[[
+function SWEP:Hook_GetDamageAtRange(data)
+    data.dmg = (math.sin(data.range / 250) + 1) * 10
+
+    return data
+end
+]]--
+
 SWEP.Num = 1 -- Number of bullets to shoot
 
 SWEP.DistributeDamage = false -- If true, damage is distributed evenly across all bullets. If false, damage is dealt to the first bullet only.
