@@ -75,9 +75,8 @@ hook.Add("InitPostEntity", "ARC9_PopulateWeaponClasses", ARC9.PopulateWeaponClas
 function ARC9.ReplaceSpawnedWeapon(ent)
     if CLIENT then return end
 
-    if !GetConVar("arc9_npc_autoreplace"):GetBool() then return end
-
     if ent:IsNPC() then
+        if !GetConVar("arc9_npc_autoreplace"):GetBool() then return end
         timer.Simple(0, function()
             if !ent:IsValid() then return end
             local cap = ent:CapabilitiesGet()
