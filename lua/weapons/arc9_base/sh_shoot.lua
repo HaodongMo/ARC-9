@@ -659,7 +659,7 @@ function SWEP:ShouldTracer()
     return shouldtracer
 end
 
-function SWEP:GetDamageAtRange(range)
+function SWEP:GetDamageDeltaAtRange(range)
     local d = 1
 
     local r_min = self:GetProcessedValue("RangeMin")
@@ -673,13 +673,17 @@ function SWEP:GetDamageAtRange(range)
         d = (range - r_min) / (r_max - r_min)
     end
 
-    local dmgv
-
     if self:GetProcessedValue("CurvedDamageScaling") then
         d = math.cos((d + 1) * math.pi) / 2 + 0.5
     end
 
-    dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), self:GetProcessedValue("DamageMin"))
+    return d
+end
+
+function SWEP:GetDamageAtRange(range)
+    local d = self:GetDamageDeltaAtRange(range)
+
+    local dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), self:GetProcessedValue("DamageMin"))
 
     dmgv = self:GetProcessedValue("Damage", dmgv)
 
