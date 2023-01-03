@@ -156,6 +156,7 @@ function SWEP:Think()
                 self:LoadPreset("default")
             end
 
+            self:SetReady(false)
             self:DoDeployAnimation()
         end
     end

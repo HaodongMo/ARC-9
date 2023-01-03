@@ -1360,6 +1360,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 25, "LockOnStartTime")
     self:NetworkVar("Float", 26, "LeanAmount")
     self:NetworkVar("Float", 27, "NearWallAmount")
+    self:NetworkVar("Float", 28, "ReadyTime")
     -- self:NetworkVar("Float", 19, "LastPressedWTime")
     -- self:NetworkVar("Float", 20, "TraversalSprintAmount")
 

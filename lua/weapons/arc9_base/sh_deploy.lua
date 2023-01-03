@@ -195,16 +195,14 @@ end)
 
 function SWEP:DoDeployAnimation()
     if (GetConVar("arc9_dev_always_ready"):GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
-        local t = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true) or 0.25
+        local t = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true) or 0
 
-        self:SetTimer(t, function()
-            self:SetReady(true)
-        end)
+        self:SetReadyTime(CurTime() + t)
+        self:SetReady(true)
     else
         local t = self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)
 
-        self:SetTimer(t, function()
-            self:SetReady(true)
-        end)
+        self:SetReadyTime(CurTime() + t)
+        self:SetReady(true)
     end
 end
