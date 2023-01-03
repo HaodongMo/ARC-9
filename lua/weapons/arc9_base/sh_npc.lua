@@ -110,6 +110,7 @@ function SWEP:NPC_Initialize()
 end
 
 function SWEP:QueueForRandomize()
+    table.insert(ARC9.RandomizeQueue, self)
 end
 
 function SWEP:RollRandomAtts(tree)
