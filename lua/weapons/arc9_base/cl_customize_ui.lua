@@ -387,10 +387,12 @@ function SWEP:CreateCustomizeHUD()
 
     bg:SetPos(0, 0)
     bg:SetSize(ScrW(), ScrH())
+
     bg.OnRemove = function(self2)
         if !IsValid(self) then return end
         -- self:SavePreset()
     end
+
     bg.OnMouseWheeled = function(self2, sd)
         if !IsValid(self) then return end
         if !self2:IsHovered() then return false end -- to prevent wheeling outside area
@@ -399,6 +401,7 @@ function SWEP:CreateCustomizeHUD()
 
         self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -64, 64)
     end
+    
     bg:SetMouseInputEnabled(true)
 
     table.Empty(SeasonalHalloween)

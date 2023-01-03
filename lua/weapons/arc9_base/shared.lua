@@ -1007,6 +1007,15 @@ SWEP.SprintMidPoint = {
 -- Position for customizing
 SWEP.CustomizeAng = Angle(90, 0, 0)
 SWEP.CustomizePos = Vector(20, 32, 4)
+SWEP.CustomizeRotateAnchor = Vector(21.5, -4.27, -5.23) 
+-- To get right anchor: 
+-- 1. get all bones and find magazine one (or anything else thats close to middle of gun) - arc9_dev_listbones 
+-- 2. move yourself to 0 0 0 - by console commands - sv_cheats 1;setang 0 0 0;setpos 0 0 0 
+-- 3. unpause game and type another shit in console - lua_run print(Entity(1):GetViewModel():GetBoneMatrix(Entity(1):GetViewModel():LookupBone("FUNNY BONE HERE")):GetTranslation())
+-- (where FUNNY BONE HERE is name of your funny bone)
+-- 4. type that shit in vector above (don't forget about commas!!!!!)
+-- 5. adjust first number to make it look more centered in rotation
+--      done!!!!!
 SWEP.CustomizeSnapshotFOV = 90
 SWEP.CustomizeSnapshotPos = Vector(0, 0, 0)
 SWEP.CustomizeSnapshotAng = Angle(0, 0, 0)

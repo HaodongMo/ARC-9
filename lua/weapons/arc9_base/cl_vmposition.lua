@@ -73,6 +73,7 @@ local somevector3 = Vector(-1, -1, 1)
 local cangup = Vector(1, 0, 0)
 local cangforward = Vector(0, 0, -1)
 
+
 function SWEP:GetViewModelPosition(pos, ang)
     local owner = self:GetOwner()
 
@@ -350,8 +351,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         end
 
         cpos = cpos + cangup * self.CustomizePanX
-        cpos = cpos + cangforward * (self.CustomizePanY - 0.7)
-        cpos = cpos + somevector2 * (self.CustomizeZoom + 10)
+        cpos = cpos + cangforward * (self.CustomizePanY)
+        cpos = cpos + somevector2 * (self.CustomizeZoom - 15)
 
         offsetpos = LerpVector(curvedcustomizedelta, offsetpos, cpos)
         offsetang = LerpAngle(curvedcustomizedelta, offsetang, cang)
@@ -396,33 +397,8 @@ function SWEP:GetViewModelPosition(pos, ang)
     ang:RotateAroundAxis(oldangright, extra_offsetang[2])
     ang:RotateAroundAxis(oldangforward, extra_offsetang[3])
 
-    if curvedcustomizedelta > 0 then
-        if !self.CustomizeNoRotate then
-            self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch)
-            self.CustomizeYaw = math.NormalizeAngle(self.CustomizeYaw)
-            -- this needs to be better
-            -- its more like proof of concept
-            -- probably this can be better if it based on selected slot offset not random numbers
-
-            -- local px, py = rotatearound2dpoint(pos.x - 4, pos.y - 15, self.CustomizePitch, pos.x, pos.y)
-            -- i have no fucking ideaaaaa im bad at trigonometry
-
-            pos = pos + (angright * math.sin(math.rad(self.CustomizePitch)) * 18) * curvedcustomizedelta ^ 2
-            pos = pos + (angforward * math.cos(math.rad(self.CustomizePitch)) * -18) * curvedcustomizedelta ^ 2
-        end
-
-        pos = pos + (angright * -18) * curvedcustomizedelta ^ 2
-        pos = pos + (angforward * 18) * curvedcustomizedelta ^ 2
-
-        if !self.CustomizeNoRotate then
-            ang:RotateAroundAxis(EyeAngles():Up(), self.CustomizePitch * curvedcustomizedelta ^ 2)
-
-            if GetConVar("arc9_cust_roll_unlock"):GetBool() then
-                ang:RotateAroundAxis(EyeAngles():Right(), self.CustomizeYaw * curvedcustomizedelta ^ 2)
-            end
-        end
-    else
-        -- idle breath
+    
+    if curvedcustomizedelta <= 0 then -- idle breath
         local sighted = Lerp(sightdelta, 1, 0.1)
         local ct = CurTime() * math.pi * Lerp(sightdelta, 1, 0.5)
 
@@ -453,11 +429,6 @@ function SWEP:GetViewModelPosition(pos, ang)
         pos = DampVector(0.0000005, pos, self.ViewModelPos)
         ang = DampAngle(0.00001, ang, self.ViewModelAng)
 
-        -- pos = DampVector(0, pos, self.ViewModelPos)
-        -- ang = DampAngle(0, ang, self.ViewModelAng)
-
-        -- ang:Normalize()
-
         self.ViewModelPos = pos
         self.ViewModelAng = ang
     else
@@ -466,8 +437,24 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
 
-    -- LocalToWorld(Vector localPos, Angle localAng, Vector originPos, Angle originAngle)
-    -- self.ViewModelAng:Normalize()
+
+    -- CUSTOMISATION ROTATION AFTER DAMPING
+    if curvedcustomizedelta > 0 then 
+        if !self.CustomizeNoRotate then
+            self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch) * curvedcustomizedelta
+            self.CustomizeYaw = math.NormalizeAngle(self.CustomizeYaw) * curvedcustomizedelta
+            
+            -- local CustomizeRotateAnchor = Vector(21.5, -4.27, -5.23)
+            
+            local rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, self.CustomizeRotateAnchor, vector_origin, Angle(0, self.CustomizePitch, self.CustomizeYaw))
+            rap_pos:Sub(pos)
+            rap_ang:Sub(ang)
+
+            pos:Add(rap_pos)
+            ang:Add(rap_ang)
+        end
+    end
+
 
     pos, ang = self:GunControllerRHIK(pos, ang)
     pos, ang = self:GunControllerThirdArm(pos, ang)
