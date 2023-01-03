@@ -85,8 +85,6 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
                         local label = vgui.Create("ContentHeader", container)
                         label:SetText(subcatName)
                         self.PropPanel:Add(label)
-                    else
-                        continue
                     end
 
                     -- Create the clickable icon
