@@ -471,6 +471,12 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
             end
             -- local tr = self:GetProcessedValue("TracerNum")
 
+            local veh = NULL
+
+            if self:GetOwner():IsPlayer() then
+                veh = self:GetOwner():GetVehicle()
+            end
+
             self:GetOwner():FireBullets({
                 Damage = self:GetProcessedValue("DamageMax"),
                 Force = self:GetProcessedValue("ImpactForce"),
@@ -480,7 +486,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 Dir = ang:Forward(),
                 Src = pos,
                 Spread = Vector(spread, spread, spread),
-                IgnoreEntity = self:GetOwner():GetVehicle(),
+                IgnoreEntity = veh,
                 Distance = self:GetProcessedValue("Distance"),
                 Callback = function(att, btr, dmg)
                     local range = (btr.HitPos - btr.StartPos):Length()
