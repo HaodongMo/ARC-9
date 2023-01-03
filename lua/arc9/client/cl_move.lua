@@ -28,7 +28,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
         cmd:AddKey(IN_WEAPON1)
     end
 
-    if GetConVar("arc9_autolean") then
+    if GetConVar("arc9_autolean"):GetBool() then
         if cmd:KeyDown(IN_ATTACK2) or (wpn:ToggleADS() and arc9_lean_direction != nil and arc9_lean_direction != 0) then
             if arc9_lean_direction != nil and arc9_lean_direction != 0 then
                 if wpn:ToggleADS() then
