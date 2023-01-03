@@ -681,14 +681,27 @@ function SWEP:GetDamageDeltaAtRange(range)
 end
 
 function SWEP:GetDamageAtRange(range)
-    local d = self:GetDamageDeltaAtRange(range)
+    local damagelut = self:GetProcessedValue("DamageLookupTable")
 
-    local dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), self:GetProcessedValue("DamageMin"))
+    local dmgv = self:GetProcessedValue("DamageMax")
 
-    dmgv = self:GetProcessedValue("Damage", dmgv)
+    if damagelut then
+        for _, tbl in ipairs(damagelut) do
+            if range < tbl[1] then
+                dmgv = tbl[2]
+                break
+            end
+        end
+    else
+        local d = self:GetDamageDeltaAtRange(range)
 
-    if self:GetProcessedValue("DistributeDamage") then
-        dmgv = dmgv / self:GetProcessedValue("Num")
+        dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), self:GetProcessedValue("DamageMin"))
+
+        dmgv = self:GetProcessedValue("Damage", dmgv)
+
+        if self:GetProcessedValue("DistributeDamage") then
+            dmgv = dmgv / self:GetProcessedValue("Num")
+        end
     end
 
     local data = self:RunHook("Hook_GetDamageAtRange", {
@@ -698,8 +711,6 @@ function SWEP:GetDamageAtRange(range)
     }) or {}
 
     dmgv = data.dmg or dmgv
-
-    // dmgv = math.ceil(dmgv)
 
     return dmgv
 end

@@ -159,6 +159,19 @@ SWEP.Distance = 33000 -- In Hammer units, how far bullets can travel, period.
 
 SWEP.CurvedDamageScaling = true -- If true, damage will scale in a quadratic curve between RangeMin and RangeMax. If false, damage will scale linearly.
 
+SWEP.DamageLookupTable = nil --[[ Example: {
+    {
+        500, 100
+    },
+    {
+        1000, 50
+    },
+    {
+        2000, 10
+    }
+}
+]]--
+
 --[[
 function SWEP:Hook_GetDamageAtRange(data)
     data.dmg = (math.sin(data.range / 250) + 1) * 10

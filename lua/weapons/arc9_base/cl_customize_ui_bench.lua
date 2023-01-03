@@ -355,7 +355,10 @@ function SWEP:CreateHUD_Bench()
                 range_max_y = h / 4
             end
 
-            local dmg_scale = math.abs(range_max_y - range_min_y) / dmg_diff
+            local dmg_scale = h / 100
+            if dmg_diff > 0 then
+                dmg_diff = math.abs(range_max_y - range_min_y) / dmg_diff
+            end
 
             if range_min == 0 then
                 range_min_x = 0
