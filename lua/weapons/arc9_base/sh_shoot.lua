@@ -683,7 +683,7 @@ end
 function SWEP:GetDamageAtRange(range)
     local damagelut = self:GetProcessedValue("DamageLookupTable")
 
-    local dmgv = self:GetProcessedValue("DamageMax")
+    local dmgv = self:GetProcessedValue("DamageMin")
 
     if damagelut then
         for _, tbl in ipairs(damagelut) do
