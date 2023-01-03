@@ -20,7 +20,7 @@
 -- PLEASE       FIX
 -- I HATE GARRY NEWMAN
 
-hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree, node)
+hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree, anode)
 
     timer.Simple(0, function()
         -- Loop through the weapons and add them to the menu
@@ -85,6 +85,8 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
                         local label = vgui.Create("ContentHeader", container)
                         label:SetText(subcatName)
                         self.PropPanel:Add(label)
+                    else
+                        continue
                     end
 
                     -- Create the clickable icon
