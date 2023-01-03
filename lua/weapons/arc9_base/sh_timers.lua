@@ -6,12 +6,6 @@ function SWEP:InitTimers()
 end
 
 function SWEP:SetTimer(time, callback, id)
-    if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
-
-    if !self.ActiveTimers then
-        self:InitTimers()
-    end
-
     table.insert(self.ActiveTimers, {time + CurTime(), id or "", callback})
 end
 
@@ -39,7 +33,7 @@ function SWEP:KillSoundTable()
     local keeptimers = {}
 
     for _, v in ipairs(self.ActiveTimers or {}) do
-        if string.sub(v[2] or "", 1, 10) == "soundtable" then
+        if string.sub(v[2] or "", 1, 10) != "soundtable" then
             table.insert(keeptimers, v)
         end
     end
@@ -60,13 +54,10 @@ function SWEP:ProcessTimers()
     end
 
     for _, v in pairs(self.ActiveTimers) do
+        print(v[2])
         if v[1] <= UCT then
             v[3]()
-        end
-    end
-
-    for _, v in pairs(self.ActiveTimers) do
-        if v[1] > UCT then
+        else
             table.insert(keeptimers, v)
         end
     end
