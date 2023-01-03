@@ -60,8 +60,6 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
 
         if !ARC9Cats[node:GetText()] then continue end
 
-        print(node:GetText())
-
         -- Get the subcategories registered in this category
         local catSubcats = Categorised[node:GetText()]
 
