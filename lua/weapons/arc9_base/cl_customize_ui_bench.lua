@@ -331,51 +331,76 @@ function SWEP:CreateHUD_Bench()
             draw.NoTexture()
             surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0},{x = w, y = cornercut}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
 
-            local dmg_max = self:GetValue("DamageMax")
-            local dmg_min = self:GetValue("DamageMin")
-            local num = self:GetValue("Num")
-
-            if self:GetProcessedValue("DistributeDamage") then
-                dmg_max = dmg_max / num
-                dmg_min = dmg_min / num
-            end
-
             local range_min = self:GetValue("RangeMin")
             local range_max = self:GetValue("RangeMax")
+
+            local dmg_max = self:GetDamageAtRange(range_min)
+            local dmg_min = self:GetDamageAtRange(range_max)
 
             surface.SetDrawColor(ARC9.GetHUDColor("fg", 75))
 
             ranger_range = range_min
 
-            local range_1_y = 2 * (h / 5)
-            local range_2_y = 4 * (h / 5)
+            local dmg_diff = math.abs(dmg_max - dmg_min)
 
-            local range_1_x = 0
-            local range_2_x = (w / 5)
-            local range_3_x = 4 * (w / 5)
+            local range_min_x = (w / 5)
+            local range_max_x = 4 * (w / 5)
 
-            if dmg_max < dmg_min then
-                range_1_y = 4 * (h / 5)
-                range_2_y = 2 * (h / 5)
-            elseif dmg_max == dmg_min then
-                range_1_y = 3 * (h / 5)
-                range_2_y = 3 * (h / 5)
+            local range_min_y = 3 * h / 4
+            local range_max_y = 3 * h / 4
+
+            if dmg_max > dmg_min then
+                range_min_y = h / 4
+            elseif dmg_max < dmg_min then
+                range_max_y = h / 4
             end
+
+            local dmg_scale = math.abs(range_max_y - range_min_y) / dmg_diff
 
             if range_min == 0 then
-                range_2_x = 0
-                range_3_x = w / 2
+                range_min_x = 0
             end
 
-            surface.DrawLine(range_2_x, 0, range_2_x, h)
-            surface.DrawLine(range_3_x, 0, range_3_x, h)
+            surface.DrawLine(range_min_x, 0, range_min_x, h)
+            surface.DrawLine(range_max_x, 0, range_max_x, h)
 
             surface.SetDrawColor(ARC9.GetHUDColor("fg"))
 
-            for i = 0, 1 do
-                surface.DrawLine(range_1_x, range_1_y + i, range_2_x, range_1_y + i)
-                surface.DrawLine(range_2_x, range_1_y + i, range_3_x, range_2_y + i)
-                surface.DrawLine(range_3_x, range_2_y + i, w, range_2_y + i)
+            -- Draw min range line
+
+            surface.DrawLine(0, range_min_y, range_min_x, range_min_y)
+
+            -- Draw max range line
+
+            surface.DrawLine(range_max_x, range_max_y, w, range_max_y)
+
+            local segments = 25
+
+            local dmg_values = {
+                [0] = dmg_max
+            }
+
+            for i = 1, segments do
+                local range_at_i = Lerp(i / segments, range_min, range_max)
+                local dmg_at_i = self:GetDamageAtRange(range_at_i)
+                dmg_values[i] = dmg_at_i
+            end
+
+            local actual_minimum_damage = math.min(dmg_min, dmg_max)
+
+            for i = 1, segments do
+                local dmg_at_i = dmg_values[i - 1]
+                local dmg_at_i2 = dmg_values[i]
+
+                if dmg_at_i then
+                    local x1 = Lerp((i - 1) / segments, range_min_x, range_max_x)
+                    local x2 = Lerp(i / segments, range_min_x, range_max_x)
+
+                    local y1 = 3 * (h / 4) - (dmg_scale * (dmg_at_i - actual_minimum_damage))
+                    local y2 = 3 * (h / 4) - (dmg_scale * (dmg_at_i2 - actual_minimum_damage))
+
+                    surface.DrawLine(x1, y1, x2, y2)
+                end
             end
 
             local mouse_x, mouse_y = input.GetCursorPos()
@@ -389,14 +414,14 @@ function SWEP:CreateHUD_Bench()
 
                     local range_m_x = 0
 
-                    if mouse_x < range_2_x then
+                    if mouse_x < range_min_x then
                         range = range_min
-                        range_m_x = range_2_x
-                    elseif mouse_x > range_3_x then
+                        range_m_x = range_min_x
+                    elseif mouse_x > range_max_x then
                         range = range_max
-                        range_m_x = range_3_x
+                        range_m_x = range_max_x
                     else
-                        local d = (mouse_x - range_2_x) / (range_3_x - range_2_x)
+                        local d = (mouse_x - range_min_x) / (range_max_x - range_min_x)
                         range = Lerp(d, range_min, range_max)
                         range_m_x = mouse_x
                     end

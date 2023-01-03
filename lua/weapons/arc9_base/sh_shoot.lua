@@ -681,6 +681,13 @@ function SWEP:GetDamageAtRange(range)
         dmgv = dmgv / self:GetProcessedValue("Num")
     end
 
+    local data = self:RunHook("Hook_GetDamageAtRange", {
+        dmg = dmgv,
+        range = range
+    }) or {}
+
+    dmgv = data.dmg or dmgv
+
     dmgv = math.ceil(dmgv)
 
     return dmgv
