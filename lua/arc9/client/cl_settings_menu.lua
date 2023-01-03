@@ -560,7 +560,7 @@ function ARC9_OpenSettings(page)
     discord:SetIcon(Material("arc9/ui/discord.png", "mips smooth"))
     discord.DoClick = function(self2)
         surface.PlaySound(clicksound)
-        gui.OpenURL("https:--discord.gg/wkafWps44a")
+        gui.OpenURL("https://discord.gg/wkafWps44a")
     end    
 
     local steam = vgui.Create("ARC9TopButton", panel)
