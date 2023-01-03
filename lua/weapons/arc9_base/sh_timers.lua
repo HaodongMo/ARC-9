@@ -54,7 +54,6 @@ function SWEP:ProcessTimers()
     end
 
     for _, v in pairs(self.ActiveTimers) do
-        print(v[2])
         if v[1] <= UCT then
             v[3]()
         else
