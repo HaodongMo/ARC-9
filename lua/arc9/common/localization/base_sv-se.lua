@@ -399,8 +399,6 @@ L["settings.npc.npc_give_weapons.desc"] = "Spelare kan trycka på E på NPC:er f
 
 L["settings.gameplay.toggleads.title"] = "Växla Sikte"
 L["settings.gameplay.toggleads.desc"] = "Användning av sikten växlas."
-L["settings.gameplay.autolean.title"] = "Automatisk Lutning"
-L["settings.gameplay.autolean.desc"] = "Användning av sikten kommer automatisk luta om detta är möjligt."
 L["settings.gameplay.autoreload.title"] = "Automatisk Omladdning"
 L["settings.gameplay.autoreload.desc"] = "Tomma ARC9 vapen kommer automatiskt laddas om."
 L["settings.gameplay.infinite_ammo.title"] = "Oändlig Ammo"
@@ -536,3 +534,15 @@ L["settings.gameplay.togglepeek.desc"] = "Tryck på kika-knapparna kommer växla
 
 L["settings.npc.npc_spread.title"] = "NPC Spridning"
 L["settings.npc.npc_spread.desc"] = "Multiplikator för hur oträffsäkra NPC:er är när de skjuter."
+
+L["settings.gameplay.togglelean.title"] = "Växla Lutning"
+L["settings.gameplay.togglelean.desc"] = "Tryck på luta-knapparna kommer växla lutningen istället för att den behövs hållas inne.\n\nFungerar dåligt tillsammans med autolutning. Om du använder växlad lutning så borde du avaktivera autolutning."
+
+L["settings.developer.presets_clear.title"] = "Rensa vapendata"
+L["settings.developer.presets_clear.desc"] = "Rensar förinställningar, alla ikoner och standard förinställningar för vapnet du håller i.\n\nVarning: om menyn är öppnad utan ett ARC9 vapen i händerna så kommer den plocka bort alla ARC9 förinställningar och ikoner!"
+L["settings.developer.clear"] = "Rensa"
+
+L["atts.favourites"] = "Favoriter"
+L["atts.filter"] = "Filtrera"
+L["customize.hint.favorite"] = "Favorit"
+L["customize.hint.unfavorite"] = "Ta bort Favorit"
