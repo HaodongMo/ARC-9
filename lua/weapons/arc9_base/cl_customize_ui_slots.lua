@@ -1,4 +1,5 @@
 local mat_plus = Material("arc9/ui/plus.png")
+local mat_dash = Material("arc9/ui/dash.png")
 
 local clicksound = "arc9/newui/uimouse_click.ogg"
 
@@ -83,6 +84,8 @@ function SWEP:CreateHUD_Slots(scroll)
             end
             if ms_slot.DefaultIcon then
                 slotbtn:SetIcon(ms_slot.DefaultIcon)
+            elseif GetConVar("arc9_atts_nocustomize"):GetBool() then
+                slotbtn:SetIcon(mat_dash)
             else
                 slotbtn:SetIcon(mat_plus)
             end

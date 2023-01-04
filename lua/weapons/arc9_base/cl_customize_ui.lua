@@ -230,6 +230,7 @@ local mat_3dslot = Material("arc9/ui/3d_slot.png", "mips smooth")
 local mat_3dslot_empty = Material("arc9/ui/3d_slot_empty.png", "mips smooth")
 local mat_gear = Material("arc9/gear.png", "mips smooth")
 local mat_plus = Material("arc9/ui/plus.png")
+local mat_dash = Material("arc9/ui/dash.png")
 
 local lmbdown = false
 local rmbdown = false
@@ -870,6 +871,8 @@ function SWEP:CreateCustomizeHUD()
 
                         if ms_slot.DefaultIcon then
                             surface.SetMaterial(ms_slot.DefaultIcon)
+                        elseif GetConVar("arc9_atts_nocustomize"):GetBool() then
+                            surface.SetMaterial(mat_dash)
                         else
                             surface.SetMaterial(mat_plus)
                         end
