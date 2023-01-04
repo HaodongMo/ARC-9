@@ -133,152 +133,163 @@ SWEP.VisualRecoilVel = Angle(0, 0, 0)
 
 end
 
-function SWEP:ThinkVisualRecoil()
-    local ft = FrameTime()
+do
+    local min, max = math.min, math.max
 
-    -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
-    -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
-
-    -- local ds = 0.2 / (self.VisualRecoilPos:Length() / 1.5)
-    -- local dr = 0.1 / (self.VisualRecoilAng.p + self.VisualRecoilAng.y + self.VisualRecoilAng.r)
-
-    -- self.VisualRecoilPos.x = math.Approach(self.VisualRecoilPos.x, 0, FrameTime() / ds)
-    -- self.VisualRecoilPos.y = math.Approach(self.VisualRecoilPos.y, 0, FrameTime() / ds)
-    -- self.VisualRecoilPos.z = math.Approach(self.VisualRecoilPos.z, 0, FrameTime() / ds)
-
-    -- self.VisualRecoilAng.p = math.Approach(self.VisualRecoilAng.p, 0, FrameTime() / dr)
-    -- self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
-    -- self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
-
-    local vpa = self:GetVisualRecoilPos()
-    local vpv = self:GetVisualRecoilPosVel()
-    local springconstant = self:GetProcessedValue("VisualRecoilDampingConst") or 120
-    local VisualRecoilSpringMagnitude = self:GetProcessedValue("VisualRecoilSpringMagnitude") or 1
-    local PUNCH_DAMPING = self:GetProcessedValue("VisualRecoilSpringPunchDamping") or 6
-
-    if CLIENT then
-        vpa = self.VisualRecoilPos
-        vpv = self.VisualRecoilPosVel
+    -- Our math.Clamp is faster because:
+    -- 1. it is local (welcome to lua)
+    -- 2. min and max inside are local (WELCOME to lua + fake for the original function)
+    local function math_Clamp(val, low, high)
+        return min(max(val, low), high)
     end
 
-    if lensqr(vpa) + lensqr(vpv) > 0 then
-        -- {
-        --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
-        --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
-
-        vpa = vpa + (vpv * ft)
-        local damping = 1 - (POS_PUNCH_DAMPING * ft)
-
-        --     if ( damping < 0 )
-        --     {
-        --         damping = 0;
-        --     }
-
-        if damping < 0 then damping = 0 end
-
-        --     player->m_Local.m_vecPunchAngleVel *= damping;
-
-        vpv = vpv * damping
-
-        --     -- torsional spring
-        --     -- UNDONE: Per-axis spring constant?
-        --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
-        local springforcemagnitude = POS_PUNCH_CONSTANT * ft * VisualRecoilSpringMagnitude
-        --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
-        springforcemagnitude = math.Clamp(springforcemagnitude, 0, 2)
-        --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
-        vpv = vpv - (vpa * springforcemagnitude)
-
-        --     -- don't wrap around
-        --     player->m_Local.m_vecPunchAngle.Init( 
-        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
-        --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
-        --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
-        -- }
-
-        vpa[1] = math.Clamp(vpa[1], -89.9, 89.9)
-        vpa[2] = math.Clamp(vpa[2], -179.9, 179.9)
-        vpa[3] = math.Clamp(vpa[3], -89.9, 89.9)
-
-        self:SetVisualRecoilPos(vpa)
-        self:SetVisualRecoilPosVel(vpv)
-
-        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
-            self.VisualRecoilPos = vpa
-            self.VisualRecoilPosVel = vpv
+    function SWEP:ThinkVisualRecoil()
+        local ft = FrameTime()
+    
+        -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
+        -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
+    
+        -- local ds = 0.2 / (self.VisualRecoilPos:Length() / 1.5)
+        -- local dr = 0.1 / (self.VisualRecoilAng.p + self.VisualRecoilAng.y + self.VisualRecoilAng.r)
+    
+        -- self.VisualRecoilPos.x = math.Approach(self.VisualRecoilPos.x, 0, FrameTime() / ds)
+        -- self.VisualRecoilPos.y = math.Approach(self.VisualRecoilPos.y, 0, FrameTime() / ds)
+        -- self.VisualRecoilPos.z = math.Approach(self.VisualRecoilPos.z, 0, FrameTime() / ds)
+    
+        -- self.VisualRecoilAng.p = math.Approach(self.VisualRecoilAng.p, 0, FrameTime() / dr)
+        -- self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
+        -- self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
+    
+        local vpa = self:GetVisualRecoilPos()
+        local vpv = self:GetVisualRecoilPosVel()
+        local springconstant = self:GetProcessedValue("VisualRecoilDampingConst") or 120
+        local VisualRecoilSpringMagnitude = self:GetProcessedValue("VisualRecoilSpringMagnitude") or 1
+        local PUNCH_DAMPING = self:GetProcessedValue("VisualRecoilSpringPunchDamping") or 6
+    
+        if CLIENT then
+            vpa = self.VisualRecoilPos
+            vpv = self.VisualRecoilPosVel
         end
-    else
-        self:SetVisualRecoilPos(Vector())
-        self:SetVisualRecoilPosVel(self:GetVisualRecoilPos())
-
-        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
-            self.VisualRecoilPos = Vector()
-            self.VisualRecoilPosVel = self.VisualRecoilPos
+    
+        if lensqr(vpa) + lensqr(vpv) > 0 then
+            -- {
+            --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
+            --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
+    
+            vpa = vpa + (vpv * ft)
+            local damping = 1 - (POS_PUNCH_DAMPING * ft)
+    
+            --     if ( damping < 0 )
+            --     {
+            --         damping = 0;
+            --     }
+    
+            if damping < 0 then damping = 0 end
+    
+            --     player->m_Local.m_vecPunchAngleVel *= damping;
+    
+            vpv = vpv * damping
+    
+            --     -- torsional spring
+            --     -- UNDONE: Per-axis spring constant?
+            --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
+            local springforcemagnitude = POS_PUNCH_CONSTANT * ft * VisualRecoilSpringMagnitude
+            --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
+            springforcemagnitude = math_Clamp(springforcemagnitude, 0, 2)
+            --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
+            vpv = vpv - (vpa * springforcemagnitude)
+    
+            --     -- don't wrap around
+            --     player->m_Local.m_vecPunchAngle.Init( 
+            --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
+            --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
+            --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
+            -- }
+    
+            vpa[1] = math_Clamp(vpa[1], -89.9, 89.9)
+            vpa[2] = math_Clamp(vpa[2], -179.9, 179.9)
+            vpa[3] = math_Clamp(vpa[3], -89.9, 89.9)
+    
+            self:SetVisualRecoilPos(vpa)
+            self:SetVisualRecoilPosVel(vpv)
+    
+            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
+                self.VisualRecoilPos = vpa
+                self.VisualRecoilPosVel = vpv
+            end
+        else
+            self:SetVisualRecoilPos(Vector())
+            self:SetVisualRecoilPosVel(self:GetVisualRecoilPos())
+    
+            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
+                self.VisualRecoilPos = Vector()
+                self.VisualRecoilPosVel = self.VisualRecoilPos
+            end
         end
-    end
-
-    local vaa = self:GetVisualRecoilAng()
-    local vav = self:GetVisualRecoilVel()
-
-    if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
-        vaa = self.VisualRecoilAng
-        vav = self.VisualRecoilVel
-    end
-
-    if lensqr(vaa) + lensqr(vav) > 0.000001 then
-        -- {
-        --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
-        --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
-
-
-        vaa = vaa + (vav * ft)
-        local damping = 1 - (PUNCH_DAMPING * ft)
-
-        --     if ( damping < 0 )
-        --     {
-        --         damping = 0;
-        --     }
-
-        if damping < 0 then damping = 0 end
-
-        --     player->m_Local.m_vecPunchAngleVel *= damping;
-
-        vav = vav * damping
-
-        --     -- torsional spring
-        --     -- UNDONE: Per-axis spring constant?
-        --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
-        local springforcemagnitude = springconstant * ft
-        --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
-        springforcemagnitude = math.Clamp(springforcemagnitude, 0, 2)
-        --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
-        vav = vav - (vaa * springforcemagnitude)
-
-        --     -- don't wrap around
-        --     player->m_Local.m_vecPunchAngle.Init( 
-        --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
-        --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
-        --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
-        -- }
-
-        vaa[1] = math.Clamp(vaa[1], -89.9, 89.9)
-        vaa[2] = math.Clamp(vaa[2], -179.9, 179.9)
-        vaa[3] = math.Clamp(vaa[3], -89.9, 89.9)
-
-        self:SetVisualRecoilAng(vaa)
-        self:SetVisualRecoilVel(vav)
-
+    
+        local vaa = self:GetVisualRecoilAng()
+        local vav = self:GetVisualRecoilVel()
+    
         if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
-            self.VisualRecoilAng = vaa
-            self.VisualRecoilVel = vav
+            vaa = self.VisualRecoilAng
+            vav = self.VisualRecoilVel
         end
-    else
-        self:SetVisualRecoilAng(Angle(ang0))
-        self:SetVisualRecoilVel(Angle(ang0))
-
-        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted()) then
-            self.VisualRecoilAng = Angle(ang0)
-            self.VisualRecoilVel = Angle(ang0)
+    
+        if lensqr(vaa) + lensqr(vav) > 0.000001 then
+            -- {
+            --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
+            --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
+    
+    
+            vaa = vaa + (vav * ft)
+            local damping = 1 - (PUNCH_DAMPING * ft)
+    
+            --     if ( damping < 0 )
+            --     {
+            --         damping = 0;
+            --     }
+    
+            if damping < 0 then damping = 0 end
+    
+            --     player->m_Local.m_vecPunchAngleVel *= damping;
+    
+            vav = vav * damping
+    
+            --     -- torsional spring
+            --     -- UNDONE: Per-axis spring constant?
+            --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
+            local springforcemagnitude = springconstant * ft
+            --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
+            springforcemagnitude = math_Clamp(springforcemagnitude, 0, 2)
+            --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
+            vav = vav - (vaa * springforcemagnitude)
+    
+            --     -- don't wrap around
+            --     player->m_Local.m_vecPunchAngle.Init( 
+            --         clamp(player->m_Local.m_vecPunchAngle->x, -89.f, 89.f ), 
+            --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
+            --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
+            -- }
+    
+            vaa[1] = math_Clamp(vaa[1], -89.9, 89.9)
+            vaa[2] = math_Clamp(vaa[2], -179.9, 179.9)
+            vaa[3] = math_Clamp(vaa[3], -89.9, 89.9)
+    
+            self:SetVisualRecoilAng(vaa)
+            self:SetVisualRecoilVel(vav)
+    
+            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
+                self.VisualRecoilAng = vaa
+                self.VisualRecoilVel = vav
+            end
+        else
+            self:SetVisualRecoilAng(Angle(ang0))
+            self:SetVisualRecoilVel(Angle(ang0))
+    
+            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted()) then
+                self.VisualRecoilAng = Angle(ang0)
+                self.VisualRecoilVel = Angle(ang0)
+            end
         end
     end
 end
