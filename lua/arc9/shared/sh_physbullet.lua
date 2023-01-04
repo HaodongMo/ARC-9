@@ -15,9 +15,12 @@ if SERVER then
 
     function ARC9:SendPhysBulletModels(ply)
         net.Start("arc9_physbulletmodels")
-        net.WriteUInt(#ARC9.PhysBulletModels, 8)
-        for i, v in ipairs(ARC9.PhysBulletModels) do
-            net.WriteString(v)
+        local t = ARC9.PhysBulletModels
+        local count = #t
+
+        net.WriteUInt(count, 8)
+        for i=1, count do
+            net.WriteString(t[i])
         end
 
         if ply then
@@ -30,11 +33,16 @@ end
 
 function ARC9:RegisterPhysBulletModel(model)
     model = string.lower(model)
-    if #ARC9.PhysBulletModels >= 255 then return -1 end
+    local count = #ARC9.PhysBulletModels
+
+    if count >= 255 then return -1 end
     if ARC9.PhysBulletModelsLookup[model] then return ARC9.PhysBulletModelsLookup[model] end
-    local index = table.insert(ARC9.PhysBulletModels, model)
-    ARC9.PhysBulletModelsLookup[model] = index
-    return index
+    count = count+1
+
+    ARC9.PhysBulletModels[count] = model
+    ARC9.PhysBulletModelsLookup[model] = count
+
+    return count
 end
 
 function ARC9:SendBullet(bullet, attacker)
@@ -70,7 +78,6 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         if SERVER then ARC9:SendPhysBulletModels() end
     end
 
-    tbl = tbl or {}
     local bullet = {
         Penleft = wep:GetProcessedValue("Penetration"),
         Gravity = wep:GetProcessedValue("PhysBulletGravity"),
@@ -97,8 +104,10 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
         FirstTimeProcessed = true
     }
 
-    for i, k in pairs(tbl) do
-        bullet[i] = k
+    if tbl then
+        for i, k in pairs(tbl) do
+            bullet[i] = k
+        end
     end
 
     if bit.band( util.PointContents( pos ), CONTENTS_WATER ) == CONTENTS_WATER then
@@ -152,98 +161,103 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 end
 
 if CLIENT then
-
-net.Receive("arc9_sendbullet", function(len, ply)
-    local pos = net.ReadVector()
-    local ang = net.ReadAngle()
-    local vel = net.ReadFloat()
-    local trav = net.ReadFloat()
-    local drag = net.ReadFloat()
-    local grav = net.ReadFloat()
-    local indirect = net.ReadBool()
-    local weapon = net.ReadEntity()
-    local modelindex = net.ReadUInt(8)
-    local ent = nil
-
-    if game.SinglePlayer() then
-        ent = net.ReadEntity()
-    end
-
-    if !IsValid(weapon) then return end
-    if !weapon.ARC9 then return end
-
-    local bullet = {
-        Pos = pos,
-        Vel = ang:Forward() * vel,
-        Travelled = trav or 0,
-        StartTime = CurTime(),
-        Imaginary = false,
-        Underwater = false,
-        Indirect = indirect,
-        Dead = false,
-        Damaged = {},
-        Drag = drag,
-        Attacker = ent,
-        Gravity = grav,
-        Weapon = weapon,
-        ModelIndex = modelindex,
-        Color = weapon:GetProcessedValue("TracerColor"),
-        Fancy = weapon:GetProcessedValue("FancyBullets"),
-        Size = weapon:GetProcessedValue("TracerSize"),
-        Filter = {ent},
-        Guidance = weapon:GetProcessedValue("BulletGuidance"),
-        GuidanceAmount = weapon:GetProcessedValue("BulletGuidanceAmount"),
-        GuidanceTarget = weapon:GetLockOnTarget(),
-        Invisible = false,
-        Secondary = weapon:GetUBGL(),
-        Distance = weapon:GetProcessedValue("Distance")
-    }
-
-    if !weapon:ShouldTracer() then
-        bullet.Invisible = true
-    end
-
-    if bit.band( util.PointContents( pos ), CONTENTS_WATER ) == CONTENTS_WATER then
-        bullet.Underwater = true
-    end
-
-    if modelindex > 0 then
-        local mdl = ARC9.PhysBulletModels[modelindex]
-        bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
-        bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
-        table.insert(ARC9.CSModelPile, {Model = bullet.ClientModel, Weapon = weapon})
-    end
-
-    table.insert(ARC9.PhysBullets, bullet)
-end)
-
-net.Receive("arc9_physbulletmodels", function()
-    ARC9.PhysBulletModels = {}
-    local count = net.ReadUInt(8)
-    for i = 1, count do
-        ARC9.PhysBulletModels[i] = net.ReadString()
-        ARC9.PhysBulletModelsLookup[ARC9.PhysBulletModels[i]] = i
-    end
-end)
-
-hook.Add("InitPostEntity", "ARC9_RetrievePhysBulletModels", function()
-    net.Start("arc9_physbulletmodels")
-    net.SendToServer()
-end)
+    
+    net.Receive("arc9_sendbullet", function(len, ply)
+        local pos = net.ReadVector()
+        local ang = net.ReadAngle()
+        local vel = net.ReadFloat()
+        local trav = net.ReadFloat()
+        local drag = net.ReadFloat()
+        local grav = net.ReadFloat()
+        local indirect = net.ReadBool()
+        local weapon = net.ReadEntity()
+        local modelindex = net.ReadUInt(8)
+        local ent = nil
+    
+        if game.SinglePlayer() then
+            ent = net.ReadEntity()
+        end
+    
+        if !IsValid(weapon) then return end
+        if !weapon.ARC9 then return end
+    
+        local bullet = {
+            Pos = pos,
+            Vel = ang:Forward() * vel,
+            Travelled = trav or 0,
+            StartTime = CurTime(),
+            Imaginary = false,
+            Underwater = false,
+            Indirect = indirect,
+            Dead = false,
+            Damaged = {},
+            Drag = drag,
+            Attacker = ent,
+            Gravity = grav,
+            Weapon = weapon,
+            ModelIndex = modelindex,
+            Color = weapon:GetProcessedValue("TracerColor"),
+            Fancy = weapon:GetProcessedValue("FancyBullets"),
+            Size = weapon:GetProcessedValue("TracerSize"),
+            Filter = {ent},
+            Guidance = weapon:GetProcessedValue("BulletGuidance"),
+            GuidanceAmount = weapon:GetProcessedValue("BulletGuidanceAmount"),
+            GuidanceTarget = weapon:GetLockOnTarget(),
+            Invisible = false,
+            Secondary = weapon:GetUBGL(),
+            Distance = weapon:GetProcessedValue("Distance")
+        }
+    
+        if !weapon:ShouldTracer() then
+            bullet.Invisible = true
+        end
+    
+        if bit.band( util.PointContents( pos ), CONTENTS_WATER ) == CONTENTS_WATER then
+            bullet.Underwater = true
+        end
+    
+        if modelindex > 0 then
+            local mdl = ARC9.PhysBulletModels[modelindex]
+            bullet.ClientModel = ClientsideModel(mdl, RENDERGROUP_OPAQUE)
+            bullet.ClientModel:SetMoveType(MOVETYPE_NONE)
+            table.insert(ARC9.CSModelPile, {Model = bullet.ClientModel, Weapon = weapon})
+        end
+    
+        table.insert(ARC9.PhysBullets, bullet)
+    end)
+    
+    net.Receive("arc9_physbulletmodels", function()
+        ARC9.PhysBulletModels = {}
+        local count = net.ReadUInt(8)
+        for i = 1, count do
+            ARC9.PhysBulletModels[i] = net.ReadString()
+            ARC9.PhysBulletModelsLookup[ARC9.PhysBulletModels[i]] = i
+        end
+    end)
+    
+    hook.Add("InitPostEntity", "ARC9_RetrievePhysBulletModels", function()
+        net.Start("arc9_physbulletmodels")
+        net.SendToServer()
+    end)
 
 end
 
 function ARC9:DoPhysBullets()
-    local new = {}
-    for _, i in ipairs(ARC9.PhysBullets) do
-        ARC9:ProgressPhysBullet(i, FrameTime())
+    local i=1
+    local tab = ARC9.PhysBullets
+    local frameTime = FrameTime()
+    while true do
+        local v = tab[i]
+        if not v then break end
 
-        if !i.Dead then
-            table.insert(new, i)
+        ARC9:ProgressPhysBullet(v, frameTime)
+
+        if v.Dead then
+            table.remove(tab, i)
+        else
+            i = i+1
         end
     end
-
-    ARC9.PhysBullets = new
 end
 
 hook.Add("Think", "ARC9_DoPhysBullets", ARC9.DoPhysBullets)
@@ -255,6 +269,23 @@ local function indim(vec, maxdim)
         return true
     end
 end
+
+local bulletGravity = GetConVar("ARC9_bullet_gravity")
+local bulletDrag = GetConVar("ARC9_bullet_drag")
+local bulletImaginary = GetConVar("ARC9_bullet_imaginary")
+local traceResultTab = {}
+local traceTab = {
+    output = traceResultTab
+}
+local fireBullets = {
+    Tracer = 0,
+    Damage = 0
+}
+local fireBullets2 = {
+    Spread = vector_origin,
+    Tracer = 0,
+    Num = 1
+}
 
 function ARC9:ProgressPhysBullet(bullet, timestep)
     timestep = timestep or FrameTime()
@@ -272,8 +303,8 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
     local dir = bullet.Vel:GetNormalized()
     local spd = bullet.Vel:Length() * timestep
 
-    local drag = bullet.Drag * spd * spd * (1 / 150000)
-    local gravity = timestep * GetConVar("ARC9_bullet_gravity"):GetFloat() * (bullet.Gravity or 1) * 600
+    local drag = bullet.Drag * spd * spd * 6.666666666666667e-06
+    local gravity = timestep * bulletGravity:GetFloat() * (bullet.Gravity or 1) * 600
 
     -- if !IsValid(attacker) then
     --     bullet.Dead = true
@@ -295,13 +326,17 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         drag = drag * 3
     end
 
-    drag = drag * GetConVar("ARC9_bullet_drag"):GetFloat()
+    drag = drag * bulletDrag:GetFloat()
 
     if spd <= 0.001 then bullet.Dead = true return end
 
     local newpos = oldpos + (oldvel * timestep)
     local newvel = oldvel - (dir * drag)
-    newvel = newvel - (vector_up * gravity)
+
+    newvel[3] = newvel[3] - gravity
+    
+    local IsPlayer = attacker:IsPlayer()
+
 
     if bullet.Imaginary then
         -- the bullet has exited the map, but will continue being visible.
@@ -309,23 +344,26 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         bullet.Vel = newvel
         bullet.Travelled = bullet.Travelled + spd
 
-        if CLIENT and !GetConVar("ARC9_bullet_imaginary"):GetBool() then
+        if CLIENT and !bulletImaginary:GetBool() then
             bullet.Dead = true
         end
     else
-        if attacker:IsPlayer() and !attacker.ARC9_LAGCOMP then
+        if isPlayer and !attacker.ARC9_LAGCOMP then
             attacker:LagCompensation(true)
             attacker.ARC9_LAGCOMP = true
         end
 
-        local tr = util.TraceLine({
-            start = oldpos,
-            endpos = newpos,
-            filter = bullet.Filter,
-            mask = MASK_SHOT
-        })
 
-        if attacker:IsPlayer() then
+        traceTab.start = oldpos
+        traceTab.endpos = newpos
+        traceTab.filter = bullet.Filter
+        traceTab.mask = MASK_SHOT
+
+        util.TraceLine(traceTab)
+        
+        local tr = traceResultTab
+
+        if isPlayer then
             attacker:LagCompensation(false)
             attacker.ARC9_LAGCOMP = false
         end
@@ -339,7 +377,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         end
 
         if tr.HitSky then
-            if CLIENT and GetConVar("ARC9_bullet_imaginary"):GetBool() then
+            if CLIENT and bulletImaginary:GetBool() then
                 bullet.Imaginary = true
             else
                 bullet.Dead = true
@@ -357,7 +395,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             bullet.Pos = tr.HitPos
             -- if we're the client, we'll get the bullet back when it exits.
 
-            if attacker:IsPlayer() and !attacker.ARC9_LAGCOMP then
+            if isPlayer and !attacker.ARC9_LAGCOMP then
                 attacker:LagCompensation(true) -- Sometimes this line is called before the first lag compensation finishes, somehow.
                 attacker.ARC9_LAGCOMP = true
             end
@@ -375,31 +413,32 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             if CLIENT then
                 -- do an impact effect and forget about it
                 if !game.SinglePlayer() and bullet.FirstTimeProcessed and !ARC9.IsPointOutOfBounds(oldpos) then
-                    attacker:FireBullets({
-                        Src = oldpos,
-                        Dir = dir,
-                        Distance = spd + 16,
-                        Tracer = 0,
-                        Damage = 0,
-                        IgnoreEntity = bullet.Attacker
-                    })
+                    fireBullets.Src = oldpos
+                    fireBullets.Dir = dir
+                    fireBullets.Distance = spd + 16
+
+                    fireBullets.IgnoreEntity = bullet.Attacker
+
+                    attacker:FireBullets(fireBullets)
                 end
                 if IsValid(bullet.ClientModel) then
                     local t = weapon:GetProcessedValue("PhysBulletModelStick") or 0
                     if t > 0 then
-                        local bone = tr.Entity:TranslatePhysBoneToBone(tr.PhysicsBone) or tr.Entity:GetHitBoxBone(tr.HitBox, tr.Entity:GetHitboxSet())
-                        local matrix = tr.Entity:GetBoneMatrix(bone or 0)
+                        local entity = tr.Entity
+
+                        local bone = entity:TranslatePhysBoneToBone(tr.PhysicsBone) or entity:GetHitBoxBone(tr.HitBox, entity:GetHitboxSet())
+                        local matrix = entity:GetBoneMatrix(bone or 0)
                         if bone and matrix then
                             local pos = matrix:GetTranslation()
                             local ang = matrix:GetAngles()
-                            bullet.ClientModel:FollowBone(tr.Entity, bone)
+                            bullet.ClientModel:FollowBone(entity, bone)
                             local n_pos, n_ang = WorldToLocal(tr.HitPos, tr.Normal:Angle(), pos, ang)
                             bullet.ClientModel:SetLocalPos(n_pos)
                             bullet.ClientModel:SetLocalAngles(n_ang)
                         else
                             bullet.ClientModel:SetPos(bullet.Pos)
                             bullet.ClientModel:SetAngles(bullet.Vel:Angle())
-                            bullet.ClientModel:SetParent(tr.Entity)
+                            bullet.ClientModel:SetParent(entity)
                         end
                     end
                     SafeRemoveEntityDelayed(bullet.ClientModel, t)
@@ -410,25 +449,24 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                 bullet.Dead = true
 
                 if IsValid(bullet.Attacker) and IsValid(weapon) and !ARC9.IsPointOutOfBounds(oldpos) then
-                    bullet.Attacker:FireBullets({
-                        Damage = weapon:GetProcessedValue("DamageMax"),
-                        Force = weapon:GetProcessedValue("ImpactForce"),
-                        Tracer = 0,
-                        Num = 1,
-                        Dir = bullet.Vel:GetNormalized(),
-                        Src = oldpos,
-                        Spread = vector_origin,
-                        Callback = function(att, btr, dmg)
-                            local range = bullet.Travelled
 
-                            weapon.Penned = 0
-                            weapon:AfterShotFunction(btr, dmg, range, bullet.Penleft, bullet.Damaged, bullet.Secondary)
-                        end
-                    })
+                    fireBullets2.Damage = weapon:GetProcessedValue("DamageMax")
+                    fireBullets2.Force = weapon:GetProcessedValue("ImpactForce")
+                    fireBullets2.Dir = bullet.Vel:GetNormalized()
+                    fireBullets2.Src = oldpos
+                    fireBullets2.Spread = vector_origin
+                    fireBullets2.Callback = function(att, btr, dmg)
+                        local range = bullet.Travelled
+
+                        weapon.Penned = 0
+                        weapon:AfterShotFunction(btr, dmg, range, bullet.Penleft, bullet.Damaged, bullet.Secondary)
+                    end
+
+                    bullet.Attacker:FireBullets(fireBullets2)
                 end
             end
 
-            if attacker:IsPlayer() and attacker.ARC9_LAGCOMP then
+            if isPlayer and attacker.ARC9_LAGCOMP then
                 attacker:LagCompensation(false)
                 attacker.ARC9_LAGCOMP = false
             end
@@ -452,14 +490,20 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
             bullet.Travelled = bullet.Travelled + spd
 
             if CLIENT or game.SinglePlayer() then
+                local utr = {}
                 if bullet.Underwater then
                     if bit.band( util.PointContents( tr.HitPos ), CONTENTS_WATER ) != CONTENTS_WATER then
-                        local utr = util.TraceLine({
-                            start = tr.HitPos,
-                            endpos = oldpos,
-                            filter = bullet.Attacker,
-                            mask = MASK_WATER
-                        })
+                        
+                        traceTab.start = tr.HitPos
+                        traceTab.endpos = oldpos
+                        traceTab.filter = bullet.Attacker
+                        traceTab.mask = MASK_WATER
+                        traceTab.output = utr
+
+                        util.TraceLine(traceTab)
+
+                        
+                        traceTab.output = traceResultTab
 
                         if utr.Hit then
                             local fx = EffectData()
@@ -473,12 +517,15 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     end
                 else
                     if bit.band( util.PointContents( tr.HitPos ), CONTENTS_WATER ) == CONTENTS_WATER then
-                        local utr = util.TraceLine({
-                            start = oldpos,
-                            endpos = tr.HitPos,
-                            filter = bullet.Attacker,
-                            mask = MASK_WATER
-                        })
+                        traceTab.start = oldpos
+                        traceTab.endpos = tr.HitPos
+                        traceTab.filter = bullet.Attacker
+                        traceTab.mask = MASK_WATER
+                        traceTab.output = utr
+
+                        util.TraceLine(traceTab)
+
+                        traceTab.output = traceResultTab
 
                         if utr.Hit then
                             local fx = EffectData()
@@ -498,10 +545,16 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
     if bullet.Guidance and IsValid(bullet.GuidanceTarget) then
         local tgt_point = bullet.GuidanceTarget:GetPos()
 
-        local tgt_dir = (tgt_point - oldpos):GetNormalized()
+        tgt_point:Sub(oldpos)
+        tgt_point:Normalize()
+        tgt_point:Mul(timestep)
+        tgt_point:Mul(bullet.GuidanceAmount or 15000)
+
+     --   local tgt_dir = (tgt_point - oldpos):GetNormalized()
 
         -- needs work
-        bullet.Vel = bullet.Vel + (tgt_dir * timestep * (bullet.GuidanceAmount or 15000))
+
+        bullet.Vel:Add(tgt_point)
 
         local bdir = bullet.Vel:Forward()
         local vel = bullet.Vel:Length()
@@ -511,7 +564,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         bullet.Vel = bdir * vel
     end
 
-    local MaxDimensions = 16384 * 4
+    local MaxDimensions = 65536
     local WorldDimensions = 16384
 
     if bullet.Travelled > bullet.Distance then
@@ -531,6 +584,8 @@ end
 
 local head = Material("particle/fire")
 local tracer = Material("arc9/tracer")
+
+local col = Color(255, 225, 200)
 
 function ARC9.DrawPhysBullets()
     cam.Start3D()
@@ -593,7 +648,7 @@ function ARC9.DrawPhysBullets()
 
         -- cam.Start3D()
 
-        local col = i.Color or Color(255, 225, 200)
+        local col = i.Color or col
         -- local col = Color(255, 225, 200)
 
         render.SetMaterial(head)
@@ -601,7 +656,10 @@ function ARC9.DrawPhysBullets()
 
         render.SetMaterial(tracer)
 
-        local tail = (vec:GetNormalized() * math.min(vel:Length() * 0.5, math.min(1024, i.Travelled - 64)))
+        local t = vec:GetNormalized()
+        t:Mul(math.min(vel:Length() * 0.5, math.min(1024, i.Travelled - 64)))
+
+        local tail = t
 
         render.DrawBeam(pos, pos - tail, size * 0.75, 1, 0, col)
 
