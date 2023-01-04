@@ -2,11 +2,14 @@ SWEP.NearWallTick = 0
 SWEP.NearWallCached = false
 
 do
+    local traceResults = {}
+
     local traceData = {
-        start = Vector(0, 0, 0),
-        endpos = Vector(0, 0, 0),
-        filter = NULL,
-        mask = MASK_SHOT_HULL
+        start = true,
+        endpos = true,
+        filter = true,
+        mask = MASK_SHOT_HULL,
+        output = traceResults
     }
 
     local VECTOR = FindMetaTable("Vector")
@@ -39,7 +42,8 @@ do
         traceData.endpos = endPos
         traceData.filter = entityGetOwner(self)
 
-        local hit = util.TraceLine(traceData).Hit
+        util.TraceLine(traceData)
+        local hit = traceResults.Hit
 
         self.NearWallCached = hit
         self.NearWallTick = now + 0.1
