@@ -513,3 +513,6 @@ L["atts.favourites"] = "Избранное"
 L["atts.filter"] = "Фильтр"
 L["customize.hint.favorite"] = "Добавить в избранное"
 L["customize.hint.unfavorite"] = "Убрать из избранного"
+
+L["folder.favourites"] = "Избранное"
+L["customize.presets.unnamed"] = "Без названия"
