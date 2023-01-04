@@ -1,26 +1,51 @@
 SWEP.NearWallTick = 0
 SWEP.NearWallCached = false
 
-function SWEP:GetIsNearWall()
-    if self.NearWallTick == CurTime() then
-        return self.NearWallCached
-    end
-
-    local length = self:GetProcessedValue("BarrelLength")
-
-    if length == 0 then return false end
-
-    local tr = util.TraceLine({
-        start = self:GetShootPos(),
-        endpos = self:GetShootPos() + self:GetShootDir():Forward() * length,
-        filter = self:GetOwner(),
+do
+    local traceData = {
+        start = Vector(0, 0, 0),
+        endpos = Vector(0, 0, 0),
+        filter = NULL,
         mask = MASK_SHOT_HULL
-    })
+    }
 
-    self.NearWallCached = tr.Hit
-    self.NearWallTick = CurTime()
+    local VECTOR = FindMetaTable("Vector")
+    local vectorAdd = VECTOR.Add
+    local vectorMul = VECTOR.Mul
 
-    return tr.Hit
+    local angleForward = FindMetaTable("Angle").Forward
+    local entityGetOwner = FindMetaTable("Entity").GetOwner 
+
+    function SWEP:GetIsNearWall()
+        local now = CurTime()
+
+        if self.NearWallTick == now then
+            return self.NearWallCached
+        end
+
+        local length = self:GetProcessedValue("BarrelLength")
+
+        if length == 0 then return false end
+
+        local startPos = self:GetShootPos()
+
+        local shootDir = angleForward(self:GetShootDir())
+        vectorMul(shootDir, length)
+
+        local endPos = Vector(startPos)
+        vectorAdd(endPos, shootDir)
+
+        traceData.start = startPos
+        traceData.endpos = endPos
+        traceData.filter = entityGetOwner(self)
+
+        local hit = util.TraceLine(traceData).Hit
+
+        self.NearWallCached = hit
+        self.NearWallTick = now
+
+        return hit
+    end
 end
 
 function SWEP:ThinkNearWall()
