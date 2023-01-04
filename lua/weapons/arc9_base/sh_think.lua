@@ -8,6 +8,8 @@ function SWEP:Think()
         self:Idle()
     end
 
+    local shouldRunPredicted = not self:PredictionFilter()
+
     if !self.NotAWeapon then
         if self:GetProcessedValue("TriggerDelay") then
             if self:GetOwner():KeyReleased(IN_ATTACK) and (self:GetTriggerDelay() > CurTime() or self:GetPrimedAttack()) then
@@ -19,7 +21,7 @@ function SWEP:Think()
             end
 
             if self:GetPrimedAttack() and self:GetTriggerDelay() <= CurTime() and !self:GetOwner():KeyDown(IN_ATTACK) then
-                if !self:PredictionFilter() then
+                if not shouldRunPredicted then
                     self:PrimaryAttack()
                 end
             end
@@ -81,50 +83,40 @@ function SWEP:Think()
 
         -- Will remove these comments later
 
-        self:ThinkCycle()
+        if shouldRunPredicted then
+            self:ThinkCycle()
+            self:ThinkHeat()
+            self:ThinkReload()
 
+            -- Done (no GetVM)
+            self:ThinkSights()
+
+            self:ThinkBipod()
+            self:ThinkMelee()
+            self:ThinkUBGL()
+            self:ThinkGrenade()
+            self:ThinkTriggerSounds()
+        end
         -- Done
         self:ThinkRecoil()
-
-        self:ThinkHeat()
-
-        self:ThinkReload()
-
-        -- Done (no GetVM)
-        self:ThinkSights()
-
-        -- self:ThinkBlindFire()
-
-        self:ThinkBipod()
-
-        self:ThinkMelee()
-
         self:ThinkHoldBreath()
-
-        self:ThinkUBGL()
-
-        self:ThinkGrenade()
-
         self:ThinkLockOn()
-
-        self:ThinkTriggerSounds()
-
     end
 
-    self:ThinkLean()
+    if shouldRunPredicted then
+        self:ThinkLean()
+        self:ThinkFiremodes()
+        self:ThinkInspect()
+    end
 
     self:ThinkSprint()
 
     -- Done
     self:ThinkNearWall()
 
-    self:ThinkFiremodes()
-
     self:ThinkFreeAim()
 
     self:ThinkLoopingSound()
-
-    self:ThinkInspect()
 
     self:ThinkAnimation()
 

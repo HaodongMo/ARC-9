@@ -1,5 +1,4 @@
 function SWEP:ThinkInspect()
-    if self:PredictionFilter() then return end
     if self:StillWaiting() or self:GetInSights() then return end
     if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
     if self:GetUBGL() then return end

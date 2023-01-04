@@ -1,5 +1,4 @@
 function SWEP:ThinkGrenade()
-    if self:PredictionFilter() then return end
     if !self:GetProcessedValue("Throwable") then return end
 
     if IsValid(self:GetDetonatorEntity()) then
