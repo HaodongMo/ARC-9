@@ -548,6 +548,11 @@ local conVars = {
         default = "0",
         client = true
     },
+    {
+        name = "never_ready",
+        default = "0",
+        replicated = true
+    }
 }
 
 local prefix = "arc9_"
