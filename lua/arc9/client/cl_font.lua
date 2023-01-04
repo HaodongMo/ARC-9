@@ -3,8 +3,8 @@ local fontaddsize_cvar = (game.SinglePlayer() or CLIENT) and GetConVar("arc9_fon
 
 function ARC9:GetFont()
     local f = font_cvar and font_cvar:GetString()
-    --if !f or f == "" then f = ARC9:GetPhrase("font") or "Venryn Sans" end
-    if !f or f == "" then f = "Venryn Sans" end
+    if !f or f == "" then f = ARC9:GetPhrase("font") or "Venryn Sans" end
+    --if !f or f == "" then f = "Venryn Sans" end
     return f
 end
 
@@ -44,15 +44,15 @@ local function generatefonts()
 
         surface.CreateFont( "ARC9_" .. tostring(i), {
             font = font,
-            size = ARC9.ScreenScale(i+addsize),
-            weight = i<16 and 650 or 600,
+            size = ARC9.ScreenScale(i + addsize),
+            weight = i < 16 and 650 or 600,
             antialias = true,
             extended = true, -- Required for non-latin fonts
         } )
 
         surface.CreateFont( "ARC9_" .. tostring(i) .. "_Slim", {
             font = font,
-            size = ARC9.ScreenScale(i+addsize),
+            size = ARC9.ScreenScale(i + addsize),
             weight = 300,
             antialias = true,
             extended = true,
@@ -60,7 +60,7 @@ local function generatefonts()
 
         surface.CreateFont( "ARC9_" .. tostring(i) .. "_Glow", {
             font = font,
-            size = ARC9.ScreenScale(i+addsize),
+            size = ARC9.ScreenScale(i + addsize),
             weight = 600,
             antialias = true,
             blursize = ARC9.ScreenScale(i * 0.2),
@@ -75,7 +75,7 @@ local function generatefonts()
             font = unscaled_font,
             size = i,
             weight = 500,
-            antialias = true,
+            antialias = false,
             extended = true,
         } )
 
@@ -83,9 +83,26 @@ local function generatefonts()
             font = unscaled_font,
             size = i,
             weight = 500,
+            antialias = false,
+            blursize = i * 0.2,
+            extended = false,
+        } )
+
+        surface.CreateFont( "ARC9_" .. tostring(i) .. "_LCD", {
+            font = "HD44780A00 5x8",
+            size = i,
+            weight = 500,
+            antialias = true,
+            extended = true,
+        } )
+
+        surface.CreateFont( "ARC9_" .. tostring(i) .. "_LCD_Glow", {
+            font = "HD44780A00 5x8",
+            size = i,
+            weight = 500,
             antialias = true,
             blursize = i * 0.2,
-            extended = true,
+            extended = false,
         } )
 
     end

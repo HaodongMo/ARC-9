@@ -384,7 +384,7 @@ function SWEP:CreatePresetName()
         local txt = textentry:GetText()
         txt = string.sub(txt, 0, 36)
         
-        if txt == "" then txt = "Unnamed" end
+        if txt == "" then txt = ARC9:GetPhrase("customize.presets.unnamed") end
 
         if txt != "autosave" and txt != "default" then
             self:SavePreset(txt)

@@ -632,12 +632,12 @@ function ARC9.DrawHUD()
         end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
-        surface.SetFont("ARC9_24_Unscaled")
+        surface.SetFont("ARC9_24_LCD")
         surface.SetTextPos(health_x + s_right, health_y + s_down)
         surface.DrawText(healthtext)
 
         surface.SetTextColor(hw_col)
-        surface.SetFont("ARC9_24_Unscaled")
+        surface.SetFont("ARC9_24_LCD")
         surface.SetTextPos(health_x, health_y)
         surface.DrawText(healthtext)
 
@@ -647,16 +647,16 @@ function ARC9.DrawHUD()
             local armor = math.Round((localplayer:Armor() / 100) * 100)
             armor = "⌂:" .. tostring(math.ceil(armor)) .. "%"
 
-            surface.SetFont("ARC9_24_Unscaled")
+            surface.SetFont("ARC9_24_LCD")
             armor_x = armor_x - surface.GetTextSize(armor)
 
             surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
-            surface.SetFont("ARC9_24_Unscaled")
+            surface.SetFont("ARC9_24_LCD")
             surface.SetTextPos(armor_x + s_right, armor_y + s_down)
             surface.DrawText(armor)
 
             surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
-            surface.SetFont("ARC9_24_Unscaled")
+            surface.SetFont("ARC9_24_LCD")
             surface.SetTextPos(armor_x, armor_y)
             surface.DrawText(armor)
         end
@@ -751,12 +751,12 @@ function ARC9.DrawHUD()
         end
 
         surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
-        surface.SetFont("ARC9_24_Unscaled")
+        surface.SetFont("ARC9_24_LCD")
         surface.SetTextPos(ammo_x + s_right, ammo_y + s_down)
         surface.DrawText(ammo_text)
 
         surface.SetTextColor(am_col)
-        surface.SetFont("ARC9_24_Unscaled")
+        surface.SetFont("ARC9_24_LCD")
         surface.SetTextPos(ammo_x, ammo_y)
         surface.DrawText(ammo_text)
 
@@ -803,14 +803,14 @@ function ARC9.DrawHUD()
 
             surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 100))
             surface.SetTextColor(ARC9.GetHUDColor("shadow_3d", 100))
-            surface.SetFont("ARC9_12_Unscaled")
-            local fmh_w = GetControllerKeyLineSize( { font = "ARC9_12_Unscaled" }, fmh_text )
-            CreateControllerKeyLine( { x = fmh_x + s_right - fmh_w, y = fmh_y + s_down, size = 16, font = "ARC9_12_Unscaled" }, fmh_text )
+            surface.SetFont("ARC9_12_LCD")
+            local fmh_w = GetControllerKeyLineSize( { font = "ARC9_12_LCD" }, fmh_text )
+            CreateControllerKeyLine( { x = fmh_x + s_right - fmh_w, y = fmh_y + s_down, size = 16, font = "ARC9_12_LCD" }, fmh_text )
 
             surface.SetDrawColor(ARC9.GetHUDColor("fg_3d", 255))
             surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
-            surface.SetFont("ARC9_12_Unscaled")
-            CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_Unscaled" }, fmh_text )
+            surface.SetFont("ARC9_12_LCD")
+            CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_LCD" }, fmh_text )
         end
 
         if !GetConVar("arc9_hud_compact"):GetBool() then
@@ -1664,10 +1664,38 @@ function ARC9MultiLineText(text, maxw, font)
         for _, word in ipairs(words) do
             local tx = surface.GetTextSize(word)
 
-            if x + tx >= maxw then
-                table.insert(content, tline)
-                tline = ""
-                x = surface.GetTextSize(word)
+            if x + tx > maxw then
+                local dashi = string.find(word, "-")
+                if maxw - x <= maxw * 0.25 then
+                    -- move whole word to new line if blank space is not very large
+                    table.insert(content, tline)
+                    tline = ""
+                    x = surface.GetTextSize(word)
+                elseif dashi and surface.GetTextSize(utf8.sub(word, 0, dashi)) <= maxw - x then
+                    -- cut the word at the dash sign if possible
+                    table.insert(content, tline .. utf8.sub(word, 0, dashi))
+                    tline = ""
+                    x = 0
+                    word = utf8.sub(word, dashi + 1)
+                    tx = surface.GetTextSize(word)
+                else
+                    -- cut the word down from the middle
+                    while x + tx > maxw do
+                        local cut = ""
+                        for i = 2, utf8.len(word) do
+                            cut = utf8.sub(word, 0, -i)
+                            tx = surface.GetTextSize(cut)
+                            if x + tx < maxw then
+                                table.insert(content, tline .. cut)
+                                tline = ""
+                                word = utf8.sub(word, utf8.len(word) - i + 2)
+                                x = 0
+                                tx = surface.GetTextSize(word)
+                                break
+                            end
+                        end
+                    end
+                end
             end
 
             tline = tline .. word .. " "

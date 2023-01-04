@@ -113,6 +113,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
     shoottimegap = math.ease.OutCirc(shoottimegap)
 
+    if GetConVar("arc9_crosshair_static"):GetBool() then shoottimegap = 0 end
 
     cam.Start3D()
         local lool = ( EyePos() + ( EyeAngles():Forward() ) + ( (self:GetProcessedValue("Spread")) * EyeAngles():Up() ) ):ToScreen()

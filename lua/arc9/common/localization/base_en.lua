@@ -127,6 +127,9 @@ L["autostat.visualrecoilroll"] = "Visual Recoil Roll"
 L["autostat.visualrecoilpunch"] = "Visual Recoil Punch"
 L["autostat.breathholdtime"] = "Focus Time"
 
+L["autostat.secondary._beforephrase"] = false -- if true, secondary stat phrasing comes before the stat
+L["autostat.secondary._divider"] = " " -- space between the secondary phrase from the stat phrase. set true to use empty string
+
 L["autostat.secondary.true"] = "when TrueNames is on"
 L["autostat.secondary.silenced"] = "when Silenced"
 L["autostat.secondary.midair"] = "in Mid-Air"
@@ -550,3 +553,5 @@ L["atts.favourites"] = "Favourites"
 L["atts.filter"] = "Filter"
 L["customize.hint.favorite"] = "Favorite"
 L["customize.hint.unfavorite"] = "Remove Favorite"
+
+L["customize.presets.unnamed"] = "Unnamed"

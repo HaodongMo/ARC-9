@@ -267,9 +267,19 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         if stat == "_Priority" then continue end
 
         if string.len(stat) > 0 then
+
+            local before = ARC9:GetPhrase("autostat.secondary._beforephrase")
+            local div = ARC9:GetPhrase("autostat.secondary._divider")
+            if div == true then div = "" end
+
             for cond, postfix in pairs(ARC9.AutoStatsConditions) do
                 if string.StartWith(stat, cond) then
-                    autostat = autostat .. " " .. (ARC9:GetPhrase("autostat.secondary." .. string.lower(cond)) or "")
+                    local phrase = (ARC9:GetPhrase("autostat.secondary." .. string.lower(cond)) or "")
+                    if before then
+                        autostat = phrase .. div .. autostat
+                    else
+                        autostat = autostat .. div .. phrase
+                    end
                     break
                 end
             end
