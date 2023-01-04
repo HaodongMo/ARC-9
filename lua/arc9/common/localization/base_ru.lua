@@ -516,3 +516,8 @@ L["customize.hint.unfavorite"] = "Убрать из избранного"
 
 L["folder.favourites"] = "Избранное"
 L["customize.presets.unnamed"] = "Без названия"
+
+-- Added 04-JAN-2023
+
+L["settings.gameplay.never_ready.title"] = "Отключить Ready анимации"
+L["settings.gameplay.never_ready.desc"] = "Никогда не проигрывать \"ready\" анимации при доставании любого оружия.\n\nЭто серверная переменная."

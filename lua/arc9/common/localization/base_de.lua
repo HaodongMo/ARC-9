@@ -513,3 +513,6 @@ L["customize.hint.unfavorite"] = "Entfavorisieren"
 
 L["customize.presets.unnamed"] = "Unbenannt"
 L["folder.favorites"] = "Favoriten"
+
+L["settings.gameplay.never_ready.title"] = "Keine \"Ready\"-Animationen."
+L["settings.gameplay.never_ready.desc"] = "Deaktiviere \"Ready\"-Animationen beim zücken einer Waffe."
