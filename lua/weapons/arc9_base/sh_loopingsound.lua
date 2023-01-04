@@ -97,6 +97,16 @@ local dirs = {
     Angle(-15, 240, 0), -- side
 }
 
+
+local traceResultTable = {}
+
+local traceTable = {
+    start = 0,
+    endpos = 0,
+    mask = 16513,
+    output = traceResultTable
+}
+
 function SWEP:GetIndoor()
     if !self.ShootSoundIndoor then return false end -- non realism guns!!!
 
@@ -109,14 +119,23 @@ function SWEP:GetIndoor()
     local hits = 0
     local endmult = 0
 
-    for i, dir in ipairs(dirs) do
-        local tracetable = {
-            start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() + dir:Forward() * 500 * (i == 1 and 2 or 1), -- if first trace (up) then multiplicate length by 1.5
-            mask = 16513
-        }
+    local owner = self:GetOwner()
+    local eyePos = owner:EyePos() -- vector which will be used for adding dir:Forward()
+    local eyePos2 = Vector(eyePos)
 
-        local tr = util.TraceLine(tracetable)
+    traceTable.start = eyePos -- copy
+    traceTable.endpos = eyePos2
+
+    for i, dir in ipairs(dirs) do
+
+        local dirForward = dir:Forward()
+        dirForward:Mul(500 * (i == 1 and 2 or 1))
+        eyePos2:Set(eyePos)
+        eyePos2:Add(dirForward)
+
+        util.TraceLine(traceTable)        
+
+        local tr = traceResultTable
 
         if tr.Hit and !tr.HitSky then
             hits = hits + 1
