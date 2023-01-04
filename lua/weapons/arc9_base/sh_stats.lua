@@ -228,11 +228,13 @@ do
         local stat = base
 
         if stat == nil then
-            stat = self[val]
+            stat = self:GetTable()[val]
         end
 
         local valContCondition = val .. condition
-        if self.HasNoAffectors[valContCondition] == true then return stat end
+        if self.HasNoAffectors[valContCondition] == true then
+            return stat
+        end
         local unaffected = true
         local statType = type(stat)
         local baseStr = tostring(base)

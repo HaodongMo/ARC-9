@@ -251,8 +251,8 @@ local function DarsuBob(self, pos, ang)
 end
 
 function SWEP:GetViewModelBob(pos, ang)
-    self.Sway = 0
-    self.Bob = 0
+    self.SwayScale = 0
+    self.BobScale = 0
     if GetConVar("arc9_vm_bobstyle"):GetInt() == 1 then
         return FesiugBob(self, pos, ang)
     elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 2 then
