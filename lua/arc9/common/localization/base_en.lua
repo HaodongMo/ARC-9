@@ -366,8 +366,8 @@ L["settings.hud_cust.cust_light_brightness.title"] = "Light Brightness"
 L["settings.hud_cust.cust_light_brightness.desc"] = "How bright that light in the customization panel will be.\n\nDon't forget to turn it on first though!"
 L["settings.hud_cust.cust_hints.title"] = "Hints"
 L["settings.hud_cust.cust_hints.desc"] = "Enable hints in the customization menu."
-L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll"
-L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way."
+L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
+L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Exit Resets Selection"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Exiting customization menu resets the active slot selection."
 
