@@ -52,16 +52,13 @@ do
     end
 end
 
+local swepGetIsNearWall = SWEP.GetIsNearWall
+local math_Approach = math.Approach
+local FrameTime = FrameTime
+
 function SWEP:ThinkNearWall()
-    local target = 0
-
-    if self:GetIsNearWall() then
-        target = 1
-    end
-
-    local amt = self:GetNearWallAmount()
-
-    amt = math.Approach(amt, target, FrameTime() / self:GetProcessedValue("SprintToFireTime"))
-
-    self:SetNearWallAmount(amt)
+    self:SetNearWallAmount(math_Approach(
+        self.dt.NearWallAmount, 
+        swepGetIsNearWall(self) and 1 or 0, 
+        FrameTime() / self:GetProcessedValue("SprintToFireTime")))
 end
