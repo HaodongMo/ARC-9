@@ -552,4 +552,4 @@ L["folder.favourites"] = "Favoriter"
 L["customize.presets.unnamed"] = "Namnlös"
 
 L["settings.gameplay.never_ready.title"] = "Inga \"Redo\" Anim."
-L["settings.gameplay.never_ready.desc"] = "Avaktivera \"Redo\" animationer när du tar fram ett vapen."
+L["settings.gameplay.never_ready.desc"] = "Avaktivera \"Redo\" animationer när du tar fram ett vapen.\n\nDetta är en servervariabel."

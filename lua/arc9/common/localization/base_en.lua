@@ -560,4 +560,4 @@ L["folder.favorites"] = "Favorites"
 -- Added 04-JAN-2023
 
 L["settings.gameplay.never_ready.title"] = "No Ready Anims"
-L["settings.gameplay.never_ready.desc"] = "Disable ready animations when deploying a weapon."
+L["settings.gameplay.never_ready.desc"] = "Disable ready animations when deploying a weapon.\n\nThis is a server variable."
