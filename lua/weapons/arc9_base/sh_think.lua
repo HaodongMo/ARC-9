@@ -19,6 +19,16 @@ local swepDoDeployAnimation = SWEP.DoDeployAnimation
 
 -- uuugghh
 -- local swepThinkSprint = SWEP.ThinkSprint
+local swepThinkCycle = SWEP.ThinkCycle
+local swepThinkHeat = SWEP.ThinkHeat
+local swepThinkReload = SWEP.ThinkReload
+local swepThinkSights = SWEP.ThinkSights
+local swepThinkBipod = SWEP.ThinkBipod
+local swepThinkMelee = SWEP.ThinkMelee
+local swepThinkGrenade = SWEP.ThinkGrenade
+local swepThinkRecoil = SWEP.ThinkRecoil
+local swepThinkHoldBreath = SWEP.ThinkHoldBreath
+local swepThinkLockOn = SWEP.ThinkLockOn
 local swepThinkLean = SWEP.ThinkLean
 local swepThinkFiremodes = SWEP.ThinkFiremodes
 local swepThinkInspect = SWEP.ThinkInspect
@@ -138,17 +148,15 @@ function SWEP:Think()
         -- Will remove these comments later
 
         if shouldRunPredicted then
-            self:ThinkCycle()
-            self:ThinkHeat()
-            self:ThinkReload()
-
+            swepThinkCycle(self)
+            swepThinkHeat(self)
+            swepThinkReload(self)
             -- Done (no GetVM)
-            self:ThinkSights()
-
-            self:ThinkBipod()
-            self:ThinkMelee()
+            swepThinkSights(self)
+            swepThinkBipod(self)
+            swepThinkMelee(self)
             self:ThinkUBGL()
-            self:ThinkGrenade()
+            swepThinkGrenade(self)
             self:ThinkTriggerSounds()
         end
         -- Done
