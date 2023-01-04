@@ -55,67 +55,78 @@ function SWEP:ToggleADS()
     return self:GetOwner():GetInfoNum("arc9_toggleads", 0) >= 1
 end
 
-function SWEP:ThinkSights()
-    -- if self:GetSafe() then return end
-    if self:PredictionFilter() then return end
+do
+    local ENTITY = FindMetaTable("Entity")
+    local entityGetOwner = ENTITY.GetOwner
+    local entitySetPoseParameter = ENTITY.SetPoseParameter
 
-    local sighted = self:GetInSights()
+    local PLAYER = FindMetaTable("Player")
+    local playerKeyDown = PLAYER.KeyDown
+    local playerKeyPressed = PLAYER.KeyPressed
 
-    if self:GetSafe() or self:GetIsNearWall() then
-        sighted = false
-    end
+    local swepGetIsNearWall = SWEP.GetIsNearWall
+    local swepToggleADS = SWEP.ToggleADS
+    local swepExitSights = SWEP.ExitSights
+    local swepEnterSights = SWEP.EnterSights
+    local swepGetBipodAmount = SWEP.GetBipodAmount
 
-    local amt = self:GetSightAmount()
-    local oldamt = amt
+    function SWEP:ThinkSights()
+        -- if self:GetSafe() then return end
+        if self:PredictionFilter() then return end
 
-    if sighted then
-        amt = math.Approach(amt, 1, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
-    else
-        amt = math.Approach(amt, 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
-    end
+        local vm = self:GetVM()
+        local swepDt = self.dt
 
-    if CLIENT then
-        self:GetVM():SetPoseParameter("sights", amt)
-    end
-
-    if oldamt != amt then
-        self:SetSightAmount(amt)
-    end
-
-    local owner = self:GetOwner()
-    local toggle = self:ToggleADS()
-    local inatt = owner:KeyDown(IN_ATTACK2)
-    local pratt = owner:KeyPressed(IN_ATTACK2)
-
-    if toggle then
-        if sighted and pratt then
-            self:ExitSights()
-        elseif !sighted and pratt then
-            -- if self:GetOwner():KeyDown(IN_USE) then
-                -- return
-            -- end why was this here?
-            self:EnterSights()
+        local sighted = swepDt.InSights
+        if swepDt.Safe or swepGetIsNearWall(self) then
+            sighted = false
         end
 
-        if pratt then
-            self:BuildMultiSight()
-        end
-    else
-        if sighted and !inatt then
-            self:ExitSights()
-        elseif !sighted and inatt then
-            -- if self:GetOwner():KeyDown(IN_USE) then
-                -- return
-            -- end why was this here?
-            self:EnterSights()
-            self:BuildMultiSight()
-        end
-    end
+        local oldamt = swepDt.SightAmount
+        local amt = math.Approach(
+            oldamt, sighted and 1 or 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
 
-    if sighted then
-        if owner:KeyPressed(IN_USE) and owner:KeyDown(IN_WALK) then
+        if CLIENT then
+            entitySetPoseParameter(vm, "sights", amt)
+        end
+
+        if oldamt ~= amt then
+            self:SetSightAmount(amt)
+        end
+
+        local owner = entityGetOwner(self)
+        local toggle = swepToggleADS(self)
+        local inatt = playerKeyDown(owner, IN_ATTACK2)
+        local pratt = playerKeyPressed(owner, IN_ATTACK2)
+
+        if toggle then
+            if sighted and pratt then
+                swepExitSights(self)
+            elseif not sighted and pratt then
+                -- if self:GetOwner():KeyDown(IN_USE) then
+                    -- return
+                -- end why was this here?
+                swepEnterSights(self)
+            end
+    
+            if pratt then
+                self:BuildMultiSight()
+            end
+        else
+            if sighted and !inatt then
+                swepExitSights(self)
+            elseif not sighted and inatt then
+                -- if self:GetOwner():KeyDown(IN_USE) then
+                    -- return
+                -- end why was this here?
+                swepEnterSights(self)
+                self:BuildMultiSight()
+            end
+        end
+
+        if sighted and playerKeyPressed(owner, IN_USE) and playerKeyDown(owner, IN_WALK) then
             -- if CurTime() - self:GetLastPressedETime() < 0.33 then
-            if owner:KeyDown(IN_SPEED) then
+            if playerKeyDown(owner, IN_SPEED) then
                 self:SwitchMultiSight(-1)
             else
                 self:SwitchMultiSight()
@@ -125,14 +136,9 @@ function SWEP:ThinkSights()
             --     self:SetLastPressedETime(CurTime())
             -- end
         end
+
+        entitySetPoseParameter(vm, "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
     end
-
-    local vm = self:GetVM()
-
-    local sightamount = self:GetSightAmount()
-    local bipodamount = self:GetBipodAmount()
-
-    vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
 end
 
 SWEP.MultiSightTable = {
