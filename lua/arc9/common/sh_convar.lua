@@ -250,6 +250,10 @@ local conVars = {
         replicated = true
     },
     {
+        name = "never_ready",
+        default = "0",
+    },
+    {
         name = "dev_always_ready",
         default = "0",
     },
