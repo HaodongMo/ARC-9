@@ -493,11 +493,23 @@ L["customize.presets.cancel"] = "Abbrechen"
 L["customize.presets.dumb"] = "Bist du dumm"
 L["customize.presets.invalid"] = "Ungültiger String!"
 
-L["settings.gameplay.togglelean.title"] = "Lehnen umschalten"
-L["settings.gameplay.togglelean.desc"] = "Das Drücken der Lehnen-Tasten schaltet die Lehn-Richtung um, anstatt gedrückt gehalten werden zu müssen."
-
 L["settings.gameplay.togglepeek.title"] = "Spähen umschalten"
 L["settings.gameplay.togglepeek.desc"] = "Das Drücken der Spähen-Taste schaltet das Spähen um, anstatt gedrückt gehalten werden zu müssen."
 
 L["settings.npc.npc_spread.title"] = "NPC-Streuung"
 L["settings.npc.npc_spread.desc"] = "Multiplikator für wie ungenau NPCs beim Feuern sein sollen."
+
+L["settings.gameplay.togglelean.title"] = "Lehnen umschalten"
+L["settings.gameplay.togglelean.desc"] = "Das Drücken der Lehnen-Tasten schaltet die Lehn-Richtung um, anstatt gedrückt gehalten werden zu müssen.\n\nFunktioniert nicht perfekt zusammen mit Auto-Lehnen. Du solltest Auto-Lehnen deaktivieren, solange du \"Lehnen umschalten\" benutzt."
+
+L["settings.developer.presets_clear.title"] = "Waffen-Daten löschen"
+L["settings.developer.presets_clear.desc"] = "Lösche Voreinstellungen, alle Icons und Standardvoreinstellungen für Waffen, die du gerade hältst.\n\nWarnung: Wenn das Menü ohne eine ARC9-Waffe in den Händen geöffnet wird, werden alle vorhandenen ARC9-Voreinstellungen und -Icons gelöscht!"
+L["settings.developer.clear"] = "Löschen"
+
+L["atts.favourites"] = "Favoriten"
+L["atts.filter"] = "Filter"
+L["customize.hint.favorite"] = "Favorisieren"
+L["customize.hint.unfavorite"] = "Entfavorisieren"
+
+L["customize.presets.unnamed"] = "Unbenannt"
+L["folder.favorites"] = "Favoriten"
