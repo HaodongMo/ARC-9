@@ -46,7 +46,7 @@ do
         local hit = traceResults.Hit
 
         self.NearWallCached = hit
-        self.NearWallTick = now + 0.1
+        self.NearWallTick = now
 
         return hit
     end
