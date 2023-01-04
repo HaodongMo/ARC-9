@@ -244,6 +244,8 @@ do
     local swepExitSights = SWEP.ExitSights
     local swepEnterSights = SWEP.EnterSights
     local swepGetBipodAmount = SWEP.GetBipodAmount
+    local swepBuildMultiSight = SWEP.BuildMultiSight
+    local swepSwitchMultiSight = SWEP.SwitchMultiSight
 
     function SWEP:ThinkSights()
         -- if self:GetSafe() then return end
@@ -285,7 +287,7 @@ do
             end
     
             if pratt then
-                self:BuildMultiSight()
+                swepBuildMultiSight(self)
             end
         else
             if sighted and !inatt then
@@ -295,16 +297,16 @@ do
                     -- return
                 -- end why was this here?
                 swepEnterSights(self)
-                self:BuildMultiSight()
+                swepBuildMultiSight(self)
             end
         end
 
         if sighted and playerKeyPressed(owner, IN_USE) and playerKeyDown(owner, IN_WALK) then
             -- if CurTime() - self:GetLastPressedETime() < 0.33 then
             if playerKeyDown(owner, IN_SPEED) then
-                self:SwitchMultiSight(-1)
+                swepSwitchMultiSight(self, -1)
             else
-                self:SwitchMultiSight()
+                swepSwitchMultiSight(self)
             end
             --     self:SetLastPressedETime(0)
             -- else
