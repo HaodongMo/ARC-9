@@ -283,30 +283,37 @@ function SWEP:ThinkVisualRecoil()
     end
 end
 
-function SWEP:ThinkRecoil()
-    local rdr = self:GetProcessedValue("RecoilDissipationRate")
+do
+    local weaponGetNextPrimaryFire = FindMetaTable("Weapon").GetNextPrimaryFire
+    local swepThinkVisualRecoil = SWEP.ThinkVisualRecoil
 
-    if (self:GetNextPrimaryFire() + self:GetProcessedValue("RecoilResetTime")) < CurTime() then
-        local rec = self:GetRecoilAmount()
+    -- Unfortunately, this file is loaded before sh_stats,
+    -- so we do not know about this function at this time
+    local swepGetProcessedValue
 
-        rec = rec - (FrameTime() * rdr)
+    function SWEP:ThinkRecoil()
+        swepGetProcessedValue = swepGetProcessedValue or self.GetProcessedValue
 
-        self:SetRecoilAmount(math.max(rec, 0))
-        -- print(math.Round(rec))
+        local rdr = swepGetProcessedValue(self, "RecoilDissipationRate")
+    
+        if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < CurTime() then
+            self:SetRecoilAmount(math.max(self.dt.RecoilAmount - (FrameTime() * rdr), 0))
+            -- print(math.Round(rec))
+        end
+    
+        -- local ru = self:GetRecoilUp()
+        -- local rs = self:GetRecoilSide()
+    
+        -- if math.abs(ru) > 0 or math.abs(rs) > 0 then
+        --     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
+        --     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
+    
+        --     self:SetRecoilUp(new_ru)
+        --     self:SetRecoilSide(new_rs)
+        -- end
+    
+        swepThinkVisualRecoil(self)
     end
-
-    -- local ru = self:GetRecoilUp()
-    -- local rs = self:GetRecoilSide()
-
-    -- if math.abs(ru) > 0 or math.abs(rs) > 0 then
-    --     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
-    --     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
-
-    --     self:SetRecoilUp(new_ru)
-    --     self:SetRecoilSide(new_rs)
-    -- end
-
-    self:ThinkVisualRecoil()
 end
 
 function SWEP:DoVisualRecoil()
