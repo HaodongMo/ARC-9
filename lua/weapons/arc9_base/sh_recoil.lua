@@ -1,5 +1,11 @@
 SWEP.RecoilPatternCache = {}
 
+-- Unfortunately, this file is loaded before sh_stats,
+-- so we do not know about this function at this time
+local swepGetProcessedValue
+
+local isSingleplayer = game.SinglePlayer()
+
 function SWEP:GetRecoilPatternDirection(shot)
     local dir = 0
 
@@ -111,8 +117,12 @@ function SWEP:ApplyRecoil()
     self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
 end
 
-local function lensqr(ang)
-    return (ang[1] ^ 2) + (ang[2] ^ 2) + (ang[3] ^ 2)
+-- local function lensqr(ang)
+--     return (ang[1] ^ 2) + (ang[2] ^ 2) + (ang[3] ^ 2)
+-- end
+-- :troll:
+local function twoLenSqr(ang1, ang2)
+    return (ang1[1] ^ 2) + (ang1[2] ^ 2) + (ang1[3] ^ 2) + (ang2[1] ^ 2) + (ang2[2] ^ 2) + (ang2[3] ^ 2)
 end
 
 -- scraped from source SDK 2013, just like this viewpunch damping code
@@ -143,8 +153,21 @@ do
         return min(max(val, low), high)
     end
 
+    local VECTOR = FindMetaTable("Vector")
+    local vectorSub = VECTOR.Sub
+    local vectorAdd = VECTOR.Add
+    local vectorMul = VECTOR.Mul
+
+    local ANGLE = FindMetaTable("Angle")
+    local angleSub = ANGLE.Sub
+    local angleAdd = ANGLE.Add
+    local angleMul = ANGLE.Mul
+
     function SWEP:ThinkVisualRecoil()
+        -- Don't need to update swepGetProcessedValue because we doing it inside ThinkRecoil
         local ft = FrameTime()
+        local swepDt = self.dt
+        local firstTimePredicted = IsFirstTimePredicted()
     
         -- self.VisualRecoilPos = LerpVector(2 * FrameTime(), self.VisualRecoilPos, Vector(0, 0, 0))
         -- self.VisualRecoilAng = LerpAngle(2.5 * FrameTime(), self.VisualRecoilAng, Angle(0, 0, 0))
@@ -160,23 +183,39 @@ do
         -- self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
         -- self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
     
-        local vpa = self:GetVisualRecoilPos()
-        local vpv = self:GetVisualRecoilPosVel()
-        local springconstant = self:GetProcessedValue("VisualRecoilDampingConst") or 120
-        local VisualRecoilSpringMagnitude = self:GetProcessedValue("VisualRecoilSpringMagnitude") or 1
-        local PUNCH_DAMPING = self:GetProcessedValue("VisualRecoilSpringPunchDamping") or 6
+        local springconstant = swepGetProcessedValue(self, "VisualRecoilDampingConst") or 120
+        local VisualRecoilSpringMagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude") or 1
+        local PUNCH_DAMPING = swepGetProcessedValue(self, "VisualRecoilSpringPunchDamping") or 6
     
-        if CLIENT then
-            vpa = self.VisualRecoilPos
-            vpv = self.VisualRecoilPosVel
-        end
-    
-        if lensqr(vpa) + lensqr(vpv) > 0 then
+        -- Sometimes we get things depending on the realm:
+        --      local vpa = self:GetVisualRecoilPos()
+        --      local vpv = self:GetVisualRecoilPosVel()
+        --      if CLIENT then
+        --          vpa = self.VisualRecoilPos
+        --          vpv = self.VisualRecoilPosVel
+        --      end
+        -- Since we can avoid calling `self:Get[...]()` by directly accessing `self.dt`,
+        -- our choice looks like:
+        --      local vpa = swepDt.VisualRecoilPos
+        --      local vpv = swepDt.VisualRecoilPosVel
+        --      if CLIENT then
+        --          vpa = self.VisualRecoilPos
+        --          vpv = self.VisualRecoilPosVel
+        --      end
+        -- Only one thing changes here = `self` or `swepDt`. So we can select it once 
+        -- and use it later:
+        local realmDataHolder = CLIENT and self or swepDt
+
+        local vpa = realmDataHolder.VisualRecoilPos
+        local vpv = realmDataHolder.VisualRecoilPosVel
+
+        if twoLenSqr(vpa, vpv) > 0 then
             -- {
             --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
             --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
     
-            vpa = vpa + (vpv * ft)
+            -- vpa = vpa + (vpv * ft)
+            vectorAdd(vpa, vpv * ft)
             local damping = 1 - (POS_PUNCH_DAMPING * ft)
     
             --     if ( damping < 0 )
@@ -188,7 +227,8 @@ do
     
             --     player->m_Local.m_vecPunchAngleVel *= damping;
     
-            vpv = vpv * damping
+            -- vpv = vpv * damping
+            vectorMul(vpv, damping)
     
             --     -- torsional spring
             --     -- UNDONE: Per-axis spring constant?
@@ -197,7 +237,8 @@ do
             --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
             springforcemagnitude = math_Clamp(springforcemagnitude, 0, 2)
             --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
-            vpv = vpv - (vpa * springforcemagnitude)
+            -- vpv = vpv - (vpa * springforcemagnitude)
+            vectorSub(vpv, vpa * springforcemagnitude)
     
             --     -- don't wrap around
             --     player->m_Local.m_vecPunchAngle.Init( 
@@ -213,35 +254,32 @@ do
             self:SetVisualRecoilPos(vpa)
             self:SetVisualRecoilPosVel(vpv)
     
-            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
+            if CLIENT and (isSingleplayer or firstTimePredicted) then
                 self.VisualRecoilPos = vpa
                 self.VisualRecoilPosVel = vpv
             end
         else
-            self:SetVisualRecoilPos(Vector())
-            self:SetVisualRecoilPosVel(self:GetVisualRecoilPos())
+            local stubVec = Vector()
+            self:SetVisualRecoilPos(stubVec)
+            self:SetVisualRecoilPosVel(swepDt.VisualRecoilPos)
     
-            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
-                self.VisualRecoilPos = Vector()
+            if CLIENT and (isSingleplayer or firstTimePredicted) then
+                self.VisualRecoilPos = stubVec
                 self.VisualRecoilPosVel = self.VisualRecoilPos
             end
         end
-    
-        local vaa = self:GetVisualRecoilAng()
-        local vav = self:GetVisualRecoilVel()
-    
-        if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
-            vaa = self.VisualRecoilAng
-            vav = self.VisualRecoilVel
-        end
-    
-        if lensqr(vaa) + lensqr(vav) > 0.000001 then
+
+        local vaa = realmDataHolder.VisualRecoilAng
+        local vav = realmDataHolder.VisualRecoilVel
+
+        if twoLenSqr(vaa, vav) > 0.000001 then
             -- {
             --     player->m_Local.m_vecPunchAngle += player->m_Local.m_vecPunchAngleVel * gpGlobals->frametime;
             --     float damping = 1 - (PUNCH_DAMPING * gpGlobals->frametime);
     
     
-            vaa = vaa + (vav * ft)
+            -- vaa = vaa + (vav * ft)
+            angleAdd(vaa, vav * ft)
             local damping = 1 - (PUNCH_DAMPING * ft)
     
             --     if ( damping < 0 )
@@ -253,7 +291,8 @@ do
     
             --     player->m_Local.m_vecPunchAngleVel *= damping;
     
-            vav = vav * damping
+            -- vav = vav * damping
+            angleMul(vav, damping)
     
             --     -- torsional spring
             --     -- UNDONE: Per-axis spring constant?
@@ -262,7 +301,8 @@ do
             --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
             springforcemagnitude = math_Clamp(springforcemagnitude, 0, 2)
             --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
-            vav = vav - (vaa * springforcemagnitude)
+            -- vav = vav - (vaa * springforcemagnitude)
+            angleSub(vav, vaa * springforcemagnitude)
     
             --     -- don't wrap around
             --     player->m_Local.m_vecPunchAngle.Init( 
@@ -278,17 +318,19 @@ do
             self:SetVisualRecoilAng(vaa)
             self:SetVisualRecoilVel(vav)
     
-            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted())  then
+            if CLIENT and (isSingleplayer or firstTimePredicted)  then
                 self.VisualRecoilAng = vaa
                 self.VisualRecoilVel = vav
             end
         else
-            self:SetVisualRecoilAng(Angle(ang0))
-            self:SetVisualRecoilVel(Angle(ang0))
+            local recoilZeroAng = Angle(0, 0, 0)
+            local velocityZeroAng = Angle(0, 0, 0)
+            self:SetVisualRecoilAng(recoilZeroAng)
+            self:SetVisualRecoilVel(velocityZeroAng)
     
-            if CLIENT and (game.SinglePlayer() or IsFirstTimePredicted()) then
-                self.VisualRecoilAng = Angle(ang0)
-                self.VisualRecoilVel = Angle(ang0)
+            if CLIENT and (isSingleplayer or firstTimePredicted) then
+                self.VisualRecoilAng = recoilZeroAng
+                self.VisualRecoilVel = velocityZeroAng
             end
         end
     end
@@ -297,10 +339,6 @@ end
 do
     local weaponGetNextPrimaryFire = FindMetaTable("Weapon").GetNextPrimaryFire
     local swepThinkVisualRecoil = SWEP.ThinkVisualRecoil
-
-    -- Unfortunately, this file is loaded before sh_stats,
-    -- so we do not know about this function at this time
-    local swepGetProcessedValue
 
     function SWEP:ThinkRecoil()
         swepGetProcessedValue = swepGetProcessedValue or self.GetProcessedValue
@@ -330,9 +368,9 @@ end
 function SWEP:DoVisualRecoil()
     if !self:GetProcessedValue("UseVisualRecoil") then return end
 
-    if game.SinglePlayer() then self:CallOnClient("DoVisualRecoil") end
+    if isSingleplayer then self:CallOnClient("DoVisualRecoil") end
 
-    -- if IsFirstTimePredicted() or game.SinglePlayer() then
+    -- if IsFirstTimePredicted() or isSingleplayer then
         local mult = self:GetProcessedValue("VisualRecoil")
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
@@ -358,7 +396,7 @@ function SWEP:DoVisualRecoil()
             self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0)))
         end
 
-        if IsFirstTimePredicted() or game.SinglePlayer() then
+        if IsFirstTimePredicted() or isSingleplayer then
             if CLIENT then
                 self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
                 self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0))
@@ -368,7 +406,7 @@ function SWEP:DoVisualRecoil()
 end
 
 function SWEP:GetViewModelRecoil(pos, ang)
-    if !game.SinglePlayer() and SERVER then return end
+    if !isSingleplayer and SERVER then return end
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
 
