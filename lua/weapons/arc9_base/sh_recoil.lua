@@ -1,29 +1,3 @@
-function SWEP:ThinkRecoil()
-    local rdr = self:GetProcessedValue("RecoilDissipationRate")
-
-    if (self:GetNextPrimaryFire() + self:GetProcessedValue("RecoilResetTime")) < CurTime() then
-        local rec = self:GetRecoilAmount()
-
-        rec = rec - (FrameTime() * rdr)
-
-        self:SetRecoilAmount(math.max(rec, 0))
-        -- print(math.Round(rec))
-    end
-
-    -- local ru = self:GetRecoilUp()
-    -- local rs = self:GetRecoilSide()
-
-    -- if math.abs(ru) > 0 or math.abs(rs) > 0 then
-    --     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
-    --     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
-
-    --     self:SetRecoilUp(new_ru)
-    --     self:SetRecoilSide(new_rs)
-    -- end
-
-    self:ThinkVisualRecoil()
-end
-
 SWEP.RecoilPatternCache = {}
 
 function SWEP:GetRecoilPatternDirection(shot)
@@ -308,6 +282,33 @@ function SWEP:ThinkVisualRecoil()
         end
     end
 end
+
+function SWEP:ThinkRecoil()
+    local rdr = self:GetProcessedValue("RecoilDissipationRate")
+
+    if (self:GetNextPrimaryFire() + self:GetProcessedValue("RecoilResetTime")) < CurTime() then
+        local rec = self:GetRecoilAmount()
+
+        rec = rec - (FrameTime() * rdr)
+
+        self:SetRecoilAmount(math.max(rec, 0))
+        -- print(math.Round(rec))
+    end
+
+    -- local ru = self:GetRecoilUp()
+    -- local rs = self:GetRecoilSide()
+
+    -- if math.abs(ru) > 0 or math.abs(rs) > 0 then
+    --     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
+    --     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
+
+    --     self:SetRecoilUp(new_ru)
+    --     self:SetRecoilSide(new_rs)
+    -- end
+
+    self:ThinkVisualRecoil()
+end
+
 function SWEP:DoVisualRecoil()
     if !self:GetProcessedValue("UseVisualRecoil") then return end
 
