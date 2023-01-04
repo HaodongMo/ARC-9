@@ -959,7 +959,7 @@ function SWEP:CreateCustomizeHUD()
 
                 self.CustomizePitch = self.CustomizePitch - (dx / ARC9ScreenScale(4)) * 3
                 -- self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
-                self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8))
+                self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * 3
 
             end
         elseif self:GetOwner():KeyDown(IN_RELOAD) then
