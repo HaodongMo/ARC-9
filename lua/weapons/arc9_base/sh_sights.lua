@@ -61,7 +61,7 @@ function SWEP:ThinkSights()
 
     local sighted = self:GetInSights()
 
-    if self:GetSafe() then
+    if self:GetSafe() or self:GetIsNearWall() then
         sighted = false
     end
 
