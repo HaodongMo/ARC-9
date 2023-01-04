@@ -297,8 +297,9 @@ function SWEP:DoPrimaryAttack()
     if self:StillWaiting() then return end
 
     local currentFiremode = self:GetCurrentFiremode()
+    local burstCount = self:GetBurstCount()
 
-    if currentFiremode > 0 and self:GetBurstCount() >= currentFiremode then return end
+    if currentFiremode > 0 and burstCount >= currentFiremode then return end
 
     local clip = self:GetLoadedClip()
 
@@ -337,11 +338,14 @@ function SWEP:DoPrimaryAttack()
 
     self:TakeAmmo()
 
-    if self:GetProcessedValue("DoFireAnimation") and !self:GetProcessedValue("TriggerStartFireAnim") then
+    local triggerStartFireAnim = self:GetProcessedValue("TriggerStartFireAnim")
+    local nthShot = self:GetNthShot()
+
+    if self:GetProcessedValue("DoFireAnimation") and !triggerStartFireAnim then
         local anim = "fire"
 
         if self:GetProcessedValue("Akimbo") then
-            if bit.band(self:GetNthShot(), 1) == 0 then
+            if nthShot % 2 == 0 then
                 anim = "fire_right"
             else
                 anim = "fire_left"
@@ -351,8 +355,8 @@ function SWEP:DoPrimaryAttack()
         local banim = anim
 
         if !self.SuppressCumulativeShoot then
-            for i = 0, self:GetBurstCount() do
-                local b = i + 1
+            for i = 1, burstCount+1 do
+                local b = tostring(i)
 
                 if self:HasAnimation(anim .. "_" .. tostring(b)) then
                     banim = anim .. "_" .. tostring(b)
@@ -363,7 +367,9 @@ function SWEP:DoPrimaryAttack()
         self:PlayAnimation(banim, 1, false, true)
     end
 
-    self:SetLoadedRounds(self:Clip1())
+    local clip1 = self:Clip1()
+
+    self:SetLoadedRounds(clip1)
 
     local manualaction = self:GetProcessedValue("ManualAction")
 
@@ -386,24 +392,29 @@ function SWEP:DoPrimaryAttack()
     self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimShoot"))
 
     local delay = 60 / self:GetProcessedValue("RPM")
+    local time = CurTime()
 
     local curatt = self:GetNextPrimaryFire()
-    local diff = CurTime() - curatt
+    local diff = time - curatt
 
     if diff > engine.TickInterval() or diff < 0 then
-        curatt = CurTime()
+        curatt = time
     end
 
     self:SetNextPrimaryFire(curatt + delay)
 
-    self:SetNthShot(self:GetNthShot() + 1)
+    self:SetNthShot(nthShot + 1)
 
     self:DoEffects()
 
-    if game.SinglePlayer() and SERVER then
-        self:CallOnClient("SInputRumble")
-    elseif !game.SinglePlayer() and CLIENT then
-        self:SInputRumble()
+    if game.SinglePlayer() then
+        if SERVER then
+            self:CallOnClient("SInputRumble")
+        end
+    else
+        if CLIENT then
+            self:SInputRumble()
+        end
     end
 
     local spread = self:GetProcessedValue("Spread")
@@ -421,17 +432,17 @@ function SWEP:DoPrimaryAttack()
     self:ApplyRecoil()
     self:DoVisualRecoil()
 
-    if self:GetBurstCount() == 0 and currentFiremode > 1 and self:GetProcessedValue("RunawayBurst") then
+    if burstCount == 0 and currentFiremode > 1 and self:GetProcessedValue("RunawayBurst") then
         if !self:GetProcessedValue("AutoBurst") then
             self:SetNeedTriggerPress(true)
         end
     end
 
-    self:SetBurstCount(self:GetBurstCount() + 1)
+    self:SetBurstCount(burstCount + 1)
 
     if manualaction then
-        if self:Clip1() > 0 or !self:GetProcessedValue("ManualActionNoLastCycle") then
-            if self:GetNthShot() % self:GetProcessedValue("ManualActionChamber") == 0 then
+        if clip1 > 0 or !self:GetProcessedValue("ManualActionNoLastCycle") then
+            if nthShot % self:GetProcessedValue("ManualActionChamber") == 0 then
                 self:SetNeedsCycle(true)
             end
         end
@@ -447,13 +458,13 @@ function SWEP:DoPrimaryAttack()
         self:RollJam()
     end
 
-    if self:Clip1() == 0 then
+    if clip1 == 0 then
         self:SetNthShot(0)
     end
 
     if self:GetProcessedValue("TriggerDelayRepeat") and self:GetOwner():KeyDown(IN_ATTACK) and currentFiremode != 1 then
-        self:SetTriggerDelay(CurTime() + self:GetProcessedValue("TriggerDelayTime"))
-        if self:GetProcessedValue("TriggerStartFireAnim") then
+        self:SetTriggerDelay(time + self:GetProcessedValue("TriggerDelayTime"))
+        if triggerStartFireAnim then
             self:PlayAnimation("fire")
         else
             self:PlayAnimation("trigger")
