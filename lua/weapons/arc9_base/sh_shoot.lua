@@ -609,7 +609,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     runHook.dmg = dmg
     runHook.range = range
     runHook.penleft = penleft
-    runHook.alreadypenned = alreadypenned,
+    runHook.alreadypenned = alreadypenned
     runHook.dmgv = dmgv
 
     self:RunHook("Hook_BulletImpact", runHook)
