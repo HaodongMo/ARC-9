@@ -42,8 +42,10 @@ end
 function ARC9:ToggleFavorite(att)
     if ARC9.Favorites[att] then
         ARC9.Favorites[att] = nil
+        surface.PlaySound("arc9/newui/ui_part_favourite2.ogg")
     else
         ARC9.Favorites[att] = true
+        surface.PlaySound("arc9/newui/ui_part_favourite1.ogg")
     end
     ARC9:SaveFavorites()
 end
