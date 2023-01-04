@@ -25,8 +25,16 @@ function SWEP:PlayTranslatedSound(soundtab)
     end
 end
 
-function SWEP:PredictionFilter()
-    return game.SinglePlayer() and CLIENT
+if SERVER then
+    function SWEP:PredictionFilter()
+        return false
+    end
+else
+    local isSingleplayer = game.SinglePlayer()
+    
+    function SWEP:PredictionFilter()
+        return isSingleplayer
+    end
 end
 
 function SWEP:GetWM()
