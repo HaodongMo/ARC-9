@@ -42,7 +42,7 @@ do
         local hit = util.TraceLine(traceData).Hit
 
         self.NearWallCached = hit
-        self.NearWallTick = now
+        self.NearWallTick = now + 0.1
 
         return hit
     end
