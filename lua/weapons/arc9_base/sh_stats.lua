@@ -368,6 +368,20 @@ do
     local cvarGetBool = FindMetaTable("ConVar").GetBool
     local vectorLength = FindMetaTable("Vector").Length
 
+    local getmetatable = getmetatable
+    local numberMeta = getmetatable(1)
+
+    -- This should NOT break anything
+    -- There are a few addons (such as SAM) that do the same
+    if not numberMeta then
+        numberMeta = {MetaName = "number"}
+        debug.setmetatable(1, numberMeta)
+    end
+
+    local function isnumber(val)
+        return getmetatable(val) == numberMeta
+    end
+
     function SWEP:GetProcessedValue(val, base, cmd)
         local swepDt = self.dt
         -- From now on, we will not call `self:GetJammed()`, `self:GetHeatLockout()`
