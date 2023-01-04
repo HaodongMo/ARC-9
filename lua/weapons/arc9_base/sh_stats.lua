@@ -152,9 +152,8 @@ do
         local hookCache = self.HookCache[val]
     
         if hookCache then
-            -- I'm not sure if `hookCache` is always sequential so 
-            for _, chook in pairs(hookCache) do
-                local d = chook(self, data)
+            for i = 1, #hookCache do
+                local d = hookCache[i](self, data)
     
                 if d ~= nil then
                     data = d
