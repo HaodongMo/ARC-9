@@ -556,3 +556,8 @@ L["customize.hint.unfavorite"] = "Remove Favorite"
 
 L["customize.presets.unnamed"] = "Unnamed"
 L["folder.favorites"] = "Favorites"
+
+-- Added 04-JAN-2023
+
+L["settings.gameplay.never_ready.title"] = "No Ready Anims"
+L["settings.gameplay.never_ready.desc"] = "Disable ready animations when deploying a weapon."
