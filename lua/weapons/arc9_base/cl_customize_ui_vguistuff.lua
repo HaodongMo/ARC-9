@@ -96,6 +96,7 @@ ARC9AttButton.MatMarkerInstalled = Material("arc9/ui/mark_installed.png", "mips 
 ARC9AttButton.MatMarkerLock = Material("arc9/ui/mark_lock.png", "mips smooth")
 ARC9AttButton.MatMarkerModes = Material("arc9/ui/mark_modes.png", "mips smooth")
 ARC9AttButton.MatMarkerSlots = Material("arc9/ui/mark_slots.png", "mips smooth")
+ARC9AttButton.MatMarkerFavorite = Material("arc9/ui/mark_favorite.png", "mips smooth")
 
 function ARC9AttButton:Init()
     self:SetText("")
@@ -112,6 +113,7 @@ function ARC9AttButton:Paint(w, h)
     local colorclicked = ARC9.GetHUDColor("hi")
     local mat = self.MatIdle
     local matmarker = nil
+    local favmarker = nil
     local att = self.att
 
     local qty = 0
@@ -142,6 +144,10 @@ function ARC9AttButton:Paint(w, h)
         markercolor = colorclicked
     end
 
+    if ARC9.Favorites[att] then
+        favmarker = self.MatMarkerFavorite
+    end
+
     surface.SetDrawColor(color)
     surface.SetMaterial(mat)
     surface.DrawTexturedRect(0, 0, w, w)
@@ -163,6 +169,12 @@ function ARC9AttButton:Paint(w, h)
         surface.SetMaterial(matmarker)
         surface.DrawTexturedRect(ARC9ScreenScale(3), w - ARC9ScreenScale(11), ARC9ScreenScale(8), ARC9ScreenScale(8))
         -- surface.DrawTexturedRect(0, 0, w, w)
+    end
+
+    if favmarker then
+        surface.SetDrawColor(markercolor)
+        surface.SetMaterial(favmarker)
+        surface.DrawTexturedRect(w - ARC9ScreenScale(11), ARC9ScreenScale(3), ARC9ScreenScale(8), ARC9ScreenScale(8))
     end
 
     if self.FolderContain then

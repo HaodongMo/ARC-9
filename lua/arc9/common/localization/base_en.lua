@@ -555,3 +555,4 @@ L["customize.hint.favorite"] = "Favorite"
 L["customize.hint.unfavorite"] = "Remove Favorite"
 
 L["customize.presets.unnamed"] = "Unnamed"
+L["folder.favorites"] = "Favorites"
