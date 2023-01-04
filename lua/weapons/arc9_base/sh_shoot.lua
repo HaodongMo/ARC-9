@@ -223,21 +223,22 @@ function SWEP:PrimaryAttack()
     if self.NotAWeapon then return end
 
     local owner = self:GetOwner()
+    local processedValue = self.GetProcessedValue
 
     if owner:IsNPC() then
         self:NPC_PrimaryAttack()
         return
     end
 
-    if self:GetProcessedValue("Throwable") then
+    if processedValue(self,"Throwable") then
         return
     end
 
-    if self:GetProcessedValue("PrimaryBash") then
+    if processedValue(self,"PrimaryBash") then
         return
     end
 
-    if self:GetProcessedValue("UBGLInsteadOfSights") then
+    if processedValue(self,"UBGLInsteadOfSights") then
         self:ToggleUBGL(false)
     end
 
@@ -255,29 +256,27 @@ function SWEP:PrimaryAttack()
 
     if self:GetCustomize() then return end
 
-    if self:GetProcessedValue("Bash") and owner:KeyDown(IN_USE) and !self:GetInSights() then
+    if processedValue(self,"Bash") and owner:KeyDown(IN_USE) and !self:GetInSights() then
         self:MeleeAttack()
         self:SetNeedTriggerPress(true)
         return
     end
 
     if self:HasAmmoInClip() then
-        if self:GetProcessedValue("TriggerDelay") then
+        if processedValue(self,"TriggerDelay") then
             local primedAttack = self:GetPrimedAttack()
             local time = CurTime()
 
             if self:GetBurstCount() == 0 and !primedAttack and !self:StillWaiting() then
-                self:SetTriggerDelay(time + self:GetProcessedValue("TriggerDelayTime"))
-                if self:GetProcessedValue("TriggerStartFireAnim") then
+                self:SetTriggerDelay(time + processedValue(self,"TriggerDelayTime"))
+                if processedValue(self,"TriggerStartFireAnim") then
                     self:PlayAnimation("fire")
                 else
                     self:PlayAnimation("trigger")
                 end
                 self:SetPrimedAttack(true)
                 return
-            elseif primedAttack and self:GetTriggerDelay() > time then
-                return
-            elseif primedAttack then
+            elseif primedAttack and self:GetTriggerDelay() <= time then
                 self:SetPrimedAttack(false)
             end
         end
@@ -294,6 +293,8 @@ end
 
 function SWEP:DoPrimaryAttack()
 
+    local processedValue = self.GetProcessedValue
+
     if self:StillWaiting() then return end
 
     local currentFiremode = self:GetCurrentFiremode()
@@ -303,12 +304,12 @@ function SWEP:DoPrimaryAttack()
 
     local clip = self:GetLoadedClip()
 
-    if self:GetProcessedValue("BottomlessClip") then
+    if processedValue(self,"BottomlessClip") then
         self:RestoreClip(math.huge)
     end
 
     if !self:HasAmmoInClip() then
-        if self:GetUBGL() and !self:GetProcessedValue("UBGLInsteadOfSights") then
+        if self:GetUBGL() and !processedValue(self,"UBGLInsteadOfSights") then
             self:ToggleUBGL(false)
             self:SetNeedTriggerPress(true)
             return
@@ -318,7 +319,7 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    if !self:GetProcessedValue("CanFireUnderwater") then
+    if !processedValue(self,"CanFireUnderwater") then
         if bit.band(util.PointContents(self:GetShootPos()), CONTENTS_WATER) == CONTENTS_WATER then
             self:DryFire()
             return
@@ -338,13 +339,13 @@ function SWEP:DoPrimaryAttack()
 
     self:TakeAmmo()
 
-    local triggerStartFireAnim = self:GetProcessedValue("TriggerStartFireAnim")
+    local triggerStartFireAnim = processedValue(self,"TriggerStartFireAnim")
     local nthShot = self:GetNthShot()
 
-    if self:GetProcessedValue("DoFireAnimation") and !triggerStartFireAnim then
+    if processedValue(self,"DoFireAnimation") and !triggerStartFireAnim then
         local anim = "fire"
 
-        if self:GetProcessedValue("Akimbo") then
+        if processedValue(self,"Akimbo") then
             if nthShot % 2 == 0 then
                 anim = "fire_right"
             else
@@ -369,10 +370,10 @@ function SWEP:DoPrimaryAttack()
 
     self:SetLoadedRounds(clip1)
 
-    local manualaction = self:GetProcessedValue("ManualAction")
+    local manualaction = processedValue(self,"ManualAction")
 
-    if !self:GetProcessedValue("NoShellEject") and !(manualaction and !self:GetProcessedValue("ManualActionEjectAnyway")) then
-        local ejectdelay = self:GetProcessedValue("EjectDelay")
+    if !processedValue(self,"NoShellEject") and !(manualaction and !processedValue(self,"ManualActionEjectAnyway")) then
+        local ejectdelay = processedValue(self,"EjectDelay")
 
         if ejectdelay == 0 then
             self:DoEject()
@@ -387,9 +388,9 @@ function SWEP:DoPrimaryAttack()
 
     self:DoShootSounds()
 
-    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimShoot"))
+    self:DoPlayerAnimationEvent(processedValue(self,"AnimShoot"))
 
-    local delay = 60 / self:GetProcessedValue("RPM")
+    local delay = 60 / processedValue(self,"RPM")
     local time = CurTime()
 
     local curatt = self:GetNextPrimaryFire()
@@ -415,13 +416,13 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    local spread = self:GetProcessedValue("Spread")
+    local spread = processedValue(self,"Spread")
 
     spread = math.Max(spread, 0)
 
     local sp, sa = self:GetShootPos()
 
-    if IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetProcessedValue("LockOnAutoaim") then
+    if IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and processedValue(self,"LockOnAutoaim") then
         sa = (self:GetLockOnTarget():EyePos() - sp):Angle()
     end
 
@@ -430,8 +431,8 @@ function SWEP:DoPrimaryAttack()
     self:ApplyRecoil()
     self:DoVisualRecoil()
 
-    if burstCount == 0 and currentFiremode > 1 and self:GetProcessedValue("RunawayBurst") then
-        if !self:GetProcessedValue("AutoBurst") then
+    if burstCount == 0 and currentFiremode > 1 and processedValue(self,"RunawayBurst") then
+        if !processedValue(self,"AutoBurst") then
             self:SetNeedTriggerPress(true)
         end
     end
@@ -439,8 +440,8 @@ function SWEP:DoPrimaryAttack()
     self:SetBurstCount(burstCount + 1)
 
     if manualaction then
-        if clip1 > 0 or !self:GetProcessedValue("ManualActionNoLastCycle") then
-            if nthShot % self:GetProcessedValue("ManualActionChamber") == 0 then
+        if clip1 > 0 or !processedValue(self,"ManualActionNoLastCycle") then
+            if nthShot % processedValue(self,"ManualActionChamber") == 0 then
                 self:SetNeedsCycle(true)
             end
         end
@@ -460,8 +461,8 @@ function SWEP:DoPrimaryAttack()
         self:SetNthShot(0)
     end
 
-    if self:GetProcessedValue("TriggerDelayRepeat") and self:GetOwner():KeyDown(IN_ATTACK) and currentFiremode != 1 then
-        self:SetTriggerDelay(time + self:GetProcessedValue("TriggerDelayTime"))
+    if processedValue(self,"TriggerDelayRepeat") and self:GetOwner():KeyDown(IN_ATTACK) and currentFiremode != 1 then
+        self:SetTriggerDelay(time + processedValue(self,"TriggerDelayTime"))
         if triggerStartFireAnim then
             self:PlayAnimation("fire")
         else
