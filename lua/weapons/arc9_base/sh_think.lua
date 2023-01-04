@@ -90,6 +90,7 @@ function SWEP:Think()
 
         self:ThinkReload()
 
+        -- Done (no GetVM)
         self:ThinkSights()
 
         -- self:ThinkBlindFire()
