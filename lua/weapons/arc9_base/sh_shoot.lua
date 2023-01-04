@@ -356,10 +356,8 @@ function SWEP:DoPrimaryAttack()
 
         if !self.SuppressCumulativeShoot then
             for i = 1, burstCount+1 do
-                local b = tostring(i)
-
-                if self:HasAnimation(anim .. "_" .. tostring(b)) then
-                    banim = anim .. "_" .. tostring(b)
+                if self:HasAnimation(anim .. "_" .. i) then
+                    banim = anim .. "_" .. i
                 end
             end
         end
