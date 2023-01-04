@@ -757,7 +757,7 @@ function ARC9ColorButton:DoClick()
         newel:EnableAlpha()
     end
 
-    newel:SetPos(self:LocalToScreen(self:GetX() - ARC9ScreenScale(80), self:GetY() - ARC9ScreenScale(48)))
+    newel:SetPos(self:LocalToScreen(self:GetX() - ARC9ScreenScale(103), self:GetY() - ARC9ScreenScale(48)))
     newel:UpdateColor(self.rgbcolor)
     newel:ShowCloseButton(false)
 
