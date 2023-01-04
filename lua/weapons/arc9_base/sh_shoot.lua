@@ -492,6 +492,10 @@ if CLIENT then
     end
 end
 
+local bulletPhysics = GetConVar("ARC9_bullet_physics")
+local fireBullets = {}
+local black = Color(0,0,0) -- if anything, let's just safe ourselves.
+
 function SWEP:DoProjectileAttack(pos, ang, spread)
     if self:GetProcessedValue("ShootEnt") then
         self:ShootRocket()
@@ -501,7 +505,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
         local bullettbl = {}
 
         if !shouldtracer then
-            bullettbl.Color = Color(0, 0, 0)
+            bullettbl.Color = black
         end
 
         local tr = 0
@@ -512,58 +516,83 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
 
         bullettbl.Size = self:GetProcessedValue("TracerSize")
 
-        if (GetConVar("ARC9_bullet_physics"):GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
+        local ang2 = Angle(ang)
+
+        if (bulletPhysics:GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
             if IsFirstTimePredicted() then
                 for i = 1, self:GetProcessedValue("Num") do
-                    local newang = ang + (spread * AngleRand() / 3.6)
-                    ARC9:ShootPhysBullet(self, pos, newang:Forward() * self:GetProcessedValue("PhysBulletMuzzleVelocity"), bullettbl)
+                    ang2:Set(ang)
+
+                    local angleRand = AngleRand()
+                    angleRand:Div(3.6)
+                    angleRand:Mul(spread)
+
+                    ang2:Add(angleRand)
+
+                    local vec = ang2:Forward()
+                    vec:Mul(self:GetProcessedValue("PhysBulletMuzzleVelocity"))
+
+                    ARC9:ShootPhysBullet(self, pos, vec, bullettbl)
                 end
             end
         else
-            if self:GetOwner():IsPlayer() then
-                self:GetOwner():LagCompensation(true)
+            local owner = self:GetOwner()
+
+            if owner:IsPlayer() then
+                owner:LagCompensation(true)
             end
+
             -- local tr = self:GetProcessedValue("TracerNum")
 
             local veh = NULL
 
-            if self:GetOwner():IsPlayer() then
-                veh = self:GetOwner():GetVehicle()
+            if owner:IsPlayer() then
+                veh = owner:GetVehicle()
             end
 
-            self:GetOwner():FireBullets({
-                Damage = self:GetProcessedValue("DamageMax"),
-                Force = self:GetProcessedValue("ImpactForce"),
-                Tracer = tr,
-                TracerName = self:GetProcessedValue("TracerEffect"),
-                Num = self:GetProcessedValue("Num"),
-                Dir = ang:Forward(),
-                Src = pos,
-                Spread = Vector(spread, spread, spread),
-                IgnoreEntity = veh,
-                Distance = self:GetProcessedValue("Distance"),
-                Callback = function(att, btr, dmg)
-                    local range = (btr.HitPos - btr.StartPos):Length()
 
-                    self.Penned = 0
-                    self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
+            local distance = self:GetProcessedValue("Distance")
 
-                    if ARC9.Dev(2) then
-                        if SERVER then
-                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
-                        else
-                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
-                        end
+            fireBullets.Damage = self:GetProcessedValue("DamageMax")
+            fireBullets.Force = self:GetProcessedValue("ImpactForce")
+            fireBullets.Tracer = tr
+            fireBullets.TracerName = self:GetProcessedValue("TracerEffect")
+            fireBullets.Num = self:GetProcessedValue("Num")
+            fireBullets.Dir = ang:Forward()
+            fireBullets.Src = pos
+            fireBullets.Spread = Vector(spread,spread,spread)
+            fireBullets.IgnoreEntity = veh
+            fireBullets.Distance = distance
+            fireBullets.Callback = function(att, btr, dmg)
+                local range = btr.Fraction*distance
+
+                self.Penned = 0
+                self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
+
+                if ARC9.Dev(2) then
+                    if SERVER then
+                        debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
+                    else
+                        debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
                     end
                 end
-            })
+            end
 
-            if self:GetOwner():IsPlayer() then
-                self:GetOwner():LagCompensation(false)
+            owner:FireBullets(fireBullets)
+
+            if owner:IsPlayer() then
+                owner:LagCompensation(false)
             end
         end
     end
 end
+
+local runHook = {}
+local bodyDamageCancel = GetConVar("arc9_mod_bodydamagecancel")
+
+local soundTab = {
+    name = "impact"
+}
 
 function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondary)
     if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
@@ -576,49 +605,52 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     local dmgv = self:GetDamageAtRange(range)
 
-    self:RunHook("Hook_BulletImpact", {
-        tr = tr,
-        dmg = dmg,
-        range = range,
-        penleft = penleft,
-        alreadypenned = alreadypenned,
-        dmgv = dmgv
-    })
+    runHook.tr = tr
+    runHook.dmg = dmg
+    runHook.range = range
+    runHook.penleft = penleft
+    runHook.alreadypenned = alreadypenned,
+    runHook.dmgv = dmgv
+
+    self:RunHook("Hook_BulletImpact", runHook)
 
     local bodydamage = self:GetProcessedValue("BodyDamageMults")
 
     local dmgbodymult = 1
 
-    if bodydamage[tr.HitGroup] then
-        dmgbodymult = dmgbodymult * bodydamage[tr.HitGroup]
+    local hitGroup = tr.HitGroup
+
+    if bodydamage[hitGroup] then
+        dmgbodymult = dmgbodymult * bodydamage[hitGroup]
     end
 
-    if GetConVar("arc9_mod_bodydamagecancel"):GetBool() and cancelmults[tr.HitGroup] then
-    -- if cancelmults[tr.HitGroup] then
-        dmgbodymult = dmgbodymult / cancelmults[tr.HitGroup]
+    if bodyDamageCancel:GetBool() and cancelmults[hitGroup] then
+        dmgbodymult = dmgbodymult / cancelmults[hitGroup]
     end
 
     dmgv = dmgv * dmgbodymult
 
-    if tr.HitGroup == HITGROUP_HEAD then
+    if hitGroup == HITGROUP_HEAD then
         dmgv = dmgv * self:GetProcessedValue("HeadshotDamage")
-    elseif tr.HitGroup == HITGROUP_CHEST then
+    elseif hitGroup == HITGROUP_CHEST then
         dmgv = dmgv * self:GetProcessedValue("ChestDamage")
-    elseif tr.HitGroup == HITGROUP_STOMACH then
+    elseif hitGroup == HITGROUP_STOMACH then
         dmgv = dmgv * self:GetProcessedValue("StomachDamage")
-    elseif tr.HitGroup == HITGROUP_LEFTARM or tr.HitGroup == HITGROUP_RIGHTARM then
+    elseif hitGroup == HITGROUP_LEFTARM or hitGroup == HITGROUP_RIGHTARM then
         dmgv = dmgv * self:GetProcessedValue("ArmDamage")
-    elseif tr.HitGroup == HITGROUP_LEFTLEG or tr.HitGroup == HITGROUP_RIGHTLEG then
+    elseif hitGroup == HITGROUP_LEFTLEG or hitGroup == HITGROUP_RIGHTLEG then
         dmgv = dmgv * self:GetProcessedValue("LegDamage")
     end
 
     local pendelta = penleft / self:GetProcessedValue("Penetration")
 
-    pendelta = Lerp(math.Clamp(pendelta, 0, 1), self:GetProcessedValue("PenetrationDelta"), 1)
+    pendelta = Lerp(pendelta, self:GetProcessedValue("PenetrationDelta"), 1) -- it arleady clamps inside
 
     dmgv = dmgv * pendelta
 
-    if self:GetOwner():IsNPC() and !GetConVar("ARC9_npc_equality"):GetBool() then
+    local owner = self:GetOwner()
+
+    if owner:IsNPC() and !GetConVar("ARC9_npc_equality"):GetBool() then
         dmgv = dmgv * 0.25
     end
 
@@ -626,74 +658,76 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     ap = math.min(ap, 1)
 
-    if tr.Entity:GetClass() == "npc_helicopter" then
+    local traceEntity = tr.Entity
+
+    if traceEntity:GetClass() == "npc_helicopter" then
         local apdmg = DamageInfo()
         apdmg:SetDamage(dmgv * ap)
         apdmg:SetDamageType(DMG_AIRBOAT)
         apdmg:SetInflictor(dmg:GetInflictor())
         apdmg:SetAttacker(dmg:GetAttacker())
 
-        tr.Entity:TakeDamageInfo(apdmg)
-    elseif tr.Entity:GetClass() == "npc_gunship" then
+        traceEntity:TakeDamageInfo(apdmg)
+    elseif traceEntity:GetClass() == "npc_gunship" then
         local apdmg = DamageInfo()
         apdmg:SetDamage(dmgv * ap)
         apdmg:SetDamageType(DMG_BLAST)
         apdmg:SetInflictor(dmg:GetInflictor())
         apdmg:SetAttacker(dmg:GetAttacker())
 
-        tr.Entity:TakeDamageInfo(apdmg)
+        traceEntity:TakeDamageInfo(apdmg)
     else
         local apdmg = dmgv * ap
-        tr.Entity:SetHealth(tr.Entity:Health() - apdmg)
+        traceEntity:SetHealth(traceEntity:Health() - apdmg)
     end
 
     dmgv = dmgv * (1 - ap)
 
     dmg:SetDamage(dmgv)
 
+    local hitPos = tr.HitPos
+    local hitNormal = tr.HitNormal
+
     if self:GetProcessedValue("ImpactDecal") then
-        util.Decal(self:GetProcessedValue("ImpactDecal"), tr.StartPos, tr.HitPos - (tr.HitNormal * 2), self:GetOwner())
+        util.Decal(self:GetProcessedValue("ImpactDecal"), tr.StartPos, hitPos - (hitNormal * 2), owner)
     end
 
     if self:GetProcessedValue("ImpactEffect") then
         local fx = EffectData()
-        fx:SetOrigin(tr.HitPos)
-        fx:SetNormal(tr.HitNormal)
+        fx:SetOrigin(hitPos)
+        fx:SetNormal(hitNormal)
         util.Effect(self:GetProcessedValue("ImpactEffect"), fx, true)
     end
 
     if self:GetProcessedValue("ImpactSound") then
-        local soundtab = {
-            name = "impact",
-            sound = self:GetProcessedValue("ImpactSound")
-        }
+        soundTab.sound = self:GetProcessedValue("ImpactSound")
 
-        soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
+        soundTab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
 
-        sound.Play(soundtab.sound, tr.HitPos, soundtab.level, soundtab.pitch, soundtab.volume)
+        sound.Play(soundtab.sound, hitPos, soundtab.level, soundtab.pitch, soundtab.volume)
     end
 
     if self:GetProcessedValue("ExplosionDamage") > 0 then
-        util.BlastDamage(self, self:GetOwner(), tr.HitPos, self:GetProcessedValue("ExplosionRadius"), self:GetProcessedValue("ExplosionDamage"))
+        util.BlastDamage(self, owner, hitPos, self:GetProcessedValue("ExplosionRadius"), self:GetProcessedValue("ExplosionDamage"))
     end
 
     if self:GetProcessedValue("ExplosionEffect") then
         local fx = EffectData()
-        fx:SetOrigin(tr.HitPos)
-        fx:SetNormal(tr.HitNormal)
+        fx:SetOrigin(hitPos)
+        fx:SetNormal(hitNormal)
         fx:SetAngles(tr.HitNormal:Angle())
 
-        if bit.band(util.PointContents(tr.HitPos), CONTENTS_WATER) == CONTENTS_WATER then
+        if bit.band(util.PointContents(hitPos), CONTENTS_WATER) == CONTENTS_WATER then
             util.Effect("WaterSurfaceExplosion", fx, true)
         else
             util.Effect(self:GetProcessedValue("ExplosionEffect"), fx, true)
         end
     end
 
-    if tr.Entity and alreadypenned[tr.Entity] then
+    if traceEntity and alreadypenned[traceEntity] then
         dmg:SetDamage(0)
-    elseif tr.Entity then
-        alreadypenned[tr.Entity] = true
+    elseif traceEntity then
+        alreadypenned[traceEntity] = true
     end
 
     self:Penetrate(tr, range, penleft, alreadypenned)
@@ -702,9 +736,11 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 end
 
 function SWEP:ShouldTracer()
-    if self:GetProcessedValue("TracerNum") <= 0 then return false end
+    local tracerNum = self:GetProcessedValue("TracerNum")
 
-    local shouldtracer = self:GetNthShot() % self:GetProcessedValue("TracerNum") == 0
+    if tracerNum <= 0 then return false end
+
+    local shouldtracer = self:GetNthShot() % tracerNum == 0
 
     if self:Clip1() <= self:GetProcessedValue("TracerFinalMag") then
         shouldtracer = true
@@ -734,10 +770,15 @@ function SWEP:GetDamageDeltaAtRange(range)
     return d
 end
 
+local damageAtRangeHook = {}
+local emptyTable = {}
+
 function SWEP:GetDamageAtRange(range)
     local damagelut = self:GetProcessedValue("DamageLookupTable")
 
-    local dmgv = self:GetProcessedValue("DamageMin")
+    local dmgMin = self:GetProcessedValue("DamageMin")
+
+    local dmgv = dmgMin
 
     if damagelut then
         for _, tbl in ipairs(damagelut) do
@@ -749,7 +790,7 @@ function SWEP:GetDamageAtRange(range)
     else
         local d = self:GetDamageDeltaAtRange(range)
 
-        dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), self:GetProcessedValue("DamageMin"))
+        dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), dmgMin)
 
         dmgv = self:GetProcessedValue("Damage", dmgv)
 
@@ -758,11 +799,11 @@ function SWEP:GetDamageAtRange(range)
         end
     end
 
-    local data = self:RunHook("Hook_GetDamageAtRange", {
-        dmg = dmgv,
-        range = range,
-        d = d
-    }) or {}
+    damageAtRangeHook.dmg = dmgv
+    damageAtRangeHook.range = range
+    damageAtRangeHook.d = d
+
+    local data = self:RunHook("Hook_GetDamageAtRange", damageAtRangeHook) or emptyTable
 
     dmgv = data.dmg or dmgv
 
@@ -829,6 +870,8 @@ end
 function SWEP:ShootRocket()
     if CLIENT then return end
 
+    local owner = self:GetOwner()
+
     local src = self:GetShootPos()
     local dir = self:GetShootDir()
 
@@ -837,28 +880,30 @@ function SWEP:ShootRocket()
 
     local spread
 
-    if self:GetOwner():IsNPC() then
-        -- ang = self:GetOwner():GetAimVector():Angle()
+    if owner:IsNPC() then
         spread = self:GetNPCBulletSpread()
     else
         spread = self:GetProcessedValue("Spread")
     end
 
-    spread = math.Max(spread, 0)
+    spread = math.max(spread, 0)
 
     for i = 1, num do
         local dispersion = Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0)
+        dispersion:Mul(spread*36)
+        dispersion:Add(dir)
 
-        dispersion = dispersion * spread * 36
+        local newAng = dispersion:Angle()
 
         local rocket = ents.Create(ent)
         if !IsValid(rocket) then return end
 
+
         rocket:SetPos(src)
-        rocket:SetAngles(dir + dispersion)
+        rocket:SetAngles(newAng)
         rocket:Spawn()
-        rocket.Owner = self:GetOwner()
-        rocket:SetOwner(self:GetOwner())
+        rocket.Owner = owner
+        rocket:SetOwner(owner)
         rocket.Weapon = self
         rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", {
             Target = (IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget())
@@ -872,9 +917,12 @@ function SWEP:ShootRocket()
         local phys = rocket:GetPhysicsObject()
 
         if phys:IsValid() then
-            phys:AddVelocity((dir + dispersion):Forward() * self:GetProcessedValue("ShootEntForce"))
+            dispersion:Normalize()
+            dispersion:Mul(self:GetProcessedValue("ShootEntForce"))
+
+            phys:AddVelocity(dispersion)
             if self:GetProcessedValue("ShootEntInheritPlayerVelocity") then
-                phys:AddVelocity(self:GetOwner():GetVelocity())
+                phys:AddVelocity(owner:GetVelocity())
             end
         end
     end
