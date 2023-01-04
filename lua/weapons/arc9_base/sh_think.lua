@@ -79,8 +79,11 @@ function SWEP:Think()
             end
         end
 
+        -- Will remove these comments later
+
         self:ThinkCycle()
 
+        -- Done
         self:ThinkRecoil()
 
         self:ThinkHeat()
