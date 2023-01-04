@@ -1,6 +1,6 @@
 UnLitGeneric
 {
-	"$basetexture"	"arc9/laser2"
+	"$basetexture"	"arc9/laser5"
 	"$additive" 	"1"
 	"$translucent" "1"
 	"$vertexcolor" 	"1"
@@ -14,11 +14,17 @@ UnLitGeneric
 
 	Proxies
 	{
-		TextureScroll
+		"TextureScroll"
 		{
 			textureScrollVar	$detailtexturetransform
 			textureScrollRate	50
 			textureScrollAngle 	90
 		}
-	}
+		//"AnimatedTexture"
+		//{
+		//"animatedTextureVar" "$basetexture"
+		//"animatedTextureFrameNumVar" "$frame"
+		//"animatedTextureFrameRate" "30"
+		//}
+     	}
 }
