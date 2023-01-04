@@ -287,9 +287,9 @@ local function DrawSettings(bg, page)
 
     local sheet = vgui.Create("ARC9ColumnSheet", bg)
     sheet:Dock(FILL)
-    sheet:DockMargin(0, 0, ARC9ScreenScale(77), ARC9ScreenScale(1.7))
+    sheet:DockMargin(0, 0, ARC9ScreenScale(100), ARC9ScreenScale(1.7))
     sheet.Navigation:DockMargin(-120, 0, 0, ARC9ScreenScale(5)) -- idk why -120
-    sheet.Navigation:SetWidth(ARC9ScreenScale(77))
+    sheet.Navigation:SetWidth(ARC9ScreenScale(100))
 
     for k, v in pairs(settingstable) do
         local newpanel = vgui.Create("DPanel", sheet)
@@ -320,8 +320,8 @@ local function DrawSettings(bg, page)
                     if bg.desc then bg.desc:Remove() end
 
                     local desc = vgui.Create("ARC9ScrollPanel", bg)
-                    desc:SetPos(bg:GetWide() - ARC9ScreenScale(74.5), ARC9ScreenScale(35))
-                    desc:SetSize(ARC9ScreenScale(70), bg:GetTall() - ARC9ScreenScale(40))
+                    desc:SetPos(bg:GetWide() - ARC9ScreenScale(97.5), ARC9ScreenScale(35))
+                    desc:SetSize(ARC9ScreenScale(93), bg:GetTall() - ARC9ScreenScale(40))
                     desc.Paint = function(self2, w, h)
                         -- surface.SetDrawColor(144, 0, 0, 100)
                         -- surface.DrawRect(0, 0, w, h)
@@ -357,11 +357,11 @@ local function DrawSettings(bg, page)
                 -- woopsie
             elseif v2.type == "bool" then
                 local newel = vgui.Create("ARC9Checkbox", elpanel)
-                newel:SetPos(elpw-ARC9ScreenScale(4+13), ARC9ScreenScale(4))
+                newel:SetPos(elpw+ARC9ScreenScale(5), ARC9ScreenScale(4))
                 if v2.convar then newel:SetConVar("arc9_" .. v2.convar) end
             elseif v2.type == "slider" then
                 local newel = vgui.Create("ARC9NumSlider", elpanel)
-                newel:SetPos(0, ARC9ScreenScale(6))
+                newel:SetPos(ARC9ScreenScale(23), ARC9ScreenScale(6))
                 newel:SetSize(elpw, 30)
                 newel:SetDecimals(v2.decimals or 0)
                 newel:SetMin(v2.min or 0)
@@ -376,7 +376,7 @@ local function DrawSettings(bg, page)
                 end
             elseif v2.type == "color" then
                 local newel = vgui.Create("ARC9ColorButton", elpanel)
-                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
 
                 local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
                 newel:CustomSetConvar(cvar)
@@ -390,7 +390,7 @@ local function DrawSettings(bg, page)
 
             elseif v2.type == "coloralpha" then
                 local newel = vgui.Create("ARC9ColorButton", elpanel)
-                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
                 newel:EnableAlpha()
 
                 local cvar = "arc9_" .. (v2.convar or "ya_dumbass")
@@ -405,11 +405,11 @@ local function DrawSettings(bg, page)
 
             elseif v2.type == "input" then
                 local newel = vgui.Create("DTextEntry", elpanel)
-                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
                 newel:SetText(v2.text)
             elseif v2.type == "combo" then
                 local newel = vgui.Create("ARC9ComboBox", elpanel)
-                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
                 newel:CustomSetConvar("arc9_" .. v2.convar)
 
                 local cvdata = GetConVar("arc9_" .. v2.convar):GetString()
@@ -423,7 +423,7 @@ local function DrawSettings(bg, page)
                 end
             elseif v2.type == "button" then
                 local newel = vgui.Create("ARC9Button", elpanel)
-                newel:SetPos(elpw-ARC9ScreenScale(88), ARC9ScreenScale(6))
+                newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
                 newel.text = ARC9:GetPhrase(v2.content)
 
                 local oldmousepressed = newel.OnMousePressed
@@ -476,8 +476,8 @@ local function DrawSettings(bg, page)
 
         surface.SetDrawColor(ARC9.GetHUDColor("bg"))
         local talll = sheet.Navigation:GetTall() + ARC9ScreenScale(6.7)
-        surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = 0, y = h-math.max(ARC9ScreenScale(5), talll-buttontalling)}, {x = ARC9ScreenScale(75.4), y = h-math.max(ARC9ScreenScale(5), talll-buttontalling)}, {x = ARC9ScreenScale(75.4), y = h}}) -- left bottom panel
-        surface.DrawPoly({{x = w-ARC9ScreenScale(75.4), y = h}, {x = w-ARC9ScreenScale(75.4), y = ARC9ScreenScale(25.7)}, {x = w, y = ARC9ScreenScale(25.7)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}}) -- right panel
+        surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = 0, y = h-math.max(ARC9ScreenScale(5), talll-buttontalling)}, {x = ARC9ScreenScale(98,4), y = h-math.max(ARC9ScreenScale(5), talll-buttontalling)}, {x = ARC9ScreenScale(98,4), y = h}}) -- left bottom panel
+        surface.DrawPoly({{x = w-ARC9ScreenScale(98,4), y = h}, {x = w-ARC9ScreenScale(98,4), y = ARC9ScreenScale(25.7)}, {x = w, y = ARC9ScreenScale(25.7)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}}) -- right panel
         surface.DrawPoly({{x = 0, y = ARC9ScreenScale(24)},{x = 0, y = cornercut},{x = cornercut, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = ARC9ScreenScale(24)}}) -- top panel
 
         surface.SetDrawColor(ARC9.GetHUDColor("hi"))
@@ -494,7 +494,7 @@ local function DrawSettings(bg, page)
 
         surface.SetFont("ARC9_8_Slim")
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.SetTextPos(w-ARC9ScreenScale(73), ARC9ScreenScale(26))
+        surface.SetTextPos(w-ARC9ScreenScale(96), ARC9ScreenScale(26))
         surface.DrawText(activedesc != "" and ARC9:GetPhrase("settings.desc") or "") -- no title if no desc
 
         surface.SetFont("ARC9_16")
@@ -536,7 +536,8 @@ function ARC9_OpenSettings(page)
     end
 
     local panel = vgui.Create("DFrame", bg)
-    panel:SetSize(ARC9ScreenScale(330), ARC9ScreenScale(242))
+    -- panel:SetSize(ARC9ScreenScale(330), ARC9ScreenScale(242))
+    panel:SetSize(ARC9ScreenScale(400), ARC9ScreenScale(242))
     panel:MakePopup()
     panel:SetAlpha(0)
     panel:AlphaTo(255, 0.2, 0, nil)
@@ -549,8 +550,16 @@ function ARC9_OpenSettings(page)
     panel.OnRemove = function() bg:Remove() end
 
 
+    local m9k = vgui.Create("ARC9TopButton", panel)
+    m9k:SetPos(panel:GetWide() - ARC9ScreenScale(21*4 + 11), ARC9ScreenScale(2))
+    m9k:SetIcon(Material("arc9/ui/w9k.png", "mips smooth"))
+    m9k.DoClick = function(self2)
+        surface.PlaySound(clicksound)
+        gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=128089118")
+    end
+
     local discord = vgui.Create("ARC9TopButton", panel)
-    discord:SetPos(panel:GetWide() - ARC9ScreenScale(21*3 + 12), ARC9ScreenScale(2))
+    discord:SetPos(panel:GetWide() - ARC9ScreenScale(21*3 + 8), ARC9ScreenScale(2))
     discord:SetIcon(Material("arc9/ui/discord.png", "mips smooth"))
     discord.DoClick = function(self2)
         surface.PlaySound(clicksound)
@@ -558,11 +567,11 @@ function ARC9_OpenSettings(page)
     end
 
     local steam = vgui.Create("ARC9TopButton", panel)
-    steam:SetPos(panel:GetWide() - ARC9ScreenScale(21*2 + 7), ARC9ScreenScale(2))
+    steam:SetPos(panel:GetWide() - ARC9ScreenScale(21*2 + 5), ARC9ScreenScale(2))
     steam:SetIcon(Material("arc9/ui/steam.png", "mips smooth"))
     steam.DoClick = function(self2)
         surface.PlaySound(clicksound)
-        gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=2910505837") -- dont forget to change to arc9 page when it release
+        gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=2910505837")
     end
 
     local close = vgui.Create("ARC9TopButton", panel)
