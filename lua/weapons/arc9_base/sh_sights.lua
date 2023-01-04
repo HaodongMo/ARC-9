@@ -55,92 +55,6 @@ function SWEP:ToggleADS()
     return self:GetOwner():GetInfoNum("arc9_toggleads", 0) >= 1
 end
 
-do
-    local ENTITY = FindMetaTable("Entity")
-    local entityGetOwner = ENTITY.GetOwner
-    local entitySetPoseParameter = ENTITY.SetPoseParameter
-
-    local PLAYER = FindMetaTable("Player")
-    local playerKeyDown = PLAYER.KeyDown
-    local playerKeyPressed = PLAYER.KeyPressed
-
-    local swepGetIsNearWall = SWEP.GetIsNearWall
-    local swepToggleADS = SWEP.ToggleADS
-    local swepExitSights = SWEP.ExitSights
-    local swepEnterSights = SWEP.EnterSights
-    local swepGetBipodAmount = SWEP.GetBipodAmount
-
-    function SWEP:ThinkSights()
-        -- if self:GetSafe() then return end
-        if self:PredictionFilter() then return end
-
-        local vm = self:GetVM()
-        local swepDt = self.dt
-
-        local sighted = swepDt.InSights
-        if swepDt.Safe or swepGetIsNearWall(self) then
-            sighted = false
-        end
-
-        local oldamt = swepDt.SightAmount
-        local amt = math.Approach(
-            oldamt, sighted and 1 or 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
-
-        if CLIENT then
-            entitySetPoseParameter(vm, "sights", amt)
-        end
-
-        if oldamt ~= amt then
-            self:SetSightAmount(amt)
-        end
-
-        local owner = entityGetOwner(self)
-        local toggle = swepToggleADS(self)
-        local inatt = playerKeyDown(owner, IN_ATTACK2)
-        local pratt = playerKeyPressed(owner, IN_ATTACK2)
-
-        if toggle then
-            if sighted and pratt then
-                swepExitSights(self)
-            elseif not sighted and pratt then
-                -- if self:GetOwner():KeyDown(IN_USE) then
-                    -- return
-                -- end why was this here?
-                swepEnterSights(self)
-            end
-    
-            if pratt then
-                self:BuildMultiSight()
-            end
-        else
-            if sighted and !inatt then
-                swepExitSights(self)
-            elseif not sighted and inatt then
-                -- if self:GetOwner():KeyDown(IN_USE) then
-                    -- return
-                -- end why was this here?
-                swepEnterSights(self)
-                self:BuildMultiSight()
-            end
-        end
-
-        if sighted and playerKeyPressed(owner, IN_USE) and playerKeyDown(owner, IN_WALK) then
-            -- if CurTime() - self:GetLastPressedETime() < 0.33 then
-            if playerKeyDown(owner, IN_SPEED) then
-                self:SwitchMultiSight(-1)
-            else
-                self:SwitchMultiSight()
-            end
-            --     self:SetLastPressedETime(0)
-            -- else
-            --     self:SetLastPressedETime(CurTime())
-            -- end
-        end
-
-        entitySetPoseParameter(vm, "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
-    end
-end
-
 SWEP.MultiSightTable = {
     -- {
     --     Pos = Vector(0, 0, 0),
@@ -313,6 +227,92 @@ function SWEP:SwitchMultiSight(amt)
         if (self.MultiSightTable[old_msi].atttbl or {}).ID == (self.MultiSightTable[msi].atttbl or {}).ID then
             self:PlayAnimation("switchsights", 1, false)
         end
+    end
+end
+
+do
+    local ENTITY = FindMetaTable("Entity")
+    local entityGetOwner = ENTITY.GetOwner
+    local entitySetPoseParameter = ENTITY.SetPoseParameter
+
+    local PLAYER = FindMetaTable("Player")
+    local playerKeyDown = PLAYER.KeyDown
+    local playerKeyPressed = PLAYER.KeyPressed
+
+    local swepGetIsNearWall = SWEP.GetIsNearWall
+    local swepToggleADS = SWEP.ToggleADS
+    local swepExitSights = SWEP.ExitSights
+    local swepEnterSights = SWEP.EnterSights
+    local swepGetBipodAmount = SWEP.GetBipodAmount
+
+    function SWEP:ThinkSights()
+        -- if self:GetSafe() then return end
+        if self:PredictionFilter() then return end
+
+        local vm = self:GetVM()
+        local swepDt = self.dt
+
+        local sighted = swepDt.InSights
+        if swepDt.Safe or swepGetIsNearWall(self) then
+            sighted = false
+        end
+
+        local oldamt = swepDt.SightAmount
+        local amt = math.Approach(
+            oldamt, sighted and 1 or 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
+
+        if CLIENT then
+            entitySetPoseParameter(vm, "sights", amt)
+        end
+
+        if oldamt ~= amt then
+            self:SetSightAmount(amt)
+        end
+
+        local owner = entityGetOwner(self)
+        local toggle = swepToggleADS(self)
+        local inatt = playerKeyDown(owner, IN_ATTACK2)
+        local pratt = playerKeyPressed(owner, IN_ATTACK2)
+
+        if toggle then
+            if sighted and pratt then
+                swepExitSights(self)
+            elseif not sighted and pratt then
+                -- if self:GetOwner():KeyDown(IN_USE) then
+                    -- return
+                -- end why was this here?
+                swepEnterSights(self)
+            end
+    
+            if pratt then
+                self:BuildMultiSight()
+            end
+        else
+            if sighted and !inatt then
+                swepExitSights(self)
+            elseif not sighted and inatt then
+                -- if self:GetOwner():KeyDown(IN_USE) then
+                    -- return
+                -- end why was this here?
+                swepEnterSights(self)
+                self:BuildMultiSight()
+            end
+        end
+
+        if sighted and playerKeyPressed(owner, IN_USE) and playerKeyDown(owner, IN_WALK) then
+            -- if CurTime() - self:GetLastPressedETime() < 0.33 then
+            if playerKeyDown(owner, IN_SPEED) then
+                self:SwitchMultiSight(-1)
+            else
+                self:SwitchMultiSight()
+            end
+            --     self:SetLastPressedETime(0)
+            -- else
+            --     self:SetLastPressedETime(CurTime())
+            -- end
+        end
+
+        entitySetPoseParameter(vm, "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
     end
 end
 
