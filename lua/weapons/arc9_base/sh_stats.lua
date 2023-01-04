@@ -226,6 +226,9 @@ do
     local swepRunHook = SWEP.RunHook
     local swepGetAllAffectors = SWEP.GetAllAffectors
 
+    -- Maybe we need to make a thug version of this function? with getmetatable fuckery
+    local type = type
+
     function SWEP:GetValue(val, base, condition, amount)
         condition = condition or ""
         amount = amount or 1
@@ -238,12 +241,11 @@ do
         local valContCondition = val .. condition
         if self.HasNoAffectors[valContCondition] == true then return stat end
         local unaffected = true
-        local statType = type(stat)
         local baseStr = tostring(base)
         -- damn
         local baseContValContCondition = baseStr .. valContCondition
 
-        if statType == 'table' then
+        if type(stat) == 'table' then
             stat.BaseClass = nil
         end
 
@@ -295,7 +297,7 @@ do
             end
         end
 
-        if statType == 'number' then
+        if type(stat) == 'number' then
             for i = 1, affectorsCount do
                 local tbl = allAffectors[i]
                 local keyName = val .. "Add" .. condition
@@ -345,7 +347,7 @@ do
         self.HasNoAffectors[valContCondition] = unaffected
 
         -- if statType == 'table' then
-        if istable(stat) then
+        if type(stat) == 'table' then
             stat.BaseClass = nil
         end
 
