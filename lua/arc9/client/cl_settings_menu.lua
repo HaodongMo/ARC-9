@@ -551,12 +551,18 @@ function ARC9_OpenSettings(page)
     panel.OnRemove = function() bg:Remove() end
 
 
-    local m9k = vgui.Create("ARC9TopButton", panel)
-    m9k:SetPos(panel:GetWide() - ARC9ScreenScale(21*4 + 11), ARC9ScreenScale(2))
-    m9k:SetIcon(Material("arc9/ui/w9k.png", "mips smooth"))
-    m9k.DoClick = function(self2)
-        surface.PlaySound(clicksound)
-        gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=128089118")
+    -- do only if april fools 
+    local day = tonumber(os.date("%d"))
+    local month = tonumber(os.date("%m"))
+
+    if month == 4 and day == 1 then
+        local m9k = vgui.Create("ARC9TopButton", panel)
+        m9k:SetPos(panel:GetWide() - ARC9ScreenScale(21*4 + 11), ARC9ScreenScale(2))
+        m9k:SetIcon(Material("arc9/ui/w9k.png", "mips smooth"))
+        m9k.DoClick = function(self2)
+            surface.PlaySound(clicksound)
+            gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=128089118")
+        end
     end
 
     local discord = vgui.Create("ARC9TopButton", panel)
