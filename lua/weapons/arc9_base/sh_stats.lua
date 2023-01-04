@@ -138,14 +138,14 @@ do
 end
 
 do
-    local CURRENT_AFFECTOR
-    local CURRENT_DATA
-    local CURRENT_SWEP
+    -- local CURRENT_AFFECTOR
+    -- local CURRENT_DATA
+    -- local CURRENT_SWEP
     local swepGetAllAffectors = SWEP.GetAllAffectors
 
-    local function affectorCall()
-        return CURRENT_AFFECTOR(CURRENT_SWEP, CURRENT_DATA)
-    end
+    -- local function affectorCall()
+    --     return CURRENT_AFFECTOR(CURRENT_SWEP, CURRENT_DATA)
+    -- end
 
     function SWEP:RunHook(val, data)
         local any = false
@@ -167,7 +167,7 @@ do
             return data, any
         end
 
-        CURRENT_SWEP = self
+        -- CURRENT_SWEP = self
         
         local cacheLen = 0
         local newCache = {}
@@ -182,16 +182,20 @@ do
                 cacheLen = cacheLen + 1
                 newCache[cacheLen] = tblVal
 
-                CURRENT_AFFECTOR = tblVal
-                CURRENT_DATA = data
-                local succ, returnedData = pcall(affectorCall)
-                if succ then
-                    data = returnedData ~= nil and returnedData or data
-                    any = true
-                else
-                    print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
-                    print(returnedData, '\n')
+                -- CURRENT_AFFECTOR = tblVal
+                -- CURRENT_DATA = data
+                -- local succ, returnedData = CURRENT_AFFECTOR(CURRENT_SWEP, CURRENT_DATA) pcall(affectorCall)
+                local d = tblVal(self, data)
+                if d ~= nil then
+                    data = d
                 end
+                -- if succ then
+                --     data = returnedData ~= nil and returnedData or data
+                --     any = true
+                -- else
+                --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
+                --     print(returnedData, '\n')
+                -- end
             end
         end
     
