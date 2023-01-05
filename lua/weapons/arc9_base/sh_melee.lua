@@ -182,8 +182,6 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
 end
 
 function SWEP:ThinkMelee()
-    if self:PredictionFilter() then return end
-
     if !self:GetGrenadePrimed() then
 
         if self:GetOwner():KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash") then

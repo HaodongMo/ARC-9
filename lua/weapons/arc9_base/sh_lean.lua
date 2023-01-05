@@ -4,8 +4,6 @@ SWEP.MaxLeanAngle = 15
 SWEP.LastLeanAmountSERVER = 0
 
 function SWEP:ThinkLean()
-    if self:PredictionFilter() then return end
-
     if !GetConVar("arc9_lean"):GetBool() or !self:GetProcessedValue("CanLean") then
         self:SetLeanAmount(0)
         return

@@ -1,6 +1,4 @@
 function SWEP:ThinkTriggerSounds()
-    if self:PredictionFilter() then return end
-
     if self:GetAnimLockTime() > CurTime() then return end
     if self:StillWaiting() then return end
     if self:SprintLock() then return end

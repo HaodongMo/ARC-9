@@ -1,5 +1,4 @@
 function SWEP:ThinkCycle()
-    if self:PredictionFilter() then return end
     if self:StillWaiting() then return end
 
     local manual = self:ShouldManualCycle()

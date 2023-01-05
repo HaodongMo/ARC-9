@@ -4,9 +4,11 @@ function SWEP:OnReloaded()
 end
 
 function SWEP:Initialize()
+    local owner = self:GetOwner()
+
     self:SetShouldHoldType()
 
-    if self:GetOwner():IsNPC() then
+    if owner:IsNPC() then
         self:PostModify()
         self:NPC_Initialize()
         return
@@ -31,7 +33,7 @@ function SWEP:Initialize()
 
     self:BuildSubAttachments(self.DefaultAttachments)
 
-    if !IsValid(self:GetOwner()) then
+    if !IsValid(owner) then
         self:PostModify()
     end
 
@@ -42,6 +44,7 @@ function SWEP:Initialize()
     --self:SetClip1(self.Primary.DefaultClip) -- genuinely unfathomable that someone would do this
 
     self.LastAmmo = self.Primary.Ammo
+
 end
 
 function SWEP:ClientInitialize()
@@ -74,33 +77,76 @@ function SWEP:ClientInitialize()
     end
 end
 
-function SWEP:SetBaseSettings()
-    if game.SinglePlayer() and SERVER then
-        self:CallOnClient("SetBaseSettings")
+do
+    local _R = debug.getregistry()
+    local ENTITY = _R.Entity
+    local entityGetOwner = ENTITY.GetOwner
+
+    local METATABLE = setmetatable(table.Copy(_R.Weapon), {__index = ENTITY})
+    local EntTabMT = {__index = METATABLE}
+
+    local copyKeys = {"MetaID","MetaName","__tostring","__eq","__concat"}
+    local copyKeysLength = #copyKeys
+
+    local function CopyMetatable(ent)
+        local tab = ent:GetTable()
+        setmetatable(tab, EntTabMT)
+
+        local mt = {
+            __index = function(self, key)
+                -- we still have to take care of these idiots
+                if key == "Owner" then
+                    return entityGetOwner(self, key)
+                end
+
+                return tab[key]
+            end,  
+            __newindex = tab, 
+            __metatable = ENTITY
+        }
+
+        for i = 1, copyKeysLength do
+            local v = copyKeys[i]
+            mt[v] = ENTITY[v]
+        end
+
+        debug.setmetatable(ent, mt)
     end
 
-    self.Primary.Automatic = true
-    self.Secondary.Automatic = true
-
-    self.Primary.ClipSize = self:GetValue("ClipSize")
-    self.Primary.Ammo = self:GetValue("Ammo")
-
-    self.Primary.DefaultClip = self.Primary.ClipSize
-
-    if self:GetValue("UBGL") then
-        self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
-        self.Secondary.Ammo = self:GetValue("UBGLAmmo")
-
-        if SERVER then
-            if self:Clip2() < 0 then
-                self:SetClip2(0)
-            end
+    function SWEP:SetBaseSettings()
+        if game.SinglePlayer() and SERVER then
+            self:CallOnClient("SetBaseSettings")
         end
-    else
-        self.Secondary.ClipSize = -1
-        self.Secondary.Ammo = nil
 
-        self:SetUBGL(false)
+        self.Primary.Automatic = true
+        self.Secondary.Automatic = true
+
+        self.Primary.ClipSize = self:GetValue("ClipSize")
+        self.Primary.Ammo = self:GetValue("Ammo")
+
+        self.Primary.DefaultClip = self.Primary.ClipSize
+
+        if self:GetValue("UBGL") then
+            self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
+            self.Secondary.Ammo = self:GetValue("UBGLAmmo")
+    
+            if SERVER then
+                if self:Clip2() < 0 then
+                    self:SetClip2(0)
+                end
+            end
+        else
+            self.Secondary.ClipSize = -1
+            self.Secondary.Ammo = nil
+    
+            self:SetUBGL(false)
+        end
+
+        timer.Simple(0, function()
+            if IsValid(self) then
+                CopyMetatable(self)
+            end
+        end)
     end
 end
 

@@ -1,46 +1,112 @@
+local ENTITY = FindMetaTable("Entity")
+local entityGetOwner = ENTITY.GetOwner
+local entityIsPlayerHolding = ENTITY.IsPlayerHolding
+
+local PLAYER = FindMetaTable("Player")
+local playerKeyReleased = PLAYER.KeyReleased
+local playerKeyDown = PLAYER.KeyDown
+local playerDoAnimationEvent = PLAYER.DoAnimationEvent
+
+local swepIdle = SWEP.Idle
+local swepGetProcessedValue = SWEP.GetProcessedValue
+local swepPlayAnimation = SWEP.PlayAnimation
+local swepPrimaryAttack = SWEP.PrimaryAttack
+local swepGetCurrentFiremode = SWEP.GetCurrentFiremode
+local swepDoPrimaryAttack = SWEP.DoPrimaryAttack
+local swepGetIsWalking = SWEP.GetIsWalking
+local swepLoadPreset = SWEP.LoadPreset
+local swepDoDeployAnimation = SWEP.DoDeployAnimation
+
+-- uuugghh
+-- local swepThinkSprint = SWEP.ThinkSprint
+local swepThinkCycle = SWEP.ThinkCycle
+local swepThinkHeat = SWEP.ThinkHeat
+local swepThinkReload = SWEP.ThinkReload
+local swepThinkSights = SWEP.ThinkSights
+local swepThinkBipod = SWEP.ThinkBipod
+local swepThinkMelee = SWEP.ThinkMelee
+local swepThinkGrenade = SWEP.ThinkGrenade
+local swepThinkRecoil = SWEP.ThinkRecoil
+local swepThinkHoldBreath = SWEP.ThinkHoldBreath
+local swepThinkLockOn = SWEP.ThinkLockOn
+local swepThinkLean = SWEP.ThinkLean
+local swepThinkFiremodes = SWEP.ThinkFiremodes
+local swepThinkInspect = SWEP.ThinkInspect
+local swepThinkSprint = SWEP.ThinkSprint
+local swepThinkNearWall = SWEP.ThinkNearWall
+local swepThinkFreeAim = SWEP.ThinkFreeAim
+local swepThinkLoopingSound = SWEP.ThinkLoopingSound
+local swepThinkAnimation = SWEP.ThinkAnimation
+local swepThinkCustomize = SWEP.ThinkCustomize
+local swepRunHook = SWEP.RunHook
+local swepThinkThirdArm = SWEP.ThinkThirdArm
+local swepThinkPeek = SWEP.ThinkPeek
+
+local WEAPON = FindMetaTable("Weapon")
+local weaponSetNextPrimaryFire = WEAPON.SetNextPrimaryFire
+local weaponGetNextPrimaryFire = WEAPON.GetNextPrimaryFire
+local isSingleplayer = game.SinglePlayer()
+
+local cvarArcAutosave = GetConVar("arc9_autosave")
+local cvarGetBool = FindMetaTable("ConVar").GetBool
+
 function SWEP:Think()
-    local owner = self:GetOwner()
+    local owner = entityGetOwner(self)
 
-    if !IsValid(owner) then return end
-    if self:GetOwner():IsNPC() then return end
+    if not IsValid(owner) then return end
+    if owner:IsNPC() then return end
 
-    if self:GetNextIdle() < CurTime() then
-        self:Idle()
+    local swepDt = self.dt
+    local now = CurTime()
+
+    if swepDt.NextIdle < now then
+        swepIdle(self)
     end
 
-    if !self.NotAWeapon then
-        if self:GetProcessedValue("TriggerDelay") then
-            if self:GetOwner():KeyReleased(IN_ATTACK) and (self:GetTriggerDelay() > CurTime() or self:GetPrimedAttack()) then
-                self:PlayAnimation("untrigger")
+    local shouldRunPredicted = not self:PredictionFilter()
 
-                if self:GetProcessedValue("TriggerDelayCancellable") then
+    if not self.NotAWeapon then
+        local notPressedAttack = not playerKeyDown(owner, IN_ATTACK)
+
+        if swepGetProcessedValue(self, "TriggerDelay") then
+            local primedAttack = swepDt.PrimedAttack
+            local triggerDelay = swepDt.TriggerDelay
+
+            if (primedAttack or triggerDelay > now) and playerKeyReleased(owner, IN_ATTACK) then
+                swepPlayAnimation(self, "untrigger")
+
+                if swepGetProcessedValue(self, "TriggerDelayCancellable") then
                     self:SetPrimedAttack(false)
                 end
             end
 
-            if self:GetPrimedAttack() and self:GetTriggerDelay() <= CurTime() and !self:GetOwner():KeyDown(IN_ATTACK) then
-                if !self:PredictionFilter() then
-                    self:PrimaryAttack()
-                end
+            if primedAttack and triggerDelay <= now and notPressedAttack and not shouldRunPredicted then
+                swepPrimaryAttack(self)
             end
         end
 
-        if !owner:KeyDown(IN_ATTACK) then
+        local currentFiremode = swepGetCurrentFiremode(self)
+        local notRunawayBurst = swepGetProcessedValue(self, "RunawayBurst")
+        local postBurstDelay = now + swepGetProcessedValue(self, "PostBurstDelay")
+
+        if notPressedAttack then
             self:SetNeedTriggerPress(false)
-            if self:GetCurrentFiremode() > 1 and !self:GetProcessedValue("RunawayBurst") and self:GetBurstCount() > 0 then
-                self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
+            if currentFiremode > 1 and notRunawayBurst and swepDt.BurstCount > 0 then
+                weaponSetNextPrimaryFire(self, postBurstDelay)
             end
-            if !self:GetProcessedValue("RunawayBurst") then
+            if notRunawayBurst then
                 self:SetBurstCount(0)
             end
         end
 
-        if self:GetProcessedValue("RunawayBurst") then
-            if self:GetBurstCount() >= self:GetCurrentFiremode() and self:GetCurrentFiremode() > 0 then
+        -- :troll:
+        if not notRunawayBurst then
+            local burstCount = swepDt.BurstCount
+            if burstCount >= currentFiremode and currentFiremode > 0 then
                 self:SetBurstCount(0)
-                self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("PostBurstDelay"))
-            elseif self:GetBurstCount() > 0 and self:GetBurstCount() < self:GetCurrentFiremode() then
-                self:DoPrimaryAttack()
+                weaponSetNextPrimaryFire(self, postBurstDelay)
+            elseif burstCount > 0 and burstCount < currentFiremode then
+                swepDoPrimaryAttack(self)
             end
         end
 
@@ -60,104 +126,88 @@ function SWEP:Think()
         -- end
 
         -- If we have stopped shooting, play the aftershotparticle
-        if self:GetAfterShot() and (IsFirstTimePredicted() or game.SinglePlayer()) then
-            local delay = 60 / self:GetProcessedValue("RPM")
+        if swepDt.AfterShot and (IsFirstTimePredicted() or isSingleplayer) then
+            local delay = 60 / swepGetProcessedValue(self, "RPM")
 
-            if self:GetNextPrimaryFire() + delay + self:GetProcessedValue("AfterShotParticleDelay") < CurTime() then
+            if weaponGetNextPrimaryFire(self) + delay + swepGetProcessedValue(self, "AfterShotParticleDelay") < now then
                 self:SetAfterShot(false)
-                if self:GetProcessedValue("AfterShotParticle") then
-                    local att = self:GetProcessedValue("AfterShotQCA") or self:GetProcessedValue("MuzzleEffectQCA")
+                if swepGetProcessedValue(self, "AfterShotParticle") then
+                    local att = swepGetProcessedValue(self, "AfterShotQCA") or swepGetProcessedValue(self, "MuzzleEffectQCA")
 
                     local data = EffectData()
                     data:SetEntity(self)
                     data:SetAttachment(att)
 
-                    local effect = self:GetProcessedValue("AfterShotEffect")
+                    local effect = swepGetProcessedValue(self, "AfterShotEffect")
 
                     util.Effect(effect, data, true)
                 end
             end
         end
 
-        self:ThinkCycle()
+        -- Will remove these comments later
 
+        if shouldRunPredicted then
+            swepThinkCycle(self)
+            swepThinkHeat(self)
+            swepThinkReload(self)
+            -- Done (no GetVM)
+            swepThinkSights(self)
+            swepThinkBipod(self)
+            swepThinkMelee(self)
+            self:ThinkUBGL()
+            swepThinkGrenade(self)
+            self:ThinkTriggerSounds()
+        end
+        -- Done
         self:ThinkRecoil()
-
-        self:ThinkHeat()
-
-        self:ThinkReload()
-
-        self:ThinkSights()
-
-        -- self:ThinkBlindFire()
-
-        self:ThinkBipod()
-
-        self:ThinkMelee()
-
         self:ThinkHoldBreath()
-
-        self:ThinkUBGL()
-
-        self:ThinkGrenade()
-
         self:ThinkLockOn()
-
-        self:ThinkTriggerSounds()
-
     end
 
-    self:ThinkLean()
+    if shouldRunPredicted then
+        swepThinkLean(self)
+        swepThinkFiremodes(self)
+        swepThinkInspect(self)
+    end
 
-    self:ThinkSprint()
+    swepThinkSprint(self)
+    -- Done
+    swepThinkNearWall(self)
+    swepThinkFreeAim(self)
+    swepThinkLoopingSound(self)
+    swepThinkAnimation(self)
+    swepThinkCustomize(self)
 
-    self:ThinkNearWall()
-
-    self:ThinkFiremodes()
-
-    self:ThinkFreeAim()
-
-    self:ThinkLoopingSound()
-
-    self:ThinkInspect()
-
-    self:ThinkAnimation()
-
-    self:ThinkCustomize()
-
-    self:RunHook("Hook_Think")
+    swepRunHook(self, "Hook_Think")
 
     if CLIENT then
-        self:ThinkThirdArm()
-
-        self:ThinkPeek()
+        swepThinkThirdArm(self)
+        swepThinkPeek(self)
     end
 
     self:ProcessTimers()
 
-    lastwalking = self:GetIsWalking()
-
-    if SERVER and owner.ARC9_HoldingProp then
-        if !IsValid(owner.ARC9_HoldingProp) or !owner.ARC9_HoldingProp:IsPlayerHolding() then
-            owner.ARC9_HoldingProp = nil    
-            net.Start("arc9_stoppickup")
-            net.Send(owner)
-            owner:DoAnimationEvent(ACT_FLINCH_BACK)
-        end
+    local holdingProp = owner.ARC9_HoldingProp
+    if SERVER and holdingProp and (not IsValid(holdingProp) or entityIsPlayerHolding(holdingProp)) then
+        holdingProp = nil    
+        net.Start("arc9_stoppickup")
+        net.Send(owner)
+        playerDoAnimationEvent(owner, ACT_FLINCH_BACK)
     end
 
     if CLIENT then
         if !self.LoadedPreset then
             self.LoadedPreset = true
 
-            if GetConVar("arc9_autosave"):GetBool() then
-                self:LoadPreset("autosave")
+            if cvarGetBool(cvarArcAutosave) then
+                swepLoadPreset(self, "autosave")
             else
-                self:LoadPreset("default")
+                swepLoadPreset(self, "default")
             end
 
             self:SetReady(false)
-            self:DoDeployAnimation()
+            swepDoDeployAnimation(self)
         end
     end
 end

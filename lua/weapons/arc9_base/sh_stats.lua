@@ -138,14 +138,14 @@ do
 end
 
 do
-    local CURRENT_AFFECTOR
-    local CURRENT_DATA
-    local CURRENT_SWEP
+    -- local CURRENT_AFFECTOR
+    -- local CURRENT_DATA
+    -- local CURRENT_SWEP
     local swepGetAllAffectors = SWEP.GetAllAffectors
 
-    local function affectorCall()
-        return CURRENT_AFFECTOR(CURRENT_SWEP, CURRENT_DATA)
-    end
+    -- local function affectorCall()
+    --     return CURRENT_AFFECTOR(CURRENT_SWEP, CURRENT_DATA)
+    -- end
 
     function SWEP:RunHook(val, data)
         local any = false
@@ -167,7 +167,7 @@ do
             return data, any
         end
 
-        CURRENT_SWEP = self
+        -- CURRENT_SWEP = self
         
         local cacheLen = 0
         local newCache = {}
@@ -182,16 +182,20 @@ do
                 cacheLen = cacheLen + 1
                 newCache[cacheLen] = tblVal
 
-                CURRENT_AFFECTOR = tblVal
-                CURRENT_DATA = data
-                local succ, returnedData = pcall(affectorCall)
-                if succ then
-                    data = returnedData ~= nil and returnedData or data
-                    any = true
-                else
-                    print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
-                    print(returnedData, '\n')
+                -- CURRENT_AFFECTOR = tblVal
+                -- CURRENT_DATA = data
+                -- local succ, returnedData = CURRENT_AFFECTOR(CURRENT_SWEP, CURRENT_DATA) pcall(affectorCall)
+                local d = tblVal(self, data)
+                if d ~= nil then
+                    data = d
                 end
+                -- if succ then
+                --     data = returnedData ~= nil and returnedData or data
+                --     any = true
+                -- else
+                --     print("!!! ARC9 ERROR - \"" .. (tbl["PrintName"] or "Unknown") .. "\" TRIED TO RUN INVALID HOOK ON " .. val .. "!")
+                --     print(returnedData, '\n')
+                -- end
             end
         end
     
@@ -222,6 +226,9 @@ do
     local swepRunHook = SWEP.RunHook
     local swepGetAllAffectors = SWEP.GetAllAffectors
 
+    -- Maybe we need to make a thug version of this function? with getmetatable fuckery
+    local type = type
+
     function SWEP:GetValue(val, base, condition, amount)
         condition = condition or ""
         amount = amount or 1
@@ -236,12 +243,11 @@ do
             return stat
         end
         local unaffected = true
-        local statType = type(stat)
         local baseStr = tostring(base)
         -- damn
         local baseContValContCondition = baseStr .. valContCondition
 
-        if statType == 'table' then
+        if type(stat) == 'table' then
             stat.BaseClass = nil
         end
 
@@ -293,7 +299,7 @@ do
             end
         end
 
-        if statType == 'number' then
+        if type(stat) == 'number' then
             for i = 1, affectorsCount do
                 local tbl = allAffectors[i]
                 local keyName = val .. "Add" .. condition
@@ -343,7 +349,7 @@ do
         self.HasNoAffectors[valContCondition] = unaffected
 
         -- if statType == 'table' then
-        if istable(stat) then
+        if type(stat) == 'table' then
             stat.BaseClass = nil
         end
 
@@ -394,11 +400,16 @@ do
         local ct = CurTime()
         local upct = UnPredictedCurTime()
         local processedValueName = tostring(val) .. tostring(base)
-        if CLIENT and self.PV_Cache[processedValueName] ~= nil and self.PV_Tick == upct then return self.PV_Cache[processedValueName] end
-
-        if self.PV_Tick ~= upct then
-            self.PV_Cache = {}
+        if CLIENT then
+            if self.PV_Cache[processedValueName] ~= nil and self.PV_Tick == upct then
+                return self.PV_Cache[processedValueName]
+            end
+            if self.PV_Tick ~= upct then
+                self.PV_Cache = {}
+            end
         end
+
+
 
         local stat = arcGetValue(self, val, base)
         local ubgl = swepDt.UBGL
@@ -570,8 +581,10 @@ do
             end
         end
 
-        self.PV_Tick = upct
-        self.PV_Cache[processedValueName] = stat
+        if CLIENT then
+            self.PV_Tick = upct
+            self.PV_Cache[processedValueName] = stat
+        end
 
         return stat
     end

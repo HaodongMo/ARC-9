@@ -1,6 +1,4 @@
 function SWEP:ThinkBipod()
-    if self:PredictionFilter() then return end
-
     local bip = self:GetBipod()
 
     if bip then
