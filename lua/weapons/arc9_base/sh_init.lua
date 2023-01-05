@@ -4,11 +4,9 @@ function SWEP:OnReloaded()
 end
 
 function SWEP:Initialize()
-    local owner = self:GetOwner()
-
     self:SetShouldHoldType()
 
-    if owner:IsNPC() then
+    if self:GetOwner():IsNPC() then
         self:PostModify()
         self:NPC_Initialize()
         return
@@ -33,7 +31,7 @@ function SWEP:Initialize()
 
     self:BuildSubAttachments(self.DefaultAttachments)
 
-    if !IsValid(owner) then
+    if !IsValid(self:GetOwner()) then
         self:PostModify()
     end
 
@@ -44,7 +42,6 @@ function SWEP:Initialize()
     --self:SetClip1(self.Primary.DefaultClip) -- genuinely unfathomable that someone would do this
 
     self.LastAmmo = self.Primary.Ammo
-
 end
 
 function SWEP:ClientInitialize()
@@ -77,33 +74,6 @@ function SWEP:ClientInitialize()
     end
 end
 
-local ENTITY = debug.getregistry().Entity
-local SWEP = debug.getregistry().Weapon
-
-local METATABLE = setmetatable(table.Copy(SWEP), {__index = ENTITY})
-
-local EntTabMT = {__index=METATABLE}
-
-local CopyKeys = {"MetaID","MetaName","__tostring","__eq","__concat"}
-local count = #CopyKeys
-local function MakeMT(ent)
-    local tab = ent:GetTable()
-    setmetatable(tab,EntTabMT)
-    local mt = {__index = function(obj, key)
-        if key == "Owner" then
-            return ENTITY.GetOwner(obj, key)
-        end
-        return tab[key]
-    end, __newindex = tab, __metatable=ENTITY}
-    for i=1, count do
-        local v = CopyKeys[i]
-        mt[v] = ENTITY[v]
-    end
-    debug.setmetatable(ent,mt)
-end
-
-
-
 function SWEP:SetBaseSettings()
     if game.SinglePlayer() and SERVER then
         self:CallOnClient("SetBaseSettings")
@@ -132,13 +102,6 @@ function SWEP:SetBaseSettings()
 
         self:SetUBGL(false)
     end
-
-    timer.Simple(0, function()
-        if not IsValid(self) then return end
-        MakeMT(self)
-    end)
-
-
 end
 
 function SWEP:SetShouldHoldType()

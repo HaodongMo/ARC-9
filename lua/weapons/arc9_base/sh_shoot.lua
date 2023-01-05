@@ -891,12 +891,15 @@ function SWEP:ShootRocket()
         local dispersion = Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0)
         dispersion:Mul(spread*36)
         dispersion:Add(dir)
+
+        local newAng = dispersion:Angle()
+
         local rocket = ents.Create(ent)
         if !IsValid(rocket) then return end
 
 
         rocket:SetPos(src)
-        rocket:SetAngles(dispersion)
+        rocket:SetAngles(newAng)
         rocket:Spawn()
         rocket.Owner = owner
         rocket:SetOwner(owner)
@@ -913,10 +916,10 @@ function SWEP:ShootRocket()
         local phys = rocket:GetPhysicsObject()
 
         if phys:IsValid() then
-            local vec = dispersion:Forward()
-            vec:Mul(self:GetProcessedValue("ShootEntForce"))
+            dispersion:Normalize()
+            dispersion:Mul(self:GetProcessedValue("ShootEntForce"))
 
-            phys:AddVelocity(vec)
+            phys:AddVelocity(dispersion)
             if self:GetProcessedValue("ShootEntInheritPlayerVelocity") then
                 phys:AddVelocity(owner:GetVelocity())
             end
