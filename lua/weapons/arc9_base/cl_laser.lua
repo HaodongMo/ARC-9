@@ -12,7 +12,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     local tr = util.TraceLine({
         start = pos,
-        endpos = pos + (dir * 30000),
+        endpos = pos + (dir * 2500),
         mask = MASK_SHOT,
         filter = self:GetOwner()
     })
@@ -31,7 +31,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     if tr.HitSky then
         hit = false
-        hitpos = pos + (dir * 30000)
+        hitpos = pos + (dir * 2500)
     end
 
     if !behav then
@@ -41,12 +41,12 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
     end
 
     if hit then
-        local rad = math.Rand(4, 6) * strength * math.max(tr.Fraction*70, 1)
+        local rad = math.Rand(4, 6) * strength * math.max(tr.Fraction*2, 1)
         local dotcolor = color
         local whitedotcolor = lasercolor200
 
-        dotcolor.a = 255 - math.min(tr.Fraction*3000, 250)
-        whitedotcolor.a = 255 - math.min(tr.Fraction*2500, 250)
+        dotcolor.a = 255 - math.min(tr.Fraction*30, 250)
+        whitedotcolor.a = 255 - math.min(tr.Fraction*25, 250)
 
         render.SetMaterial(flaremat)
 
