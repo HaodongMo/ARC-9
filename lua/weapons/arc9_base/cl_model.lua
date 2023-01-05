@@ -461,6 +461,7 @@ function SWEP:SetupModel(wm, lod, cm)
 
     for _, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
+        if slottbl.NoDraw then continue end
 
         -- local atttbl = ARC9.GetAttTable(slottbl.Installed)
         local atttbl = self:GetFinalAttTable(slottbl)

@@ -1147,6 +1147,7 @@ SWEP.Attachments = {
     --     Ang = Angle(0, 0, 0),
     --     CorrectiveAng = Angle(0, 0, 0), -- sometimes, the autosolver needs a little help. Try (-1, -1, 0)
     --     Scale = 1,
+    --     NoDraw = false, -- Do not draw the attachment's model. Might break some attachments.
     --     DuplicateModels = { -- For guns that require duplicating attachment models, e.g. akimbo or guns with 2 mags on model
     --          {
     --              Bone = "",
