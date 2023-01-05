@@ -44,6 +44,8 @@ net.Receive("arc9_randomizeatts", function(len, ply)
 
     if !wpn.ARC9 then return end
 
+    if !GetConVar("arc9_free_atts"):GetBool() then return end
+
     if wpn.NextRandomize and wpn.NextRandomize > CurTime() then return end
     wpn.NextRandomize = CurTime() + 0.055
 

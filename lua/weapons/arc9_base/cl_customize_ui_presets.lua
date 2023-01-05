@@ -290,7 +290,9 @@ function SWEP:CreatePresetMenu(reload)
         createpresetbtn(preset, !tonumber(preset)) -- if preset is a number then it's a user generated, if no - standard
     end
 
-    createpresetbtn("random", true)
+    if GetConVar("arc9_free_atts"):GetBool() then
+        createpresetbtn("random", true)
+    end
 end
 
 function SWEP:ClosePresetMenu()
