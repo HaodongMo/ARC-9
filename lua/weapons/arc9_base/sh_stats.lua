@@ -398,11 +398,16 @@ do
         local ct = CurTime()
         local upct = UnPredictedCurTime()
         local processedValueName = tostring(val) .. tostring(base)
-        if CLIENT and self.PV_Cache[processedValueName] ~= nil and self.PV_Tick == upct then return self.PV_Cache[processedValueName] end
-
-        if self.PV_Tick ~= upct then
-            self.PV_Cache = {}
+        if CLIENT then
+            if self.PV_Cache[processedValueName] ~= nil and self.PV_Tick == upct then
+                return self.PV_Cache[processedValueName]
+            end
+            if self.PV_Tick ~= upct then
+                self.PV_Cache = {}
+            end
         end
+
+
 
         local stat = arcGetValue(self, val, base)
         local ubgl = swepDt.UBGL
@@ -574,8 +579,10 @@ do
             end
         end
 
-        self.PV_Tick = upct
-        self.PV_Cache[processedValueName] = stat
+        if CLIENT then
+            self.PV_Tick = upct
+            self.PV_Cache[processedValueName] = stat
+        end
 
         return stat
     end

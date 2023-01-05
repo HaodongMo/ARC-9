@@ -20,7 +20,7 @@ do
     local entityGetOwner = FindMetaTable("Entity").GetOwner 
 
     function SWEP:GetIsNearWall()
-        local now = CurTime()
+        local now = engine.TickCount()
 
         if self.NearWallTick == now then
             return self.NearWallCached
@@ -32,11 +32,9 @@ do
 
         local startPos = self:GetShootPos()
 
-        local shootDir = angleForward(self:GetShootDir())
-        vectorMul(shootDir, length)
-
-        local endPos = Vector(startPos)
-        vectorAdd(endPos, shootDir)
+        local endPos = angleForward(self:GetShootDir())
+        vectorMul(endPos, length)
+        vectorAdd(endPos, startPos)
 
         traceData.start = startPos
         traceData.endpos = endPos
