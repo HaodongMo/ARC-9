@@ -32,9 +32,9 @@ do
 
         local startPos = self:GetShootPos()
 
-        local endpos = angleForward(self:GetShootDir())
-        vectorMul(endpos, length)
-        vectorAdd(endpos, startPos)
+        local endPos = angleForward(self:GetShootDir())
+        vectorMul(endPos, length)
+        vectorAdd(endPos, startPos)
 
         traceData.start = startPos
         traceData.endpos = endPos
