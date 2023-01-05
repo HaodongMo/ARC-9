@@ -75,7 +75,7 @@ local function generatefonts()
             font = unscaled_font,
             size = i,
             weight = 500,
-            antialias = false,
+            antialias = true,
             extended = true,
         } )
 
@@ -83,7 +83,7 @@ local function generatefonts()
             font = unscaled_font,
             size = i,
             weight = 500,
-            antialias = false,
+            antialias = true,
             blursize = i * 0.2,
             extended = false,
         } )

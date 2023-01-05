@@ -2,10 +2,10 @@
 local ARC9ScreenScale = ARC9.ScreenScale
 
 local clicksound = "arc9/newui/uimouse_click_return.ogg"
-local removesound = "arc9/newui/presets/paper_scrawl1.ogg"
-local savesound = "arc9/newui/presets/paper_write1.ogg"
-local applysound = "arc9/newui/presets/paper_search1.ogg"
-local randomizesound = "arc9/newui/presets/paper_search1.ogg"
+local removesound = "arc9/newui/presets/preset_sound1-delete.ogg"
+local savesound = "arc9/newui/presets/preset_sound3-save.ogg"
+local applysound = "arc9/newui/presets/preset_sound2-apply.ogg"
+local randomizesound = "arc9/newui/presets/shuffle_sound2.ogg"
 
 local mat_default = Material("arc9/arc9_logo.png", "mips smooth")
 local mat_random = Material("arc9/ui/random.png", "mips smooth")

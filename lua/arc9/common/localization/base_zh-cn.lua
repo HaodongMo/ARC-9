@@ -513,3 +513,4 @@ L["customize.hint.favorite"] = "加入收藏"
 L["customize.hint.unfavorite"] = "取消收藏"
 
 L["customize.presets.unnamed"] = "未命名"
+L["folder.favorites"] = "收藏夹"

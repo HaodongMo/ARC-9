@@ -327,7 +327,6 @@ end)
 local doop = 0
 hook.Add("PlayerBindPress", "ARC9_GamepadHUDBinds", function(ply, bind, pressed, code)
     if IsValid(LocalPlayer()) and IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon().ARC9 and LocalPlayer():GetActiveWeapon():GetCustomize() and ARC9.ControllerMode() then
-        local wpn = LocalPlayer():GetActiveWeapon()
         if bind == "invprev" then
             if doop % 2 == 0 then setscroll = 1 end
             doop = doop + 1
@@ -958,9 +957,9 @@ function SWEP:CreateCustomizeHUD()
                 local dx = mousex - lastmousex
                 local dy = mousey - lastmousey
 
-                self.CustomizePitch = self.CustomizePitch - (dx / ARC9ScreenScale(4))*3
+                self.CustomizePitch = self.CustomizePitch - (dx / ARC9ScreenScale(4)) * 3
                 -- self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
-                self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8))
+                self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * 3
 
             end
         elseif self:GetOwner():KeyDown(IN_RELOAD) then
@@ -1075,6 +1074,11 @@ function SWEP:CreateCustomizeHUD()
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = ARC9.GetBindKey("+showscores"),
                 row3 = true,
+            },
+            {
+                action = "customize.hint.favorite",
+                glyph = ARC9.GetBindKey("impulse 100"),
+                hidden = true,
             },
         }
     end

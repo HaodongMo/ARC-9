@@ -1,6 +1,7 @@
 local scrolleles = {}
 
 local foldericon = Material("arc9/ui/folder.png", "mips smooth")
+local folderfavicon = Material("arc9/ui/folder_favorites.png", "mips smooth")
 local backicon = Material("arc9/ui/back.png", "mips smooth")
 local adminicon = Material("arc9/admin.png", "mips smooth")
 
@@ -145,8 +146,8 @@ local function enterfolder(self, scroll, slottbl, fname)
 
         local folderbtn = vgui.Create("ARC9AttButton", scroll)
 
-        folderbtn:SetButtonText(ARC9:GetPhrase("folder." .. folder) or folder)
-        folderbtn:SetIcon(foldericon)
+        folderbtn:SetButtonText(folder == "!favorites" and ARC9:GetPhrase("folder.favorites") or ARC9:GetPhrase("folder." .. folder) or folder)
+        folderbtn:SetIcon(folder == "!favorites" and folderfavicon or foldericon)
         folderbtn:SetEmpty(true)
 
         folderbtn:DockMargin(0, 0, ARC9ScreenScale(4), 0)
@@ -165,12 +166,12 @@ local function enterfolder(self, scroll, slottbl, fname)
             end
         end
 
-        -- folderbtn.Think = function(self2)
-        --     if !IsValid(self) then return end
-        --     if self2:IsHovered() then
-        --         self.CustomizeHints["customize.hint.select"] = "Open"
-        --     end
-        -- end
+        folderbtn.Think = function(self2)
+            if !IsValid(self) then return end
+            if self2:IsHovered() then
+                self.CustomizeHints["customize.hint.select"] = "customize.hint.select"
+            end
+        end
     end
 
     if foldercount > 1 then spacer(self, scroll, 0) end
@@ -187,7 +188,9 @@ local function enterfolder(self, scroll, slottbl, fname)
 
         if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then continue end
 
-        if (!atttbl.Folder and #self.BottomBarPath > 0) or (atttbl.Folder and atttbl.Folder != strpath) then continue end
+        if strpath != "!favorites" and ((!atttbl.Folder and #self.BottomBarPath > 0) or (atttbl.Folder and atttbl.Folder != strpath)) then continue end
+
+        if strpath == "!favorites" and !ARC9.Favorites[att.att] then continue end
 
         local attname = ARC9:GetPhraseForAtt(att.att, "CompactName") or ARC9:GetPhraseForAtt(att.att, "PrintName") or ARC9:GetPhraseForAtt(att.att, "ShortName") or ""
 
@@ -212,7 +215,7 @@ local function enterfolder(self, scroll, slottbl, fname)
                 self.CustomizeSelectAddr = self2.address
             end
         end
-        
+
         attbtn2.Think = function(self2)
             if !IsValid(self) then return end
 
@@ -255,12 +258,20 @@ local function enterfolder(self, scroll, slottbl, fname)
                 elseif self2.slottbl.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
                 end
-                
+
+                if ARC9.Favorites[att.att] then
+                    self.CustomizeHints["customize.hint.favorite"] = "customize.hint.unfavorite"
+                else
+                    self.CustomizeHints["customize.hint.favorite"] = "customize.hint.favorite"
+                end
+
                 if self.AttInfoBarAtt != self2.att then
                     self.AttInfoBarAtt = self2.att
                     self.AttInfoBarAttSlot = slot
                     self:CreateHUD_AttInfo()
                 end
+
+                self.CustomizeLastHovered = self2
             end
         end
 
@@ -413,10 +424,10 @@ local function enterfolder(self, scroll, slottbl, fname)
 end
 
 surface.CreateFont("ARC9_KeybindPreview_Cust", {
-	font = "Arial",
-	size = ARC9ScreenScale(8),
-	weight = 1000,
-	antialias = true,
+    font = "Arial",
+    size = ARC9ScreenScale(8),
+    weight = 1000,
+    antialias = true,
 })
 
 function SWEP:CreateHUD_Bottom()
@@ -467,9 +478,11 @@ function SWEP:CreateHUD_Bottom()
 
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
         local atts_slots = {}
+        local atts_fav = {}
 
         for _, att in pairs(atts) do
             if (slottbl.RejectAttachments or {})[att] then continue end
+            if ARC9.Favorites[att] then atts_fav[att] = true end
             table.insert(atts_slots, {
                 att = att,
                 slot = self.BottomBarAddress
@@ -507,6 +520,9 @@ function SWEP:CreateHUD_Bottom()
             order_a = atttbl_a.SortOrder or order_a
             order_b = atttbl_b.SortOrder or order_b
 
+            if ARC9.Favorites[a] then order_a = order_a - ARC9.FavoritesWeight end
+            if ARC9.Favorites[b] then order_b = order_b - ARC9.FavoritesWeight end
+
             if order_a == order_b then
                 return (atttbl_a.CompactName or atttbl_a.PrintName or "") < (atttbl_b.CompactName or atttbl_b.PrintName or "")
             end
@@ -517,8 +533,21 @@ function SWEP:CreateHUD_Bottom()
         self.BottomBarFolders = ARC9.GetFoldersForAtts(atts)
         self.BottomBarAtts = atts_slots
 
-        if table.Count(self.BottomBarFolders) == 1 then
-            local sub = table.GetKeys(self.BottomBarFolders)[1]
+        local foldercount = 0
+        local firstfolder = nil
+        for k, v in pairs(self.BottomBarFolders) do
+            if istable(v) then
+                foldercount = foldercount + 1
+                firstfolder = k
+            end
+        end
+
+        if foldercount > 0 and atts_fav != {} then
+            self.BottomBarFolders["!favorites"] = atts_fav
+        end
+
+        if foldercount == 1 then
+            local sub = firstfolder
 
             -- print(sub)
 
@@ -671,7 +700,7 @@ function SWEP:CreateHUD_AttInfo()
             end
         end
     else
-        lowerpanel.HasPros = nil 
+        lowerpanel.HasPros = nil
     end
 
     if table.Count(consname) > 0 then
@@ -693,6 +722,6 @@ function SWEP:CreateHUD_AttInfo()
             end
         end
     else
-        lowerpanel.HasCons = nil 
+        lowerpanel.HasCons = nil
     end
 end

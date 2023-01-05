@@ -150,12 +150,7 @@ function SWEP:HoldBreathHUD()
     -- surface.DrawText(text)
 end
 
-SWEP.CachedFreeSway = 0
-SWEP.FreeSwayCacheTick = 0
-
 function SWEP:GetFreeSwayAmount()
-    if engine.TickCount() == self.FreeSwayCacheTick then return self.CachedFreeSway end
-
     if !GetConVar("arc9_mod_sway"):GetBool() then return 0 end
     if !self:GetOwner():IsPlayer() then return 0 end
     local sway = self:GetProcessedValue("Sway")
@@ -167,8 +162,6 @@ function SWEP:GetFreeSwayAmount()
     if self:GetOutOfBreath() then
         sway = sway + ((1 - self:GetBreath() / 100) * 0.75)
     end
-    self.FreeSwayCacheTick = engine.TickCount()
-    self.CachedFreeSway = sway
 
     return sway
 end

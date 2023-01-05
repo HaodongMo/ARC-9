@@ -540,3 +540,5 @@ L["atts.favourites"] = "Favoritos"
 L["atts.filter"] = "Filtrar"
 L["customize.hint.favorite"] = "Favorito"
 L["customize.hint.unfavorite"] = "Remover favorito"
+
+L["folder.favourites"] = "Favoritos"

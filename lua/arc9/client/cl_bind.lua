@@ -34,16 +34,26 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
         return ARC9.AttemptGiveNPCWeapon()
     end
 
-
-    if bind == "+showscores" then
-        if wpn:GetCustomize() then
-            if ply:KeyDown(IN_USE) then
-                wpn:CycleSelectedAtt(-1)
-            else
-                wpn:CycleSelectedAtt(1)
-            end
-            return true
+    if bind == "+showscores" and wpn:GetCustomize() then
+        if ply:KeyDown(IN_USE) then
+            wpn:CycleSelectedAtt(-1)
+        else
+            wpn:CycleSelectedAtt(1)
         end
+        return true
+    end
+
+    if bind == "impulse 100" and wpn:GetCustomize() then
+        if wpn.CustomizeLastHovered and wpn.CustomizeLastHovered:IsHovered() then
+            local att = wpn.CustomizeLastHovered.att
+            ARC9:ToggleFavorite(att)
+            if ARC9.Favorites[att] and wpn.BottomBarFolders["!favorites"] then
+                wpn.BottomBarFolders["!favorites"][att] = true
+            elseif wpn.BottomBarFolders["!favorites"] then
+                wpn.BottomBarFolders["!favorites"][att] = nil
+            end
+        end
+        return true
     end
 
     if wpn:GetInSights() then

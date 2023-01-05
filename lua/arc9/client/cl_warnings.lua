@@ -35,6 +35,9 @@ ARC9.IncompatibleAddons = {
     -- TFA's Tactical Lean
 
     ["TacticalLean"] = "Mod is old, buggy, laggy, and interferes with ARC9 lean.",
+
+    -- SLVBase 2
+    ["1516699044"] = "Causes black screen",
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale

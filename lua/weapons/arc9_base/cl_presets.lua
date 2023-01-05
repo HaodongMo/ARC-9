@@ -96,14 +96,14 @@ function SWEP:LoadPresetFromCode(str, standard)
 
     self:LoadPresetFromTable(tbl)
 
-    if !standard then 
+    if !standard then
         surface.PlaySound("arc9/preset_install.ogg")
     end
 
-    self:SavePreset(name, false, (standard and name))
+    self:SavePreset(name, false, standard and name)
 
 
-    return (name or true)
+    return name or true
 end
 
 function SWEP:GetPresetName(preset)
@@ -232,7 +232,7 @@ function SWEP:SavePreset(presetname, nooverride, forcedname)
     elseif presetname == "default" then
         filename =  ARC9.PresetPath .. self:GetPresetBase() .. "/default"
     end
-    
+
     if nooverride and file.Exists(filename .. ".txt", "DATA") then return end
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
@@ -481,27 +481,27 @@ function SWEP:CreateStandardPresets()
             if file.Exists(ARC9.PresetPath .. self:GetPresetBase() .. "/" .. name .. ".txt", "DATA") then continue end
 
             if !self:LoadPresetFromCode(v, true) then print("Something gone wrong with standard preset!") continue end
-            
+
             newloaded = true
         end
 
         if newloaded then
             self:LoadPreset("default")
         end
-    end 
+    end
 end
 
 local function deletefolder(path)
-	local files, folders = file.Find(path .. "*", "DATA")
+    local files, folders = file.Find(path .. "*", "DATA")
     for _, v in ipairs(files) do file.Delete(path .. v) end
     for _, v in ipairs(folders) do deletefolder(path .. v .. "/") end
 
-	file.Delete(path)
+    file.Delete(path)
 end
 
 concommand.Add("arc9_presets_clear", function(ply)
     if !IsValid(ply) then return end
-    
+
     local weapon = ply:GetActiveWeapon()
 
     if IsValid(weapon) and weapon.ARC9 then
