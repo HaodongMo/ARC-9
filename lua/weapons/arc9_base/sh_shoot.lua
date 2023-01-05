@@ -38,8 +38,6 @@ local soundTab = {
     channel = ARC9.CHAN_FIDDLE
 }
 
-local sound
-
 function SWEP:DryFire()
     local nthShot = self:GetNthShot()
 
@@ -589,7 +587,7 @@ end
 local runHook = {}
 local bodyDamageCancel = GetConVar("arc9_mod_bodydamagecancel")
 
-local soundTab = {
+local soundTab2 = {
     name = "impact"
 }
 
@@ -699,11 +697,11 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     end
 
     if self:GetProcessedValue("ImpactSound") then
-        soundTab.sound = self:GetProcessedValue("ImpactSound")
+        soundTab2.sound = self:GetProcessedValue("ImpactSound")
 
-        soundTab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
+        soundTab2 = self:RunHook("HookP_TranslateSound", soundTab2) or soundTab2
 
-        sound.Play(soundtab.sound, hitPos, soundtab.level, soundtab.pitch, soundtab.volume)
+        sound.Play(soundTab2.sound, hitPos, soundTab2.level, soundTab2.pitch, soundTab2.volume)
     end
 
     if self:GetProcessedValue("ExplosionDamage") > 0 then
