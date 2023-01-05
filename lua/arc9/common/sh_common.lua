@@ -257,12 +257,33 @@ ARC9.HL2Replacements = {
     ["weapon_rpg"] = {ARC9.WEAPON_RPG}
 }
 
-function ARC9.Dev(level)
-    if CLIENT and !game.SinglePlayer() then
-        return IsValid(LocalPlayer()) and LocalPlayer():IsSuperAdmin() and GetConVar("developer"):GetInt() >= level
-    end
+do
+    local isSingleplayer = game.SinglePlayer()
+    local cvarDeveloper = GetConVar("developer")
+    local cvarGetInt = FindMetaTable("ConVar").GetInt
 
-    return GetConVar("developer"):GetInt() >= level
+    if SERVER then
+        function ARC9.Dev(level)
+            return cvarGetInt(cvarDeveloper) >= level
+        end
+    elseif not isSingleplayer then
+        local localPlayer
+
+        local function initLocalPlayer()
+            localPlayer = LocalPlayer()
+        end
+
+        hook.Add("InitPostEntity", "ARC9_CacheLocalPlayer", initLocalPlayer)
+
+        -- for autorefresh
+        if IsValid(LocalPlayer()) then
+            initLocalPlayer()
+        end
+
+        function ARC9.Dev(level)
+            return IsValid(localPlayer) and localPlayer:IsSuperAdmin() and cvarGetInt(cvarDeveloper) >= level
+        end
+    end
 end
 
 -- A cheaper, dirtier branchless implementation
