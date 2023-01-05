@@ -86,7 +86,7 @@ function SWEP:Think()
         end
 
         local currentFiremode = swepGetCurrentFiremode(self)
-        local notRunawayBurst = swepGetProcessedValue(self, "RunawayBurst")
+        local notRunawayBurst = not swepGetProcessedValue(self, "RunawayBurst")
         local postBurstDelay = now + swepGetProcessedValue(self, "PostBurstDelay")
 
         if notPressedAttack then
