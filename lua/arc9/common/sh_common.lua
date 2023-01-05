@@ -258,15 +258,10 @@ ARC9.HL2Replacements = {
 }
 
 do
-    local isSingleplayer = game.SinglePlayer()
     local cvarDeveloper = GetConVar("developer")
     local cvarGetInt = FindMetaTable("ConVar").GetInt
 
-    if SERVER then
-        function ARC9.Dev(level)
-            return cvarGetInt(cvarDeveloper) >= level
-        end
-    elseif not isSingleplayer then
+    if CLIENT and not game.SinglePlayer() then
         local localPlayer
 
         local function initLocalPlayer()
@@ -282,6 +277,10 @@ do
 
         function ARC9.Dev(level)
             return IsValid(localPlayer) and localPlayer:IsSuperAdmin() and cvarGetInt(cvarDeveloper) >= level
+        end
+    else
+        function ARC9.Dev(level)
+            return cvarGetInt(cvarDeveloper) >= level
         end
     end
 end
