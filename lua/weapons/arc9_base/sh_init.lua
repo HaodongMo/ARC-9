@@ -77,68 +77,77 @@ function SWEP:ClientInitialize()
     end
 end
 
-local ENTITY = debug.getregistry().Entity
-local SWEP = debug.getregistry().Weapon
+do
+    local _R = debug.getregistry()
+    local ENTITY = _R.Entity
+    local entityGetOwner = ENTITY.GetOwner
 
-local METATABLE = setmetatable(table.Copy(SWEP), {__index = ENTITY})
+    local METATABLE = setmetatable(table.Copy(_R.Weapon), {__index = ENTITY})
+    local EntTabMT = {__index = METATABLE}
 
-local EntTabMT = {__index=METATABLE}
+    local copyKeys = {"MetaID","MetaName","__tostring","__eq","__concat"}
+    local copyKeysLength = #copyKeys
 
-local CopyKeys = {"MetaID","MetaName","__tostring","__eq","__concat"}
-local count = #CopyKeys
-local function MakeMT(ent)
-    local tab = ent:GetTable()
-    setmetatable(tab,EntTabMT)
-    local mt = {__index = function(obj, key)
-        if key == "Owner" then
-            return ENTITY.GetOwner(obj, key)
+    local function CopyMetatable(ent)
+        local tab = ent:GetTable()
+        setmetatable(tab, EntTabMT)
+
+        local mt = {
+            __index = function(self, key)
+                -- we still have to take care of these idiots
+                if key == "Owner" then
+                    return entityGetOwner(self, key)
+                end
+
+                return tab[key]
+            end,  
+            __newindex = tab, 
+            __metatable = ENTITY
+        }
+
+        for i = 1, copyKeysLength do
+            local v = copyKeys[i]
+            mt[v] = ENTITY[v]
         end
-        return tab[key]
-    end, __newindex = tab, __metatable=ENTITY}
-    for i=1, count do
-        local v = CopyKeys[i]
-        mt[v] = ENTITY[v]
-    end
-    debug.setmetatable(ent,mt)
-end
 
-
-
-function SWEP:SetBaseSettings()
-    if game.SinglePlayer() and SERVER then
-        self:CallOnClient("SetBaseSettings")
+        debug.setmetatable(ent, mt)
     end
 
-    self.Primary.Automatic = true
-    self.Secondary.Automatic = true
+    function SWEP:SetBaseSettings()
+        if game.SinglePlayer() and SERVER then
+            self:CallOnClient("SetBaseSettings")
+        end
 
-    self.Primary.ClipSize = self:GetValue("ClipSize")
-    self.Primary.Ammo = self:GetValue("Ammo")
+        self.Primary.Automatic = true
+        self.Secondary.Automatic = true
 
-    self.Primary.DefaultClip = self.Primary.ClipSize
+        self.Primary.ClipSize = self:GetValue("ClipSize")
+        self.Primary.Ammo = self:GetValue("Ammo")
 
-    if self:GetValue("UBGL") then
-        self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
-        self.Secondary.Ammo = self:GetValue("UBGLAmmo")
+        self.Primary.DefaultClip = self.Primary.ClipSize
 
-        if SERVER then
-            if self:Clip2() < 0 then
-                self:SetClip2(0)
+        if self:GetValue("UBGL") then
+            self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
+            self.Secondary.Ammo = self:GetValue("UBGLAmmo")
+    
+            if SERVER then
+                if self:Clip2() < 0 then
+                    self:SetClip2(0)
+                end
             end
+        else
+            self.Secondary.ClipSize = -1
+            self.Secondary.Ammo = nil
+    
+            self:SetUBGL(false)
         end
-    else
-        self.Secondary.ClipSize = -1
-        self.Secondary.Ammo = nil
 
-        self:SetUBGL(false)
+        timer.Simple(0, function()
+            if IsValid(self) then
+                CopyMetatable(self)
+            end
+        end)
     end
-
-    timer.Simple(0, function()
-        if not IsValid(self) then return end
-        MakeMT(self)
-    end)
-
-
 end
 
 function SWEP:SetShouldHoldType()
