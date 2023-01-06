@@ -7,6 +7,11 @@ function EFFECT:Init(data)
 
     if !IsValid(wpn) then self:Remove() return end
 
+    if !GetConVar("arc9_muzzle_others"):GetBool() and LocalPlayer() != wpn:GetOwner() then
+        self:Remove()
+        return
+    end
+
     local muzzle = wpn:GetProcessedValue("MuzzleParticle")
 
     local att = data:GetAttachment() or 1
@@ -67,7 +72,7 @@ function EFFECT:Init(data)
         end
     end
 
-    if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash") then
+    if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash") and GetConVar("arc9_muzzle_light"):GetBool() then
         local light = DynamicLight(self:EntIndex())
         local clr = Color(244, 209, 66)
         if (light) then

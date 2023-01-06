@@ -54,6 +54,10 @@ local settingstable = {
         { type = "label", text = "settings.performance.shelleject.title" },
         { type = "bool", text = "settings.eject_fx.title", convar = "eject_fx", desc = "settings.eject_fx.desc"},
         { type = "slider", text = "settings.eject_time.title", convar = "eject_time", min = -1, max = 60, decimals = 0, desc = "settings.eject_time.desc"},
+
+        { type = "label", text = "settings.performance.fx.title" },
+        { type = "bool", text = "settings.muzzle_light.title", convar = "muzzle_light", desc = "settings.muzzle_light.desc"},
+        { type = "bool", text = "settings.muzzle_others.title", convar = "muzzle_others", desc = "settings.muzzle_others.desc"},
     },
     {
         TabName = "settings.tabname.optics",

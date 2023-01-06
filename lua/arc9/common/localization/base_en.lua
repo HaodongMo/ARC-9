@@ -561,3 +561,13 @@ L["folder.favorites"] = "Favorites"
 
 L["settings.gameplay.never_ready.title"] = "No Ready Anims"
 L["settings.gameplay.never_ready.desc"] = "Disable ready animations when deploying a weapon.\n\nThis is a server variable."
+
+-- Added 05-JAN-2023
+
+L["settings.performance.fx.title"] = "Effects"
+
+L["settings.muzzle_light.title"] = "Muzzle Light"
+L["settings.muzzle_light.desc"] = "Enable light emitted from muzzle flashes when firing a weapon."
+
+L["settings.muzzle_others.title"] = "Other Muzzle Effects"
+L["settings.muzzle_others.desc"] = "Enable muzzle effects from other players' guns."

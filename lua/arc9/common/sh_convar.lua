@@ -556,7 +556,17 @@ local conVars = {
         name = "never_ready",
         default = "0",
         replicated = true
-    }
+    },
+    {
+        name = "muzzle_light",
+        default = "1",
+        client = true
+    },
+    {
+        name = "muzzle_others",
+        default = "1",
+        client = true
+    },
 }
 
 local prefix = "arc9_"
