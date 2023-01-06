@@ -35,7 +35,6 @@ local soundTab = {
     level = 75,
     pitch = 100,
     volume = 1,
-    channel = ARC9.CHAN_FIDDLE
 }
 
 function SWEP:DryFire()
@@ -47,6 +46,7 @@ function SWEP:DryFire()
 
     if nthShot > 0 and self:GetProcessedValue("DryFireSingleAction") then return end
 
+    soundTab.channel = ARC9.CHAN_FIDDLE
     soundTab.sound = self:RandomChoice(self:GetProcessedValue("DryFireSound"))
     self:PlayTranslatedSound(soundtab)
 
@@ -88,12 +88,18 @@ local soundtab6 = {
 function SWEP:DoShootSounds()
     local pvar = self:GetProcessedValue("ShootPitchVariation")
     local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
+
     local sstr = lsstr
     local sslr = lsslr
     local dsstr = ldsstr
+
     local silenced = self:GetProcessedValue("Silencer") and not self:GetUBGL()
     local indoor = self:GetIndoor() -- GetIndoor returns number and that's not fact. that's a lie. It can return false
-    local indoormix = 1 - (indoor or 0) -- it can be negative, but there is a check if indoormix > 0
+    if isbool(indoor) then
+        indoor = indoor and 1 or 0
+    end
+
+    local indoormix = 1 - indoor -- it can be negative, but there is a check if indoormix > 0
     local havedistant = self:GetProcessedValue(dsstr)
 
     if silenced and self:GetProcessedValue(sstrSilenced) then
@@ -150,6 +156,8 @@ function SWEP:DoShootSounds()
             soundtab1.channel = ARC9.CHAN_WEAPON
         end
 
+        self:PlayTranslatedSound(soundtab1)
+
         do
             soundtab2.sound = sl or ""
             soundtab2.level = svolume
@@ -158,7 +166,6 @@ function SWEP:DoShootSounds()
             soundtab2.channel = ARC9.CHAN_LAYER + 2
         end
 
-        self:PlayTranslatedSound(soundtab1)
         self:PlayTranslatedSound(soundtab2)
 
         if havedistant then
@@ -174,31 +181,31 @@ function SWEP:DoShootSounds()
         end
     end
 
-    if indoor then
+    if indoor > 0 then
         local ssIN = self:RandomChoice(self:GetProcessedValue(sstr .. "Indoor"))
         local slIN = self:RandomChoice(self:GetProcessedValue(sslr .. "Indoor"))
-        local dssIN = havedistant and self:RandomChoice(self:GetProcessedValue(dsstr .. "Indoor")) or nil
+        local dssIN = havedistant and self:RandomChoice(self:GetProcessedValue(dsstr .. "Indoor"))
+        local indoorVolumeMix = svolumeactual * indoor
+
 
         do
-            soundtab4.sound = ssIN
+            soundtab4.sound = ssIN or ""
             soundtab4.level = svolume
             soundtab4.pitch = spitch
-            soundtab4.volume = volumeMix
+            soundtab4.volume = indoorVolumeMix
             soundtab4.channel = ARC9.CHAN_INDOOR
         end
 
-       
+        self:PlayTranslatedSound(soundtab4)
 
         do
             soundtab5.sound = slIN or ""
             soundtab5.level = svolume
             soundtab5.pitch = spitch
-            soundtab5.volume = volumeMix
+            soundtab5.volume = indoorVolumeMix
             soundtab5.channel = ARC9.CHAN_INDOORLAYER
         end
 
-
-        self:PlayTranslatedSound(soundtab4)
         self:PlayTranslatedSound(soundtab5)
 
         if havedistant then
