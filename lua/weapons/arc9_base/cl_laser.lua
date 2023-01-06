@@ -36,7 +36,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     if !behav then
         render.SetMaterial(lasermat)
-        render.DrawBeam(pos, hitpos, width * 0.3, 0, 1, lasercolor200)
+        render.DrawBeam(pos, hitpos, width * 0.05, 0, 1, lasercolor200)
         render.DrawBeam(pos, hitpos, width, 0, 1, color)
     end
 
