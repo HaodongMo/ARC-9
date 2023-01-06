@@ -803,6 +803,19 @@ function SWEP:GetDamageAtRange(range)
         end
     end
 
+    if self:GetProcessedValue("SweetSpot") then
+        local sweetspotrange = self:GetProcessedValue("SweetSpotRange")
+        local sweetspotwidth = self:GetProcessedValue("SweetSpotWidth")
+
+        if range < sweetspotrange + sweetspotwidth / 2 and range > sweetspotrange - sweetspotwidth / 2 then
+            dmgv = self:GetProcessedValue("SweetSpotDamage")
+
+            if self:GetProcessedValue("DistributeDamage") then
+                dmgv = dmgv / self:GetProcessedValue("Num")
+            end
+        end
+    end
+
     damageAtRangeHook.dmg = dmgv
     damageAtRangeHook.range = range
     damageAtRangeHook.d = d

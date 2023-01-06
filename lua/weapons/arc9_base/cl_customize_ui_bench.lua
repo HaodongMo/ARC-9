@@ -378,7 +378,7 @@ function SWEP:CreateHUD_Bench()
 
             surface.DrawLine(range_max_x, range_max_y, w, range_max_y)
 
-            local segments = 25
+            local segments = 50
 
             local dmg_values = {
                 [0] = dmg_max
