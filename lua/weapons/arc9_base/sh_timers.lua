@@ -6,7 +6,7 @@ function SWEP:InitTimers()
 end
 
 function SWEP:SetTimer(time, callback, id)
-    if !self:PredictionFilter() then return end
+    if !IsFirstTimePredicted() then return end
     table.insert(self.ActiveTimers, {time + CurTime(), id or "", callback})
 end
 
@@ -31,6 +31,7 @@ function SWEP:KillTimer(id)
 end
 
 function SWEP:KillSoundTable()
+    if !IsFirstTimePredicted() then return end
     local keeptimers = {}
 
     for _, v in ipairs(self.ActiveTimers or {}) do
