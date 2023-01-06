@@ -42,7 +42,7 @@ function SWEP:TranslateAnimation(seq)
             seq = seq .. "_walk"
         end
 
-        if !self:GetProcessedValue("SuppressEmptySuffix") and (self:Clip1() == 0 or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
+        if !self:GetProcessedValue("SuppressEmptySuffix") and ((self:Clip1() == 0 and !self:GetReloading()) or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
             seq = seq .. "_empty"
         end
 
