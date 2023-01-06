@@ -1035,6 +1035,7 @@ c1 = {
     ["ManualActionChamber"] = true,
     ["TriggerDelay"] = true,
     ["RPM"] = true,
+    ["PushBackForce"] = true,
     ["PostBurstDelay"] = true,
     ["Recoil"] = true,
     ["RecoilPatternDrift"] = true,
@@ -1064,7 +1065,6 @@ c1 = {
     ["HeatPerShot"] = true,
     ["HeatCapacity"] = true,
     ["HeatDissipation"] = true,
-    ["MalfunctionMeanShotsToFail"] = true,
     ["ShootVolume"] = true,
     ["AlwaysPhysBullet"] = true,
     ["NeverPhysBullet"] = true,
@@ -1082,16 +1082,14 @@ c1 = {
     ["Overheat"] = true,
     ["Malfunction"] = true,
     ["MalfunctionMeanShotsToFail"] = true,
+    ["MalfunctionWait"] = true,
     ["Bipod"] = true,
     ["NoFlash"] = true,
     ["BulletGuidance"] = true,
     ["BulletGuidanceAmount"] = true,
     ["ExplosionDamage"] = true,
     ["ExplosionRadius"] = true,
-
     ["CanLean"] = true,
-    ["PushBackForce"] = true,
-
     ["HoldBreathTime"] = true,
     ["RestoreBreathTime"] = true,
     ["SlamFire"] = true,
@@ -1103,6 +1101,12 @@ c1 = {
     ["StomachDamage"] = true,
     ["ArmDamage"] = true,
     ["LegDamage"] = true,
+    ["VisualRecoil"] = true,
+    ["VisualRecoilUp"] = true,
+    ["VisualRecoilSide"] = true,
+    ["VisualRecoilRoll"] = true,
+    ["VisualRecoilPunch"] = true,
+    ["BreathHoldTime"] = true,
 }
 
 c2 = {
