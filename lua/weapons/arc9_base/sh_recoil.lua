@@ -361,7 +361,9 @@ do
         --     self:SetRecoilSide(new_rs)
         -- end
     
-        swepThinkVisualRecoil(self)
+        if game.SinglePlayer() or IsFirstTimePredicted() then
+            swepThinkVisualRecoil(self)
+        end
     end
 end
 
