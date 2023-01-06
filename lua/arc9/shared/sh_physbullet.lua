@@ -450,7 +450,9 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
                 if IsValid(bullet.Attacker) and IsValid(weapon) and !ARC9.IsPointOutOfBounds(oldpos) then
 
-                    SuppressHostEvents(bullet.Attacker)
+                    if !game.SinglePlayer() then
+                        SuppressHostEvents(bullet.Attacker)
+                    end
                     fireBullets2.Damage = weapon:GetProcessedValue("DamageMax")
                     fireBullets2.Force = weapon:GetProcessedValue("ImpactForce")
                     fireBullets2.Dir = bullet.Vel:GetNormalized()
@@ -464,7 +466,10 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     end
 
                     bullet.Attacker:FireBullets(fireBullets2)
-                    SuppressHostEvents()
+
+                    if !game.SinglePlayer() then
+                        SuppressHostEvents()
+                    end
                 end
             end
 
