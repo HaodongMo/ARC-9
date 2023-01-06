@@ -86,7 +86,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
 
                         local leftleantrace2 = util.TraceLine({
                             start = leftleantrace.HitPos,
-                            endpos = leftleantrace.HitPos + (forward * 32),
+                            endpos = leftleantrace.HitPos + (forward * 96),
                             filter = ply,
                         })
 
@@ -114,7 +114,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
 
                         local rightleantrace2 = util.TraceLine({
                             start = rightleantrace.HitPos,
-                            endpos = rightleantrace.HitPos + (forward * 32),
+                            endpos = rightleantrace.HitPos + (forward * 96),
                             filter = ply,
                         })
 
