@@ -521,3 +521,11 @@ L["customize.presets.unnamed"] = "Без названия"
 
 L["settings.gameplay.never_ready.title"] = "Отключить Ready анимации"
 L["settings.gameplay.never_ready.desc"] = "Никогда не проигрывать \"ready\" анимации при доставании любого оружия.\n\nЭто серверная переменная."
+
+L["settings.performance.fx.title"] = "Эффекты"
+
+L["settings.muzzle_light.title"] = "Динам. свет от выстрелов"
+L["settings.muzzle_light.desc"] = "Включает динамический свет от вспышек выстрелов."
+
+L["settings.muzzle_others.title"] = "Эффекты от выстрелов у игроков"
+L["settings.muzzle_others.desc"] = "Включает эффекты от выстрелов от пушек у других игроков на сервере."
