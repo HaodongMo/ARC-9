@@ -30,7 +30,7 @@ function SWEP:ThinkGrenade()
         if self:GetAnimLockTime() > CurTime() then return end
 
         if self:GetGrenadeRecovering() then
-            if self:GetProcessedValue("Disposable") and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) then
+            if self:GetProcessedValue("Disposable") and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
                 self:Remove()
             else
                 self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
