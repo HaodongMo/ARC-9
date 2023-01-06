@@ -6,6 +6,7 @@ function SWEP:InitTimers()
 end
 
 function SWEP:SetTimer(time, callback, id)
+    if !self:PredictionFilter() then return end
     table.insert(self.ActiveTimers, {time + CurTime(), id or "", callback})
 end
 

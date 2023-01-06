@@ -63,7 +63,7 @@ function SWEP:Think()
         swepIdle(self)
     end
 
-    local shouldRunPredicted = not self:PredictionFilter()
+    local shouldRunPredicted = self:PredictionFilter()
 
     if not self.NotAWeapon then
         local notPressedAttack = not playerKeyDown(owner, IN_ATTACK)
