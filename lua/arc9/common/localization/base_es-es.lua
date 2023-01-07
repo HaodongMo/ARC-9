@@ -460,7 +460,7 @@ L["settings.attachments.autosave.desc"] = "Tus últimas opciones de personalizac
 L["settings.attachments.free_atts.title"] = "Accesorios Gratis"
 L["settings.attachments.free_atts.desc"] = "Los archivos adjuntos se pueden utilizar sin ser recogidos primero.\n\nEsta es una variable del servidor."
 L["settings.attachments.atts_lock.title"] = "Uno Para Todos"
-L["settings.attachments.atts_lock.desc"] = "Recoger una instancia de un aditamento te permite usarlo infinitas veces en todas tus armas.\n\nEsta es una variable del servidor."
+L["settings.attachments.atts_lock.desc"] = "Recoger una instancia de un accesorio te permite usarlo infinitas veces en todas tus armas.\n\nEsta es una variable del servidor."
 L["settings.attachments.atts_loseondie.title"] = "Perder En Muerte"
 L["settings.attachments.atts_loseondie.desc"] = "Tu inventario de accesorios se perderá cuando mueras.\n\nEsta es una variable del servidor."
 L["settings.attachments.atts_generateentities.title"] = "Generar Entidades"
@@ -528,6 +528,11 @@ L["customize.presets.invalid"] = "Cadena no valida!"
 
 -- spanish translation by NeonX :3
 
+L["settings.gameplay.togglepeek.title"] = "Alternar Vistazo"
+L["settings.gameplay.togglepeek.desc"] = "Al pulsar la tecla de vistazo se activará el vistazo en lugar de tener que mantenerla pulsada."
+
+L["settings.npc.npc_spread.title"] = "Esparcion PNJs"
+L["settings.npc.npc_spread.desc"] = "Multiplicador de la imprecisión de los PNJs al disparar."
 
 L["settings.gameplay.togglelean.title"] = "Alternar Inclinación"
 L["settings.gameplay.togglelean.desc"] = "Al pulsar las teclas de inclinación se alternará la inclinación en lugar de tener que mantenerlas pulsadas.\n\nFunciona mal en conjunto a autoinclinacion. Si se utiliza la alternacion de inclinación, debe desactivar autoinclinacion"
@@ -547,3 +552,26 @@ L["customize.presets.unnamed"] = "Sin Nombre"
 
 L["settings.gameplay.never_ready.title"] = "Anims \"No Preparado\""
 L["settings.gameplay.never_ready.desc"] = "Deshabilitar animaciones de preparacion al desplegar arma."
+
+-- Added 05-JAN-2023
+
+L["settings.performance.fx.title"] = "Efectos"
+
+L["settings.muzzle_light.title"] = "Fogonazo"
+L["settings.muzzle_light.desc"] = "Habilita la luz emitida por los fogonazos al disparar un arma."
+
+L["settings.muzzle_others.title"] = "Otros efectos de fogonazos"
+L["settings.muzzle_others.desc"] = "Activa los efectos de boca de las armas de otros jugadores."
+
+-- Added 07-JAN-2023
+
+L["settings.mod_damage.title"] = "Daño"
+L["settings.mod_spread.title"] = "Esparcion"
+L["settings.mod_recoil.title"] = "Retroceso"
+L["settings.mod_visualrecoil.title"] = "Retroceso Visual"
+L["settings.mod_adstime.title"] = "Tiempo al Apuntar hacia abajo"
+L["settings.mod_sprinttime.title"] = "Tiempo de sprint hasta el disparo"
+L["settings.mod_damagerand.title"] = "Variación de daños"
+L["settings.mod_muzzlevelocity.title"] = "Velocidad de boca"
+L["settings.mod_rpm.title"] = "RPM"
+L["settings.mod_headshotdamage.title"] = "Daño por tiro a cabeza"
