@@ -133,7 +133,7 @@ function SWEP:GetIndoor()
         eyePos2:Set(eyePos)
         eyePos2:Add(dirForward)
 
-        util.TraceLine(traceTable)        
+        util.TraceLine(traceTable)
 
         local tr = traceResultTable
 
@@ -144,7 +144,7 @@ function SWEP:GetIndoor()
         end
 
         if ARC9.Dev(2) then
-            debugoverlay.Line(tracetable.start, tracetable.endpos, 3, (tr.Hit and !tr.HitSky) and Color(255,0,0) or color_white, true)
+            debugoverlay.Line(traceTable.start, traceTable.endpos, 3, (tr.Hit and !tr.HitSky) and Color(255,0,0) or color_white, true)
             if i == 8 then
                 print(hits.."/8 indoor trace hits, fraction "..endmult)
                 -- print(1-tr.Fraction, math.exp(1-tr.Fraction))
