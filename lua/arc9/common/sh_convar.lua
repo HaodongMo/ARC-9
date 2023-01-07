@@ -567,6 +567,56 @@ local conVars = {
         default = "1",
         client = true
     },
+    {
+        name = "mod_damage",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_spread",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_recoil",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_visualrecoil",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_adstime",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_sprinttime",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_damagerand",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_muzzlevelocity",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_rpm",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_headshotdamage",
+        default = "1",
+        replicated = true
+    },
 }
 
 local prefix = "arc9_"

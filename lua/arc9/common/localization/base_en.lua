@@ -571,3 +571,16 @@ L["settings.muzzle_light.desc"] = "Enable light emitted from muzzle flashes when
 
 L["settings.muzzle_others.title"] = "Other Muzzle Effects"
 L["settings.muzzle_others.desc"] = "Enable muzzle effects from other players' guns."
+
+-- Added 07-JAN-2023
+
+L["settings.mod_damage.title"] = "Damage"
+L["settings.mod_spread.title"] = "Spread"
+L["settings.mod_recoil.title"] = "Recoil"
+L["settings.mod_visualrecoil.title"] = "Visual Recoil"
+L["settings.mod_adstime.title"] = "Aim Down Sights Time"
+L["settings.mod_sprinttime.title"] = "Sprint To Fire Time"
+L["settings.mod_damagerand.title"] = "Damage Variance"
+L["settings.mod_muzzlevelocity.title"] = "Muzzle Velocity"
+L["settings.mod_rpm.title"] = "RPM"
+L["settings.mod_headshotdamage.title"] = "Headshot Damage"
