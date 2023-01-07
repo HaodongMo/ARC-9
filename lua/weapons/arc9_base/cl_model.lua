@@ -602,6 +602,12 @@ function SWEP:SetupModel(wm, lod, cm)
                 end
             end
 
+            if i == 0 then
+                csmodel.LaserCorrectionAngle = slottbl.LaserCorrectionAngle
+            else
+                csmodel.LaserCorrectionAngle = slottbl.DuplicateModels[i].LaserCorrectionAngle or slottbl.LaserCorrectionAngle
+            end
+
             if !cm and i == 0 then
                 if atttbl.IKAnimationProxy then
                     local animproxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)

@@ -113,7 +113,7 @@ function SWEP:DrawLasers(wm, behav)
 
                 if !a then return end
 
-                local lasercorrectionangle = slottbl.LaserCorrectionAngle or Angle(0, 0, 0)
+                local lasercorrectionangle = model.LaserCorrectionAngle or Angle(0, 0, 0)
 
                 local lasang = a.Ang
 
