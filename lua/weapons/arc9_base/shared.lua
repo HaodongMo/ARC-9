@@ -794,13 +794,13 @@ SWEP.FirstShootSound = nil                      -- First fire
 SWEP.ShootSound = ""                            -- Fire
 SWEP.ShootSoundIndoor = nil                     -- Fire indoors
 SWEP.ShootSoundSilenced = ""                    -- Fire silenced
-SWEP.ShootSoundIndoorSilenced = nil             -- Fire indoors silenced
+SWEP.ShootSoundSilencedIndoor = nil             -- Fire indoors silenced
 SWEP.FirstShootSoundSilenced = nil              -- First fire silenced
 SWEP.FirstDistantShootSound = nil               -- First distant fire
 SWEP.DistantShootSound = ""                     -- Distant fire
 SWEP.DistantShootSoundIndoor = nil              -- Distant fire indoors
 SWEP.DistantShootSoundSilenced = nil            -- Distant fire silenced
-SWEP.DistantShootSoundIndoorSilenced = nil      -- Distant fire indoors silenced
+SWEP.DistantShootSoundSilencedIndoor = nil      -- Distant fire indoors silenced
 SWEP.FirstDistantShootSoundSilenced = nil       -- First distant fire silenced
 
 SWEP.ShootSoundLooping = nil
