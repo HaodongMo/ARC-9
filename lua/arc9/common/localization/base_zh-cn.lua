@@ -514,3 +514,18 @@ L["customize.hint.unfavorite"] = "取消收藏"
 
 L["customize.presets.unnamed"] = "未命名"
 L["folder.favorites"] = "收藏夹"
+
+-- Added 04-JAN-2023
+
+L["settings.gameplay.never_ready.title"] = "禁用准备动画"
+L["settings.gameplay.never_ready.desc"] = "不显示武器首次掏出的特殊动画。\n\n服务器参数。"
+
+-- Added 05-JAN-2023
+
+L["settings.performance.fx.title"] = "特效"
+
+L["settings.muzzle_light.title"] = "枪火光效"
+L["settings.muzzle_light.desc"] = "开火时会短暂显示光源。"
+
+L["settings.muzzle_others.title"] = "他人枪口特效"
+L["settings.muzzle_others.desc"] = "显示其他玩家的枪口特效。"
