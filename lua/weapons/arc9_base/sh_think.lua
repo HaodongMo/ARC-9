@@ -189,8 +189,8 @@ function SWEP:Think()
     self:ProcessTimers()
 
     local holdingProp = owner.ARC9_HoldingProp
-    if SERVER and holdingProp and (not IsValid(holdingProp) or entityIsPlayerHolding(holdingProp)) then
-        holdingProp = nil    
+    if SERVER and (!IsValid(holdingProp) or !holdingProp:IsPlayerHolding()) then
+        owner.ARC9_HoldingProp = nil
         net.Start("arc9_stoppickup")
         net.Send(owner)
         playerDoAnimationEvent(owner, ACT_FLINCH_BACK)
