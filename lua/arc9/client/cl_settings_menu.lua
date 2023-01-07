@@ -226,6 +226,16 @@ local settingstable = {
     {
         TabName = "settings.tabname.modifiers",
         { type = "label", text = "settings.modifiers.quick.title", desc = "settings.modifiers.quick.desc"},
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_damage.title", convar = "mod_damage" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_spread.title", convar = "mod_spread" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_recoil.title", convar = "mod_recoil" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_visualrecoil.title", convar = "mod_visualrecoil" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_adstime.title", convar = "mod_adstime" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_sprinttime.title", convar = "mod_sprinttime" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_damagerand.title", convar = "mod_damagerand" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_muzzlevelocity.title", convar = "mod_muzzlevelocity" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_rpm.title", convar = "mod_rpm" },
+        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_headshotdamage.title", convar = "mod_headshotdamage" },
         -- { type = "slider", text = "Damage", convar = "wawa", min = 0, max = 10, decimals = 0, desc = "The     Damage\n\nThis is a server variable."},
 
         -- { type = "button", text = "Advanced modifiers", content = "Open panel", func = function(self2)

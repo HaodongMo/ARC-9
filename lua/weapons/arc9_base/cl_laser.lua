@@ -10,9 +10,11 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
     local flaremat = atttbl.LaserFlareMat or defaultflaremat
     local lasermat = atttbl.LaserTraceMat or defaulttracemat
 
+    local dist = 1000
+
     local tr = util.TraceLine({
         start = pos,
-        endpos = pos + (dir * 2500),
+        endpos = pos + (dir * 15000),
         mask = MASK_SHOT,
         filter = self:GetOwner()
     })
@@ -31,22 +33,27 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     if tr.HitSky then
         hit = false
-        hitpos = pos + (dir * 2500)
+        hitpos = pos + (dir * dist)
     end
+
+    local truedist = math.min((tr.Fraction or 1) * 15000, dist)
+    local fraction = truedist / dist
+
+    local laspos = pos + (dir * truedist)
 
     if !behav then
         render.SetMaterial(lasermat)
-        render.DrawBeam(pos, hitpos, width * 0.3, 0, 1, lasercolor200)
-        render.DrawBeam(pos, hitpos, width, 0, 1, color)
+        render.DrawBeam(pos, laspos, width * 0.3, 0, fraction, lasercolor200)
+        render.DrawBeam(pos, laspos, width, 0, fraction, color)
     end
 
     if hit then
-        local rad = math.Rand(4, 6) * strength * math.max(tr.Fraction*2, 1)
+        local rad = math.Rand(4, 6) * strength * math.max(fraction * 2, 1)
         local dotcolor = color
         local whitedotcolor = lasercolor200
 
-        dotcolor.a = 255 - math.min(tr.Fraction*30, 250)
-        whitedotcolor.a = 255 - math.min(tr.Fraction*25, 250)
+        dotcolor.a = 255 - math.min(fraction * 30, 250)
+        whitedotcolor.a = 255 - math.min(fraction * 25, 250)
 
         render.SetMaterial(flaremat)
 
@@ -106,7 +113,7 @@ function SWEP:DrawLasers(wm, behav)
 
                 if !a then return end
 
-                local lasercorrectionangle = slottbl.LaserCorrectionAngle or Angle(0, 0, 0)
+                local lasercorrectionangle = model.LaserCorrectionAngle or Angle(0, 0, 0)
 
                 local lasang = a.Ang
 

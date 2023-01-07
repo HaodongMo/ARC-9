@@ -1159,6 +1159,7 @@ SWEP.Attachments = {
     --              Pos = Vector(0, 0, 0),
     --              Ang = Angle(0, 0, 0),
     --              Scale = 1,
+    --              LaserCorrectionAngle = Angle(0, 0, 0),
     --          }
     --     },
     --     LaserCorrectionAngle = Angle(0, 0, 0), -- For lasers that are not perfectly aligned with the barrel

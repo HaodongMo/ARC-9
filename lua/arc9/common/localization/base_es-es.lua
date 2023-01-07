@@ -542,3 +542,8 @@ L["customize.hint.favorite"] = "Favorito"
 L["customize.hint.unfavorite"] = "Remover favorito"
 
 L["folder.favourites"] = "Favoritos"
+
+L["customize.presets.unnamed"] = "Sin Nombre"
+
+L["settings.gameplay.never_ready.title"] = "Anims \"No Preparado\""
+L["settings.gameplay.never_ready.desc"] = "Deshabilitar animaciones de preparacion al desplegar arma."

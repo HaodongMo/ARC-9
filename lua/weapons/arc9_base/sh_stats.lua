@@ -8,6 +8,20 @@ SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
 }
 
+local quickmodifiers = {
+    ["DamageMin"] = GetConVar("arc9_mod_damage"),
+    ["DamageMax"] = GetConVar("arc9_mod_damage"),
+    ["Spread"] = GetConVar("arc9_mod_spread"),
+    ["Recoil"] = GetConVar("arc9_mod_recoil"),
+    ["VisualRecoil"] = GetConVar("arc9_mod_visualrecoil"),
+    ["AimDownSightsTime"] = GetConVar("arc9_mod_adstime"),
+    ["SprintToFireTime"] = GetConVar("arc9_mod_sprinttime"),
+    ["DamageRand"] = GetConVar("arc9_mod_damagerand"),
+    ["PhysBulletMuzzleVelocity"] = GetConVar("arc9_mod_muzzlevelocity"),
+    ["RPM"] = GetConVar("arc9_mod_rpm"),
+    ["HeadshotDamage"] = GetConVar("arc9_mod_headshotdamage")
+}
+
 local singleplayer = game.SinglePlayer()
 local ARC9HeatCapacityGPVOverflow = false
 
@@ -267,6 +281,12 @@ do
             --     stat.BaseClass = nil
             -- end
 
+            if quickmodifiers[val] then
+                local convarvalue = quickmodifiers[val]:GetFloat()
+
+                stat = stat * convarvalue
+            end
+
             return stat
         end
 
@@ -335,12 +355,26 @@ do
                     unaffected = false
                 end
             end
+
+            if quickmodifiers[val] then
+                local convarvalue = quickmodifiers[val]:GetFloat()
+
+                stat = stat * convarvalue
+            end
         end
 
         statCache[baseContValContCondition] = stat
         -- self.StatCache[tostring(base) .. valContCondition] = stat
         local newstat, any = swepRunHook(self, val .. "Hook" .. condition, stat)
         stat = newstat or stat
+
+        if quickmodifiers[val] then
+            local convarvalue = quickmodifiers[val]:GetFloat()
+
+            stat = stat * convarvalue
+
+            unaffected = false
+        end
 
         if any then
             unaffected = false
