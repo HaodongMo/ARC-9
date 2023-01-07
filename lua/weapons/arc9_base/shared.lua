@@ -1029,7 +1029,7 @@ SWEP.CustomizeNoRotate = false
 SWEP.BipodPos = Vector(0, 0, 0)
 SWEP.BipodAng = Angle(0, 0, 0)
 
-SWEP.PeekPos = Vector(-2, 0, 2)
+SWEP.PeekPos = Vector(2, 0, -2)
 SWEP.PeekAng = Angle(0, 0, 0)
 
 SWEP.HeightOverBore = 1
