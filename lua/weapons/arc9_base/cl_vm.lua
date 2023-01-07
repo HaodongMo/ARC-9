@@ -66,7 +66,7 @@ function SWEP:PreDrawViewModel()
         cam.End2D()
     end
 
-    if shouldrtblur and blurenable then
+    if (shouldrtblur and blurenable) or (custdelta > 0 and blurtarget > 0) then
         DrawBokehDOF(bluramt, 1, 0)
     end
 
