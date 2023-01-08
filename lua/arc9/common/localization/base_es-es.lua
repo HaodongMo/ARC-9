@@ -575,3 +575,7 @@ L["settings.mod_damagerand.title"] = "Variación de daños"
 L["settings.mod_muzzlevelocity.title"] = "Velocidad de salida"
 L["settings.mod_rpm.title"] = "DPM"
 L["settings.mod_headshotdamage.title"] = "Daño por tiro a cabeza"
+
+-- Added 08-JAN-2023
+L["settings.developer.dev_greenscreen.title"] = "Pantalla Verde"
+L["settings.developer.dev_greenscreen.desc"] = "Mostrar un fondo de pantalla verde en el menú de personalización para capturas de pantalla.\n\nSi estas utilizando HDR, no olvides de ajustar mat_bloom_scalefactor_scalar a 0!"
