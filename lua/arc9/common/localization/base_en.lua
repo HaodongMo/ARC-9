@@ -586,5 +586,5 @@ L["settings.mod_rpm.title"] = "RPM"
 L["settings.mod_headshotdamage.title"] = "Headshot Damage"
 
 -- Added 08-JAN-2023
-L["settings.developer.dev_greenscreen.title"] = "Greenscreen in customisation"
-L["settings.developer.dev_greenscreen.desc"] = "Show green screen background in customisation menu for screenshots.\n\nIf you are using HDR, don't forget to set mat_bloom_scalefactor_scalar to 0!"
+L["settings.developer.dev_greenscreen.title"] = "Green Screen"
+L["settings.developer.dev_greenscreen.desc"] = "Show a green screen background in the customisation menu for screenshots.\n\nIf you are using HDR, don't forget to set mat_bloom_scalefactor_scalar to 0!"
