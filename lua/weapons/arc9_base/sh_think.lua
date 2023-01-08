@@ -80,7 +80,7 @@ function SWEP:Think()
                 end
             end
 
-            if primedAttack and triggerDelay <= now and notPressedAttack and not shouldRunPredicted then
+            if primedAttack and triggerDelay <= now and notPressedAttack and shouldRunPredicted then
                 swepPrimaryAttack(self)
             end
         end

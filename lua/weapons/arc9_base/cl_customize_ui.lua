@@ -909,7 +909,11 @@ function SWEP:CreateCustomizeHUD()
                         surface.PlaySound(clicksound)
 
                     elseif input.IsMouseDown(MOUSE_RIGHT) and !rmbdown then
-                        self:DetachAllFromSubSlot(slot.Address)
+                        if ms_slot.Integral and isstring(ms_slot.Integral) then
+                            self:Attach(slot.Address, ms_slot.Integral)
+                        else
+                            self:DetachAllFromSubSlot(slot.Address)
+                        end
                         self.BottomBarPath = {}
                         self.BottomBarFolders = {}
                         self.BottomBarAtts = {}

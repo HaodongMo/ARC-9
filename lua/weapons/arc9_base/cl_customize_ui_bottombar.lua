@@ -211,7 +211,11 @@ local function enterfolder(self, scroll, slottbl, fname)
                 self:Attach(self2.attslot, self2.att, self2.slottbl.Installed == self2.att) -- third parameter is Silent, so sound won't be played twice though att will updated (might be helpful)
                 self.CustomizeSelectAddr = self2.address
             elseif kc == MOUSE_RIGHT then
-                self:DetachAllFromSubSlot(self2.address)
+                if self2.slottbl.Integral and isstring(self2.slottbl.Integral) then
+                    self:Attach(self2.address, self2.slottbl.Integral)
+                else
+                    self:DetachAllFromSubSlot(self2.address)
+                end
                 self.CustomizeSelectAddr = self2.address
             end
         end

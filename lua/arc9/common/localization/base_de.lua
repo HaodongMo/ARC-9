@@ -516,3 +516,22 @@ L["folder.favorites"] = "Favoriten"
 
 L["settings.gameplay.never_ready.title"] = "Keine \"Ready\"-Animationen."
 L["settings.gameplay.never_ready.desc"] = "Deaktiviere \"Ready\"-Animationen beim zücken einer Waffe."
+
+L["settings.performance.fx.title"] = "Effekte"
+
+L["settings.muzzle_light.title"] = "Mündungs-Leuchten"
+L["settings.muzzle_light.desc"] = "Aktiviere das Aufleuchten des Mündungsfeuers beim Feuern einer Waffe."
+
+L["settings.muzzle_others.title"] = "Andere Mündungs-Einstellungen"
+L["settings.muzzle_others.desc"] = "Aktiviere Mündungs-Effekte für Waffen von anderen Spielern."
+
+L["settings.mod_damage.title"] = "Schaden"
+L["settings.mod_spread.title"] = "Streuung"
+L["settings.mod_recoil.title"] = "Rückstoß"
+L["settings.mod_visualrecoil.title"] = "Visueller Rückstoß"
+L["settings.mod_adstime.title"] = "Zielvorrichtungs-Zeit"
+L["settings.mod_sprinttime.title"] = "Sprint-bis-Feuer-Zeit"
+L["settings.mod_damagerand.title"] = "Schadens-Spanne"
+L["settings.mod_muzzlevelocity.title"] = "Mündungsgeschwindigkeit"
+L["settings.mod_rpm.title"] = "Feuerrate"
+L["settings.mod_headshotdamage.title"] = "Kopfschuss-Schaden"

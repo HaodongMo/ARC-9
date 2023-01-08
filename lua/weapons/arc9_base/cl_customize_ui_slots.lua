@@ -105,8 +105,11 @@ function SWEP:CreateHUD_Slots(scroll)
                 self.BottomBarAtts = {}
                 self:CreateHUD_Bottom()
             elseif kc == MOUSE_RIGHT then
-                self:DetachAllFromSubSlot(slot.Address)
-
+                if ms_slot.Integral and isstring(ms_slot.Integral) then
+                    self:Attach(slot.Address, ms_slot.Integral)
+                else
+                    self:DetachAllFromSubSlot(slot.Address)
+                end
                 timer.Simple(0, function() self:CreateHUD_Bottom() end)
                 -- self:CreateHUD_Bottom()
             end
