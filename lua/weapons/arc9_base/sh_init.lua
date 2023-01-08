@@ -44,7 +44,6 @@ function SWEP:Initialize()
     --self:SetClip1(self.Primary.DefaultClip) -- genuinely unfathomable that someone would do this
 
     self.LastAmmo = self.Primary.Ammo
-
 end
 
 function SWEP:ClientInitialize()
