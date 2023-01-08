@@ -66,7 +66,7 @@ function SWEP:PreDrawViewModel()
         cam.End2D()
     end
 
-    if shouldrtblur and blurenable then
+    if (shouldrtblur and blurenable) or (custdelta > 0 and blurtarget > 0) then
         DrawBokehDOF(bluramt, 1, 0)
     end
 
@@ -190,6 +190,6 @@ function SWEP:PostDrawViewModel()
     end
     cam.End3D()
 
-    if GetConVar("arc9_fx_adsblur"):GetBool() and self:GetSight().Blur != false then arc9toytown(self:GetSightAmount()) end -- cool ass blur
+    if GetConVar("arc9_fx_adsblur"):GetBool() and self:GetSight().Blur != false and !self.Peeking then arc9toytown(self:GetSightAmount()) end -- cool ass blur
     -- render.UpdateFullScreenDepthTexture()
 end

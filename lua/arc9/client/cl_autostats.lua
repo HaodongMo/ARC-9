@@ -196,9 +196,6 @@ ARC9.AutoStatsConditions = {
 }
 
 function ARC9.GetProsAndCons(atttbl, weapon)
-    local pros = table.Copy(atttbl.Pros or {})
-    local cons = table.Copy(atttbl.Cons or {})
-
     local prosname = {}
     local prosnum = {}
     local consname = {}
@@ -291,6 +288,21 @@ function ARC9.GetProsAndCons(atttbl, weapon)
         else
             table.insert(consname, autostat)
             table.insert(consnum, autostatnum)
+        end
+    end
+
+    -- custom stats
+    if istable(atttbl.CustomPros) then  
+        for stat, value in pairs(atttbl.CustomPros) do
+            table.insert(prosname, stat)
+            table.insert(prosnum, value)
+        end
+    end
+
+    if istable(atttbl.CustomCons) then  
+        for stat, value in pairs(atttbl.CustomCons) do
+            table.insert(consname, stat)
+            table.insert(consnum, value)
         end
     end
 
