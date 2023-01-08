@@ -262,6 +262,10 @@ local conVars = {
         default = "0",
     },
     {
+        name = "dev_greenscreen",
+        default = "0",
+    },
+    {
         name = "dev_benchgun_custom",
         default = "",
     },

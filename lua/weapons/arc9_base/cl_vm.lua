@@ -63,6 +63,12 @@ function SWEP:PreDrawViewModel()
             surface.SetDrawColor(0, 0, 0, 255 * custdelta)
             surface.SetMaterial(vignette)
             surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+
+            if GetConVar("arc9_dev_greenscreen"):GetBool() then
+                -- print(GetConVar("mat_bloom_scalefactor_scalar"):SetFloat())
+                surface.SetDrawColor(0, 255, 0, 255 * custdelta)
+                surface.DrawRect(0, 0, ScrW(), ScrH())
+            end
         cam.End2D()
     end
 

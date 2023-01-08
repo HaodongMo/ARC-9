@@ -584,3 +584,7 @@ L["settings.mod_damagerand.title"] = "Damage Variance"
 L["settings.mod_muzzlevelocity.title"] = "Muzzle Velocity"
 L["settings.mod_rpm.title"] = "RPM"
 L["settings.mod_headshotdamage.title"] = "Headshot Damage"
+
+-- Added 08-JAN-2023
+L["settings.developer.dev_greenscreen.title"] = "Greenscreen in customisation"
+L["settings.developer.dev_greenscreen.desc"] = "Show green screen background in customisation menu for screenshots.\n\nIf you are using HDR, don't forget to set mat_bloom_scalefactor_scalar to 0!"

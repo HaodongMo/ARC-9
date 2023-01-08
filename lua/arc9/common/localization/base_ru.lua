@@ -529,3 +529,19 @@ L["settings.muzzle_light.desc"] = "Включает динамический с�
 
 L["settings.muzzle_others.title"] = "Эффекты от выстрелов у игроков"
 L["settings.muzzle_others.desc"] = "Включает эффекты от выстрелов от пушек у других игроков на сервере."
+
+-- Added 07-JAN-2023
+L["settings.mod_damage.title"] = "Урон"
+L["settings.mod_spread.title"] = "Разброс"
+L["settings.mod_recoil.title"] = "Отдача"
+L["settings.mod_visualrecoil.title"] = "Физ. отдача"
+L["settings.mod_adstime.title"] = "Скорость прицеливания"
+L["settings.mod_sprinttime.title"] = "Возвращение после бега"
+L["settings.mod_damagerand.title"] = "Вариация урона"
+L["settings.mod_muzzlevelocity.title"] = "Дульная скорость"
+L["settings.mod_rpm.title"] = "Скорострельность"
+L["settings.mod_headshotdamage.title"] = "Урон в голову"
+
+-- Added 08-JAN-2023
+L["settings.developer.dev_greenscreen.title"] = "Зеленый экран в кастомизации"
+L["settings.developer.dev_greenscreen.desc"] = "Показывает зеленый экран вместо фона в меню кастомизации для скриншотов.\n\nЕсли вы используете HDR, не забудьте поставить mat_bloom_scalefactor_scalar на 0!"
