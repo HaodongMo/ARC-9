@@ -29,7 +29,7 @@ function SWEP:SprintLock()
     return false
 end
 
-local soundTab = {
+local dryfireSoundTab = {
     name = "dryfire",
     sound = "",
     level = 75,
@@ -46,9 +46,9 @@ function SWEP:DryFire()
 
     if nthShot > 0 and self:GetProcessedValue("DryFireSingleAction") then return end
 
-    soundTab.channel = ARC9.CHAN_FIDDLE
-    soundTab.sound = self:RandomChoice(self:GetProcessedValue("DryFireSound"))
-    self:PlayTranslatedSound(soundtab)
+    dryfireSoundTab.channel = ARC9.CHAN_FIDDLE
+    dryfireSoundTab.sound = self:RandomChoice(self:GetProcessedValue("DryFireSound"))
+    self:PlayTranslatedSound(dryfireSoundTab)
 
     self:SetNthShot(nthShot + 1)
 end
