@@ -281,7 +281,7 @@ do
             --     stat.BaseClass = nil
             -- end
 
-            if quickmodifiers[val] then
+            if quickmodifiers[val] and isnumber(stat) then
                 local convarvalue = quickmodifiers[val]:GetFloat()
 
                 stat = stat * convarvalue
@@ -355,12 +355,6 @@ do
                     unaffected = false
                 end
             end
-
-            if quickmodifiers[val] then
-                local convarvalue = quickmodifiers[val]:GetFloat()
-
-                stat = stat * convarvalue
-            end
         end
 
         statCache[baseContValContCondition] = stat
@@ -368,7 +362,7 @@ do
         local newstat, any = swepRunHook(self, val .. "Hook" .. condition, stat)
         stat = newstat or stat
 
-        if quickmodifiers[val] then
+        if quickmodifiers[val] and isnumber(val) then
             local convarvalue = quickmodifiers[val]:GetFloat()
 
             stat = stat * convarvalue
