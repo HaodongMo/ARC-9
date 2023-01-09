@@ -535,3 +535,7 @@ L["settings.mod_damagerand.title"] = "Schadens-Spanne"
 L["settings.mod_muzzlevelocity.title"] = "Mündungsgeschwindigkeit"
 L["settings.mod_rpm.title"] = "Feuerrate"
 L["settings.mod_headshotdamage.title"] = "Kopfschuss-Schaden"
+
+-- 8
+L["settings.developer.dev_greenscreen.title"] = "Green-Screen"
+L["settings.developer.dev_greenscreen.desc"] = "Zeigt einen Green-Screen-Hintergrund im Menü.\n\nFalls du HDR benutzt, vergiss nicht, mat_bloom_scalefactor_scalar auf 0 zu setzen!"
