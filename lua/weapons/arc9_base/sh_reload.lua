@@ -338,7 +338,7 @@ end
 
 function SWEP:GetShouldShotgunReload()
     if self:GetProcessedValue("HybridReload") then
-        if self:Clip1() > self:GetProcessedValue("ChamberSize") then
+        if (self:Clip1() > self:GetProcessedValue("ChamberSize")) and !self:GetEmptyReload() then
             return true
         else
             return false

@@ -21,7 +21,7 @@ function SWEP:ThinkCycle()
 
         self:SetAnimLockTime(CurTime() + t)
 
-        if IsFirstTimePredicted() then
+        if IsFirstTimePredicted() and !self:GetProcessedValue("NoShellEjectManualAction") then
             if ejectdelay == 0 then
                 self:DoEject()
             else

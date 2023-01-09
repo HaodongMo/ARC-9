@@ -65,7 +65,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
     end
 
     local time = 0.1
-    local minprogress
+    local minprogress = 1
 
     if IsValid(mdl) then
         time = animation.Time or mdl:SequenceDuration(seq)
