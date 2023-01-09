@@ -38,6 +38,9 @@ ARC9.IncompatibleAddons = {
 
     -- SLVBase 2
     ["1516699044"] = "Causes black screen",
+
+    -- Minecraft drops
+    ["2879200766"] = "Teleports viewmodel to any dropped gun",
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale
