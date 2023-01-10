@@ -677,7 +677,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.HookC_CanLockOn = function(self, ent) return true end -- Return true to allow lock on.
 -- SWEP.HookC_CannotLockOn = function(self, ent) return true end -- Return true to disallow lock on. Has priority over CanLockOn.
 -- SWEP.HookS_GetLockOnScore = function(self, ent) return 0 end -- Return new score
--- SWEP.Hook_GetAttPos = function(self, data) return data end -- {atttbl = {}, slottbl = {}, pos = Vector, ang = Angle}
+-- SWEP.Hook_GetAttachmentPos = function(self, data) return data end -- {atttbl = {}, slottbl = {}, pos = Vector, ang = Angle}
 -- SWEP.Hook_HideBones = function(self, bones) return bones end -- {"bone" = true, "bone" = true...}
 -- SWEP.Hook_ModifyElements = function(self, eles) return eles end -- {"ele" = true, "ele" = true...}
 -- SWEP.Hook_TranslateSource = function(self, source) return source end -- String, use this to modify source strings directly

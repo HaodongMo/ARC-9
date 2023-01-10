@@ -1,4 +1,4 @@
-function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, dupli)
+function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, customang, dupli)
     dupli = dupli or 0
     idle = idle or false
     local parentmdl = nil
@@ -164,7 +164,7 @@ function SWEP:GetAttPos(slottbl, wm, idle, nomodeloffset, custompos, customang, 
         slottbl = slottbl,
     }
 
-    data = self:RunHook("Hook_GetAttPos", data) or data
+    data = self:RunHook("Hook_GetAttachmentPos", data) or data
 
     apos = data.pos or apos
     aang = data.ang or aang

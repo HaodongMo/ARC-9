@@ -86,7 +86,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                         end
                     end
 
-                    local apos, aang = self:GetAttPos(slottbl, wm, false, false, custompos, customang or angle_zero, model.Duplicate)
+                    local apos, aang = self:GetAttachmentPos(slottbl, wm, false, false, custompos, customang or angle_zero, model.Duplicate)
                     model:SetPos(apos)
                     model:SetAngles(aang)
                     model:SetRenderOrigin(apos)

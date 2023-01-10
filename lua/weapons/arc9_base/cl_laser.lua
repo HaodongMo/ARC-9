@@ -94,7 +94,7 @@ function SWEP:DrawLasers(wm, behav)
             -- if behav then
             --     self:DrawLaser(EyePos() - (EyeAngles():Up() * 4), self:GetShootDir():Forward(), atttbl)
             -- else
-                local pos, ang = self:GetAttPos(slottbl, wm, false)
+                local pos, ang = self:GetAttachmentPos(slottbl, wm, false)
                 model:SetPos(pos)
                 model:SetAngles(ang)
 
