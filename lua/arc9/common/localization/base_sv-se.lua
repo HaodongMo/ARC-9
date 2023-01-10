@@ -561,3 +561,24 @@ L["settings.muzzle_light.desc"] = "Aktiverar ljus från mynningseld när du skju
 
 L["settings.muzzle_others.title"] = "Andras Mynningseld"
 L["settings.muzzle_others.desc"] = "Aktivera mynningseld effekter från andra spelares vapen."
+
+L["settings.mod_damage.title"] = "Skada"
+L["settings.mod_spread.title"] = "Spridning"
+L["settings.mod_recoil.title"] = "Rekyl"
+L["settings.mod_visualrecoil.title"] = "Visuell Rekyl"
+L["settings.mod_adstime.title"] = "Res/Sänk Sikte Tid"
+L["settings.mod_sprinttime.title"] = "Spring-till-Sikte Tid"
+L["settings.mod_damagerand.title"] = "Skadevariering"
+L["settings.mod_muzzlevelocity.title"] = "Mynningshastighet"
+L["settings.mod_rpm.title"] = "Eldhastighet"
+L["settings.mod_headshotdamage.title"] = "Huvudskott Skada"
+
+L["settings.developer.dev_greenscreen.title"] = "Grön Skärm"
+L["settings.developer.dev_greenscreen.desc"] = "Visar en grön skärm bakgrund i anpassningsmenyn för skärmbilder.\n\nOm du använder HDR, glöm inte att sätta mat_bloom_scalefactor_scalar till 0!"
+
+-- 10 jan
+L["autostat.triggerdelay"] = "Avtryckare Fördröj."
+L["autostat.triggerdelaytime"] = "Avtryckare Fördröj. Tid"
+L["settings.hud_cust.hud_darkmode.title"] = "Mörkt Tema"
+L["settings.hud_cust.hud_darkmode.desc"] = "Aktiverar mörka färger på gränssnittet istället för ljusgrått och avaktiverar vinjetteffekten i bakgrunden."
+L["autostat.penetrationdelta"] = "Skada Efter Penetration"
