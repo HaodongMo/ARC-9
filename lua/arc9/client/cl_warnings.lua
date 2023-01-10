@@ -36,8 +36,8 @@ ARC9.IncompatibleAddons = {
 
     ["TacticalLean"] = "Mod is old, buggy, laggy, and interferes with ARC9 lean.",
 
-    -- SLVBase 2
-    ["1516699044"] = "Causes black screen",
+    -- fixed maybe     SLVBase 2 
+    -- ["1516699044"] = "Causes black screen",
 
     -- Minecraft drops
     ["2879200766"] = "Teleports viewmodel to any dropped gun",
