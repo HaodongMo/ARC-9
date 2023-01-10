@@ -226,7 +226,7 @@ L["settings.desc"] = "Описание"
 L["settings.tabname.performance"] = "Производительность"
 L["settings.tabname.optics"] = "Оптика"
 L["settings.tabname.crosshair"] = "Перекрестие"
-L["settings.tabname.hud_cust"] = "Кастомизация"
+L["settings.tabname.hud_cust"] = "Персонализация"
 L["settings.tabname.hud_game"] = "Игровой HUD"
 L["settings.tabname.npc"] = "NPC"
 L["settings.tabname.gameplay"] = "Геймплей"
@@ -545,3 +545,9 @@ L["settings.mod_headshotdamage.title"] = "Урон в голову"
 -- Added 08-JAN-2023
 L["settings.developer.dev_greenscreen.title"] = "Зеленый экран в кастомизации"
 L["settings.developer.dev_greenscreen.desc"] = "Показывает зеленый экран вместо фона в меню кастомизации для скриншотов.\n\nЕсли вы используете HDR, не забудьте поставить mat_bloom_scalefactor_scalar на 0!"
+
+-- 10 jan
+L["autostat.triggerdelay"] = "Задержка спуска курка"
+L["autostat.triggerdelaytime"] = "Время задержки спуска курка"
+L["settings.hud_cust.hud_darkmode.title"] = "Темная тема"
+L["settings.hud_cust.hud_darkmode.desc"] = "Включает темные цвета интерфейса вместо серого и отключает виньетку у фона."

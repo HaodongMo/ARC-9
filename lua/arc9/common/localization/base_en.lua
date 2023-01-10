@@ -588,9 +588,12 @@ L["settings.mod_headshotdamage.title"] = "Headshot Damage"
 L["settings.developer.dev_greenscreen.title"] = "Green Screen"
 L["settings.developer.dev_greenscreen.desc"] = "Show a green screen background in the customisation menu for screenshots.\n\nIf you are using HDR, don't forget to set mat_bloom_scalefactor_scalar to 0!"
 
--- Modified 10-JAN-2023
+-- Modified/Added 10-JAN-2023
 
 L["autostat.triggerdelay"] = "Trigger Delay"
 L["autostat.triggerdelaytime"] = "Trigger Delay Time"
 
 L["autostat.penetrationdelta"] = "Damage After Penetration"
+
+L["settings.hud_cust.hud_darkmode.title"] = "Dark Theme"
+L["settings.hud_cust.hud_darkmode.desc"] = "Enables dark colors in HUD instead of light gray and disables vignette effect in background."

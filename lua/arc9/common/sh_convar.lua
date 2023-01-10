@@ -111,6 +111,11 @@ local conVars = {
         client = true
     },
     {
+        name = "hud_darkmode",
+        default = "0",
+        client = true
+    },
+    {
         name = "language",
         default = "",
         client = true,
