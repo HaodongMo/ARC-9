@@ -545,3 +545,7 @@ L["settings.mod_headshotdamage.title"] = "Урон в голову"
 -- Added 08-JAN-2023
 L["settings.developer.dev_greenscreen.title"] = "Зеленый экран в кастомизации"
 L["settings.developer.dev_greenscreen.desc"] = "Показывает зеленый экран вместо фона в меню кастомизации для скриншотов.\n\nЕсли вы используете HDR, не забудьте поставить mat_bloom_scalefactor_scalar на 0!"
+
+-- 10 jan
+L["autostat.triggerdelay"] = "Задержка спуска курка"
+L["autostat.triggerdelaytime"] = "Время задержки спуска курка"
