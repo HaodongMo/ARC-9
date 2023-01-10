@@ -18,6 +18,7 @@ ARC9.AutoStatsMains = {
     ["Distance"] = {hutom, false},
     ["Num"] = {false, false},
     ["Penetration"] = {"HU", false},
+    ["PenetrationDelta"] = {false, false},
     ["RicochetAngleMax"] = {"°", false},
     ["RicochetChance"] = {false, false},
     ["ArmorPiercing"] = {false, false},

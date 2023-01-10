@@ -592,3 +592,5 @@ L["settings.developer.dev_greenscreen.desc"] = "Show a green screen background i
 
 L["autostat.triggerdelay"] = "Trigger Delay"
 L["autostat.triggerdelaytime"] = "Trigger Delay Time"
+
+L["autostat.penetrationdelta"] = "Damage After Penetration"
