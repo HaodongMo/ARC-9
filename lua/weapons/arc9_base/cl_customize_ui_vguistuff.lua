@@ -17,10 +17,11 @@ ARC9TopButton.MatHoveredR = Material("arc9/ui/topbutton_hover_r.png", "mips")
 function ARC9TopButton:Init()
     self:SetText("")
     self:SetSize(ARC9ScreenScale(21), ARC9ScreenScale(21))
+    self.DarkMode = GetConVar("arc9_hud_darkmode"):GetBool()
 end
 
 function ARC9TopButton:Paint(w, h)
-    local color = self.Color
+    local color = self.DarkMode and ARC9.GetHUDColor("bg") or self.Color
     local iconcolor = self.Color
     local icon = self.Icon
     local text = self.ButtonText
@@ -46,11 +47,11 @@ function ARC9TopButton:Paint(w, h)
     -- wide button
     if text then
         surface.SetMaterial(matl)
-        surface.DrawTexturedRect(0, 0, h / 2, h)
+        for _=1, (self.DarkMode and 4 or 1) do surface.DrawTexturedRect(0, 0, h / 2, h) end
         surface.SetMaterial(matm)
-        surface.DrawTexturedRect(h / 2, 0, w - h, h)
+        for _=1, (self.DarkMode and 4 or 1) do surface.DrawTexturedRect(h / 2, 0, w - h, h) end
         surface.SetMaterial(matr)
-        surface.DrawTexturedRect(w - h / 2, 0, h / 2, h)
+        for _=1, (self.DarkMode and 4 or 1) do surface.DrawTexturedRect(w - h / 2, 0, h / 2, h) end
         surface.SetFont(self.Font or "ARC9_16")
         local tw = surface.GetTextSize(text)
         surface.SetTextColor(iconcolor)
@@ -58,7 +59,7 @@ function ARC9TopButton:Paint(w, h)
         surface.DrawText(text)
     else
         surface.SetMaterial(mat)
-        surface.DrawTexturedRect(0, 0, w, h)
+        for _=1, (self.DarkMode and 4 or 1) do surface.DrawTexturedRect(0, 0, w, h) end
     end
 
     surface.SetDrawColor(iconcolor)
@@ -366,12 +367,11 @@ vgui.Register("ARC9Checkbox", ARC9Checkbox, "DCheckBox")
 local ARC9NumSlider = {}
 ARC9NumSlider.Color = ARC9.GetHUDColor("fg")
 ARC9NumSlider.ColorClicked = ARC9.GetHUDColor("hi")
-ARC9NumSlider.ColorNo = ARC9.GetHUDColor("bg")
 
 function ARC9NumSlider:Init()
     local color = self.Color
     local color2 = ARC9.GetHUDColor("hi")
-    local color3 = self.ColorNo
+    local color3 = ARC9.GetHUDColor("hint")
     self.Slider.Knob:SetSize(ARC9ScreenScale(1.7), ARC9ScreenScale(7))
 
     self.Slider.Knob.Paint = function(panel, w, h)

@@ -101,6 +101,7 @@ local settingstable = {
                     end
                 end
             end
+
             RunConsoleCommand("arc9_hud_scale", self3:GetValue())
 
             settingspanel:Remove() -- rebuilding
@@ -116,6 +117,7 @@ local settingstable = {
         --     end)
         -- end },
         { type = "color", text = "settings.hud_cust.hud_color.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
+        { type = "bool", text = "settings.hud_cust.hud_darkmode.title", convar = "hud_darkmode", desc = "settings.hud_cust.hud_darkmode.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
         -- { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language", content = ARC9.LanguagesTable, desc = "settings.hud_cust.language_id.desc" },
         { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},
@@ -544,11 +546,15 @@ function ARC9_OpenSettings(page)
     bg:SetBackgroundBlur(true)
     -- bg:MakePopup()
 
-    -- bg.Init = function(self2) self2.startTime = SysTime() end
+    -- local darkmode = GetConVar("arc9_hud_darkmode"):GetBool()
+
     bg.Paint = function(self2, w, h)
-        surface.SetDrawColor(20, 20, 20, 224)
+        if GetConVar("arc9_hud_darkmode"):GetBool() then -- ehh i wanted make it local outside but then it becomes not dynamic
+            surface.SetDrawColor(58, 58, 58, 206)
+        else
+            surface.SetDrawColor(20, 20, 20, 224)
+        end
         surface.DrawRect(0, 0, w, h)
-        -- Derma_DrawBackgroundBlur(self2, self2.startTime) -- idk but cool
     end
 
     local panel = vgui.Create("DFrame", bg)

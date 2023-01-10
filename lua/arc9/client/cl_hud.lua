@@ -22,6 +22,7 @@ local ARC9ScreenScale = ARC9.ScreenScale
 
 ARC9.Colors = {
     bg      = Color(153, 153, 153, 97), --
+    bgdark  = Color(37, 37, 37, 240), --
     bg_pro  = Color(53, 179, 53, 97), --
     bg_con  = Color(204, 61, 61, 97), --
     pro  = Color(54, 179, 54), --
@@ -194,6 +195,12 @@ function ARC9.GetHUDColor(part, alpha)
             GetConVar("arc9_hud_color_g"):GetInt(),
             GetConVar("arc9_hud_color_b"):GetInt()
         )
+    end
+
+    if part == "bg" then
+        if GetConVar("arc9_hud_darkmode"):GetBool() then
+            col = ARC9.Colors["bgdark"]
+        end
     end
 
     if alpha < 255 then
