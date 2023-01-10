@@ -584,3 +584,5 @@ L["settings.developer.dev_greenscreen.desc"] = "Mostrar un fondo de pantalla ver
 
 L["autostat.triggerdelay"] = "Retardo de Gatillo"
 L["autostat.triggerdelaytime"] = "Tiempo de Retardo de Gatillo"
+L["settings.hud_cust.hud_darkmode.title"] = "Tema Oscuro"
+L["settings.hud_cust.hud_darkmode.desc"] = "Activa los colores oscuros en el HUD en lugar del gris claro y desactiva el efecto viñeta en el fondo."
