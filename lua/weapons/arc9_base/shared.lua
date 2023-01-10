@@ -1249,6 +1249,7 @@ SWEP.Attachments = {
 -- _sprint
 -- _walk
 -- _empty
+-- _glempty
 -- _ubgl (again)
 -- _uncycled
 -- _detonator

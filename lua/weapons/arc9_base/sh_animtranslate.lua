@@ -46,6 +46,10 @@ function SWEP:TranslateAnimation(seq)
             seq = seq .. "_empty"
         end
 
+        if !self:GetProcessedValue("SuppressEmptySuffix") and ((self:Clip2() == 0 and !self:GetReloading()) or self:GetEmptyReload()) and self:HasAnimation(seq .. "_glempty") then
+            seq = seq .. "_glempty"
+        end
+
         if self:GetUBGL() and self:HasAnimation(seq .. "_ubgl") then
             seq = seq .. "_ubgl"
         end
