@@ -579,3 +579,8 @@ L["settings.mod_headshotdamage.title"] = "Daño por tiro a cabeza"
 -- Added 08-JAN-2023
 L["settings.developer.dev_greenscreen.title"] = "Pantalla Verde"
 L["settings.developer.dev_greenscreen.desc"] = "Mostrar un fondo de pantalla verde en el menú de personalización para capturas de pantalla.\n\nSi estas utilizando HDR, no olvides de ajustar mat_bloom_scalefactor_scalar a 0!"
+
+-- Modified 10-JAN-2023
+
+L["autostat.triggerdelay"] = "Retardo de Gatillo"
+L["autostat.triggerdelaytime"] = "Tiempo de Retardo de Gatillo"
