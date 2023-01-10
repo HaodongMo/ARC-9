@@ -646,11 +646,15 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         dmgv = dmgv * self:GetProcessedValue("LegDamage")
     end
 
-    local pendelta = penleft / self:GetProcessedValue("Penetration")
+    local pen = self:GetProcessedValue("Penetration")
 
-    pendelta = Lerp(pendelta, self:GetProcessedValue("PenetrationDelta"), 1) -- it arleady clamps inside
+    if pen > 0 then
+        local pendelta = penleft / pen
 
-    dmgv = dmgv * pendelta
+        pendelta = Lerp(pendelta, self:GetProcessedValue("PenetrationDelta"), 1) -- it arleady clamps inside
+
+        dmgv = dmgv * pendelta
+    end
 
     local owner = self:GetOwner()
 
