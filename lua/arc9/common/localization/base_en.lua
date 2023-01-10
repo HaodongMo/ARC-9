@@ -59,7 +59,6 @@ L["autostat.supplylimit"] = "Reserve Magazines"
 L["autostat.secondarysupplylimit"] = "Reserve Secondary Ammo"
 L["autostat.ammopershot"] = "Ammo Per Shot"
 L["autostat.manualactionchamber"] = "Shots Per Cycle"
-L["autostat.triggerdelay"] = "Trigger Delay Time"
 L["autostat.rpm"] = "Fire Rate"
 L["autostat.postburstdelay"] = "Burst Delay"
 L["autostat.pushbackforce"] = "Pushback Force"
@@ -588,3 +587,8 @@ L["settings.mod_headshotdamage.title"] = "Headshot Damage"
 -- Added 08-JAN-2023
 L["settings.developer.dev_greenscreen.title"] = "Green Screen"
 L["settings.developer.dev_greenscreen.desc"] = "Show a green screen background in the customisation menu for screenshots.\n\nIf you are using HDR, don't forget to set mat_bloom_scalefactor_scalar to 0!"
+
+-- Modified 10-JAN-2023
+
+L["autostat.triggerdelay"] = "Trigger Delay"
+L["autostat.triggerdelaytime"] = "Trigger Delay Time"

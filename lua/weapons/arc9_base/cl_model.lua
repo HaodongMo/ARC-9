@@ -440,6 +440,13 @@ function SWEP:SetupModel(wm, lod, cm)
                 Bone = model.Bone
             }
 
+            if model.BoneMerge then
+                csmodel.BoneMerge = true
+
+                csmodel:AddEffects(EF_BONEMERGE)
+                csmodel:SetParent(basemodel)
+            end
+
             local scale = Matrix()
             local vec = model.ScaleVector or (Vector(1, 1, 1) * (model.Scale or 1))
             if wm then
@@ -448,10 +455,17 @@ function SWEP:SetupModel(wm, lod, cm)
             scale:Scale(vec)
             csmodel:EnableMatrix("RenderMultiply", scale)
 
+            csmodel:SetSkin(model.Skin or 1)
+            csmodel:SetBodyGroups(model.Bodygroups or "")
+
             local tbl = {
                 Model = csmodel,
                 Weapon = self
             }
+
+            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
+            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
+            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
 
             table.insert(ARC9.CSModelPile, tbl)
 
@@ -509,6 +523,10 @@ function SWEP:SetupModel(wm, lod, cm)
                 csmodel.DrawFunc(self, csmodel, wm)
             end
 
+            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
+            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
+            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
+
             local proxmodel
 
             if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice or atttbl.MuzzleDeviceUBGL) then
@@ -533,6 +551,13 @@ function SWEP:SetupModel(wm, lod, cm)
                 }
 
                 table.insert(ARC9.CSModelPile, tbl)
+            end
+
+            if atttbl.BoneMerge then
+                csmodel.BoneMerge = true
+
+                csmodel:AddEffects(EF_BONEMERGE)
+                csmodel:SetParent(basemodel)
             end
 
             if (atttbl.MuzzleDevice or atttbl.MuzzleDeviceUBGL) and !cm then

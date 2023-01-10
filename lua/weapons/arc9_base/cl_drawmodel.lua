@@ -141,6 +141,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 end
             end
 
+            model.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
+            model.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
+            model.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
+
 
             if !model.NoDraw then
                 model:DrawModel()

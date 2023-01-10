@@ -857,11 +857,13 @@ function SWEP:CreateCustomizeHUD()
 
                         surface.SetMaterial(atttbl.Icon or mat_3dslot)
                         surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                        render.SuppressEngineLighting(true)
                         if !atttbl.FullColorIcon then
                             surface.DrawTexturedRect(x + ARC9ScreenScale(1), y + ARC9ScreenScale(1), s - ARC9ScreenScale(2), s - ARC9ScreenScale(2))
                         else
                             surface.DrawTexturedRect(x + ARC9ScreenScale(3), y + ARC9ScreenScale(3), s - ARC9ScreenScale(6), s - ARC9ScreenScale(6))
                         end
+                        render.SuppressEngineLighting(false)
                     else
                         if ms_slot.DefaultCompactName then
                             atttxt = ARC9:UseTrueNames() and ms_slot.DefaultCompactName_TrueName or ms_slot.DefaultCompactName
