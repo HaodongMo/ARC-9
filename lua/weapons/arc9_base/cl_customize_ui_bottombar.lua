@@ -253,7 +253,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             attbtn2:SetInstalled(slot.Installed == att.att)
             attbtn2:SetHasModes(!!atttbl.ToggleStats)
             attbtn2:SetHasSlots(!!atttbl.Attachments)
-            attbtn2:SetCanAttach(self:CanAttach(slot.Address, att.att, slot))
+            attbtn2:SetCanAttach(self:CanAttach(slot.Address, att.att, slot, true))
             attbtn2:SetMissingDependents(self:GetSlotMissingDependents(slot.Address, att.att, slot))
             attbtn2:SetFullColorIcon(atttbl.FullColorIcon)
 

@@ -506,13 +506,13 @@ function SWEP:GetSlotMissingDependents(addr, att, slottbl)
     return self.DependentCache[addr][att][2]
 end
 
-function SWEP:CanAttach(addr, att, slottbl)
+function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     if ARC9.Blacklist[att] then return false end
 
     if GetConVar("arc9_atts_anarchy"):GetBool() then return true end
     if GetConVar("arc9_atts_nocustomize"):GetBool() then return false end
 
-    if SERVER and ARC9:PlayerGetAtts(self:GetOwner(), att) == 0 then return false end
+    if !ignorecount and ARC9:PlayerGetAtts(self:GetOwner(), att) == 0 then return false end
 
     slottbl = slottbl or self:LocateSlotFromAddress(addr)
 
