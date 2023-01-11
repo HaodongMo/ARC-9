@@ -224,8 +224,6 @@ function SWEP:DropMagazine()
             data:SetEntity(self)
             data:SetAttachment(drop_qca)
 
-            print("Drop mag")
-
             util.Effect("arc9_magdropeffect", data, true)
             -- local mag = ents.Create("ARC9_droppedmag")
 
