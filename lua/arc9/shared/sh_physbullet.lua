@@ -453,6 +453,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     if !game.SinglePlayer() then
                         SuppressHostEvents(bullet.Attacker)
                     end
+
                     fireBullets2.Damage = weapon:GetProcessedValue("DamageMax")
                     fireBullets2.Force = weapon:GetProcessedValue("ImpactForce")
                     fireBullets2.Dir = bullet.Vel:GetNormalized()

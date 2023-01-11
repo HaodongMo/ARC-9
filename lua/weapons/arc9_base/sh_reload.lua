@@ -131,7 +131,7 @@ function SWEP:Reload()
         end
     end
 
-    if SERVER then
+    if !self:PredictionFilter() then
         if self:GetProcessedValue("ShouldDropMag") or self:GetProcessedValue("ShouldDropMagEmpty") and clip == 0 then
             self:SetTimer(self:GetProcessedValue("DropMagazineTime"), function()
                 self:DropMagazine()
@@ -223,6 +223,8 @@ function SWEP:DropMagazine()
             local data = EffectData()
             data:SetEntity(self)
             data:SetAttachment(drop_qca)
+
+            print("Drop mag")
 
             util.Effect("arc9_magdropeffect", data, true)
             -- local mag = ents.Create("ARC9_droppedmag")
