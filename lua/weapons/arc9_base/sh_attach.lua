@@ -512,9 +512,14 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     if GetConVar("arc9_atts_anarchy"):GetBool() then return true end
     if GetConVar("arc9_atts_nocustomize"):GetBool() then return false end
 
-    if !ignorecount and ARC9:PlayerGetAtts(self:GetOwner(), att) == 0 then return false end
+    local atttbl = ARC9.GetAttTable(att)
+    local invatt = atttbl.InvAtt or att
 
     slottbl = slottbl or self:LocateSlotFromAddress(addr)
+
+    local curtbl = ARC9.GetAttTable(slottbl.Installed) or {}
+
+    if !ignorecount and ARC9:PlayerGetAtts(self:GetOwner(), att) == 0 and (curtbl.InvAtt or slottbl.Installed) != invatt then return false end
 
     if self:RunHook("Hook_BlockAttachment", {att = att, slottbl = slottbl}) == false then return false end
 
@@ -527,8 +532,6 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     if !istable(cat) then
         cat = {cat}
     end
-
-    local atttbl = ARC9.GetAttTable(att)
 
     if atttbl.Max then
         local count = self:CountAttachments(att)

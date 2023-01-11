@@ -183,8 +183,9 @@ local function enterfolder(self, scroll, slottbl, fname)
 
         local atttbl = ARC9.GetAttTable(att.att)
         local aslottbl = self:LocateSlotFromAddress(att.slot)
+        local installedtbl = ARC9.GetAttTable(aslottbl.Installed)
 
-        if qty <= 0 and !atttbl.Free and (aslottbl.Installed != att.att) and (atttbl.InvAtt == nil or aslottbl.Installed != atttbl.InvAtt) and !GetConVar("arc9_free_atts"):GetBool() then continue end
+        if qty <= 0 and !atttbl.Free and (installedtbl.InvAtt or aslottbl.Installed) != (atttbl.InvAtt or att.att) and !GetConVar("arc9_free_atts"):GetBool() then continue end
 
         if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then continue end
 
