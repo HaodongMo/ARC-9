@@ -113,12 +113,13 @@ function ARC9AttButton:Paint(w, h)
     local icon = self.Icon or ARC9TopButton.MatIdle
     local text = self.ButtonText
     local colorclicked = ARC9.GetHUDColor("hi")
+    local colorgrey = ARC9.GetHUDColor("unowned")
     local mat = self.MatIdle
     local matmarker = nil
     local favmarker = nil
     local att = self.att
 
-    local qty = 0
+    local qty = ARC9:PlayerGetAtts(LocalPlayer(), att)
     local free_or_lock = false
 
     if self:IsHovered() or self.OverrideHovered then
@@ -148,6 +149,10 @@ function ARC9AttButton:Paint(w, h)
         color = colorclicked
         matmarker = self.MatMarkerInstalled
         markercolor = colorclicked
+    elseif qty == 0 and not self.Installed and not self.SlotDisplay then
+        color = (self:IsHovered() or self.OverrideHovered) and self.Color or colorgrey
+        textcolor = color
+        iconcolor = colorgrey
     end
 
     if ARC9.Favorites[att] then
@@ -214,8 +219,7 @@ function ARC9AttButton:Paint(w, h)
             free_or_lock = true
         end
 
-        if not free_or_lock then
-            qty = ARC9:PlayerGetAtts(LocalPlayer(), att)
+        if not free_or_lock and (qty > 0 or self.Installed) then
 
             local qtext = "x" .. tostring(qty)
 
@@ -260,6 +264,12 @@ end
 function ARC9AttButton:SetMissingDependents(bool)
     self.MissingDependents = bool
 end
+
+
+function ARC9AttButton:SetSlotDisplay(bool)
+    self.SlotDisplay = bool
+end
+
 
 function ARC9AttButton:SetFolderContain(num)
     self.FolderContain = num

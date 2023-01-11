@@ -116,6 +116,11 @@ local conVars = {
         client = true
     },
     {
+        name = "hud_showunowned",
+        default = "1",
+        client = true
+    },
+    {
         name = "language",
         default = "",
         client = true,
