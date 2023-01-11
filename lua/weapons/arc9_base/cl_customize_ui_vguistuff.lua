@@ -95,6 +95,7 @@ ARC9AttButton.MatEmpty = Material("arc9/ui/att_empty.png", "mips")
 ARC9AttButton.MatBlock = Material("arc9/ui/att_block.png", "mips")
 ARC9AttButton.MatMarkerInstalled = Material("arc9/ui/mark_installed.png", "mips smooth")
 ARC9AttButton.MatMarkerLock = Material("arc9/ui/mark_lock.png", "mips smooth")
+ARC9AttButton.MatMarkerLinked = Material("arc9/ui/mark_linked.png", "mips smooth")
 ARC9AttButton.MatMarkerModes = Material("arc9/ui/mark_modes.png", "mips smooth")
 ARC9AttButton.MatMarkerSlots = Material("arc9/ui/mark_slots.png", "mips smooth")
 ARC9AttButton.MatMarkerFavorite = Material("arc9/ui/mark_favorite.png", "mips smooth")
@@ -132,9 +133,13 @@ function ARC9AttButton:Paint(w, h)
 
     if self.Empty then
         mat = self.MatEmpty
-    elseif not self.CanAttach then
+    elseif not self.CanAttach and not self.Installed then
+        if self.MissingDependents then
+            matmarker = self.MatMarkerLinked
+        else
+            matmarker = self.MatMarkerLock
+        end
         mat = self.MatBlock
-        matmarker = self.MatMarkerLock
         textcolor = self.ColorBlock
         iconcolor = self.ColorBlock
         markercolor = self.ColorBlock
@@ -250,6 +255,10 @@ end
 
 function ARC9AttButton:SetCanAttach(bool)
     self.CanAttach = bool
+end
+
+function ARC9AttButton:SetMissingDependents(bool)
+    self.MissingDependents = bool
 end
 
 function ARC9AttButton:SetFolderContain(num)

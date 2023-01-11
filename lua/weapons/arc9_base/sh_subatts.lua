@@ -235,7 +235,7 @@ end
 -- Gets rid of invalid attachments
 function SWEP:PruneAttachments()
     for _, slot in ipairs(self:GetSubSlotList()) do
-        if !slot.Installed then continue end
+        -- if !slot.Installed then continue end
 
         if !ARC9.Attachments[slot.Installed] then
             slot.Installed = nil
@@ -245,6 +245,7 @@ function SWEP:PruneAttachments()
         local atttbl = ARC9.GetAttTable(slot.Installed)
 
         if !atttbl or self:SlotInvalid(slot) then
+            ARC9:PlayerGiveAtt(self:GetOwner(), slot.Installed, 1)
             slot.Installed = false
             slot.SubAttachments = nil
         end
@@ -256,9 +257,28 @@ function SWEP:PruneAttachments()
                 if !mslottbl then continue end
 
                 if mslottbl.Installed then
+                    ARC9:PlayerGiveAtt(self:GetOwner(), slot.Installed, 1)
                     slot.Installed = false
                     slot.SubAttachments = nil
                 end
+            end
+        end
+    end
+end
+
+-- Try our best to fill any empty Integral slots
+function SWEP:FillIntegralSlots()
+    for _, slot in ipairs(self:GetSubSlotList()) do
+        if !slot.Integral or slot.Installed then continue end
+
+        if isstring(slot.Integral) and ARC9:PlayerGetAtts(self:GetOwner(), slot.Integral) > 0 then
+            slot.Installed = slot.Integral
+            ARC9:PlayerTakeAtt(self:GetOwner(), slot.Installed, 1)
+        else
+            local att = self:FirstAttForSlot(slot)
+            if att then
+                slot.Installed = att
+                ARC9:PlayerTakeAtt(self:GetOwner(), slot.Installed, 1)
             end
         end
     end

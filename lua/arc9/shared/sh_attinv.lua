@@ -10,7 +10,7 @@ function ARC9:PlayerGetAtts(ply, att)
 
     if atttbl.Free then return 999 end
 
-    if !IsValid(ply) then return 0 end
+    if !IsValid(ply) or !ply:IsPlayer() then return end
 
     if !ply:IsAdmin() and atttbl.AdminOnly then
         return 0
@@ -28,7 +28,7 @@ end
 function ARC9:PlayerGiveAtt(ply, att, amt)
     amt = amt or 1
 
-    if !IsValid(ply) then return end
+    if !IsValid(ply) or !ply:IsPlayer() then return end
 
     if !ply.ARC9_AttInv then
         ply.ARC9_AttInv = {}
@@ -50,13 +50,12 @@ function ARC9:PlayerGiveAtt(ply, att, amt)
     end
 end
 
-
 function ARC9:PlayerTakeAtt(ply, att, amt)
     amt = amt or 1
 
     if GetConVar("arc9_atts_lock"):GetBool() then return end
 
-    if !IsValid(ply) then return end
+    if !IsValid(ply) or !ply:IsPlayer() then return end
 
     if !ply.ARC9_AttInv then
         ply.ARC9_AttInv = {}

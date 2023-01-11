@@ -400,11 +400,119 @@ function SWEP:GetSlotBlocked(slottbl)
     return false
 end
 
+-- Find any available attachment for the slot the player owns, in no specific order.
+function SWEP:FirstAttForSlot(slottbl)
+    local atts = ARC9.GetAttsForCats(slottbl.Category)
+    for _, v in ipairs(atts) do
+        if ARC9:PlayerGetAtts(self:GetOwner(), v) > 0 then return v end
+    end
+    return false
+end
+
+-- When attaching or detaching, changes in elements may cause a slot to be enabled when it previously wasn't.
+-- We want to find all slots of this type that are Integral so we can fill in an attachment for it.
+-- "att" is the attachment to add, set to false for detach
+-- Note that the returned slots may not all have an address; subslots that are about to be added don't have one yet
+function SWEP:GetDependentIntegralSlots(addr, att, slottbl)
+    slottbl = slottbl or self:LocateSlotFromAddress(addr)
+    local atttbl = att and ARC9.GetAttTable(att) or ARC9.GetAttTable(slottbl.Installed)
+
+    local eles = {}
+
+    if att then
+        -- About to attach; InstalledElements will be involved
+        for _, e in pairs(slottbl.InstalledElements or {}) do
+            eles[e] = true
+        end
+        eles[att] = true
+    else
+        -- About to detach, UnInstalledElements will be involved
+        for _, e in pairs(slottbl.UnInstalledElements or {}) do
+            eles[e] = true
+        end
+    end
+
+    -- The attachment's elements will be involved regardless of attaching or detaching
+    if atttbl then
+        for _, e in pairs(atttbl.ActivateElements or {}) do
+            eles[e] = true
+        end
+    end
+
+    -- If another slot is providing the element too, our changes will have no effect
+    local othereles = self:GetElements({[addr] = true})
+    for _, e in pairs(othereles) do
+        eles[e] = nil
+    end
+
+    local slots = {}
+
+    for _, tbl in ipairs(self:GetSubSlotList()) do
+        if !tbl.Integral then continue end
+
+        local affected = false
+        if att then
+            -- If the elements we are trying to add will enable this slot, it is affected
+            local required = tbl.RequireElements
+            if !istable(required) then required = {required} end
+            for _, e in ipairs(required) do
+                if eles[e] then
+                    affected = true
+                    break
+                end
+            end
+        else
+            -- If the element we are about to remove is keeping the slot disabled, it is affected
+            local excluded = tbl.ExcludeElements
+            if !istable(excluded) then excluded = {excluded} end
+            for _, e in ipairs(excluded) do
+                if eles[e] then
+                    affected = true
+                    break
+                end
+            end
+        end
+
+        -- TODO: Consider domino effect caused by the slot about to be added?
+        if affected then
+            table.insert(slots, tbl)
+        end
+    end
+
+    -- Any subslots added by the attachment may need Integral attachments
+    if att then
+        for _, slot in ipairs(atttbl.Attachments or {}) do
+            if slot.Integral then
+                table.insert(slots, slot)
+            end
+        end
+    end
+
+    return slots
+end
+
+function SWEP:GetSlotMissingDependents(addr, att, slottbl)
+    self.DependentCache = self.DependentCache or {}
+    if !self.DependentCache[addr] or (self.DependentCache[addr][att] or {0, false})[1] != CurTime() then
+        self.DependentCache[addr] = self.DependentCache[addr] or {}
+        self.DependentCache[addr][att] = {CurTime(), false}
+        for _, v in ipairs(self:GetDependentIntegralSlots(addr, att, slottbl)) do
+            if !self:FirstAttForSlot(v) then
+                self.DependentCache[addr][att][2] = true
+                break
+            end
+        end
+    end
+    return self.DependentCache[addr][att][2]
+end
+
 function SWEP:CanAttach(addr, att, slottbl)
     if ARC9.Blacklist[att] then return false end
 
     if GetConVar("arc9_atts_anarchy"):GetBool() then return true end
     if GetConVar("arc9_atts_nocustomize"):GetBool() then return false end
+
+    if SERVER and ARC9:PlayerGetAtts(self:GetOwner(), att) == 0 then return false end
 
     slottbl = slottbl or self:LocateSlotFromAddress(addr)
 
@@ -454,7 +562,12 @@ function SWEP:CanAttach(addr, att, slottbl)
         end
     end
 
-    return cat_true
+    if !cat_true then return false end
+
+    -- If attaching will enable any Integral slots, we must own something to put in there
+    if self:GetSlotMissingDependents(addr, att, slottbl) then return false end
+
+    return true
 end
 
 function SWEP:CanDetach(addr)

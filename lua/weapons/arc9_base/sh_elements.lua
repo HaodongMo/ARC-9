@@ -1,7 +1,7 @@
 SWEP.ElementsCache = {}
 
-function SWEP:GetElements()
-    if self.ElementsCache then
+function SWEP:GetElements(exclude)
+    if !exclude and self.ElementsCache then
         local eles = self.ElementsCache
 
         if !ARC9.ModifyElementsOverrun then
@@ -16,6 +16,7 @@ function SWEP:GetElements()
     local eles = {}
 
     for _, slottbl in ipairs(self:GetSubSlotList()) do
+        if exclude and exclude[slottbl.Address] then continue end
         if slottbl.Installed then
             table.Add(eles, slottbl.InstalledElements or {})
             table.insert(eles, slottbl.Installed)
@@ -49,7 +50,9 @@ function SWEP:GetElements()
         eles2[ele] = true
     end
 
-    self.ElementsCache = eles2
+    if !exclude then
+        self.ElementsCache = eles2
+    end
 
     if !ARC9.ModifyElementsOverrun then
         ARC9.ModifyElementsOverrun = true

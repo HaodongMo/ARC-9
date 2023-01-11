@@ -47,11 +47,14 @@ function SWEP:SendAttachmentTree(tree)
 end
 
 function SWEP:CountAttsInTree(tree)
-    local flattree = self:AttTreeToList(tree)
+    local flattree = {}
+    for _, i in pairs(tree) do
+        table.Add(flattree, self:AttTreeToList(i))
+    end
 
     local count = {}
 
-    for _, i in pairs(flattree[1]) do
+    for _, i in pairs(flattree) do
         if i.Installed then
             local att = i.Installed
             count[att] = (count[att] or 0) + 1
@@ -71,6 +74,7 @@ function SWEP:ReceiveWeapon()
     end
 
     if SERVER then
+
         if !self:ValidateInventoryForNewTree(tbl) then
             self:SendWeapon()
             return
@@ -109,9 +113,8 @@ function SWEP:ReceiveWeapon()
                     ARC9:PlayerGiveAtt(self:GetOwner(), att, diff)
                 end
             end
-
-            ARC9:PlayerSendAttInv(self:GetOwner())
         end
+
     end
 
     self:BuildSubAttachments(tbl)
@@ -125,8 +128,11 @@ function SWEP:ReceiveWeapon()
     else
         self:InvalidateCache()
         self:PruneAttachments()
+        self:FillIntegralSlots()
         self:SendWeapon()
         self:PostModify()
+
+        ARC9:PlayerSendAttInv(self:GetOwner())
     end
 
     -- self:SetBaseSettings()
