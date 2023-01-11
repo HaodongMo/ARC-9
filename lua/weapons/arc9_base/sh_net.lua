@@ -57,6 +57,8 @@ function SWEP:CountAttsInTree(tree)
     for _, i in pairs(flattree) do
         if i.Installed then
             local att = i.Installed
+            local atttbl = ARC9.GetAttTable(att) or {}
+            att = atttbl.InvAtt or att
             count[att] = (count[att] or 0) + 1
         end
     end
