@@ -580,9 +580,12 @@ L["settings.mod_headshotdamage.title"] = "Daño por tiro a cabeza"
 L["settings.developer.dev_greenscreen.title"] = "Pantalla Verde"
 L["settings.developer.dev_greenscreen.desc"] = "Mostrar un fondo de pantalla verde en el menú de personalización para capturas de pantalla.\n\nSi estas utilizando HDR, no olvides de ajustar mat_bloom_scalefactor_scalar a 0!"
 
--- Modified 10-JAN-2023
+-- Modified/Added 10-JAN-2023
 
 L["autostat.triggerdelay"] = "Retardo de Gatillo"
 L["autostat.triggerdelaytime"] = "Tiempo de Retardo de Gatillo"
+
+L["autostat.penetrationdelta"] = "Daño Tras Penetracion"
+
 L["settings.hud_cust.hud_darkmode.title"] = "Tema Oscuro"
 L["settings.hud_cust.hud_darkmode.desc"] = "Activa los colores oscuros en el HUD en lugar del gris claro y desactiva el efecto viñeta en el fondo."

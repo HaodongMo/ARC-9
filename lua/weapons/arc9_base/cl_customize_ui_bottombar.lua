@@ -534,6 +534,7 @@ function SWEP:CreateHUD_Bottom()
             return order_a < order_b
         end)
 
+        -- BottomBarFolders actually contains every folder and attachment, not just folders!
         self.BottomBarFolders = ARC9.GetFoldersForAtts(atts)
         self.BottomBarAtts = atts_slots
 
@@ -550,7 +551,7 @@ function SWEP:CreateHUD_Bottom()
             self.BottomBarFolders["!favorites"] = atts_fav
         end
 
-        if foldercount == 1 then
+        if table.Count(self.BottomBarFolders) == 1 then
             local sub = firstfolder
 
             -- print(sub)
