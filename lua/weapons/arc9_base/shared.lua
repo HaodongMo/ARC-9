@@ -682,6 +682,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_ModifyElements = function(self, eles) return eles end -- {"ele" = true, "ele" = true...}
 -- SWEP.Hook_TranslateSource = function(self, source) return source end -- String, use this to modify source strings directly
 -- SWEP.Hook_GetDamageAtRange(self, data) return data end -- {range = range, dmg = dmg, d = delta}
+-- SWEP.Hook_OnKill(self, ent) return end
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install

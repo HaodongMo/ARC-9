@@ -145,6 +145,9 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             model.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
             model.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
 
+            if atttbl.DrawFunc then
+                atttbl.DrawFunc(self, model, wm)
+            end
 
             if !model.NoDraw then
                 model:DrawModel()
@@ -163,10 +166,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         --     --         self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
         --     --     end
         --     -- end
-
-            if atttbl.DrawFunc then
-                atttbl.DrawFunc(self, model, wm)
-            end
         end
 
         if wm then
