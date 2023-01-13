@@ -8,7 +8,7 @@ ATT.Description = [[Basic red color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_red"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_red")
 
@@ -22,7 +22,7 @@ ATT.Description = [[Basic orange color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_orange"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_orange")
 
@@ -36,7 +36,7 @@ ATT.Description = [[Basic yellow color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_yellow"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_yellow")
 
@@ -50,7 +50,7 @@ ATT.Description = [[Basic green color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_green"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_green")
 
@@ -64,7 +64,7 @@ ATT.Description = [[Basic blue color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_blue"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_blue")
 
@@ -78,7 +78,7 @@ ATT.Description = [[Basic purple color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_purple"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_purple")
 
@@ -92,7 +92,7 @@ ATT.Description = [[Eye searingly bright pink color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_pink"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_pink")
 
@@ -106,6 +106,6 @@ ATT.Description = [[The perfect shade of orange for that cute little ARC9 Logo s
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_arc9orange"
 ATT.CustomCamoScale = 1
-ATT.Folder = "Base/Flat Color/Color"
+ATT.Folder = "Base/Flat Color/Toy"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_arc9orange")
