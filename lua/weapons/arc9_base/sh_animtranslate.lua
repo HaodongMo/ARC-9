@@ -12,6 +12,10 @@ function SWEP:TranslateAnimation(seq)
             seq = seq .. "_primed"
         end
 
+        if self:GetGrenadeTossing() and self:HasAnimation(seq .. "_toss") then
+            seq = seq .. "_toss"
+        end
+
         if self:GetInSights() and self:HasAnimation(seq .. "_iron") then
             seq = seq .. "_iron"
         end

@@ -473,6 +473,10 @@ do
             stat = arcGetValue(self, val, stat, "FirstShot")
         end
 
+        if swepDt.GrenadeTossing then
+            stat = arcGetValue(self, val, stat, "Toss")
+        end
+
         if weaponClip1(self) == 0 then
             stat = arcGetValue(self, val, stat, "Empty")
         end

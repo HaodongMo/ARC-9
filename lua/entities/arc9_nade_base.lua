@@ -34,7 +34,7 @@ ENT.LifeTime = 3
 
 ENT.Scorch = true
 ENT.ExplosionEffect = "explosion"
-ENT.BounceSound = "CSGO.HE.Bounce"
+ENT.BounceSounds = "CSGO.HE.Bounce"
 
 if SERVER then
     function ENT:Initialize()
@@ -102,14 +102,18 @@ if SERVER then
                 end
             end
 
-            if self.BounceSound then
-                self:EmitSound(self.BounceSound)
+            if not self.BounceSounds and self.BounceSound then
+                self.BounceSounds = {self.BounceSound}
+            end
+
+            if data.DeltaTime > 0.1 then
+                self:EmitSound(self.BounceSounds[math.random(1, #self.BounceSounds)], 75)
             end
         end
 
         if self.ExplodeOnImpact then
-            self.HitPos = colData.HitPos
-            self.HitVelocity = colData.OurOldVelocity
+            self.HitPos = data.HitPos
+            self.HitVelocity = data.OurOldVelocity
             self:Detonate()
         end
     end

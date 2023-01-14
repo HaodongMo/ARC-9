@@ -19,6 +19,7 @@ SWEP.AdminOnly = false
 -- Crouch
 -- Reload (While reloading)
 -- FirstShot
+-- Toss (While tossing)
 -- Empty
 -- EvenShot
 -- OddShot
