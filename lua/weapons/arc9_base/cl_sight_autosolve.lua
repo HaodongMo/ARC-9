@@ -47,7 +47,7 @@ end
 function SWEP:GetExtraSightPositions()
     local s = self:GetSight()
     local se = s.ExtraPos or Vector(0, 0, 0)
-    se.y = se.y - (s.ExtraSightDistance or 0)
+    se.y = se.y + (s.ExtraSightDistance or 0)
     -- return Vector(0, 0, 0), Angle(0, 0, 0)
     return se, s.ExtraAng or Angle(0, 0, 0)
 end
