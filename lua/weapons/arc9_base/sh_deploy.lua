@@ -34,6 +34,10 @@ function SWEP:Deploy()
     self:SetFreeAimAngle(Angle(0, 0, 0))
     self:SetLastAimAngle(Angle(0, 0, 0))
 
+    if self:GetProcessedValue("AutoReload") then
+        self:RestoreClip(math.huge)
+    end
+
     self:DoDeployAnimation()
 
     self:SetBurstCount(0)
@@ -58,10 +62,6 @@ function SWEP:Deploy()
 
     if self:GetValue("AnimDraw") then
         self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))
-    end
-
-    if self:GetProcessedValue("AutoReload") then
-        self:RestoreClip(math.huge)
     end
 
     if game.SinglePlayer() then
