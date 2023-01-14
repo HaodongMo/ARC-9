@@ -492,7 +492,15 @@ function SWEP:SetupModel(wm, lod, cm)
             stickermodel.slottbl = slottbl
 
             stickermodel:AddEffects(EF_BONEMERGE)
-            stickermodel:SetParent(basemodel)
+            local stickerparent = basemodel
+            if slottbl.ParentTable then
+                if wm then
+                    stickerparent = slottbl.ParentTable.WModel or basemodel
+                else
+                    stickerparent = slottbl.ParentTable.VModel or basemodel
+                end
+            end
+            stickermodel:SetParent(stickerparent)
 
             stickermodel:SetMaterial(atttbl.StickerMaterial)
 

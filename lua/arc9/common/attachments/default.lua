@@ -207,6 +207,7 @@ ATT.Attachments = {
         Pos = Vector(0, 0, 0),
         Ang = Angle(0, 0, 0),
         KeepBaseIrons = false,
+        StickerModel = "" -- applies to the current model if one exists
     }
 }
 

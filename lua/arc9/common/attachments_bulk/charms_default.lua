@@ -208,3 +208,32 @@ if CLIENT then
 end
 
 ARC9.LoadAttachment(ATT, "charm_gs_clock")
+
+ATT = {}
+
+ATT.PrintName = "Sticker Panel"
+ATT.CompactName = "STICKER"
+ATT.Icon = Material("entities/arc9_att_charm_gs_sticker.png", "mips smooth")
+ATT.Free = true
+
+ATT.Description = [[Allows a sticker to be applied to the screen.]]
+
+ATT.MenuCategory = "ARC9 - Charms"
+
+ATT.Model = "models/items/arc9/att_screenbase.mdl"
+ATT.BoxModel = "models/items/arc9/att_cardboard_box.mdl"
+
+ATT.Category = {"charm", "gunscreen"}
+
+ATT.Attachments = {
+    {
+        PrintName = "STICKER",
+        StickerModel = "models/items/arc9/sticker_screenbase.mdl",
+        Category = "stickers",
+        Pos = Vector(0, 0, 0),
+        Ang = Angle(0, 0, 0),
+        Icon_Offset = Vector(-2, 0, 0)
+    }
+}
+
+ARC9.LoadAttachment(ATT, "charm_gs_sticker")
