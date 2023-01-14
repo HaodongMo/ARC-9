@@ -662,7 +662,7 @@ function SWEP:CreateHUD_AttInfo()
                 curmode = atttbl.ToggleStats[slot.ToggleNum] and atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
                 tw = surface.GetTextSize(curmode)
                 mode_toggle:SetPos(descscroller:GetWide() / 2-(ARC9ScreenScale(24) + tw) / 2, ARC9ScreenScale(50))
-                mode_toggle:SetSize(ARC9ScreenScale(26) + tw, ARC9ScreenScale(21 * 0.75))
+                mode_toggle:SetSize(ARC9ScreenScale(5) + tw, ARC9ScreenScale(21 * 0.75))
                 mode_toggle:SetButtonText(curmode, "ARC9_12")
             else
                 mode_toggle:SetSize(0, 0)
