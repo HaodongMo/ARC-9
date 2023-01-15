@@ -639,7 +639,7 @@ function SWEP:CreateHUD_AttInfo()
         mode_toggle:SetIcon(Material("arc9/ui/modes.png", "mips smooth"))
         mode_toggle.DoClick = function(self2)
             -- surface.PlaySound(clicksound)
-            self:PlayAnimation("toggle", 1, false)
+            -- self:PlayAnimation("toggle")
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("ToggleAttSound")), 75, 100, 1, CHAN_ITEM)
             self:ToggleStat(self2.addr)
             self:PostModify()
@@ -647,7 +647,7 @@ function SWEP:CreateHUD_AttInfo()
 
         mode_toggle.DoRightClick = function(self2)
             -- surface.PlaySound(clicksound)
-            self:PlayAnimation("toggle", 1, false)
+            -- self:PlayAnimation("toggle")
             self:EmitSound(self:RandomChoice(self:GetProcessedValue("ToggleAttSound")), 75, 100, 1, CHAN_ITEM)
             self:ToggleStat(self2.addr, -1)
             self:PostModify()
@@ -660,9 +660,11 @@ function SWEP:CreateHUD_AttInfo()
 
             if slot.Installed == self.AttInfoBarAtt then
                 curmode = atttbl.ToggleStats[slot.ToggleNum] and atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
+                
+                surface.SetFont("ARC9_12")
                 tw = surface.GetTextSize(curmode)
                 mode_toggle:SetPos(descscroller:GetWide() / 2-(ARC9ScreenScale(24) + tw) / 2, ARC9ScreenScale(50))
-                mode_toggle:SetSize(ARC9ScreenScale(5) + tw, ARC9ScreenScale(21 * 0.75))
+                mode_toggle:SetSize(ARC9ScreenScale(21) + tw, ARC9ScreenScale(21 * 0.75))
                 mode_toggle:SetButtonText(curmode, "ARC9_12")
             else
                 mode_toggle:SetSize(0, 0)
