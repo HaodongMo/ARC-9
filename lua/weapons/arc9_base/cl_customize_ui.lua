@@ -299,9 +299,9 @@ hook.Add("StartCommand", "ARC9_GamepadHUD", function(ply, cmd)
                     Press2 = false
                 end
             end
-        end
+        -- end
 
-        if true then
+        -- if true then
             local cx, cy = input.GetCursorPos()
 
             gpX = ((pox * 160 * (ScrH() / 480)) * RealFrameTime())
