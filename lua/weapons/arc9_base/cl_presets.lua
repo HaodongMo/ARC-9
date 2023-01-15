@@ -237,6 +237,9 @@ function SWEP:SavePreset(presetname, nooverride, forcedname)
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
     local f = file.Open(filename .. ".txt", "w", "DATA")
+
+    if !f then return end
+
     f:Write("name=" .. presetname .. "\n" .. str)
     f:Close()
 
