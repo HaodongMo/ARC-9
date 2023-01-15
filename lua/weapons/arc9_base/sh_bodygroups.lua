@@ -154,13 +154,11 @@ function SWEP:GetHiddenBones(wm)
         hide = false
     end
 
-    if self:GetAnimLockTime() >= CurTime() and reloadhidebones and self:ShouldTPIK() and wm then
-        local index = self:GetHideBoneIndex()
+    local index = self:GetHideBoneIndex()
 
-        if index != 0 then
-            for _, bone in ipairs(reloadhidebones[index] or {}) do
-                bones[bone] = true
-            end
+    if self:GetAnimLockTime() >= CurTime() and reloadhidebones and self:ShouldTPIK() and wm and index != 0 then
+        for _, bone in ipairs(reloadhidebones[index] or {}) do
+            bones[bone] = true
         end
     else
         if hidebones and hide then
