@@ -84,8 +84,8 @@ function SWEP:ApplyRecoil()
     recoilup = recoilup + randomrecoilup
     recoilside = recoilside + randomrecoilside
 
-    recoilup = recoilup * self:GetProcessedValue("Recoil")
-    recoilside = recoilside * self:GetProcessedValue("Recoil")
+    recoilup = recoilup * (self:GetProcessedValue("Recoil") or 0)
+    recoilside = recoilside * (self:GetProcessedValue("Recoil") or 0)
 
     self:SetRecoilUp(recoilup)
     self:SetRecoilSide(recoilside)
