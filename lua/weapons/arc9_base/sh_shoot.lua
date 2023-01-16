@@ -274,11 +274,15 @@ function SWEP:PrimaryAttack()
 
             if self:GetBurstCount() == 0 and !primedAttack and !self:StillWaiting() then
                 self:SetTriggerDelay(time + processedValue(self,"TriggerDelayTime"))
+                local isEmpty = self:Clip1() == processedValue(self, "AmmoPerShot")
+                local anim = "trigger"
                 if processedValue(self,"TriggerStartFireAnim") then
-                    self:PlayAnimation("fire")
-                else
-                    self:PlayAnimation("trigger")
+                    anim = "fire"
                 end
+                if self:HasAnimation(anim .. "_empty") and isEmpty then
+                    anim = anim .. "_empty"
+                end
+                self:PlayAnimation(anim)
                 self:SetPrimedAttack(true)
                 return
             elseif primedAttack and self:GetTriggerDelay() <= time then
