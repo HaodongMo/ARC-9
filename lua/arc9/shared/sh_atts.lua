@@ -65,10 +65,14 @@ function ARC9.LoadAtts()
     for _, filename in pairs(files) do
         if filename == "default.lua" then continue end
 
-        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
 
         local shortname = string.lower(string.sub(filename, 1, -5))
-        shortname = string.gsub(shortname, "[^%w_]", "") -- Only allow lowercase letters, numbers and underscores
+        if string.match(shortname, "[^%w_]") then
+            ErrorNoHalt("ARC9: Refusing to load attachment with invalid name \"" .. tostring(shortname) .. "\"!\n")
+            continue
+        end
+
+        ARC9.Attachments_Count = ARC9.Attachments_Count + 1
         local attid = ARC9.Attachments_Count
 
         -- include(searchdir .. filename)
