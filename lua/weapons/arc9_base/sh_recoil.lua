@@ -407,7 +407,8 @@ function SWEP:DoVisualRecoil()
     -- end
 end
 
-function SWEP:GetViewModelRecoil(pos, ang)
+function SWEP:GetViewModelRecoil(pos, ang, correct)
+    correct = correct or 1
     if !isSingleplayer and SERVER then return end
     if !self:GetProcessedValue("UseVisualRecoil") then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter")
@@ -416,7 +417,7 @@ function SWEP:GetViewModelRecoil(pos, ang)
 
     vra.y = -vra.y
 
-    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, vra)
+    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, vra / correct)
 
     if ARC9.Dev(2) then
         debugoverlay.Axis(self:GetVM():LocalToWorld(self:GetProcessedValue("VisualRecoilCenter")), ang, 2, 0.1, true)

@@ -408,7 +408,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         ang:RotateAroundAxis(angforward, sighted * math.sin(ct * 0.5) * 0.25) -- R
     end
 
-    pos, ang = self:GetViewModelRecoil(pos, ang)
+    pos, ang = self:GetViewModelRecoil(pos, ang, cor_val)
 
     if not self:GetProcessedValue("NoViewBob") then
         pos, ang = self:GetViewModelBob(pos, ang)
