@@ -112,7 +112,8 @@ ATT.Category = "universal_camo"
 ATT.Description = [[The perfect shade of orange for that cute little ARC9 Logo sticker.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_arc9orange"
-ATT.CustomCamoScale = 11
+ATT.CustomCamoScale = 1
+ATT.SortOrder = 11
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_arc9orange")
