@@ -41,6 +41,9 @@ ARC9.IncompatibleAddons = {
 
     -- Minecraft drops
     ["2879200766"] = "Teleports viewmodel to any dropped gun",
+    
+    -- arc9 csgo skins
+    ["2914197519"] = "Breaks arc9 atts and not allowing you to attach any of them to any gun",
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale

@@ -8,6 +8,7 @@ ATT.Description = [[Standard Olive Drab camouflage.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_od"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 4
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_od")
@@ -22,6 +23,7 @@ ATT.Description = [[Standard Desert Tan camouflage.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_deserttan"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 3
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_deserttan")
@@ -36,6 +38,7 @@ ATT.Description = [[Standard Arctic White camouflage.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_arctic"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 7
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_arctic")
@@ -50,6 +53,7 @@ ATT.Description = [[Standard Factory Issue Black.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_black"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 1
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_black")
@@ -64,6 +68,7 @@ ATT.Description = [[Standard Urban Gray camouflage.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_urbangray"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 6
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_urbangray")
@@ -78,6 +83,7 @@ ATT.Description = [[Standard Forest Green camouflage.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_forestgreen"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 5
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_forestgreen")
@@ -92,6 +98,7 @@ ATT.Description = [[Standard Navy Blue color.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_navy"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 8
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_navy")
@@ -106,6 +113,7 @@ ATT.Description = [[Standard Mountbatten Pink camouflage. Shockingly effective i
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_mountbattenpink"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 9
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_mountbattenpink")
@@ -120,6 +128,7 @@ ATT.Description = [[Standard Flat Dark Earth camouflage.]]
 ATT.MenuCategory = "ARC-9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_fde"
 ATT.CustomCamoScale = 1
+ATT.SortOrder = 2
 ATT.Folder = "Base"
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_fde")

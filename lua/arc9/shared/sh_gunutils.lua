@@ -7,6 +7,10 @@ hook.Add( "entity_killed", "entity_killed_example", function( data )
 
     // Called when a Player or Entity is killed
 
+    if !victim_index then return end
+    if !attacker_index then return end
+    if !inflictor_index then return end
+
     local ent = Entity( victim_index )
     local attacker = Entity( attacker_index )
     local inflictor = Entity( inflictor_index )
