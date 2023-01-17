@@ -67,7 +67,8 @@ function ARC9.LoadAtts()
 
         ARC9.Attachments_Count = ARC9.Attachments_Count + 1
 
-        local shortname = string.sub(filename, 1, -5)
+        local shortname = string.lower(string.sub(filename, 1, -5))
+        shortname = string.gsub(shortname, "[^%w_]", "") -- Only allow lowercase letters, numbers and underscores
         local attid = ARC9.Attachments_Count
 
         -- include(searchdir .. filename)
