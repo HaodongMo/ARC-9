@@ -84,7 +84,10 @@ function SWEP:TranslateAnimation(seq)
 end
 
 function SWEP:HasAnimation(seq)
-    -- seq = self:TranslateSequence(seq)
+    local seqr = self:RunHook("Hook_BlockHasAnimation", seq)
+
+    if !seqr then return false end
+
     if self.Animations[seq] or self.IKAnimationProxy[seq] then
         return true
     end

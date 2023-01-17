@@ -141,7 +141,7 @@ function SWEP:GetCameraControl()
 
             local mult = self:GetProcessedValue("CamQCA_Mult") or 1
 
-            if self:GetAnimLockTime() < CurTime() then
+            if self:GetAnimLockTime() < CurTime() and !self:GetInMeleeAttack() then
                 mult = 0
             end
 
