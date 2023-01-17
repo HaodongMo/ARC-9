@@ -484,10 +484,13 @@ SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
 
 SWEP.Spread = 0
 
-SWEP.UsePelletSpread = false -- Multiple bullets fired at once clump up, like for a shotgun. Spread affects which direction they get fired, not their spread relative to one another.
+SWEP.UsePelletSpread = false -- Multiple bullets fired at once clump up, like for a shotgun.
+---Spread affects which direction they get fired, not their spread relative to one another.
 SWEP.PelletSpread = 0.2
 
-SWEP.PelletSpreadPattern = {} -- Use to give shotguns custom spread patterns. If Pellet Spread is off, each pellet will be subject to spread. Otherwise, the entire pattern shifts, and each pellet is randomly offset by pellet spread amount.
+SWEP.PelletSpreadPattern = {} -- Use to give shotguns custom spread patterns.
+--If Pellet Spread is off, each pellet will be subject to spread.
+--Otherwise, the entire pattern shifts, and each pellet is randomly offset by pellet spread amount.
 
 -- SWEP.PelletSpreadPattern = {
 --     {
