@@ -419,6 +419,8 @@ function SWEP:EndReload()
 
             local banim = anim
 
+            local end_clipsize = self:Clip1()
+
             for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
                 if self:HasAnimation(anim .. "_" .. tostring(i)) then
                     banim = anim .. "_" .. tostring(i)
@@ -429,6 +431,8 @@ function SWEP:EndReload()
                 end
             end
 
+            end_clipsize = end_clipsize + attempt_to_restore
+
             anim = banim
 
             local minprogress = (self:GetAnimationEntry(anim) or {}).MinProgress or 0.75
@@ -436,22 +440,18 @@ function SWEP:EndReload()
 
             local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true, true)
 
-            -- local res = math.min(math.min(attempt_to_restore, self:GetCapacity(self:GetUBGL()) - clip), ammo)
+            local magswaptime = (self:GetAnimationEntry(anim) or {}).MagSwapTime or 0
 
-            -- self:SetLoadedRounds(res)
-            self:SetLoadedRounds(math.max(1, self:Clip1())) -- probably very dumb but idk i just want it work correctly with bullet b ones
+            self:SetTimer(magswaptime * t, function()
+                self:SetLoadedRounds(end_clipsize)
+            end)
+
 
             self:SetTimer(minprogress * t, function()
                 self:RestoreClip(attempt_to_restore)
             end)
 
             self:SetReloadFinishTime(CurTime() + t)
-
-            -- self:SetTimer(t * 0.95 * (res / 3), function()
-            --     if !IsValid(self) then return end
-
-            --     self:EndReload()
-            -- end)
         end
     else
         self:SetReloading(false)
