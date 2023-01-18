@@ -77,8 +77,8 @@ SWEP.CustomizeButtons = {
 
             if self2.CustomizeHUD.lowerpanel then
                 if self2.CustomizeHUD.lowerpanel.Extended then
-                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
-                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5+5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5+5), 0.2, 0, 0.5, nil)
                 else
                     self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
                     self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
@@ -111,8 +111,8 @@ SWEP.CustomizeButtons = {
 
             if self2.CustomizeHUD.lowerpanel then
                 if self2.CustomizeHUD.lowerpanel.Extended then
-                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
-                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5+5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5+5), 0.2, 0, 0.5, nil)
                 else
                     self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
                     self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
@@ -1470,23 +1470,23 @@ function SWEP:CreateHUD_RHP()
             draw.NoTexture()
 
             if self2.Extended then
-                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = h}})
+                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5+60+3.5)}, {x = w*0.5-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60+3.5)}, {x = w*0.5-ARC9ScreenScale(0.75), y = h}})
 
-                surface.DrawRect(0, ARC9ScreenScale(15.5+60-2.5), w*0.5-ARC9ScreenScale(0.5), ARC9ScreenScale(1.5))
+                surface.DrawRect(0, ARC9ScreenScale(15.5+60-2.5+3.5), w*0.5-ARC9ScreenScale(0.5), ARC9ScreenScale(1.5))
 
-                surface.DrawRect(0, ARC9ScreenScale(15.5), w, ARC9ScreenScale(60-3.5))
+                surface.DrawRect(0, ARC9ScreenScale(15.5), w, ARC9ScreenScale(60-3.5+3.5))
 
                 surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("bg_pro") or ARC9.GetHUDColor("bg"))
-                surface.DrawPoly({{x = w*0.5+ARC9ScreenScale(0.75), y = h}, {x = w*0.5+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.75-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.75-ARC9ScreenScale(0.75), y = h}})
+                surface.DrawPoly({{x = w*0.5+ARC9ScreenScale(0.75), y = h}, {x = w*0.5+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60+3.5)}, {x = w*0.75-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60+3.5)}, {x = w*0.75-ARC9ScreenScale(0.75), y = h}})
 
                 surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("pro") or ARC9.GetHUDColor("bg"))
-                surface.DrawRect(w*0.5+ARC9ScreenScale(0.75), ARC9ScreenScale(15.5+60-2.5), w*0.25-ARC9ScreenScale(1), ARC9ScreenScale(1.5))
+                surface.DrawRect(w*0.5+ARC9ScreenScale(0.75), ARC9ScreenScale(15.5+60-2.5+3.5), w*0.25-ARC9ScreenScale(1), ARC9ScreenScale(1.5))
 
                 surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("bg_con") or ARC9.GetHUDColor("bg"))
-                surface.DrawPoly({{x = w*0.75+ARC9ScreenScale(0.75), y = h}, {x = w*0.75+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w, y = ARC9ScreenScale(15.5+60)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+                surface.DrawPoly({{x = w*0.75+ARC9ScreenScale(0.75), y = h}, {x = w*0.75+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60+3.5)}, {x = w, y = ARC9ScreenScale(15.5+60+3.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
 
                 surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("con") or ARC9.GetHUDColor("bg"))
-                surface.DrawRect(w*0.75+ARC9ScreenScale(1), ARC9ScreenScale(15.5+60-2.5), w*0.25, ARC9ScreenScale(1.5))
+                surface.DrawRect(w*0.75+ARC9ScreenScale(1), ARC9ScreenScale(15.5+60-2.5+3.5), w*0.25, ARC9ScreenScale(1.5))
             else
                 surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5)}, {x = w, y = ARC9ScreenScale(15.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
             end

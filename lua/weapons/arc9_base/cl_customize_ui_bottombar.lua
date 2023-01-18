@@ -459,13 +459,20 @@ function SWEP:CreateHUD_Bottom()
     scroll:SetOverlap(-ARC9ScreenScale(7)) -- If this is too small, the right side will be cut out. idk why and idk how to fix it elegantly so here you go
     scroll:MoveToFront()
 
-    function scroll.btnLeft:Paint(w, h) end
-    function scroll.btnRight:Paint(w, h) end
+
+    local scrollerpanel = vgui.Create("DPanel", scroll)
+    scrollerpanel:SetPos(0, scroll:GetTall() - ARC9ScreenScale(2))
+    scrollerpanel:SetSize(scroll:GetWide(), ARC9ScreenScale(2))
+    -- scrollerpanel.LastX = ARC9ScreenScale(79)
+    -- self.scrollerpanel = scrollerpanel -- for later integration
+
+    -- function scroll.btnLeft:Paint(w, h) end
+    -- function scroll.btnRight:Paint(w, h) end
 
 
     if self.BottomBarMode == 1 then
-        self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
-        self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+        self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5+5), 0.2, 0, 0.5, nil)
+        self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5+5), 0.2, 0, 0.5, nil)
         self.CustomizeHUD.lowerpanel.Extended = true
 
         self:ClosePresetMenu()
@@ -592,7 +599,7 @@ function SWEP:CreateHUD_AttInfo()
 
     local infopanel = vgui.Create("DPanel", lowerpanel)
     infopanel:SetSize(lowerpanel:GetWide(), ARC9ScreenScale(70))
-    infopanel:SetPos(0, ARC9ScreenScale(75.5))
+    infopanel:SetPos(0, ARC9ScreenScale(75.5+25))
     infopanel.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName") or atttbl.PrintName
     infopanel.Paint = function(self2, w, h)
         if !IsValid(self) then return end
