@@ -37,6 +37,8 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         else
             mdl = self.WModel
             lod = self:ShouldLOD()
+
+            mdl[1]:SetMaterial(self:GetProcessedValue("Material"))
         end
 
         if lod >= 2 then
