@@ -88,7 +88,7 @@ function SWEP:DoRHIK(wm)
                     -- we are on the first stage.
                     stage = {
                         t = 0,
-                        lhik = 0
+                        rhik = 0
                     }
 
                     next_stage = iktl[next_stage_index]
@@ -101,7 +101,7 @@ function SWEP:DoRHIK(wm)
 
                 next_stage = {
                     t = iket,
-                    lhik = iktl[#iktl].rhik
+                    rhik = iktl[#iktl].rhik
                 }
             end
 
