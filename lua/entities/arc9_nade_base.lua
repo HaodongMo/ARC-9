@@ -34,7 +34,8 @@ ENT.LifeTime = 3
 
 ENT.Scorch = true
 ENT.ExplosionEffect = "explosion"
-ENT.BounceSounds = "CSGO.HE.Bounce"
+ENT.BounceSound = nil
+ENT.BounceSounds = nil -- {}
 
 if SERVER then
     function ENT:Initialize()
