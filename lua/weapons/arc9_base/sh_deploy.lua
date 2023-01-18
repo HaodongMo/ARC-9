@@ -94,6 +94,19 @@ end
 local v0 = Vector(0, 0, 0)
 local v1 = Vector(1, 1, 1)
 
+function SWEP:ClientHolster()
+    if game.SinglePlayer() then
+        self:CallOnClient("ClientHolster")
+    end
+
+    self:GetVM():SetSubMaterial()
+    self:GetVM():SetMaterial()
+
+    for i = 0, self:GetVM():GetBoneCount() do
+        self:GetVM():ManipulateBoneScale(i, v1)
+    end
+end
+
 function SWEP:Holster(wep)
     -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
     if game.SinglePlayer() and CLIENT then return end
@@ -123,6 +136,8 @@ function SWEP:Holster(wep)
         self:GetOwner():SetCanZoom(true)
         self:EndLoop()
 
+        self:ClientHolster()
+
         if game.SinglePlayer() then
             game.SetTimeScale(1)
         end
@@ -133,15 +148,6 @@ function SWEP:Holster(wep)
         end
 
         self:RunHook("Hook_Holster")
-
-        self:GetVM():SetSubMaterial()
-        self:GetVM():SetMaterial()
-
-        if CLIENT then
-            for i = 0, self:GetVM():GetBoneCount() do
-                self:GetVM():ManipulateBoneScale(i, v1)
-            end
-        end
 
         if SERVER then
             self:KillShield()
