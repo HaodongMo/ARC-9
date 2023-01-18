@@ -23,11 +23,6 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     local width = math.Rand(0.1, 0.2) * strength
 
-    if behavior then
-        cam.Start3D(nil, nil, nil, 0, 0, ScrW(), ScrH(), 4, 32000)
-        pos = pos - (dir * 256)
-    end
-
     local hit = tr.Hit
     local hitpos = tr.HitPos
 
@@ -59,10 +54,6 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
         render.DrawSprite(hitpos, rad, rad, dotcolor)
         render.DrawSprite(hitpos, rad * 0.3, rad * 0.3, whitedotcolor)
-    end
-
-    if behavior then
-        cam.End3D()
     end
 end
 
