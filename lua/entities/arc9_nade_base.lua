@@ -102,12 +102,12 @@ if SERVER then
                 end
             end
 
-            if not self.BounceSounds and self.BounceSound then
-                self.BounceSounds = {self.BounceSound}
-            end
-
             if data.DeltaTime > 0.1 then
-                self:EmitSound(self.BounceSounds[math.random(1, #self.BounceSounds)], 75)
+                if self.BounceSounds then
+                    self:EmitSound(self.BounceSounds[math.random(1, #self.BounceSounds)], 75)
+                else
+                    self:EmitSound(self.BounceSound, 75)
+                end
             end
         end
 
