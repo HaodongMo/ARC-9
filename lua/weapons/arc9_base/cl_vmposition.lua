@@ -150,21 +150,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     local getbipod = self:GetBipod()
     local reloading = self:GetReloading()
 
-    if not reloading and not getbipod then
-        local crouchpos = self:GetProcessedValue("CrouchPos")
-        local crouchang = self:GetProcessedValue("CrouchAng")
-        local viewOffsetZ = owner:GetViewOffset().z
-        local crouchdelta = math.Clamp(math.ease.InOutSine((viewOffsetZ - owner:GetCurrentViewOffset().z) / (viewOffsetZ - owner:GetViewOffsetDucked().z)), 0, 1)
-
-        if crouchpos then
-            LerpVectorEdit(crouchdelta, offsetpos, crouchpos)
-        end
-
-        if crouchang then
-            LerpAngleEdit(crouchdelta, offsetang, crouchang)
-        end
-    end
-
     if getbipod then
         local bipodamount = self:GetBipodAmount()
         bipodamount = math.ease.InOutQuad(bipodamount)
@@ -178,6 +163,19 @@ function SWEP:GetViewModelPosition(pos, ang)
         else
             offsetpos:Add(sightpos * bipodamount)
             offsetang:Add(sightang * bipodamount)
+        end
+    else
+        local crouchpos = self:GetProcessedValue("CrouchPos")
+        local crouchang = self:GetProcessedValue("CrouchAng")
+        local viewOffsetZ = owner:GetViewOffset().z
+        local crouchdelta = math.Clamp(math.ease.InOutSine((viewOffsetZ - owner:GetCurrentViewOffset().z) / (viewOffsetZ - owner:GetViewOffsetDucked().z)), 0, 1)
+
+        if crouchpos then
+            LerpVectorEdit(crouchdelta, offsetpos, crouchpos)
+        end
+
+        if crouchang then
+            LerpAngleEdit(crouchdelta, offsetang, crouchang)
         end
     end
 
