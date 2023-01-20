@@ -48,6 +48,8 @@ ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
 ATT.NoDraw = false
 
+ATT.DrawOrder = 1 -- Set lower to draw first, higher to draw last.
+
 ATT.Material = ""
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.

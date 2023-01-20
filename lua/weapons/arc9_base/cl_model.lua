@@ -372,6 +372,7 @@ function SWEP:SetupModel(wm, lod, cm)
 
         csmodel:SetNoDraw(true)
         csmodel.atttbl = {}
+        csmodel.IsBaseModel = true
 
         if cm then
             csmodel.slottbl = {
@@ -707,6 +708,28 @@ function SWEP:SetupModel(wm, lod, cm)
             end
         end
     end
+
+    -- sort mdl by atttbl.DrawOrder
+    -- lower DrawOrder = higher priority
+    -- basemodel must always be first
+
+    table.sort(mdl, function(a, b)
+        if a.IsBaseModel then return true end
+        if b.IsBaseModel then return false end
+
+        local order_a = 1
+        local order_b = 1
+
+        if a.atttbl then
+            order_a = a.atttbl.DrawOrder or 1
+        end
+
+        if b.atttbl then
+            order_b = b.atttbl.DrawOrder or 1
+        end
+
+        return order_a < order_b
+    end)
 
     self:CreateFlashlights()
 
