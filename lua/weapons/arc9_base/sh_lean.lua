@@ -126,8 +126,6 @@ local leanang_right = Angle(3, 2.2, 1)
 function SWEP:DoPlayerModelLean(cancel, forceupdate)
     local amt = self:GetLeanDelta()
 
-    if amt == 0 then return end
-
     if cancel then amt = 0 end
 
     local bone = self:GetOwner():LookupBone(leanbone)
