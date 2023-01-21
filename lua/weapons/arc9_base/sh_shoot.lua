@@ -662,7 +662,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     local owner = self:GetOwner()
 
-    if owner:IsNPC() and !GetConVar("ARC9_npc_equality"):GetBool() then
+    if owner:IsNPC() and !GetConVar("arc9_npc_equality"):GetBool() then
         dmgv = dmgv * 0.25
     end
 

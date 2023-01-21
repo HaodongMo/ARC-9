@@ -68,7 +68,7 @@ function SWEP:DoTPIK()
 
     local nolefthand = false
 
-    if self:GetHoldType() == "slam" or self:GetHoldType() == "magic" then
+    if self:GetHoldType() == "slam" or self:GetHoldType() == "magic" or self:GetHoldType() == "pistol" then
         nolefthand = true
     end
 
