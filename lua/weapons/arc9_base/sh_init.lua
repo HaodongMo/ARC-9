@@ -38,7 +38,7 @@ function SWEP:Initialize()
     end
 
     timer.Simple(0, function()
-        if !IsValid(owner) then -- we are on ground!
+        if IsValid(self) and !IsValid(owner) then -- we are on ground!
             self:SetClip1(self:GetValue("ClipSize") * 3) -- *3 better be something own please fix later
         end
     end)
