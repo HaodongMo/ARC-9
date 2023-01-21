@@ -38,8 +38,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             mdl = self.WModel
             lod = self:ShouldLOD()
             
-            if !IsValid(mdl) or !IsValid(mdl[1]) then 
-                mdl[1]:SetMaterial(self:GetProcessedValue("Material")) 
+            if mdl then 
+                -- if mdl[1] then
+                    mdl[1]:SetMaterial(self:GetProcessedValue("Material")) 
+                -- end
             end
         end
 
