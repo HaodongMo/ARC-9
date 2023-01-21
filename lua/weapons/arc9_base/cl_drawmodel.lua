@@ -151,14 +151,15 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             model.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
             model.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
 
-            if atttbl.DrawFunc then
-                atttbl.DrawFunc(self, model, wm)
-            end
 
             if !model.NoDraw then
                 model:DrawModel()
             end
 
+            if atttbl.DrawFunc then
+                atttbl.DrawFunc(self, model, wm)
+            end
+            
         --     -- if model.Flare and !self:GetCustomize() then
         --     --     if model.Flare.Attachment then
         --     --         local attpos = model:GetAttachment(model.Flare.Attachment)
