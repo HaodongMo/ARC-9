@@ -33,7 +33,6 @@ ARC9.IncompatibleAddons = {
     ["DisplayDistancePlane"] = "Tool contains faulty hook.",
 
     -- TFA's Tactical Lean
-
     ["TacticalLean"] = "Mod is old, buggy, laggy, and interferes with ARC9 lean.",
 
     -- fixed maybe     SLVBase 2 
@@ -41,9 +40,6 @@ ARC9.IncompatibleAddons = {
 
     -- Minecraft drops
     ["2879200766"] = "Teleports viewmodel to any dropped gun",
-    
-    -- arc9 csgo skins
-    ["2914197519"] = "Breaks arc9 atts and not allowing you to attach any of them to any gun",
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale
