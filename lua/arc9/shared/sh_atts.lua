@@ -31,7 +31,9 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
         local attent = {}
         attent.Base = "arc9_att_base"
         attent.Icon = atttbl.Icon or defaulticon
-        -- attent.IconOverride = atttbl.Icon or defaulticon  -- nah this needs a path (a true string), imaterial "path" does not work
+        if att.Icon then
+            attent.IconOverride = string.Replace( attent.Icon:GetTexture( "$basetexture" ):GetName() .. ".png", "0001010", "" )
+        end
         attent.PrintName = atttbl.PrintName or shortname
         attent.Spawnable = true
         attent.AdminOnly = atttbl.AdminOnly or false
