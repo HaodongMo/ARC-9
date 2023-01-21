@@ -5,7 +5,7 @@ ARC9.Attachments_Count = 0
 
 ARC9.Attachments_Bits = 16
 
-local defaulticon = Material("arc9/arccw_bird.png", "mips smooth")
+local defaulticon = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 
 function ARC9.LoadAttachment(atttbl, shortname, id)
     if atttbl.Ignore then return end
