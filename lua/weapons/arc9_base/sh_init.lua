@@ -35,6 +35,7 @@ function SWEP:Initialize()
 
     if !IsValid(owner) then
         self:PostModify()
+        self:SetClip1(self:GetValue("ClipSize"))
     end
 
     self.LastClipSize = self:GetProcessedValue("ClipSize")
