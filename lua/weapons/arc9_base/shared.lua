@@ -378,7 +378,8 @@ SWEP.AutoBurst = false -- Hold fire to keep firing bursts
 SWEP.PostBurstDelay = 0
 SWEP.RunawayBurst = false -- Burst will keep firing until all of the burst has been expended.
 
-SWEP.Akimbo = false
+SWEP.Akimbo = false -- Alternate shooting animation with "fire_left" and "fire_right"
+SWEP.AkimboBoth = false -- Play effects twice and use "fire_both" for shooting animation. Does not actually affect ammo consumed or bullets fired.
 
 -- Use this hook to modify features of a firemode.
 -- SWEP.HookP_ModifyFiremode = function(self, firemode) return firemode end

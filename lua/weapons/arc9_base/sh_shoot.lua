@@ -355,7 +355,9 @@ function SWEP:DoPrimaryAttack()
         local anim = "fire"
 
         if processedValue(self,"Akimbo") then
-            if nthShot % 2 == 0 then
+            if processedValue(self, "AkimboBoth") then
+                anim = "fire_both"
+            elseif nthShot % 2 == 0 then
                 anim = "fire_right"
             else
                 anim = "fire_left"
@@ -414,6 +416,13 @@ function SWEP:DoPrimaryAttack()
     self:SetNthShot(nthShot + 1)
 
     self:DoEffects()
+
+    -- ewww
+    if processedValue(self, "AkimboBoth") then
+        self:SetNthShot(nthShot + 2)
+        self:DoEffects()
+        self:SetNthShot(nthShot + 1)
+    end
 
     if game.SinglePlayer() then
         if SERVER then

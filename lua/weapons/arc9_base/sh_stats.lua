@@ -164,25 +164,25 @@ do
     function SWEP:RunHook(val, data)
         local any = false
         local hookCache = self.HookCache[val]
-    
+
         if hookCache then
             for i = 1, #hookCache do
                 local d = hookCache[i](self, data)
-    
+
                 if d ~= nil then
                     data = d
                 end
-    
+
                 any = true
             end
-    
+
             data = hook.Run("ARC9_" .. val, self, data) or data
-    
+
             return data, any
         end
 
         -- CURRENT_SWEP = self
-        
+
         local cacheLen = 0
         local newCache = {}
         local affectors = swepGetAllAffectors(self)
@@ -192,7 +192,7 @@ do
             local tbl = affectors[i]
             if tbl[val] then
                 local tblVal = tbl[val]
-    
+
                 cacheLen = cacheLen + 1
                 newCache[cacheLen] = tblVal
 
@@ -212,10 +212,10 @@ do
                 -- end
             end
         end
-    
+
         self.HookCache[val] = newCache
         data = hook.Run("ARC9_" .. val, self, data) or data
-    
+
         return data, any
     end
 end
@@ -261,7 +261,7 @@ do
         -- damn
         local baseContValContCondition = baseStr .. valContCondition
 
-        if type(stat) == 'table' then
+        if type(stat) == "table" then
             stat.BaseClass = nil
         end
 
@@ -319,7 +319,7 @@ do
             end
         end
 
-        if type(stat) == 'number' then
+        if type(stat) == "number" then
             for i = 1, affectorsCount do
                 local tbl = allAffectors[i]
                 local keyName = val .. "Add" .. condition
