@@ -93,6 +93,7 @@ end
 
 local v0 = Vector(0, 0, 0)
 local v1 = Vector(1, 1, 1)
+local a0 = Angle(0, 0, 0)
 
 function SWEP:ClientHolster()
     if game.SinglePlayer() then
@@ -104,6 +105,8 @@ function SWEP:ClientHolster()
 
     for i = 0, self:GetVM():GetBoneCount() do
         self:GetVM():ManipulateBoneScale(i, v1)
+        self:GetVM():ManipulateBoneAngles(i, a0)
+        self:GetVM():ManipulateBonePosition(i, v0)
     end
 end
 
