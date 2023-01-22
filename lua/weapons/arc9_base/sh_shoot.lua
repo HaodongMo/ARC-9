@@ -455,11 +455,7 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    if processedValue(self, "RunawayBurst") and burstCount < currentFiremode - 1 then
-        self:SetBurstCount(burstCount + 1)
-    else
-        self:SetBurstCount(0)
-    end
+    self:SetBurstCount(burstCount + 1)
 
     if manualaction then
         if clip1 > 0 or !processedValue(self,"ManualActionNoLastCycle") then
