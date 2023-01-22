@@ -25,6 +25,7 @@ function SWEP:NPC_PrimaryAttack()
 end
 
 function SWEP:GetNPCBulletSpread(prof)
+    prof = prof or 0
     local mode = self:GetCurrentFiremode()
     local mult = GetConVar("arc9_npc_spread"):GetFloat()
 
