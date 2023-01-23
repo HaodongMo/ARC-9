@@ -115,7 +115,7 @@ function SWEP:ThinkSprint()
 
     self:SetLastWasSprinting(sprinting)
 
-    if sprinting then
+    if sprinting and !self:GetPrimedAttack() then
         if amt < 1 then
             amt = math.Approach(amt, 1, FrameTime() / self:GetSprintToFireTime())
         end
