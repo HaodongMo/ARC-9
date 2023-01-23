@@ -40,6 +40,9 @@ ARC9.IncompatibleAddons = {
 
     -- Minecraft drops
     ["2879200766"] = "Teleports viewmodel to any dropped gun",
+
+    -- Advanced color tool
+    ["692778306"] = "Incompatible"
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale
