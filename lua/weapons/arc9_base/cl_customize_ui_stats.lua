@@ -64,6 +64,8 @@ function SWEP:CreateHUD_Stats()
 
                 if self:GetProcessedValue("DistributeDamage") then
                     dv = dv / num
+                elseif self:GetProcessedValue("NormalizeNumDamage") then
+                    dv = dv / (num / self.Num)
                 end
 
                 dv = math.Round(dv, 0)
