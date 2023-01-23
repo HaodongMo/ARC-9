@@ -1116,12 +1116,31 @@ SWEP.AttachmentBodygroups = {
 SWEP.DefaultElements = {}
 
 SWEP.AttachmentElements = {
-    -- ["bg_name"] = {
-    --     Bodygroups = {
-    --         {1, 1}
-    --     },
-    --     -- Other attachment parameters work here
-    -- }
+    --[[]
+    ["bg_name"] = {
+        Bodygroups = {
+            {1, 1}
+        },
+        AttPosMods = {
+            [1] = { -- slot index
+                Pos = Vector(),
+                Ang = Angle(),
+            }
+        }
+        Models = {
+            Model = "",
+            Pos = Vector(),
+            Ang = Angle(),
+            Bone = "",
+            BoneMerge = false,
+            Skin = 0,
+            Bodygroups = "000",
+            Scale = 1,
+            ScaleVector = Vector(),
+        }
+        -- Other attachment parameters work here
+    }
+    ]]
 }
 
 -- Use to override attachment table entry data.
