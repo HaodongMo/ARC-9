@@ -799,6 +799,11 @@ function SWEP:GetDamageAtRange(range)
 
     local dmgMin = self:GetProcessedValue("DamageMin")
 
+    local num = self:GetProcessedValue("Num")
+    if num <= 0 then
+        return 0 -- avoid divide-by-zero
+    end
+
     local dmgv = dmgMin
 
     if damagelut then
@@ -817,6 +822,8 @@ function SWEP:GetDamageAtRange(range)
 
         if self:GetProcessedValue("DistributeDamage") then
             dmgv = dmgv / self:GetProcessedValue("Num")
+        elseif self:GetProcessedValue("NormalizeNumDamage") then
+            dmgv = dmgv / (num / self.Num)
         end
     end
 
@@ -828,7 +835,9 @@ function SWEP:GetDamageAtRange(range)
             dmgv = self:GetProcessedValue("SweetSpotDamage")
 
             if self:GetProcessedValue("DistributeDamage") then
-                dmgv = dmgv / self:GetProcessedValue("Num")
+                dmgv = dmgv / num
+            elseif self:GetProcessedValue("NormalizeNumDamage") then
+                dmgv = dmgv / (num / self.Num)
             end
         end
     end

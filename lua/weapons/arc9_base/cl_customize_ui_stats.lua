@@ -60,6 +60,8 @@ function SWEP:CreateHUD_Stats()
             conv = function(a)
                 local dv = self:GetProcessedValue("DamageMax")
                 local num = self:GetProcessedValue("Num")
+                if num <= 0 then return 0 end
+
                 if self:GetProcessedValue("DistributeDamage") then
                     dv = dv / num
                 end
