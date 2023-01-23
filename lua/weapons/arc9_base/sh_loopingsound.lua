@@ -108,7 +108,7 @@ local traceTable = {
 }
 
 function SWEP:GetIndoor()
-    if !self.ShootSoundIndoor then return false end -- non realism guns!!!
+    if !self.ShootSoundIndoor and !self.DistantShootSoundIndoor and !self.ShootSoundSilencedIndoor and !self.DistantShootSoundSilencedIndoor then return false end -- non realism guns!!!
 
     if self.IndoorTick == UnPredictedCurTime() then return self.IsIndoors end
 
