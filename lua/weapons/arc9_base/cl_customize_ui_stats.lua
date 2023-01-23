@@ -59,11 +59,15 @@ function SWEP:CreateHUD_Stats()
             fifty = 50,
             conv = function(a)
                 local dv = self:GetProcessedValue("DamageMax")
+                local num = self:GetProcessedValue("Num")
+                if self:GetProcessedValue("DistributeDamage") then
+                    dv = dv / num
+                end
 
                 dv = math.Round(dv, 0)
 
-                if self:GetProcessedValue("Num") > 1 then
-                    dv = dv .. " x " .. tostring(self:GetProcessedValue("Num"))
+                if num > 1 then
+                    dv = dv .. " x " .. tostring(num)
                 end
 
                 return dv
