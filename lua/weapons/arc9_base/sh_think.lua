@@ -67,7 +67,6 @@ function SWEP:Think()
 
     if not self.NotAWeapon then
         local notPressedAttack = not playerKeyDown(owner, IN_ATTACK)
-        local shouldprimaryattack = false
 
         if swepGetProcessedValue(self, "TriggerDelay") then
             local primedAttack = swepDt.PrimedAttack
@@ -82,7 +81,7 @@ function SWEP:Think()
             end
 
             if primedAttack and triggerDelay <= now and notPressedAttack and shouldRunPredicted then
-                shouldprimaryattack = true
+                swepPrimaryAttack(self)
             end
         end
 
@@ -106,13 +105,9 @@ function SWEP:Think()
             if burstCount >= currentFiremode and currentFiremode > 0 then
                 self:SetBurstCount(0)
                 weaponSetNextPrimaryFire(self, postBurstDelay)
-            elseif burstCount > 0 and burstCount < currentFiremode and not primedAttack then
-                shouldprimaryattack = true
+            elseif burstCount > 0 and burstCount < currentFiremode then
+                swepDoPrimaryAttack(self)
             end
-        end
-
-        if shouldprimaryattack then
-            swepPrimaryAttack(self)
         end
 
         -- if !self:StillWaiting() and self:GetProcessedValue("TriggerDelay") then
