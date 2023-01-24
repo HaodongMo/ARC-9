@@ -13,10 +13,16 @@ function SWEP:PlayTranslatedSound(soundtab)
     soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
 
     if soundtab and soundtab.sound then
+        local pitch = soundtab.pitch
+
+        if istable(pitch) then
+            pitch = math.random(pitch[1], pitch[2])
+        end
+
         self:EmitSound(
             soundtab.sound,
             soundtab.level,
-            soundtab.pitch,
+            pitch,
             soundtab.volume,
             soundtab.channel,
             soundtab.flags,
