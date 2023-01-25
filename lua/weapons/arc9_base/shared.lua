@@ -1284,10 +1284,11 @@ SWEP.Attachments = {
 
 -- Randomization:
 
--- 1_animname, 2_animname: will play one of these at random.
--- animname must still exist and be valid
--- animname will also be a valid choice.
--- So, if you have animname, 1_animname, 2_animname, it will pick one of these at random.
+-- animname, 1_animname, 2_animname: will play one of these at random.
+-- for example if you want 3 inspect animations you need
+-- ["inspect"]
+-- ["1_inspect"]
+-- ["2_inspect"]
 
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
