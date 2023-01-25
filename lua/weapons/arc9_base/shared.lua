@@ -1282,6 +1282,13 @@ SWEP.Attachments = {
 -- _uncycled
 -- _detonator
 
+-- Randomization:
+
+-- 1_animname, 2_animname: will play one of these at random.
+-- animname must still exist and be valid
+-- animname will also be a valid choice.
+-- So, if you have animname, 1_animname, 2_animname, it will pick one of these at random.
+
 -- Not necessary; if your sequences are named the same as animations, they will be used automatically.
 
 SWEP.Animations = {

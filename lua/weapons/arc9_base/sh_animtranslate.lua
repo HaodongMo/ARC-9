@@ -78,7 +78,13 @@ function SWEP:TranslateAnimation(seq)
         seq = seq[math.Round(util.SharedRandom("ARC9_animtr", 1, #seq))]
     end
 
-    -- print(seq)
+    local rando = {seq}
+
+    local i = 1
+    while self:HasAnimation(tostring(i) .. "_" .. seq) do
+        table.insert(rando, tostring(i) .. "_" .. seq)
+        i = i + 1
+    end
 
     return seq
 end
