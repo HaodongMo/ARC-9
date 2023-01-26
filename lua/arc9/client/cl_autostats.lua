@@ -205,6 +205,8 @@ function ARC9.GetProsAndCons(atttbl, weapon)
 
     for stat, value in pairs(atttbl) do
         if !isnumber(value) and !isbool(value) then continue end
+        if isnumber(value) then value = math.Round(value, 2) end
+        
         local autostat = ""
         local autostatnum = ""
         local canautostat = false
