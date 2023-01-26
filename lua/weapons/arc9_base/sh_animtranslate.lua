@@ -78,18 +78,20 @@ function SWEP:TranslateAnimation(seq)
         seq = seq[math.Round(util.SharedRandom("ARC9_animtr", 1, #seq))]
     end
 
-    -- local rando = {seq}
+    local rando = {seq}
 
-    -- local i = 1
-    -- while self:HasAnimation(tostring(i) .. "_" .. seq) do
-        -- table.insert(rando, tostring(i) .. "_" .. seq)
-        -- i = i + 1
-    -- end
+    local i = 1
+    while self:HasAnimation(tostring(i) .. "_" .. seq, true) do
+        table.insert(rando, tostring(i) .. "_" .. seq)
+        i = i + 1
+    end
+
+    seq = rando[math.Round(util.SharedRandom("ARC9_animtr", 1, #rando))]
 
     return seq
 end
 
-function SWEP:HasAnimation(seq)
+function SWEP:HasAnimation(seq, lq)
     local seqr = self:RunHook("Hook_BlockHasAnimation", seq)
 
     if !seqr then return false end
@@ -97,6 +99,8 @@ function SWEP:HasAnimation(seq)
     if self.Animations[seq] or self.IKAnimationProxy[seq] then
         return true
     end
+
+    if lq then return false end
 
     local vm = self:GetVM()
 
