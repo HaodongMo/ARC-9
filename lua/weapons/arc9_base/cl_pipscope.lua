@@ -14,6 +14,8 @@ function SWEP:DoRT(fov, atttbl)
 
     local rtpos, rtang = self:GetShootPos()
 
+    rtang.r = rtang.r + EyeAngles().z -- lean fix
+
     local sighttbl = self:GetSight()
 
     local rt = {
