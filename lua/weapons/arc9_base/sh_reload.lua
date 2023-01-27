@@ -210,7 +210,6 @@ end
 
 function SWEP:DropMagazine()
     -- if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
-    if !self:GetProcessedValue("ShouldDropMag") then return end
 
     local mdl = self:GetProcessedValue("DropMagazineModel")
 
