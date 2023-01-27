@@ -62,6 +62,8 @@ function ARC9.StartCommand(ply, cmd)
 
     if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
 
+    local timescalefactor = 5 / (ply:Ping() or 5)
+
     if wpn:GetBipod() then
         local bipang = wpn:GetBipodAng()
 
@@ -112,8 +114,6 @@ function ARC9.StartCommand(ply, cmd)
         if game.SinglePlayer() then
             m = 100
         end
-
-        local timescalefactor = 5 / (ply:Ping() or 5)
 
         m = m * timescalefactor
 
@@ -167,7 +167,7 @@ function ARC9.StartCommand(ply, cmd)
 
     recrise = ARC9.RecoilRise
 
-    local recreset = recrise * FrameTime() * wpn:GetProcessedValue("RecoilAutoControl")
+    local recreset = recrise * FrameTime() * wpn:GetProcessedValue("RecoilAutoControl") * timescalefactor
 
     recreset.p = math.max(recreset.p, recrise.p)
     recreset.y = math.max(recreset.y, recrise.y)
