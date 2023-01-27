@@ -100,6 +100,12 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
             end)
         end
 
+        if animation.DropMagAt then
+            self:SetTimer(animation.DropMagAt * mult, function()
+                self:DropMagazine()
+            end)
+        end
+
         minprogress = animation.MinProgress or 0.8
         minprogress = math.min(minprogress, 1)
 

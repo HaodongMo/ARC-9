@@ -1305,6 +1305,7 @@ SWEP.Animations = {
     --     Mult = 1, -- multiplies time
     --     Reverse = false, -- Reverse the animation
     --     EjectAt = 0, -- Eject a shell at this time
+    --     DropMagAt = 0, -- Drop magazine at this time
     --     InstantIdle = false, -- For firing animations, do not delay idle. Use only for guns with long shoot animations
     --     DelayedIdle = false, -- Idle immediately after playing this animation
     --     IKTimeLine = { -- t is in fraction of animation
