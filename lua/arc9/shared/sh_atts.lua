@@ -85,8 +85,12 @@ function ARC9.LoadAtts()
 
                 local thrownerror = RunString(data, "ARC9AsyncLoad", true)
 
-                if thrownerror then
+                if table.Count(ATT) == 0 then
                     print("ARC9: Error loading attachment " .. shortname .. "!")
+                    print("Source file: " .. searchdir .. filename)
+                elseif thrownerror then
+                    print("ARC9: Error loading attachment " .. shortname .. "!")
+                    print("Source file: " .. searchdir .. filename)
                     print(thrownerror)
                 else
                     ARC9.LoadAttachment(ATT, shortname, attid)
