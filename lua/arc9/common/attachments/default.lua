@@ -225,6 +225,8 @@ ATT.IKAnimationProxy = {
     }
 } -- When an animation event plays, override it with one based on this LHIK model.
 
+ATT.IKAnimationAlsoPlayBase = false -- Also play the base animation
+
 ATT.IKGunMotionQCA = nil -- Make the gun move while in IK animation
 
 ATT.IKGunMotionMult = 1

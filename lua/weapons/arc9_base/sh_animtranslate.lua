@@ -172,6 +172,7 @@ function SWEP:AddProxyToAnimProxyTable(tbl, model, atttbl, address)
         newanimtable.ModelName = atttbl.Model
         newanimtable.Address = address
         newanimtable.MotionAttachment = atttbl.IKGunMotionQCA
+        newanimtable.AlsoPlayBase = atttbl.IKAnimationAlsoPlayBase
     end
 end
 

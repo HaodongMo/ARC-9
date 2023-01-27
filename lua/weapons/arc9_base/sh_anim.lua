@@ -1,4 +1,4 @@
-function SWEP:PlayAnimation(anim, mult, lock, delayidle)
+function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy)
     mult = mult or 1
     lock = lock or false
     anim = self:TranslateAnimation(anim)
@@ -35,7 +35,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
 
     local seq = 0
 
-    if animation.ProxyAnimation then
+    if animation.ProxyAnimation and !noproxy then
         if CLIENT then
             mdl = animation.Model
 
@@ -54,6 +54,10 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle)
             seq = mdl:LookupSequence(source)
 
             if seq == -1 then return 0, 1 end
+
+            if animation.AlsoPlayBase then
+                self:PlayAnimation(anim, mult, lock, delayidle, true)
+            end
 
         end
     else
