@@ -32,16 +32,10 @@ function SWEP:Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
     self:BuildSubAttachments(self.DefaultAttachments)
-    
+
     if !IsValid(owner) then -- player is nil here sometimes
         self:PostModify()
     end
-
-    timer.Simple(0, function()
-        if IsValid(self) and !IsValid(owner) then -- we are on ground!
-            self:SetClip1(self:GetValue("ClipSize") * 3) -- *3 better be something own please fix later
-        end
-    end)
 
     self.LastClipSize = self:GetProcessedValue("ClipSize")
 
