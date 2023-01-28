@@ -863,10 +863,10 @@ function SWEP:GetShootPos()
     local pos = owner:EyePos()
 
     local ang = self:GetShootDir()
-    local angUp = ang:Up()
-    
-    angUp:Mul(self:GetProcessedValue("HeightOverBore"))
-    pos:Add(angUp)
+    local height = ang:Up()
+
+    height:Mul(self:GetProcessedValue("HeightOverBore"))
+    pos:Add(height)
 
     --pos = pos + (owner:EyeAngles():Right() * self:GetLeanOffset())
 
@@ -896,7 +896,7 @@ end
 
 function SWEP:GetShootDir()
     local owner = self:GetOwner()
-    if not owner:IsValid() then return self:GetAngles() end
+    if !owner:IsValid() then return self:GetAngles() end
     local dir = owner:EyeAngles()
     local shootangoffset = self:GetProcessedValue("ShootAngOffset")
 
@@ -933,7 +933,7 @@ function SWEP:ShootRocket()
 
     for i = 1, num do
         local dispersion = Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0)
-        dispersion:Mul(spread*36)
+        dispersion:Mul(spread * 36)
         dispersion:Add(dir)
         local rocket = ents.Create(ent)
         if !IsValid(rocket) then return end
@@ -946,7 +946,7 @@ function SWEP:ShootRocket()
         rocket:SetOwner(owner)
         rocket.Weapon = self
         rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", {
-            Target = (IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget())
+            Target = IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget()
         })
         rocket.ARC9Projectile = true
 

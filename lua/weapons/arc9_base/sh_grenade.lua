@@ -91,8 +91,6 @@ function SWEP:ThrowGrenade(nttype, delaytime)
         force = forcemin + (forcemax - forcemin) * math.Clamp(time / forcetime, 0, 1)
     end
 
-    local src, dir = self:GetShootPos()
-
     local num = self:GetProcessedValue("Num")
     local ent = self:GetProcessedValue("ShootEnt")
 
@@ -106,6 +104,38 @@ function SWEP:ThrowGrenade(nttype, delaytime)
     spread = math.Max(spread, 0)
 
     self:SetTimer(delaytime, function()
+
+        local src, dir
+        if self:GetProcessedValue("ThrowOnGround") then
+            src = self:GetOwner():EyePos()
+            dir = Angle(0, self:GetOwner():GetAngles().y, 0)
+
+            local shootposoffset = self:GetProcessedValue("ShootPosOffset")
+
+            local angRight = dir:Right()
+            local angForward = dir:Forward()
+            local angUp = dir:Up()
+
+            angRight:Mul(shootposoffset[1])
+            angForward:Mul(shootposoffset[2])
+            angUp:Mul(shootposoffset[3])
+
+            src:Add(angRight)
+            src:Add(angForward)
+            src:Add(angUp)
+
+            src, dir = self:GetRecoilOffset(src, dir)
+
+            local tr = util.TraceLine({
+                start = src,
+                endpos = src - Vector(0, 0, 64),
+                mask = MASK_SOLID,
+            })
+            src = tr.HitPos
+        else
+            src, dir = self:GetShootPos()
+        end
+
         for i = 1, num do
             local nade = ents.Create(ent)
 
@@ -140,11 +170,12 @@ function SWEP:ThrowGrenade(nttype, delaytime)
             if IsValid(phys) then
                 if self:GetProcessedValue("ThrowTumble") then
                     nade:SetAngles(Angle(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))
-
                     phys:AddAngleVelocity(Vector(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))
                 end
 
-                phys:SetVelocity(self:GetOwner():GetVelocity())
+                if self:GetProcessedValue("ShootEntInheritPlayerVelocity") then
+                    phys:SetVelocity(self:GetOwner():GetVelocity())
+                end
 
                 phys:AddVelocity((dir + dispersion):Forward() * force)
             end
