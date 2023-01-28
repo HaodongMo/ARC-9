@@ -38,12 +38,17 @@ function SWEP:Initialize()
     end
 
     self.LastClipSize = self:GetProcessedValue("ClipSize")
-
     self.Primary.Ammo = self:GetProcessedValue("Ammo")
-    self.Primary.DefaultClip = self.LastClipSize * (self:GetProcessedValue("SupplyLimit") + 1)
-    --self:SetClip1(self.Primary.DefaultClip) -- genuinely unfathomable that someone would do this
-
     self.LastAmmo = self.Primary.Ammo
+
+    local bottomless = self:GetProcessedValue("BottomlessClip")
+    local clip = bottomless and self:GetProcessedValue("AmmoPerShot") or self.LastClipSize
+    self.Primary.DefaultClip = clip * math.max(1, self:GetProcessedValue("SupplyLimit") + (bottomless and 0 or 1))
+
+    if self.Primary.DefaultClip == 1 then -- This specific value seems to be hard-coded to not give any ammo?
+        self:SetClip1(1)
+        self.Primary.DefaultClip = 0
+    end
 end
 
 function SWEP:ClientInitialize()
@@ -99,8 +104,8 @@ do
                 end
 
                 return tab[key]
-            end,  
-            __newindex = tab, 
+            end,
+            __newindex = tab,
             __metatable = ENTITY
         }
 
@@ -128,7 +133,7 @@ do
         if self:GetValue("UBGL") then
             self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
             self.Secondary.Ammo = self:GetValue("UBGLAmmo")
-    
+
             if SERVER then
                 if self:Clip2() < 0 then
                     self:SetClip2(0)
@@ -137,7 +142,7 @@ do
         else
             self.Secondary.ClipSize = -1
             self.Secondary.Ammo = nil
-    
+
             self:SetUBGL(false)
         end
 

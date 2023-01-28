@@ -95,6 +95,8 @@ function SWEP:PostModify(toggleonly)
         self:SetNthReload(0)
     end
 
+    local validplayerowner = IsValid(self:GetOwner()) and self:GetOwner():IsPlayer()
+
     local base = baseclass.Get(self:GetClass())
 
     if ARC9:UseTrueNames() then
@@ -124,11 +126,9 @@ function SWEP:PostModify(toggleonly)
         self:BuildMultiSight()
         self.InvalidateSelectIcon = true
     else
-        if self:GetOwner():IsPlayer() then
-            if self:GetValue("ToggleOnF") then
-                if self:GetOwner():FlashlightIsOn() then
-                    self:GetOwner():Flashlight(false)
-                end
+        if validplayerowner then
+            if self:GetValue("ToggleOnF") and self:GetOwner():FlashlightIsOn() then
+                self:GetOwner():Flashlight(false)
             end
 
             if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
@@ -158,12 +158,11 @@ function SWEP:PostModify(toggleonly)
 
             self.LastUBGLAmmo = self:GetValue("UBGLAmmo")
             self.LastUBGLClipSize = self:GetValue("UBGLClipSize")
-        end
 
-        if self:GetOwner():IsPlayer() then
-            if self:GetCapacity(false) > 0 and self:Clip1() > self:GetCapacity(false) then
-                self:GetOwner():GiveAmmo(self:Clip1() - self:GetCapacity(false), self:GetValue("Ammo"))
-                self:SetClip1(self:GetCapacity(false))
+            local capacity = self:GetCapacity(false)
+            if capacity > 0 and self:Clip1() > capacity then
+                self:GetOwner():GiveAmmo(self:Clip1() - capacity, self:GetValue("Ammo"))
+                self:SetClip1(capacity)
             end
         end
 
@@ -180,14 +179,13 @@ function SWEP:PostModify(toggleonly)
                 self:SetClip2(self:GetCapacity(true))
             end
         else
-            if self.LastUBGLAmmo and SERVER then
-                if !IsValid(self:GetOwner()) or !self:GetOwner():IsPlayer() then return end
+            if self.LastUBGLAmmo and validplayerowner then
                 self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
                 self:SetClip2(0)
             end
         end
 
-        if self:GetProcessedValue("BottomlessClip") then
+        if validplayerowner and self:GetProcessedValue("BottomlessClip") then
             self:RestoreClip()
         end
     end
@@ -196,7 +194,7 @@ function SWEP:PostModify(toggleonly)
         self:ToggleUBGL(false)
     end
 
-    if game.SinglePlayer() then
+    if validplayerowner and game.SinglePlayer() then
         self:CallOnClient("RecalculateIKGunMotionOffset")
     end
 

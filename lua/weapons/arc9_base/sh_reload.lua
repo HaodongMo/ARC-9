@@ -249,7 +249,7 @@ function SWEP:TakeAmmo()
     if self:GetUBGL() then
         self:TakeSecondaryAmmo(self:GetProcessedValue("AmmoPerShot"))
     else
-        if self:GetValue("BottomlessClip") then
+        if self:GetProcessedValue("BottomlessClip") then
             if !self:GetInfiniteAmmo() then
                 self:RestoreClip(self:GetValue("ClipSize"))
 
@@ -294,9 +294,10 @@ function SWEP:RestoreClip(amt)
         ammo = self:Ammo2()
     end
 
-    amt = math.max(amt, -clip)
+    -- amt = math.max(amt, -clip)
 
-    local reserve = inf and math.huge or (clip + ammo)
+    -- clip can be -1 here if defaultclip is being set
+    local reserve = inf and math.huge or (math.max(0, clip) + ammo)
 
     local lastclip
 
@@ -307,10 +308,8 @@ function SWEP:RestoreClip(amt)
 
         reserve = reserve - self:Clip2()
 
-        if !inf then
-            if IsValid(self:GetOwner()) then
-                self:GetOwner():SetAmmo(reserve, self.Secondary.Ammo)
-            end
+        if !inf and IsValid(self:GetOwner()) then
+            self:GetOwner():SetAmmo(reserve, self.Secondary.Ammo)
         end
 
         clip = self:Clip2()
@@ -321,10 +320,8 @@ function SWEP:RestoreClip(amt)
 
         reserve = reserve - self:Clip1()
 
-        if !inf then
-            if IsValid(self:GetOwner()) then
-                self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
-            end
+        if !inf and IsValid(self:GetOwner()) then
+            self:GetOwner():SetAmmo(reserve, self.Primary.Ammo)
         end
 
         clip = self:Clip1()
