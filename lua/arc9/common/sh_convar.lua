@@ -325,6 +325,21 @@ local conVars = {
         client = true,
     },
     {
+        name = "vm_cambob",
+        default = "1",
+        client = true,
+    },
+    {
+        name = "vm_cambobwalk",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "vm_cambobintensity",
+        default = "1",
+        client = true,
+    },
+    {
         name = "vm_addx",
         default = "0",
         client = true,

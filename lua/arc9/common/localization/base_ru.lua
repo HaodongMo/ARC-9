@@ -552,3 +552,16 @@ L["autostat.triggerdelaytime"] = "Время задержки спуска ку�
 L["settings.hud_cust.hud_darkmode.title"] = "Темная тема"
 L["settings.hud_cust.hud_darkmode.desc"] = "Включает темные цвета интерфейса вместо серого и отключает виньетку у фона."
 L["autostat.penetrationdelta"] = "Урон после пробития"
+
+-- Added 29-JAN-2023
+
+L["settings.hud_game.hud_nohints.title"] = "Отключить подсказки"
+L["settings.hud_game.hud_nohints.desc"] = "Отключить подсказки вообще. Их не будет ни в 3D интерфейсе, ни в 2D."
+
+L["settings.visuals.cambob"] = "Тряска камеры"
+L["settings.visuals.vm_cambob.title"] = "Тряска при беге"
+L["settings.visuals.vm_cambob.desc"] = "При беге у камеры будет тряска."
+L["settings.visuals.vm_cambobwalk.title"] = "Тряска при ходьбе"
+L["settings.visuals.vm_cambobwalk.desc"] = "При обычный ходьбе у камеры тоже будет тряска (требует включенной тряски при беге)"
+L["settings.visuals.vm_cambobintensity.title"] = "Интенсивность"
+L["settings.visuals.vm_cambobintensity.desc"] = "Насколько сильная будет тряска"

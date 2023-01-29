@@ -196,7 +196,12 @@ local settingstable = {
         { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addx.title", convar = "vm_addx", desc = "settings.visuals.vm_addx.desc" },
         { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addy.title", convar = "vm_addy", desc = "settings.visuals.vm_addy.desc" },
         { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addz.title", convar = "vm_addz", desc = "settings.visuals.vm_addz.desc" },
-
+        
+        { type = "label", text = "settings.visuals.cambob" },
+        { type = "bool", text = "settings.visuals.vm_cambob.title", convar = "vm_cambob", desc = "settings.visuals.vm_cambob.desc" },
+        { type = "bool", text = "settings.visuals.vm_cambobwalk.title", convar = "vm_cambobwalk", desc = "settings.visuals.vm_cambobwalk.desc" },
+        { type = "slider", text = "settings.visuals.vm_cambobintensity.title", convar = "vm_cambobintensity", min = 0, max = 3, decimals = 2, desc = "settings.visuals.vm_cambobintensity.desc"},
+        
         { type = "label", text = "settings.visuals.tpik" },
         { type = "bool", text = "settings.visuals.tpik.title", convar = "tpik", desc = "settings.visuals.tpik.desc" },
         { type = "bool", text = "settings.visuals.tpik_others.title", convar = "tpik_others", desc = "settings.visuals.tpik_others.desc" },

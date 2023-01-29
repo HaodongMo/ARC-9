@@ -602,3 +602,11 @@ L["settings.hud_cust.hud_darkmode.desc"] = "Enables dark colors in HUD instead o
 
 L["settings.hud_game.hud_nohints.title"] = "Disable Hints"
 L["settings.hud_game.hud_nohints.desc"] = "Disable hints completely. They will not show up in the 3D HUD, nor in the 2D HUD."
+
+L["settings.visuals.cambob"] = "View Bobbing"
+L["settings.visuals.vm_cambob.title"] = "Sprint View Bobbing"
+L["settings.visuals.vm_cambob.desc"] = "Makes your camera move when you sprinting"
+L["settings.visuals.vm_cambobwalk.title"] = "Walk View Bobbing"
+L["settings.visuals.vm_cambobwalk.desc"] = "Makes your camera slightly move when you walking around (requires sprint bobbing)"
+L["settings.visuals.vm_cambobintensity.title"] = "Intensity"
+L["settings.visuals.vm_cambobintensity.desc"] = "How intense bobbing will be"

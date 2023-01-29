@@ -17,6 +17,8 @@ function SWEP:CalcView(ply, pos, ang, fov)
         ang.r = ang.r + (math.sin(CurTime() * self:GetProcessedValue("RecoilKickDamping")) * rec)
     end
 
+    local sightamount = self:GetSightAmount()
+
     -- EFT like recoil
     if self.ViewRecoil then
         local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
@@ -37,7 +39,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
     if self:IsScoping() and GetConVar("arc9_cheapscopes"):GetBool() then
         local _, shootang = self:GetShootPos()
 
-        ang = LerpAngle(self:GetSightAmount(), ang, shootang)
+        ang = LerpAngle(sightamount, ang, shootang)
     end
 
     fov = fov / self:GetSmoothedFOVMag()
@@ -45,6 +47,14 @@ function SWEP:CalcView(ply, pos, ang, fov)
     self.FOV = fov
 
     ang = ang + (self:GetCameraControl() or angle_zero)
+    
+    if GetConVar("arc9_vm_cambob"):GetBool() then
+        local sprintmult = GetConVar("arc9_vm_cambobwalk"):GetBool() and 1 or Lerp(self:GetSprintAmount(), 0, 1)
+        local totalmult = math.ease.InQuad(math.Clamp(self.ViewModelBobVelocity / 350, 0, 1) * Lerp(sightamount, 1, 0.65)) * sprintmult * GetConVar("arc9_vm_cambobintensity"):GetFloat()
+        ang:RotateAroundAxis(ang:Right(),   math.cos(self.BobCT * 6)    * totalmult * -0.5)
+        ang:RotateAroundAxis(ang:Up(),      math.cos(self.BobCT * 3.3)  * totalmult * -0.5)
+        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * 6)    * totalmult * -0.36)
+    end
 
     pos, ang = self:DoCameraLean(pos, ang)
 
