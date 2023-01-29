@@ -336,7 +336,7 @@ local conVars = {
     },
     {
         name = "vm_cambobintensity",
-        default = "1",
+        default = "0.75",
         client = true,
     },
     {
