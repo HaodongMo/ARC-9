@@ -1270,7 +1270,7 @@ function SWEP:CreateHUD_RHP()
     self.CustomizeHUD.topleft_panel = topleft_panel
     topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
     topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
-    topleft_panel:SetSize(ARC9ScreenScale(70), ARC9ScreenScale(40))
+    topleft_panel:SetSize(ARC9ScreenScale(70+29), ARC9ScreenScale(40))
     topleft_panel:MoveToFront()
     topleft_panel.Paint = function(self2, w, h) end
 
@@ -1294,6 +1294,18 @@ function SWEP:CreateHUD_RHP()
     topleft_light.DoClick = function(self2)
         oldlightdoclick(self2)
         surface.PlaySound(self2:GetChecked() and lightonsound or lightoffsound)
+    end
+
+    if GetConVar("sv_cheats"):GetBool() then
+        local topleft_devreload = vgui.Create("ARC9TopButton", topleft_panel)
+        topleft_devreload:SetPos(ARC9ScreenScale(47.5+29), ARC9ScreenScale(19))
+        topleft_devreload:SetIcon(Material("arc9/reset.png", "mips smooth"))
+        topleft_devreload:SetConVar("arc9_reloadatts")
+        local olddevreloaddoclick = topleft_devreload.DoClick
+        topleft_devreload.DoClick = function(self2)
+            olddevreloaddoclick(self2)
+        end
+        topleft_devreload.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
     end
 
     topleft_settings.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.topleft_panel, 8) end
