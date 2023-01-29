@@ -692,6 +692,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_GetDamageAtRange(self, data) return data end -- {range = range, dmg = dmg, d = delta}
 -- SWEP.Hook_OnKill(self, ent) return end
 -- SWEP.Hook_BlockHasAnimation(self, anim) return false end -- Return false to claim the animation does not exist.
+-- SWEP.Hook_BlockTPIK(self) return true end -- Return true to block TPIK.
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install

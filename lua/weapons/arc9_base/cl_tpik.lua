@@ -15,6 +15,7 @@ function SWEP:ShouldTPIK()
     -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
     if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
+    if self:RunHook("Hook_BlockTPIK") then return end
     -- if !GetConVar("arc9_tpik"):GetBool() then return false end
     if lp != owner then
         return GetConVar("arc9_tpik_others"):GetBool()
