@@ -284,6 +284,10 @@ local function DrawSimpleHints()
 
     local weapon = LocalPlayer():GetActiveWeapon()
     if !weapon.ARC9 then return end
+    
+    if !GetConVar("cl_drawhud"):GetBool() then return end
+    if weapon:GetCustomize() then return end
+
     local ct = CurTime()
 
     local capabilities = GetWeaponCapabilities(weapon)
