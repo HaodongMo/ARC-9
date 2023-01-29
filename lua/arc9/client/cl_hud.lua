@@ -15,7 +15,7 @@ hook.Add("HUDShouldDraw", "ARC9_HideHUD", function(name)
 end)
 
 ARC9.ScreenScale = function(size)
-    return size * (ScrW() / 640) * GetConVar("arc9_hud_scale"):GetFloat()
+    return size * (ScrW() / 640) * GetConVar("arc9_hud_scale"):GetFloat() * 0.9
 end
 
 local ARC9ScreenScale = ARC9.ScreenScale
@@ -420,7 +420,7 @@ local function DrawSimpleHints()
     if convar_keephints:GetBool() then hint_alpha = 1 end
 
     local hints_w = ARC9ScreenScale(100)
-    local hints_h = ARC9ScreenScale(10) * table.Count(hints)
+    local hints_h = ARC9ScreenScale(12) * table.Count(hints)
 
     hx = ARC9ScreenScale(10)
     hy = (ScrH() - hints_h) / 2
@@ -436,22 +436,22 @@ local function DrawSimpleHints()
 
     for _, hint in ipairs(hints) do
         local strreturn = 0
-        surface.SetFont("ARC9_8")
+        surface.SetFont("ARC9_10")
         surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
         surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
         surface.SetTextPos(hx + off_x, hy + off_y)
-        strreturn = CreateControllerKeyLine( {x = hx + off_x, y = hy + off_y, size = ARC9ScreenScale(7), font_keyb = "ARC9_8", font = "ARC9_8" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
-        CreateControllerKeyLine( {x = hx + off_x + math.max(strreturn, ARC9ScreenScale(20)), y = hy + txt_off_y + off_y, size = ARC9ScreenScale(8), font_keyb = "ARC9_8", font = "ARC9_8" }, " " .. hint.action )
+        strreturn = CreateControllerKeyLine( {x = hx + off_x, y = hy + off_y, size = ARC9ScreenScale(9), font_keyb = "ARC9_10", font = "ARC9_10" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        CreateControllerKeyLine( {x = hx + off_x + math.max(strreturn, ARC9ScreenScale(25)), y = hy + txt_off_y + off_y, size = ARC9ScreenScale(10), font_keyb = "ARC9_10", font = "ARC9_10" }, " " .. hint.action )
 
 
-        surface.SetFont("ARC9_8")
+        surface.SetFont("ARC9_10")
         surface.SetDrawColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
         surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
         surface.SetTextPos(hx, hy)
-        strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = ARC9ScreenScale(7), font_keyb = "ARC9_8", font = "ARC9_8" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
-        CreateControllerKeyLine( {x = hx + math.max(strreturn, ARC9ScreenScale(20)), y = hy + txt_off_y, size = ARC9ScreenScale(8), font_keyb = "ARC9_8", font = "ARC9_8" }, " " .. hint.action )
+        strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = ARC9ScreenScale(9), font_keyb = "ARC9_10", font = "ARC9_10" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        CreateControllerKeyLine( {x = hx + math.max(strreturn, ARC9ScreenScale(25)), y = hy + txt_off_y, size = ARC9ScreenScale(10), font_keyb = "ARC9_10", font = "ARC9_10" }, " " .. hint.action )
 
-        hy = hy + ARC9ScreenScale(10)
+        hy = hy + ARC9ScreenScale(12)
     end
 end
 
