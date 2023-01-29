@@ -266,7 +266,13 @@ function SWEP:Idle()
     end
     anim = banim
 
-    self:PlayAnimation(anim)
+    local speed = 1
+
+    if self:GetIsNearWall() then
+        speed = math.huge
+    end
+
+    self:PlayAnimation(anim, speed)
 end
 
 SWEP.PoseParamState = {}
