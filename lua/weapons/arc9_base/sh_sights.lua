@@ -25,7 +25,11 @@ function SWEP:EnterSights()
     end
 
     if self:GetAnimLockTime() < CurTime() then
-        self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
+        if self:GetProcessedValue("InstantSightIdle") then
+            self:PlayAnimation("idle")
+        else
+            self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
+        end
     end
 
     self:SetShouldHoldType()
@@ -45,7 +49,11 @@ function SWEP:ExitSights()
     end
 
     if self:GetAnimLockTime() < CurTime() then
-        self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+        if self:GetProcessedValue("InstantSightIdle") then
+            self:PlayAnimation("idle")
+        else
+            self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+        end
     end
 
     self:SetShouldHoldType()

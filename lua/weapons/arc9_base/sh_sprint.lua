@@ -45,7 +45,7 @@ function SWEP:GetIsSprintingCheck()
     if self:GetIsNearWall() then return true end
     if !owner:KeyDown(IN_SPEED) then return false end
     if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then return false end
-    if !owner:KeyDown(IN_FORWARD+IN_BACK+IN_MOVELEFT+IN_MOVERIGHT) then return false end
+    if !owner:KeyDown(IN_FORWARD + IN_BACK + IN_MOVELEFT + IN_MOVERIGHT) then return false end
 
     if (self:GetAnimLockTime() > CurTime()) and self:GetProcessedValue("NoSprintWhenLocked") then
         return false
@@ -62,9 +62,6 @@ function SWEP:GetIsSprintingCheck()
     end
 
     if owner:Crouching() then return false end
-    -- if owner:KeyDown(IN_WALK) then return false end
-    local curspeed = owner:GetVelocity():LengthSqr()
-    if curspeed <= 0 then return false end
 
     return true
 end
@@ -83,7 +80,11 @@ function SWEP:EnterSprint()
     end
 
     if !self:StillWaiting() then
-        self:PlayAnimation("enter_sprint", self:GetProcessedValue("SprintToFireTime"))
+        if self:GetProcessedValue("InstantSprintIdle") then
+            self:PlayAnimation("idle")
+        else
+            self:PlayAnimation("enter_sprint", self:GetProcessedValue("SprintToFireTime"))
+        end
     end
 end
 
@@ -91,7 +92,11 @@ function SWEP:ExitSprint()
     self:SetShouldHoldType()
 
     if !self:StillWaiting() then
-        self:PlayAnimation("exit_sprint", self:GetProcessedValue("SprintToFireTime"))
+        if self:GetProcessedValue("InstantSprintIdle") then
+            self:PlayAnimation("idle")
+        else
+            self:PlayAnimation("exit_sprint", self:GetProcessedValue("SprintToFireTime"))
+        end
     end
 end
 
