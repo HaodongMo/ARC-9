@@ -24,7 +24,7 @@ function SWEP:EnterSights()
         self:PlayTranslatedSound(soundtab1)
     end
 
-    if self:GetAnimLockTime() < CurTime() then
+    if !self:StillWaiting() then
         if self:GetProcessedValue("InstantSightIdle") then
             self:PlayAnimation("idle")
         else
@@ -48,7 +48,7 @@ function SWEP:ExitSights()
         self:PlayTranslatedSound(soundtab1)
     end
 
-    if self:GetAnimLockTime() < CurTime() then
+    if !self:StillWaiting() then
         if self:GetProcessedValue("InstantSightIdle") then
             self:PlayAnimation("idle")
         else
