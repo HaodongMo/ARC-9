@@ -585,3 +585,17 @@ L["autostat.penetrationdelta"] = "Skada Efter Penetration"
 
 L["settings.hud_game.hud_nohints.title"] = "Avaktivera Tips"
 L["settings.hud_game.hud_nohints.desc"] = "Avaktiverar tips helt och hållet. Dem kommer inte visas upp i 3D eller 2D gränssnittet."
+
+
+-- Added 29-JAN-2023
+
+L["settings.hud_game.hud_nohints.title"] = "Avaktivera Tips"
+L["settings.hud_game.hud_nohints.desc"] = "Avaktiverar tips helt och hållet. Dem kommer inte visas upp i 3D eller 2D gränssnittet."
+
+L["settings.visuals.cambob"] = "Vy Guppande"
+L["settings.visuals.vm_cambob.title"] = "Spring Vy Guppande"
+L["settings.visuals.vm_cambob.desc"] = "Gör att din kamera förflyttar sig när du springer"
+L["settings.visuals.vm_cambobwalk.title"] = "Gå Vy Guppande"
+L["settings.visuals.vm_cambobwalk.desc"] = "Gör att din kamera lätt förflyttar sig när du går runt (kräver spring guppande)"
+L["settings.visuals.vm_cambobintensity.title"] = "Intensitet"
+L["settings.visuals.vm_cambobintensity.desc"] = "Hur intensiv guppandet är"
