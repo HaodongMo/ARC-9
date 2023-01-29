@@ -122,6 +122,8 @@ surface.CreateFont( "ARC9_Deco_8_Unscaled", {
 
 generatefonts()
 
+timer.Simple(2, generatefonts) -- im sorry but new hud default 0.9 mult doesn't want to work on fonts otherwise
+
 function ARC9.Regen()
     generatefonts()
 end
