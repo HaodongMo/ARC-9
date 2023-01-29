@@ -135,6 +135,7 @@ local settingstable = {
         { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
         { type = "bool", text = "settings.hud_game.hud_always.title", convar = "hud_always", desc = "settings.hud_game.hud_always.desc" },
         { type = "bool", text = "settings.hud_game.hud_compact.title", convar = "hud_compact", desc = "settings.hud_game.hud_compact.desc" },
+        { type = "bool", text = "settings.hud_game.hud_nohints.title", convar = "hud_nohints", desc = "settings.hud_game.hud_nohints.desc" },
         { type = "bool", text = "settings.hud_game.hud_keephints.title", convar = "hud_keephints", desc = "settings.hud_game.hud_keephints.desc" },
 
         { type = "label", text = "settings.hud_game.killfeed" },

@@ -597,3 +597,8 @@ L["autostat.penetrationdelta"] = "Damage After Penetration"
 
 L["settings.hud_cust.hud_darkmode.title"] = "Dark Theme"
 L["settings.hud_cust.hud_darkmode.desc"] = "Enables dark colors in HUD instead of light gray and disables vignette effect in background."
+
+-- Added 29-JAN-2023
+
+L["settings.hud_game.hud_nohints.title"] = "Disable Hints"
+L["settings.hud_game.hud_nohints.desc"] = "Disable hints completely. They will not show up in the 3D HUD, nor in the 2D HUD."

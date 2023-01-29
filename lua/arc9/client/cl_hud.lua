@@ -279,11 +279,185 @@ local function GetWeaponCapabilities(wpn)
     return cap
 end
 
+local function DrawSimpleHints()
+    if GetConVar("arc9_hud_nohints"):GetBool() then return end
+
+    local weapon = LocalPlayer():GetActiveWeapon()
+    if !weapon.ARC9 then return end
+    local ct = CurTime()
+
+    local capabilities = GetWeaponCapabilities(weapon)
+
+    local CTRL = false
+    local hints = {}
+
+    if capabilities.UBGL then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+use"),
+            glyph2 = ARC9.GetBindKey("+reload"),
+            action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
+        })
+    end
+
+    if capabilities.SwitchSights then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+walk"),
+            glyph2 = ARC9.GetBindKey("+use"),
+            action = ARC9:GetPhrase("hud.hint.switchsights")
+        })
+    end
+
+    if capabilities.VariableZoom then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("invnext"),
+            glyph2 = ARC9.GetBindKey("invprev"),
+            action = ARC9:GetPhrase("hud.hint.zoom")
+        })
+    end
+
+    if capabilities.HoldBreath then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+speed"),
+            action = ARC9:GetPhrase("hud.hint.breath")
+        })
+    end
+
+    if capabilities.Bash then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+use"),
+            glyph2 = ARC9.GetBindKey("+attack"),
+            action = ARC9:GetPhrase("hud.hint.bash")
+        })
+    end
+
+    if capabilities.Inspect then
+        table.insert(hints, {
+            glyph2 = ARC9.GetBindKey("+use"),
+            glyph = ARC9.GetBindKey("+reload"),
+            action = ARC9:GetPhrase("hud.hint.inspect")
+        })
+    end
+
+    if capabilities.Firemode then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+zoom"),
+            action = ARC9:GetPhrase("hud.hint.firemode")
+        })
+    end
+
+    if capabilities.ManualCycle then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+reload"),
+            action = ARC9:GetPhrase("hud.hint.cycle")
+        })
+    end
+
+    if weapon:CanToggleAllStatsOnF() then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("impulse 100"),
+            action = ARC9:GetPhrase("hud.hint.toggleatts")
+        })
+    end
+
+    table.insert(hints, {
+        glyph = ARC9.GetBindKey("+menu_context"),
+        action = weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") })
+
+    table.insert(hints, {
+        glyph = ARC9.GetBindKey("+use"),
+        glyph2 = ARC9.GetBindKey("+zoom"),
+        action = ARC9:GetPhrase("hud.hint.safe")
+    })
+
+    if capabilities.Lean and input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+alt1"),
+            glyph2 = ARC9.GetBindKey("+alt2"),
+            action = ARC9:GetPhrase("hud.hint.lean")
+        })
+    end
+
+    for i, v in ipairs(hints) do
+        if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
+        if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
+        if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
+        if v.glyph2 then 
+            if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
+            if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
+            if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
+        end
+    end
+
+    if lasthintcount != #hints and hidefadetime + 1.5 < ct then
+        hidefadetime = ct
+    end
+
+    if weapon:GetInSights() and hidefadetime + 1.5 < ct then
+        hidefadetime = ct
+    end
+
+    if first then
+        hidefadetime = ct + 10
+        first = false
+    end
+
+    lasthintcount = #hints
+
+    local hx = 0
+    local hy = 0
+    local SIZE = ScreenScale(12)
+
+    if hidefadetime + 1.5 > ct then
+        hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
+    else
+        hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
+    end
+    if convar_keephints:GetBool() then hint_alpha = 1 end
+
+    local hints_w = ScreenScale(200)
+    local hints_h = ScreenScale(16) * table.Count(hints)
+
+    hx = ScreenScale(4)
+    hy = (ScrH() - hints_h) / 2
+
+    surface.SetDrawColor(ARC9.GetHUDColor("shadow", 150 * hint_alpha))
+    surface.SetMaterial(hud_bigblur)
+    surface.DrawTexturedRect(hx, hy, hints_w, hints_h)
+
+    local off_x = ScreenScale(1)
+    local off_y = ScreenScale(1)
+
+    local txt_off_y = -ScreenScale(1)
+
+    for _, hint in ipairs(hints) do
+        local strreturn = 0
+        surface.SetFont("ARC9_12")
+        surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
+        surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
+        surface.SetTextPos(hx + off_x, hy + off_y)
+        strreturn = CreateControllerKeyLine( {x = hx + off_x, y = hy + off_y, size = ScreenScale(10), font_keyb = "ARC9_12", font = "ARC9_12" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        CreateControllerKeyLine( {x = hx + off_x + math.max(strreturn, 48), y = hy + txt_off_y + off_y, size = ScreenScale(12), font_keyb = "ARC9_12", font = "ARC9_12" }, " " .. hint.action )
+
+
+        surface.SetFont("ARC9_12")
+        surface.SetDrawColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
+        surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
+        surface.SetTextPos(hx, hy)
+        strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = ScreenScale(10), font_keyb = "ARC9_12", font = "ARC9_12" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        CreateControllerKeyLine( {x = hx + math.max(strreturn, 48), y = hy + txt_off_y, size = ScreenScale(12), font_keyb = "ARC9_12", font = "ARC9_12" }, " " .. hint.action )
+
+        hy = hy + ScreenScale(12)
+    end
+end
+
 function ARC9.DrawHUD()
     EyeAngles() -- This, for some ungodly reason, allows sway to work when the HUD is off.
     EyePos()
 
-    if !ARC9.ShouldDrawHUD() then return end
+    if !ARC9.ShouldDrawHUD() then
+        DrawSimpleHints()
+        return
+    end
 
     local localplayer = LocalPlayer()
     local weapon = localplayer:GetActiveWeapon()
@@ -907,7 +1081,7 @@ function ARC9.DrawHUD()
 
     cam.End3D2D()
 
-    if weapon.ARC9 then
+    if weapon.ARC9 and !GetConVar("arc9_hud_nohints"):GetBool() then
         local capabilities = GetWeaponCapabilities(weapon)
 
         -- local hints = {

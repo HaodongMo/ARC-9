@@ -415,6 +415,11 @@ local conVars = {
         client = true
     },
     {
+        name = "hud_nohints",
+        default = "0",
+        client = true
+    },
+    {
         name = "infinite_ammo",
         default = "0",
         replicated = true
