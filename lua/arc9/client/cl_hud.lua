@@ -242,6 +242,7 @@ local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
 local hud_t_full = Material("arc9/thermometer_full.png", "mips")
 local hud_t_empty = Material("arc9/thermometer_empty.png", "mips")
 local hud_bigblur = Material("arc9/bigblur.png", "mips")
+local hud_sillyhints = Material("arc9/sillyhintsblur.png", "mips")
 local hud_logo_lowvis = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 
 local firemode_pics = {
@@ -401,7 +402,7 @@ local function DrawSimpleHints()
     end
 
     if first then
-        hidefadetime = ct + 10
+        hidefadetime = ct + 7
         first = false
     end
 
@@ -409,8 +410,8 @@ local function DrawSimpleHints()
 
     local hx = 0
     local hy = 0
-    local SIZE = ScreenScale(12)
-
+    local SIZE = ARC9ScreenScale(8)
+    
     if hidefadetime + 1.5 > ct then
         hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
     else
@@ -418,39 +419,39 @@ local function DrawSimpleHints()
     end
     if convar_keephints:GetBool() then hint_alpha = 1 end
 
-    local hints_w = ScreenScale(200)
-    local hints_h = ScreenScale(16) * table.Count(hints)
+    local hints_w = ARC9ScreenScale(100)
+    local hints_h = ARC9ScreenScale(10) * table.Count(hints)
 
-    hx = ScreenScale(4)
+    hx = ARC9ScreenScale(10)
     hy = (ScrH() - hints_h) / 2
 
-    surface.SetDrawColor(ARC9.GetHUDColor("shadow", 150 * hint_alpha))
-    surface.SetMaterial(hud_bigblur)
-    surface.DrawTexturedRect(hx, hy, hints_w, hints_h)
+    surface.SetDrawColor(ARC9.GetHUDColor("shadow", 160 * hint_alpha))
+    surface.SetMaterial(hud_sillyhints)
+    surface.DrawTexturedRect(-ARC9ScreenScale(5), hy-ARC9ScreenScale(7.5), hints_w, hints_h+ARC9ScreenScale(15))
 
-    local off_x = ScreenScale(1)
-    local off_y = ScreenScale(1)
+    local off_x = ARC9ScreenScale(0.5)
+    local off_y = ARC9ScreenScale(0.5)
 
-    local txt_off_y = -ScreenScale(1)
+    local txt_off_y = -ARC9ScreenScale(0.8)
 
     for _, hint in ipairs(hints) do
         local strreturn = 0
-        surface.SetFont("ARC9_12")
+        surface.SetFont("ARC9_8")
         surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
         surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
         surface.SetTextPos(hx + off_x, hy + off_y)
-        strreturn = CreateControllerKeyLine( {x = hx + off_x, y = hy + off_y, size = ScreenScale(10), font_keyb = "ARC9_12", font = "ARC9_12" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
-        CreateControllerKeyLine( {x = hx + off_x + math.max(strreturn, 48), y = hy + txt_off_y + off_y, size = ScreenScale(12), font_keyb = "ARC9_12", font = "ARC9_12" }, " " .. hint.action )
+        strreturn = CreateControllerKeyLine( {x = hx + off_x, y = hy + off_y, size = ARC9ScreenScale(7), font_keyb = "ARC9_8", font = "ARC9_8" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        CreateControllerKeyLine( {x = hx + off_x + math.max(strreturn, ARC9ScreenScale(20)), y = hy + txt_off_y + off_y, size = ARC9ScreenScale(8), font_keyb = "ARC9_8", font = "ARC9_8" }, " " .. hint.action )
 
 
-        surface.SetFont("ARC9_12")
+        surface.SetFont("ARC9_8")
         surface.SetDrawColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
         surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
         surface.SetTextPos(hx, hy)
-        strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = ScreenScale(10), font_keyb = "ARC9_12", font = "ARC9_12" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
-        CreateControllerKeyLine( {x = hx + math.max(strreturn, 48), y = hy + txt_off_y, size = ScreenScale(12), font_keyb = "ARC9_12", font = "ARC9_12" }, " " .. hint.action )
+        strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = ARC9ScreenScale(7), font_keyb = "ARC9_8", font = "ARC9_8" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        CreateControllerKeyLine( {x = hx + math.max(strreturn, ARC9ScreenScale(20)), y = hy + txt_off_y, size = ARC9ScreenScale(8), font_keyb = "ARC9_8", font = "ARC9_8" }, " " .. hint.action )
 
-        hy = hy + ScreenScale(12)
+        hy = hy + ARC9ScreenScale(10)
     end
 end
 
