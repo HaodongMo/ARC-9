@@ -582,3 +582,6 @@ L["autostat.triggerdelaytime"] = "Avtryckare Fördröj. Tid"
 L["settings.hud_cust.hud_darkmode.title"] = "Mörkt Tema"
 L["settings.hud_cust.hud_darkmode.desc"] = "Aktiverar mörka färger på gränssnittet istället för ljusgrått och avaktiverar vinjetteffekten i bakgrunden."
 L["autostat.penetrationdelta"] = "Skada Efter Penetration"
+
+L["settings.hud_game.hud_nohints.title"] = "Avaktivera Tips"
+L["settings.hud_game.hud_nohints.desc"] = "Avaktiverar tips helt och hållet. Dem kommer inte visas upp i 3D eller 2D gränssnittet."
