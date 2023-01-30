@@ -326,6 +326,9 @@ end
 vgui.Register("ARC9ScrollPanel", ARC9ScrollPanel, "DScrollPanel")
 local ARC9HorizontalScroller = {}
 
+local circlemat = Material("arc9/circle.png", "smooth mips")
+local circlefillmat = Material("arc9/circlefill.png", "smooth mips")
+
 function ARC9HorizontalScroller:Init()
     local smoothdlta = 0
 
@@ -339,58 +342,76 @@ function ARC9HorizontalScroller:Init()
     end
 end
 
-function ARC9HorizontalScroller:RefreshPageButtons()
+function ARC9HorizontalScroller:RefreshScrollBar(bar)
     local width = self:GetWide()
     local contentswidth = self.pnlCanvas:GetWide()
 
-    local pagecount = math.ceil(contentswidth / width)
+    if contentswidth > width then
+        -- Create a panel centered in the bottom middle of bar
+        -- This will be the scroll bar
+        -- Drag the scroll bar to scroll the contents
+        -- Width should be the ratio of the width of the bar to the width of the contents
 
-    if pagecount > 1 then
-        -- Create a panel centered in the bottom middle of self.BottomBar, if it exists
-        -- On this panel, create pagecount number of circles, each representing a page
-        -- When a page is selected, the circle is filled in, otherwise it is empty
-        -- Pressing a button makes the scroller scroll to the page
-
-        if IsValid(self.PageButtons) then
-            self.PageButtons:Remove()
-            self.PageButtons = nil
+        if IsValid(self.ScrollBarParent) then
+            self.ScrollBarParent:Remove()
+            self.ScrollBarParent = nil
         end
 
-        self.PageButtons = vgui.Create("DPanel", self.BottomBar)
-        self.PageButtons:SetTall(ARC9ScreenScale(10))
-        self.PageButtons.Paint = function(panel, w, h)
-            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
-            surface.DrawRect(0, 0, w, h)
+        self.ScrollBarParent = vgui.Create("DPanel", bar)
+        self.ScrollBarParent:SetSize(bar:GetWide(), ARC9ScreenScale(5))
+        self.ScrollBarParent:SetPos(0, 0)
+        self.ScrollBarParent.Paint = function(panel, w, h)
         end
 
-        local pagebuttonsize = ARC9ScreenScale(8)
-        local pagebuttonspacing = ARC9ScreenScale(2)
-        local pagebuttoncount = pagecount
+        local scrollbar = vgui.Create("DPanel", self.ScrollBarParent)
+        scrollbar:SetSize(self.ScrollBarParent:GetWide() * (width / contentswidth), ARC9ScreenScale(1))
+        scrollbar:SetPos(0, 0)
+        scrollbar.Paint = function(panel, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            surface.DrawRect(0, 0, w, ARC9ScreenScale(1))
+        end
 
-        local pagebuttonswidth = pagebuttonsize * pagebuttoncount + pagebuttonspacing * (pagebuttoncount - 1)
+        scrollbar.Think = function(panel)
+            local x, y = self.pnlCanvas:GetPos()
+            local width = self:GetWide()
+            local contentswidth = self.pnlCanvas:GetWide()
+            local scrollwidth = self.ScrollBarParent:GetWide()
+            local scrollpos = math.Clamp(-x / (contentswidth - width), 0, 1)
+            local scrollx = scrollpos * (scrollwidth - scrollbar:GetWide())
 
-        self.PageButtons:SetWide(pagebuttonswidth)
-        self.PageButtons:SetPos((width - pagebuttonswidth) / 2, (self.BottomBar:GetTall() - self.PageButtons:GetTall()) / 2)
+            panel:SetPos(scrollx, y)
+        end
 
-        local pagebuttons = {}
+        self.Dragging = false
 
-        for i = 1, pagecount do
-            local pagebutton = vgui.Create("DButton", self.PageButtons)
-            pagebutton:SetSize(pagebuttonsize, pagebuttonsize)
-            pagebutton:SetPos((pagebuttonsize + pagebuttonspacing) * (i - 1), 0)
-            pagebutton:SetText("")
-            pagebutton.Paint = function(panel, w, h)
-                surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-                surface.DrawRect(0, 0, w, h)
+        self.ScrollBarParent.Think = function(panel)
+            -- Scroll functionality
+            local scrollwidth = self.ScrollBarParent:GetWide()
+            local contentswidth = self.pnlCanvas:GetWide()
+            local width = self:GetWide()
+
+            local mx, my = input.GetCursorPos()
+            local px, py = panel:LocalToScreen(0, 0)
+            local pw, ph = panel:GetSize()
+
+            if input.IsMouseDown(MOUSE_LEFT) then
+                if not self.Dragging then
+                    if mx > px and mx < px + pw and my > py and my < py + ph then
+                        self.Dragging = true
+                    end
+                end
+            else
+                self.Dragging = false
             end
 
-            pagebutton.DoClick = function()
-                self.OffsetX = (i - 1) * width
-                self:InvalidateLayout(true)
+            if self.Dragging then
+                local scrollpos = math.Clamp((mx - px - (scrollbar:GetWide() / 2)) / (scrollwidth - scrollbar:GetWide()), 0, 1)
+                local scrollx = scrollpos * (contentswidth - width)
+                self:SetScroll(scrollx)
             end
-
-            pagebuttons[i] = pagebutton
         end
+
+        self.ScrollBarParent:MoveToFront()
     end
 end
 

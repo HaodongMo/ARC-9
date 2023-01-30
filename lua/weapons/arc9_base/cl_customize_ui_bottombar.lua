@@ -151,6 +151,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     -- end
 
     scroll:SetPos(anchor:GetWide(), ARC9ScreenScale(3))
+    scroll:SetWide(self.BottomBar:GetWide() - anchor:GetWide())
 
     local foldercount = 0
 
@@ -304,153 +305,9 @@ local function enterfolder(self, scroll, slottbl, fname)
                 self.CustomizeLastHovered = self2
             end
         end
-
-        -- print(scrolleles[#scrolleles-1])
-        -- PrintTable(scrolleles)
-        -- attbtn.Paint = function(self2, w, h)
-        --     if !IsValid(self) then return end
-
-        --     local slot = self:LocateSlotFromAddress(self2.attslot)
-
-        --     if !slot then return end
-        --         if slot != self2.slottbl then
-        --         local c1 = slot.Category
-        --         local c2 = self2.slottbl.Category
-
-        --         if istable(c1) then
-        --             c1 = table.concat(c1, " ")
-        --         end
-
-        --         if istable(c2) then
-        --             c2 = table.concat(c2, " ")
-        --         end
-
-        --         if c1 != c2 then
-        --             self:ClearAttInfoBar()
-        --             self:ClearBottomBar()
-        --             self.BottomBarAddress = nil
-        --             self.AttInfoBarAtt = nil
-        --             return
-        --         end
-
-        --         self2.slottbl = slot
-        --     end
-
-        --     local attached = slot.Installed == self2.att
-
-        --     local col1 = ARC9.GetHUDColor("fg")
-        --     local col2 = ARC9.GetHUDColor("shadow")
-
-        --     local hasbg = false
-
-        --     if self2:IsHovered() then
-        --         if !attached then self.CustomizeHints["customize.hint.select"]  = "Attach" end
-        --         -- if attached then self.CustomizeHints["customize.hint.deselect"] = "Unattach" end
-        --         if slot.Installed then self.CustomizeHints["customize.hint.deselect"] = "Unattach" end
-        --     end
-
-        --     if self2:IsHovered() or attached then
-        --         if !atttbl.FullColorIcon then
-        --             col1 = ARC9.GetHUDColor("shadow")
-        --             surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-        --             surface.DrawRect(ARC9ScreenScale(1), ARC9ScreenScale(1), w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
-
-        --             if self2:IsHovered() then
-        --                 surface.SetDrawColor(ARC9.GetHUDColor("hi"))
-        --                 col2 = ARC9.GetHUDColor("hi")
-        --             else
-        --                 surface.SetDrawColor(ARC9.GetHUDColor("fg"))
-        --                 col2 = ARC9.GetHUDColor("fg")
-        --             end
-        --             surface.DrawRect(0, 0, w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
-        --         end
-
-        --         hasbg = true
-        --     else
-        --         surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
-        --         surface.DrawRect(0, 0, w, h)
-        --     end
-
-        --     if self2:IsHovered() and self.AttInfoBarAtt != self2.att then
-        --         self.AttInfoBarAtt = self2.att
-        --         self:CreateHUD_AttInfo()
-        --     end
-
-        --     local canattach = self:CanAttach(slot.Address, self2.att, slot)
-
-        --     if !canattach then
-        --         col1 = ARC9.GetHUDColor("neg")
-        --     end
-
-        --     local icon = atttbl.Icon
-
-        --     if !hasbg then
-        --         surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-        --         surface.SetMaterial(icon)
-        --         surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
-        --     end
-
-        --     if atttbl.FullColorIcon then
-        --         surface.SetDrawColor(ARC9.GetHUDColor("fg", 150))
-        --         surface.SetMaterial(icon)
-        --         surface.DrawTexturedRect(ARC9ScreenScale(1), ARC9ScreenScale(1), w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
-        --     else
-        --         surface.SetDrawColor(col1)
-        --         surface.SetMaterial(icon)
-        --         surface.DrawTexturedRect(ARC9ScreenScale(1), ARC9ScreenScale(1), w - ARC9ScreenScale(1), h - ARC9ScreenScale(1))
-        --     end
-
-        --     if atttbl.HoloSight or atttbl.RTScope then
-        --         local hrs = ARC9ScreenScale(12)
-        --         local hricon = atttbl.RTScopeReticle or atttbl.HoloSightReticle
-        --         local icons = hrs
-
-        --         if atttbl.RTScopeReticle then
-        --             icons = icons * 2
-        --         elseif atttbl.HoloSightSize then
-        --             icons = icons * (atttbl.HoloSightSize / 500)
-        --         end
-
-        --         surface.SetDrawColor(ARC9.GetHUDColor("shadow"))
-        --         surface.DrawRect(ARC9ScreenScale(1), ARC9ScreenScale(1) + h - hrs, hrs, hrs)
-
-        --         surface.SetDrawColor(col1)
-        --         surface.DrawRect(0, h - hrs, hrs, hrs)
-
-        --         local scx, scy = self2:LocalToScreen(0, h - hrs)
-
-        --         if hricon then
-        --             render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, true)
-        --             surface.SetDrawColor(col2)
-        --             surface.SetMaterial(hricon)
-        --             surface.DrawTexturedRect((hrs / 2) - (icons / 2), h - (hrs / 2) - (icons / 2), icons, icons)
-        --             render.SetScissorRect(scx, scy, scx + hrs, scy + hrs, false)
-        --         end
-        --     end
-
-        --     if atttbl.AdminOnly then
-        --         local hrs = ARC9ScreenScale(12)
-
-        --         surface.SetDrawColor(col1)
-        --         surface.SetMaterial(adminicon)
-        --         surface.DrawTexturedRect(w - hrs, h - hrs, hrs, hrs)
-        --     end
-
-        --     local name = ARC9:GetPhraseForAtt(self2.att, "CompactName") or ARC9:GetPhraseForAtt(self2.att, "PrintName") or ARC9:GetPhraseForAtt(self2.att, "ShortName") or ""
-
-        --     if !hasbg then
-        --         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        --         surface.SetTextPos(ARC9ScreenScale(14), ARC9ScreenScale(1))
-        --         surface.SetFont("ARC9_10")
-        --         self:DrawTextRot(self2, name, 0, 0, ARC9ScreenScale(3), ARC9ScreenScale(1), ARC9ScreenScale(46), true)
-        --     end
-
-        --     surface.SetTextColor(col1)
-        --     surface.SetTextPos(ARC9ScreenScale(13), 0)
-        --     surface.SetFont("ARC9_10")
-        --     self:DrawTextRot(self2, name, 0, 0, ARC9ScreenScale(2), 0, ARC9ScreenScale(46), false)
-        -- end
     end
+
+    scroll:RefreshScrollBar(self.BottomBar)
 end
 
 surface.CreateFont("ARC9_KeybindPreview_Cust", {
