@@ -166,6 +166,7 @@ function ARC9AttButton:Paint(w, h)
     render.SuppressEngineLighting(true)
     surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
+    render.SetAmbientLight(255, 255, 255)
 
     if not self.FullColorIcon then
         surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w - ARC9ScreenScale(4), w - ARC9ScreenScale(4))
@@ -174,6 +175,7 @@ function ARC9AttButton:Paint(w, h)
     end
 
     render.SuppressEngineLighting(false)
+    render.SetLightingMode(0)
 
     if matmarker then
         surface.SetDrawColor(markercolor)
@@ -334,6 +336,61 @@ function ARC9HorizontalScroller:Init()
         self2:InvalidateLayout(true)
 
         return true
+    end
+end
+
+function ARC9HorizontalScroller:RefreshPageButtons()
+    local width = self:GetWide()
+    local contentswidth = self.pnlCanvas:GetWide()
+
+    local pagecount = math.ceil(contentswidth / width)
+
+    if pagecount > 1 then
+        -- Create a panel centered in the bottom middle of self.BottomBar, if it exists
+        -- On this panel, create pagecount number of circles, each representing a page
+        -- When a page is selected, the circle is filled in, otherwise it is empty
+        -- Pressing a button makes the scroller scroll to the page
+
+        if IsValid(self.PageButtons) then
+            self.PageButtons:Remove()
+            self.PageButtons = nil
+        end
+
+        self.PageButtons = vgui.Create("DPanel", self.BottomBar)
+        self.PageButtons:SetTall(ARC9ScreenScale(10))
+        self.PageButtons.Paint = function(panel, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+            surface.DrawRect(0, 0, w, h)
+        end
+
+        local pagebuttonsize = ARC9ScreenScale(8)
+        local pagebuttonspacing = ARC9ScreenScale(2)
+        local pagebuttoncount = pagecount
+
+        local pagebuttonswidth = pagebuttonsize * pagebuttoncount + pagebuttonspacing * (pagebuttoncount - 1)
+
+        self.PageButtons:SetWide(pagebuttonswidth)
+        self.PageButtons:SetPos((width - pagebuttonswidth) / 2, (self.BottomBar:GetTall() - self.PageButtons:GetTall()) / 2)
+
+        local pagebuttons = {}
+
+        for i = 1, pagecount do
+            local pagebutton = vgui.Create("DButton", self.PageButtons)
+            pagebutton:SetSize(pagebuttonsize, pagebuttonsize)
+            pagebutton:SetPos((pagebuttonsize + pagebuttonspacing) * (i - 1), 0)
+            pagebutton:SetText("")
+            pagebutton.Paint = function(panel, w, h)
+                surface.SetDrawColor(ARC9.GetHUDColor("fg"))
+                surface.DrawRect(0, 0, w, h)
+            end
+
+            pagebutton.DoClick = function()
+                self.OffsetX = (i - 1) * width
+                self:InvalidateLayout(true)
+            end
+
+            pagebuttons[i] = pagebutton
+        end
     end
 end
 
