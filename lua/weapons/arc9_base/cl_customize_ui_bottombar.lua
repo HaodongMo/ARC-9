@@ -453,6 +453,8 @@ function SWEP:CreateHUD_Bottom()
         self:CreateHUD_Slots(scroll)
     end
 
+    scroll:RefreshScrollBar(self.BottomBar)
+
     if self.LastScroll then
         scroll:SetScroll(self.LastScroll)
     end
