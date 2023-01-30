@@ -408,6 +408,8 @@ function ARC9HorizontalScroller:RefreshScrollBar(bar)
                 local scrollpos = math.Clamp((mx - px - (scrollbar:GetWide() / 2)) / (scrollwidth - scrollbar:GetWide()), 0, 1)
                 local scrollx = scrollpos * (contentswidth - width)
                 self:SetScroll(scrollx)
+            else
+                self:SetScroll(self.OffsetX)
             end
         end
 
