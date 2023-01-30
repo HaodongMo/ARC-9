@@ -28,6 +28,7 @@ local function spacer(self, scroll, margin)
 end
 
 SWEP.BottomBar = nil
+SWEP.BottomBarAnchor = nil
 
 -- 0: Preset
 -- 1: Attachment
@@ -90,15 +91,38 @@ local function enterfolder(self, scroll, slottbl, fname)
         p:Remove()
     end
 
-    local backbtn = vgui.Create("ARC9AttButton", scroll)
+    if IsValid(self.BottomBarAnchor) then
+        self.BottomBarAnchor:Remove()
+        self.BottomBarAnchor = nil
+    end
+
+    local anchor = vgui.Create("DPanel", self.BottomBar)
+    anchor:SetPos(ARC9ScreenScale(3), ARC9ScreenScale(3))
+    anchor:SetSize(ARC9ScreenScale(57.5), ARC9ScreenScale(57.5))
+
+    function anchor:Paint(w, h)
+    end
+
+    self.BottomBarAnchor = anchor
+
+    local backbtn = vgui.Create("ARC9AttButton", anchor)
     backbtn:SetIcon(backicon)
     backbtn:SetEmpty(true)
 
     backbtn:DockMargin(ARC9ScreenScale(5), 0, 0, 0)
     backbtn:Dock(LEFT)
 
-    scroll:AddPanel(backbtn)
-    table.insert(scrolleles, backbtn)
+    local newspacer = vgui.Create("DPanel", anchor)
+    newspacer:DockMargin(ARC9ScreenScale(3.5), 0, ARC9ScreenScale(4), 0)
+    newspacer:Dock(LEFT)
+    newspacer:SetSize(ARC9ScreenScale(1), ARC9ScreenScale(2))
+
+    newspacer.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
+        surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+        surface.DrawRect(0, ARC9ScreenScale(2), w, ARC9ScreenScale(40))
+    end
 
     if #self.BottomBarPath > 0 then
         backbtn:SetButtonText(ARC9:GetPhrase("folder.back"))
@@ -126,7 +150,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     --     end
     -- end
 
-    spacer(self, scroll, 4)
+    scroll:SetPos(anchor:GetWide(), ARC9ScreenScale(3))
 
     local foldercount = 0
 
