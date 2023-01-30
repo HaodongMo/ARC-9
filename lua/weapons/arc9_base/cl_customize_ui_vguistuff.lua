@@ -342,6 +342,14 @@ function ARC9HorizontalScroller:Init()
     end
 end
 
+function ARC9HorizontalScroller:Think()
+    local wep = LocalPlayer():GetActiveWeapon()
+
+    if not IsValid(wep) then return end
+
+    wep.LastScroll = self.OffsetX
+end
+
 function ARC9HorizontalScroller:RefreshScrollBar(bar)
     local width = self:GetWide()
     local contentswidth = self.pnlCanvas:GetWide()
@@ -414,6 +422,11 @@ function ARC9HorizontalScroller:RefreshScrollBar(bar)
         end
 
         self.ScrollBarParent:MoveToFront()
+    else
+        if IsValid(self.ScrollBarParent) then
+            self.ScrollBarParent:Remove()
+            self.ScrollBarParent = nil
+        end
     end
 end
 

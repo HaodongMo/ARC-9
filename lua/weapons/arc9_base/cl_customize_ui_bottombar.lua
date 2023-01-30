@@ -44,6 +44,8 @@ SWEP.BottomBarAtts = {}
 -- 1: Personalization
 SWEP.BottomBarCategory = 0
 
+SWEP.LastScroll = 0
+
 function SWEP:ClearBottomBar()
     if self.BottomBar then
         self.BottomBar:Remove()
@@ -449,6 +451,10 @@ function SWEP:CreateHUD_Bottom()
         enterfolder(self, scroll, slottbl, true)
     else
         self:CreateHUD_Slots(scroll)
+    end
+
+    if self.LastScroll then
+        scroll:SetScroll(self.LastScroll)
     end
 end
 
