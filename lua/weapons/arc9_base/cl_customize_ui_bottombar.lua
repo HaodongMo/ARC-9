@@ -66,9 +66,9 @@ local function recursivefoldercount(folder)
 
             if !atttbl then continue end
 
-            if atttbl.Free then count = count + 1 continue end
-            if GetConVar("arc9_free_atts"):GetBool() then count = count + 1 continue end
-            if ARC9:PlayerGetAtts(i) > 0 then count = count + 1 continue end
+            if atttbl.Free or GetConVar("arc9_hud_showunowned"):GetBool() or GetConVar("arc9_free_atts"):GetBool() or ARC9:PlayerGetAtts(i) > 0 then
+                count = count + 1
+            end
         end
     end
 
