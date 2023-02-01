@@ -855,10 +855,10 @@ end
 
 function SWEP:GetShootPos()
     local owner = self:GetOwner()
-    
+
     if !IsValid(owner) then return Vector(), Angle() end
 
-    if owner:IsNPC() then
+    if SERVER and owner:IsNPC() then
         return owner:GetShootPos()
     end
 

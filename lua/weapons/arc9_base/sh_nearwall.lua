@@ -17,7 +17,7 @@ do
     local vectorMul = VECTOR.Mul
 
     local angleForward = FindMetaTable("Angle").Forward
-    local entityGetOwner = FindMetaTable("Entity").GetOwner 
+    local entityGetOwner = FindMetaTable("Entity").GetOwner
 
     function SWEP:GetIsNearWall()
         local now = engine.TickCount()
@@ -56,7 +56,7 @@ local FrameTime = FrameTime
 
 function SWEP:ThinkNearWall()
     self:SetNearWallAmount(math_Approach(
-        self.dt.NearWallAmount, 
-        swepGetIsNearWall(self) and 1 or 0, 
+        self.dt.NearWallAmount,
+        swepGetIsNearWall(self) and 1 or 0,
         FrameTime() / self:GetProcessedValue("SprintToFireTime")))
 end

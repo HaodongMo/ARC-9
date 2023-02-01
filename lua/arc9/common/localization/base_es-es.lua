@@ -589,3 +589,16 @@ L["autostat.penetrationdelta"] = "Daño Tras Penetracion"
 
 L["settings.hud_cust.hud_darkmode.title"] = "Tema Oscuro"
 L["settings.hud_cust.hud_darkmode.desc"] = "Activa los colores oscuros en el HUD en lugar del gris claro y desactiva el efecto viñeta en el fondo."
+
+-- Added 29-JAN-2023
+
+L["settings.hud_game.hud_nohints.title"] = "Deshabilita Pistas"
+L["settings.hud_game.hud_nohints.desc"] = "Deshabilita completamente las pistas. No aparecerán en el HUD 3D ni en el HUD 2D."
+
+L["settings.visuals.cambob"] = "Balanceo de Vista"
+L["settings.visuals.vm_cambob.title"] = "Balanceo al Esprintar"
+L["settings.visuals.vm_cambob.desc"] = "Hace que tu cámara se mueva cuando esprintas"
+L["settings.visuals.vm_cambobwalk.title"] = "Balanceo de Vista al Caminar"
+L["settings.visuals.vm_cambobwalk.desc"] = "Hace que tu cámara se mueva ligeramente cuando caminas (requiere balanceo al esprintar)"
+L["settings.visuals.vm_cambobintensity.title"] = "Intensidad"
+L["settings.visuals.vm_cambobintensity.desc"] = "Qué tan intenso será el balanceo"

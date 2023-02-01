@@ -166,6 +166,7 @@ function ARC9AttButton:Paint(w, h)
     render.SuppressEngineLighting(true)
     surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
+    render.SetAmbientLight(255, 255, 255)
 
     if not self.FullColorIcon then
         surface.DrawTexturedRect(ARC9ScreenScale(2), ARC9ScreenScale(2), w - ARC9ScreenScale(4), w - ARC9ScreenScale(4))
@@ -174,6 +175,7 @@ function ARC9AttButton:Paint(w, h)
     end
 
     render.SuppressEngineLighting(false)
+    render.SetLightingMode(0)
 
     if matmarker then
         surface.SetDrawColor(markercolor)
@@ -324,6 +326,9 @@ end
 vgui.Register("ARC9ScrollPanel", ARC9ScrollPanel, "DScrollPanel")
 local ARC9HorizontalScroller = {}
 
+local circlemat = Material("arc9/circle.png", "smooth mips")
+local circlefillmat = Material("arc9/circlefill.png", "smooth mips")
+
 function ARC9HorizontalScroller:Init()
     local smoothdlta = 0
 
@@ -334,6 +339,94 @@ function ARC9HorizontalScroller:Init()
         self2:InvalidateLayout(true)
 
         return true
+    end
+end
+
+function ARC9HorizontalScroller:Think()
+    local wep = LocalPlayer():GetActiveWeapon()
+
+    if not IsValid(wep) then return end
+
+    wep.LastScroll = self.OffsetX
+end
+
+function ARC9HorizontalScroller:RefreshScrollBar(bar)
+    local width = self:GetWide()
+    local contentswidth = self.pnlCanvas:GetWide()
+
+    if contentswidth > width then
+        -- Create a panel centered in the bottom middle of bar
+        -- This will be the scroll bar
+        -- Drag the scroll bar to scroll the contents
+        -- Width should be the ratio of the width of the bar to the width of the contents
+
+        if IsValid(self.ScrollBarParent) then
+            self.ScrollBarParent:Remove()
+            self.ScrollBarParent = nil
+        end
+
+        self.ScrollBarParent = vgui.Create("DPanel", bar)
+        self.ScrollBarParent:SetSize(bar:GetWide(), ARC9ScreenScale(5))
+        self.ScrollBarParent:SetPos(0, 0)
+        self.ScrollBarParent.Paint = function(panel, w, h)
+        end
+
+        local scrollbar = vgui.Create("DPanel", self.ScrollBarParent)
+        scrollbar:SetSize(self.ScrollBarParent:GetWide() * (width / contentswidth), ARC9ScreenScale(1))
+        scrollbar:SetPos(0, 0)
+        scrollbar.Paint = function(panel, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            surface.DrawRect(0, 0, w, ARC9ScreenScale(1))
+        end
+
+        scrollbar.Think = function(panel)
+            local x, y = self.pnlCanvas:GetPos()
+            local width = self:GetWide()
+            local contentswidth = self.pnlCanvas:GetWide()
+            local scrollwidth = self.ScrollBarParent:GetWide()
+            local scrollpos = math.Clamp(-x / (contentswidth - width), 0, 1)
+            local scrollx = scrollpos * (scrollwidth - scrollbar:GetWide())
+
+            panel:SetPos(scrollx, y)
+        end
+
+        self.Dragging = false
+
+        self.ScrollBarParent.Think = function(panel)
+            -- Scroll functionality
+            local scrollwidth = self.ScrollBarParent:GetWide()
+            local contentswidth = self.pnlCanvas:GetWide()
+            local width = self:GetWide()
+
+            local mx, my = input.GetCursorPos()
+            local px, py = panel:LocalToScreen(0, 0)
+            local pw, ph = panel:GetSize()
+
+            if input.IsMouseDown(MOUSE_LEFT) then
+                if not self.Dragging then
+                    if mx > px and mx < px + pw and my > py and my < py + ph then
+                        self.Dragging = true
+                    end
+                end
+            else
+                self.Dragging = false
+            end
+
+            if self.Dragging then
+                local scrollpos = math.Clamp((mx - px - (scrollbar:GetWide() / 2)) / (scrollwidth - scrollbar:GetWide()), 0, 1)
+                local scrollx = scrollpos * (contentswidth - width)
+                self:SetScroll(scrollx)
+            else
+                self:SetScroll(self.OffsetX)
+            end
+        end
+
+        self.ScrollBarParent:MoveToFront()
+    else
+        if IsValid(self.ScrollBarParent) then
+            self.ScrollBarParent:Remove()
+            self.ScrollBarParent = nil
+        end
     end
 end
 

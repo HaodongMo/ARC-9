@@ -11,7 +11,7 @@ ATT.CustomPros = {
     ["You're awesome"] = "",
 }
 ATT.CustomCons = {
-    Bad = "-50", 
+    Bad = "-50",
     ["Warning: this enables something"] = "",
 }
 
