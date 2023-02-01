@@ -188,5 +188,7 @@ function SWEP:TouchOff()
 
     self:SetGrenadeRecovering(true)
 
-    self:GetDetonatorEntity():Detonate()
+    if SERVER and IsValid(self:GetDetonatorEntity()) then
+        self:GetDetonatorEntity():Detonate()
+    end
 end
