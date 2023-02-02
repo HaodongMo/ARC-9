@@ -941,12 +941,11 @@ function SWEP:ShootRocket()
         local rocket = ents.Create(ent)
         if !IsValid(rocket) then return end
 
-
+        rocket:SetOwner(owner)
         rocket:SetPos(src)
         rocket:SetAngles(dispersion)
         rocket:Spawn()
         rocket.Owner = owner
-        rocket:SetOwner(owner)
         rocket.Weapon = self
         rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", {
             Target = IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget()
