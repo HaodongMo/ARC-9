@@ -339,7 +339,7 @@ function SWEP:CreateHUD_Bottom()
     local scroll = vgui.Create("ARC9HorizontalScroller", bp)
     scroll:SetPos(0, ARC9ScreenScale(3))
     scroll:SetSize(lowerpanel:GetWide(), ARC9ScreenScale(57.3))
-    scroll:SetOverlap(-ARC9ScreenScale(4)) -- If this is too small, the right side will be cut out. idk why and idk how to fix it elegantly so here you go
+    scroll:SetOverlap(-ARC9ScreenScale(5)) -- If this is too small, the right side will be cut out. idk why and idk how to fix it elegantly so here you go
     scroll:MoveToFront()
 
     function scroll.btnLeft:Paint(w, h) end
