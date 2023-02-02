@@ -42,6 +42,7 @@ function SWEP:GetIsSprintingCheck()
     if !self:GetOwner():IsValid() or self:GetOwner():IsNPC() then
         return false
     end
+    if self:GetInSights() then return false end
     -- if self:GetIsNearWall() then return true end
     if !owner:KeyDown(IN_SPEED) then return false end
     if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then return false end
