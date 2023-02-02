@@ -16,7 +16,7 @@ function SWEP:SlotIsCosmetic(slottbl)
         end
 
         for _, cat in ipairs(cats) do
-            if !ARC9.CosmeticCategories[cat] then
+            if !ARC9.CosmeticCategories[cat] or slottbl.ForceNoCosmetics then
                 hasnoncosmeticslot = true
                 break
             end
