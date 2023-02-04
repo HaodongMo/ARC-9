@@ -375,6 +375,8 @@ SWEP.Firemodes = {
     }
 }
 
+SWEP.FiremodeAnimLock = false -- Firemode animation cannot be interrupted
+
 SWEP.SlamFire = false -- Manual action weapons cycle themselves
 
 SWEP.AutoBurst = false -- Hold fire to keep firing bursts

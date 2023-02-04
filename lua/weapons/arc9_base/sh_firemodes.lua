@@ -33,13 +33,15 @@ function SWEP:SwitchFiremode()
 
     self:SetFiremode(fm)
 
+    local lock = self:GetValue("FiremodeAnimLock")
+
     if self:HasAnimation(anim) then
-        local t = self:PlayAnimation(anim, 1, false)
+        local t = self:PlayAnimation(anim, 1, lock)
 
         self:SetFinishFiremodeAnimTime(CurTime() + t)
         -- self:SetFiremodePose()
     elseif self:HasAnimation("firemode") then
-        local t = self:PlayAnimation("firemode", 1, false)
+        local t = self:PlayAnimation("firemode", 1, lock)
 
         self:SetFinishFiremodeAnimTime(CurTime() + t)
     end
