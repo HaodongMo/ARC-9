@@ -94,7 +94,7 @@ function SWEP:DoShootSounds()
     local sslr = lsslr
     local dsstr = ldsstr
 
-    local silenced = self:GetProcessedValue("Silencer") and not self:GetUBGL()
+    local silenced = self:GetProcessedValue("Silencer") and !self:GetUBGL()
     local indoor = self:GetIndoor() -- GetIndoor returns number and that's not fact. that's a lie. It can return false
     if isbool(indoor) then
         indoor = indoor and 1 or 0
@@ -258,7 +258,6 @@ function SWEP:PrimaryAttack()
 
     if self:GetNeedsCycle() then return end
 
-    if self:SprintLock() then return end
 
     if self:GetCustomize() then return end
 
@@ -267,6 +266,8 @@ function SWEP:PrimaryAttack()
         self:SetNeedTriggerPress(true)
         return
     end
+
+    if self:SprintLock() then return end
 
     if self:HasAmmoInClip() then
         if processedValue(self,"TriggerDelay") then

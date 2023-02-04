@@ -572,6 +572,8 @@ SWEP.PostBashTime = 0.5
 SWEP.BashDamageType = DMG_CLUB
 SWEP.BashDecal = "ManhackCut"
 
+SWEP.BashWhileSprint = false -- Unlike ShootWhileSprint, this will not require transitioning out of sprint state (and waiting the sprinttofire delay)
+
 SWEP.BashThirdArmAnimation = {
         rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",
         sequence = {"melee1", "melee2"},

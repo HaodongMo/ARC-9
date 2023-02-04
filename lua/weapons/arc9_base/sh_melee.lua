@@ -4,7 +4,7 @@ local vmaxs, vmins = Vector(2, 2, 2), Vector(-2, -2, -2)
 function SWEP:MeleeAttack(bypass, bash2)
     if !bypass then
         if self:StillWaiting() then return end
-        if self:SprintLock() then return end
+        if !self:GetProcessedValue("BashWhileSprint") and self:SprintLock() then return end
     end
 
     self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimMelee"))
