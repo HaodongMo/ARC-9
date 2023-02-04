@@ -26,7 +26,6 @@ function SWEP:PreDrawViewModel()
         return
     end
 
-
     local getsights = self:GetSight()
     local sightamount = self:GetSightAmount()
 
@@ -40,14 +39,9 @@ function SWEP:PreDrawViewModel()
         blurtarget = 2 * sightamount
     end
 
-    if GetConVar("arc9_fx_reloadblur"):GetBool() then
-        if self:GetReloading() then
-            blurtarget = 1.5
-            shouldrtblur = true
-        elseif self:GetReadyTime() >= CurTime() and GetConVar("arc9_fx_animblur"):GetBool() then
-            blurtarget = 1.5
-            shouldrtblur = true
-        end
+    if (GetConVar("arc9_fx_reloadblur"):GetBool() and self:GetReloading()) or (GetConVar("arc9_fx_animblur"):GetBool() and self:GetReadyTime() >= CurTime()) then
+        blurtarget = 1.5
+        shouldrtblur = true
     end
 
     local custdelta = self.CustomizeDelta

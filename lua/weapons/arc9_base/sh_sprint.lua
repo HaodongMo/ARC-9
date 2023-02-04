@@ -52,10 +52,8 @@ function SWEP:GetIsSprintingCheck()
         return false
     end
 
-    if self:GetProcessedValue("ShootWhileSprint") then
-        if owner:KeyDown(IN_ATTACK) then
-            return false
-        end
+    if self:GetProcessedValue("ShootWhileSprint") and owner:KeyDown(IN_ATTACK) then
+        return false
     end
 
     if self:GetGrenadePrimed() then
