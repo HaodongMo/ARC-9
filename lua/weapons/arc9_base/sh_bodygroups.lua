@@ -141,7 +141,7 @@ function SWEP:GetHiddenBones(wm)
         hide = true
     end
 
-    if wm then
+    if wm or self:GetProcessedValue("ReloadHideBonesFirstPerson") then
         hide = true
     end
 

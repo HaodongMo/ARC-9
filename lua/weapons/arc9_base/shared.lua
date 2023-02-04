@@ -940,6 +940,8 @@ SWEP.ReloadHideBoneTables = { -- works only with TPIK
     -- [1] = {"list", "of", "bones"},
     -- [2] = {"list", "of", "bones"}
 }
+SWEP.ReloadHideBonesFirstPerson = false -- Set to true to enable HideBones even in first person.
+-- Come on, fix your damn animations!
 
 SWEP.PoseParameters = {} -- Poseparameters to manage. ["parameter"] = starting value.
 -- Use animations to switch between different pose parameters.
