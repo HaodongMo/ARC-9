@@ -39,7 +39,6 @@ function SWEP:Deploy()
     end
 
     self:DoDeployAnimation()
-    print(self:GetReadyTime() - CurTime())
 
     self:SetBurstCount(0)
     self:SetSightAmount(0)
@@ -205,10 +204,9 @@ end)
 
 function SWEP:DoDeployAnimation()
     if !GetConVar("arc9_never_ready"):GetBool() and (GetConVar("arc9_dev_always_ready"):GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
-        local t = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true) or 0
-        local minprogress = self:GetAnimationEntry(self:TranslateAnimation("ready")).MinProgress or 1
+        local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true)
 
-        self:SetReadyTime(CurTime() + t * minprogress)
+        self:SetReadyTime(CurTime() + t * min)
         self:SetReady(true)
     else
         self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)

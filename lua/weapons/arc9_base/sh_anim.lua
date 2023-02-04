@@ -162,7 +162,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy)
 
     self:SetFiremodePose()
 
-    return (time * mult), minprogress
+    return time * mult, minprogress
 end
 
 function SWEP:GetAnimationProxyModel(wm)
