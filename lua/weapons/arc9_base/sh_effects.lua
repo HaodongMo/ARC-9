@@ -7,8 +7,9 @@ function SWEP:DoEffects()
     local data = EffectData()
     data:SetEntity(self)
     data:SetAttachment(muzz_qca)
+    data:SetSurfaceProp(self:GetNthShot() % 2) -- hopefully nobody uses this on a muzzle effect
 
-    local muzzle = "ARC9_muzzleeffect"
+    local muzzle = "arc9_muzzleeffect"
 
     if !self:GetProcessedValue("MuzzleParticle") and self:GetProcessedValue("MuzzleEffect") then
         muzzle = self:GetProcessedValue("MuzzleEffect")
@@ -74,13 +75,14 @@ function SWEP:GetTracerOrigin()
     end
 end
 
-function SWEP:GetMuzzleDevice(wm)
+function SWEP:GetMuzzleDevice(wm, n)
     if self:GetProcessedValue("IgnoreMuzzleDevice") then
         if wm then return self:GetWM() else return self:GetVM() end
     end
 
     local model
     local muzz
+    local nthShot = n or self:GetNthShot()
 
     local ubgl = self:GetUBGL()
 
@@ -90,13 +92,13 @@ function SWEP:GetMuzzleDevice(wm)
 
         if ubgl and self.MuzzleDeviceUBGLWM then
             if istable(self.MuzzleDeviceUBGLWM) then
-                return self.MuzzleDeviceUBGLWM[(self:GetNthShot() % #self.MuzzleDeviceUBGLWM) + 1]
+                return self.MuzzleDeviceUBGLWM[(nthShot % #self.MuzzleDeviceUBGLWM) + 1]
             else
                 return self.MuzzleDeviceUBGLWM
             end
         elseif self.MuzzleDeviceWM then
             if istable(self.MuzzleDeviceWM) then
-                return self.MuzzleDeviceWM[(self:GetNthShot() % #self.MuzzleDeviceWM) + 1]
+                return self.MuzzleDeviceWM[(nthShot % #self.MuzzleDeviceWM) + 1]
             else
                 return self.MuzzleDeviceWM
             end
@@ -107,13 +109,13 @@ function SWEP:GetMuzzleDevice(wm)
 
         if ubgl and self.MuzzleDeviceUBGLVM then
             if istable(self.MuzzleDeviceUBGLVM) then
-                return self.MuzzleDeviceUBGLVM[(self:GetNthShot() % #self.MuzzleDeviceUBGLVM) + 1]
+                return self.MuzzleDeviceUBGLVM[(nthShot % #self.MuzzleDeviceUBGLVM) + 1]
             else
                 return self.MuzzleDeviceUBGLVM
             end
         elseif self.MuzzleDeviceVM then
             if istable(self.MuzzleDeviceVM) then
-                return self.MuzzleDeviceVM[(self:GetNthShot() % #self.MuzzleDeviceVM) + 1]
+                return self.MuzzleDeviceVM[(nthShot % #self.MuzzleDeviceVM) + 1]
             else
                 return self.MuzzleDeviceVM
             end

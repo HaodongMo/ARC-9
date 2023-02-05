@@ -369,7 +369,7 @@ function SWEP:DoPrimaryAttack()
         local banim = anim
 
         if !self.SuppressCumulativeShoot then
-            for i = 1, burstCount+1 do
+            for i = 1, burstCount + 1 do
                 if self:HasAnimation(anim .. "_" .. i) then
                     banim = anim .. "_" .. i
                 end
@@ -423,6 +423,16 @@ function SWEP:DoPrimaryAttack()
     if processedValue(self, "AkimboBoth") then
         self:SetNthShot(nthShot + 2)
         self:DoEffects()
+        if !processedValue(self,"NoShellEject") and !(manualaction and !processedValue(self,"ManualActionEjectAnyway")) then
+            local ejectdelay = processedValue(self,"EjectDelay")
+            if ejectdelay == 0 then
+                self:DoEject()
+            else
+                self:SetTimer(ejectdelay, function()
+                    self:DoEject()
+                end)
+            end
+        end
         self:SetNthShot(nthShot + 1)
     end
 

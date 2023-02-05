@@ -33,7 +33,7 @@ function EFFECT:Init(data)
         parent = (wpn.WModel or {})[1] or wpn
     end
 
-    local muz = wpn:GetMuzzleDevice(wm)
+    local muz = wpn:GetMuzzleDevice(wm, data:GetSurfaceProp())
 
     if !IsValid(muz) then
         muz = wpn
