@@ -30,7 +30,7 @@ SWEP.AdminOnly = false
 -- HipFire
 -- Hot (Scales with overheat)
 -- Shooting (Enabled when constantly shooting)
--- Recoil (Scales with long bursts)
+-- Recoil (Scales with long bursts, you should also set RecoilModifierCap!)
 -- Move (Scaled with move speed)
 
 -- Example:
@@ -102,7 +102,7 @@ SWEP.MirrorVMWM = false -- Use this to use the viewmodel as a worldmodel.
 SWEP.WorldModelMirror = nil -- Use this to set a lower-quality version of the viewmodel, with the same bone structure, as a worldmodel, to take advantage of MirrorVMWM without having to use the viewmodel.
 SWEP.WorldModelOffset = nil
 -- SWEP.WorldModelOffset = {
---     Pos = Vector(0, 0, 0), -- non tpik (while on ground, on npc etc) 
+--     Pos = Vector(0, 0, 0), -- non tpik (while on ground, on npc etc)
 --     Ang = Angle(0, 0, 0),
 --     TPIKPos = Vector(0, 0, 0), -- arc9_tpik 1, you can make cool poses with it
 --     TPIKAng = Angle(0, 0, 0),
@@ -524,6 +524,10 @@ SWEP.SpreadAddBlindFire = 0 -- Applied when blind firing.
 SWEP.SpreadAddCrouch = 0 -- Applied when crouching.
 
 SWEP.SpreadAddRecoil = 0 -- Applied per unit of recoil.
+
+-- Limit the effect of recoil on modifiers to this much.
+-- Because the per shot modifier used to be broken and effectively had a limit of 1, it is set to 1 by default. You should probably set it higher.
+SWEP.RecoilModifierCap = 1
 
 -------------------------- HANDLING
 
@@ -972,7 +976,7 @@ SWEP.IronSights = {
     Magnification = 1,
     AssociatedSlot = 0, -- Attachment slot to associate the sights with. Causes RT scopes to render.
     CrosshairInSights = false,
-    Blur = true, -- If arc9_fx_adsblur 1 then blur gun in that ironsights. Disable if your "ironsights" are not real ironsights 
+    Blur = true, -- If arc9_fx_adsblur 1 then blur gun in that ironsights. Disable if your "ironsights" are not real ironsights
     ---- FLAT SCOPES
     -- These don't look very good; please use actual RT scopes if possible.
     FlatScope = false,

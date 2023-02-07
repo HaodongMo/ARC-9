@@ -8,6 +8,10 @@ SWEP.ExcludeFromRawStats = {
     ["PrintName"] = true,
 }
 
+SWEP.DynamicConditions = { -- Never cache these conditions because they will always change
+    ["Recoil"] = true,
+}
+
 local quickmodifiers = {
     ["DamageMin"] = GetConVar("arc9_mod_damage"),
     ["DamageMax"] = GetConVar("arc9_mod_damage"),
@@ -357,7 +361,9 @@ do
             end
         end
 
-        statCache[baseContValContCondition] = stat
+        if not self.DynamicConditions[condition] then
+            statCache[baseContValContCondition] = stat
+        end
         -- self.StatCache[tostring(base) .. valContCondition] = stat
         local newstat, any = swepRunHook(self, val .. "Hook" .. condition, stat)
         stat = newstat or stat
@@ -374,7 +380,9 @@ do
             unaffected = false
         end
 
-        self.HasNoAffectors[valContCondition] = unaffected
+        if not self.DynamicConditions[condition] then
+            self.HasNoAffectors[valContCondition] = unaffected
+        end
 
         -- if statType == 'table' then
         if type(stat) == 'table' then
@@ -587,8 +595,8 @@ do
             end
         end
 
-        if not hasNoAffectors[val .. "Recoil"] then
-            local recoilAmount = swepDt.RecoilAmount
+        if val ~= "RecoilModifierCap" and not hasNoAffectors[val .. "Recoil"] then
+            local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap"), swepDt.RecoilAmount)
 
             if recoilAmount > 0 then
                 stat = arcGetValue(self, val, stat, "Recoil", recoilAmount)
