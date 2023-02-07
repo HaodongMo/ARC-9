@@ -552,9 +552,11 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 for i = 1, self:GetProcessedValue("Num") do
                     ang2:Set(ang)
 
-                    local angleRand = AngleRand()
-                    angleRand:Div(3.6)
-                    angleRand:Mul(spread)
+                    -- trig stuff to ensure the spread is a circle of the right size
+                    local seed = i + self:EntIndex() + engine.TickCount()
+                    local a = util.SharedRandom("arc9_physbullet", 0, 360, seed)
+                    local angleRand = Angle(math.sin(a), math.cos(a), 0)
+                    angleRand:Mul(spread * util.SharedRandom("arc9_physbullet2", 0, 45, seed) * 1.4142135623730)
 
                     ang2:Add(angleRand)
 
