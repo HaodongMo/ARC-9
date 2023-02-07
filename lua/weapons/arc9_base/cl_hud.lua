@@ -67,7 +67,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
     col.a = lasthelperalpha * col.a
 
-    if owner:IsAdmin() and ARC9.Dev(1) and GetConVar("arc9_dev_crosshair"):GetBool() then
+    if owner:IsAdmin() and GetConVar("arc9_dev_crosshair"):GetBool() then
         self:DevStuffCrosshair()
         return true
     end
