@@ -595,7 +595,7 @@ do
             end
         end
 
-        if val ~= "RecoilModifierCap" and not hasNoAffectors[val .. "Recoil"] then
+        if base ~= "RecoilModifierCap" and not hasNoAffectors[val .. "Recoil"] then
             local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap"), swepDt.RecoilAmount)
 
             if recoilAmount > 0 then
