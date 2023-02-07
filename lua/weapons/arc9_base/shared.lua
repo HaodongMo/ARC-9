@@ -619,8 +619,9 @@ SWEP.BackstabDecal = "ManhackCut"
 -------------------------- LOCKON
 
 SWEP.LockOn = false
+-- SWEP.LockOnSights = false
 
--- Use LockOnSights = true to lock only in sights
+-- Do not use LockOn and LockOnSights together
 -- LockOn will provide targeting data in ENT.ShootEntData
 
 SWEP.LockOnAutoaim = false -- Gun will shoot directly towards lockon target
