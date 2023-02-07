@@ -280,6 +280,10 @@ local conVars = {
         default = "",
     },
     {
+        name = "dev_crosshair",
+        default = "0",
+    },
+    {
         name = "breath_hud",
         default = "1",
         client = true,

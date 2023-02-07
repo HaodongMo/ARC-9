@@ -202,7 +202,7 @@ function SWEP:DoTPIK()
         ply_r_forearm_pos = LocalToWorld(self.TPIKCache.r_forearm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
     end
 
-    if ARC9.Dev(1) then
+    if ARC9.Dev(2) then
         debugoverlay.Line(ply_r_shoulder_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1)
         debugoverlay.Line(ply_r_upperarm_pos, ply_r_forearm_pos, 0.1)
         -- debugoverlay.Line(ply_r_forearm_pos, ply_r_hand_matrix:GetTranslation(), 0.1)
@@ -261,7 +261,7 @@ function SWEP:DoTPIK()
         ply_l_forearm_pos = LocalToWorld(self.TPIKCache.l_forearm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
     end
 
-    if ARC9.Dev(1) then
+    if ARC9.Dev(2) then
         debugoverlay.Line(ply_l_shoulder_matrix:GetTranslation(), ply_l_upperarm_pos, 0.1, Color(255, 255, 255), true)
         debugoverlay.Line(ply_l_upperarm_pos, ply_l_forearm_pos, 0.1, Color(255, 255, 255), true)
         -- debugoverlay.Line(ply_l_forearm_pos, ply_l_hand_matrix:GetTranslation(), 0.1, Color(255, 255, 255), true)

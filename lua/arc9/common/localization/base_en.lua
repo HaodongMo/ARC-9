@@ -426,7 +426,7 @@ L["settings.gameplay.nearwall.title"] = "Near-walling"
 L["settings.gameplay.nearwall.desc"] = "Not allow gun shoot when you standing too close to wall or any obstacle."
 
 L["settings.visuals.vm_bobstyle.title"] = "Bob Style"
-L["settings.visuals.vm_bobstyle.desc"] = "Select different bobbing styles, to the flavor of different members of the ARC9 team (and valve software), going from most newest style to oldest one."
+L["settings.visuals.vm_bobstyle.desc"] = "Select different bobbing styles, to the flavor of different members of the ARC9 team (and Valve Software), going from most newest style to oldest one."
 L["settings.visuals.fov.title"] = "FOV"
 L["settings.visuals.fov.desc"] = "Add viewmodel FOV. Makes the viewmodel bigger or smaller. Use responsibly."
 L["settings.visuals.vm_addx.title"] = "Add X"
@@ -610,3 +610,7 @@ L["settings.visuals.vm_cambobwalk.title"] = "Walk View Bobbing"
 L["settings.visuals.vm_cambobwalk.desc"] = "Makes your camera slightly move when you walking around (requires sprint bobbing)"
 L["settings.visuals.vm_cambobintensity.title"] = "Intensity"
 L["settings.visuals.vm_cambobintensity.desc"] = "How intense bobbing will be"
+
+-- Added 7-FEB-2023
+L["settings.developer.dev_crosshair.title"] = "Dev Crosshair"
+L["settings.developer.dev_crosshair.desc"] = "Funky looking crosshair showing the exact point of aim and some useful numbers.\n\nThis is a server variable, and only works for admins - don't get cheaty with this!"

@@ -123,7 +123,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                 --     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
                 -- end
 
-                if ARC9.Dev(1) then
+                if ARC9.Dev(2) then
                     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, 0, 0), true)
                 end
 
@@ -160,8 +160,8 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             })
 
             -- Go backwards to find out where this thing ends
-            
-            if ARC9.Dev(1) then
+
+            if ARC9.Dev(2) then
                 debugoverlay.Line(endpos, ntr.HitPos, 10, Color(255, 0, 0), true)
             end
             local d1 = (endpos - ntr.HitPos):Length()

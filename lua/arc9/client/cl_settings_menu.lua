@@ -268,6 +268,7 @@ local settingstable = {
         { type = "label", text = "settings.developer.developer"},
         { type = "bool", text = "settings.developer.dev_always_ready.title", convar = "dev_always_ready", desc = "settings.developer.dev_always_ready.desc"},
         { type = "bool", text = "settings.developer.dev_benchgun.title", convar = "dev_benchgun", desc = "settings.developer.dev_benchgun.desc"},
+        { type = "bool", text = "settings.developer.dev_crosshair.title", convar = "dev_crosshair", desc = "settings.developer.dev_crosshair.desc"},
         { type = "bool", text = "settings.developer.dev_show_shield.title", convar = "dev_show_shield", desc = "settings.developer.dev_show_shield.desc"},
         { type = "bool", text = "settings.developer.dev_greenscreen.title", convar = "dev_greenscreen", desc = "settings.developer.dev_greenscreen.desc"},
         { type = "button", text = "settings.developer.reloadatts.title", content = "settings.developer.reload", func = function(self2)

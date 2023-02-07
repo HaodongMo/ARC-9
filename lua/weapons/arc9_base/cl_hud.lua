@@ -63,20 +63,21 @@ function SWEP:DoDrawCrosshair(x, y)
     miniprong_1 = lerp(d, miniprong_1, ARC9ScreenScale(3))
     miniprong_2 = lerp(d, miniprong_2, ARC9ScreenScale(1))
 
-    if owner:IsAdmin() and ARC9.Dev(2) and self:GetInSights() then
-        surface.SetDrawColor(255, 0, 0, 150)
-        surface.DrawLine(scrw / 2, 0, scrw / 2, scrh)
-        surface.DrawLine(0, scrh / 2, scrw, scrh / 2)
-    end
-
     local helpertarget = 0
 
     col.a = lasthelperalpha * col.a
 
+    if owner:IsAdmin() and ARC9.Dev(1) and GetConVar("arc9_dev_crosshair"):GetBool() then
+        self:DevStuffCrosshair()
+        return true
+    end
+
     if !self:ShouldDrawCrosshair() then
+        --[[]
         if owner:KeyDown(IN_USE) then
-            -- helpertarget = 1
+            helpertarget = 1
         end
+        ]]
 
         lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
 
