@@ -419,16 +419,15 @@ concommand.Add("arc9_dev_toggleanimsmenu", function(ply, cmd, args)
     end
 end)
 
---local gaA = 0
+local gaA = 0
 local function GetFOVAcc(deg)
     cam.Start3D()
     local lool = (EyePos() + EyeAngles():Forward() + (deg * EyeAngles():Up())):ToScreen()
     cam.End3D()
     local gau = (ScrH() / 2) - lool.y
-    return gau
-    --gaA = math.Approach(gaA, gau, (ScrH() / 2) * FrameTime())
+    gaA = math.Approach(gaA, gau, (ScrH() / 2) * FrameTime() * 2)
 
-    --return gaA
+    return gaA
 end
 
 surface.CreateFont( "ARC9_DevCrosshair", {
@@ -490,7 +489,7 @@ function SWEP:DevStuffCrosshair()
     surface.DrawLine(x, y - len, x, y + len)
     surface.DrawLine(x - len, y, x + len, y)
 
-    local spread_val = self:GetProcessedValue("Spread")
+    local spread_val = math.max(0, self:GetProcessedValue("Spread"))
     local spread = GetFOVAcc(spread_val)
     surface.DrawCircle(x, y, spread, 255, 255, 255, 255)
     surface.DrawCircle(x, y, spread + 0.5, 255, 255, 255, 100)
