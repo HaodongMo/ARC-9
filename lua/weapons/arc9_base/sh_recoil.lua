@@ -346,7 +346,8 @@ do
         local rdr = swepGetProcessedValue(self, "RecoilDissipationRate")
 
         if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < CurTime() then
-            self:SetRecoilAmount(math.max(self.dt.RecoilAmount - (FrameTime() * rdr), 0))
+            -- as soon as dissipation kicks in, recoil is clamped to the modifer cap; this is to not break recoil lookup table runoff calculations
+            self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (FrameTime() * rdr), 0, swepGetProcessedValue(self, "RecoilModifierCap")))
             -- print(math.Round(rec))
         end
 
