@@ -582,7 +582,7 @@ do
             local nextPrimaryFire = weaponGetNextPrimaryFire(self)
 
             if nextPrimaryFire + 0.1 > ct then
-                local pft = ct - nextPrimaryFire + 0.1
+                local pft = ct - (nextPrimaryFire + 0.1)
                 local d = 1 - math.Clamp(pft / 0.1, 0, 1)
 
                 if isnumber(stat) then
