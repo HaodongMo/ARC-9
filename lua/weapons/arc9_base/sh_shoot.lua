@@ -470,12 +470,14 @@ function SWEP:DoPrimaryAttack()
     self:SetBurstCount(burstCount + 1)
 
     if manualaction then
+        nthShot = nthShot + 1
         if clip1 > 0 or !processedValue(self,"ManualActionNoLastCycle") then
             if nthShot % processedValue(self,"ManualActionChamber") == 0 then
                 self:SetNeedsCycle(true)
             end
         end
     end
+    -- print("shot = " .. nthShot)
 
     if currentFiremode == 1 or clip == 0 then
         self:SetNeedTriggerPress(true)
@@ -595,7 +597,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
             fireBullets.IgnoreEntity = veh
             fireBullets.Distance = distance
             fireBullets.Callback = function(att, btr, dmg)
-                local range = btr.Fraction*distance
+                local range = btr.Fraction * distance
 
                 self.Penned = 0
                 self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
