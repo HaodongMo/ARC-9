@@ -108,6 +108,8 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
         mins = vmins2
     })
 
+    self:RunHook("Hook_Bash", tr)
+
     if tr.Hit then
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
             if backstab then
@@ -172,6 +174,9 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
             dmg:SetDamageType(self:GetProcessedValue(prefix .. "DamageType"))
             dmg:SetAttacker(owner)
             dmg:SetInflictor(self)
+
+            local data = {tr = tr, dmg = dmg}
+            self:RunHook("Hook_BashHit", data)
 
             tr.Entity:TakeDamageInfo(dmg)
         end
