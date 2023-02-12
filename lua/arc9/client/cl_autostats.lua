@@ -77,7 +77,7 @@ ARC9.AutoStatsMains = {
     ["CanFireUnderwater"] = {false, true},
     ["AutoReload"] = {false, true},
     ["AutoBurst"] = {false, true},
-    ["RunAwayBurst"] = {false, false},
+    ["RunawayBurst"] = {false, false},
     ["ShootWhileSprint"] = {false, true},
     ["Bash"] = {false, true},
     ["Overheat"] = {false, false},
@@ -100,6 +100,7 @@ ARC9.AutoStatsMains = {
     ["VisualRecoilRoll"] = {false, true},
     ["VisualRecoilPunch"] = {false, true},
     ["BreathHoldTime"] = {false, false},
+    ["RecoilModifierCap"] = {false, true},
 }
 
 ARC9.AutoStatsOperations = {

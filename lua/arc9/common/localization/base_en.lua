@@ -614,3 +614,6 @@ L["settings.visuals.vm_cambobintensity.desc"] = "How intense bobbing will be"
 -- Added 7-FEB-2023
 L["settings.developer.dev_crosshair.title"] = "Dev Crosshair"
 L["settings.developer.dev_crosshair.desc"] = "Funky looking crosshair showing the exact point of aim and some useful numbers.\n\nThis is a server variable, and only works for admins - don't get cheaty with this!"
+
+-- Added 11-FEB-2023
+L["autostat.recoilmodifiercap"] = "Maximum Cumulative Recoil"
