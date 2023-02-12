@@ -63,6 +63,8 @@ function ARC9.StartCommand(ply, cmd)
     if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
 
     local timescalefactor = 5 / (ply:Ping() or 5)
+    
+    if ply:IsBot() then timescalefactor = 1 end -- ping is infinite for them lol
 
     if wpn:GetBipod() then
         local bipang = wpn:GetBipodAng()
@@ -110,10 +112,6 @@ function ARC9.StartCommand(ply, cmd)
         local eyeang = cmd:GetViewAngles()
 
         local m = 100
-
-        if game.SinglePlayer() then
-            m = 100
-        end
 
         m = m * timescalefactor
 
