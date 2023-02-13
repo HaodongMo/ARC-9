@@ -46,12 +46,15 @@ function SWEP:CanLockOn(ent)
     return canlock
 end
 
-function SWEP:GetLockOnScore(ent)
+function SWEP:GetLockOnScore(ent, pure)
     local score = 0
 
     local dot = self:GetOwner():GetAimVector():Dot((ent:GetPos() - self:GetShootPos()):GetNormalized())
 
+    if math.deg(math.acos(dot)) > self:GetProcessedValue("LockOnFOV") then return 0 end
+
     score = score + (math.deg(math.acos(dot)) / 2)
+    if pure then return score end
 
     if ent:IsPlayer() then
         score = score + 100
@@ -85,14 +88,13 @@ function SWEP:LockOnTargetInFOV(ent)
 end
 
 function SWEP:ThinkLockOn()
-
     if !self:GetProcessedValue("LockOn") then
         self:SetLockOnTarget(NULL)
         return
     end
 
     if IsValid(self:GetLockOnTarget()) then
-        if !self:LockOnTargetInFOV(self:GetLockOnTarget()) then
+        if self:GetLockOnScore(self:GetLockOnTarget(), true) == 0 then
             self:SetLockOnTarget(NULL)
         else
             if !self:GetLockedOn() and
@@ -110,20 +112,16 @@ function SWEP:ThinkLockOn()
         end
     end
 
-    local ents = ents.GetAll()
-
     local bestent = nil
     local bestscore = 0
 
-    for _, ent in ipairs(ents) do
-        if !IsValid(ent) then continue end
-        if ent:IsWorld() then continue end
-
-        if !self:CanLockOn(ent) then continue end
-
-        if !self:LockOnTargetInFOV(ent) then continue end
+    for _, ent in ipairs(ents.GetAll()) do
+        if !IsValid(ent) or ent:IsWorld() then continue end
 
         local score = self:GetLockOnScore(ent)
+
+        if score == 0 then continue end
+        if !self:CanLockOn(ent) then continue end
 
         if score > bestscore then
             bestent = ent
@@ -172,13 +170,11 @@ function SWEP:DrawLockOnHUD(iam3d)
         })
     end
 
-    local ents = ents.GetAll()
-
     local bestent = nil
     local bestscore = 0
     local bestlock = {}
 
-    for _, ent in ipairs(ents) do
+    for _, ent in ipairs(ents.GetAll()) do
         if !IsValid(ent) then continue end
         if ent:IsWorld() then continue end
         if ent == self:GetLockOnTarget() then continue end
@@ -196,7 +192,7 @@ function SWEP:DrawLockOnHUD(iam3d)
 
         table.insert(locks, locktbl)
 
-        if !self:LockOnTargetInFOV(ent) then
+        if score == 0 then
             locktbl.outoffov = true
             continue
         end
