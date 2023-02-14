@@ -58,12 +58,14 @@ end
 hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)
 
 function ARC9.StartCommand(ply, cmd)
+    if !IsValid(ply) then return end
+
     local wpn = ply:GetActiveWeapon()
 
     if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
 
     local timescalefactor = 5 / (ply:Ping() or 5)
-    
+
     if ply:IsBot() then timescalefactor = 1 end -- ping is infinite for them lol
 
     if wpn:GetBipod() then
