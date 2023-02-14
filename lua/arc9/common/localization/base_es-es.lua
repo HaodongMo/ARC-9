@@ -602,3 +602,10 @@ L["settings.visuals.vm_cambobwalk.title"] = "Balanceo de Vista al Caminar"
 L["settings.visuals.vm_cambobwalk.desc"] = "Hace que tu cámara se mueva ligeramente cuando caminas (requiere balanceo al esprintar)"
 L["settings.visuals.vm_cambobintensity.title"] = "Intensidad"
 L["settings.visuals.vm_cambobintensity.desc"] = "Qué tan intenso será el balanceo"
+
+-- Added 7-FEB-2023
+L["settings.developer.dev_crosshair.title"] = "Punto de Mira Dev"
+L["settings.developer.dev_crosshair.desc"] = "Un punto de mira de aspecto gracioso que muestra el punto exacto de puntería y algunos números útiles.\n\nEsta es una variable del servidor, y sólo funciona para los administradores - ¡no hagas trampas con esto!"
+
+-- Added 11-FEB-2023
+L["autostat.recoilmodifiercap"] = "Máximo retroceso acumulado"
