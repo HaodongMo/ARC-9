@@ -74,7 +74,9 @@ function EFFECT:Init(data)
     if IsValid(ent.Owner) then
         plyvel = ent.Owner:GetAbsVelocity()
     end
-    phys:Wake()
+
+    if phys then phys:Wake() end
+
     -- phys:SetDamping(0, 0)
     -- phys:SetMass(1)
     phys:SetMaterial("gmod_silent")
