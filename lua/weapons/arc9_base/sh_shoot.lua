@@ -41,7 +41,7 @@ local dryfireSoundTab = {
 function SWEP:DryFire()
     local nthShot = self:GetNthShot()
 
-    self:PlayAnimation("dryfire")
+    self:PlayAnimation("dryfire", _, true)
     self:SetBurstCount(0)
     self:SetNeedTriggerPress(true)
 
