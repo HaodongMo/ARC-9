@@ -327,7 +327,9 @@ function SWEP:RestoreClip(amt)
 
         clip = self:Clip1()
 
-        self:SetLoadedRounds(self:Clip1())
+        if !self.NoForceSetLoadedRoundsOnReload then -- sorry
+            self:SetLoadedRounds(self:Clip1())
+        end
     end
 
     return clip - lastclip
