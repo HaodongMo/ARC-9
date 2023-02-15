@@ -1209,7 +1209,6 @@ SWEP.Attachments = {
     --     Icon_Offset = Vector(0, 0, 0),
     --     KeepBaseIrons = false,
     --     ExtraSightDistance = 0,
-    --     ExtraSightDistanceNoRT = false, -- Ignore ExtraSightDistance for RT scopes
     --     Installed = nil,
     --     MergeSlots = {}, -- merge this slot with another
     --     StickerModel = "", -- This is the model that will be used for the sticker
