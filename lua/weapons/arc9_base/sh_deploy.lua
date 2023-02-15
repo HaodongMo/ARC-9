@@ -75,8 +75,9 @@ function SWEP:Deploy()
         self:SetTimer(0.25, function()
             self:SendWeapon()
         end)
-
-        self:GetOwner():GetHands():SetLightingOriginEntity(self:GetOwner():GetViewModel())
+        if IsValid(self:GetOwner():GetHands()) then
+            self:GetOwner():GetHands():SetLightingOriginEntity(self:GetOwner():GetViewModel())
+        end
     end
 
     self:SetShouldHoldType()
