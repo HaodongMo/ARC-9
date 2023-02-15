@@ -37,18 +37,17 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         else
             mdl = self.WModel
             lod = self:ShouldLOD()
-            
-            if mdl then 
+            if mdl then
                 -- if mdl[1] then
-                    mdl[1]:SetMaterial(self:GetProcessedValue("Material")) 
+                    mdl[1]:SetMaterial(self:GetProcessedValue("Material"))
                 -- end
             end
         end
 
-        if lod >= 2 then
-            self:DrawModel()
-            return
-        end
+        self:DrawCustomModel()
+        -- if lod >= 2 then
+        --     self:DrawModel()
+        -- end
     end
 
     if !mdl then
@@ -159,7 +158,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             if atttbl.DrawFunc then
                 atttbl.DrawFunc(self, model, wm)
             end
-            
         --     -- if model.Flare and !self:GetCustomize() then
         --     --     if model.Flare.Attachment then
         --     --         local attpos = model:GetAttachment(model.Flare.Attachment)
