@@ -249,6 +249,8 @@ function SWEP:SavePreset(presetname, nooverride, forcedname)
 end
 
 function SWEP:DoPresetCapture(filename, foricon)
+    local color = GetConVar("arc9_killfeed_color"):GetBool()
+
     render.PushRenderTarget(cammat)
 
     render.SetColorMaterial()
@@ -321,10 +323,12 @@ function SWEP:DoPresetCapture(filename, foricon)
     -- mdl:SetupBones()
     -- mdl:InvalidateBoneCache()
 
-    render.SetBlend(1)
-    render.SetColorModulation(1, 1, 1)
+    if !color then
+        render.SetBlend(1)
+        render.SetColorModulation(1, 1, 1)
+        render.MaterialOverride(Material("models/shiny"))
+    end
 
-    render.MaterialOverride(Material("models/shiny"))
     render.OverrideColorWriteEnable(true, false)
     -- self:GetVM():DrawModel()
     self:DrawCustomModel(true, pos, ang)
@@ -332,7 +336,10 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.BlurRenderTarget(cammat, 10, 10, 1)
 
-    render.MaterialOverride(Material("models/shiny"))
+    if !color then
+        render.MaterialOverride(Material("models/shiny"))
+    end
+
     self:DrawCustomModel(true, pos, ang)
     render.MaterialOverride()
 

@@ -417,6 +417,11 @@ local conVars = {
         client = true
     },
     {
+        name = "killfeed_color",
+        default = "0",
+        client = true
+    },
+    {
         name = "hud_always",
         default = "0"
     },

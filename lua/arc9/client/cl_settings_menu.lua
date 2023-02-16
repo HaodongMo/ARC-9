@@ -141,6 +141,7 @@ local settingstable = {
         { type = "label", text = "settings.hud_game.killfeed" },
         { type = "bool", text = "settings.hud_game.killfeed_enable.title", convar = "killfeed_enable", desc = "settings.hud_game.killfeed_enable.desc" },
         { type = "bool", text = "settings.hud_game.killfeed_dynamic.title", convar = "killfeed_dynamic", desc = "settings.hud_game.killfeed_dynamic.desc" },
+        { type = "bool", text = "settings.hud_game.killfeed_color.title", convar = "killfeed_color", desc = "settings.hud_game.killfeed_color.desc" },
 
         { type = "label", text = "settings.hud_game.breath" },
         { type = "bool", text = "settings.hud_game.breath_hud.title", convar = "breath_hud", desc = "settings.hud_game.breath_hud.desc" },
@@ -196,12 +197,12 @@ local settingstable = {
         { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addx.title", convar = "vm_addx", desc = "settings.visuals.vm_addx.desc" },
         { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addy.title", convar = "vm_addy", desc = "settings.visuals.vm_addy.desc" },
         { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addz.title", convar = "vm_addz", desc = "settings.visuals.vm_addz.desc" },
-        
+
         { type = "label", text = "settings.visuals.cambob" },
         { type = "bool", text = "settings.visuals.vm_cambob.title", convar = "vm_cambob", desc = "settings.visuals.vm_cambob.desc" },
         { type = "bool", text = "settings.visuals.vm_cambobwalk.title", convar = "vm_cambobwalk", desc = "settings.visuals.vm_cambobwalk.desc" },
         { type = "slider", text = "settings.visuals.vm_cambobintensity.title", convar = "vm_cambobintensity", min = 0, max = 3, decimals = 2, desc = "settings.visuals.vm_cambobintensity.desc"},
-        
+
         { type = "label", text = "settings.visuals.tpik" },
         { type = "bool", text = "settings.visuals.tpik.title", convar = "tpik", desc = "settings.visuals.tpik.desc" },
         { type = "bool", text = "settings.visuals.tpik_others.title", convar = "tpik_others", desc = "settings.visuals.tpik_others.desc" },
@@ -579,7 +580,7 @@ function ARC9_OpenSettings(page)
     panel.OnRemove = function() bg:Remove() end
 
 
-    -- do only if april fools 
+    -- do only if april fools
     local day = tonumber(os.date("%d"))
     local month = tonumber(os.date("%m"))
 
