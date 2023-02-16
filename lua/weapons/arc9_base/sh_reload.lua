@@ -87,7 +87,6 @@ function SWEP:Reload()
         end
 
         anim = nanim
-
     end
 
     if !self:GetProcessedValue("ReloadInSights") then
@@ -143,7 +142,9 @@ function SWEP:Reload()
         self:Unload()
     end
 
-    self:SetLoadedRounds(self:Clip1())
+    if !self.NoForceSetLoadedRoundsOnReload then -- sorry
+        self:SetLoadedRounds(self:Clip1())
+    end
 
     self:SetReloading(true)
     self:SetEndReload(false)
@@ -326,7 +327,9 @@ function SWEP:RestoreClip(amt)
 
         clip = self:Clip1()
 
-        self:SetLoadedRounds(self:Clip1())
+        if !self.NoForceSetLoadedRoundsOnReload then -- sorry
+            self:SetLoadedRounds(self:Clip1())
+        end
     end
 
     return clip - lastclip
@@ -438,10 +441,11 @@ function SWEP:EndReload()
 
             local magswaptime = (self:GetAnimationEntry(anim) or {}).MagSwapTime or 0
 
-            self:SetTimer(magswaptime * t, function()
-                self:SetLoadedRounds(end_clipsize)
-            end)
-
+            if !self.NoForceSetLoadedRoundsOnReload then -- sorry
+                self:SetTimer(magswaptime * t, function()
+                    self:SetLoadedRounds(end_clipsize)
+                end)
+            end
 
             self:SetTimer(minprogress * t, function()
                 self:RestoreClip(attempt_to_restore)
