@@ -18,7 +18,7 @@ function SWEP:Initialize()
     self:SetNthShot(0)
 
     self.SpawnTime = CurTime()
-
+    self:SetSpawnEffect(false) -- lol gmod suck
     -- self:BuildAttachmentAddresses()
 
     self:InitTimers()
