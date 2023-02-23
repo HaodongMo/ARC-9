@@ -420,6 +420,7 @@ SWEP.RecoilRandomSide = 0.1
 
 SWEP.RecoilDissipationRate = 10 -- How much recoil dissipates per second.
 SWEP.RecoilResetTime = 0.1 -- How long the gun must go before the recoil pattern starts to reset.
+SWEP.RecoilFullResetTime = 2 -- How long recoil must stay after last shoot
 
 SWEP.RecoilAutoControl = 1 -- Multiplier for automatic recoil control.
 
@@ -480,8 +481,24 @@ SWEP.VisualRecoilPositionBumpUp = 0.08 -- its a mult
 
 
 SWEP.VisualRecoilDampingConst = nil -- How spring will be visual recoil, 120 is default
-SWEP.VisualRecoilSpringPunchDamping = nil -- ehh another val for "eft" recoil, 6 is default
 SWEP.VisualRecoilSpringMagnitude = 1
+SWEP.VisualRecoilSpringPunchDamping = nil -- ehh another val for "eft" recoil, 6 is default
+
+SWEP.VisualRecoilThinkFunc = nil -- wawa, override DampingConst, SpringMagnitude, SpringPunchDamping here 
+-- function(springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING, recamount)
+--     if recamount > 3 then
+--         return springconstant * 100, VisualRecoilSpringMagnitude * 1, PUNCH_DAMPING * 1
+--     end
+--     return springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING
+-- end
+
+SWEP.VisualRecoilDoingFunc = nil -- wawa, override Up, Side, Roll here 
+-- function(up, side, roll, punch, recamount)
+--     if recamount > 2 then
+--         return up * 5, side * 1.5, roll, punch * 0.9
+--     end
+--     return up, side, roll, punch
+-- end
 
 SWEP.RecoilKick = 1 -- Camera recoil
 SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping

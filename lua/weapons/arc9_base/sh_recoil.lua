@@ -186,6 +186,10 @@ do
         local springconstant = swepGetProcessedValue(self, "VisualRecoilDampingConst") or 120
         local VisualRecoilSpringMagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude") or 1
         local PUNCH_DAMPING = swepGetProcessedValue(self, "VisualRecoilSpringPunchDamping") or 6
+        
+        if self.VisualRecoilThinkFunc then
+            springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING = self.VisualRecoilThinkFunc(springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING, self:GetRecoilAmount())
+        end
 
         -- Sometimes we get things depending on the realm:
         --      local vpa = self:GetVisualRecoilPos()
@@ -310,7 +314,6 @@ do
             --         clamp(player->m_Local.m_vecPunchAngle->y, -179.f, 179.f ),
             --         clamp(player->m_Local.m_vecPunchAngle->z, -89.f, 89.f ) );
             -- }
-
             vaa[1] = math_Clamp(vaa[1], -89.9, 89.9)
             vaa[2] = math_Clamp(vaa[2], -179.9, 179.9)
             vaa[3] = math_Clamp(vaa[3], -89.9, 89.9)
@@ -348,6 +351,9 @@ do
         if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < CurTime() then
             -- as soon as dissipation kicks in, recoil is clamped to the modifer cap; this is to not break visual recoil
             self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (FrameTime() * rdr), 0, swepGetProcessedValue(self, "UseVisualRecoil") and math.huge or swepGetProcessedValue(self, "RecoilModifierCap")))
+            if weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilFullResetTime") < CurTime() then
+                self:SetRecoilAmount(0)
+            end
             -- print(math.Round(rec))
         end
 
@@ -386,6 +392,10 @@ function SWEP:DoVisualRecoil()
         local side = self:GetProcessedValue("VisualRecoilSide") * mult * self:GetRecoilSide()
         local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 0.1 * mult
         local punch = self:GetProcessedValue("VisualRecoilPunch") * mult * (self.ViewRecoil and math.Min(0.3, self:GetBurstCount() * 0.1) or 1)
+
+        if self.VisualRecoilDoingFunc then
+            up, side, roll, punch = self.VisualRecoilDoingFunc(up, side, roll, punch, self:GetRecoilAmount())
+        end
 
         local fake = 0
 
