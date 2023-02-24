@@ -115,11 +115,22 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
             if v.shelleject then
                 local index = 0
+                local num = 1
 
                 if isnumber(v.shelleject) then
                     index = v.shelleject
+                elseif istable(v.shelleject) then
+                    index = v.shelleject.index
+                    if v.shelleject.upto then
+                        num = self:Clip1() >= v.shelleject.upto and (v.shelleject.num or 1) or 0
+                    else
+                        num = v.shelleject.num
+                    end
                 end
-                self:DoEject(index, v.att)
+
+                for j = 1, (num == "clip" and self:Clip1()) or num do
+                    self:DoEject(index, v.att)
+                end
             end
 
             if v.e then
