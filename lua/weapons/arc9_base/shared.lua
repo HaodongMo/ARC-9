@@ -1359,7 +1359,12 @@ SWEP.Animations = {
     --                 p = 1 -- sound pitch
     --                 v = 1 -- sound playback volume
     --                 l = 75 -- sound level in db
-    --             shelleject = 1, -- eject a shell, true for regular eject, int for special ejection
+    --             shelleject = 1, -- eject a shell, true for regular eject, int for special ejection, can also be a table:
+    --             shelleject = {
+    --               index = 1, -- special index
+    --               num = nil, -- amount to eject, can also be "clip" for the amount of remaining bullets
+    --               upto = nil -- ejects num if clip is no less than this number, otherwise does nothing
+    --             },
     --             e = "", -- effect to emit
     --             att = nil, -- on attachment point X
     --             mag = 100, -- with magnitude whatever this is
