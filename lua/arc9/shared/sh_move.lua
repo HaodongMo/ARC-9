@@ -183,7 +183,9 @@ function ARC9.StartCommand(ply, cmd)
 
     eyeang = eyeang - recreset
     
-    if eyeang.r != eyeang.r then eyeang.r = 0 end
+    if eyeang.p != eyeang.p then eyeang.p = 0 end -- die cunt
+    if eyeang.y != eyeang.y then eyeang.y = 0 end -- die faggot
+    if eyeang.r != eyeang.r then eyeang.r = 0 end -- die retard
     cmd:SetViewAngles(eyeang)
 
     ARC9.RecoilRise = recrise
