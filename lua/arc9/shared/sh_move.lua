@@ -182,7 +182,8 @@ function ARC9.StartCommand(ply, cmd)
     -- eyeang.y = math.AngleDifference(eyeang.y, recreset.y)
 
     eyeang = eyeang - recreset
-
+    
+    if eyeang.r != eyeang.r then eyeang.r = 0 end
     cmd:SetViewAngles(eyeang)
 
     ARC9.RecoilRise = recrise
