@@ -144,6 +144,7 @@ function SWEP:Reload()
 
     if !self.NoForceSetLoadedRoundsOnReload then -- sorry
         self:SetLoadedRounds(self:Clip1())
+        self:SetLastLoadedRounds(clip)
     end
 
     self:SetReloading(true)

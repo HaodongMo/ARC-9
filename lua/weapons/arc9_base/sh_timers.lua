@@ -122,13 +122,13 @@ function SWEP:PlaySoundTable(soundtable, mult)
                 elseif istable(v.shelleject) then
                     index = v.shelleject.index
                     if v.shelleject.upto then
-                        num = self:Clip1() >= v.shelleject.upto and (v.shelleject.num or 1) or 0
+                        num = self:GetLastLoadedRounds() >= v.shelleject.upto and (v.shelleject.num or 1) or 0
                     else
                         num = v.shelleject.num
                     end
                 end
 
-                for j = 1, (num == "clip" and self:Clip1()) or num do
+                for j = 1, (num == "clip" and self:GetLastLoadedRounds()) or num do
                     self:DoEject(index, v.att)
                 end
             end

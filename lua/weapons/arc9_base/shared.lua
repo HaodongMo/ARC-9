@@ -1493,6 +1493,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", 7, "HideBoneIndex")
     self:NetworkVar("Int", 8, "SequenceIndex")
     self:NetworkVar("Int", 9, "LeanState")
+    self:NetworkVar("Int", 10, "LastLoadedRounds")
 
     self:NetworkVar("Bool", 0, "Customize")
     self:NetworkVar("Bool", 1, "Reloading")
