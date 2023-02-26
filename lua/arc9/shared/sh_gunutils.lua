@@ -29,8 +29,8 @@ end )
 timer.Simple(10, function() -- tfa does same thing, no need to copy (timer here cuz tfa loads after arc9)
     if !TFA then 
         -- code stolen from wiki
-        local cheats = GetConVar("sv_cheats" )
-        local timeScale = GetConVar("host_timescale" )
+        local cheats = GetConVar("sv_cheats")
+        local timeScale = GetConVar("host_timescale")
 
         hook.Add("EntityEmitSound", "ARC9_TimeWarpSounds", function(t)
             local p = t.Pitch
@@ -38,9 +38,14 @@ timer.Simple(10, function() -- tfa does same thing, no need to copy (timer here 
             if game.GetTimeScale() != 1 then
                 p = p * game.GetTimeScale()
             end
-            
-            if timeScale:GetInt() != 1 and cheats >= 1 then
-                p = p * timeScale:GetInt()
+
+            if timeScale then
+                local ts = timeScale:GetFloat()
+                if isnumber(ts) then
+                    if ts != 1 and cheats:GetBool() >= 1 then
+                        p = p * ts
+                    end
+                end
             end
             
             if p != t.Pitch then
