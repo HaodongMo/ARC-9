@@ -42,7 +42,7 @@ timer.Simple(10, function() -- tfa does same thing, no need to copy (timer here 
             if timeScale then
                 local ts = timeScale:GetFloat()
                 if isnumber(ts) then
-                    if ts != 1 and cheats:GetBool() >= 1 then
+                    if ts != 1 and cheats:GetBool() then
                         p = p * ts
                     end
                 end
