@@ -174,7 +174,12 @@ function SWEP:ThrowGrenade(nttype, delaytime)
                 end
 
                 if self:GetProcessedValue("ShootEntInheritPlayerVelocity") then
-                    phys:SetVelocity(self:GetOwner():GetVelocity())
+                    local vel = self:GetOwner():GetVelocity()
+                    local limit = self:GetProcessedValue("ShootEntInheritPlayerVelocityLimit")
+                    if isnumber(limit) and limit > 0 and vel:Length() > limit then
+                        vel = vel:GetNormalized() * limit
+                    end
+                    phys:SetVelocity(vel)
                 end
 
                 phys:AddVelocity((dir + dispersion):Forward() * force)
