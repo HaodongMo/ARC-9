@@ -247,9 +247,10 @@ function SWEP:DropMagazine()
     end
 end
 
-function SWEP:TakeAmmo()
+function SWEP:TakeAmmo(amt)
+    amt = amt or self:GetProcessedValue("AmmoPerShot")
     if self:GetUBGL() then
-        self:TakeSecondaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+        self:TakeSecondaryAmmo()
     else
         if self:GetProcessedValue("BottomlessClip") then
             if !self:GetInfiniteAmmo() then
@@ -257,13 +258,13 @@ function SWEP:TakeAmmo()
 
                 if self:Ammo1() > 0 then
                     local ammotype = self:GetValue("Ammo")
-                    self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - self:GetValue("AmmoPerShot"), ammotype)
+                    self:GetOwner():SetAmmo(self:GetOwner():GetAmmoCount(ammotype) - amt, ammotype)
                 else
-                    self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+                    self:TakePrimaryAmmo(amt)
                 end
             end
         else
-            self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+            self:TakePrimaryAmmo(amt)
         end
     end
 end
