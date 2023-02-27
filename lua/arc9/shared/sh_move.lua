@@ -57,14 +57,21 @@ end
 
 hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)
 
+ARC9.RecoilTimeStep = 0.03
+
+ARC9.ClientRecoilTime = 0
+
+ARC9.ClientRecoilUp = 0
+ARC9.ClientRecoilSide = 0
+
+ARC9.ClientRecoilProgress = 0
+
 function ARC9.StartCommand(ply, cmd)
     if !IsValid(ply) then return end
 
     local wpn = ply:GetActiveWeapon()
 
     if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
-
-    local timescalefactor = 5 / (ply:Ping() or 5)
 
     if ply:IsBot() then timescalefactor = 1 end -- ping is infinite for them lol
 
@@ -92,57 +99,6 @@ function ARC9.StartCommand(ply, cmd)
         end
     end
 
-    local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
-    local recrise = ARC9.RecoilRise
-
-    if recrise.p > 0 then
-        recrise.p = math.Clamp(recrise.p, 0, recrise.p - diff.p)
-    elseif recrise.p < 0 then
-        recrise.p = math.Clamp(recrise.p, recrise.p - diff.p, 0)
-    end
-
-    if recrise.y > 0 then
-        recrise.y = math.Clamp(recrise.y, 0, recrise.y - diff.y)
-    elseif recrise.y < 0 then
-        recrise.y = math.Clamp(recrise.y, recrise.y - diff.y, 0)
-    end
-
-    recrise:Normalize()
-    ARC9.RecoilRise = recrise
-
-    if math.abs(wpn:GetRecoilUp()) > 1e-9 or math.abs(wpn:GetRecoilSide()) > 1e-9 then
-        local eyeang = cmd:GetViewAngles()
-
-        local m = 100
-
-        m = m * timescalefactor
-
-        local uprec = FrameTime() * wpn:GetRecoilUp() * m
-        local siderec = FrameTime() * wpn:GetRecoilSide() * m
-
-        uprec = math.Clamp(uprec, -math.abs(wpn:GetRecoilUp()), math.abs(wpn:GetRecoilUp()))
-        siderec = math.Clamp(siderec, -math.abs(wpn:GetRecoilSide()), math.abs(wpn:GetRecoilSide()))
-
-        wpn:SetRecoilUp(wpn:GetRecoilUp() - uprec)
-        wpn:SetRecoilSide(wpn:GetRecoilSide() - siderec)
-
-        eyeang.p = eyeang.p + uprec
-        eyeang.y = eyeang.y + siderec
-
-        recrise = ARC9.RecoilRise
-
-        recrise = recrise + Angle(uprec, siderec, 0)
-
-        ARC9.RecoilRise = recrise
-
-        cmd:SetViewAngles(eyeang)
-
-        -- local aim_kick_v = rec * math.sin(CurTime() * 15) * FrameTime() * (1 - sightdelta)
-        -- local aim_kick_h = rec * math.sin(CurTime() * 12.2) * FrameTime() * (1 - sightdelta)
-
-        -- wpn:SetFreeAimAngle(wpn:GetFreeAimAngle() - Angle(aim_kick_v, aim_kick_h, 0))
-    end
-
     local isScope = wpn:GetSight() and wpn:GetSight().atttbl and wpn:GetSight().atttbl.RTScope
     local cheap = CLIENT and isScope and GetConVar("ARC9_cheapscopes"):GetBool()
 
@@ -165,32 +121,89 @@ function ARC9.StartCommand(ply, cmd)
         cmd:RemoveKey(IN_SPEED)
     end
 
-    recrise = ARC9.RecoilRise
-
-    local recreset = recrise * FrameTime() * wpn:GetProcessedValue("RecoilAutoControl") * timescalefactor
-
-    recreset.p = math.max(recreset.p, recrise.p)
-    recreset.y = math.max(recreset.y, recrise.y)
-
-    recrise = recrise - recreset
-
-    recrise:Normalize()
-
     local eyeang = cmd:GetViewAngles()
 
-    -- eyeang.p = math.AngleDifference(eyeang.p, recreset.p)
-    -- eyeang.y = math.AngleDifference(eyeang.y, recreset.y)
+    if eyeang.p != eyeang.p then eyeang.p = 0 end
+    if eyeang.y != eyeang.y then eyeang.y = 0 end
+    if eyeang.r != eyeang.r then eyeang.r = 0 end
 
-    eyeang = eyeang - recreset
-    
-    if eyeang.p != eyeang.p then eyeang.p = 0 end -- die cunt
-    if eyeang.y != eyeang.y then eyeang.y = 0 end -- die faggot
-    if eyeang.r != eyeang.r then eyeang.r = 0 end -- die retard
-    cmd:SetViewAngles(eyeang)
+    local m = 10
 
-    ARC9.RecoilRise = recrise
+    if CLIENT then
+        local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
+        local recrise = ARC9.RecoilRise
 
-    ARC9.LastEyeAngles = cmd:GetViewAngles()
+        if recrise.p > 0 then
+            recrise.p = math.Clamp(recrise.p, 0, recrise.p - diff.p)
+        elseif recrise.p < 0 then
+            recrise.p = math.Clamp(recrise.p, recrise.p - diff.p, 0)
+        end
+
+        if recrise.y > 0 then
+            recrise.y = math.Clamp(recrise.y, 0, recrise.y - diff.y)
+        elseif recrise.y < 0 then
+            recrise.y = math.Clamp(recrise.y, recrise.y - diff.y, 0)
+        end
+
+        ARC9.RecoilRise = recrise
+
+        local catchup = 0
+
+        if ARC9.ClientRecoilTime < CurTime() then
+            ARC9.ClientRecoilUp = wpn:GetRecoilUp() * ARC9.RecoilTimeStep
+            ARC9.ClientRecoilSide = wpn:GetRecoilSide() * ARC9.RecoilTimeStep
+
+            ARC9.ClientRecoilTime = CurTime() + ARC9.RecoilTimeStep
+
+            if ARC9.ClientRecoilProgress < 1 then
+                catchup = ARC9.RecoilTimeStep * (1 - ARC9.ClientRecoilProgress)
+            end
+
+            ARC9.ClientRecoilProgress = 0
+        end
+
+        local cft = math.min(FrameTime(), ARC9.RecoilTimeStep)
+
+        local progress = cft / ARC9.RecoilTimeStep
+
+        if progress > 1 - ARC9.ClientRecoilProgress then
+            cft = (1 - ARC9.ClientRecoilProgress) * ARC9.RecoilTimeStep
+            progress = (1 - ARC9.ClientRecoilProgress)
+        end
+
+        cft = cft + catchup
+
+        ARC9.ClientRecoilProgress = ARC9.ClientRecoilProgress + progress
+
+        if math.abs(ARC9.ClientRecoilUp) > 1e-5 then
+            eyeang.p = eyeang.p + ARC9.ClientRecoilUp * m * cft / ARC9.RecoilTimeStep
+        end
+
+        if math.abs(ARC9.ClientRecoilSide) > 1e-5 then
+            eyeang.y = eyeang.y + ARC9.ClientRecoilSide * m * cft / ARC9.RecoilTimeStep
+        end
+
+        local diff_p = ARC9.ClientRecoilUp * m * cft / ARC9.RecoilTimeStep
+        local diff_y = ARC9.ClientRecoilSide * m * cft / ARC9.RecoilTimeStep
+
+        ARC9.RecoilRise = ARC9.RecoilRise + Angle(diff_p, diff_y, 0)
+
+        local recreset = ARC9.RecoilRise * wpn:GetProcessedValue("RecoilAutoControl") * cft
+
+        if math.abs(recreset.p) > 1e-5 then
+            eyeang.p = eyeang.p - recreset.p
+        end
+        if math.abs(recreset.y) > 1e-5 then
+            eyeang.y = eyeang.y - recreset.y
+        end
+
+
+        ARC9.RecoilRise = ARC9.RecoilRise - Angle(recreset.p, recreset.y, 0)
+
+        cmd:SetViewAngles(eyeang)
+
+        ARC9.LastEyeAngles = eyeang
+    end
 
     if cmd:GetImpulse() == 100 and wpn:CanToggleAllStatsOnF() and !wpn:GetCustomize() then
         if !wpn:GetReloading() and !wpn:GetUBGL() then

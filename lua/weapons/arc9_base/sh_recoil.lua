@@ -357,16 +357,18 @@ do
             -- print(math.Round(rec))
         end
 
-        -- local ru = self:GetRecoilUp()
-        -- local rs = self:GetRecoilSide()
+        local ru = self.dt.RecoilUp
+        local rs = self.dt.RecoilSide
 
-        -- if math.abs(ru) > 0 or math.abs(rs) > 0 then
-        --     local new_ru = ru - (FrameTime() * self:GetRecoilUp() * rdr)
-        --     local new_rs = rs - (FrameTime() * self:GetRecoilSide() * rdr)
+        local m = 5
 
-        --     self:SetRecoilUp(new_ru)
-        --     self:SetRecoilSide(new_rs)
-        -- end
+        if math.abs(ru) > 1e-5 or math.abs(rs) > 1e-5 then
+            local new_ru = ru - (FrameTime() * ru * m)
+            local new_rs = rs - (FrameTime() * rs * m)
+
+            self:SetRecoilUp(new_ru)
+            self:SetRecoilSide(new_rs)
+        end
 
         if game.SinglePlayer() or IsFirstTimePredicted() then
             swepThinkVisualRecoil(self)
