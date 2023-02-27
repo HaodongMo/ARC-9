@@ -720,6 +720,10 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_OnKill(self, ent) return end
 -- SWEP.Hook_BlockHasAnimation(self, anim) return false end -- Return false to claim the animation does not exist.
 -- SWEP.Hook_BlockTPIK(self) return true end -- Return true to block TPIK.
+-- SWEP.Hook_GrenadeThrown(self, data) return end -- Called when grenade is released and about to be thrown. {force = 0, delay = 0}
+-- SWEP.Hook_GrenadeCreated(self, nades) return end -- Called when grenade entities are created. nades is a table of entities.
+-- SWEP.Hook_Bash(self, tr) return end
+-- SWEP.Hook_BashHit(self, data) return end -- {tr, dmg}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
