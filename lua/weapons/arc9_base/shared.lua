@@ -552,7 +552,7 @@ SWEP.RecoilModifierCap = 1
 SWEP.FreeAimRadius = 10 -- In degrees, how much this gun can free aim in hip fire.
 SWEP.Sway = 1 -- How much the gun sways.
 
-SWEP.HoldBreathTime = 5 -- time that you can hold breath for
+SWEP.HoldBreathTime = 5 -- time that you can hold breath for, set to 0 to disable holding breath
 SWEP.RestoreBreathTime = 10
 
 SWEP.FreeAimRadiusMultSights = 0.25
