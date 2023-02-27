@@ -55,6 +55,8 @@ function SWEP:DoDrawCrosshair(x, y)
     col.g = GetConVar("arc9_cross_g"):GetFloat()
     col.b = GetConVar("arc9_cross_b"):GetFloat()
 
+    col.a =  GetConVar("arc9_cross_a"):GetFloat()
+
     local d = self:GetSightDelta()
 
     prong = lerp(d, prong, ARC9ScreenScale(6))
