@@ -552,7 +552,7 @@ SWEP.RecoilModifierCap = 1
 SWEP.FreeAimRadius = 10 -- In degrees, how much this gun can free aim in hip fire.
 SWEP.Sway = 1 -- How much the gun sways.
 
-SWEP.HoldBreathTime = 5 -- time that you can hold breath for
+SWEP.HoldBreathTime = 5 -- time that you can hold breath for, set to 0 to disable holding breath
 SWEP.RestoreBreathTime = 10
 
 SWEP.FreeAimRadiusMultSights = 0.25
@@ -720,6 +720,10 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_OnKill(self, ent) return end
 -- SWEP.Hook_BlockHasAnimation(self, anim) return false end -- Return false to claim the animation does not exist.
 -- SWEP.Hook_BlockTPIK(self) return true end -- Return true to block TPIK.
+-- SWEP.Hook_GrenadeThrown(self, data) return end -- Called when grenade is released and about to be thrown. {force = 0, delay = 0}
+-- SWEP.Hook_GrenadeCreated(self, nades) return end -- Called when grenade entities are created. nades is a table of entities.
+-- SWEP.Hook_Bash(self, tr) return end
+-- SWEP.Hook_BashHit(self, data) return end -- {tr, dmg}
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install

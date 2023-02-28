@@ -609,3 +609,7 @@ L["settings.developer.dev_crosshair.desc"] = "Un punto de mira de aspecto gracio
 
 -- Added 11-FEB-2023
 L["autostat.recoilmodifiercap"] = "Máximo retroceso acumulado"
+
+-- Added 14-FEB-2023
+L["settings.hud_game.killfeed_color.title"] = "Iconos a todo color"
+L["settings.hud_game.killfeed_color.desc"] = "Los iconos generados dinámicamente están totalmente coloreados."

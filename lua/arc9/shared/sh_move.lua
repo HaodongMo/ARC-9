@@ -57,7 +57,7 @@ end
 
 hook.Add("SetupMove", "ARC9.SetupMove", ARC9.Move)
 
-ARC9.RecoilTimeStep = 1 / 30
+ARC9.RecoilTimeStep = 0.03
 
 ARC9.ClientRecoilTime = 0
 

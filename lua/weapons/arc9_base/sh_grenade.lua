@@ -103,6 +103,15 @@ function SWEP:ThrowGrenade(nttype, delaytime)
 
     spread = math.Max(spread, 0)
 
+    local override = {
+        force = force,
+        delay = delaytime,
+    }
+    self:RunHook("Hook_GrenadeThrown", override)
+
+    force = override.force or force
+    delaytime = override.delay or delaytime
+
     self:SetTimer(delaytime, function()
 
         local src, dir
@@ -136,6 +145,7 @@ function SWEP:ThrowGrenade(nttype, delaytime)
             src, dir = self:GetShootPos()
         end
 
+        local nades = {}
         for i = 1, num do
             local nade = ents.Create(ent)
 
@@ -184,7 +194,11 @@ function SWEP:ThrowGrenade(nttype, delaytime)
 
                 phys:AddVelocity((dir + dispersion):Forward() * force)
             end
+
+            table.insert(nades, nade)
         end
+
+        self:RunHook("Hook_GrenadeCreated", nades)
     end)
 end
 
