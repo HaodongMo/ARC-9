@@ -351,6 +351,8 @@ SWEP.DropMagazineVelocity = Vector(0, 0, 0) -- Put something here if your anim t
 
 SWEP.BarrelLength = 0 -- Distance for nearwalling
 
+SWEP.DryFireDelay = false -- Set to set time, otherwise uses animation length
+
 -------------------------- FIREMODES
 
 SWEP.RPM = 750

@@ -41,7 +41,14 @@ local dryfireSoundTab = {
 function SWEP:DryFire()
     local nthShot = self:GetNthShot()
 
-    self:PlayAnimation("dryfire", _, true)
+    local delay = self:GetProcessedValue("DryFireDelay")
+
+    if delay then
+        self:PlayAnimation("dryfire", _, false)
+        self:SetNextPrimaryFire(CurTime() + delay)
+    else
+        self:PlayAnimation("dryfire", _, true)
+    end
     self:SetBurstCount(0)
     self:SetNeedTriggerPress(true)
 
