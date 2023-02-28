@@ -193,12 +193,14 @@ function ARC9.StartCommand(ply, cmd)
         if math.abs(recreset.p) > 1e-5 then
             eyeang.p = eyeang.p - recreset.p
         end
+
         if math.abs(recreset.y) > 1e-5 then
             eyeang.y = eyeang.y - recreset.y
         end
 
-
         ARC9.RecoilRise = ARC9.RecoilRise - Angle(recreset.p, recreset.y, 0)
+
+        ARC9.RecoilRise:Normalize()
 
         cmd:SetViewAngles(eyeang)
 
