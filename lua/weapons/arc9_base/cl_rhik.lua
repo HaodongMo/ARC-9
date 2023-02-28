@@ -324,6 +324,8 @@ function SWEP:RecalculateIKGunMotionOffset()
         anim_mdl:ResetSequence(0)
         anim_mdl:SetCycle(0)
 
+        if !anim_mdl:GetAttachment(qca) then return end
+
         local idleattpos = anim_mdl:GetAttachment(qca).Pos
         local idleattang = anim_mdl:GetAttachment(qca).Ang
 
