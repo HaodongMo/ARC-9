@@ -250,7 +250,7 @@ end
 function SWEP:TakeAmmo(amt)
     amt = amt or self:GetProcessedValue("AmmoPerShot")
     if self:GetUBGL() then
-        self:TakeSecondaryAmmo()
+        self:TakeSecondaryAmmo(amt)
     else
         if self:GetProcessedValue("BottomlessClip") then
             if !self:GetInfiniteAmmo() then
