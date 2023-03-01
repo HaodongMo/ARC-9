@@ -1215,6 +1215,7 @@ end
 function SWEP:CreateHUD_RHP()
     local bg = self.CustomizeHUD
     if !IsValid(self) then return end
+    if !bg then return end
 
     local scrh = ScrH()
     local scrw = ScrW()
