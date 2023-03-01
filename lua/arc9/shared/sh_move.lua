@@ -127,7 +127,7 @@ function ARC9.StartCommand(ply, cmd)
     if eyeang.y != eyeang.y then eyeang.y = 0 end
     if eyeang.r != eyeang.r then eyeang.r = 0 end
 
-    local m = 10
+    local m = 25
 
     if CLIENT then
         local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
@@ -188,7 +188,7 @@ function ARC9.StartCommand(ply, cmd)
 
         ARC9.RecoilRise = ARC9.RecoilRise + Angle(diff_p, diff_y, 0)
 
-        local recreset = ARC9.RecoilRise * wpn:GetProcessedValue("RecoilAutoControl") * cft
+        local recreset = ARC9.RecoilRise * wpn:GetProcessedValue("RecoilAutoControl") * cft * 2
 
         if math.abs(recreset.p) > 1e-5 then
             eyeang.p = eyeang.p - recreset.p

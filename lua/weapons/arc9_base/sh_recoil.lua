@@ -360,7 +360,7 @@ do
         local ru = self.dt.RecoilUp
         local rs = self.dt.RecoilSide
 
-        local m = 5
+        local m = 10
 
         if math.abs(ru) > 1e-5 or math.abs(rs) > 1e-5 then
             local new_ru = ru - (FrameTime() * ru * m)
