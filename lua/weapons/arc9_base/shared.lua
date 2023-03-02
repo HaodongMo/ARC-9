@@ -1393,7 +1393,8 @@ SWEP.Animations = {
     --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
     --     FireASAP = false, -- allowes to shoot right after clip anim was "done" with MinProgress
     --     RestoreAmmo = 0, -- Restores ammunition to clip
-    --     DumpAmmo = false -- Dump clip on reload
+    --     DumpAmmo = false, -- Dump clip on reload
+    --     NoStatAffectors = false, -- do not adjust animation length based on stats (sprint to fire time, aim down sights time)
     -- }
 }
 

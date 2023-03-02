@@ -28,7 +28,7 @@ function SWEP:GetIsWalking()
     end
 
     if owner:KeyDown(IN_SPEED) then return false end
-    if !owner:KeyDown(IN_FORWARD+IN_BACK+IN_MOVELEFT+IN_MOVERIGHT) then return false end
+    if !owner:KeyDown(IN_FORWARD + IN_BACK + IN_MOVELEFT + IN_MOVERIGHT) then return false end
 
     local curspeed = owner:GetVelocity():LengthSqr()
     if curspeed <= 0 then return false end
@@ -72,8 +72,6 @@ end
 function SWEP:EnterSprint()
     self:SetShouldHoldType()
 
-    -- self:ToggleBlindFire(false)
-
     if !self:GetProcessedValue("ReloadWhileSprint") then
         self:CancelReload()
     end
@@ -82,7 +80,12 @@ function SWEP:EnterSprint()
         if self:GetProcessedValue("InstantSprintIdle") then
             self:PlayAnimation("idle")
         else
-            self:PlayAnimation("enter_sprint", self:GetProcessedValue("SprintToFireTime"))
+            local anim = self:TranslateAnimation("enter_sprint")
+            local mult = self:GetProcessedValue("SprintToFireTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+            if self:GetAnimationEntry(anim).NoStatAffectors then
+                mult = 1
+            end
+            self:PlayAnimation(anim, mult, nil, nil, nil, true)
         end
     end
 end
@@ -94,7 +97,12 @@ function SWEP:ExitSprint()
         if self:GetProcessedValue("InstantSprintIdle") then
             self:PlayAnimation("idle")
         else
-            self:PlayAnimation("exit_sprint", self:GetProcessedValue("SprintToFireTime"))
+            local anim = self:TranslateAnimation("exit_sprint")
+            local mult = self:GetProcessedValue("SprintToFireTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+            if self:GetAnimationEntry(anim).NoStatAffectors then
+                mult = 1
+            end
+            self:PlayAnimation(anim, mult, nil, nil, nil, true)
         end
     end
 end

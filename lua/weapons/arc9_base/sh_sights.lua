@@ -28,7 +28,12 @@ function SWEP:EnterSights()
         if self:GetProcessedValue("InstantSightIdle") then
             self:PlayAnimation("idle")
         else
-            self:PlayAnimation("enter_sights", self:GetProcessedValue("AimDownSightsTime"))
+            local anim = self:TranslateAnimation("enter_sights")
+            local mult = self:GetProcessedValue("AimDownSightsTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+            if self:GetAnimationEntry(anim).NoStatAffectors then
+                mult = 1
+            end
+            self:PlayAnimation(anim, mult, nil, nil, nil, true)
         end
     end
 
@@ -52,7 +57,12 @@ function SWEP:ExitSights()
         if self:GetProcessedValue("InstantSightIdle") then
             self:PlayAnimation("idle")
         else
-            self:PlayAnimation("exit_sights", self:GetProcessedValue("AimDownSightsTime"))
+            local anim = self:TranslateAnimation("exit_sights")
+            local mult = self:GetProcessedValue("AimDownSightsTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+            if self:GetAnimationEntry(anim).NoStatAffectors then
+                mult = 1
+            end
+            self:PlayAnimation(anim, mult, nil, nil, nil, true)
         end
     end
 

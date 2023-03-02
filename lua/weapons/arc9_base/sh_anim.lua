@@ -1,7 +1,7 @@
-function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy)
+function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
     mult = mult or 1
     lock = lock or false
-    anim = self:TranslateAnimation(anim)
+    anim = (notranslate == true) and anim or self:TranslateAnimation(anim)
 
     mult = self:RunHook("Hook_TranslateAnimSpeed", {mult = mult, anim = anim}).Mult or mult
 
