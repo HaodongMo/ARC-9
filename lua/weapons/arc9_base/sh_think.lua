@@ -71,8 +71,11 @@ function SWEP:Think()
         if swepGetProcessedValue(self, "TriggerDelay") then
             local primedAttack = swepDt.PrimedAttack
             local triggerDelay = swepDt.TriggerDelay
+            local releasetofire = swepGetProcessedValue(self, "TriggerDelayReleaseToFire")
 
-            if (primedAttack or triggerDelay > now) and playerKeyReleased(owner, IN_ATTACK) then
+            if primedAttack and triggerDelay <= now and releasetofire and playerKeyReleased(owner, IN_ATTACK) and shouldRunPredicted then
+                swepPrimaryAttack(self)
+            elseif (primedAttack or triggerDelay > now) and playerKeyReleased(owner, IN_ATTACK) then
                 swepPlayAnimation(self, "untrigger")
 
                 if swepGetProcessedValue(self, "TriggerDelayCancellable") then

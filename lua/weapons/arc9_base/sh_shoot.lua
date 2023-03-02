@@ -294,7 +294,7 @@ function SWEP:PrimaryAttack()
                 self:PlayAnimation(anim)
                 self:SetPrimedAttack(true)
                 return
-            elseif primedAttack and self:GetTriggerDelay() <= time then
+            elseif primedAttack and (self:GetTriggerDelay() <= time and (!processedValue(self, "TriggerDelayReleaseToFire") or !owner:KeyDown(IN_ATTACK))) then
                 self:SetPrimedAttack(false)
             end
         end

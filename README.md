@@ -194,14 +194,15 @@ Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS 
  - **OddShot**: Enabled on odd shots.
  - **EvenReload**: Enabled on even reloads.
  - **OddReload**: Enabled on odd reloads.
- - **BlindFire**: Enabled while blind firing.
  - **Sights**: Enabled when at least partially sighted. Scales with sight amount.
  - **HipFire**: Enabled when not sighted at all. Scales with sight amount.
  - **Sighted**: Enabled when fully sighted. Takes priority over both Sights and HipFire for the same condition.
  - **Hot**: Enabled with overheat amount, like with Sights. Scales with heat amount.
+ - **Heated**: Enabled when heat is at capacity. Takes priority over Hot for the same condition.
  - **Shooting**: Enabled when constantly shooting. Takes full effect immediately after shooting and then fades according to fire rate.
- - **Recoil**: Scales with bursts. Scales with recoil amount.
+ - **Recoil**: Enabled while weapon is affected by recoil. Scales with recoil amount, limited by **RecoilModiferCap**.
  - **Move**: Enabled when moving. Scales with velocity.
+ - **Bipod**: Enabled while weapon is mounted with a bipod.
 
  ## Tips for Developers
  - If you want to increase recoil without making view shoot to the top, try increasing RecoilPatternDrift.

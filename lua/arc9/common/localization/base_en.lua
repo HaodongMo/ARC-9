@@ -624,3 +624,5 @@ L["settings.hud_game.killfeed_color.desc"] = "Dynamically generated icons are fu
 
 -- Added 01-MAR-2023
 L["autostat.secondary.sighted"] = "while Sighted"
+L["autostat.secondary.hot"] = "from Heat"
+L["autostat.secondary.heated"] = "while Heated"

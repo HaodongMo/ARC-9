@@ -361,6 +361,7 @@ SWEP.TriggerDelay = false -- Add a delay before the weapon fires.
 SWEP.TriggerDelayTime = 0.2 -- Time until weapon fires.
 SWEP.TriggerDelayRepeat = false -- Whether to do it for every shot on automatics.
 SWEP.TriggerDelayCancellable = true -- Whether it is possible to cancel trigger delay by releasing the trigger before it is done.
+SWEP.TriggerDelayReleaseToFire = false -- Release the trigger to fire instead of firing as soon as the delay is over.
 SWEP.TriggerStartFireAnim = false -- Whether trigger begins the firing animation
 
 -- Works different to ArcCW

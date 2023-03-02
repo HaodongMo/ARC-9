@@ -552,17 +552,26 @@ do
             local heatAmount = swepDt.HeatAmount
             local hasHeat = heatAmount > 0
 
-            if hasHeat and base ~= "HeatCapacity" and not hasNoAffectors[val .. "Hot"] then
+            if hasHeat and base ~= "HeatCapacity" and (not hasNoAffectors[val .. "Hot"] or not hasNoAffectors[val .. "Heated"]) then
+
+                ARC9HeatCapacityGPVOverflow = true
+                local cap = self:GetProcessedValue("HeatCapacity")
+                ARC9HeatCapacityGPVOverflow = false
+
                 if isnumber(stat) then
                     local hot = arcGetValue(self, val, stat, "Hot")
 
-                    if isnumber(hot) then
+                    if not hasNoAffectors[val .. "Heated"] and heatAmount >= cap then
+                        stat = arcGetValue(self, val, stat, "Heated")
+                    elseif isnumber(hot) then
                         ARC9HeatCapacityGPVOverflow = true
-                        stat = Lerp(heatAmount / self:GetProcessedValue("HeatCapacity"), stat, hot)
+                        stat = Lerp(heatAmount / cap, stat, hot)
                         ARC9HeatCapacityGPVOverflow = false
                     end
                 else
-                    if hasHeat then
+                    if not hasNoAffectors[val .. "Heated"] and heatAmount >= cap then
+                        stat = arcGetValue(self, val, stat, "Heated")
+                    elseif hasHeat then
                         stat = arcGetValue(self, val, stat, "Hot")
                     end
                 end
