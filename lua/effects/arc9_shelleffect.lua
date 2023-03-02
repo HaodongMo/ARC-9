@@ -78,6 +78,7 @@ function EFFECT:Init(data)
     local pitch = ent:GetProcessedValue("ShellPitch")
     local sounds = ent:GetProcessedValue("ShellSounds")
     local smoke = ent:GetProcessedValue("ShellSmoke")
+    local velocity = ent:GetProcessedValue("ShellVelocity") or math.Rand(1, 2)
 
     local index = data:GetFlags()
 
@@ -94,6 +95,8 @@ function EFFECT:Init(data)
             if shelldata.smoke != nil then
                 smoke = shelldata.smoke
             end
+            velocity = shelldata.velocity or velocity
+            if istable(velocity) then velocity = math.Rand(velocity[1], velocity[2]) end
         end
     end
 
@@ -146,8 +149,6 @@ function EFFECT:Init(data)
     phys:SetMass(1)
     phys:SetMaterial("gmod_silent")
     -- phys:SetMaterial("default_silent")
-
-    local velocity = ent:GetProcessedValue("ShellVelocity") or math.Rand(1, 2)
 
     phys:SetVelocity((dir * mag * velocity) + plyvel)
 

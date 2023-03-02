@@ -33,12 +33,12 @@ ARC9.Colors = {
     unowned = Color(180, 180, 180, 255),
 
     notoccupied      = Color(216, 216, 216, 70), --
-    
-    sel     = Color(255, 150, 100),
-    occupied= Color(150, 255, 100),
-    shadow  = Color(17, 17, 9),
-    neg     = Color(255, 100, 100),
-    pos     = Color(100, 255, 100),
+
+    sel      = Color(255, 150, 100),
+    occupied = Color(150, 255, 100),
+    shadow   = Color(17, 17, 9),
+    neg      = Color(255, 100, 100),
+    pos      = Color(100, 255, 100),
 
     bg_3d = Color(255, 255, 240),
     fg_3d = Color(0, 0, 0),
@@ -285,7 +285,7 @@ local function DrawSimpleHints()
 
     local weapon = LocalPlayer():GetActiveWeapon()
     if !weapon.ARC9 then return end
-    
+
     if !GetConVar("cl_drawhud"):GetBool() then return end
     if weapon:GetCustomize() then return end
 
@@ -386,7 +386,7 @@ local function DrawSimpleHints()
         if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
         if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
         if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
-        if v.glyph2 then 
+        if v.glyph2 then
             if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
             if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
             if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
@@ -411,7 +411,7 @@ local function DrawSimpleHints()
     local hx = 0
     local hy = 0
     local SIZE = ARC9ScreenScale(8)
-    
+
     if hidefadetime + 1.5 > ct then
         hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
     else
@@ -1201,7 +1201,7 @@ function ARC9.DrawHUD()
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
             if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
             if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
-            if v.glyph2 then 
+            if v.glyph2 then
                 if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
                 if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
                 if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
@@ -1774,7 +1774,7 @@ end
 
 function CreateControllerKeyLine( info, ... )
     UpdateGlyphs()
-    local args = { ... } 
+    local args = { ... }
     local strlength = 0
 
     for i, v in ipairs( args ) do
@@ -1812,7 +1812,7 @@ end
 -- Gets the size of the controller key line.
 function GetControllerKeyLineSize( info, ... )
     UpdateGlyphs()
-    local args = { ... } 
+    local args = { ... }
     local strlength = 0
 
     for i, v in ipairs( args ) do

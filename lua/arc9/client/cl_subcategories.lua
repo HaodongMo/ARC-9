@@ -28,6 +28,8 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
         local Categorised = {}
         local ARC9Cats = {}
 
+        local truenames = ARC9:UseTrueNames()
+
         -- Build into categories + subcategories
         for k, weapon in pairs(Weapons) do
             if !weapon.Spawnable then continue end
@@ -42,11 +44,15 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
 
             -- Get the weapon subcategory as a string
             local SubCategory = "Other"
-            if (WepTable != nil && WepTable.SubCategory != nil) then
+            if (WepTable != nil and WepTable.SubCategory != nil) then
                 SubCategory = WepTable.SubCategory
                 if (!isstring(SubCategory)) then
                     SubCategory = tostring(SubCategory)
                 end
+            end
+
+            if truenames and WepTable.TrueName then
+                weapon.PrintName = WepTable.TrueName
             end
 
             -- Insert it into our categorised table

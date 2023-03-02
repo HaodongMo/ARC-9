@@ -6,7 +6,7 @@ local conVars = {
     },
     {
         name = "truenames",
-        default = "0",
+        default = "2",
         client = true,
         min = 0,
         max = 2,

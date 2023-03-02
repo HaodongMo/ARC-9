@@ -37,12 +37,36 @@ local settingstable = {
     --     -- { type = "input", text = "Color alpha", desc = "g" },
     -- },
     {
+        TabName = "settings.tabname.general",
+
+        { type = "label", text = "settings.general.client" },
+        { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
+        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
+        { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
+        { type = "combo", text = "settings.truenames.title", convar = "truenames", content = {
+            {"1Use Default", "2"},
+            {"2Disabled", "0"},
+            {"3Enabled", "1"},
+        }, desc = "settings.truenames.desc"},
+
+        { sv = true, type = "label", text = "settings.general.server" },
+        { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
+        { sv = true, type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
+        { sv = true, type = "combo", text = "settings.truenames_default.title", convar = "truenames_default", content = {
+            {"1Disabled", "0"},
+            {"2Enabled", "1"},
+        }, desc = "settings.truenames_default.desc"},
+        { sv = true, type = "bool", text = "settings.truenames_enforced.title", convar = "truenames_enforced", desc = "settings.truenames_enforced.desc"},
+
+    },
+    {
         TabName = "settings.tabname.performance",
+
         { type = "label", text = "settings.performance.important" },
         { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
-        { type = "bool", text = "settings.allflash.title", convar = "allflash", desc = "settings.allflash.desc"},
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
-        { type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
+        { type = "bool", text = "settings.allflash.title", convar = "allflash", desc = "settings.allflash.desc"},
+
 
         { type = "label", text = "settings.performance.blur.title" },
         { type = "bool", text = "settings.cust_blur.title", convar = "cust_blur", desc = "settings.cust_blur.desc"},
@@ -61,10 +85,7 @@ local settingstable = {
     },
     {
         TabName = "settings.tabname.optics",
-        -- { type = "label", text = "Performance" }, -- fine here but they are already in first tab
-        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
-        -- { type = "bool", text = "Blur in Scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
-        -- { type = "bool", text = "Blur in Sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
+        -- { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
 
         { type = "label", text = "settings.optics.control" },
         { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
@@ -150,6 +171,7 @@ local settingstable = {
     },
     {
         TabName = "settings.tabname.npc",
+        sv = true,
         { type = "label", text = "settings.npc.weapons" },
         { type = "bool", text = "settings.npc.npc_equality.title", convar = "npc_equality", desc = "settings.npc.npc_equality.desc" },
         { type = "slider", text = "settings.npc.npc_spread.title", min = 0, max = 10, decimals = 1, convar = "npc_spread", desc = "settings.npc.npc_spread.desc"},
@@ -167,17 +189,16 @@ local settingstable = {
         { type = "bool", text = "settings.gameplay.togglelean.title", convar = "togglelean", desc = "settings.gameplay.togglelean.desc" },
         { type = "bool", text = "settings.gameplay.togglepeek.title", convar = "togglepeek", desc = "settings.gameplay.togglepeek.desc" },
 
-        { type = "label", text = "settings.gameplay.mechanics" },
-        -- { type = "combo", text = "Lean style", convar = "vm_bobstyle", content = {"1Disabled", "2Only manual", "3Manual + auto", "4Auto only"}, desc = "Select style of leaning.\n\nWhether players can lean with +alt1 and +alt2 or with automatic near-wall lean.\n\nThis is a server variable." },
-        { type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
-        { type = "bool", text = "settings.gameplay.realrecoil.title", convar = "realrecoil", desc = "settings.gameplay.realrecoil.desc" },
-        { type = "bool", text = "settings.gameplay.lean.title", convar = "lean", desc = "settings.gameplay.lean.desc" },
-        { type = "bool", text = "settings.gameplay.mod_sway.title", convar = "mod_sway", desc = "settings.gameplay.mod_sway.desc" },
-        { type = "bool", text = "settings.gameplay.mod_freeaim.title", convar = "mod_freeaim", desc = "settings.gameplay.mod_freeaim.desc" },
-        { type = "bool", text = "settings.gameplay.mod_bodydamagecancel.title", convar = "mod_bodydamagecancel", desc = "settings.gameplay.mod_bodydamagecancel.desc" },
-        { type = "bool", text = "settings.gameplay.breath_slowmo.title", convar = "breath_slowmo", desc = "settings.gameplay.breath_slowmo.desc" },
-        { type = "bool", text = "settings.gameplay.manualbolt.title", convar = "manualbolt", desc = "settings.gameplay.manualbolt.desc" },
-        { type = "bool", text = "settings.gameplay.never_ready.title", convar = "never_ready", desc = "settings.gameplay.never_ready.desc" },
+        { sv = true, type = "label", text = "settings.gameplay.mechanics" },
+        { sv = true, type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.realrecoil.title", convar = "realrecoil", desc = "settings.gameplay.realrecoil.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.lean.title", convar = "lean", desc = "settings.gameplay.lean.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.mod_sway.title", convar = "mod_sway", desc = "settings.gameplay.mod_sway.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.mod_freeaim.title", convar = "mod_freeaim", desc = "settings.gameplay.mod_freeaim.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.mod_bodydamagecancel.title", convar = "mod_bodydamagecancel", desc = "settings.gameplay.mod_bodydamagecancel.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.breath_slowmo.title", convar = "breath_slowmo", desc = "settings.gameplay.breath_slowmo.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.manualbolt.title", convar = "manualbolt", desc = "settings.gameplay.manualbolt.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.never_ready.title", convar = "never_ready", desc = "settings.gameplay.never_ready.desc" },
         -- { type = "bool", text = "", convar = "nearwall", desc = "" },
         -- random jams
         -- overheating
@@ -210,6 +231,7 @@ local settingstable = {
     },
     {
         TabName = "settings.tabname.bullets",
+        sv = true,
         { type = "label", text = "settings.bullets.bullets"},
         { type = "bool", text = "settings.bullets.bullet_physics.title", convar = "bullet_physics", desc = "settings.bullets.bullet_physics.desc" },
         { type = "slider", text = "settings.bullets.bullet_gravity.title", convar = "bullet_gravity", min = 0, max = 10, decimals = 1, desc = "settings.bullets.bullet_gravity.desc" },
@@ -221,19 +243,20 @@ local settingstable = {
     },
     {
         TabName = "settings.tabname.attachments",
-        { type = "label", text = "settings.attachments.customization"},
-        { type = "bool", text = "settings.attachments.atts_nocustomize.title", convar = "atts_nocustomize", desc = "settings.attachments.atts_nocustomize.desc"},
+        { sv = true, type = "label", text = "settings.attachments.customization"},
+        { sv = true, type = "bool", text = "settings.attachments.atts_nocustomize.title", convar = "atts_nocustomize", desc = "settings.attachments.atts_nocustomize.desc"},
         { type = "slider", text = "settings.attachments.atts_max.title", convar = "atts_max", min = 0, max = 250, decimals = 0, desc = "settings.attachments.atts_max.desc"},
         { type = "bool", text = "settings.attachments.autosave.title", convar = "autosave", desc = "settings.attachments.autosave.desc"},
         -- { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
-        { type = "label", text = "settings.attachments.inventory"},
-        { type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
-        { type = "bool", text = "settings.attachments.atts_lock.title", convar = "atts_lock", desc = "settings.attachments.atts_lock.desc"},
-        { type = "bool", text = "settings.attachments.atts_loseondie.title", convar = "atts_loseondie", desc = "settings.attachments.atts_loseondie.desc"},
-        { type = "bool", text = "settings.attachments.atts_generateentities.title", convar = "atts_generateentities", desc = "settings.attachments.atts_generateentities.desc"},
+        { sv = true, type = "label", text = "settings.attachments.inventory"},
+        { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
+        { sv = true, type = "bool", text = "settings.attachments.atts_lock.title", convar = "atts_lock", desc = "settings.attachments.atts_lock.desc"},
+        { sv = true, type = "bool", text = "settings.attachments.atts_loseondie.title", convar = "atts_loseondie", desc = "settings.attachments.atts_loseondie.desc"},
+        { sv = true, type = "bool", text = "settings.attachments.atts_generateentities.title", convar = "atts_generateentities", desc = "settings.attachments.atts_generateentities.desc"},
     },
     {
         TabName = "settings.tabname.modifiers",
+        sv = true,
         { type = "label", text = "settings.modifiers.quick.title", desc = "settings.modifiers.quick.desc"},
         { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_damage.title", convar = "mod_damage" },
         { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_spread.title", convar = "mod_spread" },
@@ -266,6 +289,7 @@ local settingstable = {
     },
     {
         TabName = "settings.tabname.developer",
+        sv = true,
         { type = "label", text = "settings.developer.developer"},
         { type = "bool", text = "settings.developer.dev_always_ready.title", convar = "dev_always_ready", desc = "settings.developer.dev_always_ready.desc"},
         { type = "bool", text = "settings.developer.dev_benchgun.title", convar = "dev_benchgun", desc = "settings.developer.dev_benchgun.desc"},
@@ -318,6 +342,8 @@ local function DrawSettings(bg, page)
     sheet.Navigation:SetWidth(ARC9ScreenScale(100))
 
     for k, v in pairs(settingstable) do
+        if v.sv and !(game.SinglePlayer() or LocalPlayer():IsAdmin()) then continue end -- you don't have the right, oh you don't have the right
+
         local newpanel = vgui.Create("DPanel", sheet)
         newpanel:Dock(FILL)
         newpanel.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, ARC9.GetHUDColor("bg")) end
@@ -325,9 +351,9 @@ local function DrawSettings(bg, page)
         newpanelscroll:Dock(FILL)
         newpanelscroll:DockMargin(ARC9ScreenScale(4), ARC9ScreenScale(4), ARC9ScreenScale(4), 0)
 
-        local tabname = v.tabname
-
         for k2, v2 in ipairs(v) do
+            if v2.sv and !(game.SinglePlayer() or LocalPlayer():IsAdmin()) then continue end -- you don't have the right, oh you don't have the right
+
             local elpanel = vgui.Create("DPanel", newpanelscroll)
 
             elpanel:SetTall(ARC9ScreenScale(v2.type == "label" and 14 or 21))

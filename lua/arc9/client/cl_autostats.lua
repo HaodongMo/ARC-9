@@ -190,6 +190,9 @@ ARC9.AutoStatsConditions = {
     ["EvenReload"] = "Every Other Reload",
     ["OddReload"] = "Every Odd Reload",
     ["Sights"] = "In Sights",
+    ["Sighted"] = "While Sighted",
+    ["Hot"] = "From Heat",
+    ["Heated"] = "While Heated",
     ["HipFire"] = "In Hipfire",
     ["Shooting"] = "While Shooting",
     ["Recoil"] = "With Each Shot",
@@ -207,7 +210,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
     for stat, value in pairs(atttbl) do
         if !isnumber(value) and !isbool(value) then continue end
         if isnumber(value) then value = math.Round(value, 2) end
-        
+
         local autostat = ""
         local autostatnum = ""
         local canautostat = false
@@ -297,14 +300,14 @@ function ARC9.GetProsAndCons(atttbl, weapon)
     end
 
     -- custom stats
-    if istable(atttbl.CustomPros) then  
+    if istable(atttbl.CustomPros) then
         for stat, value in pairs(atttbl.CustomPros) do
             table.insert(prosname, stat)
             table.insert(prosnum, value)
         end
     end
 
-    if istable(atttbl.CustomCons) then  
+    if istable(atttbl.CustomCons) then
         for stat, value in pairs(atttbl.CustomCons) do
             table.insert(consname, stat)
             table.insert(consnum, value)

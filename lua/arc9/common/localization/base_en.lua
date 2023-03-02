@@ -323,7 +323,7 @@ L["settings.hud_cust.hud"] = "HUD"
 L["settings.crosshair.crosshair"] = "Crosshair"
 L["settings.optics.color"] = "Color"
 L["settings.optics.control"] = "Control"
-L["settings.performance.important"] = "Important"
+L["settings.performance.important"] = "High Performance Impact"
 L["settings.performance.blur.title"] = "Blur"
 L["settings.performance.shelleject.title"] = "Shell Eject"
 
@@ -621,3 +621,18 @@ L["autostat.recoilmodifiercap"] = "Maximum Cumulative Recoil"
 -- Added 14-FEB-2023
 L["settings.hud_game.killfeed_color.title"] = "Full Color Icons"
 L["settings.hud_game.killfeed_color.desc"] = "Dynamically generated icons are fully colored."
+
+-- Added 01-MAR-2023
+L["autostat.secondary.sighted"] = "while Sighted"
+L["autostat.secondary.hot"] = "from Heat"
+L["autostat.secondary.heated"] = "while Heated"
+L["settings.tabname.general"] = "General"
+L["settings.general.server"] = "Server"
+L["settings.general.client"] = "Client"
+L["settings.truenames.title"] = "True Names"
+L["settings.truenames.desc"] = "Set whether to use weapons' real names or fictional names made by the developers. Not all weapons utilize this.\n\nServer setting may override this preference."
+
+L["settings.truenames_default.title"] = "Default True Names"
+L["settings.truenames_default.desc"] = "Set the default true names mode on the server. All players using \"Default\" in preference will use this."
+L["settings.truenames_enforced.title"] = "Default True Names Enforced"
+L["settings.truenames_enforced.desc"] = "Set to force all players to use the server setting for true names."

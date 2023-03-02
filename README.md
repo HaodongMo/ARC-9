@@ -110,11 +110,11 @@ While hip-firing, your weapon's point of aim will sway around the screen. This m
 
 Each stat is handled more automatically than ever. Each stat has a "Base", such as Speed or ReloadTime or Sway. To create a new modifier to it, we add "Mult", e.g. SpeedMult. To make it conditional, we can then add a condition onto it, e.g. SpeedMultSights. This will make adding new conditions easier than ever, as it only needs to be modified in one place - the condition handler.
 
-Each condition is handled individually according to the specific condition. For instance, the MidAir condition is binary - so modifiers with this condition are applied only if the player is in mind-air. However, the Sighted condition will interpolate between 0 and 1 multiplied by the total multiplier. So if the player is 50% aimed down their sights, and they have an attachment with SpreadMultSighted of 2, their spread will be multiplied by 1.5x. Mults are multiplied together before this happens - if the player has two attachments, one with SpreadMultSighted of 2 and one with 3, ARC9 will only save "6" and thus if the player is halfway sighted, their spread is multiplied by 3.
+Each condition is handled individually according to the specific condition. For instance, the MidAir condition is binary - so modifiers with this condition are applied only if the player is in mind-air. However, the Sights condition will interpolate between 0 and 1 multiplied by the total multiplier. So if the player is 50% aimed down their sights, and they have an attachment with SpreadMultSights of 2, their spread will be multiplied by 1.5x. Mults are multiplied together before this happens - if the player has two attachments, one with SpreadMultSights of 2 and one with 3, ARC9 will only save "6" and thus if the player is halfway sighted, their spread is multiplied by 3.
 
 Modifier classes are Override, Mult, Add, and Hook, processed in that order, as in ArcCW.
 
-Override and Hook modifiers also support _Priority values being assigned to the same attachment or the base weapon for greater control over the order in which they are run. For instance. SpreadOverrideSighted_Priority = 2 on an attachment will cause that attachment's SpreadOverrideSighted to take precedence over all SpreadOverrideSighted values without a priority set or with priority less than 2. Unset priority counts as 1.
+Override and Hook modifiers also support _Priority values being assigned to the same attachment or the base weapon for greater control over the order in which they are run. For instance. SpreadOverrideSights_Priority = 2 on an attachment will cause that attachment's SpreadOverrideSights to take precedence over all SpreadOverrideSights values without a priority set or with priority less than 2. Unset priority counts as 1.
 
 Examples:
 
@@ -194,13 +194,15 @@ Use these in attachment stats, e.g. AimDownSightsTimeMultCrouch to multiply ADS 
  - **OddShot**: Enabled on odd shots.
  - **EvenReload**: Enabled on even reloads.
  - **OddReload**: Enabled on odd reloads.
- - **BlindFire**: Enabled while blind firing.
- - **Sights**: Enabled when sighted. Scales.
- - **HipFire**: Enabled when not sighted. Scales.
- - **Hot**: Enabled with overheat amount, like with Sights. Scales.
- - **Shooting**: Enabled when constantly shooting.
- - **Recoil**: Scales with bursts. Unique in that it multiplies with recoil amount.
- - **Move**: Enabled when moving.
+ - **Sights**: Enabled when at least partially sighted. Scales with sight amount.
+ - **HipFire**: Enabled when not sighted at all. Scales with sight amount.
+ - **Sighted**: Enabled when fully sighted. Takes priority over both Sights and HipFire for the same condition.
+ - **Hot**: Enabled with overheat amount, like with Sights. Scales with heat amount.
+ - **Heated**: Enabled when heat is at capacity. Takes priority over Hot for the same condition.
+ - **Shooting**: Enabled when constantly shooting. Takes full effect immediately after shooting and then fades according to fire rate.
+ - **Recoil**: Enabled while weapon is affected by recoil. Scales with recoil amount, limited by **RecoilModiferCap**.
+ - **Move**: Enabled when moving. Scales with velocity.
+ - **Bipod**: Enabled while weapon is mounted with a bipod.
 
  ## Tips for Developers
  - If you want to increase recoil without making view shoot to the top, try increasing RecoilPatternDrift.
