@@ -129,14 +129,14 @@ function SWEP:ThinkSprint()
 
     if sprinting and !self:GetPrimedAttack() then
         if amt < 1 then
-            amt = math.Approach(amt, 1, FrameTime() / self:GetSprintToFireTime())
+            amt = math.Approach(amt, 1, FrameTime() / self:GetProcessedValue("SprintToFireTime"))
         end
         -- if self:GetTraversalSprint() then
         --     ts_amt = math.Approach(ts_amt, 1, FrameTime() / (self:GetTraverseSprintToFireTime()))
         -- end
     else
         if amt > 0 then
-            amt = math.Approach(amt, 0, FrameTime() / self:GetSprintToFireTime())
+            amt = math.Approach(amt, 0, FrameTime() / self:GetProcessedValue("SprintToFireTime"))
         end
     end
 

@@ -440,6 +440,7 @@ surface.CreateFont( "ARC9_DevCrosshair", {
 
 function SWEP:DevStuffCrosshair()
     if self:GetCustomize() then return end
+    local time = CurTime()
 
     local owner = self:GetOwner()
     local x2, y2 = ScrW() / 2, ScrH() / 2
@@ -486,7 +487,7 @@ function SWEP:DevStuffCrosshair()
 
     local len = 256
     surface.SetDrawColor(255, 50, 50, 200)
-    surface.DrawLine(x, y - len, x, y + len)
+    surface.DrawLine(x, y - len, x, y + len - 48)
     surface.DrawLine(x - len, y, x + len, y)
 
     local spread_val = math.max(0, self:GetProcessedValue("Spread"))
@@ -494,6 +495,30 @@ function SWEP:DevStuffCrosshair()
     surface.DrawCircle(x, y, spread, 255, 255, 255, 255)
     surface.DrawCircle(x, y, spread + 0.5, 255, 255, 255, 100)
 
+    local state_txt = "READY"
+    local state2_txt = ""
+    if self:GetNextPrimaryFire() > time then
+        state_txt = "WAIT: Primary"
+        state2_txt = string.format("%.2f", self:GetNextPrimaryFire() - time)
+    elseif self:GetNextSecondaryFire() > time then
+        state_txt = "WAIT: Secondary"
+        state2_txt = string.format("%.2f", self:GetNextSecondaryFire() - time)
+    elseif self:GetAnimLockTime() > time then
+        state_txt = "WAIT: AnimLock"
+        state2_txt = string.format("%.2f", self:GetAnimLockTime() - time)
+    elseif self:GetPrimedAttack() then
+        state_txt = "WAIT: Primed"
+        state2_txt = string.format("%.2f", math.max(0, self:GetTriggerDelay() - time))
+    elseif self:GetHolsterTime() > 0 then
+        state_txt = "WAIT: Holster"
+        state2_txt = string.format("%.2f", self:GetHolsterTime() - time)
+    elseif self:GetSprintAmount() > 0 then
+        state_txt = "SPRINT"
+        state2_txt = string.format("%d%%", self:GetSprintAmount() * 100)
+    elseif self:GetSightAmount() > 0 then
+        state_txt = "SIGHT"
+        state2_txt = string.format("%d%%", self:GetSightAmount() * 100)
+    end
     local recoil_txt = "Recoil: " .. tostring(math.Round(math.min(self:GetProcessedValue("UseVisualRecoil") and math.huge or self:GetProcessedValue("RecoilModifierCap"), self:GetRecoilAmount()), 2))
     local spread_txt = "Cone: " .. math.Round(spread_val, 5)
     local sway_txt = string.format("%.2f", self:GetFreeSwayAmount()) .. " Sway"
@@ -503,6 +528,8 @@ function SWEP:DevStuffCrosshair()
     surface.SetFont("ARC9_DevCrosshair")
     local sway_w = surface.GetTextSize(sway_txt)
     local damage_w = surface.GetTextSize(damage_txt)
+    local state_w = surface.GetTextSize(state_txt)
+    local state2_w = surface.GetTextSize(state2_txt)
 
     surface.SetTextColor(0, 0, 0, 255)
 
@@ -514,6 +541,10 @@ function SWEP:DevStuffCrosshair()
     surface.DrawText(sway_txt)
     surface.SetTextPos(x + len - damage_w + 2, y + 2)
     surface.DrawText(damage_txt)
+    surface.SetTextPos(x - state_w / 2 + 2, y + len - 40 + 2)
+    surface.DrawText(state_txt)
+    surface.SetTextPos(x - state2_w / 2 + 2, y + len - 8 + 2)
+    surface.DrawText(state2_txt)
 
     surface.SetTextColor(255, 255, 255, 255)
 
@@ -525,4 +556,8 @@ function SWEP:DevStuffCrosshair()
     surface.DrawText(sway_txt)
     surface.SetTextPos(x + len - damage_w, y)
     surface.DrawText(damage_txt)
+    surface.SetTextPos(x - state_w / 2, y + len - 40)
+    surface.DrawText(state_txt)
+    surface.SetTextPos(x - state2_w / 2, y + len - 8)
+    surface.DrawText(state2_txt)
 end
