@@ -242,7 +242,7 @@ local conVars = {
     },
     {
         name = "replace_spawned",
-        default = "1"
+        default = "0"
     },
     {
         name = "mod_penetration",
