@@ -522,19 +522,26 @@ do
 
         local hasNoAffectors = self.HasNoAffectors
 
-        if not hasNoAffectors[val .. "Sights"] or not hasNoAffectors[val .. "HipFire"] then
+        if not hasNoAffectors[val .. "Sights"] or not hasNoAffectors[val .. "HipFire"] or not hasNoAffectors[val .. "Sighted"] then
             local sightAmount = swepDt.SightAmount
 
             if isnumber(stat) then
                 local hipfire = arcGetValue(self, val, stat, "HipFire")
                 local sights = arcGetValue(self, val, stat, "Sights")
+                local sighted = arcGetValue(self, val, stat, "Sighted")
 
-                if isnumber(hipfire) and isnumber(sights) then
+                if sightAmount >= 1 and not hasNoAffectors[val .. "Sighted"] then
+                    stat = sighted
+                elseif isnumber(hipfire) and isnumber(sights) then
                     stat = Lerp(sightAmount, hipfire, sights)
                 end
             else
                 if sightAmount >= 1 then
-                    stat = arcGetValue(self, val, stat, "Sights")
+                    if hasNoAffectors[val .. "Sighted"] then
+                        stat = arcGetValue(self, val, stat, "Sights")
+                    else
+                        stat = arcGetValue(self, val, stat, "Sighted")
+                    end
                 else
                     stat = arcGetValue(self, val, stat, "HipFire")
                 end
