@@ -498,19 +498,19 @@ function SWEP:DevStuffCrosshair()
     local state_txt = "READY"
     local state2_txt = ""
     if self:GetNextPrimaryFire() > time then
-        state_txt = "WAIT: Primary"
+        state_txt = "FIRE"
         state2_txt = string.format("%.2f", self:GetNextPrimaryFire() - time)
     elseif self:GetNextSecondaryFire() > time then
-        state_txt = "WAIT: Secondary"
+        state_txt = "ALTFIRE"
         state2_txt = string.format("%.2f", self:GetNextSecondaryFire() - time)
     elseif self:GetAnimLockTime() > time then
-        state_txt = "WAIT: AnimLock"
+        state_txt = "ANIMATION"
         state2_txt = string.format("%.2f", self:GetAnimLockTime() - time)
     elseif self:GetPrimedAttack() then
-        state_txt = "WAIT: Primed"
+        state_txt = "TRIGGER"
         state2_txt = string.format("%.2f", math.max(0, self:GetTriggerDelay() - time))
     elseif self:GetHolsterTime() > 0 then
-        state_txt = "WAIT: Holster"
+        state_txt = "HOLSTER"
         state2_txt = string.format("%.2f", self:GetHolsterTime() - time)
     elseif self:GetSprintAmount() > 0 then
         state_txt = "SPRINT"
@@ -518,6 +518,10 @@ function SWEP:DevStuffCrosshair()
     elseif self:GetSightAmount() > 0 then
         state_txt = "SIGHT"
         state2_txt = string.format("%d%%", self:GetSightAmount() * 100)
+    elseif self:GetGrenadePrimed() then
+        state_txt = "PRIMED"
+        local pt = time - self:GetGrenadePrimedTime()
+        state2_txt = string.format("%.2f | %d%%", self:GetProcessedValue("FuseTimer") - pt, math.Clamp(pt / self:GetProcessedValue("ThrowChargeTime"), 0, 1) * 100)
     end
     local recoil_txt = "Recoil: " .. tostring(math.Round(math.min(self:GetProcessedValue("UseVisualRecoil") and math.huge or self:GetProcessedValue("RecoilModifierCap"), self:GetRecoilAmount()), 2))
     local spread_txt = "Cone: " .. math.Round(spread_val, 5)
