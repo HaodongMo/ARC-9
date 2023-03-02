@@ -613,3 +613,18 @@ L["autostat.recoilmodifiercap"] = "Máximo retroceso acumulado"
 -- Added 14-FEB-2023
 L["settings.hud_game.killfeed_color.title"] = "Iconos a todo color"
 L["settings.hud_game.killfeed_color.desc"] = "Los iconos generados dinámicamente están totalmente coloreados."
+
+-- Added 01-MAR-2023
+L["autostat.secondary.sighted"] = "while Sighted"
+L["autostat.secondary.hot"] = "from Heat"
+L["autostat.secondary.heated"] = "while Heated"
+L["settings.tabname.general"] = "General"
+L["settings.general.server"] = "Servidor"
+L["settings.general.client"] = "Cliente"
+L["settings.truenames.title"] = "Nombres reales"
+L["settings.truenames.desc"] = "Establece si usar los nombres reales de las armas o nombres ficticios hechos por los desarrolladores. No todas las armas lo utilizan.\n\nLa configuración del servidor puede anular esta preferencia."
+
+L["settings.truenames_default.title"] = "Nombres reales por defecto"
+L["settings.truenames_default.desc"] = "Establece el modo de nombres reales por defecto en el servidor. Todos los jugadores que utilicen \"Default\" en preferencia lo utilizarán."
+L["settings.truenames_enforced.title"] = "Nombres reales por defecto forcado"
+L["settings.truenames_enforced.desc"] = "Establecer para obligar a todos los jugadores a utilizar la configuración del servidor para los nombres verdaderos."
