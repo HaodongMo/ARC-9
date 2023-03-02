@@ -133,17 +133,23 @@ function ARC9.StartCommand(ply, cmd)
         local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
         local recrise = ARC9.RecoilRise
 
-        if recrise.p > 0 then
+        -- 0 can be negative or positive!!!!! Insane
+
+        if recrise.p == 0 then
+        elseif recrise.p > 0 then
             recrise.p = math.Clamp(recrise.p, 0, recrise.p - diff.p)
         elseif recrise.p < 0 then
             recrise.p = math.Clamp(recrise.p, recrise.p - diff.p, 0)
         end
 
-        if recrise.y > 0 then
+        if recrise.y == 0 then
+        elseif recrise.y > 0 then
             recrise.y = math.Clamp(recrise.y, 0, recrise.y - diff.y)
         elseif recrise.y < 0 then
             recrise.y = math.Clamp(recrise.y, recrise.y - diff.y, 0)
         end
+
+        recrise:Normalize()
 
         ARC9.RecoilRise = recrise
 
