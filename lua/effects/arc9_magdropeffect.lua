@@ -30,7 +30,7 @@ function EFFECT:Init(data)
     local model = ent:GetProcessedValue("DropMagazineModel")
     local skinn = ent:GetProcessedValue("DropMagazineSkin")
     local sounds = ent:GetProcessedValue("DropMagazineSounds")
-    
+
     local dir = ang:Forward()
 
     local correctpos = ent:GetProcessedValue("DropMagazinePos") or vector_origin
@@ -67,15 +67,14 @@ function EFFECT:Init(data)
     -- self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 
     local phys = self:GetPhysicsObject()
-    if !IsValid(phys) then self:Remove() end --hhh
+    if !IsValid(phys) then self:Remove() return end
+    phys:Wake()
 
     local plyvel = vector_origin
 
     if IsValid(ent.Owner) then
         plyvel = ent.Owner:GetAbsVelocity()
     end
-
-    if phys then phys:Wake() end
 
     -- phys:SetDamping(0, 0)
     -- phys:SetMass(1)
