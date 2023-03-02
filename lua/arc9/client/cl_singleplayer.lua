@@ -67,9 +67,7 @@ end
 
 concommand.Add("arc9_dev_printatts", function()
     local wep = LocalPlayer():GetActiveWeapon()
-    if !wep then return end
-    local vm = LocalPlayer():GetViewModel()
-    if !vm then return end
+    if !IsValid(wep) or !wep.ARC9 or !wep.Attachments then MsgC(clr_r, "Not a valid ARC9 weapon with attachments!") return end
 
     MsgC(clr_b, "{\n")
     printattsintable(wep.Attachments, 1)
