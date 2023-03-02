@@ -497,7 +497,8 @@ function SWEP:DevStuffCrosshair()
     local recoil_txt = "Recoil: " .. tostring(math.Round(math.min(self:GetProcessedValue("UseVisualRecoil") and math.huge or self:GetProcessedValue("RecoilModifierCap"), self:GetRecoilAmount()), 2))
     local spread_txt = "Cone: " .. math.Round(spread_val, 5)
     local sway_txt = string.format("%.2f", self:GetFreeSwayAmount()) .. " Sway"
-    local damage_txt = math.Round(self:GetDamageAtRange(dist)) .. " DMG"
+    local num = math.floor(self:GetProcessedValue("Num"))
+    local damage_txt = math.Round(self:GetDamageAtRange(dist)) .. (num > 1 and ("×" .. tostring(num)) or "") .. " DMG"
 
     surface.SetFont("ARC9_DevCrosshair")
     local sway_w = surface.GetTextSize(sway_txt)
