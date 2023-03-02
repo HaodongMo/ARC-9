@@ -36,7 +36,7 @@ function ARC9:PlayerGiveAtt(ply, att, amt)
 
     local atttbl = ARC9.GetAttTable(att)
 
-    if !atttbl then print("Invalid att " .. att) return end
+    if !atttbl then return end
     if atttbl.Free then return end -- You can't give a free attachment, silly
     if atttbl.AdminOnly and !(ply:IsPlayer() and ply:IsAdmin()) then return false end
 
