@@ -298,7 +298,7 @@ function SWEP:PrimaryAttack()
                 self:SetPrimedAttack(false)
             end
         end
-    else
+    elseif !processedValue(self,"TriggerDelay") or !processedValue(self, "TriggerDelayReleaseToFire") or !owner:KeyDown(IN_ATTACK) then
         self:SetPrimedAttack(false)
     end
 
