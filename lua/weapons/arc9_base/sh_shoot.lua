@@ -410,7 +410,7 @@ function SWEP:DoPrimaryAttack()
 
     self:DoPlayerAnimationEvent(processedValue(self,"AnimShoot"))
 
-    local delay = 60 / processedValue(self,"RPM")
+    local delay = 60 / processedValue(self, "RPM")
     local time = CurTime()
 
     local curatt = self:GetNextPrimaryFire()

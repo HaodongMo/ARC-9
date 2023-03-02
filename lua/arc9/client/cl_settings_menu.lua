@@ -37,12 +37,36 @@ local settingstable = {
     --     -- { type = "input", text = "Color alpha", desc = "g" },
     -- },
     {
+        TabName = "settings.tabname.general",
+
+        { type = "label", text = "settings.general.client" },
+        { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
+        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
+        { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
+        { type = "combo", text = "settings.truenames.title", convar = "truenames", content = {
+            {"1Default", "0"},
+            {"2Enabled", "1"},
+            {"3Disabled", "2"},
+        }, desc = "settings.truenames.desc"},
+
+        { type = "label", text = "settings.general.server" },
+        { type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
+        { type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
+        { type = "combo", text = "settings.truenames_default.title", convar = "truenames_default", content = {
+            {"1Disabled", "0"},
+            {"2Enabled", "1"},
+        }, desc = "settings.truenames_default.desc"},
+        { type = "bool", text = "settings.truenames_enforced.title", convar = "truenames_enforced", desc = "settings.truenames_enforced.desc"},
+
+    },
+    {
         TabName = "settings.tabname.performance",
+
         { type = "label", text = "settings.performance.important" },
         { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
-        { type = "bool", text = "settings.allflash.title", convar = "allflash", desc = "settings.allflash.desc"},
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
-        { type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
+        { type = "bool", text = "settings.allflash.title", convar = "allflash", desc = "settings.allflash.desc"},
+
 
         { type = "label", text = "settings.performance.blur.title" },
         { type = "bool", text = "settings.cust_blur.title", convar = "cust_blur", desc = "settings.cust_blur.desc"},
@@ -61,10 +85,7 @@ local settingstable = {
     },
     {
         TabName = "settings.tabname.optics",
-        -- { type = "label", text = "Performance" }, -- fine here but they are already in first tab
-        { type = "bool", text = "Cheap Scopes", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
-        -- { type = "bool", text = "Blur in Scopes", convar = "fx_rtblur", desc = "Blurs the world while using a magnified scope."},
-        -- { type = "bool", text = "Blur in Sights", convar = "fx_adsblur", desc = "Blurs the weapon while aiming down sights."},
+        -- { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
 
         { type = "label", text = "settings.optics.control" },
         { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
