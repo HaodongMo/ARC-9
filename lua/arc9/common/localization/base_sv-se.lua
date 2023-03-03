@@ -595,3 +595,29 @@ L["settings.visuals.vm_cambobwalk.title"] = "Gå Vy Guppande"
 L["settings.visuals.vm_cambobwalk.desc"] = "Gör att din kamera lätt förflyttar sig när du går runt (kräver spring guppande)"
 L["settings.visuals.vm_cambobintensity.title"] = "Intensitet"
 L["settings.visuals.vm_cambobintensity.desc"] = "Hur intensiv guppandet är"
+
+-- Added 7-FEB-2023
+L["settings.developer.dev_crosshair.title"] = "Tillv. Hårkors"
+L["settings.developer.dev_crosshair.desc"] = "Ett konstigt hårkors som visar exakt sikte pukt och några användbara nummer.\n\nDetta är en servervariabel och fungerar endast för admins - försök inte fuska med detta!"
+
+-- Added 11-FEB-2023
+L["autostat.recoilmodifiercap"] = "Maximal Kumulativ Rekyl"
+
+-- Added 14-FEB-2023
+L["settings.hud_game.killfeed_color.title"] = "Fullfärgade Ikoner"
+L["settings.hud_game.killfeed_color.desc"] = "Dem dynamiskt skapade ikonerna är fullfärgade."
+
+-- Added 01-MAR-2023
+L["autostat.secondary.sighted"] = "i Siktet"
+L["autostat.secondary.hot"] = "från Hetta"
+L["autostat.secondary.heated"] = "när den är Het"
+L["settings.tabname.general"] = "Generellt"
+L["settings.general.server"] = "Server"
+L["settings.general.client"] = "Klient"
+L["settings.truenames.title"] = "Sanna Namn"
+L["settings.truenames.desc"] = "Välj om vapnen ska använda riktiga namn eller fiktiva namn valda av utvecklarna. Notera att inte alla vapen använder detta.\n\nServerinställningar kan överskrida denna preferens."
+
+L["settings.truenames_default.title"] = "Standard Sanna Namn"
+L["settings.truenames_default.desc"] = "Sätt standard sanna namn läget på servern. Alla spelare som använder \"Standard\" i preferensen kommer använda detta."
+L["settings.truenames_enforced.title"] = "Standard Sanna Namn (Tvinga)"
+L["settings.truenames_enforced.desc"] = "Välj för att tvinga alla spelare att använda serverinställningen för sanna namn."
