@@ -189,8 +189,8 @@ do
         
         if CLIENT and isSingleplayer then  -- idk why
             ft = ft * 0.6666
-            PUNCH_DAMPING = PUNCH_DAMPING * 1.6666
-            VisualRecoilSpringMagnitude = VisualRecoilSpringMagnitude * 0.6666
+            PUNCH_DAMPING = PUNCH_DAMPING * 2.6666
+            VisualRecoilSpringMagnitude = VisualRecoilSpringMagnitude * 1.6666
         end
 
         if self.VisualRecoilThinkFunc then
