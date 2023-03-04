@@ -408,7 +408,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     pos, ang = self:GetViewModelRecoil(pos, ang, cor_val)
 
-    if not self:GetProcessedValue("NoViewBob") then
+    if !self:GetProcessedValue("NoViewBob") then
         pos, ang = self:GetViewModelBob(pos, ang)
         pos, ang = self:GetMidAirBob(pos, ang)
     end

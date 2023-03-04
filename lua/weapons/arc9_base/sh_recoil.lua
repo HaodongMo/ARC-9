@@ -187,6 +187,11 @@ do
         local VisualRecoilSpringMagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude") or 1
         local PUNCH_DAMPING = swepGetProcessedValue(self, "VisualRecoilSpringPunchDamping") or 6
         
+        if CLIENT and isSingleplayer then  -- idk why
+            ft = ft * 0.6666 
+            PUNCH_DAMPING = PUNCH_DAMPING * 1.666
+        end
+
         if self.VisualRecoilThinkFunc then
             springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING = self.VisualRecoilThinkFunc(springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING, self:GetRecoilAmount())
         end
