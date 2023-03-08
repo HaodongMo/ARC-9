@@ -1857,7 +1857,7 @@ function ARC9MultiLineText(text, maxw, font)
                     -- move whole word to new line if blank space is not very large
                     table.insert(content, tline)
                     tline = ""
-                    x = surface.GetTextSize(word)
+                    x = 0
                 elseif dashi and surface.GetTextSize(utf8.sub(word, 0, dashi)) <= maxw - x then
                     -- cut the word at the dash sign if possible
                     table.insert(content, tline .. utf8.sub(word, 0, dashi))
