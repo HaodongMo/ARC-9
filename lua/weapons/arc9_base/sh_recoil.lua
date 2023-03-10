@@ -191,6 +191,10 @@ do
             ft = ft * 0.6666
             PUNCH_DAMPING = PUNCH_DAMPING * 2.6666
             VisualRecoilSpringMagnitude = VisualRecoilSpringMagnitude * 1.6666
+        -- elseif CLIENT and !isSingleplayer then -- Grrrrrrrrrrrrrrrrrjugoidfhgniudfhgifduojiodfuhdufjhg
+        else
+            PUNCH_DAMPING = PUNCH_DAMPING * 1.6666
+            springconstant = springconstant * 0.6666
         end
 
         if self.VisualRecoilThinkFunc then
