@@ -31,7 +31,13 @@ function SWEP:ThinkGrenade()
 
         if self:GetGrenadeRecovering() then
             if self:GetProcessedValue("Disposable") and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
+                if self.PairedItem then
+                    if self:GetOwner():HasInventoryItemSpecific(self.PairedItem) then
+                        self:GetOwner():TakeInventoryItem(self.PairedItem)
+                    end
+                else
                 self:Remove()
+                end
             else
                 self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
                 self:SetGrenadeRecovering(false)
