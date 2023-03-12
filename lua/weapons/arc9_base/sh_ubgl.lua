@@ -20,6 +20,8 @@ function SWEP:ToggleUBGL(on)
 
     if on == self:GetUBGL() then return end
 
+    if self:StillWaiting() then return end
+
     self:CancelReload()
     self:SetUBGL(on)
 

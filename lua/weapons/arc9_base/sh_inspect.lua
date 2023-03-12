@@ -1,8 +1,8 @@
 function SWEP:ThinkInspect()
     if self:StillWaiting() or self:GetInSights() then return end
     if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
-    -- if self:GetUBGL() then return end
-
+    if self:GetUBGL() and !self:HasAnimation("inspect_ubgl") then return end
+    
     -- self:PlayAnimation("inspect", 1, true)
     if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyDown(IN_RELOAD) then
         if !self:HasAnimation("enter_inspect") then
