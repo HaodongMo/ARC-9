@@ -245,7 +245,9 @@ function SWEP:SwitchMultiSight(amt)
         if self:StillWaiting() then return end
 
         if (self.MultiSightTable[old_msi].atttbl or {}).ID == (self.MultiSightTable[msi].atttbl or {}).ID then
-            -- self:PlayAnimation("switchsights", 1, false)
+            if !self:GetUBGL() then -- for me
+                self:PlayAnimation("switchsights", 1, false)
+            end
         end
     end
 end
