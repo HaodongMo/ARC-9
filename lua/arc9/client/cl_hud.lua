@@ -299,7 +299,7 @@ local function DrawSimpleHints()
     if capabilities.UBGL then
         table.insert(hints, {
             glyph = ARC9.GetBindKey("+use"),
-            glyph2 = ARC9.GetBindKey("+reload"),
+            glyph2 = ARC9.GetBindKey("+attack2"),
             action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
         })
     end
@@ -307,7 +307,7 @@ local function DrawSimpleHints()
     if capabilities.SwitchSights then
         table.insert(hints, {
             glyph = ARC9.GetBindKey("+walk"),
-            glyph2 = ARC9.GetBindKey("+use"),
+            glyph2 = ARC9.GetBindKey("invnext"),
             action = ARC9:GetPhrase("hud.hint.switchsights")
         })
     end

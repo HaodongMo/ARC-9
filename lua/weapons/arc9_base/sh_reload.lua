@@ -4,19 +4,19 @@ function SWEP:Reload()
         return
     end
 
-    if !self:GetOwner():KeyPressed(IN_RELOAD) then
-        return
-    end
+    -- if !self:GetOwner():KeyPressed(IN_RELOAD) then
+    --     return
+    -- end
 
     if self:GetNeedsCycle() then
         return
     end
 
-    if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
-        if self:GetOwner():KeyDown(IN_USE) then
-            return
-        end
-    end
+    -- if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
+    --     if self:GetOwner():KeyDown(IN_USE) then
+    --         return
+    --     end
+    -- end
 
     if self:GetJammed() then
         self:UnJam()

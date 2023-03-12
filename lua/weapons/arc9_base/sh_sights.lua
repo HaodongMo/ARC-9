@@ -11,6 +11,7 @@ function SWEP:EnterSights()
     if self:GetProcessedValue("UBGLInsteadOfSights") then return end
     if self:GetSafe() then return end
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
+    if self:GetValue("UBGL") and self:GetOwner():KeyDown(IN_USE) then return end
 
     -- self:ToggleBlindFire(false)
     self:SetInSights(true)
@@ -206,9 +207,8 @@ function SWEP:BuildMultiSight()
 end
 
 function SWEP:SwitchMultiSight(amt)
-
     if self.NextSightSwitch and self.NextSightSwitch > CurTime() then return end
-    self.NextSightSwitch = CurTime() + 0.25
+    self.NextSightSwitch = CurTime() + 0.15
 
     if game.SinglePlayer() then
         self:CallOnClient("InvalidateCache")
@@ -218,23 +218,25 @@ function SWEP:SwitchMultiSight(amt)
     local old_msi = self:GetMultiSight()
     msi = old_msi
     msi = msi + amt
-
+    
     if msi > #self.MultiSightTable then
         msi = 1
     elseif msi <= 0 then
         msi = #self.MultiSightTable
     end
-
+    
     self:SetMultiSight(msi)
 
     self:RunHook("Hook_SwitchSight", self.MultiSightTable[msi])
 
-    if self.MultiSightTable[msi].OnSwitchToSight then
-        self.MultiSightTable[msi].OnSwitchToSight(self, self.MultiSightTable[msi].slottbl)
-    end
+    if self.MultiSightTable[msi] then
+        if self.MultiSightTable[msi].OnSwitchToSight then
+            self.MultiSightTable[msi].OnSwitchToSight(self, self.MultiSightTable[msi].slottbl)
+        end
 
-    if self.MultiSightTable[old_msi].OnSwitchFromSight then
-        self.MultiSightTable[old_msi].OnSwitchFromSight(self, self.MultiSightTable[msi].slottbl)
+        if self.MultiSightTable[old_msi].OnSwitchFromSight then
+            self.MultiSightTable[old_msi].OnSwitchFromSight(self, self.MultiSightTable[msi].slottbl)
+        end
     end
 
     self:InvalidateCache()
@@ -317,18 +319,20 @@ do
             end
         end
 
-        if sighted and playerKeyPressed(owner, IN_USE) and playerKeyDown(owner, IN_WALK) then
-            -- if CurTime() - self:GetLastPressedETime() < 0.33 then
-            if playerKeyDown(owner, IN_SPEED) then
-                swepSwitchMultiSight(self, -1)
-            else
-                swepSwitchMultiSight(self)
-            end
-            --     self:SetLastPressedETime(0)
-            -- else
-            --     self:SetLastPressedETime(CurTime())
-            -- end
-        end
+        -- Moved to sh_move for mouse wheel to work
+
+        -- if sighted and playerKeyPressed(owner, IN_USE) and playerKeyDown(owner, IN_WALK) then
+        --     -- if CurTime() - self:GetLastPressedETime() < 0.33 then
+        --     if playerKeyDown(owner, IN_SPEED) then
+        --         swepSwitchMultiSight(self, -1)
+        --     else
+        --         swepSwitchMultiSight(self)
+        --     end
+        --     --     self:SetLastPressedETime(0)
+        --     -- else
+        --     --     self:SetLastPressedETime(CurTime())
+        --     -- end
+        -- end
 
         entitySetPoseParameter(vm, "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
     end

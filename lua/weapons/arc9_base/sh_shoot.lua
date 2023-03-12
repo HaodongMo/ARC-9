@@ -328,8 +328,13 @@ function SWEP:DoPrimaryAttack()
 
     if !self:HasAmmoInClip() then
         if self:GetUBGL() and !processedValue(self,"UBGLInsteadOfSights") then
-            self:ToggleUBGL(false)
-            self:SetNeedTriggerPress(true)
+            if self:CanReload() then 
+                self:Reload()
+            else
+                self:ToggleUBGL(false)
+                self:SetNeedTriggerPress(true)
+            end
+            
             return
         else
             self:DryFire()
