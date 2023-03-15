@@ -337,8 +337,8 @@ local function DrawSimpleHints()
 
     if capabilities.Inspect then
         table.insert(hints, {
-            glyph2 = ARC9.GetBindKey("+use"),
-            glyph = ARC9.GetBindKey("+reload"),
+            glyph = ARC9.GetBindKey("+use"),
+            glyph2 = ARC9.GetBindKey("+reload"),
             action = ARC9:GetPhrase("hud.hint.inspect")
         })
     end
