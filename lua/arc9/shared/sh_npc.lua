@@ -42,14 +42,20 @@ function ARC9.GiveNPCPlayerWeapon(npc, ply)
     npc:DropWeapon(nil, ply:GetPos())
     npc:Give(weapon:GetClass())
 
-    local wpn = npc:GetActiveWeapon()
-    wpn.Attachments = weapon.Attachments
-    wpn.WeaponWasGiven = true
-    wpn:Activate()
-    wpn:NPC_Initialize()
-    wpn:SetClip1(weapon:Clip1())
+    timer.Simple(0.05, function() 
+        if !IsValid(npc) then return end
+        local wpn = npc:GetActiveWeapon()
+        if !IsValid(wpn) then return end
 
-    ply:StripWeapon(weapon:GetClass())
+        wpn.Attachments = weapon.Attachments
+        wpn.WeaponWasGiven = true
+        wpn:NPC_Initialize()
+        wpn:SendWeapon()
+        -- wpn:Activate() -- idk what this for
+        wpn:SetClip1(weapon:Clip1())
+
+        ply:StripWeapon(weapon:GetClass())
+    end)
 end
 
 hook.Add("AllowPlayerPickup", "ARC9_AllowPlayerPickup", function(ply, ent)
