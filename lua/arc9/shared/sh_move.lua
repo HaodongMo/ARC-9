@@ -224,7 +224,7 @@ function ARC9.StartCommand(ply, cmd)
         cmd:SetImpulse(ARC9.IMPULSE_TOGGLEATTS)
     end
 
-    if ply:KeyDown(IN_WALK) and wpn:GetInSights() and cmd:GetMouseWheel() != 0 and #wpn.MultiSightTable > 0 then
+    if ply:KeyDown(IN_USE) and wpn:GetInSights() and cmd:GetMouseWheel() != 0 and #wpn.MultiSightTable > 0 then
         wpn:SwitchMultiSight(-cmd:GetMouseWheel())
     end
 end

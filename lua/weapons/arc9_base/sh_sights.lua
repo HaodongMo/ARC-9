@@ -373,6 +373,7 @@ end
 SWEP.ScrollLevels = {}
 
 function SWEP:Scroll(amt)
+    if ply:KeyDown(IN_USE) then return end
     local sights = self:GetSight() or {}
 
     local atttbl = sights.atttbl

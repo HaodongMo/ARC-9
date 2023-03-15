@@ -306,7 +306,7 @@ local function DrawSimpleHints()
 
     if capabilities.SwitchSights then
         table.insert(hints, {
-            glyph = ARC9.GetBindKey("+walk"),
+            glyph = ARC9.GetBindKey("+use"),
             glyph2 = ARC9.GetBindKey("invnext"),
             action = ARC9:GetPhrase("hud.hint.switchsights")
         })
