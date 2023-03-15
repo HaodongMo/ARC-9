@@ -225,7 +225,7 @@ function ARC9.StartCommand(ply, cmd)
     end
 
     if ply:KeyDown(IN_USE) and wpn:GetInSights() and cmd:GetMouseWheel() != 0 and #wpn.MultiSightTable > 0 then
-        wpn:SwitchMultiSight(-cmd:GetMouseWheel())
+        wpn:SwitchMultiSight(cmd:GetMouseWheel())
     end
 end
 
