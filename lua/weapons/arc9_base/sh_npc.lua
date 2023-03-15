@@ -95,6 +95,8 @@ function SWEP:NPC_Initialize()
     self:BuildSubAttachments(self.DefaultAttachments)
     self:SetBaseSettings()
 
+    self.LoadedPreset = true
+
     if CLIENT then return end
 
     if IsValid(self) then

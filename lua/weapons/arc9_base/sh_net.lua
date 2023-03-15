@@ -127,6 +127,10 @@ function SWEP:ReceiveWeapon()
         self:SetupModel(true)
         self:SetupModel(false)
         self:RefreshCustomizeMenu()
+
+        if !IsValid(self:GetOwner()) and GetConVar("arc9_npc_autoreplace"):GetBool() then -- very awful but i dont know how to make that value network properly
+            self.LoadedPreset = true
+        end
     else
         self:InvalidateCache()
         self:PruneAttachments()
