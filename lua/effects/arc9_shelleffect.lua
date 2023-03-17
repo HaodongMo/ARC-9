@@ -10,6 +10,8 @@ EFFECT.SpawnTime = 0
 
 EFFECT.VMContext = true
 
+EFFECT.PCFs = {}
+
 function EFFECT:Init(data)
 
     local att = data:GetAttachment()
@@ -138,11 +140,6 @@ function EFFECT:Init(data)
 
         if IsValid(pcf) then
             pcf:StartEmission()
-
-            -- if (muz or parent) != vm and !wm then
-            --     pcf:SetShouldDraw(false)
-            --     table.insert(ent.PCFs, pcf)
-            -- end
         end
 
         local smkpcf = CreateParticleSystem(self, "shellsmoke", PATTACH_ABSORIGIN_FOLLOW, 0)
@@ -150,6 +147,12 @@ function EFFECT:Init(data)
         if IsValid(smkpcf) then
             smkpcf:StartEmission()
         end
+
+        table.insert(ent.PCFs, pcf)
+        table.insert(self.PCFs, smkpcf)
+
+        pcf:SetShouldDraw(false)
+        smkpcf:SetShouldDraw(false)
     end
 
     self.SpawnTime = CurTime()
@@ -192,6 +195,12 @@ function EFFECT:Render()
     if !IsValid(self) then return end
 
     self:DrawModel()
+
+    for k, v in pairs(self.PCFs) do
+        if IsValid(v) then
+            v:Render()
+        end
+    end
 end
 
 function EFFECT:DrawTranslucent()
