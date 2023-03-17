@@ -1281,7 +1281,8 @@ function SWEP:CreateHUD_RHP()
         "tips.external",
         "tips.love",
         "tips.tolerance",
-        "tips.cyberdemon"
+        "tips.cyberdemon",
+        "tips.tips"
     }
 
     local tips_ticker = vgui.Create("DPanel", bg)
@@ -1312,15 +1313,13 @@ function SWEP:CreateHUD_RHP()
         surface.SetTextColor(ARC9.GetHUDColor("fg", 100))
         surface.DrawText(ARC9:GetPhrase(self2.tiptext))
 
-        self2.tx = self2.tx - FrameTime() * 90
+        self2.tx = self2.tx - FrameTime() * 90 * GetConVar("arc9_cust_tips_speed"):GetFloat()
 
         if self2.tx < -self2.tw then
-            -- pick another random tip but don't choose the same one
-            local newtip = math.random(1, #tips)
-            while newtip == self2.tipindex do
-                newtip = math.random(1, #tips)
+            self2.tipindex = self2.tipindex + 1
+            if self2.tipindex > #tips then
+                self2.tipindex = 1
             end
-            self2.tipindex = newtip
             self2.tiptext = tips[self2.tipindex]
             surface.SetFont("ARC9_12")
             local tw = surface.GetTextSize(ARC9:GetPhrase(self2.tiptext))

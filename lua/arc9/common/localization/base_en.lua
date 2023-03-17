@@ -679,7 +679,11 @@ L["tips.external"] = "If using the Github version of ARC9, make sure to update f
 L["tips.love"] = "Feel free to tell the devs you appreciate their work! It really helps us keep going."
 L["tips.tolerance"] = "All weapon bases work fine together. There's no need for favoritism."
 L["tips.cyberdemon"] = "To kill the terrorist, shoot him until he is dead."
+L["tips.tips"] = "Tips have a fixed order. Keep reading and you'll eventually see them all."
 -- L["tips."] = ""
 
 L["settings.hud_cust.cust_tips.title"] = "Tips"
 L["settings.hud_cust.cust_tips.desc"] = "News ticker style feed of tips for using ARC9."
+
+L["settings.hud_cust.cust_tips_speed.title"] = "Tips Scroll Speed"
+L["settings.hud_cust.cust_tips_speed.desc"] = "How quickly the tips scroll past."
