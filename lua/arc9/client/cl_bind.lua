@@ -82,3 +82,56 @@ function ARC9.GetBindKey(bind)
         return string.upper(key)
     end
 end
+
+function ARC9.GetKeyIsBound(bind)
+    local key = input.LookupBinding(bind)
+
+    if !key then
+        return false
+    else
+        return true
+    end
+end
+
+function ARC9.GetKey(bind)
+    local key = input.LookupBinding(bind)
+
+    return input.GetKeyCode(key)
+end
+
+ARC9.KeyPressed_Melee = false
+ARC9.KeyPressed_UBGL = false
+ARC9.KeyPressed_Inspect = false
+ARC9.KeyPressed_SwitchSights = false
+
+concommand.Add("+arc9_melee", function()
+    ARC9.KeyPressed_Melee = true
+end)
+
+concommand.Add("-arc9_melee", function()
+    ARC9.KeyPressed_Melee = false
+end)
+
+concommand.Add("+arc9_ubgl", function()
+    ARC9.KeyPressed_UBGL = true
+end)
+
+concommand.Add("-arc9_ubgl", function()
+    ARC9.KeyPressed_UBGL = false
+end)
+
+concommand.Add("+arc9_inspect", function()
+    ARC9.KeyPressed_Inspect = true
+end)
+
+concommand.Add("-arc9_inspect", function()
+    ARC9.KeyPressed_Inspect = false
+end)
+
+concommand.Add("+arc9_switchsights", function()
+    ARC9.KeyPressed_SwitchSights = true
+end)
+
+concommand.Add("-arc9_switchsights", function()
+    ARC9.KeyPressed_SwitchSights = false
+end)

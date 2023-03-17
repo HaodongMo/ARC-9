@@ -197,6 +197,10 @@ function SWEP:ThinkMelee()
             self:MeleeAttack(false, true)
         end
 
+        if self:GetOwner():KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash") and !self:GetInSights() then
+            self:MeleeAttack()
+        end
+
     end
 
     local prebash = self:GetProcessedValue("PreBashTime")

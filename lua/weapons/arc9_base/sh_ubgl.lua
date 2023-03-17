@@ -1,6 +1,6 @@
 function SWEP:ThinkUBGL()
     if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
-        if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_ATTACK2) then
+        if (self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_ATTACK2)) or self:GetOwner():KeyPressed(ARC9.IN_UBGL) then
             if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
             self.NextUBGLSwitch = CurTime() + 1
 

@@ -321,20 +321,9 @@ do
             end
         end
 
-        -- Moved to sh_move for mouse wheel to work
-
-        -- if sighted and playerKeyPressed(owner, IN_USE) and playerKeyDown(owner, IN_WALK) then
-        --     -- if CurTime() - self:GetLastPressedETime() < 0.33 then
-        --     if playerKeyDown(owner, IN_SPEED) then
-        --         swepSwitchMultiSight(self, -1)
-        --     else
-        --         swepSwitchMultiSight(self)
-        --     end
-        --     --     self:SetLastPressedETime(0)
-        --     -- else
-        --     --     self:SetLastPressedETime(CurTime())
-        --     -- end
-        -- end
+        if sighted and playerKeyPressed(owner, ARC9.IN_SWITCHSIGHTS) then
+            swepSwitchMultiSight(self)
+        end
 
         entitySetPoseParameter(vm, "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
     end

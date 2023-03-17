@@ -4,7 +4,7 @@ function SWEP:ThinkInspect()
     if self:GetUBGL() and !self:HasAnimation("inspect_ubgl") then return end
     
     -- self:PlayAnimation("inspect", 1, true)
-    if self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyDown(IN_RELOAD) then
+    if (self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyDown(IN_RELOAD)) or self:GetOwner():KeyDown(ARC9.IN_INSPECT) then
         if !self:HasAnimation("enter_inspect") then
             self:PlayAnimation("inspect", 1, true)
             return

@@ -208,7 +208,7 @@ function SWEP:PostModify(toggleonly)
 end
 
 function SWEP:ThinkCustomize()
-    if self:GetOwner():KeyPressed(IN_WEAPON1) and !self:GetOwner():KeyDown(IN_USE) then
+    if self:GetOwner():KeyPressed(ARC9.IN_CUSTOMIZE) and !self:GetOwner():KeyDown(IN_USE) then
         self:ToggleCustomize(!self:GetCustomize())
     end
 end

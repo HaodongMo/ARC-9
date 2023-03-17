@@ -285,19 +285,33 @@ local function GetHintsTable(capabilities)
     local hints = {}
 
     if capabilities.UBGL then
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+use"),
-            glyph2 = ARC9.GetBindKey("+attack2"),
-            action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
-        })
+        if ARC9.GetKeyIsBound("+arc9_ubgl") then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+arc9_ubgl"),
+                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
+            })
+        else
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("+attack2"),
+                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
+            })
+        end
     end
 
     if capabilities.SwitchSights then
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+use"),
-            glyph2 = ARC9.GetBindKey("invnext"),
-            action = ARC9:GetPhrase("hud.hint.switchsights")
-        })
+        if ARC9.GetKeyIsBound("+arc9_switchsights") then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+arc9_switchsights"),
+                action = ARC9:GetPhrase("hud.hint.switchsights")
+            })
+        else
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("invnext"),
+                action = ARC9:GetPhrase("hud.hint.switchsights")
+            })
+        end
     end
 
     if capabilities.VariableZoom then
@@ -316,19 +330,33 @@ local function GetHintsTable(capabilities)
     end
 
     if capabilities.Bash then
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+use"),
-            glyph2 = ARC9.GetBindKey("+attack"),
-            action = ARC9:GetPhrase("hud.hint.bash")
-        })
+        if ARC9.GetKeyIsBound("+arc9_melee") then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+arc9_melee"),
+                action = ARC9:GetPhrase("hud.hint.bash")
+            })
+        else
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("+attack"),
+                action = ARC9:GetPhrase("hud.hint.bash")
+            })
+        end
     end
 
     if capabilities.Inspect then
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+use"),
-            glyph2 = ARC9.GetBindKey("+reload"),
-            action = ARC9:GetPhrase("hud.hint.inspect")
-        })
+        if ARC9.GetKeyIsBound("+arc9_inspect") then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+arc9_inspect"),
+                action = ARC9:GetPhrase("hud.hint.inspect")
+            })
+        else
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("+reload"),
+                action = ARC9:GetPhrase("hud.hint.inspect")
+            })
+        end
     end
 
     if capabilities.Firemode then

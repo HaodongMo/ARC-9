@@ -246,6 +246,16 @@ ARC9.WEAPON_MISC = 0
 
 ARC9.IMPULSE_TOGGLEATTS = 40
 
+ARC9.IN_CUSTOMIZE = IN_WEAPON1
+ARC9.IN_MELEE = IN_BULLRUSH
+ARC9.IN_UBGL = IN_WEAPON2
+ARC9.IN_INSPECT = IN_CANCEL
+ARC9.IN_SWITCHSIGHTS = IN_RUN
+-- Official enums end at 2^24
+-- IN flags is 32 bit!
+-- We still have 7 free values!!!
+-- Use them up!!!!!
+
 ARC9.HL2Replacements = {
     ["weapon_pistol"] = {ARC9.WEAPON_PISTOL},
     ["weapon_357"] = {ARC9.WEAPON_PISTOL, ARC9.WEAPON_SNIPER},
