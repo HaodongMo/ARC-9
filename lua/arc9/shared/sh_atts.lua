@@ -50,6 +50,9 @@ end
 
 function ARC9.LoadAtts()
     ARC9.Attachments_Count = 0
+    local Attachments_BulkCount = 0
+    local Attachments_RegularCount = 0
+    local Attachments_LuaCount = 0
     ARC9.Attachments = {}
     ARC9.Attachments_Index = {}
 
@@ -67,13 +70,13 @@ function ARC9.LoadAtts()
     for _, filename in pairs(files) do
         if filename == "default.lua" then continue end
 
-
         local shortname = string.lower(string.sub(filename, 1, -5))
         if string.match(shortname, "[^%w_]") then
             ErrorNoHalt("ARC9: Refusing to load attachment with invalid name \"" .. tostring(shortname) .. "\"!\n")
             continue
         end
 
+        Attachments_LuaCount = Attachments_LuaCount + 1
         ARC9.Attachments_Count = ARC9.Attachments_Count + 1
         local attid = ARC9.Attachments_Count
 
@@ -103,10 +106,15 @@ function ARC9.LoadAtts()
         end
     end
 
+    Attachments_RegularCount = Attachments_LuaCount
+
     local bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
 
     for _, filename in pairs(bulkfiles) do
         AddCSLuaFile(searchdir_bulk .. filename)
+        
+        Attachments_LuaCount = Attachments_LuaCount + 1
+        Attachments_BulkCount = Attachments_BulkCount + 1
     end
 
     bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
@@ -117,7 +125,7 @@ function ARC9.LoadAtts()
         include(searchdir_bulk .. filename)
     end
 
-    print("ARC9 Registered " .. tostring(ARC9.Attachments_Count) .. " Attachments.")
+    print("ARC9 Registered " .. tostring(ARC9.Attachments_Count) .. " attachments. (" .. Attachments_LuaCount .. " lua files total, " .. Attachments_BulkCount .. " bulk/" .. Attachments_RegularCount .. " regular)")
 
     ARC9.Attachments_Bits = math.min(math.ceil(math.log(ARC9.Attachments_Count + 1, 2)), 32)
 
