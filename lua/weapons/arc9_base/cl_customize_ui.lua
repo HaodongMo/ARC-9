@@ -1299,6 +1299,10 @@ function SWEP:CreateHUD_RHP()
     tips_ticker.Paint = function(self2, w, h)
         if !IsValid(self) then return end
 
+        if self.CustomizeButtons[self.CustomizeTab + 1].inspect then
+            self2:SetAlpha(math.max(self2:GetAlpha() - 25, 0))
+        end
+
         surface.SetFont("ARC9_12")
         surface.SetTextPos(self2.tx, 0)
         surface.SetTextColor(ARC9.GetHUDColor("fg", 100))
