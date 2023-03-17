@@ -565,3 +565,82 @@ L["settings.visuals.vm_cambobwalk.title"] = "Тряска при ходьбе"
 L["settings.visuals.vm_cambobwalk.desc"] = "При обычный ходьбе у камеры тоже будет тряска (требует включенной тряски при беге)"
 L["settings.visuals.vm_cambobintensity.title"] = "Интенсивность"
 L["settings.visuals.vm_cambobintensity.desc"] = "Насколько сильная будет тряска"
+
+
+-- Added 7-FEB-2023
+L["settings.developer.dev_crosshair.title"] = "Прицел разработчика"
+L["settings.developer.dev_crosshair.desc"] = "Покажет куда точно пойдут ваши пули и ещё пару интересных циферок.\n\nЭто серверная переменная только для админов."
+
+-- Added 11-FEB-2023
+L["autostat.recoilmodifiercap"] = "Потолок отдачи"
+
+-- Added 14-FEB-2023
+L["settings.hud_game.killfeed_color.title"] = "Цветные иконки"
+L["settings.hud_game.killfeed_color.desc"] = "Динамически генерируемые иконки не будут залитыми белым цветом (киллфид и хотбар)."
+
+-- Added 01-MAR-2023
+L["autostat.secondary.sighted"] = "в прицеле"
+L["autostat.secondary.hot"] = "от тепла"
+L["autostat.secondary.heated"] = "при нагреве"
+L["settings.tabname.general"] = "Основное"
+L["settings.general.server"] = "Сервер"
+L["settings.general.client"] = "Клиент"
+L["settings.truenames.title"] = "Настоящие названия оружия"
+L["settings.truenames.desc"] = "Будут ли оружия показывать настоящие или вымышленые названия сделанные разработчиком.\n\nЭто серверная переменная."
+
+L["settings.truenames_default.title"] = "Настоящие названия по умолчанию"
+L["settings.truenames_default.desc"] = "Устанавливает режим настоящих названий оружия на сервере. Все игроки имеющее выбранным \"По умолчанию\" в настройках будут использовать это."
+L["settings.truenames_enforced.title"] = "Настоящие названия принудительно"
+L["settings.truenames_enforced.desc"] = "Все игроки будут иметь переменную как у сервера."
+
+-- Added 17-MAR-2023
+
+L["settings.developer.dev_listmyatts.title"] = "Список обвесов"
+
+L["customize.stats.explain.firepower"] = "Урон вплотную."
+L["customize.stats.explain.rof"] = "Фактическая скорострельность."
+L["customize.stats.explain.cyclic"] = "Темп стрельбы не учитывая задержки очередей или перезарядку."
+L["customize.stats.explain.capacity"] = "Сколько боеприпасов оружие может содержать в магазине и патроннике."
+L["customize.stats.explain.range"] = "Расстояние на котором урон минимален."
+L["customize.stats.explain.precision"] = "Точность оружия. Измеряется в угловых минутах (MoA)."
+L["customize.stats.explain.muzzlevelocity"] = "Начальная скорость пули."
+L["customize.stats.explain.ammo"] = "Тип патронов оружия."
+L["customize.stats.explain.penetration"] = "На сколько толстую стенку пробьет пуля. Измеряется в милиметрах в дереву."
+L["customize.stats.explain.ricochet"] = "Максимальный шанс пули отрикошетить."
+L["customize.stats.explain.armorpiercing"] = "Количество урона пуля нанесет игнорируя броню."
+L["customize.stats.explain.explosive"] = "Урон взрывом."
+L["customize.stats.explain.speed"] = "Насколько быстро вы сможете передвигаться держа это оружие."
+L["customize.stats.explain.aimtime"] = "Насколько быстро вы сможете прицелиться."
+L["customize.stats.explain.sprinttofire"] = "Насколько быстрым будет выход из спринта до возможного выстрела."
+L["customize.stats.explain.firemodes"] = "Какие режимы стрельбы есть у оружия."
+L["customize.stats.explain.burstdelay"] = "Задержка после очереди."
+L["customize.stats.explain.triggerdelay"] = "Задержка между нажатием на спуск и выстрелом."
+L["customize.stats.explain.noise"] = "Насколько громким будет выстрел."
+L["customize.stats.explain.sway"] = "Количество качания у этого оружия."
+L["customize.stats.explain.freeaim"] = "Максимальный угол свободного прицела. Меньше - лучше."
+L["customize.stats.explain.supplylimit"] = "Количество патронов которое можно взять из коробок ARC9."
+
+L["tips.custombinds"] = "Комбинации клавиш можно заменить кастомными биндами. Начни писать +arc9_ в консоль чтобы найти возможные."
+L["tips.blacklist"] = "Вы можете заносить обвесы в черный список! Посмотри как это сделать в описании ARC9 в воркшопе."
+L["tips.hints"] = "Не выключай HUD если хочешь видеть подсказки управления."
+L["tips.lean"] = "Чтобы наклонятся по кнопкам, забинди клавиши на +alt1 и +alt2."
+L["tips.discord"] = "Присоединяйся к нашему дискорду! Ссылка в описании и сверху в настройках (такой себе сервер если честно)."
+L["tips.arc-9"] = "Правильно писать ARC9, не ARC-9 и не Arc9."
+L["tips.development"] = "Хочешь делать контент на ARC9? В официальном дискорде есть много полезной инфы."
+L["tips.presets"] = "Экспортируй свои крутые пресеты пушек и делись ими со своими друзьями!"
+-- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
+L["tips.bugs"] = "Репорть баги в официальном дискорде или открой issue на гитхабе."
+L["tips.official"] = "Скачивай ARC9 только с офиц. источников. Неизвестные сайты скорее всего имеют устаревший код (или вирусы)."
+L["tips.external"] = "Если ты используешь ARC9 с гитхаба, не забудь часто обновляться!"
+L["tips.love"] = "Говорить хорошие слова разработчикам модов - хорошое дело."
+L["tips.tolerance"] = "Все оружейные базы работают вместе без проблем и у всех есть свои недостатки. Не стоит выставлять одну базу лучше другой."
+L["tips.cyberdemon"] = "Чтобы убить террориста - стреляй ему в голову."
+L["tips.tips"] = "У советов определенный порядок. Продолжай читать и ты увидишь их все."
+L["tips.settings"] = "Ты можешь отключить эти советы, а также многое другое в настройках ARC9. Жми на кнопку слева сверху!"
+-- L["tips."] = ""
+
+L["settings.hud_cust.cust_tips.title"] = "Советы"
+L["settings.hud_cust.cust_tips.desc"] = "Советы о базе около подсказок."
+
+
+L["tips.description"] = "Советуем читать описания аддонов перед тем как оставлять там комментарии."

@@ -231,6 +231,7 @@ local mat_3dslot_empty = Material("arc9/ui/3d_slot_empty.png", "mips smooth")
 local mat_gear = Material("arc9/gear.png", "mips smooth")
 local mat_plus = Material("arc9/ui/plus.png")
 local mat_dash = Material("arc9/ui/dash.png")
+local mat_info = Material("arc9/ui/info.png")
 
 local lmbdown = false
 local rmbdown = false
@@ -1088,6 +1089,34 @@ function SWEP:CreateCustomizeHUD()
         }
     end
 
+    
+    local tips = {
+        "tips.custombinds",
+        "tips.blacklist",
+        "tips.hints",
+        "tips.lean",
+        "tips.discord",
+        "tips.arc-9",
+        "tips.development",
+        "tips.presets",
+        -- "tips.tacrp",
+        "tips.bugs",
+        "tips.official",
+        "tips.external",
+        "tips.love",
+        "tips.tolerance",
+        "tips.cyberdemon",
+        "tips.tips",
+        "tips.settings",
+        "tips.description",
+    }
+
+    local tipdelay = 8
+    local tipalpha = 0
+    local tipfade = 0
+    local tipcurrent = math.random(0, #tips)
+    local tiplast = 0
+    
     local hintspanel = vgui.Create("DPanel", bg)
     -- hintspanel:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
     -- hintspanel:SetPos(-ARC9ScreenScale(170), -ARC9ScreenScale(40)) -- w = scrw-ARC9Scr
@@ -1138,12 +1167,7 @@ function SWEP:CreateCustomizeHUD()
                 end
                 table.insert(ToAdd3, " " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             elseif v.row2 then
-                -- table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(12) })
-                -- if v.glyph2 then
-                --     table.insert(ToAdd2, " ")
-                --     table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(12) })
-                -- end
-                -- table.insert(ToAdd2, " " .. (self.CustomizeHints[v.action] or v.action) .. "    ")
+                
             else
                 table.insert(ToAdd, { v.glyph, ARC9ScreenScale(12) })
                 if v.glyph2 then
@@ -1154,15 +1178,39 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
-
-        CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
-
         local strreturn = CreateControllerKeyLine({x = self2:GetWide(), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3)) -- ghost     text only to get width
+
+        if !table.IsEmpty(ToAdd) then
+            CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
+            tipalpha = 0
+        else
+            -- tips
+            if GetConVar("arc9_cust_tips"):GetBool() then
+                if CurTime() > tiplast then
+                    tiplast = CurTime() + tipdelay
+                    tipcurrent = tipcurrent + 1
+                end
+
+                tipalpha = math.min(tipalpha + FrameTime() * 300, 100)
+                tipfade = math.min((tiplast-CurTime()) / tipdelay, 0.025) * 40 * tipalpha
+                local tiptext = ARC9:GetPhrase(tips[tipcurrent%(#tips)+1])
+
+                surface.SetMaterial(mat_info)
+                surface.SetDrawColor(ARC9.GetHUDColor("fg", tipalpha))
+                surface.DrawTexturedRect(ARC9ScreenScale(8), ARC9ScreenScale(2), ARC9ScreenScale(10), ARC9ScreenScale(10))
+
+                surface.SetFont("ARC9_10")
+                surface.SetTextPos(ARC9ScreenScale(22), ARC9ScreenScale(2))
+                surface.SetTextColor(ARC9.GetHUDColor("fg", tipfade))
+                -- surface.DrawText(tiptext)
+                ARC9.DrawTextRot(self2, tiptext, ARC9ScreenScale(22), 0, ARC9ScreenScale(22), ARC9ScreenScale(2), w - strreturn - ARC9ScreenScale(32), false)
+            end
+        end
+
         CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(8)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
 
         table.Empty(self.CustomizeHints)
     end
-    -- self:CreateHUD_Bottom()
 end
 
 function SWEP:RemoveCustomizeHUD()
@@ -1263,69 +1311,6 @@ function SWEP:CreateHUD_RHP()
             else
                 panel:SetAlpha(math.max(panel:GetAlpha() - minusnum, 0)) -- * number of cust buttons
             end
-        end
-    end
-
-    local tips = {
-        "tips.custombinds",
-        "tips.blacklist",
-        "tips.hints",
-        "tips.lean",
-        "tips.discord",
-        "tips.arc-9",
-        "tips.development",
-        "tips.presets",
-        "tips.tacrp",
-        "tips.bugs",
-        "tips.official",
-        "tips.external",
-        "tips.love",
-        "tips.tolerance",
-        "tips.cyberdemon",
-        "tips.tips",
-        "tips.settings"
-    }
-
-    local tips_ticker = vgui.Create("DPanel", bg)
-    tips_ticker:SetPos(0, -ARC9ScreenScale(40))
-    tips_ticker:MoveTo(0, ARC9ScreenScale(48), 0.4, 0, 0.1, nil)
-    tips_ticker:SetSize(scrw, ARC9ScreenScale(12))
-    tips_ticker:MoveToFront()
-    tips_ticker.tipindex = math.random(1, #tips)
-    tips_ticker.tiptext = tips[tips_ticker.tipindex]
-
-    surface.SetFont("ARC9_12")
-    local tw = surface.GetTextSize(ARC9:GetPhrase(tips_ticker.tiptext))
-    tips_ticker.tx = scrw
-    tips_ticker.tw = tw
-    tips_ticker.Paint = function(self2, w, h)
-        if !IsValid(self) then return end
-
-        if !GetConVar("arc9_cust_tips"):GetBool() then return end
-
-        if self.CustomizeButtons[self.CustomizeTab + 1].inspect then
-            self2:SetAlpha(math.min(self2:GetAlpha() + 25, 0))
-        else
-            self2:SetAlpha(math.max(self2:GetAlpha() - 25, 255))
-        end
-
-        surface.SetFont("ARC9_12")
-        surface.SetTextPos(self2.tx, 0)
-        surface.SetTextColor(ARC9.GetHUDColor("fg", 100))
-        surface.DrawText(ARC9:GetPhrase(self2.tiptext))
-
-        self2.tx = self2.tx - FrameTime() * 90 * GetConVar("arc9_cust_tips_speed"):GetFloat()
-
-        if self2.tx < -self2.tw then
-            self2.tipindex = self2.tipindex + 1
-            if self2.tipindex > #tips then
-                self2.tipindex = 1
-            end
-            self2.tiptext = tips[self2.tipindex]
-            surface.SetFont("ARC9_12")
-            local tw = surface.GetTextSize(ARC9:GetPhrase(self2.tiptext))
-            self2.tx = scrw
-            self2.tw = tw
         end
     end
 

@@ -665,11 +665,6 @@ local conVars = {
         default = "1",
         client = true
     },
-    {
-        name = "cust_tips_speed",
-        default = "1",
-        client = true
-    },
 }
 
 local prefix = "arc9_"

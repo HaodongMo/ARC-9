@@ -141,14 +141,13 @@ local settingstable = {
         { type = "bool", text = "settings.hud_cust.hud_darkmode.title", convar = "hud_darkmode", desc = "settings.hud_cust.hud_darkmode.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
         -- { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language", content = ARC9.LanguagesTable, desc = "settings.hud_cust.language_id.desc" },
-        { type = "bool", text = "settings.hud_cust.cust_tips.title", convar = "cust_tips", desc = "settings.hud_cust.cust_tips.desc"},
-        { type = "slider", text = "settings.hud_cust.cust_tips_speed.title", min = 0.1, max = 5, decimals = 1, convar = "cust_tips_speed", desc = "settings.hud_cust.cust_tips_speed.desc"},
         { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},
         { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.cust_light_brightness.title", convar = "cust_light_brightness", desc = "settings.hud_cust.cust_light_brightness.desc" },
 
         { type = "label", text = "settings.hud_cust.customization" },
         -- { type = "bool", text = "Background Blur", convar = "cust_blur", desc = "Blurs customization background.\n\nRequires DX9."},
         { type = "bool", text = "settings.hud_cust.cust_hints.title", convar = "cust_hints", desc = "settings.hud_cust.cust_hints.desc"},
+        { type = "bool", text = "settings.hud_cust.cust_tips.title", convar = "cust_tips", desc = "settings.hud_cust.cust_tips.desc"},
         -- { type = "bool", text = "settings.hud_cust.cust_roll_unlock.title", convar = "cust_roll_unlock", desc = "settings.hud_cust.cust_roll_unlock.desc"},
         { type = "bool", text = "settings.hud_cust.cust_exit_reset_sel.title", convar = "cust_exit_reset_sel", desc = "settings.hud_cust.cust_exit_reset_sel.desc"}
     },
