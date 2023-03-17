@@ -182,9 +182,9 @@ function SWEP:PostDrawViewModel()
                 table.insert(newfx, fx)
             end
         end
-    cam.End3D()
 
-    self.ActiveEffects = newfx
+        self.ActiveEffects = newfx
+    cam.End3D()
 
     if ARC9.PresetCam then return end
 
