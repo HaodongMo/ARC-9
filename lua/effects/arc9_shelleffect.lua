@@ -157,7 +157,7 @@ function EFFECT:Init(data)
 
         if self.VMContext then
             table.insert(ent.PCFs, pcf)
-            table.insert(self.PCFs, smkpcf)
+            table.insert(ent.PCFs, smkpcf)
 
             pcf:SetShouldDraw(false)
             smkpcf:SetShouldDraw(false)
@@ -204,12 +204,6 @@ function EFFECT:Render()
     if !IsValid(self) then return end
 
     self:DrawModel()
-
-    for k, v in pairs(self.PCFs) do
-        if IsValid(v) then
-            v:Render()
-        end
-    end
 end
 
 function EFFECT:DrawTranslucent()
