@@ -1,38 +1,74 @@
 local ARC9ScreenScale = ARC9.ScreenScale
 
-local function GetTrueRPM(self)
-    if self:GetCapacity() == 1 then
-        local reloadtime = self:GetProcessedValue("ReloadTime") * self:GetAnimationTime("reload")
+local function GetTrueRPM(self, base)
+    if base then
+        if self:GetCapacity() == 1 then
+            local reloadtime = self.ReloadTime * self:GetAnimationTime("reload")
 
-        local a = 60 / reloadtime
+            local a = 60 / reloadtime
 
-        a = math.Round(a, 0)
+            a = math.Round(a, 0)
 
-        return a
+            return a
+        else
+            local a = self.RPM
+            local delay = 60 / a
+
+            if self.TriggerDelayRepeat then
+                delay = math.max(self.TriggerDelayTime, delay)
+            end
+
+            if self.ManualAction then
+                delay = delay + (self.cycle * self.CycleTime)
+            end
+
+            if self:GetCurrentFiremode() > 1 then
+                local pbd = self.PostBurstDelay
+                local burstlength = self:GetCurrentFiremode()
+
+                delay = delay + (pbd / burstlength)
+            end
+
+            a = 60 / delay
+
+            a = math.Round(a / 50, 0) * 50
+
+            return a
+        end
     else
-        local a = self:GetProcessedValue("RPM")
-        local delay = 60 / a
+        if self:GetCapacity() == 1 then
+            local reloadtime = self:GetProcessedValue("ReloadTime") * self:GetAnimationTime("reload")
 
-        if self:GetProcessedValue("TriggerDelayRepeat") then
-            delay = math.max(self:GetProcessedValue("TriggerDelayTime"), delay)
+            local a = 60 / reloadtime
+
+            a = math.Round(a, 0)
+
+            return a
+        else
+            local a = self:GetProcessedValue("RPM")
+            local delay = 60 / a
+
+            if self:GetProcessedValue("TriggerDelayRepeat") then
+                delay = math.max(self:GetProcessedValue("TriggerDelayTime"), delay)
+            end
+
+            if self:GetProcessedValue("ManualAction") then
+                delay = delay + (self:GetAnimationTime("cycle") * self:GetProcessedValue("CycleTime"))
+            end
+
+            if self:GetCurrentFiremode() > 1 then
+                local pbd = self:GetProcessedValue("PostBurstDelay")
+                local burstlength = self:GetCurrentFiremode()
+
+                delay = delay + (pbd / burstlength)
+            end
+
+            a = 60 / delay
+
+            a = math.Round(a / 50, 0) * 50
+
+            return a
         end
-
-        if self:GetProcessedValue("ManualAction") then
-            delay = delay + (self:GetAnimationTime("cycle") * self:GetProcessedValue("CycleTime"))
-        end
-
-        if self:GetCurrentFiremode() > 1 then
-            local pbd = self:GetProcessedValue("PostBurstDelay")
-            local burstlength = self:GetCurrentFiremode()
-
-            delay = delay + (pbd / burstlength)
-        end
-
-        a = 60 / delay
-
-        a = math.Round(a / 50, 0) * 50
-
-        return a
     end
 end
 
@@ -50,11 +86,14 @@ function SWEP:CreateHUD_Stats()
     --     func = function() return 0 end,
     --     cond = function() return true end
     --     conv = function(a) return a * 100 end
+    --     lowerisbetter = false
+    --     eval = function() return 0 end # return negative value to indicate this stat is WORSE than base and positive to indicate it is better
     -- }
 
     local stats = {
         {
             title = "customize.stats.firepower",
+            desc = "customize.stats.explain.firepower",
             unit = "unit.dmg",
             fifty = 50,
             conv = function(a)
@@ -82,6 +121,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.rof",
+            desc = "customize.stats.explain.rof",
             stat = "RPM",
             fifty = 600,
             unit = "unit.rpm",
@@ -97,12 +137,21 @@ function SWEP:CreateHUD_Stats()
 
                 return str .. tostring(a)
             end,
+            eval = function()
+                local a = GetTrueRPM(self)
+                local b = GetTrueRPM(self, true)
+
+                if a == b then return 0 end
+
+                return a > b and 1 or -1
+            end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end,
         },
         {
             title = "customize.stats.cyclic",
+            desc = "customize.stats.explain.cyclic",
             stat = "RPM",
             fifty = 600,
             unit = "unit.rpm",
@@ -117,8 +166,17 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.capacity",
+            desc = "customize.stats.explain.capacity",
             stat = "ClipSize",
             fifty = 20,
+            eval = function()
+                local a = self:GetProcessedValue("ClipSize") + self:GetProcessedValue("ChamberSize")
+                local b = self.ClipSize + self.ChamberSize
+
+                if a == b then return 0 end
+
+                return a > b and 1 or -1
+            end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash")
             end,
@@ -134,6 +192,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.range",
+            desc = "customize.stats.explain.range",
             unit = "unit.meter",
             fifty = 500,
             stat = "RangeMax",
@@ -146,8 +205,10 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.precision",
+            desc = "customize.stats.explain.precision",
             stat = "Spread",
             fifty = 5,
+            lowerisbetter = true,
             unit = "unit.moa",
             conv = function(a) return math.Round(a * 360 * 60 / 10, 1) end,
             cond = function()
@@ -156,6 +217,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.muzzlevelocity",
+            desc = "customize.stats.explain.muzzlevelocity",
             stat = "PhysBulletMuzzleVelocity",
             fifty = 500,
             unit = "unit.meterpersecond",
@@ -164,10 +226,9 @@ function SWEP:CreateHUD_Stats()
                 return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("ShootEnt")
             end
         },
-
-
         {
             title = "customize.stats.ammo",
+            desc = "customize.stats.explain.ammo",
             stat = "Ammo",
             conv = function(a) return language.GetPhrase(a .. "_ammo") end,
             cond = function()
@@ -176,6 +237,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.penetration",
+            desc = "customize.stats.explain.penetration",
             stat = "Penetration",
             fifty = 50,
             unit = "unit.millimeter",
@@ -185,6 +247,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.ricochet",
+            desc = "customize.stats.explain.ricochet",
             stat = "RicochetChance",
             fifty = 50,
             unit = "%",
@@ -195,6 +258,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.armorpiercing",
+            desc = "customize.stats.explain.armorpiercing",
             stat = "ArmorPiercing",
             fifty = 25,
             unit = "%",
@@ -205,6 +269,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.explosive",
+            desc = "customize.stats.explain.explosive",
             stat = "ExplosionDamage",
             fifty = 50,
             unit = "unit.dmg",
@@ -215,6 +280,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.speed",
+            desc = "customize.stats.explain.speed",
             stat = "SpeedMult",
             fifty = 95,
             unit = "%",
@@ -222,7 +288,9 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.aimtime",
+            desc = "customize.stats.explain.aimtime",
             stat = "AimDownSightsTime",
+            lowerisbetter = true,
             fifty = 0.3,
             unit = "unit.second",
             cond = function()
@@ -231,7 +299,9 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.sprinttofire",
+            desc = "customize.stats.explain.sprinttofire",
             stat = "SprintToFireTime",
+            lowerisbetter = true,
             fifty = 0.3,
             unit = "unit.second"
         },
@@ -271,6 +341,7 @@ function SWEP:CreateHUD_Stats()
         -- },
         {
             title = "customize.stats.firemodes",
+            desc = "customize.stats.explain.firemodes",
             conv = function(a)
                 str = ""
 
@@ -299,7 +370,9 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.burstdelay",
+            desc = "customize.stats.explain.burstdelay",
             stat = "PostBurstDelay",
+            lowerisbetter = true,
             fifty = 0.1,
             unit = "unit.second",
             cond = function()
@@ -308,7 +381,9 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.triggerdelay",
+            desc = "customize.stats.explain.triggerdelay",
             stat = "TriggerDelayTime",
+            lowerisbetter = true,
             fifty = 0.1,
             unit = "unit.second",
             cond = function()
@@ -317,7 +392,9 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.noise",
+            desc = "customize.stats.explain.noise",
             stat = "ShootVolume",
+            lowerisbetter = true,
             fifty = 100,
             unit = "unit.decibel",
             cond = function()
@@ -326,7 +403,9 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.sway",
+            desc = "customize.stats.explain.sway",
             stat = "Sway",
+            lowerisbetter = true,
             fifty = 95,
             unit = "%",
             conv = function(a) return math.Round(a * 60, 0) end,
@@ -336,7 +415,9 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.freeaim",
+            desc = "customize.stats.explain.freeaim",
             stat = "FreeAimRadius",
+            lowerisbetter = true,
             fifty = 20,
             unit = "°",
             cond = function()
@@ -345,6 +426,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "customize.stats.supplylimit",
+            desc = "customize.stats.explain.supplylimit",
             stat = "SupplyLimit",
             fifty = 3,
             cond = function()
@@ -404,10 +486,58 @@ function SWEP:CreateHUD_Stats()
         statpanel.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
-            if self2.ri % 2 == 1 then
-                surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
-                surface.DrawRect(0, 0, w, h)
+            local major = ""
+            local improvement = 0 -- 0 = same, 1 = better, -1 = worse
+            if self2.stats.stat then major = self:GetValue(self2.stats.stat) end
+
+            if self2.stats.eval then
+                improvement = self2.stats.eval()
+            else
+                if isnumber(major) then
+                    local base = self:GetTable()[self2.stats.stat]
+
+                    if isnumber(base) then
+                        if self2.stats.lowerisbetter then
+                            if major < base then
+                                improvement = 1
+                            elseif major > base then
+                                improvement = -1
+                            end
+                        else
+                            if major > base then
+                                improvement = 1
+                            elseif major < base then
+                                improvement = -1
+                            end
+                        end
+                    end
+                end
             end
+
+            if self2.stats.conv then major = self2.stats.conv(major) end
+
+            if isnumber(major) then major = math.Round(major, 2) end
+            local oldmajor = major
+            major = tostring(major)
+
+            local textcol = ARC9.GetHUDColor("fg")
+
+            if improvement == 1 then
+                textcol = ARC9.GetHUDColor("pro")
+            elseif improvement == -1 then
+                textcol = ARC9.GetHUDColor("con")
+            end
+
+            if self2:IsHovered() then
+                surface.SetDrawColor(ARC9.GetHUDColor("fg", 100))
+                surface.DrawRect(0, 0, w, h)
+            else
+                if self2.ri % 2 == 1 then
+                    surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+                    surface.DrawRect(0, 0, w, h)
+                end
+            end
+
             surface.SetFont("ARC9_10_Slim")
             surface.SetTextPos(ARC9ScreenScale(2), ARC9ScreenScale(2))
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
@@ -419,7 +549,7 @@ function SWEP:CreateHUD_Stats()
                 tw_u = surface.GetTextSize(ARC9:GetPhrase(self2.stats.unit) or self2.stats.unit)
 
                 surface.SetTextPos(w - tw_u - ARC9ScreenScale(2), ARC9ScreenScale(3))
-                surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                surface.SetTextColor(textcol)
                 surface.DrawText(ARC9:GetPhrase(self2.stats.unit) or self2.stats.unit)
 
                 tw_u = tw_u + ARC9ScreenScale(4)
@@ -427,18 +557,45 @@ function SWEP:CreateHUD_Stats()
                 tw_u = ARC9ScreenScale(2)
             end
 
-            local major = ""
-            if self2.stats.stat then major = self:GetValue(self2.stats.stat) end
-            if self2.stats.conv then major = self2.stats.conv(major) end
-            if isnumber(major) then major = math.Round(major, 2) end
-            local oldmajor = major
-            major = tostring(major)
-
             surface.SetFont("ARC9_10")
             local tw = surface.GetTextSize(major)
             surface.SetTextPos(w-tw-tw_u, ARC9ScreenScale(2))
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextColor(textcol)
             surface.DrawText(major)
+
+            if self2:IsHovered() then
+                self2:MoveToFront()
+                local todo = DisableClipping(true)
+                local col_text = ARC9.GetHUDColor("fg")
+                local rx, ry = self2:CursorPos()
+                rx = rx + ARC9ScreenScale(8)
+                ry = ry + ARC9ScreenScale(8)
+
+                local desc = ARC9:GetPhrase(self2.stats.desc)
+
+                surface.SetFont("ARC9_10")
+                local btw = surface.GetTextSize(desc)
+
+                local bw, bh = btw + ARC9ScreenScale(8), ARC9ScreenScale(16)
+
+                if self2:GetY() + ry >= ARC9ScreenScale(60) then
+                    ry = ry - ARC9ScreenScale(60)
+                end
+
+                if self2:GetX() + rx + bw >= ScrW() then
+                    rx = rx - bw
+                end
+
+                surface.SetDrawColor(ARC9.GetHUDColor("shadow", 253))
+                surface.DrawRect(rx, ry, bw, bh)
+
+                surface.SetTextColor(col_text)
+                surface.SetFont("ARC9_10")
+                surface.SetTextPos(rx + ARC9ScreenScale(3), ry + ARC9ScreenScale(3))
+                surface.DrawText(desc)
+
+                DisableClipping(todo)
+            end
         end
     end
 
