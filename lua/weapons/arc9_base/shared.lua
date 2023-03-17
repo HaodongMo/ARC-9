@@ -1423,6 +1423,7 @@ SWEP.ARC9 = true
 SWEP.m_bPlayPickupSound = false
 
 SWEP.PCFs = {}
+SWEP.MuzzPCFs = {}
 
 SWEP.ActiveEffects = {}
 

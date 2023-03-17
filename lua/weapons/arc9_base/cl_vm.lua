@@ -161,7 +161,19 @@ end
 
 function SWEP:PostDrawViewModel()
 
+    local newmzpcfs = {}
+
+    for _, pcf in ipairs(self.MuzzPCFs) do
+        if IsValid(pcf) then
+            pcf:Render()
+            table.insert(newmzpcfs, pcf)
+        end
+    end
+
+    self.MuzzPCFs = newmzpcfs
+
     cam.Start3D()
+        cam.IgnoreZ(false)
         local newpcfs = {}
 
         for _, pcf in ipairs(self.PCFs) do

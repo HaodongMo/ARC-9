@@ -66,7 +66,7 @@ function EFFECT:Init(data)
 
                 if (muz or parent) != vm and !wm then
                     pcf:SetShouldDraw(false)
-                    table.insert(wpn.PCFs, pcf)
+                    table.insert(wpn.MuzzPCFs, pcf)
                 end
             end
         end
