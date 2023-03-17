@@ -1282,7 +1282,8 @@ function SWEP:CreateHUD_RHP()
         "tips.love",
         "tips.tolerance",
         "tips.cyberdemon",
-        "tips.tips"
+        "tips.tips",
+        "tips.settings"
     }
 
     local tips_ticker = vgui.Create("DPanel", bg)

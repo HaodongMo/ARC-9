@@ -680,6 +680,7 @@ L["tips.love"] = "Feel free to tell the devs you appreciate their work! It reall
 L["tips.tolerance"] = "All weapon bases work fine together. There's no need for favoritism."
 L["tips.cyberdemon"] = "To kill the terrorist, shoot him until he is dead."
 L["tips.tips"] = "Tips have a fixed order. Keep reading and you'll eventually see them all."
+L["tips.settings"] = "You can turn these tips off, and much more, in the ARC9 settings. Click the button in the top left corner, or type arc9_ in console and see what it gives you."
 -- L["tips."] = ""
 
 L["settings.hud_cust.cust_tips.title"] = "Tips"
