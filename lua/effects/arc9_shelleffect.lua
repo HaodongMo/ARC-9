@@ -26,7 +26,12 @@ function EFFECT:Init(data)
         self.VMContext = false
     else
         mdl = LocalPlayer():GetViewModel()
-        table.insert(ent.ActiveEffects, self)
+
+        if ent:ShouldTPIK() then
+            self.VMContext = false
+        else
+            table.insert(ent.ActiveEffects, self)
+        end
     end
 
     if !IsValid(ent) then self:Remove() return end
@@ -90,7 +95,9 @@ function EFFECT:Init(data)
     self:SetAngles(ang)
     self:SetModelScale(scale or 1)
 
-    self:SetNoDraw(true)
+    if self.VMContext then
+        self:SetNoDraw(true)
+    end
 
     self.ShellPitch = pitch
 
@@ -148,11 +155,13 @@ function EFFECT:Init(data)
             smkpcf:StartEmission()
         end
 
-        table.insert(ent.PCFs, pcf)
-        table.insert(self.PCFs, smkpcf)
+        if self.VMContext then
+            table.insert(ent.PCFs, pcf)
+            table.insert(self.PCFs, smkpcf)
 
-        pcf:SetShouldDraw(false)
-        smkpcf:SetShouldDraw(false)
+            pcf:SetShouldDraw(false)
+            smkpcf:SetShouldDraw(false)
+        end
     end
 
     self.SpawnTime = CurTime()
