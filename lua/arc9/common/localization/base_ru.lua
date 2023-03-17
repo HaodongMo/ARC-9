@@ -576,7 +576,7 @@ L["autostat.recoilmodifiercap"] = "Потолок отдачи"
 
 -- Added 14-FEB-2023
 L["settings.hud_game.killfeed_color.title"] = "Цветные иконки"
-L["settings.hud_game.killfeed_color.desc"] = "Динамически генерируемые иконки не будут залитыми белым цветом (киллфид и хотбар)."
+L["settings.hud_game.killfeed_color.desc"] = "Динамически генерируемые иконки не будут залиты белым цветом (киллфид и хотбар)."
 
 -- Added 01-MAR-2023
 L["autostat.secondary.sighted"] = "в прицеле"
@@ -585,10 +585,10 @@ L["autostat.secondary.heated"] = "при нагреве"
 L["settings.tabname.general"] = "Основное"
 L["settings.general.server"] = "Сервер"
 L["settings.general.client"] = "Клиент"
-L["settings.truenames.title"] = "Настоящие названия оружия"
+L["settings.truenames.title"] = "Наст. названия оружия"
 L["settings.truenames.desc"] = "Будут ли оружия показывать настоящие или вымышленые названия сделанные разработчиком.\n\nЭто серверная переменная."
 
-L["settings.truenames_default.title"] = "Настоящие названия по умолчанию"
+L["settings.truenames_default.title"] = "Наст. названия по умолч."
 L["settings.truenames_default.desc"] = "Устанавливает режим настоящих названий оружия на сервере. Все игроки имеющее выбранным \"По умолчанию\" в настройках будут использовать это."
 L["settings.truenames_enforced.title"] = "Настоящие названия принудительно"
 L["settings.truenames_enforced.desc"] = "Все игроки будут иметь переменную как у сервера."
