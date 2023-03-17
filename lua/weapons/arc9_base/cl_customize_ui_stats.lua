@@ -240,9 +240,11 @@ function SWEP:CreateHUD_Stats()
             title = "customize.stats.ammo",
             desc = "customize.stats.explain.ammo",
             stat = "Ammo",
-            conv = function(a) return language.GetPhrase(a .. "_ammo") end,
+            conv = function(a)
+                return language.GetPhrase(a .. "_ammo")
+            end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash")
+                return self:GetProcessedValue("PrimaryBash") or self:GetProcessedValue("InfiniteAmmo")
             end
         },
         {

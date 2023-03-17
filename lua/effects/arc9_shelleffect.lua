@@ -8,33 +8,7 @@ EFFECT.AlreadyPlayedSound = false
 EFFECT.ShellTime = 0.5
 EFFECT.SpawnTime = 0
 
--- EFFECT.TypeSettings = {
---     [1] = {
---         Model = "models/weapons/shell.mdl",
---         Sounds = {
---             "player/pl_shell1.wav",
---             "player/pl_shell2.wav",
---             "player/pl_shell3.wav",
---         }
---     },
---     [2] = {
---         Model = "models/weapons/rifleshell.mdl",
---         Sounds = {
---             "player/pl_shell1.wav",
---             "player/pl_shell2.wav",
---             "player/pl_shell3.wav",
---         },
---         Scale = 0.5
---     },
---     [3] = {
---         Model = "models/weapons/shotgun_shell.mdl",
---         Sounds = {
---             "weapons/fx/tink/shotgun_shell1.wav",
---             "weapons/fx/tink/shotgun_shell2.wav",
---             "weapons/fx/tink/shotgun_shell3.wav",
---         }
---     },
--- }
+EFFECT.VMContext = true
 
 function EFFECT:Init(data)
 
@@ -44,11 +18,13 @@ function EFFECT:Init(data)
     if !IsValid(ent) then self:Remove() return end
     if !IsValid(ent:GetOwner()) then self:Remove() return end
 
-    if LocalPlayer():ShouldDrawLocalPlayer() or ent:GetOwner() != LocalPlayer() then
+    if LocalPlayer():ShouldDrawLocalPlayer() or ent:GetOwner() != LocalPlayer() and !ent:ShouldTPIK() then
         mdl = (ent.WModel or {})[1] or ent
         att = 2
+        self.VMContext = false
     else
         mdl = LocalPlayer():GetViewModel()
+        table.insert(ent.ActiveEffects, self)
     end
 
     if !IsValid(ent) then self:Remove() return end
@@ -56,10 +32,6 @@ function EFFECT:Init(data)
     if !mdl:GetAttachment(att) then self:Remove() return end
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
-
-    local vm = LocalPlayer():GetViewModel()
-
-    local wm = false
 
     if (LocalPlayer():ShouldDrawLocalPlayer() or ent.Owner != LocalPlayer()) then
         wm = true
@@ -115,6 +87,8 @@ function EFFECT:Init(data)
     self:DrawShadow(true)
     self:SetAngles(ang)
     self:SetModelScale(scale or 1)
+
+    self:SetNoDraw(true)
 
     self.ShellPitch = pitch
 
@@ -187,6 +161,9 @@ function EFFECT:PhysicsCollide(colData)
     phys:SetVelocityInstantaneous(colData.HitNormal * -150)
     self:StopSound("Default.ImpactHard")
 
+    self.VMContext = false
+    self:SetNoDraw(false)
+
     sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1, CHAN_WEAPON)
 
     self.AlreadyPlayedSound = true
@@ -213,9 +190,12 @@ end
 
 function EFFECT:Render()
     if !IsValid(self) then return end
+
     self:DrawModel()
 end
 
 function EFFECT:DrawTranslucent()
+    if !IsValid(self) then return end
+
     self:DrawModel()
 end

@@ -170,6 +170,18 @@ function SWEP:PostDrawViewModel()
 
     self.PCFs = newpcfs
 
+    local newfx = {}
+
+    for _, fx in ipairs(self.ActiveEffects) do
+        if IsValid(fx) then
+            if !fx.VMContext then continue end
+            fx:DrawModel()
+            table.insert(newfx, fx)
+        end
+    end
+
+    self.ActiveEffects = newfx
+
     if ARC9.PresetCam then return end
 
     cam.IgnoreZ(false)

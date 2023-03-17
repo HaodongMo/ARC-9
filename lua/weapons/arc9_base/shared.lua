@@ -1424,6 +1424,8 @@ SWEP.m_bPlayPickupSound = false
 
 SWEP.PCFs = {}
 
+SWEP.ActiveEffects = {}
+
 local searchdir = "weapons/arc9_base"
 
 local function autoinclude(dir)
