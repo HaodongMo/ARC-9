@@ -22,7 +22,7 @@ function EFFECT:Init(data)
 
     if (LocalPlayer():ShouldDrawLocalPlayer() or wpn.Owner != LocalPlayer()) then
         wm = true
-        att = 1
+        if !wpn:ShouldTPIK() then att = 1 end
     end
 
     local parent = wpn
