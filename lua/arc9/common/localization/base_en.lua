@@ -687,3 +687,4 @@ L["settings.hud_cust.cust_tips.title"] = "Tips"
 L["settings.hud_cust.cust_tips.desc"] = "Tips about ARC9 base near hints."
 
 L["tips.description"] = "We advise you to read the descriptions of addons before commenting."
+L["tips.m9k"] = "Check out M9K guns!."
