@@ -1300,7 +1300,9 @@ function SWEP:CreateHUD_RHP()
         if !IsValid(self) then return end
 
         if self.CustomizeButtons[self.CustomizeTab + 1].inspect then
-            self2:SetAlpha(math.max(self2:GetAlpha() - 25, 0))
+            self2:SetAlpha(math.min(self2:GetAlpha() + 25, 0))
+        else
+            self2:SetAlpha(math.max(self2:GetAlpha() - 25, 255))
         end
 
         surface.SetFont("ARC9_12")
