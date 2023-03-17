@@ -140,6 +140,7 @@ end
 
 function SWEP:ViewModelDrawn()
     -- self:DrawLasers(false)
+
     self:DrawCustomModel(false)
     self:DoRHIK()
     self:PreDrawThirdArm()
@@ -159,26 +160,29 @@ function SWEP:ViewModelDrawn()
 end
 
 function SWEP:PostDrawViewModel()
-    local newpcfs = {}
 
-    for _, pcf in ipairs(self.PCFs) do
-        if IsValid(pcf) then
-            pcf:Render()
-            table.insert(newpcfs, pcf)
+    cam.Start3D()
+        local newpcfs = {}
+
+        for _, pcf in ipairs(self.PCFs) do
+            if IsValid(pcf) then
+                pcf:Render()
+                table.insert(newpcfs, pcf)
+            end
         end
-    end
 
-    self.PCFs = newpcfs
+        self.PCFs = newpcfs
 
-    local newfx = {}
+        local newfx = {}
 
-    for _, fx in ipairs(self.ActiveEffects) do
-        if IsValid(fx) then
-            if !fx.VMContext then continue end
-            fx:DrawModel()
-            table.insert(newfx, fx)
+        for _, fx in ipairs(self.ActiveEffects) do
+            if IsValid(fx) then
+                if !fx.VMContext then continue end
+                fx:DrawModel()
+                table.insert(newfx, fx)
+            end
         end
-    end
+    cam.End3D()
 
     self.ActiveEffects = newfx
 
