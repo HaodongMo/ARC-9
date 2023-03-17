@@ -280,20 +280,8 @@ local function GetWeaponCapabilities(wpn)
     return cap
 end
 
-local function DrawSimpleHints()
-    if GetConVar("arc9_hud_nohints"):GetBool() then return end
-
+local function GetHintsTable(capabilities)
     local weapon = LocalPlayer():GetActiveWeapon()
-    if !weapon.ARC9 then return end
-
-    if !GetConVar("cl_drawhud"):GetBool() then return end
-    if weapon:GetCustomize() then return end
-
-    local ct = CurTime()
-
-    local capabilities = GetWeaponCapabilities(weapon)
-
-    local CTRL = false
     local hints = {}
 
     if capabilities.UBGL then
@@ -392,6 +380,26 @@ local function DrawSimpleHints()
             if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
         end
     end
+
+    return hints
+end
+
+local function DrawSimpleHints()
+    if GetConVar("arc9_hud_nohints"):GetBool() then return end
+
+    local weapon = LocalPlayer():GetActiveWeapon()
+    if !weapon.ARC9 then return end
+
+    if !GetConVar("cl_drawhud"):GetBool() then return end
+    if weapon:GetCustomize() then return end
+
+    local ct = CurTime()
+
+    local capabilities = GetWeaponCapabilities(weapon)
+
+    local CTRL = false
+
+    local hints = GetHintsTable(capabilities)
 
     if lasthintcount != #hints and hidefadetime + 1.5 < ct then
         hidefadetime = ct
@@ -1108,105 +1116,7 @@ function ARC9.DrawHUD()
         --     },
         -- }
 
-        local CTRL = false--ARC9.ControllerMode()
-        local hints = {}
-
-        if capabilities.UBGL then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+use"),
-                glyph2 = ARC9.GetBindKey("+reload"),
-                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
-            })
-        end
-
-        if capabilities.SwitchSights then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+walk"),
-                glyph2 = ARC9.GetBindKey("+use"),
-                action = ARC9:GetPhrase("hud.hint.switchsights")
-            })
-        end
-
-        if capabilities.VariableZoom then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("invnext"),
-                glyph2 = ARC9.GetBindKey("invprev"),
-                action = ARC9:GetPhrase("hud.hint.zoom")
-            })
-        end
-
-        if capabilities.HoldBreath then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+speed"),
-                action = ARC9:GetPhrase("hud.hint.breath")
-            })
-        end
-
-        if capabilities.Bash then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+use"),
-                glyph2 = ARC9.GetBindKey("+attack"),
-                action = ARC9:GetPhrase("hud.hint.bash")
-            })
-        end
-
-        if capabilities.Inspect then
-            table.insert(hints, {
-                glyph2 = ARC9.GetBindKey("+use"),
-                glyph = ARC9.GetBindKey("+reload"),
-                action = ARC9:GetPhrase("hud.hint.inspect")
-            })
-        end
-
-        if capabilities.Firemode then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+zoom"),
-                action = ARC9:GetPhrase("hud.hint.firemode")
-            })
-        end
-
-        if capabilities.ManualCycle then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+reload"),
-                action = ARC9:GetPhrase("hud.hint.cycle")
-            })
-        end
-
-        if weapon:CanToggleAllStatsOnF() then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("impulse 100"),
-                action = ARC9:GetPhrase("hud.hint.toggleatts")
-            })
-        end
-
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+menu_context"),
-            action = weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") })
-
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+use"),
-            glyph2 = ARC9.GetBindKey("+zoom"),
-            action = ARC9:GetPhrase("hud.hint.safe")
-        })
-
-        if capabilities.Lean and input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+alt1"),
-                glyph2 = ARC9.GetBindKey("+alt2"),
-                action = ARC9:GetPhrase("hud.hint.lean")
-            })
-        end
-
-        for i, v in ipairs(hints) do
-            if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
-            if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth" ) end
-            if v.glyph2 then
-                if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
-                if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth" ) end
-            end
-        end
+        local hints = GetHintsTable(capabilities)
 
         if lasthintcount != #hints and hidefadetime + 1.5 < ct then
             hidefadetime = ct

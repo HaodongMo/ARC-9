@@ -77,7 +77,7 @@ function ARC9.GetBindKey(bind)
     if CTRL then
         return bind
     elseif !key then
-        return "bind KEY "..  bind
+        return "bind KEY " ..  bind
     else
         return string.upper(key)
     end
