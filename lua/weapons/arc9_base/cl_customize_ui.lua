@@ -370,7 +370,6 @@ local lightonsound = "arc9/newui/ui_light_on.ogg"
 local lightoffsound = "arc9/newui/ui_light_off.ogg"
 local tabsound = "arc9/newui/uimouse_click_tab.ogg"
 
-
 function SWEP:CreateCustomizeHUD()
     if !IsValid(self) then return end
 
@@ -1267,10 +1266,65 @@ function SWEP:CreateHUD_RHP()
         end
     end
 
+    local tips = {
+        "tips.custombinds",
+        "tips.blacklist",
+        "tips.hints",
+        "tips.lean",
+        "tips.discord",
+        "tips.arc-9",
+        "tips.development",
+        "tips.presets",
+        "tips.tacrp",
+        "tips.bugs",
+        "tips.official",
+        "tips.external",
+        "tips.love",
+        "tips.tolerance",
+        "tips.cyberdemon"
+    }
+
+    local tips_ticker = vgui.Create("DPanel", bg)
+    tips_ticker:SetPos(0, -ARC9ScreenScale(40))
+    tips_ticker:MoveTo(0, ARC9ScreenScale(48), 0.4, 0, 0.1, nil)
+    tips_ticker:SetSize(scrw, ARC9ScreenScale(12))
+    tips_ticker:MoveToFront()
+    tips_ticker.tipindex = math.random(1, #tips)
+    tips_ticker.tiptext = tips[tips_ticker.tipindex]
+
+    surface.SetFont("ARC9_12")
+    local tw = surface.GetTextSize(ARC9:GetPhrase(tips_ticker.tiptext))
+    tips_ticker.tx = scrw
+    tips_ticker.tw = tw
+    tips_ticker.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+
+        surface.SetFont("ARC9_12")
+        surface.SetTextPos(self2.tx, 0)
+        surface.SetTextColor(ARC9.GetHUDColor("fg", 100))
+        surface.DrawText(ARC9:GetPhrase(self2.tiptext))
+
+        self2.tx = self2.tx - FrameTime() * 90
+
+        if self2.tx < -self2.tw then
+            -- pick another random tip but don't choose the same one
+            local newtip = math.random(1, #tips)
+            while newtip == self2.tipindex do
+                newtip = math.random(1, #tips)
+            end
+            self2.tipindex = newtip
+            self2.tiptext = tips[self2.tipindex]
+            surface.SetFont("ARC9_12")
+            local tw = surface.GetTextSize(ARC9:GetPhrase(self2.tiptext))
+            self2.tx = scrw
+            self2.tw = tw
+        end
+    end
+
     local topleft_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topleft_panel = topleft_panel
     topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
-    topleft_panel:MoveTo(0, 0, 0.4, 0, 0.1, nil)
+    topleft_panel:MoveTo(0, 0.1, 0.4, 0, 0.1, nil)
     topleft_panel:SetSize(ARC9ScreenScale(70+29), ARC9ScreenScale(40))
     topleft_panel:MoveToFront()
     topleft_panel.Paint = function(self2, w, h) end
