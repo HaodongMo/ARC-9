@@ -182,6 +182,8 @@ function SWEP:DoRTScopeEffects()
     -- end
 end
 
+local vec1 = Vector(1,1,1)
+
 function SWEP:DoRTScope(model, atttbl, active)
     local pos = model:GetPos()
     local ang = EyeAngles()
@@ -228,7 +230,6 @@ function SWEP:DoRTScope(model, atttbl, active)
 
             render.PushRenderTarget(rtmat)
 
-            render.SetToneMappingScaleLinear(Vector(1,1,1))
 
             cam.Start2D()
 
@@ -324,6 +325,8 @@ function SWEP:DoRTScope(model, atttbl, active)
         cam.End2D()
 
         render.PopRenderTarget()
+        -- if sd > 0 then render.SetToneMappingScaleLinear(render.GetToneMappingScaleLinear()*0.2) end
+        if sd > 0.5 then render.SetToneMappingScaleLinear(vec1) end
 
         rtsurf:SetTexture("$basetexture", rtmat)
 
