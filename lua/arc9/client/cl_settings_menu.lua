@@ -302,6 +302,9 @@ local settingstable = {
         { type = "button", text = "settings.developer.reloadlangs.title", content = "settings.developer.reload", func = function(self2)
             RunConsoleCommand("arc9_reloadlangs")
         end},
+        { type = "button", text = "settings.developer.dev_listmyatts.title", content = "settings.developer.print", func = function(self2)
+            RunConsoleCommand("arc9_dev_listmyatts")
+        end},
         { type = "button", text = "settings.developer.dev_listanims.title", content = "settings.developer.print", func = function(self2)
             RunConsoleCommand("arc9_dev_listanims")
         end},

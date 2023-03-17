@@ -52,6 +52,18 @@ concommand.Add("arc9_dev_listanims", function()
     end
 end)
 
+concommand.Add("arc9_dev_listmyatts", function()
+    local wep = LocalPlayer():GetActiveWeapon()
+    if !wep then return end
+    local atts = wep:GetAttachmentList()
+
+    for i = 0, #atts do
+        if !atts[i] then continue end
+        MsgC(clr_b, i, " --- ")
+        MsgC(color_white, "\t", atts[i], "\n")
+    end
+end)
+
 local function printattsintable(tbl, depth)
     for k, v in pairs(tbl) do
         if istable(v) and isnumber(k) or k == "SubAttachments" then
