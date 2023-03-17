@@ -680,3 +680,6 @@ L["tips.love"] = "Feel free to tell the devs you appreciate their work! It reall
 L["tips.tolerance"] = "All weapon bases work fine together. There's no need for favoritism."
 L["tips.cyberdemon"] = "To kill the terrorist, shoot him until he is dead."
 -- L["tips."] = ""
+
+L["settings.hud_cust.cust_tips.title"] = "Tips"
+L["settings.hud_cust.cust_tips.desc"] = "News ticker style feed of tips for using ARC9."

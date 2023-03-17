@@ -660,6 +660,11 @@ local conVars = {
         default = "1",
         replicated = true
     },
+    {
+        name = "cust_tips",
+        default = "1",
+        client = true
+    },
 }
 
 local prefix = "arc9_"
