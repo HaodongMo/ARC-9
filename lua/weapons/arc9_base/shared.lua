@@ -511,31 +511,8 @@ SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
 
 SWEP.Spread = 0
 
-SWEP.UsePelletSpread = false -- Multiple bullets fired at once clump up, like for a shotgun.
----Spread affects which direction they get fired, not their spread relative to one another.
-SWEP.PelletSpread = 0.2
-
-SWEP.PelletSpreadPattern = {} -- Use to give shotguns custom spread patterns.
---If Pellet Spread is off, each pellet will be subject to spread.
---Otherwise, the entire pattern shifts, and each pellet is randomly offset by pellet spread amount.
-
--- SWEP.PelletSpreadPattern = {
---     {
---         x = -1,
---         y = -1
---     },
---     {
---         x = -1,
---         y = 1
---     }
--- }
-
-SWEP.PelletSpreadPatternOverrun = nil
--- {Angle(1, 1, 0), Angle(1, 0, 0) ..}
--- list of how far each pellet should veer
--- if only one pellet then it'll use the first index
--- if two then the first two
--- in case of overrun pellets will start looping, preferably with the second one, so use that for the loopables
+SWEP.UseDispersion = false -- Use this for shotguns - Additional random angle to spread, same for each pellet
+SWEP.DispersionSpread = 0.2 -- SWEP.Spread will be clump spread, and this will be dispersion of clump
 
 SWEP.SpreadAddMove = 0 -- Applied when speed is equal to walking speed.
 SWEP.SpreadAddMidAir = 0 -- Applied when not touching the ground.

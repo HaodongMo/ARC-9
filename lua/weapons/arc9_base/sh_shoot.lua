@@ -563,6 +563,14 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
 
         if (bulletPhysics:GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
             if IsFirstTimePredicted() then
+                if self:GetProcessedValue("UseDispersion") then 
+                    local seed = 1337 + self:EntIndex() + engine.TickCount()
+                    local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
+                    local angleRand = Angle(math.sin(a), math.cos(a), 0)
+                    angleRand:Mul(self:GetProcessedValue("DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
+                    ang:Add(angleRand)
+                end
+
                 for i = 1, self:GetProcessedValue("Num") do
                     ang2:Set(ang)
 
@@ -596,6 +604,14 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
             end
 
 
+            if self:GetProcessedValue("UseDispersion") then
+                local seed = 1337 + self:EntIndex() + engine.TickCount()
+                local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
+                local angleRand = Angle(math.sin(a), math.cos(a), 0)
+                angleRand:Mul(self:GetProcessedValue("DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
+                ang:Add(angleRand)
+            end
+
             local distance = self:GetProcessedValue("Distance")
 
             fireBullets.Damage = self:GetProcessedValue("DamageMax")
@@ -605,7 +621,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
             fireBullets.Num = self:GetProcessedValue("Num")
             fireBullets.Dir = ang:Forward()
             fireBullets.Src = pos
-            fireBullets.Spread = Vector(spread,spread,spread)
+            fireBullets.Spread = Vector(spread, spread, spread)
             fireBullets.IgnoreEntity = veh
             fireBullets.Distance = distance
             fireBullets.Callback = function(att, btr, dmg)

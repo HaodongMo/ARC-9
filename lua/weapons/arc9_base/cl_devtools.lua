@@ -430,6 +430,17 @@ local function GetFOVAcc(deg)
     return gaA
 end
 
+local gaA2 = 0
+local function GetFOVAcc2(deg)
+    cam.Start3D()
+    local lool = (EyePos() + EyeAngles():Forward() + (deg * EyeAngles():Up())):ToScreen()
+    cam.End3D()
+    local gau = (ScrH() / 2) - lool.y
+    gaA2 = math.Approach(gaA2, gau, (ScrH() / 2) * FrameTime() * 2)
+
+    return gaA2
+end
+
 surface.CreateFont( "ARC9_DevCrosshair", {
     font = ARC9:GetFont(),
     size = 32,
@@ -495,6 +506,8 @@ function SWEP:DevStuffCrosshair()
     surface.DrawCircle(x, y, spread, 255, 255, 255, 255)
     surface.DrawCircle(x, y, spread + 0.5, 255, 255, 255, 100)
 
+
+
     local state_txt = "READY"
     local state2_txt = ""
     if self:GetNextPrimaryFire() > time then
@@ -523,6 +536,7 @@ function SWEP:DevStuffCrosshair()
         local pt = time - self:GetGrenadePrimedTime()
         state2_txt = string.format("%.2f | %d%%", self:GetProcessedValue("FuseTimer") - pt, math.Clamp(pt / self:GetProcessedValue("ThrowChargeTime"), 0, 1) * 100)
     end
+
     local recoil_txt = "Recoil: " .. tostring(math.Round(math.min(self:GetProcessedValue("UseVisualRecoil") and math.huge or self:GetProcessedValue("RecoilModifierCap"), self:GetRecoilAmount()), 2))
     local spread_txt = "Cone: " .. math.Round(spread_val, 5)
     local sway_txt = string.format("%.2f", self:GetFreeSwayAmount()) .. " Sway"
@@ -564,4 +578,21 @@ function SWEP:DevStuffCrosshair()
     surface.DrawText(state_txt)
     surface.SetTextPos(x - state2_w / 2, y + len - 8)
     surface.DrawText(state2_txt)
+
+    local sgspread_txt = ""
+    if self:GetProcessedValue("UseDispersion") then
+        local sgspread_val = math.max(0, self:GetProcessedValue("DispersionSpread"))
+        local sgspread = GetFOVAcc2(sgspread_val)
+        surface.DrawCircle(x, y, sgspread, 255, 255, 0, 255)
+        surface.DrawCircle(x, y, sgspread + 0.5, 255, 255, 0, 100)
+        
+        sgspread_txt = self:GetProcessedValue("UseDispersion") and "SG Cone: " .. math.Round(sgspread_val, 5) or ""
+    
+        surface.SetTextColor(0, 0, 0, 255)
+        surface.SetTextPos(x - len + 2, y - 64 + 2)
+        surface.DrawText(sgspread_txt)
+        surface.SetTextColor(255, 255, 255, 255)
+        surface.SetTextPos(x - len, y - 64)
+        surface.DrawText(sgspread_txt)
+    end
 end
