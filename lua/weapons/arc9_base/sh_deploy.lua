@@ -126,7 +126,9 @@ function SWEP:Holster(wep)
     end
 
     self:SetCustomize(false)
-
+    if self:GetValue("AnimDraw") then
+        self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))
+    end
     if self:GetHolsterTime() > CurTime() then return false end
 
     if (self:GetHolsterTime() != 0 and self:GetHolsterTime() <= CurTime()) or !IsValid(wep) then
