@@ -62,8 +62,9 @@ local LerpAngleEdit = function(a, v1, v2)
 end
 
 function SWEP:GetViewModelSway(pos, ang)
+    if self:GetCustomize() then return pos, ang end
     -- local mult = -0.5 -- negative will make you aim ahead
-    local mult = 0.8 -- positive will make aim delayed like tarcow
+    local mult = 0.65 -- positive will make aim delayed like tarcow
     local ft = FrameTime()
     -- local ft = 0.01
     local sightmult = Lerp(self:GetSightAmount(), 1, 0.5)
