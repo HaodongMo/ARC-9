@@ -412,7 +412,10 @@ function SWEP:DoVisualRecoil()
         local fake = 0
 
         fake = self:GetProcessedValue("VisualRecoilPositionBump") or 1.5
-        local bumpup = self:GetProcessedValue("VisualRecoilPositionBumpUp") or 0.08
+
+        local isRTscoped = CLIENT and self:GetSight() and self:GetSight().atttbl and self:GetSight().atttbl.RTScope -- horible
+
+        local bumpup = (isRTscoped and self:GetProcessedValue("VisualRecoilPositionBumpUpRTScope") or self:GetProcessedValue("VisualRecoilPositionBumpUp")) or 0.08
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
