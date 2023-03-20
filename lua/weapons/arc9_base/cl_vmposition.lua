@@ -398,11 +398,11 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- making parenthesis on (sightes * math.sin) cuz it creates number first and then multiplies vector to it
         -- if we won't do it, then vector would be multiplied by sighted,
         -- new vector will be created and there would be 3 additional vectors, which won't be used
-        pos:Sub(angright * (sighted * math.sin(ct * 0.8) * 0.02)) -- X 
-        pos:Sub(angup * (sighted * math.cos(ct * 0.84) * 0.04)) -- Y
-        pos:Sub(angforward * (sighted * math.cos(ct * 0.84) * 0.04)) -- Z
-        ang:RotateAroundAxis(angright, sighted * math.sin(ct * 0.84) * -0.1) -- P
-        ang:RotateAroundAxis(angup, sighted * math.cos(ct * -0.65) * -0.06) -- Y
+        pos:Sub(angright * (sighted * math.sin(ct * 0.8) * 0.01)) -- X 
+        pos:Sub(angup * (sighted * math.cos(ct * 0.84) * 0.02)) -- Y
+        pos:Sub(angforward * (sighted * math.cos(ct * 0.84) * 0.02)) -- Z
+        ang:RotateAroundAxis(angright, sighted * math.sin(ct * 0.84) * -0.07) -- P
+        ang:RotateAroundAxis(angup, sighted * math.cos(ct * -0.65) * -0.07) -- Y
         ang:RotateAroundAxis(angforward, sighted * math.sin(ct * 0.5) * 0.25) -- R
     end
 

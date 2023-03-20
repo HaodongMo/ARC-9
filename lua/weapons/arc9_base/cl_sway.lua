@@ -9,87 +9,30 @@ local posoffset = Vector()
 local smoothswayroll = 0
 local smoothswaypitch = 0
 
-
-local Lerp = function(a, v1, v2)
-    local d = v2 - v1
-
-    return v1 + (a * d)
-end
-
-local LerpVector = function(a, v1, v2)
-    local d = v2 - v1
-
-    return v1 + (a * d)
-end
-
-local LerpVectorEdit = function(a, v1, v2)
-    local v11, v12, v13 = v1[1], v1[2], v1[3]
-    local v21, v22, v23 = v2[1], v2[2], v2[3]
-    v1[1] = Lerp(a, v11, v21)
-    v1[2] = Lerp(a, v12, v22)
-    v1[3] = Lerp(a, v13, v23)
-end
-
-local LerpAngle = function(a, v1, v2)
-    -- angle aware lerp with Angles()
-    local v11 = v1[1]
-    local v12 = v1[2]
-    local v13 = v1[3]
-    local v21 = v2[1]
-    local v22 = v2[2]
-    local v23 = v2[3]
-    local d1 = math.AngleDifference(v21, v11)
-    local d2 = math.AngleDifference(v22, v12)
-    local d3 = math.AngleDifference(v23, v13)
-    local v3 = Angle(v11 + (a * d1), v12 + (a * d2), v13 + (a * d3))
-
-    return v3
-end
-
-local LerpAngleEdit = function(a, v1, v2)
-    local v11 = v1[1]
-    local v12 = v1[2]
-    local v13 = v1[3]
-    local v21 = v2[1]
-    local v22 = v2[2]
-    local v23 = v2[3]
-    local d1 = math.AngleDifference(v21, v11)
-    local d2 = math.AngleDifference(v22, v12)
-    local d3 = math.AngleDifference(v23, v13)
-    v1[1] = v11 + (a * d1)
-    v1[2] = v12 + (a * d2)
-    v1[3] = v13 + (a * d3)
-end
-
 function SWEP:GetViewModelSway(pos, ang)
-    -- local mult = -0.5 -- negative will make you aim ahead
-    local mult = 0.8 -- positive will make aim delayed like tarcow
-    local ft = FrameTime()
-    -- local ft = 0.01
     local sightmult = Lerp(self:GetSightAmount(), 1, 0.5)
-    LerpAngleEdit(math.Clamp(0.6-ft*11, 0, 1), smootheyeang, ang - lasteyeang)
+    smootheyeang = LerpAngle(math.Clamp(FrameTime() * 8, 0, 0.04), smootheyeang, EyeAngles() - lasteyeang)
     lasteyeang = EyeAngles()
 
-    smoothswayroll = Lerp(math.Clamp(0.6-ft*11, 0, 1), smoothswayroll, smootheyeang.y * 2)
-    smoothswaypitch = Lerp(math.Clamp(0.6-ft*11, 0, 1), smoothswaypitch, smootheyeang.p * 10)
+    smoothswayroll = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -3.5)
+    smoothswaypitch = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
 
-    -- if self.SprintVerticalOffset then
-    --     local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1)
-    --     pos:Add(ang:Up() * sprintoffset)
-    --     pos:Add(ang:Forward() * sprintoffset)
-    -- end
-    
+    if self.SprintVerticalOffset then
+        local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1)
+        pos:Add(ang:Up() * sprintoffset)
+        pos:Add(ang:Forward() * sprintoffset)
+    end
 
-    smootheyeang.p = math.Clamp(smootheyeang.p * 0.95, -3, 3)
-    smootheyeang.y = math.Clamp(smootheyeang.y * 0.9, -2, 2)
-    smootheyeang.r = math.Clamp(smoothswayroll + smoothswaypitch * -0.16, -4, 4)
+    posoffset.x = math.Clamp(smoothswayroll * 0.1,  -1.5, 1.5)
+    posoffset.y = math.Clamp(smoothswaypitch * 0.5, -1.5, 1.5)
+    posoffset.z = math.Clamp(smoothswayroll * 0.03, -1.5, 1.5)
 
-    posoffset.x = math.Clamp(smootheyeang.y * 0.2,  -1.5, 1.5)
-    posoffset.y = math.Clamp(math.abs(smootheyeang.y) * 0.2, -1.5, 1.5)
-    posoffset.z = math.Clamp(smootheyeang.r * -0.07 + smootheyeang.p * 0.13, -1.5, 1.5)
+    smootheyeang.p = math.Clamp(smootheyeang.p * 0.95, -7, 7)
+    smootheyeang.y = math.Clamp(smootheyeang.y * 0.9, -7, 7)
+    smootheyeang.r = math.Clamp(smoothswayroll + smoothswaypitch * -2, -15, 15)
 
-    pos:Add(posoffset * sightmult * mult)
-    ang:Add(smootheyeang * -sightmult * mult)
+    ang:Add(smootheyeang * sightmult)
+    pos:Add(posoffset * sightmult)
 
     return pos, ang
 end
@@ -289,20 +232,20 @@ local function DarsuBob(self, pos, ang)
     local d3 = math.ease.InQuad(d)
     local speedmult = 1.3
 
-    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.3-sightamount*0.5)
+    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.3-sightamount)
     smoothsidemove = Lerp(math.Clamp(FrameTime()*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5*(1.3-sightamount)  or 1
     
     if owner.GetSliding then if owner:GetSliding() then speedmult = 0.01 d3 = 0 smoothsidemove = -10 end end
 
+    pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 
+    pos:Sub(ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3 * crouchmult)                     -- Y
+    pos:Sub(ang:Forward() *        math.sin(speedmult * self.BobCT * 4.5)  * d2 * 0.75 * crouchmult)                   -- Z
+
     ang:RotateAroundAxis(ang:Right(),   math.cos(speedmult * self.BobCT * 6)    * d3 * 2 + smoothjumpmove)                  -- P
     ang:RotateAroundAxis(ang:Up(),      math.cos(speedmult * self.BobCT * 3.3)  * d3 * 2)                                   -- Y
     ang:RotateAroundAxis(ang:Forward(), math.sin(speedmult * self.BobCT * 6)    * d3 * 3.5 * crouchmult + smoothsidemove)   -- R
-
-    pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 
-    pos:Sub(ang:Up() *             (math.cos(speedmult * self.BobCT * 6)    * d * 0.2 * crouchmult - smoothsidemove*0.085))                     -- Y
-    pos:Sub(ang:Forward() *        math.sin(speedmult * self.BobCT * 4)  * d2 * 1.5 * crouchmult)                   -- Z
 
     return pos, ang
 end
