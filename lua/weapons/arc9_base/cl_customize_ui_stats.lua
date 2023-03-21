@@ -442,9 +442,19 @@ function SWEP:CreateHUD_Stats()
             stat = "SupplyLimit",
             fifty = 3,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash")
+                return self:GetProcessedValue("PrimaryBash") or self:GetValue("EFTErgo")
             end,
             conv = function(a) return math.Round(a, 0) end,
+            unit = ""
+        },
+        {
+            title = "Ergonomics",
+            desc = "EFT: Ergonomics affects the speed that the player aims down their sights and stamina drain.",
+            stat = "EFTErgo",
+            fifty = 50,
+            cond = function()
+                return !self:GetValue("EFTErgo")
+            end,
             unit = ""
         },
     }
@@ -583,7 +593,7 @@ function SWEP:CreateHUD_Stats()
                 rx = rx + ARC9ScreenScale(8)
                 ry = ry + ARC9ScreenScale(8)
 
-                local desc = ARC9:GetPhrase(self2.stats.desc)
+                local desc = ARC9:GetPhrase(self2.stats.desc) or self2.stats.desc
 
                 surface.SetFont("ARC9_10")
                 local btw = surface.GetTextSize(desc)
