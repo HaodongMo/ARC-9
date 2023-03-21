@@ -81,6 +81,8 @@ local lastpressed = false
 SWEP.IsHoldingBreath = false
 
 function SWEP:HoldingBreath()
+    if self:GetSightAmount() < 0.05 then self.IsHoldingBreath = false return end
+
     if GetConVar("arc9_togglebreath"):GetBool() then
         if self:GetOwner():KeyDown(IN_SPEED) and !lastpressed then
             self.IsHoldingBreath = !self.IsHoldingBreath

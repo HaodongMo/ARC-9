@@ -431,7 +431,9 @@ function SWEP:DoPrimaryAttack()
 
     self:DoEffects()
 
-    self:SetBreath(self:GetBreath() - self:GetValue("HoldBreathTime")/20)
+    if self:HoldingBreath() then
+        self:SetBreath(self:GetBreath() - self:GetValue("HoldBreathTime")/20)
+    end
 
     -- ewww
     if processedValue(self, "AkimboBoth") then
