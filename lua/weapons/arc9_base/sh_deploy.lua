@@ -148,10 +148,10 @@ function SWEP:Holster(wep)
             game.SetTimeScale(1)
         end
 
-        if self.SetBreathDSP then
-            self:GetOwner():SetDSP(0)
-            self.SetBreathDSP = false
-        end
+        -- if self.SetBreathDSP then
+        --     self:GetOwner():SetDSP(0)
+        --     self.SetBreathDSP = false
+        -- end
 
         self:RunHook("Hook_Holster")
 

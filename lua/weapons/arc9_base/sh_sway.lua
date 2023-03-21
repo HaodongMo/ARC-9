@@ -1,7 +1,6 @@
 SWEP.SetBreathDSP = false
 
 function SWEP:ThinkHoldBreath()
-
     if !self:GetOwner():IsPlayer() then return end
     local holdbreathtime = self:GetValue("HoldBreathTime")
     if holdbreathtime <= 0 then return end
@@ -22,37 +21,40 @@ function SWEP:ThinkHoldBreath()
                     sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")),
                     channel = ARC9.CHAN_BREATH
                 }
-                self:PlayTranslatedSound(soundtab)
 
-                if self.SetBreathDSP then
-                    self:GetOwner():SetDSP(0)
-                    self.SetBreathDSP = false
-                end
+                if CLIENT then self:PlayTranslatedSound(soundtab) end
+
+                -- if self.SetBreathDSP then
+                --     self:GetOwner():SetDSP(0)
+                --     self.SetBreathDSP = false
+                -- end
             end
         else
             target_ts = Lerp(1 - (self:GetBreath() / 100), 0.33, 0.25)
-            if sfx and !self.SetBreathDSP then
-                self:GetOwner():SetDSP(30)
-                self.SetBreathDSP = true
+            if sfx then
+            -- if sfx and !self.SetBreathDSP then
+                -- self:GetOwner():SetDSP(30)
+                -- self.SetBreathDSP = true
                 local soundtab = {
                     name = "breathin",
                     sound = self:RandomChoice(self:GetProcessedValue("BreathInSound")),
                     channel = ARC9.CHAN_BREATH
                 }
 
-                self:PlayTranslatedSound(soundtab)
+                if CLIENT then self:PlayTranslatedSound(soundtab) end
             end
         end
     else
-        if sfx and self.SetBreathDSP then
-            self:GetOwner():SetDSP(0)
-            self.SetBreathDSP = false
+        if sfx then
+        -- if sfx and self.SetBreathDSP then
+            -- self:GetOwner():SetDSP(0)
+            -- self.SetBreathDSP = false
             local soundtab = {
                 name = "breathout",
                 sound = self:RandomChoice(self:GetProcessedValue("BreathOutSound")),
                 channel = ARC9.CHAN_BREATH
             }
-            self:PlayTranslatedSound(soundtab)
+            if CLIENT then self:PlayTranslatedSound(soundtab) end
         end
 
         self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime")))
