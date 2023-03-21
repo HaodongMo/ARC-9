@@ -77,8 +77,21 @@ function SWEP:CanHoldBreath()
     return self:GetBreath() > 0 and !self:GetOutOfBreath()
 end
 
+local lastpressed = false
+SWEP.IsHoldingBreath = false
+
 function SWEP:HoldingBreath()
-    return self:CanHoldBreath() and self:GetOwner():KeyDown(IN_SPEED) and (self:GetSightAmount() >= 1) and self:GetValue("HoldBreathTime") > 0
+    if GetConVar("arc9_togglebreath"):GetBool() then
+        if self:GetOwner():KeyDown(IN_SPEED) and !lastpressed then
+            self.IsHoldingBreath = !self.IsHoldingBreath
+        end
+    else
+        self.IsHoldingBreath = self:GetOwner():KeyDown(IN_SPEED)
+    end
+
+    lastpressed = self:GetOwner():KeyDown(IN_SPEED)
+    
+    return self:CanHoldBreath() and self.IsHoldingBreath and (self:GetSightAmount() >= 1) and self:GetValue("HoldBreathTime") > 0
 end
 
 local pp_amount = 0

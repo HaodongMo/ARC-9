@@ -688,3 +688,8 @@ L["settings.hud_cust.cust_tips.desc"] = "Tips about ARC9 base near hints."
 
 L["tips.description"] = "We advise you to read the descriptions of addons before commenting."
 L["tips.m9k"] = "Check out M9K guns!."
+
+
+
+L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
+L["settings.gameplay.togglebreath.desc"] = "Pressing the Holding Breath key will toggle Holding Breath instead of needing to be held down."

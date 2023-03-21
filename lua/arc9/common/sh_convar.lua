@@ -586,6 +586,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "togglebreath",
+        default = "0",
+        client = true,
+    },
+    {
         name = "eject_fx",
         default = "1",
         client = true
