@@ -19,7 +19,7 @@ local function GetTrueRPM(self, base)
             end
 
             if self.ManualAction then
-                delay = delay + (self.cycle * self.CycleTime)
+                delay = delay + ((self.cycle or 1) * self.CycleTime)
             end
 
             if self:GetCurrentFiremode() > 1 then
