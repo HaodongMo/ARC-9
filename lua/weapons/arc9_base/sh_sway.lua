@@ -14,6 +14,7 @@ function SWEP:ThinkHoldBreath()
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
             self:SetBreath(0)
+            self.IsHoldingBreath = false
 
             if sfx then
                 local soundtab = {
@@ -21,7 +22,9 @@ function SWEP:ThinkHoldBreath()
                     sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound")),
                     channel = ARC9.CHAN_BREATH
                 }
-
+                
+                self.BreathOutPlayed = true
+                self.BreathInPlayed = nil
                 if CLIENT then self:PlayTranslatedSound(soundtab) end
 
                 -- if self.SetBreathDSP then
@@ -31,10 +34,14 @@ function SWEP:ThinkHoldBreath()
             end
         else
             target_ts = Lerp(1 - (self:GetBreath() / 100), 0.33, 0.25)
-            if sfx then
+            if sfx and !self.BreathInPlayed then
             -- if sfx and !self.SetBreathDSP then
                 -- self:GetOwner():SetDSP(30)
                 -- self.SetBreathDSP = true
+                
+                self.BreathInPlayed = true
+                self.BreathOutPlayed = nil
+
                 local soundtab = {
                     name = "breathin",
                     sound = self:RandomChoice(self:GetProcessedValue("BreathInSound")),
@@ -45,7 +52,7 @@ function SWEP:ThinkHoldBreath()
             end
         end
     else
-        if sfx then
+        if sfx and !self.BreathOutPlayed and !self:GetOutOfBreath() then
         -- if sfx and self.SetBreathDSP then
             -- self:GetOwner():SetDSP(0)
             -- self.SetBreathDSP = false
@@ -54,6 +61,10 @@ function SWEP:ThinkHoldBreath()
                 sound = self:RandomChoice(self:GetProcessedValue("BreathOutSound")),
                 channel = ARC9.CHAN_BREATH
             }
+
+            self.BreathOutPlayed = true
+            self.BreathInPlayed = nil
+
             if CLIENT then self:PlayTranslatedSound(soundtab) end
         end
 
