@@ -679,3 +679,9 @@ L["settings.hud_cust.cust_tips.title"] = "Consejos"
 L["settings.hud_cust.cust_tips.desc"] = "Consejos sobre la base ARC9 cerca de pistas."
 
 L["tips.description"] = "Le aconsejamos que lea las descripciones de los addons antes de hacer comentarios."
+L["tips.m9k"] = "¡Hecha un vistazo a las armas M9K!."
+
+
+
+L["settings.gameplay.togglebreath.title"] = "Alternar contener la respiración"
+L["settings.gameplay.togglebreath.desc"] = "Al pulsar la tecla Contener la respiración se activará Contener la respiración en lugar de tener que mantenerla pulsada."
