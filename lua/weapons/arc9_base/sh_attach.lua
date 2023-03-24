@@ -215,6 +215,7 @@ end
 
 function SWEP:ToggleCustomize(on)
     if on == self:GetCustomize() then return end
+    if self.NotAWeapon then return end
 
     self:SetCustomize(on)
 
