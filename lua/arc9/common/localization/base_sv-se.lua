@@ -670,3 +670,17 @@ L["tips.settings"] = "Du kan stänga av dessa tips, och mycket mer, via ARC9-ins
 
 L["settings.hud_cust.cust_tips.title"] = "Tips"
 L["settings.hud_cust.cust_tips.desc"] = "Tips om ARC9-basen nära tipsen."
+
+L["tips.description"] = "Vi föreslår att du läser beskrivningen på tilläggen innan du kommenterar.."
+L["tips.m9k"] = "Checka ut M9K-vapnen!"
+
+
+
+L["settings.gameplay.togglebreath.title"] = "Växla Hålla Andan"
+L["settings.gameplay.togglebreath.desc"] = "Att trycka på Hålla Andan-knappen kommer växla Hålla Andan istället för att den krävs att hållas ner."
+
+
+
+L["customize.presets.deldef"] = "Är du säker på att du vill plocka bort standard förinställning \"{name}\"?"
+L["customize.presets.deldef2"] = "Du kommer behöva återställa vapnet via tillverkare inställningar för att få tillbaka den."
+L["customize.presets.yes"] = "Ja"
