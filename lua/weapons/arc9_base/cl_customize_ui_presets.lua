@@ -173,8 +173,9 @@ function SWEP:CreatePresetMenu(reload)
             presetbtn.preset = preset
             presetbtn.name, presetbtn.attcount = self:GetPresetData(preset)
         end
+        if presetbtn.name == "ignore" then presetbtn:Remove() return end
 
-        if presetbtn.name == "default" then presetbtn.name = ARC9:GetPhrase("customize.presets.default") end
+        if presetbtn.name == "default" then presetbtn.name = ARC9:GetPhrase("customize.presets.default") presetbtn.def = true end
 
         if file.Exists(filename, "DATA") then
             presetbtn.icon = Material("data/" .. filename, "smooth")
@@ -209,12 +210,12 @@ function SWEP:CreatePresetMenu(reload)
             surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), 0)
             surface.DrawText(self2.name)
             surface.SetFont("ARC9_8")
-            surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(11))
+            surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(12))
             surface.DrawText(tostring(self2.attcount) .. ARC9:GetPhrase("customize.presets.atts"))
 
-            if undeletable then
+            if self2.def or undeletable and !self2:IsHovered() and !(self2.delbutton and self2.delbutton:IsHovered()) then
                 surface.SetTextColor(ARC9.GetHUDColor("fg", 75))
-                surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(19))
+                surface.SetTextPos(h*1.4 + ARC9ScreenScale(5), ARC9ScreenScale(20))
                 surface.DrawText(ARC9:GetPhrase("customize.presets.default.long"))
             end
         end
@@ -237,7 +238,7 @@ function SWEP:CreatePresetMenu(reload)
         --     end
         -- end
 
-        if !undeletable then
+        if !undeletable and !presetbtn.def  then
             local preset_share = vgui.Create("ARC9TopButton", presetbtn)
             preset_share:SetPos(ARC9ScreenScale(69), presetbtn:GetTall() - ARC9ScreenScale(15))
             preset_share:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
@@ -260,22 +261,37 @@ function SWEP:CreatePresetMenu(reload)
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.export"
                 end
             end
-
+        end
+        
+        if !undeletable and !presetbtn.def or undeletable and !presetbtn.def then
             local preset_delete = vgui.Create("ARC9TopButton", presetbtn)
+            presetbtn.delbutton = preset_delete
             preset_delete:SetPos(ARC9ScreenScale(54), presetbtn:GetTall() - ARC9ScreenScale(15))
             preset_delete:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
             preset_delete:SetIcon(Material("arc9/ui/delete.png", "mips smooth"))
             preset_delete.DoClick = function(self2)
-                self:DeletePreset(preset)
-                presetbtn:Remove()
-                presetbtn = nil
-                -- self:CreatePresetMenu()
-                surface.PlaySound(removesound)
+                if undeletable then
+                    self:CreateDeleteDefPreset(preset)
+                else
+                    self:DeletePreset(preset)
+                    presetbtn:Remove()
+                    presetbtn = nil
+                    -- self:CreatePresetMenu()
+                    surface.PlaySound(removesound)
+                end
             end
             preset_delete.Think = function(self2)
                 if !IsValid(self) then return end
                 if self2:IsHovered() then
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.delete"
+                end
+
+                if undeletable then
+                    if presetbtn:IsHovered() or self2:IsHovered() then
+                        self2:SetSize(ARC9ScreenScale(21*0.625), ARC9ScreenScale(21*0.625))
+                    else
+                        self2:SetSize(0, 0)
+                    end
                 end
             end
         end
@@ -286,7 +302,6 @@ function SWEP:CreatePresetMenu(reload)
 
     for _, preset in ipairs(presetlist) do
         if preset == "autosave" or preset == "default" then continue end
-        
         createpresetbtn(preset, !tonumber(preset)) -- if preset is a number then it's a user generated, if no - standard
     end
 
@@ -307,7 +322,7 @@ function SWEP:ClosePresetMenu()
     end
 end
 
-local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
+local function createPopup(self, title, buttontext, typeable, inside, btnfunc, noinput, secondline)
     local scrw, scrh = ScrW(), ScrH()
 
     local bg = vgui.Create("DFrame")
@@ -326,24 +341,36 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc)
         surface.SetFont("ARC9_20")
         local tw = surface.GetTextSize(title)
         surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-        surface.SetTextPos(w/2-tw/2+ARC9ScreenScale(1), h/2 - ARC9ScreenScale(71))
+        surface.SetTextPos(w/2-tw/2+ARC9ScreenScale(1), h/2 - ARC9ScreenScale(71) + (noinput and ARC9ScreenScale(10) or 0))
         surface.DrawText(title)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.SetTextPos(w/2-tw/2, h/2 - ARC9ScreenScale(72))
+        surface.SetTextPos(w/2-tw/2, h/2 - ARC9ScreenScale(72) + (noinput and ARC9ScreenScale(10) or 0))
         surface.DrawText(title)
+
+        if secondline then
+            local tw = surface.GetTextSize(secondline)
+            surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+            surface.SetTextPos(w/2-tw/2+ARC9ScreenScale(1), h/2 - ARC9ScreenScale(71-35))
+            surface.DrawText(secondline)
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextPos(w/2-tw/2, h/2 - ARC9ScreenScale(72-35))
+            surface.DrawText(secondline)
+        end
     end
     bg:MakePopup()
 
-    local textentry = vgui.Create("DTextEntry", bg)
-    textentry:SetSize(scrw/3, ARC9ScreenScale(24))
-    textentry:Center()
-    textentry:SetY(scrh/2 - ARC9ScreenScale(48))
-    textentry:RequestFocus()
-    textentry:SetFont("ARC9_24")
-    textentry:SetText("")
+    if !noinput then
+        local textentry = vgui.Create("DTextEntry", bg)
+        textentry:SetSize(scrw/3, ARC9ScreenScale(24))
+        textentry:Center()
+        textentry:SetY(scrh/2 - ARC9ScreenScale(48))
+        textentry:RequestFocus()
+        textentry:SetFont("ARC9_24")
+        textentry:SetText("")
 
-    textentry.OnEnter = function(spaa, kc)
-        btnfunc(bg, textentry)
+        textentry.OnEnter = function(spaa, kc)
+            btnfunc(bg, textentry)
+        end
     end
 
     local savebtn = vgui.Create("ARC9TopButton", bg)
@@ -418,6 +445,18 @@ function SWEP:CreateExportPreset(string)
             bg:Remove()
         end)
     end)
+end
+
+function SWEP:CreateDeleteDefPreset(preset)
+    createPopup(self, ARC9:GetPhrase("customize.presets.deldef", {name=preset}), ARC9:GetPhrase("customize.presets.yes"), true, nil, function(bg, textentry)
+        bg:AlphaTo(0, 0.1, 0, function()
+            
+            bg:Remove()
+            surface.PlaySound(removesound)
+            self:IgnorePreset(preset)
+            self:CreatePresetMenu(true)
+        end)
+    end, true, ARC9:GetPhrase("customize.presets.deldef2"))
 end
 
 function SWEP:CreateImportPreset()

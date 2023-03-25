@@ -649,3 +649,9 @@ L["tips.m9k"] = "Зацени M9K!."
 
 L["settings.gameplay.togglebreath.title"] = "Задержка дыхания по нажатию"
 L["settings.gameplay.togglebreath.desc"] = "Вместо удерживания кнопки задержки дыхания достаточно нажать один раз."
+
+
+
+L["customize.presets.deldef"] = "Ты точно хочешь удалить стандартный \"{name}\" пресет?"
+L["customize.presets.deldef2"] = "Чтобы его вернуть, тебе придётся сбрасывать данные оружия в настройках разработчика."
+L["customize.presets.yes"] = "Да"

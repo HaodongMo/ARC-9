@@ -51,6 +51,16 @@ function SWEP:DeletePreset(filename)
     end
 end
 
+function SWEP:IgnorePreset(filename)
+    if LocalPlayer() != self:GetOwner() then return end
+
+    filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename
+
+    if file.Exists(filename .. ".txt", "DATA") then
+        file.Write(filename .. ".txt", "name=ignore\n")
+    end
+end
+
 function SWEP:StripWeapon()
     for slot, slottbl in ipairs(self.Attachments) do
         slottbl.Installed = nil
@@ -149,8 +159,8 @@ function SWEP:GetPresetData(preset)
     end
 
     local tbl = self:ImportPresetCode(code)
-
-    local count = self:GetAttCountFromTable(tbl)
+    local count = 0
+    if tbl then count = self:GetAttCountFromTable(tbl) end
 
     f:Close()
 

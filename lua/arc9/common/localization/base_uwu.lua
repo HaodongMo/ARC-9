@@ -693,3 +693,9 @@ L["tips.m9k"] = "Check out m9k guwuns meow"
 
 L["settings.gameplay.togglebreath.title"] = "Towgle howolding bweath"
 L["settings.gameplay.togglebreath.desc"] = "Pwessing de Holding Bweath key will toggle Holding Bweath instead of needing to be held down"
+
+
+
+L["customize.presets.deldef"] = "Awee yyu suwe yu wawt two dewete \"{name}\" dewaauwt pwesew? owo"
+L["customize.presets.deldef2"] = "Youw woulwd hawe to weset uwuweapon in dewelopew sewtings two weturn it >~<"
+L["customize.presets.yes"] = "MEOW !"

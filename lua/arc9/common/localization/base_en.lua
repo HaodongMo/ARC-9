@@ -693,3 +693,9 @@ L["tips.m9k"] = "Check out M9K guns!."
 
 L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
 L["settings.gameplay.togglebreath.desc"] = "Pressing the Holding Breath key will toggle Holding Breath instead of needing to be held down."
+
+
+
+L["customize.presets.deldef"] = "Are you sure you want to delete \"{name}\" default preset?"
+L["customize.presets.deldef2"] = "You would have to reset weapon in developer settings to return it."
+L["customize.presets.yes"] = "Yes"
