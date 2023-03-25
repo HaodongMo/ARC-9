@@ -685,3 +685,9 @@ L["tips.m9k"] = "¡Hecha un vistazo a las armas M9K!."
 
 L["settings.gameplay.togglebreath.title"] = "Alternar contener la respiración"
 L["settings.gameplay.togglebreath.desc"] = "Al pulsar la tecla Contener la respiración se activará Contener la respiración en lugar de tener que mantenerla pulsada."
+
+
+
+L["customize.presets.deldef"] = "¿Estás seguro de que quieres borrar \"{name}\" preajuste por defecto?"
+L["customize.presets.deldef2"] = "Tendrías que resetear arma en ajustes de desarrollador para devolverla."
+L["customize.presets.yes"] = "Yes"
