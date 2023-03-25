@@ -13,11 +13,6 @@
 -- Writted by Buu342, Still a work in progress.
 
 
--- PLEASE
--- I HAVE ZERO IDEA
--- THIRD EVEN FUCKING EMPTY POPULATEWEAPONS HOOK BREAKS OTHER HOOKS
--- URBAN COALITION AND MODERN WARFARE
--- PLEASE       FIX
 -- I HATE GARRY NEWMAN
 
 hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree, anode)
