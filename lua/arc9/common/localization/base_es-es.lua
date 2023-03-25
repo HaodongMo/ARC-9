@@ -690,4 +690,4 @@ L["settings.gameplay.togglebreath.desc"] = "Al pulsar la tecla Contener la respi
 
 L["customize.presets.deldef"] = "¿Estás seguro de que quieres borrar \"{name}\" preajuste por defecto?"
 L["customize.presets.deldef2"] = "Tendrías que resetear arma en ajustes de desarrollador para devolverla."
-L["customize.presets.yes"] = "Yes"
+L["customize.presets.yes"] = "Si"
