@@ -76,7 +76,7 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
             node.DoPopulate = function(self)
 
                 -- If we've already populated it - forget it.
-                if (self.PropPanel) then return end
+                -- if (self.PropPanel) then return end
 
                 -- Create the container panel
                 self.PropPanel = vgui.Create("ContentContainer", pnlContent)
