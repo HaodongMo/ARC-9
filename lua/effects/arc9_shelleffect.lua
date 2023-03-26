@@ -20,7 +20,7 @@ function EFFECT:Init(data)
     if !IsValid(ent) then self:Remove() return end
     if !IsValid(ent:GetOwner()) then self:Remove() return end
 
-    if LocalPlayer():ShouldDrawLocalPlayer() or ent:GetOwner() != LocalPlayer() and !ent:ShouldTPIK() then
+    if ent:GetOwner() != LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
         mdl = (ent.WModel or {})[1] or ent
         att = 2
         self.VMContext = false
