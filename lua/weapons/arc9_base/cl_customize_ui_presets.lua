@@ -159,6 +159,7 @@ function SWEP:CreatePresetMenu(reload)
             presetbtn.name = ARC9:GetPhrase("customize.presets.random")
             presetbtn.attcount = "?"
             presetbtn.icon = mat_random
+            presetbtn.def = true
             presetbtn.DoClick = function(self2)
                 if GetConVar("arc9_atts_nocustomize"):GetBool() then return end
                 -- self:NPC_Initialize()        
@@ -359,8 +360,10 @@ local function createPopup(self, title, buttontext, typeable, inside, btnfunc, n
     end
     bg:MakePopup()
 
+    local textentry = nil
+
     if !noinput then
-        local textentry = vgui.Create("DTextEntry", bg)
+        textentry = vgui.Create("DTextEntry", bg)
         textentry:SetSize(scrw/3, ARC9ScreenScale(24))
         textentry:Center()
         textentry:SetY(scrh/2 - ARC9ScreenScale(48))
