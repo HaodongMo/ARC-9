@@ -1283,21 +1283,21 @@ function SWEP:CreateHUD_RHP()
         -- if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).inspect then return end
 
         surface.SetFont("ARC9_24")
-        local tw = surface.GetTextSize(self.PrintName)
+        local tw = surface.GetTextSize(self.PrintName or "No name ??? wtf")
 
         surface.SetFont("ARC9_24")
         surface.SetTextPos(w/2 - tw/2, 0)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.DrawText(self.PrintName)
+        surface.DrawText(self.PrintName or "No name ??? wtf")
 
         -- class
         surface.SetFont("ARC9_12")
-        local tw2 = surface.GetTextSize(self.Class)
+        local tw2 = surface.GetTextSize(self.Class or "No class ??? wtf")
 
         surface.SetFont("ARC9_12")
         surface.SetTextPos(w/2 - tw2/2, ARC9ScreenScale(25))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.DrawText(self.Class)
+        surface.DrawText(self.Class or "No class ??? wtf")
 
         surface.SetDrawColor(ARC9.GetHUDColor("bg"))
         surface.DrawRect(w/2 - tw2/2, ARC9ScreenScale(23), tw2, ARC9ScreenScale(1.5))
