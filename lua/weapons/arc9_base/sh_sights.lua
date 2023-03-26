@@ -12,7 +12,8 @@ function SWEP:EnterSights()
     if self:GetSafe() then return end
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
     if self:GetValue("UBGL") and self:GetOwner():KeyDown(IN_USE) then return end
-
+    if self:GetIsNearWall() then return end
+    
     -- self:ToggleBlindFire(false)
     self:SetInSights(true)
     if IsFirstTimePredicted() then
