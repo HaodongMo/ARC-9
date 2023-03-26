@@ -35,9 +35,19 @@ function SWEP:DoDrawCrosshair(x, y)
 
         local endpos = sp + (sa:Forward() * 9000)
         local toscreen = endpos:ToScreen()
-
-        x = toscreen.x
-        y = toscreen.y
+    
+        if ARC9.ShouldThirdPerson() then
+            local tr = util.TraceLine({
+                start = sp,
+                endpos = endpos,
+                mask = MASK_SHOT,
+                filter = owner
+            })
+    
+            toscreen = tr.HitPos:ToScreen()
+        end
+    
+        x, y = toscreen.x, toscreen.y
     end
 
     local m = GetConVar("arc9_cross_size_mult"):GetFloat()
@@ -91,24 +101,6 @@ function SWEP:DoDrawCrosshair(x, y)
 
         lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
     end
-
-    local sp, sa = self:GetShootPos()
-
-    local endpos = sp + (sa:Forward() * 9000)
-    local toscreen = endpos:ToScreen()
-
-    if ARC9.ShouldThirdPerson() then
-        local tr = util.TraceLine({
-            start = sp,
-            endpos = endpos,
-            mask = MASK_SHOT,
-            filter = owner
-        })
-
-        toscreen = tr.HitPos:ToScreen()
-    end
-
-    x, y = toscreen.x, toscreen.y
 
     local mode = self:GetCurrentFiremode()
 
