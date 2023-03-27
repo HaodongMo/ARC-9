@@ -386,6 +386,8 @@ do
     end
 end
 
+local lastrft = 0
+
 function SWEP:DoVisualRecoil()
     if !self:GetProcessedValue("UseVisualRecoil") then return end
 
@@ -418,6 +420,29 @@ function SWEP:DoVisualRecoil()
         local bumpup = (isRTscoped and self:GetProcessedValue("VisualRecoilPositionBumpUpRTScope") or self:GetProcessedValue("VisualRecoilPositionBumpUp")) or 0.08
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
+
+        if CLIENT then -- Very very very awful code ahead to prevent different bumps on different framerates
+            local midrft = math.max(lastrft, RealFrameTime()) -- prevent stutters
+
+            local awfulnumber = (220 - math.Clamp(1/midrft, 60, 220))
+            awfulnumber = math.Clamp(awfulnumber * awfulnumber * awfulnumber * 0.00000035 + 0.7, 0.5, 2.15) -- Cubic
+            
+            fake = fake * awfulnumber
+
+            lastrft = RealFrameTime()
+                -- my calcluations what awfulnumber should be on different fps 
+            -- <60fps = 2.15
+            -- 70fps = 2
+            -- 80fps = 1.75
+            -- 90fps = 1.5
+            -- 100fps = 1.4
+            -- 110fps = 1.25
+            -- 130fps = 1.1
+            -- 150fps = 1
+            -- 170fps = 0.9
+            -- 200fps = 0.8
+            -- >220fps = 0.7
+        end
 
         if GetConVar("arc9_realrecoil"):GetBool() then
             self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
