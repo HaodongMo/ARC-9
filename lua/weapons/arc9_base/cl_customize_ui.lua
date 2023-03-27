@@ -1109,7 +1109,6 @@ function SWEP:CreateCustomizeHUD()
         "tips.tips",
         "tips.settings",
         "tips.description",
-        "tips.m9k",
     }
 
     local tipdelay = 8

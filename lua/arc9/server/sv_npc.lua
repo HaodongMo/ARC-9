@@ -190,8 +190,8 @@ function ARC9.TryRandomize()
         if IsValid(wpn) then
             wpn:RollRandomAtts(wpn.Attachments)
 
-            wpn:PostModify()
             wpn:PruneAttachments()
+            wpn:PostModify()
             wpn:SendWeapon()
         end
     end
