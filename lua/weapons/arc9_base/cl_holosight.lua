@@ -1,5 +1,5 @@
 function SWEP:DoHolosight(mdl, atttbl)
-    if self:GetSightAmount() <= 0 then return end
+    if self:GetSightAmount() <= 0 and !self:GetCustomize() then return end
     if ARC9.OverDraw then return end
     if self:GetOwner() != LocalPlayer() then return end
 
