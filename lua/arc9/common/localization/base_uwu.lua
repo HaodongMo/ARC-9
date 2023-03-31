@@ -167,8 +167,8 @@ L["hud.firemode.auto"] = "AUTOwO"
 L["hud.firemode.safe"] = "SAWE~"
 
 L["hud.version"] = "OWO SYwwEwS HUD w"
-L["hud.jammed"] = "JAWWED >~< !!!!!!"
-L["hud.derm_deco"] = "BAWWEL TEMP"
+L["hud.jammed"] = "JAWWED >~<"
+L["hud.therm_deco"] = "BAWWEL TEMP uwu"
 
 L["hud.hint.ubgl"] = "Towgwle"
 L["hud.hint.switchsights"] = "S-switch siwts"

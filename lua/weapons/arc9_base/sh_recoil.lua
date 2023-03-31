@@ -422,8 +422,7 @@ function SWEP:DoVisualRecoil()
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
         if CLIENT then -- Very very very awful code ahead to prevent different bumps on different framerates
-            local midrft = math.max(lastrft, RealFrameTime()) -- prevent stutters
-
+            local midrft = math.min(lastrft, RealFrameTime()) -- prevent stutters
             local awfulnumber = (220 - math.Clamp(1/midrft, 60, 220))
             awfulnumber = math.Clamp(awfulnumber * awfulnumber * awfulnumber * 0.00000035 + 0.7, 0.5, 2.15) -- Cubic
             
@@ -442,6 +441,7 @@ function SWEP:DoVisualRecoil()
             -- 170fps = 0.9
             -- 200fps = 0.8
             -- >220fps = 0.7
+                -- if we ever will get LUT interpolation (for dmg on ranges LUT etc) add it here too
         end
 
         if GetConVar("arc9_realrecoil"):GetBool() then
