@@ -684,3 +684,28 @@ L["settings.gameplay.togglebreath.desc"] = "Att trycka på Hålla Andan-knappen 
 L["customize.presets.deldef"] = "Är du säker på att du vill plocka bort standard förinställning \"{name}\"?"
 L["customize.presets.deldef2"] = "Du kommer behöva återställa vapnet via tillverkare inställningar för att få tillbaka den."
 L["customize.presets.yes"] = "Ja"
+
+-- april 2
+
+L["settings.tabname.caching"] = "Tillgång-Cache"
+L["settings.caching.title"] = "Tillgång-Cache"
+L["settings.caching.desc"] = "Du kan cacha några ARC9-tillgångar (spara i minnet utan att ladda när du spelar) för att förhindra stamning för en bra spel upplevelse!\n\nDu borde säkert aktivera några grejer om ditt GMod spelas på en HDD."
+
+L["settings.caching.precache_sounds_onfirsttake.title"] = "På första upplock: Cache vapenljud"
+L["settings.caching.precache_sounds_onfirsttake.desc"] = "Cache alla ljud endast för det vapnet du tar upp i handen (förutom omladdning ljud).\n\nInte väldigt effektfull men kan hjälpa att förhindra stamning när man skjuter."
+
+L["settings.caching.precache_attsmodels_onfirsttake.title"] = "På första upplock: Cache alla tillbehör"
+L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Cache alla ARC9-tillbehör modeller när ett ARC9-vapen är i händerna.\n\nOrsakar en stor frysning, speciellt när du har många vapen."
+L["settings.caching.precache_wepmodels_onfirsttake.title"] = "På första upplock: Cache alla vapenmodeller"
+L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Cache alla ARC9-vapen viewmodeller när ett ARC9-vapen är i händerna.\n\nOrsakar en MASSIV frysning, speciellt när du har många vapen."
+
+L["settings.caching.precache_allsounds_onstartup.title"] = "På spelstart: Cache alla vapenljud"
+L["settings.caching.precache_allsounds_onstartup.desc"] = "Cache alla ljud från alla vapen vid serverstart (förutom omladdning ljud).\n\nInte väldigt effektfull men det är bättre att du använder första alternativet här."
+L["settings.caching.precache_attsmodels_onstartup.title"] = "På spelstart: Cache alla tillbehör"
+L["settings.caching.precache_attsmodels_onstartup.desc"] = "Cache alla ARC9-tillbehör modeller vid serverstart.\n\nOrsakar väldigt högt ökad laddningstid, speciellt när du har många vapen."
+L["settings.caching.precache_wepmodels_onstartup.title"] = "På spelstart: Cache alla vapenmodeller"
+L["settings.caching.precache_wepmodels_onstartup.desc"] = "Cache alla ARC9-vapen viewmodeller vid serverstart.\n\nOrsakar VÄLDIGT ökad laddningstid, speciellt när du har många vapen."
+L["settings.caching.precache_allsounds.title"] = "Alla vapenljud"
+L["settings.caching.precache_wepmodels.title"] = "Alla vapenmodeller"
+L["settings.caching.precache_attsmodels.title"] = "Alla tillbehör modeller"
+L["settings.developer.cache"] = "Cache"
