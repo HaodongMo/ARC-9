@@ -689,12 +689,12 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         dmgbodymult = dmgbodymult * bodydamage[hitGroup]
     end
 
-    if bodyDamageCancel:GetBool() and cancelmults[hitGroup] then
-        dmgbodymult = dmgbodymult / cancelmults[hitGroup]
-    end
+    -- if bodyDamageCancel:GetBool() and cancelmults[hitGroup] then
+    --     dmgbodymult = dmgbodymult / cancelmults[hitGroup]
+    -- end
 
     dmgv = dmgv * dmgbodymult
-
+    -- print(dmg, "bodydamage = ",bodydamage,"dmgbodymult = ", dmgbodymult,"hitGroup = ", hitGroup, "dmgv = ", dmgv)
     if hitGroup == HITGROUP_HEAD then
         dmgv = dmgv * self:GetProcessedValue("HeadshotDamage")
     elseif hitGroup == HITGROUP_CHEST then
