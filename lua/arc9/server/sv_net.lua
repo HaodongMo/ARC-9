@@ -50,8 +50,9 @@ net.Receive("arc9_randomizeatts", function(len, ply)
     wpn.NextRandomize = CurTime() + 0.055
 
     wpn:QueueForRandomize()
-    timer.Simple(0.15, function() 
+    timer.Simple(0.1, function() 
         if IsValid(wpn) then
+            wpn:PruneAttachments()
             wpn:PostModify()
             -- wpn:SendWeapon()
         end
