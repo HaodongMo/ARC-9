@@ -707,13 +707,13 @@ L["settings.tabname.caching"] = "Asset Caching"
 L["settings.caching.title"] = "Asset Caching"
 L["settings.caching.desc"] = "You can cache some ARC9 assets (save in memory without loading while playing) to prevent stutters for comfort gameplay!\n\nYou surely should enable some stuff if your gmod running on HDD."
 
-L["settings.caching.precache_sounds_onfirsttake.title"] = "On first take: Cache gun sounds"
+L["settings.caching.precache_sounds_onfirsttake.title"] = "On first equip: Cache gun sounds"
 L["settings.caching.precache_sounds_onfirsttake.desc"] = "Caches all sounds only from gun you just took in hands (except reload sounds).\n\nNot any impactful, rather helpful to prevent stutters while firing."
 
-L["settings.caching.precache_attsmodels_onfirsttake.title"] = "On first take: Cache all attachments"
-L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Caches all ARC9 attachments models when any ARC9 weapon was taken in hands.\n\nCauses pretty big freeze, especially when you have lots of weapons."
-L["settings.caching.precache_wepmodels_onfirsttake.title"] = "On first take: Cache all weapon models"
-L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Caches all ARC9 weapons viewmodels when any ARC9 weapon was taken in hands.\n\nCauses REALLY BIG freeze, especially when you have lots of weapons."
+L["settings.caching.precache_attsmodels_onfirsttake.title"] = "On first equip: Cache all attachments"
+L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Caches all ARC9 attachments models when any ARC9 weapon was first equipped.\n\nCauses pretty big freeze, especially when you have lots of weapons."
+L["settings.caching.precache_wepmodels_onfirsttake.title"] = "On first equip: Cache all weapon models"
+L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Caches all ARC9 weapons viewmodels when any ARC9 weapon was first equipped.\n\nCauses REALLY BIG freeze, especially when you have lots of weapons."
 
 L["settings.caching.precache_allsounds_onstartup.title"] = "On game start: Cache all guns sounds"
 L["settings.caching.precache_allsounds_onstartup.desc"] = "Caches all sounds from all guns on server start-up. (except reload sounds).\n\nNot so impactful, but anyway you better use first option here."
