@@ -425,7 +425,9 @@ function SWEP:DoVisualRecoil()
             local midrft = math.min(lastrft, RealFrameTime()) -- prevent stutters
             local awfulnumber = (220 - math.Clamp(1/midrft, 60, 220))
             awfulnumber = math.Clamp(awfulnumber * awfulnumber * awfulnumber * 0.00000035 + 0.7, 0.5, 2.15) -- Cubic
-            
+
+            if !game.SinglePlayer() then awfulnumber = 1.2 end
+
             fake = fake * awfulnumber
 
             lastrft = RealFrameTime()
