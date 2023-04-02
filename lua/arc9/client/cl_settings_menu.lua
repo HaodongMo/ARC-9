@@ -359,6 +359,7 @@ local function DrawSettings(bg, page)
 
     local buttontalling = 0
     local activedesc = ""
+    local activecvar = ""
 
     local sheet = vgui.Create("ARC9ColumnSheet", bg)
     sheet:Dock(FILL)
@@ -394,6 +395,7 @@ local function DrawSettings(bg, page)
 
                 if self2:IsHovered() and activedesc != (ARC9:GetPhrase(v2.desc) or v2.desc or "") then
                     activedesc = (ARC9:GetPhrase(v2.desc) or v2.desc or "")
+                    activecvar = v2.convar and ("arc9_" .. v2.convar) or ""
                     if bg.desc then bg.desc:Remove() end
 
                     local desc = vgui.Create("ARC9ScrollPanel", bg)
@@ -573,6 +575,14 @@ local function DrawSettings(bg, page)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.SetTextPos(w-ARC9ScreenScale(96), ARC9ScreenScale(26))
         surface.DrawText(activedesc != "" and ARC9:GetPhrase("settings.desc") or "") -- no title if no desc
+        
+        if activecvar != "" then
+            local freshcvar = activecvar .. " " .. (GetConVar(activecvar):GetString() or "")
+            local tw = surface.GetTextSize(freshcvar)
+            surface.SetTextColor(ARC9.GetHUDColor("hint"))
+            surface.SetTextPos(w-ARC9ScreenScale(49)-tw/2, h-ARC9ScreenScale(16))
+            surface.DrawText(freshcvar)
+        end
 
         surface.SetFont("ARC9_16")
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
