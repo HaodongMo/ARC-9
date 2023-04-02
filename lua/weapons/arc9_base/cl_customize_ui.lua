@@ -843,6 +843,19 @@ function SWEP:CreateCustomizeHUD()
                     surface.SetTextPos(boneposX, boneposY)
                     surface.DrawText(slot.Bone)
                 else
+                    if ms_slot.SubAttachments then
+                        local isparenttosomething = false
+
+                        for _, p in ipairs(ms_slot.SubAttachments) do
+                            if p.Installed then isparenttosomething = true end
+                        end
+
+                        if isparenttosomething then 
+                            s = s * 0.6 
+                            col = ARC9.GetHUDColor("hi", 75)
+                        end
+                    end
+
                     x, y = x-s/2, y-s/2
 
                     surface.SetMaterial(mat_3dslot)
