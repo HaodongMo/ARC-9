@@ -577,7 +577,14 @@ local function DrawSettings(bg, page)
         surface.DrawText(activedesc != "" and ARC9:GetPhrase("settings.desc") or "") -- no title if no desc
         
         if activecvar != "" then
-            local freshcvar = activecvar .. " " .. (GetConVar(activecvar):GetString() or "")
+            local freshcvar = ""
+
+            if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then 
+                freshcvar = activecvar .. "_r/_g/_b" .. (GetConVar(activecvar .. "_a") and "_a" or "")
+            else
+                freshcvar = activecvar .. " " .. (GetConVar(activecvar):GetString() or "")
+            end
+
             local tw = surface.GetTextSize(freshcvar)
             surface.SetTextColor(ARC9.GetHUDColor("hint"))
             surface.SetTextPos(w-ARC9ScreenScale(49)-tw/2, h-ARC9ScreenScale(16))
