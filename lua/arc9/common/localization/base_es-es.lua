@@ -691,3 +691,29 @@ L["settings.gameplay.togglebreath.desc"] = "Al pulsar la tecla Contener la respi
 L["customize.presets.deldef"] = "¿Estás seguro de que quieres borrar \"{name}\" preajuste por defecto?"
 L["customize.presets.deldef2"] = "Tendrías que resetear arma en ajustes de desarrollador para devolverla."
 L["customize.presets.yes"] = "Si"
+
+
+-- april 2 
+
+L["settings.tabname.caching"] = "Almacenamiento en caché"
+L["settings.caching.title"] = "Almacenamiento en caché"
+L["settings.caching.desc"] = "¡Puede almacenar en caché algunos recursos ARC9 (guardarlos en memoria sin cargarlos mientras juega) para evitar tartamudeos y disfrutar de un juego más cómodo!\n\nSeguramente deberías habilitar algunas cosas si tu gmod funciona en HDD."
+
+L["settings.caching.precache_sounds_onfirsttake.title"] = "Al equipar por primera vez: Almacena todos los sonidos de arma"
+L["settings.caching.precache_sounds_onfirsttake.desc"] = "Almacena todos los sonidos del arma que acabas de recoger (excepto los sonidos de recarga).\n\nNo es nada impactante, más bien ayuda a evitar tartamudeos al disparar."
+
+L["settings.caching.precache_attsmodels_onfirsttake.title"] = "Al equipar por primera vez: Almacena todos los accesorios"
+L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Almacena todos los modelos de accesorios ARC9 cuando cualquier arma ARC9 fue equipada por primera vez.\n\nCausa un gran congelamiento, especialmente cuando tienes muchas armas."
+L["settings.caching.precache_wepmodels_onfirsttake.title"] = "Al equipar por primera vez: Almacena todos los modelos de armas"
+L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Almacena en caché todos los modelos de armas ARC9 cuando cualquier arma ARC9 se equipa por primera vez.\n\nCausa GRAN congelación, especialmente cuando tienes muchas armas."
+
+L["settings.caching.precache_allsounds_onstartup.title"] = "Al inicio del juego: Almacena todos los sonidos de las armas"
+L["settings.caching.precache_allsounds_onstartup.desc"] = "Almacena en caché todos los sonidos de todas las armas al iniciar el servidor. (excepto los sonidos de recarga).\n\nNo es tan impactante, pero de todos modos es mejor utilizar la primera opción aquí."
+L["settings.caching.precache_attsmodels_onstartup.title"] = "Al inicio del juego: Almacena todos los accesorios"
+L["settings.caching.precache_attsmodels_onstartup.desc"] = "Almacena en caché todos los modelos de accesorios ARC9 al iniciar el servidor.\n\nProvoca un aumento bastante grande del tiempo de carga, especialmente cuando tienes muchas armas."
+L["settings.caching.precache_wepmodels_onstartup.title"] = "Al inicio del juego: Almacena todos los modelos de armas"
+L["settings.caching.precache_wepmodels_onstartup.desc"] = "Almacena en caché todos los modelos de armas ARC9 al iniciar el servidor.\n\nProvoca un aumento REALMENTE GRANDE del tiempo de carga, especialmente cuando tienes muchas armas."
+L["settings.caching.precache_allsounds.title"] = "Todos los sonidos de armas"
+L["settings.caching.precache_wepmodels.title"] = "Todos los modelos de armas"
+L["settings.caching.precache_attsmodels.title"] = "Todos los modelos de accesorios"
+L["settings.developer.cache"] = "Caché"
