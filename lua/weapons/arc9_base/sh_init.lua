@@ -49,6 +49,16 @@ function SWEP:Initialize()
         self:SetClip1(1)
         self.Primary.DefaultClip = 0
     end
+
+    ARC9.CacheAttsModels()
+
+    if GetConVar("arc9_precache_sounds_onfirsttake"):GetBool() then
+        ARC9.CacheWepSounds(self, self:GetClass())
+    end
+    
+    if GetConVar("arc9_precache_wepmodels_onfirsttake"):GetBool() then
+        ARC9.CacheWeaponsModels()
+    end
 end
 
 function SWEP:ClientInitialize()

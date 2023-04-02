@@ -670,6 +670,36 @@ local conVars = {
         default = "1",
         client = true
     },
+    {
+        name = "precache_sounds_onfirsttake",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "precache_allsounds_onstartup",
+        default = "0",
+        replicated = true
+    },
+    {
+        name = "precache_attsmodels_onfirsttake",
+        default = "0",
+        replicated = true
+    },
+    {
+        name = "precache_attsmodels_onstartup",
+        default = "0",
+        replicated = true
+    },
+    {
+        name = "precache_wepmodels_onfirsttake",
+        default = "0",
+        replicated = true
+    },
+    {
+        name = "precache_wepmodels_onstartup",
+        default = "0",
+        replicated = true
+    },
 }
 
 local prefix = "arc9_"

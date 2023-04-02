@@ -5,6 +5,8 @@ ARC9.Attachments_Count = 0
 
 ARC9.Attachments_Bits = 16
 
+ARC9.ModelToPrecacheList = {}
+
 local defaulticon = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 
 function ARC9.LoadAttachment(atttbl, shortname, id)
@@ -23,6 +25,10 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
     --     local stat2 = string.Replace(stat, "Override", "")
     --     atttbl[stat2] = val
     -- end
+
+    if atttbl.Model then
+        table.insert(ARC9.ModelToPrecacheList, atttbl.Model)
+    end
 
     ARC9.Attachments[shortname] = atttbl
     ARC9.Attachments_Index[atttbl.ID] = shortname
@@ -128,6 +134,10 @@ function ARC9.LoadAtts()
     print("ARC9 Registered " .. tostring(ARC9.Attachments_Count) .. " attachments. (" .. Attachments_LuaCount .. " lua files total, " .. Attachments_BulkCount .. " bulk/" .. Attachments_RegularCount .. " regular)")
 
     ARC9.Attachments_Bits = math.min(math.ceil(math.log(ARC9.Attachments_Count + 1, 2)), 32)
+
+    if SERVER and !ARC9.AttMdlPrecached and GetConVar("arc9_precache_attsmodels"):GetBool() and GetConVar("arc9_precache_attsmodels_onstartup"):GetBool() then
+        ARC9.CacheAttsModels()
+    end
 
     if game.SinglePlayer() then
         if IsValid(Entity(1)) then

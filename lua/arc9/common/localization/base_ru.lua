@@ -655,3 +655,28 @@ L["settings.gameplay.togglebreath.desc"] = "Вместо удерживания 
 L["customize.presets.deldef"] = "Ты точно хочешь удалить стандартный \"{name}\" пресет?"
 L["customize.presets.deldef2"] = "Чтобы его вернуть, тебе придётся сбрасывать данные оружия в настройках разработчика."
 L["customize.presets.yes"] = "Да"
+
+
+-- april 2 
+
+L["settings.tabname.caching"] = "Кэширование"
+L["settings.caching.title"] = "Кэширование ассетов"
+L["settings.caching.desc"] = "Вы можете кэшировать (сохранять в память без подгрузок во время) некоторые ассеты для предотвращения статтеров для более комфортной игры!\n\nТебе точно стоит включить что-нибудь если твой гмод установлен на жестком диске."
+
+L["settings.caching.precache_sounds_onfirsttake.title"] = "При первом взятии: Кэшировать звуки"
+L["settings.caching.precache_sounds_onfirsttake.desc"] = "Кэшировать звуки оружия которое вы только что подобрали (кроме звуков перезарядок).\n\nНе особо влияет на производительность, однако крайне полезно для предотвращения статтеров во время стрельбы."
+L["settings.caching.precache_attsmodels_onfirsttake.title"] = "При первом взятии: Кэш. все обвесы"
+L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Кэшировать все модельки ARC9 обвесов когда любая ARC9 пушка была взята в руки.\n\nВызывает достаточно большой фриз, особенно когда у вас установлено много оружия."
+L["settings.caching.precache_wepmodels_onfirsttake.title"] = "При первом взятии: Кэш. все модели оружия"
+L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Кэшировать все вьюмодели оружия ARC9 когда любая ARC9 пушка была взята в руки.\n\nВызывает ОЧЕНЬ БОЛЬШОЙ фриз, особенно когда у вас установлено много оружия."
+
+L["settings.caching.precache_allsounds_onstartup.title"] = "При старте игры: Кэш. все звуки оружия"
+L["settings.caching.precache_allsounds_onstartup.desc"] = "Кэшировать все звуки всего ARC9 оружия при старте сервера (кроме звуков перезарядок).\n\nНе особо влияет на производительность, но лучше просто использовать первую опцию здесь."
+L["settings.caching.precache_attsmodels_onstartup.title"] = "При старте игры: Кэш. все обвесы"
+L["settings.caching.precache_attsmodels_onstartup.desc"] = "Кэшировать все модельки ARC9 обвесов при старте сервера.\n\nДелает загрузку в игру немного дольше, особенно когда у вас установлено много оружия."
+L["settings.caching.precache_wepmodels_onstartup.title"] = "При старте игры: Кэш. все модели оружия"
+L["settings.caching.precache_wepmodels_onstartup.desc"] = "Кэшировать все вьюмодели оружия ARC9 при старте сервера.\n\nДелает загрузку в игру НАМНОГО дольше, особенно когда у вас установлено много оружия."
+L["settings.caching.precache_allsounds.title"] = "Все звуки оружия"
+L["settings.caching.precache_wepmodels.title"] = "Все модели оружия"
+L["settings.caching.precache_attsmodels.title"] = "Все модели обвесы"
+L["settings.developer.cache"] = "Кэшировать"

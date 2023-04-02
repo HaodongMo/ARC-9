@@ -391,8 +391,8 @@ L["settings.hud_game.breath_sfx.desc"] = "Holding bweath will play associated so
 
 L["settings.npc.npc_equality.title"] = "Damage Equality"
 L["settings.npc.npc_equality.desc"] = "NPCs do just as much damage as playews do.\n\ndis is a sewvew wawiableh"
-L["settings.npc.npc_atts.title"] = "Give Attachments"
-L["settings.npc.npc_atts.desc"] = "Spawned ow given AwC9 weapons weceive a wandom set of attachments.\n\ndis is a sewvew wawiableh"
+L["settings.npc.npc_atts.title"] = "Give awatachmenws"
+L["settings.npc.npc_atts.desc"] = "Spawned ow given AwC9 weapons weceive a wandom set of awatachmenws.\n\ndis is a sewvew wawiableh"
 L["settings.npc.npc_autoreplace.title"] = "Weplace NPC UWeapons"
 L["settings.npc.npc_autoreplace.desc"] = "Weplace NPC weapons with wandomly chosen AwC9 weapons.\n\ndis is a sewvew wawiableh"
 L["settings.npc.replace_spawned.title"] = "Weplace Gwound Weapons"
@@ -459,18 +459,18 @@ L["settings.bullets.bullet_imaginary.desc"] = "Bullets will appeaw to twavel int
 
 L["settings.attachments.atts_nocustomize.title"] = "Diawawable Customization"
 L["settings.attachments.atts_nocustomize.desc"] = "Disallow all customization via de customization menu.\n\ndis is a sewwew wawiableh"
-L["settings.attachments.atts_max.title"] = "Max Attachments"
-L["settings.attachments.atts_max.desc"] = "de maximum numbew of attachments that can be put on a weapon, including cosmetic attachments.\n\ndis is a sewwew wawiableh"
+L["settings.attachments.atts_max.title"] = "Max awatachmenws"
+L["settings.attachments.atts_max.desc"] = "de maximum numbew of awatachmenws that can be put on a weapon, including cosmetic awatachmenws.\n\ndis is a sewwew wawiableh"
 L["settings.attachments.autosave.title"] = "Autosave"
 L["settings.attachments.autosave.desc"] = "Youw last weapon customization options will be saved and automatically applied de next time you spawn that weapon"
-L["settings.attachments.free_atts.title"] = "Fwee Attachments"
-L["settings.attachments.free_atts.desc"] = "Attachments can be used without being picked up fiwst.\n\ndis is a sewwew wawiableh"
+L["settings.attachments.free_atts.title"] = "Fwee awatachmenws"
+L["settings.attachments.free_atts.desc"] = "Awatachmenws can be used without being picked up fiwst.\n\ndis is a sewwew wawiableh"
 L["settings.attachments.atts_lock.title"] = "One Fow All"
-L["settings.attachments.atts_lock.desc"] = "Picking up one instance of an attachments allows you to use it infinite times on all youw guns.\n\ndis is a sewwew wawiableh"
+L["settings.attachments.atts_lock.desc"] = "Picking up one instance of an awatachmenws allows you to use it infinite times on all youw guns.\n\ndis is a sewwew wawiableh"
 L["settings.attachments.atts_loseondie.title"] = "Lose On Death"
 L["settings.attachments.atts_loseondie.desc"] = "Youw attachment inventowy will be lost when you die.\n\ndis is a sewwew wawiableh"
 L["settings.attachments.atts_generateentities.title"] = "Genewate Entities"
-L["settings.attachments.atts_generateentities.desc"] = "Genewate entities that can be spawned, allowing you to pick up attachments when fwee attachments is off.\n\nMight incwease load time.\n\ndis is a sewwew wawiableh"
+L["settings.attachments.atts_generateentities.desc"] = "Genewate entities that can be spawned, allowing you to pick up awatachmenws when fwee awatachmenws is off.\n\nMight incwease load time.\n\ndis is a sewwew wawiableh"
 
 
 L["settings.modifiers.quick.title"] = "Quick Stats Modifiews"
@@ -497,12 +497,12 @@ L["settings.developer.dev_show_shield.desc"] = "Showo de model fow de playew's s
 L["settings.developer.print"] = "Pwint to Console"
 L["settings.developer.reload"] = "W-weload"
 
-L["settings.developer.reloadatts.title"] = "Weload Attachments"
+L["settings.developer.reloadatts.title"] = "Weload awatachmenws"
 L["settings.developer.reloadlangs.title"] = "Weload Languages"
 L["settings.developer.dev_listanims.title"] = "List Anims"
 L["settings.developer.dev_listbones.title"] = "List Bones"
 L["settings.developer.dev_listbgs.title"] = "List Bodygwoups"
-L["settings.developer.dev_listatts.title"] = "List QCAttachments"
+L["settings.developer.dev_listatts.title"] = "List QCawatachmenws"
 L["settings.developer.dev_export.title"] = "Get ExpoWt Code"
 L["settings.developer.dev_getjson.title"] = "Get Weapon JSON"
 
@@ -639,7 +639,7 @@ L["settings.truenames_enforced.desc"] = "Set to fowce all playews to use de sewv
 
 -- Added 17-MAR-2023
 
-L["settings.developer.dev_listmyatts.title"] = "List My Attachments"
+L["settings.developer.dev_listmyatts.title"] = "List My awatachmenws"
 
 L["customize.stats.explain.firepower"] = "de dawage powotential at powoint-bwank wange"
 L["customize.stats.explain.rof"] = "de guns wate of fiwe ^w^"
@@ -699,3 +699,29 @@ L["settings.gameplay.togglebreath.desc"] = "Pwessing de Holding Bweath key will 
 L["customize.presets.deldef"] = "Awee yyu suwe yu wawt two dewete \"{name}\" dewaauwt pwesew? owo"
 L["customize.presets.deldef2"] = "Youw woulwd hawe to weset uwuweapon in dewelopew sewtings two weturn it >~<"
 L["customize.presets.yes"] = "MEOW !"
+
+
+-- april 2 
+
+L["settings.tabname.caching"] = "Awwet Cashwing :3"
+L["settings.caching.title"] = "Awwet Cawwing uwu"
+L["settings.caching.desc"] = "Youw can cawhe some AWC9 awwets (sawe in memowy wwidout woading wwile plawing owo) to pwewent stuttews fow comwowt gameplay uwu\n\nYwou suwely shouwd enable some stuww iw youw gmod wunning on HDD :3"
+
+L["settings.caching.precache_sounds_onfirsttake.title"] = "On fiwst take: Cawhe gun sounds"
+L["settings.caching.precache_sounds_onfirsttake.desc"] = "Cawhes aww sounds only fwom gun you just took in hands (excewt weload sounds owo \n\nNow any impactwul, wadew helpful to pwevent stuttews while fiwing owo"
+
+L["settings.caching.precache_attsmodels_onfirsttake.title"] = "On fiwst take: Cawhe aww awatachmenws"
+L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Cawhes aww AWC9 awatachmenws models when any AWC9 uwuweapon was taken in hands uwu\n\nCauses pwetty big fweeze uwu especiawwy when you have lots of wweapons"
+L["settings.caching.precache_wepmodels_onfirsttake.title"] = "On fiwst take: Cawhe aww wweapon models"
+L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Cawhes aww AWC9 uwuweapon viewmodels when any AWC9 uwuweapon was taken in hands owo\n\nCauses w-WEALLY BIG fweeze uwu especiawwy when you have lots of wwwweapons"
+
+L["settings.caching.precache_allsounds_onstartup.title"] = "On game stawt: Cawhe aww guns sounds"
+L["settings.caching.precache_allsounds_onstartup.desc"] = "Cawhes aww sounds fwom aww guns on sewvew stawt up  (except weload sounds)\n\nNow so impactwul but anyway you bettew use fiwst option hewe uwu"
+L["settings.caching.precache_attsmodels_onstartup.title"] = "On game stawt: Cawhe aww awatachmenws"
+L["settings.caching.precache_attsmodels_onstartup.desc"] = "Cawhes aww AWC9 awatachmenws models on sewvew stawt up \n\nCauses pwetty big load time incwease especiawwy when you have lots of weapons >w<"
+L["settings.caching.precache_wepmodels_onstartup.title"] = "On game stawt: Cawhe aww weapon models"
+L["settings.caching.precache_wepmodels_onstartup.desc"] = "Cawhes aww AWC9 uwuweapons viewmodels on sewvew stawt up \n\nCauses wW-WEALLY BIG load time incwease especiawwy when you have lots of weapons awoo"
+L["settings.caching.precache_allsounds.title"] = "Aww uwuweapon sounds"
+L["settings.caching.precache_wepmodels.title"] = "Aww uwuweapon models"
+L["settings.caching.precache_attsmodels.title"] = "Aww awtachmenws models"
+L["settings.developer.cache"] = "Cawhe"

@@ -290,6 +290,26 @@ local settingstable = {
         -- end},
     },
     {
+        TabName = "settings.tabname.caching",
+        { type = "label", text = "settings.caching.title", desc = "settings.caching.desc" },
+        { type = "bool", text = "settings.caching.precache_sounds_onfirsttake.title", convar = "precache_sounds_onfirsttake", desc = "settings.caching.precache_sounds_onfirsttake.desc"},
+        { type = "bool", text = "settings.caching.precache_attsmodels_onfirsttake.title", convar = "precache_attsmodels_onfirsttake", desc = "settings.caching.precache_attsmodels_onfirsttake.desc"},
+        { type = "bool", text = "settings.caching.precache_wepmodels_onfirsttake.title", convar = "precache_wepmodels_onfirsttake", desc = "settings.caching.precache_wepmodels_onfirsttake.desc"},
+        { type = "bool", text = "settings.caching.precache_allsounds_onstartup.title", convar = "precache_allsounds_onstartup", desc = "settings.caching.precache_allsounds_onstartup.desc"},
+        { type = "bool", text = "settings.caching.precache_attsmodels_onstartup.title", convar = "precache_attsmodels_onstartup", desc = "settings.caching.precache_attsmodels_onstartup.desc"},
+        { type = "bool", text = "settings.caching.precache_wepmodels_onstartup.title", convar = "precache_wepmodels_onstartup", desc = "settings.caching.precache_wepmodels_onstartup.desc"},
+
+        { type = "button", text = "settings.caching.precache_allsounds.title", content = "settings.developer.cache", func = function(self2)
+            RunConsoleCommand("arc9_precache_allsounds")
+        end},
+        { type = "button", text = "settings.caching.precache_attsmodels.title", content = "settings.developer.cache", func = function(self2)
+            RunConsoleCommand("arc9_precache_attsmodels")
+        end},
+        { type = "button", text = "settings.caching.precache_wepmodels.title", content = "settings.developer.cache", func = function(self2)
+            RunConsoleCommand("arc9_precache_wepmodels")
+        end},
+    },
+    {
         TabName = "settings.tabname.developer",
         sv = true,
         { type = "label", text = "settings.developer.developer"},
