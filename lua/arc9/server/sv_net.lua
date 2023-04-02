@@ -49,5 +49,11 @@ net.Receive("arc9_randomizeatts", function(len, ply)
     if wpn.NextRandomize and wpn.NextRandomize > CurTime() then return end
     wpn.NextRandomize = CurTime() + 0.055
 
-    wpn:NPC_Initialize()
+    wpn:QueueForRandomize()
+    timer.Simple(0.15, function() 
+        if IsValid(wpn) then
+            wpn:PostModify()
+            -- wpn:SendWeapon()
+        end
+    end)
 end)

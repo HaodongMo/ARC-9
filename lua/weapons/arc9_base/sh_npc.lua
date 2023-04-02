@@ -137,6 +137,7 @@ function SWEP:RollRandomAtts(tree)
         local atttbl = ARC9.GetAttTable(att)
 
         if !atttbl then continue end
+        if atttbl.Ignore or slottbl.Hidden then continue end
 
         slottbl.Installed = att
 

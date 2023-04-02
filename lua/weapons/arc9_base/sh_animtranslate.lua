@@ -159,7 +159,7 @@ function SWEP:AddProxyToAnimProxyTable(tbl, model, atttbl, address)
         if !self.IKAnimationProxy[anim] then
             self.IKAnimationProxy[anim] = newanimtable
         else
-            if tbl.Priority > self.IKAnimationProxy[anim].Priority then
+            if (tbl.Priority or 0) > self.IKAnimationProxy[anim].Priority then
                 self.IKAnimationProxy[anim] = newanimtable
             else
                 continue
