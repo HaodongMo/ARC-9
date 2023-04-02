@@ -135,10 +135,6 @@ function ARC9.LoadAtts()
 
     ARC9.Attachments_Bits = math.min(math.ceil(math.log(ARC9.Attachments_Count + 1, 2)), 32)
 
-    if SERVER and !ARC9.AttMdlPrecached and GetConVar("arc9_precache_attsmodels"):GetBool() and GetConVar("arc9_precache_attsmodels_onstartup"):GetBool() then
-        ARC9.CacheAttsModels()
-    end
-
     if game.SinglePlayer() then
         if IsValid(Entity(1)) then
             local wep = Entity(1):GetActiveWeapon()

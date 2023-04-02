@@ -141,6 +141,10 @@ timer.Simple(1, function()
         if GetConVar("arc9_precache_wepmodels_onstartup"):GetBool() then
             ARC9.CacheWeaponsModels()
         end
+        
+        if GetConVar("arc9_precache_attsmodels_onstartup"):GetBool() then
+            ARC9.CacheAttsModels()
+        end
     end
 
     if GetConVar("arc9_precache_allsounds_onstartup"):GetBool() then
