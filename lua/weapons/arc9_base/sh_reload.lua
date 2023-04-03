@@ -31,14 +31,15 @@ function SWEP:Reload()
 
     local clip = self:Clip1()
     local ammo = self:Ammo1()
+    local getUBGL = self:GetUBGL()
 
-    if self:GetUBGL() then
+    if getUBGL then
         clip = self:Clip2()
         ammo = self:Ammo2()
     end
 
     if !self:GetProcessedValue("BottomlessClip") then
-        if clip >= self:GetCapacity(self:GetUBGL()) then return end
+        if clip >= self:GetCapacity(getUBGL) then return end
 
         if !self:GetInfiniteAmmo() and ammo <= 0 then
             return
@@ -67,26 +68,27 @@ function SWEP:Reload()
 
     local anim = "reload"
 
-    if self:GetUBGL() then
+    if getUBGL then
         anim = "reload_ubgl"
     end
 
     if self:GetShouldShotgunReload() then
         anim = "reload_start"
 
-        if self:GetUBGL() then
+        if getUBGL then
             anim = "reload_ubgl_start"
         end
 
-        local nanim = anim
+        local anim2
 
-        for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
-            if self:HasAnimation(anim .. "_" .. tostring(i)) then
-                nanim = anim .. "_" .. tostring(i)
+        for i = 1, self:GetCapacity(getUBGL) - clip do
+            anim2 = anim .. "_" .. tostring(i)
+
+            if self:HasAnimation(anim2) then
+                anim = anim2
+                break
             end
         end
-
-        anim = nanim
     end
 
     if !self:GetProcessedValue("ReloadInSights") then
@@ -102,7 +104,7 @@ function SWEP:Reload()
         minprogress = math.min(minprogress, 0.95)
 
         if !self:GetAnimationEntry(self:TranslateAnimation(anim)).RestoreAmmo then
-            if self:GetUBGL() then
+            if getUBGL then
                 self:SetTimer(t * minprogress, function()
                     self:RestoreClip(self:GetValue("UBGLClipSize"))
                 end, "reloadtimer")
@@ -115,7 +117,7 @@ function SWEP:Reload()
 
         local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.5
 
-        if !self:GetUBGL() then
+        if !getUBGL then
             if !self:GetAnimationEntry(self:TranslateAnimation(anim)).NoMagSwap then
                 self:SetTimer(self:GetProcessedValue("ReloadTime") * newcliptime, function()
                     local ammo1 = self:Ammo1()
@@ -350,15 +352,16 @@ function SWEP:GetShouldShotgunReload()
 end
 
 function SWEP:GetInfiniteAmmo()
-    return self:GetProcessedValue("InfiniteAmmo") or GetConVar("arc9_infinite_ammo"):GetBool()
+    return GetConVar("arc9_infinite_ammo"):GetBool() or self:GetProcessedValue("InfiniteAmmo")
 end
 
 function SWEP:EndReload()
     if self:GetShouldShotgunReload() then
         local clip = self:Clip1()
         local ammo = self:Ammo1()
+        local getUBGL = self:GetUBGL()
 
-        if self:GetUBGL() then
+        if getUBGL then
             clip = self:Clip2()
             ammo = self:Ammo2()
         end
@@ -367,13 +370,15 @@ function SWEP:EndReload()
             ammo = math.huge
         end
 
-        local capacity = self:GetProcessedValue("ClipSize")
+        local capacity
 
-        if self:GetUBGL() then
+        if getUBGL then
             capacity = self:GetProcessedValue("UBGLClipSize")
+        else
+            capacity = self:GetProcessedValue("ClipSize")
         end
 
-        if self:GetUBGL() then
+        if getUBGL then
             if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber") then
                 capacity = capacity + self:GetProcessedValue("UBGLChamberSize")
             end
@@ -387,19 +392,20 @@ function SWEP:EndReload()
             -- finish
             local anim = "reload_finish"
 
-            if self:GetUBGL() then
+            if getUBGL then
                 anim = "reload_ubgl_finish"
             end
 
-            local canim = anim
+            local anim2
 
-            for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
-                if self:HasAnimation(anim .. "_" .. tostring(i)) then
-                    canim = anim .. "_" .. tostring(i)
+            for i = 1, self:GetCapacity(getUBGL) - clip do
+                anim2 = anim .. "_" .. tostring(i)
+
+                if self:HasAnimation(anim2) then
+                    anim = anim2
+                    break
                 end
             end
-
-            anim = canim
 
             self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", 1), true)
             self:SetReloading(false)
@@ -413,28 +419,33 @@ function SWEP:EndReload()
             self:SetEmptyReload(false)
         else
             local anim = "reload_insert"
-            if self:GetUBGL() then
+            if getUBGL then
                 anim = "reload_ubgl_insert"
             end
+
             local attempt_to_restore = 1
-
-            local banim = anim
-
+            local anim2
             local end_clipsize = self:Clip1()
 
-            for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
-                if self:HasAnimation(anim .. "_" .. tostring(i)) then
-                    banim = anim .. "_" .. tostring(i)
+            for i = 1, self:GetCapacity(getUBGL) - clip do
+                anim2 = anim .. "_" .. tostring(i)
+
+                if self:HasAnimation(anim2) then
+                    anim = anim2
                     attempt_to_restore = i
-                elseif self:HasAnimation(anim .. "_bullet_" .. tostring(i)) then
-                    banim = anim .. "_bullet_" .. tostring(i)
-                    attempt_to_restore = 1
+                    break
+                else
+                    anim2 = anim .. "_bullet_" .. tostring(i)
+
+                    if self:HasAnimation(anim2) then
+                        anim = anim2
+                        attempt_to_restore = 1
+                        break
+                    end
                 end
             end
 
             end_clipsize = end_clipsize + attempt_to_restore
-
-            anim = banim
 
             local minprogress = (self:GetAnimationEntry(anim) or {}).MinProgress or 0.75
             minprogress = math.min(minprogress, 0.99)
@@ -495,22 +506,19 @@ end
 function SWEP:GetLoadedClip()
     local clip = self:Clip1()
     local ammo = self:Ammo1()
-    local ammo2 = self:Ammo2()
 
     if self:GetInfiniteAmmo() then
         ammo = math.huge
-    end
-
-    if self:GetProcessedValue("BottomlessClip") then
-        clip = ammo
     end
 
     if self:GetUBGL() then
         clip = self:Clip2()
 
         if self:GetProcessedValue("BottomlessClip") then
-            clip = ammo2
+            clip = self:Ammo2()
         end
+    elseif self:GetProcessedValue("BottomlessClip") then
+        clip = ammo
     end
 
     return clip
