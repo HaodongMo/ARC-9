@@ -709,3 +709,8 @@ L["settings.caching.precache_allsounds.title"] = "Alla vapenljud"
 L["settings.caching.precache_wepmodels.title"] = "Alla vapenmodeller"
 L["settings.caching.precache_attsmodels.title"] = "Alla tillbehör modeller"
 L["settings.developer.cache"] = "Cache"
+
+-- april 3
+
+L["settings.gameplay.togglepeek_reset.title"] = "Återställ Kikande Status Efter Sikte"
+L["settings.gameplay.togglepeek_reset.desc"] = "(Endast om Växla Kikande är på)\nKik-status kommer inte behållas efter du går ur siktet."
