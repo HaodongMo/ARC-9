@@ -716,7 +716,7 @@ L["settings.caching.precache_wepmodels_onstartup.desc"] = "Almacena en caché to
 L["settings.caching.precache_allsounds.title"] = "Todos los sonidos de armas"
 L["settings.caching.precache_wepmodels.title"] = "Todos los modelos de armas"
 L["settings.caching.precache_attsmodels.title"] = "Todos los modelos de accesorios"
-L["settings.developer.cache"] = "Caché"
+L["settings.developer.cache"] = "Almacenar Caché"
 
 -- april 3
 
