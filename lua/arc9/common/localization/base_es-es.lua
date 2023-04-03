@@ -717,3 +717,8 @@ L["settings.caching.precache_allsounds.title"] = "Todos los sonidos de armas"
 L["settings.caching.precache_wepmodels.title"] = "Todos los modelos de armas"
 L["settings.caching.precache_attsmodels.title"] = "Todos los modelos de accesorios"
 L["settings.developer.cache"] = "Caché"
+
+-- april 3
+
+L["settings.gameplay.togglepeek_reset.title"] = "Restablecer estado de Vistazo después de apuntar"
+L["settings.gameplay.togglepeek_reset.desc"] = "(Sólo si Alternar Peek está activado)\nEl estado de vistazo no se conservará al salir de las miras de puntería."
