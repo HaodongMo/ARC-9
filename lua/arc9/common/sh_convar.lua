@@ -700,6 +700,11 @@ local conVars = {
         default = "0",
         replicated = true
     },
+    {
+        name = "togglepeek_reset",
+        default = "0",
+        client = true,
+    },
 }
 
 local prefix = "arc9_"

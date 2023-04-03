@@ -725,3 +725,9 @@ L["settings.caching.precache_allsounds.title"] = "Aww uwuweapon sounds"
 L["settings.caching.precache_wepmodels.title"] = "Aww uwuweapon models"
 L["settings.caching.precache_attsmodels.title"] = "Aww awtachmenws models"
 L["settings.developer.cache"] = "Cawhe"
+
+
+-- april 3
+
+L["settings.gameplay.togglepeek_reset.title"] = "Weset pewek stawte awter awaiming"
+L["settings.gameplay.togglepeek_reset.desc"] = "(owly if Towgle Pewek is on owo)\npeeeek state w-wil notw be wetaiwed wwen ewiting awaim dowon siwts uwu"

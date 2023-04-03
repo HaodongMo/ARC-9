@@ -189,6 +189,7 @@ local settingstable = {
         { type = "bool", text = "settings.gameplay.autoreload.title", convar = "autoreload", desc = "settings.gameplay.autoreload.desc" },
         { type = "bool", text = "settings.gameplay.togglelean.title", convar = "togglelean", desc = "settings.gameplay.togglelean.desc" },
         { type = "bool", text = "settings.gameplay.togglepeek.title", convar = "togglepeek", desc = "settings.gameplay.togglepeek.desc" },
+        { type = "bool", text = "settings.gameplay.togglepeek_reset.title", convar = "togglepeek_reset", desc = "settings.gameplay.togglepeek_reset.desc" },
         { type = "bool", text = "settings.gameplay.togglebreath.title", convar = "togglebreath", desc = "settings.gameplay.togglebreath.desc" },
 
         { sv = true, type = "label", text = "settings.gameplay.mechanics" },

@@ -680,3 +680,9 @@ L["settings.caching.precache_allsounds.title"] = "Все звуки оружия
 L["settings.caching.precache_wepmodels.title"] = "Все модели оружия"
 L["settings.caching.precache_attsmodels.title"] = "Все модели обвесы"
 L["settings.developer.cache"] = "Кэшировать"
+
+
+-- april 3
+
+L["settings.gameplay.togglepeek_reset.title"] = "Сброс выглядывания после прицел."
+L["settings.gameplay.togglepeek_reset.desc"] = "(Только если Выглядывание по нажатию включено)\nСостояние выглядывения будет сброшено после выхода из прицела."

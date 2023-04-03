@@ -725,3 +725,8 @@ L["settings.caching.precache_allsounds.title"] = "All weapon sounds"
 L["settings.caching.precache_wepmodels.title"] = "All weapon models"
 L["settings.caching.precache_attsmodels.title"] = "All attachments models"
 L["settings.developer.cache"] = "Cache"
+
+-- april 3
+
+L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek State After Aiming"
+L["settings.gameplay.togglepeek_reset.desc"] = "(Only if Toggle Peek is on)\nPeek state will not be retained when exiting aim down sights."
