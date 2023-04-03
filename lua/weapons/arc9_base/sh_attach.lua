@@ -1,45 +1,38 @@
 function SWEP:Attach(addr, att, silent)
+    local slottbl = self:LocateSlotFromAddress(addr)
+    if (slottbl.Installed == att) then return false end
     if !self:CanAttach(addr, att) then return false end
 
-    local slottbl = self:LocateSlotFromAddress(addr)
-
     self:DetachAllFromSubSlot(addr, true)
-
-    if slottbl.Installed == att then return end
 
     slottbl.Installed = att
     slottbl.ToggleNum = 1
 
     if !silent then
-        local soundtab1 = {
+        self:PlayTranslatedSound({
             name = "install",
             sound = slottbl.InstallSound or "arc9/newui/ui_part_install.ogg"
-        }
-        self:PlayTranslatedSound(soundtab1)
+        })
     end
 
     self:PruneAttachments()
-
     self:PostModify()
 
     return true
 end
 
 function SWEP:Detach(addr, silent)
-    if !self:CanDetach(addr) then return false end
-
     local slottbl = self:LocateSlotFromAddress(addr)
-
-    if !slottbl.Installed then return end
+    if !slottbl.Installed then return false end
+    if !self:CanDetach(addr) then return false end
 
     slottbl.Installed = nil
 
     if !silent then
-        local soundtab1 = {
+        self:PlayTranslatedSound({
             name = "uninstall",
             sound = slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg"
-        }
-        self:PlayTranslatedSound(soundtab1)
+        })
     end
 
     self:PruneAttachments()
@@ -95,7 +88,8 @@ function SWEP:PostModify(toggleonly)
         self:SetNthReload(0)
     end
 
-    local validplayerowner = IsValid(self:GetOwner()) and self:GetOwner():IsPlayer()
+	local client = self:GetOwner()
+    local validplayerowner = IsValid(client) and client:IsPlayer()
 
     local base = baseclass.Get(self:GetClass())
 
@@ -103,11 +97,6 @@ function SWEP:PostModify(toggleonly)
         self.PrintName = base.TrueName
         self.PrintName = self:GetValue("TrueName")
     else
-        self.PrintName = base.PrintName
-        self.PrintName = self:GetValue("PrintName")
-    end
-
-    if !self.PrintName then
         self.PrintName = base.PrintName
         self.PrintName = self:GetValue("PrintName")
     end
@@ -127,8 +116,8 @@ function SWEP:PostModify(toggleonly)
         self.InvalidateSelectIcon = true
     else
         if validplayerowner then
-            if self:GetValue("ToggleOnF") and self:GetOwner():FlashlightIsOn() then
-                self:GetOwner():Flashlight(false)
+            if self:GetValue("ToggleOnF") and client:FlashlightIsOn() then
+                client:Flashlight(false)
             end
 
             if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
@@ -144,49 +133,39 @@ function SWEP:PostModify(toggleonly)
             self.LastAmmo = self:GetValue("Ammo")
             self.LastClipSize = self:GetValue("ClipSize")
 
-            if self.LastUBGLAmmo and self.LastUBGLAmmo != self:GetValue("UBGLAmmo") then
-                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
-                self:SetClip2(0)
-                self:SetRequestReload(true)
-            end
+            if self:GetValue("UBGL") then
+                if !self.AlreadyGaveUBGLAmmo then
+                    self:SetClip2(self:GetMaxClip2())
+                    self.AlreadyGaveUBGLAmmo = true
+                end
 
-            if self.LastUBGLAmmo and self.LastUBGLClipSize != self:GetValue("UBGLClipSize") then
-                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
-                self:SetClip2(0)
-                self:SetRequestReload(true)
-            end
+                if (self.LastUBGLAmmo) then
+                    if (self.LastUBGLAmmo != self:GetValue("UBGLAmmo") or self.LastUBGLClipSize != self:GetValue("UBGLClipSize")) then
+                        client:GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
+                        self:SetClip2(0)
+                        self:SetRequestReload(true)
+                    end
+                end
 
-            self.LastUBGLAmmo = self:GetValue("UBGLAmmo")
-            self.LastUBGLClipSize = self:GetValue("UBGLClipSize")
+                self.LastUBGLAmmo = self:GetValue("UBGLAmmo")
+                self.LastUBGLClipSize = self:GetValue("UBGLClipSize")
+
+                local capacity = self:GetCapacity(true)
+                if capacity > 0 and self:Clip2() > capacity then
+                    client:GiveAmmo(self:Clip2() - capacity, self.LastUBGLAmmo)
+                    self:SetClip2(capacity)
+                end
+            end
 
             local capacity = self:GetCapacity(false)
             if capacity > 0 and self:Clip1() > capacity then
-                self:GetOwner():GiveAmmo(self:Clip1() - capacity, self:GetValue("Ammo"))
+                client:GiveAmmo(self:Clip1() - capacity, self.LastAmmo)
                 self:SetClip1(capacity)
             end
-        end
 
-        if self:GetValue("UBGL") then
-            if !self.AlreadyGaveUBGLAmmo then
-                self:SetClip2(self:GetMaxClip2())
-                self.AlreadyGaveUBGLAmmo = true
+            if self:GetProcessedValue("BottomlessClip") then
+                self:RestoreClip()
             end
-
-            self.LastUBGLAmmo = self:GetProcessedValue("UBGLAmmo")
-
-            if self:GetOwner():IsPlayer() and self:GetCapacity(true) > 0 and self:Clip2() > self:GetCapacity(true) then
-                self:GetOwner():GiveAmmo(self:Clip2() - self:GetCapacity(true), self:GetValue("UBGLAmmo"))
-                self:SetClip2(self:GetCapacity(true))
-            end
-        else
-            if self.LastUBGLAmmo and validplayerowner then
-                self:GetOwner():GiveAmmo(self:Clip2(), self.LastUBGLAmmo)
-                self:SetClip2(0)
-            end
-        end
-
-        if validplayerowner and self:GetProcessedValue("BottomlessClip") then
-            self:RestoreClip()
         end
     end
 
@@ -194,7 +173,7 @@ function SWEP:PostModify(toggleonly)
         self:ToggleUBGL(false)
     end
 
-    if validplayerowner and game.SinglePlayer() then
+    if game.SinglePlayer() and validplayerowner then
         self:CallOnClient("RecalculateIKGunMotionOffset")
     end
 
@@ -474,7 +453,7 @@ function SWEP:GetDependentIntegralSlots(addr, att, slottbl)
 
         -- TODO: Consider domino effect caused by the slot about to be added?
         if affected then
-            table.insert(slots, tbl)
+			slots[#slots + 1] = tbl
         end
     end
 
@@ -482,7 +461,7 @@ function SWEP:GetDependentIntegralSlots(addr, att, slottbl)
     if att then
         for _, slot in ipairs(atttbl.Attachments or {}) do
             if slot.Integral then
-                table.insert(slots, slot)
+				slots[#slots + 1] = slot
             end
         end
     end
