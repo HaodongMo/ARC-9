@@ -255,16 +255,18 @@ function SWEP:Idle()
     if self:GetPrimedAttack() then return end
     if self:GetSafe() then return end
 
-    local anim = "idle"
+    local anim = "idle_"
     local clip = self:Clip1()
-    local banim = anim
+    local anim2
 
     for i = 1, self:GetCapacity(self:GetUBGL()) - clip do
-        if self:HasAnimation(anim .. "_" .. tostring(i)) then
-            banim = anim .. "_" .. tostring(i)
+        anim2 = anim .. tostring(i)
+
+        if self:HasAnimation(anim2) then
+            anim = anim2
+            break
         end
     end
-    anim = banim
 
     local speed = 1
 
@@ -280,10 +282,10 @@ SWEP.PoseParamState = {}
 function SWEP:DoPoseParams()
     local vm = self:GetVM()
 
-    if !vm or !IsValid(vm) then return end
-
-    for i, k in pairs(self.PoseParamState) do
-        vm:SetPoseParameter(i, k)
+    if (IsValid(vm)) then
+        for i, k in pairs(self.PoseParamState) do
+            vm:SetPoseParameter(i, k)
+        end
     end
 end
 
