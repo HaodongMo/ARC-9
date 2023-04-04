@@ -501,7 +501,7 @@ function SWEP:DoPrimaryAttack()
 
     self:DoHeat()
 
-    if !manualaction or manualaction and !self.MalfunctionCycle then
+    if !manualaction or manualaction and !self.MalfunctionCycle and !self:GetUBGL() then
         self:RollJam()
     end
 
