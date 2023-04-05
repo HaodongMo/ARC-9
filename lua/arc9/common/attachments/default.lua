@@ -18,6 +18,7 @@ ATT.CustomCons = {
 ATT.AdminOnly = false
 ATT.Free = false
 ATT.Ignore = true
+ATT.AttNotForNPCs = false -- for randomizing through presets too
 
 ATT.Model = ""
 ATT.WorldModel = "" -- optional
