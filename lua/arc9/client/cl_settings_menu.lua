@@ -23,7 +23,7 @@
 
 ARC9.LanguagesTable = {}
 
-local settingstable = {
+ARC9.SettingsTable = {
     -- {
     --     TabName = "Tab name 1",
     --     { type = "label", text = "Header" },
@@ -368,7 +368,7 @@ local function DrawSettings(bg, page)
     sheet.Navigation:DockMargin(-120, 0, 0, ARC9ScreenScale(5)) -- idk why -120
     sheet.Navigation:SetWidth(ARC9ScreenScale(100))
 
-    for k, v in pairs(settingstable) do
+    for k, v in pairs(ARC9.SettingsTable) do
         if v.sv and !(game.SinglePlayer() or LocalPlayer():IsAdmin()) then continue end -- you don't have the right, oh you don't have the right
 
         local newpanel = vgui.Create("DPanel", sheet)
@@ -542,11 +542,11 @@ local function DrawSettings(bg, page)
             surface.DrawRect(ARC9ScreenScale(3.4), 0, w-ARC9ScreenScale(3.4), h)
 
             surface.SetFont("ARC9_12")
-            local tw = surface.GetTextSize(ARC9:GetPhrase(v.TabName))
+            local tw = surface.GetTextSize(ARC9:GetPhrase(v.TabName) or v.TabName)
 
             surface.SetTextColor(buttontextcolor)
             surface.SetTextPos((w - tw) / 2 + ARC9ScreenScale(1.7), ARC9ScreenScale(3))
-            surface.DrawText(ARC9:GetPhrase(v.TabName))
+            surface.DrawText(ARC9:GetPhrase(v.TabName) or v.TabName)
         end
         buttontalling = buttontalling + ARC9ScreenScale(19+1.7)
     end
