@@ -722,3 +722,7 @@ L["settings.developer.cache"] = "Almacenar Caché"
 
 L["settings.gameplay.togglepeek_reset.title"] = "Restablecer estado de Vistazo después de apuntar"
 L["settings.gameplay.togglepeek_reset.desc"] = "(Sólo si Alternar Vistazo está activado)\nEl estado de vistazo no se conservará al salir de las miras de puntería."
+
+-- april 7
+
+L["settings.mod_malfunction.title"] = "Probabilidad de fallo"
