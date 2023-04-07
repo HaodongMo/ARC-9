@@ -333,6 +333,7 @@ function SWEP:DoPrimaryAttack()
             else
                 self:ToggleUBGL(false)
                 self:SetNeedTriggerPress(true)
+                self:ExitSights()
             end
             
             return
