@@ -731,3 +731,8 @@ L["settings.developer.cache"] = "Cawhe"
 
 L["settings.gameplay.togglepeek_reset.title"] = "Weset pewek stawte awter awaiming"
 L["settings.gameplay.togglepeek_reset.desc"] = "(owly if Towgle Pewek is on owo)\npeeeek state w-wil notw be wetaiwed wwen ewiting awaim dowon siwts uwu"
+
+
+
+-- april 7
+L["settings.mod_malfunction.title"] = "Mawwunctiwon Chanwce"

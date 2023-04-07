@@ -686,3 +686,7 @@ L["settings.developer.cache"] = "Кэшировать"
 
 L["settings.gameplay.togglepeek_reset.title"] = "Сброс выглядывания после прицел."
 L["settings.gameplay.togglepeek_reset.desc"] = "(Только если Выглядывание по нажатию включено)\nСостояние выглядывения будет сброшено после выхода из прицела."
+
+
+-- april 7
+L["settings.mod_malfunction.title"] = "Шанс неполадки"

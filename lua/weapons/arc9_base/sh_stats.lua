@@ -23,7 +23,8 @@ local quickmodifiers = {
     ["DamageRand"] = GetConVar("arc9_mod_damagerand"),
     ["PhysBulletMuzzleVelocity"] = GetConVar("arc9_mod_muzzlevelocity"),
     ["RPM"] = GetConVar("arc9_mod_rpm"),
-    ["HeadshotDamage"] = GetConVar("arc9_mod_headshotdamage")
+    ["HeadshotDamage"] = GetConVar("arc9_mod_headshotdamage"),
+    ["MalfunctionMeanShotsToFail"] = GetConVar("arc9_mod_malfunction")
 }
 
 local singleplayer = game.SinglePlayer()
@@ -284,11 +285,15 @@ do
             -- if istable(stat) then
             --     stat.BaseClass = nil
             -- end
-
+            
             if quickmodifiers[val] and isnumber(stat) then
                 local convarvalue = quickmodifiers[val]:GetFloat()
 
-                stat = stat * convarvalue
+                if val == "MalfunctionMeanShotsToFail" then -- dont kill me for this pls
+                    stat = stat / math.max(0.00000001, convarvalue)
+                else
+                    stat = stat * convarvalue
+                end
             end
 
             return stat
@@ -370,8 +375,12 @@ do
 
         if quickmodifiers[val] and isnumber(val) then
             local convarvalue = quickmodifiers[val]:GetFloat()
-
-            stat = stat * convarvalue
+            
+            if val == "MalfunctionMeanShotsToFail" then  -- dont kill me for this pls
+                stat = stat / math.max(0.00000001, convarvalue)
+            else
+                stat = stat * convarvalue
+            end
 
             unaffected = false
         end

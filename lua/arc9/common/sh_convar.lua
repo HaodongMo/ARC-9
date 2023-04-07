@@ -666,6 +666,11 @@ local conVars = {
         replicated = true
     },
     {
+        name = "mod_malfunction",
+        default = "1",
+        replicated = true
+    },
+    {
         name = "cust_tips",
         default = "1",
         client = true

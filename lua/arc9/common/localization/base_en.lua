@@ -730,3 +730,8 @@ L["settings.developer.cache"] = "Cache"
 
 L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek State After Aiming"
 L["settings.gameplay.togglepeek_reset.desc"] = "(Only if Toggle Peek is on)\nPeek state will not be retained when exiting aim down sights."
+
+
+-- april 7
+
+L["settings.mod_malfunction.title"] = "Malfunction Chance"

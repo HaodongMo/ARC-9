@@ -271,6 +271,7 @@ ARC9.SettingsTable = {
         { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_muzzlevelocity.title", convar = "mod_muzzlevelocity" },
         { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_rpm.title", convar = "mod_rpm" },
         { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_headshotdamage.title", convar = "mod_headshotdamage" },
+        { type = "slider", min = 0, max = 100, decimals = 1, text = "settings.mod_malfunction.title", convar = "mod_malfunction" },
         -- { type = "slider", text = "Damage", convar = "wawa", min = 0, max = 10, decimals = 0, desc = "The     Damage\n\nThis is a server variable."},
 
         -- { type = "button", text = "Advanced modifiers", content = "Open panel", func = function(self2)
