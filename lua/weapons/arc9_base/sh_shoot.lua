@@ -502,8 +502,10 @@ function SWEP:DoPrimaryAttack()
 
     self:DoHeat()
 
-    if !manualaction or manualaction and !self.MalfunctionCycle and !self:GetUBGL() then
-        self:RollJam()
+    if !self:GetUBGL() then
+        if !manualaction or manualaction and !self.MalfunctionCycle then
+            self:RollJam()
+        end
     end
 
     if clip1 == 0 then
