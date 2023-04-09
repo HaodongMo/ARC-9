@@ -100,6 +100,11 @@ function SWEP:PostModify(toggleonly)
         self.PrintName = base.PrintName
         self.PrintName = self:GetValue("PrintName")
     end
+    
+    if !self.PrintName then
+        self.PrintName = base.PrintName
+        self.PrintName = self:GetValue("PrintName")
+    end
 
     self.PrintName = self:RunHook("HookP_NameChange", self.PrintName)
     self.Description = self:RunHook("HookP_DescriptionChange", self.Description)
