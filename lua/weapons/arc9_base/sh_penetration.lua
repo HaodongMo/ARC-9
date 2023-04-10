@@ -143,7 +143,6 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             end
 
             td.start = endpos + (dir * 0.25)
-
             local ptr = util.TraceLine(td)
 
             -- Penetrate through to whatever the next thing is
@@ -176,6 +175,8 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         end
     end
 
+    if tr.HitTexture == "**displacement**" then return end -- FUCK DISPLACEMENTS
+    
     if penleft > 0 then
         if (dir:Length() == 0) then return end
 
