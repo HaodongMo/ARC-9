@@ -79,6 +79,8 @@ function SWEP:DoTPIK()
     local time = self:GetSequenceCycle()
     local seq = self:GetSequenceIndex()
 
+    if self:GetSequenceProxy() != 0 then seq = wm:LookupSequence("idle") end -- lhik ubgls fix
+
     wm:SetSequence(seq)
 
     wm:SetCycle(time)
