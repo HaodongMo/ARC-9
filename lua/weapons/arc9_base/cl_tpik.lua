@@ -188,12 +188,14 @@ function SWEP:DoTPIK()
     local ply_r_hand_matrix = ply:GetBoneMatrix(ply_r_hand_index)
 
     local limblength = ply:BoneLength(ply_l_elbow_index) + 1
+    local limblength2 = ply:BoneLength(ply_l_hand_index)
     if !limblength or limblength == 0 then limblength = 12 end
+    if !limblength2 or limblength2 == 0 then limblength2 = 12 end
     
     local r_upperarm_length = limblength 
-    local r_forearm_length = limblength
+    local r_forearm_length = limblength2
     local l_upperarm_length = limblength
-    local l_forearm_length = limblength
+    local l_forearm_length = limblength2
 
     local ply_r_upperarm_pos, ply_r_forearm_pos
 
