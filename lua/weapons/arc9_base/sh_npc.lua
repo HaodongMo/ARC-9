@@ -100,7 +100,7 @@ function SWEP:NPC_Initialize()
     if CLIENT then return end
 
     if IsValid(self) then
-        if !self.WeaponWasGiven then
+        if !self.WeaponWasGiven and GetConVar("arc9_npc_atts"):GetBool() then
             -- self:RollRandomAtts(self.Attachments)
             self:QueueForRandomize()
         end
