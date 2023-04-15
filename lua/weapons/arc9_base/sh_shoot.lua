@@ -44,10 +44,10 @@ function SWEP:DryFire()
     local delay = self:GetProcessedValue("DryFireDelay")
 
     if delay then
-        self:PlayAnimation("dryfire", _, false)
+        self:PlayAnimation("dryfire", 1, false)
         self:SetNextPrimaryFire(CurTime() + delay)
     else
-        self:PlayAnimation("dryfire", _, true)
+        self:PlayAnimation("dryfire", 1, true)
     end
     self:SetBurstCount(0)
     self:SetNeedTriggerPress(true)
