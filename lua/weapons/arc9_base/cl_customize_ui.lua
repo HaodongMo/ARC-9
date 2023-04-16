@@ -1,5 +1,3 @@
-local mat_grad = Material("arc9/gradient.png")
-
 local DevMode = false
 
 local ARC9ScreenScale = ARC9.ScreenScale
