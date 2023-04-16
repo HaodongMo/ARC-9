@@ -50,7 +50,7 @@ function SWEP:Initialize()
         self.Primary.DefaultClip = 0
     end
 
-    if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true print("true") end
+    if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
 
     ARC9.CacheAttsModels()
 

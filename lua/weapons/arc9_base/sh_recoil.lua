@@ -353,34 +353,38 @@ do
     local weaponGetNextPrimaryFire = FindMetaTable("Weapon").GetNextPrimaryFire
     local swepThinkVisualRecoil = SWEP.ThinkVisualRecoil
 
+    local smolnumber = 1e-5
+
     function SWEP:ThinkRecoil()
+        local ru = self.dt.RecoilUp
+        local rs = self.dt.RecoilSide
+
+        if math.abs(ru) < smolnumber and math.abs(rs) < smolnumber and self.dt.RecoilAmount == 0 then return end
+
         swepGetProcessedValue = swepGetProcessedValue or self.GetProcessedValue
 
         local rdr = swepGetProcessedValue(self, "RecoilDissipationRate")
+        local ct = CurTime()
+        local ft = FrameTime()
 
-        if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < CurTime() then
+        if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < ct then
             -- as soon as dissipation kicks in, recoil is clamped to the modifer cap; this is to not break visual recoil
-            self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (FrameTime() * rdr), 0, swepGetProcessedValue(self, "UseVisualRecoil") and math.huge or swepGetProcessedValue(self, "RecoilModifierCap")))
-            if weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilFullResetTime") < CurTime() then
+            self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (ft * rdr), 0, swepGetProcessedValue(self, "UseVisualRecoil") and math.huge or swepGetProcessedValue(self, "RecoilModifierCap")))
+            if weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilFullResetTime") <ct then
                 self:SetRecoilAmount(0)
             end
             -- print(math.Round(rec))
         end
 
-        local ru = self.dt.RecoilUp
-        local rs = self.dt.RecoilSide
-
-        local m = 10
-
-        if math.abs(ru) > 1e-5 or math.abs(rs) > 1e-5 then
-            local new_ru = ru - (FrameTime() * ru * m)
-            local new_rs = rs - (FrameTime() * rs * m)
+        if math.abs(ru) > smolnumber or math.abs(rs) > smolnumber then
+            local new_ru = ru - (ft * ru * 10)
+            local new_rs = rs - (ft * rs * 10)
 
             self:SetRecoilUp(new_ru)
             self:SetRecoilSide(new_rs)
         end
 
-        if game.SinglePlayer() or IsFirstTimePredicted() then
+        if isSingleplayer or IsFirstTimePredicted() then
             swepThinkVisualRecoil(self)
         end
     end
@@ -426,7 +430,7 @@ function SWEP:DoVisualRecoil()
             local awfulnumber = (220 - math.Clamp(1/midrft, 60, 220))
             awfulnumber = math.Clamp(awfulnumber * awfulnumber * awfulnumber * 0.00000035 + 0.7, 0.5, 2.15) -- Cubic
 
-            if !game.SinglePlayer() then awfulnumber = 1.2 end
+            if !isSingleplayer then awfulnumber = 1.2 end
 
             fake = fake * awfulnumber
 
