@@ -9,11 +9,11 @@ function SWEP:ThinkCycle()
         cycling = self:GetOwner():KeyDown(IN_RELOAD)
     end
 
-    if self:GetNeedsCycle() and (cycling or self:GetProcessedValue("SlamFire")) then
+    if self:GetNeedsCycle() and (cycling or self:GetProcessedValue("SlamFire", _, _, true)) then
 
         if self.MalfunctionCycle and (IsFirstTimePredicted() and self:RollJam()) then return end
 
-        local ejectdelay = self:GetProcessedValue("EjectDelay")
+        local ejectdelay = self:GetProcessedValue("EjectDelay", _, _, true)
 
         local t = self:PlayAnimation("cycle", self:GetProcessedValue("CycleTime"), false)
 
@@ -21,7 +21,7 @@ function SWEP:ThinkCycle()
 
         self:SetAnimLockTime(CurTime() + t)
 
-        if IsFirstTimePredicted() and !self:GetProcessedValue("NoShellEjectManualAction") then
+        if IsFirstTimePredicted() and !self:GetProcessedValue("NoShellEjectManualAction", _, _, true) then
             if ejectdelay == 0 then
                 self:DoEject()
             else

@@ -1,7 +1,7 @@
 function SWEP:TranslateAnimation(seq)
     if self:GetOwner():IsNPC() then return seq end
 
-    local sds = self:GetProcessedValue("SuppressDefaultSuffixes")
+    local sds = self:GetProcessedValue("SuppressDefaultSuffixes", _, _, true)
 
     if !sds then
         if self:GetUBGL() and self:HasAnimation(seq .. "_ubgl") then
@@ -40,17 +40,17 @@ function SWEP:TranslateAnimation(seq)
             seq = seq .. "_bipod"
         end
 
-        if !self:GetProcessedValue("SuppressSprintSuffix") and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
+        if !self:GetProcessedValue("SuppressSprintSuffix", _, _, true) and self:GetIsSprinting() and self:HasAnimation(seq .. "_sprint") then
             seq = seq .. "_sprint"
         elseif self:GetIsWalking() and self:HasAnimation(seq .. "_walk") then
             seq = seq .. "_walk"
         end
 
-        if !self:GetProcessedValue("SuppressEmptySuffix") and ((self:Clip1() == 0 and !self:GetReloading()) or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
+        if !self:GetProcessedValue("SuppressEmptySuffix", _, _, true) and ((self:Clip1() == 0 and !self:GetReloading()) or self:GetEmptyReload()) and self:HasAnimation(seq .. "_empty") then
             seq = seq .. "_empty"
         end
 
-        if !self:GetProcessedValue("SuppressEmptySuffix") and ((self:Clip2() == 0 and !self:GetReloading()) or self:GetEmptyReload()) and self:HasAnimation(seq .. "_glempty") then
+        if !self:GetProcessedValue("SuppressEmptySuffix", _, _, true) and ((self:Clip2() == 0 and !self:GetReloading()) or self:GetEmptyReload()) and self:HasAnimation(seq .. "_glempty") then
             seq = seq .. "_glempty"
         end
 

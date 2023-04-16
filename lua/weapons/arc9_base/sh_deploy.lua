@@ -34,7 +34,7 @@ function SWEP:Deploy()
     self:SetFreeAimAngle(Angle(0, 0, 0))
     self:SetLastAimAngle(Angle(0, 0, 0))
 
-    if self:GetProcessedValue("AutoReload") then
+    if self:GetProcessedValue("AutoReload", _, _, true) then
         self:RestoreClip(math.huge)
     end
 
@@ -159,7 +159,7 @@ function SWEP:Holster(wep)
             self:KillShield()
         end
 
-        if SERVER and self:GetProcessedValue("Disposable") and self:Clip1() == 0 and self:Ammo1() == 0 and !IsValid(self:GetDetonatorEntity()) then
+        if SERVER and self:GetProcessedValue("Disposable", _, _, true) and self:Clip1() == 0 and self:Ammo1() == 0 and !IsValid(self:GetDetonatorEntity()) then
             self:Remove()
         end
 
@@ -171,11 +171,11 @@ function SWEP:Holster(wep)
     else
         -- Prepare the holster and set up the timer
         if self:HasAnimation("holster") then
-            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1), true, false) or 0
+            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", 1, _, true), true, false) or 0
             self:SetHolsterTime(CurTime() + animation)
             self:SetHolster_Entity(wep)
         else
-            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", 1)))
+            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", 1, _, true)))
             self:SetHolster_Entity(wep)
         end
 
@@ -207,12 +207,12 @@ end)
 
 function SWEP:DoDeployAnimation()
     if !GetConVar("arc9_never_ready"):GetBool() and (GetConVar("arc9_dev_always_ready"):GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
-        local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1), true)
+        local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1, _, true), true)
 
         self:SetReadyTime(CurTime() + t * min)
         self:SetReady(true)
     else
-        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1), true)
+        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", 1, _, true), true)
         self:SetReady(true)
     end
 end

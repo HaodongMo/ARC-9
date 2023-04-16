@@ -91,7 +91,7 @@ function SWEP:Reload()
         end
     end
 
-    if !self:GetProcessedValue("ReloadInSights") then
+    if !self:GetProcessedValue("ReloadInSights", _, _, true) then
         self:ExitSights()
     end
 
@@ -133,8 +133,8 @@ function SWEP:Reload()
     end
 
     if !self:PredictionFilter() then
-        if self:GetProcessedValue("ShouldDropMag") or self:GetProcessedValue("ShouldDropMagEmpty") and clip == 0 then
-            self:SetTimer(self:GetProcessedValue("DropMagazineTime"), function()
+        if self:GetProcessedValue("ShouldDropMag", _, _, true) or self:GetProcessedValue("ShouldDropMagEmpty", _, _, true) and clip == 0 then
+            self:SetTimer(self:GetProcessedValue("DropMagazineTime", _, _, true), function()
                 self:DropMagazine()
             end)
         end
@@ -175,7 +175,7 @@ function SWEP:CanReload()
         ammo = self:Ammo2()
     end
     if ammo <= 0 and !self:GetInfiniteAmmo() then return end
-    if !self:GetProcessedValue("ReloadWhileSprint") and self:GetSprintAmount() > 0 then
+    if !self:GetProcessedValue("ReloadWhileSprint", _, _, true) and self:GetSprintAmount() > 0 then
         return
     end
     if self:GetJammed() then return end
@@ -215,12 +215,12 @@ end
 function SWEP:DropMagazine()
     -- if !IsFirstTimePredicted() and !game.SinglePlayer() then return end
 
-    local mdl = self:GetProcessedValue("DropMagazineModel")
+    local mdl = self:GetProcessedValue("DropMagazineModel", _, _, true)
 
     if mdl then
         util.PrecacheModel(mdl) -- garry newman moment
 
-        for i = 1, self:GetProcessedValue("DropMagazineAmount") do
+        for i = 1, self:GetProcessedValue("DropMagazineAmount", _, _, true) do
             local drop_qca = self:GetQCAMagdrop()
 
             local data = EffectData()
@@ -379,11 +379,11 @@ function SWEP:EndReload()
         end
 
         if getUBGL then
-            if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber") then
+            if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber", _, _, true) then
                 capacity = capacity + self:GetProcessedValue("UBGLChamberSize")
             end
         else
-            if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber") then
+            if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber", _, _, true) then
                 capacity = capacity + self:GetProcessedValue("ChamberSize")
             end
         end
@@ -412,7 +412,7 @@ function SWEP:EndReload()
 
             self:SetNthShot(0)
 
-            if self:GetEmptyReload() or self:GetProcessedValue("PartialReloadCountsTowardsNthReload") then
+            if self:GetEmptyReload() or self:GetProcessedValue("PartialReloadCountsTowardsNthReload", _, _, true) then
                 self:SetNthReload(self:GetNthReload() + 1)
             end
 
@@ -471,7 +471,7 @@ function SWEP:EndReload()
 
         self:SetNthShot(0)
 
-        if self:GetEmptyReload() or self:GetProcessedValue("PartialReloadCountsTowardsNthReload") then
+        if self:GetEmptyReload() or self:GetProcessedValue("PartialReloadCountsTowardsNthReload", _, _, true) then
             self:SetNthReload(self:GetNthReload() + 1)
         end
         -- self:SetLoadedRounds(self:Clip1())
@@ -573,9 +573,9 @@ end
 if CLIENT then
     function SWEP:CallNonTPIKReloadAnim()
         if !self:ShouldTPIK() then
-            self:DoPlayerAnimationEvent(self:GetProcessedValue("NonTPIKAnimReload"))
+            self:DoPlayerAnimationEvent(self:GetProcessedValue("NonTPIKAnimReload", _, _, true))
         else
-            self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload"))
+            self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimReload", _, _, true))
         end
     end
 end

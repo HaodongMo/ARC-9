@@ -24,13 +24,13 @@ function SWEP:ThinkGrenade()
         end
     end
 
-    local tossable = self:GetProcessedValue("Tossable") and self:HasAnimation("toss")
+    local tossable = self:GetProcessedValue("Tossable", _, _, true) and self:HasAnimation("toss")
 
     if !self:GetGrenadePrimed() then
         if self:GetAnimLockTime() > CurTime() then return end
 
         if self:GetGrenadeRecovering() then
-            if self:GetProcessedValue("Disposable") and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
+            if self:GetProcessedValue("Disposable", _, _, true) and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
                 self:Remove()
             else
                 self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
@@ -39,7 +39,7 @@ function SWEP:ThinkGrenade()
         elseif ((tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
             self:GetOwner():KeyDown(IN_ATTACK)) and
             self:HasAmmoInClip() and
-            (!self:GetOwner():KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash")) and
+            (!self:GetOwner():KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash", _, _, true)) and
             !IsValid(self:GetDetonatorEntity())
             then
             self:SetGrenadePrimed(true)
@@ -55,11 +55,11 @@ function SWEP:ThinkGrenade()
     else
         if self:GetAnimLockTime() > CurTime() then return end
 
-        if self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly")) then
+        if self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly", _, _, true)) then
             local t = self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
             local mp = self:GetAnimationEntry("toss").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS, t * mp)
-        elseif !self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK) or self:GetProcessedValue("ThrowInstantly")) then
+        elseif !self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK) or self:GetProcessedValue("ThrowInstantly", _, _, true)) then
             local t = self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
             local mp = self:GetAnimationEntry("throw").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL, t * mp)
@@ -115,11 +115,11 @@ function SWEP:ThrowGrenade(nttype, delaytime)
     self:SetTimer(delaytime, function()
 
         local src, dir
-        if self:GetProcessedValue("ThrowOnGround") then
+        if self:GetProcessedValue("ThrowOnGround", _, _, true) then
             src = self:GetOwner():EyePos()
             dir = Angle(0, self:GetOwner():GetAngles().y, 0)
 
-            local shootposoffset = self:GetProcessedValue("ShootPosOffset")
+            local shootposoffset = self:GetProcessedValue("ShootPosOffset", _, _, true)
 
             local angRight = dir:Right()
             local angForward = dir:Forward()
@@ -164,21 +164,21 @@ function SWEP:ThrowGrenade(nttype, delaytime)
             end
 
             if nttype  == ARC9.NADETHROWTYPE_TOSS then
-                force = self:GetProcessedValue("TossForce")
+                force = self:GetProcessedValue("TossForce", _, _, true)
             elseif nttype == ARC9.NADETHROWTYPE_EXPLODEINHANDS then
                 force = 0
                 time = 0
                 nade:Detonate()
             end
 
-            if self:GetProcessedValue("Detonator") then
+            if self:GetProcessedValue("Detonator", _, _, true) then
                 self:SetDetonatorEntity(nade)
             end
 
             local phys = nade:GetPhysicsObject()
 
             if IsValid(phys) then
-                if self:GetProcessedValue("ThrowTumble") then
+                if self:GetProcessedValue("ThrowTumble", _, _, true) then
                     nade:SetAngles(Angle(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))
                     phys:AddAngleVelocity(Vector(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))
                 end

@@ -1,7 +1,9 @@
 SWEP.ClientFreeAimAng = Angle(0, 0, 0)
 
+local faconvar = GetConVar("arc9_mod_freeaim")
+
 function SWEP:ThinkFreeAim()
-    if !GetConVar("arc9_mod_freeaim"):GetBool() then return true end
+    if !faconvar:GetBool() then return true end
 
     local diff = self:GetOwner():EyeAngles() - self:GetLastAimAngle()
 

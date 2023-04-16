@@ -12,13 +12,13 @@ function SWEP:CanLockOn(ent)
 
     local canlock = false
 
-    if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) and self:GetProcessedValue("LocksLiving") then
+    if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) and self:GetProcessedValue("LocksLiving", _, _, true) then
         canlock = true
     end
 
     if !canlock then
-        local lockair = self:GetProcessedValue("LocksAir")
-        local lockground = self:GetProcessedValue("LocksGround")
+        local lockair = self:GetProcessedValue("LocksAir", _, _, true)
+        local lockground = self:GetProcessedValue("LocksGround", _, _, true)
 
         if lockair and lockground then
             canlock = true
@@ -56,7 +56,7 @@ function SWEP:GetLockOnScore(ent, pure)
 
     local dot = self:GetOwner():GetAimVector():Dot((ent:GetPos() - self:GetShootPos()):GetNormalized())
 
-    if math.deg(math.acos(dot)) > self:GetProcessedValue("LockOnFOV") then return 0 end
+    if math.deg(math.acos(dot)) > self:GetProcessedValue("LockOnFOV", _, _, true) then return 0 end
 
     score = score + (math.deg(math.acos(dot)) / 2)
     if pure then return score end
@@ -87,7 +87,7 @@ function SWEP:LockOnTargetInFOV(ent)
 
     local deg_dot = math.deg(math.acos(dot))
 
-    if deg_dot > self:GetProcessedValue("LockOnFOV") then return false end
+    if deg_dot > self:GetProcessedValue("LockOnFOV", _, _, true) then return false end
 
     return true
 end
@@ -146,7 +146,7 @@ function SWEP:ThinkLockOn()
 
         local soundtab = {
             name = "lockon",
-            sound = self:GetProcessedValue("LockOnSound"),
+            sound = self:GetProcessedValue("LockOnSound", _, _, true),
         }
 
         self:PlayTranslatedSound(soundtab)
@@ -159,7 +159,7 @@ local lockonmat = Material("arc9/lockon.png", "noclamp smooth")
 function SWEP:DrawLockOnHUD(iam3d)
     if self:IsScoping() and !iam3d then return end
 
-    if !self:GetProcessedValue("LockOn") then
+    if !self:GetProcessedValue("LockOn", _, _, true) then
         return
     end
 

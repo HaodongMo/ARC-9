@@ -77,7 +77,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 
         penleft = penleft * d
 
-        local ricochetsounds = self:GetProcessedValue("RicochetSounds") or {}
+        local ricochetsounds = self:GetProcessedValue("RicochetSounds", _, _, true) or {}
 
         sound.Play(ricochetsounds[math.random(#ricochetsounds)], tr.HitPos, 75, math.Rand(90, 110), 1)
 

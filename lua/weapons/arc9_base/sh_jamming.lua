@@ -1,11 +1,11 @@
 function SWEP:RollJam()
-    if !self:GetProcessedValue("Malfunction") then return end
+    if !self:GetProcessedValue("Malfunction", _, _, true) then return end
     if self:Clip1() == 0 and self.MalfunctionNeverLastShoot then return end
 
     local chance = 1 / self:GetProcessedValue("MalfunctionMeanShotsToFail")
 
     if util.SharedRandom("arc9_jam", 0, 1000) / 1000 <= chance then
-        if self:GetProcessedValue("MalfunctionJam") then
+        if self:GetProcessedValue("MalfunctionJam", _, _, true) then
             self:SetJammed(true)
         end
 
@@ -13,7 +13,7 @@ function SWEP:RollJam()
         self:PlayAnimation("jam", 1, true)
         local soundtab1 = {
             name = "jam",
-            sound = self:RandomChoice(self:GetProcessedValue("MalfunctionSound")),
+            sound = self:RandomChoice(self:GetProcessedValue("MalfunctionSound", _, _, true)),
             channel = ARC9.CHAN_FIDDLE
         }
         self:PlayTranslatedSound(soundtab1)
@@ -25,13 +25,13 @@ function SWEP:RollJam()
 end
 
 function SWEP:DoHeat()
-    if !self:GetProcessedValue("Overheat") then return end
+    if !self:GetProcessedValue("Overheat", _, _, true) then return end
 
     self:SetHeatAmount(self:GetHeatAmount() + self:GetProcessedValue("HeatPerShot"))
 
     if self:GetHeatAmount() >= self:GetProcessedValue("HeatCapacity") then
         self:SetHeatAmount(self:GetProcessedValue("HeatCapacity"))
-        if self:GetProcessedValue("HeatLockout") then
+        if self:GetProcessedValue("HeatLockout", _, _, true) then
             self:SetHeatLockout(true)
         end
 
@@ -48,7 +48,7 @@ function SWEP:FixHeat()
     self:PlayAnimation("fix", self:GetProcessedValue("OverheatTime"), true)
     self:SetJammed(false)
 
-    if self:GetProcessedValue("HeatFix") then
+    if self:GetProcessedValue("HeatFix", _, _, true) then
         self:SetHeatAmount(0)
     end
 end
@@ -59,7 +59,7 @@ function SWEP:ThinkHeat(dt)
 
     if heat <= 0 then return end
 
-    if !self:GetProcessedValue("Overheat") then return end
+    if !self:GetProcessedValue("Overheat", _, _, true) then return end
 
     if self:GetNextPrimaryFire() + self:GetProcessedValue("HeatDelayTime") < CurTime() then
         heat = heat - (dt * self:GetProcessedValue("HeatDissipation"))

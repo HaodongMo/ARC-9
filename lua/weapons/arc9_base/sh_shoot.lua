@@ -94,7 +94,7 @@ local soundtab6 = {
 }
 
 function SWEP:DoShootSounds()
-    local pvar = self:GetProcessedValue("ShootPitchVariation")
+    local pvar = self:GetProcessedValue("ShootPitchVariation", _, _, true)
     local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
 
     local sstr = lsstr
@@ -366,7 +366,7 @@ function SWEP:DoPrimaryAttack()
     local triggerStartFireAnim = processedValue(self,"TriggerStartFireAnim", _, _, true)
     local nthShot = self:GetNthShot()
 
-    if processedValue(self,"DoFireAnimation") and !triggerStartFireAnim then
+    if processedValue(self,"DoFireAnimation", _, _, true) and !triggerStartFireAnim then
         local anim = "fire"
 
         if processedValue(self,"Akimbo", _, _, true) then
@@ -398,7 +398,7 @@ function SWEP:DoPrimaryAttack()
 
     local manualaction = processedValue(self,"ManualAction")
 
-    if !processedValue(self,"NoShellEject") and !(manualaction and !processedValue(self,"ManualActionEjectAnyway")) then
+    if !processedValue(self,"NoShellEject") and !(manualaction and !processedValue(self,"ManualActionEjectAnyway", _, _, true)) then
         local ejectdelay = processedValue(self,"EjectDelay")
 
         if ejectdelay == 0 then
@@ -414,7 +414,7 @@ function SWEP:DoPrimaryAttack()
 
     self:DoShootSounds()
 
-    self:DoPlayerAnimationEvent(processedValue(self,"AnimShoot"))
+    self:DoPlayerAnimationEvent(processedValue(self,"AnimShoot", _, _, true))
 
     local delay = 60 / processedValue(self, "RPM")
     local time = CurTime()
@@ -437,11 +437,11 @@ function SWEP:DoPrimaryAttack()
     end
 
     -- ewww
-    if processedValue(self, "AkimboBoth") then
+    if processedValue(self, "AkimboBoth", _, _, true) then
         self:SetNthShot(nthShot + 2)
         self:DoEffects()
         if !processedValue(self,"NoShellEject") and !(manualaction and !processedValue(self,"ManualActionEjectAnyway", _, _, true)) then
-            local ejectdelay = processedValue(self,"EjectDelay")
+            local ejectdelay = processedValue(self,"EjectDelay", _, _, true)
             if ejectdelay == 0 then
                 self:DoEject()
             else

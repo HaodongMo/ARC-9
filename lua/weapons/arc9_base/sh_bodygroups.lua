@@ -87,7 +87,7 @@ function SWEP:DoBodygroups(wm, cm)
         mdl:ManipulateBoneScale(boneid, v0)
     end
 
-    local bulletbones = self:GetProcessedValue("BulletBones")
+    local bulletbones = self:GetProcessedValue("BulletBones", _, _, true)
 
     for i, bone in ipairs(bulletbones or {}) do
         local bones = bone
@@ -109,7 +109,7 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
-    local stripperbones = self:GetProcessedValue("StripperClipBones")
+    local stripperbones = self:GetProcessedValue("StripperClipBones", _, _, true)
 
     for i, bone in ipairs(stripperbones or {}) do
         local bones = bone
@@ -144,12 +144,12 @@ function SWEP:GetHiddenBones(wm)
         hide = true
     end
 
-    if wm or self:GetProcessedValue("ReloadHideBonesFirstPerson") then
+    if wm or self:GetProcessedValue("ReloadHideBonesFirstPerson", _, _, true) then
         hide = true
     end
 
-    local hidebones = self:GetProcessedValue("HideBones")
-    local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables")
+    local hidebones = self:GetProcessedValue("HideBones", _, _, true)
+    local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables", _, _, true)
 
     local bones = {}
 

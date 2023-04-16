@@ -25,7 +25,7 @@ function SWEP:SwitchFiremode()
     if IsFirstTimePredicted() then
         local soundtab1 = {
             name = "firemode",
-            sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound")),
+            sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound", _, _, true)),
             channel = ARC9.CHAN_FIDDLE
         }
         self:PlayTranslatedSound(soundtab1)
@@ -118,7 +118,7 @@ function SWEP:ToggleSafety(onoff)
         if IsFirstTimePredicted() then
             local soundtab1 = {
                 name = "safety",
-                sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound")),
+                sound = self:RandomChoice(self:GetProcessedValue("FiremodeSound", _, _, true)),
                 channel = ARC9.CHAN_FIDDLE
             }
             self:PlayTranslatedSound(soundtab1)

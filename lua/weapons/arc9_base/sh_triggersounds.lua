@@ -7,7 +7,7 @@ function SWEP:ThinkTriggerSounds()
     if self:GetOwner():KeyReleased(IN_ATTACK) then
         local soundtab = {
             name = "triggerup",
-            sound = self:RandomChoice(self:GetProcessedValue("TriggerUpSound")),
+            sound = self:RandomChoice(self:GetProcessedValue("TriggerUpSound", _, _, true)),
             channel = ARC9.CHAN_TRIGGER
         }
 
@@ -15,7 +15,7 @@ function SWEP:ThinkTriggerSounds()
     elseif self:GetOwner():KeyPressed(IN_ATTACK) then
         local soundtab = {
             name = "triggerdown",
-            sound = self:RandomChoice(self:GetProcessedValue("TriggerDownSound")),
+            sound = self:RandomChoice(self:GetProcessedValue("TriggerDownSound", _, _, true)),
             channel = ARC9.CHAN_TRIGGER
         }
 
