@@ -240,6 +240,7 @@ SWEP.PV_Move = 0
 SWEP.PV_Shooting = 0
 SWEP.PV_Melee = 0
 SWEP.PV_Cache = {}
+SWEP.PV_CacheLong = {}
 
 do
     local swepRunHook = SWEP.RunHook
@@ -435,7 +436,7 @@ do
         return getmetatable(val) == numberMeta
     end
 
-    function SWEP:GetProcessedValue(val, base, cmd)
+    function SWEP:GetProcessedValue(val, base, cmd, cachedelay)
         local swepDt = self.dt
         -- From now on, we will not call `self:GetJammed()`, `self:GetHeatLockout()`
         -- and similar functions, because all they do is just return `self.dt[thing]`
@@ -445,6 +446,7 @@ do
         local ct = CurTime()
         local upct = UnPredictedCurTime()
         local processedValueName = tostring(val) .. tostring(base)
+
         if CLIENT then
             if self.PV_Cache[processedValueName] ~= nil and self.PV_Tick == upct then
                 return self.PV_Cache[processedValueName]
@@ -454,6 +456,25 @@ do
             end
         end
 
+        if cachedelay then
+            if self.PV_CacheLong[processedValueName] then
+                local cachetime = self.PV_CacheLong[processedValueName].time
+
+                if cachetime then
+                    if upct > cachetime then
+                        self.PV_CacheLong[processedValueName].time = upct + 0.15
+                        self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
+                        -- print(processedValueName, "working", upct)
+                    end
+                end
+            else
+                self.PV_CacheLong[processedValueName] = {}
+                self.PV_CacheLong[processedValueName].time = upct
+                self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
+            end
+
+            return self.PV_CacheLong[processedValueName].value
+        end
 
 
         local stat = arcGetValue(self, val, base)

@@ -23,7 +23,7 @@ end
 function SWEP:GetIsWalking()
     local owner = self:GetOwner()
 
-    if !self:GetOwner():IsValid() or self:GetOwner():IsNPC() then
+    if !owner:IsValid() or owner:IsNPC() then
         return false
     end
 
@@ -39,7 +39,7 @@ end
 function SWEP:GetIsSprintingCheck()
     local owner = self:GetOwner()
 
-    if !self:GetOwner():IsValid() or self:GetOwner():IsNPC() then
+    if !owner:IsValid() or owner:IsNPC() then
         return false
     end
     if self:GetInSights() then return false end
@@ -48,11 +48,11 @@ function SWEP:GetIsSprintingCheck()
     if !owner:OnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP then return false end
     if !owner:KeyDown(IN_FORWARD + IN_BACK + IN_MOVELEFT + IN_MOVERIGHT) then return false end
 
-    if (self:GetAnimLockTime() > CurTime()) and self:GetProcessedValue("NoSprintWhenLocked") then
+    if (self:GetAnimLockTime() > CurTime()) and self:GetProcessedValue("NoSprintWhenLocked", _, _, true) then
         return false
     end
 
-    if self:GetProcessedValue("ShootWhileSprint") and owner:KeyDown(IN_ATTACK) then
+    if self:GetProcessedValue("ShootWhileSprint", _, _, true) and owner:KeyDown(IN_ATTACK) then
         return false
     end
 
@@ -72,12 +72,12 @@ end
 function SWEP:EnterSprint()
     self:SetShouldHoldType()
 
-    if !self:GetProcessedValue("ReloadWhileSprint") then
+    if !self:GetProcessedValue("ReloadWhileSprint", _, _, true) then
         self:CancelReload()
     end
 
     if !self:StillWaiting() then
-        if self:GetProcessedValue("InstantSprintIdle") then
+        if self:GetProcessedValue("InstantSprintIdle", _, _, true) then
             self:PlayAnimation("idle")
         else
             local anim = self:TranslateAnimation("enter_sprint")
@@ -94,7 +94,7 @@ function SWEP:ExitSprint()
     self:SetShouldHoldType()
 
     if !self:StillWaiting() then
-        if self:GetProcessedValue("InstantSprintIdle") then
+        if self:GetProcessedValue("InstantSprintIdle", _, _, true) then
             self:PlayAnimation("idle")
         else
             local anim = self:TranslateAnimation("exit_sprint")
@@ -111,7 +111,7 @@ function SWEP:ThinkSprint()
 
     local sprinting = self:GetSafe() or self:GetIsSprinting()
 
-    if self:GetSightAmount() >= 1 or (self:GetProcessedValue("ReloadNoSprintPos") and self:GetReloading()) then
+    if self:GetSightAmount() >= 1 or (self:GetProcessedValue("ReloadNoSprintPos", _, _, true) and self:GetReloading()) then
         sprinting = false
     end
 

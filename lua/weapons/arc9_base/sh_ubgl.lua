@@ -1,6 +1,8 @@
 function SWEP:ThinkUBGL()
-    if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
-        if (self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyPressed(IN_ATTACK2)) or self:GetOwner():KeyPressed(ARC9.IN_UBGL) then
+    if !self:GetProcessedValue("UBGLInsteadOfSights", _, _, true) and self:GetValue("UBGL") then
+        local owner = self:GetOwner()
+        
+        if (owner:KeyDown(IN_USE) and owner:KeyPressed(IN_ATTACK2)) or owner:KeyPressed(ARC9.IN_UBGL) then
             if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
             self.NextUBGLSwitch = CurTime() + 1
 
@@ -28,7 +30,7 @@ function SWEP:ToggleUBGL(on)
     if on then
         local soundtab = {
             name = "enterubgl",
-            sound = self:RandomChoice(self:GetProcessedValue("EnterUBGLSound")),
+            sound = self:RandomChoice(self:GetProcessedValue("EnterUBGLSound", _, _, true)),
             channel = ARC9.CHAN_FIDDLE
         }
 
@@ -43,7 +45,7 @@ function SWEP:ToggleUBGL(on)
     else
         local soundtab = {
             name = "exitubgl",
-            sound = self:RandomChoice(self:GetProcessedValue("ExitUBGLSound")),
+            sound = self:RandomChoice(self:GetProcessedValue("ExitUBGLSound", _, _, true)),
             channel = ARC9.CHAN_FIDDLE
         }
 

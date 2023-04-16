@@ -1,3 +1,8 @@
+-- i heard this lower fps to 5
+
+
+
+
 function SWEP:CanLockOn(ent)
     local _, reject = self:RunHook("HookC_CannotLockOn", ent)
     if reject then return false end
@@ -88,7 +93,7 @@ function SWEP:LockOnTargetInFOV(ent)
 end
 
 function SWEP:ThinkLockOn()
-    if !self:GetProcessedValue("LockOn") then
+    if !self:GetProcessedValue("LockOn", _, _, true) then
         self:SetLockOnTarget(NULL)
         return
     end
@@ -104,7 +109,7 @@ function SWEP:ThinkLockOn()
 
                 local soundtab = {
                     name = "lockedon",
-                    sound = self:GetProcessedValue("LockedOnSound"),
+                    sound = self:GetProcessedValue("LockedOnSound", _, _, true),
                 }
 
                 self:PlayTranslatedSound(soundtab)

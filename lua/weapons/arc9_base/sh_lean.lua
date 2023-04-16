@@ -3,39 +3,42 @@ SWEP.MaxLeanAngle = 15
 
 SWEP.LastLeanAmountSERVER = 0
 
+local leanconvar = GetConVar("arc9_lean")
+
 function SWEP:ThinkLean()
-    if !GetConVar("arc9_lean"):GetBool() or !self:GetProcessedValue("CanLean") then
+    if !leanconvar:GetBool() or !self:GetProcessedValue("CanLean", _, _, true) then
         self:SetLeanAmount(0)
         return
     end
 
     local leanstate = self:GetLeanState()
+    local owner = self:GetOwner()
 
-    if !(self:GetOwner():KeyDown(IN_SPEED) and (self:GetOwner():KeyDown(IN_FORWARD) or self:GetOwner():KeyDown(IN_BACK) or self:GetOwner():KeyDown(IN_MOVELEFT) or self:GetOwner():KeyDown(IN_MOVERIGHT))) then
-        if self:GetOwner():GetInfoNum("arc9_togglelean", 0) >= 1 then
+    if !(owner:KeyDown(IN_SPEED) and (owner:KeyDown(IN_FORWARD) or owner:KeyDown(IN_BACK) or owner:KeyDown(IN_MOVELEFT) or owner:KeyDown(IN_MOVERIGHT))) then
+        if owner:GetInfoNum("arc9_togglelean", 0) >= 1 then
             if leanstate == -1 then
-                if self:GetOwner():KeyPressed(IN_ALT1) then
+                if owner:KeyPressed(IN_ALT1) then
                     leanstate = 0
-                elseif self:GetOwner():KeyPressed(IN_ALT2) then
+                elseif owner:KeyPressed(IN_ALT2) then
                     leanstate = 1
                 end
             elseif leanstate == 1 then
-                if self:GetOwner():KeyPressed(IN_ALT2) then
+                if owner:KeyPressed(IN_ALT2) then
                     leanstate = 0
-                elseif self:GetOwner():KeyPressed(IN_ALT1) then
+                elseif owner:KeyPressed(IN_ALT1) then
                     leanstate = -1
                 end
             else
-                if self:GetOwner():KeyPressed(IN_ALT1) then
+                if owner:KeyPressed(IN_ALT1) then
                     leanstate = -1
-                elseif self:GetOwner():KeyPressed(IN_ALT2) then
+                elseif owner:KeyPressed(IN_ALT2) then
                     leanstate = 1
                 end
             end
         else
-            if self:GetOwner():KeyDown(IN_ALT1) then
+            if owner:KeyDown(IN_ALT1) then
                 leanstate = -1
-            elseif self:GetOwner():KeyDown(IN_ALT2) then
+            elseif owner:KeyDown(IN_ALT2) then
                 leanstate = 1
             else
                 leanstate = 0
@@ -51,9 +54,9 @@ function SWEP:ThinkLean()
 
     if leanstate != 0 then
         local tr = util.TraceHull({
-            start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() + self:GetOwner():EyeAngles():Right() * (self.MaxLeanOffset - 2) * leanstate,
-            filter = self:GetOwner(),
+            start = owner:EyePos(),
+            endpos = owner:EyePos() + owner:EyeAngles():Right() * (self.MaxLeanOffset - 2) * leanstate,
+            filter = owner,
             maxs = Vector(1, 1, 1) * 4,
             mins = Vector(-1, -1, -1) * 4,
         })
@@ -76,7 +79,7 @@ function SWEP:ThinkLean()
     self:SetLeanAmount(amt)
 
     if amt != 0 then
-        self:GetOwner():SetCollisionBounds(Vector(-32, -32, 0), Vector(32, 32, 64))
+        owner:SetCollisionBounds(Vector(-32, -32, 0), Vector(32, 32, 64))
     end
 
     local force = SERVER and (math.abs(amt) == 1 or math.abs(amt) == 0) and self.LastLeanAmountSERVER != amt
@@ -128,9 +131,11 @@ function SWEP:DoPlayerModelLean(cancel, forceupdate)
 
     if cancel then amt = 0 end
 
-    local bone = self:GetOwner():LookupBone(leanbone)
+    local owner = self:GetOwner()
+
+    local bone = owner:LookupBone(leanbone)
 
     if !bone then return end
 
-    self:GetOwner():ManipulateBoneAngles(bone, (amt < 0 and leanang_left or leanang_right) * amt * self.MaxLeanAngle, game.SinglePlayer() or cancel or forceupdate)
+    owner:ManipulateBoneAngles(bone, (amt < 0 and leanang_left or leanang_right) * amt * self.MaxLeanAngle, game.SinglePlayer() or cancel or forceupdate)
 end
