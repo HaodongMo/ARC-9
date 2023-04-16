@@ -1,5 +1,6 @@
 EFFECT.Weapon = nil
-
+local lighconvar = GetConVar("arc9_muzzle_light")
+local otherconvar = GetConVar("arc9_muzzle_others")
 function EFFECT:Init(data)
     local wpn = data:GetEntity()
 
@@ -7,12 +8,12 @@ function EFFECT:Init(data)
 
     if !IsValid(wpn) then self:Remove() return end
 
-    if !GetConVar("arc9_muzzle_others"):GetBool() and LocalPlayer() != wpn:GetOwner() then
+    if !otherconvar:GetBool() and LocalPlayer() != wpn:GetOwner() then
         self:Remove()
         return
     end
 
-    local muzzle = wpn:GetProcessedValue("MuzzleParticle")
+    local muzzle = wpn:GetProcessedValue("MuzzleParticle", _, _, true)
 
     local att = data:GetAttachment() or 1
 
@@ -72,7 +73,7 @@ function EFFECT:Init(data)
         end
     end
 
-    if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash") and GetConVar("arc9_muzzle_light"):GetBool() then
+    if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash", _, _, true) and lighconvar:GetBool() then
         local light = DynamicLight(self:EntIndex())
         local clr = Color(244, 209, 66)
         if (light) then

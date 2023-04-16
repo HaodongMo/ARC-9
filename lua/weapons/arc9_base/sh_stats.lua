@@ -456,13 +456,16 @@ do
             end
         end
 
+
+        -- mega cool thing to not calculate mostly static values
+
         if cachedelay then
             if self.PV_CacheLong[processedValueName] then
                 local cachetime = self.PV_CacheLong[processedValueName].time
 
                 if cachetime then
                     if upct > cachetime then
-                        self.PV_CacheLong[processedValueName].time = upct + 0.15
+                        self.PV_CacheLong[processedValueName].time = upct + 0.2
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
                         -- print(processedValueName, "working", upct)
                     end

@@ -257,7 +257,7 @@ local function GetWeaponCapabilities(wpn)
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
         VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable),
         ManualCycle = tobool(wpn:GetNeedsCycle() and wpn:ShouldManualCycle()),
-        Lean = tobool(wpn:GetProcessedValue("CanLean") and GetConVar("arc9_lean"):GetBool()),
+        Lean = tobool(wpn:GetProcessedValue("CanLean", _, _, true) and GetConVar("arc9_lean"):GetBool()),
     }
 
     return cap
@@ -586,7 +586,7 @@ function ARC9.DrawHUD()
             jammed = true
         end
 
-        if weapon:GetProcessedValue("Overheat") then
+        if weapon:GetProcessedValue("Overheat", _, _, true) then
             showheat = true
             heat = weapon:GetHeatAmount()
             heatcap = weapon:GetProcessedValue("HeatCapacity")

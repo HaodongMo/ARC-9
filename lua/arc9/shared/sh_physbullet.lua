@@ -69,7 +69,7 @@ end
 
 function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
 
-    local physmdl = wep:GetProcessedValue("PhysBulletModel")
+    local physmdl = wep:GetProcessedValue("PhysBulletModel", _, _, true)
     local mdlindex = ARC9.PhysBulletModelsLookup[string.lower(physmdl or "")] or 0
 
     if physmdl and mdlindex == 0 then
@@ -422,7 +422,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     attacker:FireBullets(fireBullets)
                 end
                 if IsValid(bullet.ClientModel) then
-                    local t = weapon:GetProcessedValue("PhysBulletModelStick") or 0
+                    local t = weapon:GetProcessedValue("PhysBulletModelStick", _, _, true) or 0
                     if t > 0 then
                         local entity = tr.Entity
 

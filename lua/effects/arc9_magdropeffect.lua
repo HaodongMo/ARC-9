@@ -27,14 +27,14 @@ function EFFECT:Init(data)
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
 
-    local model = ent:GetProcessedValue("DropMagazineModel")
-    local skinn = ent:GetProcessedValue("DropMagazineSkin")
-    local sounds = ent:GetProcessedValue("DropMagazineSounds")
+    local model = ent:GetProcessedValue("DropMagazineModel", _, _, true)
+    local skinn = ent:GetProcessedValue("DropMagazineSkin", _, _, true)
+    local sounds = ent:GetProcessedValue("DropMagazineSounds", _, _, true)
 
     local dir = ang:Forward()
 
-    local correctpos = ent:GetProcessedValue("DropMagazinePos") or vector_origin
-    local correctang = ent:GetProcessedValue("DropMagazineAng") or angle_zero
+    local correctpos = ent:GetProcessedValue("DropMagazinePos", _, _, true) or vector_origin
+    local correctang = ent:GetProcessedValue("DropMagazineAng", _, _, true) or angle_zero
     ang:RotateAroundAxis(ang:Forward(), correctang.p)
     ang:RotateAroundAxis(ang:Right(), 90 + correctang.y)
     ang:RotateAroundAxis(ang:Up(), 90 + correctang.r)
@@ -81,7 +81,7 @@ function EFFECT:Init(data)
     phys:SetMaterial("gmod_silent")
     -- phys:SetMaterial("default_silent")
 
-    local velocity = ent:GetProcessedValue("DropMagazineVelocity") or Vector(0, 0, 0)
+    local velocity = ent:GetProcessedValue("DropMagazineVelocity", _, _, true) or Vector(0, 0, 0)
 
     -- phys:SetVelocity((dir * mag * velocity) + plyvel)
     dir:Add(ang:Right() * velocity.x)

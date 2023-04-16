@@ -50,19 +50,19 @@ function EFFECT:Init(data)
     -- ang:RotateAroundAxis(ang:Up(), (ent.ShellRotateAngle or Angle(0, 0, 0))[2])
     -- ang:RotateAroundAxis(ang:Forward(), (ent.ShellRotateAngle or Angle(0, 0, 0))[3])
 
-    local model = ent:GetProcessedValue("ShellModel")
-    local material = ent:GetProcessedValue("ShellMaterial")
-    local scale = ent:GetProcessedValue("ShellScale")
-    local physbox = ent:GetProcessedValue("ShellPhysBox")
-    local pitch = ent:GetProcessedValue("ShellPitch")
-    local sounds = ent:GetProcessedValue("ShellSounds")
-    local smoke = ent:GetProcessedValue("ShellSmoke")
-    local velocity = ent:GetProcessedValue("ShellVelocity") or math.Rand(1, 2)
+    local model = ent:GetProcessedValue("ShellModel", _, _, true)
+    local material = ent:GetProcessedValue("ShellMaterial", _, _, true)
+    local scale = ent:GetProcessedValue("ShellScale", _, _, true)
+    local physbox = ent:GetProcessedValue("ShellPhysBox", _, _, true)
+    local pitch = ent:GetProcessedValue("ShellPitch", _, _, true)
+    local sounds = ent:GetProcessedValue("ShellSounds", _, _, true)
+    local smoke = ent:GetProcessedValue("ShellSmoke", _, _, true)
+    local velocity = ent:GetProcessedValue("ShellVelocity", _, _, true) or math.Rand(1, 2)
 
     local index = data:GetFlags()
 
     if index != 0 then
-        local shelldata = ent:GetProcessedValue("ExtraShellModels")[index]
+        local shelldata = ent:GetProcessedValue("ExtraShellModels", _, _, true)[index]
 
         if shelldata then
             model = shelldata.model or model
@@ -83,7 +83,7 @@ function EFFECT:Init(data)
 
     local dir = ang:Forward()
 
-    local correctang = ent:GetProcessedValue("ShellCorrectAng") or angle_zero
+    local correctang = ent:GetProcessedValue("ShellCorrectAng", _, _, true) or angle_zero
     ang:RotateAroundAxis(ang:Forward(), 90 + correctang.p)
     ang:RotateAroundAxis(ang:Right(), correctang.y)
     ang:RotateAroundAxis(ang:Up(), correctang.r)
