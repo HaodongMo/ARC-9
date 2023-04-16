@@ -50,6 +50,8 @@ function SWEP:Initialize()
         self.Primary.DefaultClip = 0
     end
 
+    if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true print("true") end
+
     ARC9.CacheAttsModels()
 
     if GetConVar("arc9_precache_sounds_onfirsttake"):GetBool() then

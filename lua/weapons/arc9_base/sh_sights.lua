@@ -272,7 +272,6 @@ do
 
     function SWEP:ThinkSights()
         -- if self:GetSafe() then return end
-        local vm = self:GetVM()
         local swepDt = self.dt
 
         local sighted = swepDt.InSights
@@ -282,11 +281,8 @@ do
 
         local oldamt = swepDt.SightAmount
         local amt = math.Approach(
-            oldamt, sighted and 1 or 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
-
-        if CLIENT then
-            entitySetPoseParameter(vm, "sights", amt)
-        end
+            -- oldamt, sighted and 1 or 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
+            oldamt, sighted and 1 or 0, FrameTime() / 1)
 
         if oldamt ~= amt then
             self:SetSightAmount(amt)
@@ -326,7 +322,12 @@ do
             swepSwitchMultiSight(self)
         end
 
-        entitySetPoseParameter(vm, "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
+        if HasSightsPoseparam then
+            if CLIENT then
+                entitySetPoseParameter(self:GetVM(), "sights", amt)
+            end
+            entitySetPoseParameter(self:GetVM(), "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
+        end
     end
 end
 
