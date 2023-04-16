@@ -211,23 +211,6 @@ function ARC9.GetHUDColor(part, alpha)
     return col
 end
 
-local arc9logo_layer1 = Material("arc9/logo/logo_bottom.png", "mips smooth")
-local arc9logo_layer2 = Material("arc9/logo/logo_middle.png", "mips smooth")
-local arc9logo_layer3 = Material("arc9/logo/logo_top.png", "mips smooth")
-
-function ARC9.DrawColoredARC9Logo(x, y, s, col)
-    surface.SetDrawColor(255, 255, 255)
-    surface.SetMaterial(arc9logo_layer1)
-    surface.DrawTexturedRect(x, y, s, s)
-
-    surface.SetDrawColor(col)
-    surface.SetMaterial(arc9logo_layer2)
-    surface.DrawTexturedRect(x, y, s, s)
-
-    surface.SetDrawColor(255, 255, 255)
-    surface.SetMaterial(arc9logo_layer3)
-    surface.DrawTexturedRect(x, y, s, s)
-end
 
 local rackrisetime = 0
 local lastrow = 0

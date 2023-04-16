@@ -355,6 +355,8 @@ ARC9.SettingsTable = {
 
 local ARC9ScreenScale = ARC9.ScreenScale
 -- local mat_icon = Material("arc9/arc9_logo_ui.png", "mips smooth")
+local arc9logo_layer1 = Material("arc9/logo/logo_bottom.png", "mips smooth")
+local arc9logo_layer2 = Material("arc9/logo/logo_middle.png", "mips smooth")
 
 local function DrawSettings(bg, page)
     local cornercut = ARC9ScreenScale(3.5)
@@ -571,7 +573,20 @@ local function DrawSettings(bg, page)
         -- surface.SetMaterial(mat_icon)
         -- surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9ScreenScale(20))
 
-        ARC9.DrawColoredARC9Logo(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9.GetHUDColor("hi"))
+        -- ARC9.DrawColoredARC9Logo(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9.GetHUDColor("hi"))
+        
+        -- function ARC9.DrawColoredARC9Logo(x, y, s, col)
+        do
+            local x, y, s = ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20)
+            surface.SetDrawColor(255, 255, 255)
+            surface.SetMaterial(arc9logo_layer1)
+            surface.DrawTexturedRect(x, y, s, s)
+        
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            surface.SetMaterial(arc9logo_layer2)
+            surface.DrawTexturedRect(x, y, s, s)
+        end
+
 
         surface.SetFont("ARC9_8_Slim")
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
