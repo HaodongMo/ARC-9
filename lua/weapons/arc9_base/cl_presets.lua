@@ -182,14 +182,17 @@ function SWEP:GetAttCountFromTable(tbl)
     return count
 end
 
+local arc9_atts_nocustomize = GetConVar("arc9_atts_nocustomize")
+local arc9_autosave = GetConVar("arc9_autosave")
+
 function SWEP:LoadPreset(filename)
-    if GetConVar("arc9_atts_nocustomize"):GetBool() then return end
+    if arc9_atts_nocustomize:GetBool() then return end
     if LocalPlayer() != self:GetOwner() then return end
 
     filename = filename or "autosave"
 
     if filename == "autosave" then
-        if !GetConVar("arc9_autosave"):GetBool() then return end
+        if !arc9_autosave:GetBool() then return end
     end
 
     filename = ARC9.PresetPath .. self:GetPresetBase() .. "/" .. filename .. ".txt"
@@ -258,8 +261,11 @@ function SWEP:SavePreset(presetname, nooverride, forcedname)
     end
 end
 
+local arc9_killfeed_color = GetConVar("arc9_killfeed_color")
+local matshiny = Material("models/shiny")
+
 function SWEP:DoPresetCapture(filename, foricon)
-    local color = GetConVar("arc9_killfeed_color"):GetBool()
+    local color = arc9_killfeed_color:GetBool()
 
     render.PushRenderTarget(cammat)
 
@@ -336,7 +342,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     if !color then
         render.SetBlend(1)
         render.SetColorModulation(1, 1, 1)
-        render.MaterialOverride(Material("models/shiny"))
+        render.MaterialOverride(matshiny)
     end
 
     render.OverrideColorWriteEnable(true, false)
@@ -347,7 +353,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     render.BlurRenderTarget(cammat, 10, 10, 1)
 
     if !color then
-        render.MaterialOverride(Material("models/shiny"))
+        render.MaterialOverride(matshiny)
     end
 
     self:DrawCustomModel(true, pos, ang)

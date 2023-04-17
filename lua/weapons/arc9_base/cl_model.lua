@@ -206,9 +206,9 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         csmodel:SetMaterial(atttbl.ModelMaterial)
     end
 
-    csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
-    csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
-    csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
+    csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", _, _, true)
+    csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", _, _, true)
+    csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", _, _, true)
 
     if atttbl.CharmModel then
         local charmmodel = ClientsideModel(atttbl.CharmModel)
@@ -463,9 +463,9 @@ function SWEP:SetupModel(wm, lod, cm)
                 Weapon = self
             }
 
-            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
-            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
-            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
+            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", _, _, true)
+            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", _, _, true)
+            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", _, _, true)
 
             table.insert(ARC9.CSModelPile, tbl)
 
@@ -531,9 +531,9 @@ function SWEP:SetupModel(wm, lod, cm)
                 csmodel.DrawFunc(self, csmodel, wm)
             end
 
-            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
-            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
-            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
+            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", _, _, true)
+            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", _, _, true)
+            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", _, _, true)
 
             local proxmodel
 

@@ -182,7 +182,11 @@ function SWEP:DoRTScopeEffects()
     -- end
 end
 
-local vec1 = Vector(1,1,1)
+local vec1 = Vector(1, 1, 1)
+
+local arc9_scope_r = GetConVar("arc9_scope_r")
+local arc9_scope_g = GetConVar("arc9_scope_g")
+local arc9_scope_b = GetConVar("arc9_scope_b")
 
 function SWEP:DoRTScope(model, atttbl, active)
     local pos = model:GetPos()
@@ -238,9 +242,9 @@ function SWEP:DoRTScope(model, atttbl, active)
 
             if atttbl.RTScopeColorable then
                 color = Color(0, 0, 0)
-                color.r = GetConVar("arc9_scope_r"):GetInt()
-                color.g = GetConVar("arc9_scope_g"):GetInt()
-                color.b = GetConVar("arc9_scope_b"):GetInt()
+                color.r = arc9_scope_r:GetInt()
+                color.g = arc9_scope_g:GetInt()
+                color.b = arc9_scope_b:GetInt()
             end
 
             -- I'm not sure this is a good feature to add
