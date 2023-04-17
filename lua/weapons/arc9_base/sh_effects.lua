@@ -11,8 +11,10 @@ function SWEP:DoEffects()
 
     local muzzle = "arc9_muzzleeffect"
 
-    if !self:GetProcessedValue("MuzzleParticle", _, _, true) and self:GetProcessedValue("MuzzleEffect", _, _, true) then
-        muzzle = self:GetProcessedValue("MuzzleEffect", _, _, true)
+    local muzefect = self:GetProcessedValue("MuzzleEffect", _, _, true)
+
+    if !self:GetProcessedValue("MuzzleParticle", _, _, true) and muzefect then
+        muzzle = muzefect
         data:SetScale(1)
         data:SetFlags(0)
         data:SetEntity(self:GetVM())
@@ -58,12 +60,13 @@ end
 
 function SWEP:GetTracerOrigin()
     local ow = self:GetOwner()
-    local wm = ow:IsNPC() or !ow:IsValid() or !ow:GetViewModel():IsValid() or ow:ShouldDrawLocalPlayer()
+    local vm = ow:GetViewModel()
+    local wm = ow:IsNPC() or !ow:IsValid() or !vm:IsValid() or ow:ShouldDrawLocalPlayer()
     local att = self:GetQCAMuzzle()
     local muzz = self
 
     if !wm then
-        muzz = ow:GetViewModel()
+        muzz = vm
     end
 
     if muzz and muzz:IsValid() then

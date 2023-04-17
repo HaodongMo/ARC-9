@@ -1,5 +1,7 @@
 
 function SWEP:Deploy()
+    local owner = self:GetOwner()
+
     if self:GetOwner():IsNPC() then
         return
     end
@@ -21,7 +23,7 @@ function SWEP:Deploy()
     self:SetEmptyReload(false)
     self:SetLeanState(0)
 
-    self:GetOwner():SetCanZoom(false)
+    owner:SetCanZoom(false)
     -- self:SetTraversalSprint(false)
     -- self:SetLastPressedWTime(0)
 
@@ -54,7 +56,7 @@ function SWEP:Deploy()
 
     self:SetBipod(false)
 
-    self:SetTriggerDown(self:GetOwner():KeyDown(IN_ATTACK))
+    self:SetTriggerDown(owner:KeyDown(IN_ATTACK))
 
     local holsteredtime = CurTime() - self:GetLastHolsterTime()
 
@@ -75,8 +77,8 @@ function SWEP:Deploy()
         self:SetTimer(0.25, function()
             self:SendWeapon()
         end)
-        if IsValid(self:GetOwner():GetHands()) then
-            self:GetOwner():GetHands():SetLightingOriginEntity(self:GetOwner():GetViewModel())
+        if IsValid(owner:GetHands()) then
+            owner:GetHands():SetLightingOriginEntity(owner:GetViewModel())
         end
     end
 
@@ -101,13 +103,15 @@ function SWEP:ClientHolster()
         self:CallOnClient("ClientHolster")
     end
 
-    self:GetVM():SetSubMaterial()
-    self:GetVM():SetMaterial()
+    local vm = self:GetVM()
 
-    for i = 0, self:GetVM():GetBoneCount() do
-        self:GetVM():ManipulateBoneScale(i, v1)
-        self:GetVM():ManipulateBoneAngles(i, a0)
-        self:GetVM():ManipulateBonePosition(i, v0)
+    vm:SetSubMaterial()
+    vm:SetMaterial()
+
+    for i = 0, vm:GetBoneCount() do
+        vm:ManipulateBoneScale(i, v1)
+        vm:ManipulateBoneAngles(i, a0)
+        vm:ManipulateBonePosition(i, v0)
     end
 end
 
@@ -115,9 +119,11 @@ function SWEP:Holster(wep)
     -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
     if game.SinglePlayer() and CLIENT then return end
 
-    if CLIENT and self:GetOwner() != LocalPlayer() then return end
+    local owner = self:GetOwner()
 
-    if self:GetOwner():IsNPC() then
+    if CLIENT and owner != LocalPlayer() then return end
+
+    if owner:IsNPC() then
         return
     end
 
@@ -126,9 +132,13 @@ function SWEP:Holster(wep)
     end
 
     self:SetCustomize(false)
-    if self:GetValue("AnimDraw") then
-        self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))
+    
+    local animdrwa = self:GetValue("AnimDraw")
+
+    if animdrwa then
+        self:DoPlayerAnimationEvent(animdrwa)
     end
+
     if self:GetHolsterTime() > CurTime() then return false end
 
     if (self:GetHolsterTime() != 0 and self:GetHolsterTime() <= CurTime()) or !IsValid(wep) then
@@ -138,8 +148,8 @@ function SWEP:Holster(wep)
         self:SetHolster_Entity(NULL)
 
         self:KillTimers()
-        self:GetOwner():SetFOV(0, 0)
-        self:GetOwner():SetCanZoom(true)
+        owner:SetFOV(0, 0)
+        owner:SetCanZoom(true)
         self:EndLoop()
 
         self:ClientHolster()
@@ -205,8 +215,11 @@ hook.Add("StartCommand", "ARC9_Holster", function(ply, ucmd)
     end
 end)
 
+local arc9_never_ready = GetConVar("arc9_never_ready")
+local arc9_dev_always_ready = GetConVar("arc9_dev_always_ready")
+
 function SWEP:DoDeployAnimation()
-    if !GetConVar("arc9_never_ready"):GetBool() and (GetConVar("arc9_dev_always_ready"):GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
+    if !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
         local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", 1, _, true), true)
 
         self:SetReadyTime(CurTime() + t * min)

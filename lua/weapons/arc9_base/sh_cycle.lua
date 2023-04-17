@@ -1,12 +1,13 @@
 function SWEP:ThinkCycle()
     if self:StillWaiting() then return end
+    local owner = self:GetOwner()
 
     local manual = self:ShouldManualCycle()
 
-    local cycling = !self:GetOwner():KeyDown(IN_ATTACK)
+    local cycling = !owner:KeyDown(IN_ATTACK)
 
     if manual then
-        cycling = self:GetOwner():KeyDown(IN_RELOAD)
+        cycling = owner:KeyDown(IN_RELOAD)
     end
 
     if self:GetNeedsCycle() and (cycling or self:GetProcessedValue("SlamFire", _, _, true)) then

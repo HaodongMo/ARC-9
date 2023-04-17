@@ -1,8 +1,9 @@
 function SWEP:ThinkGrenade()
-    if !self:GetProcessedValue("Throwable") then return end
+    if !self:GetProcessedValue("Throwable", _, _, true) then return end
+    local owner = self:GetOwner()
 
     if IsValid(self:GetDetonatorEntity()) then
-        if self:GetOwner():KeyPressed(IN_ATTACK) then
+        if owner:KeyPressed(IN_ATTACK) then
             self:TouchOff()
             return
         end
@@ -36,30 +37,30 @@ function SWEP:ThinkGrenade()
                 self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
                 self:SetGrenadeRecovering(false)
             end
-        elseif ((tossable and self:GetOwner():KeyDown(IN_ATTACK2)) or
-            self:GetOwner():KeyDown(IN_ATTACK)) and
+        elseif ((tossable and owner:KeyDown(IN_ATTACK2)) or
+        owner:KeyDown(IN_ATTACK)) and
             self:HasAmmoInClip() and
-            (!self:GetOwner():KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash", _, _, true)) and
+            (!owner:KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash", _, _, true)) and
             !IsValid(self:GetDetonatorEntity())
             then
             self:SetGrenadePrimed(true)
             self:SetGrenadePrimedTime(CurTime())
 
-            if self:GetOwner():KeyDown(IN_ATTACK2) and self:HasAnimation("pullpin_toss") then
+            if owner:KeyDown(IN_ATTACK2) and self:HasAnimation("pullpin_toss") then
                 self:PlayAnimation("pullpin_toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
             else
                 self:PlayAnimation("pullpin", self:GetProcessedValue("ThrowAnimSpeed"), true)
             end
-            self:SetGrenadeTossing(self:GetOwner():KeyDown(IN_ATTACK2))
+            self:SetGrenadeTossing(owner:KeyDown(IN_ATTACK2))
         end
     else
         if self:GetAnimLockTime() > CurTime() then return end
 
-        if self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly", _, _, true)) then
+        if self:GetGrenadeTossing() and (!owner:KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly", _, _, true)) then
             local t = self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
             local mp = self:GetAnimationEntry("toss").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS, t * mp)
-        elseif !self:GetGrenadeTossing() and (!self:GetOwner():KeyDown(IN_ATTACK) or self:GetProcessedValue("ThrowInstantly", _, _, true)) then
+        elseif !self:GetGrenadeTossing() and (!owner:KeyDown(IN_ATTACK) or self:GetProcessedValue("ThrowInstantly", _, _, true)) then
             local t = self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
             local mp = self:GetAnimationEntry("throw").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL, t * mp)
@@ -94,7 +95,9 @@ function SWEP:ThrowGrenade(nttype, delaytime)
     local num = self:GetProcessedValue("Num")
     local ent = self:GetProcessedValue("ShootEnt")
 
-    if self:GetOwner():IsNPC() then
+    local owner = self:GetOwner()
+
+    if owner:IsNPC() then
         -- ang = self:GetOwner():GetAimVector():Angle()
         spread = self:GetNPCBulletSpread()
     else
@@ -116,8 +119,8 @@ function SWEP:ThrowGrenade(nttype, delaytime)
 
         local src, dir
         if self:GetProcessedValue("ThrowOnGround", _, _, true) then
-            src = self:GetOwner():EyePos()
-            dir = Angle(0, self:GetOwner():GetAngles().y, 0)
+            src = owner:EyePos()
+            dir = Angle(0, owner:GetAngles().y, 0)
 
             local shootposoffset = self:GetProcessedValue("ShootPosOffset", _, _, true)
 
@@ -156,7 +159,7 @@ function SWEP:ThrowGrenade(nttype, delaytime)
 
             nade:SetPos(src)
             nade:SetAngles(dir)
-            nade:SetOwner(self:GetOwner())
+            nade:SetOwner(owner)
             nade:Spawn()
 
             if fusetimer >= 0 then
@@ -184,7 +187,7 @@ function SWEP:ThrowGrenade(nttype, delaytime)
                 end
 
                 if self:GetProcessedValue("ShootEntInheritPlayerVelocity") then
-                    local vel = self:GetOwner():GetVelocity()
+                    local vel = owner:GetVelocity()
                     local limit = self:GetProcessedValue("ShootEntInheritPlayerVelocityLimit")
                     if isnumber(limit) and limit > 0 and vel:Length() > limit then
                         vel = vel:GetNormalized() * limit

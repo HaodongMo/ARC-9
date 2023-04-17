@@ -2,9 +2,11 @@ function SWEP:ThinkInspect()
     if self:StillWaiting() or self:GetInSights() then return end
     if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
     if self:GetUBGL() and !self:HasAnimation("inspect_ubgl") then return end
+
+    local owner = self:GetOwner()
     
     -- self:PlayAnimation("inspect", 1, true)
-    if (self:GetOwner():KeyDown(IN_USE) and self:GetOwner():KeyDown(IN_RELOAD)) or self:GetOwner():KeyDown(ARC9.IN_INSPECT) then
+    if (owner:KeyDown(IN_USE) and owner:KeyDown(IN_RELOAD)) or owner:KeyDown(ARC9.IN_INSPECT) then
         if !self:HasAnimation("enter_inspect") then
             self:PlayAnimation("inspect", 1, true)
             return

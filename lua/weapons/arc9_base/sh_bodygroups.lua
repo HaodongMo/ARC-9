@@ -3,9 +3,10 @@ local v1 = Vector(1, 1, 1)
 
 function SWEP:DoBodygroups(wm, cm)
     if cm then wm = true end
+    local owner = self:GetOwner()
 
-    if !wm and !IsValid(self:GetOwner()) then return end
-    if !wm and self:GetOwner():IsNPC() then return end
+    if !wm and !IsValid(owner) then return end
+    if !wm and owner:IsNPC() then return end
 
     local dbg = self:GetValue("DefaultBodygroups")
 
@@ -128,9 +129,9 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
-    mdl.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture")
-    mdl.CustomCamoScale = self:GetProcessedValue("CustomCamoScale")
-    mdl.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor")
+    mdl.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", _, _, true)
+    mdl.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", _, _, true)
+    mdl.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", _, _, true)
 
     -- PrintTable(mdl:GetMaterials())
 

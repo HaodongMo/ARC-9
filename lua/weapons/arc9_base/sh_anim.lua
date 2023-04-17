@@ -288,50 +288,54 @@ function SWEP:DoPoseParams()
 end
 
 function SWEP:ThinkAnimation()
-    if CLIENT and self:GetSequenceProxy() != 0 then
-        for _, wm in ipairs({true, false}) do
-            local mdl = self:GetAnimationProxyModel(wm)
+    if CLIENT then 
+        local seqprox = self:GetSequenceProxy()
 
-            if !IsValid(mdl) then continue end
+        if seqprox != 0 then
+            for _, wm in ipairs({true, false}) do
+                local mdl = self:GetAnimationProxyModel(wm)
 
-            mdl:SetSequence(self:GetSequenceIndex())
-            mdl:SetCycle(self:GetSequenceCycle())
+                if !IsValid(mdl) then continue end
 
-            if self:GetSequenceProxy() == self.LHIKModelAddress then
-                local lhik_mdl
+                mdl:SetSequence(self:GetSequenceIndex())
+                mdl:SetCycle(self:GetSequenceCycle())
 
-                if wm then
-                    lhik_mdl = self.LHIKModelWM
-                else
-                    lhik_mdl = self.LHIKModel
+                if seqprox == self.LHIKModelAddress then
+                    local lhik_mdl
+
+                    if wm then
+                        lhik_mdl = self.LHIKModelWM
+                    else
+                        lhik_mdl = self.LHIKModel
+                    end
+
+                    if !lhik_mdl then return end
+
+                    lhik_mdl:SetSequence(self:GetSequenceIndex())
+                    lhik_mdl:SetCycle(self:GetSequenceCycle())
                 end
 
-                if !lhik_mdl then return end
+                if seqprox == self.RHIKModelAddress then
+                    local rhik_mdl
 
-                lhik_mdl:SetSequence(self:GetSequenceIndex())
-                lhik_mdl:SetCycle(self:GetSequenceCycle())
-            end
+                    if wm then
+                        rhik_mdl = self.RHIKModelWM
+                    else
+                        rhik_mdl = self.RHIKModel
+                    end
 
-            if self:GetSequenceProxy() == self.RHIKModelAddress then
-                local rhik_mdl
+                    if !rhik_mdl then return end
 
-                if wm then
-                    rhik_mdl = self.RHIKModelWM
-                else
-                    rhik_mdl = self.RHIKModel
+                    rhik_mdl:SetSequence(self:GetSequenceIndex())
+                    rhik_mdl:SetCycle(self:GetSequenceCycle())
                 end
 
-                if !rhik_mdl then return end
+                local anim_mdl = self:GetAnimationProxyGunDriver()
 
-                rhik_mdl:SetSequence(self:GetSequenceIndex())
-                rhik_mdl:SetCycle(self:GetSequenceCycle())
-            end
-
-            local anim_mdl = self:GetAnimationProxyGunDriver()
-
-            if IsValid(anim_mdl) then
-                anim_mdl:SetSequence(self:GetSequenceIndex())
-                anim_mdl:SetCycle(self:GetSequenceCycle())
+                if IsValid(anim_mdl) then
+                    anim_mdl:SetSequence(self:GetSequenceIndex())
+                    anim_mdl:SetCycle(self:GetSequenceCycle())
+                end
             end
         end
     end

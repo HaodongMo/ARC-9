@@ -1,12 +1,13 @@
 function SWEP:ThinkBipod()
     local bip = self:GetBipod()
+    local owner = self:GetOwner()
 
     if bip then
-        if self:MustExitBipod() or self:GetOwner():KeyDown(IN_BACK) then
+        if self:MustExitBipod() or owner:KeyDown(IN_BACK) then
             self:ExitBipod()
         end
     else
-        if self:CanBipod() and self:GetOwner():KeyPressed(IN_ATTACK2) then
+        if self:CanBipod() and owner:KeyPressed(IN_ATTACK2) then
             self:EnterBipod()
         end
     end
@@ -33,10 +34,12 @@ function SWEP:CanBipod(ang)
 
     if self:GetEnterBipodTime() + 1 > CurTime() then return end
 
-    if self:GetOwner():KeyDown(IN_FORWARD) or self:GetOwner():KeyDown(IN_BACK) or self:GetOwner():KeyDown(IN_MOVELEFT) or self:GetOwner():KeyDown(IN_MOVERIGHT) then return end
+    local owner = self:GetOwner()
 
-    local pos = self:GetOwner():EyePos()
-    ang = ang or self:GetOwner():EyeAngles()
+    if owner:KeyDown(IN_FORWARD) or owner:KeyDown(IN_BACK) or owner:KeyDown(IN_MOVELEFT) or owner:KeyDown(IN_MOVERIGHT) then return end
+
+    local pos = owner:EyePos()
+    ang = ang or owner:EyeAngles()
 
     local maxs = Vector(2, 2, 2)
     local mins = Vector(-2, -2, -48)
@@ -44,7 +47,7 @@ function SWEP:CanBipod(ang)
     local tr = util.TraceLine({
         start = pos,
         endpos = pos + (ang:Forward() * 64),
-        filter = self:GetOwner(),
+        filter = owner,
         mask = MASK_PLAYERSOLID
     })
 
@@ -60,7 +63,7 @@ function SWEP:CanBipod(ang)
     local tr2 = util.TraceHull({
         start = pos,
         endpos = pos + (ang:Forward() * 24),
-        filter = self:GetOwner(),
+        filter = owner,
         maxs = maxs,
         mins = mins,
         mask = MASK_PLAYERSOLID
@@ -85,8 +88,10 @@ function SWEP:EnterBipod()
     self:PlayAnimation("enter_bipod", 1, true)
     self:SetEnterBipodTime(CurTime())
 
-    self:SetBipodAng(self:GetOwner():EyeAngles())
-    self:SetBipodPos(self:GetOwner():EyePos() + (self:GetOwner():EyeAngles():Forward() * 4) - Vector(0, 0, 2))
+    local owner = self:GetOwner()
+
+    self:SetBipodAng(owner:EyeAngles())
+    self:SetBipodPos(owner:EyePos() + (owner:EyeAngles():Forward() * 4) - Vector(0, 0, 2))
 
     self:ExitSights()
 end

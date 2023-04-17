@@ -10,7 +10,9 @@ function SWEP:SwitchFiremode()
 
     if self:GetUBGL() then return end
 
-    if #self:GetValue("Firemodes") < 2 then return end
+    local fmodes = self:GetValue("Firemodes")
+
+    if #fmodes < 2 then return end
 
     local fm = self:GetFiremode()
 
@@ -18,7 +20,7 @@ function SWEP:SwitchFiremode()
 
     fm = fm + 1
 
-    if fm > #self:GetValue("Firemodes") then
+    if fm > #fmodes then
         fm = 1
     end
 
@@ -75,10 +77,12 @@ function SWEP:SetFiremodePose(wm)
 
     pp = self:RunHook("HookP_ModifyFiremodePoseParam", pp) or pp
 
-    if self:GetFinishFiremodeAnimTime() < CurTime() then
-        vm:SetPoseParameter("firemode", pp)
-    else
-        vm:SetPoseParameter("firemode", 1)
+    if self.HasFiremodePoseparam then
+        if self:GetFinishFiremodeAnimTime() < CurTime() then
+            vm:SetPoseParameter("firemode", pp)
+        else
+            vm:SetPoseParameter("firemode", 1)
+        end
     end
 end
 

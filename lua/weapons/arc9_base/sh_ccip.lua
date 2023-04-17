@@ -1,3 +1,6 @@
+local ARC9_bullet_drag = GetConVar("ARC9_bullet_drag")
+local ARC9_bullet_gravity = GetConVar("ARC9_bullet_gravity")
+
 function SWEP:GetCCIP(pos, ang)
     -- get calculated point of impact
 
@@ -17,8 +20,8 @@ function SWEP:GetCCIP(pos, ang)
     for i = 1, maxiter do
         local dir = vel:GetNormalized()
         local spd = vel:Length() * timestep
-        local drag = d * spd * spd * (1 / 150000) * GetConVar("ARC9_bullet_drag"):GetFloat()
-        local gravity = timestep * g * GetConVar("ARC9_bullet_gravity"):GetFloat() * 600
+        local drag = d * spd * spd * (1 / 150000) * ARC9_bullet_drag:GetFloat()
+        local gravity = timestep * g * ARC9_bullet_gravity:GetFloat() * 600
 
         if spd <= 0.001 then return nil end
 
