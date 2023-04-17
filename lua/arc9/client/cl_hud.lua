@@ -67,7 +67,7 @@ function ARC9.ShouldDrawHUD()
     hide.CHudGMod = incust
 
     -- if (!hud and !incust) or (!a9 and !hudalways) then return end
-    if (!arc9_hud_arc9:GetBool() and !incust) or (!a9 and !Garc9_hud_always:GetBool()) then return end -- this line was hard
+    if (!arc9_hud_arc9:GetBool() and !incust) or (!a9 and !arc9_hud_always:GetBool()) then return end -- this line was hard
 
     return true
 end
