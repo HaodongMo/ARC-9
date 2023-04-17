@@ -1,5 +1,9 @@
 -- third person inverse kinematics
 
+local arc9_tpik = GetConVar("arc9_tpik")
+local arc9_tpik_others = GetConVar("arc9_tpik_others")
+local arc9_tpik_framerate = GetConVar("arc9_tpik_framerate")
+
 function SWEP:ShouldTPIK()
     if self.NoTPIK then return end
     local owner = self:GetOwner()
@@ -16,11 +20,11 @@ function SWEP:ShouldTPIK()
     -- if self:GetBlindFireAmount() > 0 then return false end
     if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
     if self:RunHook("Hook_BlockTPIK") then return end
-    -- if !GetConVar("arc9_tpik"):GetBool() then return false end
+    -- if !arc9_tpik:GetBool() then return false end
     if lp != owner then
-        return GetConVar("arc9_tpik_others"):GetBool()
+        return arc9_tpik_others:GetBool()
     else
-        return GetConVar("arc9_tpik"):GetBool()
+        return arc9_tpik:GetBool()
     end
     -- return false
 end
@@ -48,7 +52,7 @@ function SWEP:DoTPIK()
     if ply != LocalPlayer() then
         local dist = EyePos():DistToSqr(ply:GetPos())
 
-        local convartpiktime = GetConVar("arc9_tpik_framerate"):GetFloat()
+        local convartpiktime = arc9_tpik_framerate:GetFloat()
         convartpiktime = (convartpiktime == 0) and 250 or math.Clamp(convartpiktime, 5, 250)
         tpikdelay = 1 / convartpiktime
 
@@ -69,7 +73,9 @@ function SWEP:DoTPIK()
 
     local nolefthand = false
 
-    if !self.NotAWeapon and (self:GetHoldType() == "slam" or self:GetHoldType() == "magic" or self:GetHoldType() == "pistol"  or self:GetHoldType() == "normal") then
+    local htype = self:GetHoldType()
+
+    if !self.NotAWeapon and (htype == "slam" or htype == "magic" or htype == "pistol"  or htype == "normal") then
         nolefthand = true
     end
 

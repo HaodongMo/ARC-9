@@ -702,9 +702,10 @@ function ARC9.DrawHUD()
     cam.Start3D(nil, nil, 55, 0, ScrH() - anchorwidth, anchorwidth, anchorwidth)
     -- cam.Start3D(nil, nil, 105)
 
-    local up, right, forward = EyeAngles():Up(), EyeAngles():Right(), EyeAngles():Forward()
-
     local ang = EyeAngles()
+
+    local up, right, forward = ang:Up(), ang:Right(), ang:Forward()
+
     -- local ang = EyeAngles()
 
     -- ang = ang + Angle(0, 180, 0)

@@ -321,7 +321,7 @@ do
             swepSwitchMultiSight(self)
         end
 
-        if HasSightsPoseparam then
+        if self.HasSightsPoseparam then
             if CLIENT then
                 entitySetPoseParameter(self:GetVM(), "sights", amt)
             end

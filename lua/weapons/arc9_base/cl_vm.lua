@@ -19,6 +19,18 @@ local function arc9toytown(amount) -- cool ass blur
 end
 
 local bluramt = 0
+-- please cache fucking convars
+local arc9_fx_rtblur = GetConVar("arc9_fx_rtblur")
+local arc9_fx_animblur = GetConVar("arc9_fx_animblur")
+local arc9_fx_reloadblur = GetConVar("arc9_fx_reloadblur")
+local arc9_cust_blur = GetConVar("arc9_cust_blur")
+local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
+local arc9_dev_greenscreen = GetConVar("arc9_dev_greenscreen")
+local arc9_cust_light = GetConVar("arc9_cust_light")
+local arc9_cust_light_brightness = GetConVar("arc9_cust_light_brightness")
+local arc9_dev_benchgun = GetConVar("arc9_dev_benchgun")
+local arc9_fx_adsblur = GetConVar("arc9_fx_adsblur")
+
 
 function SWEP:PreDrawViewModel()
     if ARC9.PresetCam then
@@ -31,7 +43,7 @@ function SWEP:PreDrawViewModel()
 
     local blurtarget = 0
 
-    local blurenable = GetConVar("arc9_fx_rtblur"):GetBool()
+    local blurenable = arc9_fx_rtblur:GetBool()
 
     local shouldrtblur = sightamount > 0 and blurenable and !self.Peeking and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
 
@@ -39,7 +51,7 @@ function SWEP:PreDrawViewModel()
         blurtarget = 2 * sightamount
     end
 
-    if (GetConVar("arc9_fx_reloadblur"):GetBool() and self:GetReloading()) or (GetConVar("arc9_fx_animblur"):GetBool() and self:GetReadyTime() >= CurTime()) then
+    if (arc9_fx_reloadblur:GetBool() and self:GetReloading()) or (arc9_fx_animblur:GetBool() and self:GetReadyTime() >= CurTime()) then
         blurtarget = 1.5
         shouldrtblur = true
     end
@@ -47,7 +59,7 @@ function SWEP:PreDrawViewModel()
     local custdelta = self.CustomizeDelta
 
     if custdelta > 0 then
-        if GetConVar("arc9_cust_blur"):GetBool() then
+        if arc9_cust_blur:GetBool() then
             blurtarget = 5 * custdelta
         end
 
@@ -55,12 +67,12 @@ function SWEP:PreDrawViewModel()
             surface.SetDrawColor(15, 15, 15, 180 * custdelta)
             surface.DrawRect(0, 0, ScrW(), ScrH())
             surface.SetDrawColor(0, 0, 0, 255 * custdelta)
-            if !GetConVar("arc9_hud_darkmode"):GetBool() then
+            if !arc9_hud_darkmode:GetBool() then
                 surface.SetMaterial(vignette)
                 surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
             end
 
-            if GetConVar("arc9_dev_greenscreen"):GetBool() then
+            if arc9_dev_greenscreen:GetBool() then
                 -- print(GetConVar("mat_bloom_scalefactor_scalar"):SetFloat())
                 surface.SetDrawColor(0, 255, 0, 255 * custdelta)
                 surface.DrawRect(0, 0, ScrW(), ScrH())
@@ -74,7 +86,7 @@ function SWEP:PreDrawViewModel()
 
     bluramt = math.Approach(bluramt, blurtarget, FrameTime() * 10)
 
-    if GetConVar("arc9_cust_light"):GetBool() and self:GetCustomize() then
+    if arc9_cust_light:GetBool() and self:GetCustomize() then
         -- render.SuppressEngineLighting(true)
         -- render.ResetModelLighting(0.6, 0.6, 0.6)
         -- render.SetModelLighting(BOX_TOP, 4, 4, 4)
@@ -83,7 +95,7 @@ function SWEP:PreDrawViewModel()
         light.r = 255
         light.g = 255
         light.b = 255
-        light.brightness = 0.2 * (GetConVar("arc9_cust_light_brightness"):GetFloat())
+        light.brightness = 0.2 * (arc9_cust_light_brightness:GetFloat())
         light.Decay = 1000
         light.Size = 500
         light.DieTime = CurTime() + 0.1
@@ -98,8 +110,13 @@ function SWEP:PreDrawViewModel()
     local bipodamount = self:GetBipodAmount()
     local vm = self:GetVM()
 
-    vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
-    if self:GetValue("BoneMods") then for i, k in pairs(self:GetValue("BoneMods")) do
+    if self.HasSightsPoseparam then
+        vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
+    end
+
+    local bonemods = self:GetValue("BoneMods")
+
+    if bonemods then for _, k in pairs(bonemods) do
         local boneindex = vm:LookupBone(i)
 
         if !boneindex then continue end
@@ -108,13 +125,14 @@ function SWEP:PreDrawViewModel()
         vm:ManipulateBoneAngles(boneindex, k.ang or angle_zero)
         vm:ManipulateBoneScale(boneindex, k.scale or vector_origin)
     end end
+    
     vm:InvalidateBoneCache()
 
     local vmfov = self:GetViewModelFOV()
 
     self.ViewModelFOV = vmfov
 
-    if !GetConVar("arc9_dev_benchgun"):GetBool() then
+    if !arc9_dev_benchgun:GetBool() then
         cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
     end
 
@@ -126,12 +144,15 @@ function SWEP:PreDrawViewModel()
         self:DoRTScope(vm, self:GetTable(), sightamount > 0)
     end
 
-    vm:SetMaterial(self:GetProcessedValue("Material"))
+    vm:SetMaterial(self:GetProcessedValue("Material", _, _, true))
 
     cam.IgnoreZ(true)
 
     self:SetFiremodePose()
-    vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
+    
+    if self.HasSightsPoseparam then
+        vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
+    end
 
     if sightamount > 0.75 and getsights.FlatScope and !getsights.FlatScopeKeepVM then
         render.SetBlend(0)
@@ -203,7 +224,7 @@ function SWEP:PostDrawViewModel()
     cam.IgnoreZ(false)
     render.SetBlend(1)
 
-    if !GetConVar("arc9_dev_benchgun"):GetBool() then
+    if !arc9_dev_benchgun:GetBool() then
         cam.End3D()
     end
 
@@ -220,6 +241,6 @@ function SWEP:PostDrawViewModel()
     end
     cam.End3D()
 
-    if GetConVar("arc9_fx_adsblur"):GetBool() and self:GetSight().Blur != false and !self.Peeking then arc9toytown(self:GetSightAmount()) end -- cool ass blur
+    if arc9_fx_adsblur:GetBool() and self:GetSight().Blur != false and !self.Peeking then arc9toytown(self:GetSightAmount()) end -- cool ass blur
     -- render.UpdateFullScreenDepthTexture()
 end
