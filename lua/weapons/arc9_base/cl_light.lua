@@ -77,8 +77,13 @@ function SWEP:KillFlashlights()
     self.Flashlights = nil
 end
 
+local arc9_allflash = GetConVar("arc9_allflash")
+
 function SWEP:DrawFlashlightsWM()
-    if (!GetConVar("arc9_allflash"):GetBool()) and self:GetOwner() != LocalPlayer() then return end
+    local owner = self:GetOwner()
+    local lp = LocalPlayer()
+
+    if (!arc9_allflash:GetBool()) and owner != lp then return end
 
     if !self.Flashlights then
         self:CreateFlashlights()
@@ -92,8 +97,8 @@ function SWEP:DrawFlashlightsWM()
         local pos, ang
 
         if !model then
-            pos = self:GetOwner():EyePos()
-            ang = self:GetOwner():EyeAngles()
+            pos = owner:EyePos()
+            ang = owner:EyeAngles()
         else
             pos = model:GetPos()
             ang = model:GetAngles()
@@ -105,14 +110,14 @@ function SWEP:DrawFlashlightsWM()
             start = pos,
             endpos = pos + ang:Forward() * 16,
             mask = MASK_OPAQUE,
-            filter = LocalPlayer(),
+            filter = lp,
         })
         if tr.Fraction < 1 then -- We need to push the flashlight back
             local tr2 = util.TraceLine({
                 start = pos,
                 endpos = pos - ang:Forward() * 16,
                 mask = MASK_OPAQUE,
-                filter = LocalPlayer(),
+                filter = lp,
             })
             -- push it as back as the area behind us allows
             pos = pos + -ang:Forward() * 16 * math.min(1 - tr.Fraction, tr2.Fraction)
@@ -131,6 +136,10 @@ function SWEP:DrawFlashlightsVM()
         self:CreateFlashlights()
     end
 
+    local owner = self:GetOwner()
+    local lp = LocalPlayer()
+    local eyepos = owner:EyePos()
+
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).VModel
 
@@ -139,25 +148,25 @@ function SWEP:DrawFlashlightsVM()
         local pos, ang
 
         if !model then
-            pos = self:GetOwner():EyePos()
-            ang = self:GetOwner():EyeAngles()
+            pos = eyepos
+            ang = owner:EyeAngles()
         else
             pos = model:GetPos()
             ang = model:GetAngles()
         end
 
         local tr = util.TraceLine({
-            start = self:GetOwner():EyePos(),
-            endpos = self:GetOwner():EyePos() - -ang:Forward() * 128,
+            start = eyepos,
+            endpos = eyepos - -ang:Forward() * 128,
             mask = MASK_OPAQUE,
-            filter = LocalPlayer(),
+            filter = lp,
         })
         if tr.Fraction < 1 then -- We need to push the flashlight back
             local tr2 = util.TraceLine({
-                start = self:GetOwner():EyePos(),
-                endpos = self:GetOwner():EyePos() + -ang:Forward() * 128,
+                start = eyepos,
+                endpos = eyepos + -ang:Forward() * 128,
                 mask = MASK_OPAQUE,
-                filter = LocalPlayer(),
+                filter = lp,
             })
             -- push it as back as the area behind us allows
             pos = pos + -ang:Forward() * 128 * math.min(1 - tr.Fraction, tr2.Fraction)
