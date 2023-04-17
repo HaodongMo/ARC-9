@@ -90,6 +90,8 @@ function SWEP:BuildMultiSight()
     local keepbaseirons = true
     local keepmodularirons = true
 
+    local dev3 = ARC9.Dev(3)
+
     for i, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
         if slottbl.BlockSights then continue end
@@ -105,7 +107,7 @@ function SWEP:BuildMultiSight()
                 local s = {}
 
                 if CLIENT then
-                    if ARC9.Dev(3) then
+                    if dev3 then
                         s = self:GenerateAutoSight({
                             Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
                             Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
@@ -133,7 +135,7 @@ function SWEP:BuildMultiSight()
                 s.OnSwitchToSight = sight.OnSwitchToSight
                 s.OnSwitchFromSight = sight.OnSwitchFromSight
 
-                if ARC9.Dev(3) then
+                if dev3 then
                     s.OriginalSightTable = {
                         Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
                         Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
@@ -183,7 +185,7 @@ function SWEP:BuildMultiSight()
 
     if keepbaseirons then
         local tbl = {}
-        if ARC9.Dev(3) then
+        if dev3 then
             table.insert(tbl, {
                 Pos = Vector(GetConVar("arc9_dev_irons_x"):GetFloat(), GetConVar("arc9_dev_irons_y"):GetFloat(), GetConVar("arc9_dev_irons_z"):GetFloat()),
                 Ang = Angle(GetConVar("arc9_dev_irons_pitch"):GetFloat(), GetConVar("arc9_dev_irons_yaw"):GetFloat(), GetConVar("arc9_dev_irons_roll"):GetFloat()),
