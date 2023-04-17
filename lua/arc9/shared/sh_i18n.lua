@@ -2,12 +2,13 @@ ARC9.PhraseTable = ARC9.PhraseTable or {}
 ARC9.STPTable = ARC9.STPTable or {}
 
 local lang_cvar = GetConVar("arc9_language")
+local gmod_language = GetConVar("gmod_language")
 
 function ARC9:GetLanguage()
     if lang_cvar:GetString() ~= "" then
         return string.lower(lang_cvar:GetString())
     end
-    local l = GetConVar("gmod_language"):GetString()
+    local l = gmod_language:GetString()
     return string.lower(l)
 end
 
@@ -110,7 +111,7 @@ function ARC9:LoadLanguages()
     ARC9.PhraseTable = {}
 
     ARC9:LoadLanguage()
-    ARC9:LoadLanguage(GetConVar("gmod_language"):GetString())
+    ARC9:LoadLanguage(gmod_language:GetString())
     ARC9:LoadLanguage("en")
 end
 

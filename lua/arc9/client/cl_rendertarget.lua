@@ -1,3 +1,5 @@
+local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
+
 hook.Add("PreRender", "ARC9_PreRender", function()
     local wpn = LocalPlayer():GetActiveWeapon()
 
@@ -5,7 +7,7 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 
     wpn:RunHook("Hook_DoRT")
 
-    if GetConVar("ARC9_cheapscopes"):GetBool() then return end
+    if ARC9_cheapscopes:GetBool() then return end
 
     local atttbl = wpn:IsScoping()
 
@@ -15,7 +17,7 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 end)
 
 hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
-    if !GetConVar("ARC9_cheapscopes"):GetBool() then return end
+    if !ARC9_cheapscopes:GetBool() then return end
 
     local wpn = LocalPlayer():GetActiveWeapon()
 

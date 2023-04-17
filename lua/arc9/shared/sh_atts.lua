@@ -159,6 +159,8 @@ function ARC9.GetAttTable(name)
     end
 end
 
+local arc9_atts_anarchy = GetConVar("arc9_atts_anarchy")
+
 function ARC9.GetAttsForCats(cats)
     if !istable(cats) then
         cats = {cats}
@@ -174,7 +176,7 @@ function ARC9.GetAttsForCats(cats)
         end
 
         for _, cat in pairs(cats) do
-            if GetConVar("arc9_atts_anarchy"):GetBool() then
+            if arc9_atts_anarchy:GetBool() then
                 table.insert(atts, k.ShortName)
                 break
             else
@@ -219,8 +221,10 @@ end
 
 hook.Add("OnReloaded", "ARC9_ReloadAtts", ARC9.LoadAtts)
 
+local arc9_atts_max = GetConVar("arc9_atts_max")
+
 function ARC9.GetMaxAtts()
-    return GetConVar("arc9_atts_max"):GetInt()
+    return arc9_atts_max:GetInt()
 end
 
 if CLIENT then

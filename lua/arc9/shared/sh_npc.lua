@@ -16,18 +16,18 @@ hook.Add("InitPostEntity", "ARC9_NPCRegister", function()
 end)
 
 if SERVER then
+    local arc9_npc_give_weapons = GetConVar("arc9_npc_give_weapons")
 
-net.Receive("arc9_givenpcweapon", function(len, ply)
-    local ent = net.ReadEntity()
+    net.Receive("arc9_givenpcweapon", function(len, ply)
+        local ent = net.ReadEntity()
 
-    if !GetConVar("arc9_npc_give_weapons"):GetBool() then return end
+        if !arc9_npc_give_weapons:GetBool() then return end
 
-    if !ent:IsValid() then return end
-    if !ent:IsNPC() then return end
+        if !ent:IsValid() then return end
+        if !ent:IsNPC() then return end
 
-    ARC9.GiveNPCPlayerWeapon(ent, ply)
-end)
-
+        ARC9.GiveNPCPlayerWeapon(ent, ply)
+    end)
 end
 
 function ARC9.GiveNPCPlayerWeapon(npc, ply)

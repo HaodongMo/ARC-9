@@ -4,6 +4,11 @@ SWEP.FOV = 90
 local SmoothRecoilUp = 0
 local SmoothRecoilSide = 0
 
+local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
+local arc9_vm_cambob = GetConVar("arc9_vm_cambob")
+local arc9_vm_cambobwalk = GetConVar("arc9_vm_cambobwalk")
+local arc9_vm_cambobintensity = GetConVar("arc9_vm_cambobintensity")
+
 function SWEP:CalcView(ply, pos, ang, fov)
     if self:GetOwner():ShouldDrawLocalPlayer() then return end
 
@@ -36,7 +41,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
         ang.y = ang.y + SmoothRecoilSide
     end
 
-    if self:IsScoping() and GetConVar("arc9_cheapscopes"):GetBool() then
+    if self:IsScoping() and arc9_cheapscopes:GetBool() then
         local _, shootang = self:GetShootPos()
 
         ang = LerpAngle(sightamount, ang, shootang)
@@ -48,9 +53,9 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     ang = ang + (self:GetCameraControl() or angle_zero)
     
-    if GetConVar("arc9_vm_cambob"):GetBool() then
-        local sprintmult = GetConVar("arc9_vm_cambobwalk"):GetBool() and 1 or Lerp(self:GetSprintAmount(), 0, 1)
-        local totalmult = math.ease.InQuad(math.Clamp(self.ViewModelBobVelocity / 350, 0, 1) * Lerp(sightamount, 1, 0.65)) * sprintmult * GetConVar("arc9_vm_cambobintensity"):GetFloat()
+    if arc9_vm_cambob:GetBool() then
+        local sprintmult = arc9_vm_cambobwalk:GetBool() and 1 or Lerp(self:GetSprintAmount(), 0, 1)
+        local totalmult = math.ease.InQuad(math.Clamp(self.ViewModelBobVelocity / 350, 0, 1) * Lerp(sightamount, 1, 0.65)) * sprintmult * arc9_vm_cambobintensity:GetFloat()
         ang:RotateAroundAxis(ang:Right(),   math.cos(self.BobCT * 6)    * totalmult * -0.5)
         ang:RotateAroundAxis(ang:Up(),      math.cos(self.BobCT * 3.3)  * totalmult * -0.5)
         ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * 6)    * totalmult * -0.36)

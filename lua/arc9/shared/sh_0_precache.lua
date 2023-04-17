@@ -10,9 +10,10 @@ local function CacheAModel(mdl)
         end
     end
 end
+local arc9_precache_attsmodels_onfirsttake = GetConVar("arc9_precache_attsmodels_onfirsttake")
 
 function ARC9.CacheAttsModels()
-    if SERVER and GetConVar("arc9_precache_attsmodels_onfirsttake"):GetBool() then
+    if SERVER and arc9_precache_attsmodels_onfirsttake:GetBool() then
         if !ARC9.AttMdlPrecached then
             print("ARC9: Starting caching all attachments models assets.")
             for _, mdl in ipairs(ARC9.ModelToPrecacheList) do

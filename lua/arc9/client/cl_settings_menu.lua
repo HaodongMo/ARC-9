@@ -626,6 +626,7 @@ end
 local hoversound = "arc9/newui/uimouse_hover.ogg"
 local clicksound = "arc9/newui/uimouse_click_return.ogg"
 
+local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
 
 function ARC9_OpenSettings(page)
     local bg = vgui.Create("DFrame")
@@ -639,10 +640,8 @@ function ARC9_OpenSettings(page)
     bg:SetBackgroundBlur(true)
     -- bg:MakePopup()
 
-    -- local darkmode = GetConVar("arc9_hud_darkmode"):GetBool()
-
     bg.Paint = function(self2, w, h)
-        if GetConVar("arc9_hud_darkmode"):GetBool() then -- ehh i wanted make it local outside but then it becomes not dynamic
+        if arc9_hud_darkmode:GetBool() then
             surface.SetDrawColor(58, 58, 58, 206)
         else
             surface.SetDrawColor(20, 20, 20, 224)

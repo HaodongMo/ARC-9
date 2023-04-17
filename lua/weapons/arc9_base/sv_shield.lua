@@ -1,3 +1,5 @@
+local arc9_dev_show_shield = GetConVar("arc9_dev_show_shield")
+
 function SWEP:CreateShield()
     self:KillShield()
 
@@ -37,7 +39,7 @@ function SWEP:CreateShield()
     shield:SetSolid(SOLID_NONE)
     shield:SetMoveType(MOVETYPE_NONE)
 
-    if GetConVar("arc9_dev_show_shield"):GetBool() then
+    if arc9_dev_show_shield:GetBool() then
         shield:SetColor(Color(0, 0, 0, 255))
     else
         shield:SetNoDraw(true)

@@ -1,6 +1,10 @@
+local arc9_free_atts = GetConVar("arc9_free_atts")
+local arc9_atts_lock = GetConVar("arc9_atts_lock")
+local arc9_atts_loseondie = GetConVar("arc9_atts_loseondie")
+
 function ARC9:PlayerGetAtts(ply, att)
     if !IsValid(ply) then return 0 end
-    if GetConVar("arc9_free_atts"):GetBool() then return 999 end
+    if arc9_free_atts:GetBool() then return 999 end
 
     if att == "" then return 999 end
 
@@ -42,7 +46,7 @@ function ARC9:PlayerGiveAtt(ply, att, amt)
 
     if atttbl.InvAtt then att = atttbl.InvAtt end
 
-    if GetConVar("arc9_atts_lock"):GetBool() then
+    if arc9_atts_lock:GetBool() then
         if ply.ARC9_AttInv[att] == 1 then return end
         ply.ARC9_AttInv[att] = 1
     else
@@ -53,7 +57,7 @@ end
 function ARC9:PlayerTakeAtt(ply, att, amt)
     amt = amt or 1
 
-    if GetConVar("arc9_atts_lock"):GetBool() then return end
+    if arc9_atts_lock:GetBool() then return end
 
     if !IsValid(ply) or !ply:IsPlayer() then return end
 
@@ -119,7 +123,7 @@ end)
 hook.Add("PlayerSpawn", "ARC9_SpawnAttInv", function(ply, trans)
     if trans then return end
 
-    if GetConVar("arc9_atts_loseondie"):GetInt() >= 1 then
+    if arc9_atts_loseondie:GetInt() >= 1 then
         ply.ARC9_AttInv = {}
 
         ARC9:PlayerSendAttInv(ply)
@@ -127,7 +131,7 @@ hook.Add("PlayerSpawn", "ARC9_SpawnAttInv", function(ply, trans)
 end)
 
 function ARC9:PlayerSendAttInv(ply)
-    if GetConVar("arc9_free_atts"):GetBool() then return end
+    if arc9_free_atts:GetBool() then return end
 
     if !IsValid(ply) then return end
 

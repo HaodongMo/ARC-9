@@ -1,5 +1,8 @@
 local arc9_lean_direction = nil
 
+local arc9_autoreload = GetConVar("arc9_autoreload")
+local arc9_autolean = GetConVar("arc9_autolean")
+
 hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     local wpn = LocalPlayer():GetActiveWeapon()
     local ply = LocalPlayer()
@@ -7,7 +10,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     if !IsValid(wpn) then return end
     if !wpn.ARC9 then return end
 
-    if (GetConVar("arc9_autoreload"):GetBool() or wpn:GetRequestReload()) and
+    if (arc9_autoreload:GetBool() or wpn:GetRequestReload()) and
         !wpn:GetCustomize() and
         !wpn:GetCustomize() and
         wpn:CanReload() and
@@ -44,7 +47,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
         cmd:AddKey(ARC9.IN_SWITCHSIGHTS)
     end
 
-    if GetConVar("arc9_autolean"):GetBool() then
+    if arc9_autolean:GetBool() then
         if cmd:KeyDown(IN_ATTACK2) or (wpn:ToggleADS() and arc9_lean_direction != nil and arc9_lean_direction != 0) then
             if arc9_lean_direction != nil and arc9_lean_direction != 0 then
                 if wpn:ToggleADS() then

@@ -273,6 +273,7 @@ end
 local bulletGravity = GetConVar("ARC9_bullet_gravity")
 local bulletDrag = GetConVar("ARC9_bullet_drag")
 local bulletImaginary = GetConVar("ARC9_bullet_imaginary")
+local bulletLifetime = GetConVar("ARC9_bullet_lifetime")
 local traceResultTab = {}
 local traceTab = {
     output = traceResultTab
@@ -579,7 +580,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
         bullet.Dead = true
     end
 
-    if bullet.StartTime <= (CurTime() - GetConVar("ARC9_bullet_lifetime"):GetFloat()) then
+    if bullet.StartTime <= (CurTime() - bulletLifetime:GetFloat()) then
         bullet.Dead = true
     elseif !indim(bullet.Pos, MaxDimensions) then
         bullet.Dead = true

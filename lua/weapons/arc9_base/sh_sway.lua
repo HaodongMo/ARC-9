@@ -101,15 +101,17 @@ SWEP.IsHoldingBreath = false
 function SWEP:HoldingBreath()
     if self:GetSightAmount() < 0.05 then self.IsHoldingBreath = false return end
 
+    local ownerkeydownspeed = self:GetOwner():KeyDown(IN_SPEED)
+
     if togglconvar:GetBool() then
-        if self:GetOwner():KeyDown(IN_SPEED) and !lastpressed then
+        if ownerkeydownspeed and !lastpressed then
             self.IsHoldingBreath = !self.IsHoldingBreath
         end
     else
-        self.IsHoldingBreath = self:GetOwner():KeyDown(IN_SPEED)
+        self.IsHoldingBreath = ownerkeydownspeed
     end
 
-    lastpressed = self:GetOwner():KeyDown(IN_SPEED)
+    lastpressed = ownerkeydownspeed
     
     return self:CanHoldBreath() and self.IsHoldingBreath and (self:GetSightAmount() >= 1) and self:GetValue("HoldBreathTime") > 0
 end

@@ -8,15 +8,18 @@ function ARC9.HUDBob(pos, ang)
     local ts = 0 -- self:GetTraversalSprintAmount()
     -- ts = 1
 
-    local v = LocalPlayer():GetVelocity():Length()
+    local lp = LocalPlayer()
+    local ft = FrameTime()
+
+    local v = lp:GetVelocity():Length()
     v = math.Clamp(v, 0, 350)
     hud_velocity = v
     local d = math.Clamp(hud_velocity / 350, 0, 1)
 
-    if LocalPlayer():OnGround() and LocalPlayer():GetMoveType() != MOVETYPE_NOCLIP then
-        hud_notonground = math.Approach(hud_notonground, 0, FrameTime() / 0.1)
+    if lp:OnGround() and lp:GetMoveType() != MOVETYPE_NOCLIP then
+        hud_notonground = math.Approach(hud_notonground, 0, ft / 0.1)
     else
-        hud_notonground = math.Approach(hud_notonground, 1, FrameTime() / 0.1)
+        hud_notonground = math.Approach(hud_notonground, 1, ft / 0.1)
     end
 
     mag = mag * d
@@ -33,7 +36,7 @@ function ARC9.HUDBob(pos, ang)
     steprate = Lerp(hud_notonground, steprate, 0.25)
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
-        bobct = bobct + (FrameTime() * steprate)
+        bobct = bobct + (ft * steprate)
     end
 
     return pos, ang

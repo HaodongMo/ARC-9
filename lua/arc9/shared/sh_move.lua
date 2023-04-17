@@ -66,6 +66,8 @@ ARC9.ClientRecoilSide = 0
 
 ARC9.ClientRecoilProgress = 0
 
+local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
+
 function ARC9.StartCommand(ply, cmd)
     if !IsValid(ply) then return end
 
@@ -100,7 +102,7 @@ function ARC9.StartCommand(ply, cmd)
     end
 
     local isScope = wpn:GetSight() and wpn:GetSight().atttbl and wpn:GetSight().atttbl.RTScope
-    local cheap = CLIENT and isScope and GetConVar("ARC9_cheapscopes"):GetBool()
+    local cheap = CLIENT and isScope and ARC9_cheapscopes:GetBool()
 
     if wpn:GetSightAmount() > 0.5 and cheap then
         local swayspeed = 2

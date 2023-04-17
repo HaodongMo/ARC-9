@@ -525,6 +525,7 @@ end
 
 if CLIENT then
     local cl_rumble = GetConVar("arc9_controller_rumble")
+
     function SWEP:SInputRumble()
         if !sinput then return false end
         if !cl_rumble:GetBool() then return false end
@@ -657,6 +658,7 @@ end
 
 local runHook = {}
 local bodyDamageCancel = GetConVar("arc9_mod_bodydamagecancel")
+local arc9_npc_equality = GetConVar("arc9_npc_equality")
 
 local soundTab2 = {
     name = "impact"
@@ -722,7 +724,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     local owner = self:GetOwner()
 
-    if owner:IsNPC() and !GetConVar("arc9_npc_equality"):GetBool() then
+    if owner:IsNPC() and !arc9_npc_equality:GetBool() then
         dmgv = dmgv * 0.25
     end
 

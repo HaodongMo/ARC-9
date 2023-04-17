@@ -1,6 +1,8 @@
 EFFECT.Weapon = nil
+
 local lighconvar = GetConVar("arc9_muzzle_light")
 local otherconvar = GetConVar("arc9_muzzle_others")
+
 function EFFECT:Init(data)
     local wpn = data:GetEntity()
 

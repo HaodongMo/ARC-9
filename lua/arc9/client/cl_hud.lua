@@ -14,8 +14,9 @@ hook.Add("HUDShouldDraw", "ARC9_HideHUD", function(name)
     end
 end)
 
+local arc9_hud_scale = GetConVar("arc9_hud_scale")
 ARC9.ScreenScale = function(size)
-    return size * (ScrW() / 640) * GetConVar("arc9_hud_scale"):GetFloat() * 0.9
+    return size * (ScrW() / 640) * arc9_hud_scale:GetFloat() * 0.9
 end
 
 local ARC9ScreenScale = ARC9.ScreenScale
@@ -50,19 +51,23 @@ ARC9.Colors = {
     md = Color(107,107,92),
 }
 
+local cl_drawhud = GetConVar("cl_drawhud")
+local arc9_hud_arc9 = GetConVar("arc9_hud_arc9")
+local arc9_hud_always = GetConVar("arc9_hud_always")
+
 function ARC9.ShouldDrawHUD()
-    if !GetConVar("cl_drawhud"):GetBool() then return end
+    if !cl_drawhud:GetBool() then return end
 
     local wpn = LocalPlayer():GetActiveWeapon()
     local a9 = wpn.ARC9
     local incust = a9 and wpn:GetCustomize()
-    -- local hud = GetConVar("arc9_hud_arc9"):GetBool()
-    -- local hudalways = GetConVar("arc9_hud_always"):GetBool()
+    -- local hud = arc9_hud_arc9:GetBool()
+    -- local hudalways = arc9_hud_always:GetBool()
 
     hide.CHudGMod = incust
 
     -- if (!hud and !incust) or (!a9 and !hudalways) then return end
-    if (!GetConVar("arc9_hud_arc9"):GetBool() and !incust) or (!a9 and !GetConVar("arc9_hud_always"):GetBool()) then return end -- this line was hard
+    if (!arc9_hud_arc9:GetBool() and !incust) or (!a9 and !Garc9_hud_always:GetBool()) then return end -- this line was hard
 
     return true
 end
@@ -148,9 +153,12 @@ local events = {
     },
 }
 
+local arc9_holiday_month = GetConVar("arc9_holiday_month")
+local arc9_holiday_day = GetConVar("arc9_holiday_day")
+
 function ARC9.GetTime()
-    if GetConVar("arc9_holiday_month"):GetInt() > 0 and GetConVar("arc9_holiday_day"):GetInt() > 0 then
-        return os.time( { month = GetConVar("arc9_holiday_month"):GetInt(), day = GetConVar("arc9_holiday_day"):GetInt(), year = 2000 } )
+    if arc9_holiday_month:GetInt() > 0 and arc9_holiday_day:GetInt() > 0 then
+        return os.time( { month = arc9_holiday_month:GetInt(), day = arc9_holiday_day:GetInt(), year = 2000 } )
     else
         return os.time( )--{ month = 12, day = 1, year = 2000 } )
     end
@@ -186,20 +194,25 @@ local holidayscolors = {
     }
 }
 
+local arc9_hud_color_r = GetConVar("arc9_hud_color_r")
+local arc9_hud_color_g = GetConVar("arc9_hud_color_g")
+local arc9_hud_color_b = GetConVar("arc9_hud_color_b")
+local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
+
 function ARC9.GetHUDColor(part, alpha)
     alpha = alpha or 255
     local col = ARC9.Colors[part] or ARC9.Colors.hi
 
     if part == "hi" then
         col = Color(
-            GetConVar("arc9_hud_color_r"):GetInt(),
-            GetConVar("arc9_hud_color_g"):GetInt(),
-            GetConVar("arc9_hud_color_b"):GetInt()
+            arc9_hud_color_r:GetInt(),
+            arc9_hud_color_g:GetInt(),
+            arc9_hud_color_b:GetInt()
         )
     end
 
     if part == "bg" then
-        if GetConVar("arc9_hud_darkmode"):GetBool() then
+        if arc9_hud_darkmode:GetBool() then
             col = ARC9.Colors["bgdark"]
         end
     end
@@ -244,6 +257,8 @@ local automatics = {
     ["weapon_egon"] = true
 }
 
+local arc9_lean = GetConVar("arc9_lean")
+
 local function GetWeaponCapabilities(wpn)
     cap = {
         UBGL = tobool(!wpn:GetInSights() and wpn:GetValue("UBGL")),
@@ -257,7 +272,7 @@ local function GetWeaponCapabilities(wpn)
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
         VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable),
         ManualCycle = tobool(wpn:GetNeedsCycle() and wpn:ShouldManualCycle()),
-        Lean = tobool(wpn:GetProcessedValue("CanLean", _, _, true) and GetConVar("arc9_lean"):GetBool()),
+        Lean = tobool(wpn:GetProcessedValue("CanLean", _, _, true) and arc9_lean:GetBool()),
     }
 
     return cap
@@ -395,13 +410,16 @@ local function GetHintsTable(capabilities)
     return hints
 end
 
+local arc9_hud_nohints = GetConVar("arc9_hud_nohints")
+local arc9_hud_compact = GetConVar("arc9_hud_compact")
+
 local function DrawSimpleHints()
-    if GetConVar("arc9_hud_nohints"):GetBool() then return end
+    if arc9_hud_nohints:GetBool() then return end
 
     local weapon = LocalPlayer():GetActiveWeapon()
     if !weapon.ARC9 then return end
 
-    if !GetConVar("cl_drawhud"):GetBool() then return end
+    if !cl_drawhud:GetBool() then return end
     if weapon:GetCustomize() then return end
 
     local ct = CurTime()
@@ -730,11 +748,13 @@ function ARC9.DrawHUD()
     pos, ang = ARC9.HUDBob(pos, ang)
     pos, ang = ARC9.HUDSway(pos, ang)
 
+    local compatc = arc9_hud_compact:GetBool()
+
     cam.Start3D2D(pos, ang, 0.0125)
         -- surface.SetDrawColor(ARC9.GetHUDColor("shadow_3d", 20))
         -- surface.DrawRect( 8, 4, 254, 110 )
 
-        if GetConVar("arc9_hud_compact"):GetBool() then
+        if compatc then
             surface.SetDrawColor(ARC9.GetHUDColor("bg_3d", 20))
             surface.DrawRect( 0, 0, 254, 80 )
 
@@ -802,7 +822,7 @@ function ARC9.DrawHUD()
         local hb_tall = 24
         local hb_wide = 209
 
-        if GetConVar("arc9_hud_compact"):GetBool() and showheat then
+        if compatc and showheat then
             hb_wide = 140
         end
 
@@ -891,7 +911,7 @@ function ARC9.DrawHUD()
             local therm_deco_y = 97
             local therm_deco = ARC9:GetPhrase("hud.therm_deco")
 
-            if GetConVar("arc9_hud_compact"):GetBool() then
+            if compatc then
                 therm_x = 174
                 therm_y = 6
                 therm_w = 70
@@ -1020,7 +1040,7 @@ function ARC9.DrawHUD()
             CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_LCD" }, fmh_text )
         end
 
-        if !GetConVar("arc9_hud_compact"):GetBool() then
+        if !compatc then
             -- bullet fields
 
             local b_alpha = 225
@@ -1106,7 +1126,7 @@ function ARC9.DrawHUD()
 
     cam.End3D2D()
 
-    if weapon.ARC9 and !GetConVar("arc9_hud_nohints"):GetBool() then
+    if weapon.ARC9 and !arc9_hud_nohints:GetBool() then
         local capabilities = GetWeaponCapabilities(weapon)
 
         -- local hints = {
@@ -1671,13 +1691,14 @@ Vararg:
 ]]
 
 local lastupdate = 0
+local arc9_controller_glyphset = GetConVar("arc9_controller_glyphset")
 local function UpdateGlyphs()
     if lastupdate == FrameNumber() then
         return false
     end
     lastupdate = FrameNumber()
 
-    local glyphset = GetConVar("arc9_controller_glyphset"):GetString()
+    local glyphset = arc9_controller_glyphset:GetString()
     if glyphset != "" then
         table.Empty(ARC9.CTRL_Set_UserCustom)
         local config = glyphset

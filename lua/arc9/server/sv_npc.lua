@@ -72,11 +72,14 @@ ARC9.PopulateWeaponClasses()
 
 hook.Add("InitPostEntity", "ARC9_PopulateWeaponClasses", ARC9.PopulateWeaponClasses)
 
+local arc9_npc_autoreplace = GetConVar("arc9_npc_autoreplace")
+local arc9_replace_spawned = GetConVar("arc9_replace_spawned")
+
 function ARC9.ReplaceSpawnedWeapon(ent)
     if CLIENT then return end
 
     if ent:IsNPC() then
-        if !GetConVar("arc9_npc_autoreplace"):GetBool() then return end
+        if !arc9_npc_autoreplace:GetBool() then return end
         timer.Simple(0, function()
             if !ent:IsValid() then return end
             local cap = ent:CapabilitiesGet()
@@ -100,7 +103,7 @@ function ARC9.ReplaceSpawnedWeapon(ent)
             end
         end)
     elseif ent:IsWeapon() then
-        if !GetConVar("arc9_replace_spawned"):GetBool() then return end
+        if !arc9_replace_spawned:GetBool() then return end
         timer.Simple(0, function()
             if !ent:IsValid() then return end
             if IsValid(ent:GetOwner()) then return end
@@ -135,9 +138,12 @@ end
 
 hook.Add("OnEntityCreated", "ARC9_ReplaceSpawnedWeapons", ARC9.ReplaceSpawnedWeapon)
 
+local arc9_npc_blacklist = GetConVar("arc9_npc_blacklist")
+local arc9_npc_whitelist = GetConVar("arc9_npc_whitelist")
+
 function ARC9.WeaponIsAllowed(class)
-    local blacklist = GetConVar("arc9_npc_blacklist"):GetString()
-    local whitelist = GetConVar("arc9_npc_whitelist"):GetString()
+    local blacklist = arc9_npc_blacklist:GetString()
+    local whitelist = arc9_npc_whitelist:GetString()
 
     if whitelist == "" then
         -- Check blacklist

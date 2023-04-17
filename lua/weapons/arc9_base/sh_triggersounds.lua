@@ -3,8 +3,9 @@ function SWEP:ThinkTriggerSounds()
     if self:StillWaiting() then return end
     if self:SprintLock() then return end
     if self:GetSafe() then return end
+    local owner = self:GetOwner()
 
-    if self:GetOwner():KeyReleased(IN_ATTACK) then
+    if owner:KeyReleased(IN_ATTACK) then
         local soundtab = {
             name = "triggerup",
             sound = self:RandomChoice(self:GetProcessedValue("TriggerUpSound", _, _, true)),
@@ -12,7 +13,7 @@ function SWEP:ThinkTriggerSounds()
         }
 
         self:PlayTranslatedSound(soundtab)
-    elseif self:GetOwner():KeyPressed(IN_ATTACK) then
+    elseif owner:KeyPressed(IN_ATTACK) then
         local soundtab = {
             name = "triggerdown",
             sound = self:RandomChoice(self:GetProcessedValue("TriggerDownSound", _, _, true)),

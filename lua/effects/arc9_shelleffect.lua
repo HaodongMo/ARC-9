@@ -12,6 +12,9 @@ EFFECT.VMContext = true
 
 EFFECT.PCFs = {}
 
+local arc9_eject_time = GetConVar("arc9_eject_time")
+local arc9_eject_fx = GetConVar("arc9_eject_fx")
+
 function EFFECT:Init(data)
 
     local att = data:GetAttachment()
@@ -79,7 +82,7 @@ function EFFECT:Init(data)
         end
     end
 
-    self.ShellTime = self.ShellTime + GetConVar("arc9_eject_time"):GetFloat()
+    self.ShellTime = self.ShellTime + arc9_eject_time:GetFloat()
 
     local dir = ang:Forward()
 
@@ -138,7 +141,7 @@ function EFFECT:Init(data)
     phys:AddAngleVelocity(VectorRand() * 100)
     phys:AddAngleVelocity(ang:Up() * 2500 * velocity / 0.75)
 
-    if !GetConVar("arc9_eject_fx"):GetBool() then
+    if !arc9_eject_fx:GetBool() then
         smoke = false
     end
 

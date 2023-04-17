@@ -5,6 +5,13 @@ ARC9.FOV = 90
 ARC9.RealCamPos = Vector(0, 0, 0)
 ARC9.RealCamAng = Angle(0, 0, 0)
 
+local arc9_cam_shoulder = GetConVar("arc9_cam_shoulder")
+local sensitivity = GetConVar("sensitivity")
+local m_yaw = GetConVar("m_yaw")
+local m_pitch = GetConVar("m_pitch")
+local arc9_thirdperson_force = GetConVar("arc9_thirdperson_force")
+local arc9_thirdperson = GetConVar("arc9_thirdperson")
+
 function ARC9.CalcView( ply, pos, angles, fov )
     local cam_enabled = ARC9.ShouldThirdPerson()
     local znear = 2
@@ -87,7 +94,7 @@ function ARC9.CalcView( ply, pos, angles, fov )
     local forward = angles:Forward()
 
     if !traceend then
-        traceend = attpos + (up * cam_up) + (right * cam_right * GetConVar("arc9_cam_shoulder"):GetInt()) + (forward * cam_forward)
+        traceend = attpos + (up * cam_up) + (right * cam_right * arc9_cam_shoulder:GetInt()) + (forward * cam_forward)
     end
 
     local view = {}
@@ -217,14 +224,16 @@ function ARC9.InputMouseApply( cmd, x, y, ang )
         c_angles = c_angles
     end
 
-    local deltax = x * mult * GetConVar("sensitivity"):GetFloat() / 100
-    local deltay = y * mult * GetConVar("sensitivity"):GetFloat() / 100
+    local sensa = mult * sensitivity:GetFloat() / 100
 
-    if GetConVar("m_yaw"):GetFloat() < 0 then
+    local deltax = x * sensa
+    local deltay = y * sensa
+
+    if m_yaw:GetFloat() < 0 then
         deltax = deltax * -1
     end
 
-    if GetConVar("m_pitch"):GetFloat() < 0 then
+    if m_pitch:GetFloat() < 0 then
         deltay = deltay * -1
     end
 
@@ -246,8 +255,8 @@ end
 hook.Add( "InputMouseApply", "ARC9.InputMouseApply", ARC9.InputMouseApply )
 
 ARC9.ShouldThirdPerson = function()
-    local force = GetConVar("arc9_thirdperson_force"):GetInt()
-    local should = GetConVar("arc9_thirdperson"):GetBool()
+    local force = arc9_thirdperson_force:GetInt()
+    local should = arc9_thirdperson:GetBool()
 
     if force == 1 then
         should = true

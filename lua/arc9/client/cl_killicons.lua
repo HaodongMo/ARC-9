@@ -4,8 +4,10 @@ local killicons_cachedicons = {}
 local killicons_cachedtimes = {}
 local killiconmat = Material("arc9/arc9_logo.png", "mips smooth")
 
+local arc9_killfeed_enable = GetConVar("arc9_killfeed_enable")
+local arc9_killfeed_dynamic = GetConVar("arc9_killfeed_dynamic")
 ARC9NEWKillicondraw = function(x, y, name, alpha)
-    if !GetConVar("arc9_killfeed_enable"):GetBool() then
+    if !arc9_killfeed_enable:GetBool() then
         return ARC9OLDKilliconDraw(x, y, name, alpha)
     end
 
@@ -24,7 +26,7 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
 
         local selecticon = killicons_cachedicons[name]
 
-        if GetConVar("arc9_killfeed_dynamic"):GetBool() and (!killicons_cachedtimes[name] or (killicons_cachedtimes[name] and killicons_cachedtimes[name] < CurTime())) then -- dynamic
+        if arc9_killfeed_dynamic:GetBool() and (!killicons_cachedtimes[name] or (killicons_cachedtimes[name] and killicons_cachedtimes[name] < CurTime())) then -- dynamic
             killicons_cachedtimes[name] = CurTime() + 5
             killicons_cachedicons[name] = nil
             -- print("RESET")
