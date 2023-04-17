@@ -199,12 +199,12 @@ function SWEP:DoRHIK(wm)
         local rupperarm_position, rforearm_position = self:Solve2PartIK(rarm_start, rhand_end, rupperarm_length, rarm_length, 0)
         local lupperarm_position, lforearm_position = self:Solve2PartIK(larm_start, lhand_end, lupperarm_length, larm_length, 0)
         
-        debugoverlay.Line(rarm_start, rupperarm_position, 0.1, Color(255, 255, 255), true)
-        debugoverlay.Line(rforearm_position, rupperarm_position, 0.1, Color(255, 255, 255), true)
-        debugoverlay.Line(rforearm_position, rhand_end, 0.1, Color(255, 255, 255), true)
-        debugoverlay.Line(larm_start, lupperarm_position, 0.1, Color(255, 255, 255), true)
-        debugoverlay.Line(lforearm_position, lupperarm_position, 0.1, Color(255, 255, 255), true)
-        debugoverlay.Line(lforearm_position, lhand_end, 0.1, Color(255, 255, 255), true)
+        debugoverlay.Line(rarm_start, rupperarm_position, 0.1, color_white, true)
+        debugoverlay.Line(rforearm_position, rupperarm_position, 0.1, color_white, true)
+        debugoverlay.Line(rforearm_position, rhand_end, 0.1, color_white, true)
+        debugoverlay.Line(larm_start, lupperarm_position, 0.1, color_white, true)
+        debugoverlay.Line(lforearm_position, lupperarm_position, 0.1, color_white, true)
+        debugoverlay.Line(lforearm_position, lhand_end, 0.1, color_white, true)
 
         -- rupperarm_matrix:SetTranslation(rupperarm_position)
         -- brought to you by: https://rubberduckdebugging.com/
@@ -310,8 +310,10 @@ function SWEP:DoRHIK(wm)
 end
 
 function SWEP:RecalculateIKGunMotionOffset()
-    if self:GetSequenceProxy() != 0 then
-        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+    local seqproxy = self:GetSequenceProxy()
+
+    if seqproxy != 0 then
+        local slottbl = self:LocateSlotFromAddress(seqproxy)
         local atttbl = self:GetFinalAttTable(slottbl)
         local qca = atttbl.IKGunMotionQCA
 
@@ -338,8 +340,10 @@ function SWEP:RecalculateIKGunMotionOffset()
 end
 
 function SWEP:GunControllerRHIK(pos, ang)
-    if self:GetSequenceProxy() != 0 then
-        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+    local seqproxy = self:GetSequenceProxy()
+
+    if seqproxy != 0 then
+        local slottbl = self:LocateSlotFromAddress(seqproxy)
         local atttbl = self:GetFinalAttTable(slottbl)
         local qca = atttbl.IKGunMotionQCA
 

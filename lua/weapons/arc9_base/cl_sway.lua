@@ -10,12 +10,13 @@ local smoothswayroll = 0
 local smoothswaypitch = 0
 
 function SWEP:GetViewModelSway(pos, ang)
+    local ft = FrameTime()
     local sightmult = Lerp(self:GetSightAmount(), 1, 0.5)
-    smootheyeang = LerpAngle(math.Clamp(FrameTime() * 8, 0, 0.04), smootheyeang, EyeAngles() - lasteyeang)
+    smootheyeang = LerpAngle(math.Clamp(ft * 8, 0, 0.04), smootheyeang, EyeAngles() - lasteyeang)
     lasteyeang = EyeAngles()
 
-    smoothswayroll = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -3.5)
-    smoothswaypitch = Lerp(math.Clamp(FrameTime() * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
+    smoothswayroll = Lerp(math.Clamp(ft * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -3.5)
+    smoothswaypitch = Lerp(math.Clamp(ft * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
 
     if self.SprintVerticalOffset then
         local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1)
@@ -41,15 +42,18 @@ SWEP.ViewModelLastEyeAng = Angle()
 SWEP.ViewModelSwayInertia = Angle()
 
 function SWEP:GetViewModelInertia(pos, ang)
+    local eyeangg = self:GetOwner():EyeAngles()
+    local ft = FrameTime()
+
     local d = 1 - self:GetSightAmount()
-    local diff = self:GetOwner():EyeAngles() - self.ViewModelLastEyeAng
+    local diff = eyeangg - self.ViewModelLastEyeAng
     diff = diff / 4
     diff.p = math.Clamp(diff.p, -1, 1)
     diff.y = math.Clamp(diff.y, -1, 1)
     local vsi = self.ViewModelSwayInertia
-    vsi.p = math.ApproachAngle(vsi.p, diff.p, vsi.p / 10 * FrameTime() / 0.5)
-    vsi.y = math.ApproachAngle(vsi.y, diff.y, vsi.y / 10 * FrameTime() / 0.5)
-    self.ViewModelLastEyeAng = self:GetOwner():EyeAngles()
+    vsi.p = math.ApproachAngle(vsi.p, diff.p, vsi.p / 10 * ft / 0.5)
+    vsi.y = math.ApproachAngle(vsi.y, diff.y, vsi.y / 10 * ft / 0.5)
+    self.ViewModelLastEyeAng = eyeangg
     ang:RotateAroundAxis(ang:Up(), vsi.y * 12 * d)
     ang:RotateAroundAxis(ang:Right(), -vsi.p * 12 * d)
     -- pos = pos - (ang:Up() * vsi.p * 0.5 * d)
@@ -78,7 +82,9 @@ local stammer_moving = false
 
 local function FesiugBob(self, pos, ang)
     if self:GetCustomize() then return pos, ang end
-    local cv = self:GetOwner():GetVelocity():Length()
+    local owner = self:GetOwner()
+
+    local cv = owner:GetVelocity():Length()
     v = math.Approach(v, cv, FrameTime()*400/0.4)
     v = math.Clamp(v, 0, 400)
     local tv = v / 400
@@ -91,7 +97,7 @@ local function FesiugBob(self, pos, ang)
     local p = math.pi
     local spe = self:GetIsSprinting()
 
-    local grounded = (self:GetOwner():IsOnGround() or self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP)
+    local grounded = (owner:IsOnGround() or owner:GetMoveType() == MOVETYPE_NOCLIP)
     airtime = math.Approach(airtime, (grounded and 0 or 1), FrameTime()*5*(grounded and 10 or 1))
 
     offset:Set(vector_origin)
@@ -124,8 +130,7 @@ local function FesiugBob(self, pos, ang)
     local stammertime_pos = Vector()
     local stammertime_ang = Angle()
 
-    local pe = self:GetOwner()
-    local pep = pe:KeyDown(IN_FORWARD) or pe:KeyDown(IN_BACK) or pe:KeyDown(IN_MOVELEFT) or pe:KeyDown(IN_MOVERIGHT)
+    local pep = owner:KeyDown(IN_FORWARD) or owner:KeyDown(IN_BACK) or owner:KeyDown(IN_MOVELEFT) or owner:KeyDown(IN_MOVERIGHT)
     if tk > 0.1 then
         stammer = 1
         stammer_moving = true
@@ -152,7 +157,7 @@ local function FesiugBob(self, pos, ang)
     ang:RotateAroundAxis( ang:Forward(),        stammertime_ang.x * elistam )
     ang:RotateAroundAxis( ang:Right(),          stammertime_ang.y * elistam )
     ang:RotateAroundAxis( ang:Up(),             stammertime_ang.z * elistam )
-    ang:RotateAroundAxis( ang:Up(),             (pe:KeyDown(IN_MOVELEFT) and 2 or pe:KeyDown(IN_MOVERIGHT) and -2 or 0) * tv )
+    ang:RotateAroundAxis( ang:Up(),             (owner:KeyDown(IN_MOVELEFT) and 2 or owner:KeyDown(IN_MOVERIGHT) and -2 or 0) * tv )
 
     ang:RotateAroundAxis( ang:Forward(),          math.sin( ct * p * 1 ) * airtime*-5 * mulp * 2)
     ang:RotateAroundAxis( ang:Right(),          ( math.sin( ct * p * 1 ) * airtime*3 * mulp ) + ( (3/2) * airtime * mulp ) ) 
@@ -167,14 +172,19 @@ local function ArcticBob(self, pos, ang)
     local ts = 0 -- self:GetTraversalSprintAmount()
     -- ts = 1
     if self:GetCustomize() then return pos, ang end
-    local v = self:GetOwner():GetVelocity():Length()
+
+    local owner = self:GetOwner()
+    local ft = FrameTime()
+
+    local v = owner:GetVelocity():Length()
     v = math.Clamp(v, 0, 350)
-    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, FrameTime() * 10000)
+    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, ft * 10000)
     local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
-    if self:GetOwner():OnGround() and self:GetOwner():GetMoveType() != MOVETYPE_NOCLIP then
-        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, FrameTime() / 0.1)
+
+    if owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP then
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, ft / 0.1)
     else
-        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, FrameTime() / 0.1)
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, ft / 0.1)
     end
 
     d = d * Lerp(self:GetSightAmount(), 1, 0.5) * Lerp(ts, 1, 1.5)
@@ -191,7 +201,7 @@ local function ArcticBob(self, pos, ang)
     steprate = Lerp(self.ViewModelNotOnGround, steprate, 0.25)
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
-        self.BobCT = self.BobCT + (FrameTime() * steprate)
+        self.BobCT = self.BobCT + (ft * steprate)
     end
 
     return pos, ang
@@ -206,25 +216,26 @@ local function DarsuBob(self, pos, ang)
     if self:GetCustomize() then return pos, ang end
 
     local owner = self:GetOwner()
+    local ft = FrameTime()
     local velocityangle = owner:GetVelocity()
     local sightamount = self:GetSightAmount()
 
     local velocity = math.Clamp(velocityangle:Length(), 0, 350)
 
-    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, velocity, FrameTime() * 10000)
+    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, velocity, ft * 10000)
     
     local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
 
-    notonground = math.Approach(notonground, (owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP) and 0 or 1, FrameTime() / 0.1)
+    notonground = math.Approach(notonground, (owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP) and 0 or 1, ft / 0.1)
     local steprate = Lerp(d, 1, 2.5)
     steprate = Lerp(notonground, steprate, 0.5)
 
 
     local jumpmove = math.Clamp(math.ease.InExpo(math.Clamp(velocityangle.z, -350, 0)/-350)*25 + math.ease.InExpo(math.Clamp(velocityangle.z, 0, 350)/350)*-60, -5, 3.5) * (1.5-sightamount) -- crazy math for jump movement
-    smoothjumpmove = Lerp(math.Clamp(FrameTime()*8, 0, 1), smoothjumpmove, jumpmove)
+    smoothjumpmove = Lerp(math.Clamp(ft*8, 0, 1), smoothjumpmove, jumpmove)
 
 
-    if IsFirstTimePredicted() or game.SinglePlayer() then self.BobCT = self.BobCT + (FrameTime() * steprate) end
+    if IsFirstTimePredicted() or game.SinglePlayer() then self.BobCT = self.BobCT + (ft * steprate) end
     
     d = d * Lerp(sightamount, 1, 0.65) -- If we in sights make less moves
 
@@ -233,7 +244,7 @@ local function DarsuBob(self, pos, ang)
     local speedmult = 1.3
 
     local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.3-sightamount)
-    smoothsidemove = Lerp(math.Clamp(FrameTime()*8, 0, 1), smoothsidemove, sidemove)
+    smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5*(1.3-sightamount)  or 1
     
@@ -250,14 +261,18 @@ local function DarsuBob(self, pos, ang)
     return pos, ang
 end
 
+local arc9_vm_bobstyle = GetConVar("arc9_vm_bobstyle")
+
 function SWEP:GetViewModelBob(pos, ang)
     self.SwayScale = 0
     self.BobScale = 0
-    if GetConVar("arc9_vm_bobstyle"):GetInt() == 1 then
+    local bobb = arc9_vm_bobstyle:GetInt()
+
+    if bobb == 1 then
         return FesiugBob(self, pos, ang)
-    elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 2 then
+    elseif bobb == 2 then
         return ArcticBob(self, pos, ang)
-    elseif GetConVar("arc9_vm_bobstyle"):GetInt() == 0 then
+    elseif bobb == 0 then
         return DarsuBob(self, pos, ang)
     else
         self.SwayScale = Lerp(self:GetSightDelta(), 1, 0.1)
@@ -298,13 +313,16 @@ SWEP.ViewModelInertiaY = 0
 
 function SWEP:GetViewModelLeftRight(pos, ang)
     if self:GetCustomize() then return pos, ang end
-    local v = self:GetOwner():GetVelocity()
+    local owner = self:GetOwner()
+    local ft = FrameTime()
+
+    local v = owner:GetVelocity()
     local d = Lerp(self:GetSightDelta(), 1, 0)
-    v, _ = WorldToLocal(v, Angle(), Vector(), self:GetOwner():EyeAngles())
+    v, _ = WorldToLocal(v, Angle(), Vector(), owner:EyeAngles())
     local vx = math.Clamp(v.x / 200, -1, 1)
     local vy = math.Clamp(v.y / 200, -1, 1)
-    self.ViewModelInertiaX = math.Approach(self.ViewModelInertiaX, vx, math.abs(vx) * FrameTime() / 0.1)
-    self.ViewModelInertiaY = math.Approach(self.ViewModelInertiaY, vy, math.abs(vy) * FrameTime() / 0.1)
+    self.ViewModelInertiaX = math.Approach(self.ViewModelInertiaX, vx, math.abs(vx) * ft / 0.1)
+    self.ViewModelInertiaY = math.Approach(self.ViewModelInertiaY, vy, math.abs(vy) * ft / 0.1)
     pos = pos + (ang:Right() * -self.ViewModelInertiaX * 0.65 * d)
     pos = pos + (ang:Forward() * self.ViewModelInertiaY * 0.5 * d)
 
