@@ -274,14 +274,17 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- self.SwayScale = Lerp(sightdelta, 1, 0.1)
     end
 
-    local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
-    extra_offsetang[2] = extra_offsetang[2] - (getfreeswayang[1] * cor_val)
-    extra_offsetang[1] = extra_offsetang[1] + (getfreeswayang[2] * cor_val)
-    -- extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01
-    -- extra_offsetpos.z = extra_offsetpos.z + (self:GetFreeSwayAngles().p * cor_val) - 0.05 -- idkkkkkkkk
-    extra_offsetang[2] = extra_offsetang[2] - (getfreeswayoffset[1] * cor_val)
-    extra_offsetang[1] = extra_offsetang[1] + (getfreeswayoffset[2] * cor_val)
-
+    local fswayang = self:GetFreeSwayAngles()
+    if fswayang then
+        local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
+        extra_offsetang[2] = extra_offsetang[2] - (getfreeswayang[1] * cor_val)
+        extra_offsetang[1] = extra_offsetang[1] + (getfreeswayang[2] * cor_val)
+        -- extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01
+        -- extra_offsetpos.z = extra_offsetpos.z + (self:GetFreeSwayAngles().p * cor_val) - 0.05 -- idkkkkkkkk
+        extra_offsetang[2] = extra_offsetang[2] - (getfreeswayoffset[1] * cor_val)
+        extra_offsetang[1] = extra_offsetang[1] + (getfreeswayoffset[2] * cor_val)
+    end
+    
     if singleplayer or IsFirstTimePredicted() then
         if self:GetCustomize() then
             if self.CustomizeDelta < 1 then

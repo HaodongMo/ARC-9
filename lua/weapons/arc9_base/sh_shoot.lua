@@ -960,8 +960,12 @@ function SWEP:GetShootDir()
     dir:RotateAroundAxis(dir:Forward(), shootangoffset[3])
 
     dir:Add(self:GetFreeAimOffset())
-    dir:Add(self:GetFreeSwayAngles())
-
+    
+    local fswayang = self:GetFreeSwayAngles()
+    if fswayang then
+        dir:Add(fswayang)
+    end
+    
     return dir
 end
 

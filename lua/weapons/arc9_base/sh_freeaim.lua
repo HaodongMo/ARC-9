@@ -50,7 +50,7 @@ local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
 
 local smoothswayamt = 0
 function SWEP:GetFreeSwayAngles()
-    if !arc9_mod_sway:GetBool() then return angle_zero end
+    if !arc9_mod_sway:GetBool() then return end
     local swayamt = self:GetFreeSwayAmount()
 
     local swayspeed = 2
