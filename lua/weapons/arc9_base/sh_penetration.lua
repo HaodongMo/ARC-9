@@ -21,8 +21,12 @@ end
 SWEP.MaxPenetrationLayers = 3
 SWEP.Penned = 0
 
+local arc9_mod_penetration = GetConVar("arc9_mod_penetration")
+local ARC9_bullet_physics = GetConVar("ARC9_bullet_physics")
+local ARC9_ricochet = GetConVar("ARC9_ricochet")
+
 function SWEP:Penetrate(tr, range, penleft, alreadypenned)
-    if !GetConVar("arc9_mod_penetration"):GetBool() then return end
+    if !arc9_mod_penetration:GetBool() then return end
 
     if !IsValid(self) then return end
     if !IsValid(self:GetOwner()) then return end
@@ -60,9 +64,9 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         ang = ang + (AngleRand() * (1 - degree) * 15 / 360)
         dir = ang:Forward()
 
-        if self:GetProcessedValue("RicochetSeeking") then
+        if self:GetProcessedValue("RicochetSeeking", _, _, true) then
             local tgt = nil
-            for _, e in pairs(ents.FindInCone(tr.StartPos, dir, self:GetProcessedValue("RicochetSeekingRange"), math.cos(math.rad(self:GetProcessedValue("RicochetSeekingAngle"))))) do
+            for _, e in pairs(ents.FindInCone(tr.StartPos, dir, self:GetProcessedValue("RicochetSeekingRange", _, _, true), math.cos(math.rad(self:GetProcessedValue("RicochetSeekingAngle", _, _, true))))) do
                 if (e:IsNPC() or e:IsPlayer() or e:IsNextBot()) and e:Health() > 0 and e ~= self:GetOwner() then
                     tgt = e
                     break
@@ -180,7 +184,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
     if penleft > 0 then
         if (dir:Length() == 0) then return end
 
-        if GetConVar("ARC9_bullet_physics"):GetBool() then
+        if ARC9_bullet_physics:GetBool() then
             ARC9:ShootPhysBullet(self, endpos, dir * self:GetProcessedValue("PhysBulletMuzzleVelocity"), {
                 Penleft = penleft,
                 Travelled = range,
@@ -227,7 +231,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 end
 
 function SWEP:GetRicochetChance(tr)
-    if !GetConVar("ARC9_ricochet"):GetBool() then return 0 end
+    if !ARC9_ricochet:GetBool() then return 0 end
     local degree = tr.HitNormal:Dot((tr.StartPos - tr.HitPos):GetNormalized())
 
     degree = 90 - math.deg(math.acos(degree))

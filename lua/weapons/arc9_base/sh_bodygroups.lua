@@ -97,7 +97,7 @@ function SWEP:DoBodygroups(wm, cm)
         end
 
         local loaded = self:GetLoadedRounds()
-        if self:GetProcessedValue("BottomlessClip") then loaded = self:Ammo1() end
+        if self:GetProcessedValue("BottomlessClip", _, _, true) then loaded = self:Ammo1() end
 
         for _, bone2 in ipairs(bones) do
             local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)

@@ -155,6 +155,7 @@ end
 
 local lockonmat = Material("arc9/lockon.png", "noclamp smooth")
 -- local rtsize = math.min(1024, ScrW(), ScrH())
+local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 
 function SWEP:DrawLockOnHUD(iam3d)
     if self:IsScoping() and !iam3d then return end
@@ -221,8 +222,7 @@ function SWEP:DrawLockOnHUD(iam3d)
         local size = 32
 
         if iam3d then
-
-            if !GetConVar("arc9_cheapscopes"):GetBool() then
+            if !arc9_cheapscopes:GetBool() then
                 x = x / 2
                 size = ScreenScale(32)
             else

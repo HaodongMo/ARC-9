@@ -66,8 +66,12 @@ function SWEP:CountAttsInTree(tree)
     return count
 end
 
+local arc9_atts_nocustomize = GetConVar("arc9_atts_nocustomize")
+local arc9_atts_lock = GetConVar("arc9_atts_lock")
+local arc9_npc_autoreplace = GetConVar("arc9_npc_autoreplace")
+
 function SWEP:ReceiveWeapon()
-    if SERVER and GetConVar("arc9_atts_nocustomize"):GetBool() then return end
+    if SERVER and arc9_atts_nocustomize:GetBool() then return end
 
     local tbl = {}
 
@@ -82,7 +86,7 @@ function SWEP:ReceiveWeapon()
             return
         end
 
-        if !GetConVar("arc9_atts_lock"):GetBool() then
+        if !arc9_atts_lock:GetBool() then
             local oldcount = self:CountAttsInTree(self.Attachments)
             local newcount = self:CountAttsInTree(tbl)
 
@@ -128,7 +132,7 @@ function SWEP:ReceiveWeapon()
         self:SetupModel(false)
         self:RefreshCustomizeMenu()
 
-        if !IsValid(self:GetOwner()) and GetConVar("arc9_npc_autoreplace"):GetBool() then -- very awful but i dont know how to make that value network properly
+        if !IsValid(self:GetOwner()) and arc9_npc_autoreplace:GetBool() then -- very awful but i dont know how to make that value network properly
             self.LoadedPreset = true
         end
     else

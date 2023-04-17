@@ -16,22 +16,25 @@ function SWEP:ThinkLean()
 
     if !(owner:KeyDown(IN_SPEED) and (owner:KeyDown(IN_FORWARD) or owner:KeyDown(IN_BACK) or owner:KeyDown(IN_MOVELEFT) or owner:KeyDown(IN_MOVERIGHT))) then
         if owner:GetInfoNum("arc9_togglelean", 0) >= 1 then
+            local pressalt1 = owner:KeyPressed(IN_ALT1)
+            local pressalt2 = owner:KeyPressed(IN_ALT2)
+
             if leanstate == -1 then
-                if owner:KeyPressed(IN_ALT1) then
+                if pressalt1 then
                     leanstate = 0
-                elseif owner:KeyPressed(IN_ALT2) then
+                elseif pressalt2 then
                     leanstate = 1
                 end
             elseif leanstate == 1 then
-                if owner:KeyPressed(IN_ALT2) then
+                if pressalt2 then
                     leanstate = 0
-                elseif owner:KeyPressed(IN_ALT1) then
+                elseif pressalt1 then
                     leanstate = -1
                 end
             else
-                if owner:KeyPressed(IN_ALT1) then
+                if pressalt1 then
                     leanstate = -1
-                elseif owner:KeyPressed(IN_ALT2) then
+                elseif pressalt2 then
                     leanstate = 1
                 end
             end

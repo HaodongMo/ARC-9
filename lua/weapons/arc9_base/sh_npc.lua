@@ -19,15 +19,17 @@ function SWEP:NPC_PrimaryAttack()
 
     self:DoProjectileAttack(owner:GetShootPos(), owner:GetAimVector():Angle(), spread)
 
-    if !self:GetProcessedValue("BottomlessClip") then
+    if !self:GetProcessedValue("BottomlessClip", _, _, true) then
         self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
     end
 end
 
+local arc9_npc_spread = GetConVar("arc9_npc_spread")
+
 function SWEP:GetNPCBulletSpread(prof)
     prof = prof or 0
     local mode = self:GetCurrentFiremode()
-    local mult = GetConVar("arc9_npc_spread"):GetFloat()
+    local mult = arc9_npc_spread:GetFloat()
 
     mult = mult * 0.5
 
@@ -89,6 +91,8 @@ function SWEP:NPC_Reload()
     self:SetNthShot(0)
 end
 
+local arc9_npc_atts = GetConVar("arc9_npc_atts")
+
 function SWEP:NPC_Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
 
@@ -100,7 +104,7 @@ function SWEP:NPC_Initialize()
     if CLIENT then return end
 
     if IsValid(self) then
-        if !self.WeaponWasGiven and GetConVar("arc9_npc_atts"):GetBool() then
+        if !self.WeaponWasGiven and arc9_npc_atts:GetBool() then
             -- self:RollRandomAtts(self.Attachments)
             self:QueueForRandomize()
         end

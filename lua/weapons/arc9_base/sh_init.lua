@@ -44,7 +44,7 @@ function SWEP:Initialize()
     self.Primary.Ammo = self:GetProcessedValue("Ammo")
     self.LastAmmo = self.Primary.Ammo
 
-    local bottomless = self:GetProcessedValue("BottomlessClip")
+    local bottomless = self:GetProcessedValue("BottomlessClip", _, _, true)
     local clip = bottomless and self:GetProcessedValue("AmmoPerShot") or self.LastClipSize
     self.Primary.DefaultClip = clip * math.max(1, self:GetProcessedValue("SupplyLimit") + (bottomless and 0 or 1))
 

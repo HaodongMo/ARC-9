@@ -84,8 +84,10 @@ function SWEP:ApplyRecoil()
     recoilup = recoilup + randomrecoilup
     recoilside = recoilside + randomrecoilside
 
-    recoilup = recoilup * (self:GetProcessedValue("Recoil") or 0)
-    recoilside = recoilside * (self:GetProcessedValue("Recoil") or 0)
+    local pvrec = self:GetProcessedValue("Recoil")
+
+    recoilup = recoilup * (pvrec or 0)
+    recoilside = recoilside * (pvrec or 0)
 
     self:SetRecoilUp(recoilup)
     self:SetRecoilSide(recoilside)
@@ -97,8 +99,10 @@ function SWEP:ApplyRecoil()
 
     local pbf = self:GetProcessedValue("PushBackForce")
 
+    local owner = self:GetOwner()
+
     if pbf != 0 then
-        self:GetOwner():SetVelocity(self:GetShootDir():Forward() * -pbf)
+        owner:SetVelocity(self:GetShootDir():Forward() * -pbf)
     end
 
     local vis_kick = self:GetProcessedValue("RecoilKick")
@@ -111,10 +115,10 @@ function SWEP:ApplyRecoil()
     local vis_kick_h = vis_kick * util.SharedRandom("ARC9_vis_kick_h", -1, 1)
     vis_shake = vis_shake * util.SharedRandom("ARC9_vis_kick_shake", -1, 1)
 
-    -- self:GetOwner():SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
+    -- owner:SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
 
-    self:GetOwner():SetFOV(self:GetOwner():GetFOV() * 0.99, 0)
-    self:GetOwner():SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
+    owner:SetFOV(owner:GetFOV() * 0.99, 0)
+    owner:SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
 end
 
 -- local function lensqr(ang)
@@ -369,8 +373,8 @@ do
 
         if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < ct then
             -- as soon as dissipation kicks in, recoil is clamped to the modifer cap; this is to not break visual recoil
-            self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (ft * rdr), 0, swepGetProcessedValue(self, "UseVisualRecoil") and math.huge or swepGetProcessedValue(self, "RecoilModifierCap")))
-            if weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilFullResetTime") <ct then
+            self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (ft * rdr), 0, swepGetProcessedValue(self, "UseVisualRecoil", _, _, true) and math.huge or swepGetProcessedValue(self, "RecoilModifierCap")))
+            if weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilFullResetTime") < ct then
                 self:SetRecoilAmount(0)
             end
             -- print(math.Round(rec))
@@ -405,7 +409,7 @@ function SWEP:DoVisualRecoil()
 
         if self:GetProcessedValue("RecoilLookupTable", _, _, true) then
             local dir = self:PatternWithRunOff(self:GetProcessedValue("RecoilLookupTable", _, _, true), self:GetProcessedValue("RecoilLookupTableOverrun", _, _, true) or self:GetProcessedValue("RecoilLookupTable", _, _, true), math.floor(self:GetRecoilAmount()) + 1)
-            up = self:GetProcessedValue("VisualRecoilUp") * mult * self:GetRecoilUp() * -20 * (math.sin(math.rad(dir-90)) * -1)
+            up = up * self:GetRecoilUp() * -20 * (math.sin(math.rad(dir-90)) * -1)
         end
 
         local side = self:GetProcessedValue("VisualRecoilSide") * mult * self:GetRecoilSide()

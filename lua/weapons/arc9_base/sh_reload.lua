@@ -38,7 +38,7 @@ function SWEP:Reload()
         ammo = self:Ammo2()
     end
 
-    if !self:GetProcessedValue("BottomlessClip") then
+    if !self:GetProcessedValue("BottomlessClip", _, _, true) then
         if clip >= self:GetCapacity(getUBGL) then return end
 
         if !self:GetInfiniteAmmo() and ammo <= 0 then
@@ -254,7 +254,7 @@ function SWEP:TakeAmmo(amt)
     if self:GetUBGL() then
         self:TakeSecondaryAmmo(amt)
     else
-        if self:GetProcessedValue("BottomlessClip") then
+        if self:GetProcessedValue("BottomlessClip", _, _, true) then
             if !self:GetInfiniteAmmo() then
                 self:RestoreClip(self:GetValue("ClipSize"))
 
@@ -351,8 +351,10 @@ function SWEP:GetShouldShotgunReload()
     return self:GetProcessedValue("ShotgunReload")
 end
 
+local arc9_infinite_ammo = GetConVar("arc9_infinite_ammo")
+
 function SWEP:GetInfiniteAmmo()
-    return GetConVar("arc9_infinite_ammo"):GetBool() or self:GetProcessedValue("InfiniteAmmo")
+    return arc9_infinite_ammo:GetBool() or self:GetProcessedValue("InfiniteAmmo", _, _, true)
 end
 
 function SWEP:EndReload()
@@ -494,7 +496,7 @@ function SWEP:GetLoadingIntoClip()
         ammo = math.huge
     end
 
-    if self:GetProcessedValue("BottomlessClip") then
+    if self:GetProcessedValue("BottomlessClip", _, _, true) then
         capacity = ammo
     end
 
@@ -514,10 +516,10 @@ function SWEP:GetLoadedClip()
     if self:GetUBGL() then
         clip = self:Clip2()
 
-        if self:GetProcessedValue("BottomlessClip") then
+        if self:GetProcessedValue("BottomlessClip", _, _, true) then
             clip = self:Ammo2()
         end
-    elseif self:GetProcessedValue("BottomlessClip") then
+    elseif self:GetProcessedValue("BottomlessClip", _, _, true) then
         clip = ammo
     end
 
@@ -525,7 +527,7 @@ function SWEP:GetLoadedClip()
 end
 
 function SWEP:HasAmmoInClip()
-    if self:GetProcessedValue("BottomlessClip") then
+    if self:GetProcessedValue("BottomlessClip", _, _, true) then
         if self:GetUBGL() then
             return self:Clip2() + self:Ammo2() >= self:GetProcessedValue("AmmoPerShot")
         else

@@ -41,7 +41,7 @@ function SWEP:MeleeAttack(bypass, bash2)
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
             self:SetLungeEntity(tr.Entity)
 
-            local dot = self:GetOwner():EyeAngles():Forward():Dot(tr.Entity:EyeAngles():Forward())
+            local dot = owner:EyeAngles():Forward():Dot(tr.Entity:EyeAngles():Forward())
 
             backstab = dot > 0
         end
@@ -187,17 +187,19 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
 end
 
 function SWEP:ThinkMelee()
+    local owner = self:GetOwner()
+
     if !self:GetGrenadePrimed() then
 
-        if self:GetOwner():KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", _, _, true) then
+        if owner:KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", _, _, true) then
             self:MeleeAttack()
         end
 
-        if self:GetOwner():KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", _, _, true) then
+        if owner:KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", _, _, true) then
             self:MeleeAttack(false, true)
         end
 
-        if self:GetOwner():KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", _, _, true) and !self:GetInSights() then
+        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", _, _, true) and !self:GetInSights() then
             self:MeleeAttack()
         end
 

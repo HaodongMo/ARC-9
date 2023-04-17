@@ -569,7 +569,7 @@ function ARC9.DrawHUD()
             weapon_reserve = 2147483640
         end
 
-        if weapon:GetProcessedValue("BottomlessClip") then
+        if weapon:GetProcessedValue("BottomlessClip", _, _, true) then
             inf_clip = true
             weapon_reserve = weapon_reserve + weapon_clip
             clip_to_show = weapon_reserve

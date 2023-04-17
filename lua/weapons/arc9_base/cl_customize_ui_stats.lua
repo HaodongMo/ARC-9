@@ -171,7 +171,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 20,
             eval = function()
                 local a = self:GetProcessedValue("ClipSize") + self:GetProcessedValue("ChamberSize")
-                if self:GetProcessedValue("BottomlessClip") then
+                if self:GetProcessedValue("BottomlessClip", _, _, true) then
                     a = a + math.huge
                 end
                 local b = self.ClipSize + self.ChamberSize
@@ -193,7 +193,7 @@ function SWEP:CreateHUD_Stats()
                     a = a .. "+" .. tostring(self:GetProcessedValue("ChamberSize"))
                 end
 
-                if self:GetProcessedValue("BottomlessClip") then
+                if self:GetProcessedValue("BottomlessClip", _, _, true) then
                     a = "∞"
                 end
 
