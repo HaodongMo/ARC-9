@@ -61,6 +61,8 @@ function SWEP:CalcView(ply, pos, ang, fov)
     return pos, ang, fov
 end
 
+local mathapproach = math.Approach
+
 function SWEP:GetSmoothedFOVMag()
     local mag = 1
     local speed = 20
@@ -88,7 +90,7 @@ function SWEP:GetSmoothedFOVMag()
 
     local diff = math.abs(self.SmoothedMagnification - mag)
 
-    self.SmoothedMagnification = math.Approach(self.SmoothedMagnification, mag, FrameTime() * diff * speed)
+    self.SmoothedMagnification = mathapproach(self.SmoothedMagnification, mag, FrameTime() * diff * speed)
 
     return self.SmoothedMagnification
 end
@@ -99,8 +101,9 @@ SWEP.ProceduralViewOffset = Angle(0, 0, 0)
 SWEP.ProceduralSpeedLimit = 5
 
 function SWEP:GetCameraControl()
-    if self:GetSequenceProxy() != 0 then
-        local slottbl = self:LocateSlotFromAddress(self:GetSequenceProxy())
+    local seqprox = self:GetSequenceProxy()
+    if seqprox != 0 then
+        local slottbl = self:LocateSlotFromAddress(seqprox)
         local atttbl = self:GetFinalAttTable(slottbl)
         local camqca = atttbl.IKCameraMotionQCA
 
@@ -138,8 +141,10 @@ function SWEP:GetCameraControl()
         ang:Sub(self.CamOffsetAng)
 
         if self:GetProcessedValue("CamCoolView", _, _, true) then
-            self.ProceduralViewOffset:Normalize()
+            local ft = FrameTime()
 
+            self.ProceduralViewOffset:Normalize()
+            
             ang:Normalize()
             local delta = self.LastMuzzleAngle - ang
             delta:Normalize()
@@ -147,7 +152,7 @@ function SWEP:GetCameraControl()
             local targeting = self:GetNextPrimaryFire() - .1 > CurTime()
             local target = targeting and 1 or 0
             target = math.min(target, 1 - math.pow( vm:GetCycle(), 2 ) )
-            local progress = Lerp(FrameTime() * 15, progress or 0, target)
+            local progress = Lerp(ft * 15, progress or 0, target)
 
             local mult = self:GetProcessedValue("CamQCA_Mult", _, _, true) or 1
 
@@ -156,22 +161,22 @@ function SWEP:GetCameraControl()
             end
 
             self.MuzzleAngleVelocity = self.MuzzleAngleVelocity + delta * 2 * mult
-            self.MuzzleAngleVelocity.p = math.Approach(self.MuzzleAngleVelocity.p, -self.ProceduralViewOffset.p * 2, FrameTime() * 20)
+            self.MuzzleAngleVelocity.p = mathapproach(self.MuzzleAngleVelocity.p, -self.ProceduralViewOffset.p * 2, ft * 20)
             self.MuzzleAngleVelocity.p = math.Clamp(self.MuzzleAngleVelocity.p, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
-            self.ProceduralViewOffset.p = self.ProceduralViewOffset.p + self.MuzzleAngleVelocity.p * FrameTime()
+            self.ProceduralViewOffset.p = self.ProceduralViewOffset.p + self.MuzzleAngleVelocity.p * ft
             self.ProceduralViewOffset.p = math.Clamp(self.ProceduralViewOffset.p, -90, 90)
-            self.MuzzleAngleVelocity.y = math.Approach(self.MuzzleAngleVelocity.y, -self.ProceduralViewOffset.y * 2, FrameTime() * 20)
+            self.MuzzleAngleVelocity.y = mathapproach(self.MuzzleAngleVelocity.y, -self.ProceduralViewOffset.y * 2, ft * 20)
             self.MuzzleAngleVelocity.y = math.Clamp(self.MuzzleAngleVelocity.y, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
-            self.ProceduralViewOffset.y = self.ProceduralViewOffset.y + self.MuzzleAngleVelocity.y * FrameTime()
+            self.ProceduralViewOffset.y = self.ProceduralViewOffset.y + self.MuzzleAngleVelocity.y * ft
             self.ProceduralViewOffset.y = math.Clamp(self.ProceduralViewOffset.y, -90, 90)
-            self.MuzzleAngleVelocity.r = math.Approach(self.MuzzleAngleVelocity.r, -self.ProceduralViewOffset.r * 2, FrameTime() * 20)
+            self.MuzzleAngleVelocity.r = mathapproach(self.MuzzleAngleVelocity.r, -self.ProceduralViewOffset.r * 2, ft * 20)
             self.MuzzleAngleVelocity.r = math.Clamp(self.MuzzleAngleVelocity.r, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
-            self.ProceduralViewOffset.r = self.ProceduralViewOffset.r + self.MuzzleAngleVelocity.r * FrameTime()
+            self.ProceduralViewOffset.r = self.ProceduralViewOffset.r + self.MuzzleAngleVelocity.r * ft
             self.ProceduralViewOffset.r = math.Clamp(self.ProceduralViewOffset.r, -90, 90)
 
-            self.ProceduralViewOffset.p = math.Approach(self.ProceduralViewOffset.p, 0, (1 - progress) * FrameTime() * -self.ProceduralViewOffset.p)
-            self.ProceduralViewOffset.y = math.Approach(self.ProceduralViewOffset.y, 0, (1 - progress) * FrameTime() * -self.ProceduralViewOffset.y)
-            self.ProceduralViewOffset.r = math.Approach(self.ProceduralViewOffset.r, 0, (1 - progress) * FrameTime() * -self.ProceduralViewOffset.r)
+            self.ProceduralViewOffset.p = mathapproach(self.ProceduralViewOffset.p, 0, (1 - progress) * ft * -self.ProceduralViewOffset.p)
+            self.ProceduralViewOffset.y = mathapproach(self.ProceduralViewOffset.y, 0, (1 - progress) * ft * -self.ProceduralViewOffset.y)
+            self.ProceduralViewOffset.r = mathapproach(self.ProceduralViewOffset.r, 0, (1 - progress) * ft * -self.ProceduralViewOffset.r)
 
             self.LastMuzzleAngle = ang
 
