@@ -1,8 +1,21 @@
+local arc9_crosshair_force = GetConVar("arc9_crosshair_force")
+local arc9_cross_enable = GetConVar("arc9_cross_enable")
+local arc9_crosshair_static = GetConVar("arc9_crosshair_static")
+local arc9_cross_size_mult = GetConVar("arc9_cross_size_mult")
+local arc9_cross_size_dot = GetConVar("arc9_cross_size_dot")
+local arc9_cross_size_prong = GetConVar("arc9_cross_size_prong")
+local arc9_cross_r = GetConVar("arc9_cross_r")
+local arc9_cross_g = GetConVar("arc9_cross_g")
+local arc9_cross_b = GetConVar("arc9_cross_b")
+local arc9_cross_a = GetConVar("arc9_cross_a")
+local arc9_dev_crosshair = GetConVar("arc9_dev_crosshair")
+
+
 function SWEP:ShouldDrawCrosshair()
     if self:GetInSights() then
         return self:GetSight().CrosshairInSights
     end
-    if (!self:GetProcessedValue("Crosshair") and !GetConVar("arc9_crosshair_force"):GetBool()) and !ARC9.ShouldThirdPerson() then return false end
+    if (!self:GetProcessedValue("Crosshair", _, _, true) and !arc9_crosshair_force:GetBool()) and !ARC9.ShouldThirdPerson() then return false end
     if self:GetCustomize() then return false end
 
     return true
@@ -23,11 +36,13 @@ local lerp = Lerp
 local ARC9ScreenScale = ARC9.ScreenScale
 
 function SWEP:DoDrawCrosshair(x, y)
-    if !GetConVar("arc9_cross_enable"):GetBool() then return end
+    if !arc9_cross_enable:GetBool() then return end
     local scrw, scrh = ScrW(), ScrH()
     local owner = self:GetOwner()
 
-    if GetConVar("arc9_crosshair_static"):GetBool() then
+    local staticcs = arc9_crosshair_static:GetBool()
+
+    if staticcs then
         x = scrw / 2
         y = scrh / 2
     else
@@ -50,22 +65,22 @@ function SWEP:DoDrawCrosshair(x, y)
         x, y = toscreen.x, toscreen.y
     end
 
-    local m = GetConVar("arc9_cross_size_mult"):GetFloat()
+    local m = arc9_cross_size_mult:GetFloat()
+    local sizeprong = arc9_cross_size_prong:GetFloat()
 
-    local dotsize = ARC9ScreenScale(1) * m * GetConVar("arc9_cross_size_dot"):GetFloat()
-    local prong = ARC9ScreenScale(4) * m * GetConVar("arc9_cross_size_prong"):GetFloat()
+    local dotsize = ARC9ScreenScale(1) * m * arc9_cross_size_dot:GetFloat()
+    local prong = ARC9ScreenScale(4) * m * sizeprong
     local minigap = ARC9ScreenScale(2) * m
-    local miniprong_1 = ARC9ScreenScale(4) * m * GetConVar("arc9_cross_size_prong"):GetFloat()
-    local miniprong_2 = ARC9ScreenScale(2) * m * GetConVar("arc9_cross_size_prong"):GetFloat()
+    local miniprong_1 = ARC9ScreenScale(4) * m * sizeprong
+    local miniprong_2 = ARC9ScreenScale(2) * m * sizeprong
     local gap = 0
     local staticgap = ARC9ScreenScale(4)
+
     local col = Color(255, 255, 255, 255)
-
-    col.r = GetConVar("arc9_cross_r"):GetFloat()
-    col.g = GetConVar("arc9_cross_g"):GetFloat()
-    col.b = GetConVar("arc9_cross_b"):GetFloat()
-
-    col.a =  GetConVar("arc9_cross_a"):GetFloat()
+    col.r = arc9_cross_r:GetFloat()
+    col.g = arc9_cross_g:GetFloat()
+    col.b = arc9_cross_b:GetFloat()
+    col.a =  arc9_cross_a:GetFloat()
 
     local d = self:GetSightDelta()
 
@@ -79,7 +94,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
     col.a = lasthelperalpha * col.a
 
-    if owner:IsAdmin() and GetConVar("arc9_dev_crosshair"):GetBool() then
+    if owner:IsAdmin() and arc9_dev_crosshair:GetBool() then
         self:DevStuffCrosshair()
         return true
     end
@@ -104,11 +119,11 @@ function SWEP:DoDrawCrosshair(x, y)
 
     local mode = self:GetCurrentFiremode()
 
-    local shoottimegap = math.Clamp((self:GetNextPrimaryFire() - CurTime()) / (60 / (self:GetProcessedValue("RPM") * 0.1)), 0, 1)
+    local shoottimegap = math.Clamp((self:GetNextPrimaryFire() - CurTime()) / (60 / (self:GetProcessedValue("RPM", _, _, true) * 0.1)), 0, 1)
 
     shoottimegap = math.ease.OutCirc(shoottimegap)
 
-    if GetConVar("arc9_crosshair_static"):GetBool() then shoottimegap = 0 end
+    if staticcs then shoottimegap = 0 end
 
     cam.Start3D()
         local lool = ( EyePos() + ( EyeAngles():Forward() ) + ( (self:GetProcessedValue("Spread")) * EyeAngles():Up() ) ):ToScreen()
@@ -131,7 +146,7 @@ function SWEP:DoDrawCrosshair(x, y)
     if self:GetSprintAmount() > 0 then return true end
     if self:GetReloading() then return true end
 
-    if self:GetProcessedValue("MissileCrosshair") then
+    if self:GetProcessedValue("MissileCrosshair", _, _, true) then
         -- local dotcount = 4
 
         -- for i = 1, dotcount do
@@ -162,7 +177,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
         drawshadowrect(x - gap * -1 - (dotsize / 2), y - gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
         drawshadowrect(x - gap * -1 - (dotsize / 2), y + gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
-    elseif self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("LauncherCrosshair") then
+    elseif self:GetProcessedValue("ShootEnt", _, _, true) or self:GetProcessedValue("LauncherCrosshair", _, _, true) then
         if mode > 1 then
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2, y - (dotsize / 2), miniprong_2, dotsize, col)
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2 - minigap - miniprong_1, y - (dotsize / 2), miniprong_1, dotsize, col)
@@ -196,7 +211,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
         drawshadowrect(x - (dotsize / 2) - (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
         drawshadowrect(x - (dotsize / 2) + (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
-    elseif self:GetProcessedValue("Num") > 1 then
+    elseif self:GetProcessedValue("Num", _, _, true) > 1 then
         local dotcount = 10
 
         for i = 1, dotcount do

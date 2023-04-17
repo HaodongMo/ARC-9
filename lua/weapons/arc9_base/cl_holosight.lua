@@ -1,3 +1,9 @@
+local whitecolo = Color(255, 255, 255)
+
+local colrcvar = GetConVar("arc9_reflex_r")
+local colgcvar = GetConVar("arc9_reflex_g")
+local colbcvar = GetConVar("arc9_reflex_b")
+
 function SWEP:DoHolosight(mdl, atttbl)
     if self:GetSightAmount() <= 0 and !self:GetCustomize() then return end
     if ARC9.OverDraw then return end
@@ -65,13 +71,13 @@ function SWEP:DoHolosight(mdl, atttbl)
         -- local s = atttbl.HoloSightSize / math.Clamp(dist / 7, 0.5, 3)
         local s = atttbl.HoloSightSize
 
-        local col = atttbl.HoloSightColor or Color(255, 255, 255)
+        local col = atttbl.HoloSightColor or whitecolo
 
         if atttbl.HoloSightColorable then
             col = Color(0, 0, 0)
-            col.r = GetConVar("arc9_reflex_r"):GetFloat()
-            col.g = GetConVar("arc9_reflex_g"):GetFloat()
-            col.b = GetConVar("arc9_reflex_b"):GetFloat()
+            col.r = colrcvar:GetFloat()
+            col.g = colgcvar:GetFloat()
+            col.b = colbcvar:GetFloat()
         end
 
         render.SetMaterial(reticle)
@@ -88,7 +94,7 @@ function SWEP:DoHolosight(mdl, atttbl)
         -- render.DrawQuadEasy(pos, -mdl:GetAngles():Forward(), s, s, atttbl.HoloSightColor or Color(255, 255, 255))
 
         -- cam.Start3D(nil, nil, self.ViewModelFOV, nil, nil, nil, nil, 1, 10000 )
-        render.DrawQuad(v1, v2, v3, v4, col or Color(255, 255, 255))
+        render.DrawQuad(v1, v2, v3, v4, col or whitecolo)
 
         if atttbl.HoloSightFunc then
             atttbl.HoloSightFunc(self, pos, mdl)
