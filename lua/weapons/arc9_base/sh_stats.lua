@@ -35,9 +35,11 @@ function SWEP:InvalidateCache()
         self:CallOnClient("InvalidateCache")
     end
 
+    for _, v in pairs(self.PV_CacheLong) do v.time = 0 end
+    -- self.PV_CacheLong = {}
+    
     self.StatCache = {}
     self.HookCache = {}
-    self.PV_CacheLong = {}
     self.AffectorsCache = nil
     self.ElementsCache = nil
     self.RecoilPatternCache = {}
