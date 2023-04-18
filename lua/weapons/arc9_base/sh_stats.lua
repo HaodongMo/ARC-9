@@ -37,6 +37,7 @@ function SWEP:InvalidateCache()
 
     self.StatCache = {}
     self.HookCache = {}
+    self.PV_CacheLong = {}
     self.AffectorsCache = nil
     self.ElementsCache = nil
     self.RecoilPatternCache = {}
@@ -465,7 +466,7 @@ do
 
                 if cachetime then
                     if upct > cachetime then
-                        self.PV_CacheLong[processedValueName].time = upct + 0.2
+                        self.PV_CacheLong[processedValueName].time = upct + 0.35 -- idk whats number here should be
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
                         -- print(processedValueName, "working", upct)
                     end
