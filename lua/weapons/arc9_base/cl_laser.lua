@@ -104,15 +104,16 @@ function SWEP:DrawLasers(wm, behav)
 
                 if !a then return end
 
-                local lasercorrectionangle = model.LaserCorrectionAngle or Angle(0, 0, 0)
-
+                local lasercorrectionangle = model.LaserCorrectionAngle
                 local lasang = a.Ang
 
-                local up, right, forward = lasang:Up(), lasang:Right(), lasang:Forward()
+                if lasercorrectionangle then
+                    local up, right, forward = lasang:Up(), lasang:Right(), lasang:Forward()
 
-                lasang:RotateAroundAxis(up, lasercorrectionangle.p)
-                lasang:RotateAroundAxis(right, lasercorrectionangle.y)
-                lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
+                    lasang:RotateAroundAxis(up, lasercorrectionangle.p)
+                    lasang:RotateAroundAxis(right, lasercorrectionangle.y)
+                    lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
+                end
 
                 if !wm or self:GetOwner() == LocalPlayer() then
                     if behav then
