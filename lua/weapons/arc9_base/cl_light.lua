@@ -25,9 +25,11 @@ function SWEP:CreateFlashlights()
             local newlight = {
                 slottbl = k,
                 light = ProjectedTexture(),
-                col = color_white,
-                br = 3,
+                col = atttbl.FlashlightColor or color_white,
+                br = atttbl.FlashlightBrightness or 3,
+                qca = atttbl.FlashlightAttachment,
             }
+
             total_lights = total_lights + 1
 
             local l = newlight.light
@@ -96,6 +98,7 @@ function SWEP:DrawFlashlightsWM()
 
         local pos, ang
 
+
         if !model then
             pos = owner:EyePos()
             ang = owner:EyeAngles()
@@ -103,6 +106,16 @@ function SWEP:DrawFlashlightsWM()
             pos = model:GetPos()
             ang = model:GetAngles()
         end
+
+
+        if k.qca then
+            a = model:GetAttachment(k.qca)
+            pos, ang = a.Pos, a.Ang
+        end
+        -- print(ang)
+        self:DrawLightFlare(pos, ang, k.col, k.br * 20)
+        
+        if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
         -- ang:RotateAroundAxis(ang:Up(), 90)
 
@@ -128,6 +141,7 @@ function SWEP:DrawFlashlightsWM()
         k.light:SetPos(pos)
         k.light:SetAngles(ang)
         k.light:Update()
+
     end
 end
 
@@ -154,6 +168,15 @@ function SWEP:DrawFlashlightsVM()
             pos = model:GetPos()
             ang = model:GetAngles()
         end
+
+        if k.qca then
+            a = model:GetAttachment(k.qca)
+            pos, ang = a.Pos, a.Ang
+        end
+
+        self:DrawLightFlare(pos, ang, k.col, k.br * 25)
+        
+        if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
         local tr = util.TraceLine({
             start = eyepos,
@@ -193,5 +216,7 @@ function SWEP:DrawFlashlightsVM()
         --     dl.dietime = CurTime() + 0.1
         --     dl.size = (k.br or 2) * 64
         -- end
+
+        -- self:DrawLightFlare(pos, ang+Angle(0,90,0), k.col, k.br * 25)
     end
 end

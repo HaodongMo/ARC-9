@@ -114,7 +114,10 @@ function SWEP:DrawLasers(wm, behav)
                     lasang:RotateAroundAxis(right, lasercorrectionangle.y)
                     lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
                 end
-
+                -- print(a.Pos)
+                
+                self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, 5)
+                
                 if !wm or self:GetOwner() == LocalPlayer() then
                     if behav then
                         self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
