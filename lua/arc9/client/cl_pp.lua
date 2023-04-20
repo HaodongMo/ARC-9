@@ -10,28 +10,18 @@ hook.Add("PostDrawHUD", "ARC9_SSE_PP", function()
     if !wpn.ARC9 then return end
 
     wpn:HoldBreathPP()
+    
+    for i, flare in ipairs(ARC9.Flares) do
+        cam.Start3D()
+        local toscreen = flare.pos:ToScreen()
+        cam.End3D()
 
-    -- local r = math.Rand(0.97, 1.02)
-
-    for _, flare in ipairs(ARC9.Flares) do
-        -- render.SetMaterial(flaremat)
-        -- render.DrawSprite(flare.pos, flare.size, flare.size, flare.col)
         surface.SetMaterial(flaremat)
-        -- surface.SetDrawColor(Color(255, 255, 255))
         surface.SetDrawColor(flare.color)
         local s = flare.size
-        surface.DrawTexturedRect(flare.x - (s / 2), flare.y - (s / 2), s, s)
+        -- print(i, s)
+        surface.DrawTexturedRect(toscreen.x - (s / 2), toscreen.y - (s / 2), s, s)
     end
-    
-    -- for _, flare in ipairs(ARC9.Flares) do
-        -- render.SetMaterial(flaremat)
-        -- render.DrawSprite(flare.pos, flare.size, flare.size, flare.col)
-        -- surface.SetMaterial(flaremat)
-        -- surface.SetDrawColor(255, 255, 255)
-        -- local s = 100
-        -- surface.DrawTexturedRect(flare.x - (s / 2), flare.y - (s / 2), s, s)
-        -- surface.DrawTexturedRect(500, 500, s, s)
-    -- end
 
     ARC9.Flares = {}
 

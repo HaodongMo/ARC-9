@@ -60,7 +60,7 @@ function SWEP:CreateFlashlights()
         end
     end
 
-    if total_lights > 2 then -- you are a madman
+    if total_lights > 1 then -- you are a madman
         for i, k in ipairs(self.Flashlights) do
             if k.light:IsValid() then k.light:SetEnableShadows(false) end
         end
@@ -80,7 +80,7 @@ function SWEP:KillFlashlights()
 end
 
 local arc9_allflash = GetConVar("arc9_allflash")
-local fuckingmicrovectorwhatisthisfuckingbullshit = Vector(0, 0, 0.001)
+local fuckingmicrovectorwhatisthisfuckingbullshit = Vector(0, 0, 0.005)
 
 function SWEP:DrawFlashlightsWM()
     local owner = self:GetOwner()
@@ -91,7 +91,7 @@ function SWEP:DrawFlashlightsWM()
     if !self.Flashlights then
         self:CreateFlashlights()
     end
-
+    
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).WModel
 
@@ -114,9 +114,9 @@ function SWEP:DrawFlashlightsWM()
             pos, ang = a.Pos, a.Ang
         end
         -- print(ang)
-        
+        -- print(i)
         self:DrawLightFlare(pos + fuckingmicrovectorwhatisthisfuckingbullshit, ang, k.col, k.br * 20)
-        
+
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
         -- ang:RotateAroundAxis(ang:Up(), 90)
@@ -176,7 +176,7 @@ function SWEP:DrawFlashlightsVM()
             pos, ang = a.Pos, a.Ang
         end
 
-        self:DrawLightFlare(pos, ang, k.col, k.br * 25)
+        -- self:DrawLightFlare(pos, ang, k.col, k.br * 25)
         
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
