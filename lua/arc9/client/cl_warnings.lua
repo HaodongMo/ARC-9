@@ -46,6 +46,16 @@ ARC9.IncompatibleAddons = {
 
     -- TF2 Killstreak Weapon Sheen
     ["973050319"] = "Fucks up model rendering and other shit",
+
+    -- ZINV Zombie/NPC Invasion and variants.
+    -- Original by Jason
+    ["179517028"] = "Breaks pretty much everything.",
+    -- ZINV++ by Gus "Sussy Gussy" Fring
+    ["2550261416"] = "Breaks pretty much everything.",
+    -- ZINV+ by moomoohk
+    ["597017711"] = "Breaks pretty much everything.",
+    -- ZINV++ by snorts
+    ["2757203958"] = "Breaks pretty much everything.",
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale
@@ -227,7 +237,7 @@ function ARC9.DoCompatibilityCheck()
     end
 
     local playerspawnhooks = hook.GetTable().PlayerSpawn
-    if playerspawnhooks and (playerspawnhooks.PlayerSpawn) then
+    if playerspawnhooks and playerspawnhooks.PlayerSpawn then
         incompatList["TacticalLean"] = {
             title = "Tactical Leaning",
             wsid = "TacticalLean",
