@@ -80,6 +80,7 @@ function SWEP:KillFlashlights()
 end
 
 local arc9_allflash = GetConVar("arc9_allflash")
+local fuckingmicrovectorwhatisthisfuckingbullshit = Vector(0, 0, 0.001)
 
 function SWEP:DrawFlashlightsWM()
     local owner = self:GetOwner()
@@ -113,7 +114,8 @@ function SWEP:DrawFlashlightsWM()
             pos, ang = a.Pos, a.Ang
         end
         -- print(ang)
-        self:DrawLightFlare(pos, ang, k.col, k.br * 20)
+        
+        self:DrawLightFlare(pos + fuckingmicrovectorwhatisthisfuckingbullshit, ang, k.col, k.br * 20)
         
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 

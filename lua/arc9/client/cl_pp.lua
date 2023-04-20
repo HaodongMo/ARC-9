@@ -2,7 +2,7 @@ ARC9.Flares = {}
 
 local flaremat = Material("effects/arc9_lensflare", "mips smooth")
 
-hook.Add("DrawOverlay", "ARC9_SSE_PP", function()
+hook.Add("PostDrawHUD", "ARC9_SSE_PP", function()
     if !IsValid(LocalPlayer()) then return end
     local wpn = LocalPlayer():GetActiveWeapon()
 
