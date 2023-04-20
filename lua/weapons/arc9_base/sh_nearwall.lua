@@ -26,7 +26,7 @@ do
             return self.NearWallCached
         end
 
-        local length = self:GetProcessedValue("BarrelLength", _, _, true)
+        local length = self:GetProcessedValue("BarrelLength", true)
 
         if length == 0 then return false end
 

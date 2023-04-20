@@ -1,6 +1,6 @@
 function SWEP:DoEffects()
     if !IsFirstTimePredicted() then return end
-    if self:GetProcessedValue("NoMuzzleEffect", _, _, true) then return end
+    if self:GetProcessedValue("NoMuzzleEffect", true) then return end
 
     local muzz_qca = self:GetQCAMuzzle()
 
@@ -11,9 +11,9 @@ function SWEP:DoEffects()
 
     local muzzle = "arc9_muzzleeffect"
 
-    local muzefect = self:GetProcessedValue("MuzzleEffect", _, _, true)
+    local muzefect = self:GetProcessedValue("MuzzleEffect", true)
 
-    if !self:GetProcessedValue("MuzzleParticle", _, _, true) and muzefect then
+    if !self:GetProcessedValue("MuzzleParticle", true) and muzefect then
         muzzle = muzefect
         data:SetScale(1)
         data:SetFlags(0)
@@ -28,15 +28,15 @@ function SWEP:DoEffects()
 end
 
 function SWEP:GetQCAMuzzle()
-    return self:GetProcessedValue("MuzzleEffectQCA", _, _, true)
+    return self:GetProcessedValue("MuzzleEffectQCA", true)
 end
 
 function SWEP:GetQCAEject()
-    return self:GetProcessedValue("CaseEffectQCA", _, _, true)
+    return self:GetProcessedValue("CaseEffectQCA", true)
 end
 
 function SWEP:GetQCAMagdrop()
-    return self:GetProcessedValue("DropMagazineQCA", _, _, true) or self:GetProcessedValue("CaseEffectQCA", _, _, true)
+    return self:GetProcessedValue("DropMagazineQCA", true) or self:GetProcessedValue("CaseEffectQCA", true)
 end
 
 SWEP.EjectedShells = {}
@@ -53,8 +53,8 @@ function SWEP:DoEject(index, attachment)
     data:SetAttachment(eject_qca)
     data:SetFlags(index or 0)
 
-    for i = 1, self:GetProcessedValue("ShellEffectCount", _, _, true) do
-        util.Effect(self:GetProcessedValue("ShellEffect", _, _, true) or "ARC9_shelleffect", data, true)
+    for i = 1, self:GetProcessedValue("ShellEffectCount", true) do
+        util.Effect(self:GetProcessedValue("ShellEffect", true) or "ARC9_shelleffect", data, true)
     end
 end
 
@@ -79,7 +79,7 @@ function SWEP:GetTracerOrigin()
 end
 
 function SWEP:GetMuzzleDevice(wm, n)
-    if self:GetProcessedValue("IgnoreMuzzleDevice", _, _, true) then
+    if self:GetProcessedValue("IgnoreMuzzleDevice", true) then
         if wm then return self:GetWM() else return self:GetVM() end
     end
 

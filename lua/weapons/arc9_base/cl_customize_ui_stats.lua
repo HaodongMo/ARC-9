@@ -146,7 +146,7 @@ function SWEP:CreateHUD_Stats()
                 return a > b and 1 or -1
             end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true)
+                return self:GetProcessedValue("PrimaryBash", true)
             end,
         },
         {
@@ -171,7 +171,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 20,
             eval = function()
                 local a = self:GetProcessedValue("ClipSize") + self:GetProcessedValue("ChamberSize")
-                if self:GetProcessedValue("BottomlessClip", _, _, true) then
+                if self:GetProcessedValue("BottomlessClip", true) then
                     a = a + math.huge
                 end
                 local b = self.ClipSize + self.ChamberSize
@@ -184,7 +184,7 @@ function SWEP:CreateHUD_Stats()
                 return a > b and 1 or -1
             end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true)
+                return self:GetProcessedValue("PrimaryBash", true)
             end,
             conv = function(a)
                 a = tostring(a)
@@ -193,7 +193,7 @@ function SWEP:CreateHUD_Stats()
                     a = a .. "+" .. tostring(self:GetProcessedValue("ChamberSize"))
                 end
 
-                if self:GetProcessedValue("BottomlessClip", _, _, true) then
+                if self:GetProcessedValue("BottomlessClip", true) then
                     a = "∞"
                 end
 
@@ -210,7 +210,7 @@ function SWEP:CreateHUD_Stats()
                 return a * ARC9.HUToM
             end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("ShootEnt")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
         },
         {
@@ -222,7 +222,7 @@ function SWEP:CreateHUD_Stats()
             unit = "unit.moa",
             conv = function(a) return math.Round(a * 360 * 60 / 10, 1) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("Spread") == 0
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("Spread") == 0
             end
         },
         {
@@ -233,7 +233,7 @@ function SWEP:CreateHUD_Stats()
             unit = "unit.meterpersecond",
             conv = function(a) return math.Round(a * ARC9.HUToM) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("ShootEnt")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
         },
         {
@@ -244,7 +244,7 @@ function SWEP:CreateHUD_Stats()
                 return language.GetPhrase(a .. "_ammo")
             end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("InfiniteAmmo")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("InfiniteAmmo")
             end
         },
         {
@@ -254,7 +254,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 50,
             unit = "unit.millimeter",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("ShootEnt")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
         },
         {
@@ -265,7 +265,7 @@ function SWEP:CreateHUD_Stats()
             unit = "%",
             conv = function(a) return math.Round(a * 100, 0) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("ShootEnt")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
         },
         {
@@ -276,7 +276,7 @@ function SWEP:CreateHUD_Stats()
             unit = "%",
             conv = function(a) return math.Round(a * 100, 0) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("ShootEnt")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
         },
         {
@@ -287,7 +287,7 @@ function SWEP:CreateHUD_Stats()
             unit = "unit.dmg",
             conv = function(a) return math.Round(a, 0) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("ExplosionDamage") <= 0
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt") or self:GetProcessedValue("ExplosionDamage") <= 0
             end
         },
         {
@@ -306,7 +306,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 0.3,
             unit = "unit.second",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true)
+                return self:GetProcessedValue("PrimaryBash", true)
             end
         },
         {
@@ -388,7 +388,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 0.1,
             unit = "unit.second",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("PostBurstDelay") <= 0 or self:GetCapacity() == 0
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("PostBurstDelay") <= 0 or self:GetCapacity() == 0
             end
         },
         {
@@ -399,7 +399,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 0.1,
             unit = "unit.second",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetProcessedValue("TriggerDelayTime") <= 0 or !self:GetProcessedValue("TriggerDelay")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("TriggerDelayTime") <= 0 or !self:GetProcessedValue("TriggerDelay")
             end
         },
         {
@@ -410,7 +410,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 100,
             unit = "unit.decibel",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true)
+                return self:GetProcessedValue("PrimaryBash", true)
             end
         },
         {
@@ -422,7 +422,7 @@ function SWEP:CreateHUD_Stats()
             unit = "%",
             conv = function(a) return math.Round(a * 60, 0) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or !GetConVar("arc9_mod_sway"):GetBool()
+                return self:GetProcessedValue("PrimaryBash", true) or !GetConVar("arc9_mod_sway"):GetBool()
             end
         },
         {
@@ -433,7 +433,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 20,
             unit = "°",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or !GetConVar("arc9_mod_freeaim"):GetBool()
+                return self:GetProcessedValue("PrimaryBash", true) or !GetConVar("arc9_mod_freeaim"):GetBool()
             end
         },
         {
@@ -442,7 +442,7 @@ function SWEP:CreateHUD_Stats()
             stat = "SupplyLimit",
             fifty = 3,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", _, _, true) or self:GetValue("EFTErgo")
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetValue("EFTErgo")
             end,
             conv = function(a) return math.Round(a, 0) end,
             unit = ""

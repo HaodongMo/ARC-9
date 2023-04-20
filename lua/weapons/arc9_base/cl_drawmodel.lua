@@ -40,7 +40,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             
             if mdl then 
                 -- if mdl[1] then
-                    mdl[1]:SetMaterial(self:GetProcessedValue("Material", _, _, true)) 
+                    mdl[1]:SetMaterial(self:GetProcessedValue("Material", true)) 
                 -- end
             end
         end

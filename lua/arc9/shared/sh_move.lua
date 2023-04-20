@@ -9,7 +9,7 @@ function ARC9.Move(ply, mv, cmd)
     local basespd = (Vector(cmd:GetForwardMove(), cmd:GetUpMove(), cmd:GetSideMove())):Length()
     basespd = math.min(basespd, mv:GetMaxClientSpeed())
 
-    local mult = wpn:GetProcessedValue("Speed", 1)
+    local mult = wpn:GetProcessedValue("Speed", nil, 1)
 
     if wpn:GetSightAmount() > 0 then
         if ply:KeyDown(IN_SPEED) then
@@ -49,7 +49,7 @@ function ARC9.Move(ply, mv, cmd)
 
     if cmd:GetImpulse() == ARC9.IMPULSE_TOGGLEATTS then
         if !wpn:StillWaiting() and !wpn:GetUBGL() then
-            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", _, _, true)), 75, 100, 1, CHAN_ITEM)
+            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
             wpn:PlayAnimation("toggle")
         end
     end
@@ -119,7 +119,7 @@ function ARC9.StartCommand(ply, cmd)
         cmd:SetViewAngles(eyeang)
     end
 
-    if wpn:GetProcessedValue("NoSprintWhenLocked", _, _, true) and wpn:GetAnimLockTime() > CurTime() then
+    if wpn:GetProcessedValue("NoSprintWhenLocked", true) and wpn:GetAnimLockTime() > CurTime() then
         cmd:RemoveKey(IN_SPEED)
     end
 
@@ -217,7 +217,7 @@ function ARC9.StartCommand(ply, cmd)
 
     if cmd:GetImpulse() == 100 and wpn:CanToggleAllStatsOnF() and !wpn:GetCustomize() then
         if !wpn:GetReloading() and !wpn:GetUBGL() then
-            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", _, _, true)), 75, 100, 1, CHAN_ITEM)
+            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
             if CLIENT then
                 wpn:ToggleAllStatsOnF()
             end

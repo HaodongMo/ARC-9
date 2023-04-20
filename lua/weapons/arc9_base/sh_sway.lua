@@ -26,7 +26,7 @@ function SWEP:ThinkHoldBreath()
             if sfx then
                 local soundtab = {
                     name = "breathrunout",
-                    sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound", _, _, true)),
+                    sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound", true)),
                     channel = ARC9.CHAN_BREATH
                 }
                 
@@ -51,7 +51,7 @@ function SWEP:ThinkHoldBreath()
 
                 local soundtab = {
                     name = "breathin",
-                    sound = self:RandomChoice(self:GetProcessedValue("BreathInSound", _, _, true)),
+                    sound = self:RandomChoice(self:GetProcessedValue("BreathInSound", true)),
                     channel = ARC9.CHAN_BREATH
                 }
 
@@ -65,7 +65,7 @@ function SWEP:ThinkHoldBreath()
             -- self.SetBreathDSP = false
             local soundtab = {
                 name = "breathout",
-                sound = self:RandomChoice(self:GetProcessedValue("BreathOutSound", _, _, true)),
+                sound = self:RandomChoice(self:GetProcessedValue("BreathOutSound", true)),
                 channel = ARC9.CHAN_BREATH
             }
 
@@ -75,7 +75,7 @@ function SWEP:ThinkHoldBreath()
             if CLIENT then self:PlayTranslatedSound(soundtab) end
         end
 
-        self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime", _, _, true)))
+        self:SetBreath(self:GetBreath() + (FrameTime() * 100 / self:GetProcessedValue("RestoreBreathTime", true)))
         if self:GetBreath() >= 100 then
             self:SetBreath(100)
             self:SetOutOfBreath(false)

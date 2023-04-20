@@ -15,7 +15,7 @@ function EFFECT:Init(data)
         return
     end
 
-    local muzzle = wpn:GetProcessedValue("MuzzleParticle", _, _, true)
+    local muzzle = wpn:GetProcessedValue("MuzzleParticle", true)
 
     local att = data:GetAttachment() or 1
 
@@ -75,7 +75,7 @@ function EFFECT:Init(data)
         end
     end
 
-    if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash", _, _, true) and lighconvar:GetBool() then
+    if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash", true) and lighconvar:GetBool() then
         local light = DynamicLight(self:EntIndex())
         local clr = Color(244, 209, 66)
         if (light) then

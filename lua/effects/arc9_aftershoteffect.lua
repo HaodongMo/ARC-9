@@ -3,7 +3,7 @@ function EFFECT:Init(data)
 
 	if !IsValid(wpn) then self:Remove() return end
 
-	local smoke = wpn:GetProcessedValue("AfterShotParticle", _, _, true)
+	local smoke = wpn:GetProcessedValue("AfterShotParticle", true)
 
 	local att = data:GetAttachment() or 1
 

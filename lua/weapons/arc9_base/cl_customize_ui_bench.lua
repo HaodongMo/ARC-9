@@ -129,7 +129,7 @@ function SWEP:CreateHUD_Bench()
 
     self:CreateHUD_Stats()
 
-    if !self:GetProcessedValue("PrimaryBash", _, _, true) and !self:GetProcessedValue("Throwable", _, _, true) and !self:GetProcessedValue("ShootEnt") then -- no ballistics
+    if !self:GetProcessedValue("PrimaryBash", true) and !self:GetProcessedValue("Throwable", true) and !self:GetProcessedValue("ShootEnt") then -- no ballistics
         local tp = vgui.Create("DScrollPanel", bg)
         local width = math.min(ARC9ScreenScale(550), ScrW())
         tp:SetSize(width, ARC9ScreenScale(100))

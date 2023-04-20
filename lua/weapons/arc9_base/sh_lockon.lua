@@ -12,13 +12,13 @@ function SWEP:CanLockOn(ent)
 
     local canlock = false
 
-    if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) and self:GetProcessedValue("LocksLiving", _, _, true) then
+    if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) and self:GetProcessedValue("LocksLiving", true) then
         canlock = true
     end
 
     if !canlock then
-        local lockair = self:GetProcessedValue("LocksAir", _, _, true)
-        local lockground = self:GetProcessedValue("LocksGround", _, _, true)
+        local lockair = self:GetProcessedValue("LocksAir", true)
+        local lockground = self:GetProcessedValue("LocksGround", true)
 
         if lockair and lockground then
             canlock = true
@@ -56,7 +56,7 @@ function SWEP:GetLockOnScore(ent, pure)
 
     local dot = self:GetOwner():GetAimVector():Dot((ent:GetPos() - self:GetShootPos()):GetNormalized())
 
-    if math.deg(math.acos(dot)) > self:GetProcessedValue("LockOnFOV", _, _, true) then return 0 end
+    if math.deg(math.acos(dot)) > self:GetProcessedValue("LockOnFOV", true) then return 0 end
 
     score = score + (math.deg(math.acos(dot)) / 2)
     if pure then return score end
@@ -87,13 +87,13 @@ function SWEP:LockOnTargetInFOV(ent)
 
     local deg_dot = math.deg(math.acos(dot))
 
-    if deg_dot > self:GetProcessedValue("LockOnFOV", _, _, true) then return false end
+    if deg_dot > self:GetProcessedValue("LockOnFOV", true) then return false end
 
     return true
 end
 
 function SWEP:ThinkLockOn()
-    if !self:GetProcessedValue("LockOn", _, _, true) then
+    if !self:GetProcessedValue("LockOn", true) then
         self:SetLockOnTarget(NULL)
         return
     end
@@ -109,7 +109,7 @@ function SWEP:ThinkLockOn()
 
                 local soundtab = {
                     name = "lockedon",
-                    sound = self:GetProcessedValue("LockedOnSound", _, _, true),
+                    sound = self:GetProcessedValue("LockedOnSound", true),
                 }
 
                 self:PlayTranslatedSound(soundtab)
@@ -146,7 +146,7 @@ function SWEP:ThinkLockOn()
 
         local soundtab = {
             name = "lockon",
-            sound = self:GetProcessedValue("LockOnSound", _, _, true),
+            sound = self:GetProcessedValue("LockOnSound", true),
         }
 
         self:PlayTranslatedSound(soundtab)
@@ -160,7 +160,7 @@ local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 function SWEP:DrawLockOnHUD(iam3d)
     if self:IsScoping() and !iam3d then return end
 
-    if !self:GetProcessedValue("LockOn", _, _, true) then
+    if !self:GetProcessedValue("LockOn", true) then
         return
     end
 

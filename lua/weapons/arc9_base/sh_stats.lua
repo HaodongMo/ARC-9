@@ -439,7 +439,7 @@ do
         return getmetatable(val) == numberMeta
     end
 
-    function SWEP:GetProcessedValue(val, base, cmd, cachedelay)
+    function SWEP:GetProcessedValue(val, cachedelay, base, cmd)
         local swepDt = self.dt
         -- From now on, we will not call `self:GetJammed()`, `self:GetHeatLockout()`
         -- and similar functions, because all they do is just return `self.dt[thing]`
@@ -468,29 +468,29 @@ do
 
                 if cachetime then
                     if upct > cachetime then
-                        print("Renewing cache for - ", processedValueName)
+                        -- print("Renewing cache for - ", processedValueName)
                         
 
                         self.PV_CacheLong[processedValueName].time = upct + 0.35 -- idk whats number here should be
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
                         
-                if istable(self.PV_CacheLong[processedValueName].value) then
-                    print("Renewed value is a table!")
-                    PrintTable(self.PV_CacheLong[processedValueName].value)
-                    else print("Renewed value - ", self.PV_CacheLong[processedValueName].value) end
+                -- if istable(self.PV_CacheLong[processedValueName].value) then
+                    -- print("Renewed value is a table!")
+                    -- PrintTable(self.PV_CacheLong[processedValueName].value)
+                    -- else print("Renewed value - ", self.PV_CacheLong[processedValueName].value) end
                         -- print(processedValueName, "working", upct)
                     end
                 end
             else
 
-                        print("Didn't found cache for - ", processedValueName, ", generating!")
+                        -- print("Didn't found cache for - ", processedValueName, ", generating!")
                 self.PV_CacheLong[processedValueName] = {}
                 self.PV_CacheLong[processedValueName].time = upct
                 self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
-                if istable(self.PV_CacheLong[processedValueName].value) then
-                    print("That generated value is a table!")
-                    PrintTable(self.PV_CacheLong[processedValueName].value)
-                    else print("Generated value - ", self.PV_CacheLong[processedValueName].value) end
+                -- if istable(self.PV_CacheLong[processedValueName].value) then
+                    -- print("That generated value is a table!")
+                    -- PrintTable(self.PV_CacheLong[processedValueName].value)
+                    -- else print("Generated value - ", self.PV_CacheLong[processedValueName].value) end
             end
 
             return self.PV_CacheLong[processedValueName].value

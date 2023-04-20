@@ -3,7 +3,7 @@ local arc9_dev_show_shield = GetConVar("arc9_dev_show_shield")
 function SWEP:CreateShield()
     self:KillShield()
 
-    local model = self:GetProcessedValue("ShieldModel", _, _, true)
+    local model = self:GetProcessedValue("ShieldModel", true)
 
     if !model then return end
 
@@ -13,14 +13,14 @@ function SWEP:CreateShield()
 
     self.ShieldProp = shield
 
-    local bonename = self:GetProcessedValue("ShieldBone", _, _, true)
+    local bonename = self:GetProcessedValue("ShieldBone", true)
 
     local boneindex = self:GetOwner():LookupBone(bonename)
 
     local bpos, bang = self:GetOwner():GetBonePosition(boneindex)
 
-    local pos = self:GetProcessedValue("ShieldOffset", _, _, true)
-    local ang = self:GetProcessedValue("ShieldAngle", _, _, true)
+    local pos = self:GetProcessedValue("ShieldOffset", true)
+    local ang = self:GetProcessedValue("ShieldAngle", true)
 
     local newpos = Vector(pos)
 
@@ -49,7 +49,7 @@ function SWEP:CreateShield()
     shield.ARC9Weapon = self
 
     shield:Spawn()
-    shield:SetModelScale(self:GetProcessedValue("ShieldScale", _, _, true) or 1, 0.1)
+    shield:SetModelScale(self:GetProcessedValue("ShieldScale", true) or 1, 0.1)
     shield:Activate()
 
     function shield:OnTakeDamage(damage)

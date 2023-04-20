@@ -144,7 +144,7 @@ function SWEP:PreDrawViewModel()
         self:DoRTScope(vm, self:GetTable(), sightamount > 0)
     end
 
-    vm:SetMaterial(self:GetProcessedValue("Material", _, _, true))
+    vm:SetMaterial(self:GetProcessedValue("Material", true))
 
     cam.IgnoreZ(true)
 

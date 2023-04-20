@@ -4,11 +4,11 @@ end
 
 function SWEP:EnterSights()
     if self:GetSprintAmount() > 0 then return end
-    if !self:GetProcessedValue("HasSights", _, _, true) then return end
+    if !self:GetProcessedValue("HasSights", true) then return end
     if self:GetCustomize() then return end
-    if !self:GetProcessedValue("ReloadInSights", _, _, true) and self:GetReloading() then return end
+    if !self:GetProcessedValue("ReloadInSights", true) and self:GetReloading() then return end
     if self:GetHolsterTime() > 0 then return end
-    if self:GetProcessedValue("UBGLInsteadOfSights", _, _, true) then return end
+    if self:GetProcessedValue("UBGLInsteadOfSights", true) then return end
     if self:GetSafe() then return end
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
     if self:GetValue("UBGL") and self:GetOwner():KeyDown(IN_USE) then return end
@@ -19,7 +19,7 @@ function SWEP:EnterSights()
     if IsFirstTimePredicted() then
         local soundtab1 = {
             name = "entersights",
-            sound = self:RandomChoice(self:GetProcessedValue("EnterSightsSound", _, _, true)),
+            sound = self:RandomChoice(self:GetProcessedValue("EnterSightsSound", true)),
             channel = ARC9.CHAN_FIDDLE,
         }
 
@@ -27,7 +27,7 @@ function SWEP:EnterSights()
     end
 
     if !self:StillWaiting() then
-        if self:GetProcessedValue("InstantSightIdle", _, _, true) then
+        if self:GetProcessedValue("InstantSightIdle", true) then
             self:PlayAnimation("idle")
         else
             local anim = self:TranslateAnimation("enter_sights")
@@ -48,7 +48,7 @@ function SWEP:ExitSights()
     if IsFirstTimePredicted() then
         local soundtab1 = {
             name = "exitsights",
-            sound = self:RandomChoice(self:GetProcessedValue("ExitSightsSound", _, _, true)),
+            sound = self:RandomChoice(self:GetProcessedValue("ExitSightsSound", true)),
             channel = ARC9.CHAN_FIDDLE,
         }
 
@@ -56,7 +56,7 @@ function SWEP:ExitSights()
     end
 
     if !self:StillWaiting() then
-        if self:GetProcessedValue("InstantSightIdle", _, _, true) then
+        if self:GetProcessedValue("InstantSightIdle", true) then
             self:PlayAnimation("idle")
         else
             local anim = self:TranslateAnimation("exit_sights")

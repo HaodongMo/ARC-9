@@ -128,11 +128,11 @@ function SWEP:GetCameraControl()
 
         ang = mdl:WorldToLocalAngles(ang)
         ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
-        ang:Mul(self:GetProcessedValue("CamQCA_Mult", _, _, true) or 1)
+        ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
 
         return ang
     else
-        local camqca = self:GetProcessedValue("CamQCA", _, _, true)
+        local camqca = self:GetProcessedValue("CamQCA", true)
 
         if !camqca then return end
 
@@ -145,7 +145,7 @@ function SWEP:GetCameraControl()
         ang = vm:WorldToLocalAngles(ang)
         ang:Sub(self.CamOffsetAng)
 
-        if self:GetProcessedValue("CamCoolView", _, _, true) then
+        if self:GetProcessedValue("CamCoolView", true) then
             local ft = FrameTime()
 
             self.ProceduralViewOffset:Normalize()
@@ -159,7 +159,7 @@ function SWEP:GetCameraControl()
             target = math.min(target, 1 - math.pow( vm:GetCycle(), 2 ) )
             local progress = Lerp(ft * 15, progress or 0, target)
 
-            local mult = self:GetProcessedValue("CamQCA_Mult", _, _, true) or 1
+            local mult = self:GetProcessedValue("CamQCA_Mult", true) or 1
 
             if self:GetAnimLockTime() < CurTime() and !self:GetInMeleeAttack() then
                 mult = 0
@@ -187,8 +187,8 @@ function SWEP:GetCameraControl()
 
             return self.ProceduralViewOffset
         else
-            ang:Mul(self:GetProcessedValue("CamQCA_Mult", _, _, true) or 1)
-            ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS", _, _, true) or 0.5)))
+            ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
+            ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS", true) or 0.5)))
         end
 
         return ang

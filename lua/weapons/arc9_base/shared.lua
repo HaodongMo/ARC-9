@@ -1566,7 +1566,7 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:SecondaryAttack()
-    if self:GetValue("UBGL") and self:GetProcessedValue("UBGLInsteadOfSights", _, _, true) then
+    if self:GetValue("UBGL") and self:GetProcessedValue("UBGLInsteadOfSights", true) then
         -- self:SetUBGL(true)
         self:ToggleUBGL(true)
         self:DoPrimaryAttack()

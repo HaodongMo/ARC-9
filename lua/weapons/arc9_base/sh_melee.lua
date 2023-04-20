@@ -4,14 +4,14 @@ local vmaxs, vmins = Vector(2, 2, 2), Vector(-2, -2, -2)
 function SWEP:MeleeAttack(bypass, bash2)
     if !bypass then
         if self:StillWaiting() then return end
-        if !self:GetProcessedValue("BashWhileSprint", _, _, true) and self:SprintLock() then return end
+        if !self:GetProcessedValue("BashWhileSprint", true) and self:SprintLock() then return end
     end
 
-    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimMelee", _, _, true))
+    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimMelee", true))
 
     local soundtab1 = {
         name = "meleeswing",
-        sound = self:RandomChoice(self:GetProcessedValue("MeleeSwingSound", _, _, true)),
+        sound = self:RandomChoice(self:GetProcessedValue("MeleeSwingSound", true)),
         channel = ARC9.CHAN_MELEE
     }
 
@@ -69,7 +69,7 @@ function SWEP:MeleeAttack(bypass, bash2)
         if game.SinglePlayer() and SERVER then
             self:CallOnClient("MeleeAttack", "true")
         elseif CLIENT then
-            self:PlayThirdArmAnim(self:GetProcessedValue("BashThirdArmAnimation", _, _, true), false)
+            self:PlayThirdArmAnim(self:GetProcessedValue("BashThirdArmAnimation", true), false)
 
             if game.SinglePlayer() and CLIENT then
                 return
@@ -115,7 +115,7 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
             if backstab then
                 local soundtab = {
                     name = "backstab",
-                    sound = self:RandomChoice(self:GetProcessedValue("BackstabSound", _, _, true)),
+                    sound = self:RandomChoice(self:GetProcessedValue("BackstabSound", true)),
                     channel = ARC9.CHAN_MELEE
                 }
 
@@ -123,7 +123,7 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
             else
                 local soundtab = {
                     name = "meleehit",
-                    sound = self:RandomChoice(self:GetProcessedValue("MeleeHitSound", _, _, true)),
+                    sound = self:RandomChoice(self:GetProcessedValue("MeleeHitSound", true)),
                     channel = ARC9.CHAN_MELEE
                 }
 
@@ -142,7 +142,7 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
         else
             local soundtab1 = {
                 name = "meleehitwall",
-                sound = self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound", _, _, true)),
+                sound = self:RandomChoice(self:GetProcessedValue("MeleeHitWallSound", true)),
                 channel = ARC9.CHAN_MELEE
             }
 
@@ -191,15 +191,15 @@ function SWEP:ThinkMelee()
 
     if !self:GetGrenadePrimed() then
 
-        if owner:KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", _, _, true) then
+        if owner:KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", true) then
             self:MeleeAttack()
         end
 
-        if owner:KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", _, _, true) then
+        if owner:KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", true) then
             self:MeleeAttack(false, true)
         end
 
-        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", _, _, true) and !self:GetInSights() then
+        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", true) and !self:GetInSights() then
             self:MeleeAttack()
         end
 

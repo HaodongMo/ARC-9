@@ -64,9 +64,9 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         ang = ang + (AngleRand() * (1 - degree) * 15 / 360)
         dir = ang:Forward()
 
-        if self:GetProcessedValue("RicochetSeeking", _, _, true) then
+        if self:GetProcessedValue("RicochetSeeking", true) then
             local tgt = nil
-            for _, e in pairs(ents.FindInCone(tr.StartPos, dir, self:GetProcessedValue("RicochetSeekingRange", _, _, true), math.cos(math.rad(self:GetProcessedValue("RicochetSeekingAngle", _, _, true))))) do
+            for _, e in pairs(ents.FindInCone(tr.StartPos, dir, self:GetProcessedValue("RicochetSeekingRange", true), math.cos(math.rad(self:GetProcessedValue("RicochetSeekingAngle", true))))) do
                 if (e:IsNPC() or e:IsPlayer() or e:IsNextBot()) and e:Health() > 0 and e ~= self:GetOwner() then
                     tgt = e
                     break
@@ -81,7 +81,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 
         penleft = penleft * d
 
-        local ricochetsounds = self:GetProcessedValue("RicochetSounds", _, _, true) or {}
+        local ricochetsounds = self:GetProcessedValue("RicochetSounds", true) or {}
 
         sound.Play(ricochetsounds[math.random(#ricochetsounds)], tr.HitPos, 75, math.Rand(90, 110), 1)
 

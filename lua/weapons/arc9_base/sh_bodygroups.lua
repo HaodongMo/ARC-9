@@ -88,7 +88,7 @@ function SWEP:DoBodygroups(wm, cm)
         mdl:ManipulateBoneScale(boneid, v0)
     end
 
-    local bulletbones = self:GetProcessedValue("BulletBones", _, _, true)
+    local bulletbones = self:GetProcessedValue("BulletBones", true)
 
     for i, bone in ipairs(bulletbones or {}) do
         local bones = bone
@@ -97,7 +97,7 @@ function SWEP:DoBodygroups(wm, cm)
         end
 
         local loaded = self:GetLoadedRounds()
-        if self:GetProcessedValue("BottomlessClip", _, _, true) then loaded = self:Ammo1() end
+        if self:GetProcessedValue("BottomlessClip", true) then loaded = self:Ammo1() end
 
         for _, bone2 in ipairs(bones) do
             local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
@@ -110,7 +110,7 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
-    local stripperbones = self:GetProcessedValue("StripperClipBones", _, _, true)
+    local stripperbones = self:GetProcessedValue("StripperClipBones", true)
 
     for i, bone in ipairs(stripperbones or {}) do
         local bones = bone
@@ -129,9 +129,9 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
-    mdl.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", _, _, true)
-    mdl.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", _, _, true)
-    mdl.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", _, _, true)
+    mdl.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", true)
+    mdl.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", true)
+    mdl.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", true)
 
     -- PrintTable(mdl:GetMaterials())
 
@@ -145,12 +145,12 @@ function SWEP:GetHiddenBones(wm)
         hide = true
     end
 
-    if wm or self:GetProcessedValue("ReloadHideBonesFirstPerson", _, _, true) then
+    if wm or self:GetProcessedValue("ReloadHideBonesFirstPerson", true) then
         hide = true
     end
 
-    local hidebones = self:GetProcessedValue("HideBones", _, _, true)
-    local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables", _, _, true)
+    local hidebones = self:GetProcessedValue("HideBones", true)
+    local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables", true)
 
     local bones = {}
 
