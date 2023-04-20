@@ -60,7 +60,7 @@ end
 
 function SWEP:GetTracerOrigin()
     local ow = self:GetOwner()
-    local vm = !ow:IsNPC() and ow:GetViewModel() or nil
+    local vm = ow.GetViewModel and ow:GetViewModel() or nil
     local wm = ow:IsNPC() or !ow:IsValid() or !vm:IsValid() or ow:ShouldDrawLocalPlayer()
     local att = self:GetQCAMuzzle()
     local muzz = self
