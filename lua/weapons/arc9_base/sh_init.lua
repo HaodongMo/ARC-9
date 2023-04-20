@@ -172,54 +172,54 @@ end
 
 function SWEP:SetShouldHoldType()
     if self:GetOwner():IsNPC() then
-        local htnpc = self:GetValue("HoldTypeNPC")
+        local htnpc = self:GetValue("HoldTypeNPC", true)
 
         if !htnpc then
-            if self:GetProcessedValue("ManualAction") then
+            if self:GetProcessedValue("ManualAction", true) then
                 self:SetHoldType("shotgun")
             else
-                self:SetHoldType(self:GetValue("HoldTypeSights") or self:GetValue("HoldType"))
+                self:SetHoldType(self:GetValue("HoldTypeSights", true) or self:GetValue("HoldType", true))
             end
         else
-            self:SetHoldType(self:GetValue("HoldTypeNPC"))
+            self:SetHoldType(self:GetValue("HoldTypeNPC", true))
         end
 
         return
     end
 
     if self:GetInSights() then
-        if self:GetProcessedValue("HoldTypeSights") then
-            self:SetHoldType(self:GetProcessedValue("HoldTypeSights"))
+        if self:GetProcessedValue("HoldTypeSights", true) then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeSights", true))
 
             return
         end
     end
 
     if self:GetSafe() then
-        if self:GetProcessedValue("HoldTypeHolstered") then
-            self:SetHoldType(self:GetProcessedValue("HoldTypeHolstered"))
+        if self:GetProcessedValue("HoldTypeHolstered", true) then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeHolstered", true))
 
             return
         end
     end
 
     if self:GetIsSprinting() or self:GetSafe() then
-        if self:GetProcessedValue("HoldTypeSprint") then
-            self:SetHoldType(self:GetProcessedValue("HoldTypeSprint"))
+        if self:GetProcessedValue("HoldTypeSprint", true) then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeSprint", true))
 
             return
         end
     end
 
     if self:GetCustomize() then
-        if self:GetProcessedValue("HoldTypeCustomize") then
-            self:SetHoldType(self:GetProcessedValue("HoldTypeCustomize"))
+        if self:GetProcessedValue("HoldTypeCustomize", true) then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeCustomize", true))
 
             return
         end
     end
 
-    self:SetHoldType(self:GetProcessedValue("HoldType"))
+    self:SetHoldType(self:GetProcessedValue("HoldType", true))
 end
 
 function SWEP:OnDrop()
