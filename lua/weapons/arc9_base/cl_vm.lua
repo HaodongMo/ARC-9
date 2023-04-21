@@ -160,24 +160,12 @@ function SWEP:PreDrawViewModel()
 end
 
 function SWEP:ViewModelDrawn()
-    -- self:DrawLasers(false)
-
     self:DrawCustomModel(false)
     self:DoRHIK()
     self:PreDrawThirdArm()
+    self:DrawFlashlightsVM()
 
-    -- cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), 0, 0, ScrW(), ScrH(), 4, 30000)
-    --     cam.IgnoreZ(true)
-        self:DrawLasers(false)
-    -- cam.End3D()
-
-    -- cam.IgnoreZ(true)
-    -- local custdelta = self.CustomizeDelta
-    -- cam.Start2D()
-    --     surface.SetDrawColor(0, 0, 0, 230 * custdelta)
-    --     surface.SetMaterial(vignette2)
-    --     surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
-    -- cam.End2D()
+    self:DrawLasers(false)
 end
 
 function SWEP:PostDrawViewModel()

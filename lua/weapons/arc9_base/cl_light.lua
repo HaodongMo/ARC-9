@@ -28,6 +28,7 @@ function SWEP:CreateFlashlights()
                 col = atttbl.FlashlightColor or color_white,
                 br = atttbl.FlashlightBrightness or 3,
                 qca = atttbl.FlashlightAttachment,
+                nodotter = atttbl.Flashlight360
             }
 
             total_lights = total_lights + 1
@@ -80,7 +81,7 @@ function SWEP:KillFlashlights()
 end
 
 local arc9_allflash = GetConVar("arc9_allflash")
-local fuckingmicrovectorwhatisthisfuckingbullshit = Vector(0, 0, 0.005)
+local fuckingbullshit = Vector(0, 0, 0.001)
 
 function SWEP:DrawFlashlightsWM()
     local owner = self:GetOwner()
@@ -113,9 +114,8 @@ function SWEP:DrawFlashlightsWM()
             a = model:GetAttachment(k.qca)
             pos, ang = a.Pos, a.Ang
         end
-        -- print(ang)
-        -- print(i)
-        self:DrawLightFlare(pos + fuckingmicrovectorwhatisthisfuckingbullshit, ang, k.col, k.br * 20)
+        
+        self:DrawLightFlare(pos + fuckingbullshit, ang, k.col, k.br * 20, i, nil, k.nodotter)
 
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
@@ -143,7 +143,6 @@ function SWEP:DrawFlashlightsWM()
         k.light:SetPos(pos)
         k.light:SetAngles(ang)
         k.light:Update()
-
     end
 end
 
@@ -176,7 +175,7 @@ function SWEP:DrawFlashlightsVM()
             pos, ang = a.Pos, a.Ang
         end
 
-        -- self:DrawLightFlare(pos, ang, k.col, k.br * 25)
+        self:DrawLightFlare(pos, ang, k.col, k.br * 25, i, true, k.nodotter)
         
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
@@ -197,28 +196,8 @@ function SWEP:DrawFlashlightsVM()
             pos = pos + -ang:Forward() * 128 * math.min(1 - tr.Fraction, tr2.Fraction)
         end
 
-        -- ang:RotateAroundAxis(ang:Up(), 90)
-
         k.light:SetPos(pos)
         k.light:SetAngles(ang)
         k.light:Update()
-
-        -- local col = k.col
-
-        -- local dl = DynamicLight(self:EntIndex())
-
-        -- if dl then
-        --     dl.pos = pos
-        --     dl.r = col.r
-        --     dl.g = col.g
-        --     dl.b = col.b
-        --     dl.brightness = k.br or 2
-        --     -- print(z / maxz)
-        --     dl.Decay = 1000 / 0.1
-        --     dl.dietime = CurTime() + 0.1
-        --     dl.size = (k.br or 2) * 64
-        -- end
-
-        -- self:DrawLightFlare(pos, ang+Angle(0,90,0), k.col, k.br * 25)
     end
 end

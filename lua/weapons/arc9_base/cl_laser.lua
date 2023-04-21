@@ -82,52 +82,47 @@ function SWEP:DrawLasers(wm, behav)
         local atttbl = self:GetFinalAttTable(slottbl)
 
         if atttbl.Laser then
-            -- if behav then
-            --     self:DrawLaser(EyePos() - (EyeAngles():Up() * 4), self:GetShootDir():Forward(), atttbl)
-            -- else
-                local pos, ang = self:GetAttachmentPos(slottbl, wm, false)
-                model:SetPos(pos)
-                model:SetAngles(ang)
+            local pos, ang = self:GetAttachmentPos(slottbl, wm, false)
+            model:SetPos(pos)
+            model:SetAngles(ang)
 
-                local a
+            local a
 
-                if atttbl.LaserAttachment then
-                    a = model:GetAttachment(atttbl.LaserAttachment)
-                else
-                    a = {
-                        Pos = model:GetPos(),
-                        Ang = model:GetAngles()
-                    }
+            if atttbl.LaserAttachment then
+                a = model:GetAttachment(atttbl.LaserAttachment)
+            else
+                a = {
+                    Pos = model:GetPos(),
+                    Ang = model:GetAngles()
+                }
 
-                    a.Ang:RotateAroundAxis(a.Ang:Up(), -90)
-                end
+                a.Ang:RotateAroundAxis(a.Ang:Up(), -90)
+            end
 
-                if !a then return end
+            if !a then return end
 
-                local lasercorrectionangle = model.LaserCorrectionAngle
-                local lasang = a.Ang
+            local lasercorrectionangle = model.LaserCorrectionAngle
+            local lasang = a.Ang
 
-                if lasercorrectionangle then
-                    local up, right, forward = lasang:Up(), lasang:Right(), lasang:Forward()
+            if lasercorrectionangle then
+                local up, right, forward = lasang:Up(), lasang:Right(), lasang:Forward()
 
-                    lasang:RotateAroundAxis(up, lasercorrectionangle.p)
-                    lasang:RotateAroundAxis(right, lasercorrectionangle.y)
-                    lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
-                end
-                -- print(a.Pos)
+                lasang:RotateAroundAxis(up, lasercorrectionangle.p)
+                lasang:RotateAroundAxis(right, lasercorrectionangle.y)
+                lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
+            end
                 
-                self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, 5)
+            self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, wm and 5 or 10, slottbl.Address + 69, !wm)
                 
-                if !wm or self:GetOwner() == LocalPlayer() then
-                    if behav then
-                        self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
-                    else
-                        self:DrawLaser(a.Pos, -lasang:Right(), atttbl, behav)
-                    end
-                else
+            if !wm or self:GetOwner() == LocalPlayer() then
+                if behav then
                     self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
+                else
+                    self:DrawLaser(a.Pos, -lasang:Right(), atttbl, behav)
                 end
-            -- end
+            else
+                self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
+            end
         end
     end
 end

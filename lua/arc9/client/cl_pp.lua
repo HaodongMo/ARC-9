@@ -12,18 +12,20 @@ hook.Add("PostDrawHUD", "ARC9_SSE_PP", function()
     wpn:HoldBreathPP()
     
     for i, flare in ipairs(ARC9.Flares) do
-        cam.Start3D()
+        cam.Start3D(_, _ , flare.invm and wpn.ViewModelFOV + 16 or _) -- no idea why 16
         local toscreen = flare.pos:ToScreen()
         cam.End3D()
 
-        surface.SetMaterial(flaremat)
-        surface.SetDrawColor(flare.color)
-        local s = flare.size
-        -- print(i, s)
-        surface.DrawTexturedRect(toscreen.x - (s / 2), toscreen.y - (s / 2), s, s)
+        if toscreen.visible then
+            surface.SetMaterial(flaremat)
+            surface.SetDrawColor(flare.color)
+            local s = ScreenScale(flare.size)
+            surface.DrawTexturedRect(toscreen.x - (s / 2), toscreen.y - (s / 2), s, s)
+        end
     end
 
     ARC9.Flares = {}
+    wpn.FlaresAlreadyDrawn = {}
 
     if wpn:GetSight().FlatScope and wpn:GetSight().FlatScopeCC and wpn:GetSightAmount() > 0.75 then
         DrawColorModify(wpn:GetSight().FlatScopeCC)

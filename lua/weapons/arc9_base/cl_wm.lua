@@ -12,5 +12,6 @@ function SWEP:DrawWorldModel()
         self:DoBodygroups(true)
         self:DrawLasers(true)
         self:DoTPIK()
+        self:DrawFlashlightsWM()
     end
 end

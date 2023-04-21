@@ -159,7 +159,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             if atttbl.DrawFunc then
                 atttbl.DrawFunc(self, model, wm)
             end
-            
+
         --     -- if model.Flare and !self:GetCustomize() then
         --     --     if model.Flare.Attachment then
         --     --         local attpos = model:GetAttachment(model.Flare.Attachment)
@@ -173,12 +173,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         --     --         self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
         --     --     end
         --     -- end
-        end
-
-        if wm then
-            self:DrawFlashlightsWM()
-        else
-            self:DrawFlashlightsVM()
         end
     end
 end

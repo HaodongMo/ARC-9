@@ -79,6 +79,7 @@ ATT.FlashlightBrightness = 3
 ATT.FlashlightDistance = 1024
 ATT.FlashlightFOV = 70
 ATT.FlashlightAttachment = 0
+ATT.Flashlight360 = false -- for funnies: set to true to make flare glow from any side
 
 ATT.Laser = false
 ATT.LaserStrength = 1
@@ -87,11 +88,11 @@ ATT.LaserTraceMat = nil
 ATT.LaserColor = Color(255, 0, 0)
 ATT.LaserAttachment = 0
 
-ATT.Flare = false
-ATT.FlareColor = Color(255, 255, 255)
-ATT.FlareSize = 200
-ATT.FlareAttachment = 0
-ATT.FlareFocus = false -- This flare comes from a source of light that persists over distance, like a laser.
+-- ATT.Flare = false
+-- ATT.FlareColor = Color(255, 255, 255)
+-- ATT.FlareSize = 200
+-- ATT.FlareAttachment = 0
+-- ATT.FlareFocus = false -- This flare comes from a source of light that persists over distance, like a laser.
 
 -- Allows a custom sight position to be defined
 
