@@ -68,6 +68,10 @@ ARC9.ClientRecoilProgress = 0
 
 local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
 
+local function approxEqualsZero(a)
+    return math.abs(a) < 0.0001
+end
+
 function ARC9.StartCommand(ply, cmd)
     if !IsValid(ply) then return end
 
@@ -137,19 +141,21 @@ function ARC9.StartCommand(ply, cmd)
 
         -- 0 can be negative or positive!!!!! Insane
 
-        if recrise.p == 0 then
+        if approxEqualsZero(recrise.p) then
         elseif recrise.p > 0 then
             recrise.p = math.Clamp(recrise.p, 0, recrise.p - diff.p)
         elseif recrise.p < 0 then
             recrise.p = math.Clamp(recrise.p, recrise.p - diff.p, 0)
         end
 
-        if recrise.y == 0 then
+        if approxEqualsZero(recrise.y) then
         elseif recrise.y > 0 then
             recrise.y = math.Clamp(recrise.y, 0, recrise.y - diff.y)
         elseif recrise.y < 0 then
             recrise.y = math.Clamp(recrise.y, recrise.y - diff.y, 0)
         end
+
+        print(recrise.y)
 
         recrise:Normalize()
 
