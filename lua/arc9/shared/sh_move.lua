@@ -155,8 +155,6 @@ function ARC9.StartCommand(ply, cmd)
             recrise.y = math.Clamp(recrise.y, recrise.y - diff.y, 0)
         end
 
-        print(recrise.y)
-
         recrise:Normalize()
 
         ARC9.RecoilRise = recrise
