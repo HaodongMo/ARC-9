@@ -211,7 +211,7 @@ function SWEP:DoShootSounds()
             soundtab5.level = svolume
             soundtab5.pitch = spitch
             soundtab5.volume = indoorVolumeMix
-            soundtab5.channel = ARC9.CHAN_LAYER + 14
+            soundtab5.channel = ARC9.CHAN_INDOOR + 7
         end
 
         self:PlayTranslatedSound(soundtab5)
