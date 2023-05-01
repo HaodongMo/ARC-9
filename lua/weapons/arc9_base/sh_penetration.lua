@@ -100,87 +100,86 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 
         penmult = penmult * math.Rand(0.9, 1.1) * math.Rand(0.9, 1.1)
 
-        if tr.HitWorld and tr.HitBox > 0 then
-            -- Revert to burrowing behaviour to penetrate props.
-            local pentracelen = math.min(math.max(penleft * penmult / 8, 1), 4)
+        -- if tr.HitWorld and tr.HitBox > 0 then
+        local pentracelen = math.min(math.max(penleft * penmult / 8, 1), 4)
 
-            local ptrent = tr.Entity
-            local ptr = util.TraceLine({
+        local ptrent = tr.Entity
+        local ptr = util.TraceLine({
+            start  = endpos,
+            endpos = endpos + (dir * pentracelen),
+            mask   = MASK_SHOT
+        })
+
+        while penleft > 0 and IsPenetrating(ptr, ptrent) and ptr.Fraction < 1 and ptrent == curr_ent do
+            penleft = penleft - (pentracelen * penmult)
+
+            ptr = util.TraceLine({
                 start  = endpos,
                 endpos = endpos + (dir * pentracelen),
                 mask   = MASK_SHOT
             })
 
-            while penleft > 0 and IsPenetrating(ptr, ptrent) and ptr.Fraction < 1 and ptrent == curr_ent do
-                penleft = penleft - (pentracelen * penmult)
+            -- if ARC9.Dev(2) then
+            --     local pdeltap = penleft / self:GetValue("Penetration")
+            --     local colorlr = Lerp(pdeltap, 0, 255)
 
-                ptr = util.TraceLine({
-                    start  = endpos,
-                    endpos = endpos + (dir * pentracelen),
-                    mask   = MASK_SHOT
-                })
-
-                -- if ARC9.Dev(2) then
-                --     local pdeltap = penleft / self:GetValue("Penetration")
-                --     local colorlr = Lerp(pdeltap, 0, 255)
-
-                --     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
-                -- end
-
-                if ARC9.Dev(2) then
-                    debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, 0, 0), true)
-                end
-
-                endpos = endpos + (dir * pentracelen)
-                range = range + pentracelen
-                exitpos = ptr.HitPos
-                dist = pentracelen + 1
-            end
-        else
-            local td  = {}
-            td.start  = endpos
-            td.endpos = endpos + (dir * 520000)
-            td.mask   = MASK_SHOT
-
-            if !tr.HitWorld then
-                td.filter = tr.Entity
-            end
-
-            td.start = endpos + (dir * 0.25)
-            local ptr = util.TraceLine(td)
-
-            -- Penetrate through to whatever the next thing is
-
-            if !ptr.Hit then return end
-            if ptr.HitSky then return end
-
-            -- If we'd shoot through to the sky, then we don't really care if we can penetrate or not.
-
-            local ntr = util.TraceLine({
-                start = ptr.HitPos,
-                endpos = endpos,
-                mask = MASK_SHOT
-            })
-
-            -- Go backwards to find out where this thing ends
+            --     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
+            -- end
 
             if ARC9.Dev(2) then
-                debugoverlay.Line(endpos, ntr.HitPos, 10, Color(255, 0, 0), true)
+                debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, 0, 0), true)
             end
-            local d1 = (endpos - ntr.HitPos):Length()
-            local amt = d1 * penmult
-            endpos = ntr.HitPos
 
-            penleft = penleft - amt
-            range = range + amt
-
-            exitpos = ptr.HitPos - (dir * 1)
-            dist = (ptr.HitPos - ntr.HitPos):Length() + 1
+            endpos = endpos + (dir * pentracelen)
+            range = range + pentracelen
+            exitpos = ptr.HitPos
+            dist = pentracelen + 1
         end
+        -- else
+        --     local td  = {}
+        --     td.start  = endpos
+        --     td.endpos = endpos + (dir * 520000)
+        --     td.mask   = MASK_SHOT
+
+        --     if !tr.HitWorld then
+        --         td.filter = tr.Entity
+        --     end
+
+        --     td.start = endpos + (dir * 0.25)
+        --     local ptr = util.TraceLine(td)
+
+        --     -- Penetrate through to whatever the next thing is
+
+        --     if !ptr.Hit then return end
+        --     if ptr.HitSky then return end
+
+        --     -- If we'd shoot through to the sky, then we don't really care if we can penetrate or not.
+
+        --     local ntr = util.TraceLine({
+        --         start = ptr.HitPos,
+        --         endpos = endpos,
+        --         mask = MASK_SHOT
+        --     })
+
+        --     -- Go backwards to find out where this thing ends
+
+        --     if ARC9.Dev(2) then
+        --         debugoverlay.Line(endpos, ntr.HitPos, 10, Color(255, 0, 0), true)
+        --     end
+        --     local d1 = (endpos - ntr.HitPos):Length()
+        --     local amt = d1 * penmult
+        --     endpos = ntr.HitPos
+
+        --     penleft = penleft - amt
+        --     range = range + amt
+
+        --     exitpos = ptr.HitPos - (dir * 1)
+        --     dist = (ptr.HitPos - ntr.HitPos):Length() + 1
+        -- end
     end
 
     if tr.HitTexture == "**displacement**" then return end -- FUCK DISPLACEMENTS
-    
+
     if penleft > 0 then
         if (dir:Length() == 0) then return end
 
