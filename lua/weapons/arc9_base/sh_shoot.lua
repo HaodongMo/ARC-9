@@ -335,7 +335,7 @@ function SWEP:DoPrimaryAttack()
                 self:SetNeedTriggerPress(true)
                 self:ExitSights()
             end
-            
+
             return
         else
             self:DryFire()

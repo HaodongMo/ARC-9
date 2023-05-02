@@ -120,36 +120,9 @@ local arc9logo_layer1 = Material("arc9/logo/logo_bottom.png", "mips smooth")
 local arc9logo_layer2 = Material("arc9/logo/logo_middle.png", "mips smooth")
 
 local function SaveBlacklist()
-    -- arccw code 
-
-    -- -- We send ID over instead of strings to save on network costs
-    -- -- optimization_is_optimization.png
-
-    -- local blacklistAmt = 0
-
-    -- for attName, bStatus in pairs(blacklistTbl) do
-    --     if bStatus then blacklistAmt = blacklistAmt + 1 end
-    -- end
-
-    -- net.Start("arccw_blacklist")
-    --     net.WriteBool(false)
-    --     net.WriteUInt(blacklistAmt, ArcCW.GetBitNecessity())
-    --     for attName, bStatus in pairs(blacklistTbl) do
-    --         if bStatus then
-    --             net.WriteUInt(ArcCW.AttachmentTable[attName].ID, ArcCW.GetBitNecessity())
-    --         end
-    --     end
-    -- net.SendToServer()
-
-    -- blacklistTbl = {}
-
-
-
-    -- 
-
     net.Start("arc9_sendblacklist")
 
-    net.WriteUInt(table.Count(blacklistTbl), 32) -- this not work correctly maybe!!!!!!!!!!!!!!!!!!!
+    net.WriteUInt(table.Count(blacklistTbl), 32)
 
     for attname, i in pairs(blacklistTbl) do
         if !i then continue end
@@ -172,7 +145,7 @@ local function CreateAttButton(parent, attName, attTbl)
     attBtn:DockMargin(ARC9ScreenScale(4), ARC9ScreenScale(1), ARC9ScreenScale(4), ARC9ScreenScale(1))
     attBtn:SetContentAlignment(5)
 
-    attBtn.Paint = function(spaa, w, h) -- this not work correctly!!!!!!!!!!!!!!!!!!!
+    attBtn.Paint = function(spaa, w, h)
         local blisted = blacklistTbl[attName]
         if blisted == nil then blisted = ARC9.Blacklist[attName] end
 
@@ -256,6 +229,8 @@ function ARC9_BlacklistMenu()
     
 
     blacklistTbl = {}
+
+    blacklistTbl = table.Copy(ARC9.Blacklist)
 
     blacklistWindow = vgui.Create("DFrame", bg)
     blacklistWindow:SetSize(ScrW() * 0.45, ScrH() * 0.9)
