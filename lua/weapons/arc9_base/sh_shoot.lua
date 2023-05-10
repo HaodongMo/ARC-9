@@ -1003,9 +1003,10 @@ function SWEP:ShootRocket()
         rocket:Spawn()
         rocket.Owner = owner
         rocket.Weapon = self
-        rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", {
-            Target = IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget()
-        })
+
+        rocket.ShootEntData = table.Copy(self:GetProcessedValue("ShootEntData") or {})
+        rocket.ShootEntData.Target = IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget()
+        rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", rocket.ShootEntData)
         rocket.ARC9Projectile = true
 
         if self:GetProcessedValue("Detonator", true) then
