@@ -704,6 +704,8 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_GrenadeCreated(self, nades) return end -- Called when grenade entities are created. nades is a table of entities.
 -- SWEP.Hook_Bash(self, tr) return end
 -- SWEP.Hook_BashHit(self, data) return end -- {tr, dmg}
+-- SWEP.Hook_PostReload(self) return end -- called after a reload successfully starts
+-- SWEP.Hook_EndReload(self) return end -- called after a reload loads ammo (ammo went in magazine)
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
