@@ -168,6 +168,8 @@ function SWEP:Reload()
     -- end)
 
     self:SetReloadFinishTime(CurTime() + (t * 0.95))
+
+    self:RunHook("Hook_PostReload")
 end
 
 function SWEP:CanReload()
@@ -487,6 +489,8 @@ function SWEP:EndReload()
 
         self:SetEmptyReload(false)
     end
+
+    self:RunHook("Hook_EndReload")
 end
 
 function SWEP:ThinkReload()
