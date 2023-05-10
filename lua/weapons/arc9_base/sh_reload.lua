@@ -127,6 +127,7 @@ function SWEP:Reload()
                     end
 
                     self:SetLoadedRounds(math.min((clip == 0 and self:GetValue("ClipSize") or self:GetCapacity(false)), self:Clip1() + ammo1))
+                    self:SetLastLoadedRounds(self:GetLoadedRounds())
                 end)
             end
         end
@@ -141,12 +142,16 @@ function SWEP:Reload()
     end
 
     if self:GetAnimationEntry(self:TranslateAnimation(anim)).DumpAmmo then
-        self:Unload()
+        local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
+        minprogress = math.min(minprogress, 0.95)
+
+        self:SetTimer(t * minprogress, function()
+            self:Unload()
+        end)
     end
 
     if !self.NoForceSetLoadedRoundsOnReload then -- sorry
         self:SetLoadedRounds(self:Clip1())
-        self:SetLastLoadedRounds(clip)
     end
 
     self:SetReloading(true)
@@ -333,6 +338,7 @@ function SWEP:RestoreClip(amt)
 
         if !self.NoForceSetLoadedRoundsOnReload then -- sorry
             self:SetLoadedRounds(self:Clip1())
+            self:SetLastLoadedRounds(self:Clip1())
         end
     end
 
@@ -459,6 +465,7 @@ function SWEP:EndReload()
             if !self.NoForceSetLoadedRoundsOnReload then -- sorry
                 self:SetTimer(magswaptime * t, function()
                     self:SetLoadedRounds(end_clipsize)
+                    self:SetLastLoadedRounds(end_clipsize)
                 end)
             end
 

@@ -810,7 +810,7 @@ SWEP.FreeAimRadiusMultBipod = 0
 SWEP.ShootVolume = 125
 SWEP.ShootVolumeActual = 1
 SWEP.ShootPitch = 100
-SWEP.ShootPitchVariation = 0.05
+SWEP.ShootPitchVariation = 5 -- Not multiplied, but actually just added/subtracted.
 
 SWEP.FirstShootSound = nil                      -- First fire
 SWEP.ShootSound = ""                            -- Fire

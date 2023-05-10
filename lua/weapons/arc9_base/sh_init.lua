@@ -53,6 +53,8 @@ function SWEP:Initialize()
         self.Primary.DefaultClip = 0
     end
 
+    self:SetLastLoadedRounds(self.LastClipSize)
+
     if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
     if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
 
@@ -61,7 +63,7 @@ function SWEP:Initialize()
     if arc9_precache_sounds_onfirsttake:GetBool() then
         ARC9.CacheWepSounds(self, self:GetClass())
     end
-    
+
     if arc9_precache_wepmodels_onfirsttake:GetBool() then
         ARC9.CacheWeaponsModels()
     end
