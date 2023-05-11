@@ -94,7 +94,13 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
 
         self:SetSequenceIndex(seq or 0)
         self:SetSequenceSpeed((1 / time) / mult)
-        self:SetSequenceCycle(0)
+
+        if tmult < 0 then
+            self:SetSequenceCycle(0.99)
+            self:SetSequenceSpeed(-1 * (1 / time) / mult)
+        else
+            self:SetSequenceCycle(0)
+        end
 
         mult = math.abs(mult)
 

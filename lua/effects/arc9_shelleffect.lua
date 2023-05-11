@@ -25,7 +25,6 @@ function EFFECT:Init(data)
 
     if ent:GetOwner() != LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
         mdl = (ent.WModel or {})[1] or ent
-        att = 2
         self.VMContext = false
     else
         mdl = LocalPlayer():GetViewModel()
