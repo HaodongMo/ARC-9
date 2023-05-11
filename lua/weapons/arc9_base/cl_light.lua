@@ -172,11 +172,16 @@ function SWEP:DrawFlashlightsVM()
 
         if k.qca then
             a = model:GetAttachment(k.qca)
-            pos, ang = a.Pos, a.Ang
+
+            if a then
+                pos, ang = a.Pos, a.Ang
+            else
+                ang:RotateAroundAxis(ang:Up(), -90)
+            end
         end
 
         self:DrawLightFlare(pos, ang, k.col, k.br * 25, i, true, k.nodotter)
-        
+
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
         local tr = util.TraceLine({

@@ -1216,6 +1216,7 @@ SWEP.Attachments = {
     --     Installed = nil,
     --     MergeSlots = {}, -- merge this slot with another
     --     StickerModel = "", -- This is the model that will be used for the sticker
+    --     StickerModelWorld = "", -- This is the model that will be used for the sticker on the world model. Good for mirror models
     --     CosmeticOnly = false, -- This attachment is cosmetic only, and will be placed in the Personalization tab.
     --     SubAttachments = {
     --         {

@@ -480,8 +480,14 @@ function SWEP:SetupModel(wm, lod, cm)
         -- local atttbl = ARC9.GetAttTable(slottbl.Installed)
         local atttbl = self:GetFinalAttTable(slottbl)
 
-        if slottbl.StickerModel and atttbl.StickerMaterial then
-            local stickermodel = ClientsideModel(slottbl.StickerModel)
+        local stickertablepath = slottbl.StickerModel
+
+        if wm then
+            stickertablepath = slottbl.StickerModelWorld or stickertablepath
+        end
+
+        if stickertablepath and atttbl.StickerMaterial then
+            local stickermodel = ClientsideModel(stickertablepath)
 
             if !IsValid(stickermodel) then continue end
 
