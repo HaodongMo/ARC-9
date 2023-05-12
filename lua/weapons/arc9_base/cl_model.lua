@@ -458,6 +458,22 @@ function SWEP:SetupModel(wm, lod, cm)
             csmodel:SetSkin(model.Skin or 1)
             csmodel:SetBodyGroups(model.Bodygroups or "")
 
+            if (ele.MuzzleDevice) then
+                local priority = ele.MuzzleDevice_Priority or 0
+                local totalpriority = self.MuzzleDevice_Priority or 0
+
+                if priority > totalpriority or (priority == totalpriority and i > 0) then
+                    self.MuzzleDevice_Priority = priority
+                    csmodel.IsMuzzleDevice = true
+
+                    if wm then
+                        self.MuzzleDeviceWM = csmodel
+                    else
+                        self.MuzzleDeviceVM = csmodel
+                    end
+                end
+            end
+
             local tbl = {
                 Model = csmodel,
                 Weapon = self
