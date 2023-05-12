@@ -141,15 +141,6 @@ function SWEP:Reload()
         end
     end
 
-    if self:GetAnimationEntry(self:TranslateAnimation(anim)).DumpAmmo then
-        local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
-        minprogress = math.min(minprogress, 0.95)
-
-        self:SetTimer(t * minprogress, function()
-            self:Unload()
-        end)
-    end
-
     if !self.NoForceSetLoadedRoundsOnReload then -- sorry
         self:SetLoadedRounds(self:Clip1())
     end

@@ -116,6 +116,14 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
             end)
         end
 
+        if animation.DumpAmmo then
+            self:SetTimer((animation.MinProgress or 0.5) * mult, function()
+                if SERVER then
+                    self:Unload()
+                end
+            end)
+        end
+
         minprogress = animation.MinProgress or 0.8
         minprogress = math.min(minprogress, 1)
 
