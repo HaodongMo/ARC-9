@@ -42,7 +42,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
     end
 
     if self:IsScoping() and arc9_cheapscopes:GetBool() then
-        local _, shootang = self:GetShootPos()
+        local shootang = self:GetShootDir()
 
         ang = LerpAngle(sightamount, ang, shootang)
     end
@@ -52,7 +52,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
     self.FOV = fov
 
     ang = ang + (self:GetCameraControl() or angle_zero)
-    
+
     if arc9_vm_cambob:GetBool() then
         local sprintmult = arc9_vm_cambobwalk:GetBool() and 1 or Lerp(self:GetSprintAmount(), 0, 1)
         local totalmult = math.ease.InQuad(math.Clamp(self.ViewModelBobVelocity / 350, 0, 1) * Lerp(sightamount, 1, 0.65)) * sprintmult * arc9_vm_cambobintensity:GetFloat()
