@@ -1425,14 +1425,15 @@ function SWEP:CreateHUD_RHP()
     lowerpanel:MoveToBack()
 
     local hascosmetic = false
-    local onlycosmetic = true
+    local hasnoncosmetic = false
 
     for _, slottbl in pairs(self:GetSubSlotList()) do
-        if hascosmetic and !onlycosmetic then break end
+        if hascosmetic and hasnoncosmetic then break end
+        if slottbl.Hidden then continue end
         if self:SlotIsCosmetic(slottbl) then
             hascosmetic = true
         else
-            onlycosmetic = false
+            hasnoncosmetic = true
         end
     end
 
@@ -1440,7 +1441,7 @@ function SWEP:CreateHUD_RHP()
         table.remove(self.CustomizeButtons, 2)
     end
 
-    if (onlycosmetic or !self.Attachments[1]) and self.CustomizeButtons[1].customize then  -- NO ATTS CUST PANEL REMOVAL
+    if (!hasnoncosmetic) and self.CustomizeButtons[1].customize then  -- NO ATTS CUST PANEL REMOVAL
         table.remove(self.CustomizeButtons, 1)
         self.CustomizeButtons[1].cutcorner = 1
         self.CustomizeTab = 0

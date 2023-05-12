@@ -166,6 +166,9 @@ function SWEP:RotateAroundPoint2(pos, ang, point, offset, offset_ang)
     return mat:GetTranslation(), mat:GetAngles()
 end
 
+function SWEP:IsUsingRTScope()
+    return self:GetSight() and self:GetSight().atttbl and self:GetSight().atttbl.RTScope
+end
 
 if CLIENT then
 

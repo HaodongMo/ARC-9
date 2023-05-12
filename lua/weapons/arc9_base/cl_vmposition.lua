@@ -284,7 +284,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         extra_offsetang[2] = extra_offsetang[2] - (getfreeswayoffset[1] * cor_val)
         extra_offsetang[1] = extra_offsetang[1] + (getfreeswayoffset[2] * cor_val)
     end
-    
+
     if singleplayer or IsFirstTimePredicted() then
         if self:GetCustomize() then
             if self.CustomizeDelta < 1 then

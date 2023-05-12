@@ -205,5 +205,5 @@ function SWEP:GetCorVal()
     local vmfov = self.ViewModelFOV
     local fov = self.FOV
 
-    return vmfov / (fov * 1.33333)
+    return vmfov / (fov * 1.333333)
 end
