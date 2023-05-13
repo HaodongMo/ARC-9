@@ -3,6 +3,8 @@ SWEP.FinishFiremodeAnimTime = 0
 function SWEP:SwitchFiremode()
     if self:StillWaiting() then return end
 
+    if self:GetProcessedValue("NoFiremodeWhenEmpty") and self:Clip1() <= 0 then return end
+
     if self:GetSafe() then
         self:ToggleSafety(false)
         return

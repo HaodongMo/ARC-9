@@ -379,6 +379,8 @@ SWEP.Firemodes = {
     }
 }
 
+SWEP.NoFiremodeWhenEmpty = false -- Cannot switch firemode when empty
+
 SWEP.FiremodeAnimLock = false -- Firemode animation cannot be interrupted
 
 SWEP.SlamFire = false -- Manual action weapons cycle themselves
