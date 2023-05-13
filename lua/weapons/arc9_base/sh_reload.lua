@@ -8,7 +8,7 @@ function SWEP:Reload()
     --     return
     -- end
 
-    if self:GetNeedsCycle() then
+    if !self:GetProcessedValue("CanReloadWhileUnCycled", true) and self:GetNeedsCycle() then
         return
     end
 

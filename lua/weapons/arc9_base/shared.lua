@@ -330,6 +330,8 @@ SWEP.ReloadWhileSprint = true -- This weapon can reload while the user is sprint
 SWEP.ReloadInSights = true -- This weapon can aim down sights while reloading.
 SWEP.PartialReloadCountsTowardsNthReload = true -- If the gun is not empty, it counts towards the Nth reload. Useful for guns with spare magazine animations.
 
+SWEP.CanReloadWhileUnCycled = false
+
 SWEP.CanFireUnderwater = false -- This weapon can shoot while underwater.
 
 SWEP.Disposable = false -- When all ammo is expended, this gun will remove itself from the inventory.
