@@ -22,6 +22,7 @@ function SWEP:Deploy()
     self:SetRequestReload(false)
     self:SetEmptyReload(false)
     self:SetLeanState(0)
+    self:SetNeedsCycle(false)
 
     owner:SetCanZoom(false)
     -- self:SetTraversalSprint(false)
