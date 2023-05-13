@@ -553,7 +553,7 @@ function ARC9.DrawHUD()
             multiple_modes = true
         end
 
-        if weapon:GetProcessedValue("NoFiremodeWhenEmpty") and weapon:Clip1() <= 0 then
+        if weapon:GetProcessedValue("NoFiremodeWhenEmpty", true) and weapon:Clip1() <= 0 then
             multiple_modes = false
         end
 
