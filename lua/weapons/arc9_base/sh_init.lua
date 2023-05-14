@@ -53,6 +53,14 @@ function SWEP:Initialize()
         self.Primary.DefaultClip = 0
     end
 
+    if self:GetValue("UBGL") then
+        self.Secondary.Ammo = self:GetValue("UBGLAmmo")
+        self.Secondary.DefaultClip = self:GetValue("UBGLClipSize") * math.max(1, self:GetValue("SecondarySupplyLimit") + 1)
+    end
+
+    self:SetClip1(self.Primary.DefaultClip)
+    self:SetClip2(self.Secondary.DefaultClip)
+
     self:SetLastLoadedRounds(self.LastClipSize)
 
     if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
