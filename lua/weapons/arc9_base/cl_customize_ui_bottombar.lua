@@ -165,7 +165,7 @@ local function enterfolder(self, scroll, slottbl, fname)
 
         local count = recursivefoldercount(children)
 
-        if count > 99 then count = "99+" end
+        -- if count > 99 then count = "99+" end
 
         if count == 0 then continue end
 

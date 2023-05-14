@@ -1290,6 +1290,9 @@ function SWEP:CreateHUD_RHP()
     nameplate.Paint = function(self2, w, h)
         if !IsValid(self) then return end
 
+        local redname
+        if self.Hook_RedPrintName then redname = self:RunHook("Hook_RedPrintName") end
+
         -- if (self.CustomizeButtons[self.CustomizeTab + 1] or {}).inspect then return end
 
         surface.SetFont("ARC9_24")
@@ -1297,7 +1300,7 @@ function SWEP:CreateHUD_RHP()
 
         surface.SetFont("ARC9_24")
         surface.SetTextPos(w/2 - tw/2, 0)
-        surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        surface.SetTextColor(redname and ARC9.GetHUDColor("hi_3d") or ARC9.GetHUDColor("fg"))
         surface.DrawText(self.PrintName or "No name ??? wtf")
 
         -- class
