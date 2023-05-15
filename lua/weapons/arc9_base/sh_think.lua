@@ -203,11 +203,15 @@ function SWEP:Think()
         if !self.LoadedPreset then
             self.LoadedPreset = true
 
-            if cvarGetBool(cvarArcAutosave) then
-                swepLoadPreset(self, "autosave")
-            else
-                swepLoadPreset(self, "default")
-            end
+            timer.Simple(0.06, function() -- idk
+                if IsValid(self) then
+                    if cvarGetBool(cvarArcAutosave) then
+                        swepLoadPreset(self, "autosave")
+                    else
+                        swepLoadPreset(self, "default")
+                    end
+                end
+            end)
 
             self:SetReady(false)
             swepDoDeployAnimation(self)
