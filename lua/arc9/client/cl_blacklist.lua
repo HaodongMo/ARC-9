@@ -166,7 +166,7 @@ local function CreateAttButton(parent, attName, attTbl)
         end
 
         local txt = attTbl.PrintName
-        if internalName then txt = attName end
+        if internalName or !txt then txt = attName end
         srf.SetTextColor(Bfg_col)
         srf.SetTextPos(ARC9ScreenScale(20), ARC9ScreenScale(2))
         srf.SetFont("ARC9_12")
@@ -434,8 +434,7 @@ function ARC9_BlacklistMenu()
             if attTbl.Blacklisted then blacklistTbl[attName] = true end
 
             if onlyblacklisted and !(attTbl.Blacklisted or blacklistTbl[attName]) then continue end
-
-            if filter != "" and !(string.find((attTbl.PrintName):lower(), filter) or string.find((attName):lower(), filter)) then continue end
+            if filter != "" and !(string.find((attTbl.PrintName and attTbl.PrintName or attName):lower(), filter) or string.find((attName):lower(), filter)) then continue end
 
             --if attTbl.Slot == "charm" then continue end why the fuck would you do this
 
