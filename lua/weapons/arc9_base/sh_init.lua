@@ -5,6 +5,7 @@ end
 
 local arc9_precache_sounds_onfirsttake = GetConVar("arc9_precache_sounds_onfirsttake")
 local arc9_precache_wepmodels_onfirsttake = GetConVar("arc9_precache_wepmodels_onfirsttake")
+local arc9_precache_attsmodels_onfirsttake = GetConVar("arc9_precache_attsmodels_onfirsttake")
 
 function SWEP:Initialize()
     local owner = self:GetOwner()
@@ -66,14 +67,16 @@ function SWEP:Initialize()
     if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
     if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
 
-    ARC9.CacheAttsModels()
-
     if arc9_precache_sounds_onfirsttake:GetBool() then
         ARC9.CacheWepSounds(self, self:GetClass())
     end
 
     if arc9_precache_wepmodels_onfirsttake:GetBool() then
         ARC9.CacheWeaponsModels()
+    end
+    
+    if arc9_precache_attsmodels_onfirsttake:GetBool() then
+        ARC9.CacheAttsModels()
     end
 end
 
