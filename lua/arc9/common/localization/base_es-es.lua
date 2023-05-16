@@ -726,3 +726,15 @@ L["settings.gameplay.togglepeek_reset.desc"] = "(Sólo si Alternar Vistazo está
 -- april 7
 
 L["settings.mod_malfunction.title"] = "Probabilidad de fallo"
+
+-- may 17
+L["settings.attachments.blacklist.title"] = "Menú Lista negra"
+L["settings.attachments.blacklist.open"] = "Abrir"
+
+L["blacklist.title"] = "ARC9 Lista negra de accesorios"
+L["blacklist.desc"] = "Se bloqueará el uso de los accesorios marcados aquí"
+L["blacklist.blisted"] = "MARCADO"
+L["blacklist.all"] = "TODO"
+L["blacklist.id"] = "ID"
+L["blacklist.name"] = "NOMBRE"
+L["blacklist.filter"] = "FILTRAR"
