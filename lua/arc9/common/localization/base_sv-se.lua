@@ -691,3 +691,16 @@ L["settings.gameplay.togglepeek_reset.desc"] = "(Endast om Växla Kikande är p�
 -- april 7
 
 L["settings.mod_malfunction.title"] = "Felfunktion Chans"
+
+
+-- may 17
+L["settings.attachments.blacklist.title"] = "Svartlista Meny"
+L["settings.attachments.blacklist.open"] = "Öppna"
+
+L["blacklist.title"] = "ARC9-Tillbehör Svartlista"
+L["blacklist.desc"] = "Tillbehör avbockade här kommer blockeras från att användas"
+L["blacklist.blisted"] = "SVARTLISTAD"
+L["blacklist.all"] = "ALLA"
+L["blacklist.id"] = "ID"
+L["blacklist.name"] = "NAMN"
+L["blacklist.filter"] = "FILTER"
