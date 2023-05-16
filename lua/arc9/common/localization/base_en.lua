@@ -735,3 +735,16 @@ L["settings.gameplay.togglepeek_reset.desc"] = "(Only if Toggle Peek is on)\nPee
 -- april 7
 
 L["settings.mod_malfunction.title"] = "Malfunction Chance"
+
+
+-- may 17
+L["settings.attachments.blacklist.title"] = "Blacklist Menu"
+L["settings.attachments.blacklist.open"] = "Open"
+
+L["blacklist.title"] = "ARC9 Attachment Blacklist"
+L["blacklist.desc"] = "Attachments checked here will be blocked from use"
+L["blacklist.blisted"] = "BLACKLISTED"
+L["blacklist.all"] = "ALL"
+L["blacklist.id"] = "ID"
+L["blacklist.name"] = "NAME"
+L["blacklist.filter"] = "FILTER"

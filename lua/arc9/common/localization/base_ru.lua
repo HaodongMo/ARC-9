@@ -690,3 +690,16 @@ L["settings.gameplay.togglepeek_reset.desc"] = "(Только если Выгл�
 
 -- april 7
 L["settings.mod_malfunction.title"] = "Шанс неполадки"
+
+
+-- may 17
+L["settings.attachments.blacklist.title"] = "Чёрный список"
+L["settings.attachments.blacklist.open"] = "Открыть"
+
+L["blacklist.title"] = "ARC9 Чёрный список обвесов"
+L["blacklist.desc"] = "Выбранные тут обвесы будут заблокированы"
+L["blacklist.blisted"] = "В ЧС"
+L["blacklist.all"] = "ВСЕ"
+L["blacklist.id"] = "ID"
+L["blacklist.name"] = "ИМЯ"
+L["blacklist.filter"] = "ФИЛЬТР"

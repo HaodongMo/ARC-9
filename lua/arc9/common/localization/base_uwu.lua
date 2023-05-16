@@ -736,3 +736,16 @@ L["settings.gameplay.togglepeek_reset.desc"] = "(owly if Towgle Pewek is on owo)
 
 -- april 7
 L["settings.mod_malfunction.title"] = "Mawwunctiwon Chanwce"
+
+
+-- may 17
+L["settings.attachments.blacklist.title"] = "Bwackwist Menuwu"
+L["settings.attachments.blacklist.open"] = "OwOpen :3"
+
+L["blacklist.title"] = "AWWC9 awatachmenws bwackwist >w<"
+L["blacklist.desc"] = "AwAtachmenws checkewd hewe wiww be bwocked from use ^w^"
+L["blacklist.blisted"] = "BWACKWISTED"
+L["blacklist.all"] = "AWW"
+L["blacklist.id"] = "ID :3"
+L["blacklist.name"] = "NAME"
+L["blacklist.filter"] = "FIWTEW"

@@ -251,6 +251,9 @@ ARC9.SettingsTable = {
         { type = "slider", text = "settings.attachments.atts_max.title", convar = "atts_max", min = 0, max = 250, decimals = 0, desc = "settings.attachments.atts_max.desc"},
         { type = "bool", text = "settings.attachments.autosave.title", convar = "autosave", desc = "settings.attachments.autosave.desc"},
         -- { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
+        { sv = true, type = "button", text = "settings.attachments.blacklist.title", content = "settings.attachments.blacklist.open", func = function(self2)
+            RunConsoleCommand("arc9_blacklist")
+        end},
         { sv = true, type = "label", text = "settings.attachments.inventory"},
         { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
         { sv = true, type = "bool", text = "settings.attachments.atts_lock.title", convar = "atts_lock", desc = "settings.attachments.atts_lock.desc"},

@@ -238,7 +238,7 @@ function ARC9_BlacklistMenu()
     blacklistWindow:SetTitle("")
     blacklistWindow:SetDraggable(false)
     blacklistWindow:SetVisible(true)
-    blacklistWindow:ShowCloseButton(true)
+    blacklistWindow:ShowCloseButton(false )
     blacklistWindow:MakePopup()
     blacklistWindow:SetAlpha(0)
     blacklistWindow:AlphaTo(255, 0.2, 0, nil)
@@ -277,7 +277,7 @@ function ARC9_BlacklistMenu()
         srf.SetFont("ARC9_16")
         srf.SetTextColor(ARC9.GetHUDColor("fg"))
         srf.SetTextPos(ARC9ScreenScale(30), ARC9ScreenScale(4))
-        srf.DrawText(ARC9:GetPhrase("blacklist.title") or "ARC9 Attachment Blacklist")
+        srf.DrawText(ARC9:GetPhrase("blacklist.title"))
     end
 
     -- local title = vgui.Create("DLabel", blacklistWindow)
@@ -309,7 +309,7 @@ function ARC9_BlacklistMenu()
     desc:DockMargin(ARC9ScreenScale(4), ARC9ScreenScale(19), ARC9ScreenScale(4), ARC9ScreenScale(2))
     desc:SetFont("ARC9_12")
     desc:SetColor(ARC9.GetHUDColor("fg"))
-    desc:SetText(ARC9:GetPhrase("blacklist.desc") or "Attachments checked here will be marked as locked")
+    desc:SetText(ARC9:GetPhrase("blacklist.desc"))
     desc:SetContentAlignment(5)
 
     local attList = vgui.Create("ARC9ScrollPanel", blacklistWindow)
@@ -340,7 +340,7 @@ function ARC9_BlacklistMenu()
     FilterLabel:DockMargin(ARC9ScreenScale(2), ARC9ScreenScale(2), ARC9ScreenScale(2), ARC9ScreenScale(2))
     FilterLabel:SetFont("ARC9_12")
     FilterLabel:SetColor(ARC9.GetHUDColor("fg"))
-    FilterLabel:SetText("FILTER")
+    FilterLabel:SetText(ARC9:GetPhrase("blacklist.filter"))
 
     local FilterButton = vgui.Create("DButton", FilterPanel)
     FilterButton:SetFont("ARC9_8")
@@ -366,7 +366,7 @@ function ARC9_BlacklistMenu()
         srf.DrawRect(0, 0, w, h)
 
         spaa:SetTextColor(Bfg_col)
-        spaa:SetText(onlyblacklisted and "BLACKLISTED" or "ALL")
+        spaa:SetText(onlyblacklisted and ARC9:GetPhrase("blacklist.blisted") or ARC9:GetPhrase("blacklist.all"))
     end
 
     local NameButton = vgui.Create("DButton", FilterPanel)
@@ -392,7 +392,7 @@ function ARC9_BlacklistMenu()
         srf.DrawRect(0, 0, w, h)
 
         spaa:SetTextColor(Bfg_col)
-        spaa:SetText(internalName and "ID" or "NAME")
+        spaa:SetText(internalName and ARC9:GetPhrase("blacklist.id") or ARC9:GetPhrase("blacklist.name"))
     end
 
     local FilterEntry = vgui.Create("DTextEntry", FilterPanel)
