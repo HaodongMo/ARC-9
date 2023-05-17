@@ -106,9 +106,8 @@ function ARC9.StartCommand(ply, cmd)
     end
 
     local isScope = wpn:IsUsingRTScope()
-    local cheap = CLIENT and isScope and ARC9_cheapscopes:GetBool()
 
-    if isScope and cheap then
+    if isScope then
         local swayspeed = 2
         local swayamt = wpn:GetFreeSwayAmount()
         local swayang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
