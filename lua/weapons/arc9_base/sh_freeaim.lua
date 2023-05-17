@@ -46,6 +46,7 @@ function SWEP:GetFreeAimOffset()
 end
 
 local arc9_mod_sway = GetConVar("arc9_mod_sway")
+local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
 
 local smoothswayamt = 0
 
@@ -55,8 +56,10 @@ function SWEP:GetFreeSwayAngles()
 
     local swayspeed = 2
     local isScope = self:IsUsingRTScope()
+    
+    local cheap = CLIENT and isScope and ARC9_cheapscopes:GetBool()
 
-    swayamt = isScope and 1 - self:GetSightAmount() or (1 - self:GetSightAmount() * 0.2)
+    swayamt = cheap and 1 - self:GetSightAmount() * (1.05-swayamt) or swayamt * (1-self:GetSightAmount() * 0.2)
     smoothswayamt = CLIENT and Lerp(RealFrameTime(), smoothswayamt, swayamt) or swayamt
 
     local ang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
