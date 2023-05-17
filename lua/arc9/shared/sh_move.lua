@@ -126,6 +126,10 @@ function ARC9.StartCommand(ply, cmd)
         cmd:RemoveKey(IN_SPEED)
     end
 
+    if wpn.InertiaEnabled then
+        wpn.InertiaSideMoveRaw = cmd:GetSideMove() * 0.0001
+    end
+
     local eyeang = cmd:GetViewAngles()
 
     if eyeang.p != eyeang.p then eyeang.p = 0 end
