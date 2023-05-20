@@ -77,6 +77,8 @@ function ARC9.GetBindKey(bind)
     if CTRL then
         return bind
     elseif !key then
+        if bind == "+zoom" then return "pls bind Suit Zoom!" end -- fucking blind stupid retards please open settings
+        if bind == "+menu_context" then return "pls bind Open Context Menu!" end
         return "bind KEY " ..  bind
     else
         return string.upper(key)
