@@ -98,7 +98,7 @@ function SWEP:AdjustMouseSensitivity()
         atttbl = self:GetTable()
     end
 
-    if atttbl and atttbl.RTScope and !sight.Disassociate and !atttbl.RTCollimator then
+    if atttbl and atttbl.RTScope and !sight.Disassociate and !sight.NoSensAdjustment and !atttbl.RTCollimator then
         mag = mag + (fov / (self:GetRTScopeFOV() or 90))
     end
 

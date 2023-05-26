@@ -119,9 +119,8 @@ function SWEP:BuildMultiSight()
                     end
                 end
 
-                if sight.Disassociate then
-                    s.Disassociate = true
-                end
+                if sight.Disassociate then s.Disassociate = true end
+                if sight.NoSensAdjustment then s.NoSensAdjustment = true end
 
                 s.CrosshairInSights = sight.CrosshairInSights
 
