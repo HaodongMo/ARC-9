@@ -114,6 +114,7 @@ local color_lred = Color(125, 25, 25, 150)
 local color_dred = Color(75, 0, 0, 150)
 local color_dtbl = Color(0, 0, 0, 200)
 
+local arc9_hud_scale = GetConVar("arc9_hud_scale")
 if !ARC9.ScreenScale then ARC9.ScreenScale = function(size) return size * (ScrW() / 640) * arc9_hud_scale:GetFloat() * 0.9 end end -- idk
 local ARC9ScreenScale = ARC9.ScreenScale
 
