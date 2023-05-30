@@ -750,7 +750,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         apdmg:SetAttacker(dmg:GetAttacker())
 
         traceEntity:TakeDamageInfo(apdmg)
-    else
+    elseif traceEntity:IsPlayer() then
         local apdmg = dmgv * ap
         traceEntity:SetHealth(math.max(traceEntity:Health() - apdmg, 1))
     end
