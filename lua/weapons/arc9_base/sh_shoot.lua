@@ -752,7 +752,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         traceEntity:TakeDamageInfo(apdmg)
     else
         local apdmg = dmgv * ap
-        traceEntity:SetHealth(traceEntity:Health() - apdmg)
+        traceEntity:SetHealth(math.max(traceEntity:Health() - apdmg, 1))
     end
 
     dmgv = dmgv * (1 - ap)
