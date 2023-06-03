@@ -355,7 +355,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     end
 
     local ht = self:GetHolsterTime()
-    local curTime = CurTime()
+    local curTime = UnPredictedCurTime()
 
     if (ht + 0.1) > curTime then
         if ht > lht then
@@ -484,7 +484,7 @@ function SWEP:GetViewModelFOV()
     local owner = self:GetOwner()
     local ownerfov = owner:GetFOV()
     local convarfov = arc9Fov:GetInt()
-    local curtime = CurTime()
+    local curtime = UnPredictedCurTime()
     -- local target = owner:GetFOV() + convarfov
     local target = (self:GetProcessedValue("ViewModelFOVBase", true) or ownerfov) + (self:GetCustomize() and 0 or convarfov)
 
