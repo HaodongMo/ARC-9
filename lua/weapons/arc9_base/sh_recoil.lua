@@ -37,7 +37,7 @@ function SWEP:GetRecoilPatternDirection(shot)
                 math.randomseed(seed)
                 local drift = self:GetValue("RecoilPatternDrift")
                 dir = dir + math.Rand(-drift, drift)
-                math.randomseed(CurTime() + self:EntIndex())
+                math.randomseed(UnPredictedCurTime() + self:EntIndex())
                 self.RecoilPatternCache[shot] = dir
             else
                 dir = 0
@@ -95,7 +95,7 @@ function SWEP:ApplyRecoil()
     -- self:SetRecoilDirection(-90)
     self:SetRecoilAmount(rec)
 
-    self:SetLastRecoilTime(CurTime())
+    self:SetLastRecoilTime(UnPredictedCurTime())
 
     local pbf = self:GetProcessedValue("PushBackForce")
 
@@ -368,7 +368,7 @@ do
         swepGetProcessedValue = swepGetProcessedValue or self.GetProcessedValue
 
         local rdr = swepGetProcessedValue(self, "RecoilDissipationRate")
-        local ct = CurTime()
+        local ct = UnPredictedCurTime()
         local ft = FrameTime()
 
         if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < ct then
