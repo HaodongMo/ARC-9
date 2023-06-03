@@ -122,7 +122,7 @@ function ARC9.StartCommand(ply, cmd)
         cmd:SetViewAngles(eyeang)
     end
 
-    if wpn:GetProcessedValue("NoSprintWhenLocked", true) and wpn:GetAnimLockTime() > UnPredictedCurTime() then
+    if wpn:GetProcessedValue("NoSprintWhenLocked", true) and wpn:GetAnimLockTime() > CurTime() then
         cmd:RemoveKey(IN_SPEED)
     end
 
@@ -160,11 +160,11 @@ function ARC9.StartCommand(ply, cmd)
 
         local catchup = 0
 
-        if ARC9.ClientRecoilTime < UnPredictedCurTime() then
+        if ARC9.ClientRecoilTime < CurTime() then
             ARC9.ClientRecoilUp = wpn:GetRecoilUp() * ARC9.RecoilTimeStep
             ARC9.ClientRecoilSide = wpn:GetRecoilSide() * ARC9.RecoilTimeStep
 
-            ARC9.ClientRecoilTime = UnPredictedCurTime() + ARC9.RecoilTimeStep
+            ARC9.ClientRecoilTime = CurTime() + ARC9.RecoilTimeStep
 
             if ARC9.ClientRecoilProgress < 1 then
                 catchup = ARC9.RecoilTimeStep * (1 - ARC9.ClientRecoilProgress)
