@@ -50,7 +50,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     local atttbl = {}
 
     if slottbl.WMBase then
-        bone = "ValveBiped.Bip01_R_Hand"
+        bone = (self:ShouldTPIK() and self.TPIKParentToSpine4) and "ValveBiped.Bip01_Spine4" or "ValveBiped.Bip01_R_Hand"
 
         -- if self:ShouldTPIK() then
         --     bone = "ValveBiped.Bip01_Head1"
