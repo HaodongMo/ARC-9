@@ -162,7 +162,7 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
         end
 
         if self:HasAnimation("impact") then
-            self:PlayAnimation("impact", 1, false)
+            self:PlayAnimation(bash2 and "impact2" or "impact", 1, false)
         end
 
         if SERVER then
