@@ -76,6 +76,8 @@ function SWEP:ThrowGrenade(nttype, delaytime)
 
     self:TakeAmmo()
 
+    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimShoot", true))
+
     if CLIENT then return end
 
     local time = math.huge
