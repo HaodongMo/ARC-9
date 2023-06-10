@@ -751,9 +751,14 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
         traceEntity:TakeDamageInfo(apdmg)
     elseif traceEntity:IsPlayer() then
-        local apdmg = dmgv * ap
-        traceEntity:SetHealth(math.max(traceEntity:Health() - apdmg, 1))
-        dmgv = dmgv * (1 - ap)
+        if !ARC9.NoArmorPiercing then -- dumbass
+            local apdmg = dmgv * ap
+            traceEntity:SetHealth(math.max(traceEntity:Health() - apdmg, 1))
+            dmgv = dmgv * (1 - ap)
+        else
+            ARC9.LastArmorPiercedPlayer = traceEntity
+            ARC9.LastArmorPierceValue = ap
+        end
     end
 
     dmg:SetDamage(dmgv)

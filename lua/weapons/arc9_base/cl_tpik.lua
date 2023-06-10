@@ -4,8 +4,10 @@ local arc9_tpik = GetConVar("arc9_tpik")
 local arc9_tpik_others = GetConVar("arc9_tpik_others")
 local arc9_tpik_framerate = GetConVar("arc9_tpik_framerate")
 
+local forcednotpik = ARC9.NoTPIK
+
 function SWEP:ShouldTPIK()
-    if self.NoTPIK then return end
+    if self.NoTPIK or forcednotpik then return end
     local owner = self:GetOwner()
     local lp = LocalPlayer()
 
