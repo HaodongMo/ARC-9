@@ -197,13 +197,24 @@ function SWEP:GetViewModelPosition(pos, ang)
     if reloading then
         local reloadpos = self:GetProcessedValue("ReloadPos", true)
         local reloadang = self:GetProcessedValue("ReloadAng", true)
+        local fuckingreloadprocess
+        local fuckingreloadprocessinfluence = 1
 
         if reloadpos then
-            offsetpos:Set(reloadpos)
+            if !self:GetProcessedValue("ShotgunReload", true) then 
+                fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+                if fuckingreloadprocess < 0.666 then
+                    fuckingreloadprocessinfluence = fuckingreloadprocess * 1.333
+                elseif fuckingreloadprocess > 0.8 then
+                    fuckingreloadprocessinfluence = 1 - ((fuckingreloadprocess - 0.8) * 5)
+                end
+            end
+            
+            offsetpos:Sub(reloadpos * fuckingreloadprocessinfluence)
         end
 
         if reloadang then
-            offsetang:Set(reloadang)
+            offsetang:Sub(reloadang * fuckingreloadprocessinfluence)
         end
     end
 
