@@ -47,6 +47,9 @@ ARC9.IncompatibleAddons = {
     -- TF2 Killstreak Weapon Sheen
     ["973050319"] = "Fucks up model rendering and other shit",
 
+    -- View Model Bump
+    ["1308077613"] = "Causes broken ADS/Sights position.",
+
     -- -- ZINV Zombie/NPC Invasion and variants.
     -- -- Original by Jason
     -- ["179517028"] = "Breaks pretty much everything.",
