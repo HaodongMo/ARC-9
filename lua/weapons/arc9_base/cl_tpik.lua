@@ -38,6 +38,7 @@ local cachelastcycle = 0 -- probably bad
 
 function SWEP:DoTPIK()
     local wm = self:GetWM()
+
     if !IsValid(wm) then return end
 
     if !self:ShouldTPIK() then
@@ -61,9 +62,9 @@ function SWEP:DoTPIK()
         lod = self:ShouldLOD()
 
         if lod == 1 then
-            tpikdelay = 1 / 20 -- 20 fps if lodding
+            tpikdelay = math.max(0.05, tpikdelay)  -- max 20 fps if lodding
         elseif lod == 1.5 then
-            tpikdelay = 1 / 10
+            tpikdelay = math.max(0.1, tpikdelay)
         end
     end
 
@@ -81,35 +82,37 @@ function SWEP:DoTPIK()
         nolefthand = true
     end
 
-    wm:SetupBones()
+    if shouldfulltpik then
+        wm:SetupBones()
 
-    -- local time = IsValid(self:GetVM()) and self:GetVM():GetCycle() or self:GetSequenceCycle()
-    local time = self:GetSequenceCycle()
-    local seq = self:GetSequenceIndex()
+        -- local time = IsValid(self:GetVM()) and self:GetVM():GetCycle() or self:GetSequenceCycle()
+        local time = self:GetSequenceCycle()
+        local seq = self:GetSequenceIndex()
 
-    if self:GetSequenceProxy() != 0 then seq = wm:LookupSequence("idle") end -- lhik ubgls fix
+        if self:GetSequenceProxy() != 0 then seq = wm:LookupSequence("idle") end -- lhik ubgls fix
 
-    wm:SetSequence(seq)
+        wm:SetSequence(seq)
 
-    wm:SetCycle(time)
-    cachelastcycle = time
+        wm:SetCycle(time)
+        cachelastcycle = time
 
-    -- wm:SetSequence(vm:GetSequence())
-    -- wm:SetCycle(vm:GetCycle())
+        -- wm:SetSequence(vm:GetSequence())
+        -- wm:SetCycle(vm:GetCycle())
 
-    -- for i = 0, vm:GetNumPoseParameters() do
-    --     local pp_name = wm:GetPoseParameterName(i)
-    --     if !pp_name then continue end
-    --     wm:SetPoseParameter(pp_name, vm:GetPoseParameter(pp_name))
-    -- end
+        -- for i = 0, vm:GetNumPoseParameters() do
+        --     local pp_name = wm:GetPoseParameterName(i)
+        --     if !pp_name then continue end
+        --     wm:SetPoseParameter(pp_name, vm:GetPoseParameter(pp_name))
+        -- end
 
-    -- for i = 0, vm:GetNumBodyGroups() do
-    --     local bg = vm:GetBodygroup(i)
-    --     if !bg then continue end
-    --     wm:SetBodygroup(i, bg)
-    -- end
+        -- for i = 0, vm:GetNumBodyGroups() do
+        --     local bg = vm:GetBodygroup(i)
+        --     if !bg then continue end
+        --     wm:SetBodygroup(i, bg)
+        -- end
 
-    wm:InvalidateBoneCache()
+        wm:InvalidateBoneCache()
+    end
 
     self:DoRHIK(true)
 
@@ -198,7 +201,7 @@ function SWEP:DoTPIK()
     local limblength = ply:BoneLength(ply_l_elbow_index)
     if !limblength or limblength == 0 then limblength = 12 end
     
-    local r_upperarm_length = limblength 
+    local r_upperarm_length = limblength
     local r_forearm_length = limblength
     local l_upperarm_length = limblength
     local l_forearm_length = limblength
