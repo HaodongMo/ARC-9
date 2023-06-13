@@ -24,7 +24,7 @@ function SWEP:ShouldTPIK()
     if self:RunHook("Hook_BlockTPIK") then return end
     -- if !arc9_tpik:GetBool() then return false end
     if lp != owner then
-        return arc9_tpik_others:GetBool()
+        return arc9_tpik:GetBool() and arc9_tpik_others:GetBool()
     else
         return arc9_tpik:GetBool()
     end
