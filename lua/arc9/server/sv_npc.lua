@@ -1,3 +1,6 @@
+if CLIENT then return end
+
+
 local pistolammotypes = {
     ["pistol"] = true,
     ["357"] = true

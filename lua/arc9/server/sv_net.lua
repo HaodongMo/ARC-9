@@ -1,3 +1,5 @@
+if CLIENT then return end
+
 util.AddNetworkString("arc9_togglecustomize")
 util.AddNetworkString("arc9_networkweapon")
 util.AddNetworkString("arc9_sendattinv")

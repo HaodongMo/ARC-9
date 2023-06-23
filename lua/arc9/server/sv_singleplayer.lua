@@ -1,5 +1,7 @@
 if game.SinglePlayer() then
 
+if CLIENT then return end
+
 hook.Add("EntityTakeDamage", "ARC9_ETD", function(npc, dmg)
     timer.Simple(0, function()
         if !IsValid(npc) then return end
