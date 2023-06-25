@@ -10,6 +10,7 @@ function SWEP:Deploy()
 
     self:SetBaseSettings()
 
+    owner:SetSaveValue("m_flNextAttack", 0) -- I hope this won't have to be the final solution!!
     self:SetNextPrimaryFire(0)
     self:SetNextSecondaryFire(0)
     self:SetAnimLockTime(0)
