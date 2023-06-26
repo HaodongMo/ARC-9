@@ -10,7 +10,6 @@ function SWEP:Deploy()
 
     self:SetBaseSettings()
 
-    owner:SetSaveValue("m_flNextAttack", 0) -- I hope this won't have to be the final solution!!
     self:SetNextPrimaryFire(0)
     self:SetNextSecondaryFire(0)
     self:SetAnimLockTime(0)
@@ -81,6 +80,7 @@ function SWEP:Deploy()
         if IsValid(owner:GetHands()) then
             owner:GetHands():SetLightingOriginEntity(owner:GetViewModel())
         end
+        owner:SetSaveValue("m_flNextAttack", 0) -- I hope this won't have to be the final solution!!
     end
 
     self:SetShouldHoldType()
