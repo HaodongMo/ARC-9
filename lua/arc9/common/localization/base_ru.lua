@@ -703,3 +703,7 @@ L["blacklist.all"] = "ВСЕ"
 L["blacklist.id"] = "ID"
 L["blacklist.name"] = "ИМЯ"
 L["blacklist.filter"] = "ФИЛЬТР"
+
+-- june 29
+L["settings.hud_cust.hud_deadzonex.title"] = "Гориз. мёртвая зона"
+L["settings.hud_cust.hud_deadzonex.desc"] = "Горизонтальная \"мёртвая зона\" для меню кастомизации и HUD панели.\nПолезно на ультрашироких мониторах."

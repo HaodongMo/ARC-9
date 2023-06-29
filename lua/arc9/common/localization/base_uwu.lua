@@ -749,3 +749,7 @@ L["blacklist.all"] = "AWW"
 L["blacklist.id"] = "ID :3"
 L["blacklist.name"] = "NAME"
 L["blacklist.filter"] = "FIWTEW"
+
+-- june 29
+L["settings.hud_cust.hud_deadzonex.title"] = "HUD Widh dewdzowne"
+L["settings.hud_cust.hud_deadzonex.desc"] = "Howizontal dewadzowne fow cuwtomiwation menuwu and huwud panel\nUwUseful for uwtwawidew monitows owo"

@@ -748,3 +748,8 @@ L["blacklist.all"] = "ALL"
 L["blacklist.id"] = "ID"
 L["blacklist.name"] = "NAME"
 L["blacklist.filter"] = "FILTER"
+
+
+-- june 29
+L["settings.hud_cust.hud_deadzonex.title"] = "HUD Width Deadzone"
+L["settings.hud_cust.hud_deadzonex.desc"] = "Horizontal \"deadzone\" for customization menu and HUD panel.\nUseful for ultrawide monitors."

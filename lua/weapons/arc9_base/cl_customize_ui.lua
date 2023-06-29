@@ -56,6 +56,8 @@ local function swtichtoslotmenu(self)
     end
 end
 
+local deadzonex = GetConVar("arc9_hud_deadzonex")
+
 SWEP.CustomizeButtons = {
     {
         title = "customize.panel.customize",
@@ -75,11 +77,11 @@ SWEP.CustomizeButtons = {
 
             if self2.CustomizeHUD.lowerpanel then
                 if self2.CustomizeHUD.lowerpanel.Extended then
-                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
-                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex:GetInt(), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex:GetInt()*2, ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
                 else
-                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
-                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex:GetInt(), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex:GetInt()*2, ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
                 end
 
                 self2:ClosePresetMenu()
@@ -109,11 +111,11 @@ SWEP.CustomizeButtons = {
 
             if self2.CustomizeHUD.lowerpanel then
                 if self2.CustomizeHUD.lowerpanel.Extended then
-                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
-                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex:GetInt(), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex:GetInt()*2, ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
                 else
-                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
-                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex:GetInt(), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
+                    self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex:GetInt()*2, ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
                 end
 
                 self2:ClosePresetMenu()
@@ -157,8 +159,8 @@ SWEP.CustomizeButtons = {
                 -- self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
                 -- self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
 
-                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
-                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex:GetInt(), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex:GetInt()*2, ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
 
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
@@ -176,8 +178,8 @@ SWEP.CustomizeButtons = {
 
                 self2:ClosePresetMenu()
 
-                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
-                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex:GetInt(), ScrH()-ARC9ScreenScale(93+50), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex:GetInt()*2, ARC9ScreenScale(74+50), 0.2, 0, 0.5, nil)
 
                 self2.CustomizeHUD.lowerpanel:AlphaTo(255, 0.2, 0, nil)
                 self2.CustomizeHUD.topright_panel:AlphaTo(255, 0.2, 0, nil)
@@ -199,8 +201,8 @@ SWEP.CustomizeButtons = {
 
                 self2:ClosePresetMenu()
 
-                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
-                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex:GetInt(), ScrH() - ARC9ScreenScale(93-55-22.75), 0.2, 0, 0.5, nil)
+                self2.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex:GetInt()*2, ARC9ScreenScale(74-55), 0.2, 0, 0.5, nil)
 
                 self2.CustomizeAlphaBuffer = math.max(self2.CustomizeAlphaBuffer or 0, CurTime() + 0.5)
             end
@@ -1232,13 +1234,15 @@ function SWEP:RemoveCustomizeHUD()
     local scrh = ScrH()
     local scrw = ScrW()
 
+    local deadzonexx = deadzonex:GetInt()
+
     if self.CustomizeHUD then
         self.RemovingCustHud = true
-        if bg.nameplate then bg.nameplate:MoveTo(scrw/3, -ARC9ScreenScale(64), 0.7, 0, 0.05, nil) bg.nameplate:AlphaTo(0, 0.2, 0) end
-        if bg.topleft_panel then bg.topleft_panel:MoveTo(-ARC9ScreenScale(70), -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topleft_panel:AlphaTo(0, 0.2, 0) end
-        if bg.topright_panel then bg.topright_panel:MoveTo(scrw, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topright_panel:AlphaTo(0, 0.2, 0) end
-        if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.lowerpanel:AlphaTo(0, 0.2, 0) end
-        if bg.hintspanel then bg.hintspanel:MoveTo(ARC9ScreenScale(19), scrh, 0.7, 0, 0.05, nil) bg.hintspanel:AlphaTo(0, 0.1, 0) end
+        if bg.nameplate then bg.nameplate:MoveTo(0, -ARC9ScreenScale(64), 0.7, 0, 0.05, nil) bg.nameplate:AlphaTo(0, 0.2, 0) end
+        if bg.topleft_panel then bg.topleft_panel:MoveTo(-ARC9ScreenScale(70) + deadzonexx, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topleft_panel:AlphaTo(0, 0.2, 0) end
+        if bg.topright_panel then bg.topright_panel:MoveTo(scrw - deadzonexx, -ARC9ScreenScale(40), 0.7, 0, 0.05, nil) bg.topright_panel:AlphaTo(0, 0.2, 0) end
+        if bg.lowerpanel then bg.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonexx, scrh, 0.7, 0, 0.05, nil) bg.lowerpanel:AlphaTo(0, 0.2, 0) end
+        if bg.hintspanel then bg.hintspanel:MoveTo(ARC9ScreenScale(19) + deadzonexx, scrh, 0.7, 0, 0.05, nil) bg.hintspanel:AlphaTo(0, 0.1, 0) end
         -- if self.TabPanel then self.TabPanel:AlphaTo(0, 0.1, 0) end
 
         self:ClosePresetMenu()
@@ -1328,10 +1332,12 @@ function SWEP:CreateHUD_RHP()
         end
     end
 
+    local deadzonexx = deadzonex:GetInt()
+
     local topleft_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topleft_panel = topleft_panel
-    topleft_panel:SetPos(-ARC9ScreenScale(70), -ARC9ScreenScale(40)) -- w = 0, h = 0
-    topleft_panel:MoveTo(0, 0.1, 0.4, 0, 0.1, nil)
+    topleft_panel:SetPos(-ARC9ScreenScale(70) + deadzonexx, -ARC9ScreenScale(40)) -- w = 0, h = 0
+    topleft_panel:MoveTo(deadzonexx, 0.1, 0.4, 0, 0.1, nil)
     topleft_panel:SetSize(ARC9ScreenScale(70+29), ARC9ScreenScale(40))
     topleft_panel:MoveToFront()
     topleft_panel.Paint = function(self2, w, h) end
@@ -1375,8 +1381,8 @@ function SWEP:CreateHUD_RHP()
 
     local topright_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topright_panel = topright_panel
-    topright_panel:SetPos(scrw, -ARC9ScreenScale(40)) -- w = scrw-ARC9ScreenScale(170), h = 0
-    topright_panel:MoveTo(scrw-ARC9ScreenScale(170), 0, 0.4, 0, 0.1, nil)
+    topright_panel:SetPos(scrw - deadzonexx, -ARC9ScreenScale(40)) -- w = scrw-ARC9ScreenScale(170), h = 0
+    topright_panel:MoveTo(scrw - ARC9ScreenScale(170) - deadzonexx, 0, 0.4, 0, 0.1, nil)
     topright_panel:SetSize(ARC9ScreenScale(170), ARC9ScreenScale(40))
     topright_panel:MoveToFront()
     topright_panel.Paint = function(self2, w, h) end
@@ -1422,9 +1428,9 @@ function SWEP:CreateHUD_RHP()
 
     local lowerpanel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.lowerpanel = lowerpanel
-    lowerpanel:SetPos(ARC9ScreenScale(19), scrh) -- h = scrh-ARC9ScreenScale(93)
+    lowerpanel:SetPos(ARC9ScreenScale(19) + deadzonexx, scrh) -- h = scrh-ARC9ScreenScale(93)
     -- lowerpanel:MoveTo(ARC9ScreenScale(19), scrh-ARC9ScreenScale(93), 0.6, 0, 0.1, nil) -- CustomizeTab does this for us
-    lowerpanel:SetSize(scrw - ARC9ScreenScale(38), ARC9ScreenScale(74))
+    lowerpanel:SetSize(scrw - ARC9ScreenScale(38) - deadzonexx*2, ARC9ScreenScale(74))
     lowerpanel:MoveToBack()
 
     local hascosmetic = false
@@ -1463,7 +1469,7 @@ function SWEP:CreateHUD_RHP()
         --
 
         if btn.inspect then
-            custtabbtn:SetPos(scrw - ARC9ScreenScale(38) - titlewidth, 0)
+            custtabbtn:SetPos(scrw - ARC9ScreenScale(38) - deadzonex:GetInt()*2 - titlewidth, 0)
             inspecttextwidth = titlewidth
         else
             barlength = barlength + titlewidth + ARC9ScreenScale(1.5)

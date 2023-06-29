@@ -492,6 +492,8 @@ local function DrawSimpleHints()
     end
 end
 
+local deadzonex = GetConVar("arc9_hud_deadzonex")
+
 function ARC9.DrawHUD()
     EyeAngles() -- This, for some ungodly reason, allows sway to work when the HUD is off.
     EyePos()
@@ -721,7 +723,7 @@ function ARC9.DrawHUD()
     -- cam.Start3D(Vector pos=EyePos(), Angle angles=EyeAngles(), number fov=nil, number x=0, number y=0, number w=ScrW(), number h=ScrH(), number zNear=nil, number zFar=nil)
     local anchorwidth = math.min(ScrW() / 2, ScrH() / 2)
 
-    cam.Start3D(nil, nil, 55, 0, ScrH() - anchorwidth, anchorwidth, anchorwidth)
+    cam.Start3D(nil, nil, 55, deadzonex:GetInt(), ScrH() - anchorwidth, anchorwidth, anchorwidth)
     -- cam.Start3D(nil, nil, 105)
 
     local ang = EyeAngles()

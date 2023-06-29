@@ -136,7 +136,10 @@ ARC9.SettingsTable = {
         --     timer.Simple(0, function()
         --         ARC9.Regen() -- reload fonts with new scale
         --     end)
-        -- end },
+        -- end },       
+
+        { type = "slider", min = 0, max = 1000, decimals = 0, text = "settings.hud_cust.hud_deadzonex.title", convar = "hud_deadzonex", desc = "settings.hud_cust.hud_deadzonex.desc" },
+
         { type = "color", text = "settings.hud_cust.hud_color.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
         { type = "bool", text = "settings.hud_cust.hud_darkmode.title", convar = "hud_darkmode", desc = "settings.hud_cust.hud_darkmode.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },

@@ -146,6 +146,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "hud_deadzonex",
+        default = "0",
+        client = true,
+    },
+    {
         name = "autosave",
         default = "1",
         client = true
