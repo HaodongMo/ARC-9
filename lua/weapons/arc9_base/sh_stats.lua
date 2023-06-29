@@ -52,23 +52,9 @@ function SWEP:GetFinalAttTableFromAddress(address)
     return self:GetFinalAttTable(self:LocateSlotFromAddress(address))
 end
 
-SWEP.PV_Tick = 0
-SWEP.CACHE_GetFinalAttTable = {}
-
 function SWEP:GetFinalAttTable(slot)
     if !slot then return {} end
     if !slot.Installed then return {} end
-
-    -- optimiz
-    local upct = UnPredictedCurTime()
-    if slot.Address and self.CACHE_GetFinalAttTable[slot.Address] ~= nil and self.PV_Tick == upct then
-        return self.CACHE_GetFinalAttTable[slot.Address]
-    end
-    if self.PV_Tick ~= upct then
-        self.CACHE_GetFinalAttTable = {}
-    end
-    -- optimiz end
-
     local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed) or {})
 
     if self.AttachmentTableOverrides and self.AttachmentTableOverrides[slot.Installed] then
@@ -79,8 +65,6 @@ function SWEP:GetFinalAttTable(slot)
         local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
         table.Merge(atttbl, toggletbl)
     end
-    
-    if slot.Address then self.CACHE_GetFinalAttTable[slot.Address] = atttbl end -- optimiz
 
     return atttbl
 end
@@ -254,6 +238,7 @@ end
 -- local pv_move = 0
 -- local pv_shooting = 0
 -- local pv_melee = 0
+SWEP.PV_Tick = 0
 SWEP.PV_Move = 0
 SWEP.PV_Shooting = 0
 SWEP.PV_Melee = 0
