@@ -80,7 +80,7 @@ function SWEP:Deploy()
         if IsValid(owner:GetHands()) then
             owner:GetHands():SetLightingOriginEntity(owner:GetViewModel())
         end
-        owner:SetSaveValue("m_flNextAttack", 0) -- I hope this won't have to be the final solution!!
+        owner:SetSaveValue("m_flNextAttack", 0) -- it is the final solution
     end
 
     self:SetShouldHoldType()
@@ -92,7 +92,11 @@ end
 
 function SWEP:GiveDefaultAmmo()
     self:SetClip1(self:GetValue("ClipSize"))
-    self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * 2, self:GetValue("Ammo"))
+    self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * math.max(0, self:GetProcessedValue("SupplyLimit")), self:GetValue("Ammo"))
+    if self:GetValue("UBGL") then
+        self:SetClip2(self:GetValue("UBGLClipSize"))
+        self:GetOwner():GiveAmmo(self:GetValue("UBGLClipSize") * math.max(0, self:GetValue("SecondarySupplyLimit") + 1), self:GetValue("UBGLAmmo"))
+    end
 end
 
 local v0 = Vector(0, 0, 0)

@@ -47,7 +47,7 @@ function SWEP:Initialize()
 
     local bottomless = self:GetProcessedValue("BottomlessClip", true)
     local clip = bottomless and self:GetProcessedValue("AmmoPerShot") or self.LastClipSize
-    self.Primary.DefaultClip = clip * math.max(1, self:GetProcessedValue("SupplyLimit") + (bottomless and 0 or 1))
+    self.Primary.DefaultClip = clip + (bottomless and 0 or 1)
 
     if self.Primary.DefaultClip == 1 then -- This specific value seems to be hard-coded to not give any ammo?
         self:SetClip1(1)
@@ -56,7 +56,7 @@ function SWEP:Initialize()
 
     if self:GetValue("UBGL") then
         self.Secondary.Ammo = self:GetValue("UBGLAmmo")
-        self.Secondary.DefaultClip = self:GetValue("UBGLClipSize") * math.max(1, self:GetValue("SecondarySupplyLimit") + 1)
+        self.Secondary.DefaultClip = self:GetValue("UBGLClipSize")
     end
 
     self:SetClip1(self.Primary.DefaultClip)
