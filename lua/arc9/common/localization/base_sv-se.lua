@@ -707,4 +707,4 @@ L["blacklist.filter"] = "FILTER"
 
 -- june 29
 L["settings.hud_cust.hud_deadzonex.title"] = "Gränssnitt Bredd Dödszon"
-L["settings.hud_cust.hud_deadzonex.desc"] = "Horisontal \"dödszon\" för anpassningsmenyn och gränssnitt panelen.\nAnvändbra för ultrawide-skärmar."
+L["settings.hud_cust.hud_deadzonex.desc"] = "Horisontell \"dödszon\" för anpassningsmenyn och gränssnitt panelen.\nAnvändbra för ultrawide-skärmar."
