@@ -345,10 +345,11 @@ function SWEP:CreateHUD_Bottom()
     function scroll.btnLeft:Paint(w, h) end
     function scroll.btnRight:Paint(w, h) end
 
+    local deadzonex = GetConVar("arc9_hud_deadzonex"):GetInt()
 
     if self.BottomBarMode == 1 then
-        self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
-        self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
+        self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex, ScrH() - ARC9ScreenScale(93+73.5), 0.2, 0, 0.5, nil)
+        self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex*2, ARC9ScreenScale(74+73.5), 0.2, 0, 0.5, nil)
         self.CustomizeHUD.lowerpanel.Extended = true
 
         self:ClosePresetMenu()

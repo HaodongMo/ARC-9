@@ -31,8 +31,10 @@ function SWEP:SlotIsCosmetic(slottbl)
 end
 
 function SWEP:CreateHUD_Slots(scroll)
-    self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19), ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
-    self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38), ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
+    local deadzonex = GetConVar("arc9_hud_deadzonex"):GetInt()
+
+    self.CustomizeHUD.lowerpanel:MoveTo(ARC9ScreenScale(19) + deadzonex, ScrH() - ARC9ScreenScale(93), 0.2, 0, 0.5, nil)
+    self.CustomizeHUD.lowerpanel:SizeTo(ScrW() - ARC9ScreenScale(38) - deadzonex*2, ARC9ScreenScale(74), 0.2, 0, 0.5, nil)
     self.CustomizeHUD.lowerpanel.Extended = nil
 
     local spacer = vgui.Create("DPanel", scroll)
