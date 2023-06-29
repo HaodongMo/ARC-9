@@ -52,9 +52,23 @@ function SWEP:GetFinalAttTableFromAddress(address)
     return self:GetFinalAttTable(self:LocateSlotFromAddress(address))
 end
 
+SWEP.PV_Tick = 0
+SWEP.CACHE_GetFinalAttTable = {}
+
 function SWEP:GetFinalAttTable(slot)
-    if not slot then return {} end
-    if not slot.Installed then return {} end
+    if !slot then return {} end
+    if !slot.Installed then return {} end
+
+    -- optimiz
+    local upct = UnPredictedCurTime()
+    if slot.Address and self.CACHE_GetFinalAttTable[slot.Address] ~= nil and self.PV_Tick == upct then
+        return self.CACHE_GetFinalAttTable[slot.Address]
+    end
+    if self.PV_Tick ~= upct then
+        self.CACHE_GetFinalAttTable = {}
+    end
+    -- optimiz end
+
     local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed) or {})
 
     if self.AttachmentTableOverrides and self.AttachmentTableOverrides[slot.Installed] then
@@ -65,6 +79,8 @@ function SWEP:GetFinalAttTable(slot)
         local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
         table.Merge(atttbl, toggletbl)
     end
+    
+    if slot.Address then self.CACHE_GetFinalAttTable[slot.Address] = atttbl end -- optimiz
 
     return atttbl
 end
@@ -238,7 +254,6 @@ end
 -- local pv_move = 0
 -- local pv_shooting = 0
 -- local pv_melee = 0
-SWEP.PV_Tick = 0
 SWEP.PV_Move = 0
 SWEP.PV_Shooting = 0
 SWEP.PV_Melee = 0
@@ -450,14 +465,14 @@ do
         local upct = UnPredictedCurTime()
         local processedValueName = tostring(val) .. tostring(base)
 
-        if CLIENT then
+        -- if CLIENT then -- why cache was client only???
             if self.PV_Cache[processedValueName] ~= nil and self.PV_Tick == upct then
                 return self.PV_Cache[processedValueName]
             end
             if self.PV_Tick ~= upct then
                 self.PV_Cache = {}
             end
-        end
+        -- end
 
 
         -- mega cool thing to not calculate mostly static values
@@ -471,7 +486,7 @@ do
                         -- print("Renewing cache for - ", processedValueName)
                         
 
-                        self.PV_CacheLong[processedValueName].time = upct + 0.35 -- idk whats number here should be
+                        self.PV_CacheLong[processedValueName].time = upct + 0.66 -- idk whats number here should be
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
                         
                 -- if istable(self.PV_CacheLong[processedValueName].value) then
@@ -687,10 +702,10 @@ do
             end
         end
 
-        if CLIENT then
+        -- if CLIENT then
             self.PV_Tick = upct
             self.PV_Cache[processedValueName] = stat
-        end
+        -- end
 
         return stat
     end
