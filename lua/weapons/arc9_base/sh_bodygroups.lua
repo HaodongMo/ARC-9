@@ -8,7 +8,7 @@ function SWEP:DoBodygroups(wm, cm)
     if !wm and !IsValid(owner) then return end
     if !wm and owner:IsNPC() then return end
 
-    local dbg = self:GetValue("DefaultBodygroups")
+    local dbg = self.DefaultBodygroups
 
     local mdl
 
@@ -31,23 +31,24 @@ function SWEP:DoBodygroups(wm, cm)
     end
 
     local eles = self:GetElements()
+    if eles then
+        for i, k in pairs(eles) do
+            local ele = self.AttachmentElements[i]
 
-    for i, k in pairs(eles) do
-        local ele = self.AttachmentElements[i]
+            if !ele then continue end
 
-        if !ele then continue end
+            for _, j in pairs(ele.Bodygroups or {}) do
+                if !istable(j) then continue end
+                mdl:SetBodygroup(j[1] or 0, j[2] or 0)
+            end
 
-        for _, j in pairs(ele.Bodygroups or {}) do
-            if !istable(j) then continue end
-            mdl:SetBodygroup(j[1] or 0, j[2] or 0)
-        end
-
-        if ele.Skin then
-            mdl:SetSkin(ele.Skin)
+            if ele.Skin then
+                mdl:SetSkin(ele.Skin)
+            end
         end
     end
 
-    local bbg = self:GetValue("BulletBodygroups")
+    local bbg = self.BulletBodygroups
 
     if bbg then
         local amt = self:Clip1()
@@ -65,15 +66,19 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
-    for i, k in pairs(self.SoundTableBodygroups) do
-        mdl:SetBodygroup(i, k)
+    local stbg = self.SoundTableBodygroups
+    if stbg then
+        for i, k in pairs(stbg) do
+            mdl:SetBodygroup(i, k)
+        end
     end
 
-    for i = 0, mdl:GetNumPoseParameters() -1 do
+    for i = 0, mdl:GetNumPoseParameters() - 1 do
         mdl:SetPoseParameter(i, 0)
+        local ii = mdl:GetPoseParameterName(i)
 
-        if self.SoundTablePoseParams[mdl:GetPoseParameterName(i)] then
-            mdl:SetPoseParameter(i, self.SoundTablePoseParams[mdl:GetPoseParameterName(i)])
+        if self.SoundTablePoseParams[ii] then
+            mdl:SetPoseParameter(i, self.SoundTablePoseParams[ii])
         end
     end
 
@@ -89,42 +94,45 @@ function SWEP:DoBodygroups(wm, cm)
     end
 
     local bulletbones = self:GetProcessedValue("BulletBones", true)
+    
+    if bulletbones then
+        for i, bone in ipairs(bulletbones or {}) do
+            local bones = bone
+            if !istable(bones) then
+                bones = {bone}
+            end
 
-    for i, bone in ipairs(bulletbones or {}) do
-        local bones = bone
-        if !istable(bones) then
-            bones = {bone}
-        end
+            local loaded = self:GetLoadedRounds()
+            if self:GetProcessedValue("BottomlessClip", true) then loaded = self:Ammo1() end
 
-        local loaded = self:GetLoadedRounds()
-        if self:GetProcessedValue("BottomlessClip", true) then loaded = self:Ammo1() end
+            for _, bone2 in ipairs(bones) do
+                local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
 
-        for _, bone2 in ipairs(bones) do
-            local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
+                if !boneid then continue end
 
-            if !boneid then continue end
-
-            if i > loaded and !clear then
-                mdl:ManipulateBoneScale(boneid, v0)
+                if i > loaded and !clear then
+                    mdl:ManipulateBoneScale(boneid, v0)
+                end
             end
         end
     end
 
     local stripperbones = self:GetProcessedValue("StripperClipBones", true)
+    if stripperbones then
+        for i, bone in ipairs(stripperbones or {}) do
+            local bones = bone
+            if !istable(bones) then
+                bones = {bone}
+            end
 
-    for i, bone in ipairs(stripperbones or {}) do
-        local bones = bone
-        if !istable(bones) then
-            bones = {bone}
-        end
+            for _, bone2 in ipairs(bones) do
+                local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
 
-        for _, bone2 in ipairs(bones) do
-            local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
+                if !boneid then continue end
 
-            if !boneid then continue end
-
-            if i > self:GetLoadingIntoClip() and !clear then
-                mdl:ManipulateBoneScale(boneid, v0)
+                if i > self:GetLoadingIntoClip() and !clear then
+                    mdl:ManipulateBoneScale(boneid, v0)
+                end
             end
         end
     end
@@ -140,7 +148,8 @@ end
 
 function SWEP:GetHiddenBones(wm)
     local hide = false
-
+    -- optimize this later pls
+    
     if self.CustomizeDelta > 0 then
         hide = true
     end
