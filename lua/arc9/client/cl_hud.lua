@@ -412,6 +412,7 @@ end
 
 local arc9_hud_nohints = GetConVar("arc9_hud_nohints")
 local arc9_hud_compact = GetConVar("arc9_hud_compact")
+local deadzonex = GetConVar("arc9_hud_deadzonex")
 
 local function DrawSimpleHints()
     if arc9_hud_nohints:GetBool() then return end
@@ -459,12 +460,12 @@ local function DrawSimpleHints()
     local hints_w = ARC9ScreenScale(100)
     local hints_h = ARC9ScreenScale(12) * table.Count(hints)
 
-    hx = ARC9ScreenScale(10)
+    hx = ARC9ScreenScale(10) + deadzonex:GetInt()
     hy = (ScrH() - hints_h) / 2
 
     surface.SetDrawColor(ARC9.GetHUDColor("shadow", 160 * hint_alpha))
     surface.SetMaterial(hud_sillyhints)
-    surface.DrawTexturedRect(-ARC9ScreenScale(5), hy-ARC9ScreenScale(7.5), hints_w, hints_h+ARC9ScreenScale(15))
+    surface.DrawTexturedRect(-ARC9ScreenScale(5) + deadzonex:GetInt(), hy-ARC9ScreenScale(7.5), hints_w, hints_h+ARC9ScreenScale(15))
 
     local off_x = ARC9ScreenScale(0.5)
     local off_y = ARC9ScreenScale(0.5)

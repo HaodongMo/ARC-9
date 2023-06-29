@@ -11,6 +11,8 @@ local mat_default = Material("arc9/arc9_logo.png", "mips smooth")
 local mat_random = Material("arc9/ui/random.png", "mips smooth")
 local nextpreset = 0
 
+local deadzonex = GetConVar("arc9_hud_deadzonex")
+
 function SWEP:CreatePresetMenu(reload)
     if GetConVar("arc9_atts_nocustomize"):GetBool() then return end
     if reload and self.CustomizeHUD and self.CustomizeHUD.presetpanel then self.CustomizeHUD.presetpanel:Remove() end
@@ -27,7 +29,7 @@ function SWEP:CreatePresetMenu(reload)
 
     local presetpanel = vgui.Create("DFrame", bg)
     self.CustomizeHUD.presetpanel = presetpanel
-    presetpanel:SetPos(scrw - ARC9ScreenScale(130+19), ARC9ScreenScale(45))
+    presetpanel:SetPos(scrw - ARC9ScreenScale(130+19) - deadzonex:GetInt(), ARC9ScreenScale(45))
     presetpanel:SetSize(ARC9ScreenScale(130), scrh-ARC9ScreenScale(145))
     presetpanel:SetTitle("")
     -- presetpanel:SetDraggable(false)
