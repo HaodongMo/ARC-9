@@ -738,3 +738,7 @@ L["blacklist.all"] = "TODO"
 L["blacklist.id"] = "ID"
 L["blacklist.name"] = "NOMBRE"
 L["blacklist.filter"] = "FILTRAR"
+
+-- june 29
+L["settings.hud_cust.hud_deadzonex.title"] = "Anchura de zona muerta del HUD"
+L["settings.hud_cust.hud_deadzonex.desc"] = "\"Zona Muerta\" Horizontal para el menú de personalización y el panel HUD.\nÚtil para monitores ultrawide."
