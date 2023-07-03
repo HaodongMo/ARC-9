@@ -48,7 +48,7 @@ function SWEP:DoTPIK()
 
     local ply = self:GetOwner()
 
-    local tpikdelay = RealFrameTime()
+    local tpikdelay = 0
 
     local lod
 
