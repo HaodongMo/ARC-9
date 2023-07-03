@@ -97,7 +97,7 @@ function SWEP:ApplyRecoil()
 
     self:SetLastRecoilTime(CurTime())
 
-    local pbf = self:GetProcessedValue("PushBackForce")
+    local pbf = self:GetProcessedValue("PushBackForce", true)
 
     local owner = self:GetOwner()
 
@@ -187,9 +187,9 @@ do
         -- self.VisualRecoilAng.y = math.Approach(self.VisualRecoilAng.y, 0, FrameTime() / dr)
         -- self.VisualRecoilAng.r = math.Approach(self.VisualRecoilAng.r, 0, FrameTime() / dr)
 
-        local springconstant = swepGetProcessedValue(self, "VisualRecoilDampingConst") or 120
-        local VisualRecoilSpringMagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude") or 1
-        local PUNCH_DAMPING = swepGetProcessedValue(self, "VisualRecoilSpringPunchDamping") or 6
+        local springconstant = swepGetProcessedValue(self, "VisualRecoilDampingConst", true) or 120
+        local VisualRecoilSpringMagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude", true) or 1
+        local PUNCH_DAMPING = swepGetProcessedValue(self, "VisualRecoilSpringPunchDamping", true) or 6
         
         if CLIENT and isSingleplayer then  -- idk why
             ft = ft * 0.6666
@@ -371,10 +371,10 @@ do
         local ct = CurTime()
         local ft = FrameTime()
 
-        if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime")) < ct then
+        if (weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilResetTime", true)) < ct then
             -- as soon as dissipation kicks in, recoil is clamped to the modifer cap; this is to not break visual recoil
-            self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (ft * rdr), 0, swepGetProcessedValue(self, "UseVisualRecoil", true) and math.huge or swepGetProcessedValue(self, "RecoilModifierCap")))
-            if weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilFullResetTime") < ct then
+            self:SetRecoilAmount(math.Clamp(self.dt.RecoilAmount - (ft * rdr), 0, swepGetProcessedValue(self, "UseVisualRecoil", true) and math.huge or swepGetProcessedValue(self, "RecoilModifierCap", true)))
+            if weaponGetNextPrimaryFire(self) + swepGetProcessedValue(self, "RecoilFullResetTime", true) < ct then
                 self:SetRecoilAmount(0)
             end
             -- print(math.Round(rec))
