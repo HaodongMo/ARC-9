@@ -305,8 +305,7 @@ do
             -- vaa = vaa + (vav * ft)
             angleAdd(vaa, vav * ft)
             -- local damping = 1 - (PUNCH_DAMPING * ft)
-            -- local damping = 1 - (PUNCH_DAMPING * math.Clamp(ft, 0.004, 0.005)) * 2 -- i have zero fucking idea how but it fucking works!!!!
-            local damping = 1 - (PUNCH_DAMPING * math.Clamp(ft * 2, 0.0001, 0.008))  -- i have zero fucking idea how but it fucking works!!!!
+            local damping = 1 - (PUNCH_DAMPING * (CLIENT and math.Clamp(ft * 2, 0.0001, 0.008) or ft))  -- i have zero fucking idea how but it fucking works!!!!
             --     if ( damping < 0 )
             --     {
             --         damping = 0;
