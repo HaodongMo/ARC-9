@@ -193,12 +193,15 @@ do
         
         local dampconstmaxclampfuckthisshit = 2
 
-        if CLIENT and isSingleplayer then  -- idk why
+        if CLIENT then  -- i have zero fucking idea what those numbers mean      but they work somehow ????????????
             ft = ft * 0.6666
-            PUNCH_DAMPING = PUNCH_DAMPING * 2.6666
+            PUNCH_DAMPING = PUNCH_DAMPING * 1.6666
             VisualRecoilSpringMagnitude = VisualRecoilSpringMagnitude * 1.6666
-            dampconstmaxclampfuckthisshit = 6
-        -- elseif CLIENT and !isSingleplayer then -- Grrrrrrrrrrrrrrrrrjugoidfhgniudfhgifduojiodfuhdufjhg
+            dampconstmaxclampfuckthisshit = 10
+            if !isSingleplayer then
+                PUNCH_DAMPING = PUNCH_DAMPING * 2.6666
+                springconstant = springconstant * 1.6666
+            end
         else
             PUNCH_DAMPING = PUNCH_DAMPING * 1.6666
             springconstant = springconstant * 0.6666
@@ -302,7 +305,8 @@ do
             -- vaa = vaa + (vav * ft)
             angleAdd(vaa, vav * ft)
             -- local damping = 1 - (PUNCH_DAMPING * ft)
-            local damping = 1 - (PUNCH_DAMPING * math.min(ft, 0.0066)) * 2 -- i have zero fucking idea how but it fucking works!!!!
+            -- local damping = 1 - (PUNCH_DAMPING * math.Clamp(ft, 0.004, 0.005)) * 2 -- i have zero fucking idea how but it fucking works!!!!
+            local damping = 1 - (PUNCH_DAMPING * math.Clamp(ft * 2, 0.0001, 0.008))  -- i have zero fucking idea how but it fucking works!!!!
             --     if ( damping < 0 )
             --     {
             --         damping = 0;
