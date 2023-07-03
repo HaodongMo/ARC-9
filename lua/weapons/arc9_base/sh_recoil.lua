@@ -194,7 +194,7 @@ do
         local dampconstmaxclampfuckthisshit = 2
 
         if CLIENT then  -- i have zero fucking idea what those numbers mean      but they work somehow ????????????
-            ft = ft * 0.6666
+            ft = ft * 0.6666 -- fucking demonic code
             PUNCH_DAMPING = PUNCH_DAMPING * 1.6666
             VisualRecoilSpringMagnitude = VisualRecoilSpringMagnitude * 1.6666
             dampconstmaxclampfuckthisshit = 10
@@ -352,7 +352,8 @@ do
             self:SetVisualRecoilAng(recoilZeroAng)
             self:SetVisualRecoilVel(velocityZeroAng)
 
-            if CLIENT and (isSingleplayer or firstTimePredicted) then
+            -- if CLIENT and (isSingleplayer or firstTimePredicted) then
+            if CLIENT then
                 self.VisualRecoilAng = recoilZeroAng
                 self.VisualRecoilVel = velocityZeroAng
             end
