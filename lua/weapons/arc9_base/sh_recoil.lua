@@ -191,10 +191,13 @@ do
         local VisualRecoilSpringMagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude", true) or 1
         local PUNCH_DAMPING = swepGetProcessedValue(self, "VisualRecoilSpringPunchDamping", true) or 6
         
+        local dampconstmaxclampfuckthisshit = 2
+
         if CLIENT and isSingleplayer then  -- idk why
             ft = ft * 0.6666
             PUNCH_DAMPING = PUNCH_DAMPING * 2.6666
             VisualRecoilSpringMagnitude = VisualRecoilSpringMagnitude * 1.6666
+            dampconstmaxclampfuckthisshit = 6
         -- elseif CLIENT and !isSingleplayer then -- Grrrrrrrrrrrrrrrrrjugoidfhgniudfhgifduojiodfuhdufjhg
         else
             PUNCH_DAMPING = PUNCH_DAMPING * 1.6666
@@ -298,8 +301,8 @@ do
 
             -- vaa = vaa + (vav * ft)
             angleAdd(vaa, vav * ft)
-            local damping = 1 - (PUNCH_DAMPING * ft)
-
+            -- local damping = 1 - (PUNCH_DAMPING * ft)
+            local damping = 1 - (PUNCH_DAMPING * math.min(ft, 0.0066)) * 2 -- i have zero fucking idea how but it fucking works!!!!
             --     if ( damping < 0 )
             --     {
             --         damping = 0;
@@ -317,7 +320,7 @@ do
             --     float springForceMagnitude = PUNCH_SPRING_CONSTANT * gpGlobals->frametime;
             local springforcemagnitude = springconstant * ft
             --     springForceMagnitude = clamp(springForceMagnitude, 0.f, 2.f );
-            springforcemagnitude = math_Clamp(springforcemagnitude, 0, 2)
+            springforcemagnitude = math_Clamp(springforcemagnitude, 0, dampconstmaxclampfuckthisshit)
             --     player->m_Local.m_vecPunchAngleVel -= player->m_Local.m_vecPunchAngle * springForceMagnitude;
             -- vav = vav - (vaa * springforcemagnitude)
             angleSub(vav, vaa * springforcemagnitude)
@@ -430,29 +433,9 @@ function SWEP:DoVisualRecoil()
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
-        if CLIENT then -- Very very very awful code ahead to prevent different bumps on different framerates
-            local midrft = math.min(lastrft, RealFrameTime()) -- prevent stutters
-            local awfulnumber = (220 - math.Clamp(1/midrft, 60, 220))
-            awfulnumber = math.Clamp(awfulnumber * awfulnumber * awfulnumber * 0.00000035 + 0.7, 0.5, 2.15) -- Cubic
-
-            if !isSingleplayer then awfulnumber = 1.2 end
-
-            fake = fake * awfulnumber
-
-            lastrft = RealFrameTime()
-                -- my calcluations what awfulnumber should be on different fps 
-            -- <60fps = 2.15
-            -- 70fps = 2
-            -- 80fps = 1.75
-            -- 90fps = 1.5
-            -- 100fps = 1.4
-            -- 110fps = 1.25
-            -- 130fps = 1.1
-            -- 150fps = 1
-            -- 170fps = 0.9
-            -- 200fps = 0.8
-            -- >220fps = 0.7
-                -- if we ever will get LUT interpolation (for dmg on ranges LUT etc) add it here too
+        if CLIENT then
+            -- if !isSingleplayer then awfulnumber = 1.2 end
+            fake = fake * 0.66
         end
 
         if realrecoilconvar:GetBool() then
