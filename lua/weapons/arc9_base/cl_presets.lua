@@ -317,8 +317,12 @@ function SWEP:DoPresetCapture(filename, foricon)
     -- campos = campos + camang:Right() * -custpos.x
     -- campos = campos + camang:Forward() * -custpos.y
     -- campos = campos + camang:Up() * -custpos.z
-
-    cam.Start3D(campos, camang, self:GetProcessedValue("CustomizeSnapshotFOV"), 0, 0, ScrW(), ScrH(), 1, 1024)
+    local scrrw, scrrh = ScrW(), ScrH()
+    if scrrw/scrrh > 1.8 then -- ultrawide fix
+        cam.Start3D(campos, camang, self:GetProcessedValue("CustomizeSnapshotFOV"), (scrrw-scrrh*1.77777777)*0.5, 0, scrrh*1.77777777, scrrh, 1, 1024)
+    else
+        cam.Start3D(campos, camang, self:GetProcessedValue("CustomizeSnapshotFOV"), 0, 0, scrrw, scrrh, 1, 1024)
+    end
 
     render.ClearDepth()
 
