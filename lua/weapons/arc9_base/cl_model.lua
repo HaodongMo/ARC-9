@@ -1,3 +1,5 @@
+SWEP.ModelVersion = 0
+
 function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, customang, dupli)
     dupli = dupli or 0
     idle = idle or false
@@ -43,7 +45,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
         parentmdl:SetupBones()
         parentmdl:InvalidateBoneCache()
 
-        table.insert(ARC9.CSModelPile, {Model = parentmdl, Weapon = self})
+        table.insert(ARC9.CSModelPile, {Model = parentmdl, Weapon = self, Version = self.ModelVersion})
     end
 
     local bone = slottbl.Bone
@@ -235,7 +237,8 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 
         local charmtbl = {
             Model = charmmodel,
-            Weapon = self
+            Weapon = self,
+            Version = self.ModelVersion
         }
 
         table.insert(ARC9.CSModelPile, charmtbl)
@@ -273,7 +276,8 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 
     local tbl = {
         Model = csmodel,
-        Weapon = self
+        Weapon = self,
+        Version = self.ModelVersion
     }
 
     table.insert(ARC9.CSModelPile, tbl)
@@ -409,7 +413,8 @@ function SWEP:SetupModel(wm, lod, cm)
 
         local tbl = {
             Model = csmodel,
-            Weapon = self
+            Weapon = self,
+            Version = self.ModelVersion
         }
 
         table.insert(ARC9.CSModelPile, tbl)
@@ -476,7 +481,8 @@ function SWEP:SetupModel(wm, lod, cm)
 
             local tbl = {
                 Model = csmodel,
-                Weapon = self
+                Weapon = self,
+                Version = self.ModelVersion
             }
 
             csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", true)
@@ -528,7 +534,8 @@ function SWEP:SetupModel(wm, lod, cm)
 
             local tbl = {
                 Model = stickermodel,
-                Weapon = self
+                Weapon = self,
+                Version = self.ModelVersion
             }
 
             table.insert(ARC9.CSModelPile, tbl)
@@ -577,7 +584,8 @@ function SWEP:SetupModel(wm, lod, cm)
 
                 local tbl = {
                     Model = proxmodel,
-                    Weapon = self
+                    Weapon = self,
+                    Version = self.ModelVersion
                 }
 
                 table.insert(ARC9.CSModelPile, tbl)
@@ -681,7 +689,8 @@ function SWEP:SetupModel(wm, lod, cm)
 
                     local tbl = {
                         Model = reflectproxmodel,
-                        Weapon = self
+                        Weapon = self,
+                        Version = self.ModelVersion
                     }
 
                     table.insert(ARC9.CSModelPile, tbl)
@@ -774,6 +783,8 @@ function SWEP:KillModel(cmo)
     for _, model in ipairs(self.WModel or {}) do
         SafeRemoveEntity(model)
     end
+
+    self.ModelVersion = self.ModelVersion + 1
 
     self.VModel = nil
     self.WModel = nil

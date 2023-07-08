@@ -50,6 +50,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
     end
 
     if !mdl then
+        self:KillModel()
         self:SetupModel(wm, lod, !!custompos)
 
         mdl = self.VModel

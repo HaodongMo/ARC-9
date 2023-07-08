@@ -112,6 +112,7 @@ function SWEP:PostModify(toggleonly)
     if CLIENT then
         -- self:PruneAttachments()
         self:SendWeapon()
+        self:KillModel()
         self:SetupModel(true)
         self:SetupModel(false)
         if !toggleonly then

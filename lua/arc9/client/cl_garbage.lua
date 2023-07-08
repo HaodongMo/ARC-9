@@ -7,7 +7,7 @@ function ARC9.CollectGarbage()
     local newpile = {}
 
     for _, k in ipairs(ARC9.CSModelPile) do
-        if IsValid(k.Weapon) then
+        if IsValid(k.Weapon) and k.Weapon.ModelVersion == k.Version then
             -- table.insert(newpile, k)
             kept = kept + 1
             newpile[kept] = k

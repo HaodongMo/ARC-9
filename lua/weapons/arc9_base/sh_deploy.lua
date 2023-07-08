@@ -104,6 +104,8 @@ function SWEP:ClientHolster()
         self:CallOnClient("ClientHolster")
     end
 
+    self:KillModel()
+
     local vm = self:GetVM()
 
     vm:SetSubMaterial()

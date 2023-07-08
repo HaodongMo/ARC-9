@@ -68,6 +68,7 @@ function SWEP:DrawLasers(wm, behav)
     end
 
     if !mdl then
+        self:KillModel()
         self:SetupModel(wm)
 
         mdl = self.VModel

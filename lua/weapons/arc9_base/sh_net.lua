@@ -128,6 +128,7 @@ function SWEP:ReceiveWeapon()
     if CLIENT then
         self:InvalidateCache()
         self:PruneAttachments()
+        self:KillModel()
         self:SetupModel(true)
         self:SetupModel(false)
         self:RefreshCustomizeMenu()
