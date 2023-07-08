@@ -73,7 +73,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
 
-            if !IsValid(model) then continue end
+            if !IsValid(model) then self:KillModel() return end
 
             if !onground or model.OptimizPrevWMPos != self:GetPos() then -- mega optimiz
                 model.OptimizPrevWMPos = onground and self:GetPos() or nil
