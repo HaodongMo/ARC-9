@@ -100,6 +100,8 @@ local v1 = Vector(1, 1, 1)
 local a0 = Angle(0, 0, 0)
 
 function SWEP:ClientHolster()
+    if SERVER then return end
+
     if game.SinglePlayer() then
         self:CallOnClient("ClientHolster")
     end
