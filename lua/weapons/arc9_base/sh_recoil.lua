@@ -193,7 +193,7 @@ do
 
             if damping < 0 then damping = 0 end
 
-            local springforcemagnitude = POS_PUNCH_CONSTANT * ft * VisualRecoilSpringMagnitude
+            local springforcemagnitude = math.pow(POS_PUNCH_CONSTANT * VisualRecoilSpringMagnitude, ft  / baseFramerate)
 
             vectorSub(vpv, vpa * springforcemagnitude)
             vectorAdd(vpa, vpv * ft)
@@ -231,7 +231,7 @@ do
 
             if damping < 0 then damping = 0 end
             
-            local springforcemagnitude = springconstant * ft
+            local springforcemagnitude = math.pow(springconstant, ft  / baseFramerate)
 
             angleSub(vav, vaa * springforcemagnitude)
             angleAdd(vaa, vav * ft)
