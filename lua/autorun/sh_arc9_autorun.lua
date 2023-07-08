@@ -23,7 +23,7 @@ for _, v in pairs(file.Find(searchdir .. "client/*", "LUA")) do
     end
 end
 
-if SERVER or game.SinglePlayer() then
+if SERVER then
     for _, v in pairs(file.Find(searchdir .. "server/*", "LUA")) do
         include(searchdir .. "server/" .. v)
     end

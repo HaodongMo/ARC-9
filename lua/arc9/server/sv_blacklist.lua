@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 ARC9.Blacklist = {}
 
 -- ["att"] = true

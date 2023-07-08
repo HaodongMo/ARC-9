@@ -6,6 +6,8 @@ function SWEP:Deploy()
         return
     end
 
+    self:ClientDeploy()
+
     self:InvalidateCache()
 
     self:SetBaseSettings()
@@ -88,6 +90,16 @@ function SWEP:Deploy()
     self:RunHook("Hook_Deploy")
 
     return true
+end
+
+function SWEP:ClientDeploy()
+    if SERVER then return end
+
+    if game.SinglePlayer() then
+        self:CallOnClient("ClientDeploy")
+    end
+
+    self:KillModel()
 end
 
 function SWEP:GiveDefaultAmmo()

@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 
 local pistolammotypes = {
     ["pistol"] = true,
