@@ -186,9 +186,6 @@ do
             springconstant, springmagnitude, springdamping = self.VisualRecoilThinkFunc(springconstant, springmagnitude, springdamping, self:GetRecoilAmount())
         end
 
-        springconstant = springconstant * 1
-        springdamping = springdamping * 1
-
         local realmDataHolder = CLIENT and self or swepDt
 
         local vpa = realmDataHolder.VisualRecoilPos
@@ -196,10 +193,16 @@ do
         local vpc = realmDataHolder.VisualRecoilPosAcc
 
         vpa = vpa + (vpv * ft) + (vpc * ft * ft * 0.5)
-        local vpdrag = -(vpv * vpv:Length() * 0.5)
-        local vpreturn = (-vpa * springconstant * springmagnitude) + (-vpv * springdamping)
+        local vpdrag = -(vpv * vpv:Length() * 0.5 * springmagnitude)
+        local vpreturn = (-vpa * springconstant) + (-vpv * springdamping)
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
+
+        for i = 1, 3 do
+            vpa[i] = math_Clamp(vpa[i], -100, 100)
+            vpv[i] = math_Clamp(vpv[i], -100, 100)
+            new_vpc[i] = math_Clamp(new_vpc[i], -100, 100)
+        end
 
         self:SetVisualRecoilPos(vpa)
         self:SetVisualRecoilPosAcc(new_vpc)
@@ -218,10 +221,16 @@ do
         local vac = realmDataHolder.VisualRecoilAcc
 
         vaa = vaa + (vav * ft) + (vac * ft * ft * 0.5)
-        local vdrag = -(vav * Vector(vav):Length() * 0.5)
+        local vdrag = -(vav * Vector(vav):Length() * 0.5 * springmagnitude)
         local vreturn = (-vaa * springconstant) + (-vav * springdamping)
         local new_vac = vdrag + vreturn
         vav = vav + ((vac + new_vac) * (ft * 0.5))
+
+        for i = 1, 3 do
+            vaa[i] = math_Clamp(vaa[i], -89.9, 89.9)
+            vav[i] = math_Clamp(vav[i], -89.9, 89.9)
+            new_vac[i] = math_Clamp(new_vac[i], -89.9, 89.9)
+        end
 
         self:SetVisualRecoilAng(vaa)
         self:SetVisualRecoilAcc(new_vac)
