@@ -24,23 +24,6 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     local sightamount = self:GetSightAmount()
 
-    -- EFT like recoil
-    if self.ViewRecoil then
-        local ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
-        local srupmult = self:GetProcessedValue("RecoilUp") * (self:GetProcessedValue("ViewRecoilUpMult") or 50)
-        local srsidemult = self:GetProcessedValue("RecoilSide") * (self:GetProcessedValue("ViewRecoilSideMult") or 2)
-
-        srupmult = srupmult - 10
-        ftmult = self:GetProcessedValue("RecoilDissipationRate") / 3
-
-        SmoothRecoilUp = Lerp(FrameTime() * ftmult, SmoothRecoilUp, self:GetRecoilUp() * srupmult)
-        SmoothRecoilSide = Lerp(FrameTime() * (ftmult + 2), SmoothRecoilSide, self:GetRecoilSide() * srsidemult)
-
-
-        ang.p = ang.p + SmoothRecoilUp
-        ang.y = ang.y + SmoothRecoilSide
-    end
-
     if self:IsScoping() and arc9_cheapscopes:GetBool() then
         local shootang = self:GetShootDir()
 
