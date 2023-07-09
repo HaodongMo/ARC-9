@@ -318,7 +318,7 @@ function SWEP:DrawHUD()
         local text2_w, text2_h = surface.GetTextSize(text2)
 
         surface.SetTextPos(reloadline_x + ARC9ScreenScale(2), reloadline_target_y + ARC9ScreenScale(2))
-        surface.SetTextColor(Color(255, 255, 255, 255 * math.sin(CurTime() * 5)))
+        surface.SetTextColor(Color(255, 255, 255, 255 * math.abs(math.sin(CurTime() * 5))))
         surface.DrawText(text2)
 
         local reloadline_mover_y = reloadline_target_y * ARC9.ReloadAmount
