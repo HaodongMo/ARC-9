@@ -290,6 +290,42 @@ function SWEP:DrawHUD()
         end
     end
 
+    if GetConVar("arc9_cruelty_reload"):GetBool() and input.IsKeyDown(input.GetKeyCode(self:GetBinding("+reload"))) then
+        -- Draw vertical line
+
+        local col = Color(255, 255, 255, 255)
+
+        local reloadline_x = scrw * 3 / 4
+
+        surface.SetDrawColor(col)
+        surface.DrawLine(reloadline_x, 0, reloadline_x, scrh)
+
+        local reloadline_target_w = scrw / 20
+        local reloadline_target_y = scrh * 2 / 3
+
+        surface.DrawLine(reloadline_x - (reloadline_target_w / 2), reloadline_target_y, reloadline_x + (reloadline_target_w / 2), reloadline_target_y)
+
+        surface.SetFont("ARC9_16")
+        local text = "Reload"
+        local text_w, text_h = surface.GetTextSize(text)
+
+        surface.SetTextPos(reloadline_x + ARC9ScreenScale(2), reloadline_target_y - text_h)
+        surface.SetTextColor(col)
+        surface.DrawText(text)
+
+        surface.SetFont("ARC9_16")
+        local text2 = "Drag down to reload!!!"
+        local text2_w, text2_h = surface.GetTextSize(text2)
+
+        surface.SetTextPos(reloadline_x + ARC9ScreenScale(2), reloadline_target_y + ARC9ScreenScale(2))
+        surface.SetTextColor(Color(255, 255, 255, 255 * math.sin(CurTime() * 5)))
+        surface.DrawText(text2)
+
+        local reloadline_mover_y = reloadline_target_y * ARC9.ReloadAmount
+
+        surface.DrawLine(reloadline_x - (reloadline_target_w / 2), reloadline_mover_y, reloadline_x + (reloadline_target_w / 2), reloadline_mover_y)
+    end
+
     -- Bipod hint
 
     local ft1000 = RealFrameTime() * 1000
