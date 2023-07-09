@@ -170,6 +170,14 @@ do
     local angleAdd = ANGLE.Add
     local angleMul = ANGLE.Mul
 
+    local function vectorTranspose(ang)
+        return Vector(ang[1], ang[2], ang[3])
+    end
+
+    local function angleTranspose(vec)
+        return Angle(vec[1], vec[2], vec[3])
+    end
+
     function SWEP:ThinkVisualRecoil()
         local ft = FrameTime()
         local swepDt = self.dt
@@ -194,7 +202,7 @@ do
 
         vpa = vpa + (vpv * ft) + (vpc * ft * ft * 0.5)
         local vpdrag = -(vpv * vpv:Length() * 0.5 * springmagnitude)
-        local vpreturn = (-vpa * springconstant) + (-vpv * springdamping)
+        local vpreturn = (-vpa * vpa:Length() * springconstant) + (-vpv * springdamping)
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
@@ -221,8 +229,8 @@ do
         local vac = realmDataHolder.VisualRecoilAcc
 
         vaa = vaa + (vav * ft) + (vac * ft * ft * 0.5)
-        local vdrag = -(vav * Vector(vav):Length() * 0.5 * springmagnitude)
-        local vreturn = (-vaa * springconstant) + (-vav * springdamping)
+        local vdrag = -(vav * vectorTranspose(vav):Length() * 0.5 * springmagnitude)
+        local vreturn = (-vaa * vectorTranspose(vaa):Length() * springconstant) + (-vav * springdamping)
         local new_vac = vdrag + vreturn
         vav = vav + ((vac + new_vac) * (ft * 0.5))
 
