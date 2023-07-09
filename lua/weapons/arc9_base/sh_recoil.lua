@@ -201,8 +201,8 @@ do
         local vpc = realmDataHolder.VisualRecoilPosAcc
 
         vpa = vpa + (vpv * ft) + (vpc * ft * ft * 0.5)
-        local vpdrag = -(vpv * vpv:Length() * 0.5 * springmagnitude)
-        local vpreturn = (-vpa * vpa:Length() * springconstant) + (-vpv * springdamping)
+        local vpdrag = -(vpv * vpv:Length() * 0.5)
+        local vpreturn = (-vpa * vpa:Length() * springconstant) + (-vpa / vpa:Length() * springmagnitude) + (-vpv * springdamping)
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
@@ -229,8 +229,8 @@ do
         local vac = realmDataHolder.VisualRecoilAcc
 
         vaa = vaa + (vav * ft) + (vac * ft * ft * 0.5)
-        local vdrag = -(vav * vectorTranspose(vav):Length() * 0.5 * springmagnitude)
-        local vreturn = (-vaa * vectorTranspose(vaa):Length() * springconstant) + (-vav * springdamping)
+        local vdrag = -(vav * vectorTranspose(vav):Length() * 0.5)
+        local vreturn = (-vaa * vectorTranspose(vaa):Length() * springconstant) + (-vaa / vectorTranspose(vaa):Length() * springmagnitude) + (-vav * springdamping)
         local new_vac = vdrag + vreturn
         vav = vav + ((vac + new_vac) * (ft * 0.5))
 
