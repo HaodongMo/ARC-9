@@ -229,6 +229,8 @@ hook.Add("Think", "ARC9_cruelty_think_client_reload", function()
                 RunConsoleCommand("arc9_cruelty_reload", "0")
             end
         end
+
+        performedAprilFoolsCheck = true
     end
 
     if !GetConVar("arc9_cruelty_reload"):GetBool() then return end
