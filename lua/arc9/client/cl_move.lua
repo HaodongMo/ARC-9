@@ -83,6 +83,10 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
             buttons = bit.bor(buttons, IN_RELOAD)
         else
             buttons = bit.band(buttons, bit.bnot(IN_RELOAD))
+
+            if bit.band(cmd:GetButtons(), IN_USE) == IN_USE then
+                buttons = bit.bor(buttons, ARC9.IN_INSPECT)
+            end
         end
 
         cmd:SetButtons(buttons)
