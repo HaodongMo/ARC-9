@@ -2,6 +2,7 @@ local conVars = {
     {
         name = "cruelty_reload",
         default = "0",
+        client = true
     },
     {
         name = "allflash",
