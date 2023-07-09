@@ -5,6 +5,11 @@ local conVars = {
         client = true
     },
     {
+        name = "cruelty_reload_april_fools",
+        default = "0",
+        client = true
+    },
+    {
         name = "allflash",
         default = "0",
         client = true
