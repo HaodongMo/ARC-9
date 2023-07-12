@@ -753,3 +753,8 @@ L["blacklist.filter"] = "FIWTEW"
 -- june 29
 L["settings.hud_cust.hud_deadzonex.title"] = "HUD Widh dewdzowne"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Howizontal dewadzowne fow cuwtomiwation menuwu and huwud panel\nUwUseful for uwtwawidew monitows owo"
+
+-- jily 12
+L["settings.resetsettings.cl.title"] = "Weset aww CWIENT setings"
+L["settings.resetsettings.sv.title"] = "Weset aww SErrWWEW setings"
+L["settings.reset"] = "UwU Weset!!!"

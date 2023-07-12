@@ -707,3 +707,8 @@ L["blacklist.filter"] = "ФИЛЬТР"
 -- june 29
 L["settings.hud_cust.hud_deadzonex.title"] = "Гориз. мёртвая зона"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Горизонтальная \"мёртвая зона\" для меню кастомизации и HUD панели.\nПолезно на ультрашироких мониторах."
+
+-- jily 12
+L["settings.resetsettings.cl.title"] = "Сбросить клиентские настройки"
+L["settings.resetsettings.sv.title"] = "Сбросить серверные настройки"
+L["settings.reset"] = "Сброс!"

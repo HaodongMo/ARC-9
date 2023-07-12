@@ -48,6 +48,9 @@ ARC9.SettingsTable = {
             {"2Disabled", "0"},
             {"3Enabled", "1"},
         }, desc = "settings.truenames.desc"},
+        { type = "button", text = "settings.resetsettings.cl.title", content = "settings.reset", func = function(self2)
+            RunConsoleCommand("arc9_settings_reset_client")
+        end},
 
         { sv = true, type = "label", text = "settings.general.server" },
         { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
@@ -57,6 +60,9 @@ ARC9.SettingsTable = {
             {"2Enabled", "1"},
         }, desc = "settings.truenames_default.desc"},
         { sv = true, type = "bool", text = "settings.truenames_enforced.title", convar = "truenames_enforced", desc = "settings.truenames_enforced.desc"},
+        { sv = true, type = "button", text = "settings.resetsettings.sv.title", content = "settings.reset", func = function(self2)
+            RunConsoleCommand("arc9_settings_reset_server")
+        end},
 
     },
     {

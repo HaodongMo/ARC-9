@@ -729,10 +729,14 @@ local conVars = {
 
 local prefix = "arc9_"
 
+local torevertlist_cl = {}
+local torevertlist_sv = {}
+
 for _, var in pairs(conVars) do
     local convar_name = prefix .. var.name
 
     if var.client and CLIENT then
+        table.insert(torevertlist_cl, convar_name)
         CreateClientConVar(convar_name, var.default, true, var.userinfo)
     else
         local flags = FCVAR_ARCHIVE
@@ -742,9 +746,24 @@ for _, var in pairs(conVars) do
         if var.userinfo then
             flags = flags + FCVAR_USERINFO
         end
+        table.insert(torevertlist_sv, convar_name)
         CreateConVar(convar_name, var.default, flags, var.helptext, var.min, var.max)
     end
 end
+
+if CLIENT then
+    concommand.Add("arc9_settings_reset_client", function()
+        for _, var in pairs(torevertlist_cl) do
+            RunConsoleCommand(var, GetConVar(var):GetDefault()) -- :Revert() wont work!!!!!!!!! ghhh
+        end
+    end, nil, "Reset all client ARC9 settings.")
+end
+
+concommand.Add("arc9_settings_reset_server", function()
+    for _, var in pairs(torevertlist_sv) do
+        GetConVar(var):Revert()
+    end
+end, nil, "Reset all server ARC9 settings.")
 
 if SERVER then
     util.AddNetworkString("ARC9_InvalidateAll")

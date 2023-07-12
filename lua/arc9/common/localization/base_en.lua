@@ -753,3 +753,8 @@ L["blacklist.filter"] = "FILTER"
 -- june 29
 L["settings.hud_cust.hud_deadzonex.title"] = "HUD Width Deadzone"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Horizontal \"deadzone\" for customization menu and HUD panel.\nUseful for ultrawide monitors."
+
+-- jily 12
+L["settings.resetsettings.cl.title"] = "Reset all CLIENT settings"
+L["settings.resetsettings.sv.title"] = "Reset all SERVER settings"
+L["settings.reset"] = "Reset!"
