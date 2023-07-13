@@ -57,10 +57,12 @@ function ARC9.GuessWeaponType(swep)
 end
 
 ARC9.WeaponClasses = {}
+ARC9.ARC9Weapons = {}
 
 function ARC9.PopulateWeaponClasses()
     for _, wep in ipairs(weapons.GetList()) do
         if weapons.IsBasedOn(wep.ClassName, "arc9_base") then
+            ARC9.ARC9Weapons[wep.ClassName] = true
             if wep.NotForNPCs then continue end
             local weptype = ARC9.GuessWeaponType(wep)
             ARC9.WeaponClasses[weptype] = ARC9.WeaponClasses[weptype] or {}
@@ -92,6 +94,10 @@ function ARC9.ReplaceSpawnedWeapon(ent)
             if IsValid(ent:GetActiveWeapon()) then
                 class = ent:GetActiveWeapon():GetClass()
             end
+
+            if !class then return end
+
+            if ARC9.ARC9Weapons[class] then return end
 
             if ARC9.HL2Replacements[class] then
                 local weptbl = ARC9.HL2Replacements[class]

@@ -198,9 +198,8 @@ do
 
         for i = 1, affectorsCount do
             local tbl = affectors[i]
-            if tbl[val] then
-                local tblVal = tbl[val]
-
+            local tblVal = tbl[val]
+            if tblVal and isfunction(tblVal) then
                 cacheLen = cacheLen + 1
                 newCache[cacheLen] = tblVal
 
