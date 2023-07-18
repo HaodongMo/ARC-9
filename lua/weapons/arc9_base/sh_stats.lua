@@ -309,6 +309,8 @@ do
         if not self.ExcludeFromRawStats[val] then
             for i = 1, affectorsCount do
                 local tbl = allAffectors[i]
+                if !tbl then continue end
+                
                 local att_priority = tbl[valContCondition .. "_Priority"] or 1
 
                 if att_priority >= priority and tbl[valContCondition] ~= nil then

@@ -111,8 +111,8 @@ function SWEP:DrawFlashlightsWM()
 
 
         if k.qca then
-            a = model:GetAttachment(k.qca)
-            pos, ang = a.Pos, a.Ang
+            local a = model:GetAttachment(k.qca)
+            if a then pos, ang = a.Pos, a.Ang end
         end
         
         self:DrawLightFlare(pos + fuckingbullshit, ang, k.col, k.br * 20, i, nil, k.nodotter)

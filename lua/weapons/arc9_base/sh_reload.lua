@@ -275,7 +275,7 @@ function SWEP:GetCapacity(ubgl)
     if ubgl then
         cap = math.Round(self:GetValue("UBGLClipSize")) + math.Round(self:GetValue("UBGLChamberSize"))
     else
-        cap = math.Round(self:GetValue("ClipSize")) + math.Round(self:GetValue("ChamberSize"))
+        cap = math.Round(self:GetValue("ClipSize") or 1) + math.Round(self:GetValue("ChamberSize") or 0)
     end
 
     return cap

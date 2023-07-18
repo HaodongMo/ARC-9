@@ -57,12 +57,10 @@ function ARC9.GuessWeaponType(swep)
 end
 
 ARC9.WeaponClasses = {}
-ARC9.ARC9Weapons = {}
 
 function ARC9.PopulateWeaponClasses()
     for _, wep in ipairs(weapons.GetList()) do
         if weapons.IsBasedOn(wep.ClassName, "arc9_base") then
-            ARC9.ARC9Weapons[wep.ClassName] = true
             if wep.NotForNPCs then continue end
             local weptype = ARC9.GuessWeaponType(wep)
             ARC9.WeaponClasses[weptype] = ARC9.WeaponClasses[weptype] or {}
@@ -81,9 +79,15 @@ local arc9_replace_spawned = GetConVar("arc9_replace_spawned")
 function ARC9.ReplaceSpawnedWeapon(ent)
     if CLIENT then return end
 
+    if !(ent:IsNPC() or ent:IsWeapon()) then return end
+
+    -- print("tried to replcae", ent, CurTime())
+
+    local fuckingtimer = (CurTime() < 5 and 1.5 or 0)
+
     if ent:IsNPC() then
         if !arc9_npc_autoreplace:GetBool() then return end
-        timer.Simple(0, function()
+        timer.Simple(0.1 + fuckingtimer, function()
             if !ent:IsValid() then return end
             local cap = ent:CapabilitiesGet()
 
@@ -97,8 +101,6 @@ function ARC9.ReplaceSpawnedWeapon(ent)
 
             if !class then return end
 
-            if ARC9.ARC9Weapons[class] then return end
-
             if ARC9.HL2Replacements[class] then
                 local weptbl = ARC9.HL2Replacements[class]
                 local wepcategory = table.Random(weptbl)
@@ -111,7 +113,7 @@ function ARC9.ReplaceSpawnedWeapon(ent)
         end)
     elseif ent:IsWeapon() then
         if !arc9_replace_spawned:GetBool() then return end
-        timer.Simple(0, function()
+        timer.Simple(0.1 + fuckingtimer, function()
             if !ent:IsValid() then return end
             if IsValid(ent:GetOwner()) then return end
             if ent.ARC9 then return end
