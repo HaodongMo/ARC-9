@@ -337,6 +337,8 @@ function SWEP:DoVisualRecoil()
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
+        fake = fake * 0.66
+
         if realrecoilconvar:GetBool() then
             self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Vector(up, side * 15, roll))
             self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0)))
