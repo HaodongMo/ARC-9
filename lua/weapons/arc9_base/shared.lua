@@ -1535,9 +1535,11 @@ function SWEP:SetupDataTables()
 
     self:SetVisualRecoilAng(Vector(0, 0 ,0))
     self:SetVisualRecoilVel(Vector(0, 0, 0))
+    self:SetVisualRecoilAcc(Vector(0, 0, 0))
 
     self:SetVisualRecoilPos(Vector(0, 0, 0))
     self:SetVisualRecoilPosVel(Vector(0, 0, 0))
+    self:SetVisualRecoilPosAcc(Vector(0, 0, 0))
 
     self:SetMultiSight(1)
     self:SetLastWasSprinting(false)

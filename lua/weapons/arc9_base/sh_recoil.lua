@@ -207,9 +207,9 @@ do
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
         for i = 1, 3 do
-            vpa[i] = math_Clamp(vpa[i], -250, 250)
-            vpv[i] = math_Clamp(vpv[i], -250, 250)
-            new_vpc[i] = math_Clamp(new_vpc[i], -250, 250)
+            vpa[i] = math_Clamp(vpa[i], -294, 294)
+            vpv[i] = math_Clamp(vpv[i], -294, 294)
+            new_vpc[i] = math_Clamp(new_vpc[i], -294, 294)
         end
 
         self:SetVisualRecoilPos(vpa)
@@ -236,8 +236,8 @@ do
 
         for i = 1, 3 do
             vaa[i] = math_Clamp(vaa[i], -179.9, 179.9)
-            vav[i] = math_Clamp(vav[i], -250, 250)
-            new_vac[i] = math_Clamp(new_vac[i], -250, 250)
+            vav[i] = math_Clamp(vav[i], -294, 294)
+            new_vac[i] = math_Clamp(new_vac[i], -294, 294)
         end
 
         self:SetVisualRecoilAng(vaa)
