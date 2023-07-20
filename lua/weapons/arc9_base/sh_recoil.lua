@@ -361,7 +361,7 @@ function SWEP:GetViewModelRecoil(pos, ang, correct)
 
     local vra = self.VisualRecoilAng
 
-    vra = Angle(vra[1], vra[2], vra[3])
+    vra = Angle(vra[1], vra[2], vra[3]) * ARC9.VisualRecoilMult
 
     vra.y = -vra.y
 
@@ -382,7 +382,7 @@ function SWEP:GetRecoilOffset(pos, ang)
     local vrp = self:GetVisualRecoilPos()
     local vra = self:GetVisualRecoilAng()
 
-    vra = Angle(vra[1], vra[2], vra[3])
+    vra = Angle(vra[1], vra[2], vra[3]) * ARC9.VisualRecoilMult
 
     local vrc = self:GetProcessedValue("VisualRecoilCenter", true)
 
