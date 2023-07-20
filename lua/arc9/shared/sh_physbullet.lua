@@ -451,7 +451,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
                 if IsValid(bullet.Attacker) and IsValid(weapon) and !ARC9.IsPointOutOfBounds(oldpos) then
 
-                    if !game.SinglePlayer() then
+                    if !game.SinglePlayer() and !bullet.FirstTimeProcessed then
                         SuppressHostEvents(bullet.Attacker)
                     end
 
@@ -469,7 +469,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
 
                     bullet.Attacker:FireBullets(fireBullets2)
 
-                    if !game.SinglePlayer() then
+                    if !game.SinglePlayer() and !bullet.FirstTimeProcessed then
                         SuppressHostEvents()
                     end
                 end
