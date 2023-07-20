@@ -206,10 +206,13 @@ do
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
+        local MAGIC1 = 277
+        local MAGIC2 = 210
+
         for i = 1, 3 do
-            vpa[i] = math_Clamp(vpa[i], -275, 275)
-            vpv[i] = math_Clamp(vpv[i], -275, 275)
-            new_vpc[i] = math_Clamp(new_vpc[i], -275, 275)
+            vpa[i] = math_Clamp(vpa[i], -MAGIC1, MAGIC1)
+            vpv[i] = math_Clamp(vpv[i], -MAGIC1, MAGIC1)
+            new_vpc[i] = math_Clamp(new_vpc[i], -MAGIC1, MAGIC1)
         end
 
         self:SetVisualRecoilPos(vpa)
@@ -235,9 +238,9 @@ do
         vav = vav + ((vac + new_vac) * (ft * 0.5))
 
         for i = 1, 3 do
-            vaa[i] = math_Clamp(vaa[i], -179.9, 179.9)
-            vav[i] = math_Clamp(vav[i], -275, 275)
-            new_vac[i] = math_Clamp(new_vac[i], -275, 275)
+            vaa[i] = math_Clamp(vaa[i], -MAGIC2, MAGIC2)
+            vav[i] = math_Clamp(vav[i], -MAGIC2, MAGIC2)
+            new_vac[i] = math_Clamp(new_vac[i], -MAGIC2, MAGIC2)
         end
 
         self:SetVisualRecoilAng(vaa)
