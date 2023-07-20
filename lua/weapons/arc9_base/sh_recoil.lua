@@ -50,6 +50,8 @@ function SWEP:GetRecoilPatternDirection(shot)
     return dir
 end
 
+local recoilshake = GetConVar("arc9_recoilshake")
+
 function SWEP:ApplyRecoil()
     local rec = self:GetRecoilAmount()
 
@@ -117,8 +119,10 @@ function SWEP:ApplyRecoil()
 
     -- owner:SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
 
-    owner:SetFOV(owner:GetFOV() * 0.99, 0)
-    owner:SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
+    if recoilshake:GetBool() then
+        owner:SetFOV(owner:GetFOV() * 0.99, 0)
+        owner:SetFOV(0, 60 / (self:GetProcessedValue("RPM")))
+    end
 end
 
 -- local function lensqr(ang)

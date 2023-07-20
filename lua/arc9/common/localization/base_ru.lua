@@ -712,3 +712,7 @@ L["settings.hud_cust.hud_deadzonex.desc"] = "Горизонтальная \"мё
 L["settings.resetsettings.cl.title"] = "Сбросить клиентские настройки"
 L["settings.resetsettings.sv.title"] = "Сбросить серверные настройки"
 L["settings.reset"] = "Сброс!"
+
+-- jily 20
+L["settings.gameplay.recoilshake.title"] = "Тряска поля зрения от отдачи"
+L["settings.gameplay.recoilshake.desc"] = "Поле зрения дергается когда стреляешь"

@@ -758,3 +758,7 @@ L["settings.hud_cust.hud_deadzonex.desc"] = "Howizontal dewadzowne fow cuwtomiwa
 L["settings.resetsettings.cl.title"] = "Weset aww CWIENT setings"
 L["settings.resetsettings.sv.title"] = "Weset aww SErrWWEW setings"
 L["settings.reset"] = "UwU Weset!!!"
+
+-- jily 20
+L["settings.gameplay.recoilshake.title"] = "Wecoiw FOW Shwake -w-"
+L["settings.gameplay.recoilshake.desc"] = "Snwaps wield owo wiew when showoting"

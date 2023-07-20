@@ -725,6 +725,10 @@ local conVars = {
         default = "0",
         client = true,
     },
+    {
+        name = "recoilshake",
+        default = "1",
+    },
 }
 
 local prefix = "arc9_"

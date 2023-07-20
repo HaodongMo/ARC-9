@@ -758,3 +758,7 @@ L["settings.hud_cust.hud_deadzonex.desc"] = "Horizontal \"deadzone\" for customi
 L["settings.resetsettings.cl.title"] = "Reset all CLIENT settings"
 L["settings.resetsettings.sv.title"] = "Reset all SERVER settings"
 L["settings.reset"] = "Reset!"
+
+-- jily 20
+L["settings.gameplay.recoilshake.title"] = "Recoil FOV Shake"
+L["settings.gameplay.recoilshake.desc"] = "Snaps field of view when shooting"
