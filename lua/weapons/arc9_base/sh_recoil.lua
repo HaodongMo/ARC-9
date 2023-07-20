@@ -210,8 +210,8 @@ do
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
-        local MAGIC1 = 210
-        local MAGIC2 = 210
+        local MAGIC1 = 179.5
+        local MAGIC2 = 179.5
 
         for i = 1, 3 do
             vpa[i] = math_Clamp(vpa[i], -MAGIC1, MAGIC1)
