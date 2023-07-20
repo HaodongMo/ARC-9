@@ -337,7 +337,7 @@ function SWEP:DoVisualRecoil()
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
-        fake = fake * 0.15
+        fake = fake * 0.45
 
         if realrecoilconvar:GetBool() then
             self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Vector(up, side * 15, roll))
@@ -353,6 +353,8 @@ function SWEP:DoVisualRecoil()
     -- end
 end
 
+local retardedmult = 2
+
 function SWEP:GetViewModelRecoil(pos, ang, correct)
     correct = correct or 1
     if !isSingleplayer and SERVER then return end
@@ -361,7 +363,7 @@ function SWEP:GetViewModelRecoil(pos, ang, correct)
 
     local vra = self.VisualRecoilAng
 
-    vra = Angle(vra[1], vra[2], vra[3]) * ARC9.VisualRecoilMult
+    vra = Angle(vra[1], vra[2], vra[3]) * retardedmult
 
     vra.y = -vra.y
 
@@ -382,7 +384,7 @@ function SWEP:GetRecoilOffset(pos, ang)
     local vrp = self:GetVisualRecoilPos()
     local vra = self:GetVisualRecoilAng()
 
-    vra = Angle(vra[1], vra[2], vra[3]) * ARC9.VisualRecoilMult
+    vra = Angle(vra[1], vra[2], vra[3]) * retardedmult
 
     local vrc = self:GetProcessedValue("VisualRecoilCenter", true)
 

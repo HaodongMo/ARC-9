@@ -267,8 +267,6 @@ ARC9.HL2Replacements = {
     ["weapon_rpg"] = {ARC9.WEAPON_RPG}
 }
 
-ARC9.VisualRecoilMult = 1
-
 do
     local cvarDeveloper = GetConVar("developer")
     local cvarGetInt = FindMetaTable("ConVar").GetInt
