@@ -63,10 +63,12 @@ end
 
 local lsstr = "ShootSound"
 local lsslr = "LayerSound"
+local atsslr = "AtmosSound"
 local ldsstr = "DistantShootSound"
 
 local sstrSilenced = "ShootSoundSilenced" -- made cuz it'll just pointless to concate.
 local sslrSilenced = "LayerSoundSilenced"
+local ssatrSilenced = "AtmosSoundSilenced"
 local dsstrSilenced = "DistantShootSoundSilenced"
 
 local soundtab1 = {
@@ -93,12 +95,21 @@ local soundtab6 = {
     name = "shootdistantindoor"
 }
 
+local soundtab7 = {
+    name = "shootatmos"
+}
+
+local soundtab8 = {
+    name = "shootatmosindoor"
+}
+
 function SWEP:DoShootSounds()
     local pvar = self:GetProcessedValue("ShootPitchVariation", true)
     local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
 
     local sstr = lsstr
     local sslr = lsslr
+    local atstr = atsslr
     local dsstr = ldsstr
 
     local silenced = self:GetProcessedValue("Silencer") and !self:GetUBGL()
@@ -116,6 +127,10 @@ function SWEP:DoShootSounds()
 
     if silenced and self:GetProcessedValue(sslrSilenced, true) then
         sslr = sslrSilenced
+    end
+
+    if silenced and self:GetProcessedValue(ssatrSilenced, true) then
+        atstr = ssatrSilenced
     end
 
     if havedistant and silenced and self:GetProcessedValue(dsstrSilenced, true) then
@@ -138,6 +153,7 @@ function SWEP:DoShootSounds()
 
     local ss = self:RandomChoice(self:GetProcessedValue(sstr, true))
     local sl = self:RandomChoice(self:GetProcessedValue(sslr, true))
+    local at = self:RandomChoice(self:GetProcessedValue(atstr, true))
     local dss
 
     if havedistant then
@@ -175,6 +191,16 @@ function SWEP:DoShootSounds()
         end
 
         self:PlayTranslatedSound(soundtab2)
+		
+        do
+            soundtab7.sound = at or ""
+            soundtab7.level = svolume
+            soundtab7.pitch = spitch
+            soundtab7.volume = volumeMix * indoormix
+            soundtab7.channel = ARC9.CHAN_ATMOS + 5
+        end
+
+        self:PlayTranslatedSound(soundtab7)
 
         if havedistant then
             do
@@ -192,6 +218,7 @@ function SWEP:DoShootSounds()
     if indoor > 0 then
         local ssIN = self:RandomChoice(self:GetProcessedValue(sstr .. "Indoor", true))
         local slIN = self:RandomChoice(self:GetProcessedValue(sslr .. "Indoor", true))
+        local stIN = self:RandomChoice(self:GetProcessedValue(atstr .. "Indoor", true))
         local dssIN = havedistant and self:RandomChoice(self:GetProcessedValue(dsstr .. "Indoor", true))
         local indoorVolumeMix = svolumeactual * indoor
 
@@ -215,6 +242,16 @@ function SWEP:DoShootSounds()
         end
 
         self:PlayTranslatedSound(soundtab5)
+		
+        do
+            soundtab8.sound = stIN or ""
+            soundtab8.level = svolume
+            soundtab8.pitch = spitch
+            soundtab8.volume = indoorVolumeMix
+            soundtab8.channel = ARC9.CHAN_INDOOR + 8
+        end
+
+        self:PlayTranslatedSound(soundtab8)
 
         if havedistant then
             do
