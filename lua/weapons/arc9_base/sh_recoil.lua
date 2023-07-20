@@ -210,7 +210,7 @@ do
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
-        local MAGIC1 = 277
+        local MAGIC1 = 210
         local MAGIC2 = 210
 
         for i = 1, 3 do
