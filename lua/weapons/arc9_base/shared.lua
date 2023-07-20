@@ -1515,15 +1515,15 @@ function SWEP:SetupDataTables()
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
     self:NetworkVar("Angle", 1, "LastAimAngle")
-    self:NetworkVar("Angle", 2, "VisualRecoilAng")
-    self:NetworkVar("Angle", 3, "VisualRecoilVel")
-    self:NetworkVar("Angle", 4, "VisualRecoilAcc")
-    self:NetworkVar("Angle", 5, "BipodAng")
+    self:NetworkVar("Angle", 2, "BipodAng")
 
     self:NetworkVar("Vector", 0, "VisualRecoilPos")
     self:NetworkVar("Vector", 1, "VisualRecoilPosVel")
     self:NetworkVar("Vector", 2, "VisualRecoilPosAcc")
     self:NetworkVar("Vector", 3, "BipodPos")
+    self:NetworkVar("Vector", 4, "VisualRecoilAng")
+    self:NetworkVar("Vector", 5, "VisualRecoilVel")
+    self:NetworkVar("Vector", 6, "VisualRecoilAcc")
 
     self:NetworkVar("String", 0, "IKAnimation")
 
@@ -1533,8 +1533,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Entity", 3, "LockOnTarget")
     self:NetworkVar("Entity", 4, "DetonatorEntity")
 
-    self:SetVisualRecoilAng(Angle(0, 0 ,0))
-    self:SetVisualRecoilVel(Angle(0, 0, 0))
+    self:SetVisualRecoilAng(Vector(0, 0 ,0))
+    self:SetVisualRecoilVel(Vector(0, 0, 0))
 
     self:SetVisualRecoilPos(Vector(0, 0, 0))
     self:SetVisualRecoilPosVel(Vector(0, 0, 0))

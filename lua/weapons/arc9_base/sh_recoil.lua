@@ -144,9 +144,9 @@ SWEP.VisualRecoilPos = Vector(0, 0, 0)
 SWEP.VisualRecoilPosVel = Vector(0, 0, 0)
 SWEP.VisualRecoilPosAcc = Vector(0, 0, 0)
 
-SWEP.VisualRecoilAng = Angle(0, 0, 0)
-SWEP.VisualRecoilVel = Angle(0, 0, 0)
-SWEP.VisualRecoilAcc = Angle(0, 0, 0)
+SWEP.VisualRecoilAng = Vector(0, 0, 0)
+SWEP.VisualRecoilVel = Vector(0, 0, 0)
+SWEP.VisualRecoilAcc = Vector(0, 0, 0)
 
 end
 
@@ -207,9 +207,9 @@ do
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
         for i = 1, 3 do
-            vpa[i] = math_Clamp(vpa[i], -179, 179)
-            vpv[i] = math_Clamp(vpv[i], -179, 179)
-            new_vpc[i] = math_Clamp(new_vpc[i], -179, 179)
+            vpa[i] = math_Clamp(vpa[i], -250, 250)
+            vpv[i] = math_Clamp(vpv[i], -250, 250)
+            new_vpc[i] = math_Clamp(new_vpc[i], -250, 250)
         end
 
         self:SetVisualRecoilPos(vpa)
@@ -229,15 +229,15 @@ do
         local vac = realmDataHolder.VisualRecoilAcc
 
         vaa = vaa + (vav * ft) + (vac * ft * ft * 0.5)
-        local vdrag = -(vav * vectorTranspose(vav):Length() * 0.5)
-        local vreturn = (-vaa * vectorTranspose(vaa):Length() * springconstant) + (-vaa / vectorTranspose(vaa):Length() * springmagnitude) + (-vav * springdamping)
+        local vdrag = -(vav * vav:Length() * 0.5)
+        local vreturn = (-vaa * vaa:Length() * springconstant) + (-vaa / vaa:Length() * springmagnitude) + (-vav * springdamping)
         local new_vac = vdrag + vreturn
         vav = vav + ((vac + new_vac) * (ft * 0.5))
 
         for i = 1, 3 do
             vaa[i] = math_Clamp(vaa[i], -179.9, 179.9)
-            vav[i] = math_Clamp(vav[i], -179.9, 179.9)
-            new_vac[i] = math_Clamp(new_vac[i], -179.9, 179.9)
+            vav[i] = math_Clamp(vav[i], -250, 250)
+            new_vac[i] = math_Clamp(new_vac[i], -250, 250)
         end
 
         self:SetVisualRecoilAng(vaa)
@@ -331,18 +331,17 @@ function SWEP:DoVisualRecoil()
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
         if CLIENT then
-            -- if !isSingleplayer then awfulnumber = 1.2 end
             fake = fake * 0.66
         end
 
         if realrecoilconvar:GetBool() then
-            self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Angle(up, side * 15, roll))
+            self:SetVisualRecoilAng(self:GetVisualRecoilAng() + Vector(up, side * 15, roll))
             self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0)))
         end
 
         if IsFirstTimePredicted() or isSingleplayer then
             if CLIENT then
-                self.VisualRecoilAng = self.VisualRecoilAng + Angle(up, side * 15, roll)
+                self.VisualRecoilAng = self.VisualRecoilAng + Vector(up, side * 15, roll)
                 self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0))
             end
         end
@@ -355,7 +354,9 @@ function SWEP:GetViewModelRecoil(pos, ang, correct)
     if !self:GetProcessedValue("UseVisualRecoil", true) then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter", true)
 
-    local vra = Angle(self.VisualRecoilAng)
+    local vra = self.VisualRecoilAng
+
+    vra = Angle(vra[1], vra[2], vra[3])
 
     vra.y = -vra.y
 
@@ -375,6 +376,8 @@ function SWEP:GetRecoilOffset(pos, ang)
 
     local vrp = self:GetVisualRecoilPos()
     local vra = self:GetVisualRecoilAng()
+
+    vra = Angle(vra[1], vra[2], vra[3])
 
     local vrc = self:GetProcessedValue("VisualRecoilCenter", true)
 
