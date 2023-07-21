@@ -83,7 +83,7 @@ function SWEP:ThinkLoopingSound()
 end
 
 SWEP.IndoorTick = 0
-SWEP.IsIndoors = false
+SWEP.IsIndoors = 0
 
 local dirs = {
     Angle(-90, 90, 0), -- Up            angled by 15 degrees + diagonal direction
@@ -108,13 +108,13 @@ local traceTable = {
 }
 
 function SWEP:GetIndoor()
-    if !self.ShootSoundIndoor and !self.DistantShootSoundIndoor and !self.ShootSoundSilencedIndoor and !self.DistantShootSoundSilencedIndoor then return false end -- non realism guns!!!
+    if !self.ShootSoundIndoor and !self.DistantShootSoundIndoor and !self.ShootSoundSilencedIndoor and !self.DistantShootSoundSilencedIndoor then return 0 end -- non realism guns!!!
 
     if self.IndoorTick == UnPredictedCurTime() then return self.IsIndoors end
 
     self.IndoorTick = UnPredictedCurTime()
 
-    local isindoors = false
+    local isindoors = 0
 
     local hits = 0
     local endmult = 0
@@ -152,11 +152,12 @@ function SWEP:GetIndoor()
     end
 
     if hits > 0 then
-    -- if hits >= #dirs * 0.5 then
-        isindoors = true
+        isindoors = endmult
     end
+
+    isindoors = math.min(isindoors, 1)
 
     self.IsIndoors = isindoors
 
-    return isindoors and endmult or false
+    return isindoors
 end
