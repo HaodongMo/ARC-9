@@ -63,9 +63,11 @@ function SWEP:Initialize()
     self:SetClip2(self.Secondary.DefaultClip)
 
     self:SetLastLoadedRounds(self.LastClipSize)
-
-    if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
-    if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
+    
+    timer.Simple(0, function() 
+        if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
+        if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end 
+    end)
 
     if arc9_precache_sounds_onfirsttake:GetBool() then
         ARC9.CacheWepSounds(self, self:GetClass())
