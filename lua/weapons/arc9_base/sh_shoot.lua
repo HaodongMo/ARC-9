@@ -153,12 +153,12 @@ function SWEP:DoShootSounds()
 
     local volumeMix = svolumeactual * indoormix
 
-    local hardcutoff = self:GetValue("IndoorSoundHardCutoff") and self:GetValue("IndoorSoundHardCutoffRatio") < indoor
+    local hardcutoff = self.IndoorSoundHardCutoff and self.IndoorSoundHardCutoffRatio < indoor
 
     if hardcutoff then
         indoormix = 0
         indoor = 1
-    elseif self:GetValue("IndoorSoundHardCutoff") then
+    elseif self.IndoorSoundHardCutoff then
         indoormix = 1
         indoor = 0
     end
