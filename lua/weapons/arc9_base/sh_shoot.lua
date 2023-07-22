@@ -153,6 +153,16 @@ function SWEP:DoShootSounds()
 
     local volumeMix = svolumeactual * indoormix
 
+    local hardcutoff = self:GetValue("IndoorSoundHardCutoff") and self:GetValue("IndoorSoundHardCutoffRatio") < indoor
+
+    if hardcutoff then
+        indoormix = 0
+        indoor = 1
+    elseif self:GetValue("IndoorSoundHardCutoff") then
+        indoormix = 1
+        indoor = 0
+    end
+
     if indoormix > 0 then
 
         -- doing this cuz it uses only 1 cached table and it works way faster

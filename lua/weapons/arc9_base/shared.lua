@@ -835,6 +835,9 @@ SWEP.ShootSoundLoopingIndoor = nil
 SWEP.ShootSoundTail = nil -- played after the loop ends
 SWEP.ShootSoundTailIndoor = nil
 
+SWEP.IndoorSoundHardCutoff = false
+SWEP.IndoorSoundHardCutoffRatio = 0.5
+
 SWEP.Silencer = false -- Silencer installed or not?
 
 SWEP.DistantShootSound = nil
