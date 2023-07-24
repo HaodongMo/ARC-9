@@ -353,7 +353,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         LerpAngleEdit(curvedcustomizedelta, extra_offsetang, angle_zero)
 
         if self.BottomBarMode == 1 then
-            cpos[3] = cpos[3] + 5
+            cpos[3] = cpos[3] + 2
         else
             cpos[3] = cpos[3] + 1.5
         end
