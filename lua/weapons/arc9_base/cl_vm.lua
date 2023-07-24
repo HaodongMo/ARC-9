@@ -217,14 +217,16 @@ function SWEP:PostDrawViewModel()
     end
 
     cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), nil, nil, nil, nil, 1, 10000)
-    for _, model in ipairs(self.VModel) do
-        local slottbl = model.slottbl
-        local atttbl = self:GetFinalAttTable(slottbl)
+    if self.VModel then
+        for _, model in ipairs(self.VModel) do
+            local slottbl = model.slottbl
+            local atttbl = self:GetFinalAttTable(slottbl)
 
-        if atttbl.HoloSight then
-            -- cam.IgnoreZ(true)
-            self:DoHolosight(model, atttbl)
-            -- cam.IgnoreZ(false)
+            if atttbl.HoloSight then
+                -- cam.IgnoreZ(true)
+                self:DoHolosight(model, atttbl)
+                -- cam.IgnoreZ(false)
+            end
         end
     end
     cam.End3D()

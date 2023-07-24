@@ -158,7 +158,7 @@ function SWEP:DrawFlashlightsVM()
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).VModel
 
-        if !model then continue end
+        if !IsValid(model) then continue end
 
         local pos, ang
 
