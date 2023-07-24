@@ -182,6 +182,9 @@ do
         return Angle(vec[1], vec[2], vec[3])
     end
 
+    local MAGIC1 = 210
+    local MAGIC2 = 210
+
     function SWEP:ThinkVisualRecoil()
         local ft = FrameTime()
         local swepDt = self.dt
@@ -210,8 +213,11 @@ do
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
-        local MAGIC1 = 179.5
-        local MAGIC2 = 179.5
+        
+        if !isSingleplayer and engine.ServerFrameTime() < 0.021 then -- server under 48 tickrate fuck you!!!!!!!!
+            MAGIC1 = 89.5
+            MAGIC2 = 89.5
+        end
 
         for i = 1, 3 do
             vpa[i] = math_Clamp(vpa[i], -MAGIC1, MAGIC1)
