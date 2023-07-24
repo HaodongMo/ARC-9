@@ -67,7 +67,8 @@ function SWEP:Initialize()
     
     timer.Simple(0, function() 
         if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
-        if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end 
+        if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
+        if SERVER then self:InitialDefaultClip() end
     end)
 
     if arc9_precache_sounds_onfirsttake:GetBool() then

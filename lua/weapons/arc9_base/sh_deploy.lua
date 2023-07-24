@@ -73,8 +73,6 @@ function SWEP:Deploy()
     end
 
     if SERVER then
-        self:InitialDefaultClip()
-
         self:CreateShield()
 
         -- self:NetworkWeapon()
