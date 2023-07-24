@@ -762,3 +762,9 @@ L["settings.reset"] = "Reset!"
 -- jily 20
 L["settings.gameplay.recoilshake.title"] = "Recoil FOV Shake"
 L["settings.gameplay.recoilshake.desc"] = "Snaps field of view when shooting"
+
+-- jly 25
+L["settings.gameplay.equipment_generate_ammo.title"] = "Unique Ammo Types for Equipment"
+L["settings.gameplay.equipment_generate_ammo.desc"] = "There is a limit of 255 ammo types, and disabling this option may help fix some problems if you have lots of addons.\n\nThis is a server variable.\n\nRequires restart."
+L["settings.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
+L["settings.gameplay.mult_defaultammo.desc"] = "How many magazines/grenades/equipment give to player when he takes weapon for first time?\n\nThis is a server variable."

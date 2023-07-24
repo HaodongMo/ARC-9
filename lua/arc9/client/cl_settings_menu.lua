@@ -55,6 +55,7 @@ ARC9.SettingsTable = {
         { sv = true, type = "label", text = "settings.general.server" },
         { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
         { sv = true, type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
+        { sv = true, type = "slider", text = "settings.gameplay.mult_defaultammo.title", convar = "mult_defaultammo", min = 0, max = 16, decimals = 0, desc = "settings.gameplay.mult_defaultammo.desc" },
         { sv = true, type = "combo", text = "settings.truenames_default.title", convar = "truenames_default", content = {
             {"1Disabled", "0"},
             {"2Enabled", "1"},
@@ -212,6 +213,7 @@ ARC9.SettingsTable = {
         { sv = true, type = "bool", text = "settings.gameplay.manualbolt.title", convar = "manualbolt", desc = "settings.gameplay.manualbolt.desc" },
         { sv = true, type = "bool", text = "settings.gameplay.never_ready.title", convar = "never_ready", desc = "settings.gameplay.never_ready.desc" },
         { sv = true, type = "bool", text = "settings.gameplay.recoilshake.title", convar = "recoilshake", desc = "settings.gameplay.recoilshake.desc" },
+        { sv = true, type = "bool", text = "settings.gameplay.equipment_generate_ammo.title", convar = "equipment_generate_ammo", desc = "settings.gameplay.equipment_generate_ammo.desc" },
         -- { type = "bool", text = "", convar = "nearwall", desc = "" },
         -- random jams
         -- overheating

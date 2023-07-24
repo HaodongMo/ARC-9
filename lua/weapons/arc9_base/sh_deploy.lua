@@ -73,6 +73,8 @@ function SWEP:Deploy()
     end
 
     if SERVER then
+        self:InitialDefaultClip()
+
         self:CreateShield()
 
         -- self:NetworkWeapon()
@@ -102,9 +104,22 @@ function SWEP:ClientDeploy()
     self:KillModel()
 end
 
-function SWEP:GiveDefaultAmmo()
-    self:SetClip1(self:GetValue("ClipSize"))
-    self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * 2, self:GetValue("Ammo"))
+function SWEP:InitialDefaultClip()
+    -- self:SetClip1(self:GetValue("ClipSize"))
+    -- self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * 2, self:GetValue("Ammo"))
+
+        -- arccw code winning again
+    local ammmmmo = self:GetValue("Ammo")
+    if !ammmmmo then return end
+    if engine.ActiveGamemode() == "darkrp" then return end -- DarkRP is god's second biggest mistake after gmod
+
+    if self:GetOwner() and self:GetOwner():IsPlayer() then
+        if self.ForceDefaultAmmo then
+            self:GetOwner():GiveAmmo(self.ForceDefaultAmmo, ammmmmo)
+        else
+            self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * GetConVar("arc9_mult_defaultammo"):GetInt(), ammmmmo)
+        end
+    end
 end
 
 local v0 = Vector(0, 0, 0)

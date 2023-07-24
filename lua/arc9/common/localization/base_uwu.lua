@@ -762,3 +762,9 @@ L["settings.reset"] = "UwU Weset!!!"
 -- jily 20
 L["settings.gameplay.recoilshake.title"] = "Wecoiw FOW Shwake -w-"
 L["settings.gameplay.recoilshake.desc"] = "Snwaps wield owo wiew when showoting"
+
+-- jly 25
+L["settings.gameplay.equipment_generate_ammo.title"] = "Uniquwe Ammowo Tywps fow eckwipmenwt"
+L["settings.gameplay.equipment_generate_ammo.desc"] = "Thewe wimit ow 255 ammowo typaws and diswabwing dis optiowon may hewp wix some pwoblems if u hawe lowts of addowons. \n\nWekuiwes westawt.\n\ndis is a sewwew wawiableh"
+L["settings.gameplay.mult_defaultammo.title"] = "Dewault Weserve Amo"
+L["settings.gameplay.mult_defaultammo.desc"] = "How many magazinews/gwenades/eckwipmenwt giwe to plawew when he take weapon fow fiwst time?\n\ndis is a sewwew wawiableh"

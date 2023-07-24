@@ -729,6 +729,16 @@ local conVars = {
         name = "recoilshake",
         default = "1",
     },
+    {
+        name = "equipment_generate_ammo",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mult_defaultammo",
+        default = "2",
+        replicated = true
+    },
 }
 
 local prefix = "arc9_"
