@@ -4,7 +4,7 @@ function ARC9:AddGrenadeAmmo()
         for i, k in pairs(weapons.GetList()) do
             local class = k.ClassName
             local wpntbl = weapons.Get(class)
-            if !wpntbl.ARC9 then return end
+            if !wpntbl.ARC9 then continue end
 
             if (wpntbl.Throwing or wpntbl.Disposable) and !wpntbl.DoNotEquipmentAmmo then
                 -- ammoid check will cause inconsistency between SV/CL on map change
