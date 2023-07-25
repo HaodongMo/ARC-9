@@ -5,7 +5,7 @@ local colgcvar = GetConVar("arc9_reflex_g")
 local colbcvar = GetConVar("arc9_reflex_b")
 
 function SWEP:DoHolosight(mdl, atttbl)
-    if self:GetSightAmount() <= 0 and !self:GetCustomize() then return end
+    if self:GetSightAmount() <= 0 and !self:GetCustomize() and !atttbl.HoloSightAlwaysOn then return end
     if ARC9.OverDraw then return end
     if self:GetOwner() != LocalPlayer() then return end
 
