@@ -33,6 +33,7 @@ function SWEP:ThinkGrenade()
         if self:GetGrenadeRecovering() then
             if self:GetProcessedValue("Disposable", true) and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
                 self:Remove()
+                owner:ConCommand("lastinv") -- switch to prev weapon
             else
                 self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
                 self:SetGrenadeRecovering(false)
