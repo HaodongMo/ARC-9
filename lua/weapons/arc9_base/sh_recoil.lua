@@ -186,6 +186,8 @@ do
     local MAGIC2 = 210
 
     function SWEP:ThinkVisualRecoil()
+        if SERVER and !self.PhysicalVisualRecoil then return end
+
         local ft = FrameTime()
         local swepDt = self.dt
         local firstTimePredicted = IsFirstTimePredicted()
@@ -384,7 +386,7 @@ end
 
 
 function SWEP:GetRecoilOffset(pos, ang)
-    if !realrecoilconvar:GetBool() then return pos, ang end
+    if !self.PhysicalVisualRecoil or !realrecoilconvar:GetBool() then return pos, ang end
     if !self:GetProcessedValue("UseVisualRecoil", true) then return pos, ang end
 
     local vrp = self:GetVisualRecoilPos()
