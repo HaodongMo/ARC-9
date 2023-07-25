@@ -146,6 +146,8 @@ function SWEP:DoDrawCrosshair(x, y)
     if self:GetSprintAmount() > 0 then return true end
     if self:GetReloading() then return true end
 
+    local forcestd = self:GetProcessedValue("ForceStandardCrosshair", true)
+
     if self:GetProcessedValue("MissileCrosshair", true) then
         -- local dotcount = 4
 
@@ -177,7 +179,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
         drawshadowrect(x - gap * -1 - (dotsize / 2), y - gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
         drawshadowrect(x - gap * -1 - (dotsize / 2), y + gap * 2.75 - (dotsize / 2), gap * 1, dotsize, col)
-    elseif self:GetProcessedValue("ShootEnt", true) or self:GetProcessedValue("LauncherCrosshair", true) then
+    elseif (self:GetProcessedValue("ShootEnt", true) or self:GetProcessedValue("LauncherCrosshair", true)) and !forcestd then
         if mode > 1 then
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2, y - (dotsize / 2), miniprong_2, dotsize, col)
             drawshadowrect(x - (dotsize / 2) - gap - miniprong_2 - minigap - miniprong_1, y - (dotsize / 2), miniprong_1, dotsize, col)
@@ -211,7 +213,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
         drawshadowrect(x - (dotsize / 2) - (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
         drawshadowrect(x - (dotsize / 2) + (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
-    elseif self:GetProcessedValue("Num", true) > 1 then
+    elseif self:GetProcessedValue("Num", true) > 1 and !forcestd then
         local dotcount = 10
 
         for i = 1, dotcount do

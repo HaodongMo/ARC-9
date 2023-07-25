@@ -118,6 +118,7 @@ SWEP.Material = ""
 SWEP.Crosshair = false
 SWEP.LauncherCrosshair = false -- Force the launcher crosshair
 SWEP.MissileCrosshair = false -- Force the missile launcher crosshair
+SWEP.ForceStandardCrosshair = nil -- Force default + or T crosshair no matter what!
 
 SWEP.ViewModelFOVBase = nil -- Set to override viewmodel FOV
 
