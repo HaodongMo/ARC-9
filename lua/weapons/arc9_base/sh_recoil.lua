@@ -216,7 +216,7 @@ do
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
         
-        if !isSingleplayer and engine.ServerFrameTime() < 0.021 then -- server under 48 tickrate fuck you!!!!!!!!
+        if !isSingleplayer and ((CLIENT and engine.ServerFrameTime() or FrameTime()) < 0.021) then -- server under 48 tickrate fuck you!!!!!!!!
             MAGIC1 = 89.5
             MAGIC2 = 89.5
         end
