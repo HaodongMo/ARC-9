@@ -752,7 +752,8 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     end
 
     -- Cancel out sandbox/ttt limb damage multipliers. Done last since AP damage does not go through this
-    if bodyDamageCancel:GetBool() and cancelmults[hitGroup] then
+    -- Lambda Players call ScalePlayerDamage and cancel out hitgroup damage... except on the head
+    if bodyDamageCancel:GetBool() and cancelmults[hitGroup] and (!traceEntity.IsLambdaPlayer or hitgroup == HITGROUP_HEAD) then
         dmgv = dmgv / cancelmults[hitGroup]
     end
 
