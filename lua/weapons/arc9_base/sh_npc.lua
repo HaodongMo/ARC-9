@@ -108,7 +108,6 @@ function SWEP:NPC_Initialize()
             -- self:RollRandomAtts(self.Attachments)
             self:QueueForRandomize()
         end
-        self:SetClip1(self:GetValue("ClipSize"))
         -- self:PostModify()
 
         -- self:PruneAttachments()
@@ -150,4 +149,8 @@ function SWEP:RollRandomAtts(tree)
             self:RollRandomAtts(slottbl.SubAttachments)
         end
     end
+    
+    timer.Simple(0, function() 
+        self:SetClip1(self:GetValue("ClipSize"))
+    end)
 end
