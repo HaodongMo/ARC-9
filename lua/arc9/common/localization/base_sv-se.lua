@@ -708,3 +708,18 @@ L["blacklist.filter"] = "FILTER"
 -- june 29
 L["settings.hud_cust.hud_deadzonex.title"] = "Gräns. Bredd Dödszon"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Horisontell \"dödszon\" för anpassningsmenyn och gränssnitt panelen.\nAnvändbra för ultrawide-skärmar."
+
+-- jily 12
+L["settings.resetsettings.cl.title"] = "Återställ alla KLIENT inställ."
+L["settings.resetsettings.sv.title"] = "Återställ alla SERVER inställ."
+L["settings.reset"] = "Återställ!"
+
+-- jily 20
+L["settings.gameplay.recoilshake.title"] = "Rekyl skakning i synfält"
+L["settings.gameplay.recoilshake.desc"] = "Knäpper synfältet under skjutning"
+
+-- jly 25
+L["settings.gameplay.equipment_generate_ammo.title"] = "Unik Ammo Typ för Utrustning"
+L["settings.gameplay.equipment_generate_ammo.desc"] = "Det finns en begränsning på 255 ammo typer och avaktiverar du detta alternativ kan det fixa några problem ifall du har många tillägg.\n\nDetta är en servervariabel.\n\nKräver omstart."
+L["settings.gameplay.mult_defaultammo.title"] = "Standard Reserv Ammo"
+L["settings.gameplay.mult_defaultammo.desc"] = "Hur många magasin/granater/utrustning som ges till spelaren när hen plockar upp ett vapen för första gången?\n\nDetta är en servervariabel."
