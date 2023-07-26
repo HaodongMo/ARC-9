@@ -1,13 +1,4 @@
-local cancelmults = {
-    [HITGROUP_HEAD] = 2,
-    [HITGROUP_CHEST] = 1,
-    [HITGROUP_STOMACH] = 1,
-    [HITGROUP_LEFTARM] = 0.25,
-    [HITGROUP_RIGHTARM] = 0.25,
-    [HITGROUP_LEFTLEG] = 0.25,
-    [HITGROUP_RIGHTLEG] = 0.25,
-    [HITGROUP_GEAR] = 0.25
-}
+local cancelmults = ARC9.CancelMultipliers[engine.ActiveGamemode()] or ARC9.CancelMultipliers[1]
 
 function SWEP:StillWaiting()
     local time = CurTime()
@@ -694,22 +685,28 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     self:RunHook("Hook_BulletImpact", runHook)
 
-    local bodydamage = self:GetProcessedValue("BodyDamageMults")
-
-    local dmgbodymult = 1
-
-    local hitGroup = tr.HitGroup
-
-    if bodydamage[hitGroup] then
-        dmgbodymult = dmgbodymult * bodydamage[hitGroup]
+    -- Penetration
+    local pen = self:GetProcessedValue("Penetration")
+    if pen > 0 then
+        local pendelta = penleft / pen
+        pendelta = Lerp(pendelta, self:GetProcessedValue("PenetrationDelta"), 1) -- it arleady clamps inside
+        dmgv = dmgv * pendelta
     end
 
-    -- if bodyDamageCancel:GetBool() and cancelmults[hitGroup] then
-    --     dmgbodymult = dmgbodymult / cancelmults[hitGroup]
-    -- end
+    -- NPC damage nerf
+    local owner = self:GetOwner()
+    if owner:IsNPC() and !arc9_npc_equality:GetBool() then
+        dmgv = dmgv * 0.25
+    end
 
-    dmgv = dmgv * dmgbodymult
-    -- print(dmg, "bodydamage = ",bodydamage,"dmgbodymult = ", dmgbodymult,"hitGroup = ", hitGroup, "dmgv = ", dmgv)
+    -- Limb multipliers
+    local traceEntity = tr.Entity
+    local hitGroup = tr.HitGroup
+    local bodydamage = self:GetProcessedValue("BodyDamageMults")
+
+    if bodydamage[hitGroup] then
+        dmgv = dmgv * bodydamage[hitGroup]
+    end
     if hitGroup == HITGROUP_HEAD then
         dmgv = dmgv * self:GetProcessedValue("HeadshotDamage")
     elseif hitGroup == HITGROUP_CHEST then
@@ -722,53 +719,41 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         dmgv = dmgv * self:GetProcessedValue("LegDamage")
     end
 
-    local pen = self:GetProcessedValue("Penetration")
+    -- Armor piercing (done after weapon's limb multipliers but BEFORE body damage cancel)
+    local ap = math.Clamp(self:GetProcessedValue("ArmorPiercing"), 0, 1)
+    if ap > 0 and !alreadypenned[traceEntity] then
+        if traceEntity:GetClass() == "npc_helicopter" then
+            local apdmg = DamageInfo()
+            apdmg:SetDamage(dmgv * ap)
+            apdmg:SetDamageType(DMG_AIRBOAT)
+            apdmg:SetInflictor(dmg:GetInflictor())
+            apdmg:SetAttacker(dmg:GetAttacker())
 
-    if pen > 0 then
-        local pendelta = penleft / pen
+            traceEntity:TakeDamageInfo(apdmg)
+        elseif traceEntity:GetClass() == "npc_gunship" then
+            local apdmg = DamageInfo()
+            apdmg:SetDamage(dmgv * ap)
+            apdmg:SetDamageType(DMG_BLAST)
+            apdmg:SetInflictor(dmg:GetInflictor())
+            apdmg:SetAttacker(dmg:GetAttacker())
 
-        pendelta = Lerp(pendelta, self:GetProcessedValue("PenetrationDelta"), 1) -- it arleady clamps inside
+            traceEntity:TakeDamageInfo(apdmg)
+        elseif traceEntity:IsPlayer() then
+            if !ARC9.NoArmorPiercing then -- dumbass
+                local apdmg = math.ceil(dmgv * ap)
 
-        dmgv = dmgv * pendelta
-    end
-
-    local owner = self:GetOwner()
-
-    if owner:IsNPC() and !arc9_npc_equality:GetBool() then
-        dmgv = dmgv * 0.25
-    end
-
-    local ap = self:GetProcessedValue("ArmorPiercing")
-
-    ap = math.min(ap, 1)
-
-    local traceEntity = tr.Entity
-
-    if traceEntity:GetClass() == "npc_helicopter" then
-        local apdmg = DamageInfo()
-        apdmg:SetDamage(dmgv * ap)
-        apdmg:SetDamageType(DMG_AIRBOAT)
-        apdmg:SetInflictor(dmg:GetInflictor())
-        apdmg:SetAttacker(dmg:GetAttacker())
-
-        traceEntity:TakeDamageInfo(apdmg)
-    elseif traceEntity:GetClass() == "npc_gunship" then
-        local apdmg = DamageInfo()
-        apdmg:SetDamage(dmgv * ap)
-        apdmg:SetDamageType(DMG_BLAST)
-        apdmg:SetInflictor(dmg:GetInflictor())
-        apdmg:SetAttacker(dmg:GetAttacker())
-
-        traceEntity:TakeDamageInfo(apdmg)
-    elseif traceEntity:IsPlayer() then
-        if !ARC9.NoArmorPiercing then -- dumbass
-            local apdmg = dmgv * ap
-            traceEntity:SetHealth(math.max(traceEntity:Health() - apdmg, 1))
-            dmgv = dmgv * (1 - ap)
-        else
-            ARC9.LastArmorPiercedPlayer = traceEntity
-            ARC9.LastArmorPierceValue = ap
+                traceEntity:SetHealth(traceEntity:Health() - apdmg)
+                dmgv = math.max(1, dmgv - apdmg)
+            else
+                ARC9.LastArmorPiercedPlayer = traceEntity
+                ARC9.LastArmorPierceValue = ap
+            end
         end
+    end
+
+    -- Cancel out sandbox/ttt limb damage multipliers. Done last since AP damage does not go through this
+    if bodyDamageCancel:GetBool() and cancelmults[hitGroup] then
+        dmgv = dmgv / cancelmults[hitGroup]
     end
 
     dmg:SetDamage(dmgv)

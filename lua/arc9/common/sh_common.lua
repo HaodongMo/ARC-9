@@ -211,6 +211,31 @@ ARC9.RHIKBones = {
     "ValveBiped.Bip01_R_Finger02"
 }
 
+ARC9.CancelMultipliers = {
+    [1] = {
+        [HITGROUP_HEAD]     = 2,
+        [HITGROUP_CHEST]    = 1,
+        [HITGROUP_STOMACH]  = 1,
+        [HITGROUP_LEFTARM]  = 0.25,
+        [HITGROUP_RIGHTARM] = 0.25,
+        [HITGROUP_LEFTLEG]  = 0.25,
+        [HITGROUP_RIGHTLEG] = 0.25,
+        [HITGROUP_GEAR]     = 1,
+        [HITGROUP_GENERIC]  = 1,
+    },
+    ["terrortown"] = {
+        [HITGROUP_HEAD]     = 1, -- TTT headshot damage is per weapon, there is no global multiplier.
+        [HITGROUP_CHEST]    = 1,
+        [HITGROUP_STOMACH]  = 1,
+        [HITGROUP_LEFTARM]  = 0.55,
+        [HITGROUP_RIGHTARM] = 0.55,
+        [HITGROUP_LEFTLEG]  = 0.55,
+        [HITGROUP_RIGHTLEG] = 0.55,
+        [HITGROUP_GEAR]     = 1,
+        [HITGROUP_GENERIC]  = 1,
+    },
+}
+
 ARC9.HUToM = 0.0254
 ARC9.MOAToAcc = 10 / 360 / 60
 
