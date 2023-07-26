@@ -1,3 +1,5 @@
+local bodyDamageCancel = GetConVar("arc9_mod_bodydamagecancel")
+local cancelmults = ARC9.CancelMultipliers[engine.ActiveGamemode()] or ARC9.CancelMultipliers[1]
 
 local vmaxs, vmins = Vector(2, 2, 2), Vector(-2, -2, -2)
 
@@ -178,7 +180,8 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
             local data = {tr = tr, dmg = dmg}
             self:RunHook("Hook_BashHit", data)
 
-            tr.Entity:TakeDamageInfo(dmg)
+            -- do not need to worry about limb damage because hull traces only returns generic hitgroup
+            tr.Entity:DispatchTraceAttack(dmg, tr) -- hits breakable glass surfaces, unlike TakeDamageInfo
         end
     end
 
