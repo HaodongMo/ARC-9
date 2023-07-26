@@ -742,3 +742,18 @@ L["blacklist.filter"] = "FILTRAR"
 -- june 29
 L["settings.hud_cust.hud_deadzonex.title"] = "Anchura de zona muerta del HUD"
 L["settings.hud_cust.hud_deadzonex.desc"] = "\"Zona Muerta\" Horizontal para el menú de personalización y el panel HUD.\nÚtil para monitores ultrawide."
+
+-- jily 12
+L["settings.resetsettings.cl.title"] = "Restablecer todos los ajustes del CLIENTE"
+L["settings.resetsettings.sv.title"] = "Restablecer todos los ajustes del SERVIDOR"
+L["settings.reset"] = "Restablecer!"
+
+-- jily 20
+L["settings.gameplay.recoilshake.title"] = "Sacudida FOV de retroceso"
+L["settings.gameplay.recoilshake.desc"] = "Sacude el campo de visión al disparar"
+
+-- jly 25
+L["settings.gameplay.equipment_generate_ammo.title"] = "Tipos de munición únicos para equipamiento"
+L["settings.gameplay.equipment_generate_ammo.desc"] = "Hay un límite de 255 tipos de munición, y desactivar esta opción puede ayudar a solucionar algunos problemas si tienes muchos addons.\n\nEsta es una variable del servidor.\n\nRequiere reinicio."
+L["settings.gameplay.mult_defaultammo.title"] = "Munición de reserva por defecto"
+L["settings.gameplay.mult_defaultammo.desc"] = "¿Cuántos cargadores/granadas/equipos se dan al jugador cuando coge el arma por primera vez?\n\nEsta es una variable del servidor."
