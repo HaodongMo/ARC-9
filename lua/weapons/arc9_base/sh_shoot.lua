@@ -569,10 +569,52 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
         bullettbl.Size = self:GetProcessedValue("TracerSize")
 
         local ang2 = Angle(ang)
+        local numm = self:GetProcessedValue("Num")
+        if numm > 0 then
+            if (bulletPhysics:GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
+                if IsFirstTimePredicted() then
+                    if self:GetProcessedValue("UseDispersion") then 
+                        local seed = 1337 + self:EntIndex() + engine.TickCount()
+                        local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
+                        local angleRand = Angle(math.sin(a), math.cos(a), 0)
+                        angleRand:Mul(self:GetProcessedValue("DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
+                        ang:Add(angleRand)
+                    end
 
-        if (bulletPhysics:GetBool() or self:GetProcessedValue("AlwaysPhysBullet")) and !self:GetProcessedValue("NeverPhysBullet") then
-            if IsFirstTimePredicted() then
-                if self:GetProcessedValue("UseDispersion") then 
+                    for i = 1, numm do
+                        ang2:Set(ang)
+
+                        -- trig stuff to ensure the spread is a circle of the right size
+                        local seed = i + self:EntIndex() + engine.TickCount()
+                        local a = util.SharedRandom("arc9_physbullet", 0, 360, seed)
+                        local angleRand = Angle(math.sin(a), math.cos(a), 0)
+                        angleRand:Mul(spread * util.SharedRandom("arc9_physbullet2", 0, 45, seed) * 1.4142135623730)
+
+                        ang2:Add(angleRand)
+
+                        local vec = ang2:Forward()
+                        vec:Mul(self:GetProcessedValue("PhysBulletMuzzleVelocity"))
+
+                        ARC9:ShootPhysBullet(self, pos, vec, bullettbl)
+                    end
+                end
+            else
+                local owner = self:GetOwner()
+
+                if owner:IsPlayer() then
+                    owner:LagCompensation(true)
+                end
+
+                -- local tr = self:GetProcessedValue("TracerNum")
+
+                local veh = NULL
+
+                if owner:IsPlayer() then
+                    veh = owner:GetVehicle()
+                end
+
+
+                if self:GetProcessedValue("UseDispersion", true) then
                     local seed = 1337 + self:EntIndex() + engine.TickCount()
                     local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
                     local angleRand = Angle(math.sin(a), math.cos(a), 0)
@@ -580,78 +622,38 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     ang:Add(angleRand)
                 end
 
-                for i = 1, self:GetProcessedValue("Num") do
-                    ang2:Set(ang)
+                local distance = self:GetProcessedValue("Distance")
 
-                    -- trig stuff to ensure the spread is a circle of the right size
-                    local seed = i + self:EntIndex() + engine.TickCount()
-                    local a = util.SharedRandom("arc9_physbullet", 0, 360, seed)
-                    local angleRand = Angle(math.sin(a), math.cos(a), 0)
-                    angleRand:Mul(spread * util.SharedRandom("arc9_physbullet2", 0, 45, seed) * 1.4142135623730)
+                fireBullets.Damage = self:GetProcessedValue("DamageMax")
+                fireBullets.Force = self:GetProcessedValue("ImpactForce")
+                fireBullets.Tracer = tr
+                fireBullets.TracerName = self:GetProcessedValue("TracerEffect")
+                fireBullets.Num = numm
+                fireBullets.Dir = ang:Forward()
+                fireBullets.Src = pos
+                fireBullets.Spread = Vector(spread, spread, spread)
+                fireBullets.IgnoreEntity = veh
+                fireBullets.Distance = distance
+                fireBullets.Callback = function(att, btr, dmg)
+                    local range = btr.Fraction * distance
 
-                    ang2:Add(angleRand)
+                    self.Penned = 0
+                    self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
 
-                    local vec = ang2:Forward()
-                    vec:Mul(self:GetProcessedValue("PhysBulletMuzzleVelocity"))
-
-                    ARC9:ShootPhysBullet(self, pos, vec, bullettbl)
-                end
-            end
-        else
-            local owner = self:GetOwner()
-
-            if owner:IsPlayer() then
-                owner:LagCompensation(true)
-            end
-
-            -- local tr = self:GetProcessedValue("TracerNum")
-
-            local veh = NULL
-
-            if owner:IsPlayer() then
-                veh = owner:GetVehicle()
-            end
-
-
-            if self:GetProcessedValue("UseDispersion", true) then
-                local seed = 1337 + self:EntIndex() + engine.TickCount()
-                local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
-                local angleRand = Angle(math.sin(a), math.cos(a), 0)
-                angleRand:Mul(self:GetProcessedValue("DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
-                ang:Add(angleRand)
-            end
-
-            local distance = self:GetProcessedValue("Distance")
-
-            fireBullets.Damage = self:GetProcessedValue("DamageMax")
-            fireBullets.Force = self:GetProcessedValue("ImpactForce")
-            fireBullets.Tracer = tr
-            fireBullets.TracerName = self:GetProcessedValue("TracerEffect")
-            fireBullets.Num = self:GetProcessedValue("Num")
-            fireBullets.Dir = ang:Forward()
-            fireBullets.Src = pos
-            fireBullets.Spread = Vector(spread, spread, spread)
-            fireBullets.IgnoreEntity = veh
-            fireBullets.Distance = distance
-            fireBullets.Callback = function(att, btr, dmg)
-                local range = btr.Fraction * distance
-
-                self.Penned = 0
-                self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration"), {})
-
-                if ARC9.Dev(2) then
-                    if SERVER then
-                        debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
-                    else
-                        debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
+                    if ARC9.Dev(2) then
+                        if SERVER then
+                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
+                        else
+                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
+                        end
                     end
                 end
-            end
 
-            owner:FireBullets(fireBullets)
+                owner:FireBullets(fireBullets)
 
-            if owner:IsPlayer() then
-                owner:LagCompensation(false)
+                if owner:IsPlayer() then
+                    owner:LagCompensation(false)
+                end
             end
         end
     end
@@ -874,7 +876,7 @@ function SWEP:GetDamageAtRange(range)
         dmgv = self:GetProcessedValue("Damage", nil, dmgv)
 
         if self:GetProcessedValue("DistributeDamage", true) then
-            dmgv = dmgv / self:GetProcessedValue("Num")
+            dmgv = dmgv / num
         elseif self:GetProcessedValue("NormalizeNumDamage") then
             dmgv = dmgv / (num / self.Num)
         end
