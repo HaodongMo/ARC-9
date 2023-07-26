@@ -281,6 +281,9 @@ ARC9.IN_SWITCHSIGHTS = IN_RUN
 -- We still have 7 free values!!!
 -- Use them up!!!!!
 
+-- Used in dmginfo:SetDamageCustom to denote pending AP damage
+ARC9.DMG_CUST_AP = 4096
+
 ARC9.HL2Replacements = {
     ["weapon_pistol"] = {ARC9.WEAPON_PISTOL},
     ["weapon_357"] = {ARC9.WEAPON_PISTOL, ARC9.WEAPON_SNIPER},

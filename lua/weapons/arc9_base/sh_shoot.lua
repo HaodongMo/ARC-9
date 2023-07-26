@@ -741,8 +741,10 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         elseif traceEntity:IsPlayer() then
             if !ARC9.NoArmorPiercing then -- dumbass
                 local apdmg = math.ceil(dmgv * ap)
-
-                traceEntity:SetHealth(traceEntity:Health() - apdmg)
+                -- Delay health removal so that we can confirm the damage actually applied before removing health
+                dmg:SetDamageCustom(ARC9.DMG_CUST_AP)
+                traceEntity.ARC9APDamage = apdmg
+                -- traceEntity:SetHealth(traceEntity:Health() - apdmg)
                 dmgv = math.max(1, dmgv - apdmg)
             else
                 ARC9.LastArmorPiercedPlayer = traceEntity
@@ -1030,3 +1032,18 @@ end
 function SWEP:FireAnimationEvent( pos, ang, event, options )
     return true
 end
+
+hook.Add("PostEntityTakeDamage", "ARC9_AP", function(ent, dmginfo, took)
+    -- AP health removal only triggers if entity actually took damage. Avoids situation where you strip health from godmode players etc.
+    if dmginfo:GetDamage() > 0 and took and bit.band(dmginfo:GetDamageCustom(), ARC9.DMG_CUST_AP) != 0 and ent:Health() > 0 and (ent.ARC9APDamage or 0) > 0 then
+        ent:SetHealth(ent:Health() - ent.ARC9APDamage)
+        if ent:Health() <= 0 then
+            -- Apply damage again since setting health doesn't kill a player/npc
+            -- This won't cause an infinite loop cause AP flag is removed
+            dmginfo:SetDamageCustom(bit.band(dmginfo:GetDamageCustom(), bit.bnot(ARC9.DMG_CUST_AP)))
+            dmginfo:SetDamage(-ent:Health() + 1)
+            ent:TakeDamageInfo(dmginfo)
+        end
+        ent.ARC9APDamage = nil
+    end
+end)
