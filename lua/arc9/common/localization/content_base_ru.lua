@@ -139,8 +139,8 @@ L["sticker_tomatocat.description"] = [[Иногда люди спрашиваю�
 
 Стикер включен в базу ARC9.]]
 
-L["sticker_actionbird.printname"] = "Боевик-птица"
-L["sticker_actionbird.compactname"] = "Боевик-птица"
+L["sticker_actionbird.printname"] = "Рэмбо птица"
+L["sticker_actionbird.compactname"] = "Рэмбо птица"
 L["sticker_actionbird.description"] = [[Вот как выглядит Arctic в реальной жизни.
 Автор: CyloWalker.
 
@@ -175,7 +175,7 @@ L["sticker_bandaid.description"] = [[Приложите его к ранке.
 Стикер включен в базу ARC9.]]
 
 L["sticker_peacedove.printname"] = "Мир через высшую огневую мощь"
-L["sticker_peacedove.compactname"] = "Высшая огневая мощь"
+L["sticker_peacedove.compactname"] = "Высшая мощь"
 L["sticker_peacedove.description"] = [[Голуби приносит мир, но пушка приносит мир благодаря превосходству в огневой мощи.
 Автор: Xipil.
 
@@ -253,7 +253,7 @@ L["sticker_s6amblem.description"] = [[Дотянуться до звёзд. Вп
 
 L["sticker_babies.printname"] = "Опасность для ребёнка"
 L["sticker_babies.compactname"] = "Опасность для ребёнка"
-L["sticker_babies.description"] = [[Дети в возрасте до трёх лет должны находиться вдали от этого... огнестрельного оружия.
+L["sticker_babies.description"] = [[Дети в возрасте до трёх лет должны находиться вдали от этого... оружия.
 Автор: Itzal.
 
 Стикер включен в базу ARC9.]]
@@ -265,9 +265,9 @@ L["sticker_drawberf.description"] = [[Берф.
 
 Стикер включен в базу ARC9.]]
 
-L["sticker_arcbird.printname"] = "Арк Птица"
-L["sticker_arcbird.compactname"] = "Арк Птица"
-L["sticker_arcbird.description"] = [[Арк Птица.
+L["sticker_arcbird.printname"] = "Арк птица"
+L["sticker_arcbird.compactname"] = "Арк птица"
+L["sticker_arcbird.description"] = [[Арк птица.
 Автор: Nori/Chewable.
 
 Стикер включен в базу ARC9.]]
