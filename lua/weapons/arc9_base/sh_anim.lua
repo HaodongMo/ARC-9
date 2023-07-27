@@ -76,6 +76,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
 
         mult = mult * (animation.Mult or 1)
 
+
         if animation.Reverse then
             mult = mult * -1
         end
@@ -83,6 +84,8 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
         local tmult = 1
 
         tmult = (mdl:SequenceDuration(seq) / time) / mult
+
+        print(mdl:GetSequenceName(mdl:GetSequence()), mdl:SequenceDuration(seq), time, mult, (mdl:SequenceDuration(seq) / time), tmult)
 
         if animation.ProxyAnimation then
             mdl:SetSequence(seq)

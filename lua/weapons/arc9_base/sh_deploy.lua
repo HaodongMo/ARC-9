@@ -147,7 +147,7 @@ end
 
 function SWEP:Holster(wep)
     -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
-    if game.SinglePlayer() and CLIENT then return end
+    if game.SinglePlayer() and CLIENT then self:GetVM():ResetSequenceInfo() return end
 
     local owner = self:GetOwner()
 
@@ -162,12 +162,6 @@ function SWEP:Holster(wep)
     end
 
     self:SetCustomize(false)
-    
-    local animdrwa = self:GetValue("AnimDraw")
-
-    if animdrwa then
-        self:DoPlayerAnimationEvent(animdrwa)
-    end
 
     if self:GetHolsterTime() > CurTime() then return false end
 
@@ -217,6 +211,12 @@ function SWEP:Holster(wep)
         else
             self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)))
             self:SetHolster_Entity(wep)
+        end
+
+        local animdrwa = self:GetValue("AnimDraw")
+
+        if animdrwa then
+            self:DoPlayerAnimationEvent(animdrwa)
         end
 
         -- self:ToggleBlindFire(false)
