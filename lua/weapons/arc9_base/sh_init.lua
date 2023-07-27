@@ -65,7 +65,7 @@ function SWEP:Initialize()
 
     self:SetLastLoadedRounds(self.LastClipSize)
     
-    timer.Simple(0, function()
+    timer.Simple(0.4, function()
         if IsValid(self) then
             if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
             if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
