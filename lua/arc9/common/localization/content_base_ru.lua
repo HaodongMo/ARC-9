@@ -1,41 +1,41 @@
 L = {}
 
 -- Flat Camo
-L["camo_arc9_base_flat_od.printname"] = "Сплошной оливковый"
-L["camo_arc9_base_flat_od.compactname"] = "СО"
-L["camo_arc9_base_flat_od.description"] = "Стандартный сплошной оливковый камуфляж."
+L["camo_arc9_base_flat_od.printname"] = "Oливковый"
+L["camo_arc9_base_flat_od.compactname"] = "Оливка"
+L["camo_arc9_base_flat_od.description"] = "Стандартный оливковый камуфляж."
 
-L["camo_arc9_base_flat_deserttan.printname"] = "Светло-коричневый пустынный"
-L["camo_arc9_base_flat_deserttan.compactname"] = "Светло-коричневый"
-L["camo_arc9_base_flat_deserttan.description"] = "Стандартный светло-коричневый пустынный камуфляж."
+L["camo_arc9_base_flat_deserttan.printname"] = "Пустынный"
+L["camo_arc9_base_flat_deserttan.compactname"] = "Пустнный"
+L["camo_arc9_base_flat_deserttan.description"] = "Стандартный пустынный камуфляж."
 
 L["camo_arc9_base_flat_arctic.printname"] = "Арктический белый"
-L["camo_arc9_base_flat_arctic.compactname"] = "Арктический"
+L["camo_arc9_base_flat_arctic.compactname"] = "Арктика"
 L["camo_arc9_base_flat_arctic.description"] = "Стандартный арктический белый камуфляж."
 
-L["camo_arc9_base_flat_black.printname"] = "Заводской чёрный"
-L["camo_arc9_base_flat_black.compactname"] = "Чёрный"
-L["camo_arc9_base_flat_black.description"] = "Стандартный заводской чёрный вариант."
+L["camo_arc9_base_flat_black.printname"] = "Уголь"
+L["camo_arc9_base_flat_black.compactname"] = "Уголь"
+L["camo_arc9_base_flat_black.description"] = "Стандартный чёрный уголь."
 
 L["camo_arc9_base_flat_urbangray.printname"] = "Городской серый"
-L["camo_arc9_base_flat_urbangray.compactname"] = "Городской"
+L["camo_arc9_base_flat_urbangray.compactname"] = "Серый"
 L["camo_arc9_base_flat_urbangray.description"] = "Стандартный городской серый камуфляж."
 
-L["camo_arc9_base_flat_forestgreen.printname"] = "Лесная зелень"
-L["camo_arc9_base_flat_forestgreen.compactname"] = "Лесная"
-L["camo_arc9_base_flat_forestgreen.description"] = "Стандартная камуфляж лесной зелени."
+L["camo_arc9_base_flat_forestgreen.printname"] = "Лесной зелёный"
+L["camo_arc9_base_flat_forestgreen.compactname"] = "Лесной"
+L["camo_arc9_base_flat_forestgreen.description"] = "Стандартная лесной зеленый камуфляж."
 
-L["camo_arc9_base_flat_navy.printname"] = "Морская синева"
-L["camo_arc9_base_flat_navy.compactname"] = "Морская"
-L["camo_arc9_base_flat_navy.description"] = "Стандартный камуфляж морской синевы."
+L["camo_arc9_base_flat_navy.printname"] = "Тёмно-синий"
+L["camo_arc9_base_flat_navy.compactname"] = "Тёмно-синий"
+L["camo_arc9_base_flat_navy.description"] = "Стандартный тёмно-синий камуфляж."
 
-L["camo_arc9_base_flat_mountbattenpink.printname"] = "Розовый Маунтбэттена"
-L["camo_arc9_base_flat_mountbattenpink.compactname"] = "РМ"
-L["camo_arc9_base_flat_mountbattenpink.description"] = "Стандартный розовый камуфляж Маунтбэттена.\nПотрясающе эффективен в условиях пустыни."
+L["camo_arc9_base_flat_mountbattenpink.printname"] = "Розовый"
+L["camo_arc9_base_flat_mountbattenpink.compactname"] = "Розовый"
+L["camo_arc9_base_flat_mountbattenpink.description"] = "Стандартный розовый камуфляж.\nПотрясающе эффективен в условиях пустыни."
 
-L["camo_arc9_base_flat_fde.printname"] = "Плоская тёмная земля"
-L["camo_arc9_base_flat_fde.compactname"] = "ПТЗ"
-L["camo_arc9_base_flat_fde.description"] = "Стандартный плоский тЁмно-земляной камуфляж."
+L["camo_arc9_base_flat_fde.printname"] = "FDE"
+L["camo_arc9_base_flat_fde.compactname"] = "FDE"
+L["camo_arc9_base_flat_fde.description"] = "Стандартный FDE камуфляж."
 
 -- Flat Colour
 L["camo_arc9_base_flat_red.printname"] = "Красный"
@@ -66,208 +66,208 @@ L["camo_arc9_base_flat_pink.printname"] = "Розовый"
 L["camo_arc9_base_flat_pink.compactname"] = "Розовый"
 L["camo_arc9_base_flat_pink.description"] = "Обжигающий глаз ярко-розовый цвет."
 
-L["camo_arc9_base_flat_arc9orange.printname"] = "Оранжевый - ARC9"
-L["camo_arc9_base_flat_arc9orange.compactname"] = "Оранжевый - ARC9"
-L["camo_arc9_base_flat_arc9orange.description"] = "Идеальный оранжевый оттенок для маленькой симпатичной наклейки с логотипом ARC9."
+L["camo_arc9_base_flat_arc9orange.printname"] = "Рыжий ARC9"
+L["camo_arc9_base_flat_arc9orange.compactname"] = "Рыжий ARC9"
+L["camo_arc9_base_flat_arc9orange.description"] = "Идеальный оранжевый оттенок с логотипа ARC9."
 
 -- Charms
 L["charm_gs_killcounter.printname"] = "Счётчик убийств"
-L["charm_gs_killcounter.compactname"] = "УБИЙСТВА"
-L["charm_gs_killcounter.description"] = "Устройство для отслеживания статистики убийств с оружия."
+L["charm_gs_killcounter.compactname"] = "Счётчик убийств"
+L["charm_gs_killcounter.description"] = "Устройство для отображения количества убийств с оружия."
 
 L["charm_gs_clock.printname"] = "Обычные часы"
-L["charm_gs_clock.compactname"] = "ЧАСЫ"
+L["charm_gs_clock.compactname"] = "Часы"
 L["charm_gs_clock.description"] = "Устройство, отображающее реальное время."
 
-L["charm_gs_sticker.printname"] = "Панель с наклейками"
-L["charm_gs_sticker.compactname"] = "НАКЛЕЙКА"
-L["charm_gs_sticker.description"] = "Устройство, позволяющее наносить на экран наклейки."
+L["charm_gs_sticker.printname"] = "Панель для стикера"
+L["charm_gs_sticker.compactname"] = "Стикер"
+L["charm_gs_sticker.description"] = "Устройство, позволяющее наносить на экран стикер."
 
 -- Stickers, Base
-L["sticker_spray.printname"] = "Спрей игрока"
-L["sticker_spray.compactname"] = "Спрей"
-L["sticker_spray.description"] = [[Ваш собственный спрей в виде наклейки!
-Вы сможете видеть только свои собственные, а не чужие.
+L["sticker_spray.printname"] = "Стикер с вашим спреем"
+L["sticker_spray.compactname"] = "Ваш спрей"
+L["sticker_spray.description"] = [[Ваш собственный спрей для мультиплеера в виде наклейки!
+Вы всегда будете видеть только свой собственный.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_arc9.printname"] = "Логотип ARC9 (малозаметный)"
+L["sticker_arc9.printname"] = "Логотип ARC9 (серый)"
 L["sticker_arc9.compactname"] = "ARC9"
 L["sticker_arc9.description"] = [[Тёмная версия логотипа ARC9.
 Автор: The Villain.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_arc9_lowvis.printname"] = "Логотип ARC9"
 L["sticker_arc9_lowvis.compactname"] = "ARC9"
-L["sticker_arc9_lowvis.description"] = [[Выпьем за вас.
+L["sticker_arc9_lowvis.description"] = [[Лого
 Автор: The Villain.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_a9k.printname"] = "БАЗА ОРУЖИЯ АРКТИКТРОН 9,000"
+L["sticker_a9k.printname"] = "ARCTICTHRON 9.000 WEAPON BASE"
 L["sticker_a9k.compactname"] = "A9K"
-L["sticker_a9k.description"] = [[вот что на самом деле означает «arc9»
+L["sticker_a9k.description"] = [[именно это значит "arc9"
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_a9cylo.printname"] = "Логотип концепции ARC9 от CyloWalker"
+L["sticker_a9cylo.printname"] = "Концепт лого ARC9 от CyloWalker"
 L["sticker_a9cylo.compactname"] = "A9 Cylo"
-L["sticker_a9cylo.description"] = [[Один из первых концептов логотипа/значка ARC9 от CyloWalker (он крут!)
+L["sticker_a9cylo.description"] = [[Один из первых концептов логотипа/иконки ARC9 нарисованный CyloWalker (он крут!)
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_sus9.printname"] = "Сас 9"
-L["sticker_sus9.compactname"] = "Сас 9"
-L["sticker_sus9.description"] = [[Предатель может находиться среди нас...
+L["sticker_sus9.printname"] = "Sus 9"
+L["sticker_sus9.compactname"] = "Sus 9"
+L["sticker_sus9.description"] = [[The impostor could be anywhere among us...
 Автор: Darsu.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 -- Stickers, Com. Wave 1
-L["sticker_alien_lean.printname"] = "Легализация инопланетного лина"
-L["sticker_alien_lean.compactname"] = "Инопланетный лин"
+L["sticker_alien_lean.printname"] = "Legalize Alien Lean"
+L["sticker_alien_lean.compactname"] = "Alien Lean"
 L["sticker_alien_lean.description"] = [[Отправляйтесь на Агарту вместе с белыми парнями, чтобы выпить чашечку инопланетного лина и... другие вещи.
 Автор: Opt1ca.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_tomatocat.printname"] = "Томатный кот"
 L["sticker_tomatocat.compactname"] = "Томатный кот"
 L["sticker_tomatocat.description"] = [[Иногда люди спрашивают, являются ли помидоры фруктами или овощами... Этот вопрос может быть сложнее.
 Автор: Ender2Point0.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_actionbird.printname"] = "Боевик-птица"
 L["sticker_actionbird.compactname"] = "Боевик-птица"
 L["sticker_actionbird.description"] = [[Вот как выглядит Arctic в реальной жизни.
 Автор: CyloWalker.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_warcrimes.printname"] = "Военные преступления"
 L["sticker_warcrimes.compactname"] = "Военные преступления"
-L["sticker_warcrimes.description"] = [[Вы уже совершаете это, так почему бы не заявить об этом во всеуслышание? Кто вас остановит, ООН?
+L["sticker_warcrimes.description"] = [[Ты уже делаешь их, почему бы не заявить об этом всему миру? Думаешь ООН сможет что-то сделать?
 Автор: Rimuchii. Выполнено с использованием базы наклеек Project Sekai.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_sillycat.printname"] = "Глупая кошка"
-L["sticker_sillycat.compactname"] = "Глупая кошка"
-L["sticker_sillycat.description"] = [[глупышкаглупышкаглупышкаглупышкаглупышкаглупышкаглупышкаглупышка
+L["sticker_sillycat.printname"] = "Silly Cat"
+L["sticker_sillycat.compactname"] = "Silly Cat"
+L["sticker_sillycat.description"] = [[imsillyimsillyimsillyimsillyimsillyimsillyimsillyimsilly
 Автор: Stan_Jacobs.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_muertosskull.printname"] = "Диа-де-Лос-Муэртос-Калавера"
-L["sticker_muertosskull.compactname"] = "Лос-Муэртос"
-L["sticker_muertosskull.description"] = [[«Думаю, это будет мой окончательный вариант, если никто не предложит мне изменить его, название: "Диа-де-Лос-Муэртос-Калавера" описание: не могу придумать, что-то про день мёртвых черепа мексики бла-бла-бла»
+L["sticker_muertosskull.printname"] = "Dia De Los Muertos Calavera"
+L["sticker_muertosskull.compactname"] = "Los Muertos"
+L["sticker_muertosskull.description"] = [["this should be my final version i think, unless anyone gives me suggestions to change it, the name: "Dia de los muertos calavera" the description: i cant think of one, something about day of the dead skull mexico blah blah blah"
 Автор: rooneyviz.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_bandaid.printname"] = "Лейкопластырь"
-L["sticker_bandaid.compactname"] = "Лейкопластырь"
-L["sticker_bandaid.description"] = [[Приложите его к своему бо-бо и поцелуйте его.
+L["sticker_bandaid.printname"] = "Пластырь"
+L["sticker_bandaid.compactname"] = "Пластырь"
+L["sticker_bandaid.description"] = [[Приложите его к ранке.
 Автор: Itzal.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_peacedove.printname"] = "Мир через высшую огневую мощь"
 L["sticker_peacedove.compactname"] = "Высшая огневая мощь"
-L["sticker_peacedove.description"] = [[Голубь приносит мир, но пушка приносит мир благодаря превосходству в огневой мощи.
+L["sticker_peacedove.description"] = [[Голуби приносит мир, но пушка приносит мир благодаря превосходству в огневой мощи.
 Автор: Xipil.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_borntomodify.printname"] = "Рождённый изменять"
-L["sticker_borntomodify.compactname"] = "Изменятель"
-L["sticker_borntomodify.description"] = [[Ещё один прицел - ещё другой прицел - гранатомёт, то тут, то там...
+L["sticker_borntomodify.printname"] = "Рождённый модифицировать"
+L["sticker_borntomodify.compactname"] = "BTM"
+L["sticker_borntomodify.description"] = [[Ещё один прицел - и ещё другой - сюда гранатомёт, тут и там...
 Автор: Duck.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_cad.printname"] = "хам"
-L["sticker_cad.compactname"] = "хам"
-L["sticker_cad.description"] = [[хам
+L["sticker_cad.printname"] = "кошк"
+L["sticker_cad.compactname"] = "кошк"
+L["sticker_cad.description"] = [[кошк
 Автор: Opt1ca.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_fumo.printname"] = "Фумо"
 L["sticker_fumo.compactname"] = "Фумо"
 L["sticker_fumo.description"] = [[Н-не смотри на меня так, Райфу-кун...
 Автор: Itzal.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_hotlead.printname"] = "Hot Lead"
-L["sticker_hotlead.compactname"] = "Hot Lead"
-L["sticker_hotlead.description"] = [[Careful! It's hot!
+L["sticker_hotlead.printname"] = "Горячий свинец"
+L["sticker_hotlead.compactname"] = "орячий свинец"
+L["sticker_hotlead.description"] = [[Осторожно! Горячо!
 Автор: Arqu.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_steamhappy.printname"] = ":steamhappy:"
 L["sticker_steamhappy.compactname"] = ":steamhappy:"
-L["sticker_steamhappy.description"] = [[Счастье от этого
+L["sticker_steamhappy.description"] = [[Истинное счастье
 Автор: Steam.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_amidstus.printname"] = "Amidst Us"
 L["sticker_amidstus.compactname"] = "Amidst Us"
 L["sticker_amidstus.description"] = [[Зачем довольствоваться оригиналом, если можно купить дешёвую подделку?!
 Автор: Optica.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_arcglory.printname"] = "Слава!"
-L["sticker_arcglory.compactname"] = "Слава!"
+L["sticker_arcglory.printname"] = "Glory!"
+L["sticker_arcglory.compactname"] = "Glory!"
 L["sticker_arcglory.description"] = [[Потребовалось девять клеток мозга, чтобы набросать это
 Автор: Optica.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_wp.printname"] = "Мир во всём мире!"
 L["sticker_wp.compactname"] = "Мир во всём мире!"
 L["sticker_wp.description"] = [[Заблуждение!
 Автор: Fidget.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_tonkr.printname"] = "Отправить его"
-L["sticker_tonkr.compactname"] = "Отправить его"
+L["sticker_tonkr.printname"] = "Send It"
+L["sticker_tonkr.compactname"] = "Send It"
 L["sticker_tonkr.description"] = [[Да, он такой тяжёлый. Да, он такой мощный.
 Автор: CyloWalker.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_s6amblem.printname"] = "Секция 6"
 L["sticker_s6amblem.compactname"] = "Секция 6"
 L["sticker_s6amblem.description"] = [[Дотянуться до звёзд. Вперёд к славе!
 Автор: CyloWalker.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_babies.printname"] = "Опасность для ребёнка"
 L["sticker_babies.compactname"] = "Опасность для ребёнка"
 L["sticker_babies.description"] = [[Дети в возрасте до трёх лет должны находиться вдали от этого... огнестрельного оружия.
 Автор: Itzal.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
 L["sticker_drawberf.printname"] = "Берф"
 L["sticker_drawberf.compactname"] = "Берф"
-L["sticker_drawberf.description"] = [[Рисунок Берфа.
+L["sticker_drawberf.description"] = [[Берф.
 Автор: The Villain.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
 
-L["sticker_arcbird.printname"] = "Арктическая птица"
-L["sticker_arcbird.compactname"] = "Арктическая птица"
-L["sticker_arcbird.description"] = [[Арктическая птица.
+L["sticker_arcbird.printname"] = "Арк Птица"
+L["sticker_arcbird.compactname"] = "Арк Птица"
+L["sticker_arcbird.description"] = [[Арк Птица.
 Автор: Nori/Chewable.
 
-Наклейка входит в состав базы ARC9.]]
+Стикер включен в базу ARC9.]]
