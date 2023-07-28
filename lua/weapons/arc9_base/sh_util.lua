@@ -185,4 +185,7 @@ if CLIENT then
         return self:ScaleFOVByWidthRatio(target, ((ScrW and ScrW() or 4) / (ScrH and ScrH() or 3)) / (4 / 3))
     end
 
+    function SWEP:CallNonTPIKAnim(source)
+        self:DoPlayerAnimationEvent(self:GetProcessedValue(!self:ShouldTPIK() and "NonTPIK" .. source or source, true))
+    end
 end

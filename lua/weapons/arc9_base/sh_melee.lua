@@ -9,7 +9,7 @@ function SWEP:MeleeAttack(bypass, bash2)
         if !self:GetProcessedValue("BashWhileSprint", true) and self:SprintLock() then return end
     end
 
-    self:DoPlayerAnimationEvent(self:GetProcessedValue("AnimMelee", true))
+    self:CallOnClient("CallNonTPIKAnim", "AnimMelee")
 
     local soundtab1 = {
         name = "meleeswing",
@@ -32,7 +32,7 @@ function SWEP:MeleeAttack(bypass, bash2)
 
     local tr = util.TraceHull({
         start = owner:EyePos(),
-        endpos = owner:EyePos() + (owner:EyeAngles():Forward() * range),
+        endpos = owner:EyePos() + (owner:GetAimVector() * range),
         mask = MASK_SHOT,
         filter = {owner, self:GetShieldEntity(), self.ShieldProp},
         maxs = vmaxs,
@@ -104,7 +104,7 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
     local tr = util.TraceHull({
         start = owner:EyePos(),
         endpos = owner:EyePos() + (owner:EyeAngles():Forward() * self:GetProcessedValue(prefix .. "Range")),
-        mask = MASK_SHOT,
+        mask = MASK_SHOT + 8,
         filter = {owner, self:GetShieldEntity(), self.ShieldProp},
         maxs = vmaxs2,
         mins = vmins2

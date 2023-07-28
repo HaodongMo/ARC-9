@@ -1082,7 +1082,8 @@ SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 SWEP.AnimReload = ACT_HL2MP_GESTURE_RELOAD_MAGIC -- While in TPIK only -- Tip: if you dont want any additional anim put ACT_HL2MP_GESTURE_RELOAD_MAGIC here instead!
 SWEP.NonTPIKAnimReload = ACT_HL2MP_GESTURE_RELOAD_AR2 -- Non TPIK
 SWEP.AnimDraw = false
-SWEP.AnimMelee = ACT_GMOD_GESTURE_MELEE_SHOVE_2HAND
+SWEP.AnimMelee = ACT_FLINCH_PHYSICS
+SWEP.NonTPIKAnimMelee = ACT_GMOD_GESTURE_MELEE_SHOVE_2HAND
 
 -------------------------- Shields
 
