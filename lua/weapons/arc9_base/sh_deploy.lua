@@ -147,7 +147,10 @@ end
 
 function SWEP:Holster(wep)
     -- May cause issues? But will fix HL2 weapons playing a wrong animation on ARC9 holster
-    if game.SinglePlayer() and CLIENT then self:GetVM():ResetSequenceInfo() return end
+    if !IsValid(self) then return end
+    local vm = self:GetVM()
+    if !IsValid(vm) then return end
+    if game.SinglePlayer() and CLIENT then vm:ResetSequenceInfo() return end
 
     local owner = self:GetOwner()
 
