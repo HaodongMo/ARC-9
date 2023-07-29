@@ -674,10 +674,10 @@ do
             local spd = self.PV_Move
             local maxspd = entityIsPlayer(owner) and playerGetWalkSpeed(owner) or 250
 
-            if singleplayer or CLIENT or self.PV_Tick ~= upct then
+            --if singleplayer or CLIENT or self.PV_Tick ~= upct then
                 spd = math.min(vectorLength(entityGetAbsVelocity(owner)), maxspd) / maxspd
                 self.PV_Move = spd
-            end
+            --end
 
             if isnumber(stat) then
                 stat = Lerp(spd, stat, arcGetValue(self, val, stat, "Move"))
