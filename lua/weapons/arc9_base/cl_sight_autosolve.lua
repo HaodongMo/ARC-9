@@ -107,6 +107,6 @@ function SWEP:AdjustMouseSensitivity()
         local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
         amt = math.sqrt(amt)
 
-        return amt / sensmult:GetFloat()
+        return amt * sensmult:GetFloat()
     end
 end

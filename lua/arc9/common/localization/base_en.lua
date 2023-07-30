@@ -773,4 +773,4 @@ L["settings.gameplay.mult_defaultammo.desc"] = "How many magazines/grenades/equi
 L["hud.hint.bipod"] = "Toggle bipod"
 
 L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
-L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe higher the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
+L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
