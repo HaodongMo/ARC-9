@@ -726,3 +726,6 @@ L["settings.gameplay.mult_defaultammo.desc"] = "Hur många magasin/granater/utru
 
 -- July 30th - Bipod and Debug stuff
 L["hud.hint.bipod"] = "Växla skjutstöd"
+
+L["settings.optics.sensmult.title"] = "Mult. Känslighet i Siktet"
+L["settings.optics.sensmult.desc"] = "Multiplicerar titta runt känsligheten med detta antal i siktet.\nJu högre värdet är ju lägre är känsligheten.\nAnvändbar när kontroller används, eller om användaren vill ha lägre känslighet i siktet."

@@ -95,6 +95,7 @@ ARC9.SettingsTable = {
         -- { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
 
         { type = "label", text = "settings.optics.control" },
+		{ type = "slider", text = "settings.optics.sensmult.title", min = 1, max = 4, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
         { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
         { type = "bool", text = "settings.optics.toggleads.title", convar = "toggleads", desc = "settings.optics.toggleads.desc" },
 

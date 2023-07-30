@@ -739,6 +739,11 @@ local conVars = {
         default = "2",
         replicated = true
     },
+    {
+        name = "mult_sens",
+        default = "1",
+        client = true
+    },
 }
 
 local prefix = "arc9_"

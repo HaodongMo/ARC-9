@@ -90,6 +90,7 @@ function SWEP:AdjustMouseSensitivity()
 
     local mag = self:GetMagnification()
     local fov = fov_desired:GetFloat()
+	local sensmult = GetConVar("arc9_mult_sens")
 
     local sight = self:GetSight()
     local atttbl = sight.atttbl
@@ -106,6 +107,6 @@ function SWEP:AdjustMouseSensitivity()
         local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
         amt = math.sqrt(amt)
 
-        return amt
+        return amt / sensmult:GetFloat()
     end
 end
