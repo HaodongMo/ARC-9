@@ -770,4 +770,4 @@ L["settings.gameplay.mult_defaultammo.title"] = "Dewault Weserve Amo"
 L["settings.gameplay.mult_defaultammo.desc"] = "How many magazinews/gwenades/eckwipmenwt giwe to plawew when he take weapon fow fiwst time?\n\ndis is a sewwew wawiableh"
 
 -- July 30th - Bipod and Debug stuff
-L["hud.hint.bipod"] = "Towgle biwod"
+L["hud.hint.bipod"] = "Towgl bipOwOd >w<"
