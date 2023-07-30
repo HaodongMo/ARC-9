@@ -343,7 +343,9 @@ function SWEP:DrawHUD()
 
     if bipodhint > 0 then
         local glyph = ARC9.GetBindKey(bipodhintstate and "+back" or "+attack2")
-        local text = bipodhintstate and "Exit bipod" or "Enter bipod"
+        -- local text = bipodhintstate and "Exit bipod" or "Enter bipod"
+		-- local text = bipodhintstate and ARC9:GetPhrase("hud.hint.bipod.exit") or ARC9:GetPhrase("hud.hint.bipod.enter")
+		local text = ARC9:GetPhrase("hud.hint.bipod")
 
         if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
         if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end

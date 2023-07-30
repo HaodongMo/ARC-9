@@ -723,3 +723,6 @@ L["settings.gameplay.equipment_generate_ammo.title"] = "Unik Ammo Typ för Utrus
 L["settings.gameplay.equipment_generate_ammo.desc"] = "Det finns en begränsning på 255 ammo typer och avaktiverar du detta alternativ kan det fixa några problem ifall du har många tillägg.\n\nDetta är en servervariabel.\n\nKräver omstart."
 L["settings.gameplay.mult_defaultammo.title"] = "Standard Reserv Ammo"
 L["settings.gameplay.mult_defaultammo.desc"] = "Hur många magasin/granater/utrustning som ges till spelaren när hen plockar upp ett vapen för första gången?\n\nDetta är en servervariabel."
+
+-- July 30th - Bipod and Debug stuff
+L["hud.hint.bipod"] = "Växla skjutstöd"
