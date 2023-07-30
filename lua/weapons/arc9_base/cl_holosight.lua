@@ -63,8 +63,12 @@ function SWEP:DoHolosight(mdl, atttbl)
 
     if reticle then
         local pos = self:GetOwner():EyePos()
-
-        pos = pos + mdl:GetAngles():Forward() * 9000
+        
+        if mdl.FakeHolosightAngleOffset then
+            pos = pos + (mdl:GetAngles() + mdl.FakeHolosightAngleOffset):Forward() * 9000
+        else
+            pos = pos + mdl:GetAngles():Forward() * 9000
+        end
 
         -- cam.Start3D()
         -- local dist = (mdl:GetPos() - self:GetOwner():EyePos()):Length()
