@@ -191,27 +191,27 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                 Indirect = true
             })
         else
-            if !ARC9.IsPointOutOfBounds(endpos) then
-				local bullet_table = {
-                    Damage = self:GetValue("Damage_Max"),
-                    Force = 4,
-                    Tracer = 0,
-                    Num = 1,
-                    Dir = dir,
-                    Src = endpos,
-                    Callback = function(att, btr, dmg)
-                        range = range + (btr.HitPos - btr.StartPos):Length()
-                        self:AfterShotFunction(btr, dmg, range, penleft, alreadypenned)
+		if !ARC9.IsPointOutOfBounds(endpos) then
+			local bullet_table = {
+				Damage = self:GetValue("Damage_Max"),
+				Force = 4,
+				Tracer = 0,
+				Num = 1,
+				Dir = dir,
+				Src = endpos,
+				Callback = function(att, btr, dmg)
+					range = range + (btr.HitPos - btr.StartPos):Length()
+					self:AfterShotFunction(btr, dmg, range, penleft, alreadypenned)
 
-                        if ARC9.Dev(2) then
-                            if SERVER then
-                                debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
-                            else
-                                debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
-                            end
-                        end
-                    end
-                }
+					if ARC9.Dev(2) then
+						if SERVER then
+							debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
+						else
+							debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
+						end
+					end
+				end
+				}
 				if(table.Count(alreadypenned) == 1) then
 					--We penetrated only one entity.
 					--The reason why we do this for one entity only is that in 99.99% of cases when we penetrate more than one entity, we won't be penetrating the first entity again with the same penetration instance.
@@ -221,9 +221,9 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 						bullet_table.IgnoreEntity = first_entity
 					end
 				end
-                self:GetOwner():FireBullets(bullet_table)
-            end
-        end
+				self:GetOwner():FireBullets(bullet_table)
+			end
+		end
 
         if !ARC9.IsPointOutOfBounds(exitpos) then
             self:GetOwner():FireBullets({
