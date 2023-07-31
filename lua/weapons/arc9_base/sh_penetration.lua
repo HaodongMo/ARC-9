@@ -192,7 +192,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             })
         else
             if !ARC9.IsPointOutOfBounds(endpos) then
-                self:GetOwner():FireBullets({
+				local bullet_table = {
                     Damage = self:GetValue("Damage_Max"),
                     Force = 4,
                     Tracer = 0,
@@ -211,7 +211,17 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                             end
                         end
                     end
-                })
+                }
+				if(table.Count(alreadypenned) == 1) then
+					--We penetrated only one entity.
+					--The reason why we do this for one entity only is that in 99.99% of cases when we penetrate more than one entity, we won't be penetrating the first entity again with the same penetration instance.
+					--God I hope this isn't intensive during firefights, but this is the only way to prevent a double-damage bug where the arm is penetrated and it deals damage to the torso.
+					local first_entity = next(alreadypenned)
+					if(first_entity:GetMaxHealth()) then
+						bullet_table.IgnoreEntity = first_entity
+					end
+				end
+                self:GetOwner():FireBullets(bullet_table)
             end
         end
 
