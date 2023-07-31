@@ -191,26 +191,26 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
                 Indirect = true
             })
         else
-		if !ARC9.IsPointOutOfBounds(endpos) then
-			local bullet_table = {
-				Damage = self:GetValue("Damage_Max"),
-				Force = 4,
-				Tracer = 0,
-				Num = 1,
-				Dir = dir,
-				Src = endpos,
-				Callback = function(att, btr, dmg)
-					range = range + (btr.HitPos - btr.StartPos):Length()
-					self:AfterShotFunction(btr, dmg, range, penleft, alreadypenned)
+			if !ARC9.IsPointOutOfBounds(endpos) then
+				local bullet_table = {
+					Damage = self:GetValue("Damage_Max"),
+					Force = 4,
+					Tracer = 0,
+					Num = 1,
+					Dir = dir,
+					Src = endpos,
+					Callback = function(att, btr, dmg)
+						range = range + (btr.HitPos - btr.StartPos):Length()
+						self:AfterShotFunction(btr, dmg, range, penleft, alreadypenned)
 
-					if ARC9.Dev(2) then
-						if SERVER then
-							debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
-						else
-							debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
+						if ARC9.Dev(2) then
+							if SERVER then
+								debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
+							else
+								debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
+							end
 						end
 					end
-				end
 				}
 				if(table.Count(alreadypenned) == 1) then
 					--We penetrated only one entity.
