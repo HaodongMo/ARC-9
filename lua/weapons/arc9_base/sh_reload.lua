@@ -473,7 +473,7 @@ function SWEP:EndReload()
     else
         self:SetReloading(false)
 
-        self:SetNthShot(0)
+        self:SetNthShot(self:GetMaxClip1() - self:Clip1() + self:GetProcessedValue("ChamberSize"))
 
         if self:GetEmptyReload() or self:GetProcessedValue("PartialReloadCountsTowardsNthReload", true) then
             self:SetNthReload(self:GetNthReload() + 1)
