@@ -379,13 +379,15 @@ function SWEP:EndReload()
             capacity = self:GetProcessedValue("ClipSize")
         end
 
-        if getUBGL then
-            if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber", true) then
-                capacity = capacity + self:GetProcessedValue("UBGLChamberSize")
-            end
-        else
-            if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber", true) then
-                capacity = capacity + self:GetProcessedValue("ChamberSize")
+        if !self.ShotgunReloadNoChamber then
+            if getUBGL then
+                if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber", true) then
+                    capacity = capacity + self:GetProcessedValue("UBGLChamberSize")
+                end
+            else
+                if !self:GetEmptyReload() or self:GetProcessedValue("ShotgunReloadIncludesChamber", true) then
+                    capacity = capacity + self:GetProcessedValue("ChamberSize")
+                end
             end
         end
 
