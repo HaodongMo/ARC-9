@@ -453,7 +453,7 @@ local function DrawSettings(bg, page)
                 surface.DrawText(txt)
             end
 
-            local elpw, elph = ARC9ScreenScale(168), ARC9ScreenScale(21)
+            local elpw, elph = bg:GetWide() - ARC9ScreenScale(232), ARC9ScreenScale(21)
 
             if v2.type == "label" then
                 -- woopsie
@@ -670,7 +670,7 @@ function ARC9_OpenSettings(page)
 
     local panel = vgui.Create("DFrame", bg)
     -- panel:SetSize(ARC9ScreenScale(330), ARC9ScreenScale(242))
-    panel:SetSize(ARC9ScreenScale(400), ARC9ScreenScale(242))
+    panel:SetSize(ScrH()*1.25, ScrH()*0.75)
     panel:MakePopup()
     panel:SetAlpha(0)
     panel:AlphaTo(255, 0.2, 0, nil)
