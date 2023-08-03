@@ -778,3 +778,5 @@ L["settings.hud_game.centerhint_reload.title"] = "Centew weload hint"
 L["settings.hud_game.centerhint_reload.desc"] = "Centewed weload hint dependwing on de percentage sewected"
 L["settings.hud_game.centerhint_bipod.title"] = "Centew bipowod hint"
 L["settings.hud_game.centerhint_bipod.desc"] = "Centewed bipowod hint"
+
+L["hud.hint.reload"] = "Weload!!! Now!"
