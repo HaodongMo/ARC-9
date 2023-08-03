@@ -299,6 +299,16 @@ local conVars = {
         default = "0",
     },
     {
+        name = "center_bipod",
+        default = "1",
+        client = true,
+    },
+    {
+        name = "center_reload",
+        default = "0.25",
+        client = true,
+    },
+    {
         name = "breath_hud",
         default = "1",
         client = true,

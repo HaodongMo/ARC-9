@@ -179,7 +179,10 @@ ARC9.SettingsTable = {
         { type = "label", text = "settings.hud_game.breath" },
         { type = "bool", text = "settings.hud_game.breath_hud.title", convar = "breath_hud", desc = "settings.hud_game.breath_hud.desc" },
         { type = "bool", text = "settings.hud_game.breath_pp.title", convar = "breath_pp", desc = "settings.hud_game.breath_pp.desc" },
-        { type = "bool", text = "settings.hud_game.breath_sfx.title", convar = "breath_sfx", desc = "settings.hud_game.breath_sfx.desc" },
+
+        { type = "label", text = "settings.hud_game.centerhint" },
+        { type = "slider", min = 0, max = 1, decimals = 2, text = "settings.hud_game.centerhint_reload.title", convar = "center_reload", desc = "settings.hud_game.centerhint_reload.desc" },
+        { type = "bool", text = "settings.hud_game.centerhint_bipod.title", convar = "center_bipod", desc = "settings.hud_game.centerhint_bipod.desc" },
     },
     {
         TabName = "settings.tabname.npc",

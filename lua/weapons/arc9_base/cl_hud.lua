@@ -271,10 +271,32 @@ end
 local bipodhint = 0 -- alpha
 local bipodhintstate = false -- enter or exit
 
+local cv1, cv2, cv3
+
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
     local scrw, scrh = ScrW(), ScrH()
     local getsight = self:GetSight()
+
+	cv1 = cv1 or GetConVar("arc9_center_reload")
+    if self:Clip1() <= self:GetMaxClip1()*cv1:GetFloat() then
+        local glyph = ARC9.GetBindKey("+reload")
+		local text = "RELOAD"
+
+        if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
+        if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
+        if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/glyphs_light/" .. glyph .. "_lg" .. ".png", "smooth" ) end
+
+        surface.SetTextColor(255, 255, 255, 255)
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.SetFont("ARC9_16")
+        local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 + ScreenScale(56), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(8) })
+
+        surface.SetFont("ARC9_10")
+        local tw = surface.GetTextSize(text)
+        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(66))
+        surface.DrawText(text)
+    end
 
     if self:GetSightAmount() > 0.75 and getsight.FlatScope and getsight.FlatScopeOverlay then
         if getsight.FlatScopeBlackBox then
@@ -292,7 +314,8 @@ function SWEP:DrawHUD()
         end
     end
 
-    if GetConVar("arc9_cruelty_reload"):GetBool() and input.IsKeyDown(input.GetKeyCode(self:GetBinding("+reload"))) then
+	cv2 = cv2 or GetConVar("arc9_cruelty_reload")
+    if cv2:GetBool() and input.IsKeyDown(input.GetKeyCode(self:GetBinding("+reload"))) then
         -- Draw vertical line
 
         local col = Color(255, 255, 255, 255)
@@ -341,7 +364,8 @@ function SWEP:DrawHUD()
         bipodhintstate = false
     end
 
-    if bipodhint > 0 then
+	cv3 = cv3 or GetConVar("arc9_center_bipod")
+    if cv3:GetBool() and bipodhint > 0 then
         local glyph = ARC9.GetBindKey(bipodhintstate and "+back" or "+attack2")
         -- local text = bipodhintstate and "Exit bipod" or "Enter bipod"
 		-- local text = bipodhintstate and ARC9:GetPhrase("hud.hint.bipod.exit") or ARC9:GetPhrase("hud.hint.bipod.enter")
@@ -361,8 +385,6 @@ function SWEP:DrawHUD()
         surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(106))
         surface.DrawText(text)
     end
-
-    --
 
     self:HoldBreathHUD()
     self:DrawCustomizeHUD()

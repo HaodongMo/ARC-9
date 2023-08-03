@@ -774,3 +774,10 @@ L["hud.hint.bipod"] = "Toggle bipod"
 
 L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
 L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
+
+-- August 3rd, Centered hint
+L["settings.hud_game.centerhint"] = "Centered Hints"
+L["settings.hud_game.centerhint_reload.title"] = "Center Reload Hint"
+L["settings.hud_game.centerhint_reload.desc"] = "Centered reload hint, depending on the percentage selected."
+L["settings.hud_game.centerhint_bipod.title"] = "Center Bipod Hint"
+L["settings.hud_game.centerhint_bipod.desc"] = "Centered bipod hint."
