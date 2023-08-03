@@ -479,8 +479,8 @@ L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't fini
 
 L["settings.controller.misc"] = "Misc"
 L["settings.controller.misc.desc"] = "There should be button that will open panel with advanced controller config, but for now it is in  spawnmenu > Options > ARC9 > Controller."
-L["settings.controller.controller.title"] = "Controller Glyphs"
-L["settings.controller.controller.desc"] = "Enable custom controller-compatible glyphs, showing controller buttons instead of the default keys."
+L["settings.controller.controller.title"] = "Engage Super Controller Mode"
+L["settings.controller.controller.desc"] = "Enable custom controller-compatible actions\n'Use' is M1\n'Reload' is M2\nBind actions to glyphs in the secret settings"
 L["settings.controller.controller_rumble.title"] = "Rumble"
 L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Advanced config"
