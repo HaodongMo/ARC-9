@@ -303,7 +303,7 @@ ARC9.SettingsTable = {
         TabName = "settings.tabname.controller",
         { type = "label", text = "settings.controller.misc", desc = "settings.controller.misc.desc"},
         { type = "bool", text = "settings.controller.controller.title", convar = "controller", desc = "settings.controller.controller.desc"},
-        { type = "bool", text = "settings.controller.controller_rumble.title", convar = "controller_rumble", desc = "settings.controller.controller_rumble.desc"},
+        -- { type = "bool", text = "settings.controller.controller_rumble.title", convar = "controller_rumble", desc = "settings.controller.controller_rumble.desc"},
         -- { type = "button", text = "settings.controller.controller_config.title", desc = "settings.controller.controller_config.desc", content = "settings.controller.controller_config.content", func = function(self2)
         --     -- RunConsoleCommand("arc9_reloadatts")
         --     print("lol")
