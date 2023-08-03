@@ -757,3 +757,18 @@ L["settings.gameplay.equipment_generate_ammo.title"] = "Tipos de munición únic
 L["settings.gameplay.equipment_generate_ammo.desc"] = "Hay un límite de 255 tipos de munición, y desactivar esta opción puede ayudar a solucionar algunos problemas si tienes muchos addons.\n\nEsta es una variable del servidor.\n\nRequiere reinicio."
 L["settings.gameplay.mult_defaultammo.title"] = "Munición de reserva por defecto"
 L["settings.gameplay.mult_defaultammo.desc"] = "¿Cuántos cargadores/granadas/equipos se dan al jugador cuando coge el arma por primera vez?\n\nEsta es una variable del servidor."
+
+-- July 30th - Bipod and Debug stuff
+L["hud.hint.bipod"] = "Toggle Bipod"
+
+L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
+L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
+
+-- August 3rd, Centered hint
+L["settings.hud_game.centerhint"] = "Consejos"
+L["settings.hud_game.centerhint_reload.title"] = "Mostrar Consejo de Recarga"
+L["settings.hud_game.centerhint_reload.desc"] = "Muestra un aviso de recarga cuando el cargador actual está en el porcentaje especificado."
+L["settings.hud_game.centerhint_bipod.title"] = "Mostrar Alternar Bípode"
+L["settings.hud_game.centerhint_bipod.desc"] = "Mostrar un consejo cuando el bípode se puede conmutar."
+
+L["hud.hint.reload"] = "Recarga"
