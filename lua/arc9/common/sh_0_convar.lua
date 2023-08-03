@@ -1032,6 +1032,7 @@ local function menu_client_controller(panel)
 
     local tex_inp = vgui.Create( "DTextEntry", panel )
     local tex_out = vgui.Create( "DTextEntry", panel )
+    panel:ControlHelp( "Double-click to copy into text fields" )
     panel:AddItem( tex_inp )
     panel:ControlHelp( "Glyph or keyboard icon to be replaced.\nInputs are case-sensitive!" )
     panel:AddItem( tex_out )
@@ -1052,8 +1053,24 @@ local function menu_client_controller(panel)
     but_upd:SetText("Restore from memory")
     but_app:SetText("Save & apply")
 
+	function listview:DoDoubleClick( lineID, line )
+		tex_inp:SetValue( line:GetColumnText( 1 ) )
+		tex_out:SetValue( line:GetColumnText( 2 ) )
+	end
+
     function but_add:DoClick()
-        listview:AddLine( string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue()) )
+        local inp, out = string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue())
+        local worked = false
+        for index, line in ipairs( listview:GetLines() ) do
+            if line:GetColumnText( 1 ) == inp then
+                line:SetColumnText( 2, out )
+                worked = true
+                break
+            end
+        end
+        if !worked then
+            listview:AddLine( inp, out )
+        end
     end
 
     function but_rem:DoClick()
@@ -1114,17 +1131,7 @@ local function menu_client_controller(panel)
 
                 -- Run a console command when the Icon is clicked
                 Mat.DoClick = function( button )
-                    local menu = DermaMenu()
-                    menu:AddOption( "As input", function() self.InputPanel:SetValue( label ) end ):SetIcon( "icon16/page_copy.png" )
-                    menu:AddOption( "As output", function() self.OutputPanel:SetValue( label ) end ):SetIcon( "icon16/page_paste.png" )
-                    menu:Open()
-                end
-
-                Mat.DoRightClick = function( button )
-                    local menu = DermaMenu()
-                    menu:AddOption( "As input", function() self.InputPanel:SetValue( label ) end ):SetIcon( "icon16/page_copy.png" )
-                    menu:AddOption( "As output", function() self.OutputPanel:SetValue( label ) end ):SetIcon( "icon16/page_paste.png" )
-                    menu:Open()
+                    self.OutputPanel:SetValue( label )
                 end
 
                 -- Add the Icon us
