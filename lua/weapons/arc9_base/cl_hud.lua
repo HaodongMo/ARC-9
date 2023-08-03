@@ -281,7 +281,7 @@ function SWEP:DrawHUD()
 	cv1 = cv1 or GetConVar("arc9_center_reload")
     if self:Clip1() <= self:GetMaxClip1()*cv1:GetFloat() then
         local glyph = ARC9.GetBindKey("+reload")
-		local text = "RELOAD"
+		local text = ARC9:GetPhrase("hud.hint.reload")
 
         if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
         if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end

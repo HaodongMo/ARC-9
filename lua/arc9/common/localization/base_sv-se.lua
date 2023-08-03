@@ -725,7 +725,16 @@ L["settings.gameplay.mult_defaultammo.title"] = "Standard Reserv Ammo"
 L["settings.gameplay.mult_defaultammo.desc"] = "Hur många magasin/granater/utrustning som ges till spelaren när hen plockar upp ett vapen för första gången?\n\nDetta är en servervariabel."
 
 -- July 30th - Bipod and Debug stuff
-L["hud.hint.bipod"] = "Växla skjutstöd"
+L["hud.hint.bipod"] = "Växla Skjutstöd"
 
 L["settings.optics.sensmult.title"] = "Mult. Känslighet i Siktet"
 L["settings.optics.sensmult.desc"] = "Multiplicerar titta runt känsligheten med detta antal i siktet.\nJu lägre värdet är ju lägre är känsligheten.\nAnvändbar när kontroller används, eller om användaren vill ha lägre känslighet i siktet."
+
+-- August 3rd, Centered hint
+L["settings.hud_game.centerhint"] = "Verktygstips"
+L["settings.hud_game.centerhint_reload.title"] = "Visa Omladdning Tips"
+L["settings.hud_game.centerhint_reload.desc"] = "Visar ett omladdning tips när det nuvarande magasinet är vid den specifierade procentantalet."
+L["settings.hud_game.centerhint_bipod.title"] = "Visa Växla Skjutstöd"
+L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet kan växlas."
+
+L["hud.hint.reload"] = "Ladda om"

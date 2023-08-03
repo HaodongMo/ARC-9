@@ -770,14 +770,16 @@ L["settings.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
 L["settings.gameplay.mult_defaultammo.desc"] = "How many magazines/grenades/equipment give to player when he takes weapon for first time?\n\nThis is a server variable."
 
 -- July 30th - Bipod and Debug stuff
-L["hud.hint.bipod"] = "Toggle bipod"
+L["hud.hint.bipod"] = "Toggle Bipod"
 
 L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
 L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
 
 -- August 3rd, Centered hint
-L["settings.hud_game.centerhint"] = "Centered Hints"
-L["settings.hud_game.centerhint_reload.title"] = "Center Reload Hint"
-L["settings.hud_game.centerhint_reload.desc"] = "Centered reload hint, depending on the percentage selected."
-L["settings.hud_game.centerhint_bipod.title"] = "Center Bipod Hint"
-L["settings.hud_game.centerhint_bipod.desc"] = "Centered bipod hint."
+L["settings.hud_game.centerhint"] = "Tooltips"
+L["settings.hud_game.centerhint_reload.title"] = "Display Reload Tip"
+L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when the current magazine is at the specified percentage."
+L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
+L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
+
+L["hud.hint.reload"] = "Reload"
