@@ -725,3 +725,10 @@ L["settings.gameplay.mult_defaultammo.desc"] = "Как много магазин
 
 -- July 30th - Bipod and Debug stuff
 L["hud.hint.bipod"] = "Сошки"
+
+-- August 3rd, Centered hint
+L["settings.hud_game.centerhint"] = "Подсказки по центру экрана"
+L["settings.hud_game.centerhint_reload.title"] = "Перезарядка"
+L["settings.hud_game.centerhint_reload.desc"] = "Подсказка по центру экрана о необходимости перезарядки, в зависимости от выбранного процента оставшихся патрон в магазине."
+L["settings.hud_game.centerhint_bipod.title"] = "Сошки"
+L["settings.hud_game.centerhint_bipod.desc"] = "Подсказка по центру экрана о возможности установки сошек."
