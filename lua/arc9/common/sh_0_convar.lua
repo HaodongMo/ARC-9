@@ -1043,15 +1043,17 @@ local function menu_client_controller(panel)
     local but_add = vgui.Create( "DButton", panel )
     local but_rem = vgui.Create( "DButton", panel )
     local but_upd = vgui.Create( "DButton", panel )
+    but_upd:Hide()
     local but_app = vgui.Create( "DButton", panel )
+    but_app:Hide()
     panel:AddItem( but_add )
     panel:AddItem( but_rem )
     panel:AddItem( but_upd )
     panel:AddItem( but_app )
-    but_add:SetText("Add")
+    but_add:SetText("Add & apply")
     but_rem:SetText("Remove selected")
     but_upd:SetText("Restore from memory")
-    but_app:SetText("Save & apply")
+    but_app:SetText("Apply")
 
 	function listview:DoDoubleClick( lineID, line )
 		tex_inp:SetValue( line:GetColumnText( 1 ) )
@@ -1060,6 +1062,8 @@ local function menu_client_controller(panel)
 
     function but_add:DoClick()
         local inp, out = string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue())
+        if inp == "" then return end
+        if out == "" then return end
         local worked = false
         for index, line in ipairs( listview:GetLines() ) do
             if line:GetColumnText( 1 ) == inp then
@@ -1071,12 +1075,14 @@ local function menu_client_controller(panel)
         if !worked then
             listview:AddLine( inp, out )
         end
+        but_app:DoClick()
     end
 
     function but_rem:DoClick()
         for i, v in pairs(listview:GetSelected()) do
             listview:RemoveLine( v:GetID() )
         end
+        but_app:DoClick()
     end
 
     function but_upd:DoClick()
@@ -1359,6 +1365,7 @@ local function menu_server_modifiers(panel)
 
     local tex_inp = vgui.Create( "DTextEntry", panel )
     local tex_out = vgui.Create( "DTextEntry", panel )
+    panel:ControlHelp( "Double-click to copy into text fields" )
     panel:AddItem( tex_inp )
     panel:AddItem( tex_out )
     tex_inp:SetPlaceholderText("Use the first list to select a stat to modify")
@@ -1373,6 +1380,11 @@ local function menu_server_modifiers(panel)
     panel:ControlHelp( "Modification type. Some stats don't have these." )
     panel:AddItem( com_3 )
     panel:ControlHelp( "Special condition, like if you're crouching." )
+
+	function listview:DoDoubleClick( lineID, line )
+		tex_inp:SetValue( line:GetColumnText( 1 ) )
+		tex_out:SetValue( line:GetColumnText( 2 ) )
+	end
 
     for i, v in pairs(c1) do
         com_1:AddChoice( i )
@@ -1399,15 +1411,17 @@ local function menu_server_modifiers(panel)
     local but_add = vgui.Create( "DButton", panel )
     local but_rem = vgui.Create( "DButton", panel )
     local but_upd = vgui.Create( "DButton", panel )
+    but_upd:Hide()
     local but_app = vgui.Create( "DButton", panel )
+    but_app:Hide()
     panel:AddItem( but_add )
     panel:AddItem( but_rem )
     panel:AddItem( but_upd )
     panel:AddItem( but_app )
-    but_add:SetText("Add")
+    but_add:SetText("Add & apply")
     but_rem:SetText("Remove selected")
     but_upd:SetText("Restore from memory")
-    but_app:SetText("Save & apply")
+    but_app:SetText("Apply")
 
     panel:ControlHelp( "Examples:" )
     panel:ControlHelp( " - \"Overheat\" \"true\" to disable overheating." )
@@ -1416,13 +1430,28 @@ local function menu_server_modifiers(panel)
     panel:ControlHelp( " - \"RPMMultOddShot\" \"0.5\" to make every other shot 600RPM." )
 
     function but_add:DoClick()
-        listview:AddLine( string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue()) )
+        local inp, out = string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue())
+        if inp == "" then return end
+        if out == "" then return end
+        local worked = false
+        for index, line in ipairs( listview:GetLines() ) do
+            if line:GetColumnText( 1 ) == inp then
+                line:SetColumnText( 2, out )
+                worked = true
+                break
+            end
+        end
+        if !worked then
+            listview:AddLine( inp, out )
+        end
+        but_app:DoClick()
     end
 
     function but_rem:DoClick()
         for i, v in pairs(listview:GetSelected()) do
             listview:RemoveLine( v:GetID() )
         end
+        but_app:DoClick()
     end
 
     function but_upd:DoClick()
