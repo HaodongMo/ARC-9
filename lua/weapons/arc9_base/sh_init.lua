@@ -10,6 +10,8 @@ local arc9_precache_attsmodels_onfirsttake = GetConVar("arc9_precache_attsmodels
 function SWEP:Initialize()
     local owner = self:GetOwner()
 
+    self.HoldTypeDefault = self.HoldType
+
     self:SetShouldHoldType()
 
     if owner:IsNPC() then
@@ -17,6 +19,7 @@ function SWEP:Initialize()
         self:NPC_Initialize()
         return
     end
+
 
     self:SetLastMeleeTime(0)
     self:SetNthShot(0)
@@ -206,9 +209,17 @@ function SWEP:SetShouldHoldType()
         return
     end
 
-    if self:GetInSights() then
+    if self:GetInSights() and !self:GetSafe() then
         if self:GetProcessedValue("HoldTypeSights", true) then
             self:SetHoldType(self:GetProcessedValue("HoldTypeSights", true))
+
+            return
+        end
+    end
+
+    if self:GetCustomize() then
+        if self:GetProcessedValue("HoldTypeCustomize", true) then
+            self:SetHoldType(self:GetProcessedValue("HoldTypeCustomize", true))
 
             return
         end
@@ -230,15 +241,7 @@ function SWEP:SetShouldHoldType()
         end
     end
 
-    if self:GetCustomize() then
-        if self:GetProcessedValue("HoldTypeCustomize", true) then
-            self:SetHoldType(self:GetProcessedValue("HoldTypeCustomize", true))
-
-            return
-        end
-    end
-
-    self:SetHoldType(self:GetProcessedValue("HoldType", true))
+    self:SetHoldType(self:GetProcessedValue("HoldTypeDefault", true) or self:GetValue("HoldType", true))
 end
 
 function SWEP:OnDrop()
