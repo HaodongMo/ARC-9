@@ -279,7 +279,16 @@ function SWEP:DrawHUD()
     local getsight = self:GetSight()
 
 	cv1 = cv1 or GetConVar("arc9_center_reload")
-    if !self:GetReloading() and self:Clip1() <= self:GetMaxClip1()*cv1:GetFloat() then
+
+    local ubgl = self:GetUBGL()
+
+	if !ubgl then
+		mag = self:Clip1() <= self:GetMaxClip1()*cv1:GetFloat()
+	else
+		mag = self:Clip2() <= self:GetMaxClip2()*cv1:GetFloat()
+	end
+
+    if !self:GetReloading() and mag then
         local glyph = ARC9.GetBindKey("+reload")
 		local text = ARC9:GetPhrase("hud.hint.reload")
 
