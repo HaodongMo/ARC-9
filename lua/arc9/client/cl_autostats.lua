@@ -101,6 +101,7 @@ ARC9.AutoStatsMains = {
     ["VisualRecoilPunch"] = {false, true},
     ["BreathHoldTime"] = {false, false},
     ["RecoilModifierCap"] = {false, true},
+    ["BashSpeed"] = {false, false},
 }
 
 ARC9.AutoStatsOperations = {

@@ -578,6 +578,8 @@ SWEP.PostBashTime = 0.5
 SWEP.BashDamageType = DMG_CLUB
 SWEP.BashDecal = "ManhackCut"
 
+SWEP.BashSpeed = 1
+
 SWEP.BashWhileSprint = false -- Unlike ShootWhileSprint, this will not require transitioning out of sprint state (and waiting the sprinttofire delay)
 
 SWEP.BashThirdArmAnimation = {

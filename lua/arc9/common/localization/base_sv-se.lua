@@ -738,3 +738,6 @@ L["settings.hud_game.centerhint_bipod.title"] = "Visa Växla Skjutstöd"
 L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet kan växlas."
 
 L["hud.hint.reload"] = "Ladda om"
+
+-- August 4th
+L["autostat.bashspeed"] = "Närstridshastighet"

@@ -37,7 +37,6 @@ L["vi"] = "Vietnamese"
 L["zh-cn"] = "Chinese (Simplified)"
 L["zh-tw"] = "Chinese (Traditional)"
 
-
 L["autostat.damagemax"] = "Close Range Damage"
 L["autostat.damagemin"] = "Long Range Damage"
 L["autostat.damagerand"] = "Damage Variance"
@@ -783,3 +782,6 @@ L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
 
 L["hud.hint.reload"] = "Reload"
+
+-- August 4th
+L["autostat.bashspeed"] = "Melee Speed"

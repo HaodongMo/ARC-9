@@ -57,18 +57,18 @@ function SWEP:MeleeAttack(bypass, bash2)
 
     self:SetLastMeleeTime(CurTime())
 
-    self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time"))
+    self:SetNextPrimaryFire(CurTime() + (self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time") / self:GetProcessedValue("BashSpeed")))
 
-	self.SetNextAiming = CurTime() + self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time")
+	self.SetNextAiming = CurTime() + (self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time") / self:GetProcessedValue("BashSpeed"))
 
     self:SetBash2(bash2)
 
     if backstab and self:HasAnimation("backstab") then
-        self:PlayAnimation("backstab", 1, false)
+        self:PlayAnimation("backstab", 1 / self:GetProcessedValue("BashSpeed"), false)
     elseif bash2 and self:HasAnimation("bash2") then
-        self:PlayAnimation("bash2", 1, false)
+        self:PlayAnimation("bash2", 1 / self:GetProcessedValue("BashSpeed"), false)
     elseif self:HasAnimation("bash") then
-        self:PlayAnimation("bash", 1, false)
+        self:PlayAnimation("bash", 1 / self:GetProcessedValue("BashSpeed"), false)
     else
         if game.SinglePlayer() and SERVER then
             self:CallOnClient("MeleeAttack", "true")
