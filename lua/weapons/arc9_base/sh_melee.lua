@@ -59,6 +59,8 @@ function SWEP:MeleeAttack(bypass, bash2)
 
     self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time"))
 
+	self.SetNextAiming = CurTime() + self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time")
+
     self:SetBash2(bash2)
 
     if backstab and self:HasAnimation("backstab") then
