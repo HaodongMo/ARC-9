@@ -13,7 +13,7 @@ function SWEP:EnterSights()
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
     if self:GetValue("UBGL") and self:GetOwner():KeyDown(IN_USE) then return end
     if self:GetIsNearWall() then return end
-	if self:HasAnimation("bash") then
+	if self:HasAnimation("bash") and self.SetNextAiming then
 		if self.SetNextAiming > CurTime() then return end
 	end
 	
