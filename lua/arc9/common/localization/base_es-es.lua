@@ -724,10 +724,10 @@ L["settings.gameplay.mult_defaultammo.title"] = "Munición de reserva por defect
 L["settings.gameplay.mult_defaultammo.desc"] = "¿Cuántos cargadores/granadas/equipos se dan al jugador cuando coge el arma por primera vez?\n\nEsta es una variable del servidor."
 
 -- July 30th - Bipod and Debug stuff
-L["hud.hint.bipod"] = "Toggle Bipod"
+L["hud.hint.bipod"] = "Alternar Bípode"
 
-L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
-L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
+L["settings.optics.sensmult.title"] = "Multiplicar sensibilidad ADS"
+L["settings.optics.sensmult.desc"] = "Multiplique la sensibilidad de la mirada por esta cantidad al apuntar.\nCuanto menor sea el valor, menor será la sensibilidad.\nÚtil cuando se utilizan mandos, o si el usuario sólo desea una menor sensibilidad de puntería."
 
 -- August 3rd, Centered hint
 L["settings.hud_game.centerhint"] = "Consejos"
@@ -737,3 +737,6 @@ L["settings.hud_game.centerhint_bipod.title"] = "Mostrar Alternar Bípode"
 L["settings.hud_game.centerhint_bipod.desc"] = "Mostrar un consejo cuando el bípode se puede conmutar."
 
 L["hud.hint.reload"] = "Recarga"
+
+-- August 4th
+L["autostat.bashspeed"] = "Velocidad cuerpo a cuerpo"
