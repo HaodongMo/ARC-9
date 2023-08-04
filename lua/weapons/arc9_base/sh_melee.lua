@@ -53,22 +53,24 @@ function SWEP:MeleeAttack(bypass, bash2)
         prefix = "Backstab"
     end
 
+	local bashspeed = self:GetProcessedValue("BashSpeed")
+
     self:SetFreeAimAngle(angle_zero)
 
     self:SetLastMeleeTime(CurTime())
 
-    self:SetNextPrimaryFire(CurTime() + (self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time") / self:GetProcessedValue("BashSpeed")))
+    self:SetNextPrimaryFire(CurTime() + (self:GetProcessedValue("Pre" .. prefix .. "Time") / bashspeed) + (self:GetProcessedValue("Post" .. prefix .. "Time") / bashspeed))
 
-	self.SetNextAiming = CurTime() + (self:GetProcessedValue("Pre" .. prefix .. "Time") + self:GetProcessedValue("Post" .. prefix .. "Time") / self:GetProcessedValue("BashSpeed"))
+	self.SetNextAiming = CurTime() + (self:GetProcessedValue("Pre" .. prefix .. "Time") / bashspeed) + (self:GetProcessedValue("Post" .. prefix .. "Time") / bashspeed)
 
     self:SetBash2(bash2)
 
     if backstab and self:HasAnimation("backstab") then
-        self:PlayAnimation("backstab", 1 / self:GetProcessedValue("BashSpeed"), false)
+        self:PlayAnimation("backstab", 1 / bashspeed, false)
     elseif bash2 and self:HasAnimation("bash2") then
-        self:PlayAnimation("bash2", 1 / self:GetProcessedValue("BashSpeed"), false)
+        self:PlayAnimation("bash2", 1 / bashspeed, false)
     elseif self:HasAnimation("bash") then
-        self:PlayAnimation("bash", 1 / self:GetProcessedValue("BashSpeed"), false)
+        self:PlayAnimation("bash", 1 / bashspeed, false)
     else
         if game.SinglePlayer() and SERVER then
             self:CallOnClient("MeleeAttack", "true")
@@ -210,7 +212,7 @@ function SWEP:ThinkMelee()
 
     end
 
-    local prebash = self:GetProcessedValue("PreBashTime")
+    local prebash = self:GetProcessedValue("PreBashTime") / self:GetProcessedValue("BashSpeed")
 
     if self:GetBash2() then
         prebash = self:GetProcessedValue("PreBash2Time")
