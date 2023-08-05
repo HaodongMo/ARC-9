@@ -1070,6 +1070,13 @@ local function menu_client_controller(panel)
 		tex_out:SetValue( line:GetColumnText( 2 ) )
 	end
 
+	function listview:OnRowRightClick( lineID, line )
+		local menu = DermaMenu()
+		menu:AddOption( "Copy", function() tex_inp:SetValue( line:GetColumnText( 1 ) ) tex_out:SetValue( line:GetColumnText( 2 ) ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:AddOption( "Remove", function() listview:RemoveLine( lineID ) but_app:DoClick() end ):SetIcon( "icon16/cross.png" )
+		menu:Open()
+	end
+
     function but_add:DoClick()
         local inp, out = string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue())
         if inp == "" then return end
