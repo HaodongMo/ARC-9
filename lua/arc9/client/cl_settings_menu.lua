@@ -622,9 +622,23 @@ local function DrawSettings(bg, page)
             end
 
             local tw = surface.GetTextSize(freshcvar)
-            surface.SetTextColor(ARC9.GetHUDColor("hint"))
-            surface.SetTextPos(w-ARC9ScreenScale(49)-tw/2, h-ARC9ScreenScale(16))
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(25))
             surface.DrawText(freshcvar)
+
+			getcv = GetConVar(activecvar)
+			
+			if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then
+				if GetConVar(activecvar .. "_a") then ifalpha = ", " .. GetConVar(activecvar .. "_a"):GetDefault() else ifalpha = "" end
+				
+				defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. ", " .. GetConVar(activecvar .. "_g"):GetDefault() .. ", " .. GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
+			else
+				defaultvalue = GetConVar(activecvar):GetDefault()
+			end
+
+            surface.SetTextColor(ARC9.GetHUDColor("hint"))
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(16))
+            surface.DrawText(ARC9:GetPhrase("customize.presets.default") .. ": " .. defaultvalue)
         end
 
         surface.SetFont("ARC9_16")

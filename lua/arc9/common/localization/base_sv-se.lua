@@ -299,8 +299,8 @@ L["settings.optics.compensate_sens.desc"] = "Kompensera känsligheten för magni
 L["settings.optics.toggleads.title"] = "Växla Sikte"
 L["settings.optics.toggleads.desc"] = "Användning av sikten växlas."
 L["settings.optics.reflex.title"] = "Reflexsikten"
-L["settings.optics.reflex.desc"] = "Färg att använda för reflex/holografiska sikten.\n\nInte alla sikten stödjer denna funktion."
-L["settings.optics.scope.title"] = "Sikten"
+L["settings.optics.reflex.desc"] = "Färg att använda för reflex-/holografiska sikten.\n\nInte alla sikten stödjer denna funktion."
+L["settings.optics.scope.title"] = "Kikarsikten"
 L["settings.optics.scope.desc"] = "Färg att använda för magnifierade sikten.\n\nInte alla sikten stödjer denna funktion."
 
 L["settings.crosshair.cross_enable.title"] = "Aktivera Hårkors"
@@ -440,7 +440,7 @@ L["settings.attachments.atts_generateentities.desc"] = "Generera entiteter som k
 
 L["settings.modifiers.quick.title"] = "Snabbstatistik Modifierare"
 -- wawa
-L["settings.modifiers.quick.desc"] = "Vi är lite ledsna att vi inte kunde slutföra dem till släppet. Du kan använda avancerade modifierare  i spawnmeny > Options > ARC9 > Modifierare för tillfället."
+L["settings.modifiers.quick.desc"] = "Vi är lite ledsna att vi inte kunde slutföra dem till släppet. Du kan använda avancerade modifierare i spawnmeny > Options > ARC9 > Modifierare för tillfället."
 
 L["settings.controller.misc"] = "Annat"
 L["settings.controller.misc.desc"] = "Det borde vara en knapp för att öppna panelen med avancerad kontroller konfiguering, men för tillfället är det Spawnmeny > Options > ARC9 > Kontroller."
@@ -473,7 +473,7 @@ L["settings.developer.dev_getjson.title"] = "Skaffa Vapen JSON"
 
 
 L["incompatible.title"] = "ARC9: INKOMPATIBLA TILLÄGG"
-L["incompatible.line1"] = "Du har några tillägg  som är kända att inte fungera med ARC9."
+L["incompatible.line1"] = "Du har några tillägg som är kända att inte fungera med ARC9."
 L["incompatible.line2"] = "Avaktivera dem eller förvänta brutet beteende!"
 L["incompatible.confirm"] = "Bekräfta"
 L["incompatible.wait"] = "Vänta {time}s"
