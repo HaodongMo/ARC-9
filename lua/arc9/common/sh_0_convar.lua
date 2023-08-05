@@ -1367,6 +1367,7 @@ c3 = {
 }
 
 local function menu_server_modifiers(panel)
+    panel:AddControl( "header", { description = "Add ANY modifier with ANY special conditions." } )
     local listview = vgui.Create("DListView", panel)
     listview:SetSize( 99, 200 )
     panel:AddItem( listview )
@@ -1499,7 +1500,7 @@ end )
 
 local clientmenus_ti = {
     {
-        text = "REAL SETTINGS here", func = menu_arc9_settings
+        text = "REAL Settings", func = menu_arc9_settings
     },
     -- {
     --     text = "Client", func = menu_client_ti
@@ -1508,7 +1509,7 @@ local clientmenus_ti = {
     --     text = "Client - Customization", func = menu_client_customization
     -- },
     {
-        text = "Controller", func = menu_client_controller
+        text = "Super Controller", func = menu_client_controller
     },
     -- {
     --     text = "Client - Crosshair", func = menu_client_crosshair
@@ -1526,7 +1527,7 @@ local clientmenus_ti = {
     --     text = "Server - Ballistics", func = menu_server_ballistics
     -- },
     {
-        text = "Modifiers", func = menu_server_modifiers
+        text = "Super Modifiers", func = menu_server_modifiers
     },
 }
 
