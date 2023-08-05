@@ -1169,7 +1169,7 @@ local function menu_client_controller(panel)
         for k, v in SortedPairs( ARC9.CTRL_Exists ) do
             local sel, seldata = matselect_filter:GetSelected()
             if string.find( k, seldata or "" ) then
-                matselect:AddMaterial( k, "arc9/glyphs_light/" .. k .. "_lg.png" )
+                matselect:AddMaterial( k, "arc9/glyphs_dark/" .. k .. "_lg.png" )
             end
         end
 
