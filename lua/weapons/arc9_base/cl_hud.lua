@@ -290,7 +290,7 @@ function SWEP:DrawHUD()
 		mag = self:Clip2() <= self:GetMaxClip2()*cv1:GetFloat()
 	end
 
-    if	(cv1:GetFloat() > 0.00) and !rel and !throw and mag then
+    if	(cv1:GetFloat() > 0.02) and !rel and !throw and mag then
         local glyph = ARC9.GetBindKey("+reload")
 		local text = ARC9:GetPhrase("hud.hint.reload")
 
