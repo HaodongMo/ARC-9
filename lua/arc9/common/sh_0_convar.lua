@@ -1336,6 +1336,7 @@ c1 = {
     ["VisualRecoilRoll"] = true,
     ["VisualRecoilPunch"] = true,
     ["BreathHoldTime"] = true,
+    ["BashSpeed"] = true,
 }
 
 c2 = {
