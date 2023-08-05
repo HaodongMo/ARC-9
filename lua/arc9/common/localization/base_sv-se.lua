@@ -741,3 +741,6 @@ L["hud.hint.reload"] = "Ladda om"
 
 -- August 4th
 L["autostat.bashspeed"] = "Närstridshastighet"
+
+-- August 5th
+L["settings.default_convar"] = "Standard värde"

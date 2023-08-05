@@ -747,3 +747,6 @@ L["hud.hint.reload"] = "Weload!!! Now!"
 
 -- August 4th
 L["autostat.bashspeed"] = "Mewee Spewwed >w<"
+
+-- August 5th
+L["settings.default_convar"] = "defauwt wawue"

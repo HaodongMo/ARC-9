@@ -734,3 +734,6 @@ L["settings.hud_game.centerhint_bipod.title"] = "Сошки"
 L["settings.hud_game.centerhint_bipod.desc"] = "Подсказка по центру экрана о возможности установки сошек."
 
 L["hud.hint.reload"] = "Перезарядка!"
+
+-- August 5th
+L["settings.default_convar"] = "Значение по умолчанию"

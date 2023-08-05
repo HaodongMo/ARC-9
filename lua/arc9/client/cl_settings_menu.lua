@@ -612,33 +612,42 @@ local function DrawSettings(bg, page)
         surface.SetTextPos(w-ARC9ScreenScale(96), ARC9ScreenScale(26))
         surface.DrawText(activedesc != "" and ARC9:GetPhrase("settings.desc") or "") -- no title if no desc
         
-        if activecvar != "" then
+        if activecvar != "" then -- display the cvar at the bottom of the description page
             local freshcvar = ""
 
             if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then 
-                freshcvar = activecvar .. "_r/_g/_b" .. (GetConVar(activecvar .. "_a") and "_a" or "")
+                freshcvar = activecvar .. "_r/_g/_b" .. (GetConVar(activecvar .. "_a") and "/_a" or "")
             else
                 freshcvar = activecvar .. " " .. (GetConVar(activecvar):GetString() or "")
             end
 
             local tw = surface.GetTextSize(freshcvar)
             surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(25))
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(30))
             surface.DrawText(freshcvar)
 
-			getcv = GetConVar(activecvar)
+			if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then -- also display the default value of said cvar
 			
-			if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then
-				if GetConVar(activecvar .. "_a") then ifalpha = ", " .. GetConVar(activecvar .. "_a"):GetDefault() else ifalpha = "" end
+				if GetConVar(activecvar .. "_a") then ifalpha = "," .. GetConVar(activecvar .. "_a"):GetDefault() else ifalpha = "" end -- check if an alpha convar also exists
 				
-				defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. ", " .. GetConVar(activecvar .. "_g"):GetDefault() .. ", " .. GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
+				if string.len(ARC9:GetPhrase("settings.default_convar")) > 17 then -- if the string is over 17 characters long, then make it two value displays
+					defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. "," .. GetConVar(activecvar .. "_g"):GetDefault() .. ","
+					defaultvalue2 = GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
+				else -- otherwise, only use one
+					defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. "," .. GetConVar(activecvar .. "_g"):GetDefault() .. "," .. GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
+					defaultvalue2 = ""
+				end
 			else
 				defaultvalue = GetConVar(activecvar):GetDefault()
+				defaultvalue2 = ""
 			end
 
             surface.SetTextColor(ARC9.GetHUDColor("hint"))
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(16))
-            surface.DrawText(ARC9:GetPhrase("customize.presets.default") .. ": " .. defaultvalue)
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(22.5))
+            surface.DrawText(ARC9:GetPhrase("settings.default_convar") .. ": " .. defaultvalue)
+
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(15))
+            surface.DrawText(defaultvalue2)
         end
 
         surface.SetFont("ARC9_16")

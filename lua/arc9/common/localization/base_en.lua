@@ -785,3 +785,6 @@ L["hud.hint.reload"] = "Reload"
 
 -- August 4th
 L["autostat.bashspeed"] = "Melee Speed"
+
+-- August 5th
+L["settings.default_convar"] = "Default value"
