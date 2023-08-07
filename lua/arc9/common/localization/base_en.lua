@@ -788,3 +788,6 @@ L["autostat.bashspeed"] = "Melee Speed"
 
 -- August 5th
 L["settings.default_convar"] = "Default value"
+
+-- August 7th
+L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
