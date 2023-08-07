@@ -271,13 +271,14 @@ end
 local bipodhint = 0 -- alpha
 local bipodhintstate = false -- enter or exit
 
-local cv1, cv2, cv3
+local cv1, cv2, cv3, cv4
 
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
     local scrw, scrh = ScrW(), ScrH()
     local getsight = self:GetSight()
 
+	cv4 = cv4 or GetConVar("arc9_center_reload_enable")
 	cv1 = cv1 or GetConVar("arc9_center_reload")
 
     local ubgl = self:GetUBGL()
@@ -290,7 +291,7 @@ function SWEP:DrawHUD()
 		mag = self:Clip2() <= self:GetMaxClip2()*cv1:GetFloat()
 	end
 
-    if	(cv1:GetFloat() > 0.02) and !rel and !throw and mag then
+    if cv4:GetBool() and (cv1:GetFloat() > 0.02) and !rel and !throw and mag then
         local glyph = ARC9.GetBindKey("+reload")
 		local text = ARC9:GetPhrase("hud.hint.reload")
 
