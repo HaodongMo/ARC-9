@@ -209,7 +209,8 @@ function SWEP:Holster(wep)
         -- Prepare the holster and set up the timer
         if self:HasAnimation("holster") then
             local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1), true, false) or 0
-            self:SetHolsterTime(CurTime() + animation)
+			local alength = self:GetAnimationEntry(self:TranslateAnimation("holster")).MinProgress or animation
+            self:SetHolsterTime(CurTime() + alength)
             self:SetHolster_Entity(wep)
         else
             self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)))
