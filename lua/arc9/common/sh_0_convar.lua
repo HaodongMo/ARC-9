@@ -305,7 +305,7 @@ local conVars = {
     },
     {
         name = "center_reload",
-        default = "0.25",
+        default = "0",
         client = true,
     },
     {
