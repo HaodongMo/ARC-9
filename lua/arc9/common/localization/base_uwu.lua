@@ -750,6 +750,3 @@ L["autostat.bashspeed"] = "Mewee Spewwed >w<"
 
 -- August 5th
 L["settings.default_convar"] = "defauwt wawue"
-
--- August 7th
-L["settings.hud_game.centerhint_reload_percent.title"] = "Magawine Pewcentwage"

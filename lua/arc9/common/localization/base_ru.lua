@@ -737,6 +737,3 @@ L["hud.hint.reload"] = "Перезарядка!"
 
 -- August 5th
 L["settings.default_convar"] = "Значение по умолчанию"
-
--- August 7th
-L["settings.hud_game.centerhint_reload_percent.title"] = "Процент магазина"
