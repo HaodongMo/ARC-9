@@ -732,7 +732,7 @@ L["settings.optics.sensmult.desc"] = "Multiplique la sensibilidad de la mirada p
 -- August 3rd, Centered hint
 L["settings.hud_game.centerhint"] = "Consejos"
 L["settings.hud_game.centerhint_reload.title"] = "Mostrar Consejo de Recarga"
-L["settings.hud_game.centerhint_reload.desc"] = "Muestra un aviso de recarga cuando el cargador actual está en el porcentaje especificado."
+-- L["settings.hud_game.centerhint_reload.desc"] = "Muestra un aviso de recarga cuando el cargador actual está en el porcentaje especificado."
 L["settings.hud_game.centerhint_bipod.title"] = "Mostrar Alternar Bípode"
 L["settings.hud_game.centerhint_bipod.desc"] = "Mostrar un consejo cuando el bípode se puede conmutar."
 
@@ -740,3 +740,13 @@ L["hud.hint.reload"] = "Recarga"
 
 -- August 4th
 L["autostat.bashspeed"] = "Velocidad cuerpo a cuerpo"
+
+-- August 5th
+L["settings.default_convar"] = "Default value"
+
+-- August 7th
+L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
+
+-- August 8th
+L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
+L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."

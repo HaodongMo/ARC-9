@@ -284,6 +284,7 @@ function SWEP:DrawHUD()
     local ubgl = self:GetUBGL()
 	local rel = self:GetReloading()
 	local throw = self.Throwable
+	local primbash = self.PrimaryBash
 
 	if !ubgl then
 		mag = self:Clip1() <= self:GetMaxClip1()*cv1:GetFloat()
@@ -291,23 +292,25 @@ function SWEP:DrawHUD()
 		mag = self:Clip2() <= self:GetMaxClip2()*cv1:GetFloat()
 	end
 
-    if cv4:GetBool() and (cv1:GetFloat() > 0.02) and !rel and !throw and mag then
-        local glyph = ARC9.GetBindKey("+reload")
-		local text = ARC9:GetPhrase("hud.hint.reload")
+    if (cv4:GetBool() and (cv1:GetFloat() > 0.02)) then
+		if !rel and !throw and !primbash and mag then
+			local glyph = ARC9.GetBindKey("+reload")
+			local text = ARC9:GetPhrase("hud.hint.reload")
 
-        if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
-        if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
-        if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/glyphs_light/" .. glyph .. "_lg" .. ".png", "smooth" ) end
+			if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
+			if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
+			if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/glyphs_light/" .. glyph .. "_lg" .. ".png", "smooth" ) end
 
-        surface.SetTextColor(255, 255, 255, 255)
-        surface.SetDrawColor(255, 255, 255, 255)
-        surface.SetFont("ARC9_16")
-        local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 + ScreenScale(56), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(8) })
+			surface.SetTextColor(255, 255, 255, 255)
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.SetFont("ARC9_16")
+			local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 + ScreenScale(56), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(8) })
 
-        surface.SetFont("ARC9_10")
-        local tw = surface.GetTextSize(text)
-        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(66))
-        surface.DrawText(text)
+			surface.SetFont("ARC9_10")
+			local tw = surface.GetTextSize(text)
+			surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(66))
+			surface.DrawText(text)
+		end
     end
 
     if self:GetSightAmount() > 0.75 and getsight.FlatScope and getsight.FlatScopeOverlay then

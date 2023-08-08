@@ -181,8 +181,8 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_game.breath_pp.title", convar = "breath_pp", desc = "settings.hud_game.breath_pp.desc" },
 
         { type = "label", text = "settings.hud_game.centerhint" },
-        { type = "bool", text = "settings.hud_game.centerhint_reload.title", convar = "center_reload_enable", desc = "settings.hud_game.center_reload_enable.desc" },
-        { type = "slider", min = 0, max = 1, decimals = 2, text = "settings.hud_game.centerhint_reload_percent.title", convar = "center_reload", desc = "settings.hud_game.centerhint_reload.desc" },
+        { type = "bool", text = "settings.hud_game.centerhint_reload.title", convar = "center_reload_enable", desc = "settings.hud_game.centerhint_reload.desc" },
+        { type = "slider", min = 0, max = 1, decimals = 2, text = "settings.hud_game.centerhint_reload_percent.title", convar = "center_reload", desc = "settings.hud_game.centerhint_reload_percent.desc" },
         { type = "bool", text = "settings.hud_game.centerhint_bipod.title", convar = "center_bipod", desc = "settings.hud_game.centerhint_bipod.desc" },
     },
     {

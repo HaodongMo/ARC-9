@@ -733,7 +733,7 @@ L["settings.optics.sensmult.desc"] = "Multiplicerar titta runt känsligheten med
 -- August 3rd, Centered hint
 L["settings.hud_game.centerhint"] = "Verktygstips"
 L["settings.hud_game.centerhint_reload.title"] = "Visa Omladdning Tips"
-L["settings.hud_game.centerhint_reload.desc"] = "Visar ett omladdning tips när det nuvarande magasinet är vid den specifierade procentantalet."
+-- L["settings.hud_game.centerhint_reload.desc"] = "Visar ett omladdning tips när det nuvarande magasinet är vid den specifierade procentantalet."
 L["settings.hud_game.centerhint_bipod.title"] = "Visa Växla Skjutstöd"
 L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet kan växlas."
 
@@ -744,3 +744,10 @@ L["autostat.bashspeed"] = "Närstridshastighet"
 
 -- August 5th
 L["settings.default_convar"] = "Standard värde"
+
+-- August 7th
+L["settings.hud_game.centerhint_reload_percent.title"] = "Magasinprocent"
+
+-- August 8th
+L["settings.hud_game.centerhint_reload.desc"] = "Visar ett omladdning tips när ammunition är lågt."
+L["settings.hud_game.centerhint_reload_percent.desc"] = "Visar omladdningstipset när det nuvarande magasinet är vid detta procentvärde."

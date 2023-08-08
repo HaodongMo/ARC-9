@@ -135,20 +135,20 @@ L["hud.version"] = "ARCTIC SYSTEMS HUD v"
 L["hud.jammed"] = "JAMMED!"
 L["hud.therm_deco"] = "BARREL TEMP"
 
-L["hud.hint.ubgl"] = "비녀장"
-L["hud.hint.switchsights"] = "범위 변경"
-L["hud.hint.zoom"] = "줌 변경"
-L["hud.hint.breath"] = "숨을 참다"
-L["hud.hint.bash"] = "난투"
-L["hud.hint.inspect"] = "검사"
-L["hud.hint.switchsights"] = "범위 변경"
-L["hud.hint.firemode"] = "발사 모드 변경"
-L["hud.hint.cycle"] = "주기"
-L["hud.hint.toggleatts"] = "첨부 파일 전환"
-L["hud.hint.peek"] = "몰래 엿보다"
-L["hud.hint.customize"] = "커스터마이징"
-L["hud.hint.safe"] = "안전 토글"
-L["hud.hint.lean"] = "기대다"
+L["hud.hint.ubgl"] = "Toggle"
+L["hud.hint.switchsights"] = "Switch Sights"
+L["hud.hint.zoom"] = "Change Zoom"
+L["hud.hint.breath"] = "Hold Breath"
+L["hud.hint.bash"] = "Bash"
+L["hud.hint.inspect"] = "Inspect"
+L["hud.hint.switchsights"] = "Switch Sights"
+L["hud.hint.firemode"] = "Switch Firemode"
+L["hud.hint.cycle"] = "Cycle"
+L["hud.hint.toggleatts"] = "Toggle Attachments"
+L["hud.hint.peek"] = "Peek"
+L["hud.hint.customize"] = "Customize"
+L["hud.hint.safe"] = "Toggle Safe"
+L["hud.hint.lean"] = "Lean"
 
 L["autostat.enable.pre"] = "Enables"
 L["autostat.disable.pre"] = "Disables"
@@ -163,12 +163,12 @@ L["ammo.buckshot"] = "Shotgun Ammo"
 L["ammo.sniperpenetratedround"] = "Sniper Ammo"
 L["ammo.smg1_grenade"] = "Rifle Grenades"
 
-L["customize.panel.customize"] = "커스터마이징"
-L["customize.panel.personalize"] = "개인화"
-L["customize.panel.stats"] = "통계 및 탄도"
-L["customize.panel.trivia"] = "하찮은 일"
-L["customize.panel.inspect"] = "검사하다"
-L["customize.panel.presets"] = "프리셋"
+L["customize.panel.customize"] = "CUSTOMIZE"
+L["customize.panel.personalize"] = "PERSONALIZE"
+L["customize.panel.stats"] = "STATS & BALLISTICS"
+L["customize.panel.trivia"] = "TRIVIA"
+L["customize.panel.inspect"] = "INSPECT"
+L["customize.panel.presets"] = "Presets"
 
 L["customize.stats.firepower"] = "Firepower"
 L["customize.stats.rof"] = "ROF"
@@ -444,8 +444,8 @@ L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't fini
 
 L["settings.controller.misc"] = "Misc"
 L["settings.controller.misc.desc"] = "There should be button that will open panel with advanced controller config, but for now it is in  spawnmenu > Options > ARC9 > Controller."
-L["settings.controller.controller.title"] = "Controller Glyphs"
-L["settings.controller.controller.desc"] = "Enable custom controller-compatible glyphs, showing controller buttons instead of the default keys."
+L["settings.controller.controller.title"] = "Engage Super Controller Mode"
+L["settings.controller.controller.desc"] = "Enable custom controller-compatible actions\n'Use' is M1\n'Reload' is M2\nBind actions to glyphs in the secret settings"
 L["settings.controller.controller_rumble.title"] = "Rumble"
 L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Advanced config"
@@ -733,3 +733,27 @@ L["settings.gameplay.equipment_generate_ammo.title"] = "Unique Ammo Types for Eq
 L["settings.gameplay.equipment_generate_ammo.desc"] = "There is a limit of 255 ammo types, and disabling this option may help fix some problems if you have lots of addons.\n\nThis is a server variable.\n\nRequires restart."
 L["settings.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
 L["settings.gameplay.mult_defaultammo.desc"] = "How many magazines/grenades/equipment give to player when he takes weapon for first time?\n\nThis is a server variable."
+
+-- July 30th - Bipod and Debug stuff
+L["hud.hint.bipod"] = "Toggle Bipod"
+
+L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
+L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
+
+-- August 3rd, Centered hint
+L["settings.hud_game.centerhint"] = "Tooltips"
+L["settings.hud_game.centerhint_reload.title"] = "Display Reload Tip"
+L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when the current magazine is at the specified percentage."
+L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
+L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
+
+L["hud.hint.reload"] = "Reload"
+
+-- August 4th
+L["autostat.bashspeed"] = "Melee Speed"
+
+-- August 5th
+L["settings.default_convar"] = "Default value"
+
+-- August 7th
+L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"

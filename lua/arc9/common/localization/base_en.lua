@@ -777,7 +777,7 @@ L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amou
 -- August 3rd, Centered hint
 L["settings.hud_game.centerhint"] = "Tooltips"
 L["settings.hud_game.centerhint_reload.title"] = "Display Reload Tip"
-L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when the current magazine is at the specified percentage."
+-- L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when the current magazine is at the specified percentage."
 L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
 
@@ -791,3 +791,7 @@ L["settings.default_convar"] = "Default value"
 
 -- August 7th
 L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
+
+-- August 8th
+L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
+L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."

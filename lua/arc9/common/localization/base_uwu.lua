@@ -739,7 +739,7 @@ L["hud.hint.bipod"] = "Towgl bipOwOd >w<"
 -- August 3rd, Centered hint
 L["settings.hud_game.centerhint"] = "Centewed Hiwnts uwu"
 L["settings.hud_game.centerhint_reload.title"] = "Centew weload hint"
-L["settings.hud_game.centerhint_reload.desc"] = "Centewed weload hint dependwing on de percentage sewected"
+-- L["settings.hud_game.centerhint_reload.desc"] = "Centewed weload hint dependwing on de percentage sewected"
 L["settings.hud_game.centerhint_bipod.title"] = "Centew bipowod hint"
 L["settings.hud_game.centerhint_bipod.desc"] = "Centewed bipowod hint"
 
@@ -753,3 +753,7 @@ L["settings.default_convar"] = "defauwt wawue"
 
 -- August 7th
 L["settings.hud_game.centerhint_reload_percent.title"] = "Magawine Pewcentwage"
+
+-- August 8th
+L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
+L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
