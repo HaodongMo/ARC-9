@@ -742,11 +742,11 @@ L["hud.hint.reload"] = "Recarga"
 L["autostat.bashspeed"] = "Velocidad cuerpo a cuerpo"
 
 -- August 5th
-L["settings.default_convar"] = "Default value"
+L["settings.default_convar"] = "Valor predeterminado"
 
 -- August 7th
-L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
+L["settings.hud_game.centerhint_reload_percent.title"] = "Porcentaje de Cargador"
 
 -- August 8th
-L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
-L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
+L["settings.hud_game.centerhint_reload.desc"] = "Muestra un aviso de recarga cuando te quede poca munición."
+L["settings.hud_game.centerhint_reload_percent.desc"] = "Muestra un consejo de recarga cuando el cargador actual está en este valor porcentual."
