@@ -166,6 +166,7 @@ function SWEP:ViewModelDrawn()
     self:DrawFlashlightsVM()
 
     self:DrawLasers(false)
+    self:GetVM():SetMaterial("")
 end
 
 function SWEP:PostDrawViewModel()
