@@ -1211,12 +1211,19 @@ function SWEP:CreateCustomizeHUD()
                 surface.SetMaterial(mat_info)
                 surface.SetDrawColor(ARC9.GetHUDColor("fg", tipalpha))
                 surface.DrawTexturedRect(ARC9ScreenScale(8), ARC9ScreenScale(2), ARC9ScreenScale(10), ARC9ScreenScale(10))
+				
+				-- local btw = surface.GetTextSize(tiptext)
+				-- local bw, bh = btw + ARC9ScreenScale(4), ARC9ScreenScale(10)
+				
+                -- surface.SetDrawColor(ARC9.GetHUDColor("shadow", (tipalpha * 3)))
+                -- surface.DrawRect(ARC9ScreenScale(20), ARC9ScreenScale(1.5), bw, bh)
 
                 surface.SetFont("ARC9_10")
                 surface.SetTextPos(ARC9ScreenScale(22), ARC9ScreenScale(2))
                 surface.SetTextColor(ARC9.GetHUDColor("fg", tipfade))
                 -- surface.DrawText(tiptext)
                 ARC9.DrawTextRot(self2, tiptext, ARC9ScreenScale(22), 0, ARC9ScreenScale(22), ARC9ScreenScale(2), w - strreturn - ARC9ScreenScale(32), false)
+
             end
         end
 

@@ -641,7 +641,7 @@ L["tips.settings"] = "Du kan stänga av dessa tips, och mycket mer, via ARC9-ins
 L["settings.hud_cust.cust_tips.title"] = "Tips (Gränssnitt)"
 L["settings.hud_cust.cust_tips.desc"] = "Tips om ARC9-basen nära tipsen."
 
-L["tips.description"] = "Vi föreslår att du läser beskrivningen på tilläggen innan du kommenterar.."
+L["tips.description"] = "Vi föreslår att du läser beskrivningen på tilläggen innan du kommenterar."
 L["tips.m9k"] = "Checka ut M9K-vapnen!"
 
 

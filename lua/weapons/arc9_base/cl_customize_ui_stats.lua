@@ -241,7 +241,8 @@ function SWEP:CreateHUD_Stats()
             desc = "customize.stats.explain.ammo",
             stat = "Ammo",
             conv = function(a)
-                return language.GetPhrase(a .. "_ammo")
+                -- return language.GetPhrase(a .. "_ammo")
+                return ARC9:GetPhrase("ammo." .. a)
             end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("InfiniteAmmo")
@@ -363,13 +364,13 @@ function SWEP:CreateHUD_Stats()
                     else
                         if k.Mode then
                             if k.Mode == 0 then
-                                str = str .. "SAFE, "
+                                str = str .. ARC9:GetPhrase("hud.firemode.safe") .. ", "
                             elseif k.Mode < 0 then
-                                str = str .. "AUTO, "
+                                str = str .. ARC9:GetPhrase("hud.firemode.auto") .. ", "
                             elseif k.Mode == 1 then
-                                str = str .. "SEMI, "
+                                str = str .. ARC9:GetPhrase("hud.firemode.single") .. ", "
                             elseif k.Mode > 1 then
-                                str = str .. tostring(k.Mode) .. "-BURST, "
+                                str = str .. tostring(k.Mode) .. "-" .. ARC9:GetPhrase("hud.firemode.burst") .. ", "
                             end
                         end
                     end
@@ -594,6 +595,8 @@ function SWEP:CreateHUD_Stats()
                 ry = ry + ARC9ScreenScale(8)
 
                 local desc = ARC9:GetPhrase(self2.stats.desc) or self2.stats.desc
+				
+				-- self.CustomizeHints["customize.hint.select"] = self2.stats.desc
 
                 surface.SetFont("ARC9_10")
                 local btw = surface.GetTextSize(desc)
@@ -601,11 +604,11 @@ function SWEP:CreateHUD_Stats()
                 local bw, bh = btw + ARC9ScreenScale(8), ARC9ScreenScale(16)
 
                 if self2:GetY() + ry >= ARC9ScreenScale(60) then
-                    ry = ry - ARC9ScreenScale(60)
+                    ry = ry - ARC9ScreenScale(25)
                 end
 
-                if self2:GetX() + rx + bw >= ScrW() then
-                    rx = rx - bw
+                if self2:GetX() + rx + bw >= (ScrW() - 250) then
+                    rx = rx - bw - 25
                 end
 
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow", 253))
