@@ -1398,6 +1398,9 @@ SWEP.SuppressCumulativeShoot = false -- fire_1, fire_2, and fire_3 will not auto
 SWEP.InstantSprintIdle = false -- Instantly go to idle_sprint instead of playing enter_sprint.
 SWEP.InstantSightIdle = false -- Instantly go to idle_sights instead of playing enter_sights.
 
+SWEP.NoFireDuringSighting = false -- Makes enter_sights and exit_sights be important animations, no fire and other anims allowed. Slightly changes jam behaviour
+
+
 SWEP.Primary.Automatic = true
 SWEP.Primary.DefaultClip = -1
 

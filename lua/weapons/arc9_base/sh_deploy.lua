@@ -53,6 +53,8 @@ function SWEP:Deploy()
     self:SetGrenadeRecovering(false)
     self:SetUBGL(false)
     self:SetLeanAmount(0)
+    
+    self.StartedFixingJam = nil
 
     self:SetGrenadePrimed(false)
 

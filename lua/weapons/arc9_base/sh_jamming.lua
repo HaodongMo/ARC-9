@@ -9,7 +9,7 @@ function SWEP:RollJam()
             self:SetJammed(true)
         end
 
-        self:ExitSights()
+        -- self:ExitSights()
         self:PlayAnimation("jam", 1, true)
         local soundtab1 = {
             name = "jam",
@@ -42,15 +42,30 @@ function SWEP:DoHeat()
 end
 
 function SWEP:FixHeat()
-    if self:StillWaiting() then return end
+    if self:StillWaiting() and !self.NoFireDuringSighting then return end
 
-    self:ExitSights()
-    self:PlayAnimation("fix", self:GetProcessedValue("OverheatTime"), true)
-    self:SetJammed(false)
+    -- self:ExitSights()
 
-    if self:GetProcessedValue("HeatFix", true) then
-        self:SetHeatAmount(0)
-    end
+    -- self:PlayAnimation("fix", self:GetProcessedValue("OverheatTime"), true)
+    -- self:SetJammed(false)
+
+    -- if self:GetProcessedValue("HeatFix", true) then
+    --     self:SetHeatAmount(0)
+    -- end
+
+    
+    self.StartedFixingJam = true
+    local t = self:PlayAnimation("fix", self:GetProcessedValue("OverheatTime"), true)
+    self:SetInSights(false)
+
+    self:SetTimer(t * 0.8, function()
+        self:SetJammed(false)
+
+        if self:GetProcessedValue("HeatFix", true) then
+            self:SetHeatAmount(0)
+        end
+        self.StartedFixingJam = nil
+    end, "jamtimer")
 end
 
 function SWEP:ThinkHeat(dt)
@@ -69,7 +84,7 @@ function SWEP:ThinkHeat(dt)
             self:SetHeatLockout(false)
         end
 
-        if self:GetJammed() then
+        if self:GetJammed() and !self.StartedFixingJam then
             self:FixHeat()
         end
 
@@ -78,7 +93,17 @@ function SWEP:ThinkHeat(dt)
 end
 
 function SWEP:UnJam()
-    if self:StillWaiting() then return end
-    self:SetJammed(false)
-    self:PlayAnimation("fix", 1, true)
+    if self:StillWaiting() and !self.NoFireDuringSighting then return end
+    -- self:SetJammed(false)
+
+    -- self:PlayAnimation("fix", 1, true)
+
+    self.StartedFixingJam = true
+    local t = self:PlayAnimation("fix", 1, true)
+    self:SetInSights(false)
+
+    self:SetTimer(t * 0.8, function()
+        self:SetJammed(false)
+        self.StartedFixingJam = nil
+    end, "jamtimer")
 end

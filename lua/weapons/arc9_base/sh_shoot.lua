@@ -315,6 +315,7 @@ function SWEP:DoPrimaryAttack()
     local processedValue = self.GetProcessedValue
 
     if self:StillWaiting() then return end
+    if self.NoFireDuringSighting and (self:GetInSights() and self:GetSightAmount() < 0.8 or false) then return end
 
     local currentFiremode = self:GetCurrentFiremode()
     local burstCount = self:GetBurstCount()
