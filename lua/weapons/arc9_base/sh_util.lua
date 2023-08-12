@@ -6,7 +6,8 @@ end
 
 function SWEP:DoPlayerAnimationEvent(event)
     -- if CLIENT and self:ShouldTPIK() then return end
-    if event then self:GetOwner():DoAnimationEvent(event) end
+    if event then self:GetOwner():AnimRestartGesture(1, event, true) end
+    if SERVER then self:CallOnClient("DoPlayerAnimationEvent", event) end
 end
 
 function SWEP:PlayTranslatedSound(soundtab)
