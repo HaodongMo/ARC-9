@@ -1,5 +1,7 @@
 L = {}
 
+--L["font"] = "Exo Regular"
+
 L["autostat.damagemax"] = "Maximalschaden"
 L["autostat.damagemin"] = "Minimalschaden"
 L["autostat.damagerand"] = "Damage Variance"

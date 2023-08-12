@@ -1,5 +1,7 @@
 L = {}
 
+--L["font"] = "Exo Regular"
+
 L["autostat.damagemax"] = "Clowose Wange Dawage"
 L["autostat.damagemin"] = "Lowong Wange Dawage"
 L["autostat.damagerand"] = "Dawage Owarawriance"

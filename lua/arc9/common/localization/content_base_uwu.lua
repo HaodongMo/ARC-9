@@ -1,5 +1,11 @@
 L = {}
 
+-- Folders
+L["folder.arc9"] = "ARC9"
+L["folder.arc9.community"] = "Commuwnity"
+
+L["attachment.sticker"] = "Stickew"
+
 -- Flat Camo
 L["camo_arc9_base_flat_od.printname"] = "Owiwe Dwab"
 L["camo_arc9_base_flat_od.compactname"] = "OD"

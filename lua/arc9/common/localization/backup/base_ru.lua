@@ -1,5 +1,7 @@
 L = {}
 
+--L["font"] = "Exo Regular"
+
 L["autostat.damagemax"] = "Урон вблизи"
 L["autostat.damagemin"] = "Урон на расстоянии"
 L["autostat.damagerand"] = "Разброс урона"
