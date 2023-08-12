@@ -14,7 +14,7 @@ function SWEP:ShouldTPIK()
     if render.GetDXLevel() < 90 then return end
     if !owner:IsPlayer() then return end
     if owner:IsPlayingTaunt() then return end
-    if owner:InVehicle() then return end
+    if owner:InVehicle() and !owner:GetAllowWeaponsInVehicle() then return end
     if owner.ARC9_HoldingProp then return end
     if !self.MirrorVMWM then return end
     if self:ShouldLOD() == 2 then return end
