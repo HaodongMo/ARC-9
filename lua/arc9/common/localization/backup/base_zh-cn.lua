@@ -1,5 +1,8 @@
 L = {}
 
+L["font"] = "Microsoft YaHei Bold"
+L["unscaled_font"] = "Microsoft YaHei"
+
 L["autostat.damagemax"] = "近距离伤害"
 L["autostat.damagemin"] = "远距离伤害"
 L["autostat.damagerand"] = "伤害随机性"

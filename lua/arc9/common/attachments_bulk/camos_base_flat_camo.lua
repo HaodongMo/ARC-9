@@ -9,7 +9,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_od"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 4
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_od")
 
@@ -24,7 +24,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_deserttan"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 3
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_deserttan")
 
@@ -39,7 +39,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_arctic"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 7
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_arctic")
 
@@ -54,7 +54,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_black"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 1
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_black")
 
@@ -69,7 +69,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_urbangray"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 6
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_urbangray")
 
@@ -84,7 +84,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_forestgreen"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 5
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_forestgreen")
 
@@ -99,7 +99,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_navy"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 8
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_navy")
 
@@ -114,7 +114,7 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_mountbattenpink"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 9
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_mountbattenpink")
 
@@ -129,6 +129,6 @@ ATT.MenuCategory = "ARC9 - Camos"
 ATT.CustomCamoTexture = "models/weapons/arc9/camo/arc9_flatcamo/vtf/flat_fde"
 ATT.CustomCamoScale = 1
 ATT.SortOrder = 2
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ARC9.LoadAttachment(ATT, "camo_arc9_base_flat_fde")

@@ -227,7 +227,7 @@ ATT.Category = {"charm", "gunscreen"}
 
 ATT.Attachments = {
     {
-        PrintName = "STICKER",
+        PrintName = ARC9:GetPhrase("attachment.sticker"),
         StickerModel = "models/items/arc9/sticker_screenbase.mdl",
         Category = "stickers",
         Pos = Vector(0, 0, 0),

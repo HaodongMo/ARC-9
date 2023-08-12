@@ -14,7 +14,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ATT.StickerMaterial = "stickers/arc9_lowvis"
 
@@ -34,7 +34,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ATT.StickerMaterial = "stickers/arc9"
 
@@ -53,7 +53,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ATT.StickerMaterial = "stickers/a9k"
 
@@ -73,7 +73,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ATT.StickerMaterial = "stickers/a9cylo"
 
@@ -93,7 +93,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/alien_lean"
 
@@ -134,7 +134,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/tomatocat"
 
@@ -154,7 +154,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/actionbird"
 
@@ -174,7 +174,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/warcrimes"
 
@@ -194,7 +194,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/sillycat"
 
@@ -214,7 +214,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/muertosskull"
 
@@ -234,7 +234,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/bandaid"
 
@@ -254,7 +254,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/peacedove"
 
@@ -274,7 +274,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/borntomodify"
 
@@ -294,7 +294,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/cad"
 
@@ -314,7 +314,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/fumo"
 
@@ -334,7 +334,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/hotlead"
 
@@ -354,7 +354,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Base"
+ATT.Folder = ARC9:GetPhrase("folder.arc9")
 
 ATT.StickerMaterial = "stickers/sus9"
 
@@ -374,7 +374,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/steamhappy"
 
@@ -394,7 +394,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/amidstus"
 
@@ -414,7 +414,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/arcglory"
 
@@ -434,7 +434,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/wp"
 
@@ -454,7 +454,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/tonkr"
 
@@ -474,7 +474,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/s6amblem"
 
@@ -494,7 +494,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/babies"
 
@@ -514,7 +514,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/drawberf"
 
@@ -534,7 +534,7 @@ ATT.SortOrder = 0
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "Com. wave 1"
+ATT.Folder = ARC9:GetPhrase("folder.arc9") .. "/" .. ARC9:GetPhrase("folder.arc9.community")
 
 ATT.StickerMaterial = "stickers/arc_bird"
 

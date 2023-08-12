@@ -1,5 +1,7 @@
 L = {}
 
+--L["font"] = "Exo Regular"
+
 L["autostat.damagemax"] = "Närdistans Skada"
 L["autostat.damagemin"] = "Långdistans Skada"
 L["autostat.damagerand"] = "Skadevariering"
