@@ -450,8 +450,12 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
     if !selecticon then return end
 
     self.WepSelectIcon = selecticon:GetTexture("$basetexture")
+    if self:GetJammed() then  
+        surface.SetDrawColor(200, 50, 50, a)
+    else
+        surface.SetDrawColor(255, 255, 255, a)
+    end
 
-    surface.SetDrawColor(255, 255, 255, a)
     surface.SetMaterial(selecticon)
     if w > h then
         y = y - ((w - h) / 2)

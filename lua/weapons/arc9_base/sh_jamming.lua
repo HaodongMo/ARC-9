@@ -43,7 +43,7 @@ end
 
 function SWEP:FixHeat()
     if self:StillWaiting() and !self.NoFireDuringSighting then return end
-
+    if self.StartedFixingJam then return end
     -- self:ExitSights()
 
     -- self:PlayAnimation("fix", self:GetProcessedValue("OverheatTime"), true)
@@ -94,6 +94,7 @@ end
 
 function SWEP:UnJam()
     if self:StillWaiting() and !self.NoFireDuringSighting then return end
+    if self.StartedFixingJam then return end
     -- self:SetJammed(false)
 
     -- self:PlayAnimation("fix", 1, true)
