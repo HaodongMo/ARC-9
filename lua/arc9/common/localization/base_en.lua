@@ -270,6 +270,7 @@ L["autostat.secondary.sights"] = "in Sights"
 L["autostat.secondary.silenced"] = "when Silenced"
 L["autostat.secondary.true"] = "when TrueNames is on"
 L["autostat.secondary.ubgl"] = "in UBGL"
+L["autostat.secondary.bipod"] = "on Bipod"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 Attachment Blacklist"

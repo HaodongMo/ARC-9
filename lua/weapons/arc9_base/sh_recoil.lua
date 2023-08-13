@@ -337,7 +337,7 @@ function SWEP:DoVisualRecoil()
         local punch = self:GetProcessedValue("VisualRecoilPunch") * mult
 
         if self.VisualRecoilDoingFunc then
-            up, side, roll, punch = self.VisualRecoilDoingFunc(up, side, roll, punch, self:GetRecoilAmount())
+            up, side, roll, punch = self.VisualRecoilDoingFunc(up, side, roll, punch, self:GetRecoilAmount(), self)
         end
 
         local fake = 0
