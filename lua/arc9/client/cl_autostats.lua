@@ -199,7 +199,8 @@ ARC9.AutoStatsConditions = {
     ["Recoil"] = "With Each Shot",
     ["Move"] = "While Moving",
     ["BlindFire"] = "While Blind Firing",
-    ["UBGL"] = "In UBGL"
+    ["UBGL"] = "In UBGL",
+    ["Bipod"] = "On Bipod",
 }
 
 function ARC9.GetProsAndCons(atttbl, weapon)
