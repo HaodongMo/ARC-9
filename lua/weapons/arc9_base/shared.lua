@@ -1399,7 +1399,8 @@ SWEP.InstantSprintIdle = false -- Instantly go to idle_sprint instead of playing
 SWEP.InstantSightIdle = false -- Instantly go to idle_sights instead of playing enter_sights.
 
 SWEP.NoFireDuringSighting = false -- Makes enter_sights and exit_sights be important animations, no fire and other anims allowed. Slightly changes jam behaviour
-
+SWEP.SightIsAlsoBipodAnims = false -- Weapons on bipod will use _sights suffix instead of _bipod
+SWEP.UnbipodOnLockAnims = false -- Reloads/jams/draw/holsters/etc will unbipod weapon (but still call _bipod (or _sights ^) version of anim) without calling exit_bipod/exit_sights
 
 SWEP.Primary.Automatic = true
 SWEP.Primary.DefaultClip = -1

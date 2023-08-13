@@ -30,15 +30,17 @@ function SWEP:EnterSights()
     end
 
     if !self:StillWaiting() or self.NoFireDuringSighting then
-        if self:GetProcessedValue("InstantSightIdle", true) then
-            self:PlayAnimation("idle")
-        else
-            local anim = self:TranslateAnimation("enter_sights")
-            local mult = self:GetProcessedValue("AimDownSightsTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
-            if self:GetAnimationEntry(anim).NoStatAffectors then
-                mult = 1
+        if !(self.SightIsAlsoBipodAnims and self:GetBipod()) then
+            if self:GetProcessedValue("InstantSightIdle", true) then
+                self:PlayAnimation("idle")
+            else
+                local anim = self:TranslateAnimation("enter_sights")
+                local mult = self:GetProcessedValue("AimDownSightsTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+                if self:GetAnimationEntry(anim).NoStatAffectors then
+                    mult = 1
+                end
+                self:PlayAnimation(anim, mult, self.NoFireDuringSighting, nil, nil, true)
             end
-            self:PlayAnimation(anim, mult, self.NoFireDuringSighting, nil, nil, true)
         end
     end
 
@@ -60,15 +62,17 @@ function SWEP:ExitSights()
         end
 
         if !self:StillWaiting() or (self.NoFireDuringSighting and !self:GetJammed()) then
-            if self:GetProcessedValue("InstantSightIdle", true) then
-                self:PlayAnimation("idle")
-            else
-                local anim = self:TranslateAnimation("exit_sights")
-                local mult = self:GetProcessedValue("AimDownSightsTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
-                if self:GetAnimationEntry(anim).NoStatAffectors then
-                    mult = 1
+            if !(self.SightIsAlsoBipodAnims and self:GetBipod()) then
+                if self:GetProcessedValue("InstantSightIdle", true) then
+                    self:PlayAnimation("idle")
+                else
+                    local anim = self:TranslateAnimation("exit_sights")
+                    local mult = self:GetProcessedValue("AimDownSightsTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+                    if self:GetAnimationEntry(anim).NoStatAffectors then
+                        mult = 1
+                    end
+                    self:PlayAnimation(anim, mult, self.NoFireDuringSighting, nil, nil, true)
                 end
-                self:PlayAnimation(anim, mult, self.NoFireDuringSighting, nil, nil, true)
             end
         end
     end

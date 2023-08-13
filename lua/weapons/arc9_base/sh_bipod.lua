@@ -85,7 +85,7 @@ function SWEP:EnterBipod()
         sound = self:RandomChoice(self:GetProcessedValue("EnterBipodSound", true))
     }
     self:PlayTranslatedSound(soundtab1)
-    self:PlayAnimation("enter_bipod", 1, true)
+    self:PlayAnimation(self.SightIsAlsoBipodAnims and "enter_sights" or "enter_bipod", 1, true)
     self:SetEnterBipodTime(CurTime())
 
     local owner = self:GetOwner()
@@ -107,7 +107,7 @@ function SWEP:ExitBipod(force)
     self:PlayTranslatedSound(soundtab1)
     self:SetEnterBipodTime(CurTime())
 
-    self:PlayAnimation("exit_bipod", 1, true)
+    self:PlayAnimation(self.SightIsAlsoBipodAnims and "exit_sights" or "exit_bipod", 1, true)
 
     self:CancelReload()
 

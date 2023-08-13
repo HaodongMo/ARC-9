@@ -1,8 +1,8 @@
 function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
     mult = mult or 1
     lock = lock or false
+    local untranslatedanim = anim
     anim = (notranslate == true) and anim or self:TranslateAnimation(anim)
-    -- print(anim)
     mult = self:RunHook("Hook_TranslateAnimSpeed", {mult = mult, anim = anim}).Mult or mult
 
     if !self:HasAnimation(anim) then return 0, 1 end
@@ -174,6 +174,15 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
     end
 
     self:SetFiremodePose()
+
+    if self.UnbipodOnLockAnims  then
+        if lock and (untranslatedanim != "idle" and untranslatedanim != "fire" and untranslatedanim != "dryfire" and untranslatedanim != "enter_sights" and untranslatedanim != "exit_sights") then
+            if self:GetBipodAmount() > 0.9 then
+                self:SetBipod(false)
+                self:SetEnterBipodTime(CurTime())
+            end
+        end
+    end
 
     return time * mult, minprogress
 end
