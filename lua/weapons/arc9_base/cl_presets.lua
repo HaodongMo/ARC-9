@@ -351,21 +351,26 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.OverrideColorWriteEnable(true, false)
     -- self:GetVM():DrawModel()
-    self:DrawCustomModel(true, pos, ang)
+    self:DrawCustomModel(true, pos + Vector(1, 0.5, -0.5), ang)
     render.OverrideColorWriteEnable(false, false)
 
-    render.BlurRenderTarget(cammat, 10, 10, 1)
+    render.BlurRenderTarget(cammat, 5, 5, 1)
 
-    if !color then
-        render.MaterialOverride(matshiny)
-    end
+    render.MaterialOverride(matshiny)
+    self:DrawCustomModel(true, pos, ang)
+
+    render.MaterialOverride()
+    render.SetWriteDepthToDestAlpha( true )
+    render.OverrideBlend( true, BLEND_ONE, BLEND_ZERO, BLENDFUNC_ADD, BLEND_ZERO, BLEND_ONE, BLENDFUNC_ADD )
 
     self:DrawCustomModel(true, pos, ang)
-    render.MaterialOverride()
 
-    render.SuppressEngineLighting(false)
+    render.MaterialOverride()
+    render.SetWriteDepthToDestAlpha( false )
 
     self:KillModel(true)
+    render.OverrideBlend( false )
+    render.SuppressEngineLighting(false)
 
     cam.End3D()
 
