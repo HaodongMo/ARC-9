@@ -14,11 +14,17 @@ function EFFECT:Init(data)
     if !IsValid(ent) then self:Remove() return end
     if !IsValid(ent:GetOwner()) then self:Remove() return end
 
-    if LocalPlayer():ShouldDrawLocalPlayer() or ent:GetOwner() != LocalPlayer() then
+    if ent:GetOwner() != LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
         mdl = (ent.WModel or {})[1] or ent
-        -- att = 2
+        self.VMContext = false
     else
         mdl = LocalPlayer():GetViewModel()
+
+        if ent:ShouldTPIK() then
+            self.VMContext = false
+        else
+            table.insert(ent.ActiveEffects, self)
+        end
     end
 
     if !IsValid(ent) then self:Remove() return end
@@ -48,6 +54,10 @@ function EFFECT:Init(data)
     self:SetSkin(skinn)
     self:DrawShadow(true)
     self:SetAngles(ang)
+
+    if self.VMContext then
+        self:SetNoDraw(true)
+    end
 
     self.Sounds = sounds or ARC9.ShellSoundsTable
 
@@ -100,6 +110,9 @@ function EFFECT:PhysicsCollide()
     if self.AlreadyPlayedSound then return end
     local phys = self:GetPhysicsObject()
     self:StopSound("Default.ImpactHard")
+
+    self.VMContext = false
+    self:SetNoDraw(false)
 
     local snd = self.Sounds[math.random(#self.Sounds)]
     if snd then sound.Play(snd, self:GetPos(), 75, 100, 1) end
