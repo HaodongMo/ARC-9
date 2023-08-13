@@ -666,7 +666,7 @@ function ARC9.DrawPhysBullets()
         render.SetMaterial(tracer)
 
         local t = vec:GetNormalized()
-        t:Mul(math.min(vel:Length() * 0.5, math.min(1024, i.Travelled - 64)))
+        t:Mul(math.min(vel:Length() * 0.5, math.min(512, i.Travelled - 64)))
 
         local tail = t
 
