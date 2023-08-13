@@ -167,18 +167,6 @@ function SWEP:ViewModelDrawn()
 
     self:DrawLasers(false)
     self:GetVM():SetMaterial("")
-
-    local newfx = {}
-
-    for _, fx in ipairs(self.ActiveEffects) do
-        if IsValid(fx) then
-            if !fx.VMContext then continue end
-            fx:DrawModel()
-            table.insert(newfx, fx)
-        end
-    end
-
-    self.ActiveEffects = newfx
 end
 
 function SWEP:PostDrawViewModel()
@@ -206,6 +194,18 @@ function SWEP:PostDrawViewModel()
         end
 
         self.PCFs = newpcfs
+
+        local newfx = {}
+
+        for _, fx in ipairs(self.ActiveEffects) do
+            if IsValid(fx) then
+                if !fx.VMContext then continue end
+                fx:DrawModel()
+                table.insert(newfx, fx)
+            end
+        end
+
+        self.ActiveEffects = newfx
     cam.End3D()
 
     if ARC9.PresetCam then return end
