@@ -264,6 +264,18 @@ end
 local arc9_killfeed_color = GetConVar("arc9_killfeed_color")
 local matshiny = Material("models/shiny")
 
+local pp_cc_tab = {
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = 0,
+    ["$pp_colour_brightness"] = -0.03,
+    ["$pp_colour_contrast"] = 2,
+    ["$pp_colour_colour"] = 1,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0
+}
+
 function SWEP:DoPresetCapture(filename, foricon)
     local color = arc9_killfeed_color:GetBool()
 
@@ -371,6 +383,8 @@ function SWEP:DoPresetCapture(filename, foricon)
     self:KillModel(true)
     render.OverrideBlend( false )
     render.SuppressEngineLighting(false)
+
+    DrawColorModify( pp_cc_tab )
 
     cam.End3D()
 
