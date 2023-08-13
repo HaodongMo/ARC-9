@@ -264,6 +264,18 @@ end
 local arc9_killfeed_color = GetConVar("arc9_killfeed_color")
 local matshiny = Material("models/shiny")
 
+local colormodifyicontabll = {
+	[ "$pp_colour_addr" ] = 0,
+	[ "$pp_colour_addg" ] = 0,
+	[ "$pp_colour_addb" ] = 0,
+	[ "$pp_colour_brightness" ] = 0,
+	[ "$pp_colour_contrast" ] = 1.4,
+	[ "$pp_colour_colour" ] = 1.3,
+	[ "$pp_colour_mulr" ] = 0,
+	[ "$pp_colour_mulg" ] = 0,
+	[ "$pp_colour_mulb" ] = 0
+}
+
 function SWEP:DoPresetCapture(filename, foricon)
     local color = arc9_killfeed_color:GetBool()
 
@@ -297,7 +309,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     local custpos, custang = self:GetProcessedValue("CustomizePos"), self:GetProcessedValue("CustomizeAng")
     custpos = custpos + self.CustomizeSnapshotPos
     custang = custang + self.CustomizeSnapshotAng
-    local pos, ang = Vector(0, 0, 0), Angle(0, 0, 0)
+    local pos, ang = Vector(0, 0, 1), Angle(0, 0, 0)
 
     pos = pos + (camang:Right() * custpos[1])
     pos = pos + (camang:Forward() * custpos[2])
@@ -351,10 +363,10 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.OverrideColorWriteEnable(true, false)
     -- self:GetVM():DrawModel()
-    self:DrawCustomModel(true, pos + Vector(1, 0.5, -0.5), ang)
+    self:DrawCustomModel(true, pos + Vector(0.5, 0, 0), ang)
     render.OverrideColorWriteEnable(false, false)
 
-    render.BlurRenderTarget(cammat, 5, 5, 1)
+    render.BlurRenderTarget(cammat, 3, 3, 3)
 
     render.MaterialOverride(matshiny)
     self:DrawCustomModel(true, pos, ang)
@@ -367,6 +379,10 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.MaterialOverride()
     render.SetWriteDepthToDestAlpha( false )
+
+	DrawSharpen(0.2, 0.5)
+	DrawSobel(0.3)
+	DrawColorModify(colormodifyicontabll)
 
     self:KillModel(true)
     render.OverrideBlend( false )
