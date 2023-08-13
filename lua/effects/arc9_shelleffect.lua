@@ -30,8 +30,10 @@ function EFFECT:Init(data)
         mdl = LocalPlayer():GetViewModel()
 
         if ent:ShouldTPIK() then
+            mdl = ent
             self.VMContext = false
         else
+            mdl = LocalPlayer():GetViewModel()
             table.insert(ent.ActiveEffects, self)
         end
     end
