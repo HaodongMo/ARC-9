@@ -460,8 +460,8 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
     if w > h then
         y = y - ((w - h) / 2)
     end
-    -- surface.DrawTexturedRect(x, y, w, w)
-    surface.DrawTexturedRectUV(x, y, w, w, 1, 0, 0, 1)
+    surface.DrawTexturedRect(x, y, w, w)
+    // surface.DrawTexturedRectUV(x, y, w, w, 0, 0, 1, 1)
 end
 
 SWEP.AutoSelectIcon = nil
