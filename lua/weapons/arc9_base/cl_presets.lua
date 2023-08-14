@@ -355,18 +355,16 @@ function SWEP:DoPresetCapture(filename, foricon)
     -- mdl:SetupBones()
     -- mdl:InvalidateBoneCache()
 
-    if !color then
-        render.SetBlend(1)
-        render.SetColorModulation(1, 1, 1)
-        render.MaterialOverride(matshiny)
-    end
+    render.SetBlend(1)
+    render.SetColorModulation(1, 1, 1)
+    render.MaterialOverride(matshiny)
 
     render.OverrideColorWriteEnable(true, false)
     -- self:GetVM():DrawModel()
-    self:DrawCustomModel(true, pos + Vector(0.5, 0, 0), ang)
+    self:DrawCustomModel(true, pos + Vector(0.5, 0.5, -0.5), ang)
     render.OverrideColorWriteEnable(false, false)
 
-    render.BlurRenderTarget(cammat, 3, 3, 3)
+    render.BlurRenderTarget(cammat, 3, 3, 2)
 
     render.MaterialOverride(matshiny)
     self:DrawCustomModel(true, pos, ang)
@@ -380,9 +378,8 @@ function SWEP:DoPresetCapture(filename, foricon)
     render.MaterialOverride()
     render.SetWriteDepthToDestAlpha( false )
 
-	DrawSharpen(0.2, 0.5)
-	DrawSobel(0.3)
-	DrawColorModify(colormodifyicontabll)
+    DrawSharpen(0.2, 0.5)
+    DrawColorModify(colormodifyicontabll)
 
     self:KillModel(true)
     render.OverrideBlend( false )
