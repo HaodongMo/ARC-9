@@ -2,7 +2,7 @@ L = {}
 
 -- Folders
 L["folder.arc9"] = "ARC9"
-L["folder.arc9.community"] = "Community"
+L["folder.arc9.community"] = "Gemenskap"
 
 L["attachment.sticker"] = "Klistermärke"
 

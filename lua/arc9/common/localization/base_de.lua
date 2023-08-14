@@ -247,6 +247,7 @@ L["autostat.visualrecoilup"] = "Vertikaler Visueller Rückstoß"
 -- L["autostat.secondary._divider"] = "PLEASE TRANSLATE"
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
+-- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.crouch"] = "während des Kriechen"
 L["autostat.secondary.empty"] = "beim letzen Schuss im Magazin"
@@ -270,7 +271,6 @@ L["autostat.secondary.sights"] = "im Visier"
 L["autostat.secondary.silenced"] = "wenn Schallgedämpft"
 L["autostat.secondary.true"] = "wenn TrueNames an ist"
 L["autostat.secondary.ubgl"] = "im UBGL"
--- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 
 ////////////////////// Blacklist menu
 -- L["blacklist.title"] = "PLEASE TRANSLATE"

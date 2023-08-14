@@ -140,7 +140,7 @@ L["customize.bench.precision"] = "MEKANISK TRÄFFSÄKERHET TEST"
 
 L["folder.back"] = "Tillbaka"
 L["folder.deselect"] = "Välj Bort"
--- L["folder.favorites"] = "PLEASE TRANSLATE"
+L["folder.favorites"] = "Favoriter"
 L["folder.select"] = "Välj"
 
 ////////////////////// Automatic stats
@@ -247,6 +247,7 @@ L["autostat.secondary._beforephrase"] = false -- if true, secondary stat phrasin
 L["autostat.secondary._divider"] = " " -- space between the secondary phrase from the stat phrase. set true to use empty string
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
+L["autostat.secondary.bipod"] = "med Skjutstöd"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.crouch"] = "medans Hukad"
 L["autostat.secondary.empty"] = "på Sista skottet i magasinet"
@@ -270,7 +271,6 @@ L["autostat.secondary.sights"] = "i Siktet"
 L["autostat.secondary.silenced"] = "när Ljuddämpad"
 L["autostat.secondary.true"] = "när Sanna Namn är på"
 L["autostat.secondary.ubgl"] = "i UGK"
--- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9-Tillbehör Svartlista"

@@ -247,6 +247,7 @@ L["autostat.secondary._beforephrase"] = false -- if true, secondary stat phrasin
 L["autostat.secondary._divider"] = " " -- space between de secondary phrase from de stat phrase. set true to use empty string
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
+L["autostat.secondary.bipod"] = "on bipOwOd"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.crouch"] = "w-whiwe cwouchiwuwung"
 L["autostat.secondary.empty"] = "owon wast wound in mag"
@@ -270,7 +271,7 @@ L["autostat.secondary.sights"] = "in siwts!"
 L["autostat.secondary.silenced"] = "wwhen siwenced owo"
 L["autostat.secondary.true"] = "wwith TwueNawes"
 L["autostat.secondary.ubgl"] = "in UwUBGL"
-L["autostat.secondary.bipod"] = "on bipOwOd"
+
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "AWWC9 awatachmenws bwackwist >w<"
 L["blacklist.desc"] = "AwAtachmenws checkewd hewe wiww be bwocked from use ^w^"

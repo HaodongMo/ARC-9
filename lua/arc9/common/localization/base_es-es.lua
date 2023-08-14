@@ -247,6 +247,7 @@ L["autostat.visualrecoilup"] = "Retroceso Vertical Visual"
 -- L["autostat.secondary._divider"] = "PLEASE TRANSLATE"
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
+-- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.crouch"] = "mientras está agachado"
 L["autostat.secondary.empty"] = "en la ultima ronda del cargador"
@@ -270,7 +271,6 @@ L["autostat.secondary.sights"] = "en la mira"
 L["autostat.secondary.silenced"] = "cuando está silenciado"
 L["autostat.secondary.true"] = "cuando Verdaderos Nombres está activo"
 L["autostat.secondary.ubgl"] = "en UBGL"
--- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 Lista negra de accesorios"

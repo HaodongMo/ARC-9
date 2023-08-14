@@ -248,6 +248,7 @@ L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
+L["autostat.secondary.bipod"] = "on Bipod"
 L["autostat.secondary.crouch"] = "while Crouching"
 L["autostat.secondary.empty"] = "on Last round in mag"
 L["autostat.secondary.evenreload"] = "every Even Reload"
@@ -270,7 +271,6 @@ L["autostat.secondary.sights"] = "in Sights"
 L["autostat.secondary.silenced"] = "when Silenced"
 L["autostat.secondary.true"] = "when TrueNames is on"
 L["autostat.secondary.ubgl"] = "in UBGL"
-L["autostat.secondary.bipod"] = "on Bipod"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 Attachment Blacklist"

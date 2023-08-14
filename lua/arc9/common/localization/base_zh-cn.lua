@@ -247,6 +247,7 @@ L["autostat.secondary._beforephrase"] = true
 L["autostat.secondary._divider"] = true
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
+-- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.crouch"] = "蹲下"
 L["autostat.secondary.empty"] = "最后一发"
@@ -270,7 +271,6 @@ L["autostat.secondary.sights"] = "瞄准"
 L["autostat.secondary.silenced"] = "消音"
 L["autostat.secondary.true"] = "真实名称开启时"
 L["autostat.secondary.ubgl"] = "下挂武器"
--- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 
 ////////////////////// Blacklist menu
 -- L["blacklist.title"] = "PLEASE TRANSLATE"

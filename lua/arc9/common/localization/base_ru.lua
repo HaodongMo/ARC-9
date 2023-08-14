@@ -247,6 +247,7 @@ L["autostat.visualrecoilup"] = "Физ. вертикальная отдача"
 -- L["autostat.secondary._divider"] = "PLEASE TRANSLATE"
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
+L["autostat.secondary.bipod"] = "на сошках"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.crouch"] = "в присяди"
 L["autostat.secondary.empty"] = "последним выстрелом"
@@ -270,7 +271,7 @@ L["autostat.secondary.sights"] = "в прицеле"
 L["autostat.secondary.silenced"] = "с глушителем"
 L["autostat.secondary.true"] = "при вкл. TrueNames"
 L["autostat.secondary.ubgl"] = "у подствольника"
-L["autostat.secondary.bipod"] = "на сошках"
+
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 Чёрный список обвесов"
 L["blacklist.desc"] = "Выбранные тут обвесы будут заблокированы"
