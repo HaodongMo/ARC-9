@@ -1,13 +1,8 @@
-BaseDir = r"C:\Program Files (x86)\steam\steamapps\common\GarrysMod\garrysmod\addons\ARC-9\lua\arc9\common\localization\\"
-BaseFile = BaseDir + r"base_en.lua"
-ToBeFormatted = [
-    "base_de.lua",
-    "base_es-es.lua",
-    "base_ru.lua",
-    "base_sv-se.lua",
-    "base_uwu.lua",  # Real
-    "base_zh-cn.lua"
-]
+BaseDir = input(
+    "Localization Directory/File prefix:\nExample: ../lua/arc9/common/localization/base_\n")  # Example: ../lua/arc9/common/localization/base_
+BaseFile = BaseDir + r"en.lua"
+ToBeFormatted = input("Languages:\nExample: de,es-es,ru,sv-se,uwu,zh-cn\n").split(
+    ",")  # Example: de,es-es,ru,sv-se,uwu,zh-cn
 
 
 def makeTemplate():
@@ -22,10 +17,10 @@ def makeTemplate():
 
 
 for Lang in ToBeFormatted:
-    print("formatting "+Lang)
+    print("formatting " + Lang)
     Text = []
     FormattedText = makeTemplate()
-    with open(BaseDir+Lang, "r", encoding='utf-8') as f:
+    with open(BaseDir + Lang + ".lua", "r", encoding='utf-8') as f:
         Read = f.readlines()
     for i in range(len(Read)):
         if Read[i][:2] == "L[":
@@ -37,9 +32,9 @@ for Lang in ToBeFormatted:
                     i[1] = i[1] + " =" + j[1]
                     break
                 if j == Text[-1]:
-                    print(Lang+" missing string "+i[1])
-                    i[1] = "-- "+i[1]+" = \"PLEASE TRANSLATE\"\n"
-    with open(BaseDir+Lang, "w", encoding='utf-8') as f:
+                    print(Lang + " missing string " + i[1])
+                    i[1] = "-- " + i[1] + " = \"PLEASE TRANSLATE\"\n"
+    with open(BaseDir + Lang + ".lua", "w", encoding='utf-8') as f:
         for line in FormattedText:
             f.write(line[1])
     del Text[:]
