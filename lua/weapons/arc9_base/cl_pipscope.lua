@@ -5,8 +5,6 @@ local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)
 
 function SWEP:ShouldDoScope()
     if self:GetSight().Disassociate then return false end
-
-    if self.Peeking then return false end
 	
     return true
 end
