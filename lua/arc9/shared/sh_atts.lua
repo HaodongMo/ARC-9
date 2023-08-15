@@ -232,6 +232,7 @@ if CLIENT then
 concommand.Add("arc9_reloadatts", function()
     if !LocalPlayer():IsSuperAdmin() then return end
 
+	ARC9.ATTsHaveBeenReloaded = true
     net.Start("arc9_reloadatts")
     net.SendToServer()
 end)

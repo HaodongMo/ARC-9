@@ -82,6 +82,7 @@ ARC9.RicochetSounds = {
 ARC9.PresetPath = "arc9_presets/"
 ARC9.PresetIconFormat = "arc9.png"
 
+ARC9.ATTsHaveBeenReloaded = false
 ARC9.OverDraw = false
 
 ARC9.LHIKHandBones = {

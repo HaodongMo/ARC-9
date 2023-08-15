@@ -1371,7 +1371,7 @@ function SWEP:CreateHUD_RHP()
         surface.PlaySound(self2:GetChecked() and lightonsound or lightoffsound)
     end
 
-    if ARC9.Dev(0) then
+    if ARC9.Dev(0) and ARC9.ATTsHaveBeenReloaded then
         local topleft_devreload = vgui.Create("ARC9TopButton", topleft_panel)
         topleft_devreload:SetPos(ARC9ScreenScale(47.5+29), ARC9ScreenScale(19))
         topleft_devreload:SetIcon(Material("arc9/reset.png", "mips smooth"))
