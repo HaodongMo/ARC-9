@@ -80,7 +80,7 @@ if SERVER then
             end
 
             util.Effect("arc9_opencrate", effectdata)
-            self:EmitSound("weapons/ARC9/useatt.wav")
+            self:EmitSound("arc9/useatt.wav")
             self:Remove()
         end
     end
