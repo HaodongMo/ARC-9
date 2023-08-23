@@ -2,6 +2,7 @@ function SWEP:Attach(addr, att, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
     if (slottbl.Installed == att) then return false end
     if !self:CanAttach(addr, att) then return false end
+	local atttbl = ARC9.GetAttTable(att) or {}
 
     self:DetachAllFromSubSlot(addr, true)
 
@@ -11,7 +12,7 @@ function SWEP:Attach(addr, att, silent)
     if !silent then
         self:PlayTranslatedSound({
             name = "install",
-            sound = slottbl.InstallSound or "arc9/newui/ui_part_install.ogg"
+            sound = atttbl.InstallSound or slottbl.InstallSound or "arc9/newui/ui_part_install.ogg"
         })
     end
 
@@ -25,13 +26,14 @@ function SWEP:Detach(addr, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
     if !slottbl.Installed then return false end
     if !self:CanDetach(addr) then return false end
+	local atttbl = ARC9.GetAttTable(slottbl.Installed) or {}
 
     slottbl.Installed = nil
 
     if !silent then
         self:PlayTranslatedSound({
             name = "uninstall",
-            sound = slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg"
+            sound = atttbl.UninstallSound or slottbl.UninstallSound or "arc9/newui/ui_part_uninstall.ogg"
         })
     end
 

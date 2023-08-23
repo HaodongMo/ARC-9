@@ -15,6 +15,9 @@ ATT.CustomCons = {
     ["Warning: this enables something"] = "",
 }
 
+ATT.InstallSound = nil -- sounds for installing and uninstalling the attachment respectively
+ATT.UninstallSound = nil 
+
 ATT.AdminOnly = false
 ATT.Free = false
 ATT.Ignore = true
