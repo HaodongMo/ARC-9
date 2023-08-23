@@ -109,6 +109,7 @@ SWEP.WorldModelOffset = nil
 --     Scale = 1
 -- }
 SWEP.NoTPIK = false
+SWEP.MirrorVMWMHeldOnly = false -- If true, MirrorVMWM is not activated when weapon is on the ground.
 
 SWEP.TPIKParentToSpine4 = nil -- TPIK makes VM origin on right hand (which is located different on each holdtype, crouch jump run etc). Set to true if you want vm origin on spine bone
 SWEP.TPIKforcelefthand = nil -- TPIK does not do left hand when you have one of this holdtypes: slam magic pistol normal. Set to true to still do lhand tpik for those
