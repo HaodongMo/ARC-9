@@ -50,6 +50,9 @@ ARC9.IncompatibleAddons = {
     -- View Model Bump
     ["1308077613"] = "Causes broken ADS/Sights position.",
 
+    -- Improved Air To Surface Missile
+    ["2384413050"] = "Breaks viewmodels for ARC9 and many other addons.",
+
     -- -- ZINV Zombie/NPC Invasion and variants.
     -- -- Original by Jason
     -- ["179517028"] = "Breaks pretty much everything.",
