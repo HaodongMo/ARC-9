@@ -51,6 +51,8 @@ L["hud.hint.toggleatts"] = "Alternar Accesorios"
 L["hud.hint.ubgl"] = "Alternar"
 L["hud.hint.zoom"] = "Cambiar Zoom"
 
+-- L["hud.error.missingbind"] = "PLEASE TRANSLATE"
+
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUSTOMIZAR"
 L["customize.panel.personalize"] = "PERSONALIZAR"

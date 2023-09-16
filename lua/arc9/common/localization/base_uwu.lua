@@ -51,6 +51,8 @@ L["hud.hint.toggleatts"] = "Towgle awatachmewws"
 L["hud.hint.ubgl"] = "Towgwle"
 L["hud.hint.zoom"] = "Chawanwe zowom"
 
+L["hud.error.missingbind"] = "\" %s \" knot bwound >w<"
+
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUwUSTOwOMIZE"
 L["customize.panel.personalize"] = "PEWWSOWONALIWE"

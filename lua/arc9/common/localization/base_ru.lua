@@ -51,6 +51,8 @@ L["hud.hint.toggleatts"] = "ПЕРЕКЛ. МОДУЛЬ"
 L["hud.hint.ubgl"] = "ПЕРЕКЛ. НА"
 L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
 
+-- L["hud.error.missingbind"] = "PLEASE TRANSLATE"
+
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "КАСТОМИЗАЦИЯ"
 L["customize.panel.personalize"] = "КОСМЕТИКА"

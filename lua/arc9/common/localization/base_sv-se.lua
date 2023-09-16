@@ -51,6 +51,8 @@ L["hud.hint.toggleatts"] = "Växla Tillbehör"
 L["hud.hint.ubgl"] = "Växla"
 L["hud.hint.zoom"] = "Ändra Zoom"
 
+L["hud.error.missingbind"] = "\" %s \" ej bunden"
+
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "ANPASSA"
 L["customize.panel.personalize"] = "PERSONALISERA"
@@ -458,12 +460,12 @@ L["settings.hud_cust.cust_light_brightness.title"] = "Ljusstyrka för ljus"
 L["settings.hud_cust.cust_light_brightness.desc"] = "Hur starkt ljuset kommer vara i anpassnings panelen.\n\nGlöm inte att sätta på den först!"
 
 L["settings.hud_cust.customization"] = "Anpassning"
-L["settings.hud_cust.cust_hints.title"] = "Tips (Anpassning)"
-L["settings.hud_cust.cust_hints.desc"] = "Aktivera tips i anpassnings menyn."
+L["settings.hud_cust.cust_hints.title"] = "Knapptips"
+L["settings.hud_cust.cust_hints.desc"] = "Aktivera knapptips i anpassnings menyn."
 -- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
 -- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
-L["settings.hud_cust.cust_tips.title"] = "Tips (Gränssnitt)"
-L["settings.hud_cust.cust_tips.desc"] = "Tips om ARC9-basen nära tipsen."
+L["settings.hud_cust.cust_tips.title"] = "Tips"
+L["settings.hud_cust.cust_tips.desc"] = "Tips om ARC9-basen nära knapptipsen."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Stängning Återställer Val"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Stängning av anpassnings menyn återställer den aktiva valda platsen."
 

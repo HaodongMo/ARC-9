@@ -51,6 +51,8 @@ L["hud.hint.toggleatts"] = "Toggle Attachments"
 L["hud.hint.ubgl"] = "Toggle"
 L["hud.hint.zoom"] = "Change Zoom"
 
+L["hud.error.missingbind"] = "\" %s \" not bound"
+
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUSTOMIZE"
 L["customize.panel.personalize"] = "PERSONALIZE"
@@ -718,7 +720,6 @@ L["settings.developer.dev_show_shield.title"] = "Show Shield"
 L["settings.developer.dev_show_shield.desc"] = "Show the model for the player's shield."
 L["settings.developer.dev_greenscreen.title"] = "Green Screen"
 L["settings.developer.dev_greenscreen.desc"] = "Show a green screen background in the customisation menu for screenshots.\n\nIf you are using HDR, don't forget to set mat_bloom_scalefactor_scalar to 0!"
-
 L["settings.developer.reloadatts.title"] = "Reload Attachments"
 L["settings.developer.reloadlangs.title"] = "Reload Languages"
 L["settings.developer.dev_listmyatts.title"] = "List My Attachments"

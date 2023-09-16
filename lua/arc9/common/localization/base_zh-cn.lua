@@ -51,6 +51,8 @@ L["hud.hint.toggleatts"] = "切换配件"
 L["hud.hint.ubgl"] = "切换"
 L["hud.hint.zoom"] = "瞄具缩放"
 
+-- L["hud.error.missingbind"] = "PLEASE TRANSLATE"
+
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "自定义"
 L["customize.panel.personalize"] = "客制化"
