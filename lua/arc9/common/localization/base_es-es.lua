@@ -51,7 +51,7 @@ L["hud.hint.toggleatts"] = "Alternar Accesorios"
 L["hud.hint.ubgl"] = "Alternar"
 L["hud.hint.zoom"] = "Cambiar Zoom"
 
--- L["hud.error.missingbind"] = "PLEASE TRANSLATE"
+L["hud.error.missingbind"] = "\" %s \" sin asignar"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUSTOMIZAR"
@@ -142,7 +142,7 @@ L["customize.bench.precision"] = "ENSAYO MECÁNICO DE PRECISIÓN"
 
 L["folder.back"] = "Atras"
 L["folder.deselect"] = "Deseleccionar"
--- L["folder.favorites"] = "PLEASE TRANSLATE"
+L["folder.favorites"] = "Favoritos"
 L["folder.select"] = "Seleccionar"
 
 ////////////////////// Automatic stats
@@ -249,7 +249,7 @@ L["autostat.visualrecoilup"] = "Retroceso Vertical Visual"
 -- L["autostat.secondary._divider"] = "PLEASE TRANSLATE"
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
+L["autostat.secondary.bipod"] = "en Bípode"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.crouch"] = "mientras está agachado"
 L["autostat.secondary.empty"] = "en la ultima ronda del cargador"
