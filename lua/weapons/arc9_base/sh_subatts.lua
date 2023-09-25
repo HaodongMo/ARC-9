@@ -79,8 +79,8 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
         for i, k in ipairs(tbl.SubAttachments or {}) do
             if !subatts[i] then continue end
             subatts[i].Bone = parenttbl.Bone
-            local att_pos = parenttbl.Pos
-            local att_ang = parenttbl.Ang
+            local att_pos = parenttbl.Pos or Vector()
+            local att_ang = parenttbl.Ang or Angle()
 
             local og_addr = parenttbl.OriginalAddress
 

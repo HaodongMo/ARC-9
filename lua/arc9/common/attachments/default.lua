@@ -201,6 +201,11 @@ ATT.RTScopePostInvertFunc = function(swep) end -- only when InvertColors is true
 
 ATT.RTScopeMotionBlur = false
 
+ATT.RTScopeAdjustable = false -- adjustable scope settings
+ATT.RTScopeAdjustmentLevels = 4
+ATT.RTScopeFOVMin = 10
+ATT.RTScopeFOVMax = 2.5
+
 ATT.Attachments = {
     {
         PrintName = "",

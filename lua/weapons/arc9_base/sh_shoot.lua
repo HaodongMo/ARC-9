@@ -733,7 +733,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
             apdmg:SetAttacker(dmg:GetAttacker())
 
             traceEntity:TakeDamageInfo(apdmg)
-        elseif traceEntity:GetClass() == "npc_gunship" then
+        elseif traceEntity:GetClass() == "npc_gunship" or traceEntity:GetClass() == "npc_strider" then
             local apdmg = DamageInfo()
             apdmg:SetDamage(dmgv * ap)
             apdmg:SetDamageType(DMG_BLAST)
