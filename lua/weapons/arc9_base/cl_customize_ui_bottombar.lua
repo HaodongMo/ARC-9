@@ -486,10 +486,12 @@ function SWEP:CreateHUD_AttInfo()
     infopanel.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName") or atttbl.PrintName
     infopanel.Paint = function(self2, w, h)
         if !IsValid(self) then return end
-        surface.SetFont("ARC9_10")
-        surface.SetTextPos(0, 0)
-        surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        ARC9.DrawTextRot(self2, self2.title, 0, 0, ARC9ScreenScale(6), ARC9ScreenScale(3), w, true)
+        -- surface.SetFont("ARC9_10")
+        -- surface.SetTextPos(0, 0)
+        -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
+        -- ARC9.DrawTextRot(self2, self2.title, 0, 0, ARC9ScreenScale(6), ARC9ScreenScale(3), w, true)
+
+		markup.Parse("<font=ARC9_10>" .. self2.title):Draw(ARC9ScreenScale(6), ARC9ScreenScale(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
     end
 
     self.AttInfoBar = infopanel
@@ -508,10 +510,11 @@ function SWEP:CreateHUD_AttInfo()
         desc_line:SetSize(descscroller:GetWide(), ARC9ScreenScale(9))
         desc_line:Dock(TOP)
         desc_line.Paint = function(self2, w, h)
-            surface.SetFont("ARC9_9_Slim")
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos(ARC9ScreenScale(2), 0)
-            surface.DrawText(text)
+            -- surface.SetFont("ARC9_9_Slim")
+            -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            -- surface.SetTextPos(ARC9ScreenScale(2), 0)
+            -- surface.DrawText(text)
+			markup.Parse("<font=ARC9_9_Slim>" .. text):Draw(ARC9ScreenScale(2), 0, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
         end
     end
 

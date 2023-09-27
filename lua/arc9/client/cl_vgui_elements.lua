@@ -203,11 +203,14 @@ function ARC9AttButton:Paint(w, h)
     local tw = surface.GetTextSize(text)
     surface.SetTextColor(textcolor)
 
+	-- print(textcolor)
+
     if tw > w then
         ARC9.DrawTextRot(self, text, 0, h - ARC9ScreenScale(13.5), 0, h - ARC9ScreenScale(13.5), w, false)
     else
         surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(13.5))
         surface.DrawText(text)
+		-- markup.Parse("<font=ARC9_9>" .. text):Draw((w - tw) / 2, h - ARC9ScreenScale(13.5), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
     end
 
     if att then

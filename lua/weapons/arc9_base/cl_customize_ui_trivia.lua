@@ -45,7 +45,6 @@ function SWEP:CreateHUD_Trivia()
         desc_line:Dock(TOP)
         desc_line.Paint = function(self2, w, h)
             if !IsValid(self) then return end
-				local coltextdesc = markup.Parse(text)
 				markup.Parse("<font=ARC9_8>" .. text):Draw(ARC9ScreenScale(2), 0, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
             -- surface.SetFont("ARC9_8")
             -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
