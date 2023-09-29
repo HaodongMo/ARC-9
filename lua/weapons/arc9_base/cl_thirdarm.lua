@@ -269,7 +269,7 @@ end
 function SWEP:GunControllerThirdArm(pos, ang)
     if (self.ThirdArmAnimationTime + self.ThirdArmAnimationLength) < CurTime() then return pos, ang end
 
-    if self.ThirdArmModel and self.ThirdArmAnimation.gun_controller_attachment != nil then
+    if IsValid(self.ThirdArmModel) and self.ThirdArmAnimation.gun_controller_attachment != nil then
         local posang = self.ThirdArmModel:GetAttachment(self.ThirdArmAnimation.gun_controller_attachment)
         local offset_ang = posang.Ang
         local offset_pos =  posang.Pos
