@@ -192,7 +192,7 @@ local function enterfolder(self, scroll, slottbl, fname)
                 enterfolder(self, scroll, slottbl, self2.folder)
                 surface.PlaySound(foldersound)
             end
-            if kc == MOUSE_RIGHT then
+            if kc == MOUSE_RIGHT then -- randomizing attachments from folder!
                 local randompool = {}
 
                 for _, v in ipairs(self.BottomBarAtts) do
@@ -221,8 +221,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             if !IsValid(self) then return end
             if self2:IsHovered() then
                 self.CustomizeHints["customize.hint.select"] = "customize.hint.select"
-                -- self.CustomizeHints["customize.hint.deselect"] = "customize.hint.randomize"
-                    self.CustomizeHints["customize.hint.deselect"] = "customize.hint.randomize"
+                self.CustomizeHints["customize.hint.deselect"] = "customize.hint.randomize"
             end
         end
     end
