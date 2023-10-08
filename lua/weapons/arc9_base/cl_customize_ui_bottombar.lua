@@ -192,36 +192,38 @@ local function enterfolder(self, scroll, slottbl, fname)
                 enterfolder(self, scroll, slottbl, self2.folder)
                 surface.PlaySound(foldersound)
             end
-            if kc == MOUSE_RIGHT then -- randomizing attachments from folder!
-                local randompool = {}
+            -- if kc == MOUSE_RIGHT then -- randomizing attachments from folder! -- Moved to cl_bind reload
+            --     local randompool = {}
 
-                for _, v in ipairs(self.BottomBarAtts) do
-                    local atbl = ARC9.GetAttTable(v.att)
+            --     for _, v in ipairs(self.BottomBarAtts) do
+            --         local atbl = ARC9.GetAttTable(v.att)
 
-                    local checkfolder = self2.folder
+            --         local checkfolder = self2.folder
 
-                    local pathprefix = string.Implode("/", self.BottomBarPath)
-                    if pathprefix != "" then checkfolder = pathprefix .. "/" .. self2.folder end
+            --         local pathprefix = string.Implode("/", self.BottomBarPath)
+            --         if pathprefix != "" then checkfolder = pathprefix .. "/" .. self2.folder end
                     
-                    if atbl.Folder == checkfolder or (self2.folder == "!favorites" and ARC9.Favorites[v.att]) then
-                        table.insert(randompool, atbl)
-                        randompool[#randompool].fuckthis = v.slot
-                    end               
-                end
+            --         if atbl.Folder == checkfolder or (self2.folder == "!favorites" and ARC9.Favorites[v.att]) then
+            --             table.insert(randompool, atbl)
+            --             randompool[#randompool].fuckthis = v.slot
+            --         end               
+            --     end
                 
-                local thatatt = randompool[math.random(0, #randompool)]
-                if thatatt then
-                    self:Attach(thatatt.fuckthis, thatatt.ShortName, true)
-                end
-                surface.PlaySound(tabsound)
-            end
+            --     local thatatt = randompool[math.random(0, #randompool)]
+            --     if thatatt then
+            --         self:Attach(thatatt.fuckthis, thatatt.ShortName, true)
+            --     end
+                
+            --     surface.PlaySound(tabsound)
+            -- end
         end
 
         folderbtn.Think = function(self2)
             if !IsValid(self) then return end
             if self2:IsHovered() then
                 self.CustomizeHints["customize.hint.select"] = "customize.hint.select"
-                self.CustomizeHints["customize.hint.deselect"] = "customize.hint.randomize"
+                self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
+                self.CustomizeLastHoveredFolder = self2
             end
         end
     end

@@ -1,5 +1,7 @@
 ARC9.KeyPressed_Menu = false
 
+local randsound = "arc9/newui/ui_part_randomize.ogg"
+
 hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     local wpn = ply:GetActiveWeapon()
 
@@ -53,6 +55,61 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                 wpn.BottomBarFolders["!favorites"][att] = nil
             end
         end
+        return true
+    end
+
+    if bind == "+reload" and wpn:GetCustomize() then
+        local attpnl = wpn.CustomizeLastHovered
+        local foldpnl = wpn.CustomizeLastHoveredFolder
+        local slotpnl = wpn.CustomizeLastHoveredSlot
+
+        if attpnl and attpnl:IsHovered() then
+            -- print("att", attpnl.att)
+        end
+
+        if foldpnl and foldpnl:IsHovered() then
+            -- print("folder", foldpnl)
+
+            local randompool = {}
+
+            for _, v in ipairs(wpn.BottomBarAtts) do
+                local atbl = ARC9.GetAttTable(v.att)
+
+                local checkfolder = foldpnl.folder
+
+                local pathprefix = string.Implode("/", wpn.BottomBarPath)
+                if pathprefix != "" then checkfolder = pathprefix .. "/" .. foldpnl.folder end
+                
+                if atbl.Folder == checkfolder or (foldpnl.folder == "!favorites" and ARC9.Favorites[v.att]) then
+                    table.insert(randompool, atbl)
+                    randompool[#randompool].fuckthis = v.slot
+                end               
+            end
+
+            local thatatt = randompool[math.random(0, #randompool)]
+            if thatatt then
+                wpn:Attach(thatatt.fuckthis, thatatt.ShortName, true)
+            end
+
+            surface.PlaySound(randsound)
+        end
+        
+        if slotpnl and (slotpnl:IsHovered() or slotpnl.validforrand) then
+            if !wpn:GetSlotBlocked(slotpnl.slot) then
+                -- print("slot", slotpnl)
+
+                wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl.slot.Address)}, true)
+                
+                wpn:PruneAttachments()
+                wpn:PostModify()
+                wpn:SendWeapon()
+
+                timer.Simple(0, function() wpn:CreateHUD_Bottom() end)
+
+                surface.PlaySound(randsound)
+            end
+        end
+
         return true
     end
 

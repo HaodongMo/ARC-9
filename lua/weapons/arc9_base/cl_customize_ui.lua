@@ -808,6 +808,7 @@ function SWEP:CreateCustomizeHUD()
 
                 if hoveredslot then
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.expand"
+                    self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
                     if slot.Installed then
                         self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
                     end
@@ -981,7 +982,7 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * 3
 
             end
-        elseif self:GetOwner():KeyDown(IN_RELOAD) then
+        elseif self:GetOwner():KeyDown(IN_RELOAD) and self2:IsHovered() then
             self.CustomizePanX = Lerp(0.25, self.CustomizePanX, 0)
             self.CustomizePanY = Lerp(0.25, self.CustomizePanY, 0)
             self.CustomizePitch = Lerp(0.25, self.CustomizePitch, 0)
@@ -1097,6 +1098,11 @@ function SWEP:CreateCustomizeHUD()
             {
                 action = "customize.hint.favorite",
                 glyph = ARC9.GetBindKey("impulse 100"),
+                hidden = true,
+            },
+            {
+                action = "customize.hint.random",
+                glyph = ARC9.GetBindKey("+reload"),
                 hidden = true,
             },
         }

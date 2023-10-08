@@ -740,4 +740,4 @@ L["settings.developer.reload"] = "Reload"
 
 -- october 8
 
-L["customize.hint.randomize"] = "Random folder attachment"
+L["customize.hint.randomize"] = "Attach random"
