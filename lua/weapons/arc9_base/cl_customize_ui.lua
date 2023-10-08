@@ -768,7 +768,8 @@ function SWEP:CreateCustomizeHUD()
                 local s = ARC9ScreenScale(16) - self.CustomizeZoom*1.5
 
                 local hoveredslot = false
-
+                ms_slot.fuckinghovered = false
+                
                 local dist = 0
 
                 local mousex, mousey = input.GetCursorPos()
@@ -783,13 +784,14 @@ function SWEP:CreateCustomizeHUD()
 
                             if d2 < dist then
                                 hoveredslot = false
+                                ms_slot.fuckinghovered = false
                                 break
                             end
                         end
                     end
                 end
 
-                if mousey > (ScrH() - ARC9ScreenScale(64)) then hoveredslot = false end
+                if mousey > (ScrH() - ARC9ScreenScale(64)) then hoveredslot = false ms_slot.fuckinghovered = false end
 
                 table.insert(bumpy, {x = x, y = y, slot = slot})
 
@@ -807,6 +809,9 @@ function SWEP:CreateCustomizeHUD()
                 end
 
                 if hoveredslot then
+                    ms_slot.fuckinghovered = true
+                    self.CustomizeLastHoveredSlot2 = ms_slot
+
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.expand"
                     self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
                     if slot.Installed then

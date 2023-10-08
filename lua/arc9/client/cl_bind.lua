@@ -62,10 +62,11 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
         local attpnl = wpn.CustomizeLastHovered
         local foldpnl = wpn.CustomizeLastHoveredFolder
         local slotpnl = wpn.CustomizeLastHoveredSlot
+        local slotpnl2 = wpn.CustomizeLastHoveredSlot2
 
-        if attpnl and attpnl:IsHovered() then
+        -- if attpnl and attpnl:IsHovered() then
             -- print("att", attpnl.att)
-        end
+        -- end
 
         if foldpnl and foldpnl:IsHovered() then
             -- print("folder", foldpnl)
@@ -94,11 +95,24 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
             surface.PlaySound(randsound)
         end
         
-        if slotpnl and (slotpnl:IsHovered() or slotpnl.validforrand) then
+        
+        if slotpnl and slotpnl.slot then
             if !wpn:GetSlotBlocked(slotpnl.slot) then
-                -- print("slot", slotpnl)
-
                 wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl.slot.Address)}, true)
+                
+                wpn:PruneAttachments()
+                wpn:PostModify()
+                wpn:SendWeapon()
+
+                timer.Simple(0, function() wpn:CreateHUD_Bottom() end)
+
+                surface.PlaySound(randsound)
+            end
+        end
+
+        if slotpnl2 and slotpnl2.fuckinghovered then
+            if !wpn:GetSlotBlocked(slotpnl2) then
+                wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl2.Address)}, true)
                 
                 wpn:PruneAttachments()
                 wpn:PostModify()

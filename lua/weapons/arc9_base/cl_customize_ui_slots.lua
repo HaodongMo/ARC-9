@@ -124,10 +124,10 @@ function SWEP:CreateHUD_Slots(scroll)
         slotbtn.Think = function(self2)
             if !IsValid(self) then return end
 
-            if self2.slot.lowerbutton.OverrideHovered then
-                self.CustomizeLastHoveredSlot = self2
-                self.CustomizeLastHoveredSlot.validforrand = true
-            end
+            -- if slotbtn.OverrideHovered then
+            --     self.CustomizeLastHoveredSlot = self2
+            --     self.CustomizeLastHoveredSlot.validforrand = true
+            -- end
 
             if self2:IsHovered() then
                 self.CustomizeHints["customize.hint.select"] = "customize.hint.expand"
