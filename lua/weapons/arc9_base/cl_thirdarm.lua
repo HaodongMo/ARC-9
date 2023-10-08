@@ -48,7 +48,7 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
     local rig = tbl.rig
 
     -- if !self.ThirdArmModel or tbl.rig != (self.ThirdArmAnimation or {}).rig then
-        if self.ThirdArmModel then
+        if IsValid(self.ThirdArmModel) then
             SafeRemoveEntity(self.ThirdArmModel)
         end
         self.ThirdArmModel = ClientsideModel(rig)
@@ -56,7 +56,7 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
 
     table.insert(ARC9.CSModelPile, {Model = self.ThirdArmModel, Weapon = self})
 
-    if !self.ThirdArmModel then return end
+    if !IsValid(self.ThirdArmModel) then return end
 
     local seq = self.ThirdArmModel:LookupSequence(self:RandomChoice(tbl.sequence))
     self.ThirdArmModel:ResetSequence(seq)
@@ -102,7 +102,7 @@ function SWEP:PlayThirdArmAnim(tbl, persist)
 end
 
 function SWEP:PreDrawThirdArm()
-    if self.ThirdArmModel then
+    if IsValid(self.ThirdArmModel) then
         self.ThirdArmModel:SetPos(EyePos())
         self.ThirdArmModel:SetAngles(EyeAngles())
 
@@ -117,7 +117,7 @@ function SWEP:PreDrawThirdArm()
 end
 
 function SWEP:ThinkThirdArm()
-    if self.ThirdArmModel then
+    if IsValid(self.ThirdArmModel) then
         if (!self.ThirdArmPersist) and (self.ThirdArmAnimationTime + self.ThirdArmAnimationLength < CurTime()) then
             SafeRemoveEntity(self.ThirdArmModel)
             self.ThirdArmModel = nil
@@ -178,7 +178,7 @@ function SWEP:LHIKThirdArm()
 
         lh_delta = qerp(delta_time, stage.lhik, next_stage.lhik)
 
-        local next_stage_index
+        next_stage_index = nil
 
         for i, k in ipairs(iktl) do
             if !k or !k.t then continue end
@@ -202,9 +202,9 @@ function SWEP:LHIKThirdArm()
             next_stage = {t = iket, rhik = iktl[#iktl].rhik}
         end
 
-        local local_time = iklt
+        local_time = iklt
 
-        local delta_time = next_stage.t - stage.t
+        delta_time = next_stage.t - stage.t
         delta_time = (local_time - stage.t) / delta_time
 
         delta_time = math.ease.InOutQuart(delta_time)
@@ -214,7 +214,7 @@ function SWEP:LHIKThirdArm()
 
     local rhik_model = self.ThirdArmModel
 
-    if rhik_model then
+    if IsValid(rhik_model) then
         rhik_model:SetupBones()
         for _, bone in ipairs(ARC9.RHIKBones) do
             local vm_bone = vm:LookupBone(bone)
@@ -240,7 +240,7 @@ function SWEP:LHIKThirdArm()
 
     local lhik_model = self.ThirdArmModel
 
-    if lhik_model then
+    if IsValid(lhik_model) then
         lhik_model:SetupBones()
         for _, bone in ipairs(ARC9.LHIKBones) do
             local vm_bone = vm:LookupBone(bone)
@@ -271,6 +271,7 @@ function SWEP:GunControllerThirdArm(pos, ang)
 
     if IsValid(self.ThirdArmModel) and self.ThirdArmAnimation.gun_controller_attachment != nil then
         local posang = self.ThirdArmModel:GetAttachment(self.ThirdArmAnimation.gun_controller_attachment)
+        if !posang then return pos, ang end
         local offset_ang = posang.Ang
         local offset_pos =  posang.Pos
 
