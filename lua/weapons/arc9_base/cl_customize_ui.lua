@@ -953,7 +953,7 @@ function SWEP:CreateCustomizeHUD()
             cam.End3D()
 
         end
-
+        
         if dragging then
             self2:SetCursor("sizeall")
 
@@ -987,7 +987,7 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * 3
 
             end
-        elseif self:GetOwner():KeyDown(IN_RELOAD) and self2:IsHovered() then
+        elseif input.IsKeyDown(KEY_R) and self2:IsHovered() and !self.CustomizeLastHoveredSlot2.fuckinghovered then
             self.CustomizePanX = Lerp(0.25, self.CustomizePanX, 0)
             self.CustomizePanY = Lerp(0.25, self.CustomizePanY, 0)
             self.CustomizePitch = Lerp(0.25, self.CustomizePitch, 0)
