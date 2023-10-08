@@ -10,6 +10,7 @@ local ARC9ScreenScale = ARC9.ScreenScale
 local clicksound = "arc9/newui/uimouse_click.ogg"
 local foldersound = "arc9/newui/uimouse_click_forward.ogg"
 local backsound = "arc9/newui/uimouse_click_return.ogg"
+local tabsound = "arc9/newui/uimouse_click_tab.ogg"
 
 local function spacer(self, scroll, margin)
     local spacer = vgui.Create("DPanel", scroll)
@@ -191,12 +192,38 @@ local function enterfolder(self, scroll, slottbl, fname)
                 enterfolder(self, scroll, slottbl, self2.folder)
                 surface.PlaySound(foldersound)
             end
+            -- if kc == MOUSE_RIGHT then -- randomizing attachments from folder! -- Moved to cl_bind reload
+            --     local randompool = {}
+
+            --     for _, v in ipairs(self.BottomBarAtts) do
+            --         local atbl = ARC9.GetAttTable(v.att)
+
+            --         local checkfolder = self2.folder
+
+            --         local pathprefix = string.Implode("/", self.BottomBarPath)
+            --         if pathprefix != "" then checkfolder = pathprefix .. "/" .. self2.folder end
+                    
+            --         if atbl.Folder == checkfolder or (self2.folder == "!favorites" and ARC9.Favorites[v.att]) then
+            --             table.insert(randompool, atbl)
+            --             randompool[#randompool].fuckthis = v.slot
+            --         end               
+            --     end
+                
+            --     local thatatt = randompool[math.random(0, #randompool)]
+            --     if thatatt then
+            --         self:Attach(thatatt.fuckthis, thatatt.ShortName, true)
+            --     end
+                
+            --     surface.PlaySound(tabsound)
+            -- end
         end
 
         folderbtn.Think = function(self2)
             if !IsValid(self) then return end
             if self2:IsHovered() then
                 self.CustomizeHints["customize.hint.select"] = "customize.hint.select"
+                self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
+                self.CustomizeLastHoveredFolder = self2
             end
         end
     end

@@ -52,6 +52,9 @@ ARC9.IncompatibleAddons = {
 
     -- Improved Air To Surface Missile
     ["2384413050"] = "Breaks viewmodels for ARC9 and many other addons.",
+	
+    -- GLORY KILLS 2
+    ["2301721246"] = "Breaks stickers for ARC9 and many other addons.",
 
     -- -- ZINV Zombie/NPC Invasion and variants.
     -- -- Original by Jason

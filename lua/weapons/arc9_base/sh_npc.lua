@@ -119,8 +119,9 @@ function SWEP:QueueForRandomize()
     table.insert(ARC9.RandomizeQueue, self)
 end
 
-function SWEP:RollRandomAtts(tree)
+function SWEP:RollRandomAtts(tree, nofuther)
     local attchance = 66
+    if nofuther then attchance = 999 end
 
     for i, slottbl in pairs(tree) do
         if slottbl.MergeSlots then
@@ -144,7 +145,7 @@ function SWEP:RollRandomAtts(tree)
 
         slottbl.Installed = att
 
-        if atttbl.Attachments then
+        if !nofuther and atttbl.Attachments then
             slottbl.SubAttachments = table.Copy(atttbl.Attachments)
             self:RollRandomAtts(slottbl.SubAttachments)
         end

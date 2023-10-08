@@ -768,7 +768,8 @@ function SWEP:CreateCustomizeHUD()
                 local s = ARC9ScreenScale(16) - self.CustomizeZoom*1.5
 
                 local hoveredslot = false
-
+                ms_slot.fuckinghovered = false
+                
                 local dist = 0
 
                 local mousex, mousey = input.GetCursorPos()
@@ -783,13 +784,14 @@ function SWEP:CreateCustomizeHUD()
 
                             if d2 < dist then
                                 hoveredslot = false
+                                ms_slot.fuckinghovered = false
                                 break
                             end
                         end
                     end
                 end
 
-                if mousey > (ScrH() - ARC9ScreenScale(64)) then hoveredslot = false end
+                if mousey > (ScrH() - ARC9ScreenScale(64)) then hoveredslot = false ms_slot.fuckinghovered = false end
 
                 table.insert(bumpy, {x = x, y = y, slot = slot})
 
@@ -807,7 +809,11 @@ function SWEP:CreateCustomizeHUD()
                 end
 
                 if hoveredslot then
+                    ms_slot.fuckinghovered = true
+                    self.CustomizeLastHoveredSlot2 = ms_slot
+
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.expand"
+                    self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
                     if slot.Installed then
                         self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
                     end
@@ -947,7 +953,7 @@ function SWEP:CreateCustomizeHUD()
             cam.End3D()
 
         end
-
+        
         if dragging then
             self2:SetCursor("sizeall")
 
@@ -981,7 +987,7 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * 3
 
             end
-        elseif self:GetOwner():KeyDown(IN_RELOAD) then
+        elseif input.IsKeyDown(KEY_R) and self2:IsHovered() and !self.CustomizeLastHoveredSlot2.fuckinghovered then
             self.CustomizePanX = Lerp(0.25, self.CustomizePanX, 0)
             self.CustomizePanY = Lerp(0.25, self.CustomizePanY, 0)
             self.CustomizePitch = Lerp(0.25, self.CustomizePitch, 0)
@@ -1097,6 +1103,11 @@ function SWEP:CreateCustomizeHUD()
             {
                 action = "customize.hint.favorite",
                 glyph = ARC9.GetBindKey("impulse 100"),
+                hidden = true,
+            },
+            {
+                action = "customize.hint.random",
+                glyph = ARC9.GetBindKey("+reload"),
                 hidden = true,
             },
         }

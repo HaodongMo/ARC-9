@@ -111,7 +111,7 @@ function SWEP:PreDrawViewModel()
     local vm = self:GetVM()
 
     if self.HasSightsPoseparam then
-        vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
+        vm:SetPoseParameter("sights", math.max(sightamount, bipodamount, custdelta))
     end
 
     local bonemods = self:GetValue("BoneMods")
@@ -151,7 +151,7 @@ function SWEP:PreDrawViewModel()
     self:SetFiremodePose()
     
     if self.HasSightsPoseparam then
-        vm:SetPoseParameter("sights", math.max(sightamount, bipodamount))
+        vm:SetPoseParameter("sights", math.max(sightamount, bipodamount, custdelta))
     end
 
     if sightamount > 0.75 and getsights.FlatScope and !getsights.FlatScopeKeepVM then
