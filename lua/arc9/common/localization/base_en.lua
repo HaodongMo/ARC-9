@@ -101,6 +101,7 @@ L["customize.hint.nextmode"] = "Next Mode"
 L["customize.hint.open"] = "Open"
 L["customize.hint.pan"] = "Pan"
 L["customize.hint.quicksave"] = "Quicksave"
+L["customize.hint.randomize"] = "Attach Random"
 L["customize.hint.recalculate"] = "Recalculate"
 L["customize.hint.recenter"] = "Recenter"
 L["customize.hint.rotate"] = "Rotate"
@@ -736,8 +737,3 @@ L["settings.developer.presets_clear.desc"] = "Clear presets, all icons and defau
 L["settings.developer.clear"] = "Clear"
 L["settings.developer.print"] = "Print to Console"
 L["settings.developer.reload"] = "Reload"
-
-
--- october 8
-
-L["customize.hint.randomize"] = "Attach random"
