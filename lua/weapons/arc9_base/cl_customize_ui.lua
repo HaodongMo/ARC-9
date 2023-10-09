@@ -987,7 +987,10 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * 3
 
             end
-        elseif input.IsKeyDown(KEY_R) and self2:IsHovered() and !self.CustomizeLastHoveredSlot2.fuckinghovered then
+        elseif input.IsKeyDown(KEY_R) and self2:IsHovered() then
+            if self.CustomizeLastHoveredSlot2 then
+                if self.CustomizeLastHoveredSlot2.fuckinghovered then return end
+            end
             self.CustomizePanX = Lerp(0.25, self.CustomizePanX, 0)
             self.CustomizePanY = Lerp(0.25, self.CustomizePanY, 0)
             self.CustomizePitch = Lerp(0.25, self.CustomizePitch, 0)
