@@ -31,7 +31,7 @@ local singleplayer = game.SinglePlayer()
 local ARC9HeatCapacityGPVOverflow = false
 
 function SWEP:InvalidateCache()
-    if singleplayer then
+    if singleplayer and self:GetOwner():IsPlayer() then
         self:CallOnClient("InvalidateCache")
     end
 

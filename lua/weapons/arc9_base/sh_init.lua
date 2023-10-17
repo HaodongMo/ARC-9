@@ -90,7 +90,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:ClientInitialize()
-    if game.SinglePlayer() then self:CallOnClient("ClientInitialize") end
+    if game.SinglePlayer() and self:GetOwner():IsPlayer() then self:CallOnClient("ClientInitialize") end
     if SERVER then return end
 
     -- local base = baseclass.Get(self:GetClass())
@@ -156,7 +156,7 @@ do
     end
 
     function SWEP:SetBaseSettings()
-        if game.SinglePlayer() and SERVER then
+        if game.SinglePlayer() and self:GetOwner():IsPlayer() and SERVER then
             self:CallOnClient("SetBaseSettings")
         end
 
