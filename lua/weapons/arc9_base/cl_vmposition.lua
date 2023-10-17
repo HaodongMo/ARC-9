@@ -514,7 +514,7 @@ function SWEP:GetViewModelFOV()
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
     local diff = math.abs(target - self.SmoothedViewModelFOV)
-    self.SmoothedViewModelFOV = math.Approach(self.SmoothedViewModelFOV, target, diff * FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
+    self.SmoothedViewModelFOV = math.Approach(self.SmoothedViewModelFOV, target, diff * FrameTime() / self:GetProcessedValue("AimDownSightsTime") * self:GetProcessedValue("MagnificationZoomSpeed"))
     -- return 60 * self:GetSmoothedFOVMag()
     -- return 150
     -- return owner:GetFOV() * (self:GetProcessedValue("DesiredViewModelFOV") / 90) * math.pow(self:GetSmoothedFOVMag(), 1/4)
