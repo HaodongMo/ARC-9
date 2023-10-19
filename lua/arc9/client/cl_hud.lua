@@ -306,18 +306,18 @@ local function GetHintsTable(capabilities)
         else
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
-                glyph2 = ARC9.GetBindKey("invnext"),
+                glyph2 = "shared_mouse_scroll_down",
                 action = ARC9:GetPhrase("hud.hint.switchsights")
-            })
+            }) -- TODO: hardcoded to mouse wheel, see sh_move.lua ARC9.StartCommand
         end
     end
 
     if capabilities.VariableZoom then
         table.insert(hints, {
-            glyph = ARC9.GetBindKey("invnext"),
-            glyph2 = ARC9.GetBindKey("invprev"),
+            glyph = !input.LookupBinding("invnext") and !(input.LookupKeyBinding(113):len() > 0) and "shared_mouse_scroll_down" or ARC9.GetBindKey("invnext"),
+            glyph2 = !input.LookupBinding("invprev") and !(input.LookupKeyBinding(112):len() > 0) and "shared_mouse_scroll_up" or ARC9.GetBindKey("invprev"),
             action = ARC9:GetPhrase("hud.hint.zoom")
-        })
+        }) -- use mouse wheel if invnext or invprev not bound, possible convar to swap maybe? currently for semi parity with switchsights
     end
 
     if capabilities.HoldBreath then
