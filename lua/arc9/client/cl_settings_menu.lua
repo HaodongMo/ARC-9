@@ -312,6 +312,18 @@ ARC9.SettingsTable = {
         -- end},
     },
     {
+        TabName = "settings.tabname.aimassist",
+        { type = "label", text = "settings.general.client", desc = "settings.tabname.aimassist.desc" },
+        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
+		
+        { type = "label", text = "settings.general.server" },
+        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist", desc = "settings.aimassist.enable.desc"},
+        { type = "slider", min = 0.1, max = 2, decimals = 1, text = "settings.aimassist.intensity.title", convar = "aimassist_intensity", desc = "settings.aimassist.intensity.desc" },
+        { type = "slider", min = 0.1, max = 10, decimals = 1, text = "settings.aimassist.cone.title", convar = "aimassist_cone", desc = "settings.aimassist.cone.desc" },
+        { type = "bool", text = "settings.aimassist.head.title", convar = "aimassist_head", desc = "settings.aimassist.head.desc"},
+
+    },
+    {
         TabName = "settings.tabname.caching",
         { type = "label", text = "settings.caching.title", desc = "settings.caching.desc" },
         { type = "bool", text = "settings.caching.precache_sounds_onfirsttake.title", convar = "precache_sounds_onfirsttake", desc = "settings.caching.precache_sounds_onfirsttake.desc"},

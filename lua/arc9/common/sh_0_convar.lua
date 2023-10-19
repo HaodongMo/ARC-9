@@ -759,6 +759,36 @@ local conVars = {
         default = "1",
         client = true
     },
+    {
+        name = "aimassist",
+        default = "0",
+		replicated = true,
+    },
+    {
+        name = "aimassist_head",
+        default = "0",
+		replicated = true,
+    },
+    {
+        name = "aimassist_cone",
+        default = "5",
+		replicated = true,
+    },
+    {
+        name = "aimassist_distance",
+        default = "1024",
+		replicated = true,
+    },
+    {
+        name = "aimassist_intensity",
+        default = "0.5",
+		replicated = true,
+    },
+    {
+        name = "aimassist_cl",
+        default = "0",
+		client = true,
+    },
 }
 
 local prefix = "arc9_"

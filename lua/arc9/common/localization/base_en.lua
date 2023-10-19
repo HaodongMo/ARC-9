@@ -681,6 +681,24 @@ L["settings.controller.controller_config.title"] = "Advanced config"
 L["settings.controller.controller_config.content"] = "Open panel"
 L["settings.controller.controller_config.desc"] = "Open advanced controller configuration panel."
 
+////////////////////// Aim Assist
+L["settings.tabname.aimassist"] = "Aim Assist"
+L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."
+
+L["settings.aimassist.enable.title"] = "Enable Aim Assist"
+L["settings.aimassist.enable.desc"] = "Enables an aim assist feature that moves your aim towards a valid target.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+
+L["settings.aimassist.enable_client.desc"] = "Enables an aim assist feature that moves your aim towards a valid target.\n\nAlso requires Aim Assist to be enabled on SERVER."
+
+L["settings.aimassist.intensity.title"] = "Intensity"
+L["settings.aimassist.intensity.desc"] = "How intensely the aim assist moves your aim towards a valid target.\n\nThis is a server variable."
+
+L["settings.aimassist.cone.title"] = "Cone"
+L["settings.aimassist.cone.desc"] = "How close or far away you need to look towards a target before the aim assist engages.\n\nThis is a server variable."
+
+L["settings.aimassist.head.title"] = "Lock onto head"
+L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the target's head instead of its chest.\n\nThis is a server variable."
+
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Asset Caching"
 L["settings.caching.title"] = "Asset Caching"
