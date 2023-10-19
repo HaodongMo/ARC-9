@@ -440,6 +440,8 @@ L["settings.crosshair.crosshair_static.title"] = "Statiskt Hårkors"
 L["settings.crosshair.crosshair_static.desc"] = "Aktiverar en statisk hårkors som inte förflyttar sig under skjutning."
 L["settings.crosshair.crosshair_force.title"] = "Tvinga Hårkors"
 L["settings.crosshair.crosshair_force.desc"] = "Tvingar att hårkorset visas på vapen som inte vill att du ser den.\n\nServerinställning."
+L["settings.crosshair.crosshair_target.title"] = "Rött Hårkors på Måltavla"
+L["settings.crosshair.crosshair_target.desc"] = "Gör hårkorset rött när man siktar på en måltavla.\nAktiverar också sikthjälp om den är påslagen."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Anpassning"
@@ -679,6 +681,30 @@ L["settings.controller.controller.desc"] = "Aktiverar anpassade kontroller-kompa
 L["settings.controller.controller_config.title"] = "Avancerad konfig."
 L["settings.controller.controller_config.content"] = "Öppna panel"
 L["settings.controller.controller_config.desc"] = "Öppna avancerad kontroller konfigurering panel."
+
+////////////////////// Aim Assist
+L["settings.tabname.aimassist"] = "Siktehjälp"
+L["settings.tabname.aimassist.desc"] = "Du kan aktivera siktehjälp om du har problem att hålla ditt sikte på din måltavla, eller om du föredrar att inte anstränga dig när du skjuter på dina måltavlor."
+
+L["settings.aimassist.enable.title"] = "Aktivera Siktehjälp"
+L["settings.aimassist.enable.desc"] = "Aktiverar en siktehjälp som sänker ner din känslighet när du siktar över en giltig måltavla.\n\nDetta är en servervariabel.\n\nKräver också att Siktehjälp är aktiverad på CLIENT."
+
+L["settings.aimassist.enable_client.desc"] = "Aktiverar en siktehjälp som sänker ner din känslighet när du siktar över en giltig måltavla.\n\nKräver också att Siktehjälp är aktiverad på SERVER."
+
+L["settings.aimassist.lockon.title"] = "Låshjälp"
+L["settings.aimassist.lockon.desc"] = "Aktiverar ett låshjälp som flyttar din vy mot ett giltigt mål.\n\nKräver Tillåt Låshjälp."
+
+L["settings.aimassist.intensity.title"] = "Kraft"
+L["settings.aimassist.intensity.desc"] = "Hur kraftfull siktehjälpen är.\n\nDetta är en servervariabel."
+
+L["settings.aimassist.cone.title"] = "Kon"
+L["settings.aimassist.cone.desc"] = "Hur nära eller hur långt borta du måste titta på en måltavla innan siktehjälpen aktiveras.\n\nDetta är en servervariabel."
+
+L["settings.aimassist.head.title"] = "Lås mot huvud"
+L["settings.aimassist.head.desc"] = "Om siktehjälpen ska låsa sig mot måltavlans huvud istället för dess bröst.\n\nDetta är en servervariabel."
+
+L["settings.aimassist.lockon_allow.title"] = "Tillåt Låshjälp"
+L["settings.aimassist.lockon_allow.desc"] = "Tillåter användningen av låshjälp.\n\nDetta är en servervariabel."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Tillgång-Cache"

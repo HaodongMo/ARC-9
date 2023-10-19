@@ -440,6 +440,8 @@ L["settings.crosshair.crosshair_static.title"] = "Punto de Mira Estático"
 L["settings.crosshair.crosshair_static.desc"] = "Activa el punto de mira estática, que no se mueve al disparar."
 L["settings.crosshair.crosshair_force.title"] = "Forzar Punto de Mira"
 L["settings.crosshair.crosshair_force.desc"] = "Fuerza el punto de mira incluso en armas que no quieren que la veas.\n\nConfiguracion del servidor."
+-- L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
+-- L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Customización"
@@ -680,6 +682,30 @@ L["settings.controller.controller.desc"] = "Habilitar glifos personalizados comp
 L["settings.controller.controller_config.title"] = "Configuracion avanzada"
 L["settings.controller.controller_config.content"] = "Abrir panel"
 L["settings.controller.controller_config.desc"] = "Abra el panel de configuración avanzada del mando."
+
+////////////////////// Aim Assist
+-- L["settings.tabname.aimassist"] = "Aim Assist"
+-- L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."
+
+-- L["settings.aimassist.enable.title"] = "Enable Aim Assist"
+-- L["settings.aimassist.enable.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+
+-- L["settings.aimassist.enable_client.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nAlso requires Aim Assist to be enabled on SERVER."
+
+-- L["settings.aimassist.lockon.title"] = "Lock-on"
+-- L["settings.aimassist.lockon.desc"] = "Enables a lock-on assistance that moves your aim towards a valid target.\n\nRequires Allow Lock-on Assist."
+
+-- L["settings.aimassist.intensity.title"] = "Intensity"
+-- L["settings.aimassist.intensity.desc"] = "How intense the aim assist is.\n\nThis is a server variable."
+
+-- L["settings.aimassist.cone.title"] = "Cone"
+-- L["settings.aimassist.cone.desc"] = "How close or far away you need to look towards a target before the aim assist engages.\n\nThis is a server variable."
+
+-- L["settings.aimassist.head.title"] = "Lock onto head"
+-- L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the target's head instead of its chest.\n\nThis is a server variable."
+
+-- L["settings.aimassist.lockon_allow.title"] = "Allow Lock-on Assist"
+-- L["settings.aimassist.lockon_allow.desc"] = "Allow the use of the lock-on assist.\n\nThis is a server variable."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Almac. en caché"

@@ -516,6 +516,11 @@ local conVars = {
         client = true
     },
     {
+        name = "crosshair_target",
+        default = "1",
+        client = true
+    },
+    {
         name = "thirdperson",
         default = "0",
         client = true
@@ -783,6 +788,16 @@ local conVars = {
         name = "aimassist_intensity",
         default = "0.5",
 		replicated = true,
+    },
+    {
+        name = "aimassist_lockon",
+        default = "0",
+		replicated = true,
+    },
+    {
+        name = "aimassist_lockon_cl",
+        default = "0",
+		client = true,
     },
     {
         name = "aimassist_cl",
