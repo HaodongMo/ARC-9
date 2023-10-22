@@ -217,6 +217,7 @@ L["autostat.recoildissipationrate"] = "Скорость рассеивания �
 L["autostat.recoilkick"] = "Рывки отдачи"
 L["autostat.recoilmodifiercap"] = "Потолок отдачи"
 L["autostat.recoilpatterndrift"] = "Непредсказуемость отдачи"
+-- L["autostat.recoilpershot"] = "Recoil per Shot"
 L["autostat.recoilrandomside"] = "Гориз. случайная отдача"
 L["autostat.recoilrandomup"] = "Верт. случайная отдачи"
 L["autostat.recoilresettime"] = "Время до сброса отдачи"

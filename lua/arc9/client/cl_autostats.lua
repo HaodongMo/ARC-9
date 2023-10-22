@@ -102,6 +102,7 @@ ARC9.AutoStatsMains = {
     ["BreathHoldTime"] = {false, false},
     ["RecoilModifierCap"] = {false, true},
     ["BashSpeed"] = {false, false},
+    ["RecoilPerShot"] = {false, true},
 }
 
 ARC9.AutoStatsOperations = {
