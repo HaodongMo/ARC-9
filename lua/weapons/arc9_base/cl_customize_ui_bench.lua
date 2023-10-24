@@ -393,7 +393,7 @@ function SWEP:CreateHUD_Bench()
             surface.DrawLine(range_min_x, 0, range_min_x, h)
             surface.DrawLine(range_max_x, 0, range_max_x, h)
             if sweetspot then
-                range_sweetspot_x = w * Lerp((range_sweet - range_min) / (range_max - range_min), 0.2, 0.8)
+                range_sweetspot_x = Lerp((range_sweet - range_min) / (range_max - range_min), range_min_x, range_max_x)
                 surface.DrawLine(range_sweetspot_x, 0, range_sweetspot_x, h)
             end
 
