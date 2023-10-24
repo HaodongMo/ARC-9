@@ -865,9 +865,14 @@ function SWEP:GetDamageAtRange(range)
     local dmgv = dmgMin
 
     if damagelut then
-        for _, tbl in ipairs(damagelut) do
+        for i, tbl in ipairs(damagelut) do
             if range < tbl[1] then
-                dmgv = tbl[2]
+                if self:GetProcessedValue("CurvedDamageScaling", true) and i > 1 then
+                    local tbl2 = damagelut[i - 1]
+                    dmgv = Lerp(1 - math.Clamp((tbl[1] - range) / (tbl[1] - tbl2[1]), 0, 1), tbl2[2], tbl[2])
+                else
+                    dmgv = tbl[2]
+                end
                 break
             end
         end
