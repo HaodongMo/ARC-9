@@ -37,6 +37,9 @@ local ARC9ScreenScale = ARC9.ScreenScale
 
 function SWEP:DoDrawCrosshair(x, y)
     if !arc9_cross_enable:GetBool() then return end
+
+    if string.find(self:GetIKAnimation() or "", "inspect") and self:StillWaiting() then lasthelperalpha = 0 return true end
+    
     local scrw, scrh = ScrW(), ScrH()
     local owner = self:GetOwner()
 
