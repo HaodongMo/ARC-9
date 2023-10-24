@@ -498,7 +498,7 @@ function SWEP:DevStuffCrosshair()
 
     local len = 256
     surface.SetDrawColor(255, 50, 50, 200)
-    surface.DrawLine(x, y - len, x, y + len - 48)
+    surface.DrawLine(x, y - len + 24, x, y + len - 48)
     surface.DrawLine(x - len, y, x + len, y)
 
     local spread_val = math.max(0, self:GetProcessedValue("Spread"))
@@ -506,7 +506,11 @@ function SWEP:DevStuffCrosshair()
     surface.DrawCircle(x, y, spread, 255, 255, 255, 255)
     surface.DrawCircle(x, y, spread + 0.5, 255, 255, 255, 100)
 
-
+    local range_txt = math.Round(dist * ARC9.HUToM, 1) .. "m"
+    local range2_txt = math.Round(self:GetDamageDeltaAtRange(dist) * 100) .. "%"
+    if self:GetProcessedValue("SweetSpot", true) then
+        range2_txt = range2_txt .. " | " .. math.Round(self:GetSweetSpotDeltaAtRange(dist) * 100) .. "% (SweetSpot)"
+    end
 
     local state_txt = "READY"
     local state2_txt = ""
@@ -548,6 +552,8 @@ function SWEP:DevStuffCrosshair()
     local damage_w = surface.GetTextSize(damage_txt)
     local state_w = surface.GetTextSize(state_txt)
     local state2_w = surface.GetTextSize(state2_txt)
+    local range_w = surface.GetTextSize(range_txt)
+    local range2_w = surface.GetTextSize(range2_txt)
 
     surface.SetTextColor(0, 0, 0, 255)
 
@@ -563,6 +569,10 @@ function SWEP:DevStuffCrosshair()
     surface.DrawText(state_txt)
     surface.SetTextPos(x - state2_w / 2 + 2, y + len - 8 + 2)
     surface.DrawText(state2_txt)
+    surface.SetTextPos(x - range_w / 2 + 2, y - len - 40 + 2)
+    surface.DrawText(range_txt)
+    surface.SetTextPos(x - range2_w / 2 + 2, y - len - 12 + 2)
+    surface.DrawText(range2_txt)
 
     surface.SetTextColor(255, 255, 255, 255)
 
@@ -578,6 +588,10 @@ function SWEP:DevStuffCrosshair()
     surface.DrawText(state_txt)
     surface.SetTextPos(x - state2_w / 2, y + len - 8)
     surface.DrawText(state2_txt)
+    surface.SetTextPos(x - range_w / 2, y - len - 40)
+    surface.DrawText(range_txt)
+    surface.SetTextPos(x - range2_w / 2, y - len - 12)
+    surface.DrawText(range2_txt)
 
     local sgspread_txt = ""
     if self:GetProcessedValue("UseDispersion") then

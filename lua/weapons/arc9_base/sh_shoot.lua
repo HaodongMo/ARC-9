@@ -849,6 +849,34 @@ function SWEP:GetDamageDeltaAtRange(range)
     return d
 end
 
+function SWEP:GetSweetSpotDeltaAtRange(range)
+    if !self:GetProcessedValue("SweetSpot", true) then return 0 end
+
+    local ss_range = self:GetProcessedValue("SweetSpotRange", true)
+    local ss_width = self:GetProcessedValue("SweetSpotWidth", true)
+    local ss_peak = self:GetProcessedValue("SweetSpotPeak", true)
+    local ss_size = ss_width + ss_peak
+
+    if range <= ss_range + ss_size / 2 and range >= ss_range - ss_size / 2 then
+        if range <= ss_range + ss_peak / 2 and range >= ss_range - ss_peak / 2 then
+            return 1
+        else
+            local f = 0
+            if range > ss_range then
+                f = 1 - math.Clamp(math.abs((ss_range + ss_peak / 2) - range) / (ss_width / 2), 0, 1)
+            else
+                f = 1 - math.Clamp(math.abs((ss_range - ss_peak / 2) - range) / (ss_width / 2), 0, 1)
+            end
+            if self:GetProcessedValue("CurvedDamageScaling", true) then
+                f = math.cos((f + 1) * math.pi) / 2 + 0.5
+            end
+            return f
+        end
+    end
+
+    return 0
+end
+
 local damageAtRangeHook = {}
 local emptyTable = {}
 
@@ -882,28 +910,9 @@ function SWEP:GetDamageAtRange(range)
         dmgv = self:GetProcessedValue("Damage", nil, dmgv)
     end
 
-    if self:GetProcessedValue("SweetSpot", true) then
-        local ss_range = self:GetProcessedValue("SweetSpotRange", true)
-        local ss_width = self:GetProcessedValue("SweetSpotWidth", true)
-        local ss_peak = self:GetProcessedValue("SweetSpotPeak", true)
-        local ss_size = ss_width + ss_peak
-
-        if range <= ss_range + ss_size / 2 and range >= ss_range - ss_size / 2 then
-            if range <= ss_range + ss_peak / 2 and range >= ss_range - ss_peak / 2 then
-                dmgv = self:GetProcessedValue("SweetSpotDamage")
-            else
-                local f = 0
-                if range > ss_range then
-                    f = 1 - math.Clamp(math.abs((ss_range + ss_peak / 2) - range) / (ss_width / 2), 0, 1)
-                else
-                    f = 1 - math.Clamp(math.abs((ss_range - ss_peak / 2) - range) / (ss_width / 2), 0, 1)
-                end
-                if self:GetProcessedValue("CurvedDamageScaling", true) then
-                    f = math.cos((f + 1) * math.pi) / 2 + 0.5
-                end
-                dmgv = Lerp(f, dmgv, self:GetProcessedValue("SweetSpotDamage"))
-            end
-        end
+    local sweetspot_d = self:GetSweetSpotDeltaAtRange(range)
+    if sweetspot_d > 0 then
+        dmgv = Lerp(sweetspot_d, dmgv, self:GetProcessedValue("SweetSpotDamage"))
     end
 
     if self:GetProcessedValue("DistributeDamage", true) then
