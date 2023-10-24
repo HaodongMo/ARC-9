@@ -217,7 +217,7 @@ L["autostat.recoildissipationrate"] = "Скорость рассеивания �
 L["autostat.recoilkick"] = "Рывки отдачи"
 L["autostat.recoilmodifiercap"] = "Потолок отдачи"
 L["autostat.recoilpatterndrift"] = "Непредсказуемость отдачи"
--- L["autostat.recoilpershot"] = "Recoil per Shot"
+L["autostat.recoilpershot"] = "Увел. разброса за выстрел"
 L["autostat.recoilrandomside"] = "Гориз. случайная отдача"
 L["autostat.recoilrandomup"] = "Верт. случайная отдачи"
 L["autostat.recoilresettime"] = "Время до сброса отдачи"
@@ -410,8 +410,8 @@ L["settings.muzzle_others.desc"] = "Включает эффекты от выс�
 L["settings.tabname.optics"] = "Оптика"
 
 L["settings.optics.control"] = "Управление"
--- L["settings.optics.sensmult.title"] = "PLEASE TRANSLATE"
--- L["settings.optics.sensmult.desc"] = "PLEASE TRANSLATE"
+L["settings.optics.sensmult.title"] = "Чувствительность в прицеле"
+L["settings.optics.sensmult.desc"] = "Умножает чувствительность мыши при прицеливании\nЧем меньше значение - тем меньше чувствительность.\nПолезно на контроллерах или же если вы просто хотите чувствительность пониже."
 L["settings.optics.compensate_sens.title"] = "Компенсировать чувствительность"
 L["settings.optics.compensate_sens.desc"] = "Компенсировать чувствительность мыши в оптических прицелах."
 L["settings.optics.toggleads.title"] = "Прицеливание по нажатию"
@@ -441,8 +441,8 @@ L["settings.crosshair.crosshair_static.title"] = "Статичный"
 L["settings.crosshair.crosshair_static.desc"] = "Включает полностью статичный прицел, который не двигается от стрельбы."
 L["settings.crosshair.crosshair_force.title"] = "Принудительно включить"
 L["settings.crosshair.crosshair_force.desc"] = "Принудительно включает перекрестие даже не пушках которые не позволяют это.\n\nЭто серверная переменная."
--- L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
--- L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
+L["settings.crosshair.crosshair_target.title"] = "Красный прицел на цели"
+L["settings.crosshair.crosshair_target.desc"] = "Делает прицел красным при наведении на цель.\nНаведение так же активирует аим-ассист (если включено)"
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Персонализация"
@@ -685,28 +685,28 @@ L["settings.controller.controller_config.content"] = "Открыть панел�
 L["settings.controller.controller_config.desc"] = "Открывает панель для продвинутой конфигурации контроллеров."
 
 ////////////////////// Aim Assist
--- L["settings.tabname.aimassist"] = "Aim Assist"
--- L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."
+L["settings.tabname.aimassist"] = "Аим-ассист"
+L["settings.tabname.aimassist.desc"] = "Вы можете включить помощь в прицеливании (аим-ассист) если у вас проблемы с прицеливанием или если вам лень точно целиться."
 
--- L["settings.aimassist.enable.title"] = "Enable Aim Assist"
--- L["settings.aimassist.enable.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+L["settings.aimassist.enable.title"] = "Включить аим-ассист"
+L["settings.aimassist.enable.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nЭто серверная переменная.\n\nТак же требует включения аим-ассиста на клиенте."
 
--- L["settings.aimassist.enable_client.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nAlso requires Aim Assist to be enabled on SERVER."
+L["settings.aimassist.enable_client.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nТтребует включения аим-ассиста со стороны сервера."
 
--- L["settings.aimassist.lockon.title"] = "Lock-on"
--- L["settings.aimassist.lockon.desc"] = "Enables a lock-on assistance that moves your aim towards a valid target.\n\nRequires Allow Lock-on Assist."
+L["settings.aimassist.lockon.title"] = "Фиксация"
+L["settings.aimassist.lockon.desc"] = "Включает помощь прицеливания в виде фиксации прицела на цели.\n\nТребует \"Разрешить фиксацию прицела\" на сервере."
 
--- L["settings.aimassist.intensity.title"] = "Intensity"
--- L["settings.aimassist.intensity.desc"] = "How intense the aim assist is.\n\nThis is a server variable."
+L["settings.aimassist.intensity.title"] = "Интенсивность"
+L["settings.aimassist.intensity.desc"] = "На сколько интенсивна помощь в прицеливании.\n\nЭто серверная переменная."
 
--- L["settings.aimassist.cone.title"] = "Cone"
--- L["settings.aimassist.cone.desc"] = "How close or far away you need to look towards a target before the aim assist engages.\n\nThis is a server variable."
+L["settings.aimassist.cone.title"] = "Угол помощи"
+L["settings.aimassist.cone.desc"] = "Насколько далеко или близко нужно смотреть возле цели чтобы аим-ассист начал работать.\n\nЭто серверная переменная."
 
--- L["settings.aimassist.head.title"] = "Lock onto head"
--- L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the target's head instead of its chest.\n\nThis is a server variable."
+L["settings.aimassist.head.title"] = "Фиксация на головах"
+L["settings.aimassist.head.desc"] = "Должен ли аим-ассист целить вас на головы противников вместо торса?\n\nЭто серверная переменная."
 
--- L["settings.aimassist.lockon_allow.title"] = "Allow Lock-on Assist"
--- L["settings.aimassist.lockon_allow.desc"] = "Allow the use of the lock-on assist.\n\nThis is a server variable."
+L["settings.aimassist.lockon_allow.title"] = "Разрешить фиксацию прицела"
+L["settings.aimassist.lockon_allow.desc"] = "Разрешает игрокам пользоваться фиксацией на целях.\n\nЭто серверная переменная."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Кэширование"

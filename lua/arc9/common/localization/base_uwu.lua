@@ -403,15 +403,15 @@ L["settings.eject_time.desc"] = "Allow shell casings to stay in de wowld fow lon
 L["settings.performance.fx.title"] = "Effects"
 L["settings.muzzle_light.title"] = "Nuzzle Light"
 L["settings.muzzle_light.desc"] = "Enable light emitted fwom nuzzle flashes when fiwing a weapon"
--- L["settings.muzzle_others.title"] = "PLEASE TRANSLATE"
--- L["settings.muzzle_others.desc"] = "PLEASE TRANSLATE"
+L["settings.muzzle_others.title"] = "Otter nuzzle ewwekts"
+L["settings.muzzle_others.desc"] = "Enabwe nuzzle ewwekts fwom othew pwayews guns :3"
 
 ////////////////////// Optics
 L["settings.tabname.optics"] = "OwOptics"
 
 L["settings.optics.control"] = "Contwol"
--- L["settings.optics.sensmult.title"] = "PLEASE TRANSLATE"
--- L["settings.optics.sensmult.desc"] = "PLEASE TRANSLATE"
+L["settings.optics.sensmult.title"] = "Muwtipwy ADS sensitiwity"
+L["settings.optics.sensmult.desc"] = "Muwtipwy de wook sensitiwity by dis amouwunt wwen awiming.\nDe wowew de wawue, de wowew de sensitiwity.\nUwUsewuw wen uwusing controwwews or iw de usew juwust wants wowew awiming sensitiwity."
 L["settings.optics.compensate_sens.title"] = "Compensate Sensitivity"
 L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity fow magnification"
 L["settings.optics.toggleads.title"] = "Toggle ADS"
@@ -432,17 +432,17 @@ L["settings.crosshair.cross_enable.desc"] = "Enable cwosshaiw. Some guns do not 
 L["settings.crosshair.cross.title"] = "Cwosshaiw Colow"
 L["settings.crosshair.cross.desc"] = "de colow of youw cwosshaiw"
 L["settings.crosshair.cross_size_mult.title"] = "Cwosshaiw Size"
-L["settings.crosshair.cross_size_mult.desc"] = "Multiply de size of youw cwosshaiw"
+L["settings.crosshair.cross_size_mult.desc"] = "Muwtipwy de size of youw cwosshaiw"
 L["settings.crosshair.cross_size_dot.title"] = "Dot Size"
-L["settings.crosshair.cross_size_dot.desc"] = "Multiply de size of de middle dot"
+L["settings.crosshair.cross_size_dot.desc"] = "Muwtipwy de size of de middle dot"
 L["settings.crosshair.cross_size_prong.title"] = "Pwong Size"
-L["settings.crosshair.cross_size_prong.desc"] = "Multiply de size of de outew pwongs"
+L["settings.crosshair.cross_size_prong.desc"] = "Muwtipwy de size of de outew pwongs"
 L["settings.crosshair.crosshair_static.title"] = "Static Cwosshaiw"
 L["settings.crosshair.crosshair_static.desc"] = "Enable static cwosshaiw, which does not move when shooting"
 L["settings.crosshair.crosshair_force.title"] = "Fowce Cwosshaiw"
 L["settings.crosshair.crosshair_force.desc"] = "Fowce de cwosshaiw even on guns that don't want you to see it.\n\nSewvew setting"
--- L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
--- L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
+L["settings.crosshair.crosshair_target.title"] = "Wed cwosshaiw on tawget"
+L["settings.crosshair.crosshair_target.desc"] = "Make the cwosshaiw wed wen awiming on a tawget.\nAwso activates awim assist if it is tuwned on."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Cuwustomiawon"
@@ -604,8 +604,8 @@ L["settings.visuals.vm_cambobintensity.desc"] = "howo intense bobbing will be"
 L["settings.visuals.tpik"] = "TPIK"
 L["settings.visuals.tpik.title"] = "Enable TPIK"
 L["settings.visuals.tpik.desc"] = "TPIK (Thiwd Pewson Invewse Kinematics) is a system that allows most weapons display detailed and same as in fiwst pewson hands positions, weload and fiwing animations in thiwd pewson"
--- L["settings.visuals.tpik_others.title"] = "PLEASE TRANSLATE"
--- L["settings.visuals.tpik_others.desc"] = "PLEASE TRANSLATE"
+L["settings.visuals.tpik_others.title"] = "Otter Pwayews TPIK"
+L["settings.visuals.tpik_others.desc"] = "Show TPIK fow pwaywrs ottew dan uwselw. Negatively impacts pewwowmance."
 L["settings.visuals.tpik_framerate.title"] = "TPIK Fwamewate"
 L["settings.visuals.tpik_framerate.desc"] = "Maximum fwamewate at which TPIK can wun. Set to 0 fow unlimited"
 
@@ -685,28 +685,28 @@ L["settings.controller.controller_config.content"] = "Open panel"
 L["settings.controller.controller_config.desc"] = "Open advanced contwollew configuwation panel"
 
 ////////////////////// Aim Assist
--- L["settings.tabname.aimassist"] = "Aim Assist"
--- L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."
+L["settings.tabname.aimassist"] = "Awim Asist :3"
+L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have twouble keeping youw aim on youw tawget, ow if you just pwefew to not put effowt into shooting youw tawgets."
 
--- L["settings.aimassist.enable.title"] = "Enable Aim Assist"
--- L["settings.aimassist.enable.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+L["settings.aimassist.enable.title"] = "Enable Aim Assist"
+L["settings.aimassist.enable.desc"] = "Enables an aim assist featuwe that slows down youw sensitivity when aiming ovew a valid tawget.\n\ndis is a sewwew wawiableh.\n\nAlso wequiwes Aim Assist to be enabled on CLIENT."
 
--- L["settings.aimassist.enable_client.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nAlso requires Aim Assist to be enabled on SERVER."
+L["settings.aimassist.enable_client.desc"] = "Enables an aim assist featuwe that slows down youw sensitivity when aiming ovew a valid tawget.\n\nAlso wequiwes Aim Assist to be enabled on SEWWEW."
 
--- L["settings.aimassist.lockon.title"] = "Lock-on"
--- L["settings.aimassist.lockon.desc"] = "Enables a lock-on assistance that moves your aim towards a valid target.\n\nRequires Allow Lock-on Assist."
+L["settings.aimassist.lockon.title"] = "LOwOck-oWon"
+L["settings.aimassist.lockon.desc"] = "Enables a lock-on assistance that moves youw aim towawds a valid tawget.\n\nwequiwes Allow Lock-on Assist."
 
--- L["settings.aimassist.intensity.title"] = "Intensity"
--- L["settings.aimassist.intensity.desc"] = "How intense the aim assist is.\n\nThis is a server variable."
+L["settings.aimassist.intensity.title"] = "Intensity"
+L["settings.aimassist.intensity.desc"] = "How intense de aim assist is.\n\ndis is a sewwew wawiableh."
 
--- L["settings.aimassist.cone.title"] = "Cone"
--- L["settings.aimassist.cone.desc"] = "How close or far away you need to look towards a target before the aim assist engages.\n\nThis is a server variable."
+L["settings.aimassist.cone.title"] = "Cowone"
+L["settings.aimassist.cone.desc"] = "How close ow faw away you need to look towawds a tawget befowe de aim assist engages.\n\ndis is a sewwew wawiableh."
 
--- L["settings.aimassist.head.title"] = "Lock onto head"
--- L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the target's head instead of its chest.\n\nThis is a server variable."
+L["settings.aimassist.head.title"] = "Lowck owonto snouts"
+L["settings.aimassist.head.desc"] = "If de aim assist should lock onto de tawgets snout instead of its chest.\n\ndis is a sewwew wawiableh."
 
--- L["settings.aimassist.lockon_allow.title"] = "Allow Lock-on Assist"
--- L["settings.aimassist.lockon_allow.desc"] = "Allow the use of the lock-on assist.\n\nThis is a server variable."
+L["settings.aimassist.lockon_allow.title"] = "Awwow Lowck-on Assist"
+L["settings.aimassist.lockon_allow.desc"] = "Awwow de use of de lowck-on assist.\n\ndis is a sewwew wawiableh."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Awwet Cashwing :3"
