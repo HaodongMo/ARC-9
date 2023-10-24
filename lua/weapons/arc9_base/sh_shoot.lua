@@ -890,7 +890,11 @@ function SWEP:GetDamageAtRange(range)
         local sweetspotwidth = self:GetProcessedValue("SweetSpotWidth", true)
 
         if range < sweetspotrange + sweetspotwidth / 2 and range > sweetspotrange - sweetspotwidth / 2 then
-            dmgv = self:GetProcessedValue("SweetSpotDamage")
+            local f = 1 - math.Clamp(math.abs(range - sweetspotrange) / sweetspotwidth, 0, 1)
+            if self:GetProcessedValue("CurvedDamageScaling", true) then
+                f = math.cos((f + 1) * math.pi) / 2
+            end
+            dmgv = Lerp(f, dmgv, self:GetProcessedValue("SweetSpotDamage"))
 
             if self:GetProcessedValue("DistributeDamage", true) then
                 dmgv = dmgv / num
