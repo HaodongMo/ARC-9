@@ -516,11 +516,6 @@ local conVars = {
         client = true
     },
     {
-        name = "crosshair_target",
-        default = "1",
-        client = true
-    },
-    {
         name = "thirdperson",
         default = "0",
         client = true
@@ -763,46 +758,6 @@ local conVars = {
         name = "mult_sens",
         default = "1",
         client = true
-    },
-    {
-        name = "aimassist",
-        default = "0",
-		replicated = true,
-    },
-    {
-        name = "aimassist_head",
-        default = "0",
-		replicated = true,
-    },
-    {
-        name = "aimassist_cone",
-        default = "5",
-		replicated = true,
-    },
-    {
-        name = "aimassist_distance",
-        default = "1024",
-		replicated = true,
-    },
-    {
-        name = "aimassist_intensity",
-        default = "0.5",
-		replicated = true,
-    },
-    {
-        name = "aimassist_lockon",
-        default = "0",
-		replicated = true,
-    },
-    {
-        name = "aimassist_lockon_cl",
-        default = "0",
-		client = true,
-    },
-    {
-        name = "aimassist_cl",
-        default = "0",
-		client = true,
     },
 }
 

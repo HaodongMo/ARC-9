@@ -48,7 +48,6 @@ ARC9.SettingsTable = {
             {"2Disabled", "0"},
             {"3Enabled", "1"},
         }, desc = "settings.truenames.desc"},
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
         { type = "button", text = "settings.resetsettings.cl.title", content = "settings.reset", func = function(self2)
             RunConsoleCommand("arc9_settings_reset_client")
         end},
@@ -62,7 +61,6 @@ ARC9.SettingsTable = {
             {"2Enabled", "1"},
         }, desc = "settings.truenames_default.desc"},
         { sv = true, type = "bool", text = "settings.truenames_enforced.title", convar = "truenames_enforced", desc = "settings.truenames_enforced.desc"},
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist", desc = "settings.aimassist.enable.desc"},
         { sv = true, type = "button", text = "settings.resetsettings.sv.title", content = "settings.reset", func = function(self2)
             RunConsoleCommand("arc9_settings_reset_server")
         end},
@@ -115,7 +113,6 @@ ARC9.SettingsTable = {
         { type = "slider", text = "settings.crosshair.cross_size_prong.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_prong", desc = "settings.crosshair.cross_size_prong.desc" },
         { type = "bool", text = "settings.crosshair.crosshair_static.title", convar = "crosshair_static", desc = "settings.crosshair.crosshair_static.desc" },
         { type = "bool", text = "settings.crosshair.crosshair_force.title", convar = "crosshair_force", desc = "settings.crosshair.crosshair_force.desc" },
-        { type = "bool", text = "settings.crosshair.crosshair_target.title", convar = "crosshair_target", desc = "settings.crosshair.crosshair_target.desc" },
     },
     {
         TabName = "settings.tabname.hud_cust",
@@ -313,20 +310,6 @@ ARC9.SettingsTable = {
         --     print("lol")
         --     -- put here default derma panel with stuff from fesiug's spawmenu controller panel
         -- end},
-    },
-    {
-        TabName = "settings.tabname.aimassist",
-        { type = "label", text = "settings.general.client", desc = "settings.tabname.aimassist.desc" },
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
-        { type = "bool", text = "settings.aimassist.lockon.title", convar = "aimassist_lockon_cl", desc = "settings.aimassist.lockon.desc"},
-		
-        { type = "label", text = "settings.general.server" },
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist", desc = "settings.aimassist.enable.desc"},
-        { type = "bool", text = "settings.aimassist.lockon_allow.title", convar = "aimassist_lockon", desc = "settings.aimassist.lockon_allow.desc"},
-        { type = "slider", min = 0.1, max = 2, decimals = 1, text = "settings.aimassist.intensity.title", convar = "aimassist_intensity", desc = "settings.aimassist.intensity.desc" },
-        { type = "slider", min = 0.1, max = 10, decimals = 1, text = "settings.aimassist.cone.title", convar = "aimassist_cone", desc = "settings.aimassist.cone.desc" },
-        { type = "bool", text = "settings.aimassist.head.title", convar = "aimassist_head", desc = "settings.aimassist.head.desc"},
-
     },
     {
         TabName = "settings.tabname.caching",
