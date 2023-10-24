@@ -536,7 +536,7 @@ function SWEP:CreateHUD_Bench()
                         txt_dmg3 = math.Round(dmg_sweet * self:GetValue("Num")) .. "-" .. txt_dm3
                     end
                     local txt_dmg3_w = surface.GetTextSize(txt_dmg3)
-                    local txt_range3 = self:RangeUnitize(range_min)
+                    local txt_range3 = self:RangeUnitize(range_sweet)
                     local txt_range3_w = surface.GetTextSize(txt_range3)
 
                     surface.SetFont("ARC9_8")
