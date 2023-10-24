@@ -34,6 +34,7 @@ local lasthelperalpha = 0
 local lerp = Lerp
 -- local arcticcolor = Color(255, 255, 255, 100)
 local ARC9ScreenScale = ARC9.ScreenScale
+local arc9_crosshair_target = GetConVar("arc9_crosshair_target")
 
 function SWEP:DoDrawCrosshair(x, y)
     if !arc9_cross_enable:GetBool() then return end
@@ -79,11 +80,22 @@ function SWEP:DoDrawCrosshair(x, y)
     local gap = 0
     local staticgap = ARC9ScreenScale(4)
 
-    local col = Color(255, 255, 255, 255)
-    col.r = arc9_cross_r:GetFloat()
-    col.g = arc9_cross_g:GetFloat()
-    col.b = arc9_cross_b:GetFloat()
-    col.a =  arc9_cross_a:GetFloat()
+    -- local col = Color(255, 255, 255, 255)
+    -- col.r = arc9_cross_r:GetFloat()
+    -- col.g = arc9_cross_g:GetFloat()
+    -- col.b = arc9_cross_b:GetFloat()
+    -- col.a =  arc9_cross_a:GetFloat()
+
+	if owner.ARC9_AATarget != nil and arc9_crosshair_target:GetBool() then
+		col = Color(255,0,0,255)
+	else
+		col = Color(255, 255, 255, 255)
+		col.r = arc9_cross_r:GetFloat()
+		col.g = arc9_cross_g:GetFloat()
+		col.b = arc9_cross_b:GetFloat()
+		col.a =  arc9_cross_a:GetFloat()
+	end
+		
 
     local d = self:GetSightDelta()
 

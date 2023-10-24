@@ -80,33 +80,50 @@ function SWEP:GetMagnification()
     return target
 end
 
+local aa = GetConVar("arc9_aimassist")
+local aac = GetConVar("arc9_aimassist_cl")
+local aai = GetConVar("arc9_aimassist_intensity")
+local sensmult = GetConVar("arc9_mult_sens")
+
 function SWEP:AdjustMouseSensitivity()
-    if !self:GetInSights() then return end
-    if !arc9_compensate_sens:GetBool() then return end
+	if self:GetOwner().ARC9_AATarget != nil and (aa:GetBool() and aac:GetBool() and !self.NoAimAssist) then
+		aamult = 0.5 / (aai:GetFloat() * 1.25)
+	else
+		aamult = 1
+	end
 
-    if self.Peeking then
-        return
-    end
-
-    local mag = self:GetMagnification()
-    local fov = fov_desired:GetFloat()
-	local sensmult = GetConVar("arc9_mult_sens")
-
-    local sight = self:GetSight()
-    local atttbl = sight.atttbl
-
-    if sight.BaseSight then
-        atttbl = self:GetTable()
-    end
-
-    if atttbl and atttbl.RTScope and !sight.Disassociate and !sight.NoSensAdjustment and !atttbl.RTCollimator then
-        mag = mag + (fov / (self:GetRTScopeFOV() or 90))
-    end
-
-    if mag > 0 then
-        local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
+    if !self:GetInSights() then 
+		local amt = 1
         amt = math.sqrt(amt)
+		
+		return amt * (aamult or 1)
+	else
+	
+		if !arc9_compensate_sens:GetBool() then return end
 
-        return amt * sensmult:GetFloat()
-    end
+		if self.Peeking then
+			return
+		end
+
+		local mag = self:GetMagnification()
+		local fov = fov_desired:GetFloat()
+
+		local sight = self:GetSight()
+		local atttbl = sight.atttbl
+
+		if sight.BaseSight then
+			atttbl = self:GetTable()
+		end
+
+		if atttbl and atttbl.RTScope and !sight.Disassociate and !sight.NoSensAdjustment and !atttbl.RTCollimator then
+			mag = mag + (fov / (self:GetRTScopeFOV() or 90))
+		end
+
+		if mag > 0 then
+			local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
+			amt = math.sqrt(amt)
+
+			return amt * sensmult:GetFloat() * (aamult or 1)
+		end
+	end
 end
