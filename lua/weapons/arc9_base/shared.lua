@@ -165,10 +165,11 @@ SWEP.Distance = 33000 -- In Hammer units, how far bullets can travel, period.
 
 SWEP.CurvedDamageScaling = true -- If true, damage will scale in a quadratic curve between RangeMin and RangeMax. If false, damage will scale linearly.
 
-SWEP.SweetSpot = false
-SWEP.SweetSpotRange = 2500 -- Weapon deals this amount of damage when enemy is within the sweet spot range
-SWEP.SweetSpotDamage = 100
-SWEP.SweetSpotWidth = 500
+SWEP.SweetSpot = false -- Modifies damage if it's within a certain range, typically increasing it. Set this to enable
+SWEP.SweetSpotDamage = nil -- Damage at peak sweet spot
+SWEP.SweetSpotRange = nil -- Center of the sweet spot (should be larger than peak + width)
+SWEP.SweetSpotPeak = nil -- Within this much distance, sweet spot damage is maxed out
+SWEP.SweetSpotWidth = nil -- Sweet spot damage falls off over this much distance
 
 SWEP.DamageLookupTable = nil --[[ Example: {
     {
