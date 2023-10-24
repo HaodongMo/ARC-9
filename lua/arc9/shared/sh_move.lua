@@ -90,7 +90,8 @@ local arc9_aimassist = GetConVar("arc9_aimassist")
 local arc9_aimassist_lockon = GetConVar("arc9_aimassist_lockon")
 
 function ARC9.StartCommand(ply, cmd)
-    if !IsValid(ply) then return end
+    if !IsValid(ply) or cmd:CommandNumber() == 0 then return end
+    -- commandnumber may reduce inaccurate inputs on client
 
     local wpn = ply:GetActiveWeapon()
 
@@ -298,8 +299,13 @@ function ARC9.StartCommand(ply, cmd)
         cmd:SetImpulse(ARC9.IMPULSE_TOGGLEATTS)
     end
 
-    if ply:KeyDown(IN_USE) and wpn:GetInSights() and cmd:GetMouseWheel() != 0 and #wpn.MultiSightTable > 0 then
-        wpn:SwitchMultiSight(cmd:GetMouseWheel())
+    local maus = cmd:GetMouseWheel()
+    if wpn:GetInSights() and cmd:GetMouseWheel() != 0 then
+        if ply:KeyDown(IN_USE) and #wpn.MultiSightTable > 0 then
+            wpn:SwitchMultiSight(maus) -- switchsights is hardcoded to scroll wheel and can't be dealt with using invnext/invprev atm
+        elseif CLIENT and (maus < 0 and !input.LookupBinding("invnext") or maus > 0 and !input.LookupBinding("invprev")) then
+            wpn:Scroll(-maus) -- if invnext is bound use those, if not then use mouse wheel
+        end
     end
 end
 
