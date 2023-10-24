@@ -521,14 +521,14 @@ SWEP.Spread = 0
 SWEP.UseDispersion = false -- Use this for shotguns - Additional random angle to spread, same for each pellet
 SWEP.DispersionSpread = 0.2 -- SWEP.Spread will be clump spread, and this will be dispersion of clump
 
-SWEP.SpreadAddMove = 0 -- Applied when speed is equal to walking speed.
-SWEP.SpreadAddMidAir = 0 -- Applied when not touching the ground.
-SWEP.SpreadAddHipFire = 0 -- Applied when not sighted.
-SWEP.SpreadAddSighted = 0 -- Applied when sighted. Can be negative.
-SWEP.SpreadAddBlindFire = 0 -- Applied when blind firing.
-SWEP.SpreadAddCrouch = 0 -- Applied when crouching.
+SWEP.SpreadAddMove = nil -- Applied when speed is equal to walking speed.
+SWEP.SpreadAddMidAir = nil -- Applied when not touching the ground.
+SWEP.SpreadAddHipFire = nil -- Applied when not sighted.
+SWEP.SpreadAddSighted = nil -- Applied when sighted. Can be negative.
+SWEP.SpreadAddBlindFire = nil -- Applied when blind firing.
+SWEP.SpreadAddCrouch = nil -- Applied when crouching.
 
-SWEP.SpreadAddRecoil = 0 -- Applied per unit of recoil.
+SWEP.SpreadAddRecoil = nil -- Applied per unit of recoil.
 
 -- Limit the effect of recoil on modifiers to this much.
 -- Because the per shot modifier used to be broken and effectively had a limit of 1, it is set to 1 by default. You should probably set it higher.
