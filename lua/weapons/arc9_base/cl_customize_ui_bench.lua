@@ -320,9 +320,9 @@ function SWEP:CreateHUD_Bench()
         end
 
         local ranger = vgui.Create("DPanel", tp)
-        local width2 = math.min(ARC9ScreenScale(200), ScrW()/3)
+        local width2 = math.min(ARC9ScreenScale(200), ScrW() / 3)
         ranger:SetSize(width2, ARC9ScreenScale(100))
-        ranger:SetPos(ARC9ScreenScale(100)+width/22, 0)
+        ranger:SetPos(ARC9ScreenScale(100) + width / 22, 0)
         ranger.Paint = function(self2, w, h)
             if !IsValid(self) then return end
 
@@ -333,15 +333,20 @@ function SWEP:CreateHUD_Bench()
 
             local range_min = self:GetValue("RangeMin")
             local range_max = self:GetValue("RangeMax")
+            local sweetspot = self:GetProcessedValue("SweetSpot", true)
 
             local dmg_max = self:GetDamageAtRange(range_min)
             local dmg_min = self:GetDamageAtRange(range_max)
+            local dmg_sweet = self:GetProcessedValue("SweetSpotDamage")
 
             surface.SetDrawColor(ARC9.GetHUDColor("fg", 75))
 
             ranger_range = range_min
 
             local dmg_diff = math.abs(dmg_max - dmg_min)
+            if sweetspot then
+                dmg_diff = math.max(dmg_diff, math.abs(dmg_max - dmg_sweet), math.abs(dmg_min - dmg_sweet))
+            end
 
             local range_min_x = (w / 5)
             local range_max_x = 4 * (w / 5)
@@ -391,6 +396,9 @@ function SWEP:CreateHUD_Bench()
             end
 
             local actual_minimum_damage = math.min(dmg_min, dmg_max)
+            if sweetspot then
+                actual_minimum_damage = math.min(actual_minimum_damage, dmg_sweet)
+            end
 
             for i = 1, segments do
                 local dmg_at_i = dmg_values[i - 1]
