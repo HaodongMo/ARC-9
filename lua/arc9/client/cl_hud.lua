@@ -1793,6 +1793,9 @@ function ARC9MultiLineText(text, maxw, font)
     local x = 0
     surface.SetFont(font)
 
+    -- text = string.gsub(text, "<color=%d+,%d+,%d+>", "")
+    -- text = string.Replace(text, "</color>", "")
+
     local newlined = string.Split(text, "\n")
 
     for _, line in ipairs(newlined) do
@@ -1800,6 +1803,13 @@ function ARC9MultiLineText(text, maxw, font)
 
         for _, word in ipairs(words) do
             local tx = surface.GetTextSize(word)
+
+            -- Don't count color tags for length purposes
+            local match = {string.match(text, "<color=%d+,%d+,%d+>")}
+            table.Add(match, string.match(text, "</color>"))
+            for _, v in ipairs(match) do
+                tx = tx - surface.GetTextSize(v)
+            end
 
             if x + tx > maxw then
                 local dashi = string.find(word, "-")
