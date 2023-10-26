@@ -85,20 +85,6 @@ end
 SWEP.IndoorTick = 0
 SWEP.IsIndoors = 0
 
---[[]
-local dirs = {
-    Angle(-90, 90, 0), -- Up            angled by 15 degrees + diagonal direction
-    Angle(-75, 135, 0), -- Up right
-    Angle(-105, 135, 0), -- Up left
-    Angle(-105, 45, 0), -- Up front
-    Angle(-105, 225, 0), -- Up back
-
-    Angle(-15, 0, 0), -- side
-    Angle(-15, 120, 0), -- side
-    Angle(-15, 240, 0), -- side
-}
-]]
-
 local traces = {
     {
         Distance = Vector(0, 0, 1024),
@@ -143,7 +129,6 @@ function SWEP:GetIndoor()
     if self.IndoorTick == UnPredictedCurTime() then return self.IsIndoors end
     self.IndoorTick = UnPredictedCurTime()
 
-    ------------------------- the one Fesiug wrote for UC (smooth)
     local vol = 0
     local wo = self:GetOwner()
     if !IsValid(wo) then return end
@@ -171,51 +156,4 @@ function SWEP:GetIndoor()
     self.IsIndoors = 1 - vol / t_influ
 
     return self.IsIndoors
-
-    ------------------------- old one (bad) (not good)
-    --[[]
-    local isindoors = 0
-
-    local hits = 0
-    local endmult = 0
-
-    local owner = self:GetOwner()
-    local eyePos = owner:EyePos() -- vector which will be used for adding dir:Forward()
-    local eyePos2 = Vector(eyePos)
-
-    traceTable.start = eyePos -- copy
-    traceTable.endpos = eyePos2
-
-    for i, dir in ipairs(dirs) do
-
-        local dirForward = dir:Forward()
-        dirForward:Mul(500 * (i == 1 and 2 or 1))
-        eyePos2:Set(eyePos)
-        eyePos2:Add(dirForward)
-
-        util.TraceLine(traceTable)
-
-        local tr = traceResultTable
-
-        if tr.Hit and !tr.HitSky then
-            hits = hits + 1
-
-            endmult = endmult + math.exp(math.min(math.ease.InExpo(1-tr.Fraction), 0.4)) / 10
-        end
-
-        -- if ARC9.Dev(2) then
-        --     debugoverlay.Line(traceTable.start, traceTable.endpos, 3, (tr.Hit and !tr.HitSky) and Color(255,0,0) or color_white, true)
-        --     if i == 8 then
-        --         print(hits.."/8 indoor trace hits, fraction "..endmult)
-        --     end
-        -- end
-    end
-
-    if hits > 0 then
-        isindoors = endmult
-    end
-
-    isindoors = math.min(isindoors, 1)
-    self.IsIndoors = isindoors
-    ]]
 end
