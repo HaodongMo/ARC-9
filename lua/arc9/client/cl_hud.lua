@@ -1793,32 +1793,49 @@ function ARC9MultiLineText(text, maxw, font)
     local x = 0
     surface.SetFont(font)
 
-    -- text = string.gsub(text, "<color=%d+,%d+,%d+>", "")
-    -- text = string.Replace(text, "</color>", "")
+    local ts = surface.GetTextSize(" ")
 
     local newlined = string.Split(text, "\n")
 
     for _, line in ipairs(newlined) do
         local words = string.Split(line, " ")
 
+        -- Keep track of the current color tag across lines
+        local active_color_tag = nil
+
         for _, word in ipairs(words) do
             local tx = surface.GetTextSize(word)
 
             -- Don't count color tags for length purposes
-            local match = {string.match(text, "<color=%d+,%d+,%d+>")}
-            table.Add(match, string.match(text, "</color>"))
+            local match = {string.match(word, "<color=%d+,%d+,%d+>")}
+            local matchend = {string.match(word, "</color>")}
             for _, v in ipairs(match) do
                 tx = tx - surface.GetTextSize(v)
+            end
+            for _, v in ipairs(matchend) do
+                tx = tx - surface.GetTextSize(v)
+            end
+
+            -- Check the status of the color tag at the end of current word
+            if math.abs(#match - #matchend) > 1 then
+                ErrorNoHalt("<color> tag miscount!\n")
+            elseif #match > #matchend then
+                if active_color_tag != nil then
+                    ErrorNoHalt("<color> tag miscount (too many opening tags)!\n")
+                else
+                    active_color_tag = match[#match]
+                end
+            elseif #matchend > #match then
+                if active_color_tag == nil then
+                    ErrorNoHalt("<color> tag miscount (too many closing tags)!\n")
+                else
+                    active_color_tag = nil
+                end
             end
 
             if x + tx > maxw then
                 local dashi = string.find(word, "-")
-                if maxw - x <= maxw * 0.25 then
-                    -- move whole word to new line if blank space is not very large
-                    table.insert(content, tline)
-                    tline = ""
-                    x = 0
-                elseif dashi and surface.GetTextSize(utf8.sub(word, 0, dashi)) <= maxw - x then
+                if dashi and surface.GetTextSize(utf8.sub(word, 0, dashi)) <= maxw - x then
                     -- cut the word at the dash sign if possible
                     table.insert(content, tline .. utf8.sub(word, 0, dashi))
                     tline = ""
@@ -1826,28 +1843,32 @@ function ARC9MultiLineText(text, maxw, font)
                     word = utf8.sub(word, dashi + 1)
                     tx = surface.GetTextSize(word)
                 else
-                    -- cut the word down from the middle
-                    while x + tx > maxw do
-                        local cut = ""
-                        for i = 2, utf8.len(word) do
-                            cut = utf8.sub(word, 0, -i)
-                            tx = surface.GetTextSize(cut)
-                            if x + tx < maxw then
-                                table.insert(content, tline .. cut)
-                                tline = ""
-                                word = utf8.sub(word, utf8.len(word) - i + 2)
-                                x = 0
-                                tx = surface.GetTextSize(word)
-                                break
-                            end
-                        end
+                    -- move whole word to new line
+
+                    -- close color tag
+                    if active_color_tag != nil then
+                        tline = tline .. "</color>"
+                    end
+
+                    table.insert(content, tline)
+                    tline = ""
+                    x = 0
+
+                    -- reopen color tag
+                    if active_color_tag != nil then
+                        tline = tline .. active_color_tag
                     end
                 end
             end
 
             tline = tline .. word .. " "
 
-            x = x + surface.GetTextSize(word .. " ")
+            x = x + tx + ts
+        end
+
+        -- close color tag
+        if active_color_tag != nil then
+            tline = tline .. "</color>"
         end
 
         table.insert(content, tline)
