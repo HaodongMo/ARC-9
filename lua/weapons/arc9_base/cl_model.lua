@@ -222,7 +222,7 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         charmmodel.slottbl = slottbl
         charmmodel.weapon = self
 
-        charmmodel:SetBodyGroups(atttbl.CharmBodygroups)
+        charmmodel:SetBodyGroups(atttbl.CharmBodygroups or "") -- RUBAT THANK YOU FOR MAKING FUNC ERROR AFTER 10 YEARS OF STABLE WORK
         charmmodel:SetMaterial(atttbl.CharmMaterial)
         charmmodel:SetNoDraw(true)
 
