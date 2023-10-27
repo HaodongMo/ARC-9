@@ -106,15 +106,15 @@ function SWEP:ApplyRecoil()
         owner:SetVelocity(self:GetShootDir():Forward() * -pbf)
     end
 
-    local vis_kick = self:GetProcessedValue("RecoilKick")
-    local vis_shake = 0
+    -- local vis_kick = self:GetProcessedValue("RecoilKick")
+    -- local vis_shake = 0
 
-    vis_kick = vis_kick * rps
-    vis_shake = vis_kick * rps
+    -- vis_kick = vis_kick * rps
+    -- vis_shake = vis_kick * rps
 
-    local vis_kick_v = vis_kick * 0.5
-    local vis_kick_h = vis_kick * util.SharedRandom("ARC9_vis_kick_h", -1, 1)
-    vis_shake = vis_shake * util.SharedRandom("ARC9_vis_kick_shake", -1, 1)
+    -- local vis_kick_v = vis_kick * 0.5
+    -- local vis_kick_h = vis_kick * util.SharedRandom("ARC9_vis_kick_h", -1, 1)
+    -- vis_shake = vis_shake * util.SharedRandom("ARC9_vis_kick_shake", -1, 1)
 
     -- owner:SetViewPunchAngles(Angle(vis_kick_v, vis_kick_h, vis_shake))
 

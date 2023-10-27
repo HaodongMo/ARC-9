@@ -1,7 +1,7 @@
 local hutom = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meter") or "m") end
 local hutoms = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meterpersecond") or "m/s") end
 local hutoms_1 = function(i) return math.Round(i * ARC9.HUToM, 1) .. (ARC9:GetPhrase("unit.meterpersecond") or "m/s") end
-local degtomoa = function(i) return math.Round(i / ARC9.MOAToAcc, 2) .. (ARC9:GetPhrase("unit.moa") or "MOA") end
+local degtomoa = function(i) return math.Round(i / ARC9.TrueMOAToAcc, 1) .. (ARC9:GetPhrase("unit.moa") or "MOA") end
 
 -- [AutoStatName] = {unit, lower_is_better}
 -- unit can be:
@@ -137,11 +137,11 @@ ARC9.AutoStatsOperations = {
         if unit == true then
             str = math.Round(a * 100, 2) .. "%"
         elseif isstring(unit) then
-            str = tostring(a) .. unit
+            str = tostring(math.Round(a, 2)) .. unit
         elseif isfunction(unit) then
             str = unit(a)
         else
-            str = tostring(a)
+            str = tostring(math.Round(a, 2))
         end
 
         if neg then
@@ -163,11 +163,11 @@ ARC9.AutoStatsOperations = {
         if unit == true then
             str = math.Round(a * 100, 2) .. "%"
         elseif isstring(unit) then
-            str = tostring(a) .. unit
+            str = tostring(math.Round(a, 2)) .. unit
         elseif isfunction(unit) then
             str = unit(a)
         else
-            str = tostring(a)
+            str = tostring(math.Round(a, 2))
         end
 
         return str, "", a <= (weapon[stat] or 0)
@@ -212,7 +212,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
 
     for stat, value in pairs(atttbl) do
         if !isnumber(value) and !isbool(value) then continue end
-        if isnumber(value) and (stat != "Spread" and stat != "SpreadOverride") then value = math.Round(value, 2) end
+        --if isnumber(value) and (!string.StartWith(stat, "Spread")) then value = math.Round(value, 2) end
         local autostat = ""
         local autostatnum = ""
         local canautostat = false

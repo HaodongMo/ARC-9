@@ -238,7 +238,12 @@ ARC9.CancelMultipliers = {
 }
 
 ARC9.HUToM = 0.0254
+
+-- 10 / 360 / 60 is incorrect, how'd you even get it?
+-- MOA is 1/60 of a degree, 1 radian = 57.2958 degrees
+-- Not changing this in case some other addon is using the constant as stat
 ARC9.MOAToAcc = 10 / 360 / 60
+ARC9.TrueMOAToAcc = 1 / 60 / 57.2958
 
 ARC9.Version = "1.0"
 
