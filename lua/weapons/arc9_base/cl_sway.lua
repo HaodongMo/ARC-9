@@ -11,12 +11,12 @@ local smoothswaypitch = 0
 
 function SWEP:GetViewModelSway(pos, ang)
     local ft = FrameTime()
-    local sightmult = Lerp(self:GetSightAmount(), 1, 0.5)
+    local sightmult = Lerp(self:GetSightAmount(), 1.75, 0.5)
     smootheyeang = LerpAngle(math.Clamp(ft * 8, 0, 0.04), smootheyeang, EyeAngles() - lasteyeang)
     lasteyeang = EyeAngles()
 
-    smoothswayroll = Lerp(math.Clamp(ft * 8, 0, 0.8), smoothswayroll, smootheyeang.y * -3.5)
-    smoothswaypitch = Lerp(math.Clamp(ft * 8, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
+    smoothswayroll = Lerp(math.Clamp(ft * 12, 0, 0.8), smoothswayroll, smootheyeang.y * -2.5)
+    smoothswaypitch = Lerp(math.Clamp(ft * 12, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
 
     if self.SprintVerticalOffset then
         local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1)
@@ -211,6 +211,11 @@ local smoothsidemove = 0
 local smoothjumpmove = 0
 local notonground = 0
 
+-- Default table will be close to old movement to keep compat with all guns
+local defbobsettingstable  = {0.5, 0.25, 1,    0.75, 2, 0.875} -- x y z   p y r
+local defbobsettingstable2 = {1, 0.75, 1,      1, 1, 0.75}       -- x y z   p y r
+-- Edit SWEP.BobSettingsMove/Speed in your own swep to make it better for you! values can be negaitve
+
 local function DarsuBob(self, pos, ang)
     self.BobScale = 0 -- hl2 bob removal
     if self:GetCustomize() then return pos, ang end
@@ -218,13 +223,14 @@ local function DarsuBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
     local velocityangle = owner:GetVelocity()
-    local sightamount = self:GetSightAmount()
+    local sightamount = self:GetSightAmount() - (self.Peeking and 0.72 or 0)
+    local sprintamount = self:GetSprintAmount()
 
     local velocity = math.Clamp(velocityangle:Length(), 0, 350)
 
     self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, velocity, ft * 10000)
     
-    local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
+    local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 0.75)
 
     notonground = math.Approach(notonground, (owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP) and 0 or 1, ft / 0.1)
     local steprate = Lerp(d, 1, 2.5)
@@ -237,11 +243,17 @@ local function DarsuBob(self, pos, ang)
 
     if IsFirstTimePredicted() or game.SinglePlayer() then self.BobCT = self.BobCT + (ft * steprate) end
     
-    d = d * Lerp(sightamount, 1, 0.65) -- If we in sights make less moves
+    d = d * Lerp(sightamount, 1.4, 0.8) -- If we in sights make less moves
 
     local d2 = math.ease.InQuart(d)
-    local d3 = math.ease.InQuad(d)
-    local speedmult = 1.3
+    local d3 = math.ease.InQuad(d) * 0.6
+    local speedmult = 1.4
+    local speedmultang = 1.45
+
+    local settings = self.BobSettingsMove or defbobsettingstable -- custom bob per gun
+    local settings2 = self.BobSettingsSpeed or defbobsettingstable2
+    local xm, ym, zm, pm, yym, rm = settings[1], settings[2], settings[3], settings[4], settings[5], settings[6]
+    local xms, yms, zms, pms, yyms, rms = settings2[1], settings2[2], settings2[3], settings2[4], settings2[5], settings2[6]
 
     local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.3-sightamount)
     smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
@@ -250,13 +262,13 @@ local function DarsuBob(self, pos, ang)
     
     if owner.GetSliding then if owner:GetSliding() then speedmult = 0.01 d3 = 0 smoothsidemove = -10 end end
 
-    pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 3.3)  * d2 * 1)                                   -- X 
-    pos:Sub(ang:Up() *             math.cos(speedmult * self.BobCT * 6)    * d * 0.3 * crouchmult)                     -- Y
-    pos:Sub(ang:Forward() *        math.sin(speedmult * self.BobCT * 4.5)  * d2 * 0.75 * crouchmult)                   -- Z
+    pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 5 * xms)  * d2 * 0.5 * Lerp(sprintamount, 1, 0.05) * xm)                                   -- X 
+    pos:Sub(ang:Up() *             math.cos(speedmult * self.BobCT * 7 * yms)    * d * 0.05 * crouchmult * Lerp(sprintamount, 1, 0.3) * ym)                     -- Y
+    pos:Sub(ang:Forward() *        math.sin(speedmult * self.BobCT * 4 * zms)  * d2 * 0.75 * crouchmult * zm)                   -- Z
 
-    ang:RotateAroundAxis(ang:Right(),   math.cos(speedmult * self.BobCT * 6)    * d3 * 2 + smoothjumpmove)                  -- P
-    ang:RotateAroundAxis(ang:Up(),      math.cos(speedmult * self.BobCT * 3.3)  * d3 * 2)                                   -- Y
-    ang:RotateAroundAxis(ang:Forward(), math.sin(speedmult * self.BobCT * 6)    * d3 * 3.5 * crouchmult + smoothsidemove)   -- R
+    ang:RotateAroundAxis(ang:Right(),   math.sin(speedmultang * self.BobCT * 5.5 * pms + 0.3)    * d3 * 2.25 * pm + smoothjumpmove)                  -- P
+    ang:RotateAroundAxis(ang:Up(),      math.cos(speedmultang * self.BobCT * 3.3 * yyms)  * d3 * 1 * Lerp(sprintamount, 1, 0.1) * yym)                                   -- Y
+    ang:RotateAroundAxis(ang:Forward(), math.sin(speedmultang * self.BobCT * 6 * rms)    * d3 * 4.5 * crouchmult * rm + smoothsidemove)   -- R
 
     return pos, ang
 end
