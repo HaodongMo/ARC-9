@@ -453,15 +453,23 @@ local conVars = {
     },
     {
         name = "hud_always",
-        default = "0"
+        default = "0",
+        client = true,
     },
     {
         name = "hud_compact",
-        default = "0"
+        default = "0",
+        client = true,
     },
     {
         name = "hud_arc9",
-        default = "1"
+        default = "1",
+        client = true,
+    },
+    {
+        name = "hud_force_disable",
+        default = "0",
+        replicated = true,
     },
     {
         name = "hud_keephints",
@@ -767,42 +775,42 @@ local conVars = {
     {
         name = "aimassist",
         default = "0",
-		replicated = true,
+        replicated = true,
     },
     {
         name = "aimassist_head",
         default = "0",
-		replicated = true,
+        replicated = true,
     },
     {
         name = "aimassist_cone",
         default = "5",
-		replicated = true,
+        replicated = true,
     },
     {
         name = "aimassist_distance",
         default = "1024",
-		replicated = true,
+        replicated = true,
     },
     {
         name = "aimassist_intensity",
         default = "0.5",
-		replicated = true,
+        replicated = true,
     },
     {
         name = "aimassist_lockon",
         default = "0",
-		replicated = true,
+        replicated = true,
     },
     {
         name = "aimassist_lockon_cl",
         default = "0",
-		client = true,
+        client = true,
     },
     {
         name = "aimassist_cl",
         default = "0",
-		client = true,
+        client = true,
     },
 }
 
@@ -871,83 +879,6 @@ end
 
 if CLIENT then
 
-local function menu_client_ti(panel)
-    panel:AddControl("checkbox", {
-        label = "Auto-Save Weapon",
-        command = "arc9_autosave"
-    })
-    panel:ControlHelp( "Reattach your last used attachments." )
-    panel:AddControl("checkbox", {
-        label = "Draw HUD",
-        command = "arc9_hud_arc9"
-    })
-    panel:AddControl("checkbox", {
-        label = "Draw HUD Everywhere",
-        command = "arc9_hud_always"
-    })
-    panel:ControlHelp( "HUD on all weapons." )
-    panel:AddControl("checkbox", {
-        label = "ADS Blur",
-        command = "arc9_fx_adsblur"
-    })
-    panel:AddControl("checkbox", {
-        label = "ADS Blur on RT Scopes",
-        command = "arc9_fx_rtblur"
-    })
-    panel:AddControl("checkbox", {
-        label = "Keep HUD Hints",
-        command = "arc9_hud_keephints"
-    })
-    panel:ControlHelp( "Never fade HUD hints." )
-    panel:AddControl("checkbox", {
-        label = "Enable TPIK",
-        command = "arc9_tpik"
-    })
-    panel:ControlHelp( "Use high quality first person animations in third person, where available." )
-    panel:AddControl("checkbox", {
-        label = "Enable TPIK For Others",
-        command = "arc9_tpik_others"
-    })
-    panel:ControlHelp( "Enable TPIK on other players." )
-    panel:AddControl("checkbox", {
-        label = "Viewmodel Bob Style",
-        command = "arc9_vm_bobstyle"
-    })
-    panel:ControlHelp( "Toggle between old and new viewmodel bobbing." )
-    panel:AddControl("checkbox", {
-        label = "Toggle ADS",
-        command = "arc9_toggleads"
-    })
-    panel:AddControl("checkbox", {
-        label = "Automatic Reload",
-        command = "arc9_autoreload"
-    })
-    panel:AddControl("checkbox", {
-        label = "Other Player Flashlights",
-        command = "arc9_allflash"
-    })
-    panel:ControlHelp( "Other players have proper, visible flashlights in third person. Extremely expensive." )
-
-    -- Add a slider for FOV
-    panel:AddControl("slider", {
-        label = "Viewmodel FOV",
-        command = "arc9_fov",
-        min = -45,
-        max = 45,
-    })
-
-    -- Add help text for imaginary bullets
-    panel:ControlHelp( "Imaginary bullets appear to travel outside the skybox. There is no gameplay difference to disabling this option." )
-    -- Add a toggle for imaginary bullets
-    panel:AddControl("checkbox", {
-        label = "Enable Imaginary Bullets",
-        command = "arc9_bullet_imaginary"
-    })
-    panel:AddControl("checkbox", {
-        label = "ADS Sensitivity Compensation",
-        command = "arc9_compensate_sens"
-    })
-end
 
 local function menu_arc9_settings(panel)
     local butt = vgui.Create( "DButton", panel )
@@ -958,123 +889,6 @@ local function menu_arc9_settings(panel)
     function butt:DoClick()
         ARC9_OpenSettings()
     end
-end
-
-local function menu_client_customization(panel)
-    panel:AddControl("checkbox", {
-        label = "Customization Blur",
-        command = "arc9_cust_blur"
-    })
-    panel:ControlHelp( "Blur the background of the customization screen.\nMay reduce performance." )
-    panel:AddControl("checkbox", {
-        label = "Customization Light",
-        command = "arc9_cust_light"
-    })
-    panel:ControlHelp( "Add a light to the customization screen." )
-    panel:AddControl("checkbox", {
-        label = "Customization Hints",
-        command = "arc9_cust_hints"
-    })
-    panel:ControlHelp( "Show hints in bottom of hud of actions you can do there   please write better string for this" )
-    panel:AddControl("checkbox", {
-        label = "Reset attachment selection on exit",
-        command = "arc9_cust_exit_reset_sel"
-    })
-    panel:ControlHelp( "Reset last selected attachment and its folder on exit from customisation menu  (maybe write about it making you go back to slots selection?) please write better string for this" )
-    panel:AddControl("checkbox", {
-        label = "Disable Holiday Theming",
-        command = "arc9_holiday_grinch"
-    })
-    panel:ControlHelp( "Disable all holiday and events related theming.\nYou're a mean one, Mr. Grinch." )
-    panel:AddControl("slider", {
-        label = "DEBUG: Holiday Month",
-        command = "arc9_holiday_month",
-        min = 0,
-        max = 12,
-    })
-    panel:ControlHelp( "Fake month to debug and test as, set over 0!!" )
-    panel:AddControl("slider", {
-        label = "DEBUG: Holiday Day",
-        command = "arc9_holiday_day",
-        min = 0,
-        max = 31,
-    })
-    panel:ControlHelp( "Fake day to debug and test as, set over 0!!" )
-end
-
-
-local function menu_client_crosshair(panel)
-    panel:AddControl("label", {
-        text = "Crosshairs are only enabled on certain weapons."
-    })
-    panel:AddControl("checkbox", {
-        label = "Enable Crosshair",
-        command = "arc9_cross_enable"
-    })
-    panel:AddControl("color", {
-        label = "Crosshair Color",
-        red = "arc9_cross_r",
-        green = "arc9_cross_g",
-        blue = "arc9_cross_b"
-    })
-end
-
-local function menu_client_optics(panel)
-    panel:AddControl("checkbox", {
-        label = "Cheap Scopes",
-        command = "arc9_cheapscopes"
-    })
-    panel:ControlHelp( "Cheap Scopes are practically as good as normal scopes, but substantially improve performance." )
-    panel:AddControl("color", {
-        label = "Reflex Sight Color",
-        red = "arc9_reflex_r",
-        green = "arc9_reflex_g",
-        blue = "arc9_reflex_b"
-    })
-    panel:AddControl("color", {
-        label = "Scope Color",
-        red = "arc9_scope_r",
-        green = "arc9_scope_g",
-        blue = "arc9_scope_b"
-    })
-end
-
-local function menu_server_ballistics(panel)
-    panel:AddControl("checkbox", {
-        label = "Physical Bullets",
-        command = "arc9_bullet_physics"
-    })
-    panel:ControlHelp( "Most weapons are designed for this to be on. Some weapons force physical bullets on. Disabling this will improve server performance." )
-
-    -- Add a slider to control bullet gravity
-    panel:AddControl("slider", {
-        label = "Gravity Multiplier",
-        command = "arc9_bullet_gravity",
-        min = 0,
-        max = 100,
-    })
-
-    -- Add a slider for bullet drag
-    panel:AddControl("slider", {
-        label = "Drag Multiplier",
-        command = "arc9_bullet_drag",
-        min = 0,
-        max = 100,
-    })
-
-    -- Add a toggle for ricochet
-    panel:AddControl("checkbox", {
-        label = "Enable Ricochet",
-        command = "arc9_ricochet"
-    })
-
-    -- Add a slider for bullet lifetime
-    panel:AddControl("slider", {
-        label = "Bullet Lifetime",
-        command = "arc9_bullet_lifetime",
-        min = 1,
-        max = 100,
-    })
 end
 
 local function menu_client_controller(panel)
@@ -1115,17 +929,17 @@ local function menu_client_controller(panel)
     but_upd:SetText("Restore from memory")
     but_app:SetText("Apply")
 
-	function listview:DoDoubleClick( lineID, line )
-		tex_inp:SetValue( line:GetColumnText( 1 ) )
-		tex_out:SetValue( line:GetColumnText( 2 ) )
-	end
+    function listview:DoDoubleClick( lineID, line )
+        tex_inp:SetValue( line:GetColumnText( 1 ) )
+        tex_out:SetValue( line:GetColumnText( 2 ) )
+    end
 
-	function listview:OnRowRightClick( lineID, line )
-		local menu = DermaMenu()
-		menu:AddOption( "Copy", function() tex_inp:SetValue( line:GetColumnText( 1 ) ) tex_out:SetValue( line:GetColumnText( 2 ) ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:AddOption( "Remove", function() listview:RemoveLine( lineID ) but_app:DoClick() end ):SetIcon( "icon16/cross.png" )
-		menu:Open()
-	end
+    function listview:OnRowRightClick( lineID, line )
+        local menu = DermaMenu()
+        menu:AddOption( "Copy", function() tex_inp:SetValue( line:GetColumnText( 1 ) ) tex_out:SetValue( line:GetColumnText( 2 ) ) end ):SetIcon( "icon16/page_copy.png" )
+        menu:AddOption( "Remove", function() listview:RemoveLine( lineID ) but_app:DoClick() end ):SetIcon( "icon16/cross.png" )
+        menu:Open()
+    end
 
     function but_add:DoClick()
         local inp, out = string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue())
@@ -1238,63 +1052,6 @@ local function menu_client_controller(panel)
         GenerateMatSelect()
     end
 
-end
-
-local function menu_server_ti(panel)
-    panel:AddControl("checkbox", {
-        label = "Enable Penetration",
-        command = "arc9_penetration"
-    })
-    panel:AddControl("checkbox", {
-        label = "NPCs Deal Equal Damage",
-        command = "arc9_npc_equality"
-    })
-    panel:AddControl("checkbox", {
-        label = "Default Body Damage Cancel",
-        command = "arc9_mod_bodydamagecancel"
-    })
-    panel:ControlHelp( "Disable body damage cancel only if you have another addon that will override the HL2 limb damage multipliers." )
-    panel:AddControl("checkbox", {
-        label = "Infinite Ammo",
-        command = "arc9_infinite_ammo"
-    })
-    -- Add a slider for giving NPCs weapons.
-    panel:AddControl("checkbox", {
-        label = "Allow Giving NPCs Weapons With +USE.",
-        command = "arc9_npc_give_weapons",
-    })
-end
-
-local function menu_server_attachments(panel)
-    panel:AddControl("checkbox", {
-        label = "Free Attachments",
-        command = "arc9_free_atts"
-    })
-    panel:ControlHelp( "Enable this to be able to use all attachments without spawning entities." )
-    panel:AddControl("checkbox", {
-        label = "Attachment Locking",
-        command = "arc9_atts_lock"
-    })
-    panel:ControlHelp( "You only need one attachment to be able to use it on all guns." )
-    panel:AddControl("checkbox", {
-        label = "Lose Attachments On Death",
-        command = "arc9_atts_loseondie"
-    })
-    panel:AddControl("checkbox", {
-        label = "Generate Attachment Entities",
-        command = "arc9_atts_generateentities"
-    })
-    panel:ControlHelp( "Disabling this can save a lot of time on startup." )
-    panel:AddControl("checkbox", {
-        label = "NPCs Get Random Attachments",
-        command = "arc9_atts_npc"
-    })
-    --Removed Anarchy Mode from menu to prevent inexperienced users from activating it
-    -- panel:AddControl("checkbox", {
-    --     label = "Total Anarchy Mode",
-    --     command = "arc9_atts_anarchy"
-    -- })
-    -- panel:ControlHelp( "For the love of God, don't enable this." )
 end
 
 c1 = {
@@ -1450,10 +1207,10 @@ local function menu_server_modifiers(panel)
     panel:AddItem( com_3 )
     panel:ControlHelp( "Special condition, like if you're crouching." )
 
-	function listview:DoDoubleClick( lineID, line )
-		tex_inp:SetValue( line:GetColumnText( 1 ) )
-		tex_out:SetValue( line:GetColumnText( 2 ) )
-	end
+    function listview:DoDoubleClick( lineID, line )
+        tex_inp:SetValue( line:GetColumnText( 1 ) )
+        tex_out:SetValue( line:GetColumnText( 2 ) )
+    end
 
     for i, v in pairs(c1) do
         com_1:AddChoice( i )
@@ -1498,12 +1255,12 @@ local function menu_server_modifiers(panel)
     panel:ControlHelp( " - \"RecoilMultCrouch\" \"0.1\" to reduce recoil to 10% when crouching." )
     panel:ControlHelp( " - \"RPMMultOddShot\" \"0.5\" to make every other shot 600RPM." )
 
-	function listview:OnRowRightClick( lineID, line )
-		local menu = DermaMenu()
-		menu:AddOption( "Copy", function() tex_inp:SetValue( line:GetColumnText( 1 ) ) tex_out:SetValue( line:GetColumnText( 2 ) ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:AddOption( "Remove", function() listview:RemoveLine( lineID ) but_app:DoClick() end ):SetIcon( "icon16/cross.png" )
-		menu:Open()
-	end
+    function listview:OnRowRightClick( lineID, line )
+        local menu = DermaMenu()
+        menu:AddOption( "Copy", function() tex_inp:SetValue( line:GetColumnText( 1 ) ) tex_out:SetValue( line:GetColumnText( 2 ) ) end ):SetIcon( "icon16/page_copy.png" )
+        menu:AddOption( "Remove", function() listview:RemoveLine( lineID ) but_app:DoClick() end ):SetIcon( "icon16/cross.png" )
+        menu:Open()
+    end
 
     function but_add:DoClick()
         local inp, out = string.Trim(tex_inp:GetValue()), string.Trim(tex_out:GetValue())

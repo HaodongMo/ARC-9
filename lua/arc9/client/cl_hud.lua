@@ -54,9 +54,11 @@ ARC9.Colors = {
 local cl_drawhud = GetConVar("cl_drawhud")
 local arc9_hud_arc9 = GetConVar("arc9_hud_arc9")
 local arc9_hud_always = GetConVar("arc9_hud_always")
+local arc9_hud_force_disable = GetConVar("arc9_hud_force_disable")
 
 function ARC9.ShouldDrawHUD()
     if !cl_drawhud:GetBool() then return end
+    if arc9_hud_force_disable:GetBool() then return end
 
     local wpn = LocalPlayer():GetActiveWeapon()
     local a9 = wpn.ARC9

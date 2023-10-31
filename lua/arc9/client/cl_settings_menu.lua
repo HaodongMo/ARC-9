@@ -54,6 +54,8 @@ ARC9.SettingsTable = {
         end},
 
         { sv = true, type = "label", text = "settings.general.server" },
+        { type = "bool", text = "settings.hud_game.hud_force_disable.title", convar = "hud_force_disable", desc = "settings.hud_game.hud_force_disable.desc" },
+
         { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
         { sv = true, type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
         { sv = true, type = "slider", text = "settings.gameplay.mult_defaultammo.title", convar = "mult_defaultammo", min = 0, max = 16, decimals = 0, desc = "settings.gameplay.mult_defaultammo.desc" },
@@ -97,7 +99,7 @@ ARC9.SettingsTable = {
         -- { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
 
         { type = "label", text = "settings.optics.control" },
-		{ type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
+        { type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
         { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
         { type = "bool", text = "settings.optics.toggleads.title", convar = "toggleads", desc = "settings.optics.toggleads.desc" },
 
@@ -319,7 +321,7 @@ ARC9.SettingsTable = {
         { type = "label", text = "settings.general.client", desc = "settings.tabname.aimassist.desc" },
         { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
         { type = "bool", text = "settings.aimassist.lockon.title", convar = "aimassist_lockon_cl", desc = "settings.aimassist.lockon.desc"},
-		
+
         { type = "label", text = "settings.general.server" },
         { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist", desc = "settings.aimassist.enable.desc"},
         { type = "bool", text = "settings.aimassist.lockon_allow.title", convar = "aimassist_lockon", desc = "settings.aimassist.lockon_allow.desc"},
@@ -629,9 +631,10 @@ local function DrawSettings(bg, page)
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
         surface.SetTextPos(w-ARC9ScreenScale(96), ARC9ScreenScale(26))
         surface.DrawText(activedesc != "" and ARC9:GetPhrase("settings.desc") or "") -- no title if no desc
-        
+
         if activecvar != "" then -- display the cvar at the bottom of the description page
             local freshcvar = ""
+            local cvarrealm = nil
 
             if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then 
                 freshcvar = activecvar .. "_r/_g/_b" .. (GetConVar(activecvar .. "_a") and "/_a" or "")
@@ -639,32 +642,58 @@ local function DrawSettings(bg, page)
                 freshcvar = activecvar .. " " .. (GetConVar(activecvar):GetString() or "")
             end
 
-            local tw = surface.GetTextSize(freshcvar)
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(30))
-            surface.DrawText(freshcvar)
+            if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then -- also display the default value of said cvar
 
-			if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then -- also display the default value of said cvar
-			
-				if GetConVar(activecvar .. "_a") then ifalpha = "," .. GetConVar(activecvar .. "_a"):GetDefault() else ifalpha = "" end -- check if an alpha convar also exists
-				
-				if string.len(ARC9:GetPhrase("settings.default_convar")) > 17 then -- if the string is over 17 characters long, then make it two value displays
-					defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. "," .. GetConVar(activecvar .. "_g"):GetDefault() .. ","
-					defaultvalue2 = GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
-				else -- otherwise, only use one
-					defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. "," .. GetConVar(activecvar .. "_g"):GetDefault() .. "," .. GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
-					defaultvalue2 = ""
-				end
-			else
-				defaultvalue = GetConVar(activecvar):GetDefault()
-				defaultvalue2 = ""
-			end
+                if GetConVar(activecvar .. "_a") then ifalpha = "," .. GetConVar(activecvar .. "_a"):GetDefault() else ifalpha = "" end -- check if an alpha convar also exists
+
+                if string.len(ARC9:GetPhrase("settings.default_convar")) > 17 then -- if the string is over 17 characters long, then make it two value displays
+                    defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. "," .. GetConVar(activecvar .. "_g"):GetDefault() .. ","
+                    defaultvalue2 = GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
+                else -- otherwise, only use one
+                    defaultvalue = GetConVar(activecvar .. "_r"):GetDefault() .. "," .. GetConVar(activecvar .. "_g"):GetDefault() .. "," .. GetConVar(activecvar .. "_b"):GetDefault() .. ifalpha
+                    defaultvalue2 = ""
+                end
+
+                if !game.SinglePlayer() and !LocalPlayer():IsListenServerHost() then
+                    if bit.band(GetConVar(activecvar .. "_r"):GetFlags(), FCVAR_LUA_CLIENT) != 0 then
+                        cvarrealm = "settings.convar_client"
+                    else
+                        cvarrealm = "settings.convar_server"
+                    end
+                end
+            else
+                defaultvalue = GetConVar(activecvar):GetDefault()
+                defaultvalue2 = ""
+
+                if !game.SinglePlayer() and !LocalPlayer():IsListenServerHost() then
+                    if bit.band(GetConVar(activecvar):GetFlags(), FCVAR_LUA_CLIENT) != 0 then
+                        cvarrealm = "settings.convar_client"
+                    else
+                        cvarrealm = "settings.convar_server"
+                    end
+                end
+            end
+
+            local bump = cvarrealm and ARC9ScreenScale(37.5) or ARC9ScreenScale(30)
+            surface.SetTextColor(ARC9.GetHUDColor("hint"))
+
+            surface.SetTextColor(ARC9.GetHUDColor("fg"))
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
+            surface.DrawText(freshcvar)
+            bump = bump - ARC9ScreenScale(7.5)
 
             surface.SetTextColor(ARC9.GetHUDColor("hint"))
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(22.5))
-            surface.DrawText(ARC9:GetPhrase("settings.default_convar") .. ": " .. defaultvalue)
+            if cvarrealm then
+                surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
+                surface.DrawText(ARC9:GetPhrase(cvarrealm))
+                bump = bump - ARC9ScreenScale(7.5)
+            end
 
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-ARC9ScreenScale(15))
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
+            surface.DrawText(ARC9:GetPhrase("settings.default_convar") .. ": " .. defaultvalue)
+            bump = bump - ARC9ScreenScale(7.5)
+
+            surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
             surface.DrawText(defaultvalue2)
         end
 

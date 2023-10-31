@@ -349,6 +349,8 @@ L["settings.title"] = "ARC9 Settings"
 L["settings.desc"] = "Description"
 
 L["settings.default_convar"] = "Default value"
+L["settings.convar_server"] = "Server variable"
+L["settings.convar_client"] = "Client variable"
 
 ////////////////////// General
 L["settings.tabname.general"] = "General"
@@ -487,6 +489,8 @@ L["settings.hud_game.hud_nohints.title"] = "Disable Hints"
 L["settings.hud_game.hud_nohints.desc"] = "Disable hints completely. They will not show up in the 3D HUD, nor in the 2D HUD."
 L["settings.hud_game.hud_keephints.title"] = "Keep Hints"
 L["settings.hud_game.hud_keephints.desc"] = "Show the ARC9 control hints on top on HUD panel."
+L["settings.hud_game.hud_force_disable.title"] = "Force Disable HUD"
+L["settings.hud_game.hud_force_disable.desc"] = "Disable ARC9 HUD for all players. Does not affect hints."
 
 L["settings.hud_game.killfeed"] = "Killfeed"
 L["settings.hud_game.killfeed_enable.title"] = "Killfeed Icons"
