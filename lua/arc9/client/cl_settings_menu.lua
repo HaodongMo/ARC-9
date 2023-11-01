@@ -43,11 +43,11 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
         { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
-        { type = "combo", text = "settings.truenames.title", convar = "truenames", content = {
-            {"1Use Default", "2"},
-            {"2Disabled", "0"},
-            {"3Enabled", "1"},
-        }, desc = "settings.truenames.desc"},
+        -- { type = "combo", text = "settings.truenames.title", convar = "truenames", content = {
+        --     {"1Use Default", "2"},
+        --     {"2Disabled", "0"},
+        --     {"3Enabled", "1"},
+        -- }, desc = "settings.truenames.desc"},
         { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
         { type = "button", text = "settings.resetsettings.cl.title", content = "settings.reset", func = function(self2)
             RunConsoleCommand("arc9_settings_reset_client")
@@ -59,11 +59,12 @@ ARC9.SettingsTable = {
         { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
         { sv = true, type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
         { sv = true, type = "slider", text = "settings.gameplay.mult_defaultammo.title", convar = "mult_defaultammo", min = 0, max = 16, decimals = 0, desc = "settings.gameplay.mult_defaultammo.desc" },
-        { sv = true, type = "combo", text = "settings.truenames_default.title", convar = "truenames_default", content = {
-            {"1Disabled", "0"},
-            {"2Enabled", "1"},
-        }, desc = "settings.truenames_default.desc"},
-        { sv = true, type = "bool", text = "settings.truenames_enforced.title", convar = "truenames_enforced", desc = "settings.truenames_enforced.desc"},
+        { sv = true, type = "bool", text = "settings.truenames.title", convar = "truenames_default", desc = "settings.truenames.desc" },
+        -- { sv = true, type = "combo", text = "settings.truenames_default.title", convar = "truenames_default", content = {
+        --     {"1Disabled", "0"},
+        --     {"2Enabled", "1"},
+        -- }, desc = "settings.truenames_default.desc"},
+        -- { sv = true, type = "bool", text = "settings.truenames_enforced.title", convar = "truenames_enforced", desc = "settings.truenames_enforced.desc"},
         { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist", desc = "settings.aimassist.enable.desc"},
         { sv = true, type = "button", text = "settings.resetsettings.sv.title", content = "settings.reset", func = function(self2)
             RunConsoleCommand("arc9_settings_reset_server")
@@ -170,6 +171,7 @@ ARC9.SettingsTable = {
     {
         TabName = "settings.tabname.hud_game",
         { type = "label", text = "settings.hud_game.lcd" },
+        { type = "bool", text = "settings.hud_game.hud_force_disable.title", convar = "hud_force_disable", desc = "settings.hud_game.hud_force_disable.desc" },
         { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
         { type = "bool", text = "settings.hud_game.hud_always.title", convar = "hud_always", desc = "settings.hud_game.hud_always.desc" },
         { type = "bool", text = "settings.hud_game.hud_compact.title", convar = "hud_compact", desc = "settings.hud_game.hud_compact.desc" },

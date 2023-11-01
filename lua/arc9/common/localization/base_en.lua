@@ -357,7 +357,7 @@ L["settings.tabname.general"] = "General"
 
 L["settings.general.client"] = "Client"
 L["settings.truenames.title"] = "True Names"
-L["settings.truenames.desc"] = "Set whether to use weapons' real names or fictional names made by the developers. Not all weapons utilize this.\n\nServer setting may override this preference."
+L["settings.truenames.desc"] = "Set whether to use weapons' real names or fictional names made by the developers. Not all weapons utilize this."
 L["settings.resetsettings.cl.title"] = "Reset all CLIENT settings"
 
 L["settings.general.server"] = "Server"
