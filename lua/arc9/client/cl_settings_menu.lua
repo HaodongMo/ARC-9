@@ -149,7 +149,7 @@ ARC9.SettingsTable = {
         --     timer.Simple(0, function()
         --         ARC9.Regen() -- reload fonts with new scale
         --     end)
-        -- end },       
+        -- end },
 
         { type = "slider", min = 0, max = 1000, decimals = 0, text = "settings.hud_cust.hud_deadzonex.title", convar = "hud_deadzonex", desc = "settings.hud_cust.hud_deadzonex.desc" },
 
@@ -411,8 +411,6 @@ local function DrawSettings(bg, page)
     sheet.Navigation:SetWidth(ARC9ScreenScale(100))
 
     for k, v in pairs(ARC9.SettingsTable) do
-        if v.sv and !(game.SinglePlayer() or LocalPlayer():IsAdmin()) then continue end -- you don't have the right, oh you don't have the right
-
         local newpanel = vgui.Create("DPanel", sheet)
         newpanel:Dock(FILL)
         newpanel.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, ARC9.GetHUDColor("bg")) end
@@ -421,13 +419,14 @@ local function DrawSettings(bg, page)
         newpanelscroll:DockMargin(ARC9ScreenScale(4), ARC9ScreenScale(4), ARC9ScreenScale(4), 0)
 
         for k2, v2 in ipairs(v) do
-            if v2.sv and !(game.SinglePlayer() or LocalPlayer():IsAdmin()) then continue end -- you don't have the right, oh you don't have the right
-
             local elpanel = vgui.Create("DPanel", newpanelscroll)
 
             elpanel:SetTall(ARC9ScreenScale(v2.type == "label" and 14 or 21))
             elpanel:DockMargin(0, (k2 != 1 and v2.type == "label") and ARC9ScreenScale(4) or 0, 0, 0)
             elpanel:Dock(TOP)
+
+            local noperms = !game.SinglePlayer() and !LocalPlayer():IsListenServerHost() and !LocalPlayer():IsAdmin()
+                    and v2.convar and ARC9.ConVarData["arc9_" .. v2.convar] and !ARC9.ConVarData["arc9_" .. v2.convar].client
 
             elpanel.Paint = function(self2, w, h)
                 if v2.type == "label" then
@@ -468,7 +467,12 @@ local function DrawSettings(bg, page)
 
                 surface.SetFont("ARC9_12_Slim")
                 local tw, th = surface.GetTextSize(txt)
-                surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                if noperms then
+                    surface.SetTextColor(ARC9.GetHUDColor("unowned"))
+                else
+                    surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                end
+
                 surface.SetTextPos(ARC9ScreenScale(4), h/2 - th/2)
                 surface.DrawText(txt)
             end
@@ -481,6 +485,7 @@ local function DrawSettings(bg, page)
                 local newel = vgui.Create("ARC9Checkbox", elpanel)
                 newel:SetPos(elpw+ARC9ScreenScale(5), ARC9ScreenScale(4))
                 if v2.convar then newel:SetConVar("arc9_" .. v2.convar) end
+                if noperms then newel:SetEnabled(false) end
             elseif v2.type == "slider" then
                 local newel = vgui.Create("ARC9NumSlider", elpanel)
                 newel:SetPos(ARC9ScreenScale(23), ARC9ScreenScale(6))
@@ -490,6 +495,7 @@ local function DrawSettings(bg, page)
                 newel:SetMax(v2.max or 255)
                 if v2.convar then newel:SetConVar("arc9_" .. v2.convar) end
                 if v2.convar2 then newel:SetValue(GetConVar("arc9_" .. v2.convar2):GetFloat()) end
+                if noperms then newel:SetEnabled(false) end
 
                 local oldmousereleased = newel.Slider.OnMouseReleased
                 newel.Slider.OnMouseReleased = function(self2, kc)
@@ -509,6 +515,7 @@ local function DrawSettings(bg, page)
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar")
                 end
+                if noperms then newel:SetEnabled(false) end
 
             elseif v2.type == "coloralpha" then
                 local newel = vgui.Create("ARC9ColorButton", elpanel)
@@ -524,6 +531,7 @@ local function DrawSettings(bg, page)
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar (or its _alpha)")
                 end
+                if noperms then newel:SetEnabled(false) end
 
             elseif v2.type == "input" then
                 local newel = vgui.Create("DTextEntry", elpanel)
@@ -543,6 +551,8 @@ local function DrawSettings(bg, page)
                         newel:AddChoice(choice[1], choice[2])
                     end
                 end
+                if noperms then newel:SetEnabled(false) end
+
             elseif v2.type == "button" then
                 local newel = vgui.Create("ARC9Button", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
@@ -553,6 +563,8 @@ local function DrawSettings(bg, page)
                     oldmousepressed(self2, kc)
                     if kc == MOUSE_LEFT and v2.func then v2.func(self2) end
                 end
+                if noperms then newel:SetEnabled(false) end
+
             end
         end
 
@@ -613,19 +625,18 @@ local function DrawSettings(bg, page)
         -- surface.DrawTexturedRect(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9ScreenScale(20))
 
         -- ARC9.DrawColoredARC9Logo(ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20), ARC9.GetHUDColor("hi"))
-        
+
         -- function ARC9.DrawColoredARC9Logo(x, y, s, col)
         do
             local x, y, s = ARC9ScreenScale(4), ARC9ScreenScale(2), ARC9ScreenScale(20)
             surface.SetDrawColor(255, 255, 255)
             surface.SetMaterial(arc9logo_layer1)
             surface.DrawTexturedRect(x, y, s, s)
-        
+
             surface.SetDrawColor(ARC9.GetHUDColor("hi"))
             surface.SetMaterial(arc9logo_layer2)
             surface.DrawTexturedRect(x, y, s, s)
         end
-
 
         surface.SetFont("ARC9_8_Slim")
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
@@ -636,7 +647,7 @@ local function DrawSettings(bg, page)
             local freshcvar = ""
             local cvarrealm = nil
 
-            if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then 
+            if !GetConVar(activecvar) and GetConVar(activecvar .. "_r") then
                 freshcvar = activecvar .. "_r/_g/_b" .. (GetConVar(activecvar .. "_a") and "/_a" or "")
             else
                 freshcvar = activecvar .. " " .. (GetConVar(activecvar):GetString() or "")
@@ -655,7 +666,7 @@ local function DrawSettings(bg, page)
                 end
 
                 if !game.SinglePlayer() and !LocalPlayer():IsListenServerHost() then
-                    if bit.band(GetConVar(activecvar .. "_r"):GetFlags(), FCVAR_LUA_CLIENT) != 0 then
+                    if ARC9.ConVarData[activecvar .. "_r"].client then
                         cvarrealm = "settings.convar_client"
                     else
                         cvarrealm = "settings.convar_server"
@@ -666,7 +677,7 @@ local function DrawSettings(bg, page)
                 defaultvalue2 = ""
 
                 if !game.SinglePlayer() and !LocalPlayer():IsListenServerHost() then
-                    if bit.band(GetConVar(activecvar):GetFlags(), FCVAR_LUA_CLIENT) != 0 then
+                    if ARC9.ConVarData[activecvar].client then
                         cvarrealm = "settings.convar_client"
                     else
                         cvarrealm = "settings.convar_server"

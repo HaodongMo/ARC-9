@@ -14,6 +14,28 @@ ARC9TopButton.MatHoveredM = Material("arc9/ui/topbutton_hover_m.png", "mips")
 ARC9TopButton.MatIdleR = Material("arc9/ui/topbutton_r.png", "mips")
 ARC9TopButton.MatHoveredR = Material("arc9/ui/topbutton_hover_r.png", "mips")
 
+local function syncconvar(self, val)
+
+    if LocalPlayer():IsAdmin() and ARC9.ShouldNetworkConVar(LocalPlayer(), self.m_strConVar) then
+        ARC9.NetworkConVar(self.m_strConVar, tostring(val))
+    else
+        if not self.m_strConVar or #self.m_strConVar < 2 then return end
+        RunConsoleCommand(self.m_strConVar, tostring(val))
+    end
+end
+
+local function syncconvardelayed(self, val)
+
+    if LocalPlayer():IsAdmin() and ARC9.ShouldNetworkConVar(LocalPlayer(), self.m_strConVar) then
+        timer.Create("cvarsend_" .. self.m_strConVar, 0.5, 1, function()
+            ARC9.NetworkConVar(self.m_strConVar, tostring(val))
+        end)
+    else
+        if not self.m_strConVar or #self.m_strConVar < 2 then return end
+        RunConsoleCommand(self.m_strConVar, tostring(val))
+    end
+end
+
 function ARC9TopButton:Init()
     self:SetText("")
     self:SetSize(ARC9ScreenScale(21), ARC9ScreenScale(21))
@@ -203,14 +225,14 @@ function ARC9AttButton:Paint(w, h)
     local tw = surface.GetTextSize(text)
     surface.SetTextColor(textcolor)
 
-	-- print(textcolor)
+    -- print(textcolor)
 
     if tw > w then
         ARC9.DrawTextRot(self, text, 0, h - ARC9ScreenScale(13.5), 0, h - ARC9ScreenScale(13.5), w, false)
     else
         surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(13.5))
         surface.DrawText(text)
-		-- markup.Parse("<font=ARC9_9>" .. text):Draw((w - tw) / 2, h - ARC9ScreenScale(13.5), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+        -- markup.Parse("<font=ARC9_9>" .. text):Draw((w - tw) / 2, h - ARC9ScreenScale(13.5), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
     end
 
     if att then
@@ -471,12 +493,14 @@ function ARC9Checkbox:Paint(w, h)
         surface.DrawTexturedRect(0, 0, w, w)
     end
 
-    if self:IsHovered() then
+    if self:IsHovered() and self:IsEnabled() then
         surface.SetDrawColor(color2)
         surface.SetMaterial(self.MatSel)
         surface.DrawTexturedRect(0, 0, w, w)
     end
 end
+
+ARC9Checkbox.ConVarChanged = syncconvar
 
 vgui.Register("ARC9Checkbox", ARC9Checkbox, "DCheckBox")
 local ARC9NumSlider = {}
@@ -501,13 +525,16 @@ function ARC9NumSlider:Init()
         surface.DrawRect(0, h / 3, w * self.Scratch:GetFraction(), h / 4)
     end
 
+    self.Scratch.ConVarChanged = syncconvardelayed
+    self.TextArea.ConVarChanged = syncconvardelayed
+
     self.TextArea:SetWide(ARC9ScreenScale(20))
     self.TextArea:DockMargin(ARC9ScreenScale(3), 0, 0, 0)
     self.TextArea:SetHighlightColor(color2)
     self.TextArea:SetCursorColor(color2)
     self.TextArea:SetTextColor(color)
     self.TextArea:SetFont("ARC9_10_Slim")
-    -- self.TextArea.Paint = function(panel, w, h) 
+    -- self.TextArea.Paint = function(panel, w, h)
     --     surface.SetFont("ARC9_10_Slim")
     --     local text = panel:GetValue() or "Owo"
     --     local tw = surface.GetTextSize(text)
@@ -516,6 +543,7 @@ function ARC9NumSlider:Init()
     --     surface.DrawText(text)
     -- end
 end
+
 
 vgui.Register("ARC9NumSlider", ARC9NumSlider, "DNumSlider")
 local ARC9ComboBox = {}
@@ -544,7 +572,11 @@ function ARC9ComboBox:OnSelect(index, value, data)
     self.text = self:GetText()
 
     if self.Convar then
-        RunConsoleCommand(self.Convar, data)
+        if LocalPlayer():IsAdmin() and ARC9.ShouldNetworkConVar(LocalPlayer(), self.Convar) then
+            ARC9.NetworkConVar(self.Convar, tostring(data))
+        else
+            RunConsoleCommand(self.Convar, data)
+        end
     end
 
     self:SetText("")
@@ -891,16 +923,27 @@ function ARC9ColorButton:DoClick()
             newel.ResultColor.a = newel.Alpha
         end
 
-        self.rgbcolor = newel.ResultColor
-        RunConsoleCommand(self.Convar .. "_r", self.rgbcolor.r)
-        RunConsoleCommand(self.Convar .. "_g", self.rgbcolor.g)
-        RunConsoleCommand(self.Convar .. "_b", self.rgbcolor.b)
+        if LocalPlayer():IsAdmin() and ARC9.ShouldNetworkConVar(LocalPlayer(), self.m_strConVar) then
+            timer.Create("cvarsend_" .. self.Convar, 0.5, 1, function()
+                ARC9.NetworkConVar(self.Convar .. "_r", tostring(self.rgbcolor.r))
+                ARC9.NetworkConVar(self.Convar .. "_g", tostring(self.rgbcolor.g))
+                ARC9.NetworkConVar(self.Convar .. "_b", tostring(self.rgbcolor.b))
+                if newel.Alpha then
+                    ARC9.NetworkConVar(self.Convar .. "_a", tostring(self.rgbcolor.a))
+                end
+            end)
+        else
+            self.rgbcolor = newel.ResultColor
+            RunConsoleCommand(self.Convar .. "_r", self.rgbcolor.r)
+            RunConsoleCommand(self.Convar .. "_g", self.rgbcolor.g)
+            RunConsoleCommand(self.Convar .. "_b", self.rgbcolor.b)
 
-        if newel.Alpha then
-            RunConsoleCommand(self.Convar .. "_a", self.rgbcolor.a)
+            if newel.Alpha then
+                RunConsoleCommand(self.Convar .. "_a", self.rgbcolor.a)
+            end
         end
 
-        -- self:ApplyConvar or something idk () 
+        -- self:ApplyConvar or something idk ()
         newel:Remove()
         bg:Remove()
     end

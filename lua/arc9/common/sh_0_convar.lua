@@ -813,6 +813,7 @@ local conVars = {
         client = true,
     },
 }
+ARC9.ConVarData = {}
 
 local prefix = "arc9_"
 
@@ -836,6 +837,8 @@ for _, var in pairs(conVars) do
         table.insert(torevertlist_sv, convar_name)
         CreateConVar(convar_name, var.default, flags, var.helptext, var.min, var.max)
     end
+
+    ARC9.ConVarData[convar_name] = var
 end
 
 if CLIENT then
@@ -852,9 +855,28 @@ concommand.Add("arc9_settings_reset_server", function()
     end
 end, nil, "Reset all server ARC9 settings.")
 
+function ARC9.ShouldNetworkConVar(ply, cvar)
+    if !ARC9.ConVarData[cvar] then return end
+    if game.SinglePlayer() or ply:IsListenServerHost() then return false end
+
+    if ARC9.ConVarData[cvar].client then return false end
+
+    return true
+end
+
 if SERVER then
     util.AddNetworkString("ARC9_InvalidateAll")
     util.AddNetworkString("ARC9_InvalidateAll_ToClients")
+    util.AddNetworkString("arc9_setconvar")
+
+    net.Receive("arc9_setconvar", function(len, ply)
+        if !ply:IsAdmin() then return end
+        local cvar = net.ReadString()
+        if !ARC9.ShouldNetworkConVar(ply, cvar) then return end
+        local val = net.ReadString()
+        GetConVar(cvar):SetString(val)
+        print(ply:GetName() .. " set '" .. cvar .. "' to '" .. val .. "'.")
+    end)
 
     net.Receive("ARC9_InvalidateAll", function(len, ply)
         if ply:IsAdmin() then
@@ -878,6 +900,19 @@ function ARC9.InvalidateAll()
 end
 
 if CLIENT then
+
+    local debounce = {}
+    function ARC9.NetworkConVar(cvar, value)
+        if !ARC9.ShouldNetworkConVar(LocalPlayer(), cvar) then return end
+        if !LocalPlayer():IsAdmin() then return end
+        if (debounce[cvar] or 0) > CurTime() then return end
+
+        net.Start("arc9_setconvar")
+            net.WriteString(cvar)
+            net.WriteString(value)
+        net.SendToServer()
+        debounce[cvar] = CurTime() + 0.1
+    end
 
 
 local function menu_arc9_settings(panel)
