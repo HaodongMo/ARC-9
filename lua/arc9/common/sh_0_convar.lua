@@ -804,12 +804,12 @@ local conVars = {
     },
     {
         name = "aimassist_lockon_cl",
-        default = "0",
+        default = "1",
         client = true,
     },
     {
         name = "aimassist_cl",
-        default = "0",
+        default = "1",
         client = true,
     },
 }

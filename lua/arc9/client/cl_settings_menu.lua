@@ -48,7 +48,7 @@ ARC9.SettingsTable = {
         --     {"2Disabled", "0"},
         --     {"3Enabled", "1"},
         -- }, desc = "settings.truenames.desc"},
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
+        -- { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
         { type = "button", text = "settings.resetsettings.cl.title", content = "settings.reset", func = function(self2)
             RunConsoleCommand("arc9_settings_reset_client")
         end},
