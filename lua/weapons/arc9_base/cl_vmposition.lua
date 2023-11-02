@@ -123,24 +123,29 @@ function SWEP:GetViewModelPosition(pos, ang)
     -- print(extra_offsetang)
     offsetpos:Set(self:GetProcessedValue("ActivePos", true))
     offsetang:Set(self:GetProcessedValue("ActiveAng", true))
-    local movingpv = self.PV_Move
+    local maxspd, vel = owner:GetWalkSpeed() or 250, owner:OnGround() and owner:GetAbsVelocity():Length() or 0
+    local movingpv = math.Clamp(math.Remap(vel, 0, maxspd, 0, 1), 0, 1)
+    -- local movingpv = self.PV_Move
     local mvpos = self:GetProcessedValue("MovingPos", true)
+    local mvang = self:GetProcessedValue("MovingAng", true)
 
-    if mvpos and movingpv > 0.125 then
-        local mvang = self:GetProcessedValue("MovingAng", true)
+    if (mvpos or mvang) and movingpv > 0.125 then
         -- local ts_movingpv = 0 -- self:GetTraversalSprintAmount()
         movingpv = math.ease.InOutQuad(movingpv)
         -- ts_movingpv = math.ease.InOutSine(ts_movingpv)
         -- movingpv = math.max(movingpv, ts_movingpv)
-        LerpVectorEdit(movingpv, offsetpos, mvpos)
-        LerpAngleEdit(movingpv, offsetang, mvang)
-        LerpAngleEdit(movingpv, extra_offsetang, angle_zero)
+        if mvpos then
+            offsetpos:Add(mvpos * movingpv)
+        end
+        if mvang then
+            offsetang:Add(mvang * movingpv)
+        end
         local wim = self:GetProcessedValue("MovingMidPoint", true)
         local mv_midpoint = movingpv * math.cos(movingpv * halfPi)
         local mv_joffset = (wim and wim.Pos or vector_origin) * mv_midpoint
         local mv_jaffset = (wim and wim.Ang or angle_zero) * mv_midpoint
         extra_offsetpos:Add(mv_joffset)
-        extra_offsetang:Add(mv_jaffset)
+        extra_offsetang:Add(mv_jaffset) -- what does all this extra offset stuff do?
     end
 
     -- if self.PV_Move > 0.2 and self:GetSprintDelta() == 0 then
@@ -171,11 +176,13 @@ function SWEP:GetViewModelPosition(pos, ang)
         local crouchdelta = math.Clamp(math.ease.InOutSine((viewOffsetZ - owner:GetCurrentViewOffset().z) / (viewOffsetZ - owner:GetViewOffsetDucked().z)), 0, 1)
 
         if crouchpos then
-            LerpVectorEdit(crouchdelta, offsetpos, crouchpos)
+            offsetpos:Add(crouchpos * crouchdelta)
+            -- LerpVectorEdit(crouchdelta, offsetpos, crouchpos)
         end
 
         if crouchang then
-            LerpAngleEdit(crouchdelta, offsetang, crouchang)
+            offsetang:Add(crouchang * crouchdelta)
+            -- LerpAngleEdit(crouchdelta, offsetang, crouchang)
         end
     end
 

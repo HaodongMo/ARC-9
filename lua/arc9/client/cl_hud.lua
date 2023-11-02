@@ -316,8 +316,8 @@ local function GetHintsTable(capabilities)
 
     if capabilities.VariableZoom then
         table.insert(hints, {
-            glyph = !input.LookupBinding("invnext") and !(input.LookupKeyBinding(113):len() > 0) and "shared_mouse_scroll_down" or ARC9.GetBindKey("invnext"),
-            glyph2 = !input.LookupBinding("invprev") and !(input.LookupKeyBinding(112):len() > 0) and "shared_mouse_scroll_up" or ARC9.GetBindKey("invprev"),
+            glyph = !input.LookupBinding("invnext") and !(input.LookupKeyBinding(113) != nil and input.LookupKeyBinding(113):len() > 0) and "shared_mouse_scroll_down" or ARC9.GetBindKey("invnext"),
+            glyph2 = !input.LookupBinding("invprev") and !(input.LookupKeyBinding(112) != nil and input.LookupKeyBinding(112):len() > 0) and "shared_mouse_scroll_up" or ARC9.GetBindKey("invprev"),
             action = ARC9:GetPhrase("hud.hint.zoom")
         }) -- use mouse wheel if invnext or invprev not bound, possible convar to swap maybe? currently for semi parity with switchsights
     end
