@@ -54,7 +54,7 @@ ATT.NoDraw = false
 
 ATT.Material = "material/path"
 
--- Use SubMaterial0 through SubMaterial9 to set submaterials
+-- Use SubMaterial0 through SubMaterial31 to set submaterials
 ATT.SubMaterial0 = "material/path"
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.

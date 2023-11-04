@@ -140,7 +140,7 @@ function SWEP:PreDrawViewModel()
 
     vm:SetSubMaterial()
 
-    for ind = 0, 9 do
+    for ind = 0, 31 do
         local val = self:GetProcessedValue("SubMaterial" .. ind, true)
         if val then
             vm:SetSubMaterial(ind, val)

@@ -41,7 +41,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             if mdl and mdl[1]:IsValid() then
                 mdl[1]:SetMaterial(self:GetProcessedValue("Material", true))
 
-                for ind = 0, 9 do
+                for ind = 0, 31 do
                     local val = self:GetProcessedValue("SubMaterial" .. ind, true)
                     if val then
                         mdl[1]:SetSubMaterial(ind, val)
