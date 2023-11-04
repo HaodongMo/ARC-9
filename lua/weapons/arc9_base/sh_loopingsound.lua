@@ -87,15 +87,19 @@ SWEP.IsIndoors = 0
 
 local traces = {
     {
-        Distance = Vector(0, 0, 1024),
-        Influence = 0,
-    }, -- Up
+        Distance = Vector(256, 0, 768),
+        Influence = 1,
+    }, -- Up Right
     {
-        Distance = Vector(0, 768, 768),
+        Distance = Vector(-256, 0, 768),
+        Influence = 1,
+    }, -- Up Left
+    {
+        Distance = Vector(0, 256, 768),
         Influence = 1,
     }, -- Up Forward
     {
-        Distance = Vector(0, -768, 768),
+        Distance = Vector(0, -256, 768),
         Influence = 1,
     }, -- Up Back
     {
@@ -147,8 +151,8 @@ function SWEP:GetIndoor()
         t_influ = t_influ + (tin.Influence or 1)
         local result = util.TraceLine(traceTable)
         if GetConVar("developer"):GetInt() > 2 then
-            debugoverlay.Line(wop - (vector_up * 4), result.HitPos - (vector_up * 4), 1, Color((_ / 4) * 255, 0, (1 - (_ / 4)) * 255))
-            debugoverlay.Text(result.HitPos - (vector_up * 4), math.Round((result.HitSky and 1 or result.Fraction) * 100) .. "%", 1)
+            debugoverlay.Line(wop - (vector_up * 4), result.HitPos - (vector_up * 4), 3, Color((_ / 4) * 255, 0, (1 - (_ / 4)) * 255))
+            debugoverlay.Text(result.HitPos - (vector_up * 4), math.Round((result.HitSky and 1 or result.Fraction) * 100) .. "%", 3)
         end
         vol = vol + (result.HitSky and 1 or result.Fraction) * tin.Influence
     end
