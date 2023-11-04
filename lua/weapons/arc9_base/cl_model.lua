@@ -63,6 +63,8 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
         atttbl = self:GetFinalAttTable(slottbl)
     end
 
+    local icon_offset = slottbl.Icon_Offset or Vector()
+
     local offset_pos = slottbl.Pos or Vector(0, 0, 0)
     local offset_ang = slottbl.Ang or Angle(0, 0, 0)
     local bpos, bang
@@ -106,6 +108,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
             if mods[slottbl.OriginalAddress] then
                 offset_pos = mods[slottbl.OriginalAddress].Pos or offset_pos
                 offset_ang = mods[slottbl.OriginalAddress].Ang or offset_ang
+                icon_offset = mods[slottbl.OriginalAddress].Icon_Offset or icon_offset
             end
         end
     end
@@ -171,7 +174,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     apos = data.pos or apos
     aang = data.ang or aang
 
-    return apos, aang
+    return apos, aang, icon_offset
 end
 
 function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
