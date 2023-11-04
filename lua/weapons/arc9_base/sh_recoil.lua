@@ -216,8 +216,8 @@ do
 
         
         if !isSingleplayer and ((CLIENT and engine.ServerFrameTime() or FrameTime()) < 0.021) then -- server under 48 tickrate fuck you!!!!!!!!
-            MAGIC1 = 89.5
-            MAGIC2 = 89.5
+            MAGIC1 = 210
+            MAGIC2 = 210
         end
 
         for i = 1, 3 do
