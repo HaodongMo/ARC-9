@@ -518,13 +518,13 @@ function SWEP:CreateHUD_AttInfo()
         -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
         -- ARC9.DrawTextRot(self2, self2.title, 0, 0, ARC9ScreenScale(6), ARC9ScreenScale(3), w, true)
 
-		markup.Parse("<font=ARC9_10>" .. self2.title):Draw(ARC9ScreenScale(6), ARC9ScreenScale(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+        markup.Parse("<font=ARC9_10>" .. self2.title):Draw(ARC9ScreenScale(6), ARC9ScreenScale(3), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
     end
 
     self.AttInfoBar = infopanel
 
     local descscroller = vgui.Create("ARC9ScrollPanel", infopanel)
-    descscroller:SetSize(lowerpanel:GetWide()/2 - ARC9ScreenScale(5), infopanel:GetTall()-ARC9ScreenScale(16))
+    descscroller:SetSize(lowerpanel:GetWide() / 2 - ARC9ScreenScale(5), infopanel:GetTall() - ARC9ScreenScale(16))
     descscroller:SetPos(ARC9ScreenScale(4), ARC9ScreenScale(14))
 
     local multiline = {}
@@ -541,7 +541,7 @@ function SWEP:CreateHUD_AttInfo()
             -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
             -- surface.SetTextPos(ARC9ScreenScale(2), 0)
             -- surface.DrawText(text)
-			markup.Parse("<font=ARC9_9_Slim>" .. text):Draw(ARC9ScreenScale(2), 0, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+            markup.Parse("<font=ARC9_9_Slim>" .. text):Draw(ARC9ScreenScale(2), 0, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
         end
     end
 

@@ -1818,22 +1818,9 @@ function ARC9MultiLineText(text, maxw, font)
                 tx = tx - surface.GetTextSize(v)
             end
 
-            -- Check the status of the color tag at the end of current word
-            if math.abs(#match - #matchend) > 1 then
-                ErrorNoHalt("<color> tag miscount!\n")
-            elseif #match > #matchend then
-                if active_color_tag != nil then
-                    ErrorNoHalt("<color> tag miscount (too many opening tags)!\n")
-                else
-                    active_color_tag = match[#match]
-                end
-            elseif #matchend > #match then
-                if active_color_tag == nil then
-                    ErrorNoHalt("<color> tag miscount (too many closing tags)!\n")
-                else
-                    active_color_tag = nil
-                end
-            end
+            -- if #match + #matchend > 0 then
+            --     print(word, table.ToString(match), table.ToString(matchend))
+            -- end
 
             if x + tx > maxw then
                 local dashi = string.find(word, "-")
@@ -1852,6 +1839,7 @@ function ARC9MultiLineText(text, maxw, font)
                         tline = tline .. "</color>"
                     end
 
+
                     table.insert(content, tline)
                     tline = ""
                     x = 0
@@ -1860,6 +1848,25 @@ function ARC9MultiLineText(text, maxw, font)
                     if active_color_tag != nil then
                         tline = tline .. active_color_tag
                     end
+                end
+            end
+
+            -- Check the status of the color tag at the end of current word
+            if math.abs(#match - #matchend) > 1 then
+                ErrorNoHalt("<color> tag miscount!\n")
+            elseif #match > #matchend then
+                if active_color_tag != nil then
+                    ErrorNoHalt("<color> tag miscount (too many opening tags)!\n")
+                else
+                    active_color_tag = match[#match]
+                    print(word, active_color_tag)
+                end
+            elseif #matchend > #match then
+                if active_color_tag == nil then
+                    ErrorNoHalt("<color> tag miscount (too many closing tags)!\n")
+                else
+                    active_color_tag = nil
+                    print(word, "no color tag")
                 end
             end
 
