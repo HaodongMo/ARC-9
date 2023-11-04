@@ -1839,7 +1839,6 @@ function ARC9MultiLineText(text, maxw, font)
                         tline = tline .. "</color>"
                     end
 
-
                     table.insert(content, tline)
                     tline = ""
                     x = 0
@@ -1859,14 +1858,12 @@ function ARC9MultiLineText(text, maxw, font)
                     ErrorNoHalt("<color> tag miscount (too many opening tags)!\n")
                 else
                     active_color_tag = match[#match]
-                    print(word, active_color_tag)
                 end
             elseif #matchend > #match then
                 if active_color_tag == nil then
                     ErrorNoHalt("<color> tag miscount (too many closing tags)!\n")
                 else
                     active_color_tag = nil
-                    print(word, "no color tag")
                 end
             end
 
