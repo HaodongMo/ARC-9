@@ -751,7 +751,7 @@ function SWEP:CreateCustomizeHUD()
 
                 local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
 
-                icon_offset = icon_offset + (atttbl.IconOffset or vector_origin)
+                icon_offset = icon_offset + (atttbl.IconOffset or atttbl.Icon_Offset or vector_origin)
 
                 attposOffset = attposOffset + attang:Right() * icon_offset.y
                 attposOffset = attposOffset + attang:Up() * icon_offset.z
