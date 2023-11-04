@@ -175,6 +175,9 @@ function SWEP:ViewModelDrawn()
 
     self:DrawLasers(false)
     self:GetVM():SetMaterial("")
+	for ind = 0, 31 do
+		self:GetVM():SetSubMaterial(ind, "")
+	end
 end
 
 function SWEP:PostDrawViewModel()
