@@ -52,7 +52,10 @@ ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
 ATT.NoDraw = false
 
-ATT.Material = ""
+ATT.Material = "material/path"
+
+-- Use SubMaterial0 through SubMaterial9 to set submaterials
+ATT.SubMaterial0 = "material/path"
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.
 
