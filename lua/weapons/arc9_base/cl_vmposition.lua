@@ -1,4 +1,3 @@
-SWEP.CustomizeDelta = 0
 SWEP.ViewModelPos = Vector(0, 0, 0)
 SWEP.ViewModelAng = Angle(0, 0, 0)
 SWEP.BenchGunViewModelPos = Vector(0, 0, 0)

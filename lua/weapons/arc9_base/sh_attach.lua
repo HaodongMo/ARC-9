@@ -1,8 +1,10 @@
+SWEP.CustomizeDelta = 0
+
 function SWEP:Attach(addr, att, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
     if (slottbl.Installed == att) then return false end
     if !self:CanAttach(addr, att) then return false end
-	local atttbl = ARC9.GetAttTable(att) or {}
+    local atttbl = ARC9.GetAttTable(att) or {}
 
     self:DetachAllFromSubSlot(addr, true)
 
@@ -26,7 +28,7 @@ function SWEP:Detach(addr, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
     if !slottbl.Installed then return false end
     if !self:CanDetach(addr) then return false end
-	local atttbl = ARC9.GetAttTable(slottbl.Installed) or {}
+    local atttbl = ARC9.GetAttTable(slottbl.Installed) or {}
 
     slottbl.Installed = nil
 
@@ -90,7 +92,7 @@ function SWEP:PostModify(toggleonly)
         self:SetNthReload(0)
     end
 
-	local client = self:GetOwner()
+    local client = self:GetOwner()
     local validplayerowner = IsValid(client) and client:IsPlayer()
 
     local base = baseclass.Get(self:GetClass())
@@ -102,7 +104,7 @@ function SWEP:PostModify(toggleonly)
         self.PrintName = base.PrintName
         self.PrintName = self:GetValue("PrintName")
     end
-    
+
     if !self.PrintName then
         self.PrintName = base.PrintName
         self.PrintName = self:GetValue("PrintName")
@@ -477,7 +479,7 @@ function SWEP:GetDependentIntegralSlots(addr, att, slottbl)
 
         -- TODO: Consider domino effect caused by the slot about to be added?
         if affected then
-			slots[#slots + 1] = tbl
+            slots[#slots + 1] = tbl
         end
     end
 
@@ -485,7 +487,7 @@ function SWEP:GetDependentIntegralSlots(addr, att, slottbl)
     if att then
         for _, slot in ipairs(atttbl.Attachments or {}) do
             if slot.Integral then
-				slots[#slots + 1] = slot
+                slots[#slots + 1] = slot
             end
         end
     end
