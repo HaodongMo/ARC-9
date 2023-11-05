@@ -214,8 +214,7 @@ do
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
 
-        
-        if !isSingleplayer and ((CLIENT and engine.ServerFrameTime() or FrameTime()) < 0.021) then -- server under 48 tickrate fuck you!!!!!!!!
+        if !isSingleplayer and ((CLIENT and engine.ServerFrameTime() or FrameTime()) > 1 / 48) then -- server under 48 tickrate fuck you!!!!!!!!
             MAGIC1 = 89.5
             MAGIC2 = 89.5
         end
@@ -360,7 +359,7 @@ function SWEP:DoVisualRecoil()
     -- end
 end
 
-local retardedmult = 2.5
+local magicmult = 2.5
 
 function SWEP:GetViewModelRecoil(pos, ang, correct)
     correct = correct or 1
@@ -370,7 +369,7 @@ function SWEP:GetViewModelRecoil(pos, ang, correct)
 
     local vra = self.VisualRecoilAng
 
-    vra = Angle(vra[1], vra[2], vra[3]) * retardedmult
+    vra = Angle(vra[1], vra[2], vra[3]) * magicmult
 
     vra.y = -vra.y
 
@@ -391,7 +390,7 @@ function SWEP:GetRecoilOffset(pos, ang)
     local vrp = self:GetVisualRecoilPos()
     local vra = self:GetVisualRecoilAng()
 
-    vra = Angle(vra[1], vra[2], vra[3]) * retardedmult
+    vra = Angle(vra[1], vra[2], vra[3]) * magicmult
 
     local vrc = self:GetProcessedValue("VisualRecoilCenter", true)
 

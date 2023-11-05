@@ -109,9 +109,12 @@ local arc9DevBenchGun = GetConVar("arc9_dev_benchgun")
 
 function SWEP:GetViewModelPosition(pos, ang)
     local owner = self:GetOwner()
-    if not IsValid(owner) then return end
+    if !IsValid(owner) then return end
     -- if owner != LocalPlayer() then return end
     if CLIENT and owner ~= LocalPlayer() then return end
+
+    local curTime = UnPredictedCurTime()
+
     pos, ang = self:DoCameraLean(pos, ang)
     oldpos:Set(pos)
     oldang:Set(ang)
@@ -160,7 +163,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         bipodamount = math.ease.InOutQuad(bipodamount)
         local sightpos, sightang = self:GetSightPositions()
         local bipodpos, bipodang = self:GetProcessedValue("BipodPos", true), self:GetProcessedValue("BipodAng", true)
-        
+
         if bipodpos and bipodang then
             if !self:ShouldTPIK() then LerpVectorEdit(math.Clamp(bipodamount - self:GetSightAmount(), 0, 1), pos, self:GetBipodPos()) end
             LerpVectorEdit(bipodamount, offsetpos, bipodpos)
@@ -208,15 +211,15 @@ function SWEP:GetViewModelPosition(pos, ang)
         local fuckingreloadprocessinfluence = 1
 
         if reloadpos then
-            if !self:GetProcessedValue("ShotgunReload", true) then 
-                fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+            if !self:GetProcessedValue("ShotgunReload", true) then
+                fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
                 if fuckingreloadprocess < 0.666 then
                     fuckingreloadprocessinfluence = fuckingreloadprocess * 1.333
                 elseif fuckingreloadprocess > 0.8 then
                     fuckingreloadprocessinfluence = 1 - ((fuckingreloadprocess - 0.8) * 5)
                 end
             end
-            
+
             offsetpos:Sub(reloadpos * fuckingreloadprocessinfluence)
         end
 
@@ -373,7 +376,6 @@ function SWEP:GetViewModelPosition(pos, ang)
     end
 
     local ht = self:GetHolsterTime()
-    local curTime = UnPredictedCurTime()
 
     if (ht + 0.1) > curTime then
         if ht > lht then
@@ -419,7 +421,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         -- making parenthesis on (sightes * math.sin) cuz it creates number first and then multiplies vector to it
         -- if we won't do it, then vector would be multiplied by sighted,
         -- new vector will be created and there would be 3 additional vectors, which won't be used
-        pos:Sub(angright * (sighted * math.sin(ct * 0.8) * 0.01)) -- X 
+        pos:Sub(angright * (sighted * math.sin(ct * 0.8) * 0.01)) -- X
         pos:Sub(angup * (sighted * math.cos(ct * 0.84) * 0.02)) -- Y
         pos:Sub(angforward * (sighted * math.cos(ct * 0.84) * 0.02)) -- Z
         ang:RotateAroundAxis(angright, sighted * math.sin(ct * 0.84) * -0.07) -- P
@@ -502,7 +504,7 @@ function SWEP:GetViewModelFOV()
     local owner = self:GetOwner()
     local ownerfov = owner:GetFOV()
     local convarfov = arc9Fov:GetInt()
-    local curtime = UnPredictedCurTime()
+    -- local curTime = UnPredictedCurTime()
     -- local target = owner:GetFOV() + convarfov
     local target = (self:GetProcessedValue("ViewModelFOVBase", true) or ownerfov) + (self:GetCustomize() and 0 or convarfov)
 
