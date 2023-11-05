@@ -93,12 +93,9 @@ function SWEP:DoShootSounds()
     local dsstr = ldsstr
 
     local silenced = self:GetProcessedValue("Silencer") and !self:GetUBGL()
-    local indoor = self:GetIndoor() -- GetIndoor returns number and that's not fact. that's a lie. It can return false
-    if isbool(indoor) then
-        indoor = indoor and 1 or 0
-    end
+    local indoor = self:GetIndoor()
 
-    local indoormix = 1 - indoor -- it can be negative, but there is a check if indoormix > 0
+    local indoormix = 1 - indoor
     local havedistant = self:GetProcessedValue(dsstr, true)
 
     if silenced and self:GetProcessedValue(sstrSilenced, true) then
@@ -222,7 +219,7 @@ function SWEP:DoShootSounds()
                 soundtab6.sound = dssIN or ""
                 soundtab6.level = dvolume
                 soundtab6.pitch = dpitch
-                soundtab6.volume = dvolume * indoor
+                soundtab6.volume = indoor
                 soundtab6.channel = ARC9.CHAN_INDOORDISTANT
             end
 
