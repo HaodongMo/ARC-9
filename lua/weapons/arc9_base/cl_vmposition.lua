@@ -6,6 +6,24 @@ SWEP.BenchGunViewModelAng = Angle(0, 0, 0)
 local lht = 0
 local sht = 0
 
+-- local somevector = Vector(-1, 0, 1)
+-- local somevector2 = Vector(0, 1, 0)
+local somevector3 = Vector(-1, -1, 1)
+-- local cangup = Vector(1, 0, 0)
+-- local cangforward = Vector(0, 0, -1)
+local oldpos = Vector(0, 0, 0)
+local oldang = Angle(0, 0, 0)
+local offsetpos = Vector(0, 0, 0)
+local offsetang = Angle(0, 0, 0)
+local extra_offsetpos = Vector(0, 0, 0)
+local extra_offsetang = Angle(0, 0, 0)
+local rotateAroundAngle = Angle(0, 0, 0)
+local halfPi = math.pi / 2
+local vmAddX = GetConVar("arc9_vm_addx")
+local vmAddY = GetConVar("arc9_vm_addy")
+local vmAddZ = GetConVar("arc9_vm_addz")
+local arc9DevBenchGun = GetConVar("arc9_dev_benchgun")
+
 local Lerp = function(a, v1, v2)
     local d = v2 - v1
 
@@ -87,25 +105,6 @@ local DampAngleEdit = function(a, v1, v2)
     a = math.pow(a, FrameTime())
     LerpAngleEdit(a, v1, v2)
 end
-
-local singleplayer = game.SinglePlayer()
-local somevector = Vector(-1, 0, 1)
-local somevector2 = Vector(0, 1, 0)
-local somevector3 = Vector(-1, -1, 1)
-local cangup = Vector(1, 0, 0)
-local cangforward = Vector(0, 0, -1)
-local oldpos = Vector(0, 0, 0)
-local oldang = Angle(0, 0, 0)
-local offsetpos = Vector(0, 0, 0)
-local offsetang = Angle(0, 0, 0)
-local extra_offsetpos = Vector(0, 0, 0)
-local extra_offsetang = Angle(0, 0, 0)
-local rotateAroundAngle = Angle(0, 0, 0)
-local halfPi = math.pi / 2
-local vmAddX = GetConVar("arc9_vm_addx")
-local vmAddY = GetConVar("arc9_vm_addy")
-local vmAddZ = GetConVar("arc9_vm_addz")
-local arc9DevBenchGun = GetConVar("arc9_dev_benchgun")
 
 function SWEP:GetViewModelPosition(pos, ang)
     local owner = self:GetOwner()
@@ -306,17 +305,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         extra_offsetang[1] = extra_offsetang[1] + (getfreeswayoffset[2] * cor_val)
     end
 
-    if singleplayer or IsFirstTimePredicted() then
-        if self:GetCustomize() then
-            if self.CustomizeDelta < 1 then
-                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 1, FrameTime() * 6.666666666666667)
-            end
-        else
-            if self.CustomizeDelta > 0 then
-                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 0, FrameTime() * 6.666666666666667)
-            end
-        end
-    end
+    -- self.CustomizeDelta is modified in ThinkCustomize now
 
     local curvedcustomizedelta = self:Curve(self.CustomizeDelta)
     -- local sprintdelta = self:Curve(self:GetSprintDelta())
@@ -440,23 +429,20 @@ function SWEP:GetViewModelPosition(pos, ang)
     pos, ang = self:GetViewModelInertia(pos, ang)
     pos, ang = self:GetViewModelSway(pos, ang)
     pos, ang = self:GetViewModelSmooth(pos, ang)
-    -- if singleplayer or IsFirstTimePredicted() then
     pos, ang = WorldToLocal(pos, ang, oldpos, oldang)
 
-    if singleplayer or IsFirstTimePredicted() then
-        DampVectorEdit(0.0000005, pos, self.ViewModelPos)
-        DampAngleEdit(0.00001, ang, self.ViewModelAng)
-        self.ViewModelPos = pos
-        self.ViewModelAng = ang
-    else
-        pos, ang = self.ViewModelPos, self.ViewModelAng
-    end
+    -- No point checking IsFirstTimePredicted in a client function (this is not predicted!!)
+    -- This was causing choppy viewmodel movement at lower tickrates in dedicated servers
+    DampVectorEdit(0.0000005, pos, self.ViewModelPos)
+    DampAngleEdit(0.00001, ang, self.ViewModelAng)
+    self.ViewModelPos = pos
+    self.ViewModelAng = ang
 
     pos, ang = LocalToWorld(pos, ang, oldpos, oldang)
 
     -- CUSTOMISATION ROTATION AFTER DAMPING
     if curvedcustomizedelta > 0 then
-        if not self.CustomizeNoRotate then
+        if !self.CustomizeNoRotate then
             self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch) * curvedcustomizedelta
             self.CustomizeYaw = math.NormalizeAngle(self.CustomizeYaw) * curvedcustomizedelta
             -- local CustomizeRotateAnchor = Vector(21.5, -4.27, -5.23)
@@ -475,7 +461,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     local wm = self:GetWM()
 
     if IsValid(wm) and curvedcustomizedelta == 0 then
-        if not self:ShouldTPIK() then
+        if !self:ShouldTPIK() then
             wm.slottbl.Pos = self.WorldModelOffset.Pos
             wm.slottbl.Ang = self.WorldModelOffset.Ang
         else
@@ -496,7 +482,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     return pos, ang
 end
 
-local Damp = function(a, v1, v2) return Lerp(1 - math.pow(a, FrameTime()), v2, v1) end
+-- local Damp = function(a, v1, v2) return Lerp(1 - math.pow(a, FrameTime()), v2, v1) end
 SWEP.SmoothedViewModelFOV = nil
 local arc9Fov = GetConVar("arc9_fov")
 

@@ -200,6 +200,18 @@ function SWEP:ThinkCustomize()
     if owner:KeyPressed(ARC9.IN_CUSTOMIZE) and !owner:KeyDown(IN_USE) then
         self:ToggleCustomize(!self:GetCustomize())
     end
+
+    if (game.SinglePlayer() or CLIENT) and IsFirstTimePredicted() then
+        if self:GetCustomize() then
+            if self.CustomizeDelta < 1 then
+                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 1, FrameTime() * 6.666666666666667)
+            end
+        else
+            if self.CustomizeDelta > 0 then
+                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 0, FrameTime() * 6.666666666666667)
+            end
+        end
+    end
 end
 
 function SWEP:ToggleCustomize(on)
