@@ -203,7 +203,7 @@ function SWEP:ThinkCustomize()
         self:ToggleCustomize(!self:GetCustomize())
     end
 
-    if (game.SinglePlayer() or CLIENT) and IsFirstTimePredicted() then
+    if game.SinglePlayer() or (CLIENT and IsFirstTimePredicted()) then
         if self:GetCustomize() then
             if self.CustomizeDelta < 1 then
                 self.CustomizeDelta = math.Approach(self.CustomizeDelta, 1, FrameTime() * 6.666666666666667)
