@@ -188,6 +188,7 @@ local conVars = {
     {
         name = "modifiers",
         default = "",
+        replicated = true,
     },
     {
         name = "mod_bodydamagecancel",
