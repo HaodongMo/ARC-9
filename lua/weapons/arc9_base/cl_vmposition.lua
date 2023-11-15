@@ -493,19 +493,15 @@ function SWEP:GetViewModelFOV()
     -- local target = owner:GetFOV() + convarfov
     local target = (self:GetProcessedValue("ViewModelFOVBase", true) or ownerfov) + (self:GetCustomize() and 0 or convarfov)
 
-	local vmfov = self.IronSights.ViewModelFOV
+	local vmfov = (self.IronSights.ViewModelFOV or (self:GetProcessedValue("ViewModelFOVBase", true) or 70))
 	local mag = self:GetMagnification()
 
     if self:GetInSights() then
         -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
-		if self.Peeking then
-			-- if mag > 1.15 then
-				-- target = self:GetSight().ViewModelFOV / 0.5
-			-- else
-				target = vmfov
-			-- end
-		else
+		if !self.Peeking then
 			target = self:GetSight().ViewModelFOV or (75 + convarfov)
+		else
+			target = vmfov
 		end
 	end
 
