@@ -617,6 +617,7 @@ local conVars = {
     {
         name = "lean",
         default = "1",
+        replicated = true
     },
     {
         name = "togglelean",
