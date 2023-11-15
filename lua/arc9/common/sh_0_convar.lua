@@ -814,6 +814,16 @@ local conVars = {
         default = "1",
         client = true,
     },
+    {
+        name = "peek_sens",
+        default = "1",
+        client = true
+    },
+    {
+        name = "crosshair_peek",
+        default = "0",
+        client = true
+    },
 }
 ARC9.ConVarData = {}
 

@@ -418,6 +418,8 @@ L["settings.optics.compensate_sens.title"] = "Compensate Sensitivity"
 L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity for magnification."
 L["settings.optics.toggleads.title"] = "Toggle ADS"
 L["settings.optics.toggleads.desc"] = "Aiming will toggle sights."
+L["settings.optics.peeksens.title"] = "Standard ADS Sensitivity when Peeking"
+L["settings.optics.peeksens.desc"] = "When aiming and using the peek function, magnification is no longer taken into account when lowering mouse sensitivity.\nRequires \"Compensate Sensitivity\"."
 
 L["settings.optics.color"] = "Color"
 L["settings.optics.reflex.title"] = "Reflex Sights"
@@ -445,6 +447,8 @@ L["settings.crosshair.crosshair_force.title"] = "Force Crosshair"
 L["settings.crosshair.crosshair_force.desc"] = "Force the crosshair even on guns that don't want you to see it.\n\nServer setting."
 L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
 L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
+L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
+L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Customization"

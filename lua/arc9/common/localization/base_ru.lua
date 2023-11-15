@@ -416,6 +416,8 @@ L["settings.optics.compensate_sens.title"] = "Компенсировать чу�
 L["settings.optics.compensate_sens.desc"] = "Компенсировать чувствительность мыши в оптических прицелах."
 L["settings.optics.toggleads.title"] = "Прицеливание по нажатию"
 L["settings.optics.toggleads.desc"] = "Вместо удерживания кнопки прицеливания достаточно нажать один раз."
+-- L["settings.optics.peeksens.title"] = "Standard ADS Sensitivity when Peeking"
+-- L["settings.optics.peeksens.desc"] = "When aiming and using the peek function, magnification is no longer taken into account when lowering mouse sensitivity.\nRequires \"Compensate Sensitivity\"."
 
 L["settings.optics.color"] = "Цвет сетки"
 L["settings.optics.reflex.title"] = "Коллиматорных прицелов"
@@ -443,6 +445,8 @@ L["settings.crosshair.crosshair_force.title"] = "Принудительно вк
 L["settings.crosshair.crosshair_force.desc"] = "Принудительно включает перекрестие даже не пушках которые не позволяют это.\n\nЭто серверная переменная."
 L["settings.crosshair.crosshair_target.title"] = "Красный прицел на цели"
 L["settings.crosshair.crosshair_target.desc"] = "Делает прицел красным при наведении на цель.\nНаведение так же активирует аим-ассист (если включено)"
+-- L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
+-- L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Персонализация"

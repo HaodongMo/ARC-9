@@ -416,6 +416,8 @@ L["settings.optics.compensate_sens.title"] = "Kompensera Känslighet"
 L["settings.optics.compensate_sens.desc"] = "Kompensera känsligheten för magnifiering."
 L["settings.optics.toggleads.title"] = "Växla Sikte"
 L["settings.optics.toggleads.desc"] = "Användning av sikten växlas."
+L["settings.optics.peeksens.title"] = "Standard Känslighet i Siktet under Kikande"
+L["settings.optics.peeksens.desc"] = "När du är i siktet och använder kika funktionen så kommer magnifiering inte längre räknas med när muskänsligheten sänks.\nKräver \"Kompensera Känslighet\"."
 
 L["settings.optics.color"] = "Färg"
 L["settings.optics.reflex.title"] = "Reflexsikten"
@@ -443,6 +445,8 @@ L["settings.crosshair.crosshair_force.title"] = "Tvinga Hårkors"
 L["settings.crosshair.crosshair_force.desc"] = "Tvingar att hårkorset visas på vapen som inte vill att du ser den.\n\nServerinställning."
 L["settings.crosshair.crosshair_target.title"] = "Rött Hårkors på Måltavla"
 L["settings.crosshair.crosshair_target.desc"] = "Gör hårkorset rött när man siktar på en måltavla.\nAktiverar också sikthjälp om den är påslagen."
+L["settings.crosshair.crosshair_peeking.title"] = "Visa Hårkors när man Kikar"
+L["settings.crosshair.crosshair_peeking.desc"] = "Visar hårkorset när man är i siktet och använder kika funktionen."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Anpassning"

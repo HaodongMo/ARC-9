@@ -416,6 +416,8 @@ L["settings.optics.compensate_sens.title"] = "Compensar Sensibilidad"
 L["settings.optics.compensate_sens.desc"] = "Compensar sensibilidad por ampliados."
 L["settings.optics.toggleads.title"] = "Alternar ADS"
 L["settings.optics.toggleads.desc"] = "Al apuntar se alternará la mira."
+-- L["settings.optics.peeksens.title"] = "Standard ADS Sensitivity when Peeking"
+-- L["settings.optics.peeksens.desc"] = "When aiming and using the peek function, magnification is no longer taken into account when lowering mouse sensitivity.\nRequires \"Compensate Sensitivity\"."
 
 L["settings.optics.color"] = "Color"
 L["settings.optics.reflex.title"] = "Miras Holográficas"
@@ -443,6 +445,8 @@ L["settings.crosshair.crosshair_force.title"] = "Forzar Punto de Mira"
 L["settings.crosshair.crosshair_force.desc"] = "Fuerza el punto de mira incluso en armas que no quieren que la veas.\n\nConfiguracion del servidor."
 -- L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
 -- L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
+-- L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
+-- L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Customización"

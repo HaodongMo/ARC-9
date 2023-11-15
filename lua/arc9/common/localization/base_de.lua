@@ -416,6 +416,8 @@ L["settings.optics.compensate_sens.title"] = "Kompensierungs-Sensitivität"
 L["settings.optics.compensate_sens.desc"] = "Kompensierungs-Sensitivität für Vergrößerung."
 L["settings.optics.toggleads.title"] = "Zielvorr. umschalten"
 L["settings.optics.toggleads.desc"] = "Zielen wird die Visierung umschalten."
+-- L["settings.optics.peeksens.title"] = "Standard ADS Sensitivity when Peeking"
+-- L["settings.optics.peeksens.desc"] = "When aiming and using the peek function, magnification is no longer taken into account when lowering mouse sensitivity.\nRequires \"Compensate Sensitivity\"."
 
 L["settings.optics.color"] = "Farbe"
 L["settings.optics.reflex.title"] = "Reflexvisiere"
@@ -443,6 +445,8 @@ L["settings.crosshair.crosshair_force.title"] = "Fadenkreuz erzwingen"
 L["settings.crosshair.crosshair_force.desc"] = "Erzwinge das Fadenkreuz auch bei Waffen, die nicht möchten, dass du es siehst.\n\nServereinstellung."
 -- L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
 -- L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
+-- L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
+-- L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Anpassung"

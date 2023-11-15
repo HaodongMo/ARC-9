@@ -67,7 +67,7 @@ function SWEP:GetSmoothedFOVMag()
         sightdelta = math.ease.InOutQuad(sightdelta)
 
         if self.Peeking then
-            target = 1
+            target = self.IronSights.Magnification * 0.95
         end
 
         mag = Lerp(sightdelta, 1, target)

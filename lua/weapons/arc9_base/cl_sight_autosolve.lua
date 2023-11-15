@@ -84,10 +84,11 @@ local aa = GetConVar("arc9_aimassist")
 local aac = GetConVar("arc9_aimassist_cl")
 local aai = GetConVar("arc9_aimassist_intensity")
 local sensmult = GetConVar("arc9_mult_sens")
+local peeksens = GetConVar("arc9_peek_sens")
 
 function SWEP:AdjustMouseSensitivity()
 	if self:GetOwner().ARC9_AATarget != nil and (aa:GetBool() and aac:GetBool() and !self.NoAimAssist) then
-		aamult = 0.5 / (aai:GetFloat() * 1.25)
+		aamult = 0.65 / (aai:GetFloat() * 1.25)
 	else
 		aamult = 1
 	end
@@ -101,10 +102,7 @@ function SWEP:AdjustMouseSensitivity()
 	
 		if !arc9_compensate_sens:GetBool() then return end
 
-		if self.Peeking then
-			return
-		end
-
+		local magdef = self.IronSights.Magnification
 		local mag = self:GetMagnification()
 		local fov = fov_desired:GetFloat()
 
@@ -117,6 +115,10 @@ function SWEP:AdjustMouseSensitivity()
 
 		if atttbl and atttbl.RTScope and !sight.Disassociate and !sight.NoSensAdjustment and !atttbl.RTCollimator then
 			mag = mag + (fov / (self:GetRTScopeFOV() or 90))
+		end
+
+		if peeksens:GetFloat() == 1 and self.Peeking then
+			mag = magdef
 		end
 
 		if mag > 0 then

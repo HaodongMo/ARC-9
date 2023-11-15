@@ -103,6 +103,7 @@ ARC9.SettingsTable = {
         { type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
         { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
         { type = "bool", text = "settings.optics.toggleads.title", convar = "toggleads", desc = "settings.optics.toggleads.desc" },
+        { type = "bool", text = "settings.optics.peeksens.title", convar = "peek_sens", desc = "settings.optics.peeksens.desc" },
 
         { type = "label", text = "settings.optics.color" },
         { type = "color", text = "settings.optics.reflex.title", convar = "reflex", desc = "settings.optics.reflex.desc" },
@@ -119,6 +120,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.crosshair.crosshair_static.title", convar = "crosshair_static", desc = "settings.crosshair.crosshair_static.desc" },
         { type = "bool", text = "settings.crosshair.crosshair_force.title", convar = "crosshair_force", desc = "settings.crosshair.crosshair_force.desc" },
         { type = "bool", text = "settings.crosshair.crosshair_target.title", convar = "crosshair_target", desc = "settings.crosshair.crosshair_target.desc" },
+        { type = "bool", text = "settings.crosshair.crosshair_peeking.title", convar = "crosshair_peek", desc = "settings.crosshair.crosshair_peeking.desc" },
     },
     {
         TabName = "settings.tabname.hud_cust",

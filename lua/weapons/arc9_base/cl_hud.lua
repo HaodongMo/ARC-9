@@ -9,10 +9,11 @@ local arc9_cross_g = GetConVar("arc9_cross_g")
 local arc9_cross_b = GetConVar("arc9_cross_b")
 local arc9_cross_a = GetConVar("arc9_cross_a")
 local arc9_dev_crosshair = GetConVar("arc9_dev_crosshair")
+local arc9_crosshair_peek = GetConVar("arc9_crosshair_peek")
 
 
 function SWEP:ShouldDrawCrosshair()
-    if self:GetInSights() then
+    if self:GetInSights() and !(arc9_crosshair_peek:GetFloat() == 1 and self.Peeking) then
         return self:GetSight().CrosshairInSights
     end
     if (!self:GetProcessedValue("Crosshair", true) and !arc9_crosshair_force:GetBool()) and !ARC9.ShouldThirdPerson() then return false end
