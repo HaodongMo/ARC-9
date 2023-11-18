@@ -189,9 +189,11 @@ function ARC9.GetWeaponClasses(weptype)
     local weptbl = ARC9.WeaponClasses[weptype]
     local wepclasses = {}
 
-    for _, class in ipairs(weptbl) do
-        if ARC9.WeaponIsAllowed(class) then
-            table.insert(wepclasses, class)
+    if weptbl then
+        for _, class in ipairs(weptbl) do
+            if ARC9.WeaponIsAllowed(class) then
+                table.insert(wepclasses, class)
+            end
         end
     end
 
