@@ -349,6 +349,8 @@ L["settings.title"] = "A-AWC9 Sewwings"
 L["settings.desc"] = "D-descwipwion"
 
 L["settings.default_convar"] = "defauwt wawue"
+L["settings.convar_server"] = "Sewwvew wawiabwe"
+L["settings.convar_client"] = "Cwient wawiabwe"
 
 ////////////////////// General
 L["settings.tabname.general"] = "Genewal"
@@ -445,8 +447,8 @@ L["settings.crosshair.crosshair_force.title"] = "Fowce Cwosshaiw"
 L["settings.crosshair.crosshair_force.desc"] = "Fowce de cwosshaiw even on guns that don't want you to see it.\n\nSewvew setting"
 L["settings.crosshair.crosshair_target.title"] = "Wed cwosshaiw on tawget"
 L["settings.crosshair.crosshair_target.desc"] = "Make the cwosshaiw wed wen awiming on a tawget.\nAwso activates awim assist if it is tuwned on."
--- L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
--- L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
+L["settings.crosshair.crosshair_peeking.title"] = "Dispway cwosshaiw when peeking"
+L["settings.crosshair.crosshair_peeking.desc"] = "Dispways de cwosshaiw wen aiwming and uswing de pewek wunction."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Cuwustomiawon"
@@ -491,6 +493,8 @@ L["settings.hud_game.hud_nohints.title"] = "Diwable Hints >w<"
 L["settings.hud_game.hud_nohints.desc"] = "Diawawable hints completely. dey will not showo up in de 3D HUD, now in de 2D HUD"
 L["settings.hud_game.hud_keephints.title"] = "Keep Hints"
 L["settings.hud_game.hud_keephints.desc"] = "Showo de AwC9 contwol hints on top on HUD panel"
+L["settings.hud_game.hud_force_disable.title"] = "Fowce diswabwe HUwUD"
+L["settings.hud_game.hud_force_disable.desc"] = "Disawbwe AWC9 HUD fow aww pwayews. does nowt awwect hiwnts."
 
 L["settings.hud_game.killfeed"] = "Killfeed"
 L["settings.hud_game.killfeed_enable.title"] = "Killfeed Icons"

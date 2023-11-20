@@ -84,7 +84,6 @@ local aa = GetConVar("arc9_aimassist")
 local aac = GetConVar("arc9_aimassist_cl")
 local aai = GetConVar("arc9_aimassist_intensity")
 local sensmult = GetConVar("arc9_mult_sens")
-local peeksens = GetConVar("arc9_peek_sens")
 
 function SWEP:AdjustMouseSensitivity()
 	if self:GetOwner().ARC9_AATarget != nil and (aa:GetBool() and aac:GetBool() and !self.NoAimAssist) then
@@ -117,7 +116,7 @@ function SWEP:AdjustMouseSensitivity()
 			mag = mag + (fov / (self:GetRTScopeFOV() or 90))
 		end
 
-		if peeksens:GetFloat() == 1 and self.Peeking then
+		if self.Peeking then
 			mag = magdef
 		end
 

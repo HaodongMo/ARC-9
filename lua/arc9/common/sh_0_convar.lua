@@ -815,13 +815,8 @@ local conVars = {
         client = true,
     },
     {
-        name = "peek_sens",
-        default = "1",
-        client = true
-    },
-    {
         name = "crosshair_peek",
-        default = "0",
+        default = "1",
         client = true
     },
 }

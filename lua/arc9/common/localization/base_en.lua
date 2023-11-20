@@ -418,8 +418,6 @@ L["settings.optics.compensate_sens.title"] = "Compensate Sensitivity"
 L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity for magnification."
 L["settings.optics.toggleads.title"] = "Toggle ADS"
 L["settings.optics.toggleads.desc"] = "Aiming will toggle sights."
-L["settings.optics.peeksens.title"] = "Standard ADS Sensitivity when Peeking"
-L["settings.optics.peeksens.desc"] = "When aiming and using the peek function, magnification is no longer taken into account when lowering mouse sensitivity.\nRequires \"Compensate Sensitivity\"."
 
 L["settings.optics.color"] = "Color"
 L["settings.optics.reflex.title"] = "Reflex Sights"

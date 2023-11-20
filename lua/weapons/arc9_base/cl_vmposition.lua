@@ -497,12 +497,8 @@ function SWEP:GetViewModelFOV()
 	local mag = self:GetMagnification()
 
     if self:GetInSights() then
-        -- target = Lerp(self:GetSightAmount(), target, sightedtarget)
-		if !self.Peeking then
-			target = self:GetSight().ViewModelFOV or (75 + convarfov)
-		else
-			target = vmfov
-		end
+		target = self:GetSight().ViewModelFOV or (75 + convarfov)
+        if self.Peeking then target = math.max(target, 37) end -- low vm fov sights look weird in peek, ez fix
 	end
 
     if self:GetCustomize() then
