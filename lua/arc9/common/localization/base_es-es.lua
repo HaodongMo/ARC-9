@@ -217,7 +217,7 @@ L["autostat.recoildissipationrate"] = "Tasa de Disipación del Retroceso"
 L["autostat.recoilkick"] = "Retroceso Sentido"
 L["autostat.recoilmodifiercap"] = "Máximo retroceso acumulado"
 L["autostat.recoilpatterndrift"] = "Desviación del Retroceso"
--- L["autostat.recoilpershot"] = "Retroceso por disparo"
+L["autostat.recoilpershot"] = "Retroceso por disparo"
 L["autostat.recoilrandomside"] = "Propagacion del Retroceso Horizontal"
 L["autostat.recoilrandomup"] = "Propagacion del Retroceso Vertical"
 L["autostat.recoilresettime"] = "Recoil Reset Time"
@@ -252,7 +252,7 @@ L["autostat.visualrecoilup"] = "Retroceso Vertical Visual"
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
 L["autostat.secondary.bipod"] = "en Bípode"
--- L["autostat.secondary.blindfire"] = "mientras Dispara a Ciegas"
+L["autostat.secondary.blindfire"] = "mientras Dispara a Ciegas"
 L["autostat.secondary.crouch"] = "mientras está agachado"
 L["autostat.secondary.empty"] = "en la ultima ronda del cargador"
 L["autostat.secondary.evenreload"] = "cada recarga pareja"
@@ -371,8 +371,8 @@ L["settings.reset"] = "Restablecer!"
 ////////////////////// Performance
 L["settings.tabname.performance"] = "Rendimiento"
 
--- L["settings.optics.cheapscopes.title"] = "Miras Baratas"
--- L["settings.optics.cheapscopes.desc"] = "Una implementación barata de miras RT mediante el zoom de toda la vista para apuntar, en lugar de renderizar el mundo de nuevo en una mira. Aumenta significativamente el rendimiento en mapas grandes."
+L["settings.optics.cheapscopes.title"] = "Miras Baratas"
+L["settings.optics.cheapscopes.desc"] = "Una implementación barata de miras RT mediante el zoom de toda la vista para apuntar, en lugar de renderizar el mundo de nuevo en una mira. Aumenta significativamente el rendimiento en mapas grandes."
 
 L["settings.performance.important"] = "Importante"
 L["settings.cheapscopes.title"] = "Miras Baratas"
@@ -416,8 +416,8 @@ L["settings.optics.compensate_sens.title"] = "Compensar Sensibilidad"
 L["settings.optics.compensate_sens.desc"] = "Compensar sensibilidad por ampliados."
 L["settings.optics.toggleads.title"] = "Alternar ADS"
 L["settings.optics.toggleads.desc"] = "Al apuntar se alternará la mira."
--- L["settings.optics.peeksens.title"] = "Sensibilidad estándar ADS al dar vistazo"
--- L["settings.optics.peeksens.desc"] = "Al apuntar y utilizar la función de vistazo, ya no se tiene en cuenta el aumento al reducir la sensibilidad del ratón.\nRequiere \"Compensar sensibilidad\"."
+L["settings.optics.peeksens.title"] = "Sensibilidad estándar ADS al dar vistazo"
+L["settings.optics.peeksens.desc"] = "Al apuntar y utilizar la función de vistazo, ya no se tiene en cuenta el aumento al reducir la sensibilidad del ratón.\nRequiere \"Compensar sensibilidad\"."
 
 L["settings.optics.color"] = "Color"
 L["settings.optics.reflex.title"] = "Miras Holográficas"
@@ -443,10 +443,10 @@ L["settings.crosshair.crosshair_static.title"] = "Punto de Mira Estático"
 L["settings.crosshair.crosshair_static.desc"] = "Activa el punto de mira estática, que no se mueve al disparar."
 L["settings.crosshair.crosshair_force.title"] = "Forzar Punto de Mira"
 L["settings.crosshair.crosshair_force.desc"] = "Fuerza el punto de mira incluso en armas que no quieren que la veas.\n\nConfiguracion del servidor."
--- L["settings.crosshair.crosshair_target.title"] = "Punto de mira rojo en el blanco"
--- L["settings.crosshair.crosshair_target.desc"] = "Haz que la retícula sea roja al apuntar a un objetivo.\nTambién activa el asistente de puntería si está activado."
--- L["settings.crosshair.crosshair_peeking.title"] = "Mostrar la retícula al dar vistazo"
--- L["settings.crosshair.crosshair_peeking.desc"] = "Muestra la retícula al apuntar y utilizar la función de vistazo."
+L["settings.crosshair.crosshair_target.title"] = "Punto de mira rojo en el blanco"
+L["settings.crosshair.crosshair_target.desc"] = "Haz que la retícula sea roja al apuntar a un objetivo.\nTambién activa el asistente de puntería si está activado."
+L["settings.crosshair.crosshair_peeking.title"] = "Mostrar la retícula al dar vistazo"
+L["settings.crosshair.crosshair_peeking.desc"] = "Muestra la retícula al apuntar y utilizar la función de vistazo."
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Customización"
@@ -458,8 +458,8 @@ L["settings.hud_cust.hud_deadzonex.title"] = "Anchura de zona muerta del HUD"
 L["settings.hud_cust.hud_deadzonex.desc"] = "\"Zona Muerta\" Horizontal para el menú de personalización y el panel HUD.\nÚtil para monitores ultrawide."
 L["settings.hud_cust.hud_color.title"] = "Color del HUD"
 L["settings.hud_cust.hud_color.desc"] = "Color de realce para el HUD.\nEl color de acento."
--- L["settings.hud_cust.language_id.title"] = "Idioma"
--- L["settings.hud_cust.language_id.desc"] = "Paquete de idiomas a utilizar para ARC9."
+L["settings.hud_cust.language_id.title"] = "Idioma"
+L["settings.hud_cust.language_id.desc"] = "Paquete de idiomas a utilizar para ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Tema Oscuro"
 L["settings.hud_cust.hud_darkmode.desc"] = "Activa los colores oscuros en el HUD en lugar del gris claro y desactiva el efecto viñeta en el fondo."
 L["settings.hud_cust.cust_light.title"] = "Habilitar Luz"
@@ -658,7 +658,7 @@ L["settings.attachments.atts_generateentities.desc"] = "Genera entidades que pue
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "Modificadores"
 
--- L["settings.modifiers.quick.desc"] = "Lo sentimos un poco pero no hemos podido terminarlos para el lanzamiento. Usted tendrá que utilizar modificadores avanzados en spawnmenu > Opciones > ARC9 > Modificadores por ahora."
+L["settings.modifiers.quick.desc"] = "Lo sentimos un poco pero no hemos podido terminarlos para el lanzamiento. Usted tendrá que utilizar modificadores avanzados en spawnmenu > Opciones > ARC9 > Modificadores por ahora."
 
 L["settings.modifiers.quick.desc"] = "Lo sentimos pero no hemos podido terminarlos a la fecha de lanzamiento. Tendrás que usar los modificadores avanzados en  spawnmenu > Options > ARC9 > Modifiers por ahora."
 
@@ -689,28 +689,28 @@ L["settings.controller.controller_config.content"] = "Abrir panel"
 L["settings.controller.controller_config.desc"] = "Abra el panel de configuración avanzada del mando."
 
 ////////////////////// Aim Assist
--- L["settings.tabname.aimassist"] = "Asistente de Apuntado"
--- L["settings.tabname.aimassist.desc"] = "Puedes activar la asistencia para apuntar si tienes problemas para mantener la puntería en el blanco o si prefieres no esforzarte en disparar."
+L["settings.tabname.aimassist"] = "Asistente de Apuntado"
+L["settings.tabname.aimassist.desc"] = "Puedes activar la asistencia para apuntar si tienes problemas para mantener la puntería en el blanco o si prefieres no esforzarte en disparar."
 
--- L["settings.aimassist.enable.title"] = "Habilitar Asistencia de Apuntado"
--- L["settings.aimassist.enable.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nEsta es una variable del servidor.\n\nTambién requiere que Asistente de Apuntado esté activado en CLIENTE."
+L["settings.aimassist.enable.title"] = "Habilitar Asistencia de Apuntado"
+L["settings.aimassist.enable.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nEsta es una variable del servidor.\n\nTambién requiere que Asistente de Apuntado esté activado en CLIENTE."
 
--- L["settings.aimassist.enable_client.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nTambién requiere que Asistente de Apuntado esté activado en SERVIDOR."
+L["settings.aimassist.enable_client.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nTambién requiere que Asistente de Apuntado esté activado en SERVIDOR."
 
--- L["settings.aimassist.lockon.title"] = "Fijación"
--- L["settings.aimassist.lockon.desc"] = "Activa una asistencia de bloqueo que mueve tu puntería hacia un objetivo válido.\n\nRequires Allow Lock-on Assist."
+L["settings.aimassist.lockon.title"] = "Fijación"
+L["settings.aimassist.lockon.desc"] = "Activa una asistencia de bloqueo que mueve tu puntería hacia un objetivo válido.\n\nRequires Allow Lock-on Assist."
 
--- L["settings.aimassist.intensity.title"] = "Intensidad"
--- L["settings.aimassist.intensity.desc"] = "Que tan intenso es el Asistente de Apuntado\n\nEsto es una variable del servidor."
+L["settings.aimassist.intensity.title"] = "Intensidad"
+L["settings.aimassist.intensity.desc"] = "Que tan intenso es el Asistente de Apuntado\n\nEsto es una variable del servidor."
 
--- L["settings.aimassist.cone.title"] = "Cono"
--- L["settings.aimassist.cone.desc"] = "Lo cerca o lejos que debe mirar hacia un objetivo antes de que se active el asistente de puntería.\n\nEsto es una variable del servidor."
+L["settings.aimassist.cone.title"] = "Cono"
+L["settings.aimassist.cone.desc"] = "Lo cerca o lejos que debe mirar hacia un objetivo antes de que se active el asistente de puntería.\n\nEsto es una variable del servidor."
 
--- L["settings.aimassist.head.title"] = "Fijación en la cabeza"
--- L["settings.aimassist.head.desc"] = "Si el asistente de apuntado debe fijarse en la cabeza del objetivo en lugar de en su pecho.\n\nEsto es una variable del servidor."
+L["settings.aimassist.head.title"] = "Fijación en la cabeza"
+L["settings.aimassist.head.desc"] = "Si el asistente de apuntado debe fijarse en la cabeza del objetivo en lugar de en su pecho.\n\nEsto es una variable del servidor."
 
--- L["settings.aimassist.lockon_allow.title"] = "Permitir Fijación Asistida"
--- L["settings.aimassist.lockon_allow.desc"] = "Permitir el uso de la Fijación Asistida.\n\nEsto es una variable del servidor."
+L["settings.aimassist.lockon_allow.title"] = "Permitir Fijación Asistida"
+L["settings.aimassist.lockon_allow.desc"] = "Permitir el uso de la Fijación Asistida.\n\nEsto es una variable del servidor."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Almac. en caché"
