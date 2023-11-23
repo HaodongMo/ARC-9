@@ -491,6 +491,7 @@ L["settings.hud_game.hud_nohints.title"] = "Deshabilita Pistas"
 L["settings.hud_game.hud_nohints.desc"] = "Deshabilita completamente las pistas. No aparecerán en el HUD 3D ni en el HUD 2D."
 L["settings.hud_game.hud_keephints.title"] = "Mantener Pistas"
 L["settings.hud_game.hud_keephints.desc"] = "Mostrar las pistas de control ARC9 en la parte superior en el panel HUD."
+L["settings.hud_game.hud_force_disable.title"] = "Forzar Desactivación del HUD"
 
 L["settings.hud_game.killfeed"] = "Killfeed"
 L["settings.hud_game.killfeed_enable.title"] = "Iconos del Killfeed"
