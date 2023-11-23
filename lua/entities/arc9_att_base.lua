@@ -8,7 +8,7 @@ ENT.RenderGroup = RENDERGROUP_OPAQUE
 ENT.Category = "ARC9 - Attachments"
 AddCSLuaFile()
 
-ENT.Icon = Material("arc9/arccw_bird.png", "mips smooth")
+ENT.Icon = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 ENT.GiveAttachments = nil -- table of all the attachments to give, and in what quantity. {{["id"] = int quantity}}
 ENT.SoundImpact = "weapon.ImpactSoft"
 ENT.Model = "models/items/arc9/att_wooden_box.mdl"
