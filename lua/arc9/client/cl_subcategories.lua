@@ -114,3 +114,25 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
         end
     end)
 end)
+
+
+-- As of 2023-11-12, this feature is only available on dev branch.
+-- Won't break anything on release branch though.
+list.Set("ContentCategoryIcons", "ARC9 - Ammo", "arc9/icon_16.png")
+list.Set("ContentCategoryIcons", "ARC9 - Attachments", "arc9/icon_16.png")
+
+-- Give all categories with ArcCW weapons our icon unless one is already set
+local first_populate = true
+hook.Add("PopulateWeapons", "ARC9_ContentCategoryIcons", function()
+    if !first_populate then return end
+    for i, wep in pairs(weapons.GetList()) do
+        local weap = weapons.Get(wep.ClassName)
+        if weap and weap.ARC9 then
+            local cat = weap.Category
+            if cat and !list.HasEntry("ContentCategoryIcons", cat) then
+                list.Set("ContentCategoryIcons", cat, "arc9/icon_16.png")
+            end
+        end
+    end
+    first_populate = false
+end)

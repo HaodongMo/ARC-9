@@ -50,6 +50,10 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
         }
         attent.Category =  atttbl.MenuCategory or "ARC9 - Attachments"
 
+        if atttbl.MenuCategory and !list.HasEntry("ContentCategoryIcons", atttbl.MenuCategory) then
+            list.Set("ContentCategoryIcons", atttbl.MenuCategory, "arc9/icon_16.png")
+        end
+
         scripted_ents.Register(attent, "arc9_att_" .. shortname)
     end
 end
@@ -118,7 +122,7 @@ function ARC9.LoadAtts()
 
     for _, filename in pairs(bulkfiles) do
         AddCSLuaFile(searchdir_bulk .. filename)
-        
+
         Attachments_LuaCount = Attachments_LuaCount + 1
         Attachments_BulkCount = Attachments_BulkCount + 1
     end
