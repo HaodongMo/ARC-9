@@ -37,7 +37,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     local laspos = pos + (dir * truedist)
 
-    if self.LaserAlwaysOnTargetInPeek and owner == LocalPlayer() then
+    if self.LaserAlwaysOnTargetInPeek and owner == LocalPlayer() and !self.WModel then
         local sightamount = self:GetSightAmount()
         if sightamount > 0 and self.Peeking then
 
@@ -47,7 +47,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
             if self:GetReloading() then
                 if !self:GetProcessedValue("ShotgunReload", true) then
                     fuckingreloadprocess = math.Clamp((self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime(self:GetIKAnimation())), 0, 1)
-                    
+
                     if fuckingreloadprocess <= 0.2 then
                         fuckingreloadprocessinfluence = 1 - (fuckingreloadprocess * 5)
                     elseif fuckingreloadprocess >= 0.9 then
@@ -93,8 +93,9 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 end
 
 function SWEP:DrawLasers(wm, behav)
-    if !wm and !IsValid(self:GetOwner()) then return end
-    if !wm and self:GetOwner():IsNPC() then return end
+    local owner = self:GetOwner()
+    if !wm and !IsValid(owner) then return end
+    if !wm and owner:IsNPC() then return end
 
     local mdl = self.VModel
 
@@ -150,7 +151,7 @@ function SWEP:DrawLasers(wm, behav)
                 
             self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, wm and 5 or 10, slottbl.Address + 69, !wm)
                 
-            if !wm or self:GetOwner() == LocalPlayer() then
+            if !wm or owner == LocalPlayer() or wm and owner:IsNPC() then
                 if behav then
                     self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
                 else
