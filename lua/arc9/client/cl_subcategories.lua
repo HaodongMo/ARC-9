@@ -121,10 +121,8 @@ end)
 list.Set("ContentCategoryIcons", "ARC9 - Ammo", "arc9/icon_16.png")
 list.Set("ContentCategoryIcons", "ARC9 - Attachments", "arc9/icon_16.png")
 
--- Give all categories with ArcCW weapons our icon unless one is already set
-local first_populate = true
-hook.Add("PopulateWeapons", "ARC9_ContentCategoryIcons", function()
-    if !first_populate then return end
+-- Give all categories with ARC9 weapons our icon unless one is already set
+timer.Simple(0, function()
     for i, wep in pairs(weapons.GetList()) do
         local weap = weapons.Get(wep.ClassName)
         if weap and weap.ARC9 then
@@ -134,5 +132,4 @@ hook.Add("PopulateWeapons", "ARC9_ContentCategoryIcons", function()
             end
         end
     end
-    first_populate = false
 end)
