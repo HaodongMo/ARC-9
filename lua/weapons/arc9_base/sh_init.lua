@@ -251,6 +251,12 @@ function SWEP:OnDrop()
     self:SetReady(false)
 end
 
+function SWEP:OwnerChanged()
+    if CLIENT then
+        self:SetupModel(true) -- setups worldmodel offset properly
+    end
+end
+
 function SWEP:OnRemove()
     self:EndLoop()
 
