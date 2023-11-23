@@ -37,7 +37,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
     local laspos = pos + (dir * truedist)
 
-    if self.LaserAlwaysOnTargetInPeek and owner == LocalPlayer() and !self.WModel then
+    if self.LaserAlwaysOnTargetInPeek and owner == LocalPlayer() then
         local sightamount = self:GetSightAmount()
         if sightamount > 0 and self.Peeking then
 
