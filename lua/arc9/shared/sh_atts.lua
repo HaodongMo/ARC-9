@@ -7,6 +7,8 @@ ARC9.Attachments_Bits = 16
 
 ARC9.ModelToPrecacheList = {}
 
+local fullreload
+
 local defaulticon = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 
 function ARC9.LoadAttachment(atttbl, shortname, id)
@@ -56,9 +58,22 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
 
         scripted_ents.Register(attent, "arc9_att_" .. shortname)
     end
+
+    if !fullreload then -- not full loading means individual att file was updated. thats a dev! recaching gun for him so he dont have to reattach attahment!
+        if game.SinglePlayer() then
+            if IsValid(Entity(1)) then
+                local wep = Entity(1):GetActiveWeapon()
+
+                if IsValid(wep) and wep.ARC9 then
+                    timer.Simple(0, function() wep:PostModify(true) end)
+                end
+            end
+        end
+    end
 end
 
 function ARC9.LoadAtts()
+    fullreload = true
     ARC9.Attachments_Count = 0
     local Attachments_BulkCount = 0
     local Attachments_RegularCount = 0
@@ -66,19 +81,15 @@ function ARC9.LoadAtts()
     ARC9.Attachments = {}
     ARC9.Attachments_Index = {}
 
-    local searchdir = "ARC9/common/attachments/"
-    local searchdir_bulk = "ARC9/common/attachments_bulk/"
+    local searchdir = "arc9/common/attachments/"
+    local searchdir_bulk = "arc9/common/attachments_bulk/"
 
-    local files = file.Find(searchdir .. "/*.lua", "LUA")
-
-    for _, filename in pairs(files) do
-        AddCSLuaFile(searchdir .. filename)
-    end
-
-    files = file.Find(searchdir .. "/*.lua", "LUA")
+    local files = file.Find(searchdir .. "*.lua", "LUA")
 
     for _, filename in pairs(files) do
         if filename == "default.lua" then continue end
+        
+        AddCSLuaFile(searchdir .. filename)
 
         local shortname = string.lower(string.sub(filename, 1, -5))
         if string.match(shortname, "[^%w_]") then
@@ -90,30 +101,11 @@ function ARC9.LoadAtts()
         ARC9.Attachments_Count = ARC9.Attachments_Count + 1
         local attid = ARC9.Attachments_Count
 
-        -- include(searchdir .. filename)
+        ATT = {}
 
-        if game.SinglePlayer() then
-            file.AsyncRead(searchdir .. filename, "LUA", function(fileName, gamePath, status, data)
-                ATT = {}
+        include(searchdir .. filename)
 
-                local thrownerror = RunString(data, "ARC9AsyncLoad", true)
-
-                if table.Count(ATT) == 0 then
-                    print("ARC9: Error loading attachment " .. shortname .. "!")
-                elseif thrownerror then
-                    print("ARC9: Error loading attachment " .. shortname .. "!")
-                    print(thrownerror)
-                else
-                    ARC9.LoadAttachment(ATT, shortname, attid)
-                end
-            end)
-        else
-            ATT = {}
-
-            include(searchdir .. filename)
-
-            ARC9.LoadAttachment(ATT, shortname, attid)
-        end
+        ARC9.LoadAttachment(ATT, shortname, attid)
     end
 
     Attachments_RegularCount = Attachments_LuaCount
@@ -121,17 +113,13 @@ function ARC9.LoadAtts()
     local bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
 
     for _, filename in pairs(bulkfiles) do
+        if filename == "default.lua" then continue end
+
         AddCSLuaFile(searchdir_bulk .. filename)
 
         Attachments_LuaCount = Attachments_LuaCount + 1
         Attachments_BulkCount = Attachments_BulkCount + 1
-    end
-
-    bulkfiles = file.Find(searchdir_bulk .. "/*.lua", "LUA")
-
-    for _, filename in pairs(bulkfiles) do
-        if filename == "default.lua" then continue end
-
+        
         include(searchdir_bulk .. filename)
     end
 
@@ -148,6 +136,8 @@ function ARC9.LoadAtts()
             end
         end
     end
+
+    fullreload = nil
 end
 
 function ARC9.GetAttTable(name)
