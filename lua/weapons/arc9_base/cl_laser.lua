@@ -9,6 +9,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
     local color = atttbl.LaserColor or lasercolorred
     local flaremat = atttbl.LaserFlareMat or defaultflaremat
     local lasermat = atttbl.LaserTraceMat or defaulttracemat
+    local owner = self:GetOwner()
 
     local dist = 5000
 
@@ -16,7 +17,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
         start = pos,
         endpos = pos + (dir * 15000),
         mask = MASK_SHOT,
-        filter = self:GetOwner()
+        filter = owner
     })
 
     if tr.StartSolid then return end
@@ -35,6 +36,40 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
     local fraction = truedist / dist
 
     local laspos = pos + (dir * truedist)
+
+    if self.LaserAlwaysOnTargetInPeek and owner == LocalPlayer() then
+        local sightamount = self:GetSightAmount()
+        if sightamount > 0 and self.Peeking then
+
+            local fuckingreloadprocess
+            local fuckingreloadprocessinfluence = 1
+
+            if self:GetReloading() then
+                if !self:GetProcessedValue("ShotgunReload", true) then
+                    fuckingreloadprocess = math.Clamp((self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime(self:GetIKAnimation())), 0, 1)
+                    
+                    if fuckingreloadprocess <= 0.2 then
+                        fuckingreloadprocessinfluence = 1 - (fuckingreloadprocess * 5)
+                    elseif fuckingreloadprocess >= 0.9 then
+                        fuckingreloadprocessinfluence = (fuckingreloadprocess - 0.9) * 10
+                    else
+                        fuckingreloadprocessinfluence = 0
+                    end
+                end
+            end
+            
+            local trrr = util.TraceLine({
+                start = owner:EyePos(),
+                endpos = owner:EyePos() + (self:GetShootDir():Forward() * 15000),
+                mask = MASK_SHOT,
+                filter = owner
+            })
+
+            local realhitpos = trrr.HitPos
+            laspos = LerpVector(sightamount*fuckingreloadprocessinfluence, laspos, realhitpos)
+            hitpos = LerpVector(sightamount*fuckingreloadprocessinfluence, hitpos, realhitpos)
+        end
+    end
 
     if !behav then
         render.SetMaterial(lasermat)
