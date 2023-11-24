@@ -22,12 +22,10 @@ do
     function SWEP:GetIsNearWall()
         local now = engine.TickCount()
 
+        if self.NearWallTick == now then return self.NearWallCached end
+
         if (self.NearWallLastCheck or 0) > now then return self.NearWallCached end
         self.NearWallLastCheck = now + 8 -- 8 ticks before next check
-
-        if self.NearWallTick == now then
-            return self.NearWallCached
-        end
 
         local length = self:GetProcessedValue("BarrelLength", true)
 

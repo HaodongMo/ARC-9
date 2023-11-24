@@ -305,6 +305,8 @@ do
     local cvarDeveloper = GetConVar("developer")
     local cvarGetInt = FindMetaTable("ConVar").GetInt
 
+    ARC9.DevCheckCached = false 
+
     if CLIENT and not game.SinglePlayer() then
         local localPlayer
 
@@ -320,11 +322,35 @@ do
         end
 
         function ARC9.Dev(level)
-            return IsValid(localPlayer) and localPlayer:IsSuperAdmin() and cvarGetInt(cvarDeveloper) >= level
+            local now = engine.TickCount()
+    
+            if ARC9.DevCheckTick == now then return ARC9.DevCheckCached end
+    
+            if (ARC9.DevCheckLast or 0) > now then return ARC9.DevCheckCached end
+            ARC9.DevCheckLast = now + 16 -- 16 ticks before next check
+            
+            local output = IsValid(localPlayer) and localPlayer:IsSuperAdmin() and cvarGetInt(cvarDeveloper) >= level
+
+            ARC9.DevCheckCached = output
+            ARC9.DevCheckTick = now
+    
+            return output
         end
     else
         function ARC9.Dev(level)
-            return cvarGetInt(cvarDeveloper) >= level
+            local now = engine.TickCount()
+    
+            if ARC9.DevCheckTick == now then return ARC9.DevCheckCached end
+    
+            if (ARC9.DevCheckLast or 0) > now then return ARC9.DevCheckCached end
+            ARC9.DevCheckLast = now + 16 -- 16 ticks before next check
+            
+            local output = cvarGetInt(cvarDeveloper) >= level
+            
+            ARC9.DevCheckCached = output
+            ARC9.DevCheckTick = now
+    
+            return output
         end
     end
 end
