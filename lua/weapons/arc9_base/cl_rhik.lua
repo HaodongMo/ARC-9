@@ -30,7 +30,7 @@ function SWEP:DoRHIK(wm)
     local iklt = math.Clamp((CurTime() - self:GetIKTimeLineStart()) / iket, 0, 1)
 
     if iktl then
-        if self:GetProcessedValue("LHIK") then
+        if self:GetProcessedValue("LHIK", true) then
             local next_stage_index
 
             for i, k in ipairs(iktl) do
@@ -71,7 +71,7 @@ function SWEP:DoRHIK(wm)
             lh_delta = qerp(delta_time, stage.lhik or 0, next_stage.lhik or 0)
         end
 
-        if self:GetProcessedValue("RHIK") then
+        if self:GetProcessedValue("RHIK", true) then
             local next_stage_index
 
             for i, k in ipairs(iktl) do

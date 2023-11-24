@@ -75,7 +75,7 @@ function EFFECT:Init(data)
         end
     end
 
-    if !wpn:GetProcessedValue("Silencer") and !wpn:GetProcessedValue("NoFlash", true) and lighconvar:GetBool() then
+    if !wpn:GetProcessedValue("Silencer", true) and !wpn:GetProcessedValue("NoFlash", true) and lighconvar:GetBool() then
         local light = DynamicLight(self:EntIndex())
         local clr = Color(244, 209, 66)
         if (light) then

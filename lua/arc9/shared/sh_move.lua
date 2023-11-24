@@ -31,7 +31,7 @@ function ARC9.Move(ply, mv, cmd)
         local lungevec = targetpos - ply:EyePos()
         local lungedir = lungevec:GetNormalized()
         local lungedist = lungevec:Length()
-        local lungespd = (2 * (lungedist / math.Max(0.01, wpn:GetProcessedValue("PreBashTime"))))
+        local lungespd = (2 * (lungedist / math.Max(0.01, wpn:GetProcessedValue("PreBashTime", true))))
         mv:SetVelocity(lungedir * lungespd)
     end
 
@@ -269,7 +269,7 @@ function ARC9.StartCommand(ply, cmd)
 
         ARC9.RecoilRise = ARC9.RecoilRise + Angle(diff_p, diff_y, 0)
 
-        local recreset = ARC9.RecoilRise * wpn:GetProcessedValue("RecoilAutoControl") * cft * 2
+        local recreset = ARC9.RecoilRise * wpn:GetProcessedValue("RecoilAutoControl", true) * cft * 2
 
         if math.abs(recreset.p) > 1e-5 then
             eyeang.p = eyeang.p - recreset.p

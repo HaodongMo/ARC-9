@@ -9,9 +9,9 @@ function SWEP:GetCCIP(pos, ang)
     pos = pos or sp
     ang = ang or sa
 
-    local v = self:GetProcessedValue("PhysBulletMuzzleVelocity")
-    local g = self:GetProcessedValue("PhysBulletGravity")
-    local d = self:GetProcessedValue("PhysBulletDrag")
+    local v = self:GetProcessedValue("PhysBulletMuzzleVelocity", true)
+    local g = self:GetProcessedValue("PhysBulletGravity", true)
+    local d = self:GetProcessedValue("PhysBulletDrag", true)
 
     local vel = ang:Forward() * v
     local maxiter = 100

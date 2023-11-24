@@ -112,7 +112,7 @@ function SWEP:BuildMultiSight()
 
             for _, sight in pairs(atttbl.Sights) do
                 if !self:GetUBGL() and sight.UBGLOnly then continue end
-                if self:GetUBGL() and self:GetProcessedValue("UBGLExclusiveSights") and !sight.UBGLOnly then continue end
+                if self:GetUBGL() and self:GetProcessedValue("UBGLExclusiveSights", true) and !sight.UBGLOnly then continue end
                 local s = {}
 
                 if CLIENT then

@@ -184,7 +184,7 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
         if (dir:Length() == 0) then return end
 
         if ARC9_bullet_physics:GetBool() then
-            ARC9:ShootPhysBullet(self, endpos, dir * self:GetProcessedValue("PhysBulletMuzzleVelocity"), {
+            ARC9:ShootPhysBullet(self, endpos, dir * self:GetProcessedValue("PhysBulletMuzzleVelocity", true), {
                 Penleft = penleft,
                 Travelled = range,
                 Damaged = alreadypenned,
@@ -250,9 +250,9 @@ function SWEP:GetRicochetChance(tr)
     -- 0 at 1
     -- 100 at 0
 
-    if degree > self:GetProcessedValue("RicochetAngleMax") then return 0 end
+    if degree > self:GetProcessedValue("RicochetAngleMax", true) then return 0 end
 
-    local c = self:GetProcessedValue("RicochetChance")
+    local c = self:GetProcessedValue("RicochetChance", true)
 
     c = c * ricmult
 

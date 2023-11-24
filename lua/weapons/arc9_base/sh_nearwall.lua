@@ -59,5 +59,5 @@ function SWEP:ThinkNearWall()
     self:SetNearWallAmount(math_Approach(
         self.dt.NearWallAmount,
         swepGetIsNearWall(self) and 1 or 0,
-        FrameTime() / self:GetProcessedValue("SprintToFireTime")))
+        FrameTime() / self:GetProcessedValue("SprintToFireTime", true)))
 end

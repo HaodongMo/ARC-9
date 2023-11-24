@@ -1,5 +1,5 @@
 function SWEP:GetSprintToFireTime()
-    return self:GetProcessedValue("SprintToFireTime")
+    return self:GetProcessedValue("SprintToFireTime", true)
 end
 
 function SWEP:GetTraverseSprintToFireTime()
@@ -81,7 +81,7 @@ function SWEP:EnterSprint()
             self:PlayAnimation("idle")
         else
             local anim = self:TranslateAnimation("enter_sprint")
-            local mult = self:GetProcessedValue("SprintToFireTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+            local mult = self:GetProcessedValue("SprintToFireTime", true) -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
             if self:GetAnimationEntry(anim).NoStatAffectors then
                 mult = 1
             end
@@ -98,7 +98,7 @@ function SWEP:ExitSprint()
             self:PlayAnimation("idle")
         else
             local anim = self:TranslateAnimation("exit_sprint")
-            local mult = self:GetProcessedValue("SprintToFireTime") -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
+            local mult = self:GetProcessedValue("SprintToFireTime", true) -- Incorrectly uses a time as a multiplier! Preserved for legacy behavior
             if self:GetAnimationEntry(anim).NoStatAffectors then
                 mult = 1
             end
@@ -129,14 +129,14 @@ function SWEP:ThinkSprint()
 
     if sprinting and !self:GetPrimedAttack() then
         if amt < 1 then
-            amt = math.Approach(amt, 1, FrameTime() / self:GetProcessedValue("SprintToFireTime"))
+            amt = math.Approach(amt, 1, FrameTime() / self:GetProcessedValue("SprintToFireTime", true))
         end
         -- if self:GetTraversalSprint() then
         --     ts_amt = math.Approach(ts_amt, 1, FrameTime() / (self:GetTraverseSprintToFireTime()))
         -- end
     else
         if amt > 0 then
-            amt = math.Approach(amt, 0, FrameTime() / self:GetProcessedValue("SprintToFireTime"))
+            amt = math.Approach(amt, 0, FrameTime() / self:GetProcessedValue("SprintToFireTime", true))
         end
     end
 

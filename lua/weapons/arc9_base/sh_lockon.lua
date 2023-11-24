@@ -103,7 +103,7 @@ function SWEP:ThinkLockOn()
             self:SetLockOnTarget(NULL)
         else
             if !self:GetLockedOn() and
-            self:GetLockOnStartTime() + self:GetProcessedValue("LockOnTime") <= CurTime() then
+            self:GetLockOnStartTime() + self:GetProcessedValue("LockOnTime", true) <= CurTime() then
                 self:SetLockedOn(true)
                 self:RunHook("Hook_LockOn", self:GetLockOnTarget())
 

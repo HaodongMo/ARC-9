@@ -472,7 +472,7 @@ do
                         -- print("Renewing cache for - ", processedValueName)
                         
 
-                        self.PV_CacheLong[processedValueName].time = upct + 0.66 -- idk whats number here should be
+                        self.PV_CacheLong[processedValueName].time = upct + 1 -- idk whats number here should be
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
                         
                 -- if istable(self.PV_CacheLong[processedValueName].value) then
@@ -663,7 +663,7 @@ do
         end
 
         if val ~= "RecoilModifierCap" and not hasNoAffectors[val .. "Recoil"] then
-            local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap"), swepDt.RecoilAmount)
+            local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap", true), swepDt.RecoilAmount)
 
             if recoilAmount > 0 then
                 stat = arcGetValue(self, val, stat, "Recoil", recoilAmount)

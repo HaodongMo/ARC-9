@@ -90,7 +90,7 @@ end
 
 function SWEP:GetCurrentFiremode()
     if self:GetUBGL() then
-        return self:GetProcessedValue("UBGLFiremode")
+        return self:GetProcessedValue("UBGLFiremode", true)
     end
 
     mode = self:GetCurrentFiremodeTable().Mode
@@ -149,7 +149,7 @@ end
 
 function SWEP:GetFiremodeName()
     if self:GetUBGL() then
-        return self:GetProcessedValue("UBGLFiremodeName")
+        return self:GetProcessedValue("UBGLFiremodeName", true)
     end
 
     local arc9_mode = self:GetCurrentFiremodeTable()

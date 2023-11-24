@@ -19,7 +19,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
     rec = rec * self:GetProcessedValue("RecoilKick")
 
     if rec > 0 then
-        ang.r = ang.r + (math.sin(CurTime() * self:GetProcessedValue("RecoilKickDamping")) * rec)
+        ang.r = ang.r + (math.sin(CurTime() * self:GetProcessedValue("RecoilKickDamping", true)) * rec)
     end
 
     local sightamount = self:GetSightAmount()

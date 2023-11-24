@@ -92,7 +92,7 @@ function SWEP:DoShootSounds()
     local sslr = lsslr
     local dsstr = ldsstr
 
-    local silenced = self:GetProcessedValue("Silencer") and !self:GetUBGL()
+    local silenced = self:GetProcessedValue("Silencer", true) and !self:GetUBGL()
     local indoor = self:GetIndoor()
 
     local indoormix = 1 - indoor
@@ -571,7 +571,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
         if numm > 0 then
             if (bulletPhysics:GetBool() or self:GetProcessedValue("AlwaysPhysBullet", true)) and !self:GetProcessedValue("NeverPhysBullet", true) then
                 if IsFirstTimePredicted() then
-                    if self:GetProcessedValue("UseDispersion") then 
+                    if self:GetProcessedValue("UseDispersion", true) then 
                         local seed = 1337 + self:EntIndex() + engine.TickCount()
                         local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
                         local angleRand = Angle(math.sin(a), math.cos(a), 0)
@@ -812,13 +812,13 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 end
 
 function SWEP:ShouldTracer()
-    local tracerNum = self:GetProcessedValue("TracerNum")
+    local tracerNum = self:GetProcessedValue("TracerNum", true)
 
     if tracerNum <= 0 then return false end
 
     local shouldtracer = self:GetNthShot() % tracerNum == 0
 
-    if self:Clip1() <= self:GetProcessedValue("TracerFinalMag") then
+    if self:Clip1() <= self:GetProcessedValue("TracerFinalMag", true) then
         shouldtracer = true
     end
 
@@ -828,8 +828,8 @@ end
 function SWEP:GetDamageDeltaAtRange(range)
     local d = 1
 
-    local r_min = self:GetProcessedValue("RangeMin")
-    local r_max = self:GetProcessedValue("RangeMax")
+    local r_min = self:GetProcessedValue("RangeMin", true)
+    local r_max = self:GetProcessedValue("RangeMax", true)
 
     if range <= r_min then
         d = 0
@@ -909,7 +909,7 @@ function SWEP:GetDamageAtRange(range)
 
     local sweetspot_d = self:GetSweetSpotDeltaAtRange(range)
     if sweetspot_d > 0 then
-        dmgv = Lerp(sweetspot_d, dmgv, self:GetProcessedValue("SweetSpotDamage"))
+        dmgv = Lerp(sweetspot_d, dmgv, self:GetProcessedValue("SweetSpotDamage", true))
     end
 
     if self:GetProcessedValue("DistributeDamage", true) then
@@ -1001,7 +1001,7 @@ function SWEP:ShootRocket()
     local dir = self:GetShootDir()
 
     local num = self:GetProcessedValue("Num")
-    local ent = self:GetProcessedValue("ShootEnt")
+    local ent = self:GetProcessedValue("ShootEnt", true)
 
     local spread
 

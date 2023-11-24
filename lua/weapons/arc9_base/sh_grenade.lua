@@ -30,12 +30,13 @@ function SWEP:ThinkGrenade()
     if !self:GetGrenadePrimed() then
         if self:GetAnimLockTime() > CurTime() then return end
 
+        local throwanimspeed = self:GetProcessedValue("ThrowAnimSpeed", true)
         if self:GetGrenadeRecovering() then
             if self:GetProcessedValue("Disposable", true) and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
                 self:Remove()
                 owner:ConCommand("lastinv") -- switch to prev weapon
             else
-                self:PlayAnimation("draw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+                self:PlayAnimation("draw", throwanimspeed, true)
                 self:SetGrenadeRecovering(false)
             end
         elseif ((tossable and owner:KeyDown(IN_ATTACK2)) or
@@ -48,9 +49,9 @@ function SWEP:ThinkGrenade()
             self:SetGrenadePrimedTime(CurTime())
 
             if owner:KeyDown(IN_ATTACK2) and self:HasAnimation("pullpin_toss") then
-                self:PlayAnimation("pullpin_toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
+                self:PlayAnimation("pullpin_toss", throwanimspeed, true)
             else
-                self:PlayAnimation("pullpin", self:GetProcessedValue("ThrowAnimSpeed"), true)
+                self:PlayAnimation("pullpin", throwanimspeed, true)
             end
             self:SetGrenadeTossing(owner:KeyDown(IN_ATTACK2))
         end
@@ -58,11 +59,11 @@ function SWEP:ThinkGrenade()
         if self:GetAnimLockTime() > CurTime() then return end
 
         if self:GetGrenadeTossing() and (!owner:KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly", true)) then
-            local t = self:PlayAnimation("toss", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            local t = self:PlayAnimation("toss", throwanimspeed, true)
             local mp = self:GetAnimationEntry("toss").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS, t * mp)
         elseif !self:GetGrenadeTossing() and (!owner:KeyDown(IN_ATTACK) or self:GetProcessedValue("ThrowInstantly", true)) then
-            local t = self:PlayAnimation("throw", self:GetProcessedValue("ThrowAnimSpeed"), true)
+            local t = self:PlayAnimation("throw", throwanimspeed, true)
             local mp = self:GetAnimationEntry("throw").MinProgress or 0
             self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL, t * mp)
         end

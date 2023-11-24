@@ -14,7 +14,7 @@ function SWEP:ThinkBipod()
 end
 
 function SWEP:MustExitBipod()
-    if !self:GetProcessedValue("Bipod") then return true end
+    if !self:GetProcessedValue("Bipod", true) then return true end
     if self:GetSprintAmount() > 0 then return true end
     -- if self:GetBlindFireAmount() > 0 then return true end
     if self:GetUBGL() then return true end
@@ -25,7 +25,7 @@ function SWEP:MustExitBipod()
 end
 
 function SWEP:CanBipod(ang)
-    if !self:GetProcessedValue("Bipod") then return end
+    if !self:GetProcessedValue("Bipod", true) then return end
     if self:GetSprintAmount() > 0 then return end
     if self:GetReloading() and !self:GetBipod() then return end
     -- if self:GetBlindFireAmount() > 0 then return end

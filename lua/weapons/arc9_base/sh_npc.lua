@@ -20,7 +20,7 @@ function SWEP:NPC_PrimaryAttack()
     self:DoProjectileAttack(owner:GetShootPos(), owner:GetAimVector():Angle(), spread)
 
     if !self:GetProcessedValue("BottomlessClip", true) then
-        self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot"))
+        self:TakePrimaryAmmo(self:GetProcessedValue("AmmoPerShot", true))
     end
 end
 

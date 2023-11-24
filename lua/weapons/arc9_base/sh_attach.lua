@@ -173,7 +173,7 @@ function SWEP:PostModify(toggleonly)
                 self:SetClip1(capacity)
             end
 
-            if self:GetProcessedValue("BottomlessClip") then
+            if self:GetProcessedValue("BottomlessClip", true) then
                 self:RestoreClip()
             end
         end

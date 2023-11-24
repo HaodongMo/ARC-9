@@ -145,7 +145,7 @@ function SWEP:GetAnimationEntry(seq)
         else
             if self.Animations[seq] then
                 return self.Animations[seq]
-            elseif !self:GetProcessedValue("SuppressDefaultAnimations") then
+            elseif !self:GetProcessedValue("SuppressDefaultAnimations", true) then
                 return {
                     Source = seq,
                     Time = self:GetSequenceTime(seq)

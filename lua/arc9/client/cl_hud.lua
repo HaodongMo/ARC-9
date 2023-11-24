@@ -288,13 +288,13 @@ local function GetHintsTable(capabilities)
         if ARC9.GetKeyIsBound("+arc9_ubgl") then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+arc9_ubgl"),
-                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
+                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName", true))
             })
         else
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = ARC9.GetBindKey("+attack2"),
-                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName"))
+                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName", true))
             })
         end
     end
@@ -565,7 +565,7 @@ function ARC9.DrawHUD()
         if weapon:GetUBGL() then
             arc9_mode = {
                 Mode = weapon:GetCurrentFiremode(),
-                PrintName = weapon:GetProcessedValue("UBGLFiremodeName")
+                PrintName = weapon:GetProcessedValue("UBGLFiremodeName", true)
             }
             firemode_text = arc9_mode.PrintName
             weapon_clipsize = weapon:GetMaxClip2()
@@ -616,7 +616,7 @@ function ARC9.DrawHUD()
         if weapon:GetProcessedValue("Overheat", true) then
             showheat = true
             heat = weapon:GetHeatAmount()
-            heatcap = weapon:GetProcessedValue("HeatCapacity")
+            heatcap = weapon:GetProcessedValue("HeatCapacity", true)
             heatlocked = weapon:GetHeatLockout()
         end
     elseif weapon.ArcCW then
