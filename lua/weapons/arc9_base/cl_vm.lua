@@ -63,19 +63,21 @@ function SWEP:PreDrawViewModel()
             blurtarget = 5 * custdelta
         end
 
+        local scrw, scrh = ScrW(), ScrH()
+
         cam.Start2D()
             surface.SetDrawColor(15, 15, 15, 180 * custdelta)
-            surface.DrawRect(0, 0, ScrW(), ScrH())
+            surface.DrawRect(0, 0, scrw, scrh)
             surface.SetDrawColor(0, 0, 0, 255 * custdelta)
             if !arc9_hud_darkmode:GetBool() then
                 surface.SetMaterial(vignette)
-                surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+                surface.DrawTexturedRect(0, 0, scrw, scrh)
             end
 
             if arc9_dev_greenscreen:GetBool() then
                 -- print(GetConVar("mat_bloom_scalefactor_scalar"):SetFloat())
                 surface.SetDrawColor(0, 255, 0, 255 * custdelta)
-                surface.DrawRect(0, 0, ScrW(), ScrH())
+                surface.DrawRect(0, 0, scrw, scrh)
             end
         cam.End2D()
     end

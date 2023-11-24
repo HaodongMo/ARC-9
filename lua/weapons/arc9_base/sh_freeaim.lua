@@ -51,6 +51,7 @@ local smoothswayamt = 0
 
 function SWEP:GetFreeSwayAngles()
     if !arc9_mod_sway:GetBool() then return end
+    local ct = CurTime()
     local swayamt = self:GetFreeSwayAmount()
     if swayamt == 0 then return end
 
@@ -60,7 +61,7 @@ function SWEP:GetFreeSwayAngles()
     swayamt = isScope and 0 or swayamt * (1-self:GetSightAmount() * 0.2)
     smoothswayamt = CLIENT and Lerp(RealFrameTime(), smoothswayamt, swayamt) or swayamt
 
-    local ang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
+    local ang = Angle(math.sin(ct * 0.6 * swayspeed) + (math.cos(ct * 2) * 0.5), math.sin(ct * 0.4 * swayspeed) + (math.cos(ct * 1.6) * 0.5), 0)
 
     ang = ang * smoothswayamt
 
