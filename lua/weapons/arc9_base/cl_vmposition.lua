@@ -295,7 +295,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     local fswayang = self:GetFreeSwayAngles()
     if fswayang then
-        local getfreeswayang, getfreeswayoffset = self:GetFreeSwayAngles(), self:GetFreeAimOffset()
+        local getfreeswayang, getfreeswayoffset = fswayang, self:GetFreeAimOffset()
         extra_offsetang[2] = extra_offsetang[2] - (getfreeswayang[1] * cor_val)
         extra_offsetang[1] = extra_offsetang[1] + (getfreeswayang[2] * cor_val)
         -- extra_offsetpos.x = extra_offsetpos.x + (self:GetFreeSwayAngles().y * cor_val) - 0.01

@@ -197,7 +197,8 @@ function SWEP:GetFreeSwayAmount()
     local sway = self:GetProcessedValue("Sway")
 
     sway = math.Max(sway, 0)
-
+    if sway == 0 then return 0 end
+    
     if self:HoldingBreath() then return sway * 0.15 end
 
     if self:GetOutOfBreath() then

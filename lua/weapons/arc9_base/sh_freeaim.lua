@@ -52,6 +52,7 @@ local smoothswayamt = 0
 function SWEP:GetFreeSwayAngles()
     if !arc9_mod_sway:GetBool() then return end
     local swayamt = self:GetFreeSwayAmount()
+    if swayamt == 0 then return end
 
     local swayspeed = 2
     local isScope = self:IsUsingRTScope()
