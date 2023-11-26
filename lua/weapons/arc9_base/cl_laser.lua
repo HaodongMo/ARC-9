@@ -78,7 +78,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
     end
 
     if hit then
-        local rad = math.Rand(4, 6) * strength * math.max(fraction * 3, 1)
+        local rad = math.Rand(4, 6) * strength * math.max(fraction * 7, 1)
         local dotcolor = color
         local whitedotcolor = lasercolor200
 
@@ -88,7 +88,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
         render.SetMaterial(flaremat)
 
         render.DrawSprite(hitpos, rad, rad, dotcolor)
-        render.DrawSprite(hitpos, rad * 0.3, rad * 0.3, whitedotcolor)
+        render.DrawSprite(hitpos, rad * 0.4, rad * 0.3, whitedotcolor)
     end
 end
 
