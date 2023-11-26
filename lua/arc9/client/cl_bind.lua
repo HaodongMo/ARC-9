@@ -130,10 +130,12 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     if wpn:GetInSights() then
         if bind == "invnext" then
             wpn:Scroll(1)
+            wpn.Peeking = false 
 
             return true
         elseif bind == "invprev" then
             wpn:Scroll(-1)
+            wpn.Peeking = false 
 
             return true
         end
