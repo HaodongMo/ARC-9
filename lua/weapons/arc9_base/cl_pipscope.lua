@@ -90,7 +90,7 @@ local rtsurf = Material("effects/arc9/rt")
 local shadow = Material("arc9/shadow.png", "mips smooth")
 local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 
-local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
+-- local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
 
 local pp_cc_tab = {
     ["$pp_colour_addr"] = 0,
@@ -152,16 +152,16 @@ function SWEP:DoRTScopeEffects()
 
     if atttbl.RTScopeNoPP then return end
 
-    pp_ca_r:SetTexture("$basetexture", rtmat)
-    pp_ca_g:SetTexture("$basetexture", rtmat)
-    pp_ca_b:SetTexture("$basetexture", rtmat)
+    -- pp_ca_r:SetTexture("$basetexture", rtmat)
+    -- pp_ca_g:SetTexture("$basetexture", rtmat)
+    -- pp_ca_b:SetTexture("$basetexture", rtmat)
 
-    render.SetMaterial( pp_ca_r )
-    render.DrawScreenQuad()
-    render.SetMaterial( pp_ca_g )
-    render.DrawScreenQuad()
-    render.SetMaterial( pp_ca_b )
-    render.DrawScreenQuad()
+    -- render.SetMaterial( pp_ca_r )
+    -- render.DrawScreenQuad()
+    -- render.SetMaterial( pp_ca_g )
+    -- render.DrawScreenQuad()
+    -- render.SetMaterial( pp_ca_b )
+    -- render.DrawScreenQuad()
 
     -- Color modify
     DrawColorModify( pp_cc_tab )
