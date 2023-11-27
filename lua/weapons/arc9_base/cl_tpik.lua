@@ -78,14 +78,13 @@ function SWEP:DoTPIK()
 
     local htype = self:GetHoldType()
 
-    if !self.TPIKforcelefthand and !self.NotAWeapon and (htype == "slam" or htype == "magic" or htype == "pistol"  or htype == "normal") then
+    if !self.TPIKforcelefthand and !self.NotAWeapon and !(self:GetReloading() and !self.TPIKforcenoreload) and (htype == "slam" or htype == "magic" or htype == "pistol"  or htype == "normal" or self.TPIKnolefthand) then
         nolefthand = true
     end
 
     if shouldfulltpik then
         wm:SetupBones()
 
-        -- local time = IsValid(self:GetVM()) and self:GetVM():GetCycle() or self:GetSequenceCycle()
         local time = self:GetSequenceCycle()
         local seq = self:GetSequenceIndex()
 
@@ -95,21 +94,6 @@ function SWEP:DoTPIK()
 
         wm:SetCycle(time)
         cachelastcycle = time
-
-        -- wm:SetSequence(vm:GetSequence())
-        -- wm:SetCycle(vm:GetCycle())
-
-        -- for i = 0, vm:GetNumPoseParameters() do
-        --     local pp_name = wm:GetPoseParameterName(i)
-        --     if !pp_name then continue end
-        --     wm:SetPoseParameter(pp_name, vm:GetPoseParameter(pp_name))
-        -- end
-
-        -- for i = 0, vm:GetNumBodyGroups() do
-        --     local bg = vm:GetBodygroup(i)
-        --     if !bg then continue end
-        --     wm:SetBodygroup(i, bg)
-        -- end
 
         wm:InvalidateBoneCache()
     end
@@ -186,7 +170,7 @@ function SWEP:DoTPIK()
     if ply_r_ulna_index and !ply:BoneHasFlag(ply_r_ulna_index, 524032) then ply_r_ulna_index = nil end
     if ply_l_wrist_index and !ply:BoneHasFlag(ply_l_wrist_index, 524032) then ply_l_wrist_index = nil end
     if ply_r_wrist_index and !ply:BoneHasFlag(ply_r_wrist_index, 524032) then ply_r_wrist_index = nil end
-    
+
     if !ply_l_shoulder_index then return end
     if !ply_r_shoulder_index then return end
     if !ply_l_elbow_index then return end
@@ -200,7 +184,7 @@ function SWEP:DoTPIK()
 
     local limblength = ply:BoneLength(ply_l_elbow_index)
     if !limblength or limblength == 0 then limblength = 12 end
-    
+
     local r_upperarm_length = limblength
     local r_forearm_length = limblength
     local l_upperarm_length = limblength
