@@ -140,10 +140,10 @@ do
 
         if not ARC9.OverrunAttElements then
             ARC9.OverrunAttElements = true
-            
+
             local eles = self:GetAttachmentElements()
 
-            for _, eletable in pairs(eles) do
+            for _, eletable in ipairs(eles) do
                 if eletable then
                     affLength = affLength + 1
                     aff[affLength] = eletable

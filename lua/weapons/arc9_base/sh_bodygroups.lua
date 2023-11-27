@@ -32,7 +32,7 @@ function SWEP:DoBodygroups(wm, cm)
 
     local eles = self:GetAttachmentElements()
 
-    for _, ele in pairs(eles) do
+    for _, ele in ipairs(eles) do
         for _, j in pairs(ele.Bodygroups or {}) do
             if !istable(j) then continue end
             mdl:SetBodygroup(j[1] or 0, j[2] or 0)
