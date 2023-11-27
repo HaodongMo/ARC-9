@@ -1,4 +1,5 @@
 SWEP.AttachmentAddresses = {}
+SWEP.ElementTablesCache = nil
 
 function SWEP:LocateSlotFromAddress(address)
     return self.AttachmentAddresses[address]
@@ -62,6 +63,34 @@ function SWEP:GetAttachmentList()
     return atts
 end
 
+function SWEP:GetAttachmentElements()
+    if self.ElementTablesCache then return self.ElementTablesCache end
+
+    local eletables = {}
+
+    local eles = self:GetElements()
+
+    for i, _ in pairs(eles) do
+        local ele = self.AttachmentElements[i]
+
+        if !ele then continue end
+
+        table.insert(eletables, ele)
+    end
+
+    for _, slot in ipairs(self:GetSubSlotList()) do
+        local atttbl = self:GetFinalAttTable(slot)
+
+        if atttbl.Elements then
+            table.insert(eletables, atttbl.Elements)
+        end
+    end
+
+    self.ElementTablesCache = eletables
+
+    return eletables
+end
+
 -- tbl: The table we are installing on to the gun
 -- parenttbl: The parent of the table we are installing on to
 function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
@@ -85,14 +114,12 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
             local og_addr = parenttbl.OriginalAddress
 
             if og_addr then
-                local eles = self:GetElements()
+                local eles = self:GetAttachmentElements()
 
-                for i2, _ in pairs(eles) do
-                    local ele = self.AttachmentElements[i2]
-
+                for _, eletable in pairs(eles) do
                     if !ele then continue end
 
-                    local mods = ele.AttPosMods or {}
+                    local mods = eletable.AttPosMods or {}
 
                     if mods[og_addr] then
                         att_pos = mods[og_addr].Pos or att_pos

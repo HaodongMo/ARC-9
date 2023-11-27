@@ -37,11 +37,12 @@ function SWEP:InvalidateCache()
 
     for _, v in pairs(self.PV_CacheLong) do v.time = 0 end
     -- self.PV_CacheLong = {}
-    
+
     self.StatCache = {}
     self.HookCache = {}
     self.AffectorsCache = nil
     self.ElementsCache = nil
+    self.ElementTablesCache = nil
     self.RecoilPatternCache = {}
     self.ScrollLevels = {}
     self.HasNoAffectors = {}
@@ -139,14 +140,13 @@ do
 
         if not ARC9.OverrunAttElements then
             ARC9.OverrunAttElements = true
+            
+            local eles = self:GetAttachmentElements()
 
-            for i, k in pairs(swepGetElements(self)) do
-                if not k then continue end
-                local ele = self.AttachmentElements[i]
-
-                if ele then
+            for _, eletable in pairs(eles) do
+                if eletable then
                     affLength = affLength + 1
-                    aff[affLength] = ele
+                    aff[affLength] = eletable
                 end
             end
 

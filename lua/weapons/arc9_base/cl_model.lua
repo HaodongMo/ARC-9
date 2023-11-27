@@ -96,13 +96,9 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     end
 
     if slottbl.OriginalAddress then
-        local eles = self:GetElements()
+        local eles = self:GetAttachmentElements()
 
-        for i, k in pairs(eles) do
-            local ele = self.AttachmentElements[i]
-
-            if !ele then continue end
-
+        for _, ele in pairs(eles) do
             local mods = ele.AttPosMods or {}
 
             if mods[slottbl.OriginalAddress] then
@@ -430,8 +426,9 @@ function SWEP:SetupModel(wm, lod, cm)
     if !wm and owner != LocalPlayer() then return end
     if lod > 0 then return end
 
-    for e, _ in pairs(self:GetElements()) do
-        local ele = self.AttachmentElements[e]
+    local eles = self:GetAttachmentElements()
+
+    for _, ele in pairs(eles) do
 
         if !ele then continue end
         if !ele.Models then continue end

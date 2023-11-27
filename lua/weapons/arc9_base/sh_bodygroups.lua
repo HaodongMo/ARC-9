@@ -30,21 +30,16 @@ function SWEP:DoBodygroups(wm, cm)
         mdl:ManipulateBoneScale(i, v1)
     end
 
-    local eles = self:GetElements()
-    if eles then
-        for i, k in pairs(eles) do
-            local ele = self.AttachmentElements[i]
+    local eles = self:GetAttachmentElements()
 
-            if !ele then continue end
+    for _, ele in pairs(eles) do
+        for _, j in pairs(ele.Bodygroups or {}) do
+            if !istable(j) then continue end
+            mdl:SetBodygroup(j[1] or 0, j[2] or 0)
+        end
 
-            for _, j in pairs(ele.Bodygroups or {}) do
-                if !istable(j) then continue end
-                mdl:SetBodygroup(j[1] or 0, j[2] or 0)
-            end
-
-            if ele.Skin then
-                mdl:SetSkin(ele.Skin)
-            end
+        if ele.Skin then
+            mdl:SetSkin(ele.Skin)
         end
     end
 

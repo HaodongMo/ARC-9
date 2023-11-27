@@ -16,7 +16,7 @@ ATT.CustomCons = {
 }
 
 ATT.InstallSound = nil -- sounds for installing and uninstalling the attachment respectively
-ATT.UninstallSound = nil 
+ATT.UninstallSound = nil
 
 ATT.AdminOnly = false
 ATT.Free = false
@@ -65,6 +65,35 @@ ATT.Folder = "" -- a string separated by slashes (/), e.g. "my/folder/hierarchy"
 -- to give a folder a name, add a localization string "folder.FOLDERNAME"
 
 ATT.ActivateElements = {"plum_stock"}
+
+-- Does precisely the same thing AttachmentElements do
+-- Use ONLY for weapon-specific attachments. These don't get modified in any way shape or form
+-- Oh, and just... try not to use this if you can, okay? Consider this a port of last resort.
+ATT.Element = {
+    --[[]
+    Bodygroups = {
+        {1, 1}
+    },
+    AttPosMods = {
+        [1] = { -- slot index
+            Pos = Vector(),
+            Ang = Angle(),
+        }
+    }
+    Models = {
+        Model = "",
+        Pos = Vector(),
+        Ang = Angle(),
+        Bone = "",
+        BoneMerge = false,
+        Skin = 0,
+        Bodygroups = "000",
+        Scale = 1,
+        ScaleVector = Vector(),
+    }
+    -- Other attachment parameters work here
+    ]]
+}
 
 ATT.ToggleOnF = false -- This attachment is toggleable with the flashlight key.
 ATT.ToggleStats = {
