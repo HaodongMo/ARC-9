@@ -5,7 +5,7 @@ local ARC9ScreenScale = ARC9.ScreenScale
 -- Cycle the selected attachment
 function SWEP:CycleSelectedAtt(amt, cyc)
     local activetab = self.CustomizeButtons[self.CustomizeTab + 1]
-    if !(activetab.customize or activetab.personalize) then return end 
+    if !(activetab.customize or activetab.personalize) then return end
 
     cyc = cyc or 0
     if #self.AttachmentAddresses <= 0 then return end
@@ -401,7 +401,7 @@ function SWEP:CreateCustomizeHUD()
 
         self.CustomizeZoom = math.Clamp(self.CustomizeZoom, -64, 64)
     end
-    
+
     bg:SetMouseInputEnabled(true)
 
     table.Empty(SeasonalHalloween)
@@ -718,7 +718,7 @@ function SWEP:CreateCustomizeHUD()
 
             local mousex, mousey = input.GetCursorPos()
 
-            local s = ARC9ScreenScale(10) - self.CustomizeZoom*1.5
+            local s = ARC9ScreenScale(10) - self.CustomizeZoom * 1.5
 
 
             if mousex >= x - s and mousex <= x + s and mousey >= y - (s / 2) and mousey <= y + (s / 2) then
@@ -749,8 +749,6 @@ function SWEP:CreateCustomizeHUD()
                 local attpos, attang, icon_offset = self:GetAttachmentPos(slot, false, false, true)
                 local attposOffset = attpos
 
-                -- local icon_offset = slot.Icon_Offset or Vector(0, 0, 0)
-
                 icon_offset = icon_offset + (atttbl.IconOffset or atttbl.Icon_Offset or vector_origin)
 
                 attposOffset = attposOffset + attang:Right() * icon_offset.y
@@ -765,11 +763,11 @@ function SWEP:CreateCustomizeHUD()
                 local x, y = toscreenOffset.x, toscreenOffset.y
                 local xUOS, yUOS = toscreen.x, toscreen.y -- unoffsetted
 
-                local s = ARC9ScreenScale(16) - self.CustomizeZoom*1.5
+                local s = ARC9ScreenScale(16) - self.CustomizeZoom * 1.5
 
                 local hoveredslot = false
                 ms_slot.fuckinghovered = false
-                
+
                 local dist = 0
 
                 local mousex, mousey = input.GetCursorPos()
@@ -856,8 +854,8 @@ function SWEP:CreateCustomizeHUD()
                             if p.Installed then isparenttosomething = true end
                         end
 
-                        if isparenttosomething then 
-                            s = s * 0.6 
+                        if isparenttosomething then
+                            s = s * 0.6
                             col = ARC9.GetHUDColor("hi", 75)
                         end
                     end
@@ -953,7 +951,7 @@ function SWEP:CreateCustomizeHUD()
             cam.End3D()
 
         end
-        
+
         if dragging then
             self2:SetCursor("sizeall")
 
@@ -1116,7 +1114,7 @@ function SWEP:CreateCustomizeHUD()
         }
     end
 
-    
+
     local tips = {
         "tips.custombinds",
         "tips.blacklist",
@@ -1143,7 +1141,7 @@ function SWEP:CreateCustomizeHUD()
     local tipfade = 0
     local tipcurrent = math.random(0, #tips)
     local tiplast = 0
-    
+
     local hintspanel = vgui.Create("DPanel", bg)
     -- hintspanel:SetSize(ARC9ScreenScale(225), ARC9ScreenScale(100))
     -- hintspanel:SetPos(-ARC9ScreenScale(170), -ARC9ScreenScale(40)) -- w = scrw-ARC9Scr
@@ -1194,7 +1192,7 @@ function SWEP:CreateCustomizeHUD()
                 end
                 table.insert(ToAdd3, " " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             elseif v.row2 then
-                
+
             else
                 table.insert(ToAdd, { v.glyph, ARC9ScreenScale(12) })
                 if v.glyph2 then
@@ -1225,10 +1223,10 @@ function SWEP:CreateCustomizeHUD()
                 surface.SetMaterial(mat_info)
                 surface.SetDrawColor(ARC9.GetHUDColor("fg", tipalpha))
                 surface.DrawTexturedRect(ARC9ScreenScale(8), ARC9ScreenScale(2), ARC9ScreenScale(10), ARC9ScreenScale(10))
-				
+
 				-- local btw = surface.GetTextSize(tiptext)
 				-- local bw, bh = btw + ARC9ScreenScale(4), ARC9ScreenScale(10)
-				
+
                 -- surface.SetDrawColor(ARC9.GetHUDColor("shadow", (tipalpha * 3)))
                 -- surface.DrawRect(ARC9ScreenScale(20), ARC9ScreenScale(1.5), bw, bh)
 

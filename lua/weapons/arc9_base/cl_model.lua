@@ -79,7 +79,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     if parentmdl and bone then
         local boneindex = parentmdl:LookupBone(bone)
 
-        if !boneindex then return vector_origin, angle_zero end
+        if !boneindex then return vector_origin, angle_zero, vector_origin end
 
         if parentmdl == self:GetOwner() then
             parentmdl:SetupBones()
