@@ -156,7 +156,7 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
 
             util.Decal(self:GetProcessedValue(prefix .. "Decal"), tr.HitPos + (tr.HitNormal * 8), tr.HitPos - (tr.HitNormal * 8), owner)
 
-            if IsFirstTimePredicted() then
+            if self:GetProcessedValue(prefix .. "Impact") and IsFirstTimePredicted() then
                 local fx = EffectData()
                 fx:SetStart(tr.StartPos)
                 fx:SetOrigin(tr.HitPos)

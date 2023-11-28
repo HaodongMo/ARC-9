@@ -587,6 +587,7 @@ SWEP.PreBashTime = 0.5
 SWEP.PostBashTime = 0.5
 SWEP.BashDamageType = DMG_CLUB
 SWEP.BashDecal = "ManhackCut"
+SWEP.BashImpact = true -- Creates a Impact effect that leaves a bullet hole.
 
 SWEP.BashSpeed = 1
 
@@ -611,6 +612,7 @@ SWEP.PreBash2Time = 0.5
 SWEP.PostBash2Time = 0.5
 SWEP.Bash2DamageType = DMG_CLUB
 SWEP.Bash2Decal = "ManhackCut"
+SWEP.Bash2Impact = true
 
 SWEP.Bash2ThirdArmAnimation = {
     rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",
@@ -629,6 +631,7 @@ SWEP.PreBackstabTime = 0.5
 SWEP.PostBackstabTime = 0.5
 SWEP.BackstabDamageType = DMG_CLUB
 SWEP.BackstabDecal = "ManhackCut"
+SWEP.BackstabImpact = true
 
 -------------------------- LOCKON
 
