@@ -89,7 +89,7 @@ function SWEP:DoBodygroups(wm, cm)
     end
 
     local bulletbones = self:GetProcessedValue("BulletBones", true)
-    
+
     if bulletbones then
         for i, bone in ipairs(bulletbones or {}) do
             local bones = bone
@@ -138,7 +138,7 @@ function SWEP:DoBodygroups(wm, cm)
 
     -- PrintTable(mdl:GetMaterials())
 
-    self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = eles})
+    self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = self:GetElements()})
 end
 
 function SWEP:GetHiddenBones(wm)
