@@ -56,6 +56,13 @@ function SWEP:Deploy()
     
     self.StartedFixingJam = nil
 
+    timer.Simple(0.4, function() -- fixing dum eror
+        if IsValid(self) then
+            if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
+            if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
+        end
+    end)
+
     self:SetGrenadePrimed(false)
 
     self:SetBipod(false)
