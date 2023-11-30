@@ -59,8 +59,8 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
             end
             
             local trrr = util.TraceLine({
-                start = owner:EyePos(),
-                endpos = owner:EyePos() + (self:GetShootDir():Forward() * 15000),
+                start = self:GetShootPos(),
+                endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 15000),
                 mask = MASK_SHOT,
                 filter = owner
             })
