@@ -959,6 +959,7 @@ SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
     -- [0] = "bulletchamber",
     -- [1] = "bullet1"
 }
+-- SWEP.BulletBonesSub1 = true -- if gun doesnt have chamber and all bulletsbones are in mag
 SWEP.CaseBones = {}
 -- Unlike BulletBones, these bones are determined by the missing bullet amount when reloading
 SWEP.StripperClipBones = {}
