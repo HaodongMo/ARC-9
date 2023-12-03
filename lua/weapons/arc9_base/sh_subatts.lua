@@ -81,8 +81,8 @@ function SWEP:GetAttachmentElements()
     for _, slot in ipairs(self:GetSubSlotList()) do
         local atttbl = self:GetFinalAttTable(slot)
 
-        if atttbl.Elements then
-            table.insert(eletables, atttbl.Elements)
+        if atttbl.Element then
+            table.insert(eletables, atttbl.Element)
         end
     end
 
