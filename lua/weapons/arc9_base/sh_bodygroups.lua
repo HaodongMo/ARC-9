@@ -97,7 +97,7 @@ function SWEP:DoBodygroups(wm, cm)
                 bones = {bone}
             end
 
-            local loaded = self:GetLoadedRounds()
+            local loaded = self:GetLoadedRounds() - (self.BulletBonesSub1 and 1 or 0)
             if self:GetProcessedValue("BottomlessClip", true) then loaded = self:Ammo1() end
 
             for _, bone2 in ipairs(bones) do
