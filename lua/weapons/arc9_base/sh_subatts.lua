@@ -117,7 +117,7 @@ function SWEP:BuildSubAttachmentTree(tbl, parenttbl)
                 local eles = self:GetAttachmentElements()
 
                 for _, eletable in pairs(eles) do
-                    if !ele then continue end
+                    if !eletable then continue end
 
                     local mods = eletable.AttPosMods or {}
 
