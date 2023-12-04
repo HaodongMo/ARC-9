@@ -1188,7 +1188,7 @@ function ARC9.DrawHUD()
         cam.Start3D2D(pos - (ang:Right() * ((16 * #hints * 0.0125) + 0.25)), ang, 0.0125)
             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 150 * hint_alpha))
             surface.SetMaterial(hud_bigblur)
-            surface.DrawTexturedRect(-32, 0, 300, 16 * #hints)
+            surface.DrawTexturedRect(-32, 0, 300, 20 * #hints)
 
             for _, hint in ipairs(hints) do
                 local strreturn = 0
@@ -1207,7 +1207,7 @@ function ARC9.DrawHUD()
                 strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
                 CreateControllerKeyLine( {x = hx + math.max(strreturn, 48), y = hy, size = 16, font = "ARC9_16_Unscaled" }, " " .. hint.action )
 
-                hy = hy + 16
+                hy = hy + 19
             end
         cam.End3D2D()
     end
