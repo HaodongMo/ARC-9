@@ -7,7 +7,7 @@ function SWEP:DrawLightFlare(pos, ang, col, size, flareid, vm, nodotter)
     size = size or 1
     local lp = LocalPlayer()
     local campos = vm and EyePos() or lp:GetViewEntity():GetPos()
-    
+
     if !vm then -- walls!!!!!
         local tr = util.TraceLine({
             start = campos,
@@ -15,7 +15,7 @@ function SWEP:DrawLightFlare(pos, ang, col, size, flareid, vm, nodotter)
             mask = MASK_OPAQUE,
             filter = lp,
         })
-        
+
         if tr.Fraction != 1 then return end
     end
 
@@ -27,16 +27,15 @@ function SWEP:DrawLightFlare(pos, ang, col, size, flareid, vm, nodotter)
 
         if dotter < 0.4 then return end
         dotter = math.ease.InExpo(dotter)
-        if dotter!=dotter then return end
     end
 
     local distancer = math.ease.InExpo(math.max(1 - campos:DistToSqr(pos) * 0.0000005, 0))
-    
+
     size = size * dotter * 3 * distancer
-    
+
     if self.FlaresAlreadyDrawn[flareid] then return end
     self.FlaresAlreadyDrawn[flareid] = true
-    
+
     table.insert(ARC9.Flares, {
         pos = pos,
         size = math.Clamp(size, 0, 1000),

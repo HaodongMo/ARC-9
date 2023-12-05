@@ -57,7 +57,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
                     end
                 end
             end
-            
+
             local trrr = util.TraceLine({
                 start = self:GetShootPos(),
                 endpos = self:GetShootPos() + (self:GetShootDir():Forward() * 15000),
@@ -148,9 +148,9 @@ function SWEP:DrawLasers(wm, behav)
                 lasang:RotateAroundAxis(right, lasercorrectionangle.y)
                 lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
             end
-                
-            self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, wm and 5 or 10, slottbl.Address + 69, !wm)
-                
+
+            self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, wm and 5 or 10, (slottbl.Address or 0) + 69, !wm)
+
             if !wm or owner == LocalPlayer() or wm and owner:IsNPC() then
                 if behav then
                     self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
