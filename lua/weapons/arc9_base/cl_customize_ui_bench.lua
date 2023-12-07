@@ -533,7 +533,7 @@ function SWEP:CreateHUD_Bench()
                 if sweetspot then
                     local txt_dmg3 = tostring(math.Round(dmg_sweet)) .. " " .. ARC9:GetPhrase("unit.dmg")
                     if self:GetValue("Num") > 1 then
-                        txt_dmg3 = math.Round(dmg_sweet * self:GetValue("Num")) .. "-" .. txt_dm3
+                        txt_dmg3 = math.Round(dmg_sweet * self:GetValue("Num")) .. "-" .. txt_dmg3
                     end
                     local txt_dmg3_w = surface.GetTextSize(txt_dmg3)
                     local txt_range3 = self:RangeUnitize(range_sweet)
