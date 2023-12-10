@@ -28,11 +28,11 @@ function SWEP:DoEffects()
 end
 
 function SWEP:GetQCAMuzzle()
-    return self:GetProcessedValue("MuzzleEffectQCA", true)
+    return self:GetProcessedValue("MuzzleEffectQCA", false)
 end
 
 function SWEP:GetQCAEject()
-    return self:GetProcessedValue("CaseEffectQCA", true)
+    return self:GetProcessedValue("CaseEffectQCA", false)
 end
 
 function SWEP:GetQCAMagdrop()
