@@ -182,7 +182,6 @@ do
         end
 
         local ft = FrameTime()
-        local firstTimePredicted = IsFirstTimePredicted()
 
         local springconstant = swepGetProcessedValue(self, "VisualRecoilDampingConst", true) or 120
         local springmagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude", true) or 1
@@ -332,7 +331,7 @@ function SWEP:GetViewModelRecoil(pos, ang, correct)
 
     local vra = self:GetVisualRecoilAng()
 
-    vra = Angle(vra[1], vra[2], vra[3]) * magicmult
+    vra = Angle(vra[1], vra[2], vra[3]) * (self.VisualRecoilEmergency or magicmult)
 
     vra.y = -vra.y
 
