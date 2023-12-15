@@ -141,18 +141,6 @@ local POS_PUNCH_CONSTANT = 90
 local ang0 = Angle(0, 0, 0)
 local vec0 = Vector(0, 0, 0)
 
-if CLIENT then
-
-SWEP.VisualRecoilPos = Vector(0, 0, 0)
-SWEP.VisualRecoilPosVel = Vector(0, 0, 0)
-SWEP.VisualRecoilPosAcc = Vector(0, 0, 0)
-
-SWEP.VisualRecoilAng = Vector(0, 0, 0)
-SWEP.VisualRecoilVel = Vector(0, 0, 0)
-SWEP.VisualRecoilAcc = Vector(0, 0, 0)
-
-end
-
 do
     local min, max = math.min, math.max
 
@@ -185,14 +173,10 @@ do
     local MAGIC2 = 210
 
     function SWEP:ThinkVisualRecoil()
-        if SERVER and !self.PhysicalVisualRecoil then return end
+        --if SERVER and !self.PhysicalVisualRecoil then return end
 
         local ft = FrameTime()
-        local swepDt = self.dt
         local firstTimePredicted = IsFirstTimePredicted()
-        local baseFramerate = 30
-
-        ft = math_Clamp(ft, 0, 1 / baseFramerate)
 
         local springconstant = swepGetProcessedValue(self, "VisualRecoilDampingConst", true) or 120
         local springmagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude", true) or 1
@@ -202,22 +186,15 @@ do
             springconstant, springmagnitude, springdamping = self.VisualRecoilThinkFunc(springconstant, springmagnitude, springdamping, self:GetRecoilAmount())
         end
 
-        local realmDataHolder = CLIENT and self or swepDt
-
-        local vpa = realmDataHolder.VisualRecoilPos
-        local vpv = realmDataHolder.VisualRecoilPosVel
-        local vpc = realmDataHolder.VisualRecoilPosAcc
+        local vpa = self:GetVisualRecoilPos()
+        local vpv = self:GetVisualRecoilPosVel()
+        local vpc = self:GetVisualRecoilPosAcc()
 
         vpa = vpa + (vpv * ft) + (vpc * ft * ft * 0.5)
         local vpdrag = -(vpv * vpv:Length() * 0.5)
         local vpreturn = (-vpa * vpa:Length() * springconstant) + (-vpa / vpa:Length() * springmagnitude) + (-vpv * springdamping)
         local new_vpc = vpdrag + vpreturn
         vpv = vpv + ((vpc + new_vpc) * (ft * 0.5))
-
-        if !isSingleplayer and ((CLIENT and engine.ServerFrameTime() or FrameTime()) > 1 / 48) then -- server under 48 tickrate fuck you!!!!!!!!
-            MAGIC1 = 89.5
-            MAGIC2 = 89.5
-        end
 
         for i = 1, 3 do
             vpa[i] = math_Clamp(vpa[i], -MAGIC1, MAGIC1)
@@ -229,17 +206,11 @@ do
         self:SetVisualRecoilPosAcc(new_vpc)
         self:SetVisualRecoilPosVel(vpv)
 
-        if CLIENT and (isSingleplayer or firstTimePredicted)  then
-            self.VisualRecoilPos = vpa
-            self.VisualRecoilPosVel = vpv
-            self.VisualRecoilPosAcc = new_vpc
-        end
-
         -- New spring algorithm using the velocity Verlet integration
 
-        local vaa = realmDataHolder.VisualRecoilAng
-        local vav = realmDataHolder.VisualRecoilVel
-        local vac = realmDataHolder.VisualRecoilAcc
+        local vaa = self:GetVisualRecoilAng()
+        local vav = self:GetVisualRecoilVel()
+        local vac = self:GetVisualRecoilAcc()
 
         vaa = vaa + (vav * ft) + (vac * ft * ft * 0.5)
         local vdrag = -(vav * vav:Length() * 0.5)
@@ -256,12 +227,6 @@ do
         self:SetVisualRecoilAng(vaa)
         self:SetVisualRecoilAcc(new_vac)
         self:SetVisualRecoilVel(vav)
-
-        if CLIENT and (isSingleplayer or firstTimePredicted)  then
-            self.VisualRecoilAng = vaa
-            self.VisualRecoilVel = vav
-            self.VisualRecoilAcc = new_vac
-        end
     end
 end
 
@@ -277,9 +242,7 @@ do
 
         swepGetProcessedValue = swepGetProcessedValue or self.GetProcessedValue
 
-        if isSingleplayer or IsFirstTimePredicted() then
-            swepThinkVisualRecoil(self)
-        end
+		swepThinkVisualRecoil(self)
 
         if math.abs(ru) < smolnumber and math.abs(rs) < smolnumber and self.dt.RecoilAmount == 0 then return end
 
@@ -315,7 +278,7 @@ function SWEP:DoVisualRecoil()
 
     if isSingleplayer then self:CallOnClient("DoVisualRecoil") end
 
-    -- if IsFirstTimePredicted() or isSingleplayer then
+    if isSingleplayer or (!isSingleplayer and (SERVER or (CLIENT and IsFirstTimePredicted()))) then
         local mult = self:GetProcessedValue("VisualRecoil")
 
         local up = self:GetProcessedValue("VisualRecoilUp") * mult
@@ -326,7 +289,7 @@ function SWEP:DoVisualRecoil()
         end
 
         local side = self:GetProcessedValue("VisualRecoilSide") * mult * self:GetRecoilSide()
-        local roll = self:GetProcessedValue("VisualRecoilRoll") * math.Rand(-1, 1) * 0.1 * mult
+        local roll = self:GetProcessedValue("VisualRecoilRoll") * util.SharedRandom("ARC9VisualRecoil", -1, 1) * 0.1 * mult
         local punch = self:GetProcessedValue("VisualRecoilPunch") * mult
 
         if self.VisualRecoilDoingFunc then
@@ -350,13 +313,7 @@ function SWEP:DoVisualRecoil()
             self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0)))
         end
 
-        if IsFirstTimePredicted() or isSingleplayer then
-            if CLIENT then
-                self.VisualRecoilAng = self.VisualRecoilAng + Vector(up, side * 15, roll)
-                self.VisualRecoilPos = self.VisualRecoilPos - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0))
-            end
-        end
-    -- end
+    end
 end
 
 local magicmult = 2.5
@@ -367,13 +324,13 @@ function SWEP:GetViewModelRecoil(pos, ang, correct)
     if !self:GetProcessedValue("UseVisualRecoil", true) then return pos, ang end
     local vrc = self:GetProcessedValue("VisualRecoilCenter", true)
 
-    local vra = self.VisualRecoilAng
+    local vra = self:GetVisualRecoilAng()
 
     vra = Angle(vra[1], vra[2], vra[3]) * magicmult
 
     vra.y = -vra.y
 
-    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self.VisualRecoilPos, vra * correct)
+    pos, ang = self:RotateAroundPoint(pos, ang, vrc, self:GetVisualRecoilPos(), vra * correct)
 
     if ARC9.Dev(2) then
         debugoverlay.Axis(self:GetVM():LocalToWorld(self:GetProcessedValue("VisualRecoilCenter", true)), ang, 2, 0.1, true)

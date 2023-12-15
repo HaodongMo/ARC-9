@@ -570,7 +570,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
         local numm = self:GetProcessedValue("Num")
         if numm > 0 then
             if (bulletPhysics:GetBool() or self:GetProcessedValue("AlwaysPhysBullet", true)) and !self:GetProcessedValue("NeverPhysBullet", true) then
-                if IsFirstTimePredicted() then
+                if SERVER or (CLIENT and IsFirstTimePredicted()) then
                     if self:GetProcessedValue("UseDispersion", true) then 
                         local seed = 1337 + self:EntIndex() + engine.TickCount()
                         local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
