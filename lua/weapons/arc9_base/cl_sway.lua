@@ -287,8 +287,8 @@ function SWEP:GetViewModelBob(pos, ang)
     elseif bobb == 0 then
         return DarsuBob(self, pos, ang)
     else
-        self.SwayScale = Lerp(self:GetSightDelta(), 1, 0.1)
-        self.BobScale = 1
+        self.SwayScale = Lerp(self:GetSightDelta(), 1, 0.01)
+        self.BobScale = Lerp(self:GetSightDelta(), 1, 0.01)
 
         return pos, ang
     end
