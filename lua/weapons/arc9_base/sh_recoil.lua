@@ -169,11 +169,17 @@ do
         return Angle(vec[1], vec[2], vec[3])
     end
 
-    local MAGIC1 = 210
-    local MAGIC2 = 210
+    local weirdfix = true
 
     function SWEP:ThinkVisualRecoil()
         --if SERVER and !self.PhysicalVisualRecoil then return end
+
+        local MAGIC1 = 210
+        local MAGIC2 = 210
+        if weirdfix then
+            MAGIC1 = 210 / (engine.TickInterval() / 0.015)
+            MAGIC2 = 210 / (engine.TickInterval() / 0.015)
+        end
 
         local ft = FrameTime()
         local firstTimePredicted = IsFirstTimePredicted()
