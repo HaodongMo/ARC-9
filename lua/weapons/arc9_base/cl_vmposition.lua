@@ -105,7 +105,9 @@ local DampAngleEdit = function(a, v1, v2)
     LerpAngleEdit(a, v1, v2)
 end
 
-function SWEP:GetViewModelPosition(pos, ang)
+function SWEP:GetViewModelPosition(pos, ang, meth)
+	if !meth then return vector_origin, angle_zero end
+
     local owner = self:GetOwner()
     if !IsValid(owner) then return end
     -- if owner != LocalPlayer() then return end

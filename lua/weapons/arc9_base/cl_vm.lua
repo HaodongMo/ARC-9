@@ -135,7 +135,12 @@ function SWEP:PreDrawViewModel()
     self.ViewModelFOV = vmfov
 
     if !arc9_dev_benchgun:GetBool() then
-        cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
+		local mp, ma = self:GetViewModelPosition( EyePos(), EyeAngles(), true )
+		mp:Sub( EyePos() )
+		ma:Sub( EyeAngles() )
+		mp:Mul( -1 )
+		ma:Mul( -1 )
+        cam.Start3D(mp, ma, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
     end
 
     -- self:DrawCustomModel(true, EyePos() + EyeAngles():Forward() * 16, EyeAngles())
