@@ -1811,10 +1811,21 @@ function ARC9MultiLineText(text, maxw, font)
             -- Don't count color tags for length purposes
             local match = {string.match(word, "<color=%d+,%d+,%d+>")}
             local matchend = {string.match(word, "</color>")}
+			
+            local matchfont = {string.match(word, "<font=^.*$>")}
+            local matchfontend = {string.match(word, "</font>")}
+			
             for _, v in ipairs(match) do
                 tx = tx - surface.GetTextSize(v)
             end
             for _, v in ipairs(matchend) do
+                tx = tx - surface.GetTextSize(v)
+            end
+
+            for _, v in ipairs(matchfont) do
+                tx = tx - surface.GetTextSize(v)
+            end
+            for _, v in ipairs(matchfontend) do
                 tx = tx - surface.GetTextSize(v)
             end
 

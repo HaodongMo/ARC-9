@@ -696,11 +696,12 @@ L["settings.tabname.aimassist.desc"] = "Вы можете включить по�
 
 L["settings.aimassist.enable.title"] = "Включить аим-ассист"
 L["settings.aimassist.enable.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nЭто серверная переменная.\n\nТак же требует включения аим-ассиста на клиенте."
+-- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+
+-- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
 L["settings.aimassist.enable_client.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nТтребует включения аим-ассиста со стороны сервера."
-
-L["settings.aimassist.lockon.title"] = "Фиксация"
-L["settings.aimassist.lockon.desc"] = "Включает помощь прицеливания в виде фиксации прицела на цели.\n\nТребует \"Разрешить фиксацию прицела\" на сервере."
+-- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
 L["settings.aimassist.intensity.title"] = "Интенсивность"
 L["settings.aimassist.intensity.desc"] = "На сколько интенсивна помощь в прицеливании.\n\nЭто серверная переменная."
@@ -711,8 +712,7 @@ L["settings.aimassist.cone.desc"] = "Насколько далеко или бл
 L["settings.aimassist.head.title"] = "Фиксация на головах"
 L["settings.aimassist.head.desc"] = "Должен ли аим-ассист целить вас на головы противников вместо торса?\n\nЭто серверная переменная."
 
-L["settings.aimassist.lockon_allow.title"] = "Разрешить фиксацию прицела"
-L["settings.aimassist.lockon_allow.desc"] = "Разрешает игрокам пользоваться фиксацией на целях.\n\nЭто серверная переменная."
+L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Кэширование"

@@ -695,11 +695,12 @@ L["settings.tabname.aimassist.desc"] = "Puedes activar la asistencia para apunta
 
 L["settings.aimassist.enable.title"] = "Habilitar Asistencia de Apuntado"
 L["settings.aimassist.enable.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nEsta es una variable del servidor.\n\nTambién requiere que Asistente de Apuntado esté activado en CLIENTE."
+-- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+
+-- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
 L["settings.aimassist.enable_client.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nTambién requiere que Asistente de Apuntado esté activado en SERVIDOR."
-
-L["settings.aimassist.lockon.title"] = "Fijación"
-L["settings.aimassist.lockon.desc"] = "Activa una asistencia de bloqueo que mueve tu puntería hacia un objetivo válido.\n\nRequires Allow Lock-on Assist."
+-- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
 L["settings.aimassist.intensity.title"] = "Intensidad"
 L["settings.aimassist.intensity.desc"] = "Que tan intenso es el Asistente de Apuntado\n\nEsto es una variable del servidor."
@@ -710,8 +711,7 @@ L["settings.aimassist.cone.desc"] = "Lo cerca o lejos que debe mirar hacia un ob
 L["settings.aimassist.head.title"] = "Fijación en la cabeza"
 L["settings.aimassist.head.desc"] = "Si el asistente de apuntado debe fijarse en la cabeza del objetivo en lugar de en su pecho.\n\nEsto es una variable del servidor."
 
-L["settings.aimassist.lockon_allow.title"] = "Permitir Fijación Asistida"
-L["settings.aimassist.lockon_allow.desc"] = "Permitir el uso de la Fijación Asistida.\n\nEsto es una variable del servidor."
+L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Almac. en caché"

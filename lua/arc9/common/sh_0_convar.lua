@@ -789,14 +789,14 @@ local conVars = {
         default = "5",
         replicated = true,
     },
-    {
-        name = "aimassist_distance",
-        default = "1024",
-        replicated = true,
-    },
+    -- {
+        -- name = "aimassist_distance",
+        -- default = "1024",
+        -- replicated = true,
+    -- },
     {
         name = "aimassist_intensity",
-        default = "0.5",
+        default = "1",
         replicated = true,
     },
     {
@@ -818,6 +818,11 @@ local conVars = {
         name = "crosshair_peek",
         default = "1",
         client = true
+    },
+    {
+        name = "aimassist_multsens",
+        default = "0.75",
+        client = true,
     },
 }
 ARC9.ConVarData = {}

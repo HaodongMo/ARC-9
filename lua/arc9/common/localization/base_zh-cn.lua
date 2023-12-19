@@ -692,12 +692,11 @@ L["settings.controller.controller_config.desc"] = "Open advanced controller conf
 -- L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."
 
 -- L["settings.aimassist.enable.title"] = "Enable Aim Assist"
--- L["settings.aimassist.enable.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+-- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
 
--- L["settings.aimassist.enable_client.desc"] = "Enables an aim assist feature that slows down your sensitivity when aiming over a valid target.\n\nAlso requires Aim Assist to be enabled on SERVER."
+-- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
--- L["settings.aimassist.lockon.title"] = "Lock-on"
--- L["settings.aimassist.lockon.desc"] = "Enables a lock-on assistance that moves your aim towards a valid target.\n\nRequires Allow Lock-on Assist."
+-- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
 -- L["settings.aimassist.intensity.title"] = "Intensity"
 -- L["settings.aimassist.intensity.desc"] = "How intense the aim assist is.\n\nThis is a server variable."
@@ -708,8 +707,7 @@ L["settings.controller.controller_config.desc"] = "Open advanced controller conf
 -- L["settings.aimassist.head.title"] = "Lock onto head"
 -- L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the target's head instead of its chest.\n\nThis is a server variable."
 
--- L["settings.aimassist.lockon_allow.title"] = "Allow Lock-on Assist"
--- L["settings.aimassist.lockon_allow.desc"] = "Allow the use of the lock-on assist.\n\nThis is a server variable."
+-- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
 ////////////////////// Asset Caching
 -- L["settings.tabname.caching"] = "PLEASE TRANSLATE"

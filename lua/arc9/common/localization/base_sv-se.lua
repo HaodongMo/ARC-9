@@ -692,12 +692,11 @@ L["settings.tabname.aimassist"] = "Siktehjälp"
 L["settings.tabname.aimassist.desc"] = "Du kan aktivera siktehjälp om du har problem att hålla ditt sikte på din måltavla, eller om du föredrar att inte anstränga dig när du skjuter på dina måltavlor."
 
 L["settings.aimassist.enable.title"] = "Aktivera Siktehjälp"
-L["settings.aimassist.enable.desc"] = "Aktiverar en siktehjälp som sänker ner din känslighet när du siktar över en giltig måltavla.\n\nDetta är en servervariabel.\n\nKräver också att Siktehjälp är aktiverad på CLIENT."
+L["settings.aimassist.enable.desc"] = "Aktiverar en siktehjälp som förflyttar din vy mot en måltavla när du siktar nära dem.\n\nDetta är en servervariabel.\n\nKräver att Siktehjälp är aktiverad på CLIENT."
 
-L["settings.aimassist.enable_client.desc"] = "Aktiverar en siktehjälp som sänker ner din känslighet när du siktar över en giltig måltavla.\n\nKräver också att Siktehjälp är aktiverad på SERVER."
+L["settings.aimassist.enable_general.desc"] = "Aktiverar en siktehjälp som förflyttar din vy mot en måltavla när du siktar nära dem.\n\nKonfiguera den i \"Siktehjälp\"-fliken."
 
-L["settings.aimassist.lockon.title"] = "Låshjälp"
-L["settings.aimassist.lockon.desc"] = "Aktiverar ett låshjälp som flyttar din vy mot ett giltigt mål.\n\nKräver Tillåt Låshjälp."
+L["settings.aimassist.enable_client.desc"] = "Aktiverar en siktehjälp som förflyttar din vy mot en måltavla när du siktar nära dem.\n\nKräver att Siktehjälp är aktiverad på SERVER."
 
 L["settings.aimassist.intensity.title"] = "Kraft"
 L["settings.aimassist.intensity.desc"] = "Hur kraftfull siktehjälpen är.\n\nDetta är en servervariabel."
@@ -708,8 +707,7 @@ L["settings.aimassist.cone.desc"] = "Hur nära eller hur långt borta du måste 
 L["settings.aimassist.head.title"] = "Lås mot huvud"
 L["settings.aimassist.head.desc"] = "Om siktehjälpen ska låsa sig mot måltavlans huvud istället för dess bröst.\n\nDetta är en servervariabel."
 
-L["settings.aimassist.lockon_allow.title"] = "Tillåt Låshjälp"
-L["settings.aimassist.lockon_allow.desc"] = "Tillåter användningen av låshjälp.\n\nDetta är en servervariabel."
+L["settings.aimassist.sensmult.desc"] = "Multiplicerar titta runt känsligheten med detta antal när du siktar på en giltig måltavla.\nJu lägre värdet är ju lägre är känsligheten."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Tillgång-Cache"

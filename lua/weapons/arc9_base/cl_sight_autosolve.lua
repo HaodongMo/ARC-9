@@ -83,11 +83,12 @@ end
 local aa = GetConVar("arc9_aimassist")
 local aac = GetConVar("arc9_aimassist_cl")
 local aai = GetConVar("arc9_aimassist_intensity")
+local aams = GetConVar("arc9_aimassist_multsens")
 local sensmult = GetConVar("arc9_mult_sens")
 
 function SWEP:AdjustMouseSensitivity()
 	if self:GetOwner().ARC9_AATarget != nil and (aa:GetBool() and aac:GetBool() and !self.NoAimAssist) then
-		aamult = 0.65 / (aai:GetFloat() * 1.25)
+		aamult = aams:GetFloat() / aai:GetFloat()
 	else
 		aamult = 1
 	end

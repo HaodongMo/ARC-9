@@ -697,12 +697,12 @@ L["settings.tabname.aimassist"] = "Awim Asist :3"
 L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have twouble keeping youw aim on youw tawget, ow if you just pwefew to not put effowt into shooting youw tawgets."
 
 L["settings.aimassist.enable.title"] = "Enable Aim Assist"
-L["settings.aimassist.enable.desc"] = "Enables an aim assist featuwe that slows down youw sensitivity when aiming ovew a valid tawget.\n\ndis is a sewwew wawiableh.\n\nAlso wequiwes Aim Assist to be enabled on CLIENT."
+-- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+
+-- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
 L["settings.aimassist.enable_client.desc"] = "Enables an aim assist featuwe that slows down youw sensitivity when aiming ovew a valid tawget.\n\nAlso wequiwes Aim Assist to be enabled on SEWWEW."
-
-L["settings.aimassist.lockon.title"] = "LOwOck-oWon"
-L["settings.aimassist.lockon.desc"] = "Enables a lock-on assistance that moves youw aim towawds a valid tawget.\n\nwequiwes Allow Lock-on Assist."
+-- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
 L["settings.aimassist.intensity.title"] = "Intensity"
 L["settings.aimassist.intensity.desc"] = "How intense de aim assist is.\n\ndis is a sewwew wawiableh."
@@ -713,8 +713,7 @@ L["settings.aimassist.cone.desc"] = "How close ow faw away you need to look towa
 L["settings.aimassist.head.title"] = "Lowck owonto snouts"
 L["settings.aimassist.head.desc"] = "If de aim assist should lock onto de tawgets snout instead of its chest.\n\ndis is a sewwew wawiableh."
 
-L["settings.aimassist.lockon_allow.title"] = "Awwow Lowck-on Assist"
-L["settings.aimassist.lockon_allow.desc"] = "Awwow de use of de lowck-on assist.\n\ndis is a sewwew wawiableh."
+-- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Awwet Cashwing :3"

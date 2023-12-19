@@ -511,7 +511,11 @@ function SWEP:DevStuffCrosshair()
     if self:GetProcessedValue("SweetSpot", true) then
         range2_txt = range2_txt .. " | " .. math.Round(self:GetSweetSpotDeltaAtRange(dist) * 100) .. "% (SweetSpot)"
     end
-
+	
+    local aa_txt = "AIM ASSIST (%s%% INTENSITY)"
+    -- local aa_txt = "AIM ASSIST (%.2f)"
+	local aa_text = string.format(aa_txt, math.Clamp( math.Round(100 - self:GetDamageDeltaAtRange(dist) * 200), 1, 100))
+	
     local state_txt = "READY"
     local state2_txt = ""
     if self:GetNextPrimaryFire() > time then
@@ -554,6 +558,7 @@ function SWEP:DevStuffCrosshair()
     local state2_w = surface.GetTextSize(state2_txt)
     local range_w = surface.GetTextSize(range_txt)
     local range2_w = surface.GetTextSize(range2_txt)
+    local aa_w = surface.GetTextSize(aa_txt)
 
     surface.SetTextColor(0, 0, 0, 255)
 
@@ -573,6 +578,10 @@ function SWEP:DevStuffCrosshair()
     surface.DrawText(range_txt)
     surface.SetTextPos(x - range2_w / 2 + 2, y - len - 12 + 2)
     surface.DrawText(range2_txt)
+    surface.SetTextPos(x - aa_w / 2 + 2, y - len - 62 + 2)
+	if owner.ARC9_AATarget != nil and GetConVar("arc9_crosshair_target"):GetBool() then
+		surface.DrawText(aa_text)
+	end
 
     surface.SetTextColor(255, 255, 255, 255)
 
@@ -592,6 +601,12 @@ function SWEP:DevStuffCrosshair()
     surface.DrawText(range_txt)
     surface.SetTextPos(x - range2_w / 2, y - len - 12)
     surface.DrawText(range2_txt)
+    surface.SetTextPos(x - range2_w / 2, y - len - 12)
+    surface.DrawText(range2_txt)
+    surface.SetTextPos(x - aa_w / 2, y - len - 62)
+	if owner.ARC9_AATarget != nil and GetConVar("arc9_crosshair_target"):GetBool() then
+		surface.DrawText(aa_text)
+	end
 
     local sgspread_txt = ""
     if self:GetProcessedValue("UseDispersion") then
