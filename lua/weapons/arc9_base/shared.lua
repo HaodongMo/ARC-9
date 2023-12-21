@@ -979,10 +979,17 @@ SWEP.ReloadHideBoneTables = { -- works only with TPIK
 SWEP.ReloadHideBonesFirstPerson = false -- Set to true to enable HideBones even in first person.
 -- Come on, fix your damn animations!
 
+SWEP.ReloadPoseParameterTables = { -- Works very similarly to ReloadHideBoneTables
+    -- [1] = {"pose" = 0, "parameter" = 1, "value" = 0},
+    -- [2] = {"works" = 2, "like" = 3560, "this" = 0}
+}
+
 SWEP.PoseParameters = {} -- Poseparameters to manage. ["parameter"] = starting value.
+-- This doesn't do anything, by the way.
 -- Use animations to switch between different pose parameters.
 -- When an animation is being played that switches between pose parameters, those parameters are all set to 0 for the animation.
--- There are also different default pose parameters:
+
+-- The base manages these pose parameters:
 -- firemode (Changes based on Fire Mode. Don't use this if you have animated firemode switching.)
 -- sights (Changes based on sight delta)
 -- sprint (Changes based on sprint delta)
@@ -1382,16 +1389,12 @@ SWEP.Animations = {
     --             mag = 100, -- with magnitude whatever this is
     --             ind = 0, -- change bodygroup,
     --             bg = 0, -- nil to reset
-    --             pp = "", -- pose parameter name
-    --             ppv = 0, -- pose parameter value, set to nil to reset
+    --             ppi = 1, -- reloadposeparameters table, 0 for none, works just like reloadhidebones
     --             hide = 1, -- hide reloadhidebonetables table, 0 for none
     --             fl = 0, -- sound flags
     --             dsp = 0, -- dsp preset
     --         }
     --     },
-    --     PoseParamChanges = { -- pose parameters to change after this animation is done.
-    --         ["selector"] = 1 -- an application might be to change firemodes.
-    --     }, -- relevant pose parameters will be set to default values while the animation is playing, so make sure you take that into consideration for animating.
     --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one. For SWEP.BulletBones
     --     NoMagSwap = false, -- don't bother with above
     --     MinProgress = 0.9, -- seconds that must pass before the reload is considered done
@@ -1508,6 +1511,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", 8, "SequenceIndex")
     self:NetworkVar("Int", 9, "LeanState")
     self:NetworkVar("Int", 10, "LastLoadedRounds")
+    self:NetworkVar("Int", 11, "PoseParameterIndex")
 
     self:NetworkVar("Bool", 0, "Customize")
     self:NetworkVar("Bool", 1, "Reloading")

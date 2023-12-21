@@ -139,6 +139,32 @@ function SWEP:DoBodygroups(wm, cm)
     -- PrintTable(mdl:GetMaterials())
 
     self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = self:GetElements()})
+
+    local pptables = self:GetReloadPoseParameterTable(wm)
+
+    for pp, ppv in pairs(pptables or {}) do
+        if !pp then continue end
+
+        mdl:SetPoseParameter(pp, ppv)
+    end
+end
+
+function SWEP:GetReloadPoseParameterTable(wm)
+    local hide = true
+
+    local pptables = self:GetProcessedValue("ReloadPoseParameterTables", true)
+
+    local pps = {}
+
+    local index = self:GetPoseParameterIndex()
+
+    if index != 0 then
+        for pp, ppv in pairs(pptables[index] or {}) do
+            pps[pp] = ppv
+        end
+    end
+
+    return pps
 end
 
 function SWEP:GetHiddenBones(wm)

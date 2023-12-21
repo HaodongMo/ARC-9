@@ -105,10 +105,6 @@ function SWEP:PlaySoundTable(soundtable, mult)
                 self:PlayTranslatedSound(soundtab)
             end
 
-            if v.pp then
-                self.PoseParamState[v.pp] = v.ppv
-            end
-
             if v.ind then
                 self.SoundTableBodygroups[v.ind] = v.bg or nil
             end
@@ -144,6 +140,10 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
             if v.hide != nil then
                 self:SetHideBoneIndex(v.hide)
+            end
+
+            if v.ppi != nil then
+                self:SetPoseParameterIndex(v.ppi)
             end
 
             if game.SinglePlayer() and SERVER then
