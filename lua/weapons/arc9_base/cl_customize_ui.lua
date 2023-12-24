@@ -902,12 +902,25 @@ function SWEP:CreateCustomizeHUD()
                     if showname then
                         surface.SetFont("ARC9_8")
                         local tw = surface.GetTextSize(atttxt)
-                        surface.SetTextColor(ARC9.GetHUDColor("shadow"))
-                        surface.SetTextPos(x + (s / 2) - (tw / 2) + 1, y + s + ARC9ScreenScale(1.3)) -- x + s + ARC9ScreenScale(2), y + (s / 2)
-                        surface.DrawText(atttxt)
-                        surface.SetTextColor(ARC9.GetHUDColor("fg"))
-                        surface.SetTextPos(x + (s / 2) - (tw / 2), y + s + ARC9ScreenScale(1)) -- x + s + ARC9ScreenScale(2), y + (s / 2)
-                        surface.DrawText(atttxt)
+							
+						local match = {string.match(atttxt, "<color=%d+,%d+,%d+>")}
+						local matchend = {string.match(atttxt, "</color>")}
+						
+						for _, v in ipairs(match) do
+							tw = tw - surface.GetTextSize(v)
+						end
+
+						for _, v in ipairs(matchend) do
+							tw = tw - surface.GetTextSize(v)
+						end
+
+                        -- surface.SetTextColor(ARC9.GetHUDColor("shadow"))
+                        -- surface.SetTextPos(x + (s / 2) - (tw / 2) + 1, y + s + ARC9ScreenScale(1.3)) -- x + s + ARC9ScreenScale(2), y + (s / 2)
+                        -- surface.DrawText(atttxt)
+                        -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
+                        -- surface.SetTextPos(x + (s / 2) - (tw / 2), y + s + ARC9ScreenScale(1)) -- x + s + ARC9ScreenScale(2), y + (s / 2)
+                        -- surface.DrawText(atttxt)
+						markup.Parse("<font=ARC9_8>".. atttxt):Draw(x + (s / 2) - (tw / 2), y + s + ARC9ScreenScale(1), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
                     end
                 end
 

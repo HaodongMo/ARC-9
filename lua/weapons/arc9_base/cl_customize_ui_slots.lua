@@ -98,6 +98,17 @@ function SWEP:CreateHUD_Slots(scroll)
 
             -- slotbtn:SetTooltip(atttxt .. " slot (unoccupied)\n\nLMB - Customisation")
         end
+		
+		-- local match = {string.match(atttxt, "<color=%d+,%d+,%d+>")}
+		-- local matchend = {string.match(atttxt, "</color>")}
+
+		-- for _, v in ipairs(match) do
+			-- atttxt = atttxt - surface.GetTextSize(v)
+		-- end
+
+		-- for _, v in ipairs(matchend) do
+			-- atttxt = atttxt - surface.GetTextSize(v)
+		-- end
 
         slotbtn:SetButtonText(atttxt)
 
