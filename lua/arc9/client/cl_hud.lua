@@ -1906,17 +1906,6 @@ end
 -- only: don't advance text
 function ARC9.DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
     local tw, th = surface.GetTextSize(txt or "")
-	
-	local match = {string.match(txt, "<color=%d+,%d+,%d+>")}
-	local matchend = {string.match(txt, "</color>")}
-	
-	for _, v in ipairs(match) do
-		tw = tw - surface.GetTextSize(v)
-	end
-
-	for _, v in ipairs(matchend) do
-		tw = tw - surface.GetTextSize(v)
-	end
 
     span.TextRot = span.TextRot or {}
 
@@ -1953,14 +1942,12 @@ function ARC9.DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
                 end
             end
         end
-        -- surface.SetTextPos(tx - span.TextRot[txt], ty)
-        -- surface.DrawText(txt)
-		markup.Parse("<font=ARC9_9>" .. txt):Draw(tx - span.TextRot[txt], ty, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+        surface.SetTextPos(tx - span.TextRot[txt], ty)
+        surface.DrawText(txt)
         render.SetScissorRect(0, 0, 0, 0, false)
     else
-        -- surface.SetTextPos(tx, ty)
-        -- surface.DrawText(txt)
-		markup.Parse("<font=ARC9_9>" .. txt):Draw(tx, ty, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+        surface.SetTextPos(tx, ty)
+        surface.DrawText(txt)
     end
 end
 --[[

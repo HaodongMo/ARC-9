@@ -140,20 +140,12 @@ function ARC9AttButton:Paint(w, h)
     local matmarker = nil
     local favmarker = nil
     local att = self.att
-	local alttextcolor = "<color=255,255,255>"
-
-	local altcol = {
-	r = GetConVarNumber("arc9_hud_color_r"),
-	g = GetConVarNumber("arc9_hud_color_g"),
-	b = GetConVarNumber("arc9_hud_color_b")
-	}
 
     local qty = ARC9:PlayerGetAtts(LocalPlayer(), att)
     local free_or_lock = false
 
     if self:IsHovered() or self.OverrideHovered then
         textcolor = colorclicked
-		alttextcolor = "<color=" .. altcol.r .. "," .. altcol.g .. "," .. altcol.b .. ">"
     end
 
     if self.HasModes then
@@ -174,7 +166,6 @@ function ARC9AttButton:Paint(w, h)
         textcolor = self.ColorBlock
         iconcolor = self.ColorBlock
         markercolor = self.ColorBlock
-		alttextcolor = "<color=255,255,255>"
     elseif self:IsDown() or self.Installed then
         -- mat = self.MatHover
         color = colorclicked
@@ -184,7 +175,6 @@ function ARC9AttButton:Paint(w, h)
         color = (self:IsHovered() or self.OverrideHovered) and self.Color or colorgrey
         textcolor = color
         iconcolor = colorgrey
-		alttextcolor = "<color=" .. altcol.r .. "," .. altcol.g .. "," .. altcol.b .. ">"
     end
 
     if ARC9.Favorites[att] then
@@ -235,35 +225,14 @@ function ARC9AttButton:Paint(w, h)
     local tw = surface.GetTextSize(text)
     surface.SetTextColor(textcolor)
 
-    -- print(alttextcolor)
-
-	-- Don't count color tags for length purposes
-	local match = {string.match(text, "<color=%d+,%d+,%d+>")}
-	local matchend = {string.match(text, "</color>")}
-	
-	local matchfont = {string.match(text, "<font=^.*$>")}
-	local matchfontend = {string.match(text, "</font>")}
-	
-	for _, v in ipairs(match) do
-		tw = tw - surface.GetTextSize(v)
-	end
-	
-	for _, v in ipairs(matchend) do
-		tw = tw - surface.GetTextSize(v)
-	end
-
-	-- local alttextcolormatch = {string.match(alttextcolor, "<color=" .. altcol.r .. "," .. altcol.g .. "," .. altcol.b .. ">")}
-
-	-- for _, v in ipairs(alttextcolormatch) do
-		-- tw = tw - surface.GetTextSize(v)
-	-- end
+    -- print(textcolor)
 
     if tw > w then
-        ARC9.DrawTextRot(self, alttextcolor .. text, 0, h - ARC9ScreenScale(13.5), 0, h - ARC9ScreenScale(13.5), w, false)
+        ARC9.DrawTextRot(self, text, 0, h - ARC9ScreenScale(13.5), 0, h - ARC9ScreenScale(13.5), w, false)
     else
-        -- surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(13.5))
-        -- surface.DrawText(text)
-        markup.Parse("<font=ARC9_9>" .. alttextcolor .. text):Draw((w - tw) / 2, h - ARC9ScreenScale(13.5), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+        surface.SetTextPos((w - tw) / 2, h - ARC9ScreenScale(13.5))
+        surface.DrawText(text)
+        -- markup.Parse("<font=ARC9_9>" .. text):Draw((w - tw) / 2, h - ARC9ScreenScale(13.5), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
     end
 
     if att then
