@@ -157,6 +157,7 @@ ARC9.SettingsTable = {
 
         { type = "color", text = "settings.hud_cust.hud_color.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
         { type = "bool", text = "settings.hud_cust.hud_darkmode.title", convar = "hud_darkmode", desc = "settings.hud_cust.hud_darkmode.desc"},
+        { type = "bool", text = "settings.hud_cust.hud_holiday.title", convar = "hud_holiday", desc = "settings.hud_cust.hud_holiday.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
         -- { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language", content = ARC9.LanguagesTable, desc = "settings.hud_cust.language_id.desc" },
         { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},

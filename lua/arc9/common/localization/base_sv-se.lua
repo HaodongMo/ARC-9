@@ -246,13 +246,13 @@ L["autostat.visualrecoilroll"] = "Visuell Rekylrullning"
 L["autostat.visualrecoilside"] = "Horisontell Visuell Rekyl"
 L["autostat.visualrecoilup"] = "Vertikal Visuell Rekyl"
 
-L["autostat.secondary._beforephrase"] = false -- if true, secondary stat phrasing comes before the stat
+L["autostat.secondary._beforephrase"] = false
 -- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = " " -- space between the secondary phrase from the stat phrase. set true to use empty string
+L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
-L["autostat.secondary.bipod"] = "med Skjutstöd"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
+L["autostat.secondary.bipod"] = "med Skjutstöd"
 L["autostat.secondary.crouch"] = "medans Hukad"
 L["autostat.secondary.empty"] = "på Sista skottet i magasinet"
 L["autostat.secondary.evenreload"] = "varje Jämn Omladdning"
@@ -349,6 +349,10 @@ L["settings.title"] = "ARC9-Inställningar"
 L["settings.desc"] = "Beskrivning"
 
 L["settings.default_convar"] = "Standard värde"
+-- L["settings.convar_server"] = "Server variable"
+
+-- L["settings.convar_client"] = "Client variable"
+
 
 ////////////////////// General
 L["settings.tabname.general"] = "Generellt"
@@ -416,8 +420,6 @@ L["settings.optics.compensate_sens.title"] = "Kompensera Känslighet"
 L["settings.optics.compensate_sens.desc"] = "Kompensera känsligheten för magnifiering."
 L["settings.optics.toggleads.title"] = "Växla Sikte"
 L["settings.optics.toggleads.desc"] = "Användning av sikten växlas."
-L["settings.optics.peeksens.title"] = "Standard Känslighet i Siktet under Kikande"
-L["settings.optics.peeksens.desc"] = "När du är i siktet och använder kika funktionen så kommer magnifiering inte längre räknas med när muskänsligheten sänks.\nKräver \"Kompensera Känslighet\"."
 
 L["settings.optics.color"] = "Färg"
 L["settings.optics.reflex.title"] = "Reflexsikten"
@@ -491,6 +493,10 @@ L["settings.hud_game.hud_nohints.title"] = "Avaktivera Tips"
 L["settings.hud_game.hud_nohints.desc"] = "Avaktiverar tips helt och hållet. Dem kommer inte visas upp i 3D eller 2D gränssnittet."
 L["settings.hud_game.hud_keephints.title"] = "Behåll Tips"
 L["settings.hud_game.hud_keephints.desc"] = "Visa ARC9-kontroll tipsen på toppen av gränssnitt panelen."
+-- L["settings.hud_game.hud_force_disable.title"] = "Force Disable HUD"
+
+-- L["settings.hud_game.hud_force_disable.desc"] = "Disable ARC9 HUD for all players. Does not affect hints."
+
 
 L["settings.hud_game.killfeed"] = "Killfeed"
 L["settings.hud_game.killfeed_enable.title"] = "Killfeed-Ikoner"
@@ -512,7 +518,8 @@ L["settings.hud_game.centerhint"] = "Verktygstips"
 L["settings.hud_game.centerhint_reload.title"] = "Visa Omladdning Tips"
 L["settings.hud_game.centerhint_reload.desc"] = "Visar ett omladdning tips när ammunition är lågt."
 L["settings.hud_game.centerhint_reload_percent.title"] = "Magasinprocent"
-L["settings.hud_game.centerhint_reload_percent.desc"] = "Visar omladdningstipset när det nuvarande magasinet är vid detta procentvärde."L["settings.hud_game.centerhint_bipod.title"] = "Visa Växla Skjutstöd"
+L["settings.hud_game.centerhint_reload_percent.desc"] = "Visar omladdningstipset när det nuvarande magasinet är vid detta procentvärde."L["settings.hud_game.centerhint_bipod.title"] -- L["settings.hud_game.centerhint_bipod.title"] -- L["settings.hud_game.centerhint_bipod.title"] -- L["settings.hud_game.centerhint_bipod.title"] -- L["settings.hud_game.centerhint_bipod.title"] -- L["settings.hud_game.centerhint_bipod.title"] -- L["settings.hud_game.centerhint_bipod.title"] -- L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
+
 L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet kan växlas."
 
 ////////////////////// NPCs
@@ -749,7 +756,6 @@ L["settings.developer.dev_show_shield.title"] = "Visa Sköld"
 L["settings.developer.dev_show_shield.desc"] = "Visa modellen för spelarens sköld."
 L["settings.developer.dev_greenscreen.title"] = "Grön Skärm"
 L["settings.developer.dev_greenscreen.desc"] = "Visar en grön skärm bakgrund i anpassningsmenyn för skärmbilder.\n\nOm du använder HDR, glöm inte att sätta mat_bloom_scalefactor_scalar till 0!"
-
 L["settings.developer.reloadatts.title"] = "Ladda om Tillbehör"
 L["settings.developer.reloadlangs.title"] = "Ladda om Språk"
 L["settings.developer.dev_listmyatts.title"] = "Lista Mina Tillbehör"

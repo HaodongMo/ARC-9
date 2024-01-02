@@ -51,7 +51,7 @@ L["hud.hint.toggleatts"] = "ПЕРЕКЛ. МОДУЛЬ"
 L["hud.hint.ubgl"] = "ПЕРЕКЛ. НА"
 L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
 
--- L["hud.error.missingbind"] = "PLEASE TRANSLATE"
+L["hud.error.missingbind"] = "\" %s \" не связано"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "КАСТОМИЗАЦИЯ"
@@ -141,10 +141,14 @@ L["customize.bench.effect"] = "ЭФФЕКТ НА ДАЛЬНОСТИ"
 L["customize.bench.ballistics"] = "ОЦЕНКА БАЛЛИСТИЧЕСКИХ ХАРАКТЕРИСТИК"
 L["customize.bench.precision"] = "ИСПЫТАНИЕ ТОЧНОСТИ"
 
--- L["folder.back"] = "PLEASE TRANSLATE"
--- L["folder.deselect"] = "PLEASE TRANSLATE"
--- L["folder.favorites"] = "PLEASE TRANSLATE"
--- L["folder.select"] = "PLEASE TRANSLATE"
+-- L["folder.back"] = "Back"
+
+-- L["folder.deselect"] = "Deselect"
+
+-- L["folder.favorites"] = "Favorites"
+
+-- L["folder.select"] = "Select"
+
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Вкл."
@@ -163,7 +167,8 @@ L["autostat.bash"] = "Рукопашная"
 L["autostat.bashdamage"] = "Урон врукопашную"
 L["autostat.bashlungerange"] = "Дальность выпада рукопашного"
 L["autostat.bashrange"] = "Дальность рукопашного"
--- L["autostat.bashspeed"] = "PLEASE TRANSLATE"
+-- L["autostat.bashspeed"] = "Melee Speed"
+
 L["autostat.bipod"] = "Сошки"
 L["autostat.bottomlessclip"] = "Безлимитный магазин"
 L["autostat.breathholdtime"] = "Время задержки дыхания"
@@ -246,13 +251,13 @@ L["autostat.visualrecoilroll"] = "Физ. угловая отдача"
 L["autostat.visualrecoilside"] = "Физ. горизонтальная отдача"
 L["autostat.visualrecoilup"] = "Физ. вертикальная отдача"
 
--- L["autostat.secondary._beforephrase"] = "PLEASE TRANSLATE"
+L["autostat.secondary._beforephrase"] = false
 -- if true, secondary stat phrasing comes before the stat
--- L["autostat.secondary._divider"] = "PLEASE TRANSLATE"
+L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
-L["autostat.secondary.bipod"] = "на сошках"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
+L["autostat.secondary.bipod"] = "на сошках"
 L["autostat.secondary.crouch"] = "в присяди"
 L["autostat.secondary.empty"] = "последним выстрелом"
 L["autostat.secondary.evenreload"] = "каждую чёт. перезарядку"
@@ -696,12 +701,11 @@ L["settings.tabname.aimassist.desc"] = "Вы можете включить по�
 
 L["settings.aimassist.enable.title"] = "Включить аим-ассист"
 L["settings.aimassist.enable.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nЭто серверная переменная.\n\nТак же требует включения аим-ассиста на клиенте."
--- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
 
 -- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
+
 L["settings.aimassist.enable_client.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nТтребует включения аим-ассиста со стороны сервера."
--- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
 L["settings.aimassist.intensity.title"] = "Интенсивность"
 L["settings.aimassist.intensity.desc"] = "На сколько интенсивна помощь в прицеливании.\n\nЭто серверная переменная."
@@ -754,7 +758,6 @@ L["settings.developer.dev_show_shield.title"] = "Показывать щиты"
 L["settings.developer.dev_show_shield.desc"] = "Показывать модель щитов у игроков."
 L["settings.developer.dev_greenscreen.title"] = "Зеленый экран в кастомизации"
 L["settings.developer.dev_greenscreen.desc"] = "Показывает зеленый экран вместо фона в меню кастомизации для скриншотов.\n\nЕсли вы используете HDR, не забудьте поставить mat_bloom_scalefactor_scalar на 0!"
-
 L["settings.developer.reloadatts.title"] = "Обвесы"
 L["settings.developer.reloadlangs.title"] = "Языки"
 L["settings.developer.dev_listmyatts.title"] = "Список обвесов"

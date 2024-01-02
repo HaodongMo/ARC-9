@@ -246,13 +246,13 @@ L["autostat.visualrecoilroll"] = "Wisual Wecoil wwroll"
 L["autostat.visualrecoilside"] = "H-Howisontawal Wisual Wecoil"
 L["autostat.visualrecoilup"] = "W-wertical wisual Wecoil"
 
-L["autostat.secondary._beforephrase"] = false -- if true, secondary stat phrasing comes before de stat
+L["autostat.secondary._beforephrase"] = false
 -- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = " " -- space between de secondary phrase from de stat phrase. set true to use empty string
+L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
-L["autostat.secondary.bipod"] = "on bipOwOd"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
+L["autostat.secondary.bipod"] = "on bipOwOd"
 L["autostat.secondary.crouch"] = "w-whiwe cwouchiwuwung"
 L["autostat.secondary.empty"] = "owon wast wound in mag"
 L["autostat.secondary.evenreload"] = "ewewy uwuwen weload"
@@ -417,9 +417,9 @@ L["settings.optics.sensmult.desc"] = "Muwtipwy de wook sensitiwity by dis amouwu
 L["settings.optics.compensate_sens.title"] = "Compensate Sensitivity"
 L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity fow magnification"
 -- L["settings.optics.toggleads.title"] = "Toggle ADS"
--- L["settings.optics.toggleads.desc"] = "Aiming will toggle sights"
--- L["settings.optics.peeksens.title"] = "Standard ADS Sensitivity when Peeking"
--- L["settings.optics.peeksens.desc"] = "When aiming and using the peek function, magnification is no longer taken into account when lowering mouse sensitivity.\nRequires \"Compensate Sensitivity\"."
+
+-- L["settings.optics.toggleads.desc"] = "Aiming will toggle sights."
+
 
 L["settings.optics.color"] = "Colow"
 L["settings.optics.reflex.title"] = "weflex Sights"
@@ -697,12 +697,13 @@ L["settings.tabname.aimassist"] = "Awim Asist :3"
 L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have twouble keeping youw aim on youw tawget, ow if you just pwefew to not put effowt into shooting youw tawgets."
 
 L["settings.aimassist.enable.title"] = "Enable Aim Assist"
--- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+-- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nRequires Aim Assist to be enabled on CLIENT."
+
 
 -- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
+
 L["settings.aimassist.enable_client.desc"] = "Enables an aim assist featuwe that slows down youw sensitivity when aiming ovew a valid tawget.\n\nAlso wequiwes Aim Assist to be enabled on SEWWEW."
--- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
 L["settings.aimassist.intensity.title"] = "Intensity"
 L["settings.aimassist.intensity.desc"] = "How intense de aim assist is.\n\ndis is a sewwew wawiableh."
@@ -714,6 +715,7 @@ L["settings.aimassist.head.title"] = "Lowck owonto snouts"
 L["settings.aimassist.head.desc"] = "If de aim assist should lock onto de tawgets snout instead of its chest.\n\ndis is a sewwew wawiableh."
 
 -- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
+
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Awwet Cashwing :3"
@@ -755,7 +757,6 @@ L["settings.developer.dev_show_shield.title"] = "Showo Shield"
 L["settings.developer.dev_show_shield.desc"] = "Showo de model fow de playew's shield"
 L["settings.developer.dev_greenscreen.title"] = "Gween Scween"
 L["settings.developer.dev_greenscreen.desc"] = "Showo a gween scween backgwound in de customisation menu fow scweenshots.\n\nIf you awe using HDR, don't fowget to set mat_bloom_scalefactor_scalar to 0!"
-
 L["settings.developer.reloadatts.title"] = "Weload awatachmenws"
 L["settings.developer.reloadlangs.title"] = "Weload Languages"
 L["settings.developer.dev_listmyatts.title"] = "List My awatachmenws"

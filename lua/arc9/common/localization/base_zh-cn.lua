@@ -36,7 +36,7 @@ L["hud.firemode.auto"] = "自动"
 L["hud.firemode.safe"] = "保险"
 
 L["hud.hint.bash"] = "近战"
--- L["hud.hint.bipod"] = "PLEASE TRANSLATE"
+L["hud.hint.bipod"] = "切换两脚架"
 L["hud.hint.breath"] = "屏气"
 L["hud.hint.customize"] = "自定义"
 L["hud.hint.cycle"] = "上膛"
@@ -44,14 +44,14 @@ L["hud.hint.firemode"] = "切换开火模式"
 L["hud.hint.inspect"] = "检查"
 L["hud.hint.lean"] = "侧身"
 L["hud.hint.peek"] = "窥视"
--- L["hud.hint.reload"] = "PLEASE TRANSLATE"
+L["hud.hint.reload"] = "重载"
 L["hud.hint.safe"] = "切换保险"
 L["hud.hint.switchsights"] = "切换瞄具"
 L["hud.hint.toggleatts"] = "切换配件"
 L["hud.hint.ubgl"] = "切换"
 L["hud.hint.zoom"] = "瞄具缩放"
 
--- L["hud.error.missingbind"] = "PLEASE TRANSLATE"
+L["hud.error.missingbind"] = "\" %s \" 不绑"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "自定义"
@@ -102,6 +102,7 @@ L["customize.hint.open"] = "打开"
 L["customize.hint.pan"] = "平移"
 L["customize.hint.quicksave"] = "快速保存"
 -- L["customize.hint.randomize"] = "Attach Random"
+
 L["customize.hint.recalculate"] = "重新计算"
 L["customize.hint.recenter"] = "重置视角"
 L["customize.hint.rotate"] = "旋转"
@@ -113,28 +114,50 @@ L["customize.hint.zoom"] = "缩放"
 
 L["customize.trivia.description"] = "介绍"
 
--- L["customize.stats.explain.firepower"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.rof"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.cyclic"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.capacity"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.range"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.precision"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.muzzlevelocity"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.ammo"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.penetration"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.ricochet"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.armorpiercing"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.explosive"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.speed"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.aimtime"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.sprinttofire"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.firemodes"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.burstdelay"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.triggerdelay"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.noise"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.sway"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.freeaim"] = "PLEASE TRANSLATE"
--- L["customize.stats.explain.supplylimit"] = "PLEASE TRANSLATE"
+-- L["customize.stats.explain.firepower"] = "The damage potential at point-blank range."
+
+-- L["customize.stats.explain.rof"] = "The weapon's rate of fire."
+
+-- L["customize.stats.explain.cyclic"] = "The weapon's cyclic rate of fire. Ignores factors like burst delay or reload requirements."
+
+-- L["customize.stats.explain.capacity"] = "How much ammo the gun can hold in the magazine + chamber."
+
+-- L["customize.stats.explain.range"] = "The range at which the gun deals minimum damage."
+
+-- L["customize.stats.explain.precision"] = "The weapon's accuracy. Measured in Minutes of Accuracy (MOA)."
+
+-- L["customize.stats.explain.muzzlevelocity"] = "The muzzle velocity of bullets fired from this gun."
+
+-- L["customize.stats.explain.ammo"] = "The type of ammo this gun uses."
+
+-- L["customize.stats.explain.penetration"] = "Amount of material this gun can penetrate. Measured in millimeters of wood."
+
+-- L["customize.stats.explain.ricochet"] = "Maximum chance for bullets from this gun to ricochet."
+
+-- L["customize.stats.explain.armorpiercing"] = "Amount of damage from this gun that completely ignores most damage resistances."
+
+-- L["customize.stats.explain.explosive"] = "Amount of explosive damage this gun will do."
+
+-- L["customize.stats.explain.speed"] = "Speed at which you can move while using this gun."
+
+-- L["customize.stats.explain.aimtime"] = "How long it takes to aim down sights from hip fire."
+
+-- L["customize.stats.explain.sprinttofire"] = "How long it takes to exit sprint and begin shooting."
+
+-- L["customize.stats.explain.firemodes"] = "Which fire modes this gun has access to."
+
+-- L["customize.stats.explain.burstdelay"] = "Amount of time after firing a burst before the gun can fire again."
+
+-- L["customize.stats.explain.triggerdelay"] = "Delay between pulling the trigger and firing a shot."
+
+-- L["customize.stats.explain.noise"] = "How loud the gun's gunshots are."
+
+-- L["customize.stats.explain.sway"] = "Amount of sway applied to the gun."
+
+-- L["customize.stats.explain.freeaim"] = "Maximum free aim angle. Lower is better."
+
+-- L["customize.stats.explain.supplylimit"] = "Amount of ammo that the gun can receive from ARC9 ammo sources."
+
 
 L["customize.bench.dummy"] = "假人伤害测试"
 L["customize.bench.effect"] = "测试距离"
@@ -163,7 +186,8 @@ L["autostat.bash"] = "近战攻击"
 L["autostat.bashdamage"] = "近战伤害"
 L["autostat.bashlungerange"] = "近战近身距离"
 L["autostat.bashrange"] = "近战距离"
--- L["autostat.bashspeed"] = "PLEASE TRANSLATE"
+-- L["autostat.bashspeed"] = "Melee Speed"
+
 L["autostat.bipod"] = "两脚架"
 L["autostat.bottomlessclip"] = "无限弹夹"
 L["autostat.breathholdtime"] = "屏吸时间"
@@ -203,7 +227,8 @@ L["autostat.overheat"] = "过热"
 L["autostat.overheattime"] = "过热修理耗时"
 L["autostat.pelletspread"] = "弹丸散射"
 L["autostat.penetration"] = "穿透强度"
--- L["autostat.penetrationdelta"] = "PLEASE TRANSLATE"
+-- L["autostat.penetrationdelta"] = "Damage After Penetration"
+
 L["autostat.physbulletdrag"] = "弹道阻力"
 L["autostat.physbulletgravity"] = "弹道重力"
 L["autostat.physbulletmuzzlevelocity"] = "出膛速度"
@@ -215,9 +240,11 @@ L["autostat.recoil"] = "后坐力"
 L["autostat.recoilautocontrol"] = "后坐自动控制"
 L["autostat.recoildissipationrate"] = "后坐恢复速率"
 L["autostat.recoilkick"] = "后坐力强度"
--- L["autostat.recoilmodifiercap"] = "PLEASE TRANSLATE"
+-- L["autostat.recoilmodifiercap"] = "Maximum Cumulative Recoil"
+
 L["autostat.recoilpatterndrift"] = "后坐力漂移"
 -- L["autostat.recoilpershot"] = "Recoil per Shot"
+
 L["autostat.recoilrandomside"] = "随机水平后坐力"
 L["autostat.recoilrandomup"] = "随机垂直后坐力"
 L["autostat.recoilresettime"] = "后坐重置时间"
@@ -239,7 +266,8 @@ L["autostat.stomachdamage"] = "腹部伤害倍率"
 L["autostat.supplylimit"] = "后备弹药上限"
 L["autostat.sway"] = "偏移"
 L["autostat.triggerdelay"] = "扳机延迟"
--- L["autostat.triggerdelaytime"] = "PLEASE TRANSLATE"
+-- L["autostat.triggerdelaytime"] = "Trigger Delay Time"
+
 L["autostat.visualrecoil"] = "可视后坐力"
 L["autostat.visualrecoilpunch"] = "可视后坐力击退"
 L["autostat.visualrecoilroll"] = "可视后坐力横滚"
@@ -251,17 +279,20 @@ L["autostat.secondary._beforephrase"] = true
 L["autostat.secondary._divider"] = true
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.bipod"] = "PLEASE TRANSLATE"
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
+-- L["autostat.secondary.bipod"] = "on Bipod"
+
 L["autostat.secondary.crouch"] = "蹲下"
 L["autostat.secondary.empty"] = "最后一发"
 L["autostat.secondary.evenreload"] = "偶数次装填"
 L["autostat.secondary.evenshot"] = "偶数发"
 L["autostat.secondary.first"] = "首发"
 L["autostat.secondary.firstshot"] = "首发"
--- L["autostat.secondary.heated"] = "PLEASE TRANSLATE"
+-- L["autostat.secondary.heated"] = "while Heated"
+
 L["autostat.secondary.hipfire"] = "腰射"
--- L["autostat.secondary.hot"] = "PLEASE TRANSLATE"
+-- L["autostat.secondary.hot"] = "from Heat"
+
 L["autostat.secondary.last"] = "最后一发"
 L["autostat.secondary.lastshot"] = "最后一发"
 L["autostat.secondary.midair"] = "空中"
@@ -270,20 +301,28 @@ L["autostat.secondary.oddreload"] = "奇数次装填"
 L["autostat.secondary.oddshot"] = "奇数发"
 L["autostat.secondary.recoil"] = "后坐力" --"With Each Shot"
 L["autostat.secondary.shooting"] = "开火"
--- L["autostat.secondary.sighted"] = "PLEASE TRANSLATE"
+-- L["autostat.secondary.sighted"] = "while Sighted"
+
 L["autostat.secondary.sights"] = "瞄准"
 L["autostat.secondary.silenced"] = "消音"
 L["autostat.secondary.true"] = "真实名称开启时"
 L["autostat.secondary.ubgl"] = "下挂武器"
 
 ////////////////////// Blacklist menu
--- L["blacklist.title"] = "PLEASE TRANSLATE"
--- L["blacklist.desc"] = "PLEASE TRANSLATE"
--- L["blacklist.blisted"] = "PLEASE TRANSLATE"
--- L["blacklist.all"] = "PLEASE TRANSLATE"
--- L["blacklist.id"] = "PLEASE TRANSLATE"
--- L["blacklist.name"] = "PLEASE TRANSLATE"
--- L["blacklist.filter"] = "PLEASE TRANSLATE"
+-- L["blacklist.title"] = "ARC9 Attachment Blacklist"
+
+-- L["blacklist.desc"] = "Attachments checked here will be blocked from use"
+
+-- L["blacklist.blisted"] = "BLACKLISTED"
+
+-- L["blacklist.all"] = "ALL"
+
+-- L["blacklist.id"] = "ID"
+
+-- L["blacklist.name"] = "NAME"
+
+-- L["blacklist.filter"] = "FILTER"
+
 
 ////////////////////// Incompatible addons
 L["incompatible.title"] = "ARC9: INCOMPATIBLE ADDONS"
@@ -311,30 +350,50 @@ L["customize.presets.random"] = "随机"
 L["customize.presets.save"] = "保存"
 L["customize.presets.unnamed"] = "未命名"
 
--- L["customize.presets.deldef"] = "PLEASE TRANSLATE"
--- L["customize.presets.deldef2"] = "PLEASE TRANSLATE"
--- L["customize.presets.yes"] = "PLEASE TRANSLATE"
+-- L["customize.presets.deldef"] = "Are you sure you want to delete \"{name}\" default preset?"
+
+-- L["customize.presets.deldef2"] = "You would have to reset weapon in developer settings to return it."
+
+L["customize.presets.yes"] = "是"
 
 ////////////////////// Tips
--- L["tips.arc-9"] = "PLEASE TRANSLATE"
--- L["tips.blacklist"] = "PLEASE TRANSLATE"
--- L["tips.bugs"] = "PLEASE TRANSLATE"
--- L["tips.custombinds"] = "PLEASE TRANSLATE"
--- L["tips.cyberdemon"] = "PLEASE TRANSLATE"
--- L["tips.description"] = "PLEASE TRANSLATE"
--- L["tips.development"] = "PLEASE TRANSLATE"
--- L["tips.discord"] = "PLEASE TRANSLATE"
--- L["tips.external"] = "PLEASE TRANSLATE"
--- L["tips.hints"] = "PLEASE TRANSLATE"
--- L["tips.lean"] = "PLEASE TRANSLATE"
--- L["tips.love"] = "PLEASE TRANSLATE"
--- L["tips.m9k"] = "PLEASE TRANSLATE"
--- L["tips.official"] = "PLEASE TRANSLATE"
--- L["tips.presets"] = "PLEASE TRANSLATE"
--- L["tips.settings"] = "PLEASE TRANSLATE"
+-- L["tips.arc-9"] = "It's ARC9, not ARC-9, not Arc9."
+
+-- L["tips.blacklist"] = "You can blacklist attachments! See the ARC9 Workshop description for more information."
+
+-- L["tips.bugs"] = "Report bugs on the official Discord server, or better yet, open a Github issue."
+
+-- L["tips.custombinds"] = "ARC9 key combos can be replaced with custom binds. Start typing +arc9_ to find the available binds!"
+
+-- L["tips.cyberdemon"] = "To kill the terrorist, shoot him until he is dead."
+
+-- L["tips.description"] = "We advise you to read the descriptions of addons before commenting."
+
+-- L["tips.development"] = "Keen to develop ARC9 content? The official Discord server has plenty of resources to help!"
+
+-- L["tips.discord"] = "Join Diamond Doves on Discord! The link is in the ARC9 description and in top of settings."
+
+-- L["tips.external"] = "If using the Github version of ARC9, make sure to update frequently!"
+
+-- L["tips.hints"] = "Keep ARC9's HUD on to see control hints."
+
+-- L["tips.lean"] = "To manually lean, bind keys to +alt1 and +alt2."
+
+-- L["tips.love"] = "Feel free to tell the devs you appreciate their work! It really helps us keep going."
+
+-- L["tips.m9k"] = "Check out M9K guns!."
+
+-- L["tips.official"] = "Only download ARC9 from official sources. Third party uploads may be malicious or outdated!"
+
+-- L["tips.presets"] = "Share your favorite presets with your friends by exporting them!"
+
+-- L["tips.settings"] = "You can turn these tips off, and much more, in the ARC9 settings. Click the button in the top left corner!"
+
 -- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
--- L["tips.tips"] = "PLEASE TRANSLATE"
--- L["tips.tolerance"] = "PLEASE TRANSLATE"
+-- L["tips.tips"] = "Tips have a fixed order. Keep reading and you'll eventually see them all."
+
+-- L["tips.tolerance"] = "All weapon bases work fine together. There's no need for favoritism."
+
 
 ////////////////////// Other
 L["atts.favourites"] = "收藏"
@@ -348,25 +407,42 @@ L["atts.filter"] = "筛选"
 L["settings.title"] = "ARC9 设定"
 L["settings.desc"] = "简介"
 
--- L["settings.default_convar"] = "PLEASE TRANSLATE"
+-- L["settings.default_convar"] = "Default value"
+
+-- L["settings.convar_server"] = "Server variable"
+
+-- L["settings.convar_client"] = "Client variable"
+
 
 ////////////////////// General
--- L["settings.tabname.general"] = "PLEASE TRANSLATE"
+-- L["settings.tabname.general"] = "General"
 
--- L["settings.general.client"] = "PLEASE TRANSLATE"
--- L["settings.truenames.title"] = "PLEASE TRANSLATE"
--- L["settings.truenames.desc"] = "PLEASE TRANSLATE"
--- L["settings.resetsettings.cl.title"] = "PLEASE TRANSLATE"
 
--- L["settings.general.server"] = "PLEASE TRANSLATE"
--- L["settings.truenames_default.title"] = "PLEASE TRANSLATE"
--- L["settings.truenames_default.desc"] = "PLEASE TRANSLATE"
--- L["settings.truenames_enforced.title"] = "PLEASE TRANSLATE"
--- L["settings.truenames_enforced.desc"] = "PLEASE TRANSLATE"
+-- L["settings.general.client"] = "Client"
 
--- L["settings.resetsettings.sv.title"] = "PLEASE TRANSLATE"
+-- L["settings.truenames.title"] = "True Names"
 
--- L["settings.reset"] = "PLEASE TRANSLATE"
+-- L["settings.truenames.desc"] = "Set whether to use weapons' real names or fictional names made by the developers. Not all weapons utilize this."
+
+-- L["settings.resetsettings.cl.title"] = "Reset all CLIENT settings"
+
+
+-- L["settings.general.server"] = "Server"
+
+-- L["settings.truenames_default.title"] = "Default True Names"
+
+-- L["settings.truenames_default.desc"] = "Set the default true names mode on the server. All players using \"Default\" in preference will use this."
+
+-- L["settings.truenames_enforced.title"] = "Default True Names Enforced"
+
+-- L["settings.truenames_enforced.desc"] = "Set to force all players to use the server setting for true names."
+
+
+-- L["settings.resetsettings.sv.title"] = "Reset all SERVER settings"
+
+
+-- L["settings.reset"] = "Reset!"
+
 
 ////////////////////// Performance
 L["settings.tabname.performance"] = "性能"
@@ -405,18 +481,19 @@ L["settings.muzzle_light.title"] = "枪火光效"
 L["settings.muzzle_light.desc"] = "开火时会短暂显示光源。"
 L["settings.muzzle_others.title"] = "他人枪口特效"
 L["settings.muzzle_others.desc"] = "显示其他玩家的枪口特效。"
+
 ////////////////////// Optics
 L["settings.tabname.optics"] = "瞄具"
 
 L["settings.optics.control"] = "操作"
--- L["settings.optics.sensmult.title"] = "PLEASE TRANSLATE"
--- L["settings.optics.sensmult.desc"] = "PLEASE TRANSLATE"
+-- L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
+
+-- L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
+
 L["settings.optics.compensate_sens.title"] = "鼠标灵敏度自动调整"
 L["settings.optics.compensate_sens.desc"] = "根据准镜放大倍率调整灵敏度。"
 L["settings.optics.toggleads.title"] = "切换瞄准"
 L["settings.optics.toggleads.desc"] = "按一次瞄准键进入或退出瞄准，而不是按住。"
--- L["settings.optics.peeksens.title"] = "Standard ADS Sensitivity when Peeking"
--- L["settings.optics.peeksens.desc"] = "When aiming and using the peek function, magnification is no longer taken into account when lowering mouse sensitivity.\nRequires \"Compensate Sensitivity\"."
 
 L["settings.optics.color"] = "颜色"
 L["settings.optics.reflex.title"] = "全息"
@@ -443,9 +520,13 @@ L["settings.crosshair.crosshair_static.desc"] = "准心不会在开火时震动�
 L["settings.crosshair.crosshair_force.title"] = "强制启用准心"
 L["settings.crosshair.crosshair_force.desc"] = "在所有武器上开启准心。\n\n服务器端设置。"
 -- L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
+
 -- L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
+
 -- L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
+
 -- L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
+
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "自定义"
@@ -453,14 +534,18 @@ L["settings.tabname.hud_cust"] = "自定义"
 L["settings.hud_cust.hud"] = "HUD"
 L["settings.hud_cust.hud_scale.title"] = "HUD 大小"
 L["settings.hud_cust.hud_scale.desc"] = "全局界面大小倍率。"
--- L["settings.hud_cust.hud_deadzonex.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_cust.hud_deadzonex.desc"] = "PLEASE TRANSLATE"
+-- L["settings.hud_cust.hud_deadzonex.title"] = "HUD Width Deadzone"
+
+-- L["settings.hud_cust.hud_deadzonex.desc"] = "Horizontal \"deadzone\" for customization menu and HUD panel.\nUseful for ultrawide monitors."
+
 L["settings.hud_cust.hud_color.title"] = "HUD 颜色"
 L["settings.hud_cust.hud_color.desc"] = "主题高亮颜色。"
 -- L["settings.hud_cust.language_id.title"] = "Language"
 -- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
--- L["settings.hud_cust.hud_darkmode.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_cust.hud_darkmode.desc"] = "PLEASE TRANSLATE"
+-- L["settings.hud_cust.hud_darkmode.title"] = "Dark Theme"
+
+-- L["settings.hud_cust.hud_darkmode.desc"] = "Enables dark colors in HUD instead of light gray and disables vignette effect in background."
+
 L["settings.hud_cust.cust_light.title"] = "自定义界面灯光"
 L["settings.hud_cust.cust_light.desc"] = "切换灯光效果。"
 L["settings.hud_cust.cust_light_brightness.title"] = "自定义灯光强度"
@@ -471,8 +556,10 @@ L["settings.hud_cust.cust_hints.title"] = "提示"
 L["settings.hud_cust.cust_hints.desc"] = "自定义菜单的键位提示。"
 -- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
 -- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
--- L["settings.hud_cust.cust_tips.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_cust.cust_tips.desc"] = "PLEASE TRANSLATE"
+-- L["settings.hud_cust.cust_tips.title"] = "Tips"
+
+-- L["settings.hud_cust.cust_tips.desc"] = "Tips about ARC9 base near hints."
+
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "退出时重置选择"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "退出自定义菜单会同时取消选择当前槽位。"
 
@@ -486,18 +573,26 @@ L["settings.hud_game.hud_always.title"] = "HUD 全局启用"
 L["settings.hud_game.hud_always.desc"] = "非 ARC9 武器也启用此 HUD。"
 L["settings.hud_game.hud_compact.title"] = "精简模式"
 L["settings.hud_game.hud_compact.desc"] = "精简 HUD 上的信息。"
--- L["settings.hud_game.hud_nohints.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.hud_nohints.desc"] = "PLEASE TRANSLATE"
+-- L["settings.hud_game.hud_nohints.title"] = "Disable Hints"
+
+-- L["settings.hud_game.hud_nohints.desc"] = "Disable hints completely. They will not show up in the 3D HUD, nor in the 2D HUD."
+
 L["settings.hud_game.hud_keephints.title"] = "一直显示提示"
 L["settings.hud_game.hud_keephints.desc"] = "HUD 上分的操作提示不会消失。"
+-- L["settings.hud_game.hud_force_disable.title"] = "Force Disable HUD"
+
+-- L["settings.hud_game.hud_force_disable.desc"] = "Disable ARC9 HUD for all players. Does not affect hints."
+
 
 L["settings.hud_game.killfeed"] = "击杀显示"
 L["settings.hud_game.killfeed_enable.title"] = "自动生成击杀菜单图标"
 L["settings.hud_game.killfeed_enable.desc"] = "用模型生成 ARC9 武器的击杀图标而不是现有材质。"
 L["settings.hud_game.killfeed_dynamic.title"] = "动态生成菜单图标"
 L["settings.hud_game.killfeed_dynamic.desc"] = "击杀图标会自动刷新，显示当前武器配件。\n\n关掉可能影响性能。"
--- L["settings.hud_game.killfeed_color.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.killfeed_color.desc"] = "PLEASE TRANSLATE"
+-- L["settings.hud_game.killfeed_color.title"] = "Full Color Icons"
+
+-- L["settings.hud_game.killfeed_color.desc"] = "Dynamically generated icons are fully colored."
+
 
 L["settings.hud_game.breath"] = "屏气"
 L["settings.hud_game.breath_hud.title"] = "屏气条"
@@ -507,13 +602,20 @@ L["settings.hud_game.breath_pp.desc"] = "启用屏气时的特殊视觉效果。
 L["settings.hud_game.breath_sfx.title"] = "屏气音效"
 L["settings.hud_game.breath_sfx.desc"] = "启用屏气时的音效。"
 
--- L["settings.hud_game.centerhint"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.centerhint_reload.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.centerhint_reload.desc"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.centerhint_reload_percent.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.centerhint_reload_percent.desc"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.centerhint_bipod.title"] = "PLEASE TRANSLATE"
--- L["settings.hud_game.centerhint_bipod.desc"] = "PLEASE TRANSLATE"
+-- L["settings.hud_game.centerhint"] = "Tooltips"
+
+-- L["settings.hud_game.centerhint_reload.title"] = "Display Reload Tip"
+
+-- L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
+
+-- L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
+
+-- L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
+
+-- L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
+
+-- L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
+
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPC"
@@ -546,10 +648,14 @@ L["settings.gameplay.togglelean.title"] = "切换侧身"
 L["settings.gameplay.togglelean.desc"] = "按一下侧身键会进入或退出窥视状态，不需要按住。\n\n此设定和自动侧身兼容性很差，请不要同时开启两个。"
 L["settings.gameplay.togglepeek.title"] = "切换窥视"
 L["settings.gameplay.togglepeek.desc"] = "按一下窥视键会进入或退出窥视状态，不需要按住。"
--- L["settings.gameplay.togglepeek_reset.title"] = "PLEASE TRANSLATE"
--- L["settings.gameplay.togglepeek_reset.desc"] = "PLEASE TRANSLATE"
--- L["settings.gameplay.togglebreath.title"] = "PLEASE TRANSLATE"
--- L["settings.gameplay.togglebreath.desc"] = "PLEASE TRANSLATE"
+-- L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek State After Aiming"
+
+-- L["settings.gameplay.togglepeek_reset.desc"] = "(Only if Toggle Peek is on)\nPeek state will not be retained when exiting aim down sights."
+
+-- L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
+
+-- L["settings.gameplay.togglebreath.desc"] = "Pressing the Holding Breath key will toggle Holding Breath instead of needing to be held down."
+
 
 L["settings.gameplay.mechanics"] = "游戏机制"
 L["settings.gameplay.infinite_ammo.title"] = "无限子弹"
@@ -570,14 +676,20 @@ L["settings.gameplay.manualbolt.title"] = "手动上膛"
 L["settings.gameplay.manualbolt.desc"] = "需要单发上膛的武器需要按 R 上膛而不是自动上膛。"
 L["settings.gameplay.never_ready.title"] = "禁用准备动画"
 L["settings.gameplay.never_ready.desc"] = "不显示武器首次掏出的特殊动画。\n\n服务器参数。"
--- L["settings.gameplay.recoilshake.title"] = "PLEASE TRANSLATE"
--- L["settings.gameplay.recoilshake.desc"] = "PLEASE TRANSLATE"
--- L["settings.gameplay.equipment_generate_ammo.title"] = "PLEASE TRANSLATE"
--- L["settings.gameplay.equipment_generate_ammo.desc"] = "PLEASE TRANSLATE"
+-- L["settings.gameplay.recoilshake.title"] = "Recoil FOV Shake"
+
+-- L["settings.gameplay.recoilshake.desc"] = "Snaps field of view when shooting"
+
+-- L["settings.gameplay.equipment_generate_ammo.title"] = "Unique Ammo Types for Equipment"
+
+-- L["settings.gameplay.equipment_generate_ammo.desc"] = "There is a limit of 255 ammo types, and disabling this option may help fix some problems if you have lots of addons.\n\nThis is a server variable.\n\nRequires restart."
+
 
 -- ??
--- L["settings.gameplay.mult_defaultammo.title"] = "PLEASE TRANSLATE"
--- L["settings.gameplay.mult_defaultammo.desc"] = "PLEASE TRANSLATE"
+-- L["settings.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
+
+-- L["settings.gameplay.mult_defaultammo.desc"] = "How many magazines/grenades/equipment give to player when he takes weapon for first time?\n\nThis is a server variable."
+
 L["settings.gameplay.nearwall.title"] = "枪管近身"
 L["settings.gameplay.nearwall.desc"] = "如果离墙壁或者其他东西太近时，武器会没空间开火。"
 
@@ -596,13 +708,20 @@ L["settings.visuals.vm_addy.desc"] = "调整第一人称模型的前后位置。
 L["settings.visuals.vm_addz.title"] = "Z 轴偏移"
 L["settings.visuals.vm_addz.desc"] = "调整第一人称模型的上下位置。"
 
--- L["settings.visuals.cambob"] = "PLEASE TRANSLATE"
--- L["settings.visuals.vm_cambob.title"] = "PLEASE TRANSLATE"
--- L["settings.visuals.vm_cambob.desc"] = "PLEASE TRANSLATE"
--- L["settings.visuals.vm_cambobwalk.title"] = "PLEASE TRANSLATE"
--- L["settings.visuals.vm_cambobwalk.desc"] = "PLEASE TRANSLATE"
--- L["settings.visuals.vm_cambobintensity.title"] = "PLEASE TRANSLATE"
--- L["settings.visuals.vm_cambobintensity.desc"] = "PLEASE TRANSLATE"
+-- L["settings.visuals.cambob"] = "View Bobbing"
+
+-- L["settings.visuals.vm_cambob.title"] = "Sprint View Bobbing"
+
+-- L["settings.visuals.vm_cambob.desc"] = "Makes your camera move when you sprinting"
+
+-- L["settings.visuals.vm_cambobwalk.title"] = "Walk View Bobbing"
+
+-- L["settings.visuals.vm_cambobwalk.desc"] = "Makes your camera slightly move when you walking around (requires sprint bobbing)"
+
+-- L["settings.visuals.vm_cambobintensity.title"] = "Intensity"
+
+-- L["settings.visuals.vm_cambobintensity.desc"] = "How intense bobbing will be"
+
 
 L["settings.visuals.tpik"] = "TPIK"
 L["settings.visuals.tpik.title"] = "TPIK"
@@ -641,8 +760,9 @@ L["settings.attachments.atts_max.title"] = "最大配件量"
 L["settings.attachments.atts_max.desc"] = "武器最多能装的配件数量。\n\n服务器参数。"
 L["settings.attachments.autosave.title"] = "自动保存"
 L["settings.attachments.autosave.desc"] = "你的上一个武器配置会在获得下一把同样武器时应用。"
--- L["settings.attachments.blacklist.title"] = "PLEASE TRANSLATE"
--- L["settings.attachments.blacklist.open"] = "PLEASE TRANSLATE"
+-- L["settings.attachments.blacklist.title"] = "Blacklist Menu"
+
+L["settings.attachments.blacklist.open"] = "打开"
 
 L["settings.attachments.inventory"] = "配件背包"
 L["settings.attachments.free_atts.title"] = "免费配件"
@@ -662,17 +782,28 @@ L["settings.tabname.modifiers"] = "属性修改"
 L["settings.modifiers.quick.desc"] = "我们发布太快了没把这个功能做完。你需要去 Options > ARC9 > Modifiers 修改属性。"
 
 L["settings.modifiers.quick.title"] = "快捷属性修改"
--- L["settings.mod_damage.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_spread.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_recoil.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_visualrecoil.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_adstime.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_sprinttime.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_damagerand.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_muzzlevelocity.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_rpm.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_headshotdamage.title"] = "PLEASE TRANSLATE"
--- L["settings.mod_malfunction.title"] = "PLEASE TRANSLATE"
+-- L["settings.mod_damage.title"] = "Damage"
+
+-- L["settings.mod_spread.title"] = "Spread"
+
+-- L["settings.mod_recoil.title"] = "Recoil"
+
+-- L["settings.mod_visualrecoil.title"] = "Visual Recoil"
+
+-- L["settings.mod_adstime.title"] = "Aim Down Sights Time"
+
+-- L["settings.mod_sprinttime.title"] = "Sprint To Fire Time"
+
+-- L["settings.mod_damagerand.title"] = "Damage Variance"
+
+-- L["settings.mod_muzzlevelocity.title"] = "Muzzle Velocity"
+
+-- L["settings.mod_rpm.title"] = "RPM"
+
+-- L["settings.mod_headshotdamage.title"] = "Headshot Damage"
+
+-- L["settings.mod_malfunction.title"] = "Malfunction Chance"
+
 
 ////////////////////// Controller
 L["settings.tabname.controller"] = "手柄"
@@ -689,51 +820,83 @@ L["settings.controller.controller_config.desc"] = "Open advanced controller conf
 
 ////////////////////// Aim Assist
 -- L["settings.tabname.aimassist"] = "Aim Assist"
+
 -- L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."
 
+
 -- L["settings.aimassist.enable.title"] = "Enable Aim Assist"
--- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nAlso requires Aim Assist to be enabled on CLIENT."
+
+-- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nRequires Aim Assist to be enabled on CLIENT."
+
 
 -- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
+
 -- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
+
 -- L["settings.aimassist.intensity.title"] = "Intensity"
+
 -- L["settings.aimassist.intensity.desc"] = "How intense the aim assist is.\n\nThis is a server variable."
 
+
 -- L["settings.aimassist.cone.title"] = "Cone"
+
 -- L["settings.aimassist.cone.desc"] = "How close or far away you need to look towards a target before the aim assist engages.\n\nThis is a server variable."
 
+
 -- L["settings.aimassist.head.title"] = "Lock onto head"
+
 -- L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the target's head instead of its chest.\n\nThis is a server variable."
+
 
 -- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
+
 ////////////////////// Asset Caching
--- L["settings.tabname.caching"] = "PLEASE TRANSLATE"
--- L["settings.caching.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.desc"] = "PLEASE TRANSLATE"
+-- L["settings.tabname.caching"] = "Asset Caching"
 
--- L["settings.caching.precache_sounds_onfirsttake.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_sounds_onfirsttake.desc"] = "PLEASE TRANSLATE"
+-- L["settings.caching.title"] = "Asset Caching"
 
--- L["settings.caching.precache_attsmodels_onfirsttake.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_wepmodels_onfirsttake.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "PLEASE TRANSLATE"
+-- L["settings.caching.desc"] = "You can cache some ARC9 assets (save in memory without loading while playing) to prevent stutters for comfort gameplay!\n\nYou surely should enable some stuff if your gmod running on HDD."
 
--- L["settings.caching.precache_allsounds_onstartup.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_allsounds_onstartup.desc"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_attsmodels_onstartup.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_attsmodels_onstartup.desc"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_wepmodels_onstartup.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_wepmodels_onstartup.desc"] = "PLEASE TRANSLATE"
 
--- L["settings.caching.precache_allsounds.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_wepmodels.title"] = "PLEASE TRANSLATE"
--- L["settings.caching.precache_attsmodels.title"] = "PLEASE TRANSLATE"
+-- L["settings.caching.precache_sounds_onfirsttake.title"] = "On first equip: Cache gun sounds"
 
--- L["settings.developer.cache"] = "PLEASE TRANSLATE"
+-- L["settings.caching.precache_sounds_onfirsttake.desc"] = "Caches all sounds only from gun you just took in hands (except reload sounds).\n\nNot any impactful, rather helpful to prevent stutters while firing."
+
+
+-- L["settings.caching.precache_attsmodels_onfirsttake.title"] = "On first equip: Cache all attachments"
+
+-- L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Caches all ARC9 attachments models when any ARC9 weapon was first equipped.\n\nCauses pretty big freeze, especially when you have lots of weapons."
+
+-- L["settings.caching.precache_wepmodels_onfirsttake.title"] = "On first equip: Cache all weapon models"
+
+-- L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Caches all ARC9 weapons viewmodels when any ARC9 weapon was first equipped.\n\nCauses REALLY BIG freeze, especially when you have lots of weapons."
+
+
+-- L["settings.caching.precache_allsounds_onstartup.title"] = "On game start: Cache all guns sounds"
+
+-- L["settings.caching.precache_allsounds_onstartup.desc"] = "Caches all sounds from all guns on server start-up. (except reload sounds).\n\nNot so impactful, but anyway you better use first option here."
+
+-- L["settings.caching.precache_attsmodels_onstartup.title"] = "On game start: Cache all attachments"
+
+-- L["settings.caching.precache_attsmodels_onstartup.desc"] = "Caches all ARC9 attachments models on server start-up.\n\nCauses pretty big load time increase, especially when you have lots of weapons."
+
+-- L["settings.caching.precache_wepmodels_onstartup.title"] = "On game start: Cache all weapon models"
+
+-- L["settings.caching.precache_wepmodels_onstartup.desc"] = "Caches all ARC9 weapons viewmodels on server start-up.\n\nCauses REALLY BIG load time increase, especially when you have lots of weapons."
+
+
+-- L["settings.caching.precache_allsounds.title"] = "All weapon sounds"
+
+-- L["settings.caching.precache_wepmodels.title"] = "All weapon models"
+
+-- L["settings.caching.precache_attsmodels.title"] = "All attachments models"
+
+
+-- L["settings.developer.cache"] = "Cache"
+
 
 ////////////////////// Developer
 L["settings.tabname.developer"] = "开发者"
@@ -743,16 +906,20 @@ L["settings.developer.dev_always_ready.title"] = "Always Ready"
 L["settings.developer.dev_always_ready.desc"] = "Always play \"ready\" animation when deploying a weapon.\n\n服务器参数。"
 L["settings.developer.dev_benchgun.title"] = "Benchgun"
 L["settings.developer.dev_benchgun.desc"] = "Keep the weapon where it currently is."
--- L["settings.developer.dev_crosshair.title"] = "PLEASE TRANSLATE"
--- L["settings.developer.dev_crosshair.desc"] = "PLEASE TRANSLATE"
+-- L["settings.developer.dev_crosshair.title"] = "Dev Crosshair"
+
+-- L["settings.developer.dev_crosshair.desc"] = "Funky looking crosshair showing the exact point of aim and some useful numbers.\n\nThis is a server variable, and only works for admins - don't get cheaty with this!"
+
 L["settings.developer.dev_show_shield.title"] = "Show Shield"
 L["settings.developer.dev_show_shield.desc"] = "Show the model for the player's shield."
--- L["settings.developer.dev_greenscreen.title"] = "PLEASE TRANSLATE"
--- L["settings.developer.dev_greenscreen.desc"] = "PLEASE TRANSLATE"
+-- L["settings.developer.dev_greenscreen.title"] = "Green Screen"
+
+-- L["settings.developer.dev_greenscreen.desc"] = "Show a green screen background in the customisation menu for screenshots.\n\nIf you are using HDR, don't forget to set mat_bloom_scalefactor_scalar to 0!"
 
 L["settings.developer.reloadatts.title"] = "Reload Attachments"
 L["settings.developer.reloadlangs.title"] = "Reload Languages"
--- L["settings.developer.dev_listmyatts.title"] = "PLEASE TRANSLATE"
+-- L["settings.developer.dev_listmyatts.title"] = "List My Attachments"
+
 L["settings.developer.dev_listanims.title"] = "List Anims"
 L["settings.developer.dev_listbones.title"] = "List Bones"
 L["settings.developer.dev_listbgs.title"] = "List Bodygroups"
@@ -760,9 +927,12 @@ L["settings.developer.dev_listatts.title"] = "List QCAttachments"
 L["settings.developer.dev_export.title"] = "Get Export Code"
 L["settings.developer.dev_getjson.title"] = "Get Weapon JSON"
 
--- L["settings.developer.presets_clear.title"] = "PLEASE TRANSLATE"
--- L["settings.developer.presets_clear.desc"] = "PLEASE TRANSLATE"
+-- L["settings.developer.presets_clear.title"] = "Clear weapon data"
 
--- L["settings.developer.clear"] = "PLEASE TRANSLATE"
+-- L["settings.developer.presets_clear.desc"] = "Clear presets, all icons and default preset for weapon you currently holding.\n\nWarning: if menu opened without ARC9 weapon in hands it will delete all existing ARC9 presets and icons!"
+
+
+-- L["settings.developer.clear"] = "Clear"
+
 L["settings.developer.print"] = "Print to Console"
 L["settings.developer.reload"] = "Reload"
