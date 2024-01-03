@@ -1,5 +1,5 @@
 function SWEP:ThinkTriggerSounds()
-    if (!self.TriggerDownSound or self.TriggerDownSound == "") or (!self.TriggerUpSound or self.TriggerUpSound == "") then return end -- no fucking trigger sounds
+    if (!self.TriggerDownSound or self.TriggerDownSound == "") and (!self.TriggerUpSound or self.TriggerUpSound == "") then return end -- no fucking trigger sounds
 
     if self:GetAnimLockTime() > CurTime() then return end
     if self:StillWaiting() then return end
