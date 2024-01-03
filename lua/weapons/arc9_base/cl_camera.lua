@@ -1,25 +1,34 @@
 SWEP.SmoothedMagnification = 1
 SWEP.FOV = 90
 
-local SmoothRecoilUp = 0
-local SmoothRecoilSide = 0
 
 local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 local arc9_vm_cambob = GetConVar("arc9_vm_cambob")
 local arc9_vm_cambobwalk = GetConVar("arc9_vm_cambobwalk")
 local arc9_vm_cambobintensity = GetConVar("arc9_vm_cambobintensity")
 
+local SmoothRecoilAmount = 0
+
 function SWEP:CalcView(ply, pos, ang, fov)
     if self:GetOwner():ShouldDrawLocalPlayer() then return end
 
     local rec = (self:GetLastRecoilTime() + 0.25) - CurTime()
 
-    rec = rec * 3
-
-    rec = rec * self:GetProcessedValue("RecoilKick")
+    local reckick = self:GetProcessedValue("RecoilKick")
+    rec = rec * 3 * reckick
 
     if rec > 0 then
         ang.r = ang.r + (math.sin(CurTime() * self:GetProcessedValue("RecoilKickDamping", true)) * rec)
+    end
+
+    if self.RecoilKickAffectPitch then
+        if !self:IsUsingRTScope() then
+            local recam = math.min(self:GetRecoilAmount(), 15)
+            SmoothRecoilAmount = Lerp(FrameTime() * 3, SmoothRecoilAmount, recam)
+            local thing = SmoothRecoilAmount * reckick * self:GetProcessedValue("Recoil")
+            ang.p = ang.p - 0.6 * thing
+            self.VMZOffsetForCamera = -0.25 * thing
+        end
     end
 
     local sightamount = self:GetSightAmount()

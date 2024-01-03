@@ -436,6 +436,7 @@ SWEP.RecoilResetTime = 0.1 -- How long the gun must go before the recoil pattern
 SWEP.RecoilFullResetTime = 2 -- How long recoil must stay after last shoot
 
 SWEP.RecoilAutoControl = 1 -- Multiplier for automatic recoil control.
+SWEP.RecoilAutoControl_DontTryToReturnBack = nil -- If true will make recoil autocompensation not follow mouse   will make recoil be less sluggerish, but may cause crosshair to return in weird positions
 
 SWEP.RecoilPerShot = 1
 SWEP.RecoilMax = nil
@@ -518,6 +519,7 @@ SWEP.VisualRecoilDoingFunc = nil -- wawa, override Up, Side, Roll here
 
 SWEP.RecoilKick = 1 -- Camera recoil
 SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
+SWEP.RecoilKickAffectPitch = nil -- thing for eft, set to true if you want camera go up (only visually) as recoil increases, SWEP.Recoil * SWEP.RecoilKick = effect of this
 
 -------------------------- SPREAD
 
