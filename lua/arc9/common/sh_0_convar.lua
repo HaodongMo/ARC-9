@@ -106,6 +106,16 @@ local conVars = {
         client = true
     },
     {
+        name = "holiday_month",
+        default = "0",
+        replicated = true
+    },
+    {
+        name = "holiday_day",
+        default = "0",
+        replicated = true
+    },
+    {
         name = "hud_color_r",
         default = "255",
         client = true
@@ -122,6 +132,11 @@ local conVars = {
     },
     {
         name = "hud_darkmode",
+        default = "0",
+        client = true
+    },
+    {
+        name = "hud_holiday",
         default = "0",
         client = true
     },

@@ -113,6 +113,10 @@ local events = {
         months = { [1] = true },
         days = { [1] = true },
     },
+    ["Leap Day"] = {
+        months = { [2] = true },
+        days = { [29] = true },
+    },
     -- ["Opposite Day"] = {
     --     months = { 1 },
     --     days = { 25 },
@@ -131,15 +135,15 @@ local events = {
     },
     ["Halloween"] = {
         months = { [10] = true },
-        days = alldays,
+        days = { [31] = true },
     },
     ["Thanksgiving"] = {
-        months = { [9] = true, [11] = true }, -- Also includes September to give it a brownish theme
-        days = alldays,
+        months = { [11] = true }, 
+        days = { [23] = true },
     },
     ["Christmas"] = {
         months = { [12] = true },
-        days = alldays,
+        days = { [25] = true },
     },
     ["Birthday - Arctic"] = {
         months = { [7] = true },
@@ -155,6 +159,39 @@ local events = {
     },
 }
 
+local holidayscolors = {
+    ["Christmas"] = {
+        hi     = Color(184, 210, 160),
+        bg     = Color(153, 113, 110, 97),
+        bgdark = Color(33, 11, 9, 240),
+    },
+    ["Halloween"] = {
+        hi     = Color(255, 187, 132),
+        bg     = Color(120, 110, 153, 97),
+        bgdark = Color(14, 6, 37, 240),
+    },
+    ["Thanksgiving"] = {
+        hi     = Color(240, 195, 172),
+        bg     = Color(153, 137, 110, 97),
+        bgdark = Color(38, 34, 27, 240),
+    },
+    ["New Year's"] = {
+        hi     = Color(255, 255, 200),
+        bg     = Color(114, 114, 153, 97),
+        bgdark = Color(30, 30, 40, 240),
+    },
+    ["Birthday - Arctic"] = {
+        hi     = Color(210, 235, 255),
+        bg     = Color(153, 153, 114, 97),
+        bgdark = Color(40, 40, 30, 240),
+    },
+    ["None"] = {
+        hi     = ARC9.Colors.hi,
+        bg     = ARC9.Colors.bg,
+        bgdark = ARC9.Colors.bgdark,
+    },
+}
+
 local arc9_holiday_month = GetConVar("arc9_holiday_month")
 local arc9_holiday_day = GetConVar("arc9_holiday_day")
 
@@ -166,59 +203,62 @@ function ARC9.GetTime()
     end
 end
 
-function ARC9.GetHoliday()
+function ARC9.GetHolidayColor()
     local d = os.date( "*t", ARC9.GetTime() )
-    return d
+    for i,j in pairs(holidayscolors) do
+        if i == "None" then continue end
+        if events[i].days[d.day] and events[i].months[d.month] then
+            return i
+        end
+    end
+    return "None"
 end
 
 ARC9.ActiveHolidays = {}
 
-local holidayscolors = {
-    ["Christmas"] = {
-        -- fg     = Color(184, 210, 160),
-        -- shadow = Color(33, 11, 9),
-    },
-    ["Halloween"] = {
-        -- fg     = Color(255, 187, 132),
-        -- shadow = Color(14, 6, 37),
-    },
-    ["Thanksgiving"] = {
-        -- fg     = Color(240, 195, 172),
-        -- shadow = Color(38, 34, 27),
-    },
-    ["Summer Break"] = {
-        -- fg     = Color(255, 255, 200),
-        -- shadow = Color(30, 30, 40, 255*0.6),
-    },
-    ["Birthday - Arctic"] = {
-        -- fg     = Color(210, 235, 255),
-        -- shadow = Color(40, 40, 30, 255*0.6),
-    }
-}
+local d = os.date( "*t", ARC9.GetTime() )
+for i,j in pairs(events) do
+	if j.days[d.day] and j.months[d.month] then
+		ARC9.ActiveHolidays[i] = true
+	end
+end
 
 local arc9_hud_color_r = GetConVar("arc9_hud_color_r")
 local arc9_hud_color_g = GetConVar("arc9_hud_color_g")
 local arc9_hud_color_b = GetConVar("arc9_hud_color_b")
 local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
+local arc9_hud_holiday = GetConVar("arc9_hud_holiday")
 
 function ARC9.GetHUDColor(part, alpha)
     alpha = alpha or 255
+    local holidayenabled = arc9_hud_holiday:GetBool()
     local col = ARC9.Colors[part] or ARC9.Colors.hi
-
+    local holidaycol = holidayscolors[ARC9.GetHolidayColor()]
+    
+    
     if part == "hi" then
         col = Color(
             arc9_hud_color_r:GetInt(),
             arc9_hud_color_g:GetInt(),
             arc9_hud_color_b:GetInt()
         )
-    end
-
-    if part == "bg" then
-        if arc9_hud_darkmode:GetBool() then
-            col = ARC9.Colors["bgdark"]
+        if holidayenabled then
+            col = holidaycol.hi
         end
     end
 
+    if part == "bg" then
+        if holidayenabled then
+            col = holidaycol.bg
+        end
+        if arc9_hud_darkmode:GetBool() then
+            col = ARC9.Colors["bgdark"]
+            if holidayenabled then
+                col = holidaycol.bgdark
+            end
+        end
+    end
+    
     if alpha < 255 then
         col = Color(col.r, col.g, col.b)
         col.a = alpha or 255
@@ -382,7 +422,7 @@ local function GetHintsTable(capabilities)
 
     table.insert(hints, {
         glyph = ARC9.GetBindKey("+menu_context"),
-        action = weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") })
+        action = not weapon:GetProcessedValue("CantPeek",true) and weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") })
 
     table.insert(hints, {
         glyph = ARC9.GetBindKey("+use"),
@@ -1678,10 +1718,10 @@ ARC9.CTRL_Exists = {
 }
 
 surface.CreateFont( "ARC9_KeybindPreview", {
-	font = "Arial",
-	size = 16,
-	weight = 600,
-	antialias = false,
+    font = "Arial",
+    size = 16,
+    weight = 600,
+    antialias = false,
 } )
 
 --[[
@@ -1811,10 +1851,10 @@ function ARC9MultiLineText(text, maxw, font)
             -- Don't count color tags for length purposes
             local match = {string.match(word, "<color=%d+,%d+,%d+>")}
             local matchend = {string.match(word, "</color>")}
-			
+            
             local matchfont = {string.match(word, "<font=^.*$>")}
             local matchfontend = {string.match(word, "</font>")}
-			
+            
             for _, v in ipairs(match) do
                 tx = tx - surface.GetTextSize(v)
             end
@@ -1953,266 +1993,266 @@ end
 --[[
 
 ps4
-	button_logo
-	button_options
-	button_share
-	l1
-	l2
-	l2_soft
-	r1
-	r2
-	r2_soft
-	trackpad_click
-	trackpad_down
-	trackpad_l_click
-	trackpad_l_down
-	trackpad_l_left
-	trackpad_l_right
-	trackpad_l_ring
-	trackpad_l_swipe
-	trackpad_l_touch
-	trackpad_l_up
-	trackpad_left
-	trackpad
-	trackpad_r_click
-	trackpad_r_down
-	trackpad_r_left
-	trackpad_r_right
-	trackpad_r_ring
-	trackpad_r_swipe
-	trackpad_r_touch
-	trackpad_r_up
-	trackpad_right
-	trackpad_ring
-	trackpad_swipe
-	trackpad_up
+    button_logo
+    button_options
+    button_share
+    l1
+    l2
+    l2_soft
+    r1
+    r2
+    r2_soft
+    trackpad_click
+    trackpad_down
+    trackpad_l_click
+    trackpad_l_down
+    trackpad_l_left
+    trackpad_l_right
+    trackpad_l_ring
+    trackpad_l_swipe
+    trackpad_l_touch
+    trackpad_l_up
+    trackpad_left
+    trackpad
+    trackpad_r_click
+    trackpad_r_down
+    trackpad_r_left
+    trackpad_r_right
+    trackpad_r_ring
+    trackpad_r_swipe
+    trackpad_r_touch
+    trackpad_r_up
+    trackpad_right
+    trackpad_ring
+    trackpad_swipe
+    trackpad_up
 
 ps5
-	button_create
-	button_options
-	l1
-	l2
-	l2_soft
-	r1
-	r2
-	r2_soft
-	trackpad_click
-	trackpad_down
-	trackpad_l_click
-	trackpad_l_down
-	trackpad_l_left
-	trackpad_l_right
-	trackpad_l_ring
-	trackpad_l_swipe
-	trackpad_l_touch
-	trackpad_l_up
-	trackpad_left
-	trackpad
-	trackpad_r_click
-	trackpad_r_down
-	trackpad_r_left
-	trackpad_r_right
-	trackpad_r_ring
-	trackpad_r_swipe
-	trackpad_r_touch
-	trackpad_r_up
-	trackpad_right
-	trackpad_ring
-	trackpad_swipe
-	trackpad_up
+    button_create
+    button_options
+    l1
+    l2
+    l2_soft
+    r1
+    r2
+    r2_soft
+    trackpad_click
+    trackpad_down
+    trackpad_l_click
+    trackpad_l_down
+    trackpad_l_left
+    trackpad_l_right
+    trackpad_l_ring
+    trackpad_l_swipe
+    trackpad_l_touch
+    trackpad_l_up
+    trackpad_left
+    trackpad
+    trackpad_r_click
+    trackpad_r_down
+    trackpad_r_left
+    trackpad_r_right
+    trackpad_r_ring
+    trackpad_r_swipe
+    trackpad_r_touch
+    trackpad_r_up
+    trackpad_right
+    trackpad_ring
+    trackpad_swipe
+    trackpad_up
 
 ps
-	button_circle
-	button_mute
-	button_square
-	button_triangle
-	button_x
-	color_button_circle
-	color_button_square
-	color_button_triangle
-	color_button_x
-	color_outlined_button_circle
-	color_outlined_button_square
-	color_outlined_button_triangle
-	color_outlined_button_x
-	dpad_down
-	dpad_left
-	dpad
-	dpad_right
-	dpad_up
-	outlined_button_circle
-	outlined_button_square
-	outlined_button_triangle
-	outlined_button_x
+    button_circle
+    button_mute
+    button_square
+    button_triangle
+    button_x
+    color_button_circle
+    color_button_square
+    color_button_triangle
+    color_button_x
+    color_outlined_button_circle
+    color_outlined_button_square
+    color_outlined_button_triangle
+    color_outlined_button_x
+    dpad_down
+    dpad_left
+    dpad
+    dpad_right
+    dpad_up
+    outlined_button_circle
+    outlined_button_square
+    outlined_button_triangle
+    outlined_button_x
 
 sc
-	button_l_arrow
-	button_r_arrow
-	button_steam
-	dpad_click
-	dpad_down
-	dpad_left
-	dpad
-	dpad_right
-	dpad_swipe
-	dpad_touch
-	dpad_up
-	lb
-	lg
-	lt_click
-	lt
-	lt_soft
-	rb
-	rg
-	rt_click
-	rt
-	rt_soft
-	touchpad_click
-	touchpad_down
-	touchpad_edge
-	touchpad_left
-	touchpad
-	touchpad_right
-	touchpad_swipe
-	touchpad_touch
-	touchpad_up
+    button_l_arrow
+    button_r_arrow
+    button_steam
+    dpad_click
+    dpad_down
+    dpad_left
+    dpad
+    dpad_right
+    dpad_swipe
+    dpad_touch
+    dpad_up
+    lb
+    lg
+    lt_click
+    lt
+    lt_soft
+    rb
+    rg
+    rt_click
+    rt
+    rt_soft
+    touchpad_click
+    touchpad_down
+    touchpad_edge
+    touchpad_left
+    touchpad
+    touchpad_right
+    touchpad_swipe
+    touchpad_touch
+    touchpad_up
 
 sd
-	button_aux
-	button_menu
-	button_steam
-	button_view
-	l1
-	l2_half
-	l2
-	l4
-	l5
-	ltrackpad_click
-	ltrackpad_down
-	ltrackpad_left
-	ltrackpad
-	ltrackpad_right
-	ltrackpad_ring
-	ltrackpad_swipe
-	ltrackpad_up
-	r1
-	r2_half
-	r2
-	r4
-	r5
-	rtrackpad_click
-	rtrackpad_down
-	rtrackpad_left
-	rtrackpad
-	rtrackpad_right
-	rtrackpad_ring
-	rtrackpad_swipe
-	rtrackpad_up
+    button_aux
+    button_menu
+    button_steam
+    button_view
+    l1
+    l2_half
+    l2
+    l4
+    l5
+    ltrackpad_click
+    ltrackpad_down
+    ltrackpad_left
+    ltrackpad
+    ltrackpad_right
+    ltrackpad_ring
+    ltrackpad_swipe
+    ltrackpad_up
+    r1
+    r2_half
+    r2
+    r4
+    r5
+    rtrackpad_click
+    rtrackpad_down
+    rtrackpad_left
+    rtrackpad
+    rtrackpad_right
+    rtrackpad_ring
+    rtrackpad_swipe
+    rtrackpad_up
 
 shared
-	button_a
-	button_b
-	button_x
-	button_y
-	buttons_e
-	buttons_n
-	buttons_s
-	buttons_w
-	color_button_a
-	color_button_b
-	color_button_x
-	color_button_y
-	color_outlined_button_a
-	color_outlined_button_b
-	color_outlined_button_x
-	color_outlined_button_y
-	dpad_down
-	dpad_left
-	dpad
-	dpad_right
-	dpad_up
-	gyro
-	gyro_pitch
-	gyro_roll
-	gyro_yaw
-	l3
-	lstick_click
-	lstick_down
-	lstick_left
-	lstick
-	lstick_right
-	lstick_touch
-	lstick_up
-	mouse_4
-	mouse_5
-	mouse_l_click
-	mouse_mid_click
-	mouse_r_click
-	mouse_scroll_down
-	mouse_scroll_up
-	outlined_button_a
-	outlined_button_b
-	outlined_button_x
-	outlined_button_y
-	r3
-	rstick_click
-	rstick_down
-	rstick_left
-	rstick
-	rstick_right
-	rstick_touch
-	rstick_up
-	touch_doubletap
-	touch
-	touch_tap
+    button_a
+    button_b
+    button_x
+    button_y
+    buttons_e
+    buttons_n
+    buttons_s
+    buttons_w
+    color_button_a
+    color_button_b
+    color_button_x
+    color_button_y
+    color_outlined_button_a
+    color_outlined_button_b
+    color_outlined_button_x
+    color_outlined_button_y
+    dpad_down
+    dpad_left
+    dpad
+    dpad_right
+    dpad_up
+    gyro
+    gyro_pitch
+    gyro_roll
+    gyro_yaw
+    l3
+    lstick_click
+    lstick_down
+    lstick_left
+    lstick
+    lstick_right
+    lstick_touch
+    lstick_up
+    mouse_4
+    mouse_5
+    mouse_l_click
+    mouse_mid_click
+    mouse_r_click
+    mouse_scroll_down
+    mouse_scroll_up
+    outlined_button_a
+    outlined_button_b
+    outlined_button_x
+    outlined_button_y
+    r3
+    rstick_click
+    rstick_down
+    rstick_left
+    rstick
+    rstick_right
+    rstick_touch
+    rstick_up
+    touch_doubletap
+    touch
+    touch_tap
 
 switchpro
-	button_capture
-	button_home
-	button_minus
-	button_plus
-	dpad_down
-	dpad_left
-	dpad
-	dpad_right
-	dpad_up
-	l2
-	l2_soft
-	l
-	lstick_click
-	lstick_down
-	lstick_left
-	lstick
-	lstick_right
-	lstick_up
-	r2
-	r2_soft
-	r
-	rstick_click
-	rstick_down
-	rstick_left
-	rstick
-	rstick_right
-	rstick_up
+    button_capture
+    button_home
+    button_minus
+    button_plus
+    dpad_down
+    dpad_left
+    dpad
+    dpad_right
+    dpad_up
+    l2
+    l2_soft
+    l
+    lstick_click
+    lstick_down
+    lstick_left
+    lstick
+    lstick_right
+    lstick_up
+    r2
+    r2_soft
+    r
+    rstick_click
+    rstick_down
+    rstick_left
+    rstick
+    rstick_right
+    rstick_up
 
 xbox360
-	button_select
-	button_start
+    button_select
+    button_start
 
 xbox
-	button_logo
-	button_select
-	button_share
-	button_start
-	lb
-	lt
-	lt_soft
-	p1
-	p2
-	p3
-	p4
-	rb
-	rt
-	rt_soft
+    button_logo
+    button_select
+    button_share
+    button_start
+    lb
+    lt
+    lt_soft
+    p1
+    p2
+    p3
+    p4
+    rb
+    rt
+    rt_soft
 
 ]]
