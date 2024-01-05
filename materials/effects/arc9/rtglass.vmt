@@ -3,17 +3,18 @@
 	"$basetexture"             "effects/arc9/lens_d"
 	"$bumpmap"                 "effects/arc9/lens_n"
      "$phongexponenttexture"    "effects/arc9/lens_s"
-     "$color2"                  "[0 0 0]"
+     //"$color2"                  "[0 0 0]"
 
 	"$translucent" "1"
 	"$phong" "1"
 	"$phongboost"	"1"
 	"$phongexponent"	"10"
-     "$phongfresnelranges" "[1 1 1]"
+     "$phongfresnelranges" "[1 0.5 0]"
 
 	"$envmap" "env_cubemap"
+     "$envmaptint"	"[.5 .5 .5]"
 	"$normalmapalphaenvmapmask"	"1"
-	"$envmapfresnel" "0"
+	"$envmapfresnel" "5"
 
 	//"$alpha" "0"
 	//"$envmaptint" "[2 2 2]"
@@ -27,7 +28,7 @@
 	{
 	   "arc9_scope_alpha"
 	   {
-		  "resultVar" "$envmaptint"
+		  //"resultVar" "$cloakfactor"
 	   }
 	}
 }
