@@ -370,18 +370,25 @@ local function GetHintsTable(capabilities)
     end
 
     if capabilities.Bash then
-        if ARC9.GetKeyIsBound("+arc9_melee") then
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+arc9_melee"),
-                action = ARC9:GetPhrase("hud.hint.bash")
-            })
-        else
-            table.insert(hints, {
-                glyph = ARC9.GetBindKey("+use"),
-                glyph2 = ARC9.GetBindKey("+attack"),
-                action = ARC9:GetPhrase("hud.hint.bash")
-            })
-        end
+		if wep.PrimaryBash then -- If the weapon performs bashing as the primary attack function, only display the "+attack" function.
+			table.insert(hints, {
+				glyph = ARC9.GetBindKey("+attack"),
+				action = ARC9:GetPhrase("hud.hint.bash")
+			})
+		else
+			if ARC9.GetKeyIsBound("+arc9_melee") then
+				table.insert(hints, {
+					glyph = ARC9.GetBindKey("+arc9_melee"),
+					action = ARC9:GetPhrase("hud.hint.bash")
+				})
+			else
+				table.insert(hints, {
+					glyph = ARC9.GetBindKey("+use"),
+					glyph2 = ARC9.GetBindKey("+attack"),
+					action = ARC9:GetPhrase("hud.hint.bash")
+				})
+			end
+		end
     end
 
     if capabilities.Inspect then
