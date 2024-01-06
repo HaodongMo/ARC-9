@@ -210,11 +210,11 @@ function SWEP:Think()
                     else
                         swepLoadPreset(self, "default")
                     end
+
+                    self:SetReady(false)
+                    swepDoDeployAnimation(self)
                 end
             end)
-
-            self:SetReady(false)
-            swepDoDeployAnimation(self)
         end
     end
 end
