@@ -128,7 +128,7 @@ matproxy.Add( {
     --print(getWeaponSightAmount())
 
         mat:SetInt("$cloakpassenabled", 1)
-        mat:SetFloat("$cloakfactor", math.Round(getWeaponSightAmount()))
+        mat:SetFloat("$cloakfactor", math.ceil(getWeaponSightAmount()))
     end
 })
 
