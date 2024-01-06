@@ -370,7 +370,7 @@ local function GetHintsTable(capabilities)
     end
 
     if capabilities.Bash then
-		if wep.PrimaryBash then -- If the weapon performs bashing as the primary attack function, only display the "+attack" function.
+		if weapon.PrimaryBash then -- If the weapon performs bashing as the primary attack function, only display the "+attack" function.
 			table.insert(hints, {
 				glyph = ARC9.GetBindKey("+attack"),
 				action = ARC9:GetPhrase("hud.hint.bash")
