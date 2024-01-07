@@ -203,7 +203,7 @@ function SWEP:ThinkMelee()
         end
 
         if owner:KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", true) then
-            self:MeleeAttack(false, true)
+            self:MeleeAttack()
         end
 
         if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", true) and !self:GetInSights() then
