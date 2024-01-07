@@ -286,8 +286,8 @@ hook.Add("StartCommand", "ARC9_GamepadHUD", function(ply, cmd)
                     Press1 = false
                 end
             end
-            if cmd:KeyDown(IN_RELOAD) then
-                cmd:RemoveKey(IN_RELOAD)
+            if cmd:KeyDown(IN_USE) then
+                cmd:RemoveKey(IN_USE)
                 if !Press2 then
                     gui.InternalMousePressed(MOUSE_RIGHT)
                     Press2 = true
@@ -1029,7 +1029,7 @@ function SWEP:CreateCustomizeHUD()
             },
             {
                 action = "customize.hint.deselect",
-                glyph = ARC9.GetBindKey("+reload"),
+                glyph = ARC9.GetBindKey("+use"),
                 hidden = true,
             },
             {
@@ -1040,19 +1040,41 @@ function SWEP:CreateCustomizeHUD()
             },
             {
                 action = "customize.hint.pan",
-                glyph = ARC9.GetBindKey("+use"),
-                glyph2 = "shared_lstick",
+                glyph = ARC9.GetBindKey("+attack"),
+                glyph2 = "shared_touch",
                 row2 = true,
             },
             {
                 action = "customize.hint.rotate",
-                glyph = "shared_lstick",
+                glyph = ARC9.GetBindKey("+attack2"),
+                glyph2 = "shared_touch",
                 row2 = true,
             },
             {
-                action = "customize.hint.cursor",
-                glyph = "shared_rstick",
-                row2 = true,
+                action = "customize.hint.recenter",
+                glyph = ARC9.GetBindKey("+reload"),
+                row3 = true,
+            },
+            {
+                action = "customize.hint.cycle",
+                glyph = ARC9.GetBindKey("+showscores"),
+                row3 = true,
+            },
+            {
+                action = "customize.hint.last",
+                glyph = ARC9.GetBindKey("+use"),
+                glyph2 = ARC9.GetBindKey("+showscores"),
+                row3 = true,
+            },
+            {
+                action = "customize.hint.favorite",
+                glyph = ARC9.GetBindKey("impulse 100"),
+                hidden = true,
+            },
+            {
+                action = "customize.hint.random",
+                glyph = ARC9.GetBindKey("+reload"),
+                hidden = true,
             },
         }
     else
@@ -1177,36 +1199,41 @@ function SWEP:CreateCustomizeHUD()
             if hid then continue end
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
             if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material("arc9/glyphs_light/" .. v.glyph .. "_lg" .. ".png", "smooth") end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs/" .. v.glyph .. ".png", "smooth" ) end
             if v.glyph2 then
                 if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
                 if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material("arc9/glyphs_light/" .. v.glyph2 .. "_lg" .. ".png", "smooth") end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs/" .. v.glyph2 .. ".png", "smooth" ) end
             end
 
             if v.row3 then
-                table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(12) })
+                table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(10) })
                 if v.glyph2 then
                     table.insert(ToAdd3, " ")
-                    table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(12) })
+                    table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(10) })
                 end
                 table.insert(ToAdd3, " " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             elseif v.row2 then
-
+                table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(10) })
+                if v.glyph2 then
+                    table.insert(ToAdd2, " ")
+                    table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(10) })
+                end
+                table.insert(ToAdd2, " " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             else
-                table.insert(ToAdd, { v.glyph, ARC9ScreenScale(12) })
+                table.insert(ToAdd, { v.glyph, ARC9ScreenScale(10) })
                 if v.glyph2 then
                     table.insert(ToAdd, " ")
-                    table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(12) })
+                    table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(10) })
                 end
                 table.insert(ToAdd, " " .. ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             end
         end
 
-        local strreturn = CreateControllerKeyLine({x = self2:GetWide(), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3)) -- ghost     text only to get width
+        local strreturn = CreateControllerKeyLine({x = self2:GetWide(), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, Color(255,255,255,175), unpack(ToAdd3)) -- ghost     text only to get width
 
         if !table.IsEmpty(ToAdd) then
-            CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd))
+            CreateControllerKeyLine({x = ARC9ScreenScale(8), y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, Color(255,255,255,175), unpack(ToAdd))
             tipalpha = 0
         else
             -- tips
@@ -1216,7 +1243,7 @@ function SWEP:CreateCustomizeHUD()
                     tipcurrent = tipcurrent + 1
                 end
 
-                tipalpha = math.min(tipalpha + FrameTime() * 300, 100)
+                tipalpha = math.min(tipalpha + FrameTime() * 300, 175)
                 tipfade = math.min((tiplast-CurTime()) / tipdelay, 0.025) * 40 * tipalpha
                 local tiptext = ARC9:GetPhrase(tips[tipcurrent%(#tips)+1])
 
@@ -1239,7 +1266,9 @@ function SWEP:CreateCustomizeHUD()
             end
         end
 
-        CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(8)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint"), unpack(ToAdd3))
+        CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(8)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, Color(255,255,255,175), unpack(ToAdd3))
+		
+        -- CreateControllerKeyLine({x = self2:GetWide() - ARC9ScreenScale(250)-strreturn , y = ARC9ScreenScale(2), size = ARC9ScreenScale(10), font = "ARC9_10", font_keyb = "ARC9_KeybindPreview_Cust" }, ARC9.GetHUDColor("hint", 255), unpack(ToAdd2))
 
         table.Empty(self.CustomizeHints)
     end
