@@ -51,6 +51,9 @@ L["hud.hint.toggleatts"] = "Toggle Attachments"
 L["hud.hint.ubgl"] = "Toggle"
 L["hud.hint.zoom"] = "Change Zoom"
 
+L["hud.hint.lowammo"] = "Low Ammo"
+L["hud.hint.noammo"] = "No Ammo"
+
 L["hud.error.missingbind"] = "\" %s \" not bound"
 
 /////////////////////////////////////// Customization menu
@@ -110,6 +113,9 @@ L["customize.hint.select"] = "Select"
 L["customize.hint.unattach"] = "Unattach"
 L["customize.hint.unfavorite"] = "Remove Favorite"
 L["customize.hint.zoom"] = "Zoom"
+
+L["hud.hint.lowammo"] = "Low Ammo"
+L["hud.hint.noammo"] = "No Ammo"
 
 L["customize.trivia.description"] = "Description"
 

@@ -51,6 +51,9 @@ L["hud.hint.toggleatts"] = "Alternar Accesorios"
 L["hud.hint.ubgl"] = "Alternar"
 L["hud.hint.zoom"] = "Cambiar Zoom"
 
+L["hud.hint.lowammo"] = "Low Ammo"
+L["hud.hint.noammo"] = "No Ammo"
+
 L["hud.error.missingbind"] = "\" %s \" sin asignar"
 
 /////////////////////////////////////// Customization menu

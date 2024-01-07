@@ -51,6 +51,9 @@ L["hud.hint.toggleatts"] = "切换配件"
 L["hud.hint.ubgl"] = "切换"
 L["hud.hint.zoom"] = "瞄具缩放"
 
+L["hud.hint.lowammo"] = "Low Ammo"
+L["hud.hint.noammo"] = "No Ammo"
+
 L["hud.error.missingbind"] = "\" %s \" 不绑"
 
 /////////////////////////////////////// Customization menu

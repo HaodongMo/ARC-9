@@ -51,6 +51,9 @@ L["hud.hint.toggleatts"] = "Växla Tillbehör"
 L["hud.hint.ubgl"] = "Växla"
 L["hud.hint.zoom"] = "Ändra Zoom"
 
+L["hud.hint.lowammo"] = "Låg Ammo"
+L["hud.hint.noammo"] = "Ingen Ammo"
+
 L["hud.error.missingbind"] = "\" %s \" ej bunden"
 
 /////////////////////////////////////// Customization menu

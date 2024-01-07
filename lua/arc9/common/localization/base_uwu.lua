@@ -51,6 +51,9 @@ L["hud.hint.toggleatts"] = "Towgle awatachmewws"
 L["hud.hint.ubgl"] = "Towgwle"
 L["hud.hint.zoom"] = "Chawanwe zowom"
 
+L["hud.hint.lowammo"] = "Low Ammo"
+L["hud.hint.noammo"] = "No Ammo"
+
 L["hud.error.missingbind"] = "\" %s \" knot bwound >w<"
 
 /////////////////////////////////////// Customization menu

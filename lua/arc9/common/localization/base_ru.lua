@@ -51,6 +51,9 @@ L["hud.hint.toggleatts"] = "ПЕРЕКЛ. МОДУЛЬ"
 L["hud.hint.ubgl"] = "ПЕРЕКЛ. НА"
 L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
 
+L["hud.hint.lowammo"] = "Low Ammo"
+L["hud.hint.noammo"] = "No Ammo"
+
 L["hud.error.missingbind"] = "\" %s \" не связано"
 
 /////////////////////////////////////// Customization menu
