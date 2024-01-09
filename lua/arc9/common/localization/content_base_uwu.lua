@@ -1,12 +1,12 @@
 L = {}
 
--- Folders
+//////// Folders
 L["folder.arc9"] = "ARC9"
 L["folder.arc9.community"] = "Commuwnity"
 
 L["attachment.sticker"] = "Stickew"
 
--- Flat Camo
+//////// Flat Camo
 L["camo_arc9_base_flat_od.printname"] = "Owiwe Dwab"
 L["camo_arc9_base_flat_od.compactname"] = "OD"
 L["camo_arc9_base_flat_od.description"] = "Stwandawt Owiwe Dwab camowowage"
@@ -43,7 +43,7 @@ L["camo_arc9_base_flat_fde.printname"] = "Fwat Dawk Eawh"
 L["camo_arc9_base_flat_fde.compactname"] = "FDE >w<"
 L["camo_arc9_base_flat_fde.description"] = "Stwandawt Fwat Dawk Eawh camowowage"
 
--- Flat Colour
+//////// Flat Colour
 L["camo_arc9_base_flat_red.printname"] = "Wed"
 L["camo_arc9_base_flat_red.compactname"] = "Wed"
 L["camo_arc9_base_flat_red.description"] = "Bawasic wed cowow"
@@ -76,7 +76,7 @@ L["camo_arc9_base_flat_arc9orange.printname"] = "AWC9 Owange"
 L["camo_arc9_base_flat_arc9orange.compactname"] = "AWC9 Owange"
 L["camo_arc9_base_flat_arc9orange.description"] = "De pewwekt shawade of owange fow that cUwUte witle AWC9 Wogo stwickew"
 
--- Charms
+//////// Charms
 L["charm_gs_killcounter.printname"] = "Kiww Counter"
 L["charm_gs_killcounter.compactname"] = "Kiww!!!"
 L["charm_gs_killcounter.description"] = "Dewice for twacking ur owoweapon kiww stwats"
@@ -89,7 +89,7 @@ L["charm_gs_sticker.printname"] = "Stickew Pawnel"
 L["charm_gs_sticker.compactname"] = "STICKEW"
 L["charm_gs_sticker.description"] = "Dewice that awows a custom stickew to be aplied onto its scween."
 
--- Stickers, Base
+//////// Stickers, Base
 L["sticker_spray.printname"] = "Playew Spway"
 L["sticker_spray.compactname"] = "Spway"
 L["sticker_spray.description"] = [[Youw own spway as a stickew!
@@ -130,7 +130,7 @@ desiwgn bwy Darsuw.
 
 stikew incwuded in de AWC9 base]]
 
--- Stickers, Com. Wave 1
+//////// Stickers, Com. Wave 1
 L["sticker_alien_lean.printname"] = "Wegawize Alien Wean"
 L["sticker_alien_lean.compactname"] = "Awien wean"
 L["sticker_alien_lean.description"] = [[Hop dow to Agawtha wit de wite boys fow a cup of awien wean and... odew things.

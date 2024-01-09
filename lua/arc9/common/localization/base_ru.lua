@@ -51,8 +51,8 @@ L["hud.hint.toggleatts"] = "ПЕРЕКЛ. МОДУЛЬ"
 L["hud.hint.ubgl"] = "ПЕРЕКЛ. НА"
 L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
 
-L["hud.hint.lowammo"] = "Low Ammo"
-L["hud.hint.noammo"] = "No Ammo"
+-- L["hud.hint.lowammo"] = "Low Ammo"
+-- L["hud.hint.noammo"] = "No Ammo"
 
 L["hud.error.missingbind"] = "\" %s \" не связано"
 
@@ -145,13 +145,9 @@ L["customize.bench.ballistics"] = "ОЦЕНКА БАЛЛИСТИЧЕСКИХ Х�
 L["customize.bench.precision"] = "ИСПЫТАНИЕ ТОЧНОСТИ"
 
 -- L["folder.back"] = "Back"
-
 -- L["folder.deselect"] = "Deselect"
-
 -- L["folder.favorites"] = "Favorites"
-
 -- L["folder.select"] = "Select"
-
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Вкл."
@@ -171,7 +167,6 @@ L["autostat.bashdamage"] = "Урон врукопашную"
 L["autostat.bashlungerange"] = "Дальность выпада рукопашного"
 L["autostat.bashrange"] = "Дальность рукопашного"
 -- L["autostat.bashspeed"] = "Melee Speed"
-
 L["autostat.bipod"] = "Сошки"
 L["autostat.bottomlessclip"] = "Безлимитный магазин"
 L["autostat.breathholdtime"] = "Время задержки дыхания"
@@ -340,7 +335,6 @@ L["tips.m9k"] = "Зацени M9K!."
 L["tips.official"] = "Скачивай ARC9 только с офиц. источников. Неизвестные сайты скорее всего имеют устаревший код (или вирусы)."
 L["tips.presets"] = "Экспортируй свои крутые пресеты пушек и делись ими со своими друзьями!"
 L["tips.settings"] = "Ты можешь отключить эти советы, а также многое другое в настройках ARC9. Жми на кнопку слева сверху!"
--- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
 L["tips.tips"] = "У советов определенный порядок. Продолжай читать и ты увидишь их все."
 L["tips.tolerance"] = "Все оружейные базы работают вместе без проблем и у всех есть свои недостатки. Не стоит выставлять одну базу лучше другой."
 
@@ -380,9 +374,6 @@ L["settings.reset"] = "Сброс!"
 
 ////////////////////// Performance
 L["settings.tabname.performance"] = "Производительность"
-
--- L["settings.optics.cheapscopes.title"] = "Cheap Scopes"
--- L["settings.optics.cheapscopes.desc"] = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."
 
 L["settings.performance.important"] = "Важное"
 L["settings.cheapscopes.title"] = "Производительные прицелы"
@@ -467,11 +458,7 @@ L["settings.hud_cust.hud_deadzonex.desc"] = "Горизонтальная \"мё
 L["settings.hud_cust.hud_color.title"] = "Цвет интерфейса"
 L["settings.hud_cust.hud_color.desc"] = "Главный цвет интерфейса, акцент."
 -- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
-
 -- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
-
--- L["settings.hud_cust.language_id.title"] = "Language"
--- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Темная тема"
 L["settings.hud_cust.hud_darkmode.desc"] = "Включает темные цвета интерфейса вместо серого и отключает виньетку у фона."
 L["settings.hud_cust.cust_light.title"] = "Включить подсветку"
@@ -482,8 +469,6 @@ L["settings.hud_cust.cust_light_brightness.desc"] = "Яркость подсве
 L["settings.hud_cust.customization"] = "Кастомизация"
 L["settings.hud_cust.cust_hints.title"] = "Подсказки"
 L["settings.hud_cust.cust_hints.desc"] = "Включает подсказки в меню кастомизации."
--- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
--- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
 L["settings.hud_cust.cust_tips.title"] = "Советы"
 L["settings.hud_cust.cust_tips.desc"] = "Советы о базе около подсказок."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Сброс слота при выходе"
@@ -529,6 +514,12 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Процент маг�
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 L["settings.hud_game.centerhint_bipod.title"] = "Сошки"
 L["settings.hud_game.centerhint_bipod.desc"] = "Подсказка по центру экрана о возможности установки сошек."
+
+-- L["settings.hud_game.hud_glyph"] = "Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.desc"] = "Change the non-Controller Mode glyphs to use dark ones.\nRequires map reload."
+-- L["settings.hud_game.hud_glyph_size.title"] = "Glyph Size"
+-- L["settings.hud_game.hud_glyph_size.desc"] = "Multiply the size of all glyphs by this amount."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPC"
@@ -672,11 +663,9 @@ L["settings.attachments.atts_generateentities.desc"] = "Генерировать
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "Модификаторы"
 
--- L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Options > ARC9 > Modifiers  for now."
-
-L["settings.modifiers.quick.desc"] = "Простите, но мы не успели доделать их к релизу. Можете использовать продвинутые модификаторы в спавнменю > Options > ARC9 > Modifiers пока что."
-
 L["settings.modifiers.quick.title"] = "Быстрые модификаторы характеристик"
+L["settings.modifiers.quick.desc"] = " "
+
 L["settings.mod_damage.title"] = "Урон"
 L["settings.mod_spread.title"] = "Разброс"
 L["settings.mod_recoil.title"] = "Отдача"
@@ -711,7 +700,6 @@ L["settings.aimassist.enable.desc"] = "Включает помощь в приц
 
 -- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
-
 L["settings.aimassist.enable_client.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nТтребует включения аим-ассиста со стороны сервера."
 
 L["settings.aimassist.intensity.title"] = "Интенсивность"
@@ -723,7 +711,7 @@ L["settings.aimassist.cone.desc"] = "Насколько далеко или бл
 L["settings.aimassist.head.title"] = "Фиксация на головах"
 L["settings.aimassist.head.desc"] = "Должен ли аим-ассист целить вас на головы противников вместо торса?\n\nЭто серверная переменная."
 
-L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
+-- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Кэширование"

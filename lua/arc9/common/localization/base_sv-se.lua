@@ -335,7 +335,6 @@ L["tips.m9k"] = "Checka ut M9K-vapnen!"
 L["tips.official"] = "Ladda endast ner ARC9 från officiella källor. Tredje part uppladdningar kan vara farliga eller föråldrade!"
 L["tips.presets"] = "Dela med dig av dina favorita förinställningar med dina vänner genom att exportera dem!"
 L["tips.settings"] = "Du kan stänga av dessa tips, och mycket mer, via ARC9-inställningarna. Klicka på knappen i topphögra hörnet!"
--- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
 L["tips.tips"] = "Tips har en fast ordning. Fortsätt läsa så ser du till sist allihopa."
 L["tips.tolerance"] = "Alla vapenpaket fungerar bra tillsammans. Det finns ingen anledning för favorisering."
 
@@ -375,9 +374,6 @@ L["settings.reset"] = "Återställ!"
 
 ////////////////////// Performance
 L["settings.tabname.performance"] = "Prestanda"
-
-L["settings.optics.cheapscopes.title"] = "Billiga Sikten"
-L["settings.optics.cheapscopes.desc"] = "En billig RT-sikte genomförande genom att zooma in hela din vy när du siktar istället för att framställa världen igen i siktet. Ökar drastiskt prestandan på större kartor."
 
 L["settings.performance.important"] = "Viktigt"
 L["settings.cheapscopes.title"] = "Billiga Sikten"
@@ -461,12 +457,8 @@ L["settings.hud_cust.hud_deadzonex.title"] = "Gräns. Bredd Dödszon"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Horisontell \"dödszon\" för anpassningsmenyn och gränssnitt panelen.\nAnvändbra för ultrawide-skärmar."
 L["settings.hud_cust.hud_color.title"] = "Gränssnitt Färg"
 L["settings.hud_cust.hud_color.desc"] = "Markerar färgen för gränssnittet.\nAccentfärgen."
--- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
-
--- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
-
--- L["settings.hud_cust.language_id.title"] = "Language"
--- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
+L["settings.hud_cust.hud_holiday.title"] = "Högtidsteman"
+L["settings.hud_cust.hud_holiday.desc"] = "Teman som aktiverar under vissa högtider.\nSkriver över gränssnitt färger"
 L["settings.hud_cust.hud_darkmode.title"] = "Mörkt Tema"
 L["settings.hud_cust.hud_darkmode.desc"] = "Aktiverar mörka färger på gränssnittet istället för ljusgrått och avaktiverar vinjetteffekten i bakgrunden."
 L["settings.hud_cust.cust_light.title"] = "Aktivera Ljus"
@@ -477,8 +469,6 @@ L["settings.hud_cust.cust_light_brightness.desc"] = "Hur starkt ljuset kommer va
 L["settings.hud_cust.customization"] = "Anpassning"
 L["settings.hud_cust.cust_hints.title"] = "Knapptips"
 L["settings.hud_cust.cust_hints.desc"] = "Aktivera knapptips i anpassnings menyn."
--- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
--- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
 L["settings.hud_cust.cust_tips.title"] = "Tips"
 L["settings.hud_cust.cust_tips.desc"] = "Tips om ARC9-basen nära knapptipsen."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Stängning Återställer Val"
@@ -524,6 +514,12 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Magasinprocent"
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Visar omladdningstipset när det nuvarande magasinet är vid detta procentvärde."
 L["settings.hud_game.centerhint_bipod.title"] = "Visa Växla Skjutstöd"
 L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet kan växlas."
+
+L["settings.hud_game.hud_glyph"] = "Glyfer"
+L["settings.hud_game.hud_glyph_dark.title"] = "Mörka Glyfer"
+L["settings.hud_game.hud_glyph_dark.desc"] = "Ändrar icke-Kontrollerläge glyferna till några som är mörka.\nKräver omladdning av kartan."
+L["settings.hud_game.hud_glyph_size.title"] = "Storlek på Glyfer"
+L["settings.hud_game.hud_glyph_size.desc"] = "Multiplicera storleken på alla glyfer med detta antal."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPC:er"
@@ -667,11 +663,9 @@ L["settings.attachments.atts_generateentities.desc"] = "Generera entiteter som k
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "Modifierare"
 
--- L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Options > ARC9 > Modifiers  for now."
-
-L["settings.modifiers.quick.desc"] = "Vi är lite ledsna att vi inte kunde slutföra dem till släppet. Du kan använda avancerade modifierare i spawnmeny > Options > ARC9 > Modifierare för tillfället."
-
 L["settings.modifiers.quick.title"] = "Snabbstatistik Modifierare"
+L["settings.modifiers.quick.desc"] = " "
+
 L["settings.mod_damage.title"] = "Skada"
 L["settings.mod_spread.title"] = "Spridning"
 L["settings.mod_recoil.title"] = "Rekyl"

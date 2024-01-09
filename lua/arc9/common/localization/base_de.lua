@@ -37,7 +37,6 @@ L["hud.firemode.safe"] = "SICHER"
 
 L["hud.hint.bash"] = "Schlagen"
 -- L["hud.hint.bipod"] = "Toggle Bipod"
-
 L["hud.hint.breath"] = "Atem anhalten"
 L["hud.hint.customize"] = "Anpassen"
 L["hud.hint.cycle"] = "Repetieren"
@@ -52,8 +51,8 @@ L["hud.hint.toggleatts"] = "Aufsätze umschalten"
 L["hud.hint.ubgl"] = "Umschalten"
 L["hud.hint.zoom"] = "Zoom ändern"
 
-L["hud.hint.lowammo"] = "Low Ammo"
-L["hud.hint.noammo"] = "No Ammo"
+-- L["hud.hint.lowammo"] = "Low Ammo"
+-- L["hud.hint.noammo"] = "No Ammo"
 
 L["hud.error.missingbind"] = "\" %s \" nicht gebunden"
 
@@ -106,7 +105,6 @@ L["customize.hint.open"] = "Öffnen"
 L["customize.hint.pan"] = "Verschieben"
 L["customize.hint.quicksave"] = "Schnellspeichern"
 -- L["customize.hint.randomize"] = "Attach Random"
-
 L["customize.hint.recalculate"] = "Rekalkuliere"
 L["customize.hint.recenter"] = "Zentrieren"
 L["customize.hint.rotate"] = "Drehen"
@@ -119,49 +117,27 @@ L["customize.hint.zoom"] = "Zoomen"
 L["customize.trivia.description"] = "Beschreibung"
 
 -- L["customize.stats.explain.firepower"] = "The damage potential at point-blank range."
-
 -- L["customize.stats.explain.rof"] = "The weapon's rate of fire."
-
 -- L["customize.stats.explain.cyclic"] = "The weapon's cyclic rate of fire. Ignores factors like burst delay or reload requirements."
-
 -- L["customize.stats.explain.capacity"] = "How much ammo the gun can hold in the magazine + chamber."
-
 -- L["customize.stats.explain.range"] = "The range at which the gun deals minimum damage."
-
 -- L["customize.stats.explain.precision"] = "The weapon's accuracy. Measured in Minutes of Accuracy (MOA)."
-
 -- L["customize.stats.explain.muzzlevelocity"] = "The muzzle velocity of bullets fired from this gun."
-
 -- L["customize.stats.explain.ammo"] = "The type of ammo this gun uses."
-
 -- L["customize.stats.explain.penetration"] = "Amount of material this gun can penetrate. Measured in millimeters of wood."
-
 -- L["customize.stats.explain.ricochet"] = "Maximum chance for bullets from this gun to ricochet."
-
 -- L["customize.stats.explain.armorpiercing"] = "Amount of damage from this gun that completely ignores most damage resistances."
-
 -- L["customize.stats.explain.explosive"] = "Amount of explosive damage this gun will do."
-
 -- L["customize.stats.explain.speed"] = "Speed at which you can move while using this gun."
-
 -- L["customize.stats.explain.aimtime"] = "How long it takes to aim down sights from hip fire."
-
 -- L["customize.stats.explain.sprinttofire"] = "How long it takes to exit sprint and begin shooting."
-
 -- L["customize.stats.explain.firemodes"] = "Which fire modes this gun has access to."
-
 -- L["customize.stats.explain.burstdelay"] = "Amount of time after firing a burst before the gun can fire again."
-
 -- L["customize.stats.explain.triggerdelay"] = "Delay between pulling the trigger and firing a shot."
-
 -- L["customize.stats.explain.noise"] = "How loud the gun's gunshots are."
-
 -- L["customize.stats.explain.sway"] = "Amount of sway applied to the gun."
-
 -- L["customize.stats.explain.freeaim"] = "Maximum free aim angle. Lower is better."
-
 -- L["customize.stats.explain.supplylimit"] = "Amount of ammo that the gun can receive from ARC9 ammo sources."
-
 
 L["customize.bench.dummy"] = "BALLISTIK-ATTRAPPEN-TEST"
 L["customize.bench.effect"] = "EFFEKT AUF DISTANZ"
@@ -191,7 +167,6 @@ L["autostat.bashdamage"] = "Nahkampfschaden"
 L["autostat.bashlungerange"] = "Nahkampfsturz-Entfernung"
 L["autostat.bashrange"] = "Nahkampfentfernung"
 -- L["autostat.bashspeed"] = "Melee Speed"
-
 L["autostat.bipod"] = "Zweibein"
 L["autostat.bottomlessclip"] = "Bodenloses Magazin"
 L["autostat.breathholdtime"] = "Fokus-Zeit"
@@ -232,7 +207,6 @@ L["autostat.overheattime"] = "Überhitzungs-Zeit"
 L["autostat.pelletspread"] = "Kügelchenstreuung"
 L["autostat.penetration"] = "Materialpenetration"
 -- L["autostat.penetrationdelta"] = "Damage After Penetration"
-
 L["autostat.physbulletdrag"] = "Projektilverzug"
 L["autostat.physbulletgravity"] = "Projektilschwerkraft"
 L["autostat.physbulletmuzzlevelocity"] = "Mündungsgeschwindigkeit"
@@ -245,10 +219,8 @@ L["autostat.recoilautocontrol"] = "Rückstoßkontrolle"
 L["autostat.recoildissipationrate"] = "Rückstoß-Ausschweifungsrate"
 L["autostat.recoilkick"] = "Gefühlter Rückstoß"
 -- L["autostat.recoilmodifiercap"] = "Maximum Cumulative Recoil"
-
 L["autostat.recoilpatterndrift"] = "Rückstoß-Drift"
 -- L["autostat.recoilpershot"] = "Recoil per Shot"
-
 L["autostat.recoilrandomside"] = "Horizontaler Rückstoß-Streuung"
 L["autostat.recoilrandomup"] = "Vertikaler Rückstoß-Streuung"
 L["autostat.recoilresettime"] = "Rückstoß-Resetzeit"
@@ -271,7 +243,6 @@ L["autostat.supplylimit"] = "Reserve-Magazine"
 L["autostat.sway"] = "Schwanken"
 L["autostat.triggerdelay"] = "Abzugsverzögerung"
 -- L["autostat.triggerdelaytime"] = "Trigger Delay Time"
-
 L["autostat.visualrecoil"] = "Visueller Rückstoß"
 L["autostat.visualrecoilpunch"] = "Visueller Rückstoß-Schlag"
 L["autostat.visualrecoilroll"] = "Visuelle Rückstoß-Drehung"
@@ -285,7 +256,6 @@ L["autostat.secondary._divider"] = " "
 
 -- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 -- L["autostat.secondary.bipod"] = "on Bipod"
-
 L["autostat.secondary.crouch"] = "während des Kriechen"
 L["autostat.secondary.empty"] = "beim letzen Schuss im Magazin"
 L["autostat.secondary.evenreload"] = "jeden geraden Reload"
@@ -293,10 +263,8 @@ L["autostat.secondary.evenshot"] = "jeden geraden Schuss"
 L["autostat.secondary.first"] = "beim letzen Schuss"
 L["autostat.secondary.firstshot"] = "beim ersten Schuss"
 -- L["autostat.secondary.heated"] = "while Heated"
-
 L["autostat.secondary.hipfire"] = "im Hüftfeuer"
 -- L["autostat.secondary.hot"] = "from Heat"
-
 L["autostat.secondary.last"] = "beim letzen Schuss im Magazin"
 L["autostat.secondary.lastshot"] = "beim letzen Schuss im Magazin"
 L["autostat.secondary.midair"] = "in der Luft"
@@ -306,7 +274,6 @@ L["autostat.secondary.oddshot"] = "jeden ungeraden Schuss"
 L["autostat.secondary.recoil"] = "vom Rückstoß" --"With Each Shot"
 L["autostat.secondary.shooting"] = "während des Schießens"
 -- L["autostat.secondary.sighted"] = "while Sighted"
-
 L["autostat.secondary.sights"] = "im Visier"
 L["autostat.secondary.silenced"] = "wenn Schallgedämpft"
 L["autostat.secondary.true"] = "wenn TrueNames an ist"
@@ -314,19 +281,12 @@ L["autostat.secondary.ubgl"] = "im UBGL"
 
 ////////////////////// Blacklist menu
 -- L["blacklist.title"] = "ARC9 Attachment Blacklist"
-
 -- L["blacklist.desc"] = "Attachments checked here will be blocked from use"
-
 -- L["blacklist.blisted"] = "BLACKLISTED"
-
 -- L["blacklist.all"] = "ALL"
-
 -- L["blacklist.id"] = "ID"
-
 -- L["blacklist.name"] = "NAME"
-
 -- L["blacklist.filter"] = "FILTER"
-
 
 ////////////////////// Incompatible addons
 L["incompatible.title"] = "ARC9: INKOMPATIBLE ADDONS"
@@ -353,51 +313,30 @@ L["customize.presets.paste"] = "Preset-Code hier einfügen"
 L["customize.presets.random"] = "Zufall"
 L["customize.presets.save"] = "Speichern"
 L["customize.presets.unnamed"] = "Unbenannt"
-
--- L["customize.presets.deldef"] = "Are you sure you want to delete \"{name}\" default preset?"
-
+-- L["customize.presets.deldef"] = "Are you sure you want to delete \"{name}\" default preset?"´
 -- L["customize.presets.deldef2"] = "You would have to reset weapon in developer settings to return it."
-
 L["customize.presets.yes"] = "Ja"
 
 ////////////////////// Tips
 -- L["tips.arc-9"] = "It's ARC9, not ARC-9, not Arc9."
-
 -- L["tips.blacklist"] = "You can blacklist attachments! See the ARC9 Workshop description for more information."
-
 -- L["tips.bugs"] = "Report bugs on the official Discord server, or better yet, open a Github issue."
-
 -- L["tips.custombinds"] = "ARC9 key combos can be replaced with custom binds. Start typing +arc9_ to find the available binds!"
-
 -- L["tips.cyberdemon"] = "To kill the terrorist, shoot him until he is dead."
-
 -- L["tips.description"] = "We advise you to read the descriptions of addons before commenting."
-
 -- L["tips.development"] = "Keen to develop ARC9 content? The official Discord server has plenty of resources to help!"
-
 -- L["tips.discord"] = "Join Diamond Doves on Discord! The link is in the ARC9 description and in top of settings."
-
 -- L["tips.external"] = "If using the Github version of ARC9, make sure to update frequently!"
-
 -- L["tips.hints"] = "Keep ARC9's HUD on to see control hints."
-
 -- L["tips.lean"] = "To manually lean, bind keys to +alt1 and +alt2."
-
 -- L["tips.love"] = "Feel free to tell the devs you appreciate their work! It really helps us keep going."
-
 -- L["tips.m9k"] = "Check out M9K guns!."
-
 -- L["tips.official"] = "Only download ARC9 from official sources. Third party uploads may be malicious or outdated!"
-
 -- L["tips.presets"] = "Share your favorite presets with your friends by exporting them!"
-
 -- L["tips.settings"] = "You can turn these tips off, and much more, in the ARC9 settings. Click the button in the top left corner!"
-
 -- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
 -- L["tips.tips"] = "Tips have a fixed order. Keep reading and you'll eventually see them all."
-
 -- L["tips.tolerance"] = "All weapon bases work fine together. There's no need for favoritism."
-
 
 ////////////////////// Other
 L["atts.favourites"] = "Favoriten"
@@ -412,47 +351,29 @@ L["settings.title"] = "ARC9 Einstellungen"
 L["settings.desc"] = "Beschreibung"
 
 -- L["settings.default_convar"] = "Default value"
-
 -- L["settings.convar_server"] = "Server variable"
-
 -- L["settings.convar_client"] = "Client variable"
-
 
 ////////////////////// General
 -- L["settings.tabname.general"] = "General"
 
-
 -- L["settings.general.client"] = "Client"
-
 -- L["settings.truenames.title"] = "True Names"
-
 -- L["settings.truenames.desc"] = "Set whether to use weapons' real names or fictional names made by the developers. Not all weapons utilize this."
-
 -- L["settings.resetsettings.cl.title"] = "Reset all CLIENT settings"
 
-
 -- L["settings.general.server"] = "Server"
-
 -- L["settings.truenames_default.title"] = "Default True Names"
-
 -- L["settings.truenames_default.desc"] = "Set the default true names mode on the server. All players using \"Default\" in preference will use this."
-
 -- L["settings.truenames_enforced.title"] = "Default True Names Enforced"
-
 -- L["settings.truenames_enforced.desc"] = "Set to force all players to use the server setting for true names."
-
 
 -- L["settings.resetsettings.sv.title"] = "Reset all SERVER settings"
 
-
 -- L["settings.reset"] = "Reset!"
-
 
 ////////////////////// Performance
 L["settings.tabname.performance"] = "Leistung"
-
--- L["settings.optics.cheapscopes.title"] = "Cheap Scopes"
--- L["settings.optics.cheapscopes.desc"] = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."
 
 L["settings.performance.important"] = "Wichtig"
 L["settings.cheapscopes.title"] = "Billige Visiere"
@@ -491,9 +412,7 @@ L["settings.tabname.optics"] = "Optiken"
 
 L["settings.optics.control"] = "Steuerung"
 -- L["settings.optics.sensmult.title"] = "Multiply ADS Sensitivity"
-
 -- L["settings.optics.sensmult.desc"] = "Multiply the look sensitivity by this amount when aiming.\nThe lower the value, the lower the sensitivity.\nUseful when using controllers, or if the user just wants lower aiming sensitivity."
-
 L["settings.optics.compensate_sens.title"] = "Kompensierungs-Sensitivität"
 L["settings.optics.compensate_sens.desc"] = "Kompensierungs-Sensitivität für Vergrößerung."
 L["settings.optics.toggleads.title"] = "Zielvorr. umschalten"
@@ -524,13 +443,9 @@ L["settings.crosshair.crosshair_static.desc"] = "Aktiviert ein festes Fadenkreuz
 L["settings.crosshair.crosshair_force.title"] = "Fadenkreuz erzwingen"
 L["settings.crosshair.crosshair_force.desc"] = "Erzwinge das Fadenkreuz auch bei Waffen, die nicht möchten, dass du es siehst.\n\nServereinstellung."
 -- L["settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
-
 -- L["settings.crosshair.crosshair_target.desc"] = "Make the crosshair red when aiming on a target.\nAlso activates aim assist if it is turned on."
-
 -- L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
-
 -- L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
-
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Anpassung"
@@ -539,21 +454,13 @@ L["settings.hud_cust.hud"] = "HUD"
 L["settings.hud_cust.hud_scale.title"] = "UI-Skalierung"
 L["settings.hud_cust.hud_scale.desc"] = "Skalierungsmultiplikator für die Oberfläche von ARC9."
 -- L["settings.hud_cust.hud_deadzonex.title"] = "HUD Width Deadzone"
-
 -- L["settings.hud_cust.hud_deadzonex.desc"] = "Horizontal \"deadzone\" for customization menu and HUD panel.\nUseful for ultrawide monitors."
-
 L["settings.hud_cust.hud_color.title"] = "UI-Farbe"
 L["settings.hud_cust.hud_color.desc"] = "Hervorhebungsfarbe für das HUD.\nDie Akzentfarbe."
 -- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
-
 -- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
-
--- L["settings.hud_cust.language_id.title"] = "Language"
--- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 -- L["settings.hud_cust.hud_darkmode.title"] = "Dark Theme"
-
 -- L["settings.hud_cust.hud_darkmode.desc"] = "Enables dark colors in HUD instead of light gray and disables vignette effect in background."
-
 L["settings.hud_cust.cust_light.title"] = "Licht akt."
 L["settings.hud_cust.cust_light.desc"] = "Aktiviert die Waffenbeleuchtung im Anpassungsmenü.\n\nDasselbe wie der Knopf neben dem Einstellungs-Button."
 L["settings.hud_cust.cust_light_brightness.title"] = "Helligkeit"
@@ -562,12 +469,8 @@ L["settings.hud_cust.cust_light_brightness.desc"] = "Wie hell das Licht im Anpas
 L["settings.hud_cust.customization"] = "Anpassung"
 L["settings.hud_cust.cust_hints.title"] = "Hinweise"
 L["settings.hud_cust.cust_hints.desc"] = "Aktiviere Hinweise im Anpassungsmenü."
--- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
--- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
 -- L["settings.hud_cust.cust_tips.title"] = "Tips"
-
 -- L["settings.hud_cust.cust_tips.desc"] = "Tips about ARC9 base near hints."
-
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Verlassen setzt Auswahl zurück"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Das Verlassen des Anpassungsmenüs setzt die Auswahl des aktiven Slots zurück."
 
@@ -582,15 +485,11 @@ L["settings.hud_game.hud_always.desc"] = "Aktiviere das HUD bei allen Waffen."
 L["settings.hud_game.hud_compact.title"] = "Kompaktmodus"
 L["settings.hud_game.hud_compact.desc"] = "Kompaktes Erscheinungsbild für das HUD-Panel."
 -- L["settings.hud_game.hud_nohints.title"] = "Disable Hints"
-
 -- L["settings.hud_game.hud_nohints.desc"] = "Disable hints completely. They will not show up in the 3D HUD, nor in the 2D HUD."
-
 L["settings.hud_game.hud_keephints.title"] = "Hinweise behalten"
 L["settings.hud_game.hud_keephints.desc"] = "Zeige die ARC9-Steuerungshinweise oben auf dem HUD-Panel."
 -- L["settings.hud_game.hud_force_disable.title"] = "Force Disable HUD"
-
 -- L["settings.hud_game.hud_force_disable.desc"] = "Disable ARC9 HUD for all players. Does not affect hints."
-
 
 L["settings.hud_game.killfeed"] = "Killfeed"
 L["settings.hud_game.killfeed_enable.title"] = "Killfeed-Symbole"
@@ -598,9 +497,7 @@ L["settings.hud_game.killfeed_enable.desc"] = "Automatische Generierung von Kill
 L["settings.hud_game.killfeed_dynamic.title"] = "Dynamische Aktualisierung"
 L["settings.hud_game.killfeed_dynamic.desc"] = "Killfeed-Symbole werden nach jedem Kill neu generiert.\n\nDeaktiviere dies, wenn du 0,1 FPS mehr haben willst."
 -- L["settings.hud_game.killfeed_color.title"] = "Full Color Icons"
-
 -- L["settings.hud_game.killfeed_color.desc"] = "Dynamically generated icons are fully colored."
-
 
 L["settings.hud_game.breath"] = "Atmen"
 L["settings.hud_game.breath_hud.title"] = "Atem-HUD"
@@ -611,19 +508,18 @@ L["settings.hud_game.breath_sfx.title"] = "Atem-Effekte"
 L["settings.hud_game.breath_sfx.desc"] = "Wenn du den Atem anhälst, werden die zugehörigen Soundeffekte abgespielt."
 
 -- L["settings.hud_game.centerhint"] = "Tooltips"
-
 -- L["settings.hud_game.centerhint_reload.title"] = "Display Reload Tip"
-
 -- L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
-
 -- L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
-
 -- L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
-
 -- L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
-
 -- L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
 
+-- L["settings.hud_game.hud_glyph"] = "Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.title"] = "Mörka Glyfer"
+-- L["settings.hud_game.hud_glyph_dark.desc"] = "Ändrar icke-Kontrollerläge glyferna till några som är mörka.\nKräver omladdning av kartan."
+-- L["settings.hud_game.hud_glyph_size.title"] = "Storlek på Glyfer"
+-- L["settings.hud_game.hud_glyph_size.desc"] = "Multiplicera storleken på alla glyfer med detta antal."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPCs"
@@ -657,13 +553,9 @@ L["settings.gameplay.togglelean.desc"] = "Das Drücken der Lehnen-Tasten schalte
 L["settings.gameplay.togglepeek.title"] = "Spähen umschalten"
 L["settings.gameplay.togglepeek.desc"] = "Das Drücken der Spähen-Taste schaltet das Spähen um, anstatt gedrückt gehalten werden zu müssen."
 -- L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek State After Aiming"
-
 -- L["settings.gameplay.togglepeek_reset.desc"] = "(Only if Toggle Peek is on)\nPeek state will not be retained when exiting aim down sights."
-
 -- L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
-
 -- L["settings.gameplay.togglebreath.desc"] = "Pressing the Holding Breath key will toggle Holding Breath instead of needing to be held down."
-
 
 L["settings.gameplay.mechanics"] = "Spielemechaniken"
 L["settings.gameplay.infinite_ammo.title"] = "Unbegrenzte Munition"
@@ -685,19 +577,13 @@ L["settings.gameplay.manualbolt.desc"] = "Repetierwaffen, die für diese Funktio
 L["settings.gameplay.never_ready.title"] = "Keine \"Ready\"-Animationen."
 L["settings.gameplay.never_ready.desc"] = "Deaktiviere \"Ready\"-Animationen beim zücken einer Waffe."
 -- L["settings.gameplay.recoilshake.title"] = "Recoil FOV Shake"
-
 -- L["settings.gameplay.recoilshake.desc"] = "Snaps field of view when shooting"
-
 -- L["settings.gameplay.equipment_generate_ammo.title"] = "Unique Ammo Types for Equipment"
-
 -- L["settings.gameplay.equipment_generate_ammo.desc"] = "There is a limit of 255 ammo types, and disabling this option may help fix some problems if you have lots of addons.\n\nThis is a server variable.\n\nRequires restart."
-
 
 -- ??
 -- L["settings.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
-
 -- L["settings.gameplay.mult_defaultammo.desc"] = "How many magazines/grenades/equipment give to player when he takes weapon for first time?\n\nThis is a server variable."
-
 L["settings.gameplay.nearwall.title"] = "Wandnähe"
 L["settings.gameplay.nearwall.desc"] = "Schießen verbieten, wenn du zu nahe an einer Wand oder einem Hindernis stehst."
 
@@ -717,19 +603,12 @@ L["settings.visuals.vm_addz.title"] = "Z hinzufügen"
 L["settings.visuals.vm_addz.desc"] = "Verschiebe das Viewmodel nach oben und unten."
 
 -- L["settings.visuals.cambob"] = "View Bobbing"
-
 -- L["settings.visuals.vm_cambob.title"] = "Sprint View Bobbing"
-
 -- L["settings.visuals.vm_cambob.desc"] = "Makes your camera move when you sprinting"
-
 -- L["settings.visuals.vm_cambobwalk.title"] = "Walk View Bobbing"
-
 -- L["settings.visuals.vm_cambobwalk.desc"] = "Makes your camera slightly move when you walking around (requires sprint bobbing)"
-
 -- L["settings.visuals.vm_cambobintensity.title"] = "Intensity"
-
 -- L["settings.visuals.vm_cambobintensity.desc"] = "How intense bobbing will be"
-
 
 L["settings.visuals.tpik"] = "TPIK"
 L["settings.visuals.tpik.title"] = "TPIK aktivieren"
@@ -769,9 +648,7 @@ L["settings.attachments.atts_max.desc"] = "Die maximale Anzahl an Aufsätzen, di
 L["settings.attachments.autosave.title"] = "Auto-Speichern"
 L["settings.attachments.autosave.desc"] = "Deine letzten Waffenanpassungsoptionen werden gespeichert und automatisch angewendet, wenn du diese Waffe das nächste Mal spawnst."
 -- L["settings.attachments.blacklist.title"] = "Blacklist Menu"
-
 -- L["settings.attachments.blacklist.open"] = "Open"
-
 
 L["settings.attachments.inventory"] = "Inventar"
 L["settings.attachments.free_atts.title"] = "Freie Auswahl"
@@ -786,11 +663,9 @@ L["settings.attachments.atts_generateentities.desc"] = "Generiere Entities, mit 
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "Modifiers"
 
--- L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Options > ARC9 > Modifiers  for now."
-
-L["settings.modifiers.quick.desc"] = "Es tut uns Leid, aber wir konnten dies nicht rechtzeitig zum Release fertigstellen. Vorerst kannst du erweiterte Modifikatoren in  spawnmenu > Options > ARC9 > Modifiers  verwenden."
-
 L["settings.modifiers.quick.title"] = "Schnell-Stats-Modifier"
+L["settings.modifiers.quick.desc"] = " "
+
 L["settings.mod_damage.title"] = "Schaden"
 L["settings.mod_spread.title"] = "Streuung"
 L["settings.mod_recoil.title"] = "Rückstoß"
@@ -802,7 +677,6 @@ L["settings.mod_muzzlevelocity.title"] = "Mündungsgeschwindigkeit"
 L["settings.mod_rpm.title"] = "Feuerrate"
 L["settings.mod_headshotdamage.title"] = "Kopfschuss-Schaden"
 -- L["settings.mod_malfunction.title"] = "Malfunction Chance"
-
 
 ////////////////////// Controller
 L["settings.tabname.controller"] = "Controller"
@@ -819,83 +693,51 @@ L["settings.controller.controller_config.desc"] = "Öffne das erweiterte Control
 
 ////////////////////// Aim Assist
 -- L["settings.tabname.aimassist"] = "Aim Assist"
-
 -- L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."
 
-
 -- L["settings.aimassist.enable.title"] = "Enable Aim Assist"
-
 -- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nRequires Aim Assist to be enabled on CLIENT."
-
 
 -- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
-
 -- L["settings.aimassist.enable_client.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nRequires Aim Assist to be enabled on SERVER."
 
-
 -- L["settings.aimassist.intensity.title"] = "Intensity"
-
 -- L["settings.aimassist.intensity.desc"] = "How intense the aim assist is.\n\nThis is a server variable."
 
-
 -- L["settings.aimassist.cone.title"] = "Cone"
-
 -- L["settings.aimassist.cone.desc"] = "How close or far away you need to look towards a target before the aim assist engages.\n\nThis is a server variable."
 
-
 -- L["settings.aimassist.head.title"] = "Lock onto head"
-
 -- L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the target's head instead of its chest.\n\nThis is a server variable."
-
 
 -- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
-
 ////////////////////// Asset Caching
 -- L["settings.tabname.caching"] = "Asset Caching"
-
 -- L["settings.caching.title"] = "Asset Caching"
-
 -- L["settings.caching.desc"] = "You can cache some ARC9 assets (save in memory without loading while playing) to prevent stutters for comfort gameplay!\n\nYou surely should enable some stuff if your gmod running on HDD."
 
-
 -- L["settings.caching.precache_sounds_onfirsttake.title"] = "On first equip: Cache gun sounds"
-
 -- L["settings.caching.precache_sounds_onfirsttake.desc"] = "Caches all sounds only from gun you just took in hands (except reload sounds).\n\nNot any impactful, rather helpful to prevent stutters while firing."
 
-
 -- L["settings.caching.precache_attsmodels_onfirsttake.title"] = "On first equip: Cache all attachments"
-
 -- L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Caches all ARC9 attachments models when any ARC9 weapon was first equipped.\n\nCauses pretty big freeze, especially when you have lots of weapons."
-
 -- L["settings.caching.precache_wepmodels_onfirsttake.title"] = "On first equip: Cache all weapon models"
-
 -- L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Caches all ARC9 weapons viewmodels when any ARC9 weapon was first equipped.\n\nCauses REALLY BIG freeze, especially when you have lots of weapons."
 
-
 -- L["settings.caching.precache_allsounds_onstartup.title"] = "On game start: Cache all guns sounds"
-
 -- L["settings.caching.precache_allsounds_onstartup.desc"] = "Caches all sounds from all guns on server start-up. (except reload sounds).\n\nNot so impactful, but anyway you better use first option here."
-
 -- L["settings.caching.precache_attsmodels_onstartup.title"] = "On game start: Cache all attachments"
-
 -- L["settings.caching.precache_attsmodels_onstartup.desc"] = "Caches all ARC9 attachments models on server start-up.\n\nCauses pretty big load time increase, especially when you have lots of weapons."
-
 -- L["settings.caching.precache_wepmodels_onstartup.title"] = "On game start: Cache all weapon models"
-
 -- L["settings.caching.precache_wepmodels_onstartup.desc"] = "Caches all ARC9 weapons viewmodels on server start-up.\n\nCauses REALLY BIG load time increase, especially when you have lots of weapons."
 
-
 -- L["settings.caching.precache_allsounds.title"] = "All weapon sounds"
-
 -- L["settings.caching.precache_wepmodels.title"] = "All weapon models"
-
 -- L["settings.caching.precache_attsmodels.title"] = "All attachments models"
 
-
 -- L["settings.developer.cache"] = "Cache"
-
 
 ////////////////////// Developer
 L["settings.tabname.developer"] = "Entwickler"
@@ -906,9 +748,7 @@ L["settings.developer.dev_always_ready.desc"] = "Spiele immer die \"ready\" Anim
 L["settings.developer.dev_benchgun.title"] = "Benchgun"
 L["settings.developer.dev_benchgun.desc"] = "Lasse die Waffe dort wo sie gerade ist."
 -- L["settings.developer.dev_crosshair.title"] = "Dev Crosshair"
-
 -- L["settings.developer.dev_crosshair.desc"] = "Funky looking crosshair showing the exact point of aim and some useful numbers.\n\nThis is a server variable, and only works for admins - don't get cheaty with this!"
-
 L["settings.developer.dev_show_shield.title"] = "Schild zeigen"
 L["settings.developer.dev_show_shield.desc"] = "Zeige das Modell vom Schild des Spielers."
 L["settings.developer.dev_greenscreen.title"] = "Green-Screen"
@@ -916,7 +756,6 @@ L["settings.developer.dev_greenscreen.desc"] = "Zeigt einen Green-Screen-Hinterg
 L["settings.developer.reloadatts.title"] = "Aufsätze neu laden"
 L["settings.developer.reloadlangs.title"] = "Sprachen neu laden"
 -- L["settings.developer.dev_listmyatts.title"] = "List My Attachments"
-
 L["settings.developer.dev_listanims.title"] = "Animationen auflisten"
 L["settings.developer.dev_listbones.title"] = "Knochen auflisten"
 L["settings.developer.dev_listbgs.title"] = "Bodygroups auflisten"

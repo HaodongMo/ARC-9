@@ -190,11 +190,11 @@ local conVars = {
         default = "0",
         client = true
     },
-    {
-        name = "controller_rumble",
-        default = "1",
-        client = true
-    },
+    -- {
+        -- name = "controller_rumble",
+        -- default = "1",
+        -- client = true
+    -- },
     {
         name = "controller_glyphset",
         default = "",
@@ -804,26 +804,21 @@ local conVars = {
         default = "5",
         replicated = true,
     },
-    -- {
-        -- name = "aimassist_distance",
-        -- default = "1024",
-        -- replicated = true,
-    -- },
     {
         name = "aimassist_intensity",
         default = "1",
         replicated = true,
     },
-    {
-        name = "aimassist_lockon",
-        default = "0",
-        replicated = true,
-    },
-    {
-        name = "aimassist_lockon_cl",
-        default = "1",
-        client = true,
-    },
+    -- {
+        -- name = "aimassist_lockon",
+        -- default = "0",
+        -- replicated = true,
+    -- },
+    -- {
+        -- name = "aimassist_lockon_cl",
+        -- default = "1",
+        -- client = true,
+    -- },
     {
         name = "aimassist_cl",
         default = "1",
@@ -837,6 +832,16 @@ local conVars = {
     {
         name = "aimassist_multsens",
         default = "0.75",
+        client = true,
+    },
+    {
+        name = "glyph_dark",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "glyph_size",
+        default = "1",
         client = true,
     },
 }
@@ -1055,7 +1060,6 @@ local function menu_client_controller(panel)
     local matselect_filter = vgui.Create( "DComboBox", panel )
     panel:AddItem( matselect_filter )
     matselect_filter:AddChoice( "! Choose Filter !", "CHOOSEFILTER" )
-    -- matselect_filter:AddChoice( "PS4", "ps4_" )
     matselect_filter:AddChoice( "Xbox 360", "360_" )
     matselect_filter:AddChoice( "Amazon Luna", "luna_" )
     matselect_filter:AddChoice( "Oculus", "oculus_" )

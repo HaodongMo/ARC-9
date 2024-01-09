@@ -1,12 +1,12 @@
 L = {}
 
--- Folders
+//////// Folders
 L["folder.arc9"] = "ARC9"
 L["folder.arc9.community"] = "Gemenskap"
 
 L["attachment.sticker"] = "Klistermärke"
 
--- Flat Camo
+//////// Flat Camo
 L["camo_arc9_base_flat_od.printname"] = "Olivgrön"
 L["camo_arc9_base_flat_od.compactname"] = "OG"
 L["camo_arc9_base_flat_od.description"] = "Standard Olivgrön kamouflage."
@@ -43,7 +43,7 @@ L["camo_arc9_base_flat_fde.printname"] = "Platt Mörk Jord"
 L["camo_arc9_base_flat_fde.compactname"] = "PMJ"
 L["camo_arc9_base_flat_fde.description"] = "Standard Platt Mörk Jord kamouflage."
 
--- Flat Colour
+//////// Flat Colour
 L["camo_arc9_base_flat_red.printname"] = "Röd"
 L["camo_arc9_base_flat_red.compactname"] = "Röd"
 L["camo_arc9_base_flat_red.description"] = "Simpel röd färg."
@@ -76,21 +76,20 @@ L["camo_arc9_base_flat_arc9orange.printname"] = "ARC9-Orange"
 L["camo_arc9_base_flat_arc9orange.compactname"] = "ARC9-Orange"
 L["camo_arc9_base_flat_arc9orange.description"] = "Den perfekta nyans av orange för den söta lilla ARC9-logga klistermärket."
 
--- Charms
+//////// Charms
 L["charm_gs_killcounter.printname"] = "Dråp Räknare"
 L["charm_gs_killcounter.compactname"] = "DRÅP"
 L["charm_gs_killcounter.description"] = "Enhet som spårar ditt vapens dråp statistik."
 
 L["charm_gs_clock.printname"] = "Simpel Klocka"
 L["charm_gs_clock.compactname"] = "KLOCKA"
-L["charm_gs_clock.description"] = "Device that displays the real-world time."
 L["charm_gs_clock.description"] = "Enhet som visar tiden i realtid."
 
 L["charm_gs_sticker.printname"] = "Klistermärke Panel"
 L["charm_gs_sticker.compactname"] = "KLISTER."
 L["charm_gs_sticker.description"] = "Enhet som tillåter en att sätta sitt egna klistermärke på dess skärm."
 
--- Stickers, Base
+//////// Stickers, Base
 L["sticker_spray.printname"] = "Spelare Sprej"
 L["sticker_spray.compactname"] = "Sprej"
 L["sticker_spray.description"] = [[Din egna sprej som ett klistermärkte!
@@ -131,7 +130,7 @@ Design av Darsu.
 
 Klistermärke inkluderad i ARC9-basen.]]
 
--- Stickers, Com. Wave 1
+//////// Stickers, Com. Wave 1
 L["sticker_alien_lean.printname"] = "Legalisera Utomjording Lutning"
 L["sticker_alien_lean.compactname"] = "LUT"
 L["sticker_alien_lean.description"] = [[Hoppa ner till Agartha med den vita pojkarna för en kopp av utomjordiskt lutning och... andra grejer.

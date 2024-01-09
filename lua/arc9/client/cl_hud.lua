@@ -495,9 +495,12 @@ local function DrawSimpleHints()
 
     lasthintcount = #hints
 
+	local glyphmult = GetConVar("arc9_glyph_size"):GetFloat()
+	local glyphmulty = glyphmult * (1 * (glyphmult * 10))
+
     local hx = 0
     local hy = 0
-    local SIZE = ARC9ScreenScale(8)
+    local SIZE = ARC9ScreenScale(8) * glyphmult
 
     if hidefadetime + 1.5 > ct then
         hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
@@ -507,14 +510,14 @@ local function DrawSimpleHints()
     if convar_keephints:GetBool() then hint_alpha = 1 end
 
     local hints_w = ARC9ScreenScale(100)
-    local hints_h = ARC9ScreenScale(12) * table.Count(hints)
+    local hints_h = ARC9ScreenScale(11) * table.Count(hints)
 
     hx = ARC9ScreenScale(10) + deadzonex:GetInt()
     hy = (ScrH() - hints_h) / 2
 
     surface.SetDrawColor(ARC9.GetHUDColor("shadow", 160 * hint_alpha))
     surface.SetMaterial(hud_sillyhints)
-    surface.DrawTexturedRect(-ARC9ScreenScale(5) + deadzonex:GetInt(), hy-ARC9ScreenScale(7.5), hints_w, hints_h+ARC9ScreenScale(15))
+    surface.DrawTexturedRect(-ARC9ScreenScale(5) + deadzonex:GetInt(), hy-ARC9ScreenScale(12.5), hints_w, hints_h+ARC9ScreenScale(25) * math.Clamp(glyphmult, 1, 1.65) * math.Clamp(glyphmult, 1, 1.45))
 
     local off_x = ARC9ScreenScale(0.5)
     local off_y = ARC9ScreenScale(0.5)
@@ -527,18 +530,17 @@ local function DrawSimpleHints()
         surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
         surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
         surface.SetTextPos(hx + off_x, hy + off_y)
-        strreturn = CreateControllerKeyLine( {x = hx + off_x, y = hy + off_y, size = ARC9ScreenScale(9), font_keyb = "ARC9_10", font = "ARC9_10" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        strreturn = CreateControllerKeyLine( {x = hx / glyphmult + off_x, y = hy + off_y + (-glyphmulty * 0.35), size = ARC9ScreenScale(9), font_keyb = "ARC9_10", font = "ARC9_10" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
         CreateControllerKeyLine( {x = hx + off_x + math.max(strreturn, ARC9ScreenScale(25)), y = hy + txt_off_y + off_y, size = ARC9ScreenScale(10), font_keyb = "ARC9_10", font = "ARC9_10" }, " " .. hint.action )
-
 
         surface.SetFont("ARC9_10")
         surface.SetDrawColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
         surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
         surface.SetTextPos(hx, hy)
-        strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = ARC9ScreenScale(9), font_keyb = "ARC9_10", font = "ARC9_10" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+        strreturn = CreateControllerKeyLine( {x = hx / glyphmult, y = hy + (-glyphmulty * 0.35), size = ARC9ScreenScale(9), font_keyb = "ARC9_10", font = "ARC9_10" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
         CreateControllerKeyLine( {x = hx + math.max(strreturn, ARC9ScreenScale(25)), y = hy + txt_off_y, size = ARC9ScreenScale(10), font_keyb = "ARC9_10", font = "ARC9_10" }, " " .. hint.action )
 
-        hy = hy + ARC9ScreenScale(12)
+        hy = hy + ARC9ScreenScale(12) * ((math.Clamp(glyphmult, 1, 1.65)))
     end
 end
 
@@ -1219,11 +1221,17 @@ function ARC9.DrawHUD()
             first = false
         end
 
+		-- hints = table.Reverse(hints)
+
         lasthintcount = #hints
 
+		-- local glyphmult = GetConVar("arc9_glyph_size"):GetFloat()
+		local glyphmult = 1
+		local glyphmulty = glyphmult * (1 * (glyphmult * 10))
+
         local hx = 0
-        local hy = 0
-        local SIZE = 16
+        local hy = (5 * glyphmult)
+        local SIZE = 16 * glyphmult
 
         if hidefadetime + 1.5 > ct then
             hint_alpha = math.Approach(hint_alpha, 1, FrameTime() / 0.1)
@@ -1243,7 +1251,7 @@ function ARC9.DrawHUD()
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
                 surface.SetTextPos(hx + 4, hy + 2)
-                strreturn = CreateControllerKeyLine( {x = hx + 2, y = hy + 1, size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+                strreturn = CreateControllerKeyLine( {x = hx + 2 / glyphmult, y = hy + 1 + (-glyphmulty * 0.35), size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
                 CreateControllerKeyLine( {x = hx + 4 + math.max(strreturn, 48), y = hy + 2, size = 16, font = "ARC9_16_Unscaled" }, " " .. hint.action )
 
 
@@ -1251,10 +1259,10 @@ function ARC9.DrawHUD()
                 surface.SetDrawColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
                 surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
                 surface.SetTextPos(hx, hy)
-                strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
+                strreturn = CreateControllerKeyLine( {x = hx / glyphmult, y = hy + (-glyphmulty * 0.35), size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
                 CreateControllerKeyLine( {x = hx + math.max(strreturn, 48), y = hy, size = 16, font = "ARC9_16_Unscaled" }, " " .. hint.action )
 
-                hy = hy + 19
+                hy = hy + 17.5 * math.Clamp(glyphmult, 1, 1.65)
             end
         cam.End3D2D()
     end
@@ -1283,7 +1291,7 @@ ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox -- {}
 function ARC9.DarkButtons()
 	local darkbuttons = "light"
 	
-	if GetConVar("arc9_hud_darkmode"):GetFloat() == 1 then
+	if GetConVar("arc9_glyph_dark"):GetBool() then
 		darkbuttons = "dark"
 	end
 	
@@ -1294,8 +1302,8 @@ ARC9.CTRL_Lookup = {
     MOUSE1 = "mouse_left_key_" .. ARC9.DarkButtons(),
     MOUSE2 = "mouse_right_key_" .. ARC9.DarkButtons(),
     MOUSE3 = "mouse_middle_key_" .. ARC9.DarkButtons(),
-    MOUSE4 = "legacy/" .. ARC9.DarkButtons() .. "/shared_mouse_4_lg",
-    MOUSE5 = "legacy/" .. ARC9.DarkButtons() .. "/shared_mouse_5_lg",
+    MOUSE4 = "legacy/" .. ARC9.DarkButtons() .. "/shared_mouse_5_lg",
+    MOUSE5 = "legacy/" .. ARC9.DarkButtons() .. "/shared_mouse_4_lg",
 
     MWHEELUP = "legacy/" .. ARC9.DarkButtons() .. "/shared_mouse_scroll_up_lg",
     MWHEELDOWN = "legacy/" .. ARC9.DarkButtons() .. "/shared_mouse_scroll_down_lg",

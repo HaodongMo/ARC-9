@@ -1,12 +1,12 @@
 L = {}
 
--- Folders
+//////// Folders
 L["folder.arc9"] = "ARC9"
 L["folder.arc9.community"] = "Community"
 
 L["attachment.sticker"] = "Sticker"
 
--- Flat Camo
+//////// Flat Camo
 L["camo_arc9_base_flat_od.printname"] = "Verde Oliva"
 L["camo_arc9_base_flat_od.compactname"] = "VO"
 L["camo_arc9_base_flat_od.description"] = "Camuflaje Verde Oliva estándar."
@@ -43,7 +43,7 @@ L["camo_arc9_base_flat_fde.printname"] = "Tierra Oscura Plana"
 L["camo_arc9_base_flat_fde.compactname"] = "TOP"
 L["camo_arc9_base_flat_fde.description"] = "Camuflaje estándar Tierra Oscura Plana."
 
--- Flat Colour
+//////// Flat Colour
 L["camo_arc9_base_flat_red.printname"] = "Rojo"
 L["camo_arc9_base_flat_red.compactname"] = "Rojo"
 L["camo_arc9_base_flat_red.description"] = "Color rojo básico."
@@ -76,7 +76,7 @@ L["camo_arc9_base_flat_arc9orange.printname"] = "Naranja ARC9"
 L["camo_arc9_base_flat_arc9orange.compactname"] = "Naranja ARC9"
 L["camo_arc9_base_flat_arc9orange.description"] = "El tono de naranja perfecto para esa bonita pegatina con el logotipo ARC9."
 
--- Charms
+//////// Charms
 L["charm_gs_killcounter.printname"] = "Contador de muertes"
 L["charm_gs_killcounter.compactname"] = "KILL"
 L["charm_gs_killcounter.description"] = "Dispositivo para seguir las estadísticas de muerte de tu arma."
@@ -89,7 +89,7 @@ L["charm_gs_sticker.printname"] = "Panel de pegatinas"
 L["charm_gs_sticker.compactname"] = "PEGATINA"
 L["charm_gs_sticker.description"] = "Dispositivo que permite aplicar una pegatina personalizada en su pantalla."
 
--- Stickers, Base
+//////// Stickers, Base
 L["sticker_spray.printname"] = "Spray de Jugador"
 L["sticker_spray.compactname"] = "Spray"
 L["sticker_spray.description"] = [[¡Tu propio spray como pegatina!
@@ -130,7 +130,7 @@ Diseño de Darsu.
 
 Pegatina incluida en la base ARC9.]]
 
--- Stickers, Com. Wave 1
+//////// Stickers, Com. Wave 1
 L["sticker_alien_lean.printname"] = "Legalizar Magro Alien"
 L["sticker_alien_lean.compactname"] = "Magro Alien"
 L["sticker_alien_lean.description"] = [[Baja a Agartha con los chicos blancos para tomar una taza de magro alienígena y... otras cosas.

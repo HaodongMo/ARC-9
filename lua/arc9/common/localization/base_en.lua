@@ -335,7 +335,6 @@ L["tips.m9k"] = "Check out M9K guns!."
 L["tips.official"] = "Only download ARC9 from official sources. Third party uploads may be malicious or outdated!"
 L["tips.presets"] = "Share your favorite presets with your friends by exporting them!"
 L["tips.settings"] = "You can turn these tips off, and much more, in the ARC9 settings. Click the button in the top left corner!"
--- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
 L["tips.tips"] = "Tips have a fixed order. Keep reading and you'll eventually see them all."
 L["tips.tolerance"] = "All weapon bases work fine together. There's no need for favoritism."
 
@@ -375,9 +374,6 @@ L["settings.reset"] = "Reset!"
 
 ////////////////////// Performance
 L["settings.tabname.performance"] = "Performance"
-
--- L["settings.optics.cheapscopes.title"] = "Cheap Scopes"
--- L["settings.optics.cheapscopes.desc"] = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."
 
 L["settings.performance.important"] = "High Performance Impact"
 L["settings.cheapscopes.title"] = "Cheap Scopes"
@@ -463,8 +459,6 @@ L["settings.hud_cust.hud_color.title"] = "HUD Color"
 L["settings.hud_cust.hud_color.desc"] = "Highlight color for the HUD.\nThe accent color."
 L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
 L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
--- L["settings.hud_cust.language_id.title"] = "Language"
--- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Dark Theme"
 L["settings.hud_cust.hud_darkmode.desc"] = "Enables dark colors in HUD instead of light gray and disables vignette effect in background."
 L["settings.hud_cust.cust_light.title"] = "Enable Light"
@@ -475,8 +469,6 @@ L["settings.hud_cust.cust_light_brightness.desc"] = "How bright that light in th
 L["settings.hud_cust.customization"] = "Customization"
 L["settings.hud_cust.cust_hints.title"] = "Hints"
 L["settings.hud_cust.cust_hints.desc"] = "Enable hints in the customization menu."
--- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
--- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
 L["settings.hud_cust.cust_tips.title"] = "Tips"
 L["settings.hud_cust.cust_tips.desc"] = "Tips about ARC9 base near hints."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Exit Resets Selection"
@@ -522,6 +514,12 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
+
+L["settings.hud_game.hud_glyph"] = "Glyphs"
+L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
+L["settings.hud_game.hud_glyph_dark.desc"] = "Change the non-Controller Mode glyphs to use dark ones.\nRequires map reload."
+L["settings.hud_game.hud_glyph_size.title"] = "Glyph Size"
+L["settings.hud_game.hud_glyph_size.desc"] = "Multiply the size of all glyphs by this amount."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPCs"
@@ -665,11 +663,9 @@ L["settings.attachments.atts_generateentities.desc"] = "Generate entities that c
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "Modifiers"
 
--- L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Options > ARC9 > Modifiers  for now."
-
+L["settings.modifiers.quick.title"] = "Quick Stats Modifiers"
 L["settings.modifiers.quick.desc"] = " "
 
-L["settings.modifiers.quick.title"] = "Quick Stats Modifiers"
 L["settings.mod_damage.title"] = "Damage"
 L["settings.mod_spread.title"] = "Spread"
 L["settings.mod_recoil.title"] = "Recoil"

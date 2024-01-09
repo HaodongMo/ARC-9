@@ -51,8 +51,8 @@ L["hud.hint.toggleatts"] = "Alternar Accesorios"
 L["hud.hint.ubgl"] = "Alternar"
 L["hud.hint.zoom"] = "Cambiar Zoom"
 
-L["hud.hint.lowammo"] = "Low Ammo"
-L["hud.hint.noammo"] = "No Ammo"
+-- L["hud.hint.lowammo"] = "Low Ammo"
+-- L["hud.hint.noammo"] = "No Ammo"
 
 L["hud.error.missingbind"] = "\" %s \" sin asignar"
 
@@ -335,7 +335,6 @@ L["tips.m9k"] = "¡Hecha un vistazo a las armas M9K!."
 L["tips.official"] = "Descargue ARC9 únicamente de fuentes oficiales. Las cargas de terceros pueden ser maliciosas o estar desactualizadas."
 L["tips.presets"] = "Comparte tus preajustes favoritos con tus amigos exportándolos."
 L["tips.settings"] = "Puede desactivar estos consejos, y muchos más, en los ajustes de ARC9. Haga clic en el botón de la esquina superior izquierda."
--- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
 L["tips.tips"] = "Los consejos tienen un orden fijo. Siga leyendo y acabará viéndolos todos."
 L["tips.tolerance"] = "Todas las bases de armas funcionan bien juntas. No hay necesidad de favoritismos."
 
@@ -353,9 +352,7 @@ L["settings.desc"] = "Descripción"
 
 L["settings.default_convar"] = "Valor predeterminado"
 -- L["settings.convar_server"] = "Server variable"
-
 -- L["settings.convar_client"] = "Client variable"
-
 
 ////////////////////// General
 L["settings.tabname.general"] = "General"
@@ -377,9 +374,6 @@ L["settings.reset"] = "Restablecer!"
 
 ////////////////////// Performance
 L["settings.tabname.performance"] = "Rendimiento"
-
--- L["settings.optics.cheapscopes.title"] = "Cheap Scopes"
--- L["settings.optics.cheapscopes.desc"] = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."
 
 L["settings.performance.important"] = "Importante"
 L["settings.cheapscopes.title"] = "Miras Baratas"
@@ -464,11 +458,7 @@ L["settings.hud_cust.hud_deadzonex.desc"] = "\"Zona Muerta\" Horizontal para el 
 L["settings.hud_cust.hud_color.title"] = "Color del HUD"
 L["settings.hud_cust.hud_color.desc"] = "Color de realce para el HUD.\nEl color de acento."
 -- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
-
 -- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
-
--- L["settings.hud_cust.language_id.title"] = "Language"
--- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Tema Oscuro"
 L["settings.hud_cust.hud_darkmode.desc"] = "Activa los colores oscuros en el HUD en lugar del gris claro y desactiva el efecto viñeta en el fondo."
 L["settings.hud_cust.cust_light.title"] = "Habilitar Luz"
@@ -479,8 +469,6 @@ L["settings.hud_cust.cust_light_brightness.desc"] = "Cómo de brillante será la
 L["settings.hud_cust.customization"] = "Customización"
 L["settings.hud_cust.cust_hints.title"] = "Pistas"
 L["settings.hud_cust.cust_hints.desc"] = "Habilita pistas en el menu de modificacion."
--- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
--- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
 L["settings.hud_cust.cust_tips.title"] = "Consejos"
 L["settings.hud_cust.cust_tips.desc"] = "Consejos sobre la base ARC9 cerca de pistas."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Salir Restablece la selección"
@@ -502,7 +490,6 @@ L["settings.hud_game.hud_keephints.title"] = "Mantener Pistas"
 L["settings.hud_game.hud_keephints.desc"] = "Mostrar las pistas de control ARC9 en la parte superior en el panel HUD."
 L["settings.hud_game.hud_force_disable.title"] = "Forzar Desactivación del HUD"
 -- L["settings.hud_game.hud_force_disable.desc"] = "Disable ARC9 HUD for all players. Does not affect hints."
-
 
 L["settings.hud_game.killfeed"] = "Killfeed"
 L["settings.hud_game.killfeed_enable.title"] = "Iconos del Killfeed"
@@ -527,6 +514,12 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Porcentaje de Cargador
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Muestra un consejo de recarga cuando el cargador actual está en este valor porcentual."
 L["settings.hud_game.centerhint_bipod.title"] = "Mostrar Alternar Bípode"
 L["settings.hud_game.centerhint_bipod.desc"] = "Mostrar un consejo cuando el bípode se puede conmutar."
+
+-- L["settings.hud_game.hud_glyph"] = "Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.desc"] = "Change the non-Controller Mode glyphs to use dark ones.\nRequires map reload."
+-- L["settings.hud_game.hud_glyph_size.title"] = "Glyph Size"
+-- L["settings.hud_game.hud_glyph_size.desc"] = "Multiply the size of all glyphs by this amount."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPCs"
@@ -670,11 +663,9 @@ L["settings.attachments.atts_generateentities.desc"] = "Genera entidades que pue
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "Modificadores"
 
--- L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Options > ARC9 > Modifiers  for now."
-
-L["settings.modifiers.quick.desc"] = "Lo sentimos pero no hemos podido terminarlos a la fecha de lanzamiento. Tendrás que usar los modificadores avanzados en  spawnmenu > Options > ARC9 > Modifiers por ahora."
-
 L["settings.modifiers.quick.title"] = "Modificadores rápidos de estadísticas"
+L["settings.modifiers.quick.desc"] = " "
+
 L["settings.mod_damage.title"] = "Daño"
 L["settings.mod_spread.title"] = "Precisión"
 L["settings.mod_recoil.title"] = "Retroceso"
@@ -709,7 +700,6 @@ L["settings.aimassist.enable.desc"] = "Activa una función de ayuda a la punter�
 
 -- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
 
-
 L["settings.aimassist.enable_client.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nTambién requiere que Asistente de Apuntado esté activado en SERVIDOR."
 
 L["settings.aimassist.intensity.title"] = "Intensidad"
@@ -721,7 +711,7 @@ L["settings.aimassist.cone.desc"] = "Lo cerca o lejos que debe mirar hacia un ob
 L["settings.aimassist.head.title"] = "Fijación en la cabeza"
 L["settings.aimassist.head.desc"] = "Si el asistente de apuntado debe fijarse en la cabeza del objetivo en lugar de en su pecho.\n\nEsto es una variable del servidor."
 
-L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
+-- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Almac. en caché"

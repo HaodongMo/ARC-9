@@ -51,8 +51,8 @@ L["hud.hint.toggleatts"] = "Towgle awatachmewws"
 L["hud.hint.ubgl"] = "Towgwle"
 L["hud.hint.zoom"] = "Chawanwe zowom"
 
-L["hud.hint.lowammo"] = "Low Ammo"
-L["hud.hint.noammo"] = "No Ammo"
+-- L["hud.hint.lowammo"] = "Low Ammo"
+-- L["hud.hint.noammo"] = "No Ammo"
 
 L["hud.error.missingbind"] = "\" %s \" knot bwound >w<"
 
@@ -254,7 +254,7 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
-L["autostat.secondary.blindfire"] = "w-whiwe bwind-fiwing"
+-- L["autostat.secondary.blindfire"] = "w-whiwe bwind-fiwing"
 L["autostat.secondary.bipod"] = "on bipOwOd"
 L["autostat.secondary.crouch"] = "w-whiwe cwouchiwuwung"
 L["autostat.secondary.empty"] = "owon wast wound in mag"
@@ -335,7 +335,6 @@ L["tips.m9k"] = "Check out m9k guwuns meow"
 L["tips.official"] = "Owly dowonload AWC9 fwom official souwces >.< Thiwd pawty upwoads may be mawicious ow outdated >o<"
 L["tips.presets"] = "Shawe yuw fowowite pwesews with yuww furwiends by expowting dem!"
 L["tips.settings"] = "You can tuwn dese tips off and much mowe in de AWC9 settings owo c-click de button in de top left cownew"
--- L["tips.tacrp"] = "Have you tried Tactical RP base yet?"
 L["tips.tips"] = "Tips hawwe a fixed owdew. Kewep weading and yuw ewwentuawy see dem all"
 L["tips.tolerance"] = "Aww weapon basews wowk fine togeww thewes no need fow fowowoitiswm"
 
@@ -375,9 +374,6 @@ L["settings.reset"] = "UwU Weset!!!"
 
 ////////////////////// Performance
 L["settings.tabname.performance"] = "Perawawmance"
-
--- L["settings.optics.cheapscopes.title"] = "Cheap Scopes"
--- L["settings.optics.cheapscopes.desc"] = "A cheap RT scope implementation by zooming your whole view to aim, instead of rendering world again in a scope. Significantly increases performance on large maps."
 
 L["settings.performance.important"] = "High Pewfowmance Impact"
 L["settings.cheapscopes.title"] = "Chweap Scopes"
@@ -420,9 +416,7 @@ L["settings.optics.sensmult.desc"] = "Muwtipwy de wook sensitiwity by dis amouwu
 L["settings.optics.compensate_sens.title"] = "Compensate Sensitivity"
 L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity fow magnification"
 -- L["settings.optics.toggleads.title"] = "Toggle ADS"
-
 -- L["settings.optics.toggleads.desc"] = "Aiming will toggle sights."
-
 
 L["settings.optics.color"] = "Colow"
 L["settings.optics.reflex.title"] = "weflex Sights"
@@ -464,11 +458,7 @@ L["settings.hud_cust.hud_deadzonex.desc"] = "Howizontal dewadzowne fow cuwtomiwa
 L["settings.hud_cust.hud_color.title"] = "HUD Colow"
 L["settings.hud_cust.hud_color.desc"] = "Highlight colow fow de HUD.\nde accent colow"
 -- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
-
 -- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
-
--- L["settings.hud_cust.language_id.title"] = "Language"
--- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Dawk deme"
 L["settings.hud_cust.hud_darkmode.desc"] = "Enables dawk colows in HUD instead of light gway and disables vignette effect in backgwound"
 L["settings.hud_cust.cust_light.title"] = "Enable Light"
@@ -479,8 +469,6 @@ L["settings.hud_cust.cust_light_brightness.desc"] = "howo bwight that light in d
 L["settings.hud_cust.customization"] = "Customization"
 L["settings.hud_cust.cust_hints.title"] = "Hints"
 L["settings.hud_cust.cust_hints.desc"] = "Enable hints in de customization menu"
--- L["settings.hud_cust.cust_roll_unlock.title"] = "Unlock Roll" -- NOT USED ANYMORE
--- L["settings.hud_cust.cust_roll_unlock.desc"] = "Allow weapon roll in the customization menu.\n\nMight look and control not the best way." -- NOT USED ANYMORE
 L["settings.hud_cust.cust_tips.title"] = "Tiwips"
 L["settings.hud_cust.cust_tips.desc"] = "Tiwips about AWC9 base neaw hints"
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Exit wesets Selection"
@@ -526,6 +514,12 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Magawine Pewcentwage"
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 L["settings.hud_game.centerhint_bipod.title"] = "Centew bipowod hint"
 L["settings.hud_game.centerhint_bipod.desc"] = "Centewed bipowod hint"
+
+-- L["settings.hud_game.hud_glyph"] = "Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.desc"] = "Change the non-Controller Mode glyphs to use dark ones.\nRequires map reload."
+-- L["settings.hud_game.hud_glyph_size.title"] = "Glyph Size"
+-- L["settings.hud_game.hud_glyph_size.desc"] = "Multiply the size of all glyphs by this amount."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPCs >w<"
@@ -669,11 +663,9 @@ L["settings.attachments.atts_generateentities.desc"] = "Genewate entities that c
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "Modifiews"
 
--- L["settings.modifiers.quick.desc"] = "We are a little sorry but we couldn't finish them to release. You will have to use advanced modifiers in  spawnmenu > Options > ARC9 > Modifiers  for now."
-
-L["settings.modifiers.quick.desc"] = "We awe a little sowwy but we couldn't finish dem to welease. You will have to use advanced modifiews in  spawnmenu > Options > AwC9 > Modifiews  fow now"
-
 L["settings.modifiers.quick.title"] = "Quick Stats Modifiews"
+L["settings.modifiers.quick.desc"] = " "
+
 L["settings.mod_damage.title"] = "Damage"
 L["settings.mod_spread.title"] = "Spwead"
 L["settings.mod_recoil.title"] = "Wecoil"
@@ -706,9 +698,7 @@ L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you mig
 L["settings.aimassist.enable.title"] = "Enable Aim Assist"
 -- L["settings.aimassist.enable.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nThis is a server variable.\n\nRequires Aim Assist to be enabled on CLIENT."
 
-
 -- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
-
 
 L["settings.aimassist.enable_client.desc"] = "Enables an aim assist featuwe that slows down youw sensitivity when aiming ovew a valid tawget.\n\nAlso wequiwes Aim Assist to be enabled on SEWWEW."
 
@@ -722,7 +712,6 @@ L["settings.aimassist.head.title"] = "Lowck owonto snouts"
 L["settings.aimassist.head.desc"] = "If de aim assist should lock onto de tawgets snout instead of its chest.\n\ndis is a sewwew wawiableh."
 
 -- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
-
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Awwet Cashwing :3"

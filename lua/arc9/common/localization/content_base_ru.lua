@@ -1,12 +1,12 @@
 L = {}
 
--- Folders
+//////// Folders
 L["folder.arc9"] = "ARC9"
 L["folder.arc9.community"] = "Community"
 
 L["attachment.sticker"] = "Наклейка"
 
--- Flat Camo
+//////// Flat Camo
 L["camo_arc9_base_flat_od.printname"] = "Oливковый"
 L["camo_arc9_base_flat_od.compactname"] = "Оливка"
 L["camo_arc9_base_flat_od.description"] = "Стандартный оливковый камуфляж."
@@ -43,7 +43,7 @@ L["camo_arc9_base_flat_fde.printname"] = "FDE"
 L["camo_arc9_base_flat_fde.compactname"] = "FDE"
 L["camo_arc9_base_flat_fde.description"] = "Стандартный FDE камуфляж."
 
--- Flat Colour
+//////// Flat Colour
 L["camo_arc9_base_flat_red.printname"] = "Красный"
 L["camo_arc9_base_flat_red.compactname"] = "Красный"
 L["camo_arc9_base_flat_red.description"] = "Обычный красный цвет."
@@ -76,7 +76,7 @@ L["camo_arc9_base_flat_arc9orange.printname"] = "Рыжий ARC9"
 L["camo_arc9_base_flat_arc9orange.compactname"] = "Рыжий ARC9"
 L["camo_arc9_base_flat_arc9orange.description"] = "Идеальный оранжевый оттенок с логотипа ARC9."
 
--- Charms
+//////// Charms
 L["charm_gs_killcounter.printname"] = "Счётчик убийств"
 L["charm_gs_killcounter.compactname"] = "Счётчик убийств"
 L["charm_gs_killcounter.description"] = "Устройство для отображения количества убийств с оружия."
@@ -89,7 +89,7 @@ L["charm_gs_sticker.printname"] = "Панель для стикера"
 L["charm_gs_sticker.compactname"] = "Стикер"
 L["charm_gs_sticker.description"] = "Устройство, позволяющее наносить на экран стикер."
 
--- Stickers, Base
+//////// Stickers, Base
 L["sticker_spray.printname"] = "Стикер с вашим спреем"
 L["sticker_spray.compactname"] = "Ваш спрей"
 L["sticker_spray.description"] = [[Ваш собственный спрей для мультиплеера в виде наклейки!
@@ -130,7 +130,7 @@ L["sticker_sus9.description"] = [[The impostor could be anywhere among us...
 
 Стикер включен в базу ARC9.]]
 
--- Stickers, Com. Wave 1
+//////// Stickers, Com. Wave 1
 L["sticker_alien_lean.printname"] = "Legalize Alien Lean"
 L["sticker_alien_lean.compactname"] = "Alien Lean"
 L["sticker_alien_lean.description"] = [[Отправляйтесь на Агарту вместе с белыми парнями, чтобы выпить чашечку инопланетного лина и... другие вещи.

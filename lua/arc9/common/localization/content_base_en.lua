@@ -1,12 +1,12 @@
 L = {}
 
--- Folders
+//////// Folders
 L["folder.arc9"] = "ARC9"
 L["folder.arc9.community"] = "Community"
 
 L["attachment.sticker"] = "Sticker"
 
--- Flat Camo
+//////// Flat Camo
 L["camo_arc9_base_flat_od.printname"] = "Olive Drab"
 L["camo_arc9_base_flat_od.compactname"] = "OD"
 L["camo_arc9_base_flat_od.description"] = "Standard Olive Drab camouflage."
@@ -43,7 +43,7 @@ L["camo_arc9_base_flat_fde.printname"] = "Flat Dark Earth"
 L["camo_arc9_base_flat_fde.compactname"] = "FDE"
 L["camo_arc9_base_flat_fde.description"] = "Standard Flat Dark Earth camouflage."
 
--- Flat Colour
+//////// Flat Colour
 L["camo_arc9_base_flat_red.printname"] = "Red"
 L["camo_arc9_base_flat_red.compactname"] = "Red"
 L["camo_arc9_base_flat_red.description"] = "Basic red color."
@@ -76,7 +76,7 @@ L["camo_arc9_base_flat_arc9orange.printname"] = "ARC9 Orange"
 L["camo_arc9_base_flat_arc9orange.compactname"] = "ARC9 Orange"
 L["camo_arc9_base_flat_arc9orange.description"] = "The perfect shade of orange for that cute little ARC9 Logo sticker."
 
--- Charms
+//////// Charms
 L["charm_gs_killcounter.printname"] = "Kill Counter"
 L["charm_gs_killcounter.compactname"] = "KILL"
 L["charm_gs_killcounter.description"] = "Device for tracking your weapon's kill stats."
@@ -89,7 +89,7 @@ L["charm_gs_sticker.printname"] = "Sticker Panel"
 L["charm_gs_sticker.compactname"] = "STICKER"
 L["charm_gs_sticker.description"] = "Device that allows a custom sticker to be applied onto its screen."
 
--- Stickers, Base
+//////// Stickers, Base
 L["sticker_spray.printname"] = "Player Spray"
 L["sticker_spray.compactname"] = "Spray"
 L["sticker_spray.description"] = [[Your own spray as a sticker!
@@ -130,7 +130,7 @@ Design by Darsu.
 
 Sticker included in the ARC9 Base.]]
 
--- Stickers, Com. Wave 1
+//////// Stickers, Com. Wave 1
 L["sticker_alien_lean.printname"] = "Legalize Alien Lean"
 L["sticker_alien_lean.compactname"] = "Alien Lean"
 L["sticker_alien_lean.description"] = [[Hop down to Agartha with the white boys for a cup of alien lean and... other things.
