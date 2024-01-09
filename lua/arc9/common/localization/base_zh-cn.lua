@@ -543,6 +543,10 @@ L["settings.hud_cust.hud_scale.desc"] = "全局界面大小倍率。"
 
 L["settings.hud_cust.hud_color.title"] = "HUD 颜色"
 L["settings.hud_cust.hud_color.desc"] = "主题高亮颜色。"
+-- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
+
+-- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
+
 -- L["settings.hud_cust.language_id.title"] = "Language"
 -- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 -- L["settings.hud_cust.hud_darkmode.title"] = "Dark Theme"

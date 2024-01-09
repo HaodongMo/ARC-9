@@ -463,6 +463,10 @@ L["settings.hud_cust.hud_deadzonex.title"] = "Anchura de zona muerta del HUD"
 L["settings.hud_cust.hud_deadzonex.desc"] = "\"Zona Muerta\" Horizontal para el menú de personalización y el panel HUD.\nÚtil para monitores ultrawide."
 L["settings.hud_cust.hud_color.title"] = "Color del HUD"
 L["settings.hud_cust.hud_color.desc"] = "Color de realce para el HUD.\nEl color de acento."
+-- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
+
+-- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
+
 -- L["settings.hud_cust.language_id.title"] = "Language"
 -- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Tema Oscuro"

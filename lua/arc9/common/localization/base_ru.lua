@@ -466,6 +466,10 @@ L["settings.hud_cust.hud_deadzonex.title"] = "Гориз. мёртвая зон�
 L["settings.hud_cust.hud_deadzonex.desc"] = "Горизонтальная \"мёртвая зона\" для меню кастомизации и HUD панели.\nПолезно на ультрашироких мониторах."
 L["settings.hud_cust.hud_color.title"] = "Цвет интерфейса"
 L["settings.hud_cust.hud_color.desc"] = "Главный цвет интерфейса, акцент."
+-- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
+
+-- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
+
 -- L["settings.hud_cust.language_id.title"] = "Language"
 -- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Темная тема"

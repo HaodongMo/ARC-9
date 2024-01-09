@@ -254,7 +254,7 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.blindfire"] = "while Blind-Firing"
+L["autostat.secondary.blindfire"] = "w-whiwe bwind-fiwing"
 L["autostat.secondary.bipod"] = "on bipOwOd"
 L["autostat.secondary.crouch"] = "w-whiwe cwouchiwuwung"
 L["autostat.secondary.empty"] = "owon wast wound in mag"
@@ -463,6 +463,10 @@ L["settings.hud_cust.hud_deadzonex.title"] = "HUD Widh dewdzowne"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Howizontal dewadzowne fow cuwtomiwation menuwu and huwud panel\nUwUseful for uwtwawidew monitows owo"
 L["settings.hud_cust.hud_color.title"] = "HUD Colow"
 L["settings.hud_cust.hud_color.desc"] = "Highlight colow fow de HUD.\nde accent colow"
+-- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
+
+-- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
+
 -- L["settings.hud_cust.language_id.title"] = "Language"
 -- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Dawk deme"

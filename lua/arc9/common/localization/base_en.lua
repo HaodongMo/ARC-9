@@ -114,9 +114,6 @@ L["customize.hint.unattach"] = "Unattach"
 L["customize.hint.unfavorite"] = "Remove Favorite"
 L["customize.hint.zoom"] = "Zoom"
 
-L["hud.hint.lowammo"] = "Low Ammo"
-L["hud.hint.noammo"] = "No Ammo"
-
 L["customize.trivia.description"] = "Description"
 
 L["customize.stats.explain.firepower"] = "The damage potential at point-blank range."
@@ -464,6 +461,8 @@ L["settings.hud_cust.hud_deadzonex.title"] = "HUD Width Deadzone"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Horizontal \"deadzone\" for customization menu and HUD panel.\nUseful for ultrawide monitors."
 L["settings.hud_cust.hud_color.title"] = "HUD Color"
 L["settings.hud_cust.hud_color.desc"] = "Highlight color for the HUD.\nThe accent color."
+L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
+L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
 -- L["settings.hud_cust.language_id.title"] = "Language"
 -- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Dark Theme"

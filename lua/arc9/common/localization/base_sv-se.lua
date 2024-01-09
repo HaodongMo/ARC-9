@@ -353,9 +353,7 @@ L["settings.desc"] = "Beskrivning"
 
 L["settings.default_convar"] = "Standard värde"
 L["settings.convar_server"] = "Servervariabel"
-
 L["settings.convar_client"] = "Client-variabel"
-
 
 ////////////////////// General
 L["settings.tabname.general"] = "Generellt"
@@ -463,6 +461,10 @@ L["settings.hud_cust.hud_deadzonex.title"] = "Gräns. Bredd Dödszon"
 L["settings.hud_cust.hud_deadzonex.desc"] = "Horisontell \"dödszon\" för anpassningsmenyn och gränssnitt panelen.\nAnvändbra för ultrawide-skärmar."
 L["settings.hud_cust.hud_color.title"] = "Gränssnitt Färg"
 L["settings.hud_cust.hud_color.desc"] = "Markerar färgen för gränssnittet.\nAccentfärgen."
+-- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
+
+-- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
+
 -- L["settings.hud_cust.language_id.title"] = "Language"
 -- L["settings.hud_cust.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.hud_cust.hud_darkmode.title"] = "Mörkt Tema"
