@@ -105,8 +105,8 @@ function ARC9.StartCommand(ply, cmd)
             if ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
                 local cone = arc9_aimassist_cone:GetFloat()
                 -- local dist = arc9_aimassist_distance:GetFloat() * (wpn:GetProcessedValue("AARangeMult") or 1)
-                local dist = (wpn.RangeMax * 0.95)
-                local inte = arc9_aimassist_intensity:GetFloat() * math.Clamp( math.Round(1 - wpn:GetDamageDeltaAtRange(dist) / 2), 0.1, 0.75)
+                local dist = math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
+                local inte = arc9_aimassist_intensity:GetFloat()
                 local head = arc9_aimassist_head:GetBool()
 
                 -- Check if current target is beyond tracking cone
