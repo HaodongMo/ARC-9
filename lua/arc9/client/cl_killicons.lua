@@ -1,4 +1,4 @@
-ARC9OLDKilliconDraw = ARC9OLDKilliconDraw or killicon.Draw
+ARC9OLDKilliconDraw = ARC9OLDKilliconDraw or killicon.Render or killicon.Draw
 local killicons_cachednames = {}
 local killicons_cachedicons = {}
 local killicons_cachedtimes = {}
@@ -78,5 +78,6 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
 end
 
 timer.Simple(5, function() -- to make Autoicons addon not override our stuff
+    killicon.Render = ARC9NEWKillicondraw
     killicon.Draw = ARC9NEWKillicondraw
 end)
