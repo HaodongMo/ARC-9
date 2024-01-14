@@ -317,6 +317,23 @@ ARC9.SettingsTable = {
         TabName = "settings.tabname.controller",
         { type = "label", text = "settings.controller.misc", desc = "settings.controller.misc.desc"},
         { type = "bool", text = "settings.controller.controller.title", convar = "controller", desc = "settings.controller.controller.desc"},
+        -- { type = "combo", text = "settings.controller.glyphs.title", convar = "glyph_type", desc = "settings.controller.glyphs.desc", content = {
+            -- {"1Amazon Luna", "luna"},
+            -- {"1Ouya", "ouya"},
+            -- {"2PlayStation 3", "ps3"},
+            -- {"2PlayStation 4", "ps4"},
+            -- {"2PlayStation 5", "ps5"},
+            -- {"3PlayStation Vita", "psvita"},
+            -- {"3Google Stadia", "stadia"},
+            -- {"3Steam Controller", "steamc"},
+            -- {"4Steam Deck", "steamdeck"},
+            -- {"4Nintendo Switch", "switch"},
+            -- {"4Nintendo Wii U", "wiiu"},
+            -- {"5Xbox 360", "xbox360"},
+            -- {"5Xbox One", "xboxone"},
+            -- {"5Xbox Series X|S", "xboxseries"},
+			-- },
+        -- },
         -- { type = "bool", text = "settings.controller.controller_rumble.title", convar = "controller_rumble", desc = "settings.controller.controller_rumble.desc"},
         -- { type = "button", text = "settings.controller.controller_config.title", desc = "settings.controller.controller_config.desc", content = "settings.controller.controller_config.content", func = function(self2)
         --     -- RunConsoleCommand("arc9_reloadatts")

@@ -689,6 +689,9 @@ L["settings.controller.controller_config.title"] = "Avancerad konfig."
 L["settings.controller.controller_config.content"] = "Öppna panel"
 L["settings.controller.controller_config.desc"] = "Öppna avancerad kontroller konfigurering panel."
 
+L["settings.controller.glyphs.title"] = "Familj av Glyfer"
+L["settings.controller.glyphs.desc"] = "Välj från vilken familj av glyfer du vill använda.\nSätt upp glyfer i \"Spawnmeny\" > Options > ARC9 > Controller."
+
 ////////////////////// Aim Assist
 L["settings.tabname.aimassist"] = "Siktehjälp"
 L["settings.tabname.aimassist.desc"] = "Du kan aktivera siktehjälp om du har problem att hålla ditt sikte på din måltavla, eller om du föredrar att inte anstränga dig när du skjuter på dina måltavlor."

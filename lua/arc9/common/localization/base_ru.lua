@@ -689,6 +689,9 @@ L["settings.controller.controller_config.title"] = "Продвинутый ко�
 L["settings.controller.controller_config.content"] = "Открыть панель"
 L["settings.controller.controller_config.desc"] = "Открывает панель для продвинутой конфигурации контроллеров."
 
+-- L["settings.controller.glyphs.title"] = "Glyph Type"
+-- L["settings.controller.glyphs.desc"] = "Choose which family of glyphs you want to use.\nSet up glyphs in \"Spawnmenu\" > Options > ARC9 > Controller."
+
 ////////////////////// Aim Assist
 L["settings.tabname.aimassist"] = "Аим-ассист"
 L["settings.tabname.aimassist.desc"] = "Вы можете включить помощь в прицеливании (аим-ассист) если у вас проблемы с прицеливанием или если вам лень точно целиться."

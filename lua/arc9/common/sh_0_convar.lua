@@ -839,6 +839,11 @@ local conVars = {
         default = "0",
         client = true,
     },
+    -- {
+        -- name = "glyph_type",
+        -- default = "xboxseries",
+        -- client = true,
+    -- },
 }
 ARC9.ConVarData = {}
 
@@ -1061,6 +1066,22 @@ local function menu_client_controller(panel)
     matselect_filter:AddChoice( "Steam Controller", "sc_" )
     matselect_filter:AddChoice( "Steam Deck", "sd_" )
     matselect_filter:AddChoice( "Nintendo Switch", "switchpro_" )
+	
+    -- matselect_filter:AddChoice( "! Mouse !", "mouse" )
+    -- matselect_filter:AddChoice( "Amazon Luna", "luna_" )
+    -- matselect_filter:AddChoice( "Ouya", "ouya_" )
+    -- matselect_filter:AddChoice( "PlayStation 3", "ps3_" )
+    -- matselect_filter:AddChoice( "PlayStation 4", "ps4_" )
+    -- matselect_filter:AddChoice( "PlayStation 5", "ps5_" )
+    -- matselect_filter:AddChoice( "PlayStation Vita", "psvita_" )
+    -- matselect_filter:AddChoice( "Google Stadia", "stadia_" )
+    -- matselect_filter:AddChoice( "Steam Controller", "steamc_" )
+    -- matselect_filter:AddChoice( "Steam Deck", "steamdeck_" )
+    -- matselect_filter:AddChoice( "Nintendo Switch", "switch_" )
+    -- matselect_filter:AddChoice( "Nintendo Wii U", "wiiu_" )
+    -- matselect_filter:AddChoice( "Xbox 360", "xbox360_" )
+    -- matselect_filter:AddChoice( "Xbox One", "xboxone_" )
+    -- matselect_filter:AddChoice( "Xbox Series X|S", "xboxseries_" )
     matselect_filter:SetValue( "Filter by controller type" )
 
     local matselect = ""

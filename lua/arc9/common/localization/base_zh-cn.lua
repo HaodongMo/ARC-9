@@ -689,6 +689,9 @@ L["settings.controller.controller_config.title"] = "Advanced config"
 L["settings.controller.controller_config.content"] = "Open panel"
 L["settings.controller.controller_config.desc"] = "Open advanced controller configuration panel."
 
+-- L["settings.controller.glyphs.title"] = "Glyph Type"
+-- L["settings.controller.glyphs.desc"] = "Choose which family of glyphs you want to use.\nSet up glyphs in \"Spawnmenu\" > Options > ARC9 > Controller."
+
 ////////////////////// Aim Assist
 -- L["settings.tabname.aimassist"] = "Aim Assist"
 -- L["settings.tabname.aimassist.desc"] = "You can enable aim assistance if you might have trouble keeping your aim on your target, or if you just prefer to not put effort into shooting your targets."

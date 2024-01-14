@@ -689,6 +689,9 @@ L["settings.controller.controller_config.title"] = "Configuracion avanzada"
 L["settings.controller.controller_config.content"] = "Abrir panel"
 L["settings.controller.controller_config.desc"] = "Abra el panel de configuración avanzada del mando."
 
+-- L["settings.controller.glyphs.title"] = "Glyph Type"
+-- L["settings.controller.glyphs.desc"] = "Choose which family of glyphs you want to use.\nSet up glyphs in \"Spawnmenu\" > Options > ARC9 > Controller."
+
 ////////////////////// Aim Assist
 L["settings.tabname.aimassist"] = "Asistente de Apuntado"
 L["settings.tabname.aimassist.desc"] = "Puedes activar la asistencia para apuntar si tienes problemas para mantener la puntería en el blanco o si prefieres no esforzarte en disparar."
