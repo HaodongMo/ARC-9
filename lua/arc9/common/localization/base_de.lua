@@ -516,10 +516,8 @@ L["settings.hud_game.breath_sfx.desc"] = "Wenn du den Atem anhälst, werden die 
 -- L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
 
 -- L["settings.hud_game.hud_glyph"] = "Glyphs"
--- L["settings.hud_game.hud_glyph_dark.title"] = "Mörka Glyfer"
--- L["settings.hud_game.hud_glyph_dark.desc"] = "Ändrar icke-Kontrollerläge glyferna till några som är mörka.\nKräver omladdning av kartan."
--- L["settings.hud_game.hud_glyph_size.title"] = "Storlek på Glyfer"
--- L["settings.hud_game.hud_glyph_size.desc"] = "Multiplicera storleken på alla glyfer med detta antal."
+-- L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.desc"] = "Change to use darker glyphs instead.\nRequires map reload."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPCs"

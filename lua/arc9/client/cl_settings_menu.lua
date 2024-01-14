@@ -196,7 +196,7 @@ ARC9.SettingsTable = {
 
         { type = "label", text = "settings.hud_game.hud_glyph" },
         { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },
-        { type = "slider", min = 0.5, max = 2, decimals = 2, text = "settings.hud_game.hud_glyph_size.title", convar = "glyph_size", desc = "settings.hud_game.hud_glyph_size.desc" },
+        -- { type = "slider", min = 0.5, max = 2, decimals = 2, text = "settings.hud_game.hud_glyph_size.title", convar = "glyph_size", desc = "settings.hud_game.hud_glyph_size.desc" },
     },
     {
         TabName = "settings.tabname.npc",

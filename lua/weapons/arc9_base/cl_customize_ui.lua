@@ -1199,34 +1199,34 @@ function SWEP:CreateCustomizeHUD()
             if hid then continue end
             if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
             if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs/" .. v.glyph .. ".png", "smooth" ) end
+            if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/" .. ARC9.DarkButtons() .. v.glyph .. ".png", "smooth" ) end
             if v.glyph2 then
                 if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
                 if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs/" .. v.glyph2 .. ".png", "smooth" ) end
+                if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/" .. ARC9.DarkButtons() .. v.glyph2 .. ".png", "smooth" ) end
             end
 
             if v.row3 then
-                table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(10) })
+                table.insert(ToAdd3, { v.glyph, ARC9ScreenScale(8) })
                 if v.glyph2 then
-                    table.insert(ToAdd3, " ")
-                    table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(10) })
+                    table.insert(ToAdd3, "  ")
+                    table.insert(ToAdd3, { v.glyph2, ARC9ScreenScale(8) })
                 end
-                table.insert(ToAdd3, " " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
+                table.insert(ToAdd3, "  " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             elseif v.row2 then
-                table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(10) })
+                table.insert(ToAdd2, { v.glyph, ARC9ScreenScale(8) })
                 if v.glyph2 then
-                    table.insert(ToAdd2, " ")
-                    table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(10) })
+                    table.insert(ToAdd2, "  ")
+                    table.insert(ToAdd2, { v.glyph2, ARC9ScreenScale(8) })
                 end
-                table.insert(ToAdd2, " " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
+                table.insert(ToAdd2, "  " ..  ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             else
-                table.insert(ToAdd, { v.glyph, ARC9ScreenScale(10) })
+                table.insert(ToAdd, { v.glyph, ARC9ScreenScale(8) })
                 if v.glyph2 then
                     table.insert(ToAdd, " ")
-                    table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(10) })
+                    table.insert(ToAdd, { v.glyph2, ARC9ScreenScale(8) })
                 end
-                table.insert(ToAdd, " " .. ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
+                table.insert(ToAdd, "  " .. ARC9:GetPhrase(self.CustomizeHints[v.action] or v.action) .. "    ")
             end
         end
 

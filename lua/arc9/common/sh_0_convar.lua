@@ -839,11 +839,6 @@ local conVars = {
         default = "0",
         client = true,
     },
-    {
-        name = "glyph_size",
-        default = "1",
-        client = true,
-    },
 }
 ARC9.ConVarData = {}
 
@@ -1059,26 +1054,13 @@ local function menu_client_controller(panel)
 
     local matselect_filter = vgui.Create( "DComboBox", panel )
     panel:AddItem( matselect_filter )
-    matselect_filter:AddChoice( "! Choose Filter !", "CHOOSEFILTER" )
-    matselect_filter:AddChoice( "Xbox 360", "360_" )
-    matselect_filter:AddChoice( "Amazon Luna", "luna_" )
-    matselect_filter:AddChoice( "Oculus", "oculus_" )
-    matselect_filter:AddChoice( "Oculus Remote", "remote_" )
-    matselect_filter:AddChoice( "Ouya", "ouya_" )
-    matselect_filter:AddChoice( "PlayStation 3", "ps3_" )
-    matselect_filter:AddChoice( "PlayStation 4", "ps4_" )
-    matselect_filter:AddChoice( "PlayStation 5", "ps5_" )
-    matselect_filter:AddChoice( "PlayStation Move", "psmove_" )
-    matselect_filter:AddChoice( "Google Stadia", "stadia_" )
-    matselect_filter:AddChoice( "Steam Controller", "steam_" )
-    matselect_filter:AddChoice( "Steam Deck", "steamdeck_" )
-    matselect_filter:AddChoice( "Nintendo Switch", "switch_" )
-    matselect_filter:AddChoice( "PlayStation Vita", "vita_" )
-    matselect_filter:AddChoice( "Vive", "vive_" )
-    matselect_filter:AddChoice( "Wii", "wii_" )
-    matselect_filter:AddChoice( "Wii U", "wiiu_" )
-    matselect_filter:AddChoice( "Xbox One", "xboxone_" )
-    matselect_filter:AddChoice( "Xbox Series X|S", "xboxseriesx_" )
+    matselect_filter:AddChoice( "! Display All !", "" )
+    matselect_filter:AddChoice( "\"Shared\"", "shared_" )
+    matselect_filter:AddChoice( "PlayStation", "ps" )
+    matselect_filter:AddChoice( "Xbox", "xbox" )
+    matselect_filter:AddChoice( "Steam Controller", "sc_" )
+    matselect_filter:AddChoice( "Steam Deck", "sd_" )
+    matselect_filter:AddChoice( "Nintendo Switch", "switchpro_" )
     matselect_filter:SetValue( "Filter by controller type" )
 
     local matselect = ""
@@ -1110,7 +1092,7 @@ local function menu_client_controller(panel)
         for k, v in SortedPairs( ARC9.CTRL_Exists ) do
             local sel, seldata = matselect_filter:GetSelected()
             if string.find( k, seldata or "" ) then
-                matselect:AddMaterial( k, "arc9/glyphs/" .. k .. ".png" )
+                matselect:AddMaterial( k, "arc9/glyphs_dark/" .. k .. ".png" )
             end
         end
 

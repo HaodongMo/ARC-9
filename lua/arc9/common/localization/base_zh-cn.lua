@@ -515,11 +515,9 @@ L["settings.hud_game.breath_sfx.desc"] = "启用屏气时的音效。"
 -- L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 -- L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
 
-L["settings.hud_game.hud_glyph"] = "Glyphs"
-L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
-L["settings.hud_game.hud_glyph_dark.desc"] = "Change the non-Controller Mode glyphs to use dark ones.\nRequires map reload."
-L["settings.hud_game.hud_glyph_size.title"] = "Glyph Size"
-L["settings.hud_game.hud_glyph_size.desc"] = "Multiply the size of all glyphs by this amount."
+-- L["settings.hud_game.hud_glyph"] = "Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
+-- L["settings.hud_game.hud_glyph_dark.desc"] = "Change to use darker glyphs instead.\nRequires map reload."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPC"

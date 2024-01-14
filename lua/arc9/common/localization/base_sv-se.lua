@@ -517,9 +517,7 @@ L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet 
 
 L["settings.hud_game.hud_glyph"] = "Glyfer"
 L["settings.hud_game.hud_glyph_dark.title"] = "Mörka Glyfer"
-L["settings.hud_game.hud_glyph_dark.desc"] = "Ändrar icke-Kontrollerläge glyferna till några som är mörka.\nKräver omladdning av kartan."
-L["settings.hud_game.hud_glyph_size.title"] = "Storlek på Glyfer"
-L["settings.hud_game.hud_glyph_size.desc"] = "Multiplicera storleken på alla glyfer med detta antal."
+L["settings.hud_game.hud_glyph_dark.desc"] = "Ändra för att använda mörkre glyfer istället.\nKräver omladdning av kartan."
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPC:er"
