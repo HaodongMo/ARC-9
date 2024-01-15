@@ -100,7 +100,9 @@ function SWEP:Reload()
     local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true)
 
     if !self:GetShouldShotgunReload() then
-        local minprogress = self:GetAnimationEntry(self:TranslateAnimation(anim)).MinProgress or 1
+		local animation = self:GetAnimationEntry(self:TranslateAnimation(anim))
+
+        local minprogress = animation.RefillProgress or animation.MinProgress or 1
         minprogress = math.min(minprogress, 0.95)
 
         if !self:GetAnimationEntry(self:TranslateAnimation(anim)).RestoreAmmo then
