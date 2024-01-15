@@ -394,6 +394,8 @@ L["settings.fx_rtblur.title"] = "In Scopes"
 L["settings.fx_rtblur.desc"] = "Bluws de wowld while using a magnified scope"
 L["settings.fx_adsblur.title"] = "In Sights"
 L["settings.fx_adsblur.desc"] = "Bluws de weapon while aiming down sights"
+-- L["settings.fx_rtvm.title"] = "Render Weapon through RT Scopes"
+-- L["settings.fx_rtvm.desc"] = "Renders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance on larger maps."
 
 L["settings.performance.shelleject.title"] = "Shell Eject"
 L["settings.eject_fx.title"] = "Smoke Effects"

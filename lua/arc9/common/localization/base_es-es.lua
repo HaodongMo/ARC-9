@@ -394,6 +394,8 @@ L["settings.fx_rtblur.title"] = "En miras telescópicas"
 L["settings.fx_rtblur.desc"] = "Difumina el mundo mientras utilizas un miras telescópicas."
 L["settings.fx_adsblur.title"] = "En miras normales"
 L["settings.fx_adsblur.desc"] = "Difumina el arma mientras apuntas con miras de hierro u holográficas."
+-- L["settings.fx_rtvm.title"] = "Render Weapon through RT Scopes"
+-- L["settings.fx_rtvm.desc"] = "Renders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance on larger maps."
 
 L["settings.performance.shelleject.title"] = "Expulsión del proyectil"
 L["settings.eject_fx.title"] = "Efectos de Humo"

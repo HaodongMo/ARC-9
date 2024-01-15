@@ -394,6 +394,8 @@ L["settings.fx_rtblur.title"] = "使用准镜时"
 L["settings.fx_rtblur.desc"] = "有倍率的准镜会模糊准镜外的视野。"
 L["settings.fx_adsblur.title"] = "瞄准时"
 L["settings.fx_adsblur.desc"] = "武器会在瞄准时模糊。"
+-- L["settings.fx_rtvm.title"] = "Render Weapon through RT Scopes"
+-- L["settings.fx_rtvm.desc"] = "Renders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance on larger maps."
 
 L["settings.performance.shelleject.title"] = "弹壳"
 L["settings.eject_fx.title"] = "烟雾效果"
