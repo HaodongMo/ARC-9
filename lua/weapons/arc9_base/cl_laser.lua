@@ -2,6 +2,7 @@ local defaulttracemat = Material("arc9/laser2")
 local defaultflaremat = Material("sprites/light_glow02_add", "mips smooth")
 local lasercolorred = Color(255, 0, 0)
 local lasercolor200 = Color(200, 200, 200)
+local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
 
 function SWEP:DrawLaser(pos, dir, atttbl, behav)
     behav = behav or false
@@ -151,14 +152,18 @@ function SWEP:DrawLasers(wm, behav)
 
             self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, wm and 5 or 10, (slottbl.Address or 0) + 69, !wm)
 
-            if !wm or owner == LocalPlayer() or wm and owner:IsNPC() then
-                if behav then
-                    self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
-                else
-                    self:DrawLaser(a.Pos, -lasang:Right(), atttbl, behav)
-                end
+            if arc9_fx_rtvm:GetBool() then 
+                self:DrawLaser(a.Pos, -lasang:Right(), atttbl, false)
             else
-                self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
+                if !wm or owner == LocalPlayer() or wm and owner:IsNPC() then
+                    if behav then
+                        self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
+                    else
+                        self:DrawLaser(a.Pos, -lasang:Right(), atttbl, behav)
+                    end
+                else
+                    self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
+                end
             end
         end
     end

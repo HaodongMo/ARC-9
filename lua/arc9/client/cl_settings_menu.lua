@@ -78,6 +78,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
         { type = "bool", text = "settings.allflash.title", convar = "allflash", desc = "settings.allflash.desc"},
+        { type = "bool", text = "settings.fx_rtvm.title", convar = "fx_rtvm", desc = "settings.fx_rtvm.desc"},
 
 
         { type = "label", text = "settings.performance.blur.title" },

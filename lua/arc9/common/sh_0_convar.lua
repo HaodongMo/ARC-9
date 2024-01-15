@@ -844,6 +844,11 @@ local conVars = {
         -- default = "xboxseries",
         -- client = true,
     -- },
+    {
+        name = "fx_rtvm",
+        default = "0",
+        client = true,
+    },
 }
 ARC9.ConVarData = {}
 

@@ -33,6 +33,25 @@ local arc9_fx_adsblur = GetConVar("arc9_fx_adsblur")
 
 
 function SWEP:PreDrawViewModel()
+    if ARC9.RTScopeRender then -- basically a copy of code in that func for rt barrels but without useless stuff and bad stuff, and also offset of cam in scope
+        self:DoBodygroups(false)
+        local vm = self:GetVM()
+        if self.HasSightsPoseparam then
+            vm:SetPoseParameter("sights", self:GetSightAmount())
+        end
+        vm:InvalidateBoneCache()
+
+        local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
+        
+        vmpso = vmpso - vmagn:Forward() * (spso.y - 15) -- i sure do hope fixed number will be good (clueless)
+        vmpso = vmpso - vmagn:Up() * spso.z
+        vmpso = vmpso - vmagn:Right() * spso.x
+
+        cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 100040)
+
+        return
+    end
+
     if ARC9.PresetCam then
         self:DoBodygroups(false)
         return
@@ -169,9 +188,10 @@ function SWEP:PreDrawViewModel()
 end
 
 function SWEP:ViewModelDrawn()
-    cam.IgnoreZ(true)
     self:DrawCustomModel(false)
+    cam.IgnoreZ(true)
     self:DoRHIK()
+    if ARC9.RTScopeRender then return end
     self:PreDrawThirdArm()
     self:DrawFlashlightsVM()
 
@@ -183,6 +203,7 @@ function SWEP:ViewModelDrawn()
 end
 
 function SWEP:PostDrawViewModel()
+    local inrt = ARC9.RTScopeRender
 
     local newmzpcfs = {}
 
@@ -193,7 +214,7 @@ function SWEP:PostDrawViewModel()
         end
     end
 
-    self.MuzzPCFs = newmzpcfs
+    if !inrt then self.MuzzPCFs = newmzpcfs end
 
     cam.Start3D()
         cam.IgnoreZ(false)
@@ -206,7 +227,7 @@ function SWEP:PostDrawViewModel()
             end
         end
 
-        self.PCFs = newpcfs
+        if !inrt then self.PCFs = newpcfs end
 
         local newfx = {}
 
@@ -218,7 +239,7 @@ function SWEP:PostDrawViewModel()
             end
         end
 
-        self.ActiveEffects = newfx
+        if !inrt then self.ActiveEffects = newfx end
     cam.End3D()
 
     if ARC9.PresetCam then return end
@@ -229,6 +250,8 @@ function SWEP:PostDrawViewModel()
     if !arc9_dev_benchgun:GetBool() then
         cam.End3D()
     end
+
+    if inrt then return end
 
     cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), nil, nil, nil, nil, 1, 10000)
     if self.VModel then

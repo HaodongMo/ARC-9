@@ -9,6 +9,8 @@ function SWEP:ShouldDoScope()
     return true
 end
 
+local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
+
 function SWEP:DoRT(fov, atttbl)
     if ARC9.OverDraw then return end
 
@@ -18,6 +20,8 @@ function SWEP:DoRT(fov, atttbl)
 
     local sighttbl = self:GetSight()
 
+    local rtvm = arc9_fx_rtvm:GetBool()
+
     local rt = {
         x = 0,
         y = 0,
@@ -25,17 +29,21 @@ function SWEP:DoRT(fov, atttbl)
         h = rtsize,
         angles = rtang,
         origin = rtpos,
-        drawviewmodel = false,
+        drawviewmodel = rtvm or false,
         fov = fov,
         znear = 16,
         zfar = 30000
     }
+    
+    ARC9.RTScopeRenderFOV = fov
 
     render.PushRenderTarget(rtmat, 0, 0, rtsize, rtsize)
 
     if self:ShouldDoScope() then
         ARC9.OverDraw = true
+        ARC9.RTScopeRender = rtvm
         render.RenderView(rt)
+        ARC9.RTScopeRender = false
         ARC9.OverDraw = false
 
         cam.Start3D(rtpos, rtang, fov, 0, 0, rtsize, rtsize)

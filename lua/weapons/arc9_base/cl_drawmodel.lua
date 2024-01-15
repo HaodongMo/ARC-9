@@ -26,6 +26,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
     if !wm and !IsValid(owner) then return end
     if !wm and owner:IsNPC() then return end
+    if wm and ARC9.RTScopeRender then return end
     if custompos then wm = true end
 
     local mdl = self.VModel
@@ -84,6 +85,8 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
             if !onground or model.OptimizPrevWMPos != self:GetPos() then -- mega optimiz
                 model.OptimizPrevWMPos = onground and self:GetPos() or nil
+
+                if ARC9.RTScopeRender and atttbl.RTScope then continue end -- dont draw scope model while drawing vm from scope position
 
                 if model.charmparent then
                     continue
@@ -147,7 +150,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 --     self:DoHolosight(model, atttbl)
                 -- end
 
-                if !ARC9.PresetCam then
+                if !ARC9.PresetCam and !ARC9.RTScopeRender then
                     if !wm and atttbl.RTScope then
                         local active = slottbl.Address == self:GetActiveSightSlotTable().Address
                         self:DoRTScope(model, atttbl, active)
