@@ -395,7 +395,7 @@ L["settings.fx_rtblur.desc"] = "Suddar ut världen när ett magnifierat sikte an
 L["settings.fx_adsblur.title"] = "I Siktet"
 L["settings.fx_adsblur.desc"] = "Suddar ut världen i siktet."
 L["settings.fx_rtvm.title"] = "Visa vapnet genom RT-Sikten"
-L["settings.fx_rtvm.desc"] = "Visar vapnet och dess tillbehör genom RT-sikten. Kräver att \"Billiga Sikten\" är avstängt.\nSänker drastiskt prestandan på större kartor."
+L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nVisar vapnet och dess tillbehör genom RT-sikten. Kräver att \"Billiga Sikten\" är avstängt.\nSänker drastiskt prestandan."
 
 L["settings.performance.shelleject.title"] = "Patron Utmatning"
 L["settings.eject_fx.title"] = "Rökeffekter"

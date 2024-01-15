@@ -395,7 +395,7 @@ L["settings.fx_rtblur.desc"] = "Verschwemmt die Welt beim Einsatz eines Zielvisi
 L["settings.fx_adsblur.title"] = "In Zielvorrichtung"
 L["settings.fx_adsblur.desc"] = "Verschwemmt die Welt beim Zielen."
 -- L["settings.fx_rtvm.title"] = "Render Weapon through RT Scopes"
--- L["settings.fx_rtvm.desc"] = "Renders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance on larger maps."
+-- L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nRenders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance."
 
 L["settings.performance.shelleject.title"] = "Hülsenauswurf"
 L["settings.eject_fx.title"] = "Raucheffekte"

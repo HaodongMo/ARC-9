@@ -395,7 +395,7 @@ L["settings.fx_rtblur.desc"] = "Размытие мира при использ�
 L["settings.fx_adsblur.title"] = "В прицелах"
 L["settings.fx_adsblur.desc"] = "Размытие части оружия при использовании любых прицелов."
 -- L["settings.fx_rtvm.title"] = "Render Weapon through RT Scopes"
--- L["settings.fx_rtvm.desc"] = "Renders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance on larger maps."
+-- L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nRenders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance."
 
 L["settings.performance.shelleject.title"] = "Гильзы"
 L["settings.eject_fx.title"] = "Эффект дыма"
