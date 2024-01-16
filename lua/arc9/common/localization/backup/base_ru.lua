@@ -575,8 +575,8 @@ L["settings.developer.dev_crosshair.desc"] = "Покажет куда точно
 L["autostat.recoilmodifiercap"] = "Потолок отдачи"
 
 -- Added 14-FEB-2023
-L["settings.hud_game.killfeed_color.title"] = "Цветные иконки"
-L["settings.hud_game.killfeed_color.desc"] = "Динамически генерируемые иконки не будут залиты белым цветом (киллфид и хотбар)."
+L["settings.hud_game.killfeed_colour.title"] = "Цветные иконки"
+L["settings.hud_game.killfeed_colour.desc"] = "Динамически генерируемые иконки не будут залиты белым цветом (киллфид и хотбар)."
 
 -- Added 01-MAR-2023
 L["autostat.secondary.sighted"] = "в прицеле"

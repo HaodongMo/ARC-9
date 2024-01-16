@@ -463,8 +463,8 @@ local conVars = {
         client = true
     },
     {
-        name = "killfeed_color",
-        default = "0",
+        name = "killfeed_colour",
+        default = "1",
         client = true
     },
     {

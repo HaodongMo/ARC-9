@@ -618,8 +618,8 @@ L["settings.developer.dev_crosshair.desc"] = "Funky looking crosshair showing th
 L["autostat.recoilmodifiercap"] = "Maximum Cumulative Recoil"
 
 -- Added 14-FEB-2023
-L["settings.hud_game.killfeed_color.title"] = "Full Color Icons"
-L["settings.hud_game.killfeed_color.desc"] = "Dynamically generated icons are fully colored."
+L["settings.hud_game.killfeed_colour.title"] = "Full Color Icons"
+L["settings.hud_game.killfeed_colour.desc"] = "Dynamically generated icons are fully colored."
 
 -- Added 01-MAR-2023
 L["autostat.secondary.sighted"] = "while Sighted"

@@ -498,8 +498,8 @@ L["settings.hud_game.killfeed_enable.title"] = "Иконки в киллфиде
 L["settings.hud_game.killfeed_enable.desc"] = "Включает автогенерацию иконок ARC9 пушек."
 L["settings.hud_game.killfeed_dynamic.title"] = "Динамичное обновление"
 L["settings.hud_game.killfeed_dynamic.desc"] = "Иконки оружия в киллфиде будет обновлятся после каждого убийства.\n\nВыключи, если хочешь эти самые 0.1 фпс."
-L["settings.hud_game.killfeed_color.title"] = "Цветные иконки"
-L["settings.hud_game.killfeed_color.desc"] = "Динамически генерируемые иконки не будут залиты белым цветом (киллфид и хотбар)."
+L["settings.hud_game.killfeed_colour.title"] = "Цветные иконки"
+L["settings.hud_game.killfeed_colour.desc"] = "Динамически генерируемые иконки не будут залиты белым цветом (киллфид и хотбар)."
 
 L["settings.hud_game.breath"] = "Задержка дыхания"
 L["settings.hud_game.breath_hud.title"] = "Индикатор"

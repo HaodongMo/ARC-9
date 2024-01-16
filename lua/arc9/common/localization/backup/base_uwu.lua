@@ -583,8 +583,8 @@ L["settings.developer.dev_crosshair.desc"] = "Funky looking cwosshaiw showing de
 L["autostat.recoilmodifiercap"] = "Maximum cum-ulatiwe wecoil uwu"
 
 -- Added 14-FEB-2023
-L["settings.hud_game.killfeed_color.title"] = "Full colow Icons"
-L["settings.hud_game.killfeed_color.desc"] = "Dynamically genewated icons awe fully colowed"
+L["settings.hud_game.killfeed_colour.title"] = "Full colow Icons"
+L["settings.hud_game.killfeed_colour.desc"] = "Dynamically genewated icons awe fully colowed"
 
 -- Added 01-MAR-2023
 L["autostat.secondary.sighted"] = "while siwted"

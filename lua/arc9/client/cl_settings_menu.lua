@@ -184,7 +184,7 @@ ARC9.SettingsTable = {
         { type = "label", text = "settings.hud_game.killfeed" },
         { type = "bool", text = "settings.hud_game.killfeed_enable.title", convar = "killfeed_enable", desc = "settings.hud_game.killfeed_enable.desc" },
         { type = "bool", text = "settings.hud_game.killfeed_dynamic.title", convar = "killfeed_dynamic", desc = "settings.hud_game.killfeed_dynamic.desc" },
-        { type = "bool", text = "settings.hud_game.killfeed_color.title", convar = "killfeed_color", desc = "settings.hud_game.killfeed_color.desc" },
+        { type = "bool", text = "settings.hud_game.killfeed_colour.title", convar = "killfeed_colour", desc = "settings.hud_game.killfeed_colour.desc" },
 
         { type = "label", text = "settings.hud_game.breath" },
         { type = "bool", text = "settings.hud_game.breath_hud.title", convar = "breath_hud", desc = "settings.hud_game.breath_hud.desc" },

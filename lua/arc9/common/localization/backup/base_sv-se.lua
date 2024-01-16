@@ -576,8 +576,8 @@ L["settings.developer.dev_crosshair.desc"] = "Ett konstigt hårkors som visar ex
 L["autostat.recoilmodifiercap"] = "Maximal Kumulativ Rekyl"
 
 -- Added 14-FEB-2023
-L["settings.hud_game.killfeed_color.title"] = "Fullfärgade Ikoner"
-L["settings.hud_game.killfeed_color.desc"] = "Dem dynamiskt skapade ikonerna är fullfärgade."
+L["settings.hud_game.killfeed_colour.title"] = "Fullfärgade Ikoner"
+L["settings.hud_game.killfeed_colour.desc"] = "Dem dynamiskt skapade ikonerna är fullfärgade."
 
 -- Added 01-MAR-2023
 L["autostat.secondary.sighted"] = "i Siktet"

@@ -261,7 +261,7 @@ function SWEP:SavePreset(presetname, nooverride, forcedname)
     end
 end
 
-local arc9_killfeed_color = GetConVar("arc9_killfeed_color")
+local arc9_killfeed_colour = GetConVar("arc9_killfeed_colour")
 local matshiny = Material("models/shiny")
 
 local colormodifyicontabll = {
@@ -277,7 +277,7 @@ local colormodifyicontabll = {
 }
 
 function SWEP:DoPresetCapture(filename, foricon)
-    local color = arc9_killfeed_color:GetBool()
+    local colorrr = arc9_killfeed_colour:GetBool()
 
     render.PushRenderTarget(cammat)
 
@@ -370,13 +370,16 @@ function SWEP:DoPresetCapture(filename, foricon)
     self:DrawCustomModel(true, pos, ang)
 
     render.MaterialOverride()
-    render.SetWriteDepthToDestAlpha( true )
-    render.OverrideBlend( true, BLEND_ONE, BLEND_ZERO, BLENDFUNC_ADD, BLEND_ZERO, BLEND_ONE, BLENDFUNC_ADD )
+    
+    if colorrr then
+        render.SetWriteDepthToDestAlpha( true )
+        render.OverrideBlend( true, BLEND_ONE, BLEND_ZERO, BLENDFUNC_ADD, BLEND_ZERO, BLEND_ONE, BLENDFUNC_ADD )
 
-    self:DrawCustomModel(true, pos, ang)
+        self:DrawCustomModel(true, pos, ang)
 
-    render.MaterialOverride()
-    render.SetWriteDepthToDestAlpha( false )
+        render.MaterialOverride()
+        render.SetWriteDepthToDestAlpha( false )
+    end
 
     DrawSharpen(0.2, 0.5)
     DrawColorModify(colormodifyicontabll)
