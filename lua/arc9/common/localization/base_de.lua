@@ -517,9 +517,17 @@ L["settings.hud_game.breath_sfx.desc"] = "Wenn du den Atem anhälst, werden die 
 -- L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 -- L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
 
--- L["settings.hud_game.hud_glyph"] = "Glyphs"
--- L["settings.hud_game.hud_glyph_dark.title"] = "Dark Glyphs"
--- L["settings.hud_game.hud_glyph_dark.desc"] = "Change to use darker glyphs instead.\nRequires map reload."
+-- L["settings.hud_game.hud_glyph"] = "Glyph Type"
+
+-- L["settings.hud_game.hud_glyph_type_hud.title"] = "HUD"
+-- L["settings.hud_game.hud_glyph_type_hud.desc"] = "Change which family of glyphs to use.\nThis affects the HUD tips."
+
+-- L["settings.hud_game.hud_glyph_type_cust.title"] = "Customization Menu"
+-- L["settings.hud_game.hud_glyph_type_cust.desc"] = "Change which family of glyphs to use.\nThis affects the customization menu tips.\nChanges apply next time the customization menu is opened."
+
+-- L["settings.hud_game.hud_glyph_light"] = "Light"
+-- L["settings.hud_game.hud_glyph_dark"] = "Dark"
+-- L["settings.hud_game.hud_glyph_knockout"] = "Knockout"
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPCs"

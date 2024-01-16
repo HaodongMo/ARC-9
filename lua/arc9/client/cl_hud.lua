@@ -448,11 +448,11 @@ local function GetHintsTable(capabilities)
     for i, v in ipairs(hints) do
         if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
         if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-        if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/" .. ARC9.DarkButtons() .. v.glyph .. ".png", "smooth" ) end
+        if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. v.glyph .. ".png", "smooth" ) end
         if v.glyph2 then
             if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
             if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-            if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/" .. ARC9.DarkButtons() .. v.glyph2 .. ".png", "smooth" ) end
+            if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. v.glyph2 .. ".png", "smooth" ) end
         end
     end
 
@@ -1080,7 +1080,7 @@ function ARC9.DrawHUD()
 
             if ARC9.CTRL_Lookup[fmh_text] then fmh_text = ARC9.CTRL_Lookup[fmh_text] end
             if ARC9.CTRL_ConvertTo[fmh_text] then fmh_text = ARC9.CTRL_ConvertTo[fmh_text] end
-            if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/" .. ARC9.DarkButtons() .. fmh_text .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
+            if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. fmh_text .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
             fmh_text = isstring(fmh_text) and fmh_text or { fmh_text, 15 }
 
             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
@@ -1281,17 +1281,37 @@ ARC9.CTRL_Set_UserCustom = {}
 
 ARC9.CTRL_ConvertTo = ARC9.CTRL_Set_Xbox -- {}
 
-function ARC9.DarkButtons()
-	local darkbuttons = "glyphs_light/"
+function ARC9.GlyphFamilyHUD()
+	local con = GetConVar("arc9_glyph_family_hud"):GetString()
+	local family = "glyphs_light/" -- Fallback
 	
-	if GetConVar("arc9_glyph_dark"):GetBool() then
-		darkbuttons = "glyphs_dark/"
+	if con == "light" then
+		family = "glyphs_light/"
+	elseif con == "dark" then
+		family = "glyphs_dark/"
+	elseif con == "knockout" then
+		family = "glyphs_knockout/"
 	end
 
-	return darkbuttons
+	return family
 end
 
-function ARC9.GlyphFamily()
+function ARC9.GlyphFamilyCust()
+	local con = GetConVar("arc9_glyph_family_cust"):GetString()
+	local family = "glyphs_light/" -- Fallback
+	
+	if con == "light" then
+		family = "glyphs_light/"
+	elseif con == "dark" then
+		family = "glyphs_dark/"
+	elseif con == "knockout" then
+		family = "glyphs_knockout/"
+	end
+
+	return family
+end
+
+function ARC9.GlyphSet()
 	local buttonfamily = "xboxseries_"
 	local glyphf = GetConVar("arc9_glyph_type"):GetString()
 	
@@ -1972,9 +1992,9 @@ ARC9.CTRL_Exists = {
 	shared_rstick_right_lg =  true,
 	shared_rstick_touch_lg =  true,
 	shared_rstick_up_lg =  true,
-	shared_touch_doubletap_lg =  true,
-	shared_touch_lg =  true,
-	shared_touch_tap_lg =  true,
+	-- shared_touch_doubletap_lg =  true,
+	-- shared_touch_lg =  true,
+	-- shared_touch_tap_lg =  true,
 	switchpro_button_capture_lg =  true,
 	switchpro_button_home_lg =  true,
 	switchpro_button_minus_lg =  true,

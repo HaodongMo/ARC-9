@@ -835,8 +835,13 @@ local conVars = {
         client = true,
     },
     {
-        name = "glyph_dark",
-        default = "0",
+        name = "glyph_family_hud",
+        default = "light",
+        client = true,
+    },
+    {
+        name = "glyph_family_cust",
+        default = "light",
         client = true,
     },
     -- {

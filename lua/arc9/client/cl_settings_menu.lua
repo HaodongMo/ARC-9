@@ -196,8 +196,22 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_game.centerhint_bipod.title", convar = "center_bipod", desc = "settings.hud_game.centerhint_bipod.desc" },
 
         { type = "label", text = "settings.hud_game.hud_glyph" },
-        { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },
+        -- { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },
         -- { type = "slider", min = 0.5, max = 2, decimals = 2, text = "settings.hud_game.hud_glyph_size.title", convar = "glyph_size", desc = "settings.hud_game.hud_glyph_size.desc" },
+		
+        { type = "combo", text = "settings.hud_game.hud_glyph_type_hud.title", convar = "glyph_family_hud", desc = "settings.hud_game.hud_glyph_type_hud.desc", content = {
+            {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
+            {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
+            {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
+			},
+        },
+		
+        { type = "combo", text = "settings.hud_game.hud_glyph_type_cust.title", convar = "glyph_family_cust", desc = "settings.hud_game.hud_glyph_type_cust.desc", content = {
+            {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
+            {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
+            {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
+			},
+        },
     },
     {
         TabName = "settings.tabname.npc",

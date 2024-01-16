@@ -517,9 +517,17 @@ L["settings.hud_game.centerhint_reload_percent.desc"] = "Visar omladdningstipset
 L["settings.hud_game.centerhint_bipod.title"] = "Visa Växla Skjutstöd"
 L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet kan växlas."
 
-L["settings.hud_game.hud_glyph"] = "Glyfer"
-L["settings.hud_game.hud_glyph_dark.title"] = "Mörka Glyfer"
-L["settings.hud_game.hud_glyph_dark.desc"] = "Ändra för att använda mörkre glyfer istället.\nKräver omladdning av kartan."
+L["settings.hud_game.hud_glyph"] = "Sortens Glyfer"
+
+L["settings.hud_game.hud_glyph_type_hud.title"] = "Gränssnitt"
+L["settings.hud_game.hud_glyph_type_hud.desc"] = "Ändrar vilken familj av glyfer du vill använda.\nDetta gäller för gränssnittens tips."
+
+L["settings.hud_game.hud_glyph_type_cust.title"] = "Anpassningsmeny"
+L["settings.hud_game.hud_glyph_type_cust.desc"] = "Ändrar vilken familj av glyfer du vill använda.\nDetta gäller för anpassningsmenyns tips.\nÄndringar tillämpas nästa gång anpassnignsmenyn öppnas."
+
+L["settings.hud_game.hud_glyph_light"] = "Ljusa"
+L["settings.hud_game.hud_glyph_dark"] = "Mörka"
+L["settings.hud_game.hud_glyph_knockout"] = "\"Knockout\""
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPC:er"
