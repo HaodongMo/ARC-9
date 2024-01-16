@@ -19,8 +19,8 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
 
     if killicons_cachednames[name] == true then
         local w, h = 96, 96
-        x = x - 48
-        y = y - 34
+        x = x - (killicon.Render and 25 or 48) -- killiocn render is only on x64 and they changed offsets or something
+        y = y - (killicon.Render and 25 or 34)
 
         cam.Start2D()
 
