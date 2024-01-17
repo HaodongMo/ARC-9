@@ -101,58 +101,54 @@ function ARC9.StartCommand(ply, cmd)
 	
     -- Aim assist imported from ArcCW
     if CLIENT and IsValid(wpn) then
-        if !wpn.NoAimAssist and arc9_aimassist:GetBool() then
-            if ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
-                local cone = arc9_aimassist_cone:GetFloat()
-                -- local dist = arc9_aimassist_distance:GetFloat() * (wpn:GetProcessedValue("AARangeMult") or 1)
-                local dist = math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
-                local inte = arc9_aimassist_intensity:GetFloat()
-                local head = arc9_aimassist_head:GetBool()
+		local cone = arc9_aimassist_cone:GetFloat()
+		-- local dist = arc9_aimassist_distance:GetFloat() * (wpn:GetProcessedValue("AARangeMult") or 1)
+		local dist = math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
+		local inte = arc9_aimassist_intensity:GetFloat()
+		local head = arc9_aimassist_head:GetBool()
 
-                -- Check if current target is beyond tracking cone
-                local tgt = ply.ARC9_AATarget
-                if IsValid(tgt) and (tgt_pos(tgt, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length() > cone * 2 then ply.ARC9_AATarget = nil end -- lost track
+		-- Check if current target is beyond tracking cone
+		local tgt = ply.ARC9_AATarget
+		if IsValid(tgt) and (tgt_pos(tgt, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length() > cone * 2 then ply.ARC9_AATarget = nil end -- lost track
 
-                -- Try to seek target if not exists
-                tgt = ply.ARC9_AATarget
-                if !IsValid(tgt) or (tgt.Health and tgt:Health() <= 0) or util.QuickTrace(ply:EyePos(), tgt_pos(tgt, head) - ply:EyePos(), ply).Entity ~= tgt then
-                    local min_diff
-                    ply.ARC9_AATarget = nil
-                    -- for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), 244, math.cos(math.rad(cone)))) do
-                    for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), dist, math.cos(math.rad(cone)))) do
-                        if ent == ply or (!ent:IsNPC() and !ent:IsNextBot() and !ent:IsPlayer()) or ent:Health() <= 0
-                                or (ent:IsPlayer() and ent:Team() ~= TEAM_UNASSIGNED and ent:Team() == ply:Team()) then continue end
-                        local tr = util.TraceLine({
-                            start = ply:EyePos(),
-                            endpos = tgt_pos(ent, head),
-                            mask = MASK_SHOT,
-                            filter = ply
-                        })
-                        if tr.Entity ~= ent then continue end
-                        local diff = (tgt_pos(ent, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
-                        if !ply.ARC9_AATarget or diff < min_diff then
-                            ply.ARC9_AATarget = ent
-                            min_diff = diff
-                        end
-                    end
-                end
+		-- Try to seek target if not exists
+		tgt = ply.ARC9_AATarget
+		if !IsValid(tgt) or (tgt.Health and tgt:Health() <= 0) or util.QuickTrace(ply:EyePos(), tgt_pos(tgt, head) - ply:EyePos(), ply).Entity ~= tgt then
+			local min_diff
+			ply.ARC9_AATarget = nil
+			-- for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), 244, math.cos(math.rad(cone)))) do
+			for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), dist, math.cos(math.rad(cone)))) do
+				if ent == ply or (!ent:IsNPC() and !ent:IsNextBot() and !ent:IsPlayer()) or ent:Health() <= 0
+						or (ent:IsPlayer() and ent:Team() ~= TEAM_UNASSIGNED and ent:Team() == ply:Team()) then continue end
+				local tr = util.TraceLine({
+					start = ply:EyePos(),
+					endpos = tgt_pos(ent, head),
+					mask = MASK_SHOT,
+					filter = ply
+				})
+				if tr.Entity ~= ent then continue end
+				local diff = (tgt_pos(ent, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
+				if !ply.ARC9_AATarget or diff < min_diff then
+					ply.ARC9_AATarget = ent
+					min_diff = diff
+				end
+			end
+		end
 
-                -- Aim towards target
-                tgt = ply.ARC9_AATarget
-                if !wpn:GetCustomize() and IsValid(tgt) then
-                    local ang = cmd:GetViewAngles()
-                    local pos = tgt_pos(tgt, head)
-                    local tgt_ang = (pos - ply:EyePos()):Angle()
-                    local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
-                    if ang_diff > 0.1 then
-                        ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 1), ang, tgt_ang)
-                        -- if (arc9_aimassist_lockon:GetBool() and ply:GetInfoNum("arc9_aimassist_lockon_cl", 0) == 1) and !wpn.NoAimAssistLock then
-                            cmd:SetViewAngles(ang)
-                        -- end
-                    end
-                end
-            end
-        end
+		-- Aim towards target
+		tgt = ply.ARC9_AATarget
+		if arc9_aimassist:GetBool() and ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
+			if !wpn:GetCustomize() and !wpn.NoAimAssist and IsValid(tgt) then
+				local ang = cmd:GetViewAngles()
+				local pos = tgt_pos(tgt, head)
+				local tgt_ang = (pos - ply:EyePos()):Angle()
+				local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
+				if ang_diff > 0.1 then
+					ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 1), ang, tgt_ang)
+					cmd:SetViewAngles(ang)
+				end
+			end
+		end
     end
 	
     if wpn:GetBipod() then
