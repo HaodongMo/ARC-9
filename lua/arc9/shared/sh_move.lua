@@ -302,7 +302,7 @@ function ARC9.StartCommand(ply, cmd)
 
     local maus = cmd:GetMouseWheel()
     if wpn:GetInSights() and cmd:GetMouseWheel() != 0 then
-        if ply:KeyDown(IN_USE) and #wpn.MultiSightTable > 0 then
+        if ply:KeyDown(IN_USE) and #wpn.MultiSightTable > 0 and !wpn:StillWaiting() then
             wpn:SwitchMultiSight(maus) -- switchsights is hardcoded to scroll wheel and can't be dealt with using invnext/invprev atm
         elseif CLIENT and (maus < 0 and !input.LookupBinding("invnext") or maus > 0 and !input.LookupBinding("invprev")) then
             wpn:Scroll(-maus) -- if invnext is bound use those, if not then use mouse wheel
