@@ -24,6 +24,11 @@ L["unit.projectiles"] = "PROJ"
 -- L["ammo.buckshot"] = "Shotgun Ammo"
 -- L["ammo.sniperpenetratedround"] = "Sniper Ammo"
 -- L["ammo.smg1_grenade"] = "Rifle Grenades"
+-- L["ammo.xbowbolt"] = "Crossbow Bolts"
+-- L["ammo.rpg_round"] = "Rockets"
+-- L["ammo.grenade"] = "Grenades"
+-- L["ammo.slam"] = "SLAM"
+-- L["ammo.alyxgun"] = "Alyx's Gun Ammo"
 
 /////////////////////////////////////// HUD
 L["hud.version"] = "ARCTIC SYSTEMS HUD v"

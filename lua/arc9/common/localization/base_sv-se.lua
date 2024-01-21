@@ -24,6 +24,11 @@ L["ammo.ar2"] = "Gevärs Ammo"
 L["ammo.buckshot"] = "Hagelbössa Ammo"
 L["ammo.sniperpenetratedround"] = "Prickskytt. Ammo"
 L["ammo.smg1_grenade"] = "Gevärsgranater"
+L["ammo.xbowbolt"] = "Armborstpilar"
+L["ammo.rpg_round"] = "Raketer"
+L["ammo.grenade"] = "Granater"
+L["ammo.slam"] = "SLAM"
+L["ammo.alyxgun"] = "Alyxs Vapenammo"
 
 /////////////////////////////////////// HUD
 L["hud.version"] = "ARCTIC SYSTEMS HUD v"
