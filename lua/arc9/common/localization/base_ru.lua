@@ -24,11 +24,11 @@ L["ammo.ar2"] = "Винтов. патроны"
 L["ammo.buckshot"] = "Дробов. патроны"
 L["ammo.sniperpenetratedround"] = "Снайп. патроны"
 L["ammo.smg1_grenade"] = "Гранаты"
--- L["ammo.xbowbolt"] = "Crossbow Bolts"
--- L["ammo.rpg_round"] = "Rockets"
--- L["ammo.grenade"] = "Grenades"
--- L["ammo.slam"] = "SLAM"
--- L["ammo.alyxgun"] = "Alyx's Gun Ammo"
+L["ammo.xbowbolt"] = "Арбалет. болты"
+L["ammo.rpg_round"] = "Ракеты"
+L["ammo.grenade"] = "Гранаты"
+L["ammo.slam"] = "SLAM"
+L["ammo.alyxgun"] = "Alyx Gun патроны"
 
 /////////////////////////////////////// HUD
 L["hud.version"] = "ARCTIC SYSTEMS HUD v"
@@ -56,8 +56,8 @@ L["hud.hint.toggleatts"] = "ПЕРЕКЛ. МОДУЛЬ"
 L["hud.hint.ubgl"] = "ПЕРЕКЛ. НА"
 L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
 
--- L["hud.hint.lowammo"] = "Low Ammo"
--- L["hud.hint.noammo"] = "No Ammo"
+L["hud.hint.lowammo"] = "Мало патрон"
+L["hud.hint.noammo"] = "Нет патрон"
 
 L["hud.error.missingbind"] = "\" %s \" не связано"
 
@@ -149,10 +149,10 @@ L["customize.bench.effect"] = "ЭФФЕКТ НА ДАЛЬНОСТИ"
 L["customize.bench.ballistics"] = "ОЦЕНКА БАЛЛИСТИЧЕСКИХ ХАРАКТЕРИСТИК"
 L["customize.bench.precision"] = "ИСПЫТАНИЕ ТОЧНОСТИ"
 
--- L["folder.back"] = "Back"
--- L["folder.deselect"] = "Deselect"
--- L["folder.favorites"] = "Favorites"
--- L["folder.select"] = "Select"
+L["folder.back"] = "Назад"
+L["folder.deselect"] = "Снять"
+L["folder.favorites"] = "В избранное"
+L["folder.select"] = "Выбрать"
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Вкл."
@@ -171,7 +171,7 @@ L["autostat.bash"] = "Рукопашная"
 L["autostat.bashdamage"] = "Урон врукопашную"
 L["autostat.bashlungerange"] = "Дальность выпада рукопашного"
 L["autostat.bashrange"] = "Дальность рукопашного"
--- L["autostat.bashspeed"] = "Melee Speed"
+L["autostat.bashspeed"] = "Скорость рукопашного"
 L["autostat.bipod"] = "Сошки"
 L["autostat.bottomlessclip"] = "Безлимитный магазин"
 L["autostat.breathholdtime"] = "Время задержки дыхания"
@@ -399,8 +399,8 @@ L["settings.fx_rtblur.title"] = "В оптике"
 L["settings.fx_rtblur.desc"] = "Размытие мира при использовании оптических прицелов."
 L["settings.fx_adsblur.title"] = "В прицелах"
 L["settings.fx_adsblur.desc"] = "Размытие части оружия при использовании любых прицелов."
--- L["settings.fx_rtvm.title"] = "Render Weapon through RT Scopes"
--- L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nRenders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance."
+L["settings.fx_rtvm.title"] = "Отображать оружие в прицелах"
+L["settings.fx_rtvm.desc"] = "! ЭКСПЕРЕМЕНТАЛЬНАЯ ОПЦИЯ !\nРендерит модель оружия и обвесов в RT прицелах. Необходимо отключить \"Производительные прицелы\".\nЗначительно снижает производительность."
 
 L["settings.performance.shelleject.title"] = "Гильзы"
 L["settings.eject_fx.title"] = "Эффект дыма"
@@ -464,8 +464,8 @@ L["settings.hud_cust.hud_deadzonex.title"] = "Гориз. мёртвая зон�
 L["settings.hud_cust.hud_deadzonex.desc"] = "Горизонтальная \"мёртвая зона\" для меню кастомизации и HUD панели.\nПолезно на ультрашироких мониторах."
 L["settings.hud_cust.hud_color.title"] = "Цвет интерфейса"
 L["settings.hud_cust.hud_color.desc"] = "Главный цвет интерфейса, акцент."
--- L["settings.hud_cust.hud_holiday.title"] = "Holiday Themes"
--- L["settings.hud_cust.hud_holiday.desc"] = "Themes that activate during certain holidays.\nWill override highlight color"
+L["settings.hud_cust.hud_holiday.title"] = "Праздничные темы"
+L["settings.hud_cust.hud_holiday.desc"] = "Различные темы будут активироваться во время (реальных) праздников.\nПереназначит акцентный цвет интерфейса."
 L["settings.hud_cust.hud_darkmode.title"] = "Темная тема"
 L["settings.hud_cust.hud_darkmode.desc"] = "Включает темные цвета интерфейса вместо серого и отключает виньетку у фона."
 L["settings.hud_cust.cust_light.title"] = "Включить подсветку"
@@ -522,17 +522,17 @@ L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip 
 L["settings.hud_game.centerhint_bipod.title"] = "Сошки"
 L["settings.hud_game.centerhint_bipod.desc"] = "Подсказка по центру экрана о возможности установки сошек."
 
--- L["settings.hud_game.hud_glyph"] = "Glyph Type"
+L["settings.hud_game.hud_glyph"] = "Тип глифов"
 
--- L["settings.hud_game.hud_glyph_type_hud.title"] = "HUD"
--- L["settings.hud_game.hud_glyph_type_hud.desc"] = "Change which family of glyphs to use.\nThis affects the HUD tips."
+L["settings.hud_game.hud_glyph_type_hud.title"] = "HUD"
+L["settings.hud_game.hud_glyph_type_hud.desc"] = "Меняет семейство глифов для использования в интерфейсе.\nЭто также затронет подсказки."
 
--- L["settings.hud_game.hud_glyph_type_cust.title"] = "Customization Menu"
--- L["settings.hud_game.hud_glyph_type_cust.desc"] = "Change which family of glyphs to use.\nThis affects the customization menu tips.\nChanges apply next time the customization menu is opened."
+L["settings.hud_game.hud_glyph_type_cust.title"] = "Меню кастомизации"
+L["settings.hud_game.hud_glyph_type_cust.desc"] = "CМеняет семейство глифов для использования в интерфейсе.\nИзменения применятся при следующем открытии меню."
 
--- L["settings.hud_game.hud_glyph_light"] = "Light"
--- L["settings.hud_game.hud_glyph_dark"] = "Dark"
--- L["settings.hud_game.hud_glyph_knockout"] = "Knockout"
+L["settings.hud_game.hud_glyph_light"] = "Светлая тема"
+L["settings.hud_game.hud_glyph_dark"] = "Темная тема"
+L["settings.hud_game.hud_glyph_knockout"] = "Knockout тема"
 
 ////////////////////// NPCs
 L["settings.tabname.npc"] = "NPC"
@@ -698,14 +698,14 @@ L["settings.controller.misc"] = "Прочее"
 L["settings.controller.misc.desc"] = "Здесь должна быть кнопка для вызова панели для продвинутой конфигурации контроллеров, но пока что она в спавнменю > Options > ARC9 > Controller."
 L["settings.controller.controller.title"] = "Символы контроллера"
 L["settings.controller.controller.desc"] = "Включает отображение символов для контроллеров, показывая кнопки контроллера вместо обычных клавиатурных кнопок."
--- L["settings.controller.controller_rumble.title"] = "Rumble"
--- L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
+L["settings.controller.controller_rumble.title"] = "Вибрация"
+L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Продвинутый конфиг"
 L["settings.controller.controller_config.content"] = "Открыть панель"
 L["settings.controller.controller_config.desc"] = "Открывает панель для продвинутой конфигурации контроллеров."
 
--- L["settings.controller.glyphs.title"] = "Glyph Type"
--- L["settings.controller.glyphs.desc"] = "Choose which family of glyphs you want to use.\nSet up glyphs in \"Spawnmenu\" > Options > ARC9 > Controller."
+L["settings.controller.glyphs.title"] = "Тип глифов"
+L["settings.controller.glyphs.desc"] = "Меняет семейство глифов для использования в интерфейсе.\nНастрой глифы в \"спавнменю\" > Options > ARC9 > Controller."
 
 ////////////////////// Aim Assist
 L["settings.tabname.aimassist"] = "Аим-ассист"
@@ -714,7 +714,7 @@ L["settings.tabname.aimassist.desc"] = "Вы можете включить по�
 L["settings.aimassist.enable.title"] = "Включить аим-ассист"
 L["settings.aimassist.enable.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nЭто серверная переменная.\n\nТак же требует включения аим-ассиста на клиенте."
 
--- L["settings.aimassist.enable_general.desc"] = "Enables an aim assistance feature that moves your aim towards a target when aiming near them.\n\nConfigure it in the \"Aim Assist\" tab."
+L["settings.aimassist.enable_general.desc"] = "Включает помощь в прицеливании которая ведет мышь к ближайшему противнику.\n\nНастрой во вкладке \"Аим-ассист\"."
 
 L["settings.aimassist.enable_client.desc"] = "Включает помощь в прицеливании. Понижает чувствительность мыши при наведении возле цели.\n\nТтребует включения аим-ассиста со стороны сервера."
 
@@ -727,7 +727,7 @@ L["settings.aimassist.cone.desc"] = "Насколько далеко или бл
 L["settings.aimassist.head.title"] = "Фиксация на головах"
 L["settings.aimassist.head.desc"] = "Должен ли аим-ассист целить вас на головы противников вместо торса?\n\nЭто серверная переменная."
 
--- L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
+L["settings.aimassist.sensmult.desc"] = "Множитель чувствительности мыши когда прицел на противнике.\nЧем ниже значение, тем ниже чувствительность."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Кэширование"
