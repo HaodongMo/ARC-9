@@ -145,6 +145,8 @@ timer.Simple(1, function()
         if GetConVar("arc9_precache_attsmodels_onstartup"):GetBool() then
             ARC9.CacheAttsModels()
         end
+    else
+        RunConsoleCommand("arc9_dev_benchgun", "0") -- meow
     end
 
     if GetConVar("arc9_precache_allsounds_onstartup"):GetBool() then
