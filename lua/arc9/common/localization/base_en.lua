@@ -401,6 +401,7 @@ L["settings.fx_adsblur.title"] = "In Sights"
 L["settings.fx_adsblur.desc"] = "Blurs the weapon while aiming down sights."
 L["settings.fx_rtvm.title"] = "Render Weapon through RT Scopes"
 L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nRenders the weapon and its attachments through RT scopes. Requires \"Cheap Scopes\" to be disabled.\nSignificantly reduces performance."
+L["settings.fx_rtblur.title2"] = "Blur behind Scopes"
 
 L["settings.performance.shelleject.title"] = "Shell Eject"
 L["settings.eject_fx.title"] = "Smoke Effects"

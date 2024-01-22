@@ -108,6 +108,11 @@ ARC9.SettingsTable = {
         { type = "label", text = "settings.optics.color" },
         { type = "color", text = "settings.optics.reflex.title", convar = "reflex", desc = "settings.optics.reflex.desc" },
         { type = "color", text = "settings.optics.scope.title", convar = "scope", desc = "settings.optics.scope.desc" },
+
+        { type = "label", text = "settings.tabname.performance" },
+        { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
+        { type = "bool", text = "settings.fx_rtvm.title", convar = "fx_rtvm", desc = "settings.fx_rtvm.desc"},
+        { type = "bool", text = "settings.fx_rtblur.title2", convar = "fx_rtblur", desc = "settings.fx_rtblur.desc"},
     },
     {
         TabName = "settings.tabname.crosshair",
