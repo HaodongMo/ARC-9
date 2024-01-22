@@ -144,7 +144,7 @@ ARC9.SettingsTable = {
             settingspanel:Remove() -- rebuilding
             timer.Simple(0, function()
                 ARC9.Regen() -- reload fonts with new scale
-                ARC9_OpenSettings(5) -- open settings on current page (set number to tab number)
+                ARC9_OpenSettings()
             end)
         end },
         -- { type = "input", text = "Font", convar = "font", desc = "Font replacement for ARC9. Set empty to use default font." },
@@ -643,6 +643,13 @@ local function DrawSettings(bg, page)
             surface.SetTextPos((w - tw) / 2 + ARC9ScreenScale(1.7), ARC9ScreenScale(3))
             surface.DrawText(ARC9:GetPhrase(v.TabName) or v.TabName)
         end
+
+        thatsheet.Button.DoClickOld = thatsheet.Button.DoClick
+        thatsheet.Button.DoClick = function(self2)
+            self2:DoClickOld()
+            ARC9.SettingsActiveTab = k
+        end
+
         buttontalling = buttontalling + ARC9ScreenScale(19+1.7)
     end
 
@@ -770,6 +777,7 @@ local clicksound = "arc9/newui/uimouse_click_return.ogg"
 local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
 
 function ARC9_OpenSettings(page)
+    page = page or ARC9.SettingsActiveTab
     local bg = vgui.Create("DFrame")
     bg:SetPos(0, 0)
     bg:SetSize(ScrW(), ScrH())
@@ -840,6 +848,7 @@ function ARC9_OpenSettings(page)
     close:SetIcon(Material("arc9/ui/close.png", "mips smooth"))
     close.DoClick = function(self2)
         surface.PlaySound(clicksound)
+        -- print(ARC9.SettingsActiveTab)
         panel:AlphaTo(0, 0.1, 0, nil)
         bg:AlphaTo(0, 0.1, 0, function()
             bg:Remove()
