@@ -138,15 +138,17 @@ function ARC9.StartCommand(ply, cmd)
 		-- Aim towards target
 		tgt = ply.ARC9_AATarget
 		if arc9_aimassist:GetBool() and ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
-			if !wpn:GetCustomize() and !wpn:GetProcessedValue("NoAimAssist") and IsValid(tgt) then
-				local ang = cmd:GetViewAngles()
-				local pos = tgt_pos(tgt, head)
-				local tgt_ang = (pos - ply:EyePos()):Angle()
-				local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
-				if ang_diff > 0.1 then
-					ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 1), ang, tgt_ang)
-					cmd:SetViewAngles(ang)
-				end
+			if IsValid(tgt) and !wpn:GetCustomize() then
+                if !wpn:GetProcessedValue("NoAimAssist", true) then
+                    local ang = cmd:GetViewAngles()
+                    local pos = tgt_pos(tgt, head)
+                    local tgt_ang = (pos - ply:EyePos()):Angle()
+                    local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
+                    if ang_diff > 0.1 then
+                        ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 1), ang, tgt_ang)
+                        cmd:SetViewAngles(ang)
+                    end
+                end
 			end
 		end
     end
