@@ -138,7 +138,7 @@ function ARC9.StartCommand(ply, cmd)
 		-- Aim towards target
 		tgt = ply.ARC9_AATarget
 		if arc9_aimassist:GetBool() and ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
-			if !wpn:GetCustomize() and !wpn.NoAimAssist and IsValid(tgt) then
+			if !wpn:GetCustomize() and !wpn:GetProcessedValue("NoAimAssist") and IsValid(tgt) then
 				local ang = cmd:GetViewAngles()
 				local pos = tgt_pos(tgt, head)
 				local tgt_ang = (pos - ply:EyePos()):Angle()
