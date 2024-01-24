@@ -429,7 +429,7 @@ local function GetHintsTable(capabilities)
 
     table.insert(hints, {
         glyph = ARC9.GetBindKey("+menu_context"),
-        action = not weapon:GetProcessedValue("CantPeek",true) and weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") })
+        action = weapon:GetProcessedValue("CanPeek",true) and weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") })
 
     table.insert(hints, {
         glyph = ARC9.GetBindKey("+use"),

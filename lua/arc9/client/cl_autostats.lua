@@ -103,8 +103,9 @@ ARC9.AutoStatsMains = {
     ["RecoilModifierCap"] = {false, true},
     ["BashSpeed"] = {false, false},
     ["RecoilPerShot"] = {false, true},
-    ["CantPeek"] = {false, false},
-    -- ["NoAimAssist"] = {false, false},
+    ["CanPeek"] = {false, true},
+    ["AimAssist"] = {false, true},
+    ["AimAssistStrength"] = {true, false},
 }
 
 ARC9.AutoStatsOperations = {

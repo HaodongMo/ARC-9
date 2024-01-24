@@ -1089,9 +1089,10 @@ SWEP.CustomizeNoRotate = false
 SWEP.BipodPos = Vector(0, 0, 0)
 SWEP.BipodAng = Angle(0, 0, 0)
 
-SWEP.CantPeek = false
+SWEP.CanPeek = true -- Allow the weapon to use the Peek function.
 SWEP.PeekPos = Vector(-1.5, 3, -4.5)
 SWEP.PeekAng = Angle(0, 0.4, -35)
+SWEP.PeekCrosshair = true -- Displays the crosshair when using Peek.
 
 SWEP.HeightOverBore = 1
 
@@ -1139,6 +1140,11 @@ SWEP.TTTWeight = 100
 
 -- Use a different ammo type in TTT
 SWEP.TTTAmmoType = nil
+
+-------------------------- Aim Assist
+
+SWEP.AimAssist = true -- Allow the weapon to utilize aim assist.
+SWEP.AimAssistStrength = 1 -- Multiplier on how strong the aim assist should be.
 
 -------------------------- ATTACHMENTS
 
