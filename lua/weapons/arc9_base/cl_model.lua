@@ -270,6 +270,7 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         end
         vec:Mul(slottbl.Scale or 1)
         scale:Scale(vec)
+        csmodel.Scale = vec
         csmodel:EnableMatrix("RenderMultiply", scale)
     end
 
