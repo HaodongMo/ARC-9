@@ -397,6 +397,7 @@ function SWEP:DrawHUD()
 				surface.SetTextColor(255, 255, 100, 255)
 				surface.DrawText(textlow)
 			elseif mag and maxmag > 1 then -- If low on ammo and have reserve ammo
+				surface.SetTextColor(255, 255, 255, 255)
 				local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 - 7.5 + ScreenScale(100 - bipodreloadmove), size = ScreenScale(8), font = "ARC9_10", font_keyb = "ARC9_10" }, { glyph, ScreenScale(7) })
 				
 				surface.SetTextPos(scrw / 2 + 2 - tw / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
