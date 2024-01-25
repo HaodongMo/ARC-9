@@ -104,7 +104,7 @@ function ARC9.StartCommand(ply, cmd)
 		local cone = arc9_aimassist_cone:GetFloat()
 		-- local dist = arc9_aimassist_distance:GetFloat() * (wpn:GetProcessedValue("AARangeMult") or 1)
 		local dist = math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
-		local inte = arc9_aimassist_intensity:GetFloat() * (wpn:GetProcessedValue("AimAssistStrength", true) or 1)
+		local inte = arc9_aimassist_intensity:GetFloat()
 		local head = arc9_aimassist_head:GetBool()
 
 		-- Check if current target is beyond tracking cone
@@ -139,7 +139,7 @@ function ARC9.StartCommand(ply, cmd)
 		tgt = ply.ARC9_AATarget
 		if arc9_aimassist:GetBool() and ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
 			if IsValid(tgt) and !wpn:GetCustomize() then
-                if wpn:GetProcessedValue("AimAssist", true) then
+                if !wpn:GetProcessedValue("NoAimAssist", true) then
                     local ang = cmd:GetViewAngles()
                     local pos = tgt_pos(tgt, head)
                     local tgt_ang = (pos - ply:EyePos()):Angle()

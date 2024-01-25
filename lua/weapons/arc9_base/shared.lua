@@ -1084,15 +1084,15 @@ SWEP.CustomizeRotateAnchor = Vector(21.5, -4.27, -5.23)
 SWEP.CustomizeSnapshotFOV = 90
 SWEP.CustomizeSnapshotPos = Vector(0, 0, 0)
 SWEP.CustomizeSnapshotAng = Angle(0, 0, 0)
-SWEP.CustomizeNoRotate = false
+SWEP.CustomizeNoRotate = nil
 
 SWEP.BipodPos = Vector(0, 0, 0)
 SWEP.BipodAng = Angle(0, 0, 0)
 
-SWEP.CanPeek = true -- Allow the weapon to use the Peek function.
+SWEP.CantPeek = nil -- set to true if you dont want peeking on this gnu
 SWEP.PeekPos = Vector(-1.5, 3, -4.5)
 SWEP.PeekAng = Angle(0, 0.4, -35)
-SWEP.PeekCrosshair = true -- Displays the crosshair when using Peek.
+SWEP.NoPeekCrosshair = nil -- Not displays peek crosshair even if its enabled
 
 SWEP.HeightOverBore = 1
 
@@ -1143,8 +1143,7 @@ SWEP.TTTAmmoType = nil
 
 -------------------------- Aim Assist
 
-SWEP.AimAssist = true -- Allow the weapon to utilize aim assist.
-SWEP.AimAssistStrength = 1 -- Multiplier on how strong the aim assist should be.
+SWEP.NoAimAssist = nil -- Disable this weapon from utilizing aim assist.
 
 -------------------------- ATTACHMENTS
 

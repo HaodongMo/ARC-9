@@ -103,9 +103,8 @@ ARC9.AutoStatsMains = {
     ["RecoilModifierCap"] = {false, true},
     ["BashSpeed"] = {false, false},
     ["RecoilPerShot"] = {false, true},
-    ["CanPeek"] = {false, true},
-    ["AimAssist"] = {false, true},
-    ["AimAssistStrength"] = {true, false},
+    -- ["CantPeek"] = {false, false}, -- sounds dumb
+    -- ["AimAssist"] = {false, true}, -- obvious that grenade launchers wont have assist for heads, no need for that
 }
 
 ARC9.AutoStatsOperations = {
