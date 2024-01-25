@@ -160,7 +160,6 @@ L["autostat.disable.pre"] = "Выкл."
 L["autostat.enable.post"] = ""
 L["autostat.disable.post"] = ""
 
--- L["autostat.aimassist"] = "Аим-ассист"
 L["autostat.aimdownsightstime"] = "Скорость прицеливания"
 L["autostat.alwaysphysbullet"] = "Физические пули"
 L["autostat.ammopershot"] = "Патронов за выстрел"

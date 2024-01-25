@@ -160,7 +160,6 @@ L["autostat.disable.pre"] = "Nyo"
 L["autostat.enable.post"] = ""
 L["autostat.disable.post"] = ""
 
--- L["autostat.aimassist"] = "Awaim Asist ^.^"
 L["autostat.aimdownsightstime"] = "Awaim Dowon Siwts time"
 L["autostat.alwaysphysbullet"] = "Awways Phuwusical buwullets"
 L["autostat.ammopershot"] = "AmmOwO Pew Shot"
