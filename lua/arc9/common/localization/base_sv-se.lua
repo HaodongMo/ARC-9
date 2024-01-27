@@ -282,6 +282,7 @@ L["autostat.secondary.shooting"] = "under Skjutning"
 L["autostat.secondary.sighted"] = "i Siktet"
 L["autostat.secondary.sights"] = "i Siktet"
 L["autostat.secondary.silenced"] = "när Ljuddämpad"
+L["autostat.secondary.sprint"] = "i Sprint"
 L["autostat.secondary.true"] = "när Sanna Namn är på"
 L["autostat.secondary.ubgl"] = "på Tillsats"
 

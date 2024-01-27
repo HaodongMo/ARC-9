@@ -282,6 +282,7 @@ L["autostat.secondary.shooting"] = "开火"
 -- L["autostat.secondary.sighted"] = "while Sighted"
 L["autostat.secondary.sights"] = "瞄准"
 L["autostat.secondary.silenced"] = "消音"
+-- L["autostat.secondary.sprint"] = "when Sprinting"
 L["autostat.secondary.true"] = "真实名称开启时"
 L["autostat.secondary.ubgl"] = "下挂武器"
 

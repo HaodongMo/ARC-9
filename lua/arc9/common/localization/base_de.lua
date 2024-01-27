@@ -282,6 +282,7 @@ L["autostat.secondary.shooting"] = "während des Schießens"
 -- L["autostat.secondary.sighted"] = "while Sighted"
 L["autostat.secondary.sights"] = "im Visier"
 L["autostat.secondary.silenced"] = "wenn Schallgedämpft"
+L["autostat.secondary.sprint"] = "während Sprint"
 L["autostat.secondary.true"] = "wenn TrueNames an ist"
 L["autostat.secondary.ubgl"] = "im UBGL"
 

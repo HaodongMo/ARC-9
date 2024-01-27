@@ -411,6 +411,7 @@ do
     local PLAYER = FindMetaTable("Player")
     local playerCrouching = PLAYER.Crouching
     local playerGetWalkSpeed = PLAYER.GetWalkSpeed
+	local playerSprinting = PLAYER.IsSprinting
     local entityOwner = ENTITY.GetOwner
     local entityOnGround = ENTITY.OnGround
     local entityIsValid = ENTITY.IsValid
@@ -522,6 +523,10 @@ do
             if ownerOnGround and playerCrouching(owner) then
                 stat = arcGetValue(self, val, stat, "Crouch")
             end
+			
+			if ownerOnGround and playerSprinting(owner) then
+                stat = arcGetValue(self, val, stat, "Sprint")
+			end
         end
 
         if swepDt.Reloading then

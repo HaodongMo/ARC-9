@@ -282,6 +282,7 @@ L["autostat.secondary.shooting"] = "пока стреляешь"
 L["autostat.secondary.sighted"] = "в прицеле"
 L["autostat.secondary.sights"] = "в прицеле"
 L["autostat.secondary.silenced"] = "с глушителем"
+L["autostat.secondary.sprint"] = "во время бега"
 L["autostat.secondary.true"] = "при вкл. TrueNames"
 L["autostat.secondary.ubgl"] = "у подствольника"
 

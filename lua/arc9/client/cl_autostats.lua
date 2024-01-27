@@ -103,8 +103,6 @@ ARC9.AutoStatsMains = {
     ["RecoilModifierCap"] = {false, true},
     ["BashSpeed"] = {false, false},
     ["RecoilPerShot"] = {false, true},
-    -- ["CantPeek"] = {false, false}, -- sounds dumb
-    -- ["AimAssist"] = {false, true}, -- obvious that grenade launchers wont have assist for heads, no need for that
 }
 
 ARC9.AutoStatsOperations = {
@@ -204,6 +202,7 @@ ARC9.AutoStatsConditions = {
     ["BlindFire"] = "While Blind Firing",
     ["UBGL"] = "In UBGL",
     ["Bipod"] = "On Bipod",
+	["Sprint"] = "when Sprinting",
 }
 
 function ARC9.GetProsAndCons(atttbl, weapon)

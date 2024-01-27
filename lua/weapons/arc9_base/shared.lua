@@ -594,6 +594,7 @@ SWEP.BashImpact = true -- Creates a Impact effect that leaves a bullet hole.
 SWEP.BashSpeed = 1
 
 SWEP.BashWhileSprint = false -- Unlike ShootWhileSprint, this will not require transitioning out of sprint state (and waiting the sprinttofire delay)
+SWEP.BashCancelsReload = nil -- If bashing should immediately cancel the reload
 
 SWEP.BashThirdArmAnimation = {
         rig = "models/weapons/arc9/lhik/c_thirdarm_pdw.mdl",

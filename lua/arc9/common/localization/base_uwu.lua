@@ -282,6 +282,7 @@ L["autostat.secondary.shooting"] = "w-whiwe showoting"
 L["autostat.secondary.sighted"] = "while siwted"
 L["autostat.secondary.sights"] = "in siwts!"
 L["autostat.secondary.silenced"] = "wwhen siwenced owo"
+L["autostat.secondary.sprint"] = "while Spwinting"
 L["autostat.secondary.true"] = "wwith TwueNawes"
 L["autostat.secondary.ubgl"] = "in UwUBGL"
 

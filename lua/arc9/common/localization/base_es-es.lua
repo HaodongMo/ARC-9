@@ -282,6 +282,7 @@ L["autostat.secondary.shooting"] = "mientras dispara"
 L["autostat.secondary.sighted"] = "mientras Avistado"
 L["autostat.secondary.sights"] = "en la mira"
 L["autostat.secondary.silenced"] = "cuando está silenciado"
+L["autostat.secondary.sprint"] = "al Esprintar"
 L["autostat.secondary.true"] = "cuando Verdaderos Nombres está activo"
 L["autostat.secondary.ubgl"] = "en UBGL"
 
