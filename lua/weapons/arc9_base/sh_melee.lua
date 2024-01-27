@@ -6,7 +6,6 @@ local vmaxs, vmins = Vector(2, 2, 2), Vector(-2, -2, -2)
 function SWEP:MeleeAttack(bypass, bash2)
     if !bypass then
 		if !self:GetProcessedValue("BashCancelsReload", true) and self:StillWaiting() then return end
-		if !ARC9.KeyPressed_Melee and self:StillWaiting() then return end
         if !self:GetProcessedValue("BashWhileSprint", true) and self:SprintLock() then return end
     end
 
@@ -199,6 +198,12 @@ end
 function SWEP:ThinkMelee()
     local owner = self:GetOwner()
 
+    local prebash = self:GetProcessedValue("PreBashTime") / self:GetProcessedValue("BashSpeed")
+
+    if self:GetBash2() then
+        prebash = self:GetProcessedValue("PreBash2Time")
+    end
+
     if !self:GetGrenadePrimed() then
 
         if owner:KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", true) then
@@ -209,16 +214,10 @@ function SWEP:ThinkMelee()
             self:MeleeAttack()
         end
 
-        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", true) and !self:GetInSights() then
+        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", true) and !self:GetInSights() and self:GetLastMeleeTime() + prebash + self:GetProcessedValue("PostBashTime") <= CurTime() then
             self:MeleeAttack()
         end
 
-    end
-
-    local prebash = self:GetProcessedValue("PreBashTime") / self:GetProcessedValue("BashSpeed")
-
-    if self:GetBash2() then
-        prebash = self:GetProcessedValue("PreBash2Time")
     end
 
     if self:GetInMeleeAttack() and self:GetLastMeleeTime() + prebash <= CurTime() then
