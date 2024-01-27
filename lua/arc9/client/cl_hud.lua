@@ -1087,14 +1087,14 @@ function ARC9.DrawHUD()
             if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. fmh_text .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
             fmh_text = isstring(fmh_text) and fmh_text or { fmh_text, 15 }
 
-            surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
-            surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
+            surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
+            surface.SetTextColor(ARC9.GetHUDColor("shadow", 100))
             surface.SetFont("ARC9_12_LCD")
             local fmh_w = GetControllerKeyLineSize( { font = "ARC9_12_LCD" }, fmh_text )
             CreateControllerKeyLine( { x = fmh_x + s_right - fmh_w, y = fmh_y + s_down, size = 16, font = "ARC9_12_LCD" }, fmh_text )
 
             surface.SetDrawColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
-            surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
+            surface.SetTextColor(ARC9.GetHUDColor("fg_3d", 255))
             surface.SetFont("ARC9_12_LCD")
             CreateControllerKeyLine( { x = fmh_x - fmh_w, y = fmh_y, size = 16, font = "ARC9_12_LCD" }, fmh_text )
         end
