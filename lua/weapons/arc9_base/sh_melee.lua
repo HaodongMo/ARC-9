@@ -6,6 +6,7 @@ local vmaxs, vmins = Vector(2, 2, 2), Vector(-2, -2, -2)
 function SWEP:MeleeAttack(bypass, bash2)
     if !bypass then
 		if !self:GetProcessedValue("BashCancelsReload", true) and self:StillWaiting() then return end
+		if !ARC9.KeyPressed_Melee and self:StillWaiting() then return end
         if !self:GetProcessedValue("BashWhileSprint", true) and self:SprintLock() then return end
     end
 
