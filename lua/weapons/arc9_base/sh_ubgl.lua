@@ -27,6 +27,8 @@ function SWEP:ToggleUBGL(on)
     self:CancelReload()
     self:SetUBGL(on)
 
+    for _, v in pairs(self.PV_CacheLong) do v.time = 0 end -- reset cache so ubgl stats wont mix with normal gun
+
     if on then
         local soundtab = {
             name = "enterubgl",
