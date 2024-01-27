@@ -477,7 +477,7 @@ function SWEP:CreateHUD_Stats()
     local realI = 0
 
     local many = false                -- probably not the best way
-    for i, stat in ipairs(stats) do
+    for i, stat in pairs(stats) do
         if stat.cond and stat.cond() then continue end
         realI = realI + 1
         if realI > 6 then many = true end
@@ -485,7 +485,7 @@ function SWEP:CreateHUD_Stats()
 
     realI = 0
 
-    for i, stat in ipairs(stats) do
+    for i, stat in pairs(stats) do
         if stat.cond and stat.cond() then continue end
         realI = realI + 1
 
