@@ -59,7 +59,7 @@ L["hud.hint.zoom"] = "Chawanwe zowom"
 L["hud.hint.lowammo"] = "Low Ammowo!!"
 L["hud.hint.noammo"] = "Nyo Ammowo!! 0_0"
 
-L["hud.error.missingbind"] = "\" %s \" knot bwound >w<"
+-- L["hud.error.missingbind"] = "No button bound to %s"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUwUSTOwOMIZE"

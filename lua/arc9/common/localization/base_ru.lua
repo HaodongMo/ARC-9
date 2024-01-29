@@ -59,7 +59,7 @@ L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
 L["hud.hint.lowammo"] = "Мало патрон"
 L["hud.hint.noammo"] = "Нет патрон"
 
-L["hud.error.missingbind"] = "\" %s \" не связано"
+-- L["hud.error.missingbind"] = "No button bound to %s"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "КАСТОМИЗАЦИЯ"

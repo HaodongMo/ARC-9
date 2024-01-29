@@ -59,7 +59,7 @@ L["hud.hint.zoom"] = "瞄具缩放"
 -- L["hud.hint.lowammo"] = "Low Ammo"
 -- L["hud.hint.noammo"] = "No Ammo"
 
-L["hud.error.missingbind"] = "\" %s \" 不绑"
+-- L["hud.error.missingbind"] = "No button bound to %s"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "自定义"

@@ -59,7 +59,7 @@ L["hud.hint.zoom"] = "Zoom ändern"
 -- L["hud.hint.lowammo"] = "Low Ammo"
 -- L["hud.hint.noammo"] = "No Ammo"
 
-L["hud.error.missingbind"] = "\" %s \" nicht gebunden"
+-- L["hud.error.missingbind"] = "No button bound to %s"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "ANPASSEN"
