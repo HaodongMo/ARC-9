@@ -12,6 +12,11 @@ function SWEP:ThinkTriggerSounds()
     if processedValue(self,"PrimaryBash", true) then return end
 
     if owner:KeyReleased(IN_ATTACK) then
+
+		if self.RecentMelee then 
+			return 
+		end
+
         local soundtab = {
             name = "triggerup",
             sound = self:RandomChoice(self.TriggerUpSound),

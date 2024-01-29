@@ -90,6 +90,9 @@ function SWEP:MeleeAttack(bypass, bash2)
     else
         self:MeleeAttackShoot(bash2, true)
     end
+
+	self.RecentMelee = true
+
 end
 
 local vmaxs2, vmins2 = Vector(2, 2, 2), Vector(-2, -2, -2)
