@@ -59,7 +59,9 @@ L["hud.hint.zoom"] = "Chawanwe zowom"
 L["hud.hint.lowammo"] = "Low Ammowo!!"
 L["hud.hint.noammo"] = "Nyo Ammowo!! 0_0"
 
--- L["hud.error.missingbind"] = "No button bound to %s"
+L["hud.error.missingbind"] = "awooga! %s isnt bindwed!!"
+L["hud.error.missingbind_zoom"] = "wetawd!! bind \"Suit Zoom\" in setings o.o"
+L["hud.error.missingbind_context"] = "wetawd!! bind \"Open Context Menu\" in setings o.o"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUwUSTOwOMIZE"

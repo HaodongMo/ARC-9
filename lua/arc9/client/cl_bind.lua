@@ -150,12 +150,9 @@ function ARC9.GetBindKey(bind)
     if CTRL then
         return bind
     elseif !key then
-        -- if bind == "+zoom" then return "pls bind Suit Zoom!" end -- fucking blind stupid retards please open settings
-        -- if bind == "+menu_context" then return "pls bind Open Context Menu!" end
+        if bind == "+zoom" then return ARC9:GetPhrase("hud.error.missingbind_zoom") end -- fucking blind stupid retards please open settings
+        if bind == "+menu_context" then return ARC9:GetPhrase("hud.error.missingbind_context") end
         -- return "bind KEY " ..  bind
-		
-		if bind == "+zoom" then bind = "Suit Zoom" end -- Do people need extremely specific instructions on how to function?
-		if bind == "+menu_context" then bind = "Open Context Menu" end
 		
 		return string.format(ARC9:GetPhrase("hud.error.missingbind"), bind)
     else
