@@ -335,8 +335,10 @@ ARC9.SettingsTable = {
     },
     {
         TabName = "settings.tabname.controller",
-        { type = "label", text = "settings.controller.misc", desc = "settings.controller.misc.desc"},
+        { type = "label", text = "settings.tabname.controller", desc = "settings.controller.misc.desc"},
         { type = "bool", text = "settings.controller.controller.title", convar = "controller", desc = "settings.controller.controller.desc"},
+		{ type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
+		{ type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
         -- { type = "combo", text = "settings.controller.glyphs.title", convar = "glyph_type", desc = "settings.controller.glyphs.desc", content = {
             -- {"1Amazon Luna", "luna"},
             -- {"1Ouya", "ouya"},
