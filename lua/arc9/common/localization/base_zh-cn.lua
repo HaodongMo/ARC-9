@@ -60,6 +60,8 @@ L["hud.hint.zoom"] = "瞄具缩放"
 -- L["hud.hint.noammo"] = "No Ammo"
 
 -- L["hud.error.missingbind"] = "No button bound to %s"
+-- L["hud.error.missingbind_zoom"] = "Bind \"Suit Zoom\" in settings!"
+-- L["hud.error.missingbind_context"] = "Bind \"Open Context Menu\" in settings!"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "自定义"

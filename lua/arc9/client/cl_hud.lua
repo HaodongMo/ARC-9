@@ -452,11 +452,11 @@ local function GetHintsTable(capabilities)
     for i, v in ipairs(hints) do
         if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
         if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-        if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. v.glyph .. ".png", "smooth" ) end
+        if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. v.glyph .. ".png", "smooth" ) end
         if v.glyph2 then
             if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
             if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-            if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. v.glyph2 .. ".png", "smooth" ) end
+            if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. v.glyph2 .. ".png", "smooth" ) end
         end
     end
 
@@ -1084,7 +1084,7 @@ function ARC9.DrawHUD()
 
             if ARC9.CTRL_Lookup[fmh_text] then fmh_text = ARC9.CTRL_Lookup[fmh_text] end
             if ARC9.CTRL_ConvertTo[fmh_text] then fmh_text = ARC9.CTRL_ConvertTo[fmh_text] end
-            if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. fmh_text .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
+            if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. fmh_text .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
             fmh_text = isstring(fmh_text) and fmh_text or { fmh_text, 15 }
 
             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
@@ -1316,37 +1316,27 @@ function ARC9.GlyphFamilyCust()
 end
 
 function ARC9.GlyphSet()
-	local buttonfamily = "xboxseries_"
+	local buttonfamily = "Keyboard/"
 	local glyphf = GetConVar("arc9_glyph_type"):GetString()
 	
-	if glyphf == "luna" then buttonfamily = "luna_"
-		elseif glyphf == "ouya" then buttonfamily = "ouya_"
-		elseif glyphf == "ps3" then buttonfamily = "ps3_"
-		elseif glyphf == "ps4" then buttonfamily = "ps4_"
-		elseif glyphf == "ps5" then buttonfamily = "ps5_"
-		elseif glyphf == "psvita" then buttonfamily = "psvita_"
-		elseif glyphf == "stadia" then buttonfamily = "stadia_"
-		elseif glyphf == "steamc" then buttonfamily = "steamc_"
-		elseif glyphf == "steamdeck" then buttonfamily = "steamdeck_"
-		elseif glyphf == "switch" then buttonfamily = "switch_"
-		elseif glyphf == "wiiu" then buttonfamily = "wiiu_"
-		elseif glyphf == "xbox360" then buttonfamily = "xbox360_"
-		elseif glyphf == "xboxone" then buttonfamily = "xboxone_"
-		elseif glyphf == "xboxseries" then buttonfamily = "xboxseries_"
+	if glyphf == "xbox" then buttonfamily = "Xbox/"
+		elseif glyphf == "ps" then buttonfamily = "PS/"
+		elseif glyphf == "switch" then buttonfamily = "Switch/"
+		else buttonfamily = "Xbox/"
 	end
 
 	return buttonfamily
 end
 
 ARC9.CTRL_Lookup = {
-    MOUSE1 = "shared_mouse_l_click_lg",
-    MOUSE2 = "shared_mouse_r_click_lg",
-    MOUSE3 = "shared_mouse_mid_click_lg",
-    MOUSE4 = "shared_mouse_5_lg",
-    MOUSE5 = "shared_mouse_4_lg",
+    MOUSE1 = "mousel",
+    MOUSE2 = "mouser",
+    MOUSE3 = "mousemid",
+    MOUSE4 = "mouse4",
+    MOUSE5 = "mouse5",
 
-    MWHEELUP = "shared_mouse_scroll_up_lg",
-    MWHEELDOWN = "shared_mouse_scroll_down_lg",
+    MWHEELUP = "mousewhup",
+    MWHEELDOWN = "mousewhdown",
 
     KP_INS = "KP 0",
     KP_END = "KP 1",
@@ -1369,443 +1359,44 @@ ARC9.CTRL_Lookup = {
 
 ARC9.CTRL_Exists = {
 
---[[ New Glyphs
+-- New Glyphs
 	-- Mouse Buttons
-	mouse_left =  true,
-	mouse_mid =  true,
-	mouse_right =  true,
+	mousel =  true,
+	mousemid =  true,
+	mouser =  true,
 	mouse4 =  true,
 	mouse5 =  true,
-	mouse_scroll_up =  true,
-	mouse_scroll_down =  true,
+	mousewhup =  true,
+	mousewhdown =  true,
 	
--- Amazon Luna
-	luna_face_down = true,
-	luna_face_left = true,
-	luna_face_right = true,
-	luna_face_up = true,
+-- Shared
+	faced = true,
+	facel = true,
+	facer = true,
+	faceu = true,
+	stickl = true,
+	stickr = true,
+	sticklc = true,
+	stickrc = true,
+	triggerl = true,
+	triggerr = true,
+	bumperl = true,
+	bumperr = true,
+	back = true,
+	start = true,
+	dpadd = true,
+	dpadl = true,
+	dpadr = true,
+	dpadu = true,
 
-	luna_stick_left = true,
-	luna_stick_right = true,
-
-	luna_stickclick_left = true,
-	luna_stickclick_right = true,
-
-	luna_trigger_left = true,
-	luna_trigger_right = true,
-
-	luna_bumper_left = true,
-	luna_bumper_right = true,
-
-	luna_back = true,
-	luna_start = true,
-
-	luna_dpad= true,
-	luna_dpad_down = true,
-	luna_dpad_left = true,
-	luna_dpad_right = true,
-	luna_dpad_up = true,
-
-	luna_unique_mic = true,
-
--- Ouya
-	ouya_face_down = true,
-	ouya_face_left = true,
-	ouya_face_right = true,
-	ouya_face_up = true,
-	
-	ouya_stick_left = true,
-	ouya_stick_right = true,
-	
-	ouya_trigger_left = true,
-	ouya_trigger_right = true,
-	
-	ouya_bumper_left = true,
-	ouya_bumper_right = true,
-
-	ouya_dpad= true,
-	ouya_dpad_down = true,
-	ouya_dpad_left = true,
-	ouya_dpad_right = true,
-	ouya_dpad_up = true,
-	
-	ouya_unique_menu = true,
-	ouya_unique_touch = true,
-	
--- PlayStation 3 / DualShock 3
-	ps3_face_down = true,
-	ps3_face_left = true,
-	ps3_face_right = true,
-	ps3_face_up = true,
-	
-	ps3_stick_left = true,
-	ps3_stick_right = true,
-	
-	ps3_stickclick_left = true,
-	ps3_stickclick_right = true,
-	
-	ps3_trigger_left = true,
-	ps3_trigger_right = true,
-	
-	ps3_bumper_left = true,
-	ps3_bumper_right = true,
-	
-	ps3_back = true,
-	ps3_start = true,
-	
-	ps3_dpad= true,
-	ps3_dpad_down = true,
-	ps3_dpad_left = true,
-	ps3_dpad_right = true,
-	ps3_dpad_up = true,
-	
--- PlayStation 4 / DualShock 4
-	ps4_face_down = true,
-	ps4_face_left = true,
-	ps4_face_right = true,
-	ps4_face_up = true,
-	
-	ps4_stick_left = true,
-	ps4_stick_right = true,
-	
-	ps4_stickclick_left = true,
-	ps4_stickclick_right = true,
-	
-	ps4_trigger_left = true,
-	ps4_trigger_right = true,
-	
-	ps4_bumper_left = true,
-	ps4_bumper_right = true,
-	
-	ps4_back = true,
-	ps4_start = true,
-	
-	ps4_dpad= true,
-	ps4_dpad_down = true,
-	ps4_dpad_left = true,
-	ps4_dpad_right = true,
-	ps4_dpad_up = true,
-	
-	ps4_unique_share = true,
-	
--- PlayStation 5 / DualSense
-	ps5_face_down = true,
-	ps5_face_left = true,
-	ps5_face_right = true,
-	ps5_face_up = true,
-	
-	ps5_stick_left = true,
-	ps5_stick_right = true,
-	
-	ps5_stickclick_left = true,
-	ps5_stickclick_right = true,
-	
-	ps5_trigger_left = true,
-	ps5_trigger_right = true,
-	
-	ps5_bumper_left = true,
-	ps5_bumper_right = true,
-	
-	ps5_back = true,
-	ps5_start = true,
-	
-	ps5_dpad= true,
-	ps5_dpad_down = true,
-	ps5_dpad_left = true,
-	ps5_dpad_right = true,
-	ps5_dpad_up = true,
-	
-	ps5_start_alt = true,
-	ps5_unique_mic = true,
-	ps5_unique_share = true,
-	ps5_unique_share_alt = true,
-
--- PlayStation Vita
-	psvita_face_down = true,
-	psvita_face_left = true,
-	psvita_face_right = true,
-	psvita_face_up = true,
-	
-	psvita_stick_left = true,
-	psvita_stick_right = true,
-	
-	psvita_bumper_left = true,
-	psvita_bumper_right = true,
-	
-	psvita_back = true,
-	psvita_start = true,
-	
-	psvita_dpad= true,
-	psvita_dpad_down = true,
-	psvita_dpad_left = true,
-	psvita_dpad_right = true,
-	psvita_dpad_up = true,
-	
-	psvita_unique_minus = true,
-	psvita_unique_plus = true,
-	psvita_unique_power = true,
-	psvita_unique_touchpad = true,
-
--- Google Stadia
-	stadia_face_down = true,
-	stadia_face_left = true,
-	stadia_face_right = true,
-	stadia_face_up = true,
-	
-	stadia_stick_left = true,
-	stadia_stick_right = true,
-	
-	stadia_trigger_left = true,
-	stadia_trigger_right = true,
-	
-	stadia_bumper_left = true,
-	stadia_bumper_right = true,
-	
-	stadia_back = true,
-	stadia_start = true,
-	
-	stadia_dpad= true,
-	stadia_dpad_down = true,
-	stadia_dpad_left = true,
-	stadia_dpad_right = true,
-	stadia_dpad_up = true,
-
-	stadia_unique_assistant = true,
-	stadia_unique_dots = true,
-
--- Steam Controller
-	steamc_face_down = true,
-	steamc_face_left = true,
-	steamc_face_right = true,
-	steamc_face_up = true,
-
-	steamc_track = true,
-	steamc_track_center = true,
-	steamc_track_down = true,
-	steamc_track_left = true,
-	steamc_track_right = true,
-	steamc_track_up = true,
-
-	steamc_track2 = true,
-	steamc_track2_center = true,
-	steamc_track2_down = true,
-	steamc_track2_left = true,
-	steamc_track2_right = true,
-	steamc_track2_up = true,
-
-	steamc_trigger_left = true,
-	steamc_trigger_right = true,
-	
-	steamc_bumper_left = true,
-	steamc_bumper_right = true,
-	
-	steamc_back = true,
-	steamc_start = true,
-	
-	steamc_unique_gyro = true,
-	steamc_unique_roll = true,
-	steamc_unique_tilt = true,
-	steamc_unique_yaw = true,
-	steamc_unique_grip_left = true,
-	steamc_unique_grip_right = true,
-	steamc_unique_system = true,
-
--- Steam Deck
-	steamdeck_face_down = true,
-	steamdeck_face_left = true,
-	steamdeck_face_right = true,
-	steamdeck_face_up = true,
-	
-	steamdeck_stick_left = true,
-	steamdeck_stick_right = true,
-	
-	steamdeck_stickclick_left = true,
-	steamdeck_stickclick_right = true,
-	
-	steamdeck_trigger_left = true,
-	steamdeck_trigger_right = true,
-	
-	steamdeck_bumper_left = true,
-	steamdeck_bumper_right = true,
-	
-	steamdeck_back = true,
-	steamdeck_start = true,
-	
-	steamdeck_dpad= true,
-	steamdeck_dpad_down = true,
-	steamdeck_dpad_left = true,
-	steamdeck_dpad_right = true,
-	steamdeck_dpad_up = true,
-
-	steamdeck_unique_dots = true,
-	steamdeck_unique_gyro = true,
-	steamdeck_unique_l4 = true,
-	steamdeck_unique_l5 = true,
-	steamdeck_unique_minus = true,
-	steamdeck_unique_pad_left = true,
-	steamdeck_unique_pad_right = true,
-	steamdeck_unique_plus = true,
-	steamdeck_unique_power = true,
-	steamdeck_unique_r4 = true,
-	steamdeck_unique_r5 = true,
-	steamdeck_unique_steam = true,
-
--- Nintendo Switch / Switch Pro Controller
-	switch_face_down = true,
-	switch_face_left = true,
-	switch_face_right = true,
-	switch_face_up = true,
-	
-	switch_stick_left = true,
-	switch_stick_right = true,
-	
-	switch_trigger_left = true,
-	switch_trigger_right = true,
-	
-	switch_bumper_left = true,
-	switch_bumper_right = true,
-	
-	switch_back = true,
-	switch_start = true,
-	
-	switch_dpad= true,
-	switch_dpad_down = true,
-	switch_dpad_left = true,
-	switch_dpad_right = true,
-	switch_dpad_up = true,
-
-	switch_unique_down = true,
-	switch_unique_home = true,
-	switch_unique_left = true,
-	switch_unique_right = true,
-	switch_unique_square = true,
-	switch_unique_up = true,
-
--- Nintendo Wii U
-	wiiu_face_down = true,
-	wiiu_face_left = true,
-	wiiu_face_right = true,
-	wiiu_face_up = true,
-	
-	wiiu_stick_left = true,
-	wiiu_stick_right = true,
-
-	wiiu_trigger_left = true,
-	wiiu_trigger_right = true,
-	
-	wiiu_bumper_left = true,
-	wiiu_bumper_right = true,
-	
-	wiiu_back = true,
-	wiiu_start = true,
-	
-	wiiu_dpad= true,
-	wiiu_dpad_down = true,
-	wiiu_dpad_left = true,
-	wiiu_dpad_right = true,
-	wiiu_dpad_up = true,
-
-	wiiu_unique_1 = true,
-	wiiu_unique_2 = true,
-	wiiu_unique_power = true,
-
--- Xbox 360
-	xbox360_face_down = true,
-	xbox360_face_left = true,
-	xbox360_face_right = true,
-	xbox360_face_up = true,
-	
-	xbox360_stick_left = true,
-	xbox360_stick_right = true,
-	
-	xbox360_stickclick_left = true,
-	xbox360_stickclick_right = true,
-	
-	xbox360_trigger_left = true,
-	xbox360_trigger_right = true,
-	
-	xbox360_bumper_left = true,
-	xbox360_bumper_right = true,
-	
-	xbox360_back = true,
-	xbox360_start = true,
-	
-	xbox360_dpad= true,
-	xbox360_dpad_down = true,
-	xbox360_dpad_left = true,
-	xbox360_dpad_right = true,
-	xbox360_dpad_up = true,
-
-	xbox360_back_alt = true,
-	xbox360_start_alt = true,
-
--- Xbox One
-	xboxone_face_down = true,
-	xboxone_face_left = true,
-	xboxone_face_right = true,
-	xboxone_face_up = true,
-	
-	xboxone_stick_left = true,
-	xboxone_stick_right = true,
-	
-	xboxone_stickclick_left = true,
-	xboxone_stickclick_right = true,
-	
-	xboxone_trigger_left = true,
-	xboxone_trigger_right = true,
-	
-	xboxone_bumper_left = true,
-	xboxone_bumper_right = true,
-	
-	xboxone_back = true,
-	xboxone_start = true,
-	
-	xboxone_dpad= true,
-	xboxone_dpad_down = true,
-	xboxone_dpad_left = true,
-	xboxone_dpad_right = true,
-	xboxone_dpad_up = true,
-
--- Xbox Series X|S
-	xboxseries_face_down = true,
-	xboxseries_face_left = true,
-	xboxseries_face_right = true,
-	xboxseries_face_up = true,
-	
-	xboxseries_stick_left = true,
-	xboxseries_stick_right = true,
-	
-	xboxseries_stickclick_left = true,
-	xboxseries_stickclick_right = true,
-	
-	xboxseries_trigger_left = true,
-	xboxseries_trigger_right = true,
-	
-	xboxseries_bumper_left = true,
-	xboxseries_bumper_right = true,
-	
-	xboxseries_back = true,
-	xboxseries_start = true,
-	
-	xboxseries_dpad= true,
-	xboxseries_dpad_down = true,
-	xboxseries_dpad_left = true,
-	xboxseries_dpad_right = true,
-	xboxseries_dpad_up = true,
-	
-	xboxseries_unique_share = true,
-	
-	]]--
-
+--[[ Legacy Glyphs
 	ps4_button_logo_lg =  true,
 	ps4_button_options_lg =  true,
 	ps4_button_share_lg =  true,
 	ps4_l1_lg =  true,
 	ps4_l2_lg =  true,
-	-- ps4_l2_soft_lg =  true,
 	ps4_r1_lg =  true,
 	ps4_r2_lg =  true,
-	-- ps4_r2_soft_lg =  true,
 	ps4_trackpad_click_lg =  true,
 	ps4_trackpad_down_lg =  true,
 	ps4_trackpad_l_click_lg =  true,
@@ -1834,10 +1425,8 @@ ARC9.CTRL_Exists = {
 	ps5_button_options_lg =  true,
 	ps5_l1_lg =  true,
 	ps5_l2_lg =  true,
-	-- ps5_l2_soft_lg =  true,
 	ps5_r1_lg =  true,
 	ps5_r2_lg =  true,
-	-- ps5_r2_soft_lg =  true,
 	ps5_trackpad_click_lg =  true,
 	ps5_trackpad_down_lg =  true,
 	ps5_trackpad_l_click_lg =  true,
@@ -1899,12 +1488,10 @@ ARC9.CTRL_Exists = {
 	sc_lg_lg =  true,
 	sc_lt_click_lg =  true,
 	sc_lt_lg =  true,
-	-- sc_lt_soft_lg =  true,
 	sc_rb_lg =  true,
 	sc_rg_lg =  true,
 	sc_rt_click_lg =  true,
 	sc_rt_lg =  true,
-	-- sc_rt_soft_lg =  true,
 	sc_touchpad_click_lg =  true,
 	sc_touchpad_down_lg =  true,
 	sc_touchpad_edge_lg =  true,
@@ -1996,9 +1583,6 @@ ARC9.CTRL_Exists = {
 	shared_rstick_right_lg =  true,
 	shared_rstick_touch_lg =  true,
 	shared_rstick_up_lg =  true,
-	-- shared_touch_doubletap_lg =  true,
-	-- shared_touch_lg =  true,
-	-- shared_touch_tap_lg =  true,
 	switchpro_button_capture_lg =  true,
 	switchpro_button_home_lg =  true,
 	switchpro_button_minus_lg =  true,
@@ -2009,7 +1593,6 @@ ARC9.CTRL_Exists = {
 	switchpro_dpad_right_lg =  true,
 	switchpro_dpad_up_lg =  true,
 	switchpro_l2_lg =  true,
-	-- switchpro_l2_soft_lg =  true,
 	switchpro_l_lg =  true,
 	switchpro_lstick_click_lg =  true,
 	switchpro_lstick_down_lg =  true,
@@ -2018,7 +1601,6 @@ ARC9.CTRL_Exists = {
 	switchpro_lstick_right_lg =  true,
 	switchpro_lstick_up_lg =  true,
 	switchpro_r2_lg =  true,
-	-- switchpro_r2_soft_lg =  true,
 	switchpro_r_lg =  true,
 	switchpro_rstick_click_lg =  true,
 	switchpro_rstick_down_lg =  true,
@@ -2034,14 +1616,13 @@ ARC9.CTRL_Exists = {
 	xbox_button_start_lg =  true,
 	xbox_lb_lg =  true,
 	xbox_lt_lg =  true,
-	-- xbox_lt_soft_lg =  true,
 	xbox_p1_lg =  true,
 	xbox_p2_lg =  true,
 	xbox_p3_lg =  true,
 	xbox_p4_lg =  true,
 	xbox_rb_lg =  true,
 	xbox_rt_lg =  true,
-	-- xbox_rt_soft_lg =  true,
+	]]--
 
 }
 

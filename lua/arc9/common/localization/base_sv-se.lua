@@ -60,6 +60,8 @@ L["hud.hint.lowammo"] = "Låg Ammo"
 L["hud.hint.noammo"] = "Ingen Ammo"
 
 L["hud.error.missingbind"] = "Ingen knapp bunden till %s"
+L["hud.error.missingbind_zoom"] = "Bind \"Suit Zoom\" i inställningarna!"
+L["hud.error.missingbind_context"] = "Bind \"Open Context Menu\" i inställningarna!"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "ANPASSA"

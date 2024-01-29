@@ -844,11 +844,11 @@ local conVars = {
         default = "light",
         client = true,
     },
-    -- {
-        -- name = "glyph_type",
-        -- default = "xboxseries",
-        -- client = true,
-    -- },
+    {
+        name = "glyph_type",
+        default = "xbox",
+        client = true,
+    },
     {
         name = "fx_rtvm",
         default = "0",
@@ -966,12 +966,14 @@ local function menu_arc9_settings(panel)
     function butt:DoClick()
         ARC9_OpenSettings()
     end
+    panel:ControlHelp( "\nAccess the ARC9 settings by pressing this button without having to equip a weapon!" )
 end
 
 local function menu_client_controller(panel)
-    panel:AddControl( "header", { description = "Replace key names with controller glyphs." } )
-    panel:CheckBox("Activate Controller Glyphs", "arc9_controller")
-    panel:ControlHelp( "Activate controller-focused features in ARC9.\n- Keys are replaced with their bindnames.\n- JUMP and USE are used as Select and Deselect, respectively." )
+    -- panel:AddControl( "header", { description = "Replace key names with controller glyphs." } )
+    panel:CheckBox("Activate Controller Mode", "arc9_controller")
+    -- panel:ControlHelp( "Activate controller-focused features in ARC9.\n- Keys are replaced with their bindnames.\n- JUMP and USE are used as Select and Deselect, respectively." )
+    panel:ControlHelp( "Activate a controller-friendly mode for ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and\nRandomly Select attachments.\n\nController glyphs can be customized down below!" )
     -- panel:CheckBox("Controller Rumble w/ SInput", "arc9_controller_rumble")
     -- panel:ControlHelp( "Use Fesiug's SInput to interact with ARC9.\nFound at github.com/Fesiug/gmod-sinput" )
     local listview = vgui.Create("DListView", panel)
@@ -983,13 +985,13 @@ local function menu_client_controller(panel)
 
     local tex_inp = vgui.Create( "DTextEntry", panel )
     local tex_out = vgui.Create( "DTextEntry", panel )
-    panel:ControlHelp( "Double-click to copy into text fields" )
-    panel:AddItem( tex_inp )
-    panel:ControlHelp( "Glyph or keyboard icon to be replaced.\nInputs are case-sensitive!" )
-    panel:AddItem( tex_out )
     panel:ControlHelp( "Glyph to show." )
-    tex_inp:SetPlaceholderText("Input to replace")
-    tex_out:SetPlaceholderText("Glyph to display")
+    -- panel:ControlHelp( "Double-click to copy into text fields" )
+    panel:AddItem( tex_inp )
+    -- panel:ControlHelp( "Glyph or keyboard icon to be replaced.\nInputs are case-sensitive!" )
+    panel:AddItem( tex_out )
+    tex_inp:SetPlaceholderText("Write which input the glyph should replace")
+    tex_out:SetPlaceholderText("Which glyph should appear, or click on it below")
 
     local but_add = vgui.Create( "DButton", panel )
     local but_rem = vgui.Create( "DButton", panel )
@@ -1001,9 +1003,9 @@ local function menu_client_controller(panel)
     panel:AddItem( but_rem )
     panel:AddItem( but_upd )
     panel:AddItem( but_app )
-    but_add:SetText("Add & apply")
-    but_rem:SetText("Remove selected")
-    but_upd:SetText("Restore from memory")
+    but_add:SetText("Add & Apply")
+    but_rem:SetText("Remove Selected")
+    but_upd:SetText("Restore From Memory")
     but_app:SetText("Apply")
 
     function listview:DoDoubleClick( lineID, line )
@@ -1069,30 +1071,31 @@ local function menu_client_controller(panel)
 
     local matselect_filter = vgui.Create( "DComboBox", panel )
     panel:AddItem( matselect_filter )
-    matselect_filter:AddChoice( "! Display All !", "" )
-    matselect_filter:AddChoice( "\"Shared\"", "shared_" )
-    matselect_filter:AddChoice( "PlayStation", "ps" )
-    matselect_filter:AddChoice( "Xbox", "xbox" )
-    matselect_filter:AddChoice( "Steam Controller", "sc_" )
-    matselect_filter:AddChoice( "Steam Deck", "sd_" )
-    matselect_filter:AddChoice( "Nintendo Switch", "switchpro_" )
+    -- matselect_filter:AddChoice( "! Display All !", "" )
+    -- matselect_filter:AddChoice( "\"Shared\"", "shared_" )
+    -- matselect_filter:AddChoice( "PlayStation", "ps" )
+    -- matselect_filter:AddChoice( "Xbox", "xbox" )
+    -- matselect_filter:AddChoice( "Steam Controller", "sc_" )
+    -- matselect_filter:AddChoice( "Steam Deck", "sd_" )
+    -- matselect_filter:AddChoice( "Nintendo Switch", "switchpro_" )
 	
+    matselect_filter:AddChoice( "Refresh", "" )
     -- matselect_filter:AddChoice( "! Mouse !", "mouse" )
-    -- matselect_filter:AddChoice( "Amazon Luna", "luna_" )
-    -- matselect_filter:AddChoice( "Ouya", "ouya_" )
-    -- matselect_filter:AddChoice( "PlayStation 3", "ps3_" )
-    -- matselect_filter:AddChoice( "PlayStation 4", "ps4_" )
-    -- matselect_filter:AddChoice( "PlayStation 5", "ps5_" )
-    -- matselect_filter:AddChoice( "PlayStation Vita", "psvita_" )
-    -- matselect_filter:AddChoice( "Google Stadia", "stadia_" )
-    -- matselect_filter:AddChoice( "Steam Controller", "steamc_" )
-    -- matselect_filter:AddChoice( "Steam Deck", "steamdeck_" )
-    -- matselect_filter:AddChoice( "Nintendo Switch", "switch_" )
-    -- matselect_filter:AddChoice( "Nintendo Wii U", "wiiu_" )
-    -- matselect_filter:AddChoice( "Xbox 360", "xbox360_" )
-    -- matselect_filter:AddChoice( "Xbox One", "xboxone_" )
-    -- matselect_filter:AddChoice( "Xbox Series X|S", "xboxseries_" )
-    matselect_filter:SetValue( "Filter by controller type" )
+    -- matselect_filter:AddChoice( "Amazon Luna", "AmazonLuna/" )
+    -- matselect_filter:AddChoice( "Ouya", "Ouya/" )
+    -- matselect_filter:AddChoice( "PlayStation 3", "PS3/" )
+    -- matselect_filter:AddChoice( "PlayStation 4", "PS4/" )
+    -- matselect_filter:AddChoice( "PlayStation 5", "PS5/" )
+    -- matselect_filter:AddChoice( "PlayStation Vita", "PSVita/" )
+    -- matselect_filter:AddChoice( "Google Stadia", "GoogleStadia/" )
+    -- matselect_filter:AddChoice( "Steam Controller", "Steam/" )
+    -- matselect_filter:AddChoice( "Steam Deck", "SteamDeck/" )
+    -- matselect_filter:AddChoice( "Nintendo Switch", "Switch/" )
+    -- matselect_filter:AddChoice( "Nintendo Wii U", "WiiU/" )
+    -- matselect_filter:AddChoice( "Xbox 360", "Xbox360/" )
+    -- matselect_filter:AddChoice( "Xbox One", "XboxOne/" )
+    -- matselect_filter:AddChoice( "Xbox Series X|S", "XboxSeries/" )
+    matselect_filter:SetValue( "Select to refresh" )
 
     local matselect = ""
     local function GenerateMatSelect()
@@ -1123,7 +1126,7 @@ local function menu_client_controller(panel)
         for k, v in SortedPairs( ARC9.CTRL_Exists ) do
             local sel, seldata = matselect_filter:GetSelected()
             if string.find( k, seldata or "" ) then
-                matselect:AddMaterial( k, "arc9/glyphs_dark/" .. k .. ".png" )
+                matselect:AddMaterial( k, "arc9/glyphs/" .. ARC9.GlyphSet() .. k .. ".png" )
             end
         end
 
@@ -1334,9 +1337,9 @@ local function menu_server_modifiers(panel)
     panel:AddItem( but_rem )
     panel:AddItem( but_upd )
     panel:AddItem( but_app )
-    but_add:SetText("Add & apply")
-    but_rem:SetText("Remove selected")
-    but_upd:SetText("Restore from memory")
+    but_add:SetText("Add & Apply")
+    but_rem:SetText("Remove Selected")
+    but_upd:SetText("Restore From Memory")
     but_app:SetText("Apply")
 
     panel:ControlHelp( "Examples:" )
@@ -1411,7 +1414,7 @@ end )
 
 local clientmenus_ti = {
     {
-        text = "REAL Settings", func = menu_arc9_settings
+        text = "ARC9 Settings", func = menu_arc9_settings
     },
     -- {
     --     text = "Client", func = menu_client_ti
@@ -1420,7 +1423,7 @@ local clientmenus_ti = {
     --     text = "Client - Customization", func = menu_client_customization
     -- },
     {
-        text = "Super Controller", func = menu_client_controller
+        text = "Controller Mode", func = menu_client_controller
     },
     -- {
     --     text = "Client - Crosshair", func = menu_client_crosshair
