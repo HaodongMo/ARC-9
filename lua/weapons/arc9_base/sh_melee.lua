@@ -205,16 +205,17 @@ function SWEP:ThinkMelee()
     end
 
     if !self:GetGrenadePrimed() then
-
-        if owner:KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", true) then
+		waituntilbashagain = self:GetLastMeleeTime() + prebash + self:GetProcessedValue("PostBashTime") <= CurTime()
+		
+        if owner:KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", true) and waituntilbashagain then
             self:MeleeAttack()
         end
 
-        if owner:KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", true) then
+        if owner:KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", true) and waituntilbashagain then
             self:MeleeAttack()
         end
 
-        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", true) and !self:GetInSights() and self:GetLastMeleeTime() + prebash + self:GetProcessedValue("PostBashTime") <= CurTime() then
+        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", true) and !self:GetInSights() and waituntilbashagain then
             self:MeleeAttack()
         end
 
