@@ -532,8 +532,15 @@ function SWEP:SetupModel(wm, lod, cm)
                 end
             end
             stickermodel:SetParent(stickerparent)
+            local stickermat = atttbl.StickerMaterial
 
-            stickermodel:SetMaterial(atttbl.StickerMaterial)
+            if self.StickersNoNocull then
+                local fakestickwithoutnocull = Material(stickermat)
+                fakestickwithoutnocull:SetInt("$flags", bit.band(fakestickwithoutnocull:GetInt("$flags"), bit.bnot(8192)))
+                fakestickwithoutnocull:Recompute()
+            end
+            
+            stickermodel:SetMaterial(stickermat)
 
             local tbl = {
                 Model = stickermodel,
