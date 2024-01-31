@@ -115,6 +115,7 @@ SWEP.TPIKParentToSpine4 = nil -- TPIK makes VM origin on right hand (which is lo
 SWEP.TPIKforcelefthand = nil -- TPIK does not do left hand when you have one of this holdtypes: slam magic pistol normal. Set to true to still do lhand tpik for those
 SWEP.TPIKforcenoreload = false -- TPIK does not force activate during reload
 SWEP.TPIKnolefthand = false -- Force no TPIK left hand
+SWEP.TPIKNoSprintAnim = nil -- Makes weapon wm be in idle while sprinting (use when animated sprint looks too bad from outside)
 SWEP.NoTPIKVMPos = false -- TPIK position is not affected by viewmodel position (Local player only)
 SWEP.Material = ""
 

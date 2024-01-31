@@ -89,6 +89,8 @@ function SWEP:DoTPIK()
         local seq = self:GetSequenceIndex()
 
         if self:GetSequenceProxy() != 0 then seq = wm:LookupSequence("idle") end -- lhik ubgls fix
+        
+        if self.TPIKNoSprintAnim and self:GetIsSprinting() then seq = wm:LookupSequence("idle") end -- no sprint anim in tpik (less ugly)
 
         wm:SetSequence(seq)
 
