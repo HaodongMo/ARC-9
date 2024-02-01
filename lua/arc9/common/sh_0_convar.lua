@@ -844,11 +844,11 @@ local conVars = {
         default = "light",
         client = true,
     },
-    {
-        name = "glyph_type",
-        default = "xbox",
-        client = true,
-    },
+    -- {
+        -- name = "glyph_type",
+        -- default = "xbox",
+        -- client = true,
+    -- },
     {
         name = "fx_rtvm",
         default = "0",
@@ -1071,15 +1071,15 @@ local function menu_client_controller(panel)
 
     local matselect_filter = vgui.Create( "DComboBox", panel )
     panel:AddItem( matselect_filter )
-    -- matselect_filter:AddChoice( "! Display All !", "" )
-    -- matselect_filter:AddChoice( "\"Shared\"", "shared_" )
-    -- matselect_filter:AddChoice( "PlayStation", "ps" )
-    -- matselect_filter:AddChoice( "Xbox", "xbox" )
-    -- matselect_filter:AddChoice( "Steam Controller", "sc_" )
-    -- matselect_filter:AddChoice( "Steam Deck", "sd_" )
-    -- matselect_filter:AddChoice( "Nintendo Switch", "switchpro_" )
+    matselect_filter:AddChoice( "! Display All !", "" )
+    matselect_filter:AddChoice( "\"Shared\"", "shared_" )
+    matselect_filter:AddChoice( "PlayStation", "ps" )
+    matselect_filter:AddChoice( "Xbox", "xbox" )
+    matselect_filter:AddChoice( "Steam Controller", "sc_" )
+    matselect_filter:AddChoice( "Steam Deck", "sd_" )
+    matselect_filter:AddChoice( "Nintendo Switch", "switchpro_" )
 	
-    matselect_filter:AddChoice( "Refresh", "" )
+    -- matselect_filter:AddChoice( "Refresh", "" )
     -- matselect_filter:AddChoice( "! Mouse !", "mouse" )
     -- matselect_filter:AddChoice( "Amazon Luna", "AmazonLuna/" )
     -- matselect_filter:AddChoice( "Ouya", "Ouya/" )
@@ -1095,7 +1095,7 @@ local function menu_client_controller(panel)
     -- matselect_filter:AddChoice( "Xbox 360", "Xbox360/" )
     -- matselect_filter:AddChoice( "Xbox One", "XboxOne/" )
     -- matselect_filter:AddChoice( "Xbox Series X|S", "XboxSeries/" )
-    matselect_filter:SetValue( "Select to refresh" )
+    matselect_filter:SetValue( "Filter by controller type" )
 
     local matselect = ""
     local function GenerateMatSelect()
@@ -1126,7 +1126,7 @@ local function menu_client_controller(panel)
         for k, v in SortedPairs( ARC9.CTRL_Exists ) do
             local sel, seldata = matselect_filter:GetSelected()
             if string.find( k, seldata or "" ) then
-                matselect:AddMaterial( k, "arc9/glyphs/" .. ARC9.GlyphSet() .. k .. ".png" )
+                matselect:AddMaterial( k, "arc9/" .. ARC9.GlyphFamilyHUD() .. k .. ".png" )
             end
         end
 

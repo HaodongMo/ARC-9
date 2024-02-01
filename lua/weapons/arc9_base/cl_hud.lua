@@ -330,7 +330,7 @@ function SWEP:DrawHUD()
 
         if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
         if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
-        if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. glyph .. ".png", "smooth" ) end
+        if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "smooth" ) end
 
         surface.SetTextColor(255, 255, 255, bipodhint)
         surface.SetDrawColor(255, 255, 255, bipodhint)
@@ -364,7 +364,7 @@ function SWEP:DrawHUD()
 
 			if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
 			if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
-			if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. glyph .. ".png", "smooth" ) end
+			if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "smooth" ) end
 
 			surface.SetDrawColor(255, 255, 255, 255)
 			surface.SetFont("ARC9_16")

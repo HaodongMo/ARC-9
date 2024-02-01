@@ -452,11 +452,11 @@ local function GetHintsTable(capabilities)
     for i, v in ipairs(hints) do
         if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
         if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end
-        if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. v.glyph .. ".png", "smooth" ) end
+        if ARC9.CTRL_Exists[v.glyph] then v.glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. v.glyph .. ".png", "smooth" ) end
         if v.glyph2 then
             if ARC9.CTRL_Lookup[v.glyph2] then v.glyph2 = ARC9.CTRL_Lookup[v.glyph2] end
             if ARC9.CTRL_ConvertTo[v.glyph2] then v.glyph2 = ARC9.CTRL_ConvertTo[v.glyph2] end
-            if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. v.glyph2 .. ".png", "smooth" ) end
+            if ARC9.CTRL_Exists[v.glyph2] then v.glyph2 = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. v.glyph2 .. ".png", "smooth" ) end
         end
     end
 
@@ -1084,7 +1084,7 @@ function ARC9.DrawHUD()
 
             if ARC9.CTRL_Lookup[fmh_text] then fmh_text = ARC9.CTRL_Lookup[fmh_text] end
             if ARC9.CTRL_ConvertTo[fmh_text] then fmh_text = ARC9.CTRL_ConvertTo[fmh_text] end
-            if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/glyphs/" .. ARC9.GlyphSet() .. fmh_text .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
+            if ARC9.CTRL_Exists[fmh_text] then fmh_text = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. fmh_text .. ".png", "smooth" ) else fmh_text = "["..fmh_text.."]" end
             fmh_text = isstring(fmh_text) and fmh_text or { fmh_text, 15 }
 
             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100))
@@ -1329,14 +1329,14 @@ function ARC9.GlyphSet()
 end
 
 ARC9.CTRL_Lookup = {
-    MOUSE1 = "mousel",
-    MOUSE2 = "mouser",
-    MOUSE3 = "mousemid",
-    MOUSE4 = "mouse4",
-    MOUSE5 = "mouse5",
+    MOUSE1 = "shared_mouse_l_click_lg",
+    MOUSE2 = "shared_mouse_r_click_lg",
+    MOUSE3 = "shared_mouse_mid_click_lg",
+    MOUSE4 = "shared_mouse_5_lg",
+    MOUSE5 = "shared_mouse_4_lg",
 
-    MWHEELUP = "mousewhup",
-    MWHEELDOWN = "mousewhdown",
+    MWHEELUP = "shared_mouse_scroll_up_lg",
+    MWHEELDOWN = "shared_mouse_scroll_down_lg",
 
     KP_INS = "KP 0",
     KP_END = "KP 1",
@@ -1359,8 +1359,7 @@ ARC9.CTRL_Lookup = {
 
 ARC9.CTRL_Exists = {
 
--- New Glyphs
-	-- Mouse Buttons
+--[[
 	mousel =  true,
 	mousemid =  true,
 	mouser =  true,
@@ -1388,8 +1387,8 @@ ARC9.CTRL_Exists = {
 	dpadl = true,
 	dpadr = true,
 	dpadu = true,
+--]] 
 
---[[ Legacy Glyphs
 	ps4_button_logo_lg =  true,
 	ps4_button_options_lg =  true,
 	ps4_button_share_lg =  true,
@@ -1622,7 +1621,6 @@ ARC9.CTRL_Exists = {
 	xbox_p4_lg =  true,
 	xbox_rb_lg =  true,
 	xbox_rt_lg =  true,
-	]]--
 
 }
 

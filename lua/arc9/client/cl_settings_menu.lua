@@ -200,23 +200,23 @@ ARC9.SettingsTable = {
         { type = "slider", min = 0, max = 1, decimals = 2, text = "settings.hud_game.centerhint_reload_percent.title", convar = "center_reload", desc = "settings.hud_game.centerhint_reload_percent.desc" },
         { type = "bool", text = "settings.hud_game.centerhint_bipod.title", convar = "center_bipod", desc = "settings.hud_game.centerhint_bipod.desc" },
 
-        -- { type = "label", text = "settings.hud_game.hud_glyph" },
+        { type = "label", text = "settings.hud_game.hud_glyph" },
         -- { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },
         -- { type = "slider", min = 0.5, max = 2, decimals = 2, text = "settings.hud_game.hud_glyph_size.title", convar = "glyph_size", desc = "settings.hud_game.hud_glyph_size.desc" },
 		
-        -- { type = "combo", text = "settings.hud_game.hud_glyph_type_hud.title", convar = "glyph_family_hud", desc = "settings.hud_game.hud_glyph_type_hud.desc", content = {
-            -- {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
-            -- {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
-            -- {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
-			-- },
-        -- },
+        { type = "combo", text = "settings.hud_game.hud_glyph_type_hud.title", convar = "glyph_family_hud", desc = "settings.hud_game.hud_glyph_type_hud.desc", content = {
+            {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
+            {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
+            {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
+			},
+        },
 		
-        -- { type = "combo", text = "settings.hud_game.hud_glyph_type_cust.title", convar = "glyph_family_cust", desc = "settings.hud_game.hud_glyph_type_cust.desc", content = {
-            -- {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
-            -- {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
-            -- {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
-			-- },
-        -- },
+        { type = "combo", text = "settings.hud_game.hud_glyph_type_cust.title", convar = "glyph_family_cust", desc = "settings.hud_game.hud_glyph_type_cust.desc", content = {
+            {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
+            {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
+            {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
+			},
+        },
     },
     {
         TabName = "settings.tabname.npc",
@@ -339,12 +339,12 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.controller.controller.title", convar = "controller", desc = "settings.controller.controller.desc"},
 		{ type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
 		{ type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
-        { type = "combo", text = "settings.controller.glyphs.title", convar = "glyph_type", desc = "settings.controller.glyphs.desc", content = {
-            {"1Xbox", "xbox"},
-            {"2PlayStation", "ps"},
-            {"3Nintendo Switch", "switch"},
-			},
-        },
+        -- { type = "combo", text = "settings.controller.glyphs.title", convar = "glyph_type", desc = "settings.controller.glyphs.desc", content = {
+            -- {"1Xbox", "xbox"},
+            -- {"2PlayStation", "ps"},
+            -- {"3Nintendo Switch", "switch"},
+			-- },
+        -- },
         -- { type = "bool", text = "settings.controller.controller_rumble.title", convar = "controller_rumble", desc = "settings.controller.controller_rumble.desc"},
         -- { type = "button", text = "settings.controller.controller_config.title", desc = "settings.controller.controller_config.desc", content = "settings.controller.controller_config.content", func = function(self2)
         --     -- RunConsoleCommand("arc9_reloadatts")
