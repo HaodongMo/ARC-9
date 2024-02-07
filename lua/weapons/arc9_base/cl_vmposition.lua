@@ -255,11 +255,19 @@ function SWEP:GetViewModelPosition(pos, ang)
         local sightpos, sightang = self:GetSightPositions()
         local sight = self:GetSight()
         local eepos, eeang = self:GetExtraSightPositions()
+		local peekp, peeka = "PeekPos", "PeekAng"
+		local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+		local reloadanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
+		
+		if fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9) then
+			if self.PeekPosReloading then peekp = "PeekPosReloading" end
+			if self.PeekAngReloading then peeka = "PeekAngReloading" end
+		end
 
         -- if input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context"))) then
         if self.Peeking then
-            eepos = eepos + self:GetProcessedValue("PeekPos", true)
-            eeang = eeang + self:GetProcessedValue("PeekAng", true)
+            eepos = eepos + self:GetProcessedValue(peekp, true)
+            eeang = eeang + self:GetProcessedValue(peeka, true)
         end
 
         if sight.GeneratedSight then
@@ -504,7 +512,7 @@ function SWEP:GetViewModelFOV()
 
     if self:GetInSights() then
 		target = self:GetSight().ViewModelFOV or (75 + convarfov)
-        if self.Peeking then target = math.max(target, 37) end -- low vm fov sights look weird in peek, ez fix
+        if self.Peeking then target = math.max(target, self.PeekMaxFOV or 37) end -- low vm fov sights look weird in peek, ez fix
 	end
 
     if self:GetCustomize() then
