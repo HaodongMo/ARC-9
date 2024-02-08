@@ -70,6 +70,7 @@ function SWEP:GetSmoothedFOVMag()
 		local curTime = UnPredictedCurTime()
 		local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
 		local reloadanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
+		local shotgun = self:GetShouldShotgunReload()
 
         if self:GetInSights() then
             sightdelta = math.ease.OutQuart(sightdelta)
@@ -82,8 +83,10 @@ function SWEP:GetSmoothedFOVMag()
             target = self.IronSights.Magnification * 0.95
         end
 
-		if fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9) then target = target * 0.95 end
+		if !shotgun and fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9) then target = target * 0.95 end
 			
+		if shotgun and self:GetReloading() then target = target * 0.95 end
+		
         mag = Lerp(sightdelta, 1, target)
 
         -- mag = target

@@ -258,8 +258,9 @@ function SWEP:GetViewModelPosition(pos, ang)
 		local peekp, peeka = "PeekPos", "PeekAng"
 		local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
 		local reloadanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
+		local shotgun = self:GetShouldShotgunReload()
 		
-		if fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9) then
+		if (!shotgun and fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9)) or (shotgun and self:GetReloading()) then
 			if self.PeekPosReloading then peekp = "PeekPosReloading" end
 			if self.PeekAngReloading then peeka = "PeekAngReloading" end
 		end
