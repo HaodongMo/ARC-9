@@ -1,6 +1,7 @@
 local hud_notonground = 0
 local hud_velocity = 0
 local bobct = 0
+local lastctmath = 0
 
 function ARC9.HUDBob(pos, ang)
     local step = 10
@@ -36,7 +37,11 @@ function ARC9.HUDBob(pos, ang)
     steprate = Lerp(hud_notonground, steprate, 0.25)
 
     if IsFirstTimePredicted() or game.SinglePlayer() then
-        bobct = bobct + (ft * steprate)
+        local ctt = CurTime()
+        if lastctmath != ctt then
+            lastctmath = ctt
+            bobct = bobct + (ft * steprate)
+        end
     end
 
     return pos, ang
