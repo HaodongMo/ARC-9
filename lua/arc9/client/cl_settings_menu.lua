@@ -396,6 +396,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.developer.dev_crosshair.title", convar = "dev_crosshair", desc = "settings.developer.dev_crosshair.desc"},
         { type = "bool", text = "settings.developer.dev_show_shield.title", convar = "dev_show_shield", desc = "settings.developer.dev_show_shield.desc"},
         { type = "bool", text = "settings.developer.dev_greenscreen.title", convar = "dev_greenscreen", desc = "settings.developer.dev_greenscreen.desc"},
+        { type = "bool", text = "settings.developer.dev_show_affectors.title", convar = "dev_show_affectors", desc = "settings.developer.dev_show_affectors.desc"},
         { type = "button", text = "settings.developer.reloadatts.title", content = "settings.developer.reload", func = function(self2)
             RunConsoleCommand("arc9_reloadatts")
         end},

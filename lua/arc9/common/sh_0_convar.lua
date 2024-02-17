@@ -854,6 +854,10 @@ local conVars = {
         default = "0",
         client = true,
     },
+    {
+        name = "dev_show_affectors",
+        default = "0",
+    },
 }
 ARC9.ConVarData = {}
 
