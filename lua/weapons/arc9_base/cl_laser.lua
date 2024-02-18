@@ -6,7 +6,6 @@ local lasercolor200 = Color(200, 200, 200)
 function SWEP:DrawLaser(pos, dir, atttbl, behav)
     behav = behav or false
     local strength = atttbl.LaserStrength or 1
-    local color = atttbl.LaserColor or lasercolorred
     local flaremat = atttbl.LaserFlareMat or defaultflaremat
     local lasermat = atttbl.LaserTraceMat or defaulttracemat
     local owner = self:GetOwner()
@@ -70,6 +69,11 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
             hitpos = LerpVector(sightamount*fuckingreloadprocessinfluence, hitpos, realhitpos)
         end
     end
+
+    local color = atttbl.LaserColor or lasercolorred
+	local colorplayer = owner:GetWeaponColor():ToColor()
+
+	if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer end
 
     if !behav then
         render.SetMaterial(lasermat)
