@@ -428,7 +428,9 @@ local function GetHintsTable(capabilities)
     end
 
     local cantpeek = weapon:GetProcessedValue("CantPeek", true)
-    if !(cantpeek and weapon:GetInSights()) then 
+	local sight = weapon:GetInSights()
+	local bipod = weapon:GetBipod()
+    if !(cantpeek and sight) and !(sight and bipod) then 
         table.insert(hints, {
             glyph = ARC9.GetBindKey("+menu_context"),
             action = !cantpeek and weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") 
