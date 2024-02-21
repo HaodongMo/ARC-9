@@ -153,7 +153,12 @@ function SWEP:DrawLasers(wm, behav)
                 lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
             end
 
-            self:DrawLightFlare(a.Pos, lasang, atttbl.LaserColor, wm and 5 or 10, (slottbl.Address or 0) + 69, !wm)
+			local color = atttbl.LaserColor or lasercolorred
+			local colorplayer = owner:GetWeaponColor():ToColor()
+
+			if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer end
+			
+            self:DrawLightFlare(a.Pos, lasang, color, wm and 5 or 10, (slottbl.Address or 0) + 69, !wm)
 
             if !wm or owner == LocalPlayer() or wm and owner:IsNPC() then
                 if behav then
