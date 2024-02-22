@@ -54,6 +54,7 @@ L["hud.hint.safe"] = "Sicherung"
 L["hud.hint.switchsights"] = "Visierung umschalten"
 L["hud.hint.toggleatts"] = "Aufsätze umschalten"
 L["hud.hint.ubgl"] = "Umschalten"
+-- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Zoom ändern"
 
 -- L["hud.hint.lowammo"] = "Low Ammo"
@@ -429,6 +430,9 @@ L["settings.optics.compensate_sens.desc"] = "Kompensierungs-Sensitivität für V
 L["settings.optics.toggleads.title"] = "Zielvorr. umschalten"
 L["settings.optics.toggleads.desc"] = "Zielen wird die Visierung umschalten."
 
+-- L["settings.optics.dtap_sights.title"] = "Double-Tap to Switch Sights"
+-- L["settings.optics.dtap_sights.desc"] = "Allows double-tapping the USE key to switch sights."
+
 L["settings.optics.color"] = "Farbe"
 L["settings.optics.reflex.title"] = "Reflexvisiere"
 L["settings.optics.reflex.desc"] = "Farbe für Reflex- oder Holovisiere.\n\nNicht all Visiere unterstützen dieses Feature."
@@ -525,6 +529,8 @@ L["settings.hud_game.breath_sfx.desc"] = "Wenn du den Atem anhälst, werden die 
 -- L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 -- L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 -- L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
+-- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
+-- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
 -- L["settings.hud_game.hud_glyph"] = "Glyph Type"
 

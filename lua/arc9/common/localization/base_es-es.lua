@@ -54,6 +54,7 @@ L["hud.hint.safe"] = "Poner Seguro"
 L["hud.hint.switchsights"] = "Cambiar Miras"
 L["hud.hint.toggleatts"] = "Alternar Accesorios"
 L["hud.hint.ubgl"] = "Alternar"
+-- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Cambiar Zoom"
 
 -- L["hud.hint.lowammo"] = "Low Ammo"
@@ -429,6 +430,9 @@ L["settings.optics.compensate_sens.desc"] = "Compensar sensibilidad por ampliado
 L["settings.optics.toggleads.title"] = "Alternar ADS"
 L["settings.optics.toggleads.desc"] = "Al apuntar se alternará la mira."
 
+-- L["settings.optics.dtap_sights.title"] = "Double-Tap to Switch Sights"
+-- L["settings.optics.dtap_sights.desc"] = "Allows double-tapping the USE key to switch sights."
+
 L["settings.optics.color"] = "Color"
 L["settings.optics.reflex.title"] = "Miras Holográficas"
 L["settings.optics.reflex.desc"] = "Color a utilizar para miras holográficas.\n\nNo todas las miras admiten esta función."
@@ -525,6 +529,8 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Porcentaje de Cargador
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Muestra un consejo de recarga cuando el cargador actual está en este valor porcentual."
 L["settings.hud_game.centerhint_bipod.title"] = "Mostrar Alternar Bípode"
 L["settings.hud_game.centerhint_bipod.desc"] = "Mostrar un consejo cuando el bípode se puede conmutar."
+-- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
+-- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
 -- L["settings.hud_game.hud_glyph"] = "Glyph Type"
 

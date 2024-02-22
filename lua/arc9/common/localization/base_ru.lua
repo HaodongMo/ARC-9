@@ -54,6 +54,7 @@ L["hud.hint.safe"] = "ПРЕДОХРАНИТЕЛЬ"
 L["hud.hint.switchsights"] = "СМЕНИТЬ ПРИЦЕЛ"
 L["hud.hint.toggleatts"] = "ПЕРЕКЛ. МОДУЛЬ"
 L["hud.hint.ubgl"] = "ПЕРЕКЛ. НА"
+-- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
 
 L["hud.hint.lowammo"] = "Мало патрон"
@@ -430,6 +431,9 @@ L["settings.optics.compensate_sens.desc"] = "Компенсировать чув
 L["settings.optics.toggleads.title"] = "Прицеливание по нажатию"
 L["settings.optics.toggleads.desc"] = "Вместо удерживания кнопки прицеливания достаточно нажать один раз."
 
+-- L["settings.optics.dtap_sights.title"] = "Double-Tap to Switch Sights"
+-- L["settings.optics.dtap_sights.desc"] = "Allows double-tapping the USE key to switch sights."
+
 L["settings.optics.color"] = "Цвет сетки"
 L["settings.optics.reflex.title"] = "Коллиматорных прицелов"
 L["settings.optics.reflex.desc"] = "Цвет сетки у коллиматорных/ голографических прицелов.\n\nНе все прицелы поддерживают смену цвета."
@@ -526,6 +530,8 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Процент маг�
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 L["settings.hud_game.centerhint_bipod.title"] = "Сошки"
 L["settings.hud_game.centerhint_bipod.desc"] = "Подсказка по центру экрана о возможности установки сошек."
+-- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
+-- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
 L["settings.hud_game.hud_glyph"] = "Тип глифов"
 

@@ -322,6 +322,7 @@ end
 
 local function GetHintsTable(capabilities)
     local weapon = LocalPlayer():GetActiveWeapon()
+	local wait = weapon:StillWaiting()
     local hints = {}
 
     if capabilities.UBGL then
@@ -346,9 +347,10 @@ local function GetHintsTable(capabilities)
                 action = ARC9:GetPhrase("hud.hint.switchsights")
             })
         else
+			dtap = GetConVar("arc9_dtap_sights"):GetBool()
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
-                glyph2 = ARC9.GetBindKey("invnext"),
+				glyph2 = !dtap and ARC9.GetBindKey("invnext") or ARC9.GetBindKey("+use"),
                 action = ARC9:GetPhrase("hud.hint.switchsights")
             }) -- TODO: hardcoded to mouse wheel, see sh_move.lua ARC9.StartCommand
         end

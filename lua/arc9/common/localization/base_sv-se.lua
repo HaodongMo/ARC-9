@@ -32,7 +32,7 @@ L["ammo.alyxgun"] = "Alyxs Vapenammo"
 
 /////////////////////////////////////// HUD
 L["hud.version"] = "ARCTIC SYSTEMS HUD v"
-L["hud.jammed"] = "STOPPAD!"
+L["hud.jammed"] = "ELDAVBROTT!"
 L["hud.therm_deco"] = "ELDRÖR TEMP"
 
 L["hud.firemode.single"] = "ENKEL"
@@ -54,6 +54,7 @@ L["hud.hint.safe"] = "Växla Säkring"
 L["hud.hint.switchsights"] = "Växla Sikten"
 L["hud.hint.toggleatts"] = "Växla Tillbehör"
 L["hud.hint.ubgl"] = "Växla"
+L["hud.hint.unjam"] = "Fixa Eldavbrott"
 L["hud.hint.zoom"] = "Ändra Zoom"
 
 L["hud.hint.lowammo"] = "Låg Ammo"
@@ -429,6 +430,9 @@ L["settings.optics.compensate_sens.desc"] = "Kompensera känsligheten för magni
 L["settings.optics.toggleads.title"] = "Växla Sikte"
 L["settings.optics.toggleads.desc"] = "Användning av sikten växlas."
 
+L["settings.optics.dtap_sights.title"] = "Dubbeltryck för att Växla Sikten"
+L["settings.optics.dtap_sights.desc"] = "Tillåter dubbeltryckning av USE-knappen för att växla sikten."
+
 L["settings.optics.color"] = "Färg"
 L["settings.optics.reflex.title"] = "Reflexsikten"
 L["settings.optics.reflex.desc"] = "Färg att använda för reflex-/holografiska sikten.\n\nInte alla sikten stödjer denna funktion."
@@ -525,6 +529,8 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Magasinprocent"
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Visar omladdningstipset när det nuvarande magasinet är vid detta procentvärde."
 L["settings.hud_game.centerhint_bipod.title"] = "Visa Växla Skjutstöd"
 L["settings.hud_game.centerhint_bipod.desc"] = "Visa ett tips när skjutstödet kan växlas."
+L["settings.hud_game.centerhint_jammed.title"] = "Visa Eldavbrott Tips"
+L["settings.hud_game.centerhint_jammed.desc"] = "Visar ett tips när ditt vapen har fått ett eldavbrott."
 
 L["settings.hud_game.hud_glyph"] = "Sortens Glyfer"
 

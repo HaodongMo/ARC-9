@@ -54,6 +54,7 @@ L["hud.hint.safe"] = "Toggle Safe"
 L["hud.hint.switchsights"] = "Switch Sights"
 L["hud.hint.toggleatts"] = "Toggle Attachments"
 L["hud.hint.ubgl"] = "Toggle"
+L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Change Zoom"
 
 L["hud.hint.lowammo"] = "Low Ammo"
@@ -430,6 +431,9 @@ L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity for magnific
 L["settings.optics.toggleads.title"] = "Toggle ADS"
 L["settings.optics.toggleads.desc"] = "Aiming will toggle sights."
 
+L["settings.optics.dtap_sights.title"] = "Double-Tap to Switch Sights"
+L["settings.optics.dtap_sights.desc"] = "Allows double-tapping the USE key to switch sights."
+
 L["settings.optics.color"] = "Color"
 L["settings.optics.reflex.title"] = "Reflex Sights"
 L["settings.optics.reflex.desc"] = "Color to use for reflex/holographic sights.\n\nNot all optics support this feature."
@@ -526,6 +530,8 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Magazine Percentage"
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
+L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
+L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
 L["settings.hud_game.hud_glyph"] = "Glyph Type"
 

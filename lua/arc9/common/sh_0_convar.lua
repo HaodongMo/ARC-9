@@ -858,6 +858,16 @@ local conVars = {
         name = "dev_show_affectors",
         default = "0",
     },
+    {
+        name = "dtap_sights",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "center_jam",
+        default = "0",
+        client = true,
+    },
 }
 ARC9.ConVarData = {}
 

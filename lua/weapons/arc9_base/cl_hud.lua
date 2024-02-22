@@ -301,6 +301,7 @@ function SWEP:DrawHUD()
 
 	cv4 = cv4 or GetConVar("arc9_center_reload_enable")
 	cv1 = cv1 or GetConVar("arc9_center_reload")
+	jamcom = GetConVar("arc9_center_jam")
 
     local ubgl = self:GetUBGL()
 	local rel = self:GetReloading()
@@ -353,23 +354,21 @@ function SWEP:DrawHUD()
 		maxmag = self.Owner:GetAmmoCount(self.Secondary.Ammo)
 	end
 
-    if (cv4:GetBool() and (cv1:GetFloat() > 0.02)) and !(string.find(self:GetIKAnimation() or "", "inspect") and self:StillWaiting()) then
+	local glyph = ARC9.GetBindKey("+reload")
+	
+	if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
+	if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
+	if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "smooth" ) end
+
+    if (cv4:GetBool() and (cv1:GetFloat() > 0.02)) and !(string.find(self:GetIKAnimation() or "", "inspect") and self:StillWaiting()) and !self:GetJammed() then
 		if !rel and !throw and !primbash and mag then
-			local glyph = ARC9.GetBindKey("+reload")
 			local text = ARC9:GetPhrase("hud.hint.reload")
 			local textlow = ARC9:GetPhrase("hud.hint.lowammo")
 			local textempty = ARC9:GetPhrase("hud.hint.noammo")
 
-			-- local text = ARC9.ReloadText()
-
-			if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
-			if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
-			if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "smooth" ) end
-
 			surface.SetDrawColor(255, 255, 255, 255)
-			surface.SetFont("ARC9_16")
-
 			surface.SetFont("ARC9_10")
+			
 			local tw = surface.GetTextSize(text)
 			local twlow = surface.GetTextSize(textlow)
 			local twempty = surface.GetTextSize(textempty)
@@ -410,7 +409,26 @@ function SWEP:DrawHUD()
 			end
 		end
     end
-
+			
+	if jamcom:GetBool() and self:GetJammed() and not self:StillWaiting() then -- If weapon is Jammed
+		local textunjam = ARC9:GetPhrase("hud.hint.unjam")
+		local twunjam = surface.GetTextSize(textunjam)
+		
+		surface.SetDrawColor(255, 255, 255, 255)
+		surface.SetFont("ARC9_10")
+		
+		surface.SetTextColor(255, 255, 255, 255)
+		local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 - 7.5 + ScreenScale(100 - bipodreloadmove), size = ScreenScale(8), font = "ARC9_10", font_keyb = "ARC9_10" }, { glyph, ScreenScale(7) })
+		
+		surface.SetTextPos(scrw / 2 + 2 - twunjam / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
+		surface.SetTextColor(0, 0, 0, 255)
+		surface.DrawText(textunjam)
+		
+		surface.SetTextPos(scrw / 2 - twunjam / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
+		surface.SetTextColor(255, 255, 255, 255)
+		surface.DrawText(textunjam)
+	end
+			
     if self:GetSightAmount() > 0.75 and getsight.FlatScope and getsight.FlatScopeOverlay then
         if getsight.FlatScopeBlackBox then
             surface.SetMaterial(getsight.FlatScopeOverlay)

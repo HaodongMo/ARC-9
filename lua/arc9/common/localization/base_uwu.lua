@@ -54,6 +54,7 @@ L["hud.hint.safe"] = "Towgle Sawe"
 L["hud.hint.switchsights"] = "S-switch siwts"
 L["hud.hint.toggleatts"] = "Towgle awatachmewws"
 L["hud.hint.ubgl"] = "Towgwle"
+-- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Chawanwe zowom"
 
 L["hud.hint.lowammo"] = "Low Ammowo!!"
@@ -429,6 +430,9 @@ L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity fow magnific
 L["settings.optics.toggleads.title"] = "Towggle ADS"
 L["settings.optics.toggleads.desc"] = "Awiming wiw togwe sights."
 
+-- L["settings.optics.dtap_sights.title"] = "Double-Tap to Switch Sights"
+-- L["settings.optics.dtap_sights.desc"] = "Allows double-tapping the USE key to switch sights."
+
 L["settings.optics.color"] = "Colow"
 L["settings.optics.reflex.title"] = "weflex Sights"
 L["settings.optics.reflex.desc"] = "Colow to use fow weflex/hologwaphic sights.\n\nNot all optics suppowt dis featuwe"
@@ -525,6 +529,8 @@ L["settings.hud_game.centerhint_reload_percent.title"] = "Magawine Pewcentwage"
 L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 L["settings.hud_game.centerhint_bipod.title"] = "Centew bipowod hint"
 L["settings.hud_game.centerhint_bipod.desc"] = "Centewed bipowod hint"
+-- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
+-- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
 L["settings.hud_game.hud_glyph"] = "Gwyph Type"
 

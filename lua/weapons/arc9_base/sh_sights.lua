@@ -220,7 +220,11 @@ end
 function SWEP:SwitchMultiSight(amt)
     if self.NextSightSwitch and self.NextSightSwitch > CurTime() then return end
     self.NextSightSwitch = CurTime() + 0.15
-
+	
+	if self.SwitchSightTime and self.SwitchSightTime > CurTime() then
+		if self.SwitchSightDP then self.SwitchSightDP = 0 end
+	end
+	
     if game.SinglePlayer() then
         self:CallOnClient("InvalidateCache")
     end
@@ -253,8 +257,8 @@ function SWEP:SwitchMultiSight(amt)
     self:InvalidateCache()
 
     if msi != old_msi then
-        if self:StillWaiting() then return end
-
+		if self:StillWaiting() then return end
+		
         if (self.MultiSightTable[old_msi].atttbl or {}).ID == (self.MultiSightTable[msi].atttbl or {}).ID then
             if !self:GetUBGL() then -- for me
                 self:PlayAnimation("switchsights", 1, false)
@@ -306,9 +310,6 @@ do
             if sighted and pratt then
                 swepExitSights(self)
             elseif not sighted and pratt then
-                -- if self:GetOwner():KeyDown(IN_USE) then
-                    -- return
-                -- end why was this here?
                 swepEnterSights(self)
             end
     
@@ -319,9 +320,6 @@ do
             if sighted and !inatt then
                 swepExitSights(self)
             elseif not sighted and inatt then
-                -- if self:GetOwner():KeyDown(IN_USE) then
-                    -- return
-                -- end why was this here?
                 swepEnterSights(self)
                 swepBuildMultiSight(self)
             end
@@ -330,6 +328,27 @@ do
         if sighted and playerKeyPressed(owner, ARC9.IN_SWITCHSIGHTS) then
             swepSwitchMultiSight(self)
         end
+	
+		if GetConVar("arc9_dtap_sights"):GetBool() then -- Double-Tap Switching Code
+			if sighted and playerKeyPressed(owner, IN_USE) and !self:StillWaiting() then
+				self.SwitchSightDP = (self.SwitchSightDP or 0) + 1
+				
+				if self.SwitchSightDP > 0 then
+				self.SwitchSightTime = CurTime() + 0.3
+					if self.SwitchSightDP == 2 then
+						swepSwitchMultiSight(self)
+					end
+				end
+			end
+
+			if self.SwitchSightDP and self.SwitchSightDP > 2 then
+				self.SwitchSightDP = 1
+			end
+			
+			if self.SwitchSightTime and CurTime() > self.SwitchSightTime then
+				if self.SwitchSightDP then self.SwitchSightDP = 0 end
+			end
+		end
 
         if self.HasSightsPoseparam then
             if CLIENT then

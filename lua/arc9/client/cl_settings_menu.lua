@@ -104,6 +104,7 @@ ARC9.SettingsTable = {
         { type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
         { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
         { type = "bool", text = "settings.optics.toggleads.title", convar = "toggleads", desc = "settings.optics.toggleads.desc" },
+        { type = "bool", text = "settings.optics.dtap_sights.title", convar = "dtap_sights", desc = "settings.optics.dtap_sights.desc" },
 
         { type = "label", text = "settings.optics.color" },
         { type = "color", text = "settings.optics.reflex.title", convar = "reflex", desc = "settings.optics.reflex.desc" },
@@ -199,6 +200,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_game.centerhint_reload.title", convar = "center_reload_enable", desc = "settings.hud_game.centerhint_reload.desc" },
         { type = "slider", min = 0, max = 1, decimals = 2, text = "settings.hud_game.centerhint_reload_percent.title", convar = "center_reload", desc = "settings.hud_game.centerhint_reload_percent.desc" },
         { type = "bool", text = "settings.hud_game.centerhint_bipod.title", convar = "center_bipod", desc = "settings.hud_game.centerhint_bipod.desc" },
+        { type = "bool", text = "settings.hud_game.centerhint_jammed.title", convar = "center_jam", desc = "settings.hud_game.centerhint_jammed.desc" },
 
         { type = "label", text = "settings.hud_game.hud_glyph" },
         -- { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },

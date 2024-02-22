@@ -54,6 +54,7 @@ L["hud.hint.safe"] = "切换保险"
 L["hud.hint.switchsights"] = "切换瞄具"
 L["hud.hint.toggleatts"] = "切换配件"
 L["hud.hint.ubgl"] = "切换"
+-- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "瞄具缩放"
 
 -- L["hud.hint.lowammo"] = "Low Ammo"
@@ -429,6 +430,9 @@ L["settings.optics.compensate_sens.desc"] = "根据准镜放大倍率调整灵�
 L["settings.optics.toggleads.title"] = "切换瞄准"
 L["settings.optics.toggleads.desc"] = "按一次瞄准键进入或退出瞄准，而不是按住。"
 
+-- L["settings.optics.dtap_sights.title"] = "Double-Tap to Switch Sights"
+-- L["settings.optics.dtap_sights.desc"] = "Allows double-tapping the USE key to switch sights."
+
 L["settings.optics.color"] = "颜色"
 L["settings.optics.reflex.title"] = "全息"
 L["settings.optics.reflex.desc"] = "全息/反射瞄具的准心颜色。\n\n只有部分瞄具支持这个功能。"
@@ -525,6 +529,8 @@ L["settings.hud_game.breath_sfx.desc"] = "启用屏气时的音效。"
 -- L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 -- L["settings.hud_game.centerhint_bipod.title"] = "Display Toggle Bipod"
 -- L["settings.hud_game.centerhint_bipod.desc"] = "Display a tip when the bipod can be toggled."
+-- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
+-- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
 -- L["settings.hud_game.hud_glyph"] = "Glyph Type"
 

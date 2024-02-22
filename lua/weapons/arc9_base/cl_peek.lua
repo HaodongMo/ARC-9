@@ -6,6 +6,8 @@ local arc9_togglepeek_reset = GetConVar("arc9_togglepeek_reset")
 local arc9_togglepeek = GetConVar("arc9_togglepeek")
 
 function SWEP:ThinkPeek()
+	if !self.dt.InSights then return end
+
     if arc9_togglepeek_reset:GetBool() and self:GetSightAmount() < 0.5 or self:GetBipod() or self:GetProcessedValue("CantPeek", true) then self.Peeking = false return end
     local binding = input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context") or "???"))
 
