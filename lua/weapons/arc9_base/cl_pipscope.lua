@@ -97,6 +97,7 @@ end
 local rtsurf = Material("effects/arc9/rt")
 local shadow = Material("arc9/shadow.png", "mips smooth")
 local shadow2 = Material("arc9/shadow2.png", "mips smooth")
+local shadow_square = Material("arc9/shadow_square.png", "mips smooth")
 
 -- local pp_ca_base, pp_ca_r, pp_ca_g, pp_ca_b = Material("pp/arc9/ca_base"), Material("pp/arc9/ca_r"), Material("pp/arc9/ca_g"), Material("pp/arc9/ca_b")
 
@@ -287,7 +288,7 @@ function SWEP:DoRTScope(model, atttbl, active)
                     surface.DrawRect(rtr_x + size - 1, rtr_y - size * 4, size * 8, size * 8) -- right
 
                     if atttbl.RTScopeBlackBoxShadow != false then
-                        surface.SetMaterial(shadow2)
+                        surface.SetMaterial(shadow_square)
                         surface.SetDrawColor(0, 0, 0)
                         surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
                     end
