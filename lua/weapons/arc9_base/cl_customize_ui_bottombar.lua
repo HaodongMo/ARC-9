@@ -313,7 +313,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             attbtn2:SetFullColorIcon(atttbl.FullColorIcon)
 
             if self2:IsHovered() then
-                if slot.Installed != att.att then
+                if (qty > 0) and slot.Installed != att.att then
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.attach"
                 elseif self2.slottbl.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
@@ -439,6 +439,12 @@ function SWEP:CreateHUD_Bottom()
 
             if ARC9.Favorites[a] then order_a = order_a - ARC9.FavoritesWeight end
             if ARC9.Favorites[b] then order_b = order_b - ARC9.FavoritesWeight end
+
+            local qty_a = ARC9:PlayerGetAtts(self:GetOwner(), a)
+            local qty_b = ARC9:PlayerGetAtts(self:GetOwner(), b)
+
+            if ( (qty_a <= 0) and (slottbl.Installed != a) ) then order_a = order_a - ARC9.UnownedWeight end
+            if ( (qty_b <= 0) and (slottbl.Installed != b) ) then order_b = order_b - ARC9.UnownedWeight end
 
             if order_a == order_b then
                 return (atttbl_a.CompactName or atttbl_a.PrintName or "") < (atttbl_b.CompactName or atttbl_b.PrintName or "")

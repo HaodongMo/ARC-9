@@ -31,7 +31,7 @@ ARC9.Colors = {
     fg      = Color(255, 255, 255), --
     hi      = Color(255, 123, 0), --
     hint    = Color(200, 200, 200, 120), --
-    unowned = Color(180, 180, 180, 255),
+    unowned = Color(255, 255, 255, 32),
 
     notoccupied      = Color(216, 216, 216, 70), --
 

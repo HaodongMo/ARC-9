@@ -257,6 +257,15 @@ function ARC9AttButton:Paint(w, h)
             surface.SetTextPos(w - qtw - ARC9ScreenScale(4), ARC9ScreenScale(1))
             surface.DrawText(qtext)
         end
+
+        if self.Installed or qty > 0 then
+        else
+            surface.SetMaterial( ARC9AttButton.MatMarkerLock )
+            surface.SetDrawColor( 255, 255, 255, 32 )
+
+            local size = ARC9ScreenScale(14)
+            surface.DrawTexturedRect(ARC9ScreenScale(21.5) - size/2, ARC9ScreenScale(21.5) - size/2, size, size )
+        end
     end
 end
 

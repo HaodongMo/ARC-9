@@ -1,6 +1,7 @@
 ARC9.Favorites = {}
 
-ARC9.FavoritesWeight = 9999
+ARC9.FavoritesWeight = 99999
+ARC9.UnownedWeight = -9999
 
 function ARC9:LoadFavorites()
     local f = file.Open("arc9_favorites.txt", "r", "DATA")
