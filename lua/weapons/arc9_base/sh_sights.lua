@@ -283,6 +283,7 @@ do
     local swepGetBipodAmount = SWEP.GetBipodAmount
     local swepBuildMultiSight = SWEP.BuildMultiSight
     local swepSwitchMultiSight = SWEP.SwitchMultiSight
+    local dtapconvar = GetConVar("arc9_dtap_sights")
 
     function SWEP:ThinkSights()
         -- if self:GetSafe() then return end
@@ -329,7 +330,7 @@ do
             swepSwitchMultiSight(self)
         end
 	
-		if GetConVar("arc9_dtap_sights"):GetBool() then -- Double-Tap Switching Code
+		if dtapconvar:GetBool() then -- Double-Tap Switching Code
 			if sighted and playerKeyPressed(owner, IN_USE) and !self:StillWaiting() then
 				self.SwitchSightDP = (self.SwitchSightDP or 0) + 1
 				
