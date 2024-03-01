@@ -532,6 +532,11 @@ L["settings.hud_game.breath_sfx.desc"] = "Wenn du den Atem anhälst, werden die 
 -- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
 -- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
+-- L["settings.hud_game.centerhint_firemode.title"] = "Display Firemode Tip"
+-- L["settings.hud_game.centerhint_firemode.desc"] = "Display a tip when you swap firing mode or toggle your safety. Only displayed when not using the ARC9 HUD."
+-- L["settings.hud_game.centerhint_firemode_time.title"] = "Display Firemode Time"
+-- L["settings.hud_game.centerhint_firemode_time.desc"] = "How long the firing mode should be displayed."
+
 -- L["settings.hud_game.hud_glyph"] = "Glyph Type"
 
 -- L["settings.hud_game.hud_glyph_type_hud.title"] = "HUD"

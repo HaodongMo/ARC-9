@@ -2,6 +2,8 @@ function SWEP:ThinkGrenade()
     if !self:GetProcessedValue("Throwable", true) then return end
     local owner = self:GetOwner()
 
+	if self:GetSafe() and owner:KeyPressed(IN_ATTACK) then self:ToggleSafety(false) return end
+	
     if IsValid(self:GetDetonatorEntity()) then
         if owner:KeyPressed(IN_ATTACK) then
             self:TouchOff()

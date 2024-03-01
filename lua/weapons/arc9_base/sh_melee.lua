@@ -200,26 +200,44 @@ end
 
 function SWEP:ThinkMelee()
     local owner = self:GetOwner()
+	local m1 = owner:KeyDown(IN_ATTACK)
+	local m2 = owner:KeyDown(IN_ATTACK2)
+	local marc = owner:KeyPressed(ARC9.IN_MELEE)
 
     local prebash = self:GetProcessedValue("PreBashTime") / self:GetProcessedValue("BashSpeed")
+	local b2 = false
 
     if self:GetBash2() then
         prebash = self:GetProcessedValue("PreBash2Time")
     end
 
     if !self:GetGrenadePrimed() then
+		if m2 then b2 = true else b2 = false end
+		
 		waituntilbashagain = self:GetLastMeleeTime() + prebash + self:GetProcessedValue("PostBashTime") <= CurTime()
 		
-        if owner:KeyDown(IN_ATTACK) and self:GetProcessedValue("PrimaryBash", true) and waituntilbashagain then
-            self:MeleeAttack()
+        if self:GetProcessedValue("PrimaryBash", true) and (m1 or m2) and waituntilbashagain then
+			if self:GetSafe() then
+				self:ToggleSafety(false)
+			else
+				self:MeleeAttack(nil, b2)
+			end
         end
 
-        if owner:KeyDown(IN_ATTACK2) and self:GetProcessedValue("SecondaryBash", true) and waituntilbashagain then
-            self:MeleeAttack()
+        if self:GetProcessedValue("SecondaryBash", true) and m2 and waituntilbashagain then
+            if self:GetSafe() then
+				self:ToggleSafety(false)
+			else
+				self:MeleeAttack()
+			end
         end
 
-        if owner:KeyDown(ARC9.IN_MELEE) and self:GetProcessedValue("Bash", true) and !self:GetInSights() and waituntilbashagain then
-            self:MeleeAttack()
+        if self:GetProcessedValue("Bash", true) and marc and !self:GetInSights() and waituntilbashagain then
+            if self:GetSafe() then
+				self:ToggleSafety(false)
+			else
+				self:MeleeAttack()
+			end
         end
 
     end

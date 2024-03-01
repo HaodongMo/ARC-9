@@ -747,6 +747,8 @@ function SWEP:DevStuffCrosshair()
 		surface.DrawText(affectortext)
 	end
 	
+	surface.DrawText(self.FMHintTime or "no FMHintTime")
+	
     local sgspread_txt = ""
     if self:GetProcessedValue("UseDispersion") then
         local sgspread_val = math.max(0, self:GetProcessedValue("DispersionSpread"))

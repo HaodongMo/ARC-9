@@ -201,6 +201,8 @@ ARC9.SettingsTable = {
         { type = "slider", min = 0, max = 1, decimals = 2, text = "settings.hud_game.centerhint_reload_percent.title", convar = "center_reload", desc = "settings.hud_game.centerhint_reload_percent.desc" },
         { type = "bool", text = "settings.hud_game.centerhint_bipod.title", convar = "center_bipod", desc = "settings.hud_game.centerhint_bipod.desc" },
         { type = "bool", text = "settings.hud_game.centerhint_jammed.title", convar = "center_jam", desc = "settings.hud_game.centerhint_jammed.desc" },
+        { type = "bool", text = "settings.hud_game.centerhint_firemode.title", convar = "center_firemode", desc = "settings.hud_game.centerhint_firemode.desc" },
+        { type = "slider", min = 0, max = 2, decimals = 2, text = "settings.hud_game.centerhint_firemode_time.title", convar = "center_firemode_time", desc = "settings.hud_game.centerhint_firemode_time.desc" },
 
         { type = "label", text = "settings.hud_game.hud_glyph" },
         -- { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },

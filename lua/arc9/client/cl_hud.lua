@@ -409,7 +409,7 @@ local function GetHintsTable(capabilities)
     end
 
     if capabilities.Firemode then
-        table.insert(hints, {
+		table.insert(hints, {
             glyph = ARC9.GetBindKey("+zoom"),
             action = ARC9:GetPhrase("hud.hint.firemode")
         })

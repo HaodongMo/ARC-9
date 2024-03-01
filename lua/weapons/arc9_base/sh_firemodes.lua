@@ -55,6 +55,7 @@ function SWEP:SwitchFiremode()
     if game.SinglePlayer() then
         self:CallOnClient("InvalidateCache")
     end
+	
 end
 
 function SWEP:SetFiremodePose(wm)
@@ -134,16 +135,22 @@ function SWEP:ToggleSafety(onoff)
             self:ExitSights()
         end
     end
+
 end
 
 function SWEP:ThinkFiremodes()
+
+	-- if CurTime() < self.FMHintTime +1 then return end
+
     if self:GetOwner():KeyPressed(IN_ZOOM) and self:GetOwner():KeyDown(IN_USE) then
         self:ToggleSafety()
+		self.FMHintTime = CurTime()
         return
     end
 
     if self:GetOwner():KeyPressed(IN_ZOOM) then
         self:SwitchFiremode()
+		self.FMHintTime = CurTime()
     end
 end
 

@@ -868,6 +868,16 @@ local conVars = {
         default = "0",
         client = true,
     },
+    {
+        name = "center_firemode",
+        default = "1",
+        client = true,
+    },
+    {
+        name = "center_firemode_time",
+        default = "1",
+        client = true,
+    },
 }
 ARC9.ConVarData = {}
 
