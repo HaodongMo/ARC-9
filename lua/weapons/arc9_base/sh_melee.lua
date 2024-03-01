@@ -207,8 +207,8 @@ function SWEP:ThinkMelee()
     local prebash = self:GetProcessedValue("PreBashTime") / self:GetProcessedValue("BashSpeed")
 	local b2 = false
 
-    if self:GetBash2() then
-        prebash = self:GetProcessedValue("PreBash2Time")
+    if self:GetBash2() and self:GetProcessedValue("SecondaryBash", false) then
+        prebash = self:GetProcessedValue("PreBash2Time") / self:GetProcessedValue("BashSpeed")
     end
 
     if !self:GetGrenadePrimed() then
