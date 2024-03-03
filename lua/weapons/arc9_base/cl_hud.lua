@@ -169,7 +169,17 @@ function SWEP:DoDrawCrosshair(x, y)
 
     local forcestd = self:GetProcessedValue("ForceStandardCrosshair", true)
 
-    if self:GetProcessedValue("MissileCrosshair", true) then
+    if self:GetProcessedValue("CustomCrosshair", true) then
+		surface.SetDrawColor(col)
+		surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial") or Material("arc9/ui/share.png", "mips smooth") )
+		
+		surface.DrawTexturedRect(x - (dotsize / 2) - gap - prong - ARC9.ScreenScale(12.5), y - (dotsize / 2) - ARC9.ScreenScale(7), 40, 40) -- Left
+		surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), 40, 40, 180) -- Right
+		
+		surface.DrawTexturedRectRotated(x - (dotsize / 2), y - (dotsize / 2) - gap - prong - ARC9.ScreenScale(5), 40, 40, -90) -- Top
+		surface.DrawTexturedRectRotated(x - (dotsize / 2), y + (dotsize / 2) + gap + ARC9.ScreenScale(10), 40, 40, 90) -- Bottom
+
+	elseif self:GetProcessedValue("MissileCrosshair", true) then
         -- local dotcount = 4
 
         -- for i = 1, dotcount do
