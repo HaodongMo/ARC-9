@@ -878,6 +878,11 @@ local conVars = {
         default = "0.75",
         client = true,
     },
+    {
+        name = "imperial",
+        default = "0",
+        client = true,
+    },
 }
 ARC9.ConVarData = {}
 

@@ -16,6 +16,11 @@ L["unit.moa"] = "MOA"
 L["unit.dmg"] = "DMG"
 L["unit.projectiles"] = "PROJ"
 
+L["unit.inch"] = "in"
+L["unit.foot"] = "ft"
+L["unit.footpersecond"] = "ft/s"
+L["unit.yard"] = "yd"
+
 ////////////////////// Ammo types
 L["ammo.pistol"] = "Pistol Ammo"
 L["ammo.357"] = "Magnum Ammo"
@@ -489,6 +494,8 @@ L["settings.hud_cust.cust_tips.title"] = "Tips"
 L["settings.hud_cust.cust_tips.desc"] = "Tips about ARC9 base near hints."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Exit Resets Selection"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Exiting customization menu resets the active slot selection."
+L["settings.hud_cust.imperial.title"] = "Imperial Measurement"
+L["settings.hud_cust.imperial.desc"] = "Replaces various measurement systems to their Imperial variants.\nOnly affects the \"Stats & Ballistics\" customization screen."
 
 ////////////////////// Game HUD
 L["settings.tabname.hud_game"] = "Game HUD"

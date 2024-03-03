@@ -16,6 +16,11 @@ L["unit.moa"] = "MwA"
 L["unit.dmg"] = "DMG"
 L["unit.projectiles"] = "PRwJ"
 
+L["unit.inch"] = "in"
+L["unit.foot"] = "ft"
+L["unit.footpersecond"] = "ft/s"
+L["unit.yard"] = "yd"
+
 ////////////////////// Ammo types
 L["ammo.pistol"] = "Piswol AmmOwO"
 L["ammo.357"] = "Mawwnum AmmOwO"
@@ -488,6 +493,8 @@ L["settings.hud_cust.cust_tips.title"] = "Tiwips"
 L["settings.hud_cust.cust_tips.desc"] = "Tiwips about AWC9 base neaw hints"
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Exit wesets Selection"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Exiting customization menu wesets de active slot selection"
+-- L["settings.hud_cust.imperial.title"] = "Imperial Measurement"
+-- L["settings.hud_cust.imperial.desc"] = "Replaces various measurement systems to their Imperial variants.\nOnly affects the \"Stats & Ballistics\" customization screen."
 
 ////////////////////// Game HUD
 L["settings.tabname.hud_game"] = "Game HUwUD"

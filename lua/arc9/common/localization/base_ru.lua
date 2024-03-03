@@ -16,6 +16,11 @@ L["unit.moa"] = "MOA"
 L["unit.dmg"] = "DMG"
 L["unit.projectiles"] = "PROJ"
 
+L["unit.inch"] = "in"
+L["unit.foot"] = "ft"
+L["unit.footpersecond"] = "ft/s"
+L["unit.yard"] = "yd"
+
 ////////////////////// Ammo types
 L["ammo.pistol"] = "Пистолет. патрон"
 L["ammo.357"] = "Магнум патроны"
@@ -489,6 +494,8 @@ L["settings.hud_cust.cust_tips.title"] = "Советы"
 L["settings.hud_cust.cust_tips.desc"] = "Советы о базе около подсказок."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Сброс слота при выходе"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Выход из меню кастомизации будет сбрасывать выбор активного слота."
+-- L["settings.hud_cust.imperial.title"] = "Imperial Measurement"
+-- L["settings.hud_cust.imperial.desc"] = "Replaces various measurement systems to their Imperial variants.\nOnly affects the \"Stats & Ballistics\" customization screen."
 
 ////////////////////// Game HUD
 L["settings.tabname.hud_game"] = "Игровой HUD"

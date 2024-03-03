@@ -124,6 +124,7 @@ end
 
 function SWEP:CreateHUD_Bench()
     local bg = self.CustomizeHUD
+	local imperial = GetConVar("arc9_imperial"):GetBool()
 
     self:ClearTabPanel()
 
@@ -313,7 +314,10 @@ function SWEP:CreateHUD_Bench()
             surface.SetTextPos((w - tw) / 2, ARC9ScreenScale(1))
             surface.DrawText(txt_corner)
 
-            local txt_bottom = (ARC9:GetPhrase("customize.bench.effect") or "") .. " " .. tostring(math.Round(ARC9.HUToM * ranger_range, 0)) .. ARC9:GetPhrase("unit.meter")
+			local impm = imperial and "yard" or "meter"
+			local impv = imperial and 1.0936 or 1
+
+            local txt_bottom = (ARC9:GetPhrase("customize.bench.effect") or "") .. " " .. tostring(math.Round(ARC9.HUToM * impv * ranger_range, 0)) .. ARC9:GetPhrase("unit." .. impm)
             local tbw = surface.GetTextSize(txt_bottom)
             surface.SetTextPos((w - tbw) / 2, h - ARC9ScreenScale(8))
             surface.DrawText(txt_bottom)
@@ -335,6 +339,9 @@ function SWEP:CreateHUD_Bench()
 
             local range_min = self:GetValue("RangeMin")
             local range_max = self:GetValue("RangeMax")
+			
+            -- local range_min = imperial and (self:GetValue("RangeMin")) or self:GetValue("RangeMin")
+            -- local range_max = imperial and (self:GetValue("RangeMax")) or self:GetValue("RangeMax")
             local range_sweet = self:GetValue("SweetSpotRange")
 
             local dmg_max = self:GetDamageAtRange(range_min)

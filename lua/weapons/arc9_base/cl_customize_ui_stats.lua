@@ -74,6 +74,7 @@ end
 
 function SWEP:CreateHUD_Stats()
     local lowerpanel = self.CustomizeHUD.lowerpanel
+	local imperial = GetConVar("arc9_imperial"):GetBool()
 
     -- if true then return end
     self:ClearTabPanel()
@@ -203,10 +204,11 @@ function SWEP:CreateHUD_Stats()
         {
             title = "customize.stats.range",
             desc = "customize.stats.explain.range",
-            unit = "unit.meter",
+            unit = imperial and "unit.yard" or "unit.meter",
             fifty = 500,
             stat = "RangeMax",
             conv = function(a)
+				if imperial then return a * ARC9.HUToM * 1.0936 end
                 return a * ARC9.HUToM
             end,
             cond = function()
@@ -230,8 +232,11 @@ function SWEP:CreateHUD_Stats()
             desc = "customize.stats.explain.muzzlevelocity",
             stat = "PhysBulletMuzzleVelocity",
             fifty = 500,
-            unit = "unit.meterpersecond",
-            conv = function(a) return math.Round(a * ARC9.HUToM) end,
+            unit = imperial and "unit.footpersecond" or "unit.meterpersecond",
+            conv = function(a) 
+				if imperial then return math.Round(a * ARC9.HUToM * 3.2808399) end
+				return math.Round(a * ARC9.HUToM) 
+			end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
@@ -253,7 +258,11 @@ function SWEP:CreateHUD_Stats()
             desc = "customize.stats.explain.penetration",
             stat = "Penetration",
             fifty = 50,
-            unit = "unit.millimeter",
+            unit = imperial and "unit.inch" or "unit.millimeter",
+            conv = function(a) 
+				if imperial then return a * 0.03937 end
+				return a
+			end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end

@@ -16,6 +16,11 @@ L["unit.moa"] = "BM"
 L["unit.dmg"] = "SKD"
 L["unit.projectiles"] = "PROJ"
 
+L["unit.inch"] = "in"
+L["unit.foot"] = "ft"
+L["unit.footpersecond"] = "ft/s"
+L["unit.yard"] = "yd"
+
 ////////////////////// Ammo types
 L["ammo.pistol"] = "Pistol Ammo"
 L["ammo.357"] = "Magnum Ammo"
@@ -488,6 +493,8 @@ L["settings.hud_cust.cust_tips.title"] = "Tips"
 L["settings.hud_cust.cust_tips.desc"] = "Tips om ARC9-basen nära knapptipsen."
 L["settings.hud_cust.cust_exit_reset_sel.title"] = "Stängning Återställer Val"
 L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Stängning av anpassnings menyn återställer den aktiva valda platsen."
+L["settings.hud_cust.imperial.title"] = "Briittiska måttenheter"
+L["settings.hud_cust.imperial.desc"] = "Ersätter diverse måttenhetsystem med deras Brittiska varianter.\nGäller endast i \"Stats & Ballistik\" anpassningsskärmen."
 
 ////////////////////// Game HUD
 L["settings.tabname.hud_game"] = "Spelgränssnitt"
