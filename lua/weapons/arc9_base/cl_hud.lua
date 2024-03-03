@@ -449,7 +449,7 @@ function SWEP:DrawHUD()
 	local function fmhintignore()
 		local fmodes = self:GetValue("Firemodes")
 
-		if !self:GetOwner():KeyDown(IN_USE) and #fmodes < 2 then return end
+		-- if !self:GetOwner():KeyDown(IN_USE) and #fmodes < 2 then return end
 		if self:StillWaiting() then return end
 		if self:GetProcessedValue("NoFiremodeWhenEmpty", true) and self:Clip1() <= 0 then return end
 		if self:GetUBGL() then return end
@@ -457,12 +457,22 @@ function SWEP:DrawHUD()
 		self.FMHintTime = CurTime()
 	end
 
-	if self:GetOwner():KeyPressed(IN_ZOOM) then fmhintignore() end
+	local fmhintdrawtime = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+	local fmhintdrawanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
+	
+	local bzoom = self:GetOwner():KeyPressed(IN_ZOOM)
+	local batt = self:GetOwner():KeyDown(IN_ATTACK)
+
+	local fmc = GetConVar("arc9_center_firemode_time")
+
+	-- if self:GetOwner():KeyPressed(IN_ZOOM) or (fmhintdrawtime > 0.5 and fmhintdrawtime < 0.51) then fmhintignore() end
+	
+	if bzoom or (self:GetSafe() and batt) then fmhintignore() end
 
     local ft1000 = RealFrameTime() * 2000
     fmhint = math.max(0, fmhint - ft1000 * 1.25)
 	
-    if self.FMHintTime and CurTime() < self.FMHintTime + (GetConVar("arc9_center_firemode_time"):GetFloat() or 1) then
+    if self.FMHintTime and CurTime() > self.FMHintTime + 0.15 and CurTime() < self.FMHintTime + (fmc:GetFloat() or 1) + 0.15 then
         fmhint = math.min(255, fmhint + ft1000 * 2)
     end
 

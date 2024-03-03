@@ -533,7 +533,7 @@ L["settings.hud_game.centerhint_jammed.title"] = "Visa Eldavbrott Tips"
 L["settings.hud_game.centerhint_jammed.desc"] = "Visar ett tips när ditt vapen har fått ett eldavbrott."
 
 L["settings.hud_game.centerhint_firemode.title"] = "Visa Skjutlägestips"
-L["settings.hud_game.centerhint_firemode.desc"] = "Visar ett tips när du växlar skjutlägen eller växlar din säkring. Visas endast när ARC9-gränssnittet inte används."
+L["settings.hud_game.centerhint_firemode.desc"] = "Visar ett tips när du växlar skjutlägen eller växlar din säkring."
 L["settings.hud_game.centerhint_firemode_time.title"] = "Visa Skjutlägestips Tid"
 L["settings.hud_game.centerhint_firemode_time.desc"] = "Hur länge skjutläget ska visas."
 

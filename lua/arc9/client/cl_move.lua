@@ -19,11 +19,11 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
         cmd:TickCount() % 2 == 0
     then
         if wpn:GetUBGL() then
-            if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip2() == 0 and wpn:Ammo2() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
+            if !(LocalPlayer():KeyDown(IN_USE) or LocalPlayer():KeyDown(IN_ATTACK)) and wpn:Clip2() == 0 and wpn:Ammo2() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
                 cmd:AddKey(IN_RELOAD)
             end
         else
-            if !LocalPlayer():KeyDown(IN_USE) and wpn:Clip1() == 0 and wpn:Ammo1() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
+            if !(LocalPlayer():KeyDown(IN_USE) or LocalPlayer():KeyDown(IN_ATTACK)) and wpn:Clip1() == 0 and wpn:Ammo1() > 0 and wpn:GetNextPrimaryFire() + 0.5 < CurTime() then
                 cmd:AddKey(IN_RELOAD)
             end
         end

@@ -870,12 +870,12 @@ local conVars = {
     },
     {
         name = "center_firemode",
-        default = "1",
+        default = "0",
         client = true,
     },
     {
         name = "center_firemode_time",
-        default = "1",
+        default = "0.75",
         client = true,
     },
 }
