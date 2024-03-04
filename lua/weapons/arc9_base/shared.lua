@@ -124,6 +124,10 @@ SWEP.LauncherCrosshair = false -- Force the launcher crosshair
 SWEP.MissileCrosshair = false -- Force the missile launcher crosshair
 SWEP.ForceStandardCrosshair = nil -- Force default + or T crosshair no matter what!
 
+SWEP.CustomCrosshair = false -- Enables custom crosshair use.
+SWEP.CustomCrosshairMaterial = "" -- Point towards a file to use as the custom crosshair.
+SWEP.CustomCrosshairSize = 40 -- Changes the custom crosshair size. (Default 40)
+
 SWEP.ViewModelFOVBase = nil -- Set to override viewmodel FOV
 
 SWEP.NoDynamicKillIcon = false

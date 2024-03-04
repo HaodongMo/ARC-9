@@ -181,7 +181,7 @@ function SWEP:DoDrawCrosshair(x, y)
 		surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
 		surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 180) -- Right
 		
-		surface.DrawTexturedRectRotated(x - (dotsize / 2), y - (dotsize / 2) - gap - prong - ARC9.ScreenScale(5), size, size, -90) -- Top
+		surface.DrawTexturedRectRotated(x - (dotsize / 2), y - (dotsize / 2) - gap - prong - ARC9.ScreenScale(7), size, size, -90) -- Top
 		surface.DrawTexturedRectRotated(x - (dotsize / 2), y + (dotsize / 2) + gap + ARC9.ScreenScale(10), size, size, 90) -- Bottom
 
 	elseif self:GetProcessedValue("MissileCrosshair", true) then
