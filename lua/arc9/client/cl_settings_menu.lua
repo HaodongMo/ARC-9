@@ -175,7 +175,8 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_cust.cust_hints.title", convar = "cust_hints", desc = "settings.hud_cust.cust_hints.desc"},
         { type = "bool", text = "settings.hud_cust.cust_tips.title", convar = "cust_tips", desc = "settings.hud_cust.cust_tips.desc"},
         -- { type = "bool", text = "settings.hud_cust.cust_roll_unlock.title", convar = "cust_roll_unlock", desc = "settings.hud_cust.cust_roll_unlock.desc"},
-        { type = "bool", text = "settings.hud_cust.cust_exit_reset_sel.title", convar = "cust_exit_reset_sel", desc = "settings.hud_cust.cust_exit_reset_sel.desc"}
+        { type = "bool", text = "settings.hud_cust.cust_exit_reset_sel.title", convar = "cust_exit_reset_sel", desc = "settings.hud_cust.cust_exit_reset_sel.desc"},
+        { type = "bool", text = "settings.hud_cust.imperial.title", convar = "imperial", desc = "settings.hud_cust.imperial.desc"},
     },
     {
         TabName = "settings.tabname.hud_game",
