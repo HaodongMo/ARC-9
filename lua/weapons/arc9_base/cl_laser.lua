@@ -71,9 +71,9 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
     end
 
     local color = atttbl.LaserColor or lasercolorred
-	local colorplayer = owner:GetWeaponColor():ToColor()
+	local colorplayer = !owner:IsNPC() and owner:GetWeaponColor():ToColor()
 
-	if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer end
+	if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer or color end
 
     if !behav then
         render.SetMaterial(lasermat)
@@ -154,9 +154,9 @@ function SWEP:DrawLasers(wm, behav)
             end
 
 			local color = atttbl.LaserColor or lasercolorred
-			local colorplayer = owner:GetWeaponColor():ToColor()
+			local colorplayer = !owner:IsNPC() and owner:GetWeaponColor():ToColor()
 
-			if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer end
+			if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer or color end
 			
             self:DrawLightFlare(a.Pos, lasang, color, wm and 5 or 10, (slottbl.Address or 0) + 69, !wm)
 
