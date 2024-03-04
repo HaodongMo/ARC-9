@@ -171,9 +171,10 @@ function SWEP:DoDrawCrosshair(x, y)
 
     if self:GetProcessedValue("CustomCrosshair", true) then
 		surface.SetDrawColor(col)
-		surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial") or Material("arc9/ui/share.png", "mips smooth") )
 		
-		local size = self:GetProcessedValue("CustomCrosshairSize") or 40
+		surface.SetMaterial( self.CustomCrosshairMaterial or Material("arc9/ui/share.png", "mips smooth") )
+		
+		local size = self.CustomCrosshairSize or 40
 		
 		-- surface.DrawTexturedRect(x - (dotsize / 2) - gap - prong -  ARC9.ScreenScale(11), y - (dotsize / 2) - ARC9.ScreenScale(7), size, size) -- Left
 		
