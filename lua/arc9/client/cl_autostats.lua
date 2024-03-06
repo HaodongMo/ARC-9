@@ -1,6 +1,38 @@
-local hutom = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meter") or "m") end
-local hutoms = function(i) return math.Round(i * ARC9.HUToM) .. (ARC9:GetPhrase("unit.meterpersecond") or "m/s") end
-local hutoms_1 = function(i) return math.Round(i * ARC9.HUToM, 1) .. (ARC9:GetPhrase("unit.meterpersecond") or "m/s") end
+local imperial = GetConVar("arc9_imperial"):GetBool()
+
+local hutom = function(i)
+	if imperial then 
+		impv = 1.0936
+		impn = "unit.yard"
+	else 
+		impv = 1
+		impn = "unit.meter"
+	end
+	return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "m") 
+end
+
+local hutoms = function(i) 
+	if imperial then 
+		impv = 3.2808399
+		impn = "unit.footpersecond"
+	else 
+		impv = 1
+		impn = "unit.meterpersecond"
+	end
+	return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "m/s")
+end
+
+local hutoms_1 = function(i) 
+	if imperial then 
+		impv = 3.2808399
+		impn = "unit.footpersecond"
+	else 
+		impv = 1
+		impn = "unit.meterpersecond"
+	end
+	return math.Round(i * ARC9.HUToM * impv, 1) .. (ARC9:GetPhrase(impn) or "m/s")
+end
+
 local degtomoa = function(i) return math.Round(i / ARC9.TrueMOAToAcc, 1) .. (ARC9:GetPhrase("unit.moa") or "MOA") end
 
 -- [AutoStatName] = {unit, lower_is_better}
