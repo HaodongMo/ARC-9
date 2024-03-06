@@ -5,5 +5,5 @@
 	$vertexalpha 1
 	$translucent 1
 	$additive 1
-	$ignorez 1
+	//$ignorez 1
 }
