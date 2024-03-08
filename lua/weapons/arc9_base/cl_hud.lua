@@ -305,6 +305,7 @@ function SWEP:GetBinding(bind)
 end
 
 local bipodhint = 0 -- alpha
+local bipodreloadmove = 0 -- ??
 local bipodhintstate = false -- enter or exit
 local fmhint = 0 -- alpha
 
@@ -427,22 +428,24 @@ function SWEP:DrawHUD()
     end
 			
 	if jamcom:GetBool() and self:GetJammed() and not self:StillWaiting() then -- If weapon is Jammed
-		local textunjam = ARC9:GetPhrase("hud.hint.unjam")
-		local twunjam = surface.GetTextSize(textunjam)
-		
-		surface.SetDrawColor(255, 255, 255, 255)
-		surface.SetFont("ARC9_10")
-		
-		surface.SetTextColor(255, 255, 255, 255)
-		local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 - 7.5 + ScreenScale(100 - bipodreloadmove), size = ScreenScale(8), font = "ARC9_10", font_keyb = "ARC9_10" }, { glyph, ScreenScale(7) })
-		
-		surface.SetTextPos(scrw / 2 + 2 - twunjam / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
-		surface.SetTextColor(0, 0, 0, 255)
-		surface.DrawText(textunjam)
-		
-		surface.SetTextPos(scrw / 2 - twunjam / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
-		surface.SetTextColor(255, 255, 255, 255)
-		surface.DrawText(textunjam)
+        if !self:GetProcessedValue("Overheat", true) then -- overheat makes guns auto unjam so hint is useless
+            local textunjam = ARC9:GetPhrase("hud.hint.unjam")
+            local twunjam = surface.GetTextSize(textunjam)
+            
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.SetFont("ARC9_10")
+            
+            surface.SetTextColor(255, 255, 255, 255)
+            local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 - 7.5 + ScreenScale(100 - bipodreloadmove), size = ScreenScale(8), font = "ARC9_10", font_keyb = "ARC9_10" }, { glyph, ScreenScale(7) })
+            
+            surface.SetTextPos(scrw / 2 + 2 - twunjam / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
+            surface.SetTextColor(0, 0, 0, 255)
+            surface.DrawText(textunjam)
+            
+            surface.SetTextPos(scrw / 2 - twunjam / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
+            surface.SetTextColor(255, 255, 255, 255)
+            surface.DrawText(textunjam)
+        end
 	end
 			
     if self:GetSightAmount() > 0.75 and getsight.FlatScope and getsight.FlatScopeOverlay then
