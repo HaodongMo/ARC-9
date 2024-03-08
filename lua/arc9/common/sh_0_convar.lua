@@ -865,7 +865,7 @@ local conVars = {
     },
     {
         name = "center_jam",
-        default = "0",
+        default = "1",
         client = true,
     },
     {
