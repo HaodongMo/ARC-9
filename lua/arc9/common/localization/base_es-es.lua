@@ -411,6 +411,7 @@ L["settings.fx_adsblur.title"] = "En miras normales"
 L["settings.fx_adsblur.desc"] = "Difumina el arma mientras apuntas con miras de hierro u holográficas."
 L["settings.fx_rtvm.title"] = "Renderizar Arma a través de Miras RT"
 L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nRenderiza el arma y sus accesorios a través de miras RT. Requiere que \"Miras Baratas\" se desactiven.\nReduce significativamente el rendimiento."
+L["settings.fx_rtblur.title2"] = "Desenfoque detrás de los visores"
 
 L["settings.performance.shelleject.title"] = "Expulsión del proyectil"
 L["settings.eject_fx.title"] = "Efectos de Humo"
