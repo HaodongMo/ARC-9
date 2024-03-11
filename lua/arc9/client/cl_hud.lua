@@ -1875,7 +1875,7 @@ function ARC9.DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
                     span.TextRotState = 1
                 end
             elseif span.TextRotState == 1 then
-                span.TextRot[txt] = span.TextRot[txt] + (FrameTime() * ARC9ScreenScale(16))
+                span.TextRot[txt] = span.TextRot[txt] + (FrameTime() * ARC9ScreenScale(32))
                 if span.TextRot[txt] >= (tw - maxw) + ARC9ScreenScale(8) then
                     span.StartTextRot = CurTime()
                     span.TextRotState = 2
@@ -1886,7 +1886,7 @@ function ARC9.DrawTextRot(span, txt, x, y, tx, ty, maxw, only)
                     span.StartTextRot = CurTime()
                 end
             elseif span.TextRotState == 3 then
-                span.TextRot[txt] = span.TextRot[txt] - (FrameTime() * ARC9ScreenScale(16))
+                span.TextRot[txt] = span.TextRot[txt] - (FrameTime() * ARC9ScreenScale(32))
                 if span.TextRot[txt] <= 0 then
                     span.StartTextRot = CurTime()
                     span.TextRotState = 0
