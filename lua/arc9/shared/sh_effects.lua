@@ -40,6 +40,8 @@ PrecacheParticleSystem( "muzzleflash_SR25" )
 PrecacheParticleSystem( "muzzleflash_pistol_rbull"  )
 PrecacheParticleSystem( "muzzleflash_m24" )
 PrecacheParticleSystem( "muzzleflash_vollmer"  )
+PrecacheParticleSystem( "muzzle_heatwave"  )
+PrecacheParticleSystem( "muzzle_heatwave_long"  )
 
 PrecacheParticleSystem("explosion_grenade" )
 PrecacheParticleSystem("explosion_HE_claymore" )
