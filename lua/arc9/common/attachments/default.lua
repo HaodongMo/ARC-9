@@ -60,6 +60,7 @@ ATT.SubMaterial0 = "material/path"
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.
 
 ATT.Category = "" -- can be "string" or {"list", "of", "strings"}
+-- Set to "*" (exactly) to make this attachment available for all slots
 
 ATT.Folder = "" -- a string separated by slashes (/), e.g. "my/folder/hierarchy"
 -- to give a folder a name, add a localization string "folder.FOLDERNAME"
