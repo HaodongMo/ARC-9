@@ -1064,6 +1064,9 @@ SWEP.NearWallAng = nil
 SWEP.HolsterPos = Vector(0, 0, -5)
 SWEP.HolsterAng = Angle(0, -15, 25)
 
+SWEP.VManipOffsetPos = Vector(-0.35, -0.5, -1.2)
+SWEP.VManipOffsetAng = Angle(-2, 4, -8)
+
 SWEP.MovingMidPoint = {
     Pos = Vector(0, 0, 0),
     Ang = Angle(0, 0, 0)
