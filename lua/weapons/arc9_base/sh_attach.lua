@@ -348,6 +348,8 @@ function SWEP:SlotInvalid(slottbl)
 
     local attcat = atttbl.Category
 
+    if attcat == "*" then return false end
+
     if !istable(attcat) then
         attcat = {attcat}
     end
@@ -559,9 +561,9 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     -- If attaching will enable any Integral slots, we must own something to put in there
     if self:GetSlotMissingDependents(addr, att, slottbl) then return false end
 
-    if table.HasValue(cat, "*") then return true end
-
     local attcat = atttbl.Category
+
+    if attcat == "*" then return true end
 
     if !istable(attcat) then
         attcat = {attcat}

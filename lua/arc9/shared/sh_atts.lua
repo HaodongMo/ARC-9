@@ -165,6 +165,12 @@ function ARC9.GetAttsForCats(cats)
     for i, k in pairs(ARC9.Attachments) do
         if ARC9.Blacklist[k] then continue end
         local attcats = k.Category
+
+        if attcats == "*" then
+            table.insert(atts, k.ShortName)
+            continue
+        end
+
         if !istable(attcats) then
             attcats = {attcats}
         end
