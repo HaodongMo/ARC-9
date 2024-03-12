@@ -535,6 +535,8 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
 
     local cat = slottbl.Category
 
+    if cat == "*" then return true end
+
     if !istable(cat) then
         cat = {cat}
     end
