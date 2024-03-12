@@ -535,8 +535,6 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
 
     local cat = slottbl.Category
 
-    if cat == "*" then return true end
-
     if !istable(cat) then
         cat = {cat}
     end
@@ -558,6 +556,11 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     if self:GetAttBlocked(atttbl) then return false end
     if atttbl.AdminOnly and !self:GetOwner():IsAdmin() then return false end
 
+    -- If attaching will enable any Integral slots, we must own something to put in there
+    if self:GetSlotMissingDependents(addr, att, slottbl) then return false end
+
+    if table.HasValue(cat, "*") then return true end
+
     local attcat = atttbl.Category
 
     if !istable(attcat) then
@@ -574,9 +577,6 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     end
 
     if !cat_true then return false end
-
-    -- If attaching will enable any Integral slots, we must own something to put in there
-    if self:GetSlotMissingDependents(addr, att, slottbl) then return false end
 
     return true
 end
