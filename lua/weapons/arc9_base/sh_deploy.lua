@@ -217,8 +217,10 @@ function SWEP:Holster(wep)
     else
         -- Prepare the holster and set up the timer
         if self:HasAnimation("holster") then
-            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1), true, false) or 0
-			local alength = self:GetAnimationEntry(self:TranslateAnimation("holster")).MinProgress or animation
+            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1), true, false, nil, nil, true) or 0
+			local aentry = self:GetAnimationEntry(self:TranslateAnimation("holster"))
+			local alength = aentry.MinProgress or animation
+			alength = alength * (aentry.Mult or 1)
             self:SetHolsterTime(CurTime() + alength)
             self:SetHolster_Entity(wep)
         else
@@ -265,7 +267,7 @@ function SWEP:DoDeployAnimation()
     if !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
         local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", true, 1), true)
 
-        self:SetReadyTime(CurTime() + t * min)
+        self:SetReadyTime(CurTime() + (t * min))
         self:SetReady(true)
     else
         self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)

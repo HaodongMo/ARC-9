@@ -1,4 +1,4 @@
-function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
+function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, noidle)
     mult = mult or 1
     lock = lock or false
     local untranslatedanim = anim
@@ -155,7 +155,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate)
         self:SetAnimLockTime(CurTime())
     end
 
-    if !animation.NoIdle then
+    if !noidle and !animation.NoIdle then
         self:SetNextIdle(CurTime() + ((animation.DelayedIdle or (delayidle and !animation.InstantIdle)) and 0.25 or 0) + (time * mult))
     else
         self:SetNextIdle(math.huge)
