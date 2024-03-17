@@ -488,8 +488,6 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    self:SetBurstCount(burstCount + 1)
-
     if manualaction then
         nthShot = nthShot + 1
         if clip1 > 0 or !processedValue(self,"ManualActionNoLastCycle", true) then
@@ -525,6 +523,8 @@ function SWEP:DoPrimaryAttack()
         end
         self:SetPrimedAttack(true)
     end
+
+    self:SetBurstCount(burstCount + 1)
 end
 
 if CLIENT then
