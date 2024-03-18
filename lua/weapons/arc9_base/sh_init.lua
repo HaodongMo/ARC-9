@@ -119,76 +119,33 @@ function SWEP:ClientInitialize()
     end
 end
 
-do
-    local _R = debug.getregistry()
-    local ENTITY = _R.Entity
-    local entityGetOwner = ENTITY.GetOwner
-
-    local METATABLE = setmetatable(table.Copy(_R.Weapon), {__index = ENTITY})
-    local EntTabMT = {__index = METATABLE}
-
-    local copyKeys = {"MetaID","MetaName","__tostring","__eq","__concat"}
-    local copyKeysLength = #copyKeys
-
-    local function CopyMetatable(ent)
-        local tab = ent:GetTable()
-        setmetatable(tab, EntTabMT)
-
-        local mt = {
-            __index = function(self, key)
-                -- we still have to take care of these idiots
-                if key == "Owner" then
-                    return entityGetOwner(self, key)
-                end
-
-                return tab[key]
-            end,
-            __newindex = tab,
-            __metatable = ENTITY
-        }
-
-        for i = 1, copyKeysLength do
-            local v = copyKeys[i]
-            mt[v] = ENTITY[v]
-        end
-
-        debug.setmetatable(ent, mt)
+function SWEP:SetBaseSettings()
+    if game.SinglePlayer() and self:GetOwner():IsPlayer() and SERVER then
+        self:CallOnClient("SetBaseSettings")
     end
 
-    function SWEP:SetBaseSettings()
-        if game.SinglePlayer() and self:GetOwner():IsPlayer() and SERVER then
-            self:CallOnClient("SetBaseSettings")
-        end
+    self.Primary.Automatic = true
+    self.Secondary.Automatic = true
 
-        self.Primary.Automatic = true
-        self.Secondary.Automatic = true
+    self.Primary.ClipSize = self:GetValue("ClipSize")
+    self.Primary.Ammo = self:GetValue("Ammo")
 
-        self.Primary.ClipSize = self:GetValue("ClipSize")
-        self.Primary.Ammo = self:GetValue("Ammo")
+    self.Primary.DefaultClip = self.ForceDefaultClip or self.Primary.ClipSize
 
-        self.Primary.DefaultClip = self.ForceDefaultClip or self.Primary.ClipSize
+    if self:GetValue("UBGL") then
+        self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
+        self.Secondary.Ammo = self:GetValue("UBGLAmmo")
 
-        if self:GetValue("UBGL") then
-            self.Secondary.ClipSize = self:GetValue("UBGLClipSize")
-            self.Secondary.Ammo = self:GetValue("UBGLAmmo")
-
-            if SERVER then
-                if self:Clip2() < 0 then
-                    self:SetClip2(0)
-                end
+        if SERVER then
+            if self:Clip2() < 0 then
+                self:SetClip2(0)
             end
-        else
-            self.Secondary.ClipSize = -1
-            self.Secondary.Ammo = nil
-
-            self:SetUBGL(false)
         end
+    else
+        self.Secondary.ClipSize = -1
+        self.Secondary.Ammo = nil
 
-        timer.Simple(0, function()
-            if IsValid(self) then
-                CopyMetatable(self)
-            end
-        end)
+        self:SetUBGL(false)
     end
 end
 
