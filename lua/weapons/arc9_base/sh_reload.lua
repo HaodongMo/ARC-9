@@ -152,6 +152,7 @@ function SWEP:Reload()
     -- self:ToggleBlindFire(false)
     self:SetRequestReload(false)
     self:SetRecoilAmount(0)
+	self:SetNeedTriggerPress(false) -- Allows you to keep spraying with Auto-Reload
 
     -- self:SetTimer(t * 0.9, function()
     --     if !IsValid(self) then return end
