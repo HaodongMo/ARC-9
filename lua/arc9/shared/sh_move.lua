@@ -27,7 +27,8 @@ function ARC9.Move(ply, mv, cmd)
     if wpn:GetInMeleeAttack() and wpn:GetLungeEntity():IsValid() then
         mv:SetMaxSpeed(10000)
         mv:SetMaxClientSpeed(10000)
-        local targetpos = (wpn:GetLungeEntity():EyePos() + wpn:GetLungeEntity():EyePos()) / 2
+        local targetpos = wpn:GetLungeEntity():EyePos()
+        targetpos.z = math.min(targetpos.z, ply:EyePos().z) --wontt make you jump if you attack while in crouch
         local lungevec = targetpos - ply:EyePos()
         local lungedir = lungevec:GetNormalized()
         local lungedist = lungevec:Length()
