@@ -965,7 +965,7 @@ end
 function ARC9.InvalidateAll()
     for _, ent in ipairs(ents.GetAll()) do
         if IsValid(ent) and ent:IsWeapon() and ent.ARC9 then
-            ent:InvalidateCache()
+            ent:PostModify(true)
         end
     end
 end

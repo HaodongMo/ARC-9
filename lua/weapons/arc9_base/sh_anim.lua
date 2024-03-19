@@ -4,6 +4,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, n
     local untranslatedanim = anim
     anim = (notranslate == true) and anim or self:TranslateAnimation(anim)
     mult = self:RunHook("Hook_TranslateAnimSpeed", {mult = mult, anim = anim}).Mult or mult
+    local omult = mult
 
     if !self:HasAnimation(anim) then return 0, 1 end
 
@@ -142,7 +143,8 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, n
     self:KillSoundTable()
 
     if (animation.EventTable or animation.SoundTable) and IsFirstTimePredicted() then
-        self:PlaySoundTable(animation.EventTable or animation.SoundTable, mult)
+        -- This additional Mult check is necessary because mdl isn't valid above on the client and so the EventTable is off-sync.
+        self:PlaySoundTable(animation.EventTable or animation.SoundTable, omult * (animation.Mult or 1))
     end
 
     self:SetHideBoneIndex(animation.HideBoneIndex or 0)

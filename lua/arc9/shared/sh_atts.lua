@@ -12,6 +12,7 @@ local fullreload
 local defaulticon = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 
 function ARC9.LoadAttachment(atttbl, shortname, id)
+    hook.Run("ARC9_LoadAttachment", atttbl, shortname, id) then return end
     if atttbl.Ignore then return end
     shortname = shortname or "default"
 
