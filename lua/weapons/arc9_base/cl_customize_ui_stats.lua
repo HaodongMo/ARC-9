@@ -19,7 +19,12 @@ local function GetTrueRPM(self, base)
             end
 
             if self.ManualAction then
-                delay = delay + ((self.cycle or 1) * self.CycleTime)
+				-- What is self.cycle .
+				local cyclelen = self:GetAnimationTime("cycle")
+				local cycleent = self:GetAnimationEntry("cycle")
+				cyclelen = cyclelen * (cycleent.Mult or 1)
+				cyclelen = cyclelen * (cycleent.MinProgress or 1)
+                delay = delay + (cyclelen * self.CycleTime)
             end
 
             if self:GetCurrentFiremode() > 1 then
@@ -31,7 +36,7 @@ local function GetTrueRPM(self, base)
 
             a = 60 / delay
 
-            a = math.Round(a / 50, 0) * 50
+			a = math.Round(a)
 
             return a
         end
@@ -53,7 +58,11 @@ local function GetTrueRPM(self, base)
             end
 
             if self:GetProcessedValue("ManualAction") then
-                delay = delay + (self:GetAnimationTime("cycle") * self:GetProcessedValue("CycleTime"))
+				local cyclelen = self:GetAnimationTime("cycle")
+				local cycleent = self:GetAnimationEntry("cycle")
+				cyclelen = cyclelen * (cycleent.Mult or 1)
+				cyclelen = cyclelen * (cycleent.MinProgress or 1)
+                delay = delay + (cyclelen * self:GetProcessedValue("CycleTime"))
             end
 
             if self:GetCurrentFiremode() > 1 then
@@ -65,7 +74,7 @@ local function GetTrueRPM(self, base)
 
             a = 60 / delay
 
-            a = math.Round(a / 50, 0) * 50
+			a = math.Round(a)
 
             return a
         end
