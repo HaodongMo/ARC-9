@@ -530,24 +530,24 @@ function SWEP:DevStuffCrosshair()
 
     local state_txt = "READY"
     local state2_txt = ""
-    if self:GetNextPrimaryFire() > time then
+    if self:GetHolsterTime() > 0 then
+        state_txt = "HOLSTER"
+        state2_txt = string.format("%dms", (self:GetHolsterTime() - time)*1000)
+    elseif self:GetNextPrimaryFire() > time then
         state_txt = "FIRE"
-        state2_txt = string.format("%.2f", self:GetNextPrimaryFire() - time)
+        state2_txt = string.format("%.0fms", (self:GetNextPrimaryFire() - time)*1000)
     elseif self:GetNeedsCycle() then
         state_txt = "CYCLING"
-        state2_txt = string.format("%.0fms", (self:GetCycleFinishTime() - time)*1000)
+        state2_txt = string.format("%dms", (self:GetCycleFinishTime() - time)*1000)
     elseif self:GetNextSecondaryFire() > time then
         state_txt = "ALTFIRE"
-        state2_txt = string.format("%.2f", self:GetNextSecondaryFire() - time)
-    elseif self:GetAnimLockTime() > time then
-        state_txt = animationtype()
-        state2_txt = string.format("%.2f", self:GetAnimLockTime() - time)
+        state2_txt = string.format("%dms", (self:GetNextSecondaryFire() - time)*1000)
     elseif self:GetPrimedAttack() then
         state_txt = "TRIGGER"
-        state2_txt = string.format("%.2f", math.max(0, self:GetTriggerDelay() - time))
-    elseif self:GetHolsterTime() > 0 then
-        state_txt = "HOLSTER"
-        state2_txt = string.format("%.2f", self:GetHolsterTime() - time)
+        state2_txt = string.format("%dms", math.max(0, self:GetTriggerDelay() - time)*1000)
+    elseif self:GetAnimLockTime() > time then
+        state_txt = animationtype()
+        state2_txt = string.format("%dms", (self:GetAnimLockTime() - time)*1000)
     elseif self:GetSprintAmount() > 0 then
         state_txt = "SPRINT"
         state2_txt = string.format("%d%%", self:GetSprintAmount() * 100)
