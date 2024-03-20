@@ -6,6 +6,7 @@ function SWEP:StillWaiting()
     if self:GetNextPrimaryFire() > time then return true end
     if self:GetNextSecondaryFire() > time then return true end
     if self:GetAnimLockTime() > time then return true end
+    if self:GetCycleFinishTime() > time then return true end
     if self:GetPrimedAttack() then return true end
     if self:GetHolsterTime() > 0 then return true end
 

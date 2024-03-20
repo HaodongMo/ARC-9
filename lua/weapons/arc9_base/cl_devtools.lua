@@ -533,6 +533,9 @@ function SWEP:DevStuffCrosshair()
     if self:GetNextPrimaryFire() > time then
         state_txt = "FIRE"
         state2_txt = string.format("%.2f", self:GetNextPrimaryFire() - time)
+    elseif self:GetNeedsCycle() then
+        state_txt = "CYCLING"
+        state2_txt = string.format("%.0fms", (self:GetCycleFinishTime() - time)*1000)
     elseif self:GetNextSecondaryFire() > time then
         state_txt = "ALTFIRE"
         state2_txt = string.format("%.2f", self:GetNextSecondaryFire() - time)

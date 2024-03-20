@@ -149,10 +149,11 @@ function SWEP:Reload()
 
     self:SetReloading(true)
     self:SetEndReload(false)
+    self:SetCycleFinishTime(0)
     -- self:ToggleBlindFire(false)
     self:SetRequestReload(false)
     self:SetRecoilAmount(0)
-	self:SetNeedTriggerPress(false) -- Allows you to keep spraying with Auto-Reload
+    self:SetNeedTriggerPress(false) -- Allows you to keep spraying with Auto-Reload
     self:SetBurstCount(0)
 
     -- self:SetTimer(t * 0.9, function()
@@ -201,7 +202,8 @@ function SWEP:CancelReload()
 
     self:SetReloading(false)
     self:SetReloadFinishTime(0)
-	self:SetNeedTriggerPress(false) -- Allows you to keep spraying with Auto-Reload
+    self:SetCycleFinishTime(0)
+    self:SetNeedTriggerPress(false) -- Allows you to keep spraying with Auto-Reload
     local vm = self:GetVM()
     vm:SetSequence(0)
     vm:SetCycle(0)
@@ -417,6 +419,7 @@ function SWEP:EndReload()
 
             self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", nil, 1), true)
             self:SetReloading(false)
+            self:SetCycleFinishTime(0)
 
             self:SetNthShot(0)
 
@@ -424,7 +427,7 @@ function SWEP:EndReload()
                 self:SetNthReload(self:GetNthReload() + 1)
             end
 
-			self:SetNeedTriggerPress(false) -- Allows you to keep spraying with Auto-Reload
+            self:SetNeedTriggerPress(false) -- Allows you to keep spraying with Auto-Reload
             self:SetEmptyReload(false)
         else
             local anim = "reload_insert"

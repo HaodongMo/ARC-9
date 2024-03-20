@@ -1,4 +1,8 @@
 function SWEP:ThinkCycle()
+    if self:GetNeedsCycle() and self:GetCycleFinishTime() != 0 and self:GetCycleFinishTime() <= CurTime() then
+        self:SetNeedsCycle(false)
+        self:SetCycleFinishTime(0)
+    end
     if self:StillWaiting() then return end
     local owner = self:GetOwner()
 
@@ -20,7 +24,7 @@ function SWEP:ThinkCycle()
 
         t = t * ((self:GetAnimationEntry(self:TranslateAnimation("cycle")) or {}).MinProgress or 1)
 
-        self:SetAnimLockTime(CurTime() + t)
+        self:SetCycleFinishTime(CurTime() + t)
 
         if IsFirstTimePredicted() and !self:GetProcessedValue("NoShellEjectManualAction", true) then
             if ejectdelay == 0 then
@@ -31,8 +35,6 @@ function SWEP:ThinkCycle()
                 end)
             end
         end
-
-        self:SetNeedsCycle(false)
     end
 end
 

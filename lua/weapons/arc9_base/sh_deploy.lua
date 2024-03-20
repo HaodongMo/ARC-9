@@ -21,6 +21,7 @@ function SWEP:Deploy()
     self:SetRecoilSide(0)
     self:SetPrimedAttack(false)
     self:SetReloading(false)
+    self:SetCycleFinishTime(0)
     self:SetRequestReload(false)
     self:SetEmptyReload(false)
     self:SetLeanState(0)
@@ -237,6 +238,7 @@ function SWEP:Holster(wep)
         -- self:ToggleBlindFire(false)
         self:SetInSights(false)
         self:ToggleUBGL(false)
+        self:SetCycleFinishTime(0)
     end
 end
 
