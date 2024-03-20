@@ -536,13 +536,6 @@ function SWEP:DevStuffCrosshair()
     elseif self:GetNextPrimaryFire() > time then
         state_txt = "FIRE"
         state2_txt = string.format("%.0fms", (self:GetNextPrimaryFire() - time)*1000)
-    elseif self:GetNeedsCycle() then
-        state_txt = "CYCLING"
-        if self:GetCycleFinishTime() == 0 then
-            state2_txt = "waiting..."
-        else
-            state2_txt = string.format("%dms", (self:GetCycleFinishTime() - time)*1000)
-        end
     elseif self:GetNextSecondaryFire() > time then
         state_txt = "ALTFIRE"
         state2_txt = string.format("%dms", (self:GetNextSecondaryFire() - time)*1000)
@@ -552,6 +545,13 @@ function SWEP:DevStuffCrosshair()
     elseif self:GetAnimLockTime() > time then
         state_txt = animationtype()
         state2_txt = string.format("%dms", (self:GetAnimLockTime() - time)*1000)
+    elseif self:GetNeedsCycle() then
+        state_txt = "CYCLING"
+        if self:GetCycleFinishTime() == 0 then
+            state2_txt = "waiting..."
+        else
+            state2_txt = string.format("%dms", (self:GetCycleFinishTime() - time)*1000)
+        end
     elseif self:GetSprintAmount() > 0 then
         state_txt = "SPRINT"
         state2_txt = string.format("%d%%", self:GetSprintAmount() * 100)
