@@ -108,7 +108,7 @@ function SWEP:ReceiveWeapon()
 
             for att, attc in pairs(oldcount) do
                 local atttbl = ARC9.GetAttTable(att)
-
+                if !atttbl then ErrorNoHaltWithStack("The attachment trying to be installed doesn't exist. '" .. att .. "'") continue end
                 if atttbl.Free then continue end
 
                 local has = attc
