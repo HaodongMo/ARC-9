@@ -107,7 +107,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, n
         if animation.EjectAt then
             self:SetTimer(animation.EjectAt * mult, function()
                 self:DoEject()
-            end)
+            end, "ejectat")
         end
 
         if animation.DropMagAt then

@@ -1,3 +1,14 @@
+
+function SWEP:SetReloadTimer( time, amount )
+    self:SetReloadTime( time )
+    self:SetReloadAmount( amount )
+end
+
+function SWEP:KillReloadTimer()
+    self:SetReloadTime( 0 )
+    self:SetReloadAmount( 0 )
+end
+
 function SWEP:Reload()
     if self:GetOwner():IsNPC() then
         self:NPC_Reload()
@@ -106,15 +117,7 @@ function SWEP:Reload()
         minprogress = math.min(minprogress, 0.95)
 
         if !self:GetAnimationEntry(self:TranslateAnimation(anim)).RestoreAmmo then
-            if getUBGL then
-                self:SetTimer(t * minprogress, function()
-                    self:RestoreClip(self:GetValue("UBGLClipSize"))
-                end, "reloadtimer")
-            else
-                self:SetTimer(t * minprogress, function()
-                    self:RestoreClip(self:GetValue("ClipSize"))
-                end, "reloadtimer")
-            end
+            self:SetReloadTimer( CurTime() + (t * minprogress), self:GetValue(getUBGL and "UBGLClipSize" or "ClipSize") )
         end
 
         local newcliptime = self:GetAnimationEntry(self:TranslateAnimation(anim)).MagSwapTime or 0.5
@@ -211,7 +214,7 @@ function SWEP:CancelReload()
     self:PlayAnimation("idle")
     self:DoPlayerAnimationEvent(ACT_HL2MP_GESTURE_RELOAD_MAGIC)
     self:CancelSoundTable()
-    self:KillTimer("reloadtimer")
+    self:KillReloadTimer()
     self:SetIKTimeLineStart(0)
     self:SetIKTime(0)
     self:SetEmptyReload(false)
@@ -496,6 +499,11 @@ function SWEP:EndReload()
 end
 
 function SWEP:ThinkReload()
+    if self:GetReloadTime() != 0 and self:GetReloadTime() <= CurTime() then
+        self:RestoreClip( self:GetReloadAmount() )
+        self:SetReloadTime( 0 )
+        self:SetReloadAmount( 0 )
+    end
     if self:GetReloading() and self:GetReloadFinishTime() <= CurTime() then
         self:EndReload()
     end

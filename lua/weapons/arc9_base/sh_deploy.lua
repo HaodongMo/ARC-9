@@ -217,11 +217,12 @@ function SWEP:Holster(wep)
         return true
     else
         -- Prepare the holster and set up the timer
+        self:KillTimer("ejectat")
         if self:HasAnimation("holster") then
             local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1), true, false, nil, nil, true) or 0
-			local aentry = self:GetAnimationEntry(self:TranslateAnimation("holster"))
-			local alength = aentry.MinProgress or animation
-			alength = alength * (aentry.Mult or 1)
+            local aentry = self:GetAnimationEntry(self:TranslateAnimation("holster"))
+            local alength = aentry.MinProgress or animation
+            alength = alength * (aentry.Mult or 1)
             self:SetHolsterTime(CurTime() + alength)
             self:SetHolster_Entity(wep)
         else

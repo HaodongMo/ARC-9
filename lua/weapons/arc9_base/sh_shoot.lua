@@ -366,6 +366,7 @@ function SWEP:DoPrimaryAttack()
 
     self:RunHook("Hook_PrimaryAttack")
 
+    self:SetEmptyReload(false)
     self:TakeAmmo()
 
     local triggerStartFireAnim = processedValue(self,"TriggerStartFireAnim", true)

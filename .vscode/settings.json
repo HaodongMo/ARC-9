@@ -1,3 +1,4 @@
 {
-    "git-blame.gitWebUrl": ""
+	"editor.detectIndentation": true,
+	"editor.insertSpaces": true
 }
