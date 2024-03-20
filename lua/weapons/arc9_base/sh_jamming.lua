@@ -77,7 +77,7 @@ function SWEP:ThinkHeat(dt)
 
     if heat <= 0 then return end
 
-    if !self:GetProcessedValue("Overheat", true) then return end
+    -- if !self:GetProcessedValue("Overheat", true) then return end
 
     if self:GetNextPrimaryFire() + self:GetProcessedValue("HeatDelayTime", true) < CurTime() then
         heat = heat - (dt * self:GetProcessedValue("HeatDissipation"))
