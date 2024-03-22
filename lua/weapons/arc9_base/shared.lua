@@ -278,6 +278,8 @@ SWEP.ThrowOnGround = false -- If set, entity's position and angles ignores verti
 
 SWEP.NoHolsterOnPrimed = nil  -- disallow holstering if pin in pulled
 
+SWEP.QuickSwapTo = nil -- Use on grenades, will make any arc9 holster 2 times faster to this swep
+
 SWEP.Detonator = false -- Set to true to give this weapon a detonator. After throwing out a grenade, you enter detonator mode.
 
 -------------------------- PHYS BULLET BALLISTICS

@@ -219,15 +219,17 @@ function SWEP:Holster(wep)
     else
         -- Prepare the holster and set up the timer
         self:KillTimer("ejectat")
+        local holstertimemult = wep.QuickSwapTo and 0.6 or 1 -- if gun were switching to is special, make faster holster
+
         if self:HasAnimation("holster") then
-            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1), true, false, nil, nil, true) or 0
+            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1) * holstertimemult, true, false, nil, nil, true) or 0
             local aentry = self:GetAnimationEntry(self:TranslateAnimation("holster"))
             local alength = aentry.MinProgress or animation
-            alength = alength * (aentry.Mult or 1)
+            alength = alength * (aentry.Mult or 1) * holstertimemult
             self:SetHolsterTime(CurTime() + alength)
             self:SetHolster_Entity(wep)
         else
-            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)))
+            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)) * holstertimemult)
             self:SetHolster_Entity(wep)
         end
 
