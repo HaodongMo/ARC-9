@@ -201,7 +201,7 @@ end
 function SWEP:ThinkCustomize()
     local owner = self:GetOwner()
 
-    if owner:KeyPressed(ARC9.IN_CUSTOMIZE) and !owner:KeyDown(IN_USE) then
+    if owner:KeyPressed(ARC9.IN_CUSTOMIZE) and !owner:KeyDown(IN_USE) and !self:GetGrenadePrimed() then
         self:ToggleCustomize(!self:GetCustomize())
     end
 
