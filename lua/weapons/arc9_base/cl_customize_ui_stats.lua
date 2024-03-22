@@ -166,7 +166,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 600,
             unit = "unit.rpm",
             conv = function(a)
-                a = math.Round(a / 50, 0) * 50
+                a = math.Round(a)
 
                 return a
             end,
