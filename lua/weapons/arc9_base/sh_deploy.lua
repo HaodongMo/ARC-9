@@ -43,7 +43,6 @@ function SWEP:Deploy()
         self:RestoreClip(math.huge)
     end
 
-    self:DoDeployAnimation()
 
     self:SetBurstCount(0)
     self:SetSightAmount(0)
@@ -73,6 +72,8 @@ function SWEP:Deploy()
     local holsteredtime = CurTime() - self:GetLastHolsterTime()
 
     self:ThinkHeat(holsteredtime)
+
+    self:DoDeployAnimation()
 
     if self:GetValue("AnimDraw") then
         self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))

@@ -159,7 +159,7 @@ function SWEP:Think()
             swepThinkSights(self)
             swepThinkMelee(self)
             self:ThinkUBGL()
-            swepThinkGrenade(self)
+            self:ThinkGrenade()
             self:ThinkTriggerSounds()
         end
         -- Done
@@ -212,7 +212,7 @@ function SWEP:Think()
                     end
 
                     self:SetReady(false)
-                    swepDoDeployAnimation(self)
+                    self:DoDeployAnimation()
                 end
             end)
         end
