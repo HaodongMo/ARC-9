@@ -276,6 +276,8 @@ SWEP.ThrowTumble = true -- Grenade tumbles when thrown.
 
 SWEP.ThrowOnGround = false -- If set, entity's position and angles ignores vertical aim, and is lowered by up to 36 units onto the ground.
 
+SWEP.NoHolsterOnPrimed = nil  -- disallow holstering if pin in pulled
+
 SWEP.Detonator = false -- Set to true to give this weapon a detonator. After throwing out a grenade, you enter detonator mode.
 
 -------------------------- PHYS BULLET BALLISTICS
