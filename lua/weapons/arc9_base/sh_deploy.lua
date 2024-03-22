@@ -180,6 +180,21 @@ function SWEP:Holster(wep)
     if self:GetHolsterTime() > CurTime() then return false end
 
     if self.NoHolsterOnPrimed and self:GetGrenadePrimed() then return false end
+
+    if self:GetGrenadeRecovering() then -- insta holster if grenade recovering
+        self:SetHolsterTime(CurTime())
+        self:SetHolster_Entity(wep)
+
+        if SERVER and self:GetProcessedValue("Disposable", true) and self:Clip1() == 0 and self:Ammo1() == 0 and !IsValid(self:GetDetonatorEntity()) then
+            self:Remove()
+        end
+
+        self:SetLastHolsterTime(CurTime())
+        self:DoPlayerModelLean(true)
+
+        return true 
+    end
+
     if (self:GetHolsterTime() != 0 and self:GetHolsterTime() <= CurTime()) or !IsValid(wep) then
         -- Do the final holster request
         -- Picking up props try to switch to NULL, by the way
