@@ -438,12 +438,14 @@ local function GetHintsTable(capabilities)
             action = !cantpeek and weapon:GetInSights() and ARC9:GetPhrase("hud.hint.peek") or ARC9:GetPhrase("hud.hint.customize") 
         })
     end
-    
-    table.insert(hints, {
-        glyph = ARC9.GetBindKey("+use"),
-        glyph2 = ARC9.GetBindKey("+zoom"),
-        action = ARC9:GetPhrase("hud.hint.safe")
-    })
+
+    if !weapon.CantSafety then 
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+use"),
+            glyph2 = ARC9.GetBindKey("+zoom"),
+            action = ARC9:GetPhrase("hud.hint.safe")
+        })
+    end
 
     if capabilities.Lean and input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
         table.insert(hints, {

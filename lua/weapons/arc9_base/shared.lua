@@ -397,6 +397,7 @@ SWEP.Firemodes = {
 }
 
 SWEP.NoFiremodeWhenEmpty = false -- Cannot switch firemode when empty
+SWEP.CantSafety = nil -- No safety on this gun
 
 SWEP.FiremodeAnimLock = false -- Firemode animation cannot be interrupted
 
