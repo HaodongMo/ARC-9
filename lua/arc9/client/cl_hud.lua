@@ -463,7 +463,7 @@ local function GetHintsTable(capabilities)
         if quicknade and owner:HasWeapon(quicknade) and !weapon.IsQuickGrenade then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+grenade1"),
-                action = ARC9:GetPhrase("hud.hint.quicknade") .. quicknadeent.PrintName .. (howmanyquicknades > 0 and " (" .. howmanyquicknades + 1 .. ")" or "")
+                action = ARC9:GetPhrase("hud.hint.quicknade") .. (quicknadeent.ShortPrintName and quicknadeent.ShortPrintName or quicknadeent.PrintName) .. (howmanyquicknades > 0 and " (" .. howmanyquicknades + 1 .. ")" or "")
             })
         end
     end
