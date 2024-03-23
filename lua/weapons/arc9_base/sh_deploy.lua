@@ -235,18 +235,24 @@ function SWEP:Holster(wep)
     else
         -- Prepare the holster and set up the timer
         self:KillTimer("ejectat")
-        local holstertimemult = wep.QuickSwapTo and 0.6 or 1 -- if gun were switching to is special, make faster holster
-
-        if self:HasAnimation("holster") then
-            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1) * holstertimemult, true, false, nil, nil, true) or 0
-            local aentry = self:GetAnimationEntry(self:TranslateAnimation("holster"))
-            local alength = aentry.MinProgress or animation
-            alength = alength * (aentry.Mult or 1) * holstertimemult
-            self:SetHolsterTime(CurTime() + alength)
-            self:SetHolster_Entity(wep)
-        else
-            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)) * holstertimemult)
-            self:SetHolster_Entity(wep)
+        self:SetHolster_Entity(wep)
+        if self.QuickSwapTo and wep.SetDoAFastDraw then wep:SetDoAFastDraw(true) end
+        if wep.QuickSwapTo then self:SetDoAFastDraw(true) end
+        local fdraw = self:GetDoAFastDraw()
+        local specialholsterlogic = self:RunHook( "Hook_SpecialHolsterLogic" )
+        if !specialholsterlogic then
+            local hasqh = self:HasAnimation("holster_quick")
+            local selectholsteranimation = self:RunHook( "Hook_SelectHolsterAnimation" ) or (wep.QuickSwapTo and hasqh and "holster_quick") or "holster"
+            if self:HasAnimation(selectholsteranimation) then
+                local unsatmult = ((fdraw and (hasqh and 1) or (!hasqh and 0.5)) or 1)
+                local animation = self:PlayAnimation(selectholsteranimation, self:GetProcessedValue("DeployTime", true, 1) * unsatmult, true, false, nil, nil, true) or 0
+                local aentry = self:GetAnimationEntry(self:TranslateAnimation(selectholsteranimation))
+                local alength = aentry.MinProgress or animation
+                alength = alength * (aentry.Mult or 1)
+                self:SetHolsterTime(CurTime() + alength * unsatmult)
+            else
+                self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)))
+            end
         end
 
         local animdrwa = self:GetValue("AnimDraw")
@@ -288,13 +294,18 @@ local arc9_dev_always_ready = GetConVar("arc9_dev_always_ready")
 function SWEP:DoDeployAnimation()
     if self.IsQuickGrenade then self:QuicknadeDeploy() return end
 
-    if !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
+    if !self:GetDoAFastDraw() and !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
         local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", true, 1), true)
 
         self:SetReadyTime(CurTime() + (t * min))
         self:SetReady(true)
     else
-        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
+        if self:GetDoAFastDraw() and self:HasAnimation("draw_quick") then
+            self:PlayAnimation("draw_quick", self:GetProcessedValue("DeployTime", true, 1), true)
+        else
+            self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
+        end
+        self:SetDoAFastDraw(false)
         self:SetReady(true)
     end
 end

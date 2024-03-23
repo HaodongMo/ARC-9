@@ -738,6 +738,16 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_BashHit(self, data) return end -- {tr, dmg}
 -- SWEP.Hook_PostReload(self) return end -- called after a reload successfully starts
 -- SWEP.Hook_EndReload(self) return end -- called after a reload loads ammo (ammo went in magazine)
+-- SWEP.Hook_SpecialHolsterLogic(self, data) return end -- { wep } return true to override holster logic, set a time, run funcs etc
+-- Example of replica of base logic:
+-- SWEP.Hook_SpecialHolsterLogic = function( wep, data )
+--     local animation = wep:PlayAnimation("holster", wep:GetProcessedValue("DeployTime", true, 1), true, false, nil, nil, true) or 0
+--     local aentry = wep:GetAnimationEntry(wep:TranslateAnimation("holster"))
+--     local alength = aentry.MinProgress or animation
+--     alength = alength * (aentry.Mult or 1)
+--     wep:SetHolsterTime(CurTime() + alength)
+--     return true
+-- end
 
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
@@ -1548,7 +1558,6 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 9, "EmptyReload")
     self:NetworkVar("Bool", 10, "InSights")
     self:NetworkVar("Bool", 11, "PrimedAttack")
-    -- self:NetworkVar("Bool", 12, "BlindFire")
     self:NetworkVar("Bool", 12, "Bash2")
     self:NetworkVar("Bool", 13, "NeedsCycle")
     self:NetworkVar("Bool", 14, "Bipod")
@@ -1564,6 +1573,8 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 24, "GrenadeRecovering")
     self:NetworkVar("Bool", 25, "LockedOn")
     self:NetworkVar("Bool", 26, "MidMeleeAttack")
+    self:NetworkVar("Bool", 27, "DoAFastDraw")
+    -- self:NetworkVar("Bool", 12, "BlindFire")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
     self:NetworkVar("Angle", 0, "FreeAimAngle")
