@@ -455,6 +455,19 @@ local function GetHintsTable(capabilities)
         })
     end
 
+    local owner = weapon:GetOwner()
+    local quicknade = owner.ARC9LastSelectedGrenade
+    local quicknadeent = owner:GetWeapon(quicknade)
+    if IsValid(quicknadeent) then
+        local howmanyquicknades = owner:GetAmmoCount(quicknadeent.Ammo)
+        if quicknade and owner:HasWeapon(quicknade) and !weapon.IsQuickGrenade then
+            table.insert(hints, {
+                glyph = ARC9.GetBindKey("+grenade1"),
+                action = ARC9:GetPhrase("hud.hint.quicknade") .. quicknadeent.PrintName .. (howmanyquicknades > 0 and " (" .. howmanyquicknades + 1 .. ")" or "")
+            })
+        end
+    end
+
     for i, v in ipairs(hints) do
         if ARC9.CTRL_Lookup[v.glyph] then v.glyph = ARC9.CTRL_Lookup[v.glyph] end
         if ARC9.CTRL_ConvertTo[v.glyph] then v.glyph = ARC9.CTRL_ConvertTo[v.glyph] end

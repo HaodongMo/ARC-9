@@ -61,6 +61,7 @@ L["hud.hint.toggleatts"] = "Toggle Attachments"
 L["hud.hint.ubgl"] = "Toggle"
 L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Change Zoom"
+L["hud.hint.quicknade"] = "Quickthrow "
 
 L["hud.hint.lowammo"] = "Low Ammo"
 L["hud.hint.noammo"] = "No Ammo"

@@ -61,6 +61,7 @@ L["hud.hint.toggleatts"] = "Towgle awatachmewws"
 L["hud.hint.ubgl"] = "Towgwle"
 -- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Chawanwe zowom"
+L["hud.hint.quicknade"] = "Qwiktwow "
 
 L["hud.hint.lowammo"] = "Low Ammowo!!"
 L["hud.hint.noammo"] = "Nyo Ammowo!! 0_0"

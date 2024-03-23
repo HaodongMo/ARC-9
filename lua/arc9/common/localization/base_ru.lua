@@ -61,6 +61,7 @@ L["hud.hint.toggleatts"] = "ПЕРЕКЛ. МОДУЛЬ"
 L["hud.hint.ubgl"] = "ПЕРЕКЛ. НА"
 -- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "СМЕНА КРАТНОСТИ"
+L["hud.hint.quicknade"] = "КИНУТЬ "
 
 L["hud.hint.lowammo"] = "Мало патрон"
 L["hud.hint.noammo"] = "Нет патрон"
