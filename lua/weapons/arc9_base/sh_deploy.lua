@@ -244,7 +244,7 @@ function SWEP:Holster(wep)
             local hasqh = self:HasAnimation("holster_quick")
             local selectholsteranimation = self:RunHook( "Hook_SelectHolsterAnimation" ) or (wep.QuickSwapTo and hasqh and "holster_quick") or "holster"
             if self:HasAnimation(selectholsteranimation) then
-                local unsatmult = ((fdraw and (hasqh and 1) or (!hasqh and 0.5)) or 1)
+                local unsatmult = (fdraw and ((hasqh and 1) or (!hasqh and 0.5)) or 1)
                 local animation = self:PlayAnimation(selectholsteranimation, self:GetProcessedValue("DeployTime", true, 1) * unsatmult, true, false, nil, nil, true) or 0
                 local aentry = self:GetAnimationEntry(self:TranslateAnimation(selectholsteranimation))
                 local alength = aentry.MinProgress or animation
