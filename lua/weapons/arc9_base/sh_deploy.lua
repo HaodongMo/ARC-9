@@ -286,11 +286,37 @@ local arc9_never_ready = GetConVar("arc9_never_ready")
 local arc9_dev_always_ready = GetConVar("arc9_dev_always_ready")
 
 function SWEP:DoDeployAnimation()
+    if self.IsQuickGrenade then self:QuicknadeDeploy() return end
+
     if !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
         local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", true, 1), true)
 
         self:SetReadyTime(CurTime() + (t * min))
         self:SetReady(true)
+    else
+        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
+        self:SetReady(true)
+    end
+end
+
+function SWEP:QuicknadeDeploy()
+    local owner = self:GetOwner()
+    self:GetVM():SetPos(Vector(0, 0, 0)) -- sometimes quickswapping from hl2 gun set vm to weird position
+
+    owner.ARC9LastSelectedGrenade = self:GetClass()
+
+    local WasDrawnByBind = owner:KeyDown(IN_GRENADE1) or owner.ARC9QuickthrowPls
+    owner.ARC9QuickthrowPls = nil 
+    
+    if WasDrawnByBind then
+        self.WasThrownByBind = true 
+
+        self:PlayAnimation("quicknade", 1, true)
+
+        self:SetGrenadePrimed(true)
+        self:SetGrenadePrimedTime(CurTime())
+
+        self:SetGrenadeTossing(owner:KeyDown(IN_ATTACK2))
     else
         self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
         self:SetReady(true)

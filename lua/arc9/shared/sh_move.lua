@@ -314,3 +314,25 @@ function ARC9.StartCommand(ply, cmd)
 end
 
 hook.Add("StartCommand", "ARC9_StartCommand", ARC9.StartCommand)
+
+
+
+hook.Add("KeyPress", "ARC9_Quickgrenade", function( ply, key )
+    if SERVER then
+        if key == IN_GRENADE1 and ply:Alive() then
+            local switchto = ply.ARC9LastSelectedGrenade or false
+
+            if !switchto or !ply:HasWeapon(switchto) then 
+                for _, v in ipairs(ply:GetWeapons()) do
+                    if v.IsQuickGrenade then switchto = v:GetClass() break end
+                end
+            end
+
+            if switchto and ply:GetActiveWeapon() != switchto and ply:HasWeapon(switchto) then
+                ply.ARC9QuickthrowPls = true
+                -- ply:ConCommand("use " .. switchto)
+                ply:SelectWeapon(switchto) -- idk which way better
+            end
+        end
+	end
+end)
