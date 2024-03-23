@@ -55,6 +55,7 @@ local cl_drawhud = GetConVar("cl_drawhud")
 local arc9_hud_arc9 = GetConVar("arc9_hud_arc9")
 local arc9_hud_always = GetConVar("arc9_hud_always")
 local arc9_hud_force_disable = GetConVar("arc9_hud_force_disable")
+local infammo = GetConVar("arc9_infinite_ammo")
 
 function ARC9.ShouldDrawHUD()
     if !cl_drawhud:GetBool() then return end
@@ -460,7 +461,7 @@ local function GetHintsTable(capabilities)
     if quicknade then
         local quicknadeent = owner:GetWeapon(quicknade)
         if IsValid(quicknadeent) then
-            local howmanyquicknades = owner:GetAmmoCount(quicknadeent.Ammo)
+            local howmanyquicknades = infammo:GetBool() and 0 or owner:GetAmmoCount(quicknadeent.Ammo)
             if quicknade and owner:HasWeapon(quicknade) and !weapon.IsQuickGrenade then
                 table.insert(hints, {
                     glyph = ARC9.GetBindKey("+grenade1"),
