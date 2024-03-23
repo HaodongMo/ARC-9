@@ -276,6 +276,10 @@ SWEP.ThrowTumble = true -- Grenade tumbles when thrown.
 
 SWEP.ThrowOnGround = false -- If set, entity's position and angles ignores vertical aim, and is lowered by up to 36 units onto the ground.
 
+SWEP.NoHolsterOnPrimed = nil  -- disallow holstering if pin in pulled
+
+SWEP.QuickSwapTo = nil -- Use on grenades, will make any arc9 holster 2 times faster to this swep
+
 SWEP.Detonator = false -- Set to true to give this weapon a detonator. After throwing out a grenade, you enter detonator mode.
 
 -------------------------- PHYS BULLET BALLISTICS
@@ -397,6 +401,7 @@ SWEP.Firemodes = {
 }
 
 SWEP.NoFiremodeWhenEmpty = false -- Cannot switch firemode when empty
+SWEP.CantSafety = nil -- No safety on this gun
 
 SWEP.FiremodeAnimLock = false -- Firemode animation cannot be interrupted
 

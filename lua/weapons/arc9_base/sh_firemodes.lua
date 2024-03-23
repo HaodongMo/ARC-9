@@ -113,6 +113,8 @@ function SWEP:GetCurrentFiremodeTable()
 end
 
 function SWEP:ToggleSafety(onoff)
+    if self.CantSafety then return end
+
     if onoff == nil then
         onoff = !self:GetSafe()
     end

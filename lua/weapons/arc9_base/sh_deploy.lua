@@ -43,7 +43,6 @@ function SWEP:Deploy()
         self:RestoreClip(math.huge)
     end
 
-    self:DoDeployAnimation()
 
     self:SetBurstCount(0)
     self:SetSightAmount(0)
@@ -73,6 +72,8 @@ function SWEP:Deploy()
     local holsteredtime = CurTime() - self:GetLastHolsterTime()
 
     self:ThinkHeat(holsteredtime)
+
+    self:DoDeployAnimation()
 
     if self:GetValue("AnimDraw") then
         self:DoPlayerAnimationEvent(self:GetValue("AnimDraw"))
@@ -178,6 +179,22 @@ function SWEP:Holster(wep)
 
     if self:GetHolsterTime() > CurTime() then return false end
 
+    if self.NoHolsterOnPrimed and self:GetGrenadePrimed() then return false end
+
+    if self:GetGrenadeRecovering() then -- insta holster if grenade recovering
+        self:SetHolsterTime(CurTime())
+        self:SetHolster_Entity(wep)
+
+        if SERVER and self:GetProcessedValue("Disposable", true) and self:Clip1() == 0 and self:Ammo1() == 0 and !IsValid(self:GetDetonatorEntity()) then
+            self:Remove()
+        end
+
+        self:SetLastHolsterTime(CurTime())
+        self:DoPlayerModelLean(true)
+
+        return true 
+    end
+
     if (self:GetHolsterTime() != 0 and self:GetHolsterTime() <= CurTime()) or !IsValid(wep) then
         -- Do the final holster request
         -- Picking up props try to switch to NULL, by the way
@@ -218,15 +235,17 @@ function SWEP:Holster(wep)
     else
         -- Prepare the holster and set up the timer
         self:KillTimer("ejectat")
+        local holstertimemult = wep.QuickSwapTo and 0.6 or 1 -- if gun were switching to is special, make faster holster
+
         if self:HasAnimation("holster") then
-            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1), true, false, nil, nil, true) or 0
+            local animation = self:PlayAnimation("holster", self:GetProcessedValue("DeployTime", true, 1) * holstertimemult, true, false, nil, nil, true) or 0
             local aentry = self:GetAnimationEntry(self:TranslateAnimation("holster"))
             local alength = aentry.MinProgress or animation
-            alength = alength * (aentry.Mult or 1)
+            alength = alength * (aentry.Mult or 1) * holstertimemult
             self:SetHolsterTime(CurTime() + alength)
             self:SetHolster_Entity(wep)
         else
-            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)))
+            self:SetHolsterTime(CurTime() + (self:GetProcessedValue("DeployTime", true, 1)) * holstertimemult)
             self:SetHolster_Entity(wep)
         end
 
