@@ -41,6 +41,14 @@ function SWEP:DoTPIK()
 
     if !IsValid(wm) then return end
 
+    if wm:GetPos():IsZero() and self.wmnormalpos then -- VERY STUPID BUT SetupModel() on wm makes wm go to 0 0 0 BUT ONLY ON CERTAIN PLAYERMODELS???????
+        wm:SetPos(self.wmnormalpos) 
+        wm:SetAngles(self.wmnormalang) 
+    else 
+        self.wmnormalpos = wm:GetPos()
+        self.wmnormalang = wm:GetAngles()
+    end
+    
     if !self:ShouldTPIK() then
         if cachelastcycle > 0 then wm:SetCycle(0) cachelastcycle = 0 end
         return
