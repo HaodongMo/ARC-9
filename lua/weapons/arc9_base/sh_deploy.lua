@@ -315,7 +315,8 @@ end
 
 function SWEP:QuicknadeDeploy()
     local owner = self:GetOwner()
-    self:GetVM():SetPos(Vector(0, 0, 0)) -- sometimes quickswapping from hl2 gun set vm to weird position
+    self.ViewModelPos = Vector(0, 0, 0)
+    self.ViewModelAng = Angle(0, 0, 0)
 
     owner.ARC9LastSelectedGrenade = self:GetClass()
 
