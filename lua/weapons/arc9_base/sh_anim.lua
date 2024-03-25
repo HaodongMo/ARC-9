@@ -150,10 +150,11 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, n
     self:SetHideBoneIndex(animation.HideBoneIndex or 0)
 
     if lock then
-        local minprogress = minprogress
-        if !animation.FireASAP then minprogress = 1 end
-
-        self:SetAnimLockTime(CurTime() + (time * mult * minprogress))
+        local minprogress2 = minprogress
+        if !animation.FireASAP then minprogress2 = 1 end
+        if isnumber(animation.FireASAP) then minprogress2 = animation.FireASAP end
+        
+        self:SetAnimLockTime(CurTime() + (time * mult * minprogress2))
     else
         self:SetAnimLockTime(CurTime())
     end
