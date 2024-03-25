@@ -96,6 +96,31 @@ function ARC9.StartCommand(ply, cmd)
 
     local wpn = ply:GetActiveWeapon()
 
+
+    -- quicknade code before anti nonarc9 check
+    -- TOO BAD  IN MULTIPLAYER
+    -- if cmd:KeyDown(IN_GRENADE1) and ply:Alive() then
+    --     local switchto = ply.ARC9LastSelectedGrenade or false
+
+    --     if !switchto or !ply:HasWeapon(switchto) then 
+    --         print("roll")
+    --         for _, v in ipairs(ply:GetWeapons()) do
+    --             if v.IsQuickGrenade then switchto = v:GetClass() break end
+    --         end
+    --     end
+
+    --     if switchto and ply:GetActiveWeapon() != switchto and ply:HasWeapon(switchto) then
+    --         print("select")
+    --         ply.ARC9QuickthrowPls = true
+    --         -- ply:ConCommand("use " .. switchto)
+    --         -- ply:SelectWeapon(switchto) -- idk which way better
+    --         local possiblewep = ply:GetWeapon(switchto)
+    --         if IsValid(possiblewep) then cmd:SelectWeapon(possiblewep) end
+    --     end
+    -- end
+    -- end
+
+    
     if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
 
     if ply:IsBot() then timescalefactor = 1 end -- ping is infinite for them lol
