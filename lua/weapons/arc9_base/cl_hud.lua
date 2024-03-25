@@ -389,6 +389,7 @@ function SWEP:DrawHUD()
 			local tw = surface.GetTextSize(text)
 			local twlow = surface.GetTextSize(textlow)
 			local twempty = surface.GetTextSize(textempty)
+			local ia = GetConVar("arc9_infinite_ammo"):GetBool()
 
 			if bipodhint > 0 then
 				bipodreloadmove = 30
@@ -396,7 +397,7 @@ function SWEP:DrawHUD()
 				bipodreloadmove = 0
 			end
 
-			if magazine == 0 and maxmag == 0 then -- If no ammo and no reserve
+			if !ia and (magazine == 0 and maxmag == 0) then -- If no ammo and no reserve
 				surface.SetTextPos(scrw / 2 + 2 - twempty / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
 				surface.SetTextColor(0, 0, 0, 255)
 				surface.DrawText(textempty)
@@ -404,7 +405,7 @@ function SWEP:DrawHUD()
 				surface.SetTextPos(scrw / 2 - twempty / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
 				surface.SetTextColor(255, 100, 100, 255)
 				surface.DrawText(textempty)
-			elseif mag and maxmag == 0 then -- If low on ammo with no reserve ammo
+			elseif !ia and mag and maxmag == 0 then -- If low on ammo with no reserve ammo
 				surface.SetTextPos(scrw / 2 + 2 - twlow / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
 				surface.SetTextColor(0, 0, 0, 255)
 				surface.DrawText(textlow)
@@ -412,7 +413,7 @@ function SWEP:DrawHUD()
 				surface.SetTextPos(scrw / 2 - twlow / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
 				surface.SetTextColor(255, 255, 100, 255)
 				surface.DrawText(textlow)
-			elseif mag and maxmag > 1 then -- If low on ammo and have reserve ammo
+			elseif (ia and mag) or (!ia and mag and maxmag > 0) then -- If low on ammo and have reserve ammo
 				surface.SetTextColor(255, 255, 255, 255)
 				local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 - 7.5 + ScreenScale(100 - bipodreloadmove), size = ScreenScale(8), font = "ARC9_10", font_keyb = "ARC9_10" }, { glyph, ScreenScale(7) })
 				

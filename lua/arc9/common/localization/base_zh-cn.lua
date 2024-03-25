@@ -61,6 +61,7 @@ L["hud.hint.toggleatts"] = "切换配件"
 L["hud.hint.ubgl"] = "切换"
 -- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "瞄具缩放"
+-- L["hud.hint.quicknade"] = "Quickthrow "
 
 -- L["hud.hint.lowammo"] = "Low Ammo"
 -- L["hud.hint.noammo"] = "No Ammo"

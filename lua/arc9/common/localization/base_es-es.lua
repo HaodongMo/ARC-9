@@ -61,6 +61,7 @@ L["hud.hint.toggleatts"] = "Alternar Accesorios"
 L["hud.hint.ubgl"] = "Alternar"
 L["hud.hint.unjam"] = "Desatascar"
 L["hud.hint.zoom"] = "Cambiar Zoom"
+-- L["hud.hint.quicknade"] = "Quickthrow "
 
 L["hud.hint.lowammo"] = "Munición Baja"
 L["hud.hint.noammo"] = "Sin Munición"

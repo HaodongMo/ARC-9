@@ -24,6 +24,8 @@ function SWEP:ToggleUBGL(on)
 
     if self:StillWaiting() then return end
 
+	if self.UBGLCancelAnim then self:PlayAnimation("enter_sights" or "idle", 1, true) end
+	
     self:CancelReload()
     self:SetUBGL(on)
 
