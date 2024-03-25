@@ -293,8 +293,7 @@ local arc9_dev_always_ready = GetConVar("arc9_dev_always_ready")
 
 function SWEP:DoDeployAnimation()
     if self.IsQuickGrenade then self:QuicknadeDeploy() return end
-
-    if !self:GetDoAFastDraw() and !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
+    if !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
         local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", true, 1), true)
 
         self:SetReadyTime(CurTime() + (t * min))
@@ -304,7 +303,7 @@ function SWEP:DoDeployAnimation()
             if self:HasAnimation("draw_quick") then
                 self:PlayAnimation("draw_quick", self:GetProcessedValue("DeployTime", true, 1), true)
             else
-                self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1) * 0.5, true)
+                self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1) * 0.65, true, true) -- + delayedidle
             end
         else
             self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
