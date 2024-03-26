@@ -228,7 +228,7 @@ function SWEP:ThinkMelee()
             if self:GetSafe() then
 				self:ToggleSafety(false)
 			else
-				self:MeleeAttack()
+				self:MeleeAttack(nil, b2)
 			end
         end
 
