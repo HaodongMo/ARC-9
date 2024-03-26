@@ -44,6 +44,10 @@ ARC9.PistolShellSoundsTable = {
     "arc9/casings/casing_9mm_1.wav",
     "arc9/casings/casing_9mm_2.wav",
     "arc9/casings/casing_9mm_3.wav",
+    "arc9/casings/casing_9mm_4.wav",
+    "arc9/casings/casing_9mm_1.wav",
+    "arc9/casings/casing_9mm_2.wav",
+    "arc9/casings/casing_9mm_3.wav",
     "arc9/casings/casing_9mm_4.wav"
 }
 
@@ -51,10 +55,18 @@ ARC9.TinyShellSoundsTable = {
     "arc9/casings/casing_22_1.wav",
     "arc9/casings/casing_22_2.wav",
     "arc9/casings/casing_22_3.wav",
+    "arc9/casings/casing_22_4.wav",
+    "arc9/casings/casing_22_1.wav",
+    "arc9/casings/casing_22_2.wav",
+    "arc9/casings/casing_22_3.wav",
     "arc9/casings/casing_22_4.wav"
 }
 
 ARC9.ShotgunShellSoundsTable = {
+    "arc9/casings/casing_12ga_1.wav",
+    "arc9/casings/casing_12ga_2.wav",
+    "arc9/casings/casing_12ga_3.wav",
+    "arc9/casings/casing_12ga_4.wav",
     "arc9/casings/casing_12ga_1.wav",
     "arc9/casings/casing_12ga_2.wav",
     "arc9/casings/casing_12ga_3.wav",

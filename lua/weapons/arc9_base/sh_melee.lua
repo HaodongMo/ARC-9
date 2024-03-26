@@ -216,7 +216,7 @@ function SWEP:ThinkMelee()
 		
 		waituntilbashagain = self:GetLastMeleeTime() + prebash + self:GetProcessedValue("PostBashTime") <= CurTime()
 		
-        if self:GetProcessedValue("PrimaryBash", true) and (m1 or m2) and waituntilbashagain then
+        if self:GetProcessedValue("PrimaryBash", true) and m1 and waituntilbashagain then
 			if self:GetSafe() then
 				self:ToggleSafety(false)
 			else
