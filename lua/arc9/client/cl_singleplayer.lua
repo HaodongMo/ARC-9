@@ -159,3 +159,13 @@ concommand.Add("arc9_dev_listbgs", function()
         end
     end
 end)
+
+concommand.Add("arc9_dev_listsubmats", function()
+    local wep = LocalPlayer():GetActiveWeapon()
+    if !wep then return end
+    local vm = LocalPlayer():GetViewModel()
+    if !vm then return end
+    local alist = vm:GetMaterials()
+    local slist = table.ToString(alist, "Materials Table", true)
+    print(slist)
+end)
