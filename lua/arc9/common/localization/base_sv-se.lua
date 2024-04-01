@@ -545,6 +545,9 @@ L["settings.hud_game.centerhint_firemode.desc"] = "Visar ett tips när du växla
 L["settings.hud_game.centerhint_firemode_time.title"] = "Visa Skjutlägestips Tid"
 L["settings.hud_game.centerhint_firemode_time.desc"] = "Hur länge skjutläget ska visas."
 
+L["settings.hud_game.centerhint_overheat.title"] = "Visa Överhettningstips"
+L["settings.hud_game.centerhint_overheat.desc"] = "Visar ett överlägg tips som visar hur nära vapnet är att överhettas.\n\nVisas ej om ARC9-gränssnittet är aktivt eller vapnet inte stödjet överhettning."
+
 L["settings.hud_game.hud_glyph"] = "Sortens Glyfer"
 
 L["settings.hud_game.hud_glyph_type_hud.title"] = "Gränssnitt"

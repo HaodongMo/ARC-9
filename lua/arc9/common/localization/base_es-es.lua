@@ -546,6 +546,9 @@ L["settings.hud_game.centerhint_firemode.desc"] = "Muestra un aviso cuando cambi
 L["settings.hud_game.centerhint_firemode_time.title"] = "Mostrar Tiempo de Modo de Fuego"
 L["settings.hud_game.centerhint_firemode_time.desc"] = "Cuánto tiempo debe mostrarse el modo de disparo."
 
+-- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
+-- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
+
 L["settings.hud_game.hud_glyph"] = "Tipo de Glifo"
 
 L["settings.hud_game.hud_glyph_type_hud.title"] = "HUD"

@@ -883,6 +883,16 @@ local conVars = {
         default = "0",
         client = true,
     },
+    {
+        name = "center_overheat",
+        default = "0",
+        client = true,
+    },
+    {
+        name = "center_overheat_dark",
+        default = "0",
+        client = true,
+    },
 }
 ARC9.ConVarData = {}
 
