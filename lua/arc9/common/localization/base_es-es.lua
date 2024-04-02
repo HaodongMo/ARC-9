@@ -374,6 +374,8 @@ L["settings.default_convar"] = "Valor predeterminado"
 L["settings.tabname.general"] = "General"
 
 L["settings.general.client"] = "Cliente"
+L["settings.language_id.title"] = "Idioma"
+L["settings.language_id.desc"] = "Paquete de idiomas a utilizar para ARC9."
 L["settings.truenames.title"] = "Nombres reales"
 L["settings.truenames.desc"] = "Establece si usar los nombres reales de las armas o nombres ficticios hechos por los desarrolladores. No todas las armas lo utilizan.\n\nLa configuración del servidor puede anular esta preferencia."
 L["settings.resetsettings.cl.title"] = "Restablecer todos los ajustes del CLIENTE"

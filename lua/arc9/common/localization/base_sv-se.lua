@@ -374,6 +374,8 @@ L["settings.convar_client"] = "Client-variabel"
 L["settings.tabname.general"] = "Generellt"
 
 L["settings.general.client"] = "Klient"
+L["settings.language_id.title"] = "Språk"
+L["settings.language_id.desc"] = "Språkpaket som används till ARC9."
 L["settings.truenames.title"] = "Sanna Namn"
 L["settings.truenames.desc"] = "Välj om vapnen ska använda riktiga namn eller fiktiva namn valda av utvecklarna. Notera att inte alla vapen använder detta.\n\nServerinställningar kan överskrida denna preferens."
 L["settings.resetsettings.cl.title"] = "Återställ alla KLIENT inställ."

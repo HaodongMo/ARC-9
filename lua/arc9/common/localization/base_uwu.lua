@@ -374,6 +374,8 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 L["settings.tabname.general"] = "Genewal"
 
 L["settings.general.client"] = "Cwient"
+-- L["settings.language_id.title"] = "Language"
+-- L["settings.language_id.desc"] = "Language pack to use for ARC9."
 L["settings.truenames.title"] = "Twue names"
 L["settings.truenames.desc"] = "Set whedew to use weapons' weal names ow fictional names made by de developews. Not all weapons utilize dis.\n\nSewvew setting may ovewwide dis pwefewence"
 L["settings.resetsettings.cl.title"] = "Weset aww CWIENT setings"

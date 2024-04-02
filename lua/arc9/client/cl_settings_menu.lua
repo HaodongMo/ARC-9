@@ -21,7 +21,17 @@
     description to show on right
 ]]--
 
-ARC9.LanguagesTable = {}
+ARC9.LanguagesTable = {
+{"0GMod Language", ""},
+{"1English", "en"},
+{"2Deutsch", "de"},
+{"2Español", "es-es"},
+{"2Русский", "ru"},
+{"2Svenska", "sv-se"},
+{"2中國人", "zh-cn"},
+
+{"9UwU", "uwu"},
+}
 
 ARC9.SettingsTable = {
     -- {
@@ -40,6 +50,7 @@ ARC9.SettingsTable = {
         TabName = "settings.tabname.general",
 
         { type = "label", text = "settings.general.client" },
+		{ type = "combo", text = "settings.language_id.title", convar = "language", desc = "settings.language_id.desc", content = ARC9.LanguagesTable },
         { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
         { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
@@ -166,7 +177,6 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_cust.hud_darkmode.title", convar = "hud_darkmode", desc = "settings.hud_cust.hud_darkmode.desc"},
         { type = "bool", text = "settings.hud_cust.hud_holiday.title", convar = "hud_holiday", desc = "settings.hud_cust.hud_holiday.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        -- { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language", content = ARC9.LanguagesTable, desc = "settings.hud_cust.language_id.desc" },
         { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},
         { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.cust_light_brightness.title", convar = "cust_light_brightness", desc = "settings.hud_cust.cust_light_brightness.desc" },
 

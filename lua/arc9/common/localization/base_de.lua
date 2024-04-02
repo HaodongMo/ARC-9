@@ -374,6 +374,8 @@ L["settings.desc"] = "Beschreibung"
 -- L["settings.tabname.general"] = "General"
 
 -- L["settings.general.client"] = "Client"
+L["settings.language_id.title"] = "Sprache"
+L["settings.language_id.desc"] = "Sprachpaket für ARC9."
 -- L["settings.truenames.title"] = "True Names"
 -- L["settings.truenames.desc"] = "Set whether to use weapons' real names or fictional names made by the developers. Not all weapons utilize this."
 -- L["settings.resetsettings.cl.title"] = "Reset all CLIENT settings"
