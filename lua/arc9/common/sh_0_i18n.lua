@@ -78,8 +78,9 @@ end
 
 -- client languages aren't loaded through lua anymore. use gmod's stock localization system instead
 
-function ARC9:LoadLanguage(lang)
+function ARC9:LoadLanguage(lang, printshit)
     local cur_lang = lang or ARC9:GetLanguage()
+    local luacount, stringcount = 0, 0
 
     for _, v in pairs(file.Find("arc9/common/localization/*_" .. cur_lang .. ".lua", "LUA")) do
 
@@ -110,16 +111,20 @@ function ARC9:LoadLanguage(lang)
             hasany = true
         end
 
-        print("Loaded ARC9 language file " .. v .. " with " .. table.Count(L) .. " strings.")
+        -- print("Loaded ARC9 language file " .. v .. " with " .. table.Count(L) .. " strings.")
+        luacount = luacount + 1
+        stringcount = stringcount + table.Count(L)
         L = nil
         STL = nil
     end
+
+    if CLIENT and printshit then print("ARC9: Loaded " .. luacount .. " [" .. cur_lang .. "] localization files with " .. stringcount .. " strings in total.") end
 end
 
 function ARC9:LoadLanguages()
     ARC9.PhraseTable = {}
 
-    ARC9:LoadLanguage()
+    ARC9:LoadLanguage(_, true)
     ARC9:LoadLanguage(gmod_language:GetString())
     ARC9:LoadLanguage("en")
 end

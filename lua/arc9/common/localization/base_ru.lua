@@ -375,7 +375,7 @@ L["settings.tabname.general"] = "Основное"
 
 L["settings.general.client"] = "Клиент"
 L["settings.language_id.title"] = "Язык"
-L["settings.language_id.desc"] = "Языковой пакет для использования с ARC9."
+L["settings.language_id.desc"] = "Язык интерфейса ARC9."
 L["settings.truenames.title"] = "Настоящие названия оружия"
 L["settings.truenames.desc"] = "Будут ли оружия показывать настоящие или вымышленые названия сделанные разработчиком. (не все оружия поддерживают эту функцию)\n\nЭто серверная переменная."
 L["settings.resetsettings.cl.title"] = "Сброс клиентских настроек"

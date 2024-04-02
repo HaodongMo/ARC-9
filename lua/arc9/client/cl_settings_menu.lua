@@ -30,7 +30,7 @@ ARC9.LanguagesTable = {
 {"2Svenska", "sv-se"},
 {"2中國人", "zh-cn"},
 
-{"9UwU", "uwu"},
+{"9UwU :3", "uwu"},
 }
 
 ARC9.SettingsTable = {
@@ -50,7 +50,6 @@ ARC9.SettingsTable = {
         TabName = "settings.tabname.general",
 
         { type = "label", text = "settings.general.client" },
-		{ type = "combo", text = "settings.language_id.title", convar = "language", desc = "settings.language_id.desc", content = ARC9.LanguagesTable },
         { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
         { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
@@ -60,6 +59,9 @@ ARC9.SettingsTable = {
         --     {"3Enabled", "1"},
         -- }, desc = "settings.truenames.desc"},
         -- { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
+		{ type = "combo", text = "settings.language_id.title", convar = "language", desc = "settings.language_id.desc", content = ARC9.LanguagesTable, func = function(self2)
+            RunConsoleCommand("arc9_reloadlangs")
+        end},
         { type = "button", text = "settings.resetsettings.cl.title", content = "settings.reset", func = function(self2)
             RunConsoleCommand("arc9_settings_reset_client")
         end},
@@ -572,8 +574,8 @@ local function DrawSettings(bg, page)
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar")
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                if noperms then newel:SetEnabled(false) end
             elseif v2.type == "coloralpha" then
                 local newel = vgui.Create("ARC9ColorButton", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
@@ -588,8 +590,8 @@ local function DrawSettings(bg, page)
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar (or its _alpha)")
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                if noperms then newel:SetEnabled(false) end
             elseif v2.type == "input" then
                 local newel = vgui.Create("DTextEntry", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
@@ -608,8 +610,14 @@ local function DrawSettings(bg, page)
                         newel:AddChoice(choice[1], choice[2])
                     end
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                local oldCloseMenu = newel.CloseMenu
+                newel.CloseMenu = function(self2)
+                    oldCloseMenu(self2, kc)
+                    if true and v2.func then v2.func(self2) end
+                end
+
+                if noperms then newel:SetEnabled(false) end
             elseif v2.type == "button" then
                 local newel = vgui.Create("ARC9Button", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
@@ -620,8 +628,8 @@ local function DrawSettings(bg, page)
                     oldmousepressed(self2, kc)
                     if kc == MOUSE_LEFT and v2.func then v2.func(self2) end
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                if noperms then newel:SetEnabled(false) end
             end
         end
 
