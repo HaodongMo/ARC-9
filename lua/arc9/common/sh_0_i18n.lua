@@ -5,14 +5,14 @@ local lang_cvar = GetConVar("arc9_language")
 local gmod_language = GetConVar("gmod_language")
 
 function ARC9:GetLanguage()
-    local date = os.date("*t")
+    -- local date = os.date("*t")
 
-    local day = date.day
-    local month = date.month
+    -- local day = date.day
+    -- local month = date.month
 
-    if day == 1 and month == 4 then
-        return "uwu"
-    end -- REMOVE THIS AFTER 1 APRIL  (NOT OPTIMIZED!1)
+    -- if day == 1 and month == 4 then
+        -- return "uwu"
+    -- end -- REMOVE THIS AFTER 1 APRIL  (NOT OPTIMIZED!1)
 
     if lang_cvar:GetString() ~= "" then
         return string.lower(lang_cvar:GetString())
