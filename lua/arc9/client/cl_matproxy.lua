@@ -125,7 +125,12 @@ matproxy.Add( {
 		self.min = values.min || 0
 		self.max = values.max || 1
 		self.color = Vector(color[1], color[2], color[3])
-		mat:SetTexture("$envmap", values.envmap || "arc9/shared/envmaps/specularity_50")
+		--mat:SetTexture("$envmap", values.envmap || "arc9/shared/envmaps/specularity_50")
+		if (values.envmap != "env_cubemap") then
+		   mat:SetTexture("$envmap", values.envmap || "arc9/shared/envmaps/specularity_50")
+		else
+		   mat:SetString("$envmap", "env_cubemap")
+		end
 	end,
 
 	bind = function(self, mat, ent)
