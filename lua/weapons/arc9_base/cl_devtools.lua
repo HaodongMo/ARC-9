@@ -604,7 +604,7 @@ function SWEP:DevStuffCrosshair()
 				text = text .. " Crouch"
             end
 			
-			if ownerOnGround and playerSprinting(owner) then
+			if ownerOnGround and playerSprinting(owner) and !self:StillWaiting() then
 				text = text .. " Sprint"
 			end
         end
@@ -754,7 +754,12 @@ function SWEP:DevStuffCrosshair()
 		surface.DrawText(affectortext)
 	end
 	
-	surface.DrawText(self.FMHintTime or "no FMHintTime")
+    -- surface.SetTextPos(x + 5 - 2, y - 240 + 40)
+	-- if self:StillWaiting() then
+		-- surface.DrawText("Waiting")
+	-- else
+		-- surface.DrawText("Not Waiting")
+	-- end
 	
     local sgspread_txt = ""
     if self:GetProcessedValue("UseDispersion") then
