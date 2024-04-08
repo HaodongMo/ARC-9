@@ -524,7 +524,7 @@ do
                 stat = arcGetValue(self, val, stat, "Crouch")
             end
 			
-			if ownerOnGround and playerSprinting(owner) then
+			if ownerOnGround and playerSprinting(owner) and !self:StillWaiting() then
                 stat = arcGetValue(self, val, stat, "Sprint")
 			end
         end

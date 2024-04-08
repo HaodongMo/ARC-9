@@ -374,6 +374,8 @@ L["settings.convar_client"] = "Клиентская переменная"
 L["settings.tabname.general"] = "Основное"
 
 L["settings.general.client"] = "Клиент"
+L["settings.language_id.title"] = "Язык"
+L["settings.language_id.desc"] = "Язык интерфейса ARC9."
 L["settings.truenames.title"] = "Настоящие названия оружия"
 L["settings.truenames.desc"] = "Будут ли оружия показывать настоящие или вымышленые названия сделанные разработчиком. (не все оружия поддерживают эту функцию)\n\nЭто серверная переменная."
 L["settings.resetsettings.cl.title"] = "Сброс клиентских настроек"
@@ -545,6 +547,9 @@ L["settings.hud_game.centerhint_bipod.desc"] = "Подсказка по цент
 -- L["settings.hud_game.centerhint_firemode.desc"] = "Display a tip when you swap firing mode or toggle your safety."
 -- L["settings.hud_game.centerhint_firemode_time.title"] = "Display Firemode Time"
 -- L["settings.hud_game.centerhint_firemode_time.desc"] = "How long the firing mode should be displayed."
+
+-- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
+-- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
 
 L["settings.hud_game.hud_glyph"] = "Тип глифов"
 

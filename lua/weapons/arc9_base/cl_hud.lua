@@ -344,7 +344,7 @@ function SWEP:DrawHUD()
         -- local text = bipodhintstate and "Exit bipod" or "Enter bipod"
 		-- local text = bipodhintstate and ARC9:GetPhrase("hud.hint.bipod.exit") or ARC9:GetPhrase("hud.hint.bipod.enter")
 		local text = ARC9:GetPhrase("hud.hint.bipod")
-										
+        local twbp = surface.GetTextSize(text)
 
         if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
         if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
@@ -353,11 +353,17 @@ function SWEP:DrawHUD()
         surface.SetTextColor(255, 255, 255, bipodhint)
         surface.SetDrawColor(255, 255, 255, bipodhint)
         surface.SetFont("ARC9_16")
-        local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 + ScreenScale(96), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(8) })
+		
+        local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (twbp * 0.5) + ScreenScale(5), y = scrh / 2 + ScreenScale(97), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 
         surface.SetFont("ARC9_10")
-        local tw = surface.GetTextSize(text)
-        surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(106))
+		
+        surface.SetTextColor(0, 0, 0, bipodhint) -- Black
+        surface.SetTextPos(scrw / 2 + 2 - twbp / 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97))
+        surface.DrawText(text)
+		
+        surface.SetTextColor(255, 255, 255, bipodhint) -- White
+        surface.SetTextPos(scrw / 2 - twbp / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97))
         surface.DrawText(text)
     end
 
@@ -370,6 +376,8 @@ function SWEP:DrawHUD()
 		mag = magazine <= self:GetMaxClip2()*cv1:GetFloat()
 		maxmag = self.Owner:GetAmmoCount(self.Secondary.Ammo)
 	end
+
+	local blink = 255 * math.abs(math.sin(CurTime() * 5))
 
 	local glyph = ARC9.GetBindKey("+reload")
 	
@@ -384,45 +392,39 @@ function SWEP:DrawHUD()
 			local textempty = ARC9:GetPhrase("hud.hint.noammo")
 
 			surface.SetDrawColor(255, 255, 255, 255)
-			surface.SetFont("ARC9_10")
+			surface.SetFont("ARC9_12")
 			
 			local tw = surface.GetTextSize(text)
 			local twlow = surface.GetTextSize(textlow)
 			local twempty = surface.GetTextSize(textempty)
 			local ia = GetConVar("arc9_infinite_ammo"):GetBool()
 
-			if bipodhint > 0 then
-				bipodreloadmove = 30
-			else
-				bipodreloadmove = 0
-			end
-
 			if !ia and (magazine == 0 and maxmag == 0) then -- If no ammo and no reserve
-				surface.SetTextPos(scrw / 2 + 2 - twempty / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
-				surface.SetTextColor(0, 0, 0, 255)
+				surface.SetTextPos(scrw / 2 + 2 - twlow / 2, scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
+				surface.SetTextColor(0, 0, 0, blink)
 				surface.DrawText(textempty)
 				
-				surface.SetTextPos(scrw / 2 - twempty / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
-				surface.SetTextColor(255, 100, 100, 255)
+				surface.SetTextPos(scrw / 2 - twlow / 2, scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
+				surface.SetTextColor(255, 100, 100, blink)
 				surface.DrawText(textempty)
 			elseif !ia and mag and maxmag == 0 then -- If low on ammo with no reserve ammo
-				surface.SetTextPos(scrw / 2 + 2 - twlow / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
-				surface.SetTextColor(0, 0, 0, 255)
+				surface.SetTextPos(scrw / 2 + 2 - twlow / 2, scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
+				surface.SetTextColor(0, 0, 0, blink)
 				surface.DrawText(textlow)
 				
-				surface.SetTextPos(scrw / 2 - twlow / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
-				surface.SetTextColor(255, 255, 100, 255)
+				surface.SetTextPos(scrw / 2 - twlow / 2, scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
+				surface.SetTextColor(255, 255, 100, blink)
 				surface.DrawText(textlow)
 			elseif (ia and mag) or (!ia and mag and maxmag > 0) then -- If low on ammo and have reserve ammo
 				surface.SetTextColor(255, 255, 255, 255)
-				local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 - 7.5 + ScreenScale(100 - bipodreloadmove), size = ScreenScale(8), font = "ARC9_10", font_keyb = "ARC9_10" }, { glyph, ScreenScale(7) })
+				local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (tw * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 				
-				surface.SetTextPos(scrw / 2 + 2 - tw / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
-				surface.SetTextColor(0, 0, 0, 255)
+				surface.SetTextPos(scrw / 2 - tw / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
+				surface.SetTextColor(0, 0, 0, blink)
 				surface.DrawText(text)
 				
-				surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
-				surface.SetTextColor(255, 255, 255, 255)
+				surface.SetTextPos(scrw / 2 - tw / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
+				surface.SetTextColor(255, 255, 255, blink)
 				surface.DrawText(text)
 			end
 		end
@@ -437,18 +439,64 @@ function SWEP:DrawHUD()
             surface.SetFont("ARC9_10")
             
             surface.SetTextColor(255, 255, 255, 255)
-            local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(5), y = scrh / 2 - 7.5 + ScreenScale(100 - bipodreloadmove), size = ScreenScale(8), font = "ARC9_10", font_keyb = "ARC9_10" }, { glyph, ScreenScale(7) })
-            
-            surface.SetTextPos(scrw / 2 + 2 - twunjam / 2, scrh / 2 + 2 + ScreenScale(106 - bipodreloadmove))
-            surface.SetTextColor(0, 0, 0, 255)
-            surface.DrawText(textunjam)
-            
-            surface.SetTextPos(scrw / 2 - twunjam / 2, scrh / 2 + ScreenScale(106 - bipodreloadmove))
-            surface.SetTextColor(255, 255, 255, 255)
-            surface.DrawText(textunjam)
+			local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (twunjam * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
+			
+			surface.SetTextPos(scrw / 2 - twunjam / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
+			surface.SetTextColor(0, 0, 0, blink)
+			surface.DrawText(textunjam)
+			
+			surface.SetTextPos(scrw / 2 - twunjam / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
+			surface.SetTextColor(255, 255, 255, blink)
+			surface.DrawText(textunjam)
         end
 	end
-			
+
+local cvo = GetConVar("arc9_center_overheat"):GetBool()
+local ah = GetConVar("arc9_hud_arc9"):GetBool()
+
+	if cvo and !ah and self:GetProcessedValue("Overheat", true) then
+		local heat = self:GetHeatAmount()
+		local heatcap = self:GetProcessedValue("HeatCapacity", true)
+		local heatlocked = self:GetHeatLockout()
+		local hud_t_full = Material("arc9/thermometer_full.png", "mips")
+		local hud_t_empty = Material("arc9/thermometer_empty.png", "mips")
+		local fill = math.Clamp(0.035 + (0.9 * heat) / heatcap, 0, 1)
+		local wp = 25
+		local xp = 80
+		local col = {
+			white = Color(255,255,255, heat * 3),
+			black = Color(0,0,0, heat * 3),
+			red = Color(255,100,100, heat * 3),
+		}
+
+		local flashheatbar = false
+		if heatlocked then flashheatbar = true end
+
+		local heat_col = col["white"]
+
+		if GetConVar("arc9_center_overheat_dark"):GetBool() then heat_col = col["black"] end
+
+		if ((flashheatbar or heat > (heatcap * 0.75)) and math.floor(CurTime() * 3) % 2 == 0) then
+			heat_col = col["red"]
+		end
+
+		surface.SetDrawColor(col.black)
+		surface.SetMaterial(hud_t_full)
+		surface.DrawTexturedRectUV(scrw / 2 - ScreenScale(wp), scrh / 2 + ScreenScale(xp), math.ceil(150 * fill), 60, 0, 0, fill, 1)
+
+		surface.SetDrawColor(heat_col)
+		surface.SetMaterial(hud_t_full)
+		surface.DrawTexturedRectUV(scrw / 2 - ScreenScale(wp), scrh / 2 + ScreenScale(xp), math.ceil(150 * fill), 60, 0, 0, fill, 1)
+
+		surface.SetDrawColor(col.black)
+		surface.SetMaterial(hud_t_empty)
+		surface.DrawTexturedRectUV(scrw / 2 - ScreenScale(wp) + math.ceil(150 * fill), scrh / 2 + ScreenScale(xp), 150 * (1 - fill), 60, fill, 0, 1, 1)
+
+		surface.SetDrawColor(heat_col)
+		surface.SetMaterial(hud_t_empty)
+		surface.DrawTexturedRectUV(scrw / 2 - ScreenScale(wp) + math.ceil(150 * fill), scrh / 2 + ScreenScale(xp), 150 * (1 - fill), 60, fill, 0, 1, 1)
+	end
+
     if self:GetSightAmount() > 0.75 and getsight.FlatScope and getsight.FlatScopeOverlay then
         if getsight.FlatScopeBlackBox then
             surface.SetMaterial(getsight.FlatScopeOverlay)

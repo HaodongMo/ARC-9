@@ -374,6 +374,8 @@ L["settings.desc"] = "Beschreibung"
 -- L["settings.tabname.general"] = "General"
 
 -- L["settings.general.client"] = "Client"
+L["settings.language_id.title"] = "Sprache"
+L["settings.language_id.desc"] = "Sprachpaket für ARC9."
 -- L["settings.truenames.title"] = "True Names"
 -- L["settings.truenames.desc"] = "Set whether to use weapons' real names or fictional names made by the developers. Not all weapons utilize this."
 -- L["settings.resetsettings.cl.title"] = "Reset all CLIENT settings"
@@ -544,6 +546,9 @@ L["settings.hud_game.breath_sfx.desc"] = "Wenn du den Atem anhälst, werden die 
 -- L["settings.hud_game.centerhint_firemode.desc"] = "Display a tip when you swap firing mode or toggle your safety."
 -- L["settings.hud_game.centerhint_firemode_time.title"] = "Display Firemode Time"
 -- L["settings.hud_game.centerhint_firemode_time.desc"] = "How long the firing mode should be displayed."
+
+-- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
+-- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
 
 -- L["settings.hud_game.hud_glyph"] = "Glyph Type"
 

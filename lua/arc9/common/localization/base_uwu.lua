@@ -374,6 +374,8 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 L["settings.tabname.general"] = "Genewal"
 
 L["settings.general.client"] = "Cwient"
+L["settings.language_id.title"] = "Wanguwage"
+L["settings.language_id.desc"] = "Wanguwage pawck to uwuse fow AWC9\n\n\nyuwe soo pawesom fow uwusing de UwU wanguage :3"
 L["settings.truenames.title"] = "Twue names"
 L["settings.truenames.desc"] = "Set whedew to use weapons' weal names ow fictional names made by de developews. Not all weapons utilize dis.\n\nSewvew setting may ovewwide dis pwefewence"
 L["settings.resetsettings.cl.title"] = "Weset aww CWIENT setings"
@@ -544,6 +546,9 @@ L["settings.hud_game.centerhint_bipod.desc"] = "Centewed bipowod hint"
 -- L["settings.hud_game.centerhint_firemode.desc"] = "Display a tip when you swap firing mode or toggle your safety."
 -- L["settings.hud_game.centerhint_firemode_time.title"] = "Display Firemode Time"
 -- L["settings.hud_game.centerhint_firemode_time.desc"] = "How long the firing mode should be displayed."
+
+-- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
+-- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
 
 L["settings.hud_game.hud_glyph"] = "Gwyph Type"
 

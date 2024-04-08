@@ -374,6 +374,8 @@ L["settings.default_convar"] = "Valor predeterminado"
 L["settings.tabname.general"] = "General"
 
 L["settings.general.client"] = "Cliente"
+L["settings.language_id.title"] = "Idioma"
+L["settings.language_id.desc"] = "Paquete de idiomas a utilizar para ARC9."
 L["settings.truenames.title"] = "Nombres reales"
 L["settings.truenames.desc"] = "Establece si usar los nombres reales de las armas o nombres ficticios hechos por los desarrolladores. No todas las armas lo utilizan.\n\nLa configuración del servidor puede anular esta preferencia."
 L["settings.resetsettings.cl.title"] = "Restablecer todos los ajustes del CLIENTE"
@@ -545,6 +547,9 @@ L["settings.hud_game.centerhint_firemode.title"] = "Mostrar Consejo de Modo de F
 L["settings.hud_game.centerhint_firemode.desc"] = "Muestra un aviso cuando cambias de modo de disparo o activas el seguro."
 L["settings.hud_game.centerhint_firemode_time.title"] = "Mostrar Tiempo de Modo de Fuego"
 L["settings.hud_game.centerhint_firemode_time.desc"] = "Cuánto tiempo debe mostrarse el modo de disparo."
+
+-- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
+-- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
 
 L["settings.hud_game.hud_glyph"] = "Tipo de Glifo"
 

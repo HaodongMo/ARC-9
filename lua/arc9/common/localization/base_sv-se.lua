@@ -374,6 +374,8 @@ L["settings.convar_client"] = "Client-variabel"
 L["settings.tabname.general"] = "Generellt"
 
 L["settings.general.client"] = "Klient"
+L["settings.language_id.title"] = "Språk"
+L["settings.language_id.desc"] = "Språkpaket som används till ARC9."
 L["settings.truenames.title"] = "Sanna Namn"
 L["settings.truenames.desc"] = "Välj om vapnen ska använda riktiga namn eller fiktiva namn valda av utvecklarna. Notera att inte alla vapen använder detta.\n\nServerinställningar kan överskrida denna preferens."
 L["settings.resetsettings.cl.title"] = "Återställ alla KLIENT inställ."
@@ -544,6 +546,9 @@ L["settings.hud_game.centerhint_firemode.title"] = "Visa Skjutlägestips"
 L["settings.hud_game.centerhint_firemode.desc"] = "Visar ett tips när du växlar skjutlägen eller växlar din säkring."
 L["settings.hud_game.centerhint_firemode_time.title"] = "Visa Skjutlägestips Tid"
 L["settings.hud_game.centerhint_firemode_time.desc"] = "Hur länge skjutläget ska visas."
+
+L["settings.hud_game.centerhint_overheat.title"] = "Visa Överhettningstips"
+L["settings.hud_game.centerhint_overheat.desc"] = "Visar ett överlägg tips som visar hur nära vapnet är att överhettas.\n\nVisas ej om ARC9-gränssnittet är aktivt eller vapnet inte stödjet överhettning."
 
 L["settings.hud_game.hud_glyph"] = "Sortens Glyfer"
 

@@ -21,7 +21,17 @@
     description to show on right
 ]]--
 
-ARC9.LanguagesTable = {}
+ARC9.LanguagesTable = {
+{"0GMod Language", ""},
+{"1English", "en"},
+{"2Deutsch", "de"},
+{"2Español", "es-es"},
+{"2Русский", "ru"},
+{"2Svenska", "sv-se"},
+{"2中國人", "zh-cn"},
+
+{"9UwU :3", "uwu"},
+}
 
 ARC9.SettingsTable = {
     -- {
@@ -49,6 +59,9 @@ ARC9.SettingsTable = {
         --     {"3Enabled", "1"},
         -- }, desc = "settings.truenames.desc"},
         -- { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
+		{ type = "combo", text = "settings.language_id.title", convar = "language", desc = "settings.language_id.desc", content = ARC9.LanguagesTable, func = function(self2)
+            RunConsoleCommand("arc9_reloadlangs")
+        end},
         { type = "button", text = "settings.resetsettings.cl.title", content = "settings.reset", func = function(self2)
             RunConsoleCommand("arc9_settings_reset_client")
         end},
@@ -166,7 +179,6 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_cust.hud_darkmode.title", convar = "hud_darkmode", desc = "settings.hud_cust.hud_darkmode.desc"},
         { type = "bool", text = "settings.hud_cust.hud_holiday.title", convar = "hud_holiday", desc = "settings.hud_cust.hud_holiday.desc"},
         -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        -- { type = "combo", text = "settings.hud_cust.language_id.title", convar = "language", content = ARC9.LanguagesTable, desc = "settings.hud_cust.language_id.desc" },
         { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},
         { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.cust_light_brightness.title", convar = "cust_light_brightness", desc = "settings.hud_cust.cust_light_brightness.desc" },
 
@@ -204,6 +216,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_game.centerhint_jammed.title", convar = "center_jam", desc = "settings.hud_game.centerhint_jammed.desc" },
         { type = "bool", text = "settings.hud_game.centerhint_firemode.title", convar = "center_firemode", desc = "settings.hud_game.centerhint_firemode.desc" },
         { type = "slider", min = 0, max = 2, decimals = 2, text = "settings.hud_game.centerhint_firemode_time.title", convar = "center_firemode_time", desc = "settings.hud_game.centerhint_firemode_time.desc" },
+        { type = "bool", text = "settings.hud_game.centerhint_overheat.title", convar = "center_overheat", desc = "settings.hud_game.centerhint_overheat.desc" },
 
         { type = "label", text = "settings.hud_game.hud_glyph" },
         -- { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },
@@ -561,8 +574,8 @@ local function DrawSettings(bg, page)
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar")
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                if noperms then newel:SetEnabled(false) end
             elseif v2.type == "coloralpha" then
                 local newel = vgui.Create("ARC9ColorButton", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
@@ -577,8 +590,8 @@ local function DrawSettings(bg, page)
                     newel.rgbcolor = Color(255, 0, 0)
                     print("you are dumb, missing color convar (or its _alpha)")
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                if noperms then newel:SetEnabled(false) end
             elseif v2.type == "input" then
                 local newel = vgui.Create("DTextEntry", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
@@ -597,8 +610,14 @@ local function DrawSettings(bg, page)
                         newel:AddChoice(choice[1], choice[2])
                     end
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                local oldCloseMenu = newel.CloseMenu
+                newel.CloseMenu = function(self2)
+                    oldCloseMenu(self2, kc)
+                    if true and v2.func then v2.func(self2) end
+                end
+
+                if noperms then newel:SetEnabled(false) end
             elseif v2.type == "button" then
                 local newel = vgui.Create("ARC9Button", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
@@ -609,8 +628,8 @@ local function DrawSettings(bg, page)
                     oldmousepressed(self2, kc)
                     if kc == MOUSE_LEFT and v2.func then v2.func(self2) end
                 end
-                if noperms then newel:SetEnabled(false) end
 
+                if noperms then newel:SetEnabled(false) end
             end
         end
 

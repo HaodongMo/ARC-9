@@ -464,7 +464,7 @@ function SWEP:GetViewModelPosition(pos, ang)
             -- local CustomizeRotateAnchor = Vector(21.5, -4.27, -5.23)
             rotateAroundAngle[2] = self.CustomizePitch
             rotateAroundAngle[3] = self.CustomizeYaw
-            local rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, self.CustomizeRotateAnchor, vector_origin, rotateAroundAngle)
+            local rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, self:GetProcessedValue("CustomizeRotateAnchor", true), vector_origin, rotateAroundAngle)
             pos:Set(rap_pos)
             ang:Set(rap_ang)
         end
