@@ -557,10 +557,14 @@ function SWEP:SetupModel(wm, lod, cm)
 
         local dupli = slottbl.DuplicateModels or {}
 
+        local duplicheck = self:GetProcessedValue("Akimbo",true) or self:GetProcessedValue("DuplicateAttachments",true)
+
         for i = 0, #dupli do
             local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm, dupli)
 
-            csmodel.Duplicate = i
+            if duplicheck  then
+                csmodel.Duplicate = i
+            end
 
             if atttbl.NoDraw then
                 csmodel.NoDraw = true
@@ -579,7 +583,9 @@ function SWEP:SetupModel(wm, lod, cm)
             if !cm and ((atttbl.LHIK or atttbl.RHIK) or atttbl.MuzzleDevice or atttbl.MuzzleDeviceUBGL) then
                 proxmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, true)
                 proxmodel.NoDraw = true
-                proxmodel.Duplicate = i
+                if duplicheck then
+                    proxmodel.Duplicate = i
+                end
 
                 local scale = Matrix()
                 local vec = Vector(1, 1, 1) * (slottbl.Scale or 1) * (atttbl.Scale or 1)
