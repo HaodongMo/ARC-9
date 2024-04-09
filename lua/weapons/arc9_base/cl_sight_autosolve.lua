@@ -93,13 +93,15 @@ function SWEP:AdjustMouseSensitivity()
 		aamult = 1
 	end
 
-    if !self:GetInSights() then 
-		local amt = 1
-        amt = math.sqrt(amt)
-		
-		return amt * (aamult or 1)
-	else
+	local gsa = self:GetSightAmount()
 	
+    if !self:GetInSights() then 
+	-- if gsa <= 0.01 then -- Active if "Sight amount" is over 1%. Experimental.
+		local amt = 1
+		amt = math.sqrt(amt)
+		
+		return amt * aamult
+	else
 		if !arc9_compensate_sens:GetBool() then return end
 
 		local magdef = self.IronSights.Magnification
@@ -108,7 +110,7 @@ function SWEP:AdjustMouseSensitivity()
 
 		local sight = self:GetSight()
 		local atttbl = sight.atttbl
-
+		
 		if sight.BaseSight then
 			atttbl = self:GetTable()
 		end
@@ -123,9 +125,13 @@ function SWEP:AdjustMouseSensitivity()
 
 		if mag > 0 then
 			local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
+
 			amt = math.sqrt(amt)
 
-			return amt * sensmult:GetFloat() * (aamult or 1)
+			-- return amt * aamult * ( 1 - math.Clamp( gsa, 0, math.Clamp(sensmult:GetFloat(), 0, 0.99) ) ) -- Gradually reduces sensitivity. Experimental.
+			return amt * sensmult:GetFloat() * aamult
+
 		end
 	end
+
 end

@@ -462,11 +462,12 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
 		local hud_t_empty = Material("arc9/thermometer_empty.png", "mips")
 		local fill = math.Clamp(0.035 + (0.9 * heat) / heatcap, 0, 1)
 		local wp = 25
-		local xp = 80
+		local xp = 70
 		local col = {
-			white = Color(255,255,255, heat * 3),
-			black = Color(0,0,0, heat * 3),
-			red = Color(255,100,100, heat * 3),
+			white = Color(255,255,255, heat * 1.5),
+			black = Color(0,0,0, heat * 1.5),
+			red = Color(255,255,255, heat * 1.5),
+			redblink = Color(255, 255 * math.abs(math.sin(CurTime() * 5)), 255 * math.abs(math.sin(CurTime() * 5)), heat * 1.5),
 		}
 
 		local flashheatbar = false
@@ -476,8 +477,8 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
 
 		if GetConVar("arc9_center_overheat_dark"):GetBool() then heat_col = col["black"] end
 
-		if ((flashheatbar or heat > (heatcap * 0.75)) and math.floor(CurTime() * 3) % 2 == 0) then
-			heat_col = col["red"]
+		if heat > (heatcap * 0.75) then
+			heat_col = col["redblink"]
 		end
 
 		surface.SetDrawColor(col.black)

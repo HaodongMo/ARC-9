@@ -754,12 +754,13 @@ function SWEP:DevStuffCrosshair()
 		surface.DrawText(affectortext)
 	end
 	
-    -- surface.SetTextPos(x + 5 - 2, y - 240 + 40)
-	-- if self:StillWaiting() then
-		-- surface.DrawText("Waiting")
-	-- else
-		-- surface.DrawText("Not Waiting")
-	-- end
+    surface.SetTextPos(x + 5, y - 240 + 40 + 2)
+    surface.SetTextColor(0, 0, 0, 255)
+	surface.DrawText( "Mouse Sens: " .. string.format("%d%%", self:AdjustMouseSensitivity() * 100 ))
+	
+    surface.SetTextPos(x + 5 - 2, y - 240 + 40)
+    surface.SetTextColor(255, 255, 255, 255)
+	surface.DrawText( "Mouse Sens: " .. string.format("%d%%", self:AdjustMouseSensitivity() * 100 ))
 	
     local sgspread_txt = ""
     if self:GetProcessedValue("UseDispersion") then

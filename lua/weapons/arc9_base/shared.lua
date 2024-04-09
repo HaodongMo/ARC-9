@@ -470,6 +470,7 @@ SWEP.UBGLFiremodeName = "UBGL"
 SWEP.UBGLChamberSize = 0
 SWEP.UBGLInsteadOfSights = false -- Right clicking fires UBGL instead of going into irons.
 SWEP.UBGLExclusiveSights = false -- Enable to allow only UBGLOnly sights to be used.
+SWEP.UBGLToggleTime = nil -- In seconds, how long of a delay between being able to toggle the UBGL.
 
 -- Otherwise, these are just stats that get overwritten when selecting a UBGL.
 SWEP.AmmoPerShotUBGL = 1

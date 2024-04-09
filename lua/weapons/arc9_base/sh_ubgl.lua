@@ -1,10 +1,17 @@
 function SWEP:ThinkUBGL()
     if !self:GetProcessedValue("UBGLInsteadOfSights", true) and self:GetValue("UBGL") then
         local owner = self:GetOwner()
-        
+		local mag = self:Clip2()
+		local magr = self.Owner:GetAmmoCount(self.Secondary.Ammo)
+        		
+		if mag == 0 and magr == 0 then
+			if self:GetUBGL() then self:ToggleUBGL(false) end
+			return
+		end
+
         if (owner:KeyDown(IN_USE) and owner:KeyPressed(IN_ATTACK2)) or owner:KeyPressed(ARC9.IN_UBGL) then
             if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
-            self.NextUBGLSwitch = CurTime() + 1
+            self.NextUBGLSwitch = CurTime() + (self.UBGLToggleTime or 1)
 
             if self:GetUBGL() then
                 self:ToggleUBGL(false)
@@ -12,6 +19,7 @@ function SWEP:ThinkUBGL()
                 self:ToggleUBGL(true)
             end
         end
+
     end
 end
 
