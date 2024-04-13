@@ -525,8 +525,8 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
 		self.FMHintTime = CurTime()
 	end
 
-	local fmhintdrawtime = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
-	local fmhintdrawanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
+	-- local fmhintdrawtime = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+	-- local fmhintdrawanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
 	
 	local bzoom = self:GetOwner():KeyPressed(IN_ZOOM)
 	local batt = self:GetOwner():KeyDown(IN_ATTACK)
