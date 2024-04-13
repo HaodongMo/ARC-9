@@ -467,6 +467,7 @@ L["settings.developer.dev_listanims.title"] = "List Anims"
 L["settings.developer.dev_listbones.title"] = "List Bones"
 L["settings.developer.dev_listbgs.title"] = "List Bodygwoups"
 L["settings.developer.dev_listatts.title"] = "List QCawatachmenws"
+L["settings.developer.dev_listmats.title"] = "List Matewials"
 L["settings.developer.dev_export.title"] = "Get ExpoWt Code"
 L["settings.developer.dev_getjson.title"] = "Get Weapon JSON"
 

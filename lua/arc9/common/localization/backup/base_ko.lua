@@ -468,6 +468,7 @@ L["settings.developer.dev_listanims.title"] = "List Anims"
 L["settings.developer.dev_listbones.title"] = "List Bones"
 L["settings.developer.dev_listbgs.title"] = "List Bodygroups"
 L["settings.developer.dev_listatts.title"] = "List QCAttachments"
+L["settings.developer.dev_listmats.title"] = "List Materials"
 L["settings.developer.dev_export.title"] = "Get Export Code"
 L["settings.developer.dev_getjson.title"] = "Get Weapon JSON"
 

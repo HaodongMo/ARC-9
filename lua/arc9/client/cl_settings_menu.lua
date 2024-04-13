@@ -436,7 +436,7 @@ ARC9.SettingsTable = {
         { type = "button", text = "settings.developer.dev_listatts.title", content = "settings.developer.print", func = function(self2)
             RunConsoleCommand("arc9_dev_listatts")
         end},
-        { type = "button", text = "settings.developer.dev_listatts.title", content = "settings.developer.print", func = function(self2)
+        { type = "button", text = "settings.developer.dev_listmats.title", content = "settings.developer.print", func = function(self2)
             RunConsoleCommand("arc9_dev_listsubmats")
         end},
         { type = "button", text = "settings.developer.dev_export.title", content = "settings.developer.print", func = function(self2)
