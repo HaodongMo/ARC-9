@@ -415,7 +415,7 @@ function SWEP:Scroll(amt)
     if old != sights.ScrollLevel then
         local soundtab1 = {
             name = "zoom",
-            sound = atttbl.ZoomSound or "arc9/useatt.ogg",
+            sound = atttbl.ZoomSound or "arc9/useatt.wav",
             pitch = math.Rand(95, 105),
             vol = 1,
             chan = CHAN_ITEM

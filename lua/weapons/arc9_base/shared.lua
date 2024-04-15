@@ -886,7 +886,7 @@ SWEP.DistantShootSound = nil
 SWEP.DryFireSound = ""
 SWEP.DryFireSingleAction = false -- Play dryfire sound only once
 
-SWEP.FiremodeSound = "arc9/firemode.ogg"
+SWEP.FiremodeSound = "arc9/firemode.wav"
 SWEP.ToggleAttSound = {
     "arc9/toggles/flashlight_laser_toggle_on_01.ogg",
     "arc9/toggles/flashlight_laser_toggle_on_02.ogg",
@@ -896,22 +896,22 @@ SWEP.ToggleAttSound = {
 SWEP.EnterSightsSound = ""
 SWEP.ExitSightsSound = ""
 
-SWEP.EnterBipodSound = "arc9/bipod_down.ogg"
-SWEP.ExitBipodSound = "arc9/bipod_up.ogg"
+SWEP.EnterBipodSound = "arc9/bipod_down.wav"
+SWEP.ExitBipodSound = "arc9/bipod_up.wav"
 
 SWEP.EnterUBGLSound = ""
 SWEP.ExitUBGLSound = ""
 
 SWEP.MalfunctionSound = ""
 
-SWEP.MeleeHitSound = "arc9/melee_hitbody.ogg"
-SWEP.MeleeHitWallSound = "arc9/melee_hitworld.ogg"
-SWEP.MeleeSwingSound = "arc9/melee_miss.ogg"
+SWEP.MeleeHitSound = "arc9/melee_hitbody.wav"
+SWEP.MeleeHitWallSound = "arc9/melee_hitworld.wav"
+SWEP.MeleeSwingSound = "arc9/melee_miss.wav"
 SWEP.BackstabSound = "weapons/knife/knife_stab.wav"
 
-SWEP.BreathInSound = "arc9/breath_inhale.ogg"
-SWEP.BreathOutSound = "arc9/breath_exhale.ogg"
-SWEP.BreathRunOutSound = "arc9/breath_runout.ogg"
+SWEP.BreathInSound = "arc9/breath_inhale.wav"
+SWEP.BreathOutSound = "arc9/breath_exhale.wav"
+SWEP.BreathRunOutSound = "arc9/breath_runout.wav"
 
 SWEP.TriggerDownSound = ""
 SWEP.TriggerUpSound = ""
