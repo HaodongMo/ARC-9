@@ -682,6 +682,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     dmg:SetDamageType(self:GetProcessedValue("DamageType", true) or DMG_BULLET)
 
     local dmgv = self:GetDamageAtRange(range)
+    local dmgvoriginal = dmgv
 
     runHook.tr = tr
     runHook.dmg = dmg
@@ -694,9 +695,10 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     -- Penetration
     local pen = self:GetProcessedValue("Penetration", true)
+    local pendeltaval = self:GetProcessedValue("PenetrationDelta", true)
     if pen > 0 then
         local pendelta = penleft / pen
-        pendelta = Lerp(pendelta, self:GetProcessedValue("PenetrationDelta", true), 1) -- it arleady clamps inside
+        pendelta = Lerp(pendelta, pendeltaval, 1) -- it arleady clamps inside
         dmgv = dmgv * pendelta
     end
 
@@ -709,21 +711,24 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     -- Limb multipliers
     local traceEntity = tr.Entity
     local hitGroup = tr.HitGroup
-    local bodydamage = self:GetProcessedValue("BodyDamageMults", true)
+    
+    if !ARC9.NoBodyPartsDamageMults then
+        local bodydamage = self:GetProcessedValue("BodyDamageMults", true)
 
-    if bodydamage[hitGroup] then
-        dmgv = dmgv * bodydamage[hitGroup]
-    end
-    if hitGroup == HITGROUP_HEAD then
-        dmgv = dmgv * self:GetProcessedValue("HeadshotDamage", true)
-    elseif hitGroup == HITGROUP_CHEST then
-        dmgv = dmgv * self:GetProcessedValue("ChestDamage", true)
-    elseif hitGroup == HITGROUP_STOMACH then
-        dmgv = dmgv * self:GetProcessedValue("StomachDamage", true)
-    elseif hitGroup == HITGROUP_LEFTARM or hitGroup == HITGROUP_RIGHTARM then
-        dmgv = dmgv * self:GetProcessedValue("ArmDamage", true)
-    elseif hitGroup == HITGROUP_LEFTLEG or hitGroup == HITGROUP_RIGHTLEG then
-        dmgv = dmgv * self:GetProcessedValue("LegDamage", true)
+        if bodydamage[hitGroup] then
+            dmgv = dmgv * bodydamage[hitGroup]
+        end
+        if hitGroup == HITGROUP_HEAD then
+            dmgv = dmgv * self:GetProcessedValue("HeadshotDamage", true)
+        elseif hitGroup == HITGROUP_CHEST then
+            dmgv = dmgv * self:GetProcessedValue("ChestDamage", true)
+        elseif hitGroup == HITGROUP_STOMACH then
+            dmgv = dmgv * self:GetProcessedValue("StomachDamage", true)
+        elseif hitGroup == HITGROUP_LEFTARM or hitGroup == HITGROUP_RIGHTARM then
+            dmgv = dmgv * self:GetProcessedValue("ArmDamage", true)
+        elseif hitGroup == HITGROUP_LEFTLEG or hitGroup == HITGROUP_RIGHTLEG then
+            dmgv = dmgv * self:GetProcessedValue("LegDamage", true)
+        end
     end
 
     -- Armor piercing (done after weapon's limb multipliers but BEFORE body damage cancel)
@@ -756,6 +761,11 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
             else
                 ARC9.LastArmorPiercedPlayer = traceEntity
                 ARC9.LastArmorPierceValue = ap
+                ARC9.LastArmorPiercedTime = CurTime()
+
+                traceEntity.ARC9APPower = pen
+                traceEntity.ARC9APDelta = pendeltaval
+                traceEntity.ARC9APRangeMult = dmgvoriginal / self:GetProcessedValue("DamageMax", true)
             end
         end
     end

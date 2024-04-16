@@ -255,7 +255,7 @@ local function DarsuBob(self, pos, ang)
     local xm, ym, zm, pm, yym, rm = settings[1], settings[2], settings[3], settings[4], settings[5], settings[6]
     local xms, yms, zms, pms, yyms, rms = settings2[1], settings2[2], settings2[3], settings2[4], settings2[5], settings2[6]
 
-    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.3-sightamount)
+    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.1-sightamount)
     smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5*(1.3-sightamount)  or 1
