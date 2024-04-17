@@ -62,7 +62,7 @@ function ARC9.ShouldDrawHUD()
     if arc9_hud_force_disable:GetBool() then return end
 
     local wpn = LocalPlayer():GetActiveWeapon()
-    local a9 = wpn.ARC9
+    local a9 = wpn.ARC9 and !wpn.NotAWeapon
     local incust = a9 and wpn:GetCustomize()
     -- local hud = arc9_hud_arc9:GetBool()
     -- local hudalways = arc9_hud_always:GetBool()
@@ -493,7 +493,7 @@ local function DrawSimpleHints()
     if arc9_hud_nohints:GetBool() then return end
 
     local weapon = LocalPlayer():GetActiveWeapon()
-    if !weapon.ARC9 then return end
+    if !weapon.ARC9 or weapon.NotAWeapon then return end
 
     if !cl_drawhud:GetBool() then return end
     if weapon:GetCustomize() then return end
