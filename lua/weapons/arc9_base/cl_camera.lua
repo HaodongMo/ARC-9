@@ -2,7 +2,7 @@ SWEP.SmoothedMagnification = 1
 SWEP.FOV = 90
 
 
-local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
+-- local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 local arc9_vm_cambob = GetConVar("arc9_vm_cambob")
 local arc9_vm_cambobwalk = GetConVar("arc9_vm_cambobwalk")
 local arc9_vm_cambobintensity = GetConVar("arc9_vm_cambobintensity")
@@ -33,11 +33,12 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     local sightamount = self:GetSightAmount()
 
-    if self:IsScoping() and arc9_cheapscopes:GetBool() then
-        local shootang = self:GetShootDir()
+    -- does anybody knows what this part of code for? seems to be useless and breaks lean mods 
+    -- if self:IsScoping() and arc9_cheapscopes:GetBool() then
+    --     local shootang = self:GetShootDir()
 
-        ang = LerpAngle(sightamount, ang, shootang)
-    end
+    --     ang = LerpAngle(sightamount, ang, shootang)
+    -- end
 
     fov = fov / self:GetSmoothedFOVMag()
 
