@@ -71,7 +71,7 @@ function SWEP:GetMagnification()
 
             local realfov = self:GetOwner():GetFOV()
             local screenamt = ((ScrW() - ScrH()) / ScrW()) * (atttbl.ScopeScreenRatio or 0.5) * 2
-            target = (realfov / self:GetRTScopeFOV()) * screenamt
+            target = (realfov / (self:GetRTScopeFOV() or realfov)) * screenamt
 
             target = math.max(target, 1)
         end
