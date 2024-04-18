@@ -13,15 +13,16 @@ local arc9_crosshair_peek = GetConVar("arc9_crosshair_peek")
 
 
 function SWEP:ShouldDrawCrosshair()
+    local crossh = self:GetProcessedValue("Crosshair", true) or arc9_crosshair_force:GetBool()
     if self:GetInSights() then
 
-        if (self.Peeking and !self:GetProcessedValue("NoPeekCrosshair", true) and arc9_crosshair_peek:GetFloat() == 1) then
+        if (self.Peeking and !self:GetProcessedValue("NoPeekCrosshair", true) and arc9_crosshair_peek:GetFloat() == 1) and crossh then
 			return true
 		end
 
 		return self:GetSight().CrosshairInSights
     end
-    if (!self:GetProcessedValue("Crosshair", true) and !arc9_crosshair_force:GetBool()) and !ARC9.ShouldThirdPerson() then return false end
+    if !crossh and !ARC9.ShouldThirdPerson() then return false end
     if self:GetCustomize() then return false end
 
     return true
