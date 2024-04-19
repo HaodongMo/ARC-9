@@ -67,3 +67,24 @@ function SWEP:GetFreeSwayAngles()
 
     return ang
 end
+
+SWEP.InertiaDiff = Angle()
+SWEP.InertiaSideMoveRaw = 0
+SWEP.InertiaSideMoveSmooth = 0
+
+function SWEP:GetInertiaSwayAngles()
+    if !self.InertiaEnabled then return end
+    -- if !arc9_mod_inertia:GetBool() then return end
+
+    local eyee = self:GetOwner():EyeAngles()
+
+    self.InertiaDiff = LerpAngle(FrameTime() * 4, self.InertiaDiff, eyee - self:GetLastAimAngle())
+    self.InertiaSideMoveSmooth = Lerp(FrameTime() * 2, self.InertiaSideMoveSmooth, self.InertiaSideMoveRaw * 0.003)
+
+    self:SetLastAimAngle(eyee)
+
+    self.InertiaDiff.x = math.Clamp(self.InertiaDiff.x, -1.5, 1.5)
+    self.InertiaDiff.y = math.Clamp(self.InertiaDiff.y, -1, 1) - self.InertiaSideMoveSmooth
+    
+    return self.InertiaDiff * -2
+end

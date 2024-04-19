@@ -1002,9 +1002,10 @@ function SWEP:GetShootDir()
     dir:Add(self:GetFreeAimOffset())
 
     local fswayang = self:GetFreeSwayAngles()
-    if fswayang then
-        dir:Add(fswayang)
-    end
+
+    if fswayang then dir:Add(fswayang) end
+
+    if self.InertiaEnabled then dir:Add(self:GetInertiaSwayAngles()) end
 
     return dir
 end

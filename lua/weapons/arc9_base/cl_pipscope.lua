@@ -202,6 +202,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
     if active then
         if self:ShouldDoScope() then
+            self.RenderingRTScope = true
             local sight = self:GetSight()
             local sightpos = sight.ShadowPos or (sight.OriginalSightTable or {}).Pos or sight.Pos or Vector(0, 0, 0)
             sightpos = sightpos * ((sight.slottbl or {}).Scale or 1)

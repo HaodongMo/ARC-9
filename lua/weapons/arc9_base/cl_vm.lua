@@ -168,6 +168,7 @@ function SWEP:PreDrawViewModel()
         end
     end
 
+    self.RenderingRTScope = false 
     if self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
         self:DoRTScope(vm, self:GetTable(), sightamount > 0)
     end
@@ -253,6 +254,7 @@ function SWEP:PostDrawViewModel()
 
     if inrt then return end
 
+    self.RenderingHolosight = false
     cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), nil, nil, nil, nil, 1, 10000)
     if self.VModel then
         for _, model in ipairs(self.VModel) do
