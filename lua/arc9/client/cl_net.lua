@@ -16,3 +16,12 @@ end)
 net.Receive("arc9_stoppickup", function(len)
     LocalPlayer().ARC9_HoldingProp = nil
 end)
+
+net.Receive("arc9_sendnpckill", function(len)
+    local ent = net.ReadEntity()
+
+    local wpn = LocalPlayer():GetActiveWeapon()
+    if IsValid(wpn) and wpn.ARC9 then
+        wpn:RunHook("Hook_OnKill", ent)
+    end
+end)

@@ -26,6 +26,17 @@ hook.Add( "entity_killed", "entity_killed_example", function( data )
     end
 end )
 
+hook.Add("OnNPCKilled", "ARC9_OnNPCKilled", function(npc, attacker, inflictor)
+    local wpn = attacker:GetActiveWeapon()
+    if IsValid(wpn) and wpn.ARC9 then
+        wpn:RunHook("Hook_OnKill", npc)
+        
+        net.Start("arc9_sendnpckill")
+        net.WriteEntity(npc)
+        net.Send(attacker)
+    end
+end)
+
 timer.Simple(10, function() -- tfa does same thing, no need to copy (timer here cuz tfa loads after arc9)
     if !TFA then 
         -- code stolen from wiki
