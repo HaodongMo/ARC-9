@@ -123,7 +123,7 @@ if CLIENT then
 
         local w3, h3 = surface.GetTextSize(text3)
 
-        surface.SetTextPos(256 - w3 - 16, 128 + 48)
+        surface.SetTextPos(256 - w3 - 16 - 5, 120)
         surface.SetTextColor(255, 255, 255, 255)
         surface.DrawText(text3)
 
