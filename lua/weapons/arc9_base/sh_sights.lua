@@ -311,7 +311,7 @@ do
             if sighted and pratt then
                 swepExitSights(self)
             elseif not sighted and pratt then
-                swepEnterSights(self)
+                self:EnterSights()
             end
     
             if pratt then
@@ -321,7 +321,7 @@ do
             if sighted and !inatt then
                 swepExitSights(self)
             elseif not sighted and inatt then
-                swepEnterSights(self)
+                self:EnterSights()
                 swepBuildMultiSight(self)
             end
         end
