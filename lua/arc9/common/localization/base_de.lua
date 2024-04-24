@@ -633,7 +633,7 @@ L["settings.tabname.visuals"] = "Visuals"
 
 L["settings.visuals.viewmodel"] = "Viewmodel"
 L["settings.visuals.vm_bobstyle.title"] = "Bob-Stil"
-L["settings.visuals.vm_bobstyle.desc"] = "Wähle zwischen verschiedenen Bob-Stilen aus, je nach Geschmack verschiedener Mitglieder des ARC9-Teams (und Valve), vom neuesten Stil zum ältesten."
+L["settings.visuals.vm_bobstyle.desc"] = "Wähle zwischen verschiedenen Bob-Stilen aus, je nach Geschmack verschiedener Mitglieder des ARC9-Teams (und Valve)."
 L["settings.visuals.fov.title"] = "FOV"
 L["settings.visuals.fov.desc"] = "Viewmodel-FOV verändern. Vergrößert oder verkleinert das Viewmodel. Verwende diese Einstellung verantwortungsbewusst!"
 L["settings.visuals.vm_addx.title"] = "X hinzufügen"

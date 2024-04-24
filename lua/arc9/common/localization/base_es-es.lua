@@ -634,7 +634,7 @@ L["settings.tabname.visuals"] = "Visuales"
 
 L["settings.visuals.viewmodel"] = "Modelo de 1ra Persona"
 L["settings.visuals.vm_bobstyle.title"] = "Estilo de Balanceo"
-L["settings.visuals.vm_bobstyle.desc"] = "Seleccione diferentes estilos de balanceo, al gusto de los diferentes miembros del equipo ARC9 (y valve software), yendo del estilo más nuevo al más antiguo."
+L["settings.visuals.vm_bobstyle.desc"] = "Seleccione diferentes estilos de balanceo, al gusto de los diferentes miembros del equipo ARC9 (y valve software)."
 L["settings.visuals.fov.title"] = "FOV"
 L["settings.visuals.fov.desc"] = "Añade FOV (CAMPO DE VISION) al modelo de 1ra persona. Aumenta o disminuye el modelo. Uso responsable."
 L["settings.visuals.vm_addx.title"] = "Agregar X"

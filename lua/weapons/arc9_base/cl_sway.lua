@@ -207,6 +207,58 @@ local function ArcticBob(self, pos, ang)
     return pos, ang
 end
 
+local function ArcticBreadBob(self, pos, ang)
+    local step = 10
+    local mag = 1
+    local ts = 0 -- self:GetTraversalSprintAmount()
+    -- ts = 1
+    if self:GetCustomize() then return pos, ang end
+
+    local owner = self:GetOwner()
+    local ft = FrameTime()
+
+    local v = owner:GetVelocity():Length()
+    v = math.Clamp(v, 0, 350)
+    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, ft * 10000)
+    local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
+
+    if owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP then
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, ft / 0.1)
+    else
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, ft / 0.1)
+    end
+
+    d = d * Lerp(self:GetSightAmount(), 1,0.03) * Lerp(ts, 1, 1.5)
+    mag = d * 2
+    mag = mag * Lerp(ts, 1, 2)
+    step = 10
+
+    if owner:IsSprinting()
+    then 
+        pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.45 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
+        pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 0.615) * 0.2) + 2) * mag)
+        pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.55 * mag)
+        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 9 * d)
+        ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 1 * d)
+        ang:RotateAroundAxis(ang:Up(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 6 * d)
+    else
+        pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.1 * ((math.sin(self.BobCT * 3.515) * 0.2) + 2) * mag)
+        pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 0.615) * 0.2) + 1) * mag)
+        pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.55 * mag)
+        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 5 * d)
+        ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 0.1 * d)
+    end
+
+    local steprate = Lerp(d, 1, 2.75)
+    steprate = Lerp(self.ViewModelNotOnGround, steprate, 0.75)
+
+    if IsFirstTimePredicted() or game.SinglePlayer() then
+        self.BobCT = self.BobCT + (ft * steprate)
+    end
+
+    return pos, ang
+end
+
 local smoothsidemove = 0
 local smoothjumpmove = 0
 local notonground = 0
@@ -284,6 +336,8 @@ function SWEP:GetViewModelBob(pos, ang)
         return FesiugBob(self, pos, ang)
     elseif bobb == 2 then
         return ArcticBob(self, pos, ang)
+    elseif bobb == 3 then
+        return ArcticBreadBob(self, pos, ang)
     elseif bobb == 0 then
         return DarsuBob(self, pos, ang)
     else

@@ -633,7 +633,7 @@ L["settings.tabname.visuals"] = "Wisuwuals"
 
 L["settings.visuals.viewmodel"] = "Viewmodel"
 L["settings.visuals.vm_bobstyle.title"] = "Bob Style"
-L["settings.visuals.vm_bobstyle.desc"] = "Select diffewent bobbing styles, to de flavow of diffewent membews of de AWC9 team (and Valve Softwawe), going fwom most newest style to oldest one"
+L["settings.visuals.vm_bobstyle.desc"] = "Select diffewent bobbing styles, to de flavow of diffewent contwibows of de AWC9 (and Valve Softwawe)"
 L["settings.visuals.fov.title"] = "FOV"
 L["settings.visuals.fov.desc"] = "Add viewmodel FOV. Makes de viewmodel biggew ow smallew. Use wesponsibly"
 L["settings.visuals.vm_addx.title"] = "Add X"

@@ -633,7 +633,7 @@ L["settings.tabname.visuals"] = "视觉"
 
 L["settings.visuals.viewmodel"] = "第一人称模型"
 L["settings.visuals.vm_bobstyle.title"] = "视觉晃动效果"
-L["settings.visuals.vm_bobstyle.desc"] = "可选不同 ARC9 成员（以及 Valve）配置的第一人称模型晃动，从新到旧排序。"
+L["settings.visuals.vm_bobstyle.desc"] = "可选不同 ARC9 成员（以及 Valve）配置的第一人称模型晃动，从新到旧排序。" -- developer of arc9 team -> contributors of arc9; remove mention of new to old 
 L["settings.visuals.fov.title"] = "FOV"
 L["settings.visuals.fov.desc"] = "缩放第一人称模型。极端数值会导致模型很怪，请妥善利用。"
 L["settings.visuals.vm_addx.title"] = "X 轴偏移"

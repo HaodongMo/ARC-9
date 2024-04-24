@@ -633,7 +633,7 @@ L["settings.tabname.visuals"] = "Visuellt"
 
 L["settings.visuals.viewmodel"] = "Viewmodel"
 L["settings.visuals.vm_bobstyle.title"] = "Gupp Stil"
-L["settings.visuals.vm_bobstyle.desc"] = "Välj olika gupp stilar till smaken av olika medlemmar av ARC9-teamet (och valve software) från mest nyaste stil till den äldsta."
+L["settings.visuals.vm_bobstyle.desc"] = "Välj olika gupp stilar till smaken av olika medlemmar av ARC9-teamet (och valve software)."
 L["settings.visuals.fov.title"] = "Synfält"
 L["settings.visuals.fov.desc"] = "Lägg till vymodell synfält. Gör vymodellen större eller mindre. Använd ansvarsfullt."
 L["settings.visuals.vm_addx.title"] = "Lägg till X"

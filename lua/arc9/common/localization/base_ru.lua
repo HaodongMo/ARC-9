@@ -634,7 +634,7 @@ L["settings.tabname.visuals"] = "Визуал"
 
 L["settings.visuals.viewmodel"] = "Viewmodel"
 L["settings.visuals.vm_bobstyle.title"] = "Тип качения"
-L["settings.visuals.vm_bobstyle.desc"] = "Выберете стиль качения оружия созднный разными разработчиками ARC9 (и valve!), от самого нового стиля до старого."
+L["settings.visuals.vm_bobstyle.desc"] = "Выберете стиль качения оружия созднный разными разработчиками ARC9 (и valve!)."
 L["settings.visuals.fov.title"] = "FOV"
 L["settings.visuals.fov.desc"] = "Меняет поле зрения вьюмодели. Делает её больше или меньше. Используйте ответственно."
 L["settings.visuals.vm_addx.title"] = "Смещение по X"
