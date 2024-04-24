@@ -3,8 +3,9 @@ function SWEP:ThinkUBGL()
         local owner = self:GetOwner()
 		local mag = self:Clip2()
 		local magr = self.Owner:GetAmmoCount(self.Secondary.Ammo)
-        		
-		if mag == 0 and magr == 0 then
+		local infmag = GetConVar("arc9_infinite_ammo"):GetBool()
+
+		if mag == 0 and (!infmag and magr == 0) then
 			if self:GetUBGL() then self:ToggleUBGL(false) end
 			return
 		end
