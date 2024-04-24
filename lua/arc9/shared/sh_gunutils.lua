@@ -27,6 +27,8 @@ hook.Add( "entity_killed", "entity_killed_example", function( data )
 end )
 
 hook.Add("OnNPCKilled", "ARC9_OnNPCKilled", function(npc, attacker, inflictor)
+    if !IsValid(attacker) or !attacker:IsPlayer() then return end
+    
     local wpn = attacker:GetActiveWeapon()
     if IsValid(wpn) and wpn.ARC9 then
         wpn:RunHook("Hook_OnKill", npc)
