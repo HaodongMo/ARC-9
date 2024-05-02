@@ -207,6 +207,9 @@ local function ArcticBob(self, pos, ang)
     return pos, ang
 end
 
+local smoothsidemove = 0
+local smoothjumpmove = 0
+
 local function ArcticBreadBob(self, pos, ang)
     local step = 10
     local mag = 1
@@ -217,7 +220,8 @@ local function ArcticBreadBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
 
-    local v = owner:GetVelocity():Length()
+    local velocityangle = owner:GetVelocity()
+    local v = velocityangle:Length()
     v = math.Clamp(v, 0, 350)
     self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, ft * 10000)
     local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
@@ -228,25 +232,44 @@ local function ArcticBreadBob(self, pos, ang)
         self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, ft / 0.1)
     end
 
-    d = d * Lerp(self:GetSightAmount(), 1,0.03) * Lerp(ts, 1, 1.5)
+    local sightamount = self:GetSightAmount()
+
+    d = d * Lerp(sightamount, 1,0.03) * Lerp(ts, 1, 1.5)
     mag = d * 2
     mag = mag * Lerp(ts, 1, 2)
     step = 10
 
-    if owner:IsSprinting()
-    then 
+    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 8 * (1.1-sightamount)
+    smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
+
+    local crouchmult = 1
+    if owner:Crouching() then 
+        crouchmult = 3.5 + sightamount* 10
+        step = 6
+    end
+    
+    local jumpmove = math.Clamp(math.ease.InExpo(math.Clamp(velocityangle.z, -150, 0)/-150)*0.5 + math.ease.InExpo(math.Clamp(velocityangle.z, 0, 350)/350)*-50, -4, 2.5) * 0.5   -- crazy math for jump movement
+    smoothjumpmove = Lerp(math.Clamp(ft*8, 0, 1), smoothjumpmove, jumpmove)
+    local smoothjumpmove2 = math.Clamp(smoothjumpmove, -0.3, 0.01) * (1.5-sightamount)
+
+
+    if owner.GetSliding then if owner:GetSliding() then mag = 0 step = 5 smoothsidemove = 0 end end
+
+    if owner:IsSprinting() then 
         pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.45 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
         pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 0.615) * 0.2) + 2) * mag)
         pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.55 * mag)
-        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 9 * d)
+        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 9 * d + smoothsidemove * 1.5)
         ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 1 * d)
         ang:RotateAroundAxis(ang:Up(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 6 * d)
+        ang:RotateAroundAxis(ang:Right(), smoothjumpmove2 * 5)
     else
-        pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.1 * ((math.sin(self.BobCT * 3.515) * 0.2) + 2) * mag)
+        pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.1 * ((math.sin(self.BobCT * 3.515) * 0.2) + 2) * mag * crouchmult) - (ang:Up() * smoothsidemove * -0.05) - (ang:Up() * smoothjumpmove2 * 0.2)
         pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 0.615) * 0.2) + 1) * mag)
         pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.55 * mag)
-        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 5 * d)
+        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 5 * d + smoothsidemove)
         ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 0.1 * d)
+        ang:RotateAroundAxis(ang:Right(), smoothjumpmove2 * 5)
     end
 
     local steprate = Lerp(d, 1, 2.75)
@@ -259,8 +282,80 @@ local function ArcticBreadBob(self, pos, ang)
     return pos, ang
 end
 
-local smoothsidemove = 0
-local smoothjumpmove = 0
+
+local function ArcticBreadDarsuBob(self, pos, ang)
+    local step = 10
+    local mag = 1
+    local ts = 0 -- self:GetTraversalSprintAmount()
+    -- ts = 1
+    if self:GetCustomize() then return pos, ang end
+
+    local owner = self:GetOwner()
+    local ft = FrameTime()
+
+    local velocityangle = owner:GetVelocity()
+    local v = velocityangle:Length()
+    v = math.Clamp(v, 0, 350)
+    self.ViewModelBobVelocity = math.Approach(self.ViewModelBobVelocity, v, ft * 10000)
+    local d = math.Clamp(self.ViewModelBobVelocity / 350, 0, 1)
+    -- d = math.ease.InSine(d)
+    if owner:OnGround() and owner:GetMoveType() != MOVETYPE_NOCLIP then
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 0, ft / 0.1)
+    else
+        self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, ft / 0.1)
+    end
+    
+    local sightamount = self:GetSightAmount() - (self.Peeking and 0.72 or 0.1)
+
+    d = d * Lerp(sightamount, 1,0.03) * Lerp(ts, 1, 1.5)
+    mag = d * 2
+    mag = mag * Lerp(ts, 1, 2)
+    step = 9.25
+
+    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 5 * (1.1-sightamount)
+    smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
+
+    local crouchmult = 1
+    if owner:Crouching() then 
+        crouchmult = 3.5 + sightamount * 3
+        step = 6
+    end
+    
+    local jumpmove = math.Clamp(math.ease.InExpo(math.Clamp(velocityangle.z, -150, 0)/-150)*0.5 + math.ease.InExpo(math.Clamp(velocityangle.z, 0, 350)/350)*-50, -4, 2.5) * 0.5   -- crazy math for jump movement
+    smoothjumpmove = Lerp(math.Clamp(ft*8, 0, 1), smoothjumpmove, jumpmove)
+    local smoothjumpmove2 = math.Clamp(smoothjumpmove, -0.3, 0.01) * (1.5-sightamount)
+
+
+    if owner.GetSliding then if owner:GetSliding() then mag = 0 step = 5 smoothsidemove = 0 end end
+    
+
+    if owner:IsSprinting() then 
+        pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.45 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag)
+        pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.13 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 2) * ((math.sin(self.BobCT * 0.615) * 0.2) + 2) * mag)
+        pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.55 * mag)
+        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 9 * d + smoothsidemove * 1.5)
+        ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 1 * d)
+        ang:RotateAroundAxis(ang:Up(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 6 * d)
+        ang:RotateAroundAxis(ang:Right(), smoothjumpmove2 * 5)
+    else
+        pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.1 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1.5) * mag * crouchmult) - (ang:Up() * smoothsidemove * -0.05) - (ang:Up() * smoothjumpmove2 * 0.2)
+        pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 0.615) * 0.2) + 1) * mag)
+        pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.2 * mag)
+        ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * step * 0.5) * ((math.sin(self.BobCT * 6.151) * 0.2) + 1) * 5 * d + smoothsidemove)
+        ang:RotateAroundAxis(ang:Right(), math.sin(self.BobCT * step * 0.12) * ((math.sin(self.BobCT * 1.521) * 0.2) + 1) * 0.1 * d)
+        ang:RotateAroundAxis(ang:Right(), smoothjumpmove2 * 5)
+    end
+
+    local steprate = Lerp(d, 1, 2.75)
+    steprate = Lerp(self.ViewModelNotOnGround, steprate, 0.75)
+
+    if IsFirstTimePredicted() or game.SinglePlayer() then
+        self.BobCT = self.BobCT + (ft * steprate)
+    end
+
+    return pos, ang
+end
+
 local notonground = 0
 
 -- Default table will be close to old movement to keep compat with all guns
@@ -315,7 +410,7 @@ local function DarsuBob(self, pos, ang)
     if owner.GetSliding then if owner:GetSliding() then speedmult = 0.01 d3 = 0 smoothsidemove = -10 end end
 
     pos:Sub(ang:Right() *          math.sin(speedmult * self.BobCT * 5 * xms)  * d2 * 0.5 * Lerp(sprintamount, 1, 0.05) * xm)                                   -- X 
-    pos:Sub(ang:Up() *             math.cos(speedmult * self.BobCT * 7 * yms)    * d * 0.05 * crouchmult * Lerp(sprintamount, 1, 0.3) * ym)                     -- Y
+    pos:Sub(ang:Up() *             math.cos(speedmult * self.BobCT * 7 * yms)    * d * 0.05 * (crouchmult*crouchmult*crouchmult) * Lerp(sprintamount, 1, 0.3) * ym)                     -- Y
     pos:Sub(ang:Forward() *        math.sin(speedmult * self.BobCT * 4 * zms)  * d2 * 0.75 * crouchmult * zm)                   -- Z
 
     ang:RotateAroundAxis(ang:Right(),   math.sin(speedmultang * self.BobCT * 5.5 * pms + 0.3)    * d3 * 2.25 * pm + smoothjumpmove)                  -- P
@@ -337,9 +432,11 @@ function SWEP:GetViewModelBob(pos, ang)
     elseif bobb == 2 then
         return ArcticBob(self, pos, ang)
     elseif bobb == 3 then
+        return DarsuBob(self, pos, ang)
+    elseif bobb == 4 then
         return ArcticBreadBob(self, pos, ang)
     elseif bobb == 0 then
-        return DarsuBob(self, pos, ang)
+        return ArcticBreadDarsuBob(self, pos, ang)
     else
         self.SwayScale = Lerp(self:GetSightDelta(), 1, 0.01)
         self.BobScale = Lerp(self:GetSightDelta(), 1, 0.01)
