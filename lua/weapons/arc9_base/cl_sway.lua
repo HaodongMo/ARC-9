@@ -11,29 +11,29 @@ local smoothswaypitch = 0
 
 function SWEP:GetViewModelSway(pos, ang)
     local ft = FrameTime()
-    local sightmult = Lerp(self:GetSightAmount(), 1.75, 0.5)
-    smootheyeang = LerpAngle(math.Clamp(ft * 8, 0, 0.04), smootheyeang, EyeAngles() - lasteyeang)
+    local sightmult = 0.5 + math.Clamp(1/ft/100, 0, 5) -- for consistent offset on high and low fps
+    sightmult = sightmult * Lerp(self:GetSightAmount(), 1, 0.25)
+
+    smootheyeang = LerpAngle(math.Clamp(ft * 24, 0.075, 1), smootheyeang, EyeAngles() - lasteyeang)
     lasteyeang = EyeAngles()
 
-    smoothswayroll = Lerp(math.Clamp(ft * 12, 0, 0.8), smoothswayroll, smootheyeang.y * -2.5)
-    smoothswaypitch = Lerp(math.Clamp(ft * 12, 0, 0.8), smoothswaypitch, smootheyeang.p * 0.5)
-
+    smoothswayroll = Lerp(math.Clamp(ft * 24, 0.075, 1), smoothswayroll, smootheyeang.y)
     if self.SprintVerticalOffset then
-        local sprintoffset = ang.p * 0.04 * Lerp(self:GetSprintAmount(), 0, 1)
+        local sprintoffset = (ang.p * 0.06) * Lerp(self:GetSprintAmount(), 0, 1)
         pos:Add(ang:Up() * sprintoffset)
         pos:Add(ang:Forward() * sprintoffset)
     end
 
-    posoffset.x = math.Clamp(smoothswayroll * 0.1,  -1.5, 1.5)
-    posoffset.y = math.Clamp(smoothswaypitch * 0.5, -1.5, 1.5)
-    posoffset.z = math.Clamp(smoothswayroll * 0.03, -1.5, 1.5)
+    smootheyeang.p = math.Clamp(smootheyeang.p * 0.95, -10, 10)
+    smootheyeang.y = math.Clamp(smootheyeang.y * 0.9, -4, 4)
+    smootheyeang.r = math.Clamp(smoothswayroll * (0.5 + math.Clamp(ft * 64, 0, 4)), -2, 2)
+    
+    local inertiaanchor = Vector(self.CustomizeRotateAnchor)
+    inertiaanchor.x = inertiaanchor.x * 0.5
 
-    smootheyeang.p = math.Clamp(smootheyeang.p * 0.95, -7, 7)
-    smootheyeang.y = math.Clamp(smootheyeang.y * 0.9, -7, 7)
-    smootheyeang.r = math.Clamp(smoothswayroll + smoothswaypitch * -2, -15, 15)
-
-    ang:Add(smootheyeang * sightmult)
-    pos:Add(posoffset * sightmult)
+    local rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, inertiaanchor, vector_origin, smootheyeang * sightmult)
+    pos:Set(rap_pos)
+    ang:Set(rap_ang)
 
     return pos, ang
 end
@@ -312,7 +312,7 @@ local function ArcticBreadDarsuBob(self, pos, ang)
     mag = mag * Lerp(ts, 1, 2)
     step = 9.25
 
-    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 5 * (1.1-sightamount)
+    local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.5-sightamount)
     smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = 1
