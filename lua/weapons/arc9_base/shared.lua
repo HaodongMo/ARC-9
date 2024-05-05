@@ -977,6 +977,9 @@ SWEP.DoFireAnimation = true
 
 SWEP.NoViewBob = false
 
+SWEP.BobSprintMult = 1 -- if your weapon have fancy sprint animation, layering procedural sprint on top of it may look bad,  so you might need to set this to 0.1
+SWEP.BobWalkMult = 1 -- same but for all non sprint actions
+
 -------------------------- VISUALS
 
 SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
