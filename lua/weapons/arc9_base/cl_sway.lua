@@ -331,7 +331,7 @@ local function ArcticBreadDarsuBob(self, pos, ang)
     
     local jumpmove = math.Clamp(math.ease.InExpo(math.Clamp(velocityangle.z, -150, 0)/-150)*0.5 + math.ease.InExpo(math.Clamp(velocityangle.z, 0, 350)/350)*-50, -4, 2.5) * 0.5   -- crazy math for jump movement
     smoothjumpmove = Lerp(math.Clamp(ft*8, 0, 1), smoothjumpmove, jumpmove)
-    local smoothjumpmove2 = math.Clamp(smoothjumpmove, -0.3, 0.01) * (1.5-sightamount)
+    local smoothjumpmove2 = math.Clamp(smoothjumpmove, -0.3, 0.01) * (1.5-sightamount) * 2
 
 
     if owner.GetSliding then if owner:GetSliding() then mag = 0 step = 5 smoothsidemove = 0 end end

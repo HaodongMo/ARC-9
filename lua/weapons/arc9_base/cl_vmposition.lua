@@ -191,6 +191,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     if VManip != nil and self:GetSightAmount() < 0.3 then
         local vmanipmult = ((VManip:IsActive() and (VManip.VMatrixlerp < 0.3 or VManip.Cycle < 0.3)) and 1 or 0)
+        if owner.GetSliding then if owner:GetSliding() then vmanipmult = 0 end end -- vmanip quickslides ASS
         offsetpos:Add(self.VManipOffsetPos * vmanipmult)
         offsetang:Add(self.VManipOffsetAng * vmanipmult)
     end
