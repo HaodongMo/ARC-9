@@ -157,73 +157,74 @@ local function enterfolder(self, scroll, slottbl, fname)
     scroll:SetWide(self.BottomBar:GetWide() - anchor:GetWide())
 
     local foldercount = 0
-
-    for folder, children in SortedPairs(folders) do
-        if !folders then
-            table.remove(self.BottomBarPath)
-        end
-        if isbool(children) then continue end
-
-        local count = recursivefoldercount(children)
-
-        -- if count > 99 then count = "99+" end
-
-        if count == 0 then continue end
-
-        foldercount = foldercount + 1
-
-        local folderbtn = vgui.Create("ARC9AttButton", scroll)
-
-        folderbtn:SetButtonText(folder == "!favorites" and ARC9:GetPhrase("folder.favorites") or ARC9:GetPhrase("folder." .. folder) or folder)
-        folderbtn:SetIcon(folder == "!favorites" and folderfavicon or foldericon)
-        folderbtn:SetEmpty(true)
-
-        folderbtn:DockMargin(0, 0, ARC9ScreenScale(4), 0)
-        folderbtn:Dock(LEFT)
-
-        scroll:AddPanel(folderbtn)
-        table.insert(scrolleles, folderbtn)
-        folderbtn.folder = folder
-
-        folderbtn:SetFolderContain(tostring(count))
-
-        folderbtn.OnMousePressed = function(self2, kc)
-            if kc == MOUSE_LEFT then
-                enterfolder(self, scroll, slottbl, self2.folder)
-                surface.PlaySound(foldersound)
+    if folders then
+        for folder, children in SortedPairs(folders) do
+            if !folders then
+                table.remove(self.BottomBarPath)
             end
-            -- if kc == MOUSE_RIGHT then -- randomizing attachments from folder! -- Moved to cl_bind reload
-            --     local randompool = {}
+            if isbool(children) then continue end
 
-            --     for _, v in ipairs(self.BottomBarAtts) do
-            --         local atbl = ARC9.GetAttTable(v.att)
+            local count = recursivefoldercount(children)
 
-            --         local checkfolder = self2.folder
+            -- if count > 99 then count = "99+" end
 
-            --         local pathprefix = string.Implode("/", self.BottomBarPath)
-            --         if pathprefix != "" then checkfolder = pathprefix .. "/" .. self2.folder end
+            if count == 0 then continue end
+
+            foldercount = foldercount + 1
+
+            local folderbtn = vgui.Create("ARC9AttButton", scroll)
+
+            folderbtn:SetButtonText(folder == "!favorites" and ARC9:GetPhrase("folder.favorites") or ARC9:GetPhrase("folder." .. folder) or folder)
+            folderbtn:SetIcon(folder == "!favorites" and folderfavicon or foldericon)
+            folderbtn:SetEmpty(true)
+
+            folderbtn:DockMargin(0, 0, ARC9ScreenScale(4), 0)
+            folderbtn:Dock(LEFT)
+
+            scroll:AddPanel(folderbtn)
+            table.insert(scrolleles, folderbtn)
+            folderbtn.folder = folder
+
+            folderbtn:SetFolderContain(tostring(count))
+
+            folderbtn.OnMousePressed = function(self2, kc)
+                if kc == MOUSE_LEFT then
+                    enterfolder(self, scroll, slottbl, self2.folder)
+                    surface.PlaySound(foldersound)
+                end
+                -- if kc == MOUSE_RIGHT then -- randomizing attachments from folder! -- Moved to cl_bind reload
+                --     local randompool = {}
+
+                --     for _, v in ipairs(self.BottomBarAtts) do
+                --         local atbl = ARC9.GetAttTable(v.att)
+
+                --         local checkfolder = self2.folder
+
+                --         local pathprefix = string.Implode("/", self.BottomBarPath)
+                --         if pathprefix != "" then checkfolder = pathprefix .. "/" .. self2.folder end
+                        
+                --         if atbl.Folder == checkfolder or (self2.folder == "!favorites" and ARC9.Favorites[v.att]) then
+                --             table.insert(randompool, atbl)
+                --             randompool[#randompool].fuckthis = v.slot
+                --         end               
+                --     end
                     
-            --         if atbl.Folder == checkfolder or (self2.folder == "!favorites" and ARC9.Favorites[v.att]) then
-            --             table.insert(randompool, atbl)
-            --             randompool[#randompool].fuckthis = v.slot
-            --         end               
-            --     end
-                
-            --     local thatatt = randompool[math.random(0, #randompool)]
-            --     if thatatt then
-            --         self:Attach(thatatt.fuckthis, thatatt.ShortName, true)
-            --     end
-                
-            --     surface.PlaySound(tabsound)
-            -- end
-        end
+                --     local thatatt = randompool[math.random(0, #randompool)]
+                --     if thatatt then
+                --         self:Attach(thatatt.fuckthis, thatatt.ShortName, true)
+                --     end
+                    
+                --     surface.PlaySound(tabsound)
+                -- end
+            end
 
-        folderbtn.Think = function(self2)
-            if !IsValid(self) then return end
-            if self2:IsHovered() then
-                self.CustomizeHints["customize.hint.select"] = "customize.hint.select"
-                self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
-                self.CustomizeLastHoveredFolder = self2
+            folderbtn.Think = function(self2)
+                if !IsValid(self) then return end
+                if self2:IsHovered() then
+                    self.CustomizeHints["customize.hint.select"] = "customize.hint.select"
+                    self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
+                    self.CustomizeLastHoveredFolder = self2
+                end
             end
         end
     end

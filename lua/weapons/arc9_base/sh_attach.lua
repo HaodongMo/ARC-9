@@ -2,6 +2,12 @@ SWEP.CustomizeDelta = 0
 
 function SWEP:Attach(addr, att, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
+    if !slottbl then -- to not error and reset menu
+        self.BottomBarAddress = nil
+        self.BottomBarMode = 0
+        self:CreateHUD_Bottom()
+        return false 
+    end
     if (slottbl.Installed == att) then return false end
     if !self:CanAttach(addr, att) then return false end
     local atttbl = ARC9.GetAttTable(att) or {}
