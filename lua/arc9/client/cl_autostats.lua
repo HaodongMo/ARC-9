@@ -94,6 +94,9 @@ ARC9.AutoStatsMains = {
     ["BashDamage"] = {false, false},
     ["BashRange"] = {"HU", false},
     ["BashLungeRange"] = {"HU", false},
+    ["Bash2Damage"] = {false, false},
+    ["Bash2Range"] = {"HU", false},
+    ["Bash2LungeRange"] = {"HU", false},
     ["HeatPerShot"] = {false, true},
     ["HeatCapacity"] = {false, false},
     ["HeatDissipation"] = {false, false},
@@ -112,6 +115,7 @@ ARC9.AutoStatsMains = {
     ["RunawayBurst"] = {false, false},
     ["ShootWhileSprint"] = {false, true},
     ["Bash"] = {false, true},
+    ["Bash2"] = {false, true},
     ["Overheat"] = {false, false},
     ["Malfunction"] = {false, false},
     ["MalfunctionWait"] = {"s", true},
@@ -134,6 +138,7 @@ ARC9.AutoStatsMains = {
     ["BreathHoldTime"] = {false, false},
     ["RecoilModifierCap"] = {false, true},
     ["BashSpeed"] = {false, false},
+    ["Bash2Speed"] = {false, false},
     ["RecoilPerShot"] = {false, true},
 }
 
