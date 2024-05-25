@@ -58,6 +58,7 @@ function EFFECT:Init(data)
     local physbox = ent:GetProcessedValue("ShellPhysBox", true)
     local pitch = ent:GetProcessedValue("ShellPitch", true)
     local sounds = ent:GetProcessedValue("ShellSounds", true)
+    local soundsvolume = ent:GetProcessedValue("ShellVolume", true)
     local smoke = ent:GetProcessedValue("ShellSmoke", true)
     local velocity = ent:GetProcessedValue("ShellVelocity", true) or math.Rand(1, 2)
 
@@ -73,6 +74,7 @@ function EFFECT:Init(data)
             physbox = shelldata.physbox or physbox
             pitch = shelldata.pitch or pitch
             sounds = shelldata.sounds or sounds
+            soundsvolume = shelldata.soundsvolume or soundsvolume
             if shelldata.smoke != nil then
                 smoke = shelldata.smoke
             end
@@ -110,6 +112,8 @@ function EFFECT:Init(data)
     -- table.insert(ent.EjectedShells, self)
 
     self.Sounds = sounds or ARC9.ShellSoundsTable
+
+	self.SoundsVolume = soundsvolume or 1
 
     local pb_z = physbox.z
     local pb_y = physbox.y
@@ -178,7 +182,7 @@ function EFFECT:PhysicsCollide(colData)
     self.VMContext = false
     self:SetNoDraw(false)
 
-    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, 1, CHAN_WEAPON)
+    sound.Play(self.Sounds[math.random(#self.Sounds)], self:GetPos(), 75, self.ShellPitch, self.SoundsVolume, CHAN_WEAPON)
 
     self.AlreadyPlayedSound = true
 end
