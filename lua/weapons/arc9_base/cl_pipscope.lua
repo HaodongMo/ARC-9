@@ -343,7 +343,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
         rtsurf:SetTexture("$basetexture", rtmat)
 
-        model:SetSubMaterial()
+        -- model:SetSubMaterial()
 
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
     else
