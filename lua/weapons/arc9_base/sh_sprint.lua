@@ -44,6 +44,7 @@ function SWEP:GetIsSprintingCheck()
     if !owner:IsValid() or owner:IsNPC() then
         return false
     end
+    if owner:KeyDown(IN_ATTACK2) then return end
     if self:GetInSights() then return false end
     if self:GetCustomize() then return false end
     -- if self:GetIsNearWall() then return true end

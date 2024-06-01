@@ -3,7 +3,7 @@ function SWEP:GetSightDelta()
 end
 
 function SWEP:EnterSights()
-    if self:GetSprintAmount() > 0 then return end
+    if self:GetSprintAmount() > 0.5 then return end
     if !self:GetProcessedValue("HasSights", true) then return end
     if self:GetCustomize() then return end
     if !self:GetProcessedValue("ReloadInSights", true) and self:GetReloading() then return end
@@ -281,6 +281,7 @@ do
     local swepExitSights = SWEP.ExitSights
     local swepEnterSights = SWEP.EnterSights
     local swepGetBipodAmount = SWEP.GetBipodAmount
+    local swepGetSprintAmount = SWEP.GetSprintAmount
     local swepBuildMultiSight = SWEP.BuildMultiSight
     local swepSwitchMultiSight = SWEP.SwitchMultiSight
     local dtapconvar = GetConVar("arc9_dtap_sights")
@@ -310,7 +311,7 @@ do
         if toggle then
             if sighted and pratt then
                 swepExitSights(self)
-            elseif not sighted and pratt then
+            elseif not sighted and (self:GetSprintAmount() > 0 and inatt or pratt) then
                 self:EnterSights()
             end
     
