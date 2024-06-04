@@ -323,17 +323,23 @@ function SWEP:QuicknadeDeploy()
     local WasDrawnByBind = owner:KeyDown(IN_GRENADE1) or owner.ARC9QuickthrowPls
     owner.ARC9QuickthrowPls = nil 
     
+    local anim, det = "draw", self:GetProcessedValue("Detonator", true) and IsValid(self:GetDetonatorEntity())
+    if WasDrawnByBind and self:HasAnimation("quicknade") then anim = "quicknade" end
+    if det then anim = self:HasAnimation(anim .. "_detonator") and anim .. "_detonator" or self:HasAnimation("draw_detonator") and "draw_detonator" or "draw" end
+
     if WasDrawnByBind then
-        self.WasThrownByBind = true 
+        self.WasThrownByBind = true
+        self:PlayAnimation(anim, 1, true)
 
-        self:PlayAnimation("quicknade", 1, true)
-
-        self:SetGrenadePrimed(true)
-        self:SetGrenadePrimedTime(CurTime())
-
-        self:SetGrenadeTossing(owner:KeyDown(IN_ATTACK2))
+        if !det then
+            self:SetGrenadePrimed(true)
+            self:SetGrenadePrimedTime(CurTime())
+            self:SetGrenadeTossing(owner:KeyDown(IN_ATTACK2))
+        else
+            self:TouchOff()
+        end
     else
-        self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
+        self:PlayAnimation(anim, self:GetProcessedValue("DeployTime", true, 1), true)
         self:SetReady(true)
     end
 end
