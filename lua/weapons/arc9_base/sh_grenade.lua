@@ -39,8 +39,8 @@ function SWEP:ThinkGrenade()
         if self:GetGrenadeRecovering() then
             if self.WasThrownByBind then
                 self.WasThrownByBind = nil
-                self:Holster()
-                owner:ConCommand("lastinv") -- switch to prev weapon
+                self:Holster(owner:GetPreviousWeapon())
+                -- owner:ConCommand("lastinv") -- switch to prev weapon man we dont need dis shid!!
             elseif self:GetProcessedValue("Disposable", true) and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
                 self:Remove()
                 owner:ConCommand("lastinv") -- switch to prev weapon
