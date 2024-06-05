@@ -43,7 +43,6 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
         if CLIENT and attent.Icon then
             attent.IconOverride = string.Replace( attent.Icon:GetTexture( "$basetexture" ):GetName() .. ".png", "0001010", "" )
         end
-        print(attent.IconOverride)
         attent.PrintName = atttbl.PrintName or shortname
         attent.Spawnable = true
         attent.AdminOnly = atttbl.AdminOnly or false
