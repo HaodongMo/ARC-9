@@ -40,8 +40,8 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
         local attent = {}
         attent.Base = "arc9_att_base"
         attent.Icon = atttbl.Icon or defaulticon
-        if attent.Icon then
-            attent.IconOverride = CLIENT and string.Replace( attent.Icon:GetTexture( "$basetexture" ):GetName() .. ".png", "0001010", "" ) or nil
+        if CLIENT and attent.Icon then
+            attent.IconOverride = string.Replace( attent.Icon:GetTexture( "$basetexture" ):GetName() .. ".png", "0001010", "" )
         end
         print(attent.IconOverride)
         attent.PrintName = atttbl.PrintName or shortname
