@@ -5,6 +5,7 @@ function SWEP:Deploy()
     if self:GetOwner():IsNPC() then
         return
     end
+    owner:SetSaveValue("m_flNextAttack", 0)
 
     self:ClientDeploy()
 
@@ -93,7 +94,6 @@ function SWEP:Deploy()
         if IsValid(owner:GetHands()) then
             owner:GetHands():SetLightingOriginEntity(owner:GetViewModel())
         end
-        owner:SetSaveValue("m_flNextAttack", 0) -- I hope this won't have to be the final solution!!
     end
 
     self:SetShouldHoldType()
