@@ -750,6 +750,8 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 --     return true
 -- end
 
+-- SWEP.CustomPoseParamsHandler = function(self, ent, iswm) end -- do stuff related to poseparams here (previously it was done in custom think but thanks to rubat think hook now runs in wrong order)
+
 -- SOUND NAMES FOR TRANSLATESOUND:
 -- install
 -- uninstall

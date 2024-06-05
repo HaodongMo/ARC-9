@@ -65,6 +65,8 @@ function SWEP:SetFiremodePose(wm)
 
     if !vm then return end
 
+    if self.CustomPoseParamsHandler then self:CustomPoseParamsHandler(vm, wm) end
+
     local pp = self:GetFiremode()
 
     if pp > #self:GetValue("Firemodes") then
