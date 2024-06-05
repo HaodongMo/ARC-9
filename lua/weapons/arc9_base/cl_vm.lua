@@ -147,7 +147,6 @@ function SWEP:PreDrawViewModel()
         vm:ManipulateBoneScale(boneindex, k.scale or vector_origin)
     end end
     
-    vm:InvalidateBoneCache()
 
     local vmfov = self:GetViewModelFOV()
 
@@ -183,6 +182,8 @@ function SWEP:PreDrawViewModel()
         vm:SetPoseParameter("sights", math.max(sightamount, bipodamount, custdelta))
     end
 
+    vm:InvalidateBoneCache()
+    
     if sightamount > 0.75 and getsights.FlatScope and !getsights.FlatScopeKeepVM then
         render.SetBlend(0)
     end

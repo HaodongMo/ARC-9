@@ -59,6 +59,7 @@ function SWEP:SwitchFiremode()
 end
 
 function SWEP:SetFiremodePose(wm)
+    if SERVER then return end
     local vm = self:GetVM()
 
     if wm then vm = self:GetWM() end

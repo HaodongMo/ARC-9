@@ -68,12 +68,14 @@ function SWEP:DoBodygroups(wm, cm)
         end
     end
 
-    for i = 0, mdl:GetNumPoseParameters() - 1 do
-        mdl:SetPoseParameter(i, 0)
-        local ii = mdl:GetPoseParameterName(i)
+    if CLIENT then
+        for i = 0, mdl:GetNumPoseParameters() - 1 do
+            mdl:SetPoseParameter(i, 0)
+            local ii = mdl:GetPoseParameterName(i)
 
-        if self.SoundTablePoseParams[ii] then
-            mdl:SetPoseParameter(i, self.SoundTablePoseParams[ii])
+            if self.SoundTablePoseParams[ii] then
+                mdl:SetPoseParameter(i, self.SoundTablePoseParams[ii])
+            end
         end
     end
 
@@ -140,12 +142,14 @@ function SWEP:DoBodygroups(wm, cm)
 
     self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = self:GetElements()})
 
-    local pptables = self:GetReloadPoseParameterTable(wm)
+    if CLIENT then
+        local pptables = self:GetReloadPoseParameterTable(wm)
 
-    for pp, ppv in pairs(pptables or {}) do
-        if !pp then continue end
+        for pp, ppv in pairs(pptables or {}) do
+            if !pp then continue end
 
-        mdl:SetPoseParameter(pp, ppv)
+            mdl:SetPoseParameter(pp, ppv)
+        end
     end
 end
 

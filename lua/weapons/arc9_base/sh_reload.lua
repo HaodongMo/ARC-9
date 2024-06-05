@@ -564,6 +564,7 @@ function SWEP:HasAmmoInClip()
 end
 
 function SWEP:DoBulletPose()
+    if SERVER then return end
     local pp = self:Clip1()
 
     local vm = self:GetVM()
