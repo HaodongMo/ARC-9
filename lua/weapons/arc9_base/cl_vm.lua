@@ -39,6 +39,7 @@ function SWEP:PreDrawViewModel()
         if self.HasSightsPoseparam then
             vm:SetPoseParameter("sights", self:GetSightAmount())
         end
+        self:SetFiremodePose()
         vm:InvalidateBoneCache()
 
         local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
