@@ -199,7 +199,9 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
 end
 
 function SWEP:ThinkMelee()
-    local owner = self:GetOwner()
+	-- if self:StillWaiting() then return end
+    if self:GetIsSprinting() and !self.ShootWhileSprint then return end
+	local owner = self:GetOwner()
 	local m1 = owner:KeyDown(IN_ATTACK)
 	local m2 = owner:KeyDown(IN_ATTACK2)
 	local marc = owner:KeyPressed(ARC9.IN_MELEE)
