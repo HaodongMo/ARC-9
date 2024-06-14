@@ -37,13 +37,13 @@ function SWEP:ThinkGrenade()
 
         local throwanimspeed = self:GetProcessedValue("ThrowAnimSpeed", true)
         if self:GetGrenadeRecovering() then
-            if self.WasThrownByBind then
+            if self:GetProcessedValue("Disposable", true) and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
+                self:Remove()
+                owner:ConCommand("lastinv") -- switch to prev weapon
+            elseif self.WasThrownByBind then
                 self.WasThrownByBind = nil
                 self:Holster(owner:GetPreviousWeapon())
                 -- owner:ConCommand("lastinv") -- switch to prev weapon man we dont need dis shid!!
-            elseif self:GetProcessedValue("Disposable", true) and !self:HasAmmoInClip() and !IsValid(self:GetDetonatorEntity()) and SERVER then
-                self:Remove()
-                owner:ConCommand("lastinv") -- switch to prev weapon
             else
                 self:PlayAnimation("draw", throwanimspeed, true)
                 self:SetGrenadeRecovering(false)
