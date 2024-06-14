@@ -251,7 +251,7 @@ do
 
         if math.abs(ru) < smolnumber and math.abs(rs) < smolnumber and self.dt.RecoilAmount == 0 then return end
 
-        local rdr = swepGetProcessedValue(self, "RecoilDissipationRate")
+        local rdr = swepGetProcessedValue(self, "RecoilDissipationRate", true)
         local ct = CurTime()
         local ft = FrameTime()
 

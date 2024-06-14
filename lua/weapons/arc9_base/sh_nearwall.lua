@@ -19,8 +19,10 @@ do
     local angleForward = FindMetaTable("Angle").Forward
     local entityGetOwner = FindMetaTable("Entity").GetOwner
 
+    local engineTickCount = engine.TickCount
+
     function SWEP:GetIsNearWall()
-        local now = engine.TickCount()
+        local now = engineTickCount()
 
         if self.NearWallTick == now then return self.NearWallCached end
 

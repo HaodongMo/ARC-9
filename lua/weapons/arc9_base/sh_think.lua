@@ -216,7 +216,7 @@ function SWEP:Think()
                 end
             end)
         end
-        if game.SinglePlayer() and self.IsQuickGrenade then owner.ARC9LastSelectedGrenade = self:GetClass() end
+        if isSingleplayer and self.IsQuickGrenade then owner.ARC9LastSelectedGrenade = self:GetClass() end
     end
 end
 

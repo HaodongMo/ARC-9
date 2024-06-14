@@ -319,6 +319,9 @@ do
 
     ARC9.DevCheckCached = false 
 
+    local engineTickCount = engine.TickCount
+    local ARC9DevCheckTick, ARC9DevCheckCached, ARC9DevCheckLast = 0, false, 0
+
     if CLIENT and not game.SinglePlayer() then
         local localPlayer
 
@@ -333,34 +336,36 @@ do
             initLocalPlayer()
         end
 
-        function ARC9.Dev(level)
-            local now = engine.TickCount()
-    
-            if ARC9.DevCheckTick == now then return ARC9.DevCheckCached end
-    
-            if (ARC9.DevCheckLast or 0) > now then return ARC9.DevCheckCached end
-            ARC9.DevCheckLast = now + 16 -- 16 ticks before next check
-            
-            local output = IsValid(localPlayer) and localPlayer:IsSuperAdmin() and cvarGetInt(cvarDeveloper) >= level
+        local PlayerIsSuperAdmin = FindMetaTable("Player").IsSuperAdmin
 
-            ARC9.DevCheckCached = output
-            ARC9.DevCheckTick = now
+        function ARC9.Dev(level)
+            local now = engineTickCount()
+    
+            if ARC9DevCheckTick == now then return ARC9DevCheckCached end
+    
+            if (ARC9DevCheckLast or 0) > now then return ARC9DevCheckCached end
+            ARC9DevCheckLast = now + 64 -- 64 ticks before next check
+            
+            local output = IsValid(localPlayer) and PlayerIsSuperAdmin(localPlayer) and cvarGetInt(cvarDeveloper) >= level
+
+            ARC9DevCheckCached = output
+            ARC9DevCheckTick = now
     
             return output
         end
     else
         function ARC9.Dev(level)
-            local now = engine.TickCount()
+            local now = engineTickCount()
     
-            if ARC9.DevCheckTick == now then return ARC9.DevCheckCached end
+            if ARC9DevCheckTick == now then return ARC9DevCheckCached end
     
-            if (ARC9.DevCheckLast or 0) > now then return ARC9.DevCheckCached end
-            ARC9.DevCheckLast = now + 16 -- 16 ticks before next check
+            if (ARC9DevCheckLast or 0) > now then return ARC9DevCheckCached end
+            ARC9DevCheckLast = now + 64 -- 64 ticks before next check
             
             local output = cvarGetInt(cvarDeveloper) >= level
             
-            ARC9.DevCheckCached = output
-            ARC9.DevCheckTick = now
+            ARC9DevCheckCached = output
+            ARC9DevCheckTick = now
     
             return output
         end

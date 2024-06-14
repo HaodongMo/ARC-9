@@ -285,6 +285,7 @@ do
     local swepBuildMultiSight = SWEP.BuildMultiSight
     local swepSwitchMultiSight = SWEP.SwitchMultiSight
     local dtapconvar = GetConVar("arc9_dtap_sights")
+    local cvarGetBool = FindMetaTable("ConVar").GetBool
 
     function SWEP:ThinkSights()
         -- if self:GetSafe() then return end
@@ -311,7 +312,7 @@ do
         if toggle then
             if sighted and pratt then
                 swepExitSights(self)
-            elseif not sighted and (self:GetSprintAmount() > 0 and inatt or pratt) then
+            elseif not sighted and (inatt and self:GetSprintAmount() > 0 or pratt) then
                 self:EnterSights()
             end
     
@@ -331,7 +332,7 @@ do
             swepSwitchMultiSight(self)
         end
 	
-		if dtapconvar:GetBool() then -- Double-Tap Switching Code
+		if cvarGetBool(dtapconvar) then -- Double-Tap Switching Code
 			if sighted and playerKeyPressed(owner, IN_USE) and !self:StillWaiting() then
 				self.SwitchSightDP = (self.SwitchSightDP or 0) + 1
 				

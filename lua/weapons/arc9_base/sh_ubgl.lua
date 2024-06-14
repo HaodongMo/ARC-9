@@ -1,9 +1,12 @@
+local arc9_infinite_ammo = GetConVar("arc9_infinite_ammo")
+local cvarGetBool = FindMetaTable("ConVar").GetBool
+
 function SWEP:ThinkUBGL()
-    if !self:GetProcessedValue("UBGLInsteadOfSights", true) and self:GetValue("UBGL") then
+    if self:GetValue("UBGL") and !self:GetProcessedValue("UBGLInsteadOfSights", true)  then
         local owner = self:GetOwner()
 		local mag = self:Clip2()
 		local magr = self.Owner:GetAmmoCount(self.Secondary.Ammo)
-		local infmag = GetConVar("arc9_infinite_ammo"):GetBool()
+		local infmag = cvarGetBool(arc9_infinite_ammo)
 
 		if mag == 0 and (!infmag and magr == 0) then
 			if self:GetUBGL() then self:ToggleUBGL(false) end

@@ -198,25 +198,32 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
     self:SetLungeEntity(NULL)
 end
 
+local PlayerKeyDown = FindMetaTable("Player").KeyDown
+
 function SWEP:ThinkMelee()
 	-- if self:StillWaiting() then return end
-    if self:GetIsSprinting() and !self.ShootWhileSprint then return end
 	local owner = self:GetOwner()
-	local m1 = owner:KeyDown(IN_ATTACK)
-	local m2 = owner:KeyDown(IN_ATTACK2)
+	local m1 = PlayerKeyDown(owner, IN_ATTACK)
+	local m2 = PlayerKeyDown(owner, IN_ATTACK2)
 	local marc = owner:KeyPressed(ARC9.IN_MELEE)
 
-    local prebash = self:GetProcessedValue("PreBashTime") / self:GetProcessedValue("BashSpeed")
+    if !(m1 or m2 or marc) then return end
+
+    if !self.ShootWhileSprint and self:GetIsSprinting() then return end
+
+    local bashsped = self:GetProcessedValue("BashSpeed", true)
+
+    local prebash = self:GetProcessedValue("PreBashTime", true) / bashsped
 	local b2 = false
 
-    if self:GetBash2() and self:GetProcessedValue("SecondaryBash", false) then
-        prebash = self:GetProcessedValue("PreBash2Time") / self:GetProcessedValue("BashSpeed")
+    if self:GetBash2() and self:GetProcessedValue("SecondaryBash", true) then
+        prebash = self:GetProcessedValue("PreBash2Time", true) / bashsped
     end
 
     if !self:GetGrenadePrimed() then
 		if m2 then b2 = true else b2 = false end
 		
-		waituntilbashagain = self:GetLastMeleeTime() + prebash + self:GetProcessedValue("PostBashTime") <= CurTime()
+		waituntilbashagain = self:GetLastMeleeTime() + prebash + self:GetProcessedValue("PostBashTime", true) <= CurTime()
 		
         if self:GetProcessedValue("PrimaryBash", true) and m1 and waituntilbashagain then
 			if self:GetSafe() then

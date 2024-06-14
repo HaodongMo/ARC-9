@@ -3,11 +3,11 @@ function SWEP:ThinkBipod()
     local owner = self:GetOwner()
 
     if bip then
-        if self:MustExitBipod() or owner:KeyDown(IN_BACK) then
+        if owner:KeyDown(IN_BACK) or self:MustExitBipod() then
             self:ExitBipod()
         end
     else
-        if self:CanBipod() and owner:KeyPressed(IN_ATTACK2) then
+        if owner:KeyPressed(IN_ATTACK2) and self:CanBipod() then
             self:EnterBipod()
         end
     end
