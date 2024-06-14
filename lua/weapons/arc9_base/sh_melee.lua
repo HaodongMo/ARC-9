@@ -206,8 +206,8 @@ function SWEP:ThinkMelee()
 	local m1 = PlayerKeyDown(owner, IN_ATTACK)
 	local m2 = PlayerKeyDown(owner, IN_ATTACK2)
 	local marc = owner:KeyPressed(ARC9.IN_MELEE)
-
-    if !(m1 or m2 or marc) then return end
+    
+    if !(m1 or m2 or marc) and !self:GetInMeleeAttack() then return end
 
     if !self.ShootWhileSprint and self:GetIsSprinting() then return end
 
