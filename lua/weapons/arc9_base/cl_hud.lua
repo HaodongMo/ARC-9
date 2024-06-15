@@ -177,14 +177,15 @@ function SWEP:DoDrawCrosshair(x, y)
 		
 		local size = self.CustomCrosshairSize or 40
 		
-		-- surface.DrawTexturedRect(x - (dotsize / 2) - gap - prong -  ARC9.ScreenScale(11), y - (dotsize / 2) - ARC9.ScreenScale(7), size, size) -- Left
-		
-		surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
-		surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 180) -- Right
-		
-		surface.DrawTexturedRectRotated(x - (dotsize / 2), y - (dotsize / 2) - gap - prong - ARC9.ScreenScale(7), size, size, -90) -- Top
-		surface.DrawTexturedRectRotated(x - (dotsize / 2), y + (dotsize / 2) + gap + ARC9.ScreenScale(10), size, size, 90) -- Bottom
-
+		if self.CustomCrosshairSingle then
+			surface.DrawTexturedRectRotated(x, y, size + gap, size + gap, 0) -- Central
+		else
+			surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
+			surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 180) -- Right
+			
+			surface.DrawTexturedRectRotated(x - (dotsize / 2), y - (dotsize / 2) - gap - prong - ARC9.ScreenScale(7), size, size, -90) -- Top
+			surface.DrawTexturedRectRotated(x - (dotsize / 2), y + (dotsize / 2) + gap + ARC9.ScreenScale(10), size, size, 90) -- Bottom
+		end
 	elseif self:GetProcessedValue("MissileCrosshair", true) then
         -- local dotcount = 4
 

@@ -125,6 +125,7 @@ SWEP.MissileCrosshair = false -- Force the missile launcher crosshair
 SWEP.ForceStandardCrosshair = nil -- Force default + or T crosshair no matter what!
 
 SWEP.CustomCrosshair = false -- Enables custom crosshair use.
+SWEP.CustomCrosshairSingle = false -- Enables a single image to be used as the custom crosshair.
 SWEP.CustomCrosshairMaterial = "" -- Point towards a file to use as the custom crosshair.
 SWEP.CustomCrosshairSize = 40 -- Changes the custom crosshair size. (Default 40)
 
