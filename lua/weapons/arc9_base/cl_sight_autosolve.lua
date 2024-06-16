@@ -119,6 +119,10 @@ function SWEP:AdjustMouseSensitivity()
 			mag = mag + (fov / (self:GetRTScopeFOV() or 90))
 		end
 
+		if atttbl.ScopeScreenRatio then
+			mag = self:GetMagnification() + (fov / (self:GetRTScopeFOV() or 90) * (atttbl.ScopeScreenRatio * 0)) -- Why does this seem to work...? It probably breaks SOMETHING.
+		end
+
 		if self.Peeking then
 			mag = magdef
 		end
