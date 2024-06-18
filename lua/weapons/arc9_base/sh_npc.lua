@@ -134,14 +134,27 @@ function SWEP:RollRandomAtts(tree, nofuther)
 
         -- if math.Rand(0, 100) > 100 / (table.Count(atts) + 1) then slottbl.Installed = nil continue end
 
-        local att = table.Random(atts)
+        -- local att = table.Random(atts)
+
+        local randompool = {}
+
+        for _, maybethisatt in ipairs(atts) do
+            local atttbl = ARC9.GetAttTable(maybethisatt)
+            if !atttbl then continue end
+            if atttbl.Ignore or slottbl.Hidden or atttbl.AttNotForNPCs or self:GetAttBlocked(atttbl) then continue end
+
+            table.insert(randompool, maybethisatt)
+        end
+
+        local att = table.Random(randompool)
+
 
         if !att then slottbl.Installed = nil continue end
 
         local atttbl = ARC9.GetAttTable(att)
 
         if !atttbl then continue end
-        if atttbl.Ignore or slottbl.Hidden or atttbl.AttNotForNPCs then continue end
+        -- if atttbl.Ignore or slottbl.Hidden or atttbl.AttNotForNPCs or self:GetAttBlocked(atttbl) then continue end
 
         slottbl.Installed = att
 
