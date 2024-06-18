@@ -119,17 +119,39 @@ function SWEP:QueueForRandomize()
     table.insert(ARC9.RandomizeQueue, self)
 end
 
+local alwaysinstallcats = {
+    "_gas",
+    "gasblock",
+    "buffer",
+    "_rec",
+    "_grip",
+    "_pg",
+    "barrel",
+    "upper",
+    "lower",
+    "hguard",
+    "handguard",
+    "_hg",
+    "bolt",
+    "_charge",
+}
+
 function SWEP:RollRandomAtts(tree, nofuther)
     local attchance = 66
-    if nofuther then attchance = 999 end
+    if nofuther then attchance = 9999 end
 
     for i, slottbl in pairs(tree) do
         if slottbl.MergeSlots then
             if math.Rand(0, 100) > (100 / table.Count(slottbl.MergeSlots)) then continue end
         end
+        
+        local cat = slottbl.Category and (isstring(slottbl.Category) and slottbl.Category or slottbl.Category[1]) or nil
+        -- print(cat)
+        for _, needle in ipairs(alwaysinstallcats) do
+            if isstring(cat) and string.find(cat, needle) then attchance = 9999 end
+        end
 
         if math.Rand(0, 100) > attchance then continue end
-
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
 
         -- if math.Rand(0, 100) > 100 / (table.Count(atts) + 1) then slottbl.Installed = nil continue end
