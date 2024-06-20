@@ -38,9 +38,11 @@ function SWEP:DoHeat()
             self:SetHeatLockout(true)
         end
 
-        self:SetJammed(true)
-
-        self:SetNextPrimaryFire(CurTime() + self:GetProcessedValue("MalfunctionWait", true))
+        local malfwait = self:GetProcessedValue("MalfunctionWait", true)
+        if malfwait > 0 then
+            self:SetJammed(true)
+            self:SetNextPrimaryFire(CurTime() + malfwait)
+        end
     end
 end
 
