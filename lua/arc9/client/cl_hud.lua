@@ -307,7 +307,7 @@ local function GetWeaponCapabilities(wpn)
         UBGL = tobool(!wpn:GetInSights() and wpn:GetValue("UBGL")),
         Bash = tobool(!wpn:GetInSights() and wpn:GetValue("Bash")),
         SwitchSights = tobool(wpn:GetInSights() and #wpn.MultiSightTable > 1),
-        Inspect = !wpn:GetInSights() and !wep.NoInspect and tobool(wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("inspect")),
+        Inspect = !wpn:GetInSights() and !wpn.NoInspect and tobool(wpn:HasAnimation("enter_inspect") or wpn:HasAnimation("inspect")),
         -- Blindfire = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire")),
         -- BlindfireLeft = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireLeft")),
         -- BlindfireRight = tobool(!wpn:GetInSights() and wpn:GetValue("CanBlindFire") and wpn:GetValue("BlindFireRight")),
