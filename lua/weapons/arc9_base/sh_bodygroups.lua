@@ -35,6 +35,7 @@ function SWEP:DoBodygroups(wm, cm)
     for _, ele in ipairs(eles) do
         for _, j in pairs(ele.Bodygroups or {}) do
             if !istable(j) then continue end
+            if !isnumber(j[1]) then continue end -- print("arc9: something gone horribly wrong in bodygroup code!")
             mdl:SetBodygroup(j[1] or 0, j[2] or 0)
         end
 
