@@ -1,4 +1,5 @@
 function SWEP:ThinkInspect()
+	if self.NoInspect then return end
     if self:StillWaiting() or self:GetInSights() or self:GetBipod() or self:GetReloading() then return end
     if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
     if self:GetUBGL() and !self:HasAnimation("inspect_ubgl") then return end

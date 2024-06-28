@@ -589,6 +589,8 @@ SWEP.SpeedMultMelee = 0.75
 SWEP.SpeedMultCrouch = 1
 SWEP.SpeedMultBlindFire = 1
 
+SWEP.NoInspect = nil -- Set to true if there are inspect animation present, but you do not want the ability to trigger them.
+
 -------------------------- MELEE
 
 SWEP.Bash = false
