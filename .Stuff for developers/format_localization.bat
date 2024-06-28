@@ -1,2 +1,0 @@
-py format_localization.py
-pause
