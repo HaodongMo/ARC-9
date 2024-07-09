@@ -9,7 +9,7 @@ EFFECT.Speed = 15000
 
 EFFECT.Size = 1
 
--- local head = Material("effects/whiteflare")
+--local head = Material("effects/whiteflare")
 local tracer = Material("arc9/tracer")
 local smoke = Material("trails/smoke")
 
@@ -64,13 +64,13 @@ function EFFECT:Render()
     local size = self.Size
 
     local col = LerpColor(d, self.Color, Color(0, 0, 0, 0))
-    local col2 = LerpColor(d2, Color(255, 255, 255, 255), Color(0, 0, 0, 0))
+    local col2 = LerpColor(d2, Color(155, 155, 155, 155), Color(0, 0, 0, 0))
 
-    -- render.SetMaterial(head)
-    -- render.DrawSprite(endpos, size * 3, size * 3, col)
+    --render.SetMaterial(head)
+    --render.DrawSprite(endpos, size * 2, size * 2, col)
 
     render.SetMaterial(tracer)
-    render.DrawBeam(endpos, startpos, size, 0, 1, col)
+    render.DrawBeam(startpos, endpos, size, 0, 1, col)
 
     render.SetMaterial(smoke)
     render.DrawBeam(self.EndPos, endpos, size * d2, 0, 1, col2)

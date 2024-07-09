@@ -311,7 +311,7 @@ SWEP.PhysBulletModelStick = nil -- The amount of time a physbullet model will st
 SWEP.TracerNum = 1 -- Tracer every X
 SWEP.TracerFinalMag = 0 -- The last X bullets in a magazine are all tracers
 SWEP.TracerEffect = "ARC9_tracer" -- The effect to use for hitscan tracers
-SWEP.TracerColor = Color(255, 255, 255) -- Color of tracers. Only works if tracer effect supports it. For physical bullets, this is compressed down to 9-bit color.
+SWEP.TracerColor = Color(255, 255, 100) -- Color of tracers. Only works if tracer effect supports it. For physical bullets, this is compressed down to 9-bit color.
 SWEP.TracerSize = 1
 
 -------------------------- SHOOTPOS
