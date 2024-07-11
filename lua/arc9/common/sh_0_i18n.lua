@@ -127,6 +127,12 @@ function ARC9:LoadLanguages()
     ARC9:LoadLanguage(_, true)
     ARC9:LoadLanguage(gmod_language:GetString())
     ARC9:LoadLanguage("en")
+    ARC9:LoadLanguage("de")
+    ARC9:LoadLanguage("es-es")
+    ARC9:LoadLanguage("ru")
+    ARC9:LoadLanguage("sv-se")
+    ARC9:LoadLanguage("uwu")
+    ARC9:LoadLanguage("zh-cn")
 end
 
 ARC9:LoadLanguages()
