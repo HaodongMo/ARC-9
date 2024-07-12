@@ -47,6 +47,7 @@ PrecacheParticleSystem( "port_smoke_heavy" )
 ---- After Effects
 PrecacheParticleSystem( "barrel_smoke" )
 PrecacheParticleSystem( "barrel_smoke_2" )
+PrecacheParticleSystem( "barrel_smoke_3" )
 PrecacheParticleSystem( "barrel_smoke_heavy" )
 
 ---- Explosion Effects
