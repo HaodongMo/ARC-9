@@ -180,7 +180,7 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
             local dmg = DamageInfo()
 
             dmg:SetDamage(self:GetProcessedValue(prefix .. "Damage"))
-            dmg:SetDamageForce(owner:GetAimVector() * 6000)
+            dmg:SetDamageForce(owner:GetAimVector() * 16000)
             dmg:SetDamagePosition(tr.HitPos)
             dmg:SetDamageType(self:GetProcessedValue(prefix .. "DamageType"))
             dmg:SetAttacker(owner)
