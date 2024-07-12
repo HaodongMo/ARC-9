@@ -55,6 +55,9 @@ ARC9.IncompatibleAddons = {
 	
     -- GLORY KILLS 2
     ["2301721246"] = "Breaks stickers for ARC9 and many other addons.",
+	
+    -- ARC9 Anti-Furry Pack "Sigma Edition"
+    ["3287204618"] = "Automated Conflict Detector reported 8 flaws with mod! Please make a report to its author!",
 
     -- -- ZINV Zombie/NPC Invasion and variants.
     -- -- Original by Jason
