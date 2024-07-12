@@ -369,7 +369,7 @@ function SWEP:SetupModel(wm, lod, cm)
         end
 
         local csmodel = ClientsideModel(self.WorldModelMirror or self.ViewModel)
-
+        csmodel.weapon = self
         basemodel = csmodel
 
         if !IsValid(csmodel) then return end
