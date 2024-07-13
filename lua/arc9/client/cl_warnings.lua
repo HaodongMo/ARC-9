@@ -58,6 +58,9 @@ ARC9.IncompatibleAddons = {
 	
     -- ARC9 Anti-Furry Pack "Sigma Edition"
     ["3287204618"] = "Automated Conflict Detector reported 8 flaws with mod! Please make a report to its author!"
+	
+	-- ARC9 dudebros' Ultimate Anti-Furry Pack
+    ["3288589622"] = "Automated Conflict Detector reported 23 flaws with mod! Please make a report to its author!"
 
     -- -- ZINV Zombie/NPC Invasion and variants.
     -- -- Original by Jason
