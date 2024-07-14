@@ -20,13 +20,13 @@ ARC9.IncompatibleAddons = {
     -- Viewmodel Lagger (fixed)
     ["2566560460"] = "Misaligns viewmodel in sights.",
     -- VTools
-    ["DisplayDistancePlane"] = "Tool contains faulty hook.",
+    ["DisplayDistancePlane"] = "Tool contains faulty hook. You have probably installed VTools/other scenebuilding related addon through garrysmod/addons/ folder.",
     -- TFA's Tactical Lean
-    ["TacticalLean"] = "Mod is old, buggy, laggy, and interferes with ARC9 lean.",
+    ["TacticalLean"] = "Mod is old, laggy and interferes with ARC9 lean. Use relaxtakesnotes's \"Leaning\" mod steamcommunity.com/sharedfiles/filedetails/?id=3138563659 OR integrated leaning system.",
     -- fixed maybe     SLVBase 2  -- ["1516699044"] = "Causes black screen", -- Minecraft drops
     ["2879200766"] = "Teleports viewmodel to any dropped gun",
     -- Advanced color tool
-    ["692778306"] = "Incompatible",
+    ["692778306"] = "Incompatible, breaks every addon in existence",
     -- TF2 Killstreak Weapon Sheen
     ["973050319"] = "Fucks up model rendering and other shit",
     -- View Model Bump
@@ -35,10 +35,21 @@ ARC9.IncompatibleAddons = {
     ["2384413050"] = "Breaks viewmodels for ARC9 and many other addons.",
     -- GLORY KILLS 2
     ["2301721246"] = "Breaks stickers for ARC9 and many other addons.",
-    -- ARC9 Anti-Furry Pack "Sigma Edition"
-    ["3287204618"] = "The values expressed by this mod are not compatible with ARC9. We suggest going outside and touching grass.",
-    -- ARC9 dudebros' Ultimate Anti-Furry Pack
-    ["3288589622"] = "The values expressed by this mod are not compatible with ARC9. We suggest going outside and touching grass.",
+
+
+
+    -- Perhaps we should not express personal opinions here in incompat list? Those addons aren't incompatible, literally just shitty stickers 
+    -- Workshop is open for everyone, if this is truly "hate speech" then complain to steam/facepunch support
+
+    -- This is literally just a troll and hatred fuel towards people behind arc9 for "censoring" addons
+    -- You would not be able to change opinions of people who use those addons through restrictions (it will only make them more anger), but some day they will grow up anyway
+    -- so should you, stop caring about meaningless shit and take this a bit more serious :-)
+
+
+    -- -- ARC9 Anti-Furry Pack "Sigma Edition"
+    -- ["3287204618"] = "The values expressed by this mod are not compatible with ARC9. We suggest going outside and touching grass.",
+    -- -- ARC9 dudebros' Ultimate Anti-Furry Pack
+    -- ["3288589622"] = "The values expressed by this mod are not compatible with ARC9. We suggest going outside and touching grass.",
 }
 
 -- -- ZINV Zombie/NPC Invasion and variants.
@@ -237,7 +248,7 @@ function ARC9.DoCompatibilityCheck()
         hook.Remove("PreDrawViewModel", "DisplayDistancePlaneLS")
 
         incompatList["DisplayDistancePlane"] = {
-            title = "Light Sprayer / Scenic Dispenser tool",
+            title = "Light Sprayer / Scenic Dispenser tool - most likely from VTools",
             wsid = "DisplayDistancePlane",
             nourl = true,
         }
