@@ -285,6 +285,8 @@ ARC9.WEAPON_AR = 4
 ARC9.WEAPON_SNIPER = 5
 ARC9.WEAPON_RPG = 6
 ARC9.WEAPON_MELEE = 7
+ARC9.WEAPON_FRAG = 8
+ARC9.WEAPON_SPECIAL = 9
 ARC9.WEAPON_MISC = 0
 
 ARC9.IMPULSE_TOGGLEATTS = 40
@@ -310,7 +312,10 @@ ARC9.HL2Replacements = {
     ["weapon_shotgun"] = {ARC9.WEAPON_SHOTGUN},
     ["weapon_crossbow"] = {ARC9.WEAPON_SNIPER},
     ["weapon_crowbar"] = {ARC9.WEAPON_MELEE},
-    ["weapon_rpg"] = {ARC9.WEAPON_RPG}
+    ["weapon_rpg"] = {ARC9.WEAPON_RPG},
+    ["weapon_frag"] = {ARC9.WEAPON_FRAG},
+    ["weapon_alyxgun"] = {ARC9.WEAPON_SPECIAL},
+    ["weapon_annabelle"] = {ARC9.WEAPON_SPECIAL, WEAPON_SHOTGUN}
 }
 
 do
