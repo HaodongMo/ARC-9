@@ -315,7 +315,7 @@ ARC9.HL2Replacements = {
     ["weapon_rpg"] = {ARC9.WEAPON_RPG},
     ["weapon_frag"] = {ARC9.WEAPON_FRAG},
     ["weapon_alyxgun"] = {ARC9.WEAPON_SPECIAL},
-    ["weapon_annabelle"] = {ARC9.WEAPON_SPECIAL, WEAPON_SHOTGUN}
+    ["weapon_annabelle"] = {ARC9.WEAPON_SPECIAL, ARC9.WEAPON_SHOTGUN}
 }
 
 do
