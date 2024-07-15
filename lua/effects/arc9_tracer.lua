@@ -6,15 +6,14 @@ EFFECT.LifeTime2 = 0.2
 EFFECT.DieTime = 0
 EFFECT.Color = Color(255, 255, 255)
 EFFECT.Speed = 15000
-
 EFFECT.Size = 1
 
 --local head = Material("effects/whiteflare")
 local tracer = Material("arc9/tracer")
-local smoke = Material("trails/smoke")
+--local smoke = Material("effects/smoke")
+local smoke = Material("effects/fas_smoke_beam")
 
 function EFFECT:Init(data)
-
     local hit = data:GetOrigin()
     local wep = data:GetEntity()
 
@@ -27,9 +26,8 @@ function EFFECT:Init(data)
     if speed > 0 then
         self.Speed = speed
     end
-
+	
     self.LifeTime = (hit - start):Length() / self.Speed
-
     self.StartTime = UnPredictedCurTime()
     self.DieTime = UnPredictedCurTime() + math.max(self.LifeTime, self.LifeTime2)
 
@@ -73,5 +71,5 @@ function EFFECT:Render()
     render.DrawBeam(startpos, endpos, size, 0, 1, col)
 
     render.SetMaterial(smoke)
-    render.DrawBeam(self.EndPos, endpos, size * d2, 0, 1, col2)
+    render.DrawBeam(startpos, endpos, size * d2, 0, 1, col2)
 end
