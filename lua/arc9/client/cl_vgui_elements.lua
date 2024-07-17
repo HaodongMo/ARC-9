@@ -4,6 +4,7 @@ local clicksound = "arc9/newui/uimouse_click_forward.ogg"
 local ARC9TopButton = {}
 ARC9TopButton.Color = ARC9.GetHUDColor("fg")
 ARC9TopButton.ColorClicked = ARC9.GetHUDColor("hi")
+ARC9TopButton.ColorNotif = Color(255, 50, 50)
 ARC9TopButton.Icon = Material("arc9/ui/settings.png", "mips")
 ARC9TopButton.MatIdle = Material("arc9/ui/topbutton.png", "mips")
 ARC9TopButton.MatHovered = Material("arc9/ui/topbutton_hover.png", "mips")
@@ -13,6 +14,7 @@ ARC9TopButton.MatIdleM = Material("arc9/ui/topbutton_m.png", "mips")
 ARC9TopButton.MatHoveredM = Material("arc9/ui/topbutton_hover_m.png", "mips")
 ARC9TopButton.MatIdleR = Material("arc9/ui/topbutton_r.png", "mips")
 ARC9TopButton.MatHoveredR = Material("arc9/ui/topbutton_hover_r.png", "mips")
+ARC9TopButton.MatNotif = Material("arc9/ui/info.png", "mips")
 
 local function syncconvar(self, val)
 
@@ -64,6 +66,12 @@ function ARC9TopButton:Paint(w, h)
         iconcolor = ARC9.GetHUDColor("hi")
     end
 
+    if self.Notif then
+        surface.SetDrawColor(self.ColorNotif, 255)
+        surface.SetMaterial(mat)
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+
     surface.SetDrawColor(color)
 
     -- wide button
@@ -87,6 +95,12 @@ function ARC9TopButton:Paint(w, h)
     surface.SetDrawColor(iconcolor)
     surface.SetMaterial(icon)
     surface.DrawTexturedRect(h / 5, h / 5, h - h / 2.5, h - h / 2.5)
+
+    if self.Notif then
+        surface.SetDrawColor(self.ColorNotif)
+        surface.SetMaterial(self.MatNotif)
+        surface.DrawTexturedRect(w - h / 3, 0, h / 3, h / 3)
+    end
 end
 
 function ARC9TopButton:OnCursorEntered()
@@ -95,6 +109,10 @@ end
 
 function ARC9TopButton:SetIcon(mat)
     self.Icon = mat
+end
+
+function ARC9TopButton:SetNotif(val)
+    self.Notif = val
 end
 
 function ARC9TopButton:SetButtonText(text, font)

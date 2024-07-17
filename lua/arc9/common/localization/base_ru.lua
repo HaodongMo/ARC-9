@@ -315,37 +315,36 @@ L["incompatible.never.hover"] = "Уверен? Надеюсь, ты понима
 L["incompatible.never.confirm"] = "Ты решил отказаться от предупреждений несовместимостых аддонов. Если что-то окажется сломано - это на твоей совести, мы не будем тебе помогать."
 
 ////////////////////// Warning panel
--- L["badconf.title"] = "ARC9: BAD PERFORMANCE WARNING"
--- L["badconf.line1"] = "It appears some Garry's Mod settings are causing problems."
--- L["badconf.line2"] = "Listed below are problems which have been detected, and solutions to fix them."
--- L["badconf.confirm"] = "Acknowledge"
--- L["badconf.wait"] = "Wait {time}s"
+L["badconf.title"] = "ARC9: НЕКОРРЕКТНЫЕ НАСТРОЙКИ ИГРЫ"
+L["badconf.line1"] = "Некоторые ваши настройки игры вызывают проблемы."
+L["badconf.line2"] = "Снизу перечислены все обнаруженные проблемы и их решения."
+L["badconf.confirm"] = "Ознакомлен"
+L["badconf.wait"] = "Подождите {time}с"
 
--- L["badconf.warning"] = "Warning! Your performance is not optimal! - Hover over to view details."
+L["badconf.directx.title"] = "Устаревшая версия DirectX"
+L["badconf.directx.desc"] = "Игра в данный момент использует старый DirectX 8 или 8.1. Современный GMod не поддерживает его, скорее всего вы не будете видеть модели оружия на всех паках оружия. (dx9 был представлен 21 год назад!)"
+L["badconf.directx.solution"] = "Решение: открыть параметры запуска Garry's Mod's и вставить туда \"-dxlevel 95\". Если там есть \"-dxlevel 70/80/85\" то удалите эту строчку."
 
--- L["badconf.directx.title"] = "Outdated DirectX Version"
--- L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. As many weapon addons remove low-quality assets to reduce file size, you might not be able to see those models."
--- L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
+L["badconf.tickrate.title"] = "Слишком низкий тикрейт сервера"
+L["badconf.tickrate.desc"] = "Сервер на котором вы находитесь имеет слишком низкий тикрейт. ARC9 работает лучше всего на тикрейтах от 20 и выше (рекомендуется 66+)."
+L["badconf.tickrate.solution"] = "Решение: Если вы владелец сервера, вставьте \"-tickrate 33\" в настройки запуска сервера."
 
--- L["badconf.tickrate.title"] = "Low Server Tickrate"
--- L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
--- L["badconf.tickrate.solution"] = "Solution: If you are a server owner, then insert \"-tickrate 33\", or whichever value you want, in the server launch configurations."
+L["badconf.matbumpmap.title"] = "mat_bumpmap отключен"
+L["badconf.matbumpmap.desc"] = "У вас отключены карты нормалей, оружие будет выглядеть плохо и некоторые прицелы могут не работать."
+L["badconf.matbumpmap.solution"] = "Решение: В консоль введите \"mat_bumpmap 1\". Если вы используете любые FPS конфиги то найдите и удалите из \"autoexec.cfg\" строчку mat_bumpmap 0."
 
--- L["badconf.matbumpmap.title"] = "Bumpmaps Disabled"
--- L["badconf.matbumpmap.desc"] = "You have bumpmaps disabled, which makes weapons and props look worse. It also affects certain ARC9 optics."
--- L["badconf.matbumpmap.solution"] = "Solution: In the console, type \"mat_bumpmap 1\". If you are using an FPS config of any kind, then you might have to access \"autoexec.cfg\" and ensure it does not automatically turn it back off."
+L["badconf.addons.title"] = "Слишком много аддонов! Лимит lua файлов исчерпан"
+L["badconf.addons.desc"] = "Вы установили слиииишком много аддонов и достигли лимита Lua файлов. ARC9 не закончил загрузку, обвесы не будут работать."
+L["badconf.addons.solution"] = "Решение: Удалите немного тяжелых аддонов через игру или воркшоп (например другие базы оружия, JMOD, паки энтити и т.д.)."
 
--- L["badconf.addons.title"] = "Too Many LUA Files"
--- L["badconf.addons.desc"] = "You have installed way too many addons and have reached the LUA file limit. ARC9 has therefore not been able to initialize properly, meaning attachments might not work."
--- L["badconf.addons.solution"] = "Solution: Uninstall heavy addons through the in-game Addons menu, or through the Steam workshop (for example other weapon bases, JMod, Entity Packs, and so on)."
+L["badconf.warning"] = "Внимание! Производительность ограничена - наведитесь чтобы узнать детали."
+L["badconf.warning.desc"] = "Больше FPS всегда лучше. Особенно на этой базе оружия.\n\nНаведите курсор на пункты ниже чтобы узнать решение."
 
--- L["badconf.x64.title"] = "32-Bit Detected"
--- L["badconf.x64.desc"] = "You are currently running Garry's Mod in 32-bit. This restricts the amount of performance you can obtain drastically."
--- L["badconf.x64.solution"] = "Solution: In Garry's Mod's launch options, go to \"Betas\" and change to \"x86-64 - Chromium + 64-bit binaries\"."
+L["badconf.x64.title"] = "► Медленный 32-битный GMod обнаружен"
+L["badconf.x64.desc"] = "В данный момент игра работает в 32-битном режиме, это сильно ограничивает производительность.\n\nРешение: в параметрах запуска Garry's Mod's зайдите в \"Бета версии\" и измените ветку на \"x86-64 - Chromium + 64-bit binaries\".\n\nГугли \"gmod x64\" чтобы найти гайд как это сделать."
 
--- L["badconf.multicore.title"] = "No Multicore Rendering"
--- L["badconf.multicore.desc"] = "Multicore rendering is currently disabled. This results in worsened in-game performance."
--- L["badconf.multicore.solution"] = "Solution: You can google \"Gmod Multicore\" and find a solution online."
+L["badconf.multicore.title"] = "► Многопотоковый рендеринг отключен"
+L["badconf.multicore.desc"] = "Отсутствуют некоторые команды для многопотоковых процессоров, можно увеличить производительность путём добавления нужных команд в autoexec.cfg.\n\nГугли \"gmod multicore\" чтобы найти гайд как это сделать.\n\nВсе команды для увеличения производительности:\n\ngmod_mcore_test 1\nmat_queue_mode 2\ncl_threaded_bone_setup 1\ncl_threaded_client_leaf_system 1\nr_threaded_client_shadow_manager 1\nr_threaded_renderables 1"
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " обвесов"
@@ -568,20 +567,20 @@ L["settings.hud_game.breath_sfx.desc"] = "При задерживании дых
 
 L["settings.hud_game.centerhint"] = "Подсказки по центру экрана"
 L["settings.hud_game.centerhint_reload.title"] = "Перезарядка"
-L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
+-- L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
 L["settings.hud_game.centerhint_reload_percent.title"] = "Процент магазина"
-L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
+-- L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
 L["settings.hud_game.centerhint_bipod.title"] = "Сошки"
 L["settings.hud_game.centerhint_bipod.desc"] = "Подсказка по центру экрана о возможности установки сошек."
--- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
+L["settings.hud_game.centerhint_jammed.title"] = "Клины"
 -- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
 
--- L["settings.hud_game.centerhint_firemode.title"] = "Display Firemode Tip"
+L["settings.hud_game.centerhint_firemode.title"] = "Режим огня"
 -- L["settings.hud_game.centerhint_firemode.desc"] = "Display a tip when you swap firing mode or toggle your safety."
 -- L["settings.hud_game.centerhint_firemode_time.title"] = "Display Firemode Time"
 -- L["settings.hud_game.centerhint_firemode_time.desc"] = "How long the firing mode should be displayed."
 
--- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
+L["settings.hud_game.centerhint_overheat.title"] = "Перегрев"
 -- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
 
 L["settings.hud_game.hud_glyph"] = "Тип глифов"

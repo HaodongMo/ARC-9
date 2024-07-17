@@ -33,6 +33,8 @@ ARC9.LanguagesTable = {
 {"9UwU :3", "uwu"},
 }
 
+ARC9.BadPerfromanceSettings = function() return BRANCH != "x86-64" or GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1 end
+
 ARC9.SettingsTable = {
     -- {
     --     TabName = "Tab name 1",
@@ -86,6 +88,12 @@ ARC9.SettingsTable = {
     },
     {
         TabName = "settings.tabname.performance",
+        Warning = ARC9.BadPerfromanceSettings,
+        { type = "label", text = "badconf.warning", desc = "badconf.warning.desc", important = true, showfunc = ARC9.BadPerfromanceSettings },
+        { type = "label", text = "badconf.x64.title", desc = "badconf.x64.desc", showfunc = function() return BRANCH != "x86-64" end },
+        { type = "label", text = "badconf.multicore.title", desc = "badconf.multicore.desc", showfunc = function() return GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1 end },
+        { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettings },
+        { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettings },
 
         { type = "label", text = "settings.performance.important" },
         { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
@@ -457,6 +465,8 @@ local ARC9ScreenScale = ARC9.ScreenScale
 -- local mat_icon = Material("arc9/arc9_logo_ui.png", "mips smooth")
 local arc9logo_layer1 = Material("arc9/logo/logo_bottom.png", "mips smooth")
 local arc9logo_layer2 = Material("arc9/logo/logo_middle.png", "mips smooth")
+local mat_Notif = Material("arc9/ui/info.png", "mips")
+local color_Notif = Color(255, 50, 50)
 
 local function DrawSettings(bg, page)
     local cornercut = ARC9ScreenScale(3.5)
@@ -480,6 +490,8 @@ local function DrawSettings(bg, page)
         newpanelscroll:DockMargin(ARC9ScreenScale(4), ARC9ScreenScale(4), ARC9ScreenScale(4), 0)
 
         for k2, v2 in ipairs(v) do
+            if v2.showfunc and !v2.showfunc() then continue end
+            
             local elpanel = vgui.Create("DPanel", newpanelscroll)
 
             elpanel:SetTall(ARC9ScreenScale(v2.type == "label" and 14 or 21))
@@ -490,8 +502,9 @@ local function DrawSettings(bg, page)
                     and v2.convar and ARC9.ConVarData["arc9_" .. v2.convar] and !ARC9.ConVarData["arc9_" .. v2.convar].client
 
             elpanel.Paint = function(self2, w, h)
-                if v2.type == "label" then
+                if v2.type == "label" and v2.text != "" then
                     surface.SetDrawColor(0, 0, 0, 75)
+                    if v2.important then surface.SetDrawColor(233, 21, 21, 171) end
                     surface.DrawRect(0, 0, w, h)
                 end
                 -- desc!!!!!!!!
@@ -653,6 +666,10 @@ local function DrawSettings(bg, page)
                 buttontextcolor = ARC9.GetHUDColor("shadow")
             end
 
+            if v.Warning and v.Warning() then
+                barbuttoncolor = color_Notif
+            end
+
             if self2:IsHovered() then
                 barbuttoncolor = ARC9.GetHUDColor("hi")
             end
@@ -668,6 +685,13 @@ local function DrawSettings(bg, page)
             surface.SetTextColor(buttontextcolor)
             surface.SetTextPos((w - tw) / 2 + ARC9ScreenScale(1.7), ARC9ScreenScale(3))
             surface.DrawText(ARC9:GetPhrase(v.TabName) or v.TabName)
+
+
+            if v.Warning and v.Warning() then
+                surface.SetDrawColor(color_Notif)
+                surface.SetMaterial(mat_Notif)
+                surface.DrawTexturedRect(ARC9ScreenScale(8), h / 2 - h / 6, h / 3, h / 3)
+            end
         end
 
         thatsheet.Button.DoClickOld = thatsheet.Button.DoClick
