@@ -321,6 +321,8 @@ L["badconf.line2"] = "Nedanför finns problem som upptäckts och lösningar till
 L["badconf.confirm"] = "Bekräfta"
 L["badconf.wait"] = "Vänta {time}s"
 
+L["badconf.warning"] = "Varning! Din prestanda är ej optimal! - Markera för att visa detaljer."
+
 L["badconf.directx.title"] = "Gammal DirectX-Version"
 L["badconf.directx.desc"] = "Du kör just nu DirectX 8 eller 8.1. Då många vapentillägg tar bort tillgångar med lägre kvalitet för att sänka filstorleken så kanske du inte ser dessa modeller."
 L["badconf.directx.solution"] = "Lösning: Gå till startinställningarna på Garry's Mod och lägg till \"-dxlevel 95\" i startparametern. Om \"-dxlevel 70/80/85\" är med där, ta bort det."
@@ -329,13 +331,21 @@ L["badconf.tickrate.title"] = "Låg Server \"Tickrate\""
 L["badconf.tickrate.desc"] = "Servern du är på kör på för låg \"tickrate\". ARC9 är bäst när du kör på minumum 20 tickrate (66+ rekommenderas)."
 L["badconf.tickrate.solution"] = "Lösning: Om du är serverns ägare, lägg till \"-tickrate 33\", eller det värdet du vill använda, i serverns startkonfiguration."
 
-L["badconf.matbumpmap.title"] = "\"Bumpmaps\" är avstängda"
+L["badconf.matbumpmap.title"] = "\"Bumpmaps\" avaktiverade"
 L["badconf.matbumpmap.desc"] = "Du har avaktiverat \"bumpmaps\" vilket gör att vapen och modeller ser värre ut. Det kan också påverka vissa ARC9-riktmedel."
 L["badconf.matbumpmap.solution"] = "Lösning: I konsolen, skriv in \"mat_bumpmap 1\". Om du använder en \"FPS config\" av något slag så kanske du måste öppna \"autoexec.cfg\" och vara säker på att det inte stängs av automatiskt igen."
 
 L["badconf.addons.title"] = "För många LUA-filer"
 L["badconf.addons.desc"] = "Du har installerat för många tillägg och nått LUA-filbegränsningen. ARC9 har därför inte kunnat laddas korrekt, vilket betyder att tillbehör kanske inte fungerar."
 L["badconf.addons.solution"] = "Lösning: Avinstallera tyngre tillägg via spelets Tillägg meny, eller via Steam workshop (exempelvis andra vapenbaser, JMod, Entity-Tillägg, mm.)."
+
+L["badconf.x64.title"] = "32-Bitars Upptäckt"
+L["badconf.x64.desc"] = "Du kör just nu Garry's Mod i 32-bitars. Detta begränsar hur mycket prestanda du kan ha, ganska drastiskt."
+L["badconf.x64.solution"] = "Lösning: I Garry's Mods startinställningar, gå till \"Betas\" och byt till \"x86-64 - Chromium + 64-bit binaries\"."
+
+L["badconf.multicore.title"] = "Ingen Multicore-Rendering"
+L["badconf.multicore.desc"] = "Multicore-rendering är avstängt. Detta ger väldigt dålig spelprestanda."
+L["badconf.multicore.solution"] = "Lösning: Google \"Gmod Multicore\" och hitta en lösning på nätet."
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " Tillbehör"
