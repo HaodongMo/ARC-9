@@ -321,27 +321,27 @@ end)
 
 ARC9.BadConfigStuff = {
     dx = {
-        title = "Outdated DirectX level",
-        desc = "Most weapon packs won't have any models for you. Any hardware from 2003+ can run directx 9 fine.",
-        solution = "Solution: go to gmod launch options and put \"-dxlevel 95\" in there. (Remove -dxlevel 70/80/85 if it exists there)",
+        title = ARC9:GetPhrase("badconf.directx.title"),
+        desc = ARC9:GetPhrase("badconf.directx.desc"),
+        solution = ARC9:GetPhrase("badconf.directx.solution"),
         cause = function() return render.GetDXLevel() != 95 and render.GetDXLevel() != 90 end
     },
     tickrate = {
-        title = "Too low server tickrate",
-        desc = "Server isn't set up correctly. ARC9 guns need atleast 20 tickrate to work correctly (66+ preferebaly).",
-        solution = "Solution: -tickrate 33 in server launch configuration.",
+        title = ARC9:GetPhrase("badconf.tickrate.title"),
+        desc = ARC9:GetPhrase("badconf.tickrate.desc"),
+        solution = ARC9:GetPhrase("badconf.tickrate.solution"),
         cause = function() return game.IsDedicated() and 1 / engine.TickInterval() < 20 end
     },
     matbumpmap = {
-        title = "mat_bumpmap isn't set to 1",
-        desc = "Bumpmaps are off, which makes gun look worse and certain scopes might not work.",
-        solution = "Solution: open console > type \"mat_bumpmap 1\". If you are using pro gaming configs, autoexec.cfg might force it to 0, if so, find it and remove that line.",
+        title = ARC9:GetPhrase("badconf.matbumpmap.title"),
+        desc = ARC9:GetPhrase("badconf.matbumpmap.desc"),
+        solution = ARC9:GetPhrase("badconf.matbumpmap.solution"),
         cause = function() return GetConVar("mat_bumpmap"):GetInt() == 0 end
     },
     addons = {
-        title = "Too many addons - lua limit exceeded",
-        desc = "Uh-oh. Someone installed too many addons. ARC9 wasn't able to initialize properly, attachments won't work.",
-        solution = "Solution: uninstall heavy addons (other weapon bases, jmod, entity packs etc etc).",
+        title = ARC9:GetPhrase("badconf.addons.title"),
+        desc = ARC9:GetPhrase("badconf.addons.desc"),
+        solution = ARC9:GetPhrase("badconf.addons.solution"),
         cause = function() return ARC9.AllLuaFilesLoaded != true end
     },
 }

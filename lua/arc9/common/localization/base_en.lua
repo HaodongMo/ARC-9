@@ -374,11 +374,27 @@ L["incompatible.never.hover"] = "Are you absolutely sure you understand the cons
 L["incompatible.never.confirm"] = "You have chosen to never show incompatiblity warnings again. If you encounter errors or broken behaviour, it is your own responsibility."
 
 ////////////////////// Warning panel
-L["badconf.title"] = "ARC9: BAD GMOD CONFIGURATION WARNING"
-L["badconf.line1"] = "Some of your gmod settings aren't set up correctly."
-L["badconf.line2"] = "blah blah fix please."
+L["badconf.title"] = "ARC9: BAD PERFORMANCE WARNING"
+L["badconf.line1"] = "It appears some Garry's Mod settings are causing problems."
+L["badconf.line2"] = "Listed below are problems which have been detected, and solutions to fix them."
 L["badconf.confirm"] = "Acknowledge"
 L["badconf.wait"] = "Wait {time}s"
+
+L["badconf.directx.title"] = "Outdated DirectX Version"
+L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. As many weapon addons remove low-quality assets to reduce file size, you might not be able to see those models."
+L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
+
+L["badconf.tickrate.title"] = "Low Server Tickrate"
+L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
+L["badconf.tickrate.solution"] = "Solution: If you are a server owner, then insert \"-tickrate 33\", or whichever value you want, in the server launch configurations."
+
+L["badconf.matbumpmap.title"] = "Disabled Bumpmaps"
+L["badconf.matbumpmap.desc"] = "You have bumpmaps disabled, which makes weapons and props look worse. It also affects certain ARC9 optics."
+L["badconf.matbumpmap.solution"] = "Solution: In the console, type \"mat_bumpmap 1\". If you are using an FPS config of any kind, then you might have to access \"autoexec.cfg\" and ensure it does not automatically turn it back off."
+
+L["badconf.addons.title"] = "Too Many LUA Files"
+L["badconf.addons.desc"] = "You have installed way too many addons and have reached the LUA file limit. ARC9 has therefore not been able to initialize properly, meaning attachments might not work."
+L["badconf.addons.solution"] = "Solution: Uninstall heavy addons through the in-game Addons menu, or through the Steam workshop (for example other weapon bases, JMod, Entity Packs, and so on)."
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " Attachments"
@@ -883,3 +899,61 @@ L["settings.developer.presets_clear.desc"] = "Clear presets, all icons and defau
 L["settings.developer.clear"] = "Clear"
 L["settings.developer.print"] = "Print to Console"
 L["settings.developer.reload"] = "Reload"
+
+////////////////////// ARC9 Premium
+L["premium.title"] = "ARC9 Premium"
+L["premium.desc"] = "ARC9 Premium allows additional customization as a major thanks for supporting the addon financially."
+
+L["premium.requires"] = "Requires <color=255,106,0>ARC9 Premium</color>."
+L["premium.acquire"] = "Subscribe to <color=255,106,0>ARC9 Premium</color>"
+
+L["premium.ownedno"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Not owned</color>"
+L["premium.owned"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Owned</color>"
+
+L["premium.help"] = "What is ARC9 Premium?"
+L["premium.help.header"] = "Guide to ARC9 Premium"
+L["premium.help.desc"] = "Creating addons takes time and resources. ARC9 has always been available for free, and it will remain that way. However, if you wish to support the base financially, you may do so, and get rewarded for it!"
+
+L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Diamond Doves Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
+
+L["premium.content"] = "Included in <color=255,106,0>ARC9 Premium</color>:"
+L["premium.content.list"] = [[
+- Unlimited Customization Slots (Increased from 32)
+- Unlimited Preset Slots (Increased from 10 per weapon)
+- Access to Supermodifier settings*
+- Access to an exclusive Dark UI mode
+- Ability to colour optic reticles, UI and more
+- Exclusive camos made available through the base
+- Exclusive support channel on Discord
+
+*Requires administrator if on a server
+]]
+
+L["premium.payment.month"] = [[
+$%s
+Acquire ARC9 Premium for 1 Month.
+]]
+
+L["premium.payment.months"] = [[
+$%s
+Acquire ARC9 Premium for %s Months and get a <color=100,255,100>%s%% discount</color>!
+]]
+
+L["premium.payment.info"] = [[
+Purchasing ARC9 Premium grants immediate access to all the contents listed previously for the time purchased.
+Time can be extended by purchasing any of the options once more, and the time will refresh automatically once the original time has expired.
+Once the time has passed, and no additional payment has been made, access to ARC9 Premium will be removed.
+
+All customization options, including attachment slots, presets and coloured reticles made with ARC9 Premium will remain available, but you will not alter them or add any additional ones.
+]]
+
+L["premium.purchased"] = "Purchased <color=255,106,0>ARC9 Premium</color>!"
+L["premium.purchased.desc"] = [[
+Thank you for purchasing ARC9 Premium! You made the bird a very happy one!
+
+A receipt will be sent to your connected Email.
+
+If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
+
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
+]]

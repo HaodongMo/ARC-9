@@ -314,6 +314,29 @@ L["incompatible.never"] = "Never warn me again"
 L["incompatible.never.hover"] = "Are you absolutely sure you understand the consequences?"
 L["incompatible.never.confirm"] = "You have chosen to never show incompatiblity warnings again. If you encounter errors or broken behaviour, it is your own responsibility."
 
+////////////////////// Warning panel
+-- L["badconf.title"] = "ARC9: BAD PERFORMANCE WARNING"
+-- L["badconf.line1"] = "It appears some Garry's Mod settings are causing problems."
+-- L["badconf.line2"] = "Listed below are problems which have been detected, and solutions to fix them."
+-- L["badconf.confirm"] = "Acknowledge"
+-- L["badconf.wait"] = "Wait {time}s"
+
+-- L["badconf.directx.title"] = "Outdated DirectX Version"
+-- L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. As many weapon addons remove low-quality assets to reduce file size, you might not be able to see those models."
+-- L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
+
+-- L["badconf.tickrate.title"] = "Low Server Tickrate"
+-- L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
+-- L["badconf.tickrate.solution"] = "Solution: If you are a server owner, then insert \"-tickrate 33\", or whichever value you want, in the server launch configurations."
+
+-- L["badconf.matbumpmap.title"] = "Disabled Bumpmaps"
+-- L["badconf.matbumpmap.desc"] = "You have bumpmaps disabled, which makes weapons and props look worse. It also affects certain ARC9 optics."
+-- L["badconf.matbumpmap.solution"] = "Solution: In the console, type \"mat_bumpmap 1\". If you are using an FPS config of any kind, then you might have to access \"autoexec.cfg\" and ensure it does not automatically turn it back off."
+
+-- L["badconf.addons.title"] = "Too Many LUA Files"
+-- L["badconf.addons.desc"] = "You have installed way too many addons and have reached the LUA file limit. ARC9 has therefore not been able to initialize properly, meaning attachments might not work."
+-- L["badconf.addons.solution"] = "Solution: Uninstall heavy addons through the in-game Addons menu, or through the Steam workshop (for example other weapon bases, JMod, Entity Packs, and so on)."
+
 ////////////////////// Presets
 L["customize.presets.atts"] = " 个配件"
 L["customize.presets.back"] = "退回"
@@ -815,3 +838,61 @@ L["settings.developer.developer"] = "开发者设置"
 -- L["settings.developer.clear"] = "Clear"
 L["settings.developer.print"] = "Print to Console"
 L["settings.developer.reload"] = "Reload"
+
+////////////////////// ARC9 Premium
+L["premium.title"] = "ARC9 Premium"
+L["premium.desc"] = "ARC9 Premium 允许额外的自定义功能，以感谢用户在经济上对该插件的支持。"
+
+L["premium.requires"] = "需要 <color=255,106,0>ARC9 Premium</color>。"
+L["premium.acquire"] = "订阅 <color=255,106,0>ARC9 Premium</color>"
+
+L["premium.ownedno"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>未拥有</color>"
+L["premium.owned"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>已拥有</color>"
+
+L["premium.help"] = "什么是 ARC9 Premium？"
+L["premium.help.header"] = "ARC9 Premium 指南"
+L["premium.help.desc"] = "创建附加组件需要时间和资源。ARC9 一直以来都是免费提供的，今后也将如此。但是，如果您希望在经济上支持基础版，您可以这样做，并因此获得奖励！"
+
+L["premium.help.ownedbutnoaccess"] = "您是否最近购买了 ARC9 高级版，但无法自动访问？请在钻石鸽 Discord 服务器上联系我们寻求帮助。\n在联系之前，请确保您能提供购买证明。仅仅说 「我买了，现在给」是不够的。"
+
+L["premium.content"] = "包括在 <color=255,106,0>ARC9 Premium</color> 中："
+L["premium.content.list"] = [[
+- 无限定制插槽（从 32 个增加到 32 个）
+- 无限预设插槽（每种武器从 10 个增加到 10 个）
+- 访问超级修改器设置*
+- 访问独有的黑暗用户界面模式
+- 可为光学视网膜、用户界面等着色
+- 通过基地提供专属迷彩
+- Discord 上的专属支持频道
+
+*如果在服务器上，需要管理员帮助
+]]
+
+L["premium.payment.month"] = [[
+$%s
+购买 ARC9 Premium 1 个月。
+]]
+
+L["premium.payment.months"] = [[
+$%s
+购买 %s 个月的 ARC9 Premium，可享受 <color=100,255,100>%s%% 的折扣</color>！
+]]
+
+L["premium.payment.info"] = [[
+购买 ARC9 Premium 可在购买时间内立即访问前面列出的所有内容。
+您可以通过再次购买任何选项来延长时间，一旦原定时间到期，时间将自动刷新。
+一旦时间过期，且未支付额外费用，ARC9 高级版的访问权限将被取消。
+
+所有自定义选项，包括使用 ARC9 Premium 制作的附件插槽、预设和彩色视网膜仍将可用，但您将无法更改或添加任何其他选项。
+]]
+
+L["premium.purchased"] = "已购买 <color=255,106,0>ARC9 Premium</color>！"
+L["premium.purchased.desc"] = [[
+感谢您购买 ARC9 Premium！您让小鸟非常开心！
+
+收据将发送到您的连接邮箱。
+
+如果您没有立即获得 ARC9 Premium 奖励，请重新加入服务器或重启游戏。
+
+如果您仍有问题，或仍未获得高级奖励，请访问钻石鸽 Discord 服务器并提供有效的购买证明，我们会为您修复。
+]]

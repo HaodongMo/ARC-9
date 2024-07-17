@@ -314,6 +314,29 @@ L["incompatible.never"] = "Varna mig aldrig igen"
 L["incompatible.never.hover"] = "Är du absolut säker på att du förstår konsekvenserna?"
 L["incompatible.never.confirm"] = "Du har valt att aldrig igen visa inkompatibla varningar igen. Om du upplever problem eller brutet beteende så är det ditt eget ansvar."
 
+////////////////////// Warning panel
+L["badconf.title"] = "ARC9: DÅLIG PRESTANDAVARNING"
+L["badconf.line1"] = "Ser ut som att några inställningar på Garry's Mod orsakar problem."
+L["badconf.line2"] = "Nedanför finns problem som upptäckts och lösningar till dem."
+L["badconf.confirm"] = "Bekräfta"
+L["badconf.wait"] = "Vänta {time}s"
+
+L["badconf.directx.title"] = "Gammal DirectX-Version"
+L["badconf.directx.desc"] = "Du kör just nu DirectX 8 eller 8.1. Då många vapentillägg tar bort tillgångar med lägre kvalitet för att sänka filstorleken så kanske du inte ser dessa modeller."
+L["badconf.directx.solution"] = "Lösning: Gå till startinställningarna på Garry's Mod och lägg till \"-dxlevel 95\" i startparametern. Om \"-dxlevel 70/80/85\" är med där, ta bort det."
+
+L["badconf.tickrate.title"] = "Låg Server \"Tickrate\""
+L["badconf.tickrate.desc"] = "Servern du är på kör på för låg \"tickrate\". ARC9 är bäst när du kör på minumum 20 tickrate (66+ rekommenderas)."
+L["badconf.tickrate.solution"] = "Lösning: Om du är serverns ägare, lägg till \"-tickrate 33\", eller det värdet du vill använda, i serverns startkonfiguration."
+
+L["badconf.matbumpmap.title"] = "\"Bumpmaps\" är avstängda"
+L["badconf.matbumpmap.desc"] = "Du har avaktiverat \"bumpmaps\" vilket gör att vapen och modeller ser värre ut. Det kan också påverka vissa ARC9-riktmedel."
+L["badconf.matbumpmap.solution"] = "Lösning: I konsolen, skriv in \"mat_bumpmap 1\". Om du använder en \"FPS config\" av något slag så kanske du måste öppna \"autoexec.cfg\" och vara säker på att det inte stängs av automatiskt igen."
+
+L["badconf.addons.title"] = "För många LUA-filer"
+L["badconf.addons.desc"] = "Du har installerat för många tillägg och nått LUA-filbegränsningen. ARC9 har därför inte kunnat laddas korrekt, vilket betyder att tillbehör kanske inte fungerar."
+L["badconf.addons.solution"] = "Lösning: Avinstallera tyngre tillägg via spelets Tillägg meny, eller via Steam workshop (exempelvis andra vapenbaser, JMod, Entity-Tillägg, mm.)."
+
 ////////////////////// Presets
 L["customize.presets.atts"] = " Tillbehör"
 L["customize.presets.back"] = "Tillbaka"
@@ -815,3 +838,61 @@ L["settings.developer.presets_clear.desc"] = "Rensar förinställningar, alla ik
 L["settings.developer.clear"] = "Rensa"
 L["settings.developer.print"] = "Skriv till Konsol"
 L["settings.developer.reload"] = "Ladda Om"
+
+////////////////////// ARC9 Premium
+L["premium.title"] = "ARC9 Premium"
+L["premium.desc"] = "ARC9 Premium tillåter mer anpassning som ett stort tack för att ha stöttat tillägget finansiellt."
+
+L["premium.requires"] = "Kräver <color=255,106,0>ARC9 Premium</color>."
+L["premium.acquire"] = "Prenumerera till <color=255,106,0>ARC9 Premium</color>"
+
+L["premium.ownedno"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Ej ägd</color>"
+L["premium.owned"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Ägd</color>"
+
+L["premium.help"] = "Vad är ARC9 Premium?"
+L["premium.help.header"] = "Guide till ARC9 Premium"
+L["premium.help.desc"] = "Creating addons takes time and resources. ARC9 has always been available for free, and it will remain that way. However, if you wish to support the base financially, you may do so, and get rewarded for it!"
+
+L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Diamond Doves Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
+
+L["premium.content"] = "Inkluderat i <color=255,106,0>ARC9 Premium</color>:"
+L["premium.content.list"] = [[
+- Oändliga Anpassningsplatser (Ökat från 32)
+- Oändliga Förinställningar (Ökat från 10 per vapen)
+- Tillgång till "Supermodifier"-inställningar*
+- Tillgång till exklusivt Mörkt Gränssnittläge
+- Förmåga att färga riktmedel hårkors, gränssnitt och mer
+- Exklusiva kamouflage gjort tillgängliga via basen
+- Exklusiv supportkanal på Discord
+
+*Kräver administratör på servrar
+]]
+
+L["premium.payment.month"] = [[
+$%s
+Skaffa ARC9 Premium i 1 Månad.
+]]
+
+L["premium.payment.months"] = [[
+$%s
+Skaffa ARC9 Premium i %s Månader och få <color=100,255,100>%s%% rabatt</color>!
+]]
+
+L["premium.payment.info"] = [[
+Köp av ARC9 Premium ger omedelbar tillgång till all innehåll som visats innan efter köp.
+Tid kan förlängas genom att köpa valfritt alternativ en gång till, och tiden ändras automatiskt när originaltiden har gått ut.
+När tiden har gått ut, och ingen tillagd betalning har gjorts, så tas tillgång till ARC9 Premium bort.
+
+All anpassningsalternativ, inklusive anpassningsplatser, förinställningar och färgade hårkors gjorda med ARC9 Premium kommer fortsätta vara tillgängliga, men du kan inte längre ändra dem eller lägga till fler.
+]]
+
+L["premium.purchased"] = "<color=255,106,0>ARC9 Premium</color> köpt!"
+L["premium.purchased.desc"] = [[
+Tack för att du köpt ARC9 Premium! Du har gjort en fågel väldigt glad!
+
+Ett kvitto kommer skickas till din kopplad E-post.
+
+Om du inte omedelbart får tillgång till ARC9 Premium bonusarna, vänligen återanslut till servern, eller starta om spelet.
+
+Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Diamond Doves Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
+]]

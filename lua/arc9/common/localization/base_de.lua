@@ -314,6 +314,29 @@ L["incompatible.never"] = "Warne mich nicht erneut"
 L["incompatible.never.hover"] = "Bist du dir absolut sicher, dass du die Auswirkungen verstehst?"
 L["incompatible.never.confirm"] = "Du hast Inkompatibilitätswarnungen ausgeschaltet; Wenn etwas schiefläuft, ist das deine eigene Schuld."
 
+////////////////////// Warning panel
+-- L["badconf.title"] = "ARC9: BAD PERFORMANCE WARNING"
+-- L["badconf.line1"] = "It appears some Garry's Mod settings are causing problems."
+-- L["badconf.line2"] = "Listed below are problems which have been detected, and solutions to fix them."
+-- L["badconf.confirm"] = "Acknowledge"
+-- L["badconf.wait"] = "Wait {time}s"
+
+-- L["badconf.directx.title"] = "Outdated DirectX Version"
+-- L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. As many weapon addons remove low-quality assets to reduce file size, you might not be able to see those models."
+-- L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
+
+-- L["badconf.tickrate.title"] = "Low Server Tickrate"
+-- L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
+-- L["badconf.tickrate.solution"] = "Solution: If you are a server owner, then insert \"-tickrate 33\", or whichever value you want, in the server launch configurations."
+
+-- L["badconf.matbumpmap.title"] = "Disabled Bumpmaps"
+-- L["badconf.matbumpmap.desc"] = "You have bumpmaps disabled, which makes weapons and props look worse. It also affects certain ARC9 optics."
+-- L["badconf.matbumpmap.solution"] = "Solution: In the console, type \"mat_bumpmap 1\". If you are using an FPS config of any kind, then you might have to access \"autoexec.cfg\" and ensure it does not automatically turn it back off."
+
+-- L["badconf.addons.title"] = "Too Many LUA Files"
+-- L["badconf.addons.desc"] = "You have installed way too many addons and have reached the LUA file limit. ARC9 has therefore not been able to initialize properly, meaning attachments might not work."
+-- L["badconf.addons.solution"] = "Solution: Uninstall heavy addons through the in-game Addons menu, or through the Steam workshop (for example other weapon bases, JMod, Entity Packs, and so on)."
+
 ////////////////////// Presets
 L["customize.presets.atts"] = " Aufsätze"
 L["customize.presets.back"] = "Zurück"
@@ -815,3 +838,61 @@ L["settings.developer.presets_clear.desc"] = "Lösche Voreinstellungen, alle Ico
 L["settings.developer.clear"] = "Löschen"
 L["settings.developer.print"] = "In die Konsole schreiben"
 L["settings.developer.reload"] = "Neu laden"
+
+////////////////////// ARC9 Premium
+L["premium.title"] = "ARC9 Premium"
+L["premium.desc"] = "ARC9 Premium ermöglicht zusätzliche Anpassungen als großes Dankeschön für die finanzielle Unterstützung des Addons."
+
+L["premium.requires"] = "Erfordert <color=255,106,0>ARC9 Premium</color>."
+L["premium.acquire"] = "Abonnieren Sie <color=255,106,0>ARC9 Premium</color>"
+
+L["premium.ownedno"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Nicht vorhanden</color>"
+L["premium.owned"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Besitzt</color>"
+
+L["premium.help"] = "Was ist ARC9 Premium?"
+L["premium.help.header"] = "Anleitung zu ARC9 Premium"
+L["premium.help.desc"] = "Die Erstellung von Addons erfordert Zeit und Ressourcen. ARC9 war schon immer kostenlos, und das wird auch so bleiben. Wenn du jedoch die Basis finanziell unterstützen möchtest, kannst du das tun und wirst dafür belohnt!"
+
+L["premium.help.ownedbutnoaccess"] = "Haben Sie vor kurzem ARC9 Premium gekauft, haben aber keinen automatischen Zugang dazu? Kontaktieren Sie uns auf dem Diamond Doves Discord Server für Hilfe.\nStellen Sie sicher, dass Sie einen Kaufnachweis erbringen können, bevor Sie uns kontaktieren. Einfach zu sagen „Ich kaufe, jetzt geben“ ist nicht gut genug."
+
+L["premium.content"] = "Enthalten in <color=255,106,0>ARC9 Premium</color>:"
+L["premium.content.list"] = [[
+- Unbegrenzte Anpassungs-Slots (erhöht von 32)
+- Unbegrenzte Voreinstellungs-Slots (erhöht von 10 pro Waffe)
+- Zugang zu Supermodifier-Einstellungen*
+- Zugang zu einem exklusiven dunklen UI-Modus
+- Möglichkeit, optische Fadenkreuze, UI und mehr einzufärben
+- Exklusive Tarnungen, die über die Basis verfügbar sind
+- Exklusiver Support-Kanal auf Discord
+
+*Erfordert einen Administrator, wenn auf einem Server
+]]
+
+L["premium.payment.month"] = [[
+$%s
+Erwerben Sie ARC9 Premium für 1 Monat.
+]]
+
+L["premium.payment.months"] = [[
+$%s
+Erwerben Sie ARC9 Premium für %s Monate und erhalten Sie einen <color=100,255,100>Rabatt von %s%%</color>!
+]]
+
+L["premium.payment.info"] = [[
+Mit dem Erwerb von ARC9 Premium erhalten Sie sofortigen Zugriff auf alle oben aufgeführten Inhalte für die erworbene Zeit.
+Die Zeit kann durch den erneuten Kauf einer der Optionen verlängert werden, und die Zeit wird automatisch aktualisiert, sobald die ursprüngliche Zeit abgelaufen ist.
+Sobald die Zeit abgelaufen ist und keine weitere Zahlung erfolgt ist, wird der Zugang zu ARC9 Premium entfernt.
+
+Alle mit ARC9 Premium erstellten Anpassungsoptionen, einschließlich der Aufsatzslots, Voreinstellungen und farbigen Absehen, bleiben verfügbar, aber Sie können sie nicht ändern oder zusätzliche hinzufügen.
+]]
+
+L["premium.purchased"] = "<color=255,106,0>ARC9 Premium</color> gekauft!"
+L["premium.purchased.desc"] = [[
+Vielen Dank, dass Sie ARC9 Premium gekauft haben! Sie haben dem Vogel eine große Freude gemacht!
+
+Eine Quittung wird Ihnen an die von Ihnen angegebene E-Mail-Adresse gesendet.
+
+Wenn Sie nicht sofort Zugang zu den ARC9 Premium-Boni erhalten haben, verbinden Sie sich bitte erneut mit dem Server oder starten Sie Ihr Spiel neu.
+
+Wenn Sie immer noch Probleme damit haben, oder wenn Sie immer noch keinen Premium-Zugang erhalten haben, dann besuchen Sie den Diamond Doves Discord Server und geben Sie einen gültigen Kaufnachweis an, und wir werden das Problem für Sie lösen.
+]]
