@@ -373,6 +373,13 @@ L["incompatible.never"] = "Never warn me again"
 L["incompatible.never.hover"] = "Are you absolutely sure you understand the consequences?"
 L["incompatible.never.confirm"] = "You have chosen to never show incompatiblity warnings again. If you encounter errors or broken behaviour, it is your own responsibility."
 
+////////////////////// Warning panel
+L["badconf.title"] = "ARC9: BAD GMOD CONFIGURATION WARNING"
+L["badconf.line1"] = "Some of your gmod settings aren't set up correctly."
+L["badconf.line2"] = "blah blah fix please."
+L["badconf.confirm"] = "Acknowledge"
+L["badconf.wait"] = "Wait {time}s"
+
 ////////////////////// Presets
 L["customize.presets.atts"] = " Attachments"
 L["customize.presets.back"] = "Back"

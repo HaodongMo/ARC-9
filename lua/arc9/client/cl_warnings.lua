@@ -289,6 +289,20 @@ function ARC9.DoCompatibilityCheck()
     elseif not table.IsEmpty(incompatList) then
         print("ARC9 ignored " .. table.Count(incompatList) .. " incompatible addons. If things break, it's your fault.")
     end
+
+
+
+    local warningsList = {}
+
+    for _, addon in pairs(ARC9.BadConfigStuff) do
+        if addon.cause() then
+            table.insert(warningsList, addon)
+        end
+    end
+
+    if !table.IsEmpty(warningsList) then
+        ARC9.MakeBadConfigWindow(warningsList)
+    end
 end
 
 concommand.Add("arc9_dev_showwarnings", ARC9.DoCompatibilityCheck)
@@ -300,3 +314,171 @@ hook.Add("InitPostEntity", "ARC9_CheckContent", function()
 
     chat.AddText(Color(255, 255, 255), "You have installed the ARC9 base but have no weapons installed. Search the workshop for some!")
 end)
+
+
+
+
+
+ARC9.BadConfigStuff = {
+    dx = {
+        title = "Outdated DirectX level",
+        desc = "Most weapon packs won't have any models for you. Any hardware from 2003+ can run directx 9 fine.",
+        solution = "Solution: go to gmod launch options and put \"-dxlevel 95\" in there. (Remove -dxlevel 70/80/85 if it exists there)",
+        cause = function() return render.GetDXLevel() != 95 and render.GetDXLevel() != 90 end
+    },
+    tickrate = {
+        title = "Too low server tickrate",
+        desc = "Server isn't set up correctly. ARC9 guns need atleast 20 tickrate to work correctly (66+ preferebaly).",
+        solution = "Solution: -tickrate 33 in server launch configuration.",
+        cause = function() return game.IsDedicated() and 1 / engine.TickInterval() < 20 end
+    },
+    matbumpmap = {
+        title = "mat_bumpmap isn't set to 1",
+        desc = "Bumpmaps are off, which makes gun look worse and certain scopes might not work.",
+        solution = "Solution: open console > type \"mat_bumpmap 1\". If you are using pro gaming configs, autoexec.cfg might force it to 0, if so, find it and remove that line.",
+        cause = function() return GetConVar("mat_bumpmap"):GetInt() == 0 end
+    },
+    addons = {
+        title = "Too many addons - lua limit exceeded",
+        desc = "Uh-oh. Someone installed too many addons. ARC9 wasn't able to initialize properly, attachments won't work.",
+        solution = "Solution: uninstall heavy addons (other weapon bases, jmod, entity packs etc etc).",
+        cause = function() return ARC9.AllLuaFilesLoaded != true end
+    },
+}
+
+
+
+function ARC9.MakeBadConfigWindow(tbl)
+    local startTime = CurTime()
+    local window = vgui.Create("DFrame")
+    window:SetSize(ScrW() * 0.6, ScrH() * 0.6)
+    window:Center()
+    window:SetTitle("")
+    window:SetDraggable(false)
+    window:SetVisible(true)
+    window:ShowCloseButton(false)
+    window:MakePopup()
+
+    window.Paint = function(self, w, h)
+        surface.SetDrawColor(0, 0, 0, 200)
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local title = vgui.Create("DLabel", window)
+    title:SetSize(ScreenScaleMulti(256), ScreenScaleMulti(26))
+    title:Dock(TOP)
+    title:SetFont("ARC9_24")
+    title:SetText(ARC9:GetPhrase("badconf.title"))
+    title:DockMargin(ScreenScaleMulti(16), 0, ScreenScaleMulti(16), ScreenScaleMulti(8))
+    local desc = vgui.Create("DLabel", window)
+    desc:SetSize(ScreenScaleMulti(256), ScreenScaleMulti(12))
+    desc:Dock(TOP)
+    desc:DockMargin(ScreenScaleMulti(4), 0, ScreenScaleMulti(4), 0)
+    desc:SetFont("ARC9_12")
+    desc:SetText(ARC9:GetPhrase("badconf.line1"))
+    desc:SetContentAlignment(5)
+    local desc2 = vgui.Create("DLabel", window)
+    desc2:SetSize(ScreenScaleMulti(256), ScreenScaleMulti(12))
+    desc2:Dock(TOP)
+    desc2:DockMargin(ScreenScaleMulti(4), 0, ScreenScaleMulti(4), ScreenScaleMulti(4))
+    desc2:SetFont("ARC9_12")
+    desc2:SetText(ARC9:GetPhrase("badconf.line2"))
+    desc2:SetContentAlignment(5)
+
+    local addonList = vgui.Create("DScrollPanel", window)
+    addonList:SetText("")
+    addonList:Dock(FILL)
+    addonList.Paint = function(span, w, h) end
+    local sbar = addonList:GetVBar()
+    sbar.Paint = function() end
+    sbar.btnUp.Paint = function(span, w, h) end
+    sbar.btnDown.Paint = function(span, w, h) end
+
+    sbar.btnGrip.Paint = function(span, w, h)
+        surface.SetDrawColor(255, 255, 255, 255)
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local accept = vgui.Create("DButton", window)
+    accept:SetSize(ScreenScaleMulti(256), ScreenScaleMulti(20))
+    accept:SetText("")
+    accept:Dock(BOTTOM)
+    accept:DockMargin(ScreenScaleMulti(48), ScreenScaleMulti(2), ScreenScaleMulti(48), ScreenScaleMulti(2))
+
+    accept.OnMousePressed = function(spaa, kc)
+        if CurTime() > startTime + 5 then
+            window:Close()
+            window:Remove()
+        end
+    end
+
+    accept.Paint = function(spaa, w, h)
+        local Bfg_col = Color(255, 255, 255, 255)
+        local Bbg_col = Color(0, 0, 0, 200)
+
+        if CurTime() > startTime + 5 and spaa:IsHovered() then
+            Bbg_col = Color(255, 255, 255, 100)
+            Bfg_col = Color(0, 0, 0, 255)
+        end
+
+        surface.SetDrawColor(Bbg_col)
+        surface.DrawRect(0, 0, w, h)
+
+        -- local txt = ARC9:GetPhrase("badconf.confirm") .. ((CurTime() > startTime + 5) and "" or (" - " .. ARC9:GetPhrase("badconf.wait", {
+        --     time = math.ceil(startTime + 5 - CurTime())
+        -- })))
+        local txt = ARC9:GetPhrase("badconf.confirm") .. ((CurTime() > startTime + 5) and "" or (" - " .. ARC9:GetPhrase("badconf.wait", {
+            time = math.ceil(startTime + 5 - CurTime())
+        })))
+
+        surface.SetTextColor(Bfg_col)
+        surface.SetTextPos(ScreenScaleMulti(8), ScreenScaleMulti(2))
+        surface.SetFont("ARC9_12")
+        surface.DrawText(txt)
+    end
+
+    for _, addon in pairs(tbl) do
+        local addonBtn = vgui.Create("DButton", window)
+        addonBtn:SetSize(ScreenScaleMulti(256), ScreenScaleMulti(38))
+        addonBtn:Dock(TOP)
+        addonBtn:DockMargin(ScreenScaleMulti(36), ScreenScaleMulti(2), ScreenScaleMulti(36), ScreenScaleMulti(2))
+        addonBtn:SetFont("ARC9_12")
+        addonBtn:SetText("")
+        addonBtn:SetContentAlignment(5)
+
+        addonBtn.Paint = function(spaa, w, h)
+            local Bfg_col = Color(255, 255, 255, 255)
+            local Bbg_col = Color(0, 0, 0, 200)
+
+            if spaa:IsHovered() then
+                Bbg_col = Color(255, 255, 255, 100)
+                Bfg_col = Color(0, 0, 0, 255)
+            end
+
+            surface.SetDrawColor(Bbg_col)
+            surface.DrawRect(0, 0, w, h)
+            local txt = addon.title
+            surface.SetTextColor(Bfg_col)
+            surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(2))
+            surface.SetFont("ARC9_12")
+            surface.DrawText(txt)
+            local txt2 = addon.desc
+            surface.SetTextColor(Bfg_col)
+            surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(16))
+            surface.SetFont("ARC9_8")
+            surface.DrawText(txt2)
+            local txt3 = addon.solution
+            surface.SetTextColor(Bfg_col)
+            surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(26))
+            surface.SetFont("ARC9_8")
+            surface.DrawText(txt3)
+        end
+
+        addonBtn.OnMousePressed = function(spaa, kc)
+            if addon.nourl then return end
+            -- gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=" .. tostring(addon.wsid))
+        end
+    end
+end
+
+-- ARC9.MakeBadConfigWindow(ARC9.BadConfigStuff)

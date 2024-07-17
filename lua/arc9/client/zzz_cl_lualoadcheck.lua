@@ -1,0 +1,1 @@
+ARC9.AllLuaFilesLoaded = true
