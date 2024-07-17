@@ -315,37 +315,52 @@ L["incompatible.never.hover"] = "¿Estás completamente seguro de que entiendes 
 L["incompatible.never.confirm"] = "Ha elegido no volver a mostrar advertencias de incompatibilidad. Si encuentras errores o comportamientos rotos, es tu responsabilidad."
 
 ////////////////////// Warning panel
--- L["badconf.title"] = "ARC9: BAD PERFORMANCE WARNING"
+-- L["badconf.title"] = "ARC9: BAD GMOD SETTINGS WARNING"
 -- L["badconf.line1"] = "It appears some Garry's Mod settings are causing problems."
 -- L["badconf.line2"] = "Listed below are problems which have been detected, and solutions to fix them."
 -- L["badconf.confirm"] = "Acknowledge"
 -- L["badconf.wait"] = "Wait {time}s"
 
--- L["badconf.warning"] = "Warning! Your performance is not optimal! - Hover over to view details."
-
--- L["badconf.directx.title"] = "Outdated DirectX Version"
--- L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. As many weapon addons remove low-quality assets to reduce file size, you might not be able to see those models."
+-- L["badconf.directx.title"] = "Outdated DirectX version"
+-- L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. Modern GMod isn't meant for this, you might not be able to see models on most weapon packs. (dx9 was introduced 21 years ago!)"
 -- L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
 
--- L["badconf.tickrate.title"] = "Low Server Tickrate"
+-- L["badconf.tickrate.title"] = "Too low server tickrate"
 -- L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
 -- L["badconf.tickrate.solution"] = "Solution: If you are a server owner, then insert \"-tickrate 33\", or whichever value you want, in the server launch configurations."
 
--- L["badconf.matbumpmap.title"] = "Bumpmaps Disabled"
--- L["badconf.matbumpmap.desc"] = "You have bumpmaps disabled, which makes weapons and props look worse. It also affects certain ARC9 optics."
--- L["badconf.matbumpmap.solution"] = "Solution: In the console, type \"mat_bumpmap 1\". If you are using an FPS config of any kind, then you might have to access \"autoexec.cfg\" and ensure it does not automatically turn it back off."
+-- L["badconf.matbumpmap.title"] = "mat_bumpmap is disabled"
+-- L["badconf.matbumpmap.desc"] = "You have bumpmaps disabled, which makes weapons look worse. It also breaks certain ARC9 optics."
+-- L["badconf.matbumpmap.solution"] = "Solution: In the console, type \"mat_bumpmap 1\". If you are using an FPS config of any kind, then find and delete mat_bumpmap 0 line from \"autoexec.cfg\"."
 
--- L["badconf.addons.title"] = "Too Many LUA Files"
--- L["badconf.addons.desc"] = "You have installed way too many addons and have reached the LUA file limit. ARC9 has therefore not been able to initialize properly, meaning attachments might not work."
+-- L["badconf.addons.title"] = "Too many addons! Lua file limit exceeded!"
+-- L["badconf.addons.desc"] = "You have installed way too many addons and have reached the Lua file limit. ARC9 has therefore not been able to initialize properly, meaning attachments might not work."
 -- L["badconf.addons.solution"] = "Solution: Uninstall heavy addons through the in-game Addons menu, or through the Steam workshop (for example other weapon bases, JMod, Entity Packs, and so on)."
 
--- L["badconf.x64.title"] = "32-Bit Detected"
--- L["badconf.x64.desc"] = "You are currently running Garry's Mod in 32-bit. This restricts the amount of performance you can obtain drastically."
--- L["badconf.x64.solution"] = "Solution: In Garry's Mod's launch options, go to \"Betas\" and change to \"x86-64 - Chromium + 64-bit binaries\"."
+-- L["badconf.warning"] = "Warning! Your performance is not optimal! - Hover over to view details."
+-- L["badconf.warning.desc"] = "More FPS is always good. Especially on weapon bases like this one.\n\nHover cursor over items below to see solution."
 
--- L["badconf.multicore.title"] = "No Multicore Rendering"
--- L["badconf.multicore.desc"] = "Multicore rendering is currently disabled. This results in worsened in-game performance."
--- L["badconf.multicore.solution"] = "Solution: You can google \"Gmod Multicore\" and find a solution online."
+-- L["badconf.x64.title"] = "► Slow 32-Bit branch Detected"
+-- L["badconf.x64.desc"] = [[You are currently running Garry's Mod in 32-bit. This restricts the amount of performance you can obtain drastically.
+
+-- Solution: In Garry's Mod's launch options, go to "Betas" and change to "x86-64 - Chromium + 64-bit binaries".
+
+-- Google "gmod x64" to find a tutorial online.]]
+
+-- L["badconf.multicore.title"] = "► No Multicore Rendering commands"
+-- L["badconf.multicore.desc"] = [[Certain multicore rendering settings are currently disabled. This results in worsened in-game performance.
+
+-- Solution: You need to put certain commands into autoexec.cfg
+
+-- Google "gmod multicore" to find a tutorial online.
+
+-- All commands that can increase performance:
+-- gmod_mcore_test 1
+-- mat_queue_mode 2
+-- cl_threaded_bone_setup 1
+-- cl_threaded_client_leaf_system 1
+-- r_threaded_client_shadow_manager 1
+-- r_threaded_renderables 1]]
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " Accesorios"

@@ -315,37 +315,52 @@ L["incompatible.never.hover"] = "Är du absolut säker på att du förstår kons
 L["incompatible.never.confirm"] = "Du har valt att aldrig igen visa inkompatibla varningar igen. Om du upplever problem eller brutet beteende så är det ditt eget ansvar."
 
 ////////////////////// Warning panel
-L["badconf.title"] = "ARC9: DÅLIG PRESTANDAVARNING"
+L["badconf.title"] = "ARC9: DÅLIG GMOD-INSTÄLLNINGSVARNING"
 L["badconf.line1"] = "Ser ut som att några inställningar på Garry's Mod orsakar problem."
 L["badconf.line2"] = "Nedanför finns problem som upptäckts och lösningar till dem."
 L["badconf.confirm"] = "Bekräfta"
 L["badconf.wait"] = "Vänta {time}s"
 
-L["badconf.warning"] = "Varning! Din prestanda är ej optimal! - Markera för att visa detaljer."
-
 L["badconf.directx.title"] = "Gammal DirectX-Version"
 L["badconf.directx.desc"] = "Du kör just nu DirectX 8 eller 8.1. Då många vapentillägg tar bort tillgångar med lägre kvalitet för att sänka filstorleken så kanske du inte ser dessa modeller."
 L["badconf.directx.solution"] = "Lösning: Gå till startinställningarna på Garry's Mod och lägg till \"-dxlevel 95\" i startparametern. Om \"-dxlevel 70/80/85\" är med där, ta bort det."
 
-L["badconf.tickrate.title"] = "Låg Server \"Tickrate\""
+L["badconf.tickrate.title"] = "För låg server \"tickrate\""
 L["badconf.tickrate.desc"] = "Servern du är på kör på för låg \"tickrate\". ARC9 är bäst när du kör på minumum 20 tickrate (66+ rekommenderas)."
 L["badconf.tickrate.solution"] = "Lösning: Om du är serverns ägare, lägg till \"-tickrate 33\", eller det värdet du vill använda, i serverns startkonfiguration."
 
-L["badconf.matbumpmap.title"] = "\"Bumpmaps\" avaktiverade"
+L["badconf.matbumpmap.title"] = "mat_bumpmap avaktiverat"
 L["badconf.matbumpmap.desc"] = "Du har avaktiverat \"bumpmaps\" vilket gör att vapen och modeller ser värre ut. Det kan också påverka vissa ARC9-riktmedel."
-L["badconf.matbumpmap.solution"] = "Lösning: I konsolen, skriv in \"mat_bumpmap 1\". Om du använder en \"FPS config\" av något slag så kanske du måste öppna \"autoexec.cfg\" och vara säker på att det inte stängs av automatiskt igen."
+L["badconf.matbumpmap.solution"] = "Lösning: I konsolen, skriv in \"mat_bumpmap 1\". Om du använder en \"FPS config\" så måste du hitta och ta bort \"mat_bumpmap 0\" från \"autoexec.cfg\"."
 
-L["badconf.addons.title"] = "För många LUA-filer"
+L["badconf.addons.title"] = "För många tillägg! LUA-filbegränsning nådd!"
 L["badconf.addons.desc"] = "Du har installerat för många tillägg och nått LUA-filbegränsningen. ARC9 har därför inte kunnat laddas korrekt, vilket betyder att tillbehör kanske inte fungerar."
 L["badconf.addons.solution"] = "Lösning: Avinstallera tyngre tillägg via spelets Tillägg meny, eller via Steam workshop (exempelvis andra vapenbaser, JMod, Entity-Tillägg, mm.)."
 
-L["badconf.x64.title"] = "32-Bitars Upptäckt"
-L["badconf.x64.desc"] = "Du kör just nu Garry's Mod i 32-bitars. Detta begränsar hur mycket prestanda du kan ha, ganska drastiskt."
-L["badconf.x64.solution"] = "Lösning: I Garry's Mods startinställningar, gå till \"Betas\" och byt till \"x86-64 - Chromium + 64-bit binaries\"."
+L["badconf.warning"] = "Varning! Din prestanda är ej optimal! - Markera för att visa detaljer."
+L["badconf.warning.desc"] = "Högre FPS är alltid bäst. Speciellt på vapenbaser som den här.\n\nMarkera föremålen nedanför för att se lösningar."
 
-L["badconf.multicore.title"] = "Ingen Multicore-Rendering"
-L["badconf.multicore.desc"] = "Multicore-rendering är avstängt. Detta ger väldigt dålig spelprestanda."
-L["badconf.multicore.solution"] = "Lösning: Google \"Gmod Multicore\" och hitta en lösning på nätet."
+L["badconf.x64.title"] = "► Sölig 32-Bitars branch Upptäckt"
+L["badconf.x64.desc"] = [[Du kör just nu Garry's Mod i 32-bitars. Detta begränsar hur mycket prestanda du kan ha, ganska drastiskt.
+
+Lösning: I Garry's Mods startinställningar, gå till "Betan", och byt till "x86-64 - Chromium + 64-bit binaries".
+
+Googla "gmod x64" för att hitta hjälp på nätet.]]
+
+L["badconf.multicore.title"] = "► Inga Multicore-Rendering Kommandon"
+L["badconf.multicore.desc"] = [[Vissa multicore-rendering inställningar är för tillfällat avstängda. Detta ger förvärrad spelprestanda.
+
+Lösning: Du kan skriva in vissa kommandon in i autoexec.cfg
+
+Google "gmod multicore" för att hitta hjälp på nätet.
+
+Alla kommandon som han öka prestandan:
+gmod_mcore_test 1
+mat_queue_mode 2
+cl_threaded_bone_setup 1
+cl_threaded_client_leaf_system 1
+r_threaded_client_shadow_manager 1
+r_threaded_renderables 1]]
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " Tillbehör"

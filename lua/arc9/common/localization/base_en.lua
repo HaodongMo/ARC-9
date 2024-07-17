@@ -400,10 +400,26 @@ L["badconf.warning"] = "Warning! Your performance is not optimal! - Hover over t
 L["badconf.warning.desc"] = "More FPS is always good. Especially on weapon bases like this one.\n\nHover cursor over items below to see solution."
 
 L["badconf.x64.title"] = "► Slow 32-Bit branch Detected"
-L["badconf.x64.desc"] = "You are currently running Garry's Mod in 32-bit. This restricts the amount of performance you can obtain drastically.\n\nSolution: In Garry's Mod's launch options, go to \"Betas\" and change to \"x86-64 - Chromium + 64-bit binaries\".\n\nGoogle \"gmod x64\" to find a tutorial online."
+L["badconf.x64.desc"] = [[You are currently running Garry's Mod in 32-bit. This restricts the amount of performance you can obtain drastically.
+
+Solution: In Garry's Mod's launch options, go to "Betas" and change to "x86-64 - Chromium + 64-bit binaries".
+
+Google "gmod x64" to find a tutorial online.]]
 
 L["badconf.multicore.title"] = "► No Multicore Rendering commands"
-L["badconf.multicore.desc"] = "Certain multicore rendering settings are currently disabled. This results in worsened in-game performance.\n\nSolution: You need to put certain commands into autoexec.cfg\n\nGoogle \"gmod multicore\" to find a tutorial online.\n\nAll commands that can increase performance:\n\ngmod_mcore_test 1\nmat_queue_mode 2\ncl_threaded_bone_setup 1\ncl_threaded_client_leaf_system 1\nr_threaded_client_shadow_manager 1\nr_threaded_renderables 1"
+L["badconf.multicore.desc"] = [[Certain multicore rendering settings are currently disabled. This results in worsened in-game performance.
+
+Solution: You need to put certain commands into autoexec.cfg
+
+Google "gmod multicore" to find a tutorial online.
+
+All commands that can increase performance:
+gmod_mcore_test 1
+mat_queue_mode 2
+cl_threaded_bone_setup 1
+cl_threaded_client_leaf_system 1
+r_threaded_client_shadow_manager 1
+r_threaded_renderables 1]]
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " Attachments"
