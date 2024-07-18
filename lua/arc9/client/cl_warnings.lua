@@ -64,6 +64,7 @@ ARC9.IncompatibleAddons = {
 local ScreenScaleMulti = ARC9.ScreenScale
 
 function ARC9.MakeIncompatibleWindow(tbl)
+    surface.PlaySound("buttons/combine_button_locked.wav")
     local startTime = CurTime()
     local window = vgui.Create("DFrame")
     window:SetSize(ScrW() * 0.6, ScrH() * 0.6)
@@ -117,6 +118,7 @@ function ARC9.MakeIncompatibleWindow(tbl)
             window:Close()
             window:Remove()
             chat.AddText(Color(255, 0, 0), ARC9:GetPhrase("incompatible.never.confirm"))
+            surface.PlaySound("buttons/lever1.wav")
         end
     end
 
@@ -231,68 +233,8 @@ function ARC9.MakeIncompatibleWindow(tbl)
 end
 
 function ARC9.DoCompatibilityCheck()
-    local incompatList = {}
-    local addons = engine.GetAddons()
-
-    for _, addon in pairs(addons) do
-        if ARC9.IncompatibleAddons[tostring(addon.wsid)] and addon.mounted then
-            incompatList[tostring(addon.wsid)] = addon
-        end
-    end
-
-    local predrawvmhooks = hook.GetTable().PreDrawViewModel
-
-    -- vtools lua breaks ARC9 with stupid return in vm hook, ya dont need it if you going to play with guns
-    if predrawvmhooks and (predrawvmhooks.DisplayDistancePlaneLS or predrawvmhooks.DisplayDistancePlane) then
-        hook.Remove("PreDrawViewModel", "DisplayDistancePlane")
-        hook.Remove("PreDrawViewModel", "DisplayDistancePlaneLS")
-
-        incompatList["DisplayDistancePlane"] = {
-            title = "Light Sprayer / Scenic Dispenser tool - most likely from VTools",
-            wsid = "DisplayDistancePlane",
-            nourl = true,
-        }
-    end
-
-    local playerspawnhooks = hook.GetTable().PlayerSpawn
-
-    if playerspawnhooks and playerspawnhooks.PlayerSpawn then
-        incompatList["TacticalLean"] = {
-            title = "Tactical Leaning",
-            wsid = "TacticalLean",
-            nourl = true,
-        }
-    end
-
-    local shouldDo = true
-
-    -- If never show again is on, verify we have no new addons
-    if file.Exists("arc9_incompatible.txt", "DATA") then
-        shouldDo = false
-        local oldTbl = util.JSONToTable(file.Read("arc9_incompatible.txt"))
-
-        for id, addon in pairs(incompatList) do
-            local num_id = tonumber(id) or ""
-            if not oldTbl[num_id] then
-                shouldDo = true
-                break
-            end
-        end
-
-        if shouldDo then
-            file.Delete("arc9_incompatible.txt")
-        end
-    end
-
-    if shouldDo and not table.IsEmpty(incompatList) then
-        ARC9.MakeIncompatibleWindow(incompatList)
-    elseif not table.IsEmpty(incompatList) then
-        print("ARC9 ignored " .. table.Count(incompatList) .. " incompatible addons. If things break, it's your fault.")
-    end
-
-
-
-    local warningsList = {}
+    local shouldopenincompat, shouldopenconfig = false, false
+    local incompatList, warningsList = {}, {}
 
     for _, addon in pairs(ARC9.BadConfigStuff) do
         if addon.cause() then
@@ -300,8 +242,72 @@ function ARC9.DoCompatibilityCheck()
         end
     end
 
-    if !table.IsEmpty(warningsList) then
-        ARC9.MakeBadConfigWindow(warningsList)
+    shouldopenconfig = !table.IsEmpty(warningsList)
+
+    if game.SinglePlayer() then -- incompat addons only in sp
+        local addons = engine.GetAddons()
+
+        for _, addon in pairs(addons) do
+            if ARC9.IncompatibleAddons[tostring(addon.wsid)] and addon.mounted then
+                incompatList[tostring(addon.wsid)] = addon
+            end
+        end
+
+        local predrawvmhooks = hook.GetTable().PreDrawViewModel
+
+        -- vtools lua breaks ARC9 with stupid return in vm hook, ya dont need it if you going to play with guns
+        if predrawvmhooks and (predrawvmhooks.DisplayDistancePlaneLS or predrawvmhooks.DisplayDistancePlane) then
+            hook.Remove("PreDrawViewModel", "DisplayDistancePlane")
+            hook.Remove("PreDrawViewModel", "DisplayDistancePlaneLS")
+
+            incompatList["DisplayDistancePlane"] = {
+                title = "Light Sprayer / Scenic Dispenser tool - most likely from VTools",
+                wsid = "DisplayDistancePlane",
+                nourl = true,
+            }
+        end
+
+        local playerspawnhooks = hook.GetTable().PlayerSpawn
+
+        if playerspawnhooks and playerspawnhooks.PlayerSpawn then
+            incompatList["TacticalLean"] = {
+                title = "Tactical Leaning",
+                wsid = "TacticalLean",
+                nourl = true,
+            }
+        end
+
+        local shouldDo = true
+
+        -- If never show again is on, verify we have no new addons
+        if file.Exists("arc9_incompatible.txt", "DATA") then
+            shouldDo = false
+            local oldTbl = util.JSONToTable(file.Read("arc9_incompatible.txt"))
+
+            for id, addon in pairs(incompatList) do
+                local num_id = tonumber(id) or ""
+                if not oldTbl[num_id] then
+                    shouldDo = true
+                    break
+                end
+            end
+
+            if shouldDo then
+                file.Delete("arc9_incompatible.txt")
+            end
+        end
+
+        shouldopenincompat = shouldDo and not table.IsEmpty(incompatList)
+
+        if !shouldopenincompat and not table.IsEmpty(incompatList) then
+            print("ARC9 ignored " .. table.Count(incompatList) .. " incompatible addons. If things break, it's your fault.")
+        end
+    end
+
+    if shouldopenconfig then
+        ARC9.MakeBadConfigWindow(warningsList, shouldopenincompat, incompatList)
+    elseif shouldopenincompat then
+        ARC9.MakeIncompatibleWindow(incompatList)
     end
 end
 
@@ -330,7 +336,7 @@ ARC9.BadConfigStuff = {
         title = ARC9:GetPhrase("badconf.tickrate.title"),
         desc = ARC9:GetPhrase("badconf.tickrate.desc"),
         solution = ARC9:GetPhrase("badconf.tickrate.solution"),
-        cause = function() return game.IsDedicated() and 1 / engine.TickInterval() < 20 end
+        cause = function() return game.IsDedicated() and 1 / engine.TickInterval() < 20 and LocalPlayer():IsAdmin() end
     },
     matbumpmap = {
         title = ARC9:GetPhrase("badconf.matbumpmap.title"),
@@ -342,13 +348,14 @@ ARC9.BadConfigStuff = {
         title = ARC9:GetPhrase("badconf.addons.title"),
         desc = ARC9:GetPhrase("badconf.addons.desc"),
         solution = ARC9:GetPhrase("badconf.addons.solution"),
-        cause = function() return ARC9.AllLuaFilesLoaded != true end
+        cause = function() return ARC9.AllLuaFilesLoaded != true end -- zzz_cl_lualoadcheck.lua
     },
 }
 
 
 
-function ARC9.MakeBadConfigWindow(tbl)
+function ARC9.MakeBadConfigWindow(tbl, openincompatafter, incompattable)
+    surface.PlaySound("buttons/weapon_cant_buy.wav")
     local startTime = CurTime()
     local window = vgui.Create("DFrame")
     window:SetSize(ScrW() * 0.6, ScrH() * 0.6)
@@ -409,6 +416,10 @@ function ARC9.MakeBadConfigWindow(tbl)
         if CurTime() > startTime + 5 then
             window:Close()
             window:Remove()
+
+            if openincompatafter then
+                ARC9.MakeIncompatibleWindow(incompattable)
+            end
         end
     end
 
@@ -475,8 +486,7 @@ function ARC9.MakeBadConfigWindow(tbl)
         end
 
         addonBtn.OnMousePressed = function(spaa, kc)
-            if addon.nourl then return end
-            -- gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=" .. tostring(addon.wsid))
+            surface.PlaySound("npc/stalker/go_alert2.wav")
         end
     end
 end
