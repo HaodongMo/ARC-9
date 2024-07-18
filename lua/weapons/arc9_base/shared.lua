@@ -494,6 +494,9 @@ SWEP.RangeMaxUBGL = 5000
 SWEP.DistanceUBGL = 33000
 SWEP.PenetrationUBGL = 5
 SWEP.DamageTypeUBGL = DMG_BULLET
+SWEP.ExplosionDamageUBGL = 0
+SWEP.ExplosionRadiusUBGL = 0
+SWEP.ExplosionEffectUBGL = false 
 
 -------------------------- VISUAL RECOIL
 
