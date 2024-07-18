@@ -483,6 +483,17 @@ SWEP.ManualActionUBGL = false
 SWEP.ShouldDropMagUBGL = false
 SWEP.ShotgunReloadUBGL = false
 SWEP.HybridReloadUBGL = false
+SWEP.ShootEntUBGL = false
+SWEP.TracerNumUBGL = false
+SWEP.TriggerDelayUBGL = false
+SWEP.PhysBulletModelUBGL = false
+SWEP.ShootEntForceUBGL = false
+SWEP.SweetSpotUBGL = false
+SWEP.RangeMinUBGL = 0
+SWEP.RangeMaxUBGL = 5000
+SWEP.DistanceUBGL = 33000
+SWEP.PenetrationUBGL = 5
+SWEP.DamageTypeUBGL = DMG_BULLET
 
 -------------------------- VISUAL RECOIL
 
