@@ -27,6 +27,8 @@ function SWEP:ThinkUBGL()
     end
 end
 
+local singleplayer = game.SinglePlayer()
+
 function SWEP:ToggleUBGL(on)
     if on == nil then on = !self:GetUBGL() end
     if self:GetReloading() then on = false end
@@ -41,8 +43,11 @@ function SWEP:ToggleUBGL(on)
     self:CancelReload()
     self:SetUBGL(on)
 
-    for _, v in pairs(self.PV_CacheLong) do v.time = 0 end -- reset cache so ubgl stats wont mix with normal gun
-
+    if singleplayer and self:GetOwner():IsPlayer() then
+        self:CallOnClient("ClearLongCache")
+    end
+    self:ClearLongCache()
+    
     if on then
         local soundtab = {
             name = "enterubgl",
@@ -55,7 +60,7 @@ function SWEP:ToggleUBGL(on)
         self:PlayAnimation("enter_ubgl", 1, true)
         self:ExitSights()
 
-        if game.SinglePlayer() then
+        if singleplayer then
             self:CallOnClient("RecalculateIKGunMotionOffset")
         end
     else

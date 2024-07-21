@@ -30,13 +30,16 @@ local quickmodifiers = {
 local singleplayer = game.SinglePlayer()
 local ARC9HeatCapacityGPVOverflow = false
 
+function SWEP:ClearLongCache()
+    for _, v in pairs(self.PV_CacheLong) do v.time = 0 end
+end
+
 function SWEP:InvalidateCache()
     if singleplayer and self:GetOwner():IsPlayer() then
         self:CallOnClient("InvalidateCache")
     end
 
-    for _, v in pairs(self.PV_CacheLong) do v.time = 0 end
-    -- self.PV_CacheLong = {}
+    self:ClearLongCache()
 
     self.StatCache = {}
     self.HookCache = {}
