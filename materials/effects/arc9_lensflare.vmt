@@ -5,6 +5,6 @@
 	"$additive" 1
 	"$vertexalpha" 1
 	"$vertexcolor" 1
-	"$spriterendermode" 5
+	"$spriterendermode" 3
 	//"$ignorez" 0
 }
