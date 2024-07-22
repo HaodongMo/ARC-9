@@ -338,12 +338,13 @@ ARC9.BadConfigStuff = {
         solution = ARC9:GetPhrase("badconf.tickrate.solution"),
         cause = function() return game.IsDedicated() and 1 / engine.TickInterval() < 20 and LocalPlayer():IsAdmin() end
     },
-    matbumpmap = {
-        title = ARC9:GetPhrase("badconf.matbumpmap.title"),
-        desc = ARC9:GetPhrase("badconf.matbumpmap.desc"),
-        solution = ARC9:GetPhrase("badconf.matbumpmap.solution"),
-        cause = function() return GetConVar("mat_bumpmap"):GetInt() == 0 end
-    },
+    -- could be annoying, only packs that have issues are classic cod packs
+    -- matbumpmap = {
+    --     title = ARC9:GetPhrase("badconf.matbumpmap.title"),
+    --     desc = ARC9:GetPhrase("badconf.matbumpmap.desc"),
+    --     solution = ARC9:GetPhrase("badconf.matbumpmap.solution"),
+    --     cause = function() return GetConVar("mat_bumpmap"):GetInt() == 0 end
+    -- },
     addons = {
         title = ARC9:GetPhrase("badconf.addons.title"),
         desc = ARC9:GetPhrase("badconf.addons.desc"),
