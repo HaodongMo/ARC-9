@@ -249,6 +249,8 @@ ARC9.CancelMultipliers = {
     },
 }
 
+-- 0.0254 is only applicable to model scale, since actual map scaling is based on 1 foot = 16 units.
+-- Not changing this in case some other addon is using the constant as stat
 ARC9.HUToM = 0.0254
 
 -- 10 / 360 / 60 is incorrect, how'd you even get it?

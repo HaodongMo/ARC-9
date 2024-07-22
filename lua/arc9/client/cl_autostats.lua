@@ -11,6 +11,17 @@ local hutom = function(i)
 	return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "m") 
 end
 
+local hutomm = function(i)
+	if imperial then 
+		impv = 39.370
+		impn = "unit.inch"
+	else 
+		impv = 1000
+		impn = "unit.millimeter"
+	end
+	return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "mm") 
+end
+
 local hutoms = function(i) 
 	if imperial then 
 		impv = 3.2808399
@@ -49,7 +60,7 @@ ARC9.AutoStatsMains = {
     ["RangeMax"] = {hutom, false},
     ["Distance"] = {hutom, false},
     ["Num"] = {false, false},
-    ["Penetration"] = {"HU", false},
+    ["Penetration"] = {hutomm, false},
     ["PenetrationDelta"] = {true, false},
     ["RicochetAngleMax"] = {"°", false},
     ["RicochetChance"] = {false, false},

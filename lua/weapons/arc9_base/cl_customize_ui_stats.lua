@@ -269,8 +269,8 @@ function SWEP:CreateHUD_Stats()
             fifty = 50,
             unit = imperial and "unit.inch" or "unit.millimeter",
             conv = function(a) 
-				if imperial then return a * 0.03937 end
-				return a
+				if imperial then return math.Round(a * ARC9.HUToM * 39.370, 2) end -- not using it directly because hutom
+				return math.Round(a * ARC9.HUToM * 1000, 2)
 			end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
