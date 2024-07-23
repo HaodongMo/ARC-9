@@ -126,7 +126,7 @@ SWEP.ForceStandardCrosshair = nil -- Force default + or T crosshair no matter wh
 
 SWEP.CustomCrosshair = false -- Enables custom crosshair use.
 SWEP.CustomCrosshairSingle = false -- Enables a single image to be used as the custom crosshair.
-SWEP.CustomCrosshairMaterial = "" -- Point towards a file to use as the custom crosshair.
+SWEP.CustomCrosshairMaterial = nil -- Point towards a file to use as the custom crosshair. Must use Material(PATH) format.
 SWEP.CustomCrosshairSize = 40 -- Changes the custom crosshair size. (Default 40)
 
 SWEP.ViewModelFOVBase = nil -- Set to override viewmodel FOV

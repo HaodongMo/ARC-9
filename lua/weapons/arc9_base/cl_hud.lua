@@ -86,6 +86,7 @@ function SWEP:DoDrawCrosshair(x, y)
     local miniprong_2 = ARC9ScreenScale(2) * m * sizeprong
     local gap = 0
     local staticgap = ARC9ScreenScale(4)
+	local hidedot = self:GetProcessedValue("CrosshairHideDot", true)
 
     -- local col = Color(255, 255, 255, 255)
     -- col.r = arc9_cross_r:GetFloat()
@@ -130,7 +131,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
         lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
 
-        drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col)
+		if !hidedot then drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col) end
 
         return true
     else
@@ -163,7 +164,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
     gap = lastgap
 
-    drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col)
+    if !hidedot then drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col) end
 
     if self:GetSprintAmount() > 0 then return true end
     if self:GetReloading() then return true end
@@ -173,11 +174,11 @@ function SWEP:DoDrawCrosshair(x, y)
     if self:GetProcessedValue("CustomCrosshair", true) then
 		surface.SetDrawColor(col)
 		
-		surface.SetMaterial( self.CustomCrosshairMaterial or Material("arc9/ui/share.png", "mips smooth") )
+		surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial", true) or Material("arc9/ui/share.png", "mips smooth") )
 		
-		local size = self.CustomCrosshairSize or 40
+		local size = self:GetProcessedValue("CustomCrosshairSize", true) or 40
 		
-		if self.CustomCrosshairSingle then
+		if self:GetProcessedValue("CustomCrosshairSingle", true) then
 			surface.DrawTexturedRectRotated(x, y, size + gap, size + gap, 0) -- Central
 		else
 			surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
