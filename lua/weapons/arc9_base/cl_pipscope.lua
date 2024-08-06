@@ -201,9 +201,11 @@ function SWEP:DoRTScope(model, atttbl, active)
     local ang = EyeAngles()
 
     if active then
+        local sightzang = 0
         if self:ShouldDoScope() then
             self.RenderingRTScope = true
             local sight = self:GetSight()
+            sightzang = sight.Ang.z
             local sightpos = sight.ShadowPos or (sight.OriginalSightTable or {}).Pos or sight.Pos or Vector(0, 0, 0)
             sightpos = sightpos * ((sight.slottbl or {}).Scale or 1)
 
@@ -342,6 +344,8 @@ function SWEP:DoRTScope(model, atttbl, active)
         if sd > 0.5 then render.SetToneMappingScaleLinear(vec1) end
 
         rtsurf:SetTexture("$basetexture", rtmat)
+        rtsurf:SetFloat("$rot", self.ViewModelAng.z - sightzang)
+        -- rtsurf:SetMatrix("$basetexturetransform", Matrix({{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}))
 
         -- model:SetSubMaterial()
 
