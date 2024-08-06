@@ -132,8 +132,7 @@ function SWEP:GetEntityHot(ent)
         if !ent.ARC9_ColdTime then ent.ARC9_ColdTime = CurTime() + coldtime end
         return ent.ARC9_ColdTime > CurTime()
     end
-
-    if ent:IsVehicle() or ent:IsOnFire() or ent.ArcCW_Hot or ent:IsScripted() and !ent:GetOwner():IsValid() then -- arccw_hot for compatibillity
+    if ent:IsVehicle() or ent:IsOnFire() or ent.ArcCW_Hot or ent:IsScripted() and !ent:GetOwner():IsValid() and ent:EntIndex() > 0 then -- arccw_hot for compatibillity
         return true
     end
 

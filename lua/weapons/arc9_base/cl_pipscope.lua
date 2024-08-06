@@ -344,7 +344,8 @@ function SWEP:DoRTScope(model, atttbl, active)
         if sd > 0.5 then render.SetToneMappingScaleLinear(vec1) end
 
         rtsurf:SetTexture("$basetexture", rtmat)
-        rtsurf:SetFloat("$rot", self.ViewModelAng.z - sightzang)
+        rtsurf:SetFloat("$rot", ((atttbl.RTScopeShadowIntensity or 0) > 1 or atttbl.RTCollimator) and self.ViewModelAng.z - sightzang or 0)
+
         -- rtsurf:SetMatrix("$basetexturetransform", Matrix({{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}))
 
         -- model:SetSubMaterial()
