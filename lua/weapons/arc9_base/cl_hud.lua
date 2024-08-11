@@ -46,7 +46,7 @@ local arc9_crosshair_target = GetConVar("arc9_crosshair_target")
 function SWEP:DoDrawCrosshair(x, y)
     if !arc9_cross_enable:GetBool() then return end
 
-    if self:GetInspecting() and self:StillWaiting() then lasthelperalpha = 0 return true end
+    if string.find(self:GetIKAnimation() or "", "inspect") and self:StillWaiting() then lasthelperalpha = 0 return true end
     
     local scrw, scrh = ScrW(), ScrH()
     local owner = self:GetOwner()

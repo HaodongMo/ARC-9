@@ -12,7 +12,6 @@ function SWEP:ThinkInspect()
     if (owner:KeyDown(IN_USE) and owner:KeyDown(IN_RELOAD)) or owner:KeyDown(ARC9.IN_INSPECT) then
         if !self:HasAnimation("enter_inspect") and !ininspectrn then
             self:PlayAnimation("inspect", 1, true)
-            self:SetInspecting(true)
             return
         end
 
@@ -25,7 +24,5 @@ function SWEP:ThinkInspect()
     elseif self:GetInspecting() then
         self:SetInspecting(false)
         self:PlayAnimation("exit_inspect", 1, true)
-    else
-        self:SetInspecting(false)
     end
 end
