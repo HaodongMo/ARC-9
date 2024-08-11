@@ -382,7 +382,7 @@ L["badconf.wait"] = "Wait {time}s"
 
 L["badconf.directx.title"] = "Outdated DirectX version"
 L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. Modern GMod isn't meant for this, you might not be able to see models on most weapon packs. (dx9 was introduced 21 years ago!)"
-L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
+L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95 +mat_directx 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
 
 L["badconf.tickrate.title"] = "Too low server tickrate"
 L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
