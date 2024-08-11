@@ -5,10 +5,11 @@ function SWEP:ThinkInspect()
     if self:GetUBGL() and !self:HasAnimation("inspect_ubgl") then return end
 
     local owner = self:GetOwner()
-    
+    local ininspectrn = string.find(self:GetIKAnimation() or "", "inspect")
+
     -- self:PlayAnimation("inspect", 1, true)
     if (owner:KeyDown(IN_USE) and owner:KeyDown(IN_RELOAD)) or owner:KeyDown(ARC9.IN_INSPECT) then
-        if !self:HasAnimation("enter_inspect") then
+        if !self:HasAnimation("enter_inspect") and !ininspectrn then
             self:PlayAnimation("inspect", 1, true)
             return
         end
