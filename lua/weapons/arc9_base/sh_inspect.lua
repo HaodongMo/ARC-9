@@ -6,24 +6,23 @@ function SWEP:ThinkInspect()
     if self:GetGrenadePrimed() then return end
 
     local owner = self:GetOwner()
-    -- local ininspectrn = string.find(self:GetIKAnimation() or "", "inspect")
-    local ininspectrn = self:GetInspecting()
+    local inspecting = self:GetInspecting()
 
     -- self:PlayAnimation("inspect", 1, true)
     if (owner:KeyDown(IN_USE) and owner:KeyDown(IN_RELOAD)) or owner:KeyDown(ARC9.IN_INSPECT) then
-        if !self:HasAnimation("enter_inspect") and !ininspectrn then
+        if !self:HasAnimation("enter_inspect") and !inspecting then
             self:PlayAnimation("inspect", 1, true)
             self:SetInspecting(true)
             return
         end
 
-        if self:GetInspecting() then
+        if inspecting then
             self:PlayAnimation("idle_inspect", 1, true)
         else
             self:SetInspecting(true)
             self:PlayAnimation("enter_inspect", 1, true)
         end
-    elseif self:GetInspecting() then
+    elseif inspecting then
         self:SetInspecting(false)
         self:PlayAnimation("exit_inspect", 1, true)
     else
