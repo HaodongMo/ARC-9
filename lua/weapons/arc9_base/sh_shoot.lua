@@ -1,11 +1,11 @@
 local cancelmults = ARC9.CancelMultipliers[engine.ActiveGamemode()] or ARC9.CancelMultipliers[1]
 
-function SWEP:StillWaiting(interruptinspect)
+function SWEP:StillWaiting()
     local time = CurTime()
 
     if self:GetNextPrimaryFire() > time then return true end
     if self:GetNextSecondaryFire() > time then return true end
-    if !(interruptinspect and self.FireInterruptInspect and self:GetInspecting()) and self:GetAnimLockTime() > time then return true end
+    if self:GetAnimLockTime() > time then return true end
     if self:GetCycleFinishTime() > time then return true end
     if self:GetPrimedAttack() then return true end
     if self:GetHolsterTime() > 0 then return true end
@@ -317,7 +317,8 @@ end
 function SWEP:DoPrimaryAttack()
 
     local processedValue = self.GetProcessedValue
-    if self:StillWaiting(true) then return end
+    if self.FireInterruptInspect and self:GetInspecting() then self:CancelInspect() end
+    if self:StillWaiting() then return end
     if self.NoFireDuringSighting and (self:GetInSights() and self:GetSightAmount() < 0.8 or false) then return end
 
     local currentFiremode = self:GetCurrentFiremode()

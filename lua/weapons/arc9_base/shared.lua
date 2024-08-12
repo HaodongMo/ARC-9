@@ -995,6 +995,7 @@ SWEP.CamOffsetAng = Angle(0, 0, 0)
 SWEP.DoFireAnimation = true
 
 SWEP.FireInterruptInspect = false
+SWEP.SightsInterruptInspect = false
 
 SWEP.NoViewBob = false
 

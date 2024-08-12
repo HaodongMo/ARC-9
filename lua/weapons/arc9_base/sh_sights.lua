@@ -10,6 +10,7 @@ function SWEP:EnterSights()
     if self:GetHolsterTime() > 0 then return end
     if self:GetProcessedValue("UBGLInsteadOfSights", true) then return end
     if self:GetSafe() then return end
+    if self.SightsInterruptInspect and self:GetInspecting() then self:CancelInspect() end
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
     if self:GetValue("UBGL") and self:GetOwner():KeyDown(IN_USE) then return end
     if self:GetIsNearWall() then return end

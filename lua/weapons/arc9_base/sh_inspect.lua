@@ -1,6 +1,7 @@
 function SWEP:ThinkInspect()
 	if self.NoInspect then return end
-    if self:StillWaiting() or self:GetInSights() or self:GetBipod() or self:GetReloading() then return end
+    if self:StillWaiting() or self:GetInSights() then return end
+    if self:GetReloading() or self:GetBipod() then self:SetInspecting(false) return end
     if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
     if self:GetUBGL() and !self:HasAnimation("inspect_ubgl") then return end
     if self:GetGrenadePrimed() then return end
@@ -28,4 +29,18 @@ function SWEP:ThinkInspect()
     else
         self:SetInspecting(false)
     end
+end
+
+function SWEP:CancelInspect()
+    if !self:GetInspecting() then return end
+    self:SetInspecting(false)
+
+    -- local vm = self:GetVM()
+    -- vm:SetSequence(0)
+    -- vm:SetCycle(0)
+    self:SetAnimLockTime(0)
+    self:PlayAnimation("idle")
+    self:CancelSoundTable()
+    self:SetIKTimeLineStart(0)
+    self:SetIKTime(0)
 end
