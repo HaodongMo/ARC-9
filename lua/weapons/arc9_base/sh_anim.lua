@@ -133,8 +133,8 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, n
             end)
         end
 
-        self:SetIKAnimation(anim) -- used not only in ik but for getting cur anim
         if animation.IKTimeLine then
+            self:SetIKAnimation(anim)
             self:SetIKTimeLineStart(CurTime())
             self:SetIKTime(time * mult)
         end

@@ -46,7 +46,7 @@ local arc9_crosshair_target = GetConVar("arc9_crosshair_target")
 function SWEP:DoDrawCrosshair(x, y)
     if !arc9_cross_enable:GetBool() then return end
 
-    if string.find(self:GetIKAnimation() or "", "inspect") and self:StillWaiting() then lasthelperalpha = 0 return true end
+    if self:GetInspecting() then lasthelperalpha = 0 return true end
     
     local scrw, scrh = ScrW(), ScrH()
     local owner = self:GetOwner()
@@ -388,7 +388,7 @@ function SWEP:DrawHUD()
 	if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
 	if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "smooth" ) end
 
-    if (cv4:GetBool() and (cv1:GetFloat() > 0.02)) and !(string.find(self:GetIKAnimation() or "", "inspect") and self:StillWaiting()) and !self:GetJammed() then
+    if (cv4:GetBool() and (cv1:GetFloat() > 0.02)) and !self:GetInspecting() and !self:GetJammed() then
 		if !rel and !throw and !primbash and mag then
 			local text = ARC9:GetPhrase("hud.hint.reload")
 			local textlow = ARC9:GetPhrase("hud.hint.lowammo")
