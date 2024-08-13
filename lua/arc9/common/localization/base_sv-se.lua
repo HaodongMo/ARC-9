@@ -61,7 +61,7 @@ L["hud.hint.toggleatts"] = "Växla Tillbehör"
 L["hud.hint.ubgl"] = "Växla"
 L["hud.hint.unjam"] = "Fixa Eldavbrott"
 L["hud.hint.zoom"] = "Ändra Zoom"
-L["hud.hint.quicknade"] = "Snabbkasta "
+L["hud.hint.quicknade"] = "Snabbkasta \"%s\""
 
 L["hud.hint.lowammo"] = "Låg Ammo"
 L["hud.hint.noammo"] = "Ingen Ammo"

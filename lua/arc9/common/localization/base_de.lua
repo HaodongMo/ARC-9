@@ -61,7 +61,7 @@ L["hud.hint.toggleatts"] = "Zubehör umschalten"
 L["hud.hint.ubgl"] = "Umschalten"
 L["hud.hint.unjam"] = "Hemmung beheben"
 L["hud.hint.zoom"] = "Zoom ändern"
-L["hud.hint.quicknade"] = "Schnellwurf"
+L["hud.hint.quicknade"] = "Schnellwurf „%s“"
 
 L["hud.hint.lowammo"] = "Wenig Munition"
 L["hud.hint.noammo"] = "Keine Munition"
