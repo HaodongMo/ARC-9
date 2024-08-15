@@ -61,7 +61,7 @@ L["hud.hint.toggleatts"] = "Alternar Accesorios"
 L["hud.hint.ubgl"] = "Alternar"
 L["hud.hint.unjam"] = "Desatascar"
 L["hud.hint.zoom"] = "Cambiar Zoom"
--- L["hud.hint.quicknade"] = "Quickthrow \"%s\""
+L["hud.hint.quicknade"] = "Tiro-rápido \"%s\""
 
 L["hud.hint.lowammo"] = "Munición Baja"
 L["hud.hint.noammo"] = "Sin Munición"
@@ -315,52 +315,52 @@ L["incompatible.never.hover"] = "¿Estás completamente seguro de que entiendes 
 L["incompatible.never.confirm"] = "Ha elegido no volver a mostrar advertencias de incompatibilidad. Si encuentras errores o comportamientos rotos, es tu responsabilidad."
 
 ////////////////////// Warning panel
--- L["badconf.title"] = "ARC9: BAD GMOD SETTINGS WARNING"
--- L["badconf.line1"] = "It appears some Garry's Mod settings are causing problems."
--- L["badconf.line2"] = "Listed below are problems which have been detected, and solutions to fix them."
--- L["badconf.confirm"] = "Acknowledge"
--- L["badconf.wait"] = "Wait {time}s"
+L["badconf.title"] = "ARC9: AVISO DE MALA CONFIGURACIÓN DE GMOD"
+L["badconf.line1"] = "Parece que algunos ajustes de Garry's Mod están causando problemas."
+L["badconf.line2"] = "A continuación se enumeran los problemas detectados y las soluciones para solucionarlos."
+L["badconf.confirm"] = "Confirmar"
+L["badconf.wait"] = "Espera {time}s"
 
--- L["badconf.directx.title"] = "Outdated DirectX version"
--- L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. Modern GMod isn't meant for this, you might not be able to see models on most weapon packs. (dx9 was introduced 21 years ago!)"
--- L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
+L["badconf.directx.title"] = "Versión de DirectX obsoleta"
+L["badconf.directx.desc"] = "Actualmente estás ejecutando DirectX 8 o 8.1. GMod moderno no está hecho para esto, es posible que no pueda ver los modelos en la mayoría de los paquetes de armas. (¡dx9 se introdujo hace 21 años!)"
+L["badconf.directx.solution"] = "Solución: Ir a las opciones de lanzamiento de Garry's Mod e insertar \"-dxlevel 95\" en los parámetros de lanzamiento. Si \"-dxlevel 70/80/85\" aparece allí, elimínelo."
 
--- L["badconf.tickrate.title"] = "Too low server tickrate"
--- L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
--- L["badconf.tickrate.solution"] = "Solution: If you are a server owner, then insert \"-tickrate 33\", or whichever value you want, in the server launch configurations."
+L["badconf.tickrate.title"] = "Tickrate del servidor demasiado bajo"
+L["badconf.tickrate.desc"] = "El servidor en el que se encuentra está funcionando con un tickrate muy bajo. ARC9 funciona mejor si se ejecuta un mínimo de 20 tickrate (66+ se recomienda)."
+L["badconf.tickrate.solution"] = "Solución: Si es propietario de un servidor, inserte \"-tickrate 33\", o el valor que desee, en las configuraciones de lanzamiento del servidor."
 
--- L["badconf.matbumpmap.title"] = "mat_bumpmap is disabled"
--- L["badconf.matbumpmap.desc"] = "You have bumpmaps disabled, which makes weapons look worse. It also breaks certain ARC9 optics."
--- L["badconf.matbumpmap.solution"] = "Solution: In the console, type \"mat_bumpmap 1\". If you are using an FPS config of any kind, then find and delete mat_bumpmap 0 line from \"autoexec.cfg\"."
+L["badconf.matbumpmap.title"] = "mat_bumpmap está desactivado"
+L["badconf.matbumpmap.desc"] = "Tienes desactivados los bumpmaps, lo que hace que las armas se vean peor. También rompe ciertas ópticas ARC9."
+L["badconf.matbumpmap.solution"] = "Solución: En la consola, escriba \"mat_bumpmap 1\". Si está utilizando una configuración FPS de cualquier tipo, a continuación, busque y elimine mat_bumpmap 0 línea de \"autoexec.cfg\"."
 
--- L["badconf.addons.title"] = "Too many addons! Lua file limit exceeded!"
--- L["badconf.addons.desc"] = "You have installed way too many addons and have reached the Lua file limit. ARC9 has therefore not been able to initialize properly, meaning attachments might not work."
--- L["badconf.addons.solution"] = "Solution: Uninstall heavy addons through the in-game Addons menu, or through the Steam workshop (for example other weapon bases, JMod, Entity Packs, and so on)."
+L["badconf.addons.title"] = "¡Demasiados addons! ¡Límite de archivos Lua excedido!"
+L["badconf.addons.desc"] = "Usted ha instalado demasiados addons y ha alcanzado el límite de archivos Lua. ARC9 por lo tanto no ha sido capaz de inicializar correctamente, lo que significa que los accesorios podrían no funcionar."
+L["badconf.addons.solution"] = "Solución: Desinstala los addons pesados a través del menú Extensiones del juego o a través de la Steam Workshop. (por ejemplo, otras bases de armas, JMod, paquetes de entidades, etc.)."
 
--- L["badconf.warning"] = "Warning! Your performance is not optimal! - Hover over to view details."
--- L["badconf.warning.desc"] = "More FPS is always good. Especially on weapon bases like this one.\n\nHover cursor over items below to see solution."
+L["badconf.warning"] = "Advertencia! ¡Su rendimiento no es óptimo! - Pase el cursor por encima para ver los detalles."
+L["badconf.warning.desc"] = "Más FPS siempre es bueno. Especialmente en bases de armas como esta.\n\nPase el cursor por encima de los elementos siguientes para ver la solución."
 
--- L["badconf.x64.title"] = "► Slow 32-Bit branch Detected"
--- L["badconf.x64.desc"] = [[You are currently running Garry's Mod in 32-bit. This restricts the amount of performance you can obtain drastically.
+L["badconf.x64.title"] = "► Detectada rama lenta de 32 bits"
+L["badconf.x64.desc"] = [[Actualmente estás ejecutando Garry's Mod en 32 bits. Esto restringe drásticamente el rendimiento que puedes obtener..
 
--- Solution: In Garry's Mod's launch options, go to "Betas" and change to "x86-64 - Chromium + 64-bit binaries".
+Solución: En las opciones de lanzamiento de Garry's Mod, ve a "Betas" y cambiar a "x86-64 - Chromium + 64-bit binaries".
 
--- Google "gmod x64" to find a tutorial online.]]
+Busca en Google "gmod x64" para encontrar un tutorial en línea.]]
 
--- L["badconf.multicore.title"] = "► No Multicore Rendering commands"
--- L["badconf.multicore.desc"] = [[Certain multicore rendering settings are currently disabled. This results in worsened in-game performance.
+L["badconf.multicore.title"] = "► Sin comandos de renderizado multinúcleo"
+L["badconf.multicore.desc"] = [[Algunos ajustes de renderizado multinúcleo están desactivados. Esto empeora el rendimiento del juego.
 
--- Solution: You need to put certain commands into autoexec.cfg
+Solución: Tienes que poner ciertos comandos en autoexec.cfg
 
--- Google "gmod multicore" to find a tutorial online.
+Busca en Google "gmod multicore" para encontrar un tutorial en línea.
 
--- All commands that can increase performance:
--- gmod_mcore_test 1
--- mat_queue_mode 2
--- cl_threaded_bone_setup 1
--- cl_threaded_client_leaf_system 1
--- r_threaded_client_shadow_manager 1
--- r_threaded_renderables 1]]
+Todos los comandos que pueden aumentar el rendimiento:
+gmod_mcore_test 1
+mat_queue_mode 2
+cl_threaded_bone_setup 1
+cl_threaded_client_leaf_system 1
+r_threaded_client_shadow_manager 1
+r_threaded_renderables 1]]
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " Accesorios"
@@ -415,8 +415,8 @@ L["settings.title"] = "Ajustes ARC9"
 L["settings.desc"] = "Descripción"
 
 L["settings.default_convar"] = "Valor predeterminado"
--- L["settings.convar_server"] = "Server variable"
--- L["settings.convar_client"] = "Client variable"
+L["settings.convar_server"] = "Variable del servidor"
+L["settings.convar_client"] = "Variable del cliente"
 
 ////////////////////// General
 L["settings.tabname.general"] = "General"
@@ -596,8 +596,8 @@ L["settings.hud_game.centerhint_firemode.desc"] = "Muestra un aviso cuando cambi
 L["settings.hud_game.centerhint_firemode_time.title"] = "Mostrar Tiempo de Modo de Fuego"
 L["settings.hud_game.centerhint_firemode_time.desc"] = "Cuánto tiempo debe mostrarse el modo de disparo."
 
--- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
--- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
+L["settings.hud_game.centerhint_overheat.title"] = "Mostrar Consejo de Sobrecalentamiento"
+L["settings.hud_game.centerhint_overheat.desc"] = "Muestra un aviso superpuesto que indica lo cerca que está el arma de sobrecalentarse.\n\nNo se muestra si el HUD ARC9 está activado o el arma no admite sobrecalentamiento."
 
 L["settings.hud_game.hud_glyph"] = "Tipo de Glifo"
 
