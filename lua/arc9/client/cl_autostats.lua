@@ -151,6 +151,9 @@ ARC9.AutoStatsMains = {
     ["BashSpeed"] = {false, false},
     ["Bash2Speed"] = {false, false},
     ["RecoilPerShot"] = {false, true},
+    ["ImpactForce"] = {false, false},
+    ["RicochetSeeking"] = {false, true},
+    ["RicochetSeekingAngle"] = {false, false},
 }
 
 ARC9.AutoStatsOperations = {
