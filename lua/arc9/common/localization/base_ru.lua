@@ -272,7 +272,6 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.bipod"] = "на сошках"
 L["autostat.secondary.crouch"] = "в присяди"
 L["autostat.secondary.empty"] = "последним выстрелом"
@@ -776,8 +775,6 @@ L["settings.controller.misc"] = "Прочее"
 L["settings.controller.misc.desc"] = "Здесь должна быть кнопка для вызова панели для продвинутой конфигурации контроллеров, но пока что она в спавнменю > Options > ARC9 > Controller."
 L["settings.controller.controller.title"] = "Символы контроллера"
 L["settings.controller.controller.desc"] = "Включает отображение символов для контроллеров, показывая кнопки контроллера вместо обычных клавиатурных кнопок."
-L["settings.controller.controller_rumble.title"] = "Вибрация"
-L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Продвинутый конфиг"
 L["settings.controller.controller_config.content"] = "Открыть панель"
 L["settings.controller.controller_config.desc"] = "Открывает панель для продвинутой конфигурации контроллеров."
@@ -896,12 +893,12 @@ L["premium.content.list"] = [[
 ]]
 
 L["premium.payment.month"] = [[
-$%s
+%s₽
 Приобретите ARC9 Premium на 1 месяц.
 ]]
 
 L["premium.payment.months"] = [[
-$%s
+%s₽
 Приобретите ARC9 Premium на 3 месяца и получите <color=100,255,100>скидку %s%%</color>!
 ]]
 

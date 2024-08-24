@@ -50,7 +50,7 @@ L["hud.hint.bipod"] = "Växla Skjutstöd"
 L["hud.hint.breath"] = "Håll Andan"
 L["hud.hint.customize"] = "Anpassa"
 L["hud.hint.cycle"] = "Cykel"
-L["hud.hint.firemode"] = "Växla Skjutlägen"
+L["hud.hint.firemode"] = "Växla Skjutläge"
 L["hud.hint.inspect"] = "Inspektera"
 L["hud.hint.lean"] = "Luta"
 L["hud.hint.peek"] = "Kika"
@@ -96,7 +96,7 @@ L["customize.stats.range"] = "Räckvidd"
 L["customize.stats.ricochet"] = "Rikoschett Chans"
 L["customize.stats.rof"] = "Eldhastighet"
 L["customize.stats.speed"] = "Rörelsehastighet"
-L["customize.stats.sprinttofire"] = "Spring-till-Sikte Tid"
+L["customize.stats.sprinttofire"] = "Spring-till-Skjut Tid"
 L["customize.stats.supplylimit"] = "Påfyll Begränsning"
 L["customize.stats.sway"] = "Svängning"
 L["customize.stats.triggerdelay"] = "Avtryckare Fördröj."
@@ -196,7 +196,7 @@ L["autostat.damagemax"] = "Maximal Skada"
 L["autostat.damagemin"] = "Minimum Skada"
 L["autostat.damagerand"] = "Skadevariering"
 L["autostat.deploytime"] = "Ta Fram Tid"
-L["autostat.distance"] = "Patron Avstånd"
+L["autostat.distance"] = "Skottavstånd"
 L["autostat.entitymuzzlevelocity"] = "Projektilens Utgångshastighet"
 L["autostat.explosiondamage"] = "Explosiv Skada"
 L["autostat.explosionradius"] = "Explosion Stänkradie"
@@ -215,7 +215,7 @@ L["autostat.malfunctionmeanshotstofail"] = "Elaka Skott Mellan Fel"
 L["autostat.malfunctionwait"] = "Felfunktion Väntetid"
 L["autostat.manualaction"] = "Manuell Handling"
 L["autostat.manualactionchamber"] = "Skott Per Cykel"
-L["autostat.neverphysbullet"] = "Ej Fysiska Skott"
+L["autostat.neverphysbullet"] = "Icke-Fysiska Skott"
 L["autostat.noflash"] = "Ingen Mynningseld"
 L["autostat.num"] = "Antal Projektiler"
 L["autostat.overheat"] = "Överhettning"
@@ -255,7 +255,7 @@ L["autostat.shootwhilesprint"] = "Skjut i Sprint"
 L["autostat.shotgunreload"] = "Individuell Omladdning"
 L["autostat.speed"] = "Rörelsehastighet"
 L["autostat.spread"] = "Spridning"
-L["autostat.sprinttofiretime"] = "Spring-till-Sikte Tid"
+L["autostat.sprinttofiretime"] = "Spring-till-Skjut Tid"
 L["autostat.stomachdamage"] = "Magskada"
 L["autostat.supplylimit"] = "Reservmagasin"
 L["autostat.sway"] = "Svängning"
@@ -272,7 +272,6 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.blindfire"] = "under blind skjutning"
 L["autostat.secondary.bipod"] = "med Skjutstöd"
 L["autostat.secondary.crouch"] = "medans Hukad"
 L["autostat.secondary.empty"] = "på Sista skottet i magasinet"
@@ -287,13 +286,13 @@ L["autostat.secondary.last"] = "på Sista Skottet i magasinet"
 L["autostat.secondary.lastshot"] = "på Sista skottet i magasinet"
 L["autostat.secondary.midair"] = "i Luften"
 L["autostat.secondary.move"] = "under Rörelse"
-L["autostat.secondary.oddreload"] = "varje Udda Omladdning"
-L["autostat.secondary.oddshot"] = "varje Udda skott"
+L["autostat.secondary.oddreload"] = "varje Andra Omladdning"
+L["autostat.secondary.oddshot"] = "vart Andra Skott"
 L["autostat.secondary.recoil"] = "från Rekylen" --"With Each Shot"
 L["autostat.secondary.shooting"] = "under Skjutning"
 L["autostat.secondary.sighted"] = "i Siktet"
 L["autostat.secondary.sights"] = "i Siktet"
-L["autostat.secondary.silenced"] = "när Ljuddämpad"
+L["autostat.secondary.silenced"] = "om Ljuddämpad"
 L["autostat.secondary.sprint"] = "i Sprint"
 L["autostat.secondary.true"] = "när Sanna Namn är på"
 L["autostat.secondary.ubgl"] = "på Tillsats"
@@ -762,8 +761,8 @@ L["settings.mod_damage.title"] = "Skada"
 L["settings.mod_spread.title"] = "Spridning"
 L["settings.mod_recoil.title"] = "Rekyl"
 L["settings.mod_visualrecoil.title"] = "Visuell Rekyl"
-L["settings.mod_adstime.title"] = "Res/Sänk Sikte Tid"
-L["settings.mod_sprinttime.title"] = "Spring-till-Sikte Tid"
+L["settings.mod_adstime.title"] = "Res/Sänk Siktetid"
+L["settings.mod_sprinttime.title"] = "Spring-till-Siktetid"
 L["settings.mod_damagerand.title"] = "Skadevariering"
 L["settings.mod_muzzlevelocity.title"] = "Utgångshastighet"
 L["settings.mod_rpm.title"] = "Eldhastighet"
@@ -777,8 +776,6 @@ L["settings.controller.misc"] = "Annat"
 L["settings.controller.misc.desc"] = "Det borde vara en knapp för att öppna panelen med avancerad kontroller konfiguering, men för tillfället är det Spawnmeny > Options > ARC9 > Kontroller."
 L["settings.controller.controller.title"] = "Kontroller Glyfer"
 L["settings.controller.controller.desc"] = "Aktiverar anpassade kontroller-kompatibla glyfer som visar kontroller knappar istället för standard knappar."
--- L["settings.controller.controller_rumble.title"] = "Rumble"
--- L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Avancerad konfig."
 L["settings.controller.controller_config.content"] = "Öppna panel"
 L["settings.controller.controller_config.desc"] = "Öppna avancerad kontroller konfigurering panel."
@@ -879,9 +876,9 @@ L["premium.owned"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>
 
 L["premium.help"] = "Vad är ARC9 Premium?"
 L["premium.help.header"] = "Guide till ARC9 Premium"
-L["premium.help.desc"] = "Creating addons takes time and resources. ARC9 has always been available for free, and it will remain that way. However, if you wish to support the base financially, you may do so, and get rewarded for it!"
+L["premium.help.desc"] = "Det tar tid och resurser för att skapa tillägg. ARC9 har alltid varit gratis, och det kommer fortsätta vara det. Däremot, om du vill stötta basen finansiellt, så kan du göra det och bli belönad för det!"
 
-L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Diamond Doves Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
+L["premium.help.ownedbutnoaccess"] = "Har du nyligen köpt ARC9 Premium men inte fått automatisk tillgång till det? Kontakta oss på Diamond Doves Discord-servern för hjälp.\nHa med dig bevis på köpet innan du tar kontakt. Att du bara säger \"Jag köpte, ge mig nu\" är inte bra nog."
 
 L["premium.content"] = "Inkluderat i <color=255,106,0>ARC9 Premium</color>:"
 L["premium.content.list"] = [[
@@ -897,12 +894,12 @@ L["premium.content.list"] = [[
 ]]
 
 L["premium.payment.month"] = [[
-$%s
+%s SEK
 Skaffa ARC9 Premium i 1 Månad.
 ]]
 
 L["premium.payment.months"] = [[
-$%s
+%s SEK
 Skaffa ARC9 Premium i %s Månader och få <color=100,255,100>%s%% rabatt</color>!
 ]]
 

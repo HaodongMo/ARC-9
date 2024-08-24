@@ -272,7 +272,6 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
-L["autostat.secondary.blindfire"] = "ohne zu zielen"
 L["autostat.secondary.bipod"] = "auf Zweibein"
 L["autostat.secondary.crouch"] = "während des Kriechen"
 L["autostat.secondary.empty"] = "beim letzen Schuss im Magazin"
@@ -777,8 +776,6 @@ L["settings.controller.misc"] = "Sonstiges"
 L["settings.controller.misc.desc"] = "Es sollte hier einen Knopf geben, der das erweiterte Controller-Konfigurationspanel öffnet, aber bis jetzt befindet es sich in \"Spawnmenu\" > Options > ARC9 > Controller."
 L["settings.controller.controller.title"] = "Controller-Symbole"
 L["settings.controller.controller.desc"] = "Aktiviere Controller-kompatible Symbole, und zeige anstatt von Tastatursymbolen Controllerknöpfe."
-L["settings.controller.controller_rumble.title"] = "Rumble"
-L["settings.controller.controller_rumble.desc"] = "Aktiviert Controller-Rumble, solange Fesiugs DLL-Mod geladen ist.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Erweiterte Konfiguration"
 L["settings.controller.controller_config.content"] = "Öffne Panel"
 L["settings.controller.controller_config.desc"] = "Öffne das erweiterte Controller-Konfigurationspanel."
@@ -897,12 +894,12 @@ L["premium.content.list"] = [[
 ]]
 
 L["premium.payment.month"] = [[
-$%s
+€%s
 Erwerben Sie ARC9 Premium für 1 Monat.
 ]]
 
 L["premium.payment.months"] = [[
-$%s
+€%s
 Erwerben Sie ARC9 Premium für %s Monate und erhalten Sie einen <color=100,255,100>Rabatt von %s%%</color>!
 ]]
 

@@ -272,7 +272,6 @@ L["autostat.secondary._beforephrase"] = true
 L["autostat.secondary._divider"] = true
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 -- L["autostat.secondary.bipod"] = "on Bipod"
 L["autostat.secondary.crouch"] = "蹲下"
 L["autostat.secondary.empty"] = "最后一发"
@@ -777,8 +776,6 @@ L["settings.controller.misc"] = "Misc"
 L["settings.controller.misc.desc"] = "There should be button that will open panel with advanced controller config, but for now it is in  spawnmenu > Options > ARC9 > Controller."
 L["settings.controller.controller.title"] = "Controller Glyphs"
 L["settings.controller.controller.desc"] = "Enable custom controller-compatible glyphs, showing controller buttons instead of the default keys."
--- L["settings.controller.controller_rumble.title"] = "Rumble"
--- L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Advanced config"
 L["settings.controller.controller_config.content"] = "Open panel"
 L["settings.controller.controller_config.desc"] = "Open advanced controller configuration panel."
@@ -897,12 +894,12 @@ L["premium.content.list"] = [[
 ]]
 
 L["premium.payment.month"] = [[
-$%s
+%s RMB
 购买 ARC9 Premium 1 个月。
 ]]
 
 L["premium.payment.months"] = [[
-$%s
+%s RMB
 购买 %s 个月的 ARC9 Premium，可享受 <color=100,255,100>%s%% 的折扣</color>！
 ]]
 

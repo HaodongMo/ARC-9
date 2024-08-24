@@ -272,7 +272,6 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.bipod"] = "en Bípode"
 L["autostat.secondary.crouch"] = "mientras está agachado"
 L["autostat.secondary.empty"] = "en la ultima ronda del cargador"
@@ -778,8 +777,6 @@ L["settings.controller.misc"] = "Varios"
 L["settings.controller.misc.desc"] = "Debería haber un botón que abra el panel con la configuración avanzada del controlador, pero por ahora está en spawnmenu > Options > ARC9 > Controller."
 L["settings.controller.controller.title"] = "Glifos del mando"
 L["settings.controller.controller.desc"] = "Habilitar glifos personalizados compatibles con el mando, mostrando los botones del controlador en lugar de las teclas predeterminadas."
--- L["settings.controller.controller_rumble.title"] = "Rumble"
--- L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Configuracion avanzada"
 L["settings.controller.controller_config.content"] = "Abrir panel"
 L["settings.controller.controller_config.desc"] = "Abra el panel de configuración avanzada del mando."

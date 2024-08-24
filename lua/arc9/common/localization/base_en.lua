@@ -272,7 +272,6 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.blindfire"] = "while Blind-Firing"
 L["autostat.secondary.bipod"] = "on Bipod"
 L["autostat.secondary.crouch"] = "while Crouching"
 L["autostat.secondary.empty"] = "on Last round in mag"
@@ -837,8 +836,6 @@ L["settings.controller.misc"] = "Misc"
 L["settings.controller.misc.desc"] = "There should be button that will open panel with advanced controller config, but for now it is in  spawnmenu > Options > ARC9 > Controller."
 L["settings.controller.controller.title"] = "Enable Controller Mode"
 L["settings.controller.controller.desc"] = "Enable custom controller-compatible glyphs, showing controller buttons instead of the default keys."
--- L["settings.controller.controller_rumble.title"] = "Rumble"
--- L["settings.controller.controller_rumble.desc"] = "Enable controller rumble as long as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Advanced config"
 L["settings.controller.controller_config.content"] = "Open panel"
 L["settings.controller.controller_config.desc"] = "Open advanced controller configuration panel."

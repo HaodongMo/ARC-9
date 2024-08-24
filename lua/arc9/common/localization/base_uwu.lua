@@ -272,7 +272,6 @@ L["autostat.secondary._beforephrase"] = false
 L["autostat.secondary._divider"] = " "
 -- space between the secondary phrase from the stat phrase. set true to use empty string
 
--- L["autostat.secondary.blindfire"] = "w-whiwe bwind-fiwing"
 L["autostat.secondary.bipod"] = "on bipOwOd"
 L["autostat.secondary.crouch"] = "w-whiwe cwouchiwuwung"
 L["autostat.secondary.empty"] = "owon wast wound in mag"
@@ -777,8 +776,6 @@ L["settings.controller.misc"] = "Misc"
 L["settings.controller.misc.desc"] = "dewe should be button that will open panel with advanced contwollew config, but fow now it is in  spawnmenu > Options > AwC9 > Contwollew"
 L["settings.controller.controller.title"] = "Contwollew Glyphs"
 L["settings.controller.controller.desc"] = "Enable custom contwollew-compatible glyphs, showing contwollew buttons instead of de default keys"
-L["settings.controller.controller_rumble.title"] = "Wumble"
-L["settings.controller.controller_rumble.desc"] = "Enabwe contwowwew wumble as wong as Fesiug's DLL mod is loaded.\n\ngithub.com/Fesiug/\ngmod-sinput"
 L["settings.controller.controller_config.title"] = "Advanced config"
 L["settings.controller.controller_config.content"] = "Open panel"
 L["settings.controller.controller_config.desc"] = "Open advanced contwollew configuwation panel"
