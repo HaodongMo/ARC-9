@@ -84,7 +84,7 @@ local function FesiugBob(self, pos, ang)
     if self:GetCustomize() then return pos, ang end
     local owner = self:GetOwner()
 
-    local sharedmult = owner:IsSprinting() and self.BobSprintMult or self.BobWalkMult
+    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local cv = owner:GetVelocity():Length()
     v = math.Approach(v, cv, FrameTime()*400/0.4)
@@ -178,7 +178,7 @@ local function ArcticBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
 
-    local sharedmult = owner:IsSprinting() and self.BobSprintMult or self.BobWalkMult
+    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local v = owner:GetVelocity():Length()
     v = math.Clamp(v, 0, 350)
@@ -224,7 +224,7 @@ local function ArcticBreadBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
 
-    local sharedmult = owner:IsSprinting() and self.BobSprintMult or self.BobWalkMult
+    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local velocityangle = owner:GetVelocity()
     local v = velocityangle:Length()
@@ -299,7 +299,7 @@ local function ArcticBreadDarsuBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
 
-    local sharedmult = owner:IsSprinting() and self.BobSprintMult or self.BobWalkMult
+    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local velocityangle = owner:GetVelocity()
     local v = velocityangle:Length()
@@ -381,7 +381,7 @@ local function DarsuBob(self, pos, ang)
     local sightamount = self:GetSightAmount() - (self.Peeking and 0.72 or 0)
     local sprintamount = self:GetSprintAmount()
 
-    local sharedmult = owner:IsSprinting() and self.BobSprintMult or self.BobWalkMult
+    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local velocity = math.Clamp(velocityangle:Length(), 0, 350)
 
