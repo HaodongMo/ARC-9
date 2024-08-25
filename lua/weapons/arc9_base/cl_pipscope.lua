@@ -300,7 +300,8 @@ function SWEP:DoRTScope(model, atttbl, active)
 
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
-                surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
+                -- surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
+                surface.DrawTexturedRectRotated(size / 2 + rtr_x, size / 2 + rtr_y, size, size, -self.ViewModelAng.z + sightzang)
             end
 
             if atttbl.RTScopeDrawFunc then
