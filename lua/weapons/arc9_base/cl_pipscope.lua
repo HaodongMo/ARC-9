@@ -366,7 +366,9 @@ function SWEP:DoRTScope(model, atttbl, active)
 end
 
 function SWEP:GetCheapScopeScale(scale)
-    return 2 / (scale or 0.5)
+    local ratio = scale - (!self.ExtraSightDistanceNoRT and self:GetSight().ExtraSightDistance or 0) * 0.045
+    -- print(ratio)
+    return 2 / (scale or 0.5) * 0.66 / ratio
 end
 
 local hascostscoped = false
@@ -401,7 +403,7 @@ function SWEP:DoCheapScope(fov, atttbl)
     scrw = scrw
     scrh = scrh * scrh / scrw
 
-    local s = self:GetCheapScopeScale(atttbl.ScopeScreenRatio)
+    local s = self:GetCheapScopeScale(atttbl.ScopeScreenRatio or 0.5)
 
     local scrx = (ScrW() - scrw * s) / 2
     local scry = (ScrH() - scrh * s) / 2

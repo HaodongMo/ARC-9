@@ -371,26 +371,20 @@ function SWEP:GetSight()
     return self.MultiSightTable[self:GetMultiSight()] or self:GetValue("IronSights")
 end
 
+local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
+
 function SWEP:GetRTScopeFOV()
     local sights = self:GetSight()
-
+    
     if !sights then return self:GetOwner():GetFOV() end
 
-    local atttbl
+    local realzoom = self:GetRealZoom(sights)
 
-    if sights.BaseSight then
-        atttbl = self:GetTable()
-    else
-        atttbl = self:GetFinalAttTable(sights.slottbl)
-    end
+    local ratio = (sights.atttbl.ScopeScreenRatio or 0.5) - (!self.ExtraSightDistanceNoRT and sights.ExtraSightDistance or 0) * 0.045
+    local vmfovratio = arc9_cheapscopes:GetBool() and sights.Magnification or self:GetSmoothedFOVMag() -- sights.Magnification
+    local funnyfov = self:ScaleFOVByWidthRatio(self:GetOwner():GetFOV(), 1 / vmfovratio * ratio / 1.5 / realzoom)
 
-    local scrolllevel = sights.ScrollLevel or 0
-
-    if atttbl.RTScopeAdjustable then
-        return Lerp(scrolllevel / atttbl.RTScopeAdjustmentLevels, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
-    else
-        return sights.RTScopeFOV or atttbl.RTScopeFOV
-    end
+    return funnyfov
 end
 
 SWEP.ScrollLevels = {}

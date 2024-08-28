@@ -31,7 +31,8 @@ function SWEP:GenerateAutoSight(sight, slottbl)
         -- ExtraAng = ang
         ShadowPos = sight.ShadowPos,
         Reticle = sight.Reticle,
-        RTScopeFOV = sight.RTScopeFOV
+        RTScopeFOV = sight.RTScopeFOV,
+        RTScopeMagnification = sight.RTScopeMagnification
     }
 end
 
@@ -54,6 +55,25 @@ local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 local arc9_compensate_sens = GetConVar("arc9_compensate_sens")
 local fov_desired = GetConVar("fov_desired")
 
+function SWEP:GetRealZoom(sight)
+    local atttbl
+    
+    if sight.BaseSight then
+        atttbl = self:GetTable()
+    else
+        atttbl = self:GetFinalAttTable(sight.slottbl)
+    end
+
+    local scrolllevel = sight.ScrollLevel or 0
+
+    if atttbl.RTScopeAdjustable then
+        return atttbl.RTScopeMagnificationMin and Lerp(scrolllevel / atttbl.RTScopeAdjustmentLevels, atttbl.RTScopeMagnificationMax, atttbl.RTScopeMagnificationMin) or Lerp(scrolllevel / atttbl.RTScopeAdjustmentLevels, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
+    else
+        -- pseudo fake zoom if no real new thing defined
+        return sight.RTScopeMagnification or atttbl.RTScopeMagnification or (sight.ViewModelFOV or 54) / (sight.RTScopeFOV or atttbl.RTScopeFOV)
+    end
+end
+
 function SWEP:GetMagnification()
     local sight = self:GetSight()
 
@@ -67,13 +87,7 @@ function SWEP:GetMagnification()
         end
 
         if atttbl and atttbl.RTScope and !atttbl.RTCollimator then
-            -- target = (self:GetOwner():GetFOV() / self:GetRTScopeFOV())
-
-            local realfov = self:GetOwner():GetFOV()
-            local screenamt = ((ScrW() - ScrH()) / ScrW()) * (atttbl.ScopeScreenRatio or 0.5) * 2
-            target = (realfov / (self:GetRTScopeFOV() or realfov)) * screenamt
-
-            target = math.max(target, 1)
+            target = math.max(target * self:GetRealZoom(sight), 1)
         end
     end
 

@@ -166,8 +166,7 @@ ATT.FLIRHotFunc = function(swep, ent) end -- return true for hot and false for c
 
 ATT.RTScope = true
 ATT.RTScopeSubmatIndex = 1
-ATT.RTScopeFOV = 2.5
-ATT.RTScopeRes = 512
+-- ATT.RTScopeFOV = 2.5 -- Do not use this anymore!!! use RTScopeMagnification
 ATT.RTScopeReticle = Material("")
 ATT.RTScopeReticleScale = 1
 ATT.RTScopeShadowIntensity = 1.5
@@ -183,7 +182,8 @@ ATT.RTScopeDrawFunc = function(swep, rtsize) end
 -- Extra post processing like DrawMotionBlur() DrawSharpen() DrawBloom()
 ATT.RTScopeCustomPPFunc = function(swep) end
 
-ATT.ScopeScreenRatio = 0.75 -- Needed for Cheap Scopes
+ATT.ScopeScreenRatio = 0.5 -- Take a screenshot of full screen, select whole visible picture in it and divide by screen height (for example = 500/1080, you can just leave it like that here)
+ATT.RTScopeMagnification = 4 -- New zoom thing, 1 is 1x, 4 is 4x (crazy!)
 
 ATT.RTScopeNightVision = true
 ATT.RTScopeNightVisionMonochrome = true
