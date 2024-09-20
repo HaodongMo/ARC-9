@@ -367,8 +367,8 @@ end
 
 function SWEP:GetCheapScopeScale(scale)
     local ratio = scale - (!self.ExtraSightDistanceNoRT and self:GetSight().ExtraSightDistance or 0) * 0.045
-    -- print(ratio)
-    return 2 / (scale or 0.5) * 0.66 / ratio
+
+    return 1 / ratio * (ScrW() / ScrH() / 1.12)
 end
 
 local hascostscoped = false

@@ -397,8 +397,8 @@ function SWEP:Scroll(amt)
 
     if !atttbl then return end
     if !atttbl.RTScopeAdjustable then return end
-    if !atttbl.RTScopeFOVMax then return end
-    if !atttbl.RTScopeFOVMin then return end
+    if !atttbl.RTScopeFOVMax and !atttbl.RTScopeMagnificationMax then return end
+    if !atttbl.RTScopeFOVMin and !atttbl.RTScopeMagnificationMin then return end
 
     local scrolllevel = sights.ScrollLevel or 0
     local old = scrolllevel
