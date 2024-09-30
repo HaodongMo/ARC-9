@@ -276,6 +276,8 @@ function SWEP:PrimaryAttack()
 
     if self:SprintLock() then return end
 
+	local nthShot = self:GetNthShot()
+
     if self:HasAmmoInClip() then
         if processedValue(self,"TriggerDelay") then
             local primedAttack = self:GetPrimedAttack()
@@ -285,8 +287,28 @@ function SWEP:PrimaryAttack()
                 self:SetTriggerDelay(time + processedValue(self,"TriggerDelayTime"))
                 local isEmpty = self:Clip1() == processedValue(self, "AmmoPerShot")
                 local anim = "trigger"
+				
+		if processedValue(self,"Akimbo", true) then
+            if processedValue(self, "AkimboBoth", true) then
+                anim = "trigger_both"
+            elseif nthShot % 2 == 0 then
+                anim = "trigger_right"
+            else
+                anim = "trigger_left"
+            end
+        end
+		
                 if processedValue(self,"TriggerStartFireAnim", true) then
-                    anim = "fire"
+				if processedValue(self,"Akimbo", true) then
+					if processedValue(self, "AkimboBoth", true) then
+						anim = "fire_both"
+					elseif nthShot % 2 == 0 then
+						anim = "fire_right"
+					else
+						anim = "fire_left"
+					end
+				else anim = "fire"
+			end
                 end
                 if self:HasAnimation(anim .. "_empty") and isEmpty then
                     anim = anim .. "_empty"
@@ -317,7 +339,7 @@ end
 function SWEP:DoPrimaryAttack()
 
     local processedValue = self.GetProcessedValue
-    if self.FireInterruptInspect and self:GetInspecting() then self:CancelInspect() end
+
     if self:StillWaiting() then return end
     if self.NoFireDuringSighting and (self:GetInSights() and self:GetSightAmount() < 0.8 or false) then return end
 
