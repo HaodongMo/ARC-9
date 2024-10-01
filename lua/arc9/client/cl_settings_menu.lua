@@ -34,7 +34,7 @@ ARC9.LanguagesTable = {
 }
 
 -- ARC9.BadPerfromanceSettings = function() return BRANCH != "x86-64" or GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1 end
-ARC9.BadPerfromanceSettings = function() return BRANCH != "x86-64"
+ARC9.BadPerfromanceSettings = function() return BRANCH != "x86-64" end
 
 ARC9.SettingsTable = {
     -- {
