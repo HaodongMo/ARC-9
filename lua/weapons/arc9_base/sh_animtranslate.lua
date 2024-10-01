@@ -82,6 +82,9 @@ function SWEP:TranslateAnimation(seq)
     if istable(seq) then
         seq["BaseClass"] = nil
         seq = seq[math.Round(util.SharedRandom("ARC9_animtr", 1, #seq))]
+    end
+
+    if self:HasAnimation("1_" .. seq, true) then -- if theres atleast 1 random seq
         local rando = {seq}
 
         local i = 1
@@ -92,7 +95,6 @@ function SWEP:TranslateAnimation(seq)
 
         seq = rando[math.Round(util.SharedRandom("ARC9_animtr", 1, #rando))]
     end
-
 
     return seq
 end
