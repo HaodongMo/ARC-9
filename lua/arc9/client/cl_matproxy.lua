@@ -111,7 +111,15 @@ matproxy.Add({
 
 local lastPos = Vector()
 local lastValue = 0
+
+-- hyperoptimization +1000 fps
 local lerp = Lerp
+local ENTITY = FindMetaTable("Entity")
+local entityGetPos = ENTITY.GetPos
+local renderGetLightColor = render.GetLightColor
+local vectorIsEqualTol = FindMetaTable("Vector").IsEqualTol
+local mathmin = math.min
+
 matproxy.Add( {
 	name = "Arc9EnvMapTint",
 	
@@ -135,12 +143,12 @@ matproxy.Add( {
 
 	bind = function(self, mat, ent)
 		if (!IsValid(ent)) then return end
-
-		if (!lastPos:IsEqualTol(ent:GetPos(), 1)) then
-			local c = render.GetLightColor(ent:GetPos())
+        local getpos = entityGetPos(ent)
+		if !vectorIsEqualTol(lastPos, getpos, 1) then
+			local c = renderGetLightColor(getpos)
 			lastValue = (c.x * 0.2126) + (c.y * 0.7152) + (c.z * 0.0722)
-			lastValue = math.min(lastValue * 2, 1)
-			lastPos = ent:GetPos()
+			lastValue = mathmin(lastValue * 2, 1)
+			lastPos = getpos
 		end
 
 		ent.m_Arc9EnvMapTint = lerp(10 * RealFrameTime(), ent.m_Arc9EnvMapTint || 0, lastValue)
