@@ -33,8 +33,8 @@ ARC9.LanguagesTable = {
 {"9UwU :3", "uwu"},
 }
 
--- ARC9.BadPerfromanceSettings = function() return BRANCH != "x86-64" or GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1 end
 ARC9.BadPerfromanceSettings = function() return BRANCH != "x86-64" end
+ARC9.BadPerfromanceSettingsAlt = function() return BRANCH != "x86-64" or GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1 end
 
 ARC9.SettingsTable = {
     -- {
@@ -89,12 +89,12 @@ ARC9.SettingsTable = {
     },
     {
         TabName = "settings.tabname.performance",
-        Warning = ARC9.BadPerfromanceSettings,
-        { type = "label", text = "badconf.warning", desc = "badconf.warning.desc", important = true, showfunc = BRANCH != "x86-64" or (GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1) },
+        Warning = ARC9.BadPerfromanceSettingsAlt,
+        { type = "label", text = "badconf.warning", desc = "badconf.warning.desc", important = true, showfunc = ARC9.BadPerfromanceSettingsAlt },
         { type = "label", text = "badconf.x64.title", desc = "badconf.x64.desc", showfunc = function() return BRANCH != "x86-64" end },
         { type = "label", text = "badconf.multicore.title", desc = "badconf.multicore.desc", showfunc = function() return GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1 end },
-        { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettings },
-        { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettings },
+        { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettingsAlt },
+        { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettingsAlt },
 
         { type = "label", text = "settings.performance.important" },
         { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
