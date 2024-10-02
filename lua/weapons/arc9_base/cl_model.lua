@@ -223,6 +223,9 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
 
         charmmodel:SetBodyGroups(atttbl.CharmBodygroups or "") -- RUBAT THANK YOU FOR MAKING FUNC ERROR AFTER 10 YEARS OF STABLE WORK
         charmmodel:SetMaterial(atttbl.CharmMaterial)
+        if atttbl.CharmSkin then
+            charmmodel:SetSkin(atttbl.CharmSkin)
+        end
         charmmodel:SetNoDraw(true)
 
         local scale = Matrix()

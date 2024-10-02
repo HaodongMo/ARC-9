@@ -42,6 +42,7 @@ ATT.CharmAngle = Angle(0, 0, 0)
 ATT.CharmMaterial = nil
 ATT.CharmBodygroups = ""
 ATT.CharmScale = 1
+ATT.CharmSkin = 0
 
 ATT.Scale = 1
 ATT.ModelOffset = Vector(0, 0, 0)
