@@ -339,7 +339,7 @@ end
 function SWEP:DoPrimaryAttack()
 
     local processedValue = self.GetProcessedValue
-
+    if self.FireInterruptInspect and self:GetInspecting() then self:CancelInspect() end
     if self:StillWaiting() then return end
     if self.NoFireDuringSighting and (self:GetInSights() and self:GetSightAmount() < 0.8 or false) then return end
 
