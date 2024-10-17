@@ -522,14 +522,24 @@ do
             if not ownerOnGround or entityGetMoveType(owner) == MOVETYPE_NOCLIP then
                 stat = arcGetValue(self, val, stat, "MidAir")
             end
-
+			
+	    if not ownerOnGround and playerCrouching(owner) then
+                stat = arcGetValue(self, val, stat, "MidAirCrouch")
+            end
+				
+	    local ConditionHook = self:RunHook("Hook_ConditionHook", ConditionHook) or false
+			
+	    if ConditionHook == true then
+                stat = arcGetValue(self, val, stat, "CHook")
+            end
+			
             if ownerOnGround and playerCrouching(owner) then
                 stat = arcGetValue(self, val, stat, "Crouch")
             end
 			
-			if ownerOnGround and playerSprinting(owner) and !self:StillWaiting() then
+	    if ownerOnGround and playerSprinting(owner) and !self:StillWaiting() then
                 stat = arcGetValue(self, val, stat, "Sprint")
-			end
+	    end
         end
 
         if swepDt.Reloading then
