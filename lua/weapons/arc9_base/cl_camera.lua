@@ -63,7 +63,7 @@ local mathapproach = math.Approach
 
 function SWEP:GetSmoothedFOVMag()
     local mag = 1
-    local speed = 20
+    local speed = 1
 
     if self:GetInSights() then
         local target = self:GetMagnification()
@@ -92,6 +92,8 @@ function SWEP:GetSmoothedFOVMag()
 
         -- mag = target
         speed = Lerp(self:GetSightAmount(), speed, 10)
+	else
+		speed = Lerp(self:GetSightAmount(), 15, 10)
     end
 
     local diff = math.abs(self.SmoothedMagnification - mag)
