@@ -3,6 +3,7 @@ function ARC9:AddGrenadeAmmo()
     if GetConVar("arc9_equipment_generate_ammo"):GetBool() then
         for i, k in pairs(weapons.GetList()) do
             local class = k.ClassName
+            if string.find(class, "base") then continue end -- no generation for subbases
             local wpntbl = weapons.Get(class)
             if !wpntbl.ARC9 then continue end
 
