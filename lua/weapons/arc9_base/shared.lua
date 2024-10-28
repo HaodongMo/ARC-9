@@ -32,6 +32,9 @@ SWEP.AdminOnly = false
 -- Shooting (Enabled when constantly shooting)
 -- Recoil (Scales with long bursts, you should also set RecoilModifierCap!)
 -- Move (Scaled with move speed)
+-- MidAirCrouch
+-- Water (When fully underwater)
+-- CHook (Requires a positive value from the Condition Hook)
 
 -- Example:
 -- VisualRecoil (Base), Mult (Modifier), Sights (Condition)
@@ -757,6 +760,7 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- SWEP.Hook_PostReload(self) return end -- called after a reload successfully starts
 -- SWEP.Hook_EndReload(self) return end -- called after a reload loads ammo (ammo went in magazine)
 -- SWEP.Hook_SpecialHolsterLogic(self, data) return end -- { wep } return true to override holster logic, set a time, run funcs etc
+-- SWEP.Hook_ConditionHook(self) end -- ConditionHook = true, requires a statement to disable it to avoid always true
 -- Example of replica of base logic:
 -- SWEP.Hook_SpecialHolsterLogic = function( wep, data )
 --     local animation = wep:PlayAnimation("holster", wep:GetProcessedValue("DeployTime", true, 1), true, false, nil, nil, true) or 0
