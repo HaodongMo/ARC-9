@@ -518,14 +518,20 @@ do
 
         if not ownerIsNPC and entityIsValid(owner) then
             local ownerOnGround = entityOnGround(owner)
-
-            if not ownerOnGround or entityGetMoveType(owner) == MOVETYPE_NOCLIP then
+	    local ply = self:GetOwner()
+	    local ownerUnderWater = ply:WaterLevel()
+			
+            if not ownerOnGround or entityGetMoveType(owner) == MOVETYPE_NOCLIP and not ownerUnderWater == 3 then
                 stat = arcGetValue(self, val, stat, "MidAir")
             end
 			
-	    if not ownerOnGround and playerCrouching(owner) then
+	    if not ownerOnGround and playerCrouching(owner) and not ownerUnderWater == 3 then
                 stat = arcGetValue(self, val, stat, "MidAirCrouch")
             end
+
+	    if ownerUnderWater == 3 then
+	    	stat = arcGetValue(self, val, stat, "Water")
+	    end
 				
 	    local ConditionHook = self:RunHook("Hook_ConditionHook", ConditionHook) or false
 			
