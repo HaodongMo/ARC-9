@@ -520,6 +520,10 @@ do
             local ownerOnGround = entityOnGround(owner)
 	    local ply = self:GetOwner()
 	    local ownerUnderWater = ply:WaterLevel()
+
+	    if ply:KeyDown(IN_ATTACK2) then
+		stat = arcGetValue(self, val, stat, "M2")
+	    end
 			
             if not ownerOnGround or entityGetMoveType(owner) == MOVETYPE_NOCLIP and not ownerUnderWater == 3 then
                 stat = arcGetValue(self, val, stat, "MidAir")
