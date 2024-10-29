@@ -35,6 +35,7 @@ SWEP.AdminOnly = false
 -- MidAirCrouch
 -- Water (When fully underwater)
 -- CHook (Requires a positive value from the Condition Hook)
+-- M2 (Different from Sights condition, only requires M2 key press)
 
 -- Example:
 -- VisualRecoil (Base), Mult (Modifier), Sights (Condition)
