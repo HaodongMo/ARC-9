@@ -90,6 +90,9 @@ function SWEP:DoTPIK()
         nolefthand = true
     end
 
+    if ply:IsTyping() then nolefthand = true end
+    if ply:GetNW2Int("CurrentCustomGesture", 0) > 0 then nolefthand = true end -- custom thing
+
     if shouldfulltpik then
         wm:SetupBones()
 
