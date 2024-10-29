@@ -6,7 +6,7 @@ end
 
 function SWEP:DoPlayerAnimationEvent(event)
     -- if CLIENT and self:ShouldTPIK() then return end
-    if event then self:GetOwner():AnimRestartGesture(1, event, true) end
+    if event and IsValid(self:GetOwner()) then self:GetOwner():AnimRestartGesture(1, event, true) end
     if SERVER then self:CallOnClient("DoPlayerAnimationEvent", event) end
 end
 
