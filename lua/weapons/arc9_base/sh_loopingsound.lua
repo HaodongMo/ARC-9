@@ -104,7 +104,8 @@ end
 
 function SWEP:ThinkLoopingSound()
     if self.LoopingSound then
-        if self:GetNextPrimaryFire() + (60 / self:GetProcessedValue("RPM")) <= CurTime() then
+        -- if self:GetNextPrimaryFire() + (60 / self:GetProcessedValue("RPM")) <= CurTime() then
+        if self:GetNextPrimaryFire() + 0.02 + (10 / self:GetProcessedValue("RPM")) <= CurTime() then
             self:EndLoop()
         else
             self.LoopingSound:Play()
