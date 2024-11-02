@@ -476,7 +476,7 @@ do
                         -- print("Renewing cache for - ", processedValueName)
                         
 
-                        self.PV_CacheLong[processedValueName].time = upct + 1 -- idk whats number here should be
+                        self.PV_CacheLong[processedValueName].time = upct + 10 -- idk whats number here should be
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
                         
                 -- if istable(self.PV_CacheLong[processedValueName].value) then
