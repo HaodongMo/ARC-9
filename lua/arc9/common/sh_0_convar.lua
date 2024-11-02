@@ -76,6 +76,11 @@ local conVars = {
         client = true
     },
     {
+        name = "cross_sgstyle",
+        default = "1",
+        client = true
+    },
+    {
         name = "reflex_r",
         default = "255",
         client = true
