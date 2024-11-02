@@ -519,6 +519,14 @@ L["settings.crosshair.crosshair_target.desc"] = "Делает прицел кр�
 L["settings.crosshair.crosshair_peeking.title"] = "Перекрестие при выглядивании"
 L["settings.crosshair.crosshair_peeking.desc"] = "Показывает перекрестие во время выглядывания из-за прицела."
 
+-- L["settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair"
+-- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once."
+-- L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
+-- L["settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_dots"] = "Original Dots"
+-- L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Dots"
+
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Персонализация"
 

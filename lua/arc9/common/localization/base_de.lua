@@ -520,6 +520,14 @@ L["settings.crosshair.crosshair_target.desc"] = "Färbt das Fadenkreuz rot, wenn
 L["settings.crosshair.crosshair_peeking.title"] = "Fadenkreuz beim Spähen anzeigen"
 L["settings.crosshair.crosshair_peeking.desc"] = "Zeigt das Fadenkreuz beim Zielen an, wenn die Spähen-Funktion verwendet wird."
 
+-- L["settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair"
+-- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once."
+-- L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
+-- L["settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_dots"] = "Original Dots"
+-- L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Dots"
+
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Anpassung"
 

@@ -520,6 +520,14 @@ L["settings.crosshair.crosshair_force.desc"] = "在所有武器上开启准心�
 -- L["settings.crosshair.crosshair_peeking.title"] = "Display Crosshair when Peeking"
 -- L["settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when aiming and using the peek function."
 
+-- L["settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair"
+-- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once."
+-- L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
+-- L["settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_dots"] = "Original Dots"
+-- L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Dots"
+
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "自定义"
 

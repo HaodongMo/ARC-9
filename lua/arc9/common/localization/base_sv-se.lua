@@ -520,6 +520,14 @@ L["settings.crosshair.crosshair_target.desc"] = "Gör hårkorset rött när man 
 L["settings.crosshair.crosshair_peeking.title"] = "Visa Hårkors när man Kikar"
 L["settings.crosshair.crosshair_peeking.desc"] = "Visar hårkorset när man är i siktet och använder kika funktionen."
 
+L["settings.crosshair.crosshair_sgstyle.title"] = "Hagelbössa Hårkors"
+L["settings.crosshair.crosshair_sgstyle.desc"] = "Ändra hårkorsstilen som används på vapen som skjuter två eller fler projektiler samtidigt."
+L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Instängd Cirkel"
+L["settings.crosshair.crosshair_sgstyle_four"] = "4 Halvcirklar"
+L["settings.crosshair.crosshair_sgstyle_two"] = "2 Halvcirklar"
+L["settings.crosshair.crosshair_sgstyle_dots"] = "Originala Punkter"
+L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Punkter"
+
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Anpassning"
 

@@ -520,6 +520,14 @@ L["settings.crosshair.crosshair_target.desc"] = "Make the cwosshaiw wed wen awim
 L["settings.crosshair.crosshair_peeking.title"] = "Dispway cwosshaiw when peeking"
 L["settings.crosshair.crosshair_peeking.desc"] = "Dispways de cwosshaiw wen aiwming and uswing de pewek wunction."
 
+-- L["settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair"
+-- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once."
+-- L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
+-- L["settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
+-- L["settings.crosshair.crosshair_sgstyle_dots"] = "Original Dots"
+-- L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Dots"
+
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Cuwustomiawon"
 
