@@ -519,13 +519,13 @@ L["settings.crosshair.crosshair_target.desc"] = "Делает прицел кр�
 L["settings.crosshair.crosshair_peeking.title"] = "Перекрестие при выглядивании"
 L["settings.crosshair.crosshair_peeking.desc"] = "Показывает перекрестие во время выглядывания из-за прицела."
 
--- L["settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair"
--- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once."
--- L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
--- L["settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
--- L["settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
--- L["settings.crosshair.crosshair_sgstyle_dots"] = "Original Dots"
--- L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Dots"
+L["settings.crosshair.crosshair_sgstyle.title"] = "Перекрестие у дробовиков"
+L["settings.crosshair.crosshair_sgstyle.desc"] = "Меняет стиль перекрестия на оружии, которое стреляет несколькими снарядами за выстрел.\n\nПоследний пункт рисует столько точек, сколько снарядов у патрона."
+L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Закрытый круг"
+L["settings.crosshair.crosshair_sgstyle_four"] = "4 полукруга"
+L["settings.crosshair.crosshair_sgstyle_two"] = "2 полукруга"
+L["settings.crosshair.crosshair_sgstyle_dots"] = "Ориг. точки"
+L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Точки дроби"
 
 ////////////////////// Customization
 L["settings.tabname.hud_cust"] = "Персонализация"

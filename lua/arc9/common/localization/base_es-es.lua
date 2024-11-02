@@ -522,7 +522,7 @@ L["settings.crosshair.crosshair_peeking.title"] = "Mostrar la retícula al dar v
 L["settings.crosshair.crosshair_peeking.desc"] = "Muestra la retícula al apuntar y utilizar la función de vistazo."
 
 -- L["settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair"
--- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once."
+-- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once.\n\nThe last option draws the amount of dots equal to the amount of projectiles fired."
 -- L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
 -- L["settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
 -- L["settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
