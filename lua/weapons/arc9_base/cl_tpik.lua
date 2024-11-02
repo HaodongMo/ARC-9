@@ -20,15 +20,25 @@ function SWEP:ShouldTPIK()
     if self:ShouldLOD() == 2 then return end
     -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
-    if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
+    -- if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
     if self:RunHook("Hook_BlockTPIK") then return end
     -- if !arc9_tpik:GetBool() then return false end
+
+    local should = false
+
     if lp != owner then
-        return arc9_tpik:GetBool() and arc9_tpik_others:GetBool()
+        should = arc9_tpik:GetBool() and arc9_tpik_others:GetBool()
     else
-        return arc9_tpik:GetBool()
+        should = arc9_tpik:GetBool()
     end
-    -- return false
+
+    local wm = self:GetWM()
+    if IsValid(wm) and wm.slottbl then
+        wm.slottbl.Pos = (should and self.WorldModelOffset.TPIKPos) or self.WorldModelOffset.Pos
+        wm.slottbl.Ang = (should and self.WorldModelOffset.TPIKAng) or self.WorldModelOffset.Ang
+    end
+
+    return should
 end
 
 SWEP.TPIKCache = {}
