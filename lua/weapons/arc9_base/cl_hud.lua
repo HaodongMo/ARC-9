@@ -10,6 +10,7 @@ local arc9_cross_b = GetConVar("arc9_cross_b")
 local arc9_cross_a = GetConVar("arc9_cross_a")
 local arc9_dev_crosshair = GetConVar("arc9_dev_crosshair")
 local arc9_crosshair_peek = GetConVar("arc9_crosshair_peek")
+local arc9_crosshair_sgstyle = GetConVar("arc9_cross_sgstyle")
 
 
 function SWEP:ShouldDrawCrosshair()
@@ -42,6 +43,10 @@ local lerp = Lerp
 -- local arcticcolor = Color(255, 255, 255, 100)
 local ARC9ScreenScale = ARC9.ScreenScale
 local arc9_crosshair_target = GetConVar("arc9_crosshair_target")
+local sgcircle = Material("arc9/circlehollow.png", "mips smooth")
+local sgcirclethick = Material("arc9/circlehollowsmall.png", "mips smooth")
+local sgcirclethin = Material("arc9/circlehollowbig.png", "mips smooth")
+local sgcircleprong = Material("arc9/circleprong.png", "mips smooth")
 
 function SWEP:DoDrawCrosshair(x, y)
     if !arc9_cross_enable:GetBool() then return end
@@ -179,7 +184,7 @@ function SWEP:DoDrawCrosshair(x, y)
 		local size = self:GetProcessedValue("CustomCrosshairSize", true) or 40
 		
 		if self:GetProcessedValue("CustomCrosshairSingle", true) then
-			surface.DrawTexturedRectRotated(x, y, size + gap, size + gap, 0) -- Central
+			surface.DrawTexturedRectRotated(x, y, (dotsize + gap) * 2, (dotsize + gap) * 2, 0) -- Central
 		else
 			surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
 			surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 180) -- Right
@@ -253,24 +258,43 @@ function SWEP:DoDrawCrosshair(x, y)
         drawshadowrect(x - (dotsize / 2) - (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
         drawshadowrect(x - (dotsize / 2) + (minigap * 2), y - (dotsize / 2) + gap + (staticgap * 5.5), dotsize, dotsize, col)
     elseif self:GetProcessedValue("Num", true) > 1 and !forcestd then
-        -- local dotcount = 10
+        local style = arc9_crosshair_sgstyle:GetInt()
 
-        -- for i = 1, dotcount do
-            -- local rad = i * math.pi * 2 / dotcount
-            -- rad = rad - (math.pi / 2)
-            -- local cx = math.cos(rad)
-            -- local cy = math.sin(rad)
+        if style == 4 or style == 5 then
+            local dotcount = style == 5 and self:GetProcessedValue("Num", true) or 10
 
-            -- cx = cx * gap
-            -- cy = cy * gap
+            for i = 1, dotcount do
+                local rad = i * math.pi * 2 / dotcount
+                rad = rad - (math.pi / 2) + math.pi / 2
+                local cx = math.cos(rad)
+                local cy = math.sin(rad)
 
-            -- drawshadowrect(x + cx - (dotsize / 2), y + cy - (dotsize / 2), dotsize, dotsize, col)
-        -- end
+                cx = cx * gap
+                cy = cy * gap
 
-		surface.DrawCircle(x, y, dotsize + gap - 1, col.r, col.g, col.b, 255) -- Middle White / Coloured One
-		surface.DrawCircle(x, y, dotsize + gap, 0, 0, 0, 100) -- Outside Gray
-		surface.DrawCircle(x, y, dotsize + gap -2, 0, 0, 0, 100) -- Inside Gray
-		
+                drawshadowrect(x + cx - (dotsize / 2), y + cy - (dotsize / 2), dotsize, dotsize, col)
+            end
+        elseif style == 3 or style == 2 then
+            local size = gap - gap * 0.5 + 15
+
+            surface.SetDrawColor(col)
+            surface.SetMaterial(sgcircleprong)
+
+			surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap, y - (dotsize / 2) + 1, size, size, 0) -- Left
+			surface.DrawTexturedRectRotated(x - (dotsize / 2) + 2 + gap, y - (dotsize / 2) + 1, size, size, 180) -- Right
+			if style == 2 then
+                surface.DrawTexturedRectRotated(x - (dotsize / 2) + 1, y - (dotsize / 2) - gap - 1 , size, size, -90) -- Top
+                surface.DrawTexturedRectRotated(x - (dotsize / 2) + 1, y + (dotsize / 2) + gap , size, size, 90) -- Bottom
+            end
+        else
+            surface.SetDrawColor(col)
+            surface.SetMaterial((gap > 75 and sgcirclethin) or (gap < 30 and sgcirclethick) or sgcircle)
+            surface.DrawTexturedRectRotated(x, y, (dotsize + gap) * 2, (dotsize + gap) * 2, 0) -- Central
+        end
+        
+		-- surface.DrawCircle(x, y, dotsize + gap - 1, col.r, col.g, col.b, 255) -- Middle White / Coloured One
+		-- surface.DrawCircle(x, y, dotsize + gap, 0, 0, 0, 100) -- Outside Gray
+		-- surface.DrawCircle(x, y, dotsize + gap -2, 0, 0, 0, 100) -- Inside Gra
     else
         if mode > 1 then
             -- Burst crosshair

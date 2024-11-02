@@ -149,6 +149,14 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.crosshair.crosshair_force.title", convar = "crosshair_force", desc = "settings.crosshair.crosshair_force.desc" },
         { type = "bool", text = "settings.crosshair.crosshair_target.title", convar = "crosshair_target", desc = "settings.crosshair.crosshair_target.desc" },
         { type = "bool", text = "settings.crosshair.crosshair_peeking.title", convar = "crosshair_peek", desc = "settings.crosshair.crosshair_peeking.desc" },
+        { type = "combo", text = "settings.crosshair.crosshair_sgstyle.title", convar = "cross_sgstyle", desc = "settings.crosshair.crosshair_sgstyle.desc", content = {
+            {"1" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_fullcircle"), "1"},
+            {"2" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_four"), "2"},
+            {"3" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_two"), "3"},
+            {"4" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_dots"), "4"},
+            {"5" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_dots_accurate"), "5"}, 
+			},
+        },
     },
     {
         TabName = "settings.tabname.hud_cust",
