@@ -4,6 +4,7 @@ local arc9_tpik = GetConVar("arc9_tpik")
 local arc9_tpik_others = GetConVar("arc9_tpik_others")
 local arc9_tpik_framerate = GetConVar("arc9_tpik_framerate")
 
+local somevector3 = Vector(-1, -1, 1)
 local forcednotpik = ARC9.NoTPIK
 
 function SWEP:ShouldTPIK()
@@ -20,7 +21,7 @@ function SWEP:ShouldTPIK()
     if self:ShouldLOD() == 2 then return end
     -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
-    -- if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
+    if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
     if self:RunHook("Hook_BlockTPIK") then return end
     -- if !arc9_tpik:GetBool() then return false end
 
@@ -36,6 +37,11 @@ function SWEP:ShouldTPIK()
     if IsValid(wm) and wm.slottbl then
         wm.slottbl.Pos = (should and self.WorldModelOffset.TPIKPos) or self.WorldModelOffset.Pos
         wm.slottbl.Ang = (should and self.WorldModelOffset.TPIKAng) or self.WorldModelOffset.Ang
+
+        if should and lp == owner and self.CustomizeDelta == 0 then 
+            wm.slottbl.Pos = wm.slottbl.Pos - self.ViewModelPos * somevector3
+            wm.slottbl.Ang = wm.slottbl.Ang + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
+        end
     end
 
     return should
