@@ -77,7 +77,7 @@ local conVars = {
     },
     {
         name = "cross_sgstyle",
-        default = "1",
+        default = "2",
         client = true
     },
     {

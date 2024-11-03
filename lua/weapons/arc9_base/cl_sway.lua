@@ -246,7 +246,7 @@ local function ArcticBreadBob(self, pos, ang)
     step = 10
 
     -- local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 8 * (1.1-sightamount)
-    local sidemove = (owner:GetVelocity():Dot(ply:EyeAngles():Right()) / ply:GetMaxSpeed()) * 4 * (1.5-sightamount)
+    local sidemove = (owner:GetVelocity():Dot(owner:EyeAngles():Right()) / owner:GetMaxSpeed()) * 4 * (1.5-sightamount)
     smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = 1
@@ -321,7 +321,7 @@ local function ArcticBreadDarsuBob(self, pos, ang)
     mag = mag * Lerp(ts, 1, 2)
     step = 9.25
 
-    local sidemove = (owner:GetVelocity():Dot(ply:EyeAngles():Right()) / ply:GetMaxSpeed()) * 4 * (1.5-sightamount)
+    local sidemove = (owner:GetVelocity():Dot(owner:EyeAngles():Right()) / owner:GetMaxSpeed()) * 4 * (1.5-sightamount)
     -- local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.5-sightamount)
     smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
 
@@ -415,7 +415,7 @@ local function DarsuBob(self, pos, ang)
     local xms, yms, zms, pms, yyms, rms = settings2[1], settings2[2], settings2[3], settings2[4], settings2[5], settings2[6]
 
     -- local sidemove = ((owner:KeyDown(IN_MOVERIGHT) and 1 or 0) - (owner:KeyDown(IN_MOVELEFT) and 1 or 0)) * 3 * (1.1-sightamount)
-    local sidemove = (owner:GetVelocity():Dot(ply:EyeAngles():Right()) / ply:GetMaxSpeed()) * 4 * (1.5-sightamount)
+    local sidemove = (owner:GetVelocity():Dot(owner:EyeAngles():Right()) / owner:GetMaxSpeed()) * 4 * (1.5-sightamount)
     smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
 
     local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5*(1.3-sightamount)  or 1
