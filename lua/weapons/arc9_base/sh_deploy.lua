@@ -113,6 +113,11 @@ function SWEP:ClientDeploy()
         self:CallOnClient("ClientDeploy")
     end
 
+    if IsValid(self) then
+        if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
+        if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
+    end
+    
     self:KillModel()
 end
 
