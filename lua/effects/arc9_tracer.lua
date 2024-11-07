@@ -8,7 +8,7 @@ EFFECT.Color = Color(255, 255, 255)
 EFFECT.Speed = 15000
 EFFECT.Size = 1
 
---local head = Material("effects/whiteflare")
+local head = Material("effects/whiteflare")
 local tracer = Material("arc9/tracer")
 --local smoke = Material("effects/smoke")
 local smoke = Material("effects/fas_smoke_beam")
@@ -23,6 +23,8 @@ function EFFECT:Init(data)
     local speed = data:GetScale()
     local start = (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart()
 
+    local diff = hit - start
+
     if speed > 0 then
         self.Speed = speed
     end
@@ -33,6 +35,7 @@ function EFFECT:Init(data)
 
     self.StartPos = start
     self.EndPos = hit
+    self.Dir = diff:GetNormalized()
 
     -- Sometimes it freaks out and, I dunno, gets invalid
     if wep.GetProcessedValue then
@@ -59,17 +62,22 @@ function EFFECT:Render()
     local d2 = (UnPredictedCurTime() - self.StartTime) / self.LifeTime2
     local startpos = self.StartPos + (d * 0.1 * (self.EndPos - self.StartPos))
     local endpos = self.StartPos + (d * (self.EndPos - self.StartPos))
-    local size = self.Size
+    local size = self.Size * math.Clamp(math.log(EyePos():DistToSqr(endpos) - math.pow(256, 2)), 0, math.huge)
 
-    local col = LerpColor(d, self.Color, Color(0, 0, 0, 0))
+    local col = self.Color --LerpColor(d, self.Color, Color(0, 0, 0, 0))
     local col2 = LerpColor(d2, Color(155, 155, 155, 155), Color(0, 0, 0, 0))
 
-    --render.SetMaterial(head)
-    --render.DrawSprite(endpos, size * 2, size * 2, col)
+    local vel = self.Dir * self.Speed - LocalPlayer():GetVelocity()
+    local dot = math.abs(EyeAngles():Forward():Dot(vel:GetNormalized()))
+    --dot = math.Clamp(((dot * dot) - 0.25) * 5, 0, 1)
+    local headsize = size * dot * 2
+    render.SetMaterial(head)
+    render.DrawSprite(endpos, headsize, headsize, col)
 
+    local tail = (self.Dir * math.min(self.Speed / 25, 512, (endpos - startpos):Length() - 64))
     render.SetMaterial(tracer)
-    render.DrawBeam(startpos, endpos, size, 0, 1, col)
+    render.DrawBeam(endpos, endpos - tail, size * 0.75, 0, 1, col)
 
     render.SetMaterial(smoke)
-    render.DrawBeam(startpos, endpos, size * d2, 0, 1, col2)
+    render.DrawBeam( endpos - tail, startpos, size * d2, 0, 1, col2)
 end
