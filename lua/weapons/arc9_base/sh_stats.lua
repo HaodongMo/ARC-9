@@ -671,7 +671,7 @@ do
         end
 
         if val ~= "RecoilModifierCap" and not hasNoAffectors[val .. "Recoil"] then
-            local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap", true), swepDt.RecoilAmount)
+            local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap"), swepDt.RecoilAmount)
 
             if recoilAmount > 0 then
                 stat = arcGetValue(self, val, stat, "Recoil", recoilAmount)
