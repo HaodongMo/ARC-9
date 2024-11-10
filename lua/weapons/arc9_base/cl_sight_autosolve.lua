@@ -68,7 +68,7 @@ function SWEP:GetRealZoom(sight)
 
     if atttbl.RTScopeAdjustable then
         sight.SmoothScrollLevel = Lerp(FrameTime() * 12, (sight.SmoothScrollLevel or sight.ScrollLevel or 0), math.ease.InOutQuad(scrolllevel))
-        return atttbl.RTScopeMagnificationMin and Lerp(sight.SmoothScrollLevel, atttbl.RTScopeMagnificationMax, atttbl.RTScopeMagnificationMin) or (sight.ViewModelFOV or 54) / Lerp(smoothadjlevel, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
+        return atttbl.RTScopeMagnificationMin and Lerp(sight.SmoothScrollLevel, atttbl.RTScopeMagnificationMax, atttbl.RTScopeMagnificationMin) or (sight.ViewModelFOV or 54) / Lerp(sight.SmoothScrollLevel, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
     else
         -- pseudo fake zoom if no real new thing defined
         return sight.RTScopeMagnification or atttbl.RTScopeMagnification or (sight.ViewModelFOV or 54) / (sight.RTScopeFOV or atttbl.RTScopeFOV)
