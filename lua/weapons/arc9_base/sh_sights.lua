@@ -403,13 +403,13 @@ function SWEP:Scroll(amt)
     local scrolllevel = sights.ScrollLevel or 0
     local old = scrolllevel
 
-    sights.ScrollLevel = scrolllevel + amt
+    sights.ScrollLevel = scrolllevel + (amt / atttbl.RTScopeAdjustmentLevels)
 
-    sights.ScrollLevel = math.Clamp(sights.ScrollLevel, 0, atttbl.RTScopeAdjustmentLevels)
+    sights.ScrollLevel = math.Clamp(sights.ScrollLevel, 0, 1)
 
     self.ScrollLevels[self:GetMultiSight()] = sights.ScrollLevel
 
-    if old != sights.ScrollLevel then
+    if old != sights.ScrollLevel and atttbl.ZoomSound != false then
         local soundtab1 = {
             name = "zoom",
             sound = atttbl.ZoomSound or "arc9/useatt.ogg",

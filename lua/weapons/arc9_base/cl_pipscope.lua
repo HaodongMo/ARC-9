@@ -305,7 +305,7 @@ function SWEP:DoRTScope(model, atttbl, active)
             end
 
             if atttbl.RTScopeDrawFunc then
-                atttbl.RTScopeDrawFunc(self, rtsize)
+                atttbl.RTScopeDrawFunc(self, rtsize, sight)
             end
 
             -- if drawfunc then -- doesn't seem to be working

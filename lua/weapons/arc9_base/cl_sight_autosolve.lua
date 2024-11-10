@@ -54,7 +54,6 @@ end
 local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 local arc9_compensate_sens = GetConVar("arc9_compensate_sens")
 local fov_desired = GetConVar("fov_desired")
-local smoothadjlevel = 0
 
 function SWEP:GetRealZoom(sight)
     local atttbl
@@ -68,9 +67,8 @@ function SWEP:GetRealZoom(sight)
     local scrolllevel = sight.ScrollLevel or 0
 
     if atttbl.RTScopeAdjustable then
-        local meow = math.ease.OutCubic(scrolllevel / atttbl.RTScopeAdjustmentLevels)
-        smoothadjlevel = Lerp(0.1, smoothadjlevel, meow)
-        return atttbl.RTScopeMagnificationMin and Lerp(smoothadjlevel, atttbl.RTScopeMagnificationMax, atttbl.RTScopeMagnificationMin) or (sight.ViewModelFOV or 54) / Lerp(smoothadjlevel, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
+        sight.SmoothScrollLevel = Lerp(FrameTime() * 12, (sight.SmoothScrollLevel or sight.ScrollLevel or 0), math.ease.InOutQuad(scrolllevel))
+        return atttbl.RTScopeMagnificationMin and Lerp(sight.SmoothScrollLevel, atttbl.RTScopeMagnificationMax, atttbl.RTScopeMagnificationMin) or (sight.ViewModelFOV or 54) / Lerp(smoothadjlevel, atttbl.RTScopeFOVMax, atttbl.RTScopeFOVMin)
     else
         -- pseudo fake zoom if no real new thing defined
         return sight.RTScopeMagnification or atttbl.RTScopeMagnification or (sight.ViewModelFOV or 54) / (sight.RTScopeFOV or atttbl.RTScopeFOV)
