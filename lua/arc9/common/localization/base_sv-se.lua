@@ -929,3 +929,37 @@ Om du inte omedelbart får tillgång till ARC9 Premium bonusarna, vänligen åte
 
 Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Diamond Doves Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
 ]]
+
+////////////////////// Spawn Menu
+L["spawnmenu.settings.desc"] = "Få tillgång till ARC9-inställningarna genom att trycka på denna knapp utan att ta fram ett vapen!"
+L["spawnmenu.settings.button"] = "Öppna Inställningspanelen"
+
+L["spawnmenu.controller"] = "Kontrollerläge"
+L["spawnmenu.controller.button.desc"] = [[Aktivera ett kontrollervänligt läge till ARC9.
+"Hoppa", "Ladda om" och "Använd" används för att Välja, Välja bort och Slumpmässigt välja tillbehör.
+
+Kontroller glyfer kan anpassas nedanför!]]
+
+L["spawnmenu.controller.input1"] = "Skriv vilken inmatning som skall ersättas"
+L["spawnmenu.controller.input2"] = "Vilken glyf som ska visas; klicka på den nedanför"
+L["spawnmenu.controller.apply"] = "Lägg till & Tillämpa"
+L["spawnmenu.controller.remove"] = "Plocka bort vald"
+L["spawnmenu.controller.filter"] = "Filtrera med Typ av Kontroller"
+L["spawnmenu.controller.filter.all"] = "! Visa Alla !"
+
+L["spawnmenu.supermod"] = "Super Modifierare"
+L["spawnmenu.supermod.desc"] = "Lägg till vilken modifierare som helst med vilka villkor som helst!"
+L["spawnmenu.supermod.desc2"] = "Dubbeltryck för att kopiera till textfälten."
+
+L["spawnmenu.supermod.input1"] = [[ Använd första listan för att välja en statistik att ändra ]]
+L["spawnmenu.supermod.input2"] = [[ Skriv in ett nummervärde, 'true' eller 'false' ]]
+
+L["spawnmenu.supermod.list1"] = "Öppna denna lista för att välja en statistik att ändra."
+L["spawnmenu.supermod.list2"] = "Öppna sedan denna lista och välj en modifikationstyp.\nVissa statistik har inte tillgång till dessa."
+L["spawnmenu.supermod.list3"] = "Till sist, öppna denna lista och välj när den skall tillämpas, exempelvis när du är hukad."
+L["spawnmenu.supermod.examples"] = [[Här är några exemplar:
+- "Overheat" "true" för att avaktivera överhettning.
+- "BottomlessClip" "true" för att aktivera Bottenlöst Magasin.
+- "RecoilMultCrouch" "0.1" för att sänka rekylen med 90% när du är hukad.
+- "RPMMultOddShot" "0.5" för att göra att vart andra skott skjuts hälften så snabbt.
+]]
