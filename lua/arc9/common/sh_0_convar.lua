@@ -1004,19 +1004,20 @@ if CLIENT then
 local function menu_arc9_settings(panel)
     local butt = vgui.Create( "DButton", panel )
 
-    butt:SetText( ARC9:GetPhrase( "spawnmenu.settings.button" ) ) -- "Open Settings Panel"
+    butt:SetText("Open settings panel!")
     butt:SetPos(20, 50)
     butt:SetSize(300, 50)
     function butt:DoClick()
         ARC9_OpenSettings()
     end
-    panel:ControlHelp( ARC9:GetPhrase( "spawnmenu.settings.desc" ) ) -- Settings Panel Description
+    panel:ControlHelp( "\nAccess the ARC9 settings by pressing this button without having to equip a weapon!" )
 end
 
 local function menu_client_controller(panel)
+    -- panel:AddControl( "header", { description = "Replace key names with controller glyphs." } )
+    panel:CheckBox("Activate Controller Mode", "arc9_controller")
     -- panel:ControlHelp( "Activate controller-focused features in ARC9.\n- Keys are replaced with their bindnames.\n- JUMP and USE are used as Select and Deselect, respectively." )
-    panel:CheckBox( ARC9:GetPhrase( "settings.controller.controller.title" ), "arc9_controller") -- "Enable Controller Mode"
-    panel:ControlHelp( ARC9:GetPhrase( "spawnmenu.controller.button.desc" ) ) -- Controller Mode Description
+    panel:ControlHelp( "Activate a controller-friendly mode for ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and\nRandomly Select attachments.\n\nController glyphs can be customized down below!" )
     -- panel:CheckBox("Controller Rumble w/ SInput", "arc9_controller_rumble")
     -- panel:ControlHelp( "Use Fesiug's SInput to interact with ARC9.\nFound at github.com/Fesiug/gmod-sinput" )
     local listview = vgui.Create("DListView", panel)
@@ -1028,13 +1029,13 @@ local function menu_client_controller(panel)
 
     local tex_inp = vgui.Create( "DTextEntry", panel )
     local tex_out = vgui.Create( "DTextEntry", panel )
-    -- panel:ControlHelp( "Glyph to show." ) -- Not necessary?
+    panel:ControlHelp( "Glyph to show." )
     -- panel:ControlHelp( "Double-click to copy into text fields" )
     panel:AddItem( tex_inp )
     -- panel:ControlHelp( "Glyph or keyboard icon to be replaced.\nInputs are case-sensitive!" )
     panel:AddItem( tex_out )
-    tex_inp:SetPlaceholderText( ARC9:GetPhrase( "spawnmenu.controller.input1" ) ) -- "Write which input the glyph should replace"
-    tex_out:SetPlaceholderText( ARC9:GetPhrase( "spawnmenu.controller.input2" ) ) -- "Which glyph should appear; click on the one below"
+    tex_inp:SetPlaceholderText("Write which input the glyph should replace")
+    tex_out:SetPlaceholderText("Which glyph should appear, or click on it below")
 
     local but_add = vgui.Create( "DButton", panel )
     local but_rem = vgui.Create( "DButton", panel )
@@ -1046,8 +1047,8 @@ local function menu_client_controller(panel)
     panel:AddItem( but_rem )
     panel:AddItem( but_upd )
     panel:AddItem( but_app )
-    but_add:SetText( ARC9:GetPhrase( "spawnmenu.controller.apply" ) ) -- "Add & Apply"
-    but_rem:SetText( ARC9:GetPhrase( "spawnmenu.controller.remove" ) ) -- "Remove Selected"
+    but_add:SetText("Add & Apply")
+    but_rem:SetText("Remove Selected")
     but_upd:SetText("Restore From Memory")
     but_app:SetText("Apply")
 
@@ -1114,7 +1115,7 @@ local function menu_client_controller(panel)
 
     local matselect_filter = vgui.Create( "DComboBox", panel )
     panel:AddItem( matselect_filter )
-    matselect_filter:AddChoice(  ARC9:GetPhrase( "spawnmenu.controller.filter.all" ) , "" )
+    matselect_filter:AddChoice( "! Display All !", "" )
     matselect_filter:AddChoice( "\"Shared\"", "shared_" )
     matselect_filter:AddChoice( "PlayStation", "ps" )
     matselect_filter:AddChoice( "Xbox", "xbox" )
@@ -1138,7 +1139,7 @@ local function menu_client_controller(panel)
     -- matselect_filter:AddChoice( "Xbox 360", "Xbox360/" )
     -- matselect_filter:AddChoice( "Xbox One", "XboxOne/" )
     -- matselect_filter:AddChoice( "Xbox Series X|S", "XboxSeries/" )
-    matselect_filter:SetValue( ARC9:GetPhrase("spawnmenu.controller.filter") ) -- "Filter by Controller Type"
+    matselect_filter:SetValue( "Filter by controller type" )
 
     local matselect = ""
     local function GenerateMatSelect()
@@ -1317,7 +1318,7 @@ c3 = {
 }
 
 local function menu_server_modifiers(panel)
-    panel:AddControl( "header", { description = ARC9:GetPhrase( "spawnmenu.supermod.desc" ) } ) -- "Add ANY modifier with ANY special conditions"
+    panel:AddControl( "header", { description = "Add ANY modifier with ANY special conditions." } )
     local listview = vgui.Create("DListView", panel)
     listview:SetSize( 99, 200 )
     panel:AddItem( listview )
@@ -1327,21 +1328,21 @@ local function menu_server_modifiers(panel)
 
     local tex_inp = vgui.Create( "DTextEntry", panel )
     local tex_out = vgui.Create( "DTextEntry", panel )
-    panel:ControlHelp( ARC9:GetPhrase( "spawnmenu.supermod.desc2" ) )
+    panel:ControlHelp( "Double-click to copy into text fields" )
     panel:AddItem( tex_inp )
     panel:AddItem( tex_out )
-    tex_inp:SetPlaceholderText( ARC9:GetPhrase( "spawnmenu.supermod.input1" ) ) -- "Use the first list to select a stat to modify"
-    tex_out:SetPlaceholderText( ARC9:GetPhrase( "spawnmenu.supermod.input2" ) ) -- "Enter a number value, 'true' or 'False'"
+    tex_inp:SetPlaceholderText("Use the first list to select a stat to modify")
+    tex_out:SetPlaceholderText("Enter a number value, 'true', or 'false'.")
 
     local com_1 = vgui.Create( "DComboBox", panel )
     local com_2 = vgui.Create( "DComboBox", panel )
     local com_3 = vgui.Create( "DComboBox", panel )
     panel:AddItem( com_1 )
-    panel:ControlHelp( ARC9:GetPhrase( "spawnmenu.supermod.list1" ) ) -- "Open this list and select a stat to change."
+    panel:ControlHelp( "Stat to change." )
     panel:AddItem( com_2 )
-    panel:ControlHelp( ARC9:GetPhrase( "spawnmenu.supermod.list2" ) ) -- "Then, open this list to select a modification type. Some stats do not have access to these."
+    panel:ControlHelp( "Modification type. Some stats don't have these." )
     panel:AddItem( com_3 )
-    panel:ControlHelp( ARC9:GetPhrase( "spawnmenu.supermod.list3" ) ) -- "Lastly, open this list and select when it should apply, such as when crouching."
+    panel:ControlHelp( "Special condition, like if you're crouching." )
 
     function listview:DoDoubleClick( lineID, line )
         tex_inp:SetValue( line:GetColumnText( 1 ) )
@@ -1380,16 +1381,16 @@ local function menu_server_modifiers(panel)
     panel:AddItem( but_rem )
     panel:AddItem( but_upd )
     panel:AddItem( but_app )
-    but_add:SetText( ARC9:GetPhrase( "spawnmenu.controller.apply" ) ) -- "Add & Apply"
-    but_rem:SetText( ARC9:GetPhrase( "spawnmenu.controller.remove" ) ) -- "Remove Selected"
+    but_add:SetText("Add & Apply")
+    but_rem:SetText("Remove Selected")
     but_upd:SetText("Restore From Memory")
     but_app:SetText("Apply")
 
-    panel:ControlHelp( ARC9:GetPhrase( "spawnmenu.supermod.examples" ) )
-    -- panel:ControlHelp( " - \"Overheat\" \"true\" to disable overheating." )
-    -- panel:ControlHelp( " - \"BottomlessClip\" \"true\" to enable Bottomless Clip." )
-    -- panel:ControlHelp( " - \"RecoilMultCrouch\" \"0.1\" to reduce recoil to 10% when crouching." )
-    -- panel:ControlHelp( " - \"RPMMultOddShot\" \"0.5\" to make every other shot 600RPM." )
+    panel:ControlHelp( "Examples:" )
+    panel:ControlHelp( " - \"Overheat\" \"true\" to disable overheating." )
+    panel:ControlHelp( " - \"BottomlessClip\" \"true\" to enable Bottomless Clip." )
+    panel:ControlHelp( " - \"RecoilMultCrouch\" \"0.1\" to reduce recoil to 10% when crouching." )
+    panel:ControlHelp( " - \"RPMMultOddShot\" \"0.5\" to make every other shot 600RPM." )
 
     function listview:OnRowRightClick( lineID, line )
         local menu = DermaMenu()
@@ -1457,7 +1458,7 @@ end )
 
 local clientmenus_ti = {
     {
-        text = ARC9:GetPhrase( "settings.title" ), func = menu_arc9_settings
+        text = "ARC9 Settings", func = menu_arc9_settings
     },
     -- {
     --     text = "Client", func = menu_client_ti
@@ -1466,7 +1467,7 @@ local clientmenus_ti = {
     --     text = "Client - Customization", func = menu_client_customization
     -- },
     {
-        text = ARC9:GetPhrase( "spawnmenu.controller" ), func = menu_client_controller
+        text = "Controller Mode", func = menu_client_controller
     },
     -- {
     --     text = "Client - Crosshair", func = menu_client_crosshair
@@ -1484,7 +1485,7 @@ local clientmenus_ti = {
     --     text = "Server - Ballistics", func = menu_server_ballistics
     -- },
     {
-        text = ARC9:GetPhrase( "spawnmenu.supermod" ), func = menu_server_modifiers
+        text = "Super Modifiers", func = menu_server_modifiers
     },
 }
 

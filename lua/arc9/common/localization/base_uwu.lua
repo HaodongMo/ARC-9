@@ -930,37 +930,3 @@ If you have not immediately acquired access to the ARC9 Premium bonuses, please 
 
 If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
 ]]
-
-////////////////////// Spawn Menu
--- L["spawnmenu.settings.desc"] = "Access the ARC9 settings by pressing this button without having to equip a weapon!"
--- L["spawnmenu.settings.button"] = "Open Settings Panel"
-
--- L["spawnmenu.controller"] = "Controller Mode"
--- L["spawnmenu.controller.button.desc"] = [[Activate a controller-friendly mode for ARC9.
--- "Jump", "Reload" and "Use" can be used to Select, Deselect and Randomly select attachments.
-
--- Controller glyphs can be customized below!]]
-
--- L["spawnmenu.controller.input1"] = "Write which input the glyph should replace"
--- L["spawnmenu.controller.input2"] = "Which glyph should appear; click on the one below"
--- L["spawnmenu.controller.apply"] = "Add & Apply"
--- L["spawnmenu.controller.remove"] = "Remove Selected"
--- L["spawnmenu.controller.filter"] = "Filter by Controller Type"
--- L["spawnmenu.controller.filter.all"] = "! Display All !"
-
--- L["spawnmenu.supermod"] = "Super Modifiers"
--- L["spawnmenu.supermod.desc"] = "Add ANY modifier with ANY special condition!"
--- L["spawnmenu.supermod.desc2"] = "Double-click to copy into text fields."
-
--- L["spawnmenu.supermod.input1"] = [[ Use the first list to select a stat to modify ]]
--- L["spawnmenu.supermod.input2"] = [[ Enter a number value, 'true' or 'false' ]]
-
--- L["spawnmenu.supermod.list1"] = "Open this list and select a stat to change."
--- L["spawnmenu.supermod.list2"] = "Then, open this list to select a modification type.\nSome stats do not have access to these."
--- L["spawnmenu.supermod.list3"] = "Lastly, open this list and select when it should apply, such as when crouching."
--- L["spawnmenu.supermod.examples"] = [[Here are some examples:
--- - "Overheat" "true" to disable overheating.
--- - "BottomlessClip" "true" to enable Bottomless Clip.
--- - "RecoilMultCrouch" "0.1" to reduce recoil by 90% when crouching.
--- - "RPMMultOddShot" "0.5" to make every other shot shoot half as fast.
--- ]]
