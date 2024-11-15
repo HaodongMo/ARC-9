@@ -181,10 +181,10 @@ function SWEP:DoDrawCrosshair(x, y)
 		
 		surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial", true) or Material("arc9/ui/share.png", "mips smooth") )
 		
-		local size = self:GetProcessedValue("CustomCrosshairSize", true) or 40
+		local size = self:GetProcessedValue("CustomCrosshairSize", true) or 100
 		
 		if self:GetProcessedValue("CustomCrosshairSingle", true) then
-			surface.DrawTexturedRectRotated(x, y, (dotsize + gap) * 2, (dotsize + gap) * 2, 0) -- Central
+			surface.DrawTexturedRectRotated(x, y, (dotsize + gap) + size, (dotsize + gap) + size, 0) -- Central
 		else
 			surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
 			surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 180) -- Right
