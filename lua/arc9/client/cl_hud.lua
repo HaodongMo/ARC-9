@@ -887,7 +887,7 @@ function ARC9.DrawHUD()
 
         local flashhealthwidgets = false
 
-        if localplayer:Health() <= 10 then
+        if localplayer:Health() <= localplayer:GetMaxHealth() / 10 then
             flashhealthwidgets = true
         end
 
