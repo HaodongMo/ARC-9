@@ -898,6 +898,16 @@ local conVars = {
         default = "0",
         client = true,
     },
+    {
+        name = "aimassist_moving",
+        default = "0",
+        replicated = true,
+    },
+    {
+        name = "aimassist_grounded",
+        default = "0",
+        replicated = true,
+    },
 }
 ARC9.ConVarData = {}
 

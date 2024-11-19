@@ -812,6 +812,12 @@ L["settings.aimassist.head.desc"] = "Должен ли аим-ассист це�
 
 L["settings.aimassist.sensmult.desc"] = "Множитель чувствительности мыши когда прицел на противнике.\nЧем ниже значение, тем ниже чувствительность."
 
+-- L["settings.aimassist.moving.title"] = "Must move"
+-- L["settings.aimassist.moving.desc"] = "Requires the user to be moving for the lock-on aim assist to work.\n\nThis is a server variable."
+
+-- L["settings.aimassist.grounded.title"] = "Must be on ground"
+-- L["settings.aimassist.grounded.desc"] = "Requires the user to be on the ground for the lock-on aim assist to work.\n\nThis is a server variable."
+
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Кэширование"
 L["settings.caching.title"] = "Кэширование ассетов"

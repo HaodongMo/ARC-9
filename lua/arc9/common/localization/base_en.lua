@@ -873,6 +873,12 @@ L["settings.aimassist.head.desc"] = "If the aim assist should lock onto the targ
 
 L["settings.aimassist.sensmult.desc"] = "Multiply the look sensitivity by this amount when hovering over a valid target.\nThe lower the value, the lower the sensitivity."
 
+L["settings.aimassist.moving.title"] = "Must move"
+L["settings.aimassist.moving.desc"] = "Requires the user to be moving for the lock-on aim assist to work.\n\nThis is a server variable."
+
+L["settings.aimassist.grounded.title"] = "Must be on ground"
+L["settings.aimassist.grounded.desc"] = "Requires the user to be on the ground for the lock-on aim assist to work.\n\nThis is a server variable."
+
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Asset Caching"
 L["settings.caching.title"] = "Asset Caching"

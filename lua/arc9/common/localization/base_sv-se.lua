@@ -464,6 +464,7 @@ L["settings.fx_adsblur.title"] = "I Siktet"
 L["settings.fx_adsblur.desc"] = "Suddar ut världen i siktet."
 L["settings.fx_rtvm.title"] = "Visa vapnet genom RT-Sikten"
 L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nVisar vapnet och dess tillbehör genom RT-sikten. Kräver att \"Billiga Sikten\" är avstängt.\nSänker drastiskt prestandan."
+L["settings.fx_rtblur.title2"] = "Sudd bakom Siktet"
 
 L["settings.performance.shelleject.title"] = "Patron Utmatning"
 L["settings.eject_fx.title"] = "Rökeffekter"
@@ -812,6 +813,12 @@ L["settings.aimassist.head.title"] = "Lås mot huvud"
 L["settings.aimassist.head.desc"] = "Om siktehjälpen ska låsa sig mot måltavlans huvud istället för dess bröst.\n\nDetta är en servervariabel."
 
 L["settings.aimassist.sensmult.desc"] = "Multiplicerar titta runt känsligheten med detta antal när du siktar på en giltig måltavla.\nJu lägre värdet är ju lägre är känsligheten."
+
+L["settings.aimassist.moving.title"] = "Måsta förflytta"
+L["settings.aimassist.moving.desc"] = "Kräver att användaren förflyttar sig för att låsning siktehjälpen ska fungera.\n\nDetta är en servervariabel."
+
+L["settings.aimassist.grounded.title"] = "Måste vara på marken"
+L["settings.aimassist.grounded.desc"] = "Kräver att användaren är på marken för att låsning siktehjälpen ska fungera.\n\nDetta är en servervariabel."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Tillgång-Cache"

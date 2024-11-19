@@ -464,6 +464,7 @@ L["settings.fx_adsblur.title"] = "In Sights"
 L["settings.fx_adsblur.desc"] = "Bluws de weapon while aiming down sights"
 L["settings.fx_rtvm.title"] = "Wendew Wewapown dwough WT Scowpes"
 L["settings.fx_rtvm.desc"] = "! EXPEWIMENTAW !\nWendwrs de wewapon and its attwachments dwough WT scwopes. Wequiwes \"Chewp Scowpes\" to be disablewd.\nSigniwicantwy weduces pewwormance."
+-- L["settings.fx_rtblur.title2"] = "Blur behind Scopes"
 
 L["settings.performance.shelleject.title"] = "Sheww Eject"
 L["settings.eject_fx.title"] = "Smoke Effects"
@@ -812,6 +813,12 @@ L["settings.aimassist.head.title"] = "Lowck owonto snouts"
 L["settings.aimassist.head.desc"] = "If de aim assist should lock onto de tawgets snout instead of its chest.\n\ndis is a sewwew wawiableh."
 
 L["settings.aimassist.sensmult.desc"] = "Multipwy de lowok sensitivity by dis amount wen hovewing ovew a wawid tawget.\nDe wower de walue, de wower de sensitivity."
+
+-- L["settings.aimassist.moving.title"] = "Must move"
+-- L["settings.aimassist.moving.desc"] = "Requires the user to be moving for the lock-on aim assist to work.\n\nThis is a server variable."
+
+-- L["settings.aimassist.grounded.title"] = "Must be on ground"
+-- L["settings.aimassist.grounded.desc"] = "Requires the user to be on the ground for the lock-on aim assist to work.\n\nThis is a server variable."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Awwet Cashwing :3"

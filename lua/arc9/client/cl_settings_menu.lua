@@ -402,6 +402,8 @@ ARC9.SettingsTable = {
         { type = "slider", min = 0.1, max = 2, decimals = 1, text = "settings.aimassist.intensity.title", convar = "aimassist_intensity", desc = "settings.aimassist.intensity.desc" },
         { type = "slider", min = 0.1, max = 10, decimals = 1, text = "settings.aimassist.cone.title", convar = "aimassist_cone", desc = "settings.aimassist.cone.desc" },
         { type = "bool", text = "settings.aimassist.head.title", convar = "aimassist_head", desc = "settings.aimassist.head.desc"},
+        -- { type = "bool", text = "settings.aimassist.moving.title", convar = "aimassist_moving", desc = "settings.aimassist.moving.desc"},
+        -- { type = "bool", text = "settings.aimassist.grounded.title", convar = "aimassist_grounded", desc = "settings.aimassist.grounded.desc"},
 
     },
     {

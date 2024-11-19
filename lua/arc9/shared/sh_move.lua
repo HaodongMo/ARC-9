@@ -89,6 +89,8 @@ local arc9_aimassist_intensity = GetConVar("arc9_aimassist_intensity")
 local arc9_aimassist_head = GetConVar("arc9_aimassist_head")
 local arc9_aimassist = GetConVar("arc9_aimassist")
 local arc9_aimassist_lockon = GetConVar("arc9_aimassist_lockon")
+local arc9_aimassist_moving = GetConVar("arc9_aimassist_moving")
+local arc9_aimassist_grounded = GetConVar("arc9_aimassist_grounded")
 
 function ARC9.StartCommand(ply, cmd)
     if !IsValid(ply) or cmd:CommandNumber() == 0 then return end
@@ -133,6 +135,9 @@ function ARC9.StartCommand(ply, cmd)
 		local inte = arc9_aimassist_intensity:GetFloat()
 		local head = arc9_aimassist_head:GetBool()
 
+		local fav = GetConVar("arc9_mod_freeaim")
+		local far = wpn:GetProcessedValue("FreeAimRadius")
+
 		-- Check if current target is beyond tracking cone
 		local tgt = ply.ARC9_AATarget
 		if IsValid(tgt) and (tgt_pos(tgt, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length() > cone * 2 then ply.ARC9_AATarget = nil end -- lost track
@@ -143,7 +148,7 @@ function ARC9.StartCommand(ply, cmd)
 			local min_diff
 			ply.ARC9_AATarget = nil
 			-- for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), 244, math.cos(math.rad(cone)))) do
-			for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), dist, math.cos(math.rad(cone)))) do
+			for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), dist, math.cos(math.rad(cone + (fav:GetBool() and far or 0))))) do
 				if ent == ply or (!ent:IsNPC() and !ent:IsNextBot() and !ent:IsPlayer()) or ent:Health() <= 0
 						or (ent:IsPlayer() and ent:Team() ~= TEAM_UNASSIGNED and ent:Team() == ply:Team()) then continue end
 				local tr = util.TraceLine({
@@ -165,16 +170,16 @@ function ARC9.StartCommand(ply, cmd)
 		tgt = ply.ARC9_AATarget
 		if arc9_aimassist:GetBool() and ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
 			if IsValid(tgt) and !wpn:GetCustomize() then
-                if !wpn:GetProcessedValue("NoAimAssist", true) then
-                    local ang = cmd:GetViewAngles()
-                    local pos = tgt_pos(tgt, head)
-                    local tgt_ang = (pos - ply:EyePos()):Angle()
-                    local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
-                    if ang_diff > 0.1 then
-                        ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 1), ang, tgt_ang)
-                        cmd:SetViewAngles(ang)
-                    end
-                end
+				if !wpn:GetProcessedValue("NoAimAssist", true) then
+					local ang = cmd:GetViewAngles()
+					local pos = tgt_pos(tgt, head)
+					local tgt_ang = (pos - ply:EyePos()):Angle() - (wpn:GetFreeSwayAngles() or angle_zero) - (wpn:GetFreeAimOffset() or angle_zero)
+					local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
+					if ang_diff > 0.1 then
+						ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 0.1), ang, tgt_ang)
+						cmd:SetViewAngles(ang)
+					end
+				end
 			end
 		end
     end

@@ -464,6 +464,7 @@ L["settings.fx_adsblur.title"] = "In Zielvorrichtung"
 L["settings.fx_adsblur.desc"] = "Verschwimmt die Welt beim Zielen."
 L["settings.fx_rtvm.title"] = "Zeichne Waffen durch RT-Scopes"
 L["settings.fx_rtvm.desc"] = "! EXPERIMENTELL !\nStellt die Waffe durch ein RT-Scope dar. Erfordert dass \"Billige Visiere\" deaktiviert ist.\nBeeinträchtigt Performance erheblich."
+L["settings.fx_rtblur.title2"] = "Verschwimmt beim Zielen"
 
 L["settings.performance.shelleject.title"] = "Hülsenauswurf"
 L["settings.eject_fx.title"] = "Raucheffekte"
@@ -812,6 +813,12 @@ L["settings.aimassist.head.title"] = "Auf Kopf zielen"
 L["settings.aimassist.head.desc"] = "Wenn der Aim-Assist auf den Kopf statt die Brust zielen soll.\n\nDies ist eine Server-Variable."
 
 L["settings.aimassist.sensmult.desc"] = "Multipliziere die Blick-Empfindlichkeit mit diesem Wert, wenn auf etwas Zutreffendes gezielt wird.\nJe niedriger dieser Wert, desto niedriger die Empfindlichkeit."
+
+-- L["settings.aimassist.moving.title"] = "Must move"
+-- L["settings.aimassist.moving.desc"] = "Requires the user to be moving for the lock-on aim assist to work.\n\nThis is a server variable."
+
+-- L["settings.aimassist.grounded.title"] = "Must be on ground"
+-- L["settings.aimassist.grounded.desc"] = "Requires the user to be on the ground for the lock-on aim assist to work.\n\nThis is a server variable."
 
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Asset Caching"

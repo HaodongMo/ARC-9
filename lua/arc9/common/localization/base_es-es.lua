@@ -814,6 +814,12 @@ L["settings.aimassist.head.desc"] = "Si el asistente de apuntado debe fijarse en
 
 L["settings.aimassist.sensmult.desc"] = "Multiplica la sensibilidad de la mirada por esta cantidad cuando se cierne sobre un objetivo válido.\nCuanto menor sea el valor, menor será la sensibilidad."
 
+-- L["settings.aimassist.moving.title"] = "Must move"
+-- L["settings.aimassist.moving.desc"] = "Requires the user to be moving for the lock-on aim assist to work.\n\nThis is a server variable."
+
+-- L["settings.aimassist.grounded.title"] = "Must be on ground"
+-- L["settings.aimassist.grounded.desc"] = "Requires the user to be on the ground for the lock-on aim assist to work.\n\nThis is a server variable."
+
 ////////////////////// Asset Caching
 L["settings.tabname.caching"] = "Almac. en caché"
 L["settings.caching.title"] = "Almac. en caché"
