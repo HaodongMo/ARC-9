@@ -764,7 +764,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
             apdmg:SetInflictor(dmg:GetInflictor())
             apdmg:SetAttacker(dmg:GetAttacker())
 
-            traceEntity:TakeDamageInfo(apdmg)
+            if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:GetClass() == "npc_gunship" or traceEntity:GetClass() == "npc_strider" then
             local apdmg = DamageInfo()
             apdmg:SetDamage(dmgv * ap)
@@ -772,7 +772,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
             apdmg:SetInflictor(dmg:GetInflictor())
             apdmg:SetAttacker(dmg:GetAttacker())
 
-            traceEntity:TakeDamageInfo(apdmg)
+            if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:IsPlayer() then
             if !ARC9.NoArmorPiercing then -- dumbass
                 local apdmg = math.ceil(dmgv * ap)
