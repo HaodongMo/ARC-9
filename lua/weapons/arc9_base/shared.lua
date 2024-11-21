@@ -1194,6 +1194,7 @@ SWEP.TTTAmmoType = nil
 -------------------------- Aim Assist
 
 SWEP.NoAimAssist = nil -- Disable this weapon from utilizing aim assist.
+SWEP.AimAssistRange = nil -- Overrides how much range, in Hammer Units, the Aim Assist has. By default, Aim Assist uses the Maximum Range value of the weapon.
 
 -------------------------- ATTACHMENTS
 

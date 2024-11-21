@@ -131,7 +131,7 @@ function ARC9.StartCommand(ply, cmd)
     if CLIENT and IsValid(wpn) then
 		local cone = arc9_aimassist_cone:GetFloat()
 		-- local dist = arc9_aimassist_distance:GetFloat() * (wpn:GetProcessedValue("AARangeMult") or 1)
-		local dist = math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
+		local dist = wpn:GetProcessedValue("AimAssistRange", true) or math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
 		local inte = arc9_aimassist_intensity:GetFloat()
 		local head = arc9_aimassist_head:GetBool()
 
