@@ -31,6 +31,9 @@ function SWEP:GetViewModelSway(pos, ang)
     local inertiaanchor = Vector(self.CustomizeRotateAnchor)
     inertiaanchor.x = inertiaanchor.x * 0.75
 
+    pos:Add(ang:Up() * smootheyeang.p * 0.075 * sightmult)
+    pos:Add(ang:Right() * smootheyeang.y * -0.1 * sightmult)
+
     local rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, inertiaanchor, vector_origin, smootheyeang * sightmult)
     pos:Set(rap_pos)
     ang:Set(rap_ang)
