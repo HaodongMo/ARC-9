@@ -998,3 +998,209 @@ If you have not immediately acquired access to the ARC9 Premium bonuses, please 
 
 If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
 ]]
+
+//////////////////////////////////////////// V2 Settings
+////////////////////// Quick Access
+L["v2.settings.tabname.quick"] = "Quick Access"
+L["v2.settings.tabname.general"] = "General"
+L["v2.settings.tabname.general.desc"] = "Get quick access to the more important settings right here."
+
+L["v2.settings.quick.lang.title"] = "ARC9 Languare"
+L["v2.settings.quick.lang.desc"] = "Change the displayed language for ARC9.\n\nNote: Not all languages are supported in every language!"
+
+L["v2.settings.hud_game.hud_arc9.desc2"] = "Tweak in \"Game HUD\"\n\nEnable a custom LCD display HUD when using ARC9 weapons."
+
+L["v2.settings.tpik.desc2"] = "Tweak in \"Visuals\"\n\nEnables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
+
+////////////////////// Game HUD
+L["v2.settings.tabname.hud_game"] = "Game HUD"
+
+////////// ARC9 HUD
+L["v2.settings.tabname.arc9_hud"] = "ARC9 HUD"
+L["v2.settings.tabname.arc9_hud.desc"] = "Everything related to ARC9's custom HUD and its elements."
+
+L["v2.settings.hud_game.hud_arc9.title"] = "Enable ARC9 HUD"
+L["v2.settings.hud_game.hud_arc9.desc"] = "Enable a custom LCD display HUD when using ARC9 weapons."
+L["v2.settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
+L["v2.settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
+L["v2.settings.hud_game.hud_compact.title"] = "Compact mode"
+L["v2.settings.hud_game.hud_compact.desc"] = "Hides certain elements on the ARC9 HUD, providing a more compact look."
+
+L["v2.settings.hud_game.keephints.title"] = "Always Display Hints"
+L["v2.settings.hud_game.keephints.desc"] = "Disables the fadeaway of the control hints."
+L["v2.settings.hud_game.nohints.title"] = "or Disable Hints"
+L["v2.settings.hud_game.nohints.desc"] = "Completely disables ARC9 hints.\n\nNot compatible with \"Always Display Hints\"."
+
+L["v2.settings.hud_game.killfeed_enable.title"] = "Auto-Generate Killfeed Icons"
+L["v2.settings.hud_game.killfeed_enable.desc"] = "Generate killfeed icons automatically on ARC9 weapons."
+L["v2.settings.hud_game.killfeed_dynamic.title"] = "Dynamic Icons"
+L["v2.settings.hud_game.killfeed_dynamic.desc"] = "Dynamically generates icons when getting kills or altering attachments."
+L["v2.settings.hud_game.killfeed_colour.title"] = "Display in Color"
+L["v2.settings.hud_game.killfeed_colour.desc"] = "Generates icons in full color rather than black and white."
+
+////////// Glyphs
+L["v2.settings.tabname.glyphs"] = "Glyphs"
+L["v2.settings.tabname.glyphs.desc"] = "Choose which kind of glyphs you'd like to display on the HUD and in the customization menu."
+
+L["v2.settings.hud_glyph.type_hud.title"] = "On the HUD"
+L["v2.settings.hud_glyph.type_hud.desc"] = "Which glyphs to use on the ARC9 HUD and Hints."
+L["v2.settings.hud_glyph.type_cust.title"] = "In Customization Menu"
+L["v2.settings.hud_glyph.type_cust.desc"] = "Which glyphs to use when in the customization menu."
+
+L["v2.settings.hud_glyph.light"] = "Light"
+L["v2.settings.hud_glyph.dark"] = "Dark"
+L["v2.settings.hud_glyph.knockout"] = "Knockout"
+
+////////// Display Tooltips
+L["v2.settings.tabname.centerhint"] = "Display Tooltips"
+L["v2.settings.tabname.centerhint.desc"] = "Display tooltips on your HUD when certain criteria are met."
+
+L["v2.settings.centerhint.breath_hud.title"] = "When Holding Breath"
+L["v2.settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
+L["v2.settings.centerhint.breath_pp.title"] = "Post-Processing"
+L["v2.settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
+
+L["v2.settings.centerhint.reload.title"] = "When Low on Ammo"
+L["v2.settings.centerhint.reload.desc"] = "Displays a tooltip when the magazine reaches a certain percentage value.\n\nAlso displays which button to press."
+L["v2.settings.centerhint.reload_percent.title"] = "Percentage"
+L["v2.settings.centerhint.reload_percent.desc"] = "When, in percentage value, the tooltip should appear."
+
+L["v2.settings.centerhint.bipod.title"] = "When using Bipods"
+L["v2.settings.centerhint.bipod.desc"] = "Displays a tooltip when you can utilize the weapon's bipod.\n\nAlso displays which button to press."
+
+L["v2.settings.centerhint.jammed.title"] = "When Jammed"
+L["v2.settings.centerhint.jammed.desc"] = "Displays a tooltip when the weapon is jammed.\n\nAlso displays which button to press."
+
+L["v2.settings.centerhint.firemode.title"] = "When Cycling Firing Modes"
+L["v2.settings.centerhint.firemode.desc"] = "Displays a tooltip when cycling firing modes."
+
+L["v2.settings.centerhint.firemode_time.title"] = "Display Time"
+L["v2.settings.centerhint.firemode_time.desc"] = "How long, in seconds, the tooltip should remain on screen."
+
+L["v2.settings.centerhint.overheat.title"] = "When Overheating"
+L["v2.settings.centerhint.overheat.desc"] = "Displays a tooltip when the weapon is about to overheat."
+
+////////////////////// Visuals
+L["v2.settings.tabname.visuals"] = "Visuals"
+
+////////// Blur
+L["v2.settings.tabname.blur"] = "Blur"
+L["v2.settings.tabname.blur.desc"] = "Applies a blur effect when certain criteria are met."
+
+L["v2.settings.blur.cust_blur.title"] = "Blur world when Customizing"
+L["v2.settings.blur.cust_blur.desc"] = "Blurs the background when the customization menu is open."
+
+L["v2.settings.blur.fx_reloadblur.title"] = "Blur world when Reloading"
+L["v2.settings.blur.fx_reloadblur.desc"] = "Blurs the background when reloading."
+
+L["v2.settings.blur.fx_animblur.title"] = "Blur world when Readying"
+L["v2.settings.blur.fx_animblur.desc"] = "Blurs the background when pulling out a weapon."
+
+L["v2.settings.blur.fx_rtblur.title"] = "Blur world when aiming RT scopes"
+L["v2.settings.blur.fx_rtblur.desc"] = "Blurs the background when aiming with any RT scope."
+
+L["v2.settings.blur.fx_adsblur.title"] = "Blur weapon when aiming"
+L["v2.settings.blur.fx_adsblur.desc"] = "Applies a blur effect on the bottom of your screen when aiming.\n\nNot all weapons support this."
+
+////////// Effects
+L["v2.settings.tabname.effects"] = "Effects"
+L["v2.settings.tabname.effects.desc"] = "Adjust certain visual effects."
+
+L["v2.settings.effects.eject_fx.title"] = "Shell Eject Smoke"
+L["v2.settings.effects.eject_fx.desc"] = "Adds extra effects (sparks and smoke) to the shell ejection.\n\nHas minimal impact to performance."
+
+L["v2.settings.effects.eject_time.title"] = "Shell Eject Life Time"
+L["v2.settings.effects.eject_time.desc"] = "How long, in seconds, the shells ejected from ARC9 guns should remain on the ground.\n\nSet to -1 to disable.\n\nDepending on the value, can have minimal to a slight impact to performance."
+
+L["v2.settings.effects.muzzle_light.title"] = "Muzzle Lights"
+L["v2.settings.effects.muzzle_light.desc"] = "Lights up the surrounding area when firing a weapon without a suppressor.\n\nHas minimal impact to performance."
+
+L["v2.settings.effects.muzzle_others.title"] = "Other's Muzzle Effects"
+L["v2.settings.effects.muzzle_others.desc"] = "Display the muzzle effects from other player's ARC9 weapons.\n\nHas a slight impact to performance."
+
+L["v2.settings.effects.allflash.title"] = "Other's Flashlights"
+L["v2.settings.effects.allflash.desc"] = "Renders the flashlights from all players.\n\nImpacts performance."
+
+////////// TPIK
+L["v2.settings.tabname.tpik"] = "TPIK - Third Person Inverse Kinematics"
+L["v2.settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions.\n\nImpacts performance."
+
+L["v2.settings.tpik.title"] = "Enable TPIK"
+L["v2.settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
+
+L["v2.settings.tpik_others.title"] = "Other Players' TPIK"
+L["v2.settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
+
+L["v2.settings.tpik_framerate.title"] = "TPIK Frame Rate"
+L["v2.settings.tpik_framerate.desc"] = "At which frame rate the TPIK runs at.\n\nSet to 0 for unlimited.\n\nUnlimited or higher values impact performance."
+
+////////////////////// Gameplay
+L["v2.settings.tabname.gameplay"] = "Gameplay"
+
+////////// Optics
+L["v2.settings.tabname.optics"] = "Optics"
+L["v2.settings.tabname.optics.desc"] = "Adjust settings related to optics and their functionality."
+
+L["v2.settings.gameplay.cheapscopes.title"] = "Cheap Scopes"
+L["v2.settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
+
+L["v2.settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
+L["v2.settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
+
+L["v2.settings.gameplay.toggleads.title"] = "Toggle ADS"
+L["v2.settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
+
+L["v2.settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
+L["v2.settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
+
+L["v2.settings.gameplay.sensmult.title"] = "Multiply ADS Sensitivity"
+L["v2.settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity globally with this value.\n\nThe lower it is, the slower your sensitivity will be."
+
+L["v2.settings.gameplay.dtap_sights.title"] = "Double-Tap USE to Cycle Sights"
+L["v2.settings.gameplay.dtap_sights.desc"] = "Allows you to double-tap your USE button to cycle through optics."
+
+L["v2.settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
+L["v2.settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
+
+L["v2.settings.gameplay.color.scope.title"] = "Magnified Scope Color"
+L["v2.settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
+
+////////// Crosshair
+L["v2.settings.tabname.crosshair"] = "Crosshair"
+L["v2.settings.tabname.crosshair.desc"] = "Adjust settings related to the crosshair."
+
+L["v2.settings.crosshair.cross_enable.title"] = "Enable Crosshair"
+L["v2.settings.crosshair.cross_enable.desc"] = "Enables the crosshair."
+
+L["v2.settings.crosshair.crosshair_force.title"] = "Force-Enable Crosshair"
+L["v2.settings.crosshair.crosshair_force.desc"] = "Forces the crosshair to remain enabled, even on weapons which have it disabled."
+
+L["v2.settings.crosshair.crosshair_static.title"] = "Static Crosshair"
+L["v2.settings.crosshair.crosshair_static.desc"] = "Ensures that the crosshair does not move while firing.\n\nWarning: Will be inaccurate if used on weapons with non-centered crosshairs."
+
+L["v2.settings.crosshair.crosshair_target.title"] = "Red Crosshair on Target"
+L["v2.settings.crosshair.crosshair_target.desc"] = "Changes the color of the crosshair to red when hovering over a player or NPC."
+
+L["v2.settings.crosshair.crosshair_peeking.title"] = "Crosshair when Peeking"
+L["v2.settings.crosshair.crosshair_peeking.desc"] = "Displays the crosshair when peeking."
+
+L["v2.settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair Style"
+L["v2.settings.crosshair.crosshair_sgstyle.desc"] = "Change the style of crosshair used when using weapons that fire two or more projectiles at once.\n\nThe last option draws the amount of dots equal to the amount of projectiles fired."
+
+L["v2.settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
+L["v2.settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
+L["v2.settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
+L["v2.settings.crosshair.crosshair_sgstyle_dots"] = "Original Dots"
+L["v2.settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Dots"
+
+L["v2.settings.crosshair.cross.title"] = "Crosshair Color"
+L["v2.settings.crosshair.cross.desc"] = "Which color the crosshair should be."
+
+L["v2.settings.crosshair.cross_size_mult.title"] = "Crosshair Size"
+L["v2.settings.crosshair.cross_size_mult.desc"] = "Multiplies the size of the crosshair by this value."
+
+L["v2.settings.crosshair.cross_size_dot.title"] = "Crosshair Dot Size"
+L["v2.settings.crosshair.cross_size_dot.desc"] = "Multiplies the size of the center dot in the crosshair by this value."
+
+L["v2.settings.crosshair.cross_size_prong.title"] = "Crosshair Prong Width"
+L["v2.settings.crosshair.cross_size_prong.desc"] = "Multiplies the width of the crosshair prongs by this value."
