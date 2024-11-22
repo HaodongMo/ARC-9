@@ -20,7 +20,7 @@ ARC9.IncompatibleAddons = {
     -- Viewmodel Lagger (fixed)
     ["2566560460"] = "Misaligns viewmodel in sights.",
     -- VTools
-    ["DisplayDistancePlane"] = "Tool contains faulty hook. You have probably installed VTools/other scenebuilding related addon through garrysmod/addons/ folder.",
+    ["DisplayDistancePlane"] = "Scenebuilding related tool (most likely) installed through GarrysMod/garrysmod/addons/ folder breaks ARC9. Check that folder and delete the addon.",
     -- TFA's Tactical Lean
     ["TacticalLean"] = "Mod is old, laggy and interferes with ARC9 lean. Use relaxtakesnotes's \"Leaning\" mod steamcommunity.com/sharedfiles/filedetails/?id=3138563659 OR integrated leaning system.",
     -- fixed maybe     SLVBase 2  -- ["1516699044"] = "Causes black screen", -- Minecraft drops
@@ -35,6 +35,8 @@ ARC9.IncompatibleAddons = {
     ["2384413050"] = "Breaks viewmodels for ARC9 and many other addons.",
     -- GLORY KILLS 2
     ["2301721246"] = "Breaks stickers for ARC9 and many other addons.",
+    -- Immersive Weapons & Immersive Camera
+    ["2916953531"] = "Breaks movement speed on ARC9 guns.",
 
 
 
@@ -194,7 +196,7 @@ function ARC9.MakeIncompatibleWindow(tbl)
     end
 
     for _, addon in pairs(tbl) do
-        local addonBtn = vgui.Create("DButton", window)
+        local addonBtn = vgui.Create("DButton", addonList)
         addonBtn:SetSize(ScreenScaleMulti(256), ScreenScaleMulti(28))
         addonBtn:Dock(TOP)
         addonBtn:DockMargin(ScreenScaleMulti(36), ScreenScaleMulti(2), ScreenScaleMulti(36), ScreenScaleMulti(2))
@@ -218,11 +220,25 @@ function ARC9.MakeIncompatibleWindow(tbl)
             surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(2))
             surface.SetFont("ARC9_12")
             surface.DrawText(txt)
+
             local txt2 = ARC9.IncompatibleAddons[tostring(addon.wsid)]
-            surface.SetTextColor(Bfg_col)
-            surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(16))
-            surface.SetFont("ARC9_8")
-            surface.DrawText(txt2)
+            -- surface.SetTextColor(Bfg_col)
+            -- surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(16))
+            -- surface.SetFont("ARC9_8")
+            -- surface.DrawText(txt2)
+
+            local extratall = 0
+            local descmultiline = ARC9MultiLineText(txt2, w, "ARC9_8")
+            for i, text in ipairs(descmultiline) do
+                surface.SetTextColor(Bfg_col)
+                surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(16 + 8 * (i - 1)))
+                surface.SetFont("ARC9_8")
+                surface.DrawText(text)
+
+                extratall = extratall + 1
+            end
+            
+            spaa:SetTall(ScreenScaleMulti(28 - 6 + 6 * extratall))
         end
 
         addonBtn.OnMousePressed = function(spaa, kc)
@@ -315,7 +331,7 @@ concommand.Add("arc9_dev_showwarnings", ARC9.DoCompatibilityCheck)
 
 hook.Add("InitPostEntity", "ARC9_CheckContent", function()
     for _, k in pairs(weapons.GetList()) do
-        if weapons.IsBasedOn(k.ClassName, "arc9_base") and k.ClassName ~= "arc9_base" then return end
+        if weapons.IsBasedOn(k.ClassName, "arc9_base") and k.ClassName != "arc9_base" and k.ClassName != "arc9_base_nade" then return end
     end
 
     chat.AddText(Color(255, 255, 255), "You have installed the ARC9 base but have no weapons installed. Search the workshop for some!")
@@ -450,7 +466,7 @@ function ARC9.MakeBadConfigWindow(tbl, openincompatafter, incompattable)
     end
 
     for _, addon in pairs(tbl) do
-        local addonBtn = vgui.Create("DButton", window)
+        local addonBtn = vgui.Create("DButton", addonList)
         addonBtn:SetSize(ScreenScaleMulti(256), ScreenScaleMulti(38))
         addonBtn:Dock(TOP)
         addonBtn:DockMargin(ScreenScaleMulti(36), ScreenScaleMulti(2), ScreenScaleMulti(36), ScreenScaleMulti(2))
@@ -474,20 +490,36 @@ function ARC9.MakeBadConfigWindow(tbl, openincompatafter, incompattable)
             surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(2))
             surface.SetFont("ARC9_12")
             surface.DrawText(txt)
-            local txt2 = addon.desc
-            surface.SetTextColor(Bfg_col)
-            surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(16))
-            surface.SetFont("ARC9_8")
-            surface.DrawText(txt2)
-            local txt3 = addon.solution
-            surface.SetTextColor(Bfg_col)
-            surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(26))
-            surface.SetFont("ARC9_8")
-            surface.DrawText(txt3)
+
+            local txt2 = addon.desc .. "\n" .. addon.solution
+            -- surface.SetTextColor(Bfg_col)
+            -- surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(16))
+            -- surface.SetFont("ARC9_8")
+            -- surface.DrawText(txt2)
+
+            local extratall = 0
+            local descmultiline = ARC9MultiLineText(txt2, w, "ARC9_8")
+            for i, text in ipairs(descmultiline) do
+                surface.SetTextColor(Bfg_col)
+                surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(16 + 8 * (i - 1)))
+                surface.SetFont("ARC9_8")
+                surface.DrawText(text)
+
+                extratall = extratall + 1
+            end
+            
+            spaa:SetTall(ScreenScaleMulti(28 - 6 + 8 * extratall))
+
+            -- local txt3 = addon.solution
+            -- surface.SetTextColor(Bfg_col)
+            -- surface.SetTextPos(ScreenScaleMulti(18), ScreenScaleMulti(26))
+            -- surface.SetFont("ARC9_8")
+            -- surface.DrawText(txt3)
         end
 
         addonBtn.OnMousePressed = function(spaa, kc)
-            surface.PlaySound("npc/stalker/go_alert2.wav")
+            -- surface.PlaySound("npc/stalker/go_alert2.wav")
+            surface.PlaySound("arc9/malfunction.ogg")
         end
     end
 end
