@@ -154,6 +154,8 @@ function SWEP:RollRandomAtts(tree, nofuther)
         if math.Rand(0, 100) > attchance then continue end
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
 
+        if slottbl.Installed then table.RemoveByValue(atts, slottbl.Installed) end -- remove already installed att from pool
+
         -- if math.Rand(0, 100) > 100 / (table.Count(atts) + 1) then slottbl.Installed = nil continue end
 
         -- local att = table.Random(atts)
