@@ -694,7 +694,9 @@ end
 SWEP.AutoSelectIcon = nil
 
 function SWEP:DoIconCapture()
-    self:DoPresetCapture(ARC9.PresetPath .. self:GetPresetBase() .. "_icon")
+    timer.Simple(0.05, function() -- helps with flickering
+        self:DoPresetCapture(ARC9.PresetPath .. self:GetPresetBase() .. "_icon")
+    end)
 end
 
 function SWEP:RangeUnitize(range)
