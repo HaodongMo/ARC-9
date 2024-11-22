@@ -138,18 +138,21 @@ function SWEP:PostModify(toggleonly)
                 client:Flashlight(false)
             end
 
-            if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
-                if self.AlreadyGaveAmmo then
-                    self:Unload()
-                    self:SetRequestReload(true)
-                else
-                    self:SetClip1(self:GetProcessedValue("ClipSize"))
-                    self.AlreadyGaveAmmo = true
+            timer.Simple(0, function() -- PostModify gets called after each att attached
+                if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
+                    if self.AlreadyGaveAmmo then
+                        self:Unload()
+                        self:SetRequestReload(true)
+                    else
+                        self:SetClip1(self:GetProcessedValue("ClipSize"))
+                        self.AlreadyGaveAmmo = true
+                    end
                 end
-            end
+                
+                self.LastAmmo = self:GetValue("Ammo")
+                self.LastClipSize = self:GetValue("ClipSize")
+            end)
 
-            self.LastAmmo = self:GetValue("Ammo")
-            self.LastClipSize = self:GetValue("ClipSize")
 
             if self:GetValue("UBGL") then
                 if !self.AlreadyGaveUBGLAmmo then
