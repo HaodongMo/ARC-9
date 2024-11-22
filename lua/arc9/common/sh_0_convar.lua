@@ -1015,8 +1015,6 @@ if CLIENT then
         debounce[cvar] = CurTime() + 0.1
     end
 
-concommand.Add("arc9_settings_open", ARC9_OpenSettings)
-
 local function menu_arc9_settings(panel)
     local butt = panel:Button("Open settings panel!", "arc9_settings_open")
     butt:SetText("Open settings panel!")

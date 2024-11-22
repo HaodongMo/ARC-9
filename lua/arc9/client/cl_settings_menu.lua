@@ -927,3 +927,5 @@ function ARC9_OpenSettings(page)
     --     panel:Remove()
     -- end)
 end
+
+concommand.Add("arc9_settings_open", ARC9_OpenSettings)
