@@ -356,12 +356,14 @@ function SWEP:DoPrimaryAttack()
 
     if !self:HasAmmoInClip() then
         if self:GetUBGL() and !processedValue(self,"UBGLInsteadOfSights", true) then
-            if self:CanReload() then 
-                self:Reload()
-            else
-                self:ToggleUBGL(false)
-                self:SetNeedTriggerPress(true)
-                self:ExitSights()
+            if self:GetMaxClip2() < 2 then -- mytton doesn't like auto ubgl reload
+                if self:CanReload() then 
+                    self:Reload()
+                else
+                    self:ToggleUBGL(false)
+                    self:SetNeedTriggerPress(true)
+                    self:ExitSights()
+                end
             end
 
             return
