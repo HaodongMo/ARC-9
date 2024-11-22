@@ -262,7 +262,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
     local consname = {}
     local consnum = {}
 
-    for stat, value in pairs(atttbl) do
+    for stat, value in SortedPairs(atttbl) do
         if !isnumber(value) and !isbool(value) then continue end
         --if isnumber(value) and (!string.StartWith(stat, "Spread")) then value = math.Round(value, 2) end
         local autostat = ""
