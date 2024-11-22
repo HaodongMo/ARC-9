@@ -260,6 +260,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.npc.npc_equality.title", convar = "npc_equality", desc = "settings.npc.npc_equality.desc" },
         { type = "slider", text = "settings.npc.npc_spread.title", min = 0, max = 10, decimals = 1, convar = "npc_spread", desc = "settings.npc.npc_spread.desc"},
         { type = "bool", text = "settings.npc.npc_atts.title", convar = "npc_atts", desc = "settings.npc.npc_atts.desc" },
+        { type = "bool", text = "settings.npc.ground_atts.title", convar = "ground_atts", desc = "settings.npc.ground_atts.desc" },
         { type = "bool", text = "settings.npc.npc_autoreplace.title", convar = "npc_autoreplace", desc = "settings.npc.npc_autoreplace.desc" },
         { type = "bool", text = "settings.npc.replace_spawned.title", convar = "replace_spawned", desc = "settings.npc.replace_spawned.desc" },
         { type = "bool", text = "settings.npc.npc_give_weapons.title", convar = "npc_give_weapons", desc = "settings.npc.npc_give_weapons.desc" },

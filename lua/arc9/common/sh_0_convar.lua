@@ -257,6 +257,10 @@ local conVars = {
         default = "1",
     },
     {
+        name = "ground_atts",
+        default = "0",
+    },
+    {
         name = "npc_autoreplace",
         default = "0"
     },

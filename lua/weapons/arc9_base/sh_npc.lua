@@ -92,6 +92,7 @@ function SWEP:NPC_Reload()
 end
 
 local arc9_npc_atts = GetConVar("arc9_npc_atts")
+local arc9_ground_atts = GetConVar("arc9_ground_atts")
 
 function SWEP:NPC_Initialize()
     self.DefaultAttachments = table.Copy(self.Attachments)
@@ -103,16 +104,24 @@ function SWEP:NPC_Initialize()
 
     if CLIENT then return end
 
-    if IsValid(self) then
-        if !self.WeaponWasGiven and arc9_npc_atts:GetBool() then
-            -- self:RollRandomAtts(self.Attachments)
+    timer.Simple(0.1, function()
+        if IsValid(self) and !self.WeaponWasGiven and arc9_npc_atts:GetBool() then
             self:QueueForRandomize()
         end
-        -- self:PostModify()
+    end)
+end
 
-        -- self:PruneAttachments()
-        -- self:SendWeapon()
-    end
+function SWEP:NoOwner_Initialize()
+    self:CallOnClient("NoOwner_Initialize")
+    self.LoadedPreset = true
+    
+    if CLIENT then return end
+
+    timer.Simple(0.02, function()
+        if IsValid(self) and !self.WeaponWasGiven and arc9_ground_atts:GetBool() then
+            self:QueueForRandomize()
+        end
+    end)
 end
 
 function SWEP:QueueForRandomize()
@@ -154,7 +163,7 @@ function SWEP:RollRandomAtts(tree, nofuther)
         if math.Rand(0, 100) > attchance then continue end
         local atts = ARC9.GetAttsForCats(slottbl.Category or "")
 
-        if slottbl.Installed then table.RemoveByValue(atts, slottbl.Installed) end -- remove already installed att from pool
+        if nofuther and slottbl.Installed then table.RemoveByValue(atts, slottbl.Installed) end -- remove already installed att from pool
 
         -- if math.Rand(0, 100) > 100 / (table.Count(atts) + 1) then slottbl.Installed = nil continue end
 

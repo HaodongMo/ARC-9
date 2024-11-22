@@ -83,7 +83,7 @@ function ARC9.ReplaceSpawnedWeapon(ent)
 
     -- print("tried to replcae", ent, CurTime())
 
-    local fuckingtimer = (CurTime() < 5 and 1.5 or 0)
+    local fuckingtimer = (CurTime() < 5 and -0.1 or 0)
 
     if ent:IsNPC() then
         if !arc9_npc_autoreplace:GetBool() then return end
@@ -130,7 +130,7 @@ function ARC9.ReplaceSpawnedWeapon(ent)
                     wpnent:SetPos(ent:GetPos())
                     wpnent:SetAngles(ent:GetAngles())
 
-                    wpnent:NPC_Initialize()
+                    -- wpnent:NoOwner_Initialize()
 
                     wpnent:Spawn()
 
