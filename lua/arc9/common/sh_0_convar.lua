@@ -300,6 +300,16 @@ local conVars = {
         replicated = true
     },
     {
+        name = "mod_overheat",
+        default = "1",
+        replicated = true
+    },
+    {
+        name = "mod_peek",
+        default = "1",
+        replicated = true
+    },
+    {
         name = "never_ready",
         default = "0",
     },

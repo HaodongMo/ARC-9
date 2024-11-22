@@ -18,8 +18,10 @@ local soundout = {
     volume = 0.3,
 }
 
+local arc9_mod_peek = GetConVar("arc9_mod_peek")
+
 function SWEP:ThinkPeek()
-	if !self.dt.InSights then return end
+	if !self.dt.InSights or !arc9_mod_peek:GetBool() then return end
 
     if arc9_togglepeek_reset:GetBool() and self:GetSightAmount() < 0.5 or self:GetBipod() or self:GetProcessedValue("CantPeek", true) then self.Peeking = false return end
     local binding = input.IsKeyDown(input.GetKeyCode(input.LookupBinding("menu_context") or "???"))
