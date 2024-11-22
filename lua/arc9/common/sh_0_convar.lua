@@ -1011,16 +1011,13 @@ if CLIENT then
         debounce[cvar] = CurTime() + 0.1
     end
 
+concommand.Add("arc9_settings_open", ARC9_OpenSettings)
 
 local function menu_arc9_settings(panel)
-    local butt = vgui.Create( "DButton", panel )
-
+    local butt = panel:Button("Open settings panel!", "arc9_settings_open")
     butt:SetText("Open settings panel!")
     butt:SetPos(20, 50)
     butt:SetSize(300, 50)
-    function butt:DoClick()
-        ARC9_OpenSettings()
-    end
     panel:ControlHelp( "\nAccess the ARC9 settings by pressing this button without having to equip a weapon!" )
 end
 
