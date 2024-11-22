@@ -964,6 +964,7 @@ if SERVER then
     util.AddNetworkString("ARC9_InvalidateAll")
     util.AddNetworkString("ARC9_InvalidateAll_ToClients")
     util.AddNetworkString("arc9_setconvar")
+    util.AddNetworkString("arc9_svattcount")
 
     net.Receive("arc9_setconvar", function(len, ply)
         if !ply:IsAdmin() then return end

@@ -139,6 +139,12 @@ function ARC9.LoadAtts()
     end
 
     fullreload = nil
+    
+    if SERVER then
+        net.Start("arc9_svattcount")
+        net.WriteUInt(#ARC9.Attachments_Index, 16)
+        net.Broadcast()
+    end
 end
 
 function ARC9.GetAttTable(name)
