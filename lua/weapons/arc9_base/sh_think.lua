@@ -200,22 +200,24 @@ function SWEP:Think()
     end
 
     if CLIENT then
-        timer.Simple(0.06, function() -- idk
-            if IsValid(self) then
-                if !self.LoadedPreset then
-                    self.LoadedPreset = true
+        if !self.LoadedPreset then
+            timer.Simple(0.06, function() -- idk
+                if IsValid(self) then
+                    if !self.LoadedPreset then -- still same?
+                        self.LoadedPreset = true
 
-                    if cvarGetBool(cvarArcAutosave) then
-                        swepLoadPreset(self, "autosave")
-                    else
-                        swepLoadPreset(self, "default")
+                        if cvarGetBool(cvarArcAutosave) then
+                            swepLoadPreset(self, "autosave")
+                        else
+                            swepLoadPreset(self, "default")
+                        end
+
+                        self:SetReady(false)
+                        self:DoDeployAnimation()
                     end
-
-                    self:SetReady(false)
-                    self:DoDeployAnimation()
                 end
-            end
-        end)
+            end)
+        end
         if isSingleplayer and self.IsQuickGrenade then owner.ARC9LastSelectedGrenade = self:GetClass() end
     end
 end
