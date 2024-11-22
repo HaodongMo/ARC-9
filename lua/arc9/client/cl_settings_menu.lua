@@ -41,7 +41,7 @@ ARC9.SettingsTable = {
     --     TabName = "Tab name 1",
     --     { type = "label", text = "Header" },
     --     { type = "bool", text = "Booling", convar = "cust_blur", desc = "TEST DESCRIPTION" },
-    --     { type = "slider", text = "Booling 2", min = -2, max = 2, desc = "f DESCRIPTION" },
+    --     { type = "slider", text = "Booling 2", min = -2, max = 2, desc = "f DESCRIPTION", parentconvar = "cust_blur" }, -- show that slider only if cust_blur is enabled
     --     { type = "slider", text = "Slide me", min = -45, max = 45, convar = "fov", desc = "balls" },
     --     { type = "combo", text = "Yayay", convar = "arccw_attinv_loseondie", content = {"1table of thingies", "2there", "3ooo"}, desc = "hhhhhhhhhhhhhhhhh" },
     --     { type = "button", text = "Uhhh", content = "Boop", func = function(self2) print("wa") end, desc = "TEST DESCRIPTION" },
@@ -54,7 +54,7 @@ ARC9.SettingsTable = {
 
         { type = "label", text = "settings.general.client" },
         { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
-        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
+        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc", parentconvar = "hud_arc9" },
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
         -- { type = "combo", text = "settings.truenames.title", convar = "truenames", content = {
         --     {"1Use Default", "2"},
@@ -505,8 +505,8 @@ local function DrawSettings(bg, page)
             if v2.showfunc and !v2.showfunc() then continue end
             
             local elpanel = vgui.Create("DPanel", newpanelscroll)
-
-            elpanel:SetTall(ARC9ScreenScale(v2.type == "label" and 14 or 21))
+            elpanel.realtall = ARC9ScreenScale(v2.type == "label" and 14 or 21) * 0.85
+            elpanel:SetTall(elpanel.realtall)
             elpanel:DockMargin(0, (k2 != 1 and v2.type == "label") and ARC9ScreenScale(4) or 0, 0, 0)
             elpanel:Dock(TOP)
 
@@ -518,6 +518,19 @@ local function DrawSettings(bg, page)
                     surface.SetDrawColor(0, 0, 0, 75)
                     if v2.important then surface.SetDrawColor(233, 21, 21, 171) end
                     surface.DrawRect(0, 0, w, h)
+                end
+
+                local txt = ""
+
+                if v2.parentconvar then
+                    if !GetConVar("arc9_" .. v2.parentconvar):GetBool() then
+                        self2:SetTall(1)
+                        return
+                    else
+                        self2:SetTall(elpanel.realtall)
+                    end
+
+                    txt = "   › "
                 end
                 -- desc!!!!!!!!
 
@@ -549,7 +562,7 @@ local function DrawSettings(bg, page)
                     end
                 end
 
-                local txt = ARC9:GetPhrase(v2.text) or ARC9:GetPhrase("settings" .. "." .. (v2.convar or "") .. ".title") or v2.text or ""
+                txt = txt .. ARC9:GetPhrase(v2.text) or ARC9:GetPhrase("settings" .. "." .. (v2.convar or "") .. ".title") or v2.text or ""
 
                 surface.SetFont("ARC9_12_Slim")
                 local tw, th = surface.GetTextSize(txt)
