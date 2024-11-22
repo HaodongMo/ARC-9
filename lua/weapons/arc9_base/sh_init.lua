@@ -42,7 +42,11 @@ function SWEP:Initialize()
 
     if !IsValid(owner) then -- player is nil here sometimes
         self:PostModify()
-        self:NoOwner_Initialize()
+        timer.Simple(0.1, function() 
+            if IsValid(self) and !IsValid(self:GetOwner()) then -- still invalid?
+                self:NoOwner_Initialize()
+            end
+        end)
     end
 
     self.LastClipSize = self:GetProcessedValue("ClipSize")

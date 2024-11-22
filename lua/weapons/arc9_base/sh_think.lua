@@ -201,7 +201,7 @@ function SWEP:Think()
 
     if CLIENT then
         if !self.LoadedPreset then
-            timer.Simple(0.06, function() -- idk
+            timer.Simple(0.075, function() -- idk
                 if IsValid(self) then
                     if !self.LoadedPreset then -- still same?
                         self.LoadedPreset = true
