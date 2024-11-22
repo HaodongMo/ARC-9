@@ -54,7 +54,7 @@ ARC9.SettingsTable = {
 
         { type = "label", text = "settings.general.client" },
         { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
-        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc", parentconvar = "hud_arc9", parentinvert = true },
+        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
         { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
         -- { type = "combo", text = "settings.truenames.title", convar = "truenames", content = {
         --     {"1Use Default", "2"},
@@ -525,6 +525,7 @@ local function DrawSettings(bg, page)
                 if v2.parentconvar then
                     local boolll = !GetConVar("arc9_" .. v2.parentconvar):GetBool()
                     if v2.parentinvert then boolll = !boolll end
+
                     if boolll then
                         self2:SetTall(1)
                         return
