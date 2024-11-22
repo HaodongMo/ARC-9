@@ -505,7 +505,7 @@ local function DrawSettings(bg, page)
             if v2.showfunc and !v2.showfunc() then continue end
             
             local elpanel = vgui.Create("DPanel", newpanelscroll)
-            elpanel.realtall = ARC9ScreenScale(v2.type == "label" and 14 or 21) * 0.85
+            elpanel.realtall = ARC9ScreenScale(v2.type == "label" and 14 or 21) * ((v2.type == "label" or v2.type == "bool" ) and 0.85 or 1)
             elpanel:SetTall(elpanel.realtall)
             elpanel:DockMargin(0, (k2 != 1 and v2.type == "label") and ARC9ScreenScale(4) or 0, 0, 0)
             elpanel:Dock(TOP)
