@@ -124,7 +124,7 @@ end
 
 function SWEP:CreateHUD_Bench()
     local bg = self.CustomizeHUD
-	local imperial = GetConVar("arc9_units"):GetInt() == 1
+	local imperial = GetConVar("arc9_imperial"):GetBool()
 
     self:ClearTabPanel()
 

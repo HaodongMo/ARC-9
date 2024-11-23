@@ -223,9 +223,9 @@ ARC9.SettingsTable = {
         { type = "bool", text = "v2.settings.custmenu.cust_tips.title", desc = "v2.settings.custmenu.cust_tips.desc", convar = "cust_tips", parentconvar = "cust_hints" },
         { type = "bool", text = "v2.settings.custmenu.cust_exit_reset_sel.title", desc = "v2.settings.custmenu.cust_exit_reset_sel.desc", convar = "cust_exit_reset_sel" },
         { type = "bool", text = "v2.settings.custmenu.autosave.title", desc = "v2.settings.custmenu.autosave.desc", convar = "autosave" },
-        { type = "combo", text = "v2.settings.custmenu.units.title", desc = "v2.settings.custmenu.units.desc", convar = "units", content = {
-            {"1" .. ARC9:GetPhrase("v2.settings.custmenu.units.metric"), "0"},
-            {"2" .. ARC9:GetPhrase("v2.settings.custmenu.units.imperial"), "1"},
+        { type = "combo", text = "v2.settings.custmenu.units.title", desc = "v2.settings.custmenu.units.desc", convar = "imperial", content = {
+            {"1" .. ARC9:GetPhrase("v2.settings.custmenu.units.metric"), "0" },
+            {"2" .. ARC9:GetPhrase("v2.settings.custmenu.units.imperial"), "1" },
 			},
 		},
 		{ type = "combo", text = "v2.settings.quick.lang.title", convar = "language", desc = "v2.settings.quick.lang.desc", content = ARC9.LanguagesTable, func = function(self2)

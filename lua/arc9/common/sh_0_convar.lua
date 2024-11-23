@@ -908,7 +908,7 @@ local conVars = {
         client = true,
     },
     {
-        name = "units",
+        name = "imperial",
         default = "0",
         client = true,
     },

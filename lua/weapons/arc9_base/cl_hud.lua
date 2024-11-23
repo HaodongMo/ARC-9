@@ -700,6 +700,6 @@ function SWEP:DoIconCapture()
 end
 
 function SWEP:RangeUnitize(range)
-	if GetConVar("arc9_units"):GetInt() == 1 then return tostring(math.Round(range * ARC9.HUToM * 1.0936)) .. ARC9:GetPhrase("unit.yard") end
+	if GetConVar("arc9_imperial"):GetBool() then return tostring(math.Round(range * ARC9.HUToM * 1.0936)) .. ARC9:GetPhrase("unit.yard") end
     return tostring(math.Round(range * ARC9.HUToM)) .. ARC9:GetPhrase("unit.meter")
 end
