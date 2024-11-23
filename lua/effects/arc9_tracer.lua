@@ -12,6 +12,7 @@ local head = Material("effects/whiteflare")
 local tracer = Material("arc9/tracer")
 --local smoke = Material("effects/smoke")
 local smoke = Material("effects/fas_smoke_beam")
+local smoker, smoked = Color(155, 155, 155, 155), Color(155, 155, 155, 0)
 
 function EFFECT:Init(data)
     local hit = data:GetOrigin()
@@ -65,7 +66,7 @@ function EFFECT:Render()
     local size = self.Size * math.Clamp(math.log(EyePos():DistToSqr(endpos) - math.pow(256, 2)), 0, math.huge)
 
     local col = self.Color --LerpColor(d, self.Color, Color(0, 0, 0, 0))
-    local col2 = LerpColor(d2, Color(155, 155, 155, 155), Color(0, 0, 0, 0))
+    local col2 = LerpColor(d2, smoker, smoked)
 
     local vel = self.Dir * self.Speed - LocalPlayer():GetVelocity()
     local dot = math.abs(EyeAngles():Forward():Dot(vel:GetNormalized()))
