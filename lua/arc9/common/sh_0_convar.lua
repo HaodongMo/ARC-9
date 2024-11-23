@@ -898,11 +898,6 @@ local conVars = {
         client = true,
     },
     {
-        name = "imperial",
-        default = "0",
-        client = true,
-    },
-    {
         name = "center_overheat",
         default = "0",
         client = true,
@@ -913,14 +908,9 @@ local conVars = {
         client = true,
     },
     {
-        name = "aimassist_moving",
+        name = "units",
         default = "0",
-        replicated = true,
-    },
-    {
-        name = "aimassist_grounded",
-        default = "0",
-        replicated = true,
+        client = true,
     },
 }
 ARC9.ConVarData = {}

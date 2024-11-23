@@ -83,7 +83,7 @@ end
 
 function SWEP:CreateHUD_Stats()
     local lowerpanel = self.CustomizeHUD.lowerpanel
-	local imperial = GetConVar("arc9_imperial"):GetBool()
+	local imperial = GetConVar("arc9_units"):GetInt() == 1
 
     -- if true then return end
     self:ClearTabPanel()

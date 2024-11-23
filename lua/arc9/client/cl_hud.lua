@@ -59,7 +59,7 @@ local infammo = GetConVar("arc9_infinite_ammo")
 
 function ARC9.ShouldDrawHUD()
     if !cl_drawhud:GetBool() then return end
-    if arc9_hud_force_disable:GetBool() then return end
+    -- if arc9_hud_force_disable:GetBool() then return end
 
     local wpn = LocalPlayer():GetActiveWeapon()
     local a9 = wpn.ARC9 and !wpn.NotAWeapon
@@ -68,6 +68,8 @@ function ARC9.ShouldDrawHUD()
     -- local hudalways = arc9_hud_always:GetBool()
 
     hide.CHudGMod = incust
+
+	if arc9_hud_force_disable:GetBool() and !incust then return end
 
     -- if (!hud and !incust) or (!a9 and !hudalways) then return end
     if (!arc9_hud_arc9:GetBool() and !incust) or (!a9 and !arc9_hud_always:GetBool()) then return end -- this line was hard

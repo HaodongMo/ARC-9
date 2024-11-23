@@ -1000,17 +1000,30 @@ If you are still having problems with it, or if you still have not been granted 
 ]]
 
 //////////////////////////////////////////// V2 Settings
+////////////////////// Universal
+L["v2.settings.disabled"] = "(Disabled) "
+L["v2.settings.disabled.desc"] = "! DISABLED !\n\n"
+L["v2.settings.server"] = "\n\nThis is a server variable."
+
 ////////////////////// Quick Access
 L["v2.settings.tabname.quick"] = "Quick Access"
-L["v2.settings.tabname.general"] = "General"
-L["v2.settings.tabname.general.desc"] = "Get quick access to the more important settings right here."
+L["v2.settings.tabname.quick.desc"] = "Get quick access to the more important settings right here."
 
-L["v2.settings.quick.lang.title"] = "ARC9 Languare"
-L["v2.settings.quick.lang.desc"] = "Change the displayed language for ARC9.\n\nNote: Not all languages are supported in every language!"
+L["v2.settings.quick.legacy.title"] = "Legacy Settings"
+L["v2.settings.quick.legacy.desc"] = "Change back to the old settings menu."
+L["v2.settings.quick.legacy.desc2"] = "Change to the new settings menu."
+
+L["v2.settings.quick.lang.title"] = "ARC9 Language"
+L["v2.settings.quick.lang.desc"] = "Change the displayed language for ARC9.\n\nNote: Not all languages are supported on weapon packs!"
 
 L["v2.settings.hud_game.hud_arc9.desc2"] = "Tweak in \"Game HUD\"\n\nEnable a custom LCD display HUD when using ARC9 weapons."
 
 L["v2.settings.tpik.desc2"] = "Tweak in \"Visuals\"\n\nEnables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
+
+L["v2.settings.aimassist.enable.desc2"] = "Tweak in \"Gameplay\"\n\nEnables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
+
+L["v2.settings.gameplay.controller.title"] = "Enable Controller Mode"
+L["v2.settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements.\n\nCustom glyphs can be customized via the Spawnmenu (Options > ARC9 > Controller)."
 
 ////////////////////// Game HUD
 L["v2.settings.tabname.hud_game"] = "Game HUD"
@@ -1030,6 +1043,9 @@ L["v2.settings.hud_game.keephints.title"] = "Always Display Hints"
 L["v2.settings.hud_game.keephints.desc"] = "Disables the fadeaway of the control hints."
 L["v2.settings.hud_game.nohints.title"] = "or Disable Hints"
 L["v2.settings.hud_game.nohints.desc"] = "Completely disables ARC9 hints.\n\nNot compatible with \"Always Display Hints\"."
+
+L["v2.settings.hud_game.hints.title"] = "Hint Behavior"
+L["v2.settings.hud_game.hints.desc"] = "Choose to always display, fade away or completely disable control hints."
 
 L["v2.settings.hud_game.killfeed_enable.title"] = "Auto-Generate Killfeed Icons"
 L["v2.settings.hud_game.killfeed_enable.desc"] = "Generate killfeed icons automatically on ARC9 weapons."
@@ -1080,8 +1096,31 @@ L["v2.settings.centerhint.firemode_time.desc"] = "How long, in seconds, the tool
 L["v2.settings.centerhint.overheat.title"] = "When Overheating"
 L["v2.settings.centerhint.overheat.desc"] = "Displays a tooltip when the weapon is about to overheat."
 
+////////// Advanced ARC9 HUD Settings
+L["v2.settings.tabname.arc9_hud_adv"] = "Advanced ARC9 HUD Settings"
+L["v2.settings.tabname.arc9_hud_adv.desc"] = "Tweak more advanced settings related to ARC9's HUD and its elements."
+
+L["v2.settings.hud_game.hud_scale.title"] = "HUD Scale"
+L["v2.settings.hud_game.hud_scale.desc"] = "Alter the size scale of the ARC9 HUD and the customization menu.\n\nNote: If set below 1, the ARC9 HUD will be disabled."
+
+L["v2.settings.hud_game.hud_deadzonex.title"] = "HUD Width"
+L["v2.settings.hud_game.hud_deadzonex.desc"] = "Alters the maximum width of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
+
 ////////////////////// Visuals
 L["v2.settings.tabname.visuals"] = "Visuals"
+
+////////// TPIK
+L["v2.settings.tabname.tpik"] = "TPIK - Third Person Inverse Kinematics"
+L["v2.settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions."
+
+L["v2.settings.tpik.title"] = "Enable TPIK"
+L["v2.settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
+
+L["v2.settings.tpik_others.title"] = "Other Players' TPIK"
+L["v2.settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
+
+L["v2.settings.tpik_framerate.title"] = "TPIK Frame Rate"
+L["v2.settings.tpik_framerate.desc"] = "At which frame rate the TPIK runs at.\n\nSet to 0 for unlimited.\n\nUnlimited or higher values impact performance."
 
 ////////// Blur
 L["v2.settings.tabname.blur"] = "Blur"
@@ -1121,21 +1160,68 @@ L["v2.settings.effects.muzzle_others.desc"] = "Display the muzzle effects from o
 L["v2.settings.effects.allflash.title"] = "Other's Flashlights"
 L["v2.settings.effects.allflash.desc"] = "Renders the flashlights from all players.\n\nImpacts performance."
 
-////////// TPIK
-L["v2.settings.tabname.tpik"] = "TPIK - Third Person Inverse Kinematics"
-L["v2.settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions.\n\nImpacts performance."
+////////// Viewmodel Settings
+L["v2.settings.tabname.vm"] = "Viewmodel Settings"
+L["v2.settings.tabname.vm.desc"] = "Alter various settings related to the viewmodels."
 
-L["v2.settings.tpik.title"] = "Enable TPIK"
-L["v2.settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
+L["v2.settings.vm.vm_bobstyle.title"] = "Bob Style"
+L["v2.settings.vm.vm_bobstyle.desc"] = "Choose one of various viewmodel bobbing styles, graciously contributed by the ARC9 team (and Valve)."
 
-L["v2.settings.tpik_others.title"] = "Other Players' TPIK"
-L["v2.settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
+L["v2.settings.vm.fov.title"] = "Add FOV"
+L["v2.settings.vm.fov.desc"] = "Add this value to the viewmodel's field of view.\n\nNote: Could cause visual glitches if set too high or low."
 
-L["v2.settings.tpik_framerate.title"] = "TPIK Frame Rate"
-L["v2.settings.tpik_framerate.desc"] = "At which frame rate the TPIK runs at.\n\nSet to 0 for unlimited.\n\nUnlimited or higher values impact performance."
+L["v2.settings.vm.vm_addx.title"] = "Viewmodel X-Axis"
+L["v2.settings.vm.vm_addx.desc"] = "Move the viewmodel left/right."
+
+L["v2.settings.vm.vm_addy.title"] = "Viewmodel Y-Axis"
+L["v2.settings.vm.vm_addy.desc"] = "Move the viewmodel up/down."
+
+L["v2.settings.vm.vm_addz.title"] = "Viewmodel Z-Axis"
+L["v2.settings.vm.vm_addz.desc"] = "Move the viewmodel forwards/backwards."
+
+L["v2.settings.vm.vm_cambob.title"] = "Sprint View Bobbing"
+L["v2.settings.vm.vm_cambob.desc"] = "Makes the camera move when sprinting."
+
+L["v2.settings.vm.vm_cambobwalk.title"] = "Walk View Bobbing"
+L["v2.settings.vm.vm_cambobwalk.desc"] = "Makes the camera move when walking."
+
+L["v2.settings.vm.vm_cambobintensity.title"] = "Intensity"
+L["v2.settings.vm.vm_cambobintensity.desc"] = "How intense the sprint and walk bobbing should be."
+
+////////// Other
+L["v2.settings.tabname.other"] = "Other"
+L["v2.settings.tabname.other.desc"] = "Adjust various miscellaneous settings."
 
 ////////////////////// Gameplay
 L["v2.settings.tabname.gameplay"] = "Gameplay"
+
+////////// General
+L["v2.settings.tabname.general"] = "General"
+L["v2.settings.tabname.general.desc"] = "Various general gameplay settings."
+
+L["v2.settings.gameplay.toggleads.title"] = "Toggle ADS"
+L["v2.settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
+
+L["v2.settings.gameplay.dtap_sights.title"] = "Double-Tap USE to Cycle Sights"
+L["v2.settings.gameplay.dtap_sights.desc"] = "Allows you to double-tap your USE button to cycle through optics."
+
+L["v2.settings.gameplay.autoreload.title"] = "Automatic Reload"
+L["v2.settings.gameplay.autoreload.desc"] = "Automatically reloads your weapon when it is empty."
+
+L["v2.settings.gameplay.autolean.title"] = "Automatic Lean"
+L["v2.settings.gameplay.autolean.desc"] = "Automatically tries to lean when near cover."
+
+L["v2.settings.gameplay.togglelean.title"] = "Toggle Lean"
+L["v2.settings.gameplay.togglelean.desc"] = "Pressing your left or right lean button toggles leaning."
+
+L["v2.settings.gameplay.togglepeek.title"] = "Toggle Peek"
+L["v2.settings.gameplay.togglepeek.desc"] = "Pressing your peek button toggles peeking."
+
+L["v2.settings.gameplay.togglepeek_reset.title"] = "Reset Peek After Aiming"
+L["v2.settings.gameplay.togglepeek_reset.desc"] = "Pressing your aiming button toggles aiming."
+
+L["v2.settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
+L["v2.settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
 
 ////////// Optics
 L["v2.settings.tabname.optics"] = "Optics"
@@ -1147,17 +1233,11 @@ L["v2.settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that
 L["v2.settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
 L["v2.settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
 
-L["v2.settings.gameplay.toggleads.title"] = "Toggle ADS"
-L["v2.settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
-
 L["v2.settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
 L["v2.settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
 
 L["v2.settings.gameplay.sensmult.title"] = "Multiply ADS Sensitivity"
 L["v2.settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity globally with this value.\n\nThe lower it is, the slower your sensitivity will be."
-
-L["v2.settings.gameplay.dtap_sights.title"] = "Double-Tap USE to Cycle Sights"
-L["v2.settings.gameplay.dtap_sights.desc"] = "Allows you to double-tap your USE button to cycle through optics."
 
 L["v2.settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
 L["v2.settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
@@ -1204,3 +1284,279 @@ L["v2.settings.crosshair.cross_size_dot.desc"] = "Multiplies the size of the cen
 
 L["v2.settings.crosshair.cross_size_prong.title"] = "Crosshair Prong Width"
 L["v2.settings.crosshair.cross_size_prong.desc"] = "Multiplies the width of the crosshair prongs by this value."
+
+////////// Aim Assist
+L["v2.settings.tabname.aimassist"] = "Aim Assist"
+L["v2.settings.tabname.aimassist.desc"] = "Adjust settings related to aiming assistance."
+
+L["v2.settings.aimassist.enable.title"] = "Enable Aim Assist"
+L["v2.settings.aimassist.enable.desc"] = "Enables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
+
+L["v2.settings.aimassist.sensmult.desc"] = "Multiplies the aiming sensitivity by this value when aiming close to valid targets if one is detected close to your crosshair."
+
+////////////////////// Customization
+L["v2.settings.tabname.customization"] = "Customization"
+
+////////// Customization Menu
+L["v2.settings.tabname.custmenu"] = "Customization Menu"
+L["v2.settings.tabname.custmenu.desc"] = "Adjust settings related to the customization menu."
+
+L["v2.settings.custmenu.hud_color.title"] = "Customization Menu Accent"
+L["v2.settings.custmenu.hud_color.desc"] = "Alter the accent color for the customization menu."
+
+L["v2.settings.custmenu.hud_darkmode.title"] = "Dark Mode"
+L["v2.settings.custmenu.hud_darkmode.desc"] = "Changes the color scheme of the customization menu to a darker one."
+
+L["v2.settings.custmenu.hud_holiday.title"] = "Festive Mode"
+L["v2.settings.custmenu.hud_holiday.desc"] = "Changes the color scheme of the customization menu to match certain holidays.\n\nOverrides \"Customization Menu Accent\"."
+
+L["v2.settings.custmenu.cust_light.title"] = "Enable Light"
+L["v2.settings.custmenu.cust_light.desc"] = "Enables a light that makes it easier to see your weapon."
+
+L["v2.settings.custmenu.cust_light_brightness.title"] = "Light Brightness"
+L["v2.settings.custmenu.cust_light_brightness.desc"] = "Adjust the brightness of the light."
+
+L["v2.settings.custmenu.cust_hints.title"] = "Enable Control Tips"
+L["v2.settings.custmenu.cust_hints.desc"] = "Displays control tips in the bottom right of the customization menu."
+
+L["v2.settings.custmenu.cust_tips.title"] = "Enable General Hints"
+L["v2.settings.custmenu.cust_tips.desc"] = "Displays general hints in the bottom left of the customization menu."
+
+L["v2.settings.custmenu.autosave.title"] = "Auto-Save Attachments"
+L["v2.settings.custmenu.autosave.desc"] = "Automatically saves equipped attachments when you exit the customization menu. Reloads them automatically when you respawn the weapon."
+
+L["v2.settings.custmenu.units.title"] = "Display Units"
+L["v2.settings.custmenu.units.desc"] = "Choose to display either metric or imperial units in the customization menu."
+L["v2.settings.custmenu.units.metric"] = "Metric"
+L["v2.settings.custmenu.units.imperial"] = "Imperial"
+
+L["v2.settings.custmenu.cust_exit_reset_sel.title"] = "Reset Active Slot on Close"
+L["v2.settings.custmenu.cust_exit_reset_sel.desc"] = "If enabled, the active customization slot will be reset when the menu is re-opened."
+
+////////////////////// Server
+L["v2.settings.tabname.server"] = "Server"
+
+////////// ARC9 HUD
+L["v2.settings.server.hud_game.hud_arc9.title"] = "Globally Disable ARC9 HUD"
+L["v2.settings.server.hud_game.hud_arc9.desc"] = "Disables the ability for users to utilize the ARC9 HUD."
+
+////////// Visuals
+L["v2.settings.server.gameplay.truenames.title"] = "Enable True Names"
+L["v2.settings.server.gameplay.truenames.desc"] = "Enable to have weapons that utilize fictional names to display their real ones instead.\n\nNot all weapons support this."
+
+////////// Gameplay
+L["v2.settings.server.aimassist.enable.title"] = "Allow Aim Assist"
+L["v2.settings.server.aimassist.enable.desc"] = "Disables the ability for users to enable aiming assistance."
+
+L["v2.settings.server.aimassist.intensity.title"] = "Aim Assist Intensity"
+L["v2.settings.server.aimassist.intensity.desc"] = "How intense the aim assistance should be."
+
+L["v2.settings.server.aimassist.cone.title"] = "Aim Assist Cone"
+L["v2.settings.server.aimassist.cone.desc"] = "How large of an area the aim assist should take affect in. The larger, the further away the valid targets can be."
+
+L["v2.settings.server.aimassist.heads.title"] = "Lock onto Heads"
+L["v2.settings.server.aimassist.heads.desc"] = "Enable if the aim assist should target the target's head rather than its chest."
+
+L["v2.settings.server.gameplay.infinite_ammo.title"] = "Enable Infinite Ammo"
+L["v2.settings.server.gameplay.infinite_ammo.desc"] = "Weapons no longer require ammunition when reloading."
+
+L["v2.settings.server.gameplay.realrecoil.title"] = "Enable Physical Visual Recoil"
+L["v2.settings.server.gameplay.realrecoil.desc"] = "Various weapons are set up for physical muzzle rise, meaning that they will shoot where their viewmodel points rather than the center of the screen.\n\nVery important for some weapon packs' balancing schemes."
+
+L["v2.settings.server.gameplay.lean.title"] = "Allow Leaning"
+L["v2.settings.server.gameplay.lean.desc"] = "Allows users to lean left or right. Also applies to Automatic Lean."
+
+L["v2.settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway"
+L["v2.settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway, if the weapon supports it.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen."
+
+L["v2.settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
+L["v2.settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
+
+L["v2.settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
+L["v2.settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
+
+L["v2.settings.server.gameplay.breath_slowmo.title"] = "Slow-Mo Breathing in Singleplayer"
+L["v2.settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
+
+L["v2.settings.server.gameplay.manualbolt.title"] = "Require Manual Cycling"
+L["v2.settings.server.gameplay.manualbolt.desc"] = "Enable if the user should manually cycle manual operated weapons by pressing their reload key."
+
+L["v2.settings.server.gameplay.never_ready.title"] = "Disable Readying Animations"
+L["v2.settings.server.gameplay.never_ready.desc"] = "Enable to disable weapon readying animations when you first pull out a weapon."
+
+L["v2.settings.server.gameplay.recoilshake.title"] = "Enable Recoil FOV Shake"
+L["v2.settings.server.gameplay.recoilshake.desc"] = "Snaps the field of view when shooting."
+
+L["v2.settings.server.gameplay.equipment_generate_ammo.title"] = "Generate Unique Ammo for Equipment"
+L["v2.settings.server.gameplay.equipment_generate_ammo.desc"] = "The Source engine has a limit of 255 ammo types. Disabling this option could help fix errors if you have many addons installed.\n\nRequires restart."
+
+L["v2.settings.server.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
+L["v2.settings.server.gameplay.mult_defaultammo.desc"] = "How many spare magazines or pieces of equipment the player gets when a weapon is spawned."
+
+////////// Customization
+L["v2.settings.server.custmenu.atts_nocustomize.title"] = "Disable Customizing"
+L["v2.settings.server.custmenu.atts_nocustomize.desc"] = "Disables the ability for users to open the customization menu.\n\nDoes not affect admins."
+
+L["v2.settings.server.custmenu.atts_max.title"] = "Max Attachments"
+L["v2.settings.server.custmenu.atts_max.desc"] = "The maximum number of attachments a user can equip onto a weapon, including cosmetic ones."
+
+L["v2.settings.server.custmenu.free_atts.title"] = "Free Attachments"
+L["v2.settings.server.custmenu.free_atts.desc"] = "Attachments can be used without the need of picking them up first."
+
+L["v2.settings.server.custmenu.atts_lock.title"] = "Unlimited Attachment Units"
+L["v2.settings.server.custmenu.atts_lock.desc"] = "If disabled, the user has an attachment and has it equipped onto a weapon, they cannot put it onto another weapon unless they have more than one of that attachment."
+
+L["v2.settings.server.custmenu.atts_loseondie.title"] = "Lose Attachments on Death"
+L["v2.settings.server.custmenu.atts_loseondie.desc"] = "If the user dies, they'll lose all of their attachments."
+
+L["v2.settings.server.custmenu.atts_generateentities.title"] = "Generate Attachment Entities"
+L["v2.settings.server.custmenu.atts_generateentities.desc"] = "Generate entities that can be spawned via the Spawnmenu, allowing you to pick up attachments when \"Free Attachments\" is disabled.\n\nIncreases loading times."
+
+////////// Bullet Physics
+L["v2.settings.tabname.bulletphysics"] = "Bullet Physics"
+
+L["v2.settings.server.bulletphysics.bullet_physics.title"] = "Enable Physical Bullets"
+L["v2.settings.server.bulletphysics.bullet_physics.desc"] = "Weapons that support this shoot physical projectiles which are affected by bullet drop, drag and travel time."
+
+L["v2.settings.server.bulletphysics.bullet_gravity.title"] = "Bullet Gravity"
+L["v2.settings.server.bulletphysics.bullet_gravity.desc"] = "How much physical bullets are affected by gravity."
+
+L["v2.settings.server.bulletphysics.bullet_drag.title"] = "Bullet Drag"
+L["v2.settings.server.bulletphysics.bullet_drag.desc"] = "How much air resistance physical bullets will have."
+
+L["v2.settings.server.bulletphysics.bullet_lifetime.title"] = "Bullet Life Time"
+L["v2.settings.server.bulletphysics.bullet_lifetime.desc"] = "How long, in seconds, it takes for a physical bullet to be removed from existence."
+
+L["v2.settings.server.bulletphysics.ricochet.title"] = "Enable Bullet Ricochet"
+L["v2.settings.server.bulletphysics.ricochet.desc"] = "Allows bullets to bounce off of hard surfaces, potentially striking unsuspecting foes.\n\nEffectiveness depends on the weapon."
+
+L["v2.settings.server.bulletphysics.mod_penetration.title"] = "Enable Bullet Penetration"
+L["v2.settings.server.bulletphysics.mod_penetration.desc"] = "Allows bullets to pierce cover, potentially striking foes hiding behind it.\n\nEffectiveness depends on the weapon."
+
+////////// NPC Settings
+L["v2.settings.tabname.npc"] = "NPC Settings"
+
+L["v2.settings.server.npc.npc_autoreplace.title"] = "Replace NPC Weapons"
+L["v2.settings.server.npc.npc_autoreplace.desc"] = "NPC's that spawn with HL2 weapons will have them be replaced with ARC9 weapons."
+
+L["v2.settings.server.npc.npc_atts.title"] = "Give NPC Weapons Random Attachments"
+L["v2.settings.server.npc.npc_atts.desc"] = "NPC's with ARC9 weapons will receive a random set of attachments"
+
+L["v2.settings.server.npc.replace_spawned.title"] = "Replace Ground Weapons"
+L["v2.settings.server.npc.replace_spawned.desc"] = "Replace map or spawned HL2 weapons with randomly chosen ARC9 weapons"
+
+L["v2.settings.server.npc.ground_atts.title"] = "Give Ground Weapons Random Attachments"
+L["v2.settings.server.npc.ground_atts.desc"] = "Weapons spawned on the ground will receive a random set of attachments."
+
+L["v2.settings.server.npc.npc_give_weapons.title"] = "Allow NPC Weapon Swapping"
+L["v2.settings.server.npc.npc_give_weapons.desc"] = "Allow the players to press their USE key on NPC's to give them or swap their ARC9 weapons."
+
+L["v2.settings.server.npc.npc_equality.title"] = "Enable NPC Damage Equality"
+L["v2.settings.server.npc.npc_equality.desc"] = "NPC's do equal damage with ARC9 weapons as players do."
+
+L["v2.settings.server.npc.npc_spread.title"] = "NPC Spread"
+L["v2.settings.server.npc.npc_spread.desc"] = "Multiply the accuracy for weapons when NPC's are shooting them."
+
+////////// Quick Stat Modifiers
+L["v2.settings.tabname.quickstat"] = "Quick Stat Modifiers"
+
+////////////////////// Developer
+L["v2.settings.tabname.developer"] = "Developer"
+
+////////// Developer Settings
+L["v2.settings.tabname.developer.settings"] = "Developer Settings"
+L["v2.settings.tabname.developer.settings.desc"] = "General settings for developers."
+
+L["v2.settings.server.developer.reloadlangs.title"] = "Reload Languages"
+L["v2.settings.server.developer.reloadlangs.desc"] = "Reloads all ARC9 language files."
+
+L["v2.settings.server.developer.reloadatts.title"] = "Reload Attachments"
+L["v2.settings.server.developer.reloadatts.desc"] = "Reloads all ARC9 attachments."
+
+L["v2.settings.server.developer.dev_always_ready.title"] = "Always Ready"
+L["v2.settings.server.developer.dev_always_ready.desc"] = "When enabled, weapons will always play their \"ready\" animation."
+
+L["v2.settings.server.developer.dev_benchgun.title"] = "Benchgun"
+L["v2.settings.server.developer.dev_benchgun.desc"] = "When enabled, the viewmodel will remain in place, independant from where you are standing."
+
+L["v2.settings.server.developer.dev_crosshair.title"] = "Developer Crosshair"
+L["v2.settings.server.developer.dev_crosshair.desc"] = "A funky looking crosshair showing the exact point of aim and some useful variables.\n\nOnly works for administrators; don't even try to get cheaty with this."
+
+L["v2.settings.server.developer.dev_show_affectors.title"] = "Display Affectors"
+L["v2.settings.server.developer.dev_show_affectors.desc"] = "On the \"Developer Crosshair\", displays which current affectors are applied."
+
+L["v2.settings.server.developer.dev_show_shield.title"] = "Show Shield"
+L["v2.settings.server.developer.dev_show_shield.desc"] = "Show the protecting model of the player's shield."
+
+L["v2.settings.server.developer.dev_greenscreen.title"] = "Green Screen"
+L["v2.settings.server.developer.dev_greenscreen.desc"] = "Applies a green screen background when in the customization menu.\n\nUseful for screenshots.\n\nIf you use HDR, don't forget to set \"mat_bloom_scalefactor_scalar\" to 0!"
+
+L["v2.settings.server.developer.presets_clear.title"] = "Clear Weapon Data"
+L["v2.settings.server.developer.presets_clear.desc"] = "Clears presets, icons and default presets for the weapon you are currently holding.\n\nWarning: If used without an ARC9 weapon equipped, it will clear the presets, icons and default presets for all ARC9 weapons."
+
+L["v2.settings.server.developer.reload"] = "RELOAD"
+L["v2.settings.server.developer.clear"] = "CLEAR"
+
+////////// Asset Caching
+L["v2.settings.tabname.assetcache"] = "Asset Caching"
+L["v2.settings.tabname.assetcache.desc"] = "Caching certain assets can prevent stutters for more comfortable gameplay.\n\nIf running on an HDD, or with a lot of addons, these options will improve initial loading times."
+
+L["v2.settings.server.assetcache.precache_sounds_onfirsttake.title"] = "On Weapon Equip: Cache Sounds"
+L["v2.settings.server.assetcache.precache_sounds_onfirsttake.desc"] = "Caches the firing sounds for the ARC9 weapon you equip.\n\nCan cause a small game freeze when equipping weapons for the first time."
+
+L["v2.settings.server.assetcache.precache_attsmodels_onfirsttake.title"] = "On Weapon Equip: Cache Attachments"
+L["v2.settings.server.assetcache.precache_attsmodels_onfirsttake.desc"] = "Caches all ARC9 attachment models when any ARC9 weapon is equipped.\n\nCan cause a long game freeze, depending on how many ARC9 weapons you have."
+
+L["v2.settings.server.assetcache.precache_wepmodels_onfirsttake.title"] = "On Weapon Equip: Cache Weapon Models"
+L["v2.settings.server.assetcache.precache_wepmodels_onfirsttake.desc"] = "Caches all ARC9 viewmodels when any ARC9 weapon is equipped.\n\nCan cause a very long game freeze, depending on how many ARC9 weapons you have."
+
+L["v2.settings.server.assetcache.precache_allsounds_onstartup.title"] = "On Game Start: Cache Sounds"
+L["v2.settings.server.assetcache.precache_allsounds_onstartup.desc"] = "Caches all firing sounds for all ARC9 weapons when the server starts up.\n\nCan cause a temporary game freeze."
+
+L["v2.settings.server.assetcache.precache_attsmodels_onstartup.title"] = "On Game Start: Cache Attachments"
+L["v2.settings.server.assetcache.precache_attsmodels_onstartup.desc"] = "Caches all ARC9 attachment models when the server starts up.\n\nCan cause a long game freeze, depending on how many ARC9 weapons you have."
+
+L["v2.settings.server.assetcache.precache_wepmodels_onstartup.title"] = "On Game Start: Cache Weapon Models"
+L["v2.settings.server.assetcache.precache_wepmodels_onstartup.desc"] = "Caches all ARC9 viewmodels when the server starts up.\n\nCan cause a very long game freeze, depending on how many ARC9 weapons you have."
+
+L["v2.settings.server.assetcache.precache_allsounds.title"] = "Cache All Sounds"
+L["v2.settings.server.assetcache.precache_allsounds.desc"] = "Caches all firing sounds on all ARC9 weapons.\n\nCan cause a temporary game freeze."
+
+L["v2.settings.server.assetcache.precache_attsmodels.title"] = "Cache All Attachment Models"
+L["v2.settings.server.assetcache.precache_attsmodels.desc"] = "Caches all ARC9 attachment models.\n\nCan cause a long game freeze, depending on how many ARC9 weapons you have."
+
+L["v2.settings.server.assetcache.precache_wepmodels.title"] = "Cache All Weapon Models"
+L["v2.settings.server.assetcache.precache_wepmodels.desc"] = "Caches all ARC9 viewmodels.\n\nCan cause a very long game freeze, depending on how many ARC9 weapons you have."
+
+L["v2.settings.server.assetcache"] = "CACHE"
+L["v2.settings.server.assetcache.all"] = "CACHE ALL"
+
+////////// Print to Console
+L["v2.settings.tabname.printconsole"] = "Print to Console"
+L["v2.settings.tabname.printconsole.desc"] = "Press \"Print\" on any of these and they will print what is requested into your developer console."
+
+L["v2.settings.server.printconsole.dev_listmyatts.title"] = "Print My Attachments"
+L["v2.settings.server.printconsole.dev_listmyatts.desc"] = "Prints the internal names of all currently equipped attachments."
+
+L["v2.settings.server.printconsole.dev_listanims.title"] = "Print Animation List"
+L["v2.settings.server.printconsole.dev_listanims.desc"] = "Prints the full internal animation list, including their animation length."
+
+L["v2.settings.server.printconsole.dev_listbones.title"] = "Print Bone List"
+L["v2.settings.server.printconsole.dev_listbones.desc"] = "Prints the full list of bones from the viewmodel skeleton."
+
+L["v2.settings.server.printconsole.dev_listbgs.title"] = "Print Bodygroups"
+L["v2.settings.server.printconsole.dev_listbgs.desc"] = "Prints the full list of bodygroups for the viewmodel."
+
+L["v2.settings.server.printconsole.dev_listatts.title"] = "Print QCAttachments"
+L["v2.settings.server.printconsole.dev_listatts.desc"] = "Prints all of the QCAttachments for the viewmodel."
+
+L["v2.settings.server.printconsole.dev_listmats.title"] = "Print Materials List"
+L["v2.settings.server.printconsole.dev_listmats.desc"] = "Prints all of the materials used on the viewmodel."
+
+L["v2.settings.server.printconsole.dev_export.title"] = "Print Export Code"
+L["v2.settings.server.printconsole.dev_export.desc"] = "Prints an export code for the weapon's currently equipped attachments.\n\nCan be stored or shared with other users to quickly load a list of attachments."
+
+L["v2.settings.server.printconsole.dev_getjson.title"] = "Print Weapon JSON"
+L["v2.settings.server.printconsole.dev_getjson.desc"] = "Prints a JSON entry for the weapon."
+
+L["v2.settings.server.printconsole"] = "PRINT"

@@ -37,58 +37,8 @@ ARC9.BadPerfromanceSettings = function() return BRANCH != "x86-64" end
 ARC9.BadPerfromanceSettingsAlt = function() return BRANCH != "x86-64" or GetConVar("mat_queue_mode"):GetInt() == 0 or GetConVar("cl_threaded_bone_setup"):GetInt() < 1 end
 
 ARC9.SettingsTable = {
-    -- {
-    --     TabName = "Tab name 1",
-    --     { type = "label", text = "Header" },
-    --     { type = "bool", text = "Booling", convar = "cust_blur", desc = "TEST DESCRIPTION" },
-    --     { type = "slider", text = "Booling 2", min = -2, max = 2, desc = "f DESCRIPTION", parentconvar = "cust_blur" }, -- show that slider only if cust_blur is enabled
-    --     { type = "slider", text = "Slide me", min = -45, max = 45, convar = "fov", desc = "balls" },
-    --     { type = "combo", text = "Yayay", convar = "arccw_attinv_loseondie", content = {"1table of thingies", "2there", "3ooo"}, desc = "hhhhhhhhhhhhhhhhh" },
-    --     { type = "button", text = "Uhhh", content = "Boop", func = function(self2) print("wa") end, desc = "TEST DESCRIPTION" },
-    --     { type = "color", text = "Coloringa", convar = "reflex", desc = "This color is very important. \n\nClient-only.\nConvar: arc9_sdfjidojgoidfjgoidfg_r/g/b/a" },
-    --     -- { type = "coloralpha", text = "Color alpha", desc = "g" },
-    --     -- { type = "input", text = "Color alpha", desc = "g" },
-    -- },
     {
-        TabName = "settings.tabname.general",
-
-        { type = "label", text = "settings.general.client" },
-        { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
-        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
-        { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
-        -- { type = "combo", text = "settings.truenames.title", convar = "truenames", content = {
-        --     {"1Use Default", "2"},
-        --     {"2Disabled", "0"},
-        --     {"3Enabled", "1"},
-        -- }, desc = "settings.truenames.desc"},
-        -- { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
-		{ type = "combo", text = "settings.language_id.title", convar = "language", desc = "settings.language_id.desc", content = ARC9.LanguagesTable, func = function(self2)
-            RunConsoleCommand("arc9_reloadlangs")
-        end},
-        { type = "button", text = "settings.resetsettings.cl.title", content = "settings.reset", func = function(self2)
-            RunConsoleCommand("arc9_settings_reset_client")
-        end},
-
-        { sv = true, type = "label", text = "settings.general.server" },
-        { type = "bool", text = "settings.hud_game.hud_force_disable.title", convar = "hud_force_disable", desc = "settings.hud_game.hud_force_disable.desc" },
-
-        { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
-        { sv = true, type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
-        { sv = true, type = "slider", text = "settings.gameplay.mult_defaultammo.title", convar = "mult_defaultammo", min = 0, max = 16, decimals = 0, desc = "settings.gameplay.mult_defaultammo.desc" },
-        { sv = true, type = "bool", text = "settings.truenames.title", convar = "truenames_default", desc = "settings.truenames.desc" },
-        -- { sv = true, type = "combo", text = "settings.truenames_default.title", convar = "truenames_default", content = {
-        --     {"1Disabled", "0"},
-        --     {"2Enabled", "1"},
-        -- }, desc = "settings.truenames_default.desc"},
-        -- { sv = true, type = "bool", text = "settings.truenames_enforced.title", convar = "truenames_enforced", desc = "settings.truenames_enforced.desc"},
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist", desc = "settings.aimassist.enable_general.desc"},
-        { sv = true, type = "button", text = "settings.resetsettings.sv.title", content = "settings.reset", func = function(self2)
-            RunConsoleCommand("arc9_settings_reset_server")
-        end},
-
-    },
-    {
-        TabName = "settings.tabname.performance",
+        TabName = "v2.settings.tabname.quick",
         Warning = ARC9.BadPerfromanceSettingsAlt,
         { type = "label", text = "badconf.warning", desc = "badconf.warning.desc", important = true, showfunc = ARC9.BadPerfromanceSettingsAlt },
         { type = "label", text = "badconf.x64.title", desc = "badconf.x64.desc", showfunc = function() return BRANCH != "x86-64" end },
@@ -96,402 +46,26 @@ ARC9.SettingsTable = {
         { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettingsAlt },
         { type = "label", text = "", showfunc = ARC9.BadPerfromanceSettingsAlt },
 
-        { type = "label", text = "settings.performance.important" },
-        { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
-        { type = "bool", text = "settings.tpik.title", convar = "tpik", desc = "settings.tpik.desc"},
-        { type = "bool", text = "settings.allflash.title", convar = "allflash", desc = "settings.allflash.desc"},
-        { type = "bool", text = "settings.fx_rtvm.title", convar = "fx_rtvm", desc = "settings.fx_rtvm.desc"},
-
-
-        { type = "label", text = "settings.performance.blur.title" },
-        { type = "bool", text = "settings.cust_blur.title", convar = "cust_blur", desc = "settings.cust_blur.desc"},
-        { type = "bool", text = "settings.fx_reloadblur.title", convar = "fx_reloadblur", desc = "settings.fx_reloadblur.desc"},
-        { type = "bool", text = "settings.fx_animblur.title", convar = "fx_animblur", desc = "settings.fx_animblur.desc"},
-        { type = "bool", text = "settings.fx_rtblur.title", convar = "fx_rtblur", desc = "settings.fx_rtblur.desc"},
-        { type = "bool", text = "settings.fx_adsblur.title", convar = "fx_adsblur", desc = "settings.fx_adsblur.desc"},
-
-        { type = "label", text = "settings.performance.shelleject.title" },
-        { type = "bool", text = "settings.eject_fx.title", convar = "eject_fx", desc = "settings.eject_fx.desc"},
-        { type = "slider", text = "settings.eject_time.title", convar = "eject_time", min = -1, max = 60, decimals = 0, desc = "settings.eject_time.desc"},
-
-        { type = "label", text = "settings.performance.fx.title" },
-        { type = "bool", text = "settings.muzzle_light.title", convar = "muzzle_light", desc = "settings.muzzle_light.desc"},
-        { type = "bool", text = "settings.muzzle_others.title", convar = "muzzle_others", desc = "settings.muzzle_others.desc"},
-    },
-    {
-        TabName = "settings.tabname.optics",
-        -- { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
-
-        { type = "label", text = "settings.optics.control" },
-        { type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
-        { type = "bool", text = "settings.optics.compensate_sens.title", convar = "compensate_sens", desc = "settings.optics.compensate_sens.desc" },
-        { type = "bool", text = "settings.optics.toggleads.title", convar = "toggleads", desc = "settings.optics.toggleads.desc" },
-        { type = "bool", text = "settings.optics.dtap_sights.title", convar = "dtap_sights", desc = "settings.optics.dtap_sights.desc" },
-
-        { type = "label", text = "settings.optics.color" },
-        { type = "color", text = "settings.optics.reflex.title", convar = "reflex", desc = "settings.optics.reflex.desc" },
-        { type = "color", text = "settings.optics.scope.title", convar = "scope", desc = "settings.optics.scope.desc" },
-
-        { type = "label", text = "settings.tabname.performance" },
-        { type = "bool", text = "settings.cheapscopes.title", convar = "cheapscopes", desc = "settings.cheapscopes.desc"},
-        { type = "bool", text = "settings.fx_rtvm.title", convar = "fx_rtvm", desc = "settings.fx_rtvm.desc"},
-        { type = "bool", text = "settings.fx_rtblur.title2", convar = "fx_rtblur", desc = "settings.fx_rtblur.desc"},
-    },
-    {
-        TabName = "settings.tabname.crosshair",
-        { type = "label", text = "settings.crosshair.crosshair" },
-        { type = "bool", text = "settings.crosshair.cross_enable.title", convar = "cross_enable", desc = "settings.crosshair.cross_enable.desc" },
-        { type = "coloralpha", text = "settings.crosshair.cross.title", convar = "cross", desc = "settings.crosshair.cross.desc"},
-        { type = "slider", text = "settings.crosshair.cross_size_mult.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_mult", desc = "settings.crosshair.cross_size_mult.desc" },
-        { type = "slider", text = "settings.crosshair.cross_size_dot.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_dot", desc = "settings.crosshair.cross_size_dot.desc" },
-        { type = "slider", text = "settings.crosshair.cross_size_prong.title", min = 0.01, max = 10, decimals = 2, convar = "cross_size_prong", desc = "settings.crosshair.cross_size_prong.desc" },
-        { type = "bool", text = "settings.crosshair.crosshair_static.title", convar = "crosshair_static", desc = "settings.crosshair.crosshair_static.desc" },
-        { type = "bool", text = "settings.crosshair.crosshair_force.title", convar = "crosshair_force", desc = "settings.crosshair.crosshair_force.desc" },
-        { type = "bool", text = "settings.crosshair.crosshair_target.title", convar = "crosshair_target", desc = "settings.crosshair.crosshair_target.desc" },
-        { type = "bool", text = "settings.crosshair.crosshair_peeking.title", convar = "crosshair_peek", desc = "settings.crosshair.crosshair_peeking.desc" },
-        { type = "combo", text = "settings.crosshair.crosshair_sgstyle.title", convar = "cross_sgstyle", desc = "settings.crosshair.crosshair_sgstyle.desc", content = {
-            {"1" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_fullcircle"), "1"},
-            {"2" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_four"), "2"},
-            {"3" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_two"), "3"},
-            {"4" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_dots"), "4"},
-            {"5" .. ARC9:GetPhrase("settings.crosshair.crosshair_sgstyle_dots_accurate"), "5"}, 
-			},
-        },
-    },
-    {
-        TabName = "settings.tabname.hud_cust",
-        { type = "label", text = "settings.hud_cust.hud" },
-        -- crazy hacks to make hud scale work "almost dynamicly"
-        { type = "slider", text = "settings.hud_cust.hud_scale.title", min = 0.5, max = 1.5, decimals = 2, desc = "settings.hud_cust.hud_scale.desc", convar2 = "hud_scale", func = function(self2, self3, settingspanel)
-            if IsValid(LocalPlayer()) then -- uncust the gun
-                local wep = LocalPlayer():GetActiveWeapon()
-                if IsValid(wep) and wep.ARC9 then
-                    if wep.CustomizeHUD then
-                        wep:SetCustomize(false)
-                        net.Start("ARC9_togglecustomize")
-                        net.WriteBool(false)
-                        net.SendToServer()
-                    end
-                end
-            end
-
-            RunConsoleCommand("arc9_hud_scale", self3:GetValue())
-
-            settingspanel:Remove() -- rebuilding
-            timer.Simple(0, function()
-                ARC9.Regen() -- reload fonts with new scale
-                ARC9_OpenSettings()
-            end)
-        end },
-        -- { type = "input", text = "Font", convar = "font", desc = "Font replacement for ARC9. Set empty to use default font." },
-        -- { type = "slider", min = -16, max = 16, decimals = 0, text = "Font Add Size", convar = "font_addsize", desc = "Increase text size.", func = function(self2, self3, settingspanel)
-        --     timer.Simple(0, function()
-        --         ARC9.Regen() -- reload fonts with new scale
-        --     end)
-        -- end },
-
-        { type = "slider", min = 0, max = 1000, decimals = 0, text = "settings.hud_cust.hud_deadzonex.title", convar = "hud_deadzonex", desc = "settings.hud_cust.hud_deadzonex.desc" },
-
-        { type = "color", text = "settings.hud_cust.hud_color.title", convar = "hud_color", desc = "settings.hud_cust.hud_color.desc"},
-        { type = "bool", text = "settings.hud_cust.hud_darkmode.title", convar = "hud_darkmode", desc = "settings.hud_cust.hud_darkmode.desc"},
-        { type = "bool", text = "settings.hud_cust.hud_holiday.title", convar = "hud_holiday", desc = "settings.hud_cust.hud_holiday.desc"},
-        -- { type = "input", text = "Language", convar = "language", desc = "Language pack to use for ARC9. Leave blank for game default." },
-        { type = "bool", text = "settings.hud_cust.cust_light.title", convar = "cust_light", desc = "settings.hud_cust.cust_light.desc"},
-        { type = "slider", min = -20, max = 30, decimals = 1, text = "settings.hud_cust.cust_light_brightness.title", convar = "cust_light_brightness", desc = "settings.hud_cust.cust_light_brightness.desc" },
-
-        { type = "label", text = "settings.hud_cust.customization" },
-        -- { type = "bool", text = "Background Blur", convar = "cust_blur", desc = "Blurs customization background.\n\nRequires DX9."},
-        { type = "bool", text = "settings.hud_cust.cust_hints.title", convar = "cust_hints", desc = "settings.hud_cust.cust_hints.desc"},
-        { type = "bool", text = "settings.hud_cust.cust_tips.title", convar = "cust_tips", desc = "settings.hud_cust.cust_tips.desc"},
-        -- { type = "bool", text = "settings.hud_cust.cust_roll_unlock.title", convar = "cust_roll_unlock", desc = "settings.hud_cust.cust_roll_unlock.desc"},
-        { type = "bool", text = "settings.hud_cust.cust_exit_reset_sel.title", convar = "cust_exit_reset_sel", desc = "settings.hud_cust.cust_exit_reset_sel.desc"},
-        { type = "bool", text = "settings.hud_cust.imperial.title", convar = "imperial", desc = "settings.hud_cust.imperial.desc"},
-    },
-    {
-        TabName = "settings.tabname.hud_game",
-        { type = "label", text = "settings.hud_game.lcd" },
-        { type = "bool", text = "settings.hud_game.hud_force_disable.title", convar = "hud_force_disable", desc = "settings.hud_game.hud_force_disable.desc" },
-        { type = "bool", text = "settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "settings.hud_game.hud_arc9.desc" },
-        { type = "bool", text = "settings.hud_game.hud_always.title", convar = "hud_always", desc = "settings.hud_game.hud_always.desc" },
-        { type = "bool", text = "settings.hud_game.hud_compact.title", convar = "hud_compact", desc = "settings.hud_game.hud_compact.desc" },
-        { type = "bool", text = "settings.hud_game.hud_nohints.title", convar = "hud_nohints", desc = "settings.hud_game.hud_nohints.desc" },
-        { type = "bool", text = "settings.hud_game.hud_keephints.title", convar = "hud_keephints", desc = "settings.hud_game.hud_keephints.desc" },
-
-        { type = "label", text = "settings.hud_game.killfeed" },
-        { type = "bool", text = "settings.hud_game.killfeed_enable.title", convar = "killfeed_enable", desc = "settings.hud_game.killfeed_enable.desc" },
-        { type = "bool", text = "settings.hud_game.killfeed_dynamic.title", convar = "killfeed_dynamic", desc = "settings.hud_game.killfeed_dynamic.desc" },
-        { type = "bool", text = "settings.hud_game.killfeed_colour.title", convar = "killfeed_colour", desc = "settings.hud_game.killfeed_colour.desc" },
-
-        { type = "label", text = "settings.hud_game.breath" },
-        { type = "bool", text = "settings.hud_game.breath_hud.title", convar = "breath_hud", desc = "settings.hud_game.breath_hud.desc" },
-        { type = "bool", text = "settings.hud_game.breath_pp.title", convar = "breath_pp", desc = "settings.hud_game.breath_pp.desc" },
-
-        { type = "label", text = "settings.hud_game.centerhint" },
-        { type = "bool", text = "settings.hud_game.centerhint_reload.title", convar = "center_reload_enable", desc = "settings.hud_game.centerhint_reload.desc" },
-        { type = "slider", min = 0, max = 1, decimals = 2, text = "settings.hud_game.centerhint_reload_percent.title", convar = "center_reload", desc = "settings.hud_game.centerhint_reload_percent.desc" },
-        { type = "bool", text = "settings.hud_game.centerhint_bipod.title", convar = "center_bipod", desc = "settings.hud_game.centerhint_bipod.desc" },
-        { type = "bool", text = "settings.hud_game.centerhint_jammed.title", convar = "center_jam", desc = "settings.hud_game.centerhint_jammed.desc" },
-        { type = "bool", text = "settings.hud_game.centerhint_firemode.title", convar = "center_firemode", desc = "settings.hud_game.centerhint_firemode.desc" },
-        { type = "slider", min = 0, max = 2, decimals = 2, text = "settings.hud_game.centerhint_firemode_time.title", convar = "center_firemode_time", desc = "settings.hud_game.centerhint_firemode_time.desc" },
-        { type = "bool", text = "settings.hud_game.centerhint_overheat.title", convar = "center_overheat", desc = "settings.hud_game.centerhint_overheat.desc" },
-
-        { type = "label", text = "settings.hud_game.hud_glyph" },
-        -- { type = "bool", text = "settings.hud_game.hud_glyph_dark.title", convar = "glyph_dark", desc = "settings.hud_game.hud_glyph_dark.desc" },
-        -- { type = "slider", min = 0.5, max = 2, decimals = 2, text = "settings.hud_game.hud_glyph_size.title", convar = "glyph_size", desc = "settings.hud_game.hud_glyph_size.desc" },
-		
-        { type = "combo", text = "settings.hud_game.hud_glyph_type_hud.title", convar = "glyph_family_hud", desc = "settings.hud_game.hud_glyph_type_hud.desc", content = {
-            {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
-            {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
-            {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
-			},
-        },
-		
-        { type = "combo", text = "settings.hud_game.hud_glyph_type_cust.title", convar = "glyph_family_cust", desc = "settings.hud_game.hud_glyph_type_cust.desc", content = {
-            {"1" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_light"), "light"},
-            {"2" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_dark"), "dark"},
-            {"3" .. ARC9:GetPhrase("settings.hud_game.hud_glyph_knockout"), "knockout"},
-			},
-        },
-    },
-    {
-        TabName = "settings.tabname.npc",
-        sv = true,
-        { type = "label", text = "settings.npc.weapons" },
-        { type = "bool", text = "settings.npc.npc_equality.title", convar = "npc_equality", desc = "settings.npc.npc_equality.desc" },
-        { type = "slider", text = "settings.npc.npc_spread.title", min = 0, max = 10, decimals = 1, convar = "npc_spread", desc = "settings.npc.npc_spread.desc"},
-        { type = "bool", text = "settings.npc.npc_atts.title", convar = "npc_atts", desc = "settings.npc.npc_atts.desc" },
-        { type = "bool", text = "settings.npc.ground_atts.title", convar = "ground_atts", desc = "settings.npc.ground_atts.desc" },
-        { type = "bool", text = "settings.npc.npc_autoreplace.title", convar = "npc_autoreplace", desc = "settings.npc.npc_autoreplace.desc" },
-        { type = "bool", text = "settings.npc.replace_spawned.title", convar = "replace_spawned", desc = "settings.npc.replace_spawned.desc" },
-        { type = "bool", text = "settings.npc.npc_give_weapons.title", convar = "npc_give_weapons", desc = "settings.npc.npc_give_weapons.desc" },
-    },
-    {
-        TabName = "settings.tabname.gameplay",
-        { type = "label", text = "settings.gameplay.controls" },
-        { type = "bool", text = "settings.gameplay.toggleads.title", convar = "toggleads", desc = "settings.gameplay.toggleads.desc" },
-        { type = "bool", text = "settings.gameplay.autolean.title", convar = "autolean", desc = "settings.gameplay.autolean.desc" },
-        { type = "bool", text = "settings.gameplay.autoreload.title", convar = "autoreload", desc = "settings.gameplay.autoreload.desc" },
-        { type = "bool", text = "settings.gameplay.togglelean.title", convar = "togglelean", desc = "settings.gameplay.togglelean.desc" },
-        { type = "bool", text = "settings.gameplay.togglepeek.title", convar = "togglepeek", desc = "settings.gameplay.togglepeek.desc" },
-        { type = "bool", text = "settings.gameplay.togglepeek_reset.title", convar = "togglepeek_reset", desc = "settings.gameplay.togglepeek_reset.desc" },
-        { type = "bool", text = "settings.gameplay.togglebreath.title", convar = "togglebreath", desc = "settings.gameplay.togglebreath.desc" },
-
-        { sv = true, type = "label", text = "settings.gameplay.mechanics" },
-        { sv = true, type = "bool", text = "settings.gameplay.infinite_ammo.title", convar = "infinite_ammo", desc = "settings.gameplay.infinite_ammo.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.realrecoil.title", convar = "realrecoil", desc = "settings.gameplay.realrecoil.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.lean.title", convar = "lean", desc = "settings.gameplay.lean.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.mod_sway.title", convar = "mod_sway", desc = "settings.gameplay.mod_sway.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.mod_freeaim.title", convar = "mod_freeaim", desc = "settings.gameplay.mod_freeaim.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.mod_bodydamagecancel.title", convar = "mod_bodydamagecancel", desc = "settings.gameplay.mod_bodydamagecancel.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.breath_slowmo.title", convar = "breath_slowmo", desc = "settings.gameplay.breath_slowmo.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.manualbolt.title", convar = "manualbolt", desc = "settings.gameplay.manualbolt.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.never_ready.title", convar = "never_ready", desc = "settings.gameplay.never_ready.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.recoilshake.title", convar = "recoilshake", desc = "settings.gameplay.recoilshake.desc" },
-        { sv = true, type = "bool", text = "settings.gameplay.equipment_generate_ammo.title", convar = "equipment_generate_ammo", desc = "settings.gameplay.equipment_generate_ammo.desc" },
-        -- { type = "bool", text = "", convar = "nearwall", desc = "" },
-        -- random jams
-        -- overheating
-    },
-    {
-        TabName = "settings.tabname.visuals",
-        { type = "label", text = "settings.visuals.viewmodel" },
-        { type = "combo", text = "settings.visuals.vm_bobstyle.title", convar = "vm_bobstyle", content = {
-            {"1Bread & Darsu", "0"},
-            {"2Fesiug", "1"},
-            {"3Arctic", "2"},
-            {"4Darsu", "3"},
-            {"5Bread (exaggerated)", "4"},
-            {"6Half-Life 2", "-1"},
-        },
-        desc = "settings.visuals.vm_bobstyle.desc" },
-        -- { type = "slider", text = "Bob Style", convar = "vm_bobstyle", min = 0, max = 2, decimals = 0, desc = "Select different bobbing styles, to the flavor of different members of the ARC9 team.\n\n0: Darsu\n 1: Fesiug\n2: Arctic" },
-        { type = "slider", text = "settings.visuals.fov.title", convar = "fov", min = -40, max = 40, decimals = 0, desc = "settings.visuals.fov.desc"},
-        { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addx.title", convar = "vm_addx", desc = "settings.visuals.vm_addx.desc" },
-        { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addy.title", convar = "vm_addy", desc = "settings.visuals.vm_addy.desc" },
-        { type = "slider", min = -16, max = 16, decimals = 1, text = "settings.visuals.vm_addz.title", convar = "vm_addz", desc = "settings.visuals.vm_addz.desc" },
-
-        { type = "label", text = "settings.visuals.cambob" },
-        { type = "bool", text = "settings.visuals.vm_cambob.title", convar = "vm_cambob", desc = "settings.visuals.vm_cambob.desc" },
-        { type = "bool", text = "settings.visuals.vm_cambobwalk.title", convar = "vm_cambobwalk", desc = "settings.visuals.vm_cambobwalk.desc" },
-        { type = "slider", text = "settings.visuals.vm_cambobintensity.title", convar = "vm_cambobintensity", min = 0, max = 3, decimals = 2, desc = "settings.visuals.vm_cambobintensity.desc"},
-
-        { type = "label", text = "settings.visuals.tpik" },
-        { type = "bool", text = "settings.visuals.tpik.title", convar = "tpik", desc = "settings.visuals.tpik.desc" },
-        { type = "bool", text = "settings.visuals.tpik_others.title", convar = "tpik_others", desc = "settings.visuals.tpik_others.desc" },
-        { type = "slider", text = "settings.visuals.tpik_framerate.title", convar = "tpik_framerate", min = 0, max = 200, decimals = 0, desc = "settings.visuals.tpik_framerate.desc" },
-    },
-    {
-        TabName = "settings.tabname.bullets",
-        sv = true,
-        { type = "label", text = "settings.bullets.bullets"},
-        { type = "bool", text = "settings.bullets.bullet_physics.title", convar = "bullet_physics", desc = "settings.bullets.bullet_physics.desc" },
-        { type = "slider", text = "settings.bullets.bullet_gravity.title", convar = "bullet_gravity", min = 0, max = 10, decimals = 1, desc = "settings.bullets.bullet_gravity.desc" },
-        { type = "slider", text = "settings.bullets.bullet_drag.title", convar = "bullet_drag", min = 0, max = 10, decimals = 1, desc = "settings.bullets.bullet_drag.desc" },
-        { type = "bool", text = "settings.bullets.ricochet.title", convar = "ricochet", desc = "settings.bullets.ricochet.desc" },
-        { type = "bool", text = "settings.bullets.mod_penetration.title", convar = "mod_penetration", desc = "settings.bullets.mod_penetration.desc" },
-        { type = "slider", text = "settings.bullets.bullet_lifetime.title", convar = "bullet_lifetime", min = 0, max = 120, decimals = 0, desc = "settings.bullets.bullet_lifetime.desc" },
-        { type = "bool", text = "settings.bullets.bullet_imaginary.title", convar = "bullet_imaginary", desc = "settings.bullets.bullet_imaginary.desc" },
-    },
-    {
-        TabName = "settings.tabname.attachments",
-        { sv = true, type = "label", text = "settings.attachments.customization"},
-        { sv = true, type = "bool", text = "settings.attachments.atts_nocustomize.title", convar = "atts_nocustomize", desc = "settings.attachments.atts_nocustomize.desc"},
-        { type = "slider", text = "settings.attachments.atts_max.title", convar = "atts_max", min = 0, max = 250, decimals = 0, desc = "settings.attachments.atts_max.desc"},
-        { type = "bool", text = "settings.attachments.autosave.title", convar = "autosave", desc = "settings.attachments.autosave.desc"},
-        -- { type = "bool", text = "Total Anarchy", convar = "atts_anarchy", desc = "Allows any attachment to be attached to any slot.\nVERY laggy.\nWill not work properly with 99% of weapons and attachments.\nPlease don't turn this on.\n\nThis is a server variable."},
-        { sv = true, type = "button", text = "settings.attachments.blacklist.title", content = "settings.attachments.blacklist.open", func = function(self2)
-            RunConsoleCommand("arc9_blacklist")
-        end},
-        { sv = true, type = "label", text = "settings.attachments.inventory"},
-        { sv = true, type = "bool", text = "settings.attachments.free_atts.title", convar = "free_atts", desc = "settings.attachments.free_atts.desc"},
-        { sv = true, type = "bool", text = "settings.attachments.atts_lock.title", convar = "atts_lock", desc = "settings.attachments.atts_lock.desc"},
-        { sv = true, type = "bool", text = "settings.attachments.atts_loseondie.title", convar = "atts_loseondie", desc = "settings.attachments.atts_loseondie.desc"},
-        { sv = true, type = "bool", text = "settings.attachments.atts_generateentities.title", convar = "atts_generateentities", desc = "settings.attachments.atts_generateentities.desc"},
-    },
-    {
-        TabName = "settings.tabname.modifiers",
-        sv = true,
-        { type = "label", text = "settings.modifiers.quick.title", desc = "settings.modifiers.quick.desc"},
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_damage.title", convar = "mod_damage" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_spread.title", convar = "mod_spread" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_recoil.title", convar = "mod_recoil" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_visualrecoil.title", convar = "mod_visualrecoil" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_adstime.title", convar = "mod_adstime" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_sprinttime.title", convar = "mod_sprinttime" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_damagerand.title", convar = "mod_damagerand" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_muzzlevelocity.title", convar = "mod_muzzlevelocity" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_rpm.title", convar = "mod_rpm" },
-        { type = "slider", min = 0, max = 10, decimals = 1, text = "settings.mod_headshotdamage.title", convar = "mod_headshotdamage" },
-        { type = "slider", min = 0, max = 100, decimals = 1, text = "settings.mod_malfunction.title", convar = "mod_malfunction" },
-        -- { type = "slider", text = "Damage", convar = "wawa", min = 0, max = 10, decimals = 0, desc = "The     Damage\n\nThis is a server variable."},
-
-        -- { type = "button", text = "Advanced modifiers", content = "Open panel", func = function(self2)
-        --     -- RunConsoleCommand("arc9_reloadatts")
-        --     print("lol")
-        --     -- put here default derma panel with stuff from fesiug's spawmenu modifier panel
-        -- end},
-    },
-    {
-        TabName = "settings.tabname.controller",
-        { type = "label", text = "settings.tabname.controller", desc = "settings.controller.misc.desc"},
-        { type = "bool", text = "settings.controller.controller.title", convar = "controller", desc = "settings.controller.controller.desc"},
-		{ type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
-		{ type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 1, convar = "mult_sens", desc = "settings.optics.sensmult.desc" },
-        -- { type = "combo", text = "settings.controller.glyphs.title", convar = "glyph_type", desc = "settings.controller.glyphs.desc", content = {
-            -- {"1Xbox", "xbox"},
-            -- {"2PlayStation", "ps"},
-            -- {"3Nintendo Switch", "switch"},
-			-- },
-        -- },
-        -- { type = "bool", text = "settings.controller.controller_rumble.title", convar = "controller_rumble", desc = "settings.controller.controller_rumble.desc"},
-        -- { type = "button", text = "settings.controller.controller_config.title", desc = "settings.controller.controller_config.desc", content = "settings.controller.controller_config.content", func = function(self2)
-        --     -- RunConsoleCommand("arc9_reloadatts")
-        --     print("lol")
-        --     -- put here default derma panel with stuff from fesiug's spawmenu controller panel
-        -- end},
-    },
-    {
-        TabName = "settings.tabname.aimassist",
-        { type = "label", text = "settings.general.client", desc = "settings.tabname.aimassist.desc" },
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist_cl", desc = "settings.aimassist.enable_client.desc"},
-        -- { type = "bool", text = "settings.aimassist.lockon.title", convar = "aimassist_lockon_cl", desc = "settings.aimassist.lockon.desc"},
-        { type = "slider", text = "settings.optics.sensmult.title", min = 0.1, max = 1, decimals = 2, convar = "aimassist_multsens", desc = "settings.aimassist.sensmult.desc" },
-
-        { type = "label", text = "settings.general.server" },
-        { type = "bool", text = "settings.aimassist.enable.title", convar = "aimassist", desc = "settings.aimassist.enable.desc"},
-        -- { type = "bool", text = "settings.aimassist.lockon_allow.title", convar = "aimassist_lockon", desc = "settings.aimassist.lockon_allow.desc"},
-        { type = "slider", min = 0.1, max = 2, decimals = 1, text = "settings.aimassist.intensity.title", convar = "aimassist_intensity", desc = "settings.aimassist.intensity.desc" },
-        { type = "slider", min = 0.1, max = 10, decimals = 1, text = "settings.aimassist.cone.title", convar = "aimassist_cone", desc = "settings.aimassist.cone.desc" },
-        { type = "bool", text = "settings.aimassist.head.title", convar = "aimassist_head", desc = "settings.aimassist.head.desc"},
-        -- { type = "bool", text = "settings.aimassist.moving.title", convar = "aimassist_moving", desc = "settings.aimassist.moving.desc"},
-        -- { type = "bool", text = "settings.aimassist.grounded.title", convar = "aimassist_grounded", desc = "settings.aimassist.grounded.desc"},
-
-    },
-    {
-        TabName = "settings.tabname.caching",
-        { type = "label", text = "settings.caching.title", desc = "settings.caching.desc" },
-        { type = "bool", text = "settings.caching.precache_sounds_onfirsttake.title", convar = "precache_sounds_onfirsttake", desc = "settings.caching.precache_sounds_onfirsttake.desc"},
-        { type = "bool", text = "settings.caching.precache_attsmodels_onfirsttake.title", convar = "precache_attsmodels_onfirsttake", desc = "settings.caching.precache_attsmodels_onfirsttake.desc"},
-        { type = "bool", text = "settings.caching.precache_wepmodels_onfirsttake.title", convar = "precache_wepmodels_onfirsttake", desc = "settings.caching.precache_wepmodels_onfirsttake.desc"},
-        { type = "bool", text = "settings.caching.precache_allsounds_onstartup.title", convar = "precache_allsounds_onstartup", desc = "settings.caching.precache_allsounds_onstartup.desc"},
-        { type = "bool", text = "settings.caching.precache_attsmodels_onstartup.title", convar = "precache_attsmodels_onstartup", desc = "settings.caching.precache_attsmodels_onstartup.desc"},
-        { type = "bool", text = "settings.caching.precache_wepmodels_onstartup.title", convar = "precache_wepmodels_onstartup", desc = "settings.caching.precache_wepmodels_onstartup.desc"},
-
-        { type = "button", text = "settings.caching.precache_allsounds.title", content = "settings.developer.cache", func = function(self2)
-            RunConsoleCommand("arc9_precache_allsounds")
-        end},
-        { type = "button", text = "settings.caching.precache_attsmodels.title", content = "settings.developer.cache", func = function(self2)
-            RunConsoleCommand("arc9_precache_attsmodels")
-        end},
-        { type = "button", text = "settings.caching.precache_wepmodels.title", content = "settings.developer.cache", func = function(self2)
-            RunConsoleCommand("arc9_precache_wepmodels")
-        end},
-    },
-    {
-        TabName = "settings.tabname.developer",
-        sv = true,
-        { type = "label", text = "settings.developer.developer"},
-        { type = "bool", text = "settings.developer.dev_always_ready.title", convar = "dev_always_ready", desc = "settings.developer.dev_always_ready.desc"},
-        { type = "bool", text = "settings.developer.dev_benchgun.title", convar = "dev_benchgun", desc = "settings.developer.dev_benchgun.desc"},
-        { type = "bool", text = "settings.developer.dev_crosshair.title", convar = "dev_crosshair", desc = "settings.developer.dev_crosshair.desc"},
-        { type = "bool", text = "settings.developer.dev_show_shield.title", convar = "dev_show_shield", desc = "settings.developer.dev_show_shield.desc"},
-        { type = "bool", text = "settings.developer.dev_greenscreen.title", convar = "dev_greenscreen", desc = "settings.developer.dev_greenscreen.desc"},
-        { type = "bool", text = "settings.developer.dev_show_affectors.title", convar = "dev_show_affectors", desc = "settings.developer.dev_show_affectors.desc"},
-        { type = "button", text = "settings.developer.reloadatts.title", content = "settings.developer.reload", func = function(self2)
-            RunConsoleCommand("arc9_reloadatts")
-        end},
-        { type = "button", text = "settings.developer.reloadlangs.title", content = "settings.developer.reload", func = function(self2)
+        { type = "label", text = "v2.settings.tabname.general", desc = "v2.settings.tabname.quick.desc" },
+		{ type = "combo", text = "v2.settings.quick.lang.title", desc = "v2.settings.quick.lang.desc", convar = "language", content = ARC9.LanguagesTable, func = function(self2)
             RunConsoleCommand("arc9_reloadlangs")
         end},
-        { type = "button", text = "settings.developer.dev_listmyatts.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_listmyatts")
-        end},
-        { type = "button", text = "settings.developer.dev_listanims.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_listanims")
-        end},
-        { type = "button", text = "settings.developer.dev_listbones.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_listbones")
-        end},
-        { type = "button", text = "settings.developer.dev_listbgs.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_listbgs")
-        end},
-        { type = "button", text = "settings.developer.dev_listatts.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_listatts")
-        end},
-        { type = "button", text = "settings.developer.dev_listmats.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_listsubmats")
-        end},
-        { type = "button", text = "settings.developer.dev_export.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_export")
-        end},
-        { type = "button", text = "settings.developer.dev_getjson.title", content = "settings.developer.print", func = function(self2)
-            RunConsoleCommand("arc9_dev_getjson")
-        end},
-        { type = "button", text = "settings.developer.presets_clear.title", content = "settings.developer.clear", desc = "settings.developer.presets_clear.desc", func = function(self2)
-            RunConsoleCommand("arc9_presets_clear")
-        end},
-    },
-}
-
---[[ -- Uncomment this for Updated, WIP V2 Settings Menu
-ARC9.SettingsTable = {
-    {
-        TabName = "v2.settings.tabname.quick",
-
-        { type = "label", text = "v2.settings.tabname.general", desc = "v2.settings.tabname.general.desc" },
-		{ type = "combo", text = "v2.settings.quick.lang.title", convar = "language", desc = "v2.settings.quick.lang.desc", content = ARC9.LanguagesTable, func = function(self2)
-            RunConsoleCommand("arc9_reloadlangs")
-        end},
-        { type = "bool", text = "v2.settings.hud_game.hud_arc9.title", convar = "hud_arc9", desc = "v2.settings.hud_game.hud_arc9.desc2" },
         { type = "bool", text = "v2.settings.tpik.title", desc = "v2.settings.tpik.desc2", convar = "tpik" },
+        { type = "bool", text = "v2.settings.aimassist.enable.title", desc = "v2.settings.aimassist.enable.desc2", convar = "aimassist_cl", requireconvar = "aimassist" },
+        { type = "bool", text = "v2.settings.gameplay.controller.title", desc = "v2.settings.gameplay.controller.desc", convar = "controller" },
+		
+        -- { type = "label", text = "settings.modifiers.quick.desc" },
+        -- { sv = true, type = "bool", text = "v2.settings.server.hud_game.hud_arc9.title", desc = "v2.settings.server.hud_game.hud_arc9.desc", convar = "hud_force_disable" },
+        -- { sv = true, type = "bool", text = "v2.settings.gameplay.truenames.title", desc = "v2.settings.gameplay.truenames.desc", convar = "truenames_default" },
+        -- { sv = true, type = "bool", text = "v2.settings.server.aimassist.enable.title", desc = "v2.settings.server.aimassist.enable.desc", convar = "aimassist" },
 	},
     {
         TabName = "v2.settings.tabname.hud_game",
 
         { type = "label", text = "v2.settings.tabname.arc9_hud", desc = "v2.settings.tabname.arc9_hud.desc" },
-        { type = "bool", text = "v2.settings.hud_game.hud_arc9.title", desc = "v2.settings.hud_game.hud_arc9.desc", convar = "hud_arc9" },
-        { type = "bool", text = "v2.settings.hud_game.hud_compact.title", desc = "v2.settings.hud_game.hud_compact.desc", convar = "hud_compact", parentconvar = "hud_arc9" },
-        { type = "bool", text = "v2.settings.hud_game.hud_always.title", desc = "v2.settings.hud_game.hud_always.desc", convar = "hud_always", parentconvar = "hud_arc9" },
+        { type = "bool", text = "v2.settings.hud_game.hud_arc9.title", desc = "v2.settings.hud_game.hud_arc9.desc", convar = "hud_arc9", requireconvaroff = "hud_force_disable" },
+        { type = "bool", text = "v2.settings.hud_game.hud_compact.title", desc = "v2.settings.hud_game.hud_compact.desc", convar = "hud_compact", parentconvar = "hud_arc9", requireconvaroff = "hud_force_disable" },
+        { type = "bool", text = "v2.settings.hud_game.hud_always.title", desc = "v2.settings.hud_game.hud_always.desc", convar = "hud_always", parentconvar = "hud_arc9", requireconvaroff = "hud_force_disable" },
 		
         { type = "bool", text = "v2.settings.hud_game.keephints.title", desc = "v2.settings.hud_game.keephints.desc", convar = "hud_keephints" },
         { type = "bool", text = "v2.settings.hud_game.nohints.title", desc = "v2.settings.hud_game.nohints.desc", convar = "hud_nohints" },
@@ -524,10 +98,40 @@ ARC9.SettingsTable = {
         { type = "bool", text = "v2.settings.centerhint.firemode.title", desc = "v2.settings.centerhint.firemode.desc", convar = "center_firemode" },
         -- { type = "slider", text = "v2.settings.centerhint.firemode_time.title", desc = "v2.settings.centerhint.firemode_time.desc", convar = "center_firemode_time", min = 0.5, max = 2, decimals = 2 },
         { type = "bool", text = "v2.settings.centerhint.overheat.title", desc = "v2.settings.centerhint.overheat.desc", convar = "center_overheat" },
+		
+        { type = "label", text = "v2.settings.tabname.arc9_hud_adv", desc = "v2.settings.tabname.arc9_hud_adv.desc" },
+        { type = "slider", text = "v2.settings.hud_game.hud_scale.title", desc = "v2.settings.hud_game.hud_scale.desc", convar = "hud_arc9", min = 0.5, max = 1.5, decimals = 2, func = function(self2, self3, settingspanel)
+            if IsValid(LocalPlayer()) then -- uncust the gun
+                local wep = LocalPlayer():GetActiveWeapon()
+                if IsValid(wep) and wep.ARC9 then
+                    if wep.CustomizeHUD then
+                        wep:SetCustomize(false)
+                        net.Start("ARC9_togglecustomize")
+                        net.WriteBool(false)
+                        net.SendToServer()
+                    end
+                end
+            end
+
+            RunConsoleCommand("arc9_hud_scale", self3:GetValue())
+
+            settingspanel:Remove() -- rebuilding
+            timer.Simple(0, function()
+                ARC9.Regen() -- reload fonts with new scale
+                ARC9_OpenSettings()
+            end)
+        end
+		},
+        { type = "slider", text = "v2.settings.hud_game.hud_deadzonex.title", desc = "v2.settings.hud_game.hud_deadzonex.desc", convar = "hud_deadzonex", min = 0, max = 500 },
 	},
     {
         TabName = "v2.settings.tabname.visuals",
 
+        { type = "label", text = "v2.settings.tabname.tpik", desc = "v2.settings.tabname.tpik.desc" },
+        { type = "bool", text = "v2.settings.tpik.title", desc = "v2.settings.tpik.desc", convar = "tpik" },
+        { type = "bool", text = "v2.settings.tpik_others.title", desc = "v2.settings.tpik_others.desc", convar = "tpik_others", parentconvar = "tpik" },
+        { type = "slider", text = "v2.settings.tpik_framerate.title", desc = "v2.settings.tpik_framerate.desc", convar = "tpik_others", parentconvar = "tpik", min = 0, max = 200 },
+		
         { type = "label", text = "v2.settings.tabname.blur", desc = "v2.settings.tabname.blur.desc" },
         { type = "bool", text = "v2.settings.blur.cust_blur.title", desc = "v2.settings.blur.cust_blur.desc", convar = "cust_blur" },
         { type = "bool", text = "v2.settings.blur.fx_reloadblur.title", desc = "v2.settings.blur.fx_reloadblur.desc", convar = "fx_reloadblur" },
@@ -535,27 +139,47 @@ ARC9.SettingsTable = {
         { type = "bool", text = "v2.settings.blur.fx_rtblur.title", desc = "v2.settings.blur.fx_rtblur.desc", convar = "fx_rtblur" },
         { type = "bool", text = "v2.settings.blur.fx_adsblur.title", desc = "v2.settings.blur.fx_adsblur.desc", convar = "fx_adsblur", parentconvar = "fx_rtblur" },
 		
-        { type = "label", text = "v2.settings.tabname.effects", desc = "v2.settings.tabname.blur.desc" },
+        { type = "label", text = "v2.settings.tabname.effects", desc = "v2.settings.tabname.effects.desc" },
         { type = "bool", text = "v2.settings.effects.eject_fx.title", desc = "v2.settings.effects.eject_fx.desc", convar = "eject_fx" },
-        { type = "slider", text = "v2.settings.effects.eject_time.title", desc = "v2.settings.effects.eject_time.desc", convar = "eject_time", min = -1, max = 60, decimals = 0 },
+        { type = "slider", text = "v2.settings.effects.eject_time.title", desc = "v2.settings.effects.eject_time.desc", convar = "eject_time", min = -1, max = 60 },
         { type = "bool", text = "v2.settings.effects.muzzle_light.title", desc = "v2.settings.effects.muzzle_light.desc", convar = "muzzle_light" },
         { type = "bool", text = "v2.settings.effects.muzzle_others.title", desc = "v2.settings.effects.muzzle_others.desc", convar = "muzzle_others" },
         { type = "bool", text = "v2.settings.effects.allflash.title", desc = "v2.settings.effects.allflash.desc", convar = "allflash" },
 		
-        { type = "label", text = "v2.settings.tabname.tpik", desc = "v2.settings.tabname.tpik.desc" },
-        { type = "bool", text = "v2.settings.tpik.title", desc = "v2.settings.tpik.desc", convar = "tpik" },
-        { type = "bool", text = "v2.settings.tpik_others.title", desc = "v2.settings.tpik_others.desc", convar = "tpik_others", parentconvar = "tpik" },
-        { type = "slider", text = "v2.settings.tpik_framerate.title", desc = "v2.settings.tpik_framerate.desc", convar = "tpik_others", parentconvar = "tpik", min = 0, max = 200, decimals = 0 },
-		
+        { type = "label", text = "v2.settings.tabname.vm", desc = "v2.settings.tabname.vm.desc" },
+		{ type = "combo", text = "v2.settings.vm.vm_bobstyle.title", desc = "v2.settings.vm.vm_bobstyle.desc", convar = "vm_bobstyle", content = {
+				{"1Bread & Darsu", "0"},
+				{"2Fesiug", "1"},
+				{"3Arctic", "2"},
+				{"4Darsu", "3"},
+				{"5Bread (exaggerated)", "4"},
+				{"6Half-Life 2", "-1"},
+			},
+		},
+        { type = "slider", text = "v2.settings.vm.fov.title", desc = "v2.settings.vm.fov.desc", convar = "fov", min = -40, max = 40 },
+        { type = "slider", text = "v2.settings.vm.vm_addx.title", desc = "v2.settings.vm.vm_addx.desc", convar = "vm_addx", min = -16, max = 16, decimals = 1 },
+        { type = "slider", text = "v2.settings.vm.vm_addy.title", desc = "v2.settings.vm.vm_addy.desc", convar = "vm_addy", min = -16, max = 16, decimals = 1 },
+        { type = "slider", text = "v2.settings.vm.vm_addz.title", desc = "v2.settings.vm.vm_addz.desc", convar = "vm_addz", min = -16, max = 16, decimals = 1 },
+        { type = "bool", text = "v2.settings.vm.vm_cambob.title", desc = "v2.settings.vm.vm_cambob.desc", convar = "vm_cambob" },
+        { type = "bool", text = "v2.settings.vm.vm_cambobwalk.title", desc = "v2.settings.vm.vm_cambobwalk.desc", convar = "vm_cambobwalk", parentconvar = "vm_cambob" },
+        { type = "slider", text = "v2.settings.vm.vm_cambobintensity.title", desc = "v2.settings.vm.vm_cambobintensity.desc", convar = "vm_cambobintensity", min = 0.1, max = 3, decimals = 2, parentconvar = "vm_cambob" },
 	},
     {
         TabName = "v2.settings.tabname.gameplay",
 
+        { type = "label", text = "v2.settings.tabname.general", desc = "v2.settings.tabname.general.desc" },
+        { type = "bool", text = "v2.settings.gameplay.toggleads.title", desc = "v2.settings.gameplay.toggleads.desc", convar = "toggleads" },
+        { type = "bool", text = "v2.settings.gameplay.dtap_sights.title", desc = "v2.settings.gameplay.dtap_sights.desc", convar = "dtap_sights" },
+        { type = "bool", text = "v2.settings.gameplay.autoreload.title", desc = "v2.settings.gameplay.autoreload.desc", convar = "autoreload" },
+        { type = "bool", text = "v2.settings.gameplay.autolean.title", desc = "v2.settings.gameplay.autolean.desc", convar = "autolean", requireconvar = "lean" },
+        { type = "bool", text = "v2.settings.gameplay.togglelean.title", desc = "v2.settings.gameplay.togglelean.desc", convar = "togglelean", requireconvar = "lean" },
+        { type = "bool", text = "v2.settings.gameplay.togglepeek.title", desc = "v2.settings.gameplay.togglepeek.desc", convar = "togglepeek" },
+        { type = "bool", text = "v2.settings.gameplay.togglepeek_reset.title", desc = "v2.settings.gameplay.togglepeek_reset.desc", convar = "togglepeek_reset", parentconvar = "togglepeek" },
+        { type = "bool", text = "v2.settings.gameplay.togglebreath.title", desc = "v2.settings.gameplay.togglebreath.desc", convar = "togglebreath" },
+		
         { type = "label", text = "v2.settings.tabname.optics", desc = "v2.settings.tabname.optics.desc" },
         { type = "bool", text = "v2.settings.gameplay.cheapscopes.title", desc = "v2.settings.gameplay.cheapscopes.desc", convar = "cheapscopes" },
         { type = "bool", text = "v2.settings.gameplay.fx_rtvm.title", desc = "v2.settings.gameplay.fx_rtvm.desc", convar = "fx_rtvm", parentconvar = "cheapscopes", parentinvert = true },
-        { type = "bool", text = "v2.settings.gameplay.toggleads.title", desc = "v2.settings.gameplay.toggleads.desc", convar = "toggleads" },
-        { type = "bool", text = "v2.settings.gameplay.dtap_sights.title", desc = "v2.settings.gameplay.dtap_sights.desc", convar = "dtap_sights" },
         { type = "bool", text = "v2.settings.gameplay.compensate_sens.title", desc = "v2.settings.gameplay.compensate_sens.desc", convar = "compensate_sens" },
         { type = "slider", text = "v2.settings.gameplay.sensmult.title", desc = "v2.settings.gameplay.sensmult.desc", convar = "mult_sens", parentconvar = "compensate_sens", min = 0.1, max = 1, decimals = 1 },
 		
@@ -580,9 +204,147 @@ ARC9.SettingsTable = {
         { type = "slider", text = "v2.settings.crosshair.cross_size_mult.title", desc = "v2.settings.crosshair.cross_size_mult.desc", convar = "cross_size_mult", parentconvar = "cross_enable", min = 0.01, max = 10, decimals = 2 },
         { type = "slider", text = "v2.settings.crosshair.cross_size_dot.title", desc = "v2.settings.crosshair.cross_size_dot.desc", convar = "cross_size_dot", parentconvar = "cross_enable", min = 0.01, max = 10, decimals = 2 },
         { type = "slider", text = "v2.settings.crosshair.cross_size_prong.title", desc = "v2.settings.crosshair.cross_size_prong.desc", convar = "cross_size_prong", parentconvar = "cross_enable", min = 0.01, max = 10, decimals = 2 },
+		
+		
+        { type = "label", text = "v2.settings.tabname.aimassist", desc = "v2.settings.tabname.aimassist.desc" },
+        { type = "bool", text = "v2.settings.aimassist.enable.title", desc = "v2.settings.aimassist.enable.desc", convar = "aimassist_cl", requireconvar = "aimassist" },
+        { type = "slider", text = "v2.settings.gameplay.sensmult.title", desc = "v2.settings.aimassist.sensmult.desc", convar = "aimassist_multsens", parentconvar = "aimassist_cl", min = 0.1, max = 1, decimals = 2, requireconvar = "aimassist" },
+	},
+    {
+        TabName = "v2.settings.tabname.customization",
+
+        { type = "label", text = "v2.settings.tabname.custmenu", desc = "v2.settings.tabname.custmenu.desc" },
+        { type = "color", text = "v2.settings.custmenu.hud_color.title", desc = "v2.settings.custmenu.hud_color.desc", convar = "hud_color" },
+        { type = "bool", text = "v2.settings.custmenu.hud_darkmode.title", desc = "v2.settings.custmenu.hud_darkmode.desc", convar = "hud_darkmode" },
+        { type = "bool", text = "v2.settings.custmenu.hud_holiday.title", desc = "v2.settings.custmenu.hud_holiday.desc", convar = "hud_holiday" },
+        { type = "bool", text = "v2.settings.custmenu.cust_light.title", desc = "v2.settings.custmenu.cust_light.desc", convar = "cust_light" },
+        { type = "slider", text = "v2.settings.custmenu.cust_light_brightness.title", desc = "v2.settings.custmenu.cust_light_brightness.desc", convar = "cust_light_brightness", min = -20, max = 30, decimals = 1, parentconvar = "cust_light" },
+        { type = "bool", text = "v2.settings.custmenu.cust_hints.title", desc = "v2.settings.custmenu.cust_hints.desc", convar = "cust_hints" },
+        { type = "bool", text = "v2.settings.custmenu.cust_tips.title", desc = "v2.settings.custmenu.cust_tips.desc", convar = "cust_tips", parentconvar = "cust_hints" },
+        { type = "bool", text = "v2.settings.custmenu.cust_exit_reset_sel.title", desc = "v2.settings.custmenu.cust_exit_reset_sel.desc", convar = "cust_exit_reset_sel" },
+        { type = "bool", text = "v2.settings.custmenu.autosave.title", desc = "v2.settings.custmenu.autosave.desc", convar = "autosave" },
+        { type = "combo", text = "v2.settings.custmenu.units.title", desc = "v2.settings.custmenu.units.desc", convar = "units", content = {
+            {"1" .. ARC9:GetPhrase("v2.settings.custmenu.units.metric"), "0"},
+            {"2" .. ARC9:GetPhrase("v2.settings.custmenu.units.imperial"), "1"},
+			},
+		},
+		{ type = "combo", text = "v2.settings.quick.lang.title", convar = "language", desc = "v2.settings.quick.lang.desc", content = ARC9.LanguagesTable, func = function(self2)
+            RunConsoleCommand("arc9_reloadlangs")
+        end},
+	},
+    {
+        TabName = "v2.settings.tabname.server",
+		sv = true,
+        { type = "label", text = "v2.settings.tabname.hud_game" },
+        { sv = true, type = "bool", text = "v2.settings.server.hud_game.hud_arc9.title", desc = "v2.settings.server.hud_game.hud_arc9.desc", convar = "hud_force_disable" },
+        { type = "label", text = "v2.settings.tabname.visuals" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.truenames.title", desc = "v2.settings.server.gameplay.truenames.desc", convar = "truenames_default" },
+        { type = "label", text = "v2.settings.tabname.gameplay" },
+        { sv = true, type = "bool", text = "v2.settings.server.aimassist.enable.title", desc = "v2.settings.server.aimassist.enable.desc", convar = "aimassist" },
+        { sv = true, type = "slider", text = "v2.settings.server.aimassist.intensity.title", desc = "v2.settings.server.aimassist.intensity.desc", convar = "aimassist_intensity", min = 0.1, max = 2, decimals = 1, parentconvar = "aimassist" },
+        { sv = true, type = "slider", text = "v2.settings.server.aimassist.cone.title", desc = "v2.settings.server.aimassist.cone.desc", convar = "aimassist_cone", min = 1, max = 15, parentconvar = "aimassist" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.infinite_ammo.title", desc = "v2.settings.server.gameplay.infinite_ammo.desc", convar = "infinite_ammo" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.realrecoil.title", desc = "v2.settings.server.gameplay.realrecoil.desc", convar = "realrecoil" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.lean.title", desc = "v2.settings.server.gameplay.lean.desc", convar = "lean" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.mod_sway.title", desc = "v2.settings.server.gameplay.mod_sway.desc", convar = "mod_sway" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.mod_freeaim.title", desc = "v2.settings.server.gameplay.mod_freeaim.desc", convar = "mod_freeaim" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.mod_bodydamagecancel.title", desc = "v2.settings.server.gameplay.mod_bodydamagecancel.desc", convar = "mod_bodydamagecancel" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.breath_slowmo.title", desc = "v2.settings.server.gameplay.breath_slowmo.desc", convar = "breath_slowmo" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.manualbolt.title", desc = "v2.settings.server.gameplay.manualbolt.desc", convar = "manualbolt" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.never_ready.title", desc = "v2.settings.server.gameplay.never_ready.desc", convar = "never_ready" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.recoilshake.title", desc = "v2.settings.server.gameplay.recoilshake.desc", convar = "recoilshake" },
+        { sv = true, type = "bool", text = "v2.settings.server.gameplay.equipment_generate_ammo.title", desc = "v2.settings.server.gameplay.equipment_generate_ammo.desc", convar = "equipment_generate_ammo" },
+        { sv = true, type = "slider", text = "v2.settings.server.gameplay.mult_defaultammo.title", desc = "v2.settings.server.gameplay.mult_defaultammo.desc", convar = "mult_defaultammo", min = 0, max = 16 },
+		
+        { type = "label", text = "v2.settings.tabname.customization" },
+        { sv = true, type = "bool", text = "v2.settings.server.custmenu.atts_nocustomize.title", desc = "v2.settings.server.custmenu.atts_nocustomize.desc", convar = "atts_nocustomize" },
+        { sv = true, type = "slider", text = "v2.settings.server.custmenu.atts_max.title", desc = "v2.settings.server.custmenu.atts_max.desc", convar = "atts_max", min = 0, max = 250 },
+        { sv = true, type = "bool", text = "v2.settings.server.custmenu.free_atts.title", desc = "v2.settings.server.custmenu.free_atts.desc", convar = "free_atts" },
+        { sv = true, type = "bool", text = "v2.settings.server.custmenu.atts_lock.title", desc = "v2.settings.server.custmenu.atts_lock.desc", convar = "atts_lock" },
+        { sv = true, type = "bool", text = "v2.settings.server.custmenu.atts_loseondie.title", desc = "v2.settings.server.custmenu.atts_loseondie.desc", convar = "atts_loseondie" },
+        { sv = true, type = "bool", text = "v2.settings.server.custmenu.atts_generateentities.title", desc = "v2.settings.server.custmenu.atts_generateentities.desc", convar = "atts_generateentities" },
+		
+        { type = "label", text = "v2.settings.tabname.bulletphysics" },
+        { sv = true, type = "bool", text = "v2.settings.server.bulletphysics.bullet_physics.title", desc = "v2.settings.server.bulletphysics.bullet_physics.desc", convar = "bullet_physics" },
+        { sv = true, type = "slider", text = "v2.settings.server.bulletphysics.bullet_gravity.title", desc = "v2.settings.server.bulletphysics.bullet_gravity.desc", convar = "bullet_gravity", min = 0, max = 10, decimals = 1, parentconvar = "bullet_physics" },
+        { sv = true, type = "slider", text = "v2.settings.server.bulletphysics.bullet_drag.title", desc = "v2.settings.server.bulletphysics.bullet_drag.desc", convar = "bullet_drag", min = 0, max = 10, decimals = 1, parentconvar = "bullet_physics" },
+        { sv = true, type = "slider", text = "v2.settings.server.bulletphysics.bullet_lifetime.title", desc = "v2.settings.server.bulletphysics.bullet_lifetime.desc", convar = "bullet_lifetime", min = 0, max = 120, parentconvar = "bullet_physics" },
+        { sv = true, type = "bool", text = "v2.settings.server.bulletphysics.ricochet.title", desc = "v2.settings.server.bulletphysics.ricochet.desc", convar = "ricochet" },
+        { sv = true, type = "bool", text = "v2.settings.server.bulletphysics.mod_penetration.title", desc = "v2.settings.server.bulletphysics.mod_penetration.desc", convar = "mod_penetration" },
+		
+        { type = "label", text = "v2.settings.tabname.npc" },
+        { sv = true, type = "bool", text = "v2.settings.server.npc.npc_autoreplace.title", desc = "v2.settings.server.npc.npc_autoreplace.desc", convar = "npc_autoreplace" },
+        { sv = true, type = "bool", text = "v2.settings.server.npc.npc_atts.title", desc = "v2.settings.server.npc.npc_atts.desc", convar = "npc_atts", parentconvar = "npc_autoreplace" },
+        { sv = true, type = "bool", text = "v2.settings.server.npc.replace_spawned.title", desc = "v2.settings.server.npc.replace_spawned.desc", convar = "replace_spawned" },
+        { sv = true, type = "bool", text = "v2.settings.server.npc.ground_atts.title", desc = "v2.settings.server.npc.ground_atts.desc", convar = "ground_atts", parentconvar = "replace_spawned" },
+        { sv = true, type = "bool", text = "v2.settings.server.npc.npc_give_weapons.title", desc = "v2.settings.server.npc.npc_give_weapons.desc", convar = "npc_give_weapons" },
+        { sv = true, type = "bool", text = "v2.settings.server.npc.npc_equality.title", desc = "v2.settings.server.npc.npc_equality.desc", convar = "npc_equality" },
+        { sv = true, type = "slider", text = "v2.settings.server.npc.npc_spread.title", desc = "v2.settings.server.npc.npc_spread.desc", convar = "npc_spread", min = 0, max = 10, decimals = 1 },
+	},
+    {
+        TabName = "v2.settings.tabname.developer",
+		sv = true,
+        { type = "label", text = "v2.settings.tabname.developer.settings", desc = "v2.settings.tabname.developer.settings.desc" },
+        { sv = true, type = "button", text = "v2.settings.server.developer.reloadlangs.title", desc = "v2.settings.server.developer.reloadlangs.desc", content = "v2.settings.server.developer.reload", func = function(self2)
+            RunConsoleCommand("arc9_reloadlangs")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.developer.reloadatts.title", desc = "v2.settings.server.developer.reloadatts.desc", content = "v2.settings.server.developer.reload", func = function(self2)
+            RunConsoleCommand("arc9_reloadatts")
+        end},
+        { sv = true, type = "bool", text = "v2.settings.server.developer.dev_always_ready.title", desc = "v2.settings.server.developer.dev_always_ready.desc", convar = "dev_always_ready" },
+        { sv = true, type = "bool", text = "v2.settings.server.developer.dev_benchgun.title", desc = "v2.settings.server.developer.dev_benchgun.desc", convar = "dev_benchgun" },
+        { sv = true, type = "bool", text = "v2.settings.server.developer.dev_crosshair.title", desc = "v2.settings.server.developer.dev_crosshair.desc", convar = "dev_crosshair" },
+        { sv = true, type = "bool", text = "v2.settings.server.developer.dev_show_affectors.title", desc = "v2.settings.server.developer.dev_show_affectors.desc", convar = "dev_show_affectors", parentconvar = "dev_crosshair" },
+        { sv = true, type = "bool", text = "v2.settings.server.developer.dev_show_shield.title", desc = "v2.settings.server.developer.dev_show_shield.desc", convar = "dev_show_shield" },
+        { sv = true, type = "bool", text = "v2.settings.server.developer.dev_greenscreen.title", desc = "v2.settings.server.developer.dev_greenscreen.desc", convar = "dev_greenscreen" },
+        { sv = true, type = "button", text = "v2.settings.server.developer.presets_clear.title", desc = "v2.settings.server.developer.presets_clear.desc", content = "v2.settings.server.developer.clear", func = function(self2)
+            RunConsoleCommand("arc9_presets_clear")
+        end},
+		
+        { type = "label", text = "v2.settings.tabname.assetcache", desc = "v2.settings.tabname.assetcache.desc" },
+        { sv = true, type = "bool", text = "v2.settings.server.assetcache.precache_sounds_onfirsttake.title", desc = "v2.settings.server.assetcache.precache_sounds_onfirsttake.desc", convar = "precache_sounds_onfirsttake" },
+        { sv = true, type = "bool", text = "v2.settings.server.assetcache.precache_attsmodels_onfirsttake.title", desc = "v2.settings.server.assetcache.precache_attsmodels_onfirsttake.desc", convar = "precache_attsmodels_onfirsttake" },
+        { sv = true, type = "bool", text = "v2.settings.server.assetcache.precache_wepmodels_onfirsttake.title", desc = "v2.settings.server.assetcache.precache_wepmodels_onfirsttake.desc", convar = "precache_wepmodels_onfirsttake" },
+        { sv = true, type = "bool", text = "v2.settings.server.assetcache.precache_allsounds_onstartup.title", desc = "v2.settings.server.assetcache.precache_allsounds_onstartup.desc", convar = "precache_allsounds_onstartup" },
+        { sv = true, type = "bool", text = "v2.settings.server.assetcache.precache_attsmodels_onstartup.title", desc = "v2.settings.server.assetcache.precache_attsmodels_onstartup.desc", convar = "precache_attsmodels_onstartup" },
+        { sv = true, type = "bool", text = "v2.settings.server.assetcache.precache_wepmodels_onstartup.title", desc = "v2.settings.server.assetcache.precache_wepmodels_onstartup.desc", convar = "precache_wepmodels_onstartup" },
+        { sv = true, type = "button", text = "v2.settings.server.assetcache.precache_allsounds.title", desc = "v2.settings.server.assetcache.precache_allsounds.desc", content = "v2.settings.server.assetcache.all", func = function(self2)
+            RunConsoleCommand("arc9_precache_allsounds")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.assetcache.precache_attsmodels.title", desc = "v2.settings.server.assetcache.precache_attsmodels.desc", content = "v2.settings.server.assetcache.all", func = function(self2)
+            RunConsoleCommand("arc9_precache_attsmodels")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.assetcache.precache_wepmodels.title", desc = "v2.settings.server.assetcache.precache_wepmodels.desc", content = "v2.settings.server.assetcache.all", func = function(self2)
+            RunConsoleCommand("arc9_precache_wepmodels")
+        end},
+		
+        { type = "label", text = "v2.settings.tabname.printconsole", desc = "v2.settings.tabname.printconsole.desc" },
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_listmyatts.title", desc = "v2.settings.server.printconsole.dev_listmyatts.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_listmyatts")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_listanims.title", desc = "v2.settings.server.printconsole.dev_listanims.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_listanims")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_listbones.title", desc = "v2.settings.server.printconsole.dev_listbones.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_listbones")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_listbgs.title", desc = "v2.settings.server.printconsole.dev_listbgs.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_listbgs")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_listatts.title", desc = "v2.settings.server.printconsole.dev_listatts.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_listatts")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_listmats.title", desc = "v2.settings.server.printconsole.dev_listmats.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_listmats")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_export.title", desc = "v2.settings.server.printconsole.dev_export.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_export")
+        end},
+        { sv = true, type = "button", text = "v2.settings.server.printconsole.dev_getjson.title", desc = "v2.settings.server.printconsole.dev_getjson.desc", content = "v2.settings.server.printconsole", func = function(self2)
+            RunConsoleCommand("arc9_dev_getjson")
+        end},
 	},
 }
-]]--
 
 local ARC9ScreenScale = ARC9.ScreenScale
 -- local mat_icon = Material("arc9/arc9_logo_ui.png", "mips smooth")
@@ -632,6 +394,31 @@ local function DrawSettings(bg, page)
                 end
 
                 local txt = ""
+				local txt_desc = ARC9:GetPhrase(v2.desc) or v2.desc or ""
+
+				if v2.sv then 
+					-- txt = "[ SERVER ] "
+					-- txt_desc = txt_desc .. ARC9:GetPhrase("v2.settings.server")
+				end
+
+                if v2.requireconvar then
+                    local boolll = !GetConVar("arc9_" .. v2.requireconvar):GetBool()
+					if v2.requireconvaroff then boolll = !boolll end
+
+					if boolll then
+						txt = txt .. ARC9:GetPhrase("v2.settings.disabled")
+						txt_desc = ARC9:GetPhrase("v2.settings.disabled.desc") .. txt_desc
+					end
+                end
+
+                if v2.requireconvaroff then
+                    local boolll = GetConVar("arc9_" .. v2.requireconvaroff):GetBool()
+
+					if boolll then
+						txt = txt .. ARC9:GetPhrase("v2.settings.disabled")
+						txt_desc = ARC9:GetPhrase("v2.settings.disabled.desc") .. txt_desc
+					end
+                end
 
                 if v2.parentconvar then
                     local boolll = !GetConVar("arc9_" .. v2.parentconvar):GetBool()
@@ -646,10 +433,14 @@ local function DrawSettings(bg, page)
 
                     txt = "   › "
                 end
+				
+				local convarperms = ( v2.requireconvar and !GetConVar("arc9_" .. v2.requireconvar):GetBool() ) or 
+				( v2.requireconvaroff and GetConVar("arc9_" .. v2.requireconvaroff):GetBool() )
+				
                 -- desc!!!!!!!!
 
                 if self2:IsHovered() and activedesc != (ARC9:GetPhrase(v2.desc) or v2.desc or "") then
-                    activedesc = (ARC9:GetPhrase(v2.desc) or v2.desc or "")
+                    activedesc = (txt_desc or "")
                     activecvar = v2.convar and ("arc9_" .. v2.convar) or ""
                     if bg.desc then bg.desc:Remove() end
 
@@ -680,7 +471,7 @@ local function DrawSettings(bg, page)
 
                 surface.SetFont("ARC9_12_Slim")
                 local tw, th = surface.GetTextSize(txt)
-                if noperms then
+                if noperms or convarperms then
                     surface.SetTextColor(ARC9.GetHUDColor("unowned"))
                 else
                     surface.SetTextColor(ARC9.GetHUDColor("fg"))
@@ -816,6 +607,7 @@ local function DrawSettings(bg, page)
             surface.SetDrawColor(barbuttoncolor)
             surface.DrawRect(0, 0, ARC9ScreenScale(1.7), h)
             surface.SetDrawColor(mainbuttoncolor)
+			
             surface.DrawRect(ARC9ScreenScale(3.4), 0, w-ARC9ScreenScale(3.4), h)
 
             surface.SetFont("ARC9_12")
@@ -823,18 +615,24 @@ local function DrawSettings(bg, page)
 
             surface.SetTextColor(buttontextcolor)
             surface.SetTextPos((w - tw) / 2 + ARC9ScreenScale(1.7), ARC9ScreenScale(3))
+			
+			if v.sv and noperms then
+				surface.SetTextColor(ARC9.GetHUDColor("unowned"))
+			end
+			
             surface.DrawText(ARC9:GetPhrase(v.TabName) or v.TabName)
-
 
             if v.Warning and v.Warning() then
                 surface.SetDrawColor(color_Notif)
                 surface.SetMaterial(mat_Notif)
                 surface.DrawTexturedRect(ARC9ScreenScale(8), h / 2 - h / 6, h / 3, h / 3)
             end
+
         end
 
         thatsheet.Button.DoClickOld = thatsheet.Button.DoClick
         thatsheet.Button.DoClick = function(self2)
+			if v.sv and noperms then return end
             self2:DoClickOld()
             ARC9.SettingsActiveTab = k
         end
