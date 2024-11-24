@@ -50,6 +50,7 @@ ARC9.SettingsTable = {
 		{ type = "combo", text = "v2.settings.quick.lang.title", desc = "v2.settings.quick.lang.desc", convar = "language", content = ARC9.LanguagesTable, func = function(self2)
             RunConsoleCommand("arc9_reloadlangs")
         end},
+        { type = "bool", text = "v2.settings.hud_game.hud_arc9.title", desc = "v2.settings.hud_game.hud_arc9.desc2", convar = "hud_arc9", requireconvaroff = "hud_force_disable" },
         { type = "bool", text = "v2.settings.tpik.title", desc = "v2.settings.tpik.desc2", convar = "tpik" },
         { type = "bool", text = "v2.settings.aimassist.enable.title", desc = "v2.settings.aimassist.enable.desc2", convar = "aimassist_cl", requireconvar = "aimassist" },
         { type = "bool", text = "v2.settings.gameplay.controller.title", desc = "v2.settings.gameplay.controller.desc", convar = "controller" },
@@ -280,6 +281,19 @@ ARC9.SettingsTable = {
         { sv = true, type = "bool", text = "v2.settings.server.npc.npc_give_weapons.title", desc = "v2.settings.server.npc.npc_give_weapons.desc", convar = "npc_give_weapons" },
         { sv = true, type = "bool", text = "v2.settings.server.npc.npc_equality.title", desc = "v2.settings.server.npc.npc_equality.desc", convar = "npc_equality" },
         { sv = true, type = "slider", text = "v2.settings.server.npc.npc_spread.title", desc = "v2.settings.server.npc.npc_spread.desc", convar = "npc_spread", min = 0, max = 10, decimals = 1 },
+		
+        { type = "label", text = "v2.settings.tabname.quickstat" },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_damage.title", desc = "v2.settings.server.quickstat.mod_damage.desc", convar = "mod_damage", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_spread.title", desc = "v2.settings.server.quickstat.mod_spread.desc", convar = "mod_spread", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_recoil.title", desc = "v2.settings.server.quickstat.mod_recoil.desc", convar = "mod_recoil", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_visualrecoil.title", desc = "v2.settings.server.quickstat.mod_visualrecoil.desc", convar = "mod_visualrecoil", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_adstime.title", desc = "v2.settings.server.quickstat.mod_adstime.desc", convar = "mod_adstime", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_sprinttime.title", desc = "v2.settings.server.quickstat.mod_sprinttime.desc", convar = "mod_sprinttime", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_damagerand.title", desc = "v2.settings.server.quickstat.mod_damagerand.desc", convar = "mod_damagerand", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_muzzlevelocity.title", desc = "v2.settings.server.quickstat.mod_muzzlevelocity.desc", convar = "mod_muzzlevelocity", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_rpm.title", desc = "v2.settings.server.quickstat.mod_rpm.desc", convar = "mod_rpm", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_headshotdamage.title", desc = "v2.settings.server.quickstat.mod_headshotdamage.desc", convar = "mod_headshotdamage", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "v2.settings.server.quickstat.mod_malfunction.title", desc = "v2.settings.server.quickstat.mod_malfunction.desc", convar = "mod_malfunction", min = 0, max = 10, decimals = 1 },
 	},
     {
         TabName = "v2.settings.tabname.developer",

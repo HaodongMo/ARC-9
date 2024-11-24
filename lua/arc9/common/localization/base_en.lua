@@ -1009,10 +1009,6 @@ L["v2.settings.server"] = "\n\nThis is a server variable."
 L["v2.settings.tabname.quick"] = "Quick Access"
 L["v2.settings.tabname.quick.desc"] = "Get quick access to the more important settings right here."
 
-L["v2.settings.quick.legacy.title"] = "Legacy Settings"
-L["v2.settings.quick.legacy.desc"] = "Change back to the old settings menu."
-L["v2.settings.quick.legacy.desc2"] = "Change to the new settings menu."
-
 L["v2.settings.quick.lang.title"] = "ARC9 Language"
 L["v2.settings.quick.lang.desc"] = "Change the displayed language for ARC9.\n\nNote: Not all languages are supported on weapon packs!"
 
@@ -1218,7 +1214,7 @@ L["v2.settings.gameplay.togglepeek.title"] = "Toggle Peek"
 L["v2.settings.gameplay.togglepeek.desc"] = "Pressing your peek button toggles peeking."
 
 L["v2.settings.gameplay.togglepeek_reset.title"] = "Reset Peek After Aiming"
-L["v2.settings.gameplay.togglepeek_reset.desc"] = "Pressing your aiming button toggles aiming."
+L["v2.settings.gameplay.togglepeek_reset.desc"] = "Disables peek when you stop aiming."
 
 L["v2.settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
 L["v2.settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
@@ -1459,6 +1455,30 @@ L["v2.settings.server.npc.npc_spread.desc"] = "Multiply the accuracy for weapons
 
 ////////// Quick Stat Modifiers
 L["v2.settings.tabname.quickstat"] = "Quick Stat Modifiers"
+
+L["v2.settings.server.quickstat.mod_damage.title"] = "Damage"
+L["v2.settings.server.quickstat.mod_spread.title"] = "Spread"
+L["v2.settings.server.quickstat.mod_recoil.title"] = "Recoil"
+L["v2.settings.server.quickstat.mod_visualrecoil.title"] = "Visual Recoil"
+L["v2.settings.server.quickstat.mod_adstime.title"] = "Aim Down Sights Time"
+L["v2.settings.server.quickstat.mod_sprinttime.title"] = "Sprint To Fire Time"
+L["v2.settings.server.quickstat.mod_damagerand.title"] = "Damage Variance"
+L["v2.settings.server.quickstat.mod_muzzlevelocity.title"] = "Muzzle Velocity"
+L["v2.settings.server.quickstat.mod_rpm.title"] = "Fire Rate"
+L["v2.settings.server.quickstat.mod_headshotdamage.title"] = "Headshot Damage"
+L["v2.settings.server.quickstat.mod_malfunction.title"] = "Malfunction Chance"
+
+L["v2.settings.server.quickstat.mod_damage.desc"] = "Multiply how much damage weapons deal."
+L["v2.settings.server.quickstat.mod_spread.desc"] = "Multiply how much spread the weapons have."
+L["v2.settings.server.quickstat.mod_recoil.desc"] = "Multiply how much recoil the weapon has."
+L["v2.settings.server.quickstat.mod_visualrecoil.desc"] = "Multiply how much visual recoil the weapon has."
+L["v2.settings.server.quickstat.mod_adstime.desc"] = "Multiply how quickly the weapon goes in and out of ADS."
+L["v2.settings.server.quickstat.mod_sprinttime.desc"] = "Multiply how quickly the weapon enters and exits sprint."
+L["v2.settings.server.quickstat.mod_damagerand.desc"] = "Multiply damage variance, which adds or removes damage at random."
+L["v2.settings.server.quickstat.mod_muzzlevelocity.desc"] = "Multiply how fast the physical bullets move."
+L["v2.settings.server.quickstat.mod_rpm.desc"] = "Multiply how quickly the weapon fires."
+L["v2.settings.server.quickstat.mod_headshotdamage.desc"] = "Multiply how much damage the weapon deals on headshots."
+L["v2.settings.server.quickstat.mod_malfunction.desc"] = "Multiply how likely it is for the weapon to malfunction."
 
 ////////////////////// Developer
 L["v2.settings.tabname.developer"] = "Developer"
