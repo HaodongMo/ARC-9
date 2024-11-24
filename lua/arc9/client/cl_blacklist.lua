@@ -167,7 +167,7 @@ local function CreateAttButton(parent, attName, attTbl)
             srf.DrawTexturedRect(ARC9ScreenScale(2), 0, h, h)
         end
 
-        local txt = attTbl.PrintName
+        local txt = ARC9:GetPhrase(attName .. ".PrintName") or attTbl.PrintName
         if internalName or !txt then txt = attName end
         srf.SetTextColor(Bfg_col)
         srf.SetTextPos(ARC9ScreenScale(20), ARC9ScreenScale(2))
