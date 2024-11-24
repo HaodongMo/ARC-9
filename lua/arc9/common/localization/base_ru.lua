@@ -267,35 +267,37 @@ L["autostat.visualrecoilroll"] = "Физ. угловая отдача"
 L["autostat.visualrecoilside"] = "Физ. горизонтальная отдача"
 L["autostat.visualrecoilup"] = "Физ. вертикальная отдача"
 
-L["autostat.secondary._beforephrase"] = false
--- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = " "
--- space between the secondary phrase from the stat phrase. set true to use empty string
+--[[
+Secondary autostats are now controlled by string.format.
+This means that the above stats are displayed where the "%s" is located.
+For example, "%s on Bipod" results in "Spread on Bipod".
+Alternatively, "On Bipod: %s" results in "On Bipod: Spread".
+]]--
 
-L["autostat.secondary.bipod"] = "на сошках"
-L["autostat.secondary.crouch"] = "в присяди"
-L["autostat.secondary.empty"] = "последним выстрелом"
-L["autostat.secondary.evenreload"] = "каждую чёт. перезарядку"
-L["autostat.secondary.evenshot"] = "каждый чётный выстрел"
-L["autostat.secondary.first"] = "первым выстрелом"
-L["autostat.secondary.firstshot"] = "первым выстрелом"
-L["autostat.secondary.heated"] = "при нагреве"
-L["autostat.secondary.hipfire"] = "от бедра"
-L["autostat.secondary.hot"] = "от тепла"
-L["autostat.secondary.last"] = "последним выстрелом"
-L["autostat.secondary.lastshot"] = "последним выстрелом"
-L["autostat.secondary.midair"] = "в воздухе"
-L["autostat.secondary.move"] = "в движении"
-L["autostat.secondary.oddreload"] = "каждую нечёт. перезарядку"
-L["autostat.secondary.oddshot"] = "каждый нечётный выстрел"
-L["autostat.secondary.recoil"] = "пока стреляешь" --"With Each Shot"
-L["autostat.secondary.shooting"] = "пока стреляешь"
-L["autostat.secondary.sighted"] = "в прицеле"
-L["autostat.secondary.sights"] = "в прицеле"
-L["autostat.secondary.silenced"] = "с глушителем"
-L["autostat.secondary.sprint"] = "во время бега"
-L["autostat.secondary.true"] = "при вкл. TrueNames"
-L["autostat.secondary.ubgl"] = "у подствольника"
+L["autostat.secondary.bipod"] = "%s на сошках"
+L["autostat.secondary.crouch"] = "%s в присяди"
+L["autostat.secondary.empty"] = "%s последним выстрелом"
+L["autostat.secondary.evenreload"] = "%s каждую чёт. перезарядку"
+L["autostat.secondary.evenshot"] = "%s каждый чётный выстрел"
+L["autostat.secondary.first"] = "%s первым выстрелом"
+L["autostat.secondary.firstshot"] = "%s первым выстрелом"
+L["autostat.secondary.heated"] = "%s при нагреве"
+L["autostat.secondary.hipfire"] = "%s от бедра"
+L["autostat.secondary.hot"] = "%s от тепла"
+L["autostat.secondary.last"] = "%s последним выстрелом"
+L["autostat.secondary.lastshot"] = "%s последним выстрелом"
+L["autostat.secondary.midair"] = "%s в воздухе"
+L["autostat.secondary.move"] = "%s в движении"
+L["autostat.secondary.oddreload"] = "%s каждую нечёт. перезарядку"
+L["autostat.secondary.oddshot"] = "%s каждый нечётный выстрел"
+L["autostat.secondary.recoil"] = "%s пока стреляешь" --"With Each Shot"
+L["autostat.secondary.shooting"] = "%s пока стреляешь"
+L["autostat.secondary.sighted"] = "%s в прицеле"
+L["autostat.secondary.sights"] = "%s в прицеле"
+L["autostat.secondary.silenced"] = "%s с глушителем"
+L["autostat.secondary.sprint"] = "%s во время бега"
+L["autostat.secondary.true"] = "%s при вкл. TrueNames"
+L["autostat.secondary.ubgl"] = "%s у подствольника"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 Чёрный список обвесов"

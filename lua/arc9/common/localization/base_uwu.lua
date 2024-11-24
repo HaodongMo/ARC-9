@@ -267,35 +267,37 @@ L["autostat.visualrecoilroll"] = "Wisual Wecoil wwroll"
 L["autostat.visualrecoilside"] = "H-Howisontawal Wisual Wecoil"
 L["autostat.visualrecoilup"] = "W-wertical wisual Wecoil"
 
-L["autostat.secondary._beforephrase"] = false
--- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = " "
--- space between the secondary phrase from the stat phrase. set true to use empty string
+--[[
+Secondary autostats are now controlled by string.format.
+This means that the above stats are displayed where the "%s" is located.
+For example, "%s on Bipod" results in "Spread on Bipod".
+Alternatively, "On Bipod: %s" results in "On Bipod: Spread".
+]]--
 
-L["autostat.secondary.bipod"] = "on bipOwOd"
-L["autostat.secondary.crouch"] = "w-whiwe cwouchiwuwung"
-L["autostat.secondary.empty"] = "owon wast wound in mag"
-L["autostat.secondary.evenreload"] = "ewewy uwuwen weload"
-L["autostat.secondary.evenshot"] = "ewewy uwuwen shwot >//<"
-L["autostat.secondary.first"] = "owon first shwot"
-L["autostat.secondary.firstshot"] = "owon first shwot"
-L["autostat.secondary.heated"] = "while hewted"
-L["autostat.secondary.hipfire"] = "in beeppfiwe uwu"
-L["autostat.secondary.hot"] = "fwom hewt"
-L["autostat.secondary.last"] = "owon wast wound in mag"
-L["autostat.secondary.lastshot"] = "owon wast round in mag"
-L["autostat.secondary.midair"] = "in meow-air"
-L["autostat.secondary.move"] = "wwhiwe mowing"
-L["autostat.secondary.oddreload"] = "ewewy owdd weload"
-L["autostat.secondary.oddshot"] = "ewewy owdd shwot >///<"
-L["autostat.secondary.recoil"] = "from wecoil" --"With Each Shot"
-L["autostat.secondary.shooting"] = "w-whiwe showoting"
-L["autostat.secondary.sighted"] = "while siwted"
-L["autostat.secondary.sights"] = "in siwts!"
-L["autostat.secondary.silenced"] = "wwhen siwenced owo"
-L["autostat.secondary.sprint"] = "while Spwinting"
-L["autostat.secondary.true"] = "wwith TwueNawes"
-L["autostat.secondary.ubgl"] = "in UwUBGL"
+L["autostat.secondary.bipod"] = "%s on bipOwOd"
+L["autostat.secondary.crouch"] = "%s w-whiwe cwouchiwuwung"
+L["autostat.secondary.empty"] = "%s owon wast wound in mag"
+L["autostat.secondary.evenreload"] = "%s ewewy uwuwen weload"
+L["autostat.secondary.evenshot"] = "%s ewewy uwuwen shwot >//<"
+L["autostat.secondary.first"] = "%s owon first shwot"
+L["autostat.secondary.firstshot"] = "%s owon first shwot"
+L["autostat.secondary.heated"] = "%s while hewted"
+L["autostat.secondary.hipfire"] = "%s in beeppfiwe uwu"
+L["autostat.secondary.hot"] = "%s fwom hewt"
+L["autostat.secondary.last"] = "%s owon wast wound in mag"
+L["autostat.secondary.lastshot"] = "%s owon wast round in mag"
+L["autostat.secondary.midair"] = "%s in meow-air"
+L["autostat.secondary.move"] = "%s wwhiwe mowing"
+L["autostat.secondary.oddreload"] = "%s ewewy owdd weload"
+L["autostat.secondary.oddshot"] = "%s ewewy owdd shwot >///<"
+L["autostat.secondary.recoil"] = "%s from wecoil" --"With Each Shot"
+L["autostat.secondary.shooting"] = "%s w-whiwe showoting"
+L["autostat.secondary.sighted"] = "%s while siwted"
+L["autostat.secondary.sights"] = "%s in siwts!"
+L["autostat.secondary.silenced"] = "%s wwhen siwenced owo"
+L["autostat.secondary.sprint"] = "%s while Spwinting"
+L["autostat.secondary.true"] = "%s wwith TwueNawes"
+L["autostat.secondary.ubgl"] = "%s in UwUBGL"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "AWWC9 awatachmenws bwackwist >w<"

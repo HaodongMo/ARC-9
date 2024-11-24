@@ -267,35 +267,37 @@ L["autostat.visualrecoilroll"] = "Visuelle Rückstoß-Drehung"
 L["autostat.visualrecoilside"] = "Horizontaler Visueller Rückstoß"
 L["autostat.visualrecoilup"] = "Vertikaler Visueller Rückstoß"
 
-L["autostat.secondary._beforephrase"] = false
--- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = " "
--- space between the secondary phrase from the stat phrase. set true to use empty string
+--[[
+Secondary autostats are now controlled by string.format.
+This means that the above stats are displayed where the "%s" is located.
+For example, "%s on Bipod" results in "Spread on Bipod".
+Alternatively, "On Bipod: %s" results in "On Bipod: Spread".
+]]--
 
-L["autostat.secondary.bipod"] = "auf Zweibein"
-L["autostat.secondary.crouch"] = "während des Kriechen"
-L["autostat.secondary.empty"] = "beim letzen Schuss im Magazin"
-L["autostat.secondary.evenreload"] = "jeden geraden Reload"
-L["autostat.secondary.evenshot"] = "jeden geraden Schuss"
-L["autostat.secondary.first"] = "beim letzen Schuss"
-L["autostat.secondary.firstshot"] = "beim ersten Schuss"
-L["autostat.secondary.heated"] = "wenn erhitzt"
-L["autostat.secondary.hipfire"] = "im Hüftfeuer"
-L["autostat.secondary.hot"] = "durch Hitze"
-L["autostat.secondary.last"] = "beim letzen Schuss im Magazin"
-L["autostat.secondary.lastshot"] = "beim letzen Schuss im Magazin"
-L["autostat.secondary.midair"] = "in der Luft"
-L["autostat.secondary.move"] = "während Bewegung"
-L["autostat.secondary.oddreload"] = "jeden ungeraden Reload"
-L["autostat.secondary.oddshot"] = "jeden ungeraden Schuss"
-L["autostat.secondary.recoil"] = "vom Rückstoß" --"With Each Shot"
-L["autostat.secondary.shooting"] = "während des Schießens"
-L["autostat.secondary.sighted"] = "bei angelegtem Visir"
-L["autostat.secondary.sights"] = "im Visier"
-L["autostat.secondary.silenced"] = "wenn Schallgedämpft"
-L["autostat.secondary.sprint"] = "während Sprint"
-L["autostat.secondary.true"] = "wenn Originalnamen verwendet werden"
-L["autostat.secondary.ubgl"] = "im UBGL"
+L["autostat.secondary.bipod"] = "%s auf Zweibein"
+L["autostat.secondary.crouch"] = "%s während des Kriechen"
+L["autostat.secondary.empty"] = "%s beim letzen Schuss im Magazin"
+L["autostat.secondary.evenreload"] = "%s jeden geraden Reload"
+L["autostat.secondary.evenshot"] = "%s jeden geraden Schuss"
+L["autostat.secondary.first"] = "%s beim letzen Schuss"
+L["autostat.secondary.firstshot"] = "%s beim ersten Schuss"
+L["autostat.secondary.heated"] = "%s wenn erhitzt"
+L["autostat.secondary.hipfire"] = "%s im Hüftfeuer"
+L["autostat.secondary.hot"] = "%s durch Hitze"
+L["autostat.secondary.last"] = "%s beim letzen Schuss im Magazin"
+L["autostat.secondary.lastshot"] = "%s beim letzen Schuss im Magazin"
+L["autostat.secondary.midair"] = "%s in der Luft"
+L["autostat.secondary.move"] = "%s während Bewegung"
+L["autostat.secondary.oddreload"] = "%s jeden ungeraden Reload"
+L["autostat.secondary.oddshot"] = "%s jeden ungeraden Schuss"
+L["autostat.secondary.recoil"] = "%s vom Rückstoß" --"With Each Shot"
+L["autostat.secondary.shooting"] = "%s während des Schießens"
+L["autostat.secondary.sighted"] = "%s bei angelegtem Visir"
+L["autostat.secondary.sights"] = "%s im Visier"
+L["autostat.secondary.silenced"] = "%s wenn Schallgedämpft"
+L["autostat.secondary.sprint"] = "%s während Sprint"
+L["autostat.secondary.true"] = "%s wenn Originalnamen verwendet werden"
+L["autostat.secondary.ubgl"] = "%s im UBGL"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 Zubehör-Blockliste"

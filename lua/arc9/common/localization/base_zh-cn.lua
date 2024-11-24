@@ -267,35 +267,37 @@ L["autostat.visualrecoilroll"] = "可视后坐力横滚"
 L["autostat.visualrecoilside"] = "水平可视后坐力"
 L["autostat.visualrecoilup"] = "垂直可视后坐力"
 
-L["autostat.secondary._beforephrase"] = true
--- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = true
--- space between the secondary phrase from the stat phrase. set true to use empty string
+--[[
+Secondary autostats are now controlled by string.format.
+This means that the above stats are displayed where the "%s" is located.
+For example, "%s on Bipod" results in "Spread on Bipod".
+Alternatively, "On Bipod: %s" results in "On Bipod: Spread".
+]]--
 
--- L["autostat.secondary.bipod"] = "on Bipod"
-L["autostat.secondary.crouch"] = "蹲下"
-L["autostat.secondary.empty"] = "最后一发"
-L["autostat.secondary.evenreload"] = "偶数次装填"
-L["autostat.secondary.evenshot"] = "偶数发"
-L["autostat.secondary.first"] = "首发"
-L["autostat.secondary.firstshot"] = "首发"
--- L["autostat.secondary.heated"] = "while Heated"
-L["autostat.secondary.hipfire"] = "腰射"
--- L["autostat.secondary.hot"] = "from Heat"
-L["autostat.secondary.last"] = "最后一发"
-L["autostat.secondary.lastshot"] = "最后一发"
-L["autostat.secondary.midair"] = "空中"
-L["autostat.secondary.move"] = "移动"
-L["autostat.secondary.oddreload"] = "奇数次装填"
-L["autostat.secondary.oddshot"] = "奇数发"
-L["autostat.secondary.recoil"] = "后坐力" --"With Each Shot"
-L["autostat.secondary.shooting"] = "开火"
--- L["autostat.secondary.sighted"] = "while Sighted"
-L["autostat.secondary.sights"] = "瞄准"
-L["autostat.secondary.silenced"] = "消音"
--- L["autostat.secondary.sprint"] = "when Sprinting"
-L["autostat.secondary.true"] = "真实名称开启时"
-L["autostat.secondary.ubgl"] = "下挂武器"
+-- L["autostat.secondary.bipod"] = "%s on Bipod"
+L["autostat.secondary.crouch"] = "蹲下%s"
+L["autostat.secondary.empty"] = "最后一发%s"
+L["autostat.secondary.evenreload"] = "偶数次装填%s"
+L["autostat.secondary.evenshot"] = "偶数发%s"
+L["autostat.secondary.first"] = "首发%s"
+L["autostat.secondary.firstshot"] = "首发%s"
+-- L["autostat.secondary.heated"] = "%s while Heated"
+L["autostat.secondary.hipfire"] = "腰射%s"
+-- L["autostat.secondary.hot"] = "%s from Heat"
+L["autostat.secondary.last"] = "最后一发%s"
+L["autostat.secondary.lastshot"] = "最后一发%s"
+L["autostat.secondary.midair"] = "空中%s"
+L["autostat.secondary.move"] = "移动%s"
+L["autostat.secondary.oddreload"] = "奇数次装填%s"
+L["autostat.secondary.oddshot"] = "奇数发%s"
+L["autostat.secondary.recoil"] = "后坐力%s" --"With Each Shot"
+L["autostat.secondary.shooting"] = "开火%s"
+-- L["autostat.secondary.sighted"] = "%s while Sighted"
+L["autostat.secondary.sights"] = "瞄准%s"
+L["autostat.secondary.silenced"] = "消音%s"
+-- L["autostat.secondary.sprint"] = "%s when Sprinting"
+L["autostat.secondary.true"] = "真实名称开启时%s"
+L["autostat.secondary.ubgl"] = "下挂武器%s"
 
 ////////////////////// Blacklist menu
 -- L["blacklist.title"] = "ARC9 Attachment Blacklist"

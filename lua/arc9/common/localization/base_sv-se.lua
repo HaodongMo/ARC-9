@@ -267,35 +267,37 @@ L["autostat.visualrecoilroll"] = "Visuell Rekylrullning"
 L["autostat.visualrecoilside"] = "Horisontell Visuell Rekyl"
 L["autostat.visualrecoilup"] = "Vertikal Visuell Rekyl"
 
-L["autostat.secondary._beforephrase"] = false
--- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = " "
--- space between the secondary phrase from the stat phrase. set true to use empty string
+--[[
+Secondary autostats are now controlled by string.format.
+This means that the above stats are displayed where the "%s" is located.
+For example, "%s on Bipod" results in "Spread on Bipod".
+Alternatively, "On Bipod: %s" results in "On Bipod: Spread".
+]]--
 
-L["autostat.secondary.bipod"] = "med Skjutstöd"
-L["autostat.secondary.crouch"] = "medans Hukad"
-L["autostat.secondary.empty"] = "på Sista skottet i magasinet"
-L["autostat.secondary.evenreload"] = "varje Jämn Omladdning"
-L["autostat.secondary.evenshot"] = "varje Jämnt skott"
-L["autostat.secondary.first"] = "på Första Skottet"
-L["autostat.secondary.firstshot"] = "på Första Skottet"
-L["autostat.secondary.heated"] = "när den är Het"
-L["autostat.secondary.hipfire"] = "från Höften"
-L["autostat.secondary.hot"] = "från Hetta"
-L["autostat.secondary.last"] = "på Sista Skottet i magasinet"
-L["autostat.secondary.lastshot"] = "på Sista skottet i magasinet"
-L["autostat.secondary.midair"] = "i Luften"
-L["autostat.secondary.move"] = "under Rörelse"
-L["autostat.secondary.oddreload"] = "varje Andra Omladdning"
-L["autostat.secondary.oddshot"] = "vart Andra Skott"
-L["autostat.secondary.recoil"] = "från Rekylen" --"With Each Shot"
-L["autostat.secondary.shooting"] = "under Skjutning"
-L["autostat.secondary.sighted"] = "i Siktet"
-L["autostat.secondary.sights"] = "i Siktet"
-L["autostat.secondary.silenced"] = "om Ljuddämpad"
-L["autostat.secondary.sprint"] = "i Sprint"
-L["autostat.secondary.true"] = "när Verkliga Namn är på"
-L["autostat.secondary.ubgl"] = "på Tillsats"
+L["autostat.secondary.bipod"] = "%s med Skjutstöd"
+L["autostat.secondary.crouch"] = "%s medans Hukad"
+L["autostat.secondary.empty"] = "%s på Sista skottet i magasinet"
+L["autostat.secondary.evenreload"] = "%s varje Jämn Omladdning"
+L["autostat.secondary.evenshot"] = "%s varje Jämnt skott"
+L["autostat.secondary.first"] = "%s på Första Skottet"
+L["autostat.secondary.firstshot"] = "%s på Första Skottet"
+L["autostat.secondary.heated"] = "%s när den är Het"
+L["autostat.secondary.hipfire"] = "%s från Höften"
+L["autostat.secondary.hot"] = "%s från Hetta"
+L["autostat.secondary.last"] = "%s på Sista Skottet i magasinet"
+L["autostat.secondary.lastshot"] = "%s på Sista skottet i magasinet"
+L["autostat.secondary.midair"] = "%s i Luften"
+L["autostat.secondary.move"] = "%s under Rörelse"
+L["autostat.secondary.oddreload"] = "%s varje Andra Omladdning"
+L["autostat.secondary.oddshot"] = "%s vart Andra Skott"
+L["autostat.secondary.recoil"] = "%s från Rekylen" --"With Each Shot"
+L["autostat.secondary.shooting"] = "%s under Skjutning"
+L["autostat.secondary.sighted"] = "%s i Siktet"
+L["autostat.secondary.sights"] = "%s i Siktet"
+L["autostat.secondary.silenced"] = "%s om Ljuddämpad"
+L["autostat.secondary.sprint"] = "%s i Sprint"
+L["autostat.secondary.true"] = "%s när Verkliga Namn är på"
+L["autostat.secondary.ubgl"] = "%s på Tillsats"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9-Tillbehör Svartlista"

@@ -267,35 +267,37 @@ L["autostat.visualrecoilroll"] = "Visual Recoil Roll"
 L["autostat.visualrecoilside"] = "Horizontal Visual Recoil"
 L["autostat.visualrecoilup"] = "Vertical Visual Recoil"
 
-L["autostat.secondary._beforephrase"] = false
--- if true, secondary stat phrasing comes before the stat
-L["autostat.secondary._divider"] = " "
--- space between the secondary phrase from the stat phrase. set true to use empty string
+--[[
+Secondary autostats are now controlled by string.format.
+This means that the above stats are displayed where the "%s" is located.
+For example, "%s on Bipod" results in "Spread on Bipod".
+Alternatively, "On Bipod: %s" results in "On Bipod: Spread".
+]]--
 
-L["autostat.secondary.bipod"] = "on Bipod"
-L["autostat.secondary.crouch"] = "while Crouching"
-L["autostat.secondary.empty"] = "on Last round in mag"
-L["autostat.secondary.evenreload"] = "every Even Reload"
-L["autostat.secondary.evenshot"] = "every Even Shot"
-L["autostat.secondary.first"] = "on First Shot"
-L["autostat.secondary.firstshot"] = "on First Shot"
-L["autostat.secondary.heated"] = "while Heated"
-L["autostat.secondary.hipfire"] = "in Hipfire"
-L["autostat.secondary.hot"] = "from Heat"
-L["autostat.secondary.last"] = "on Last round in mag"
-L["autostat.secondary.lastshot"] = "on Last round in mag"
-L["autostat.secondary.midair"] = "in Mid-Air"
-L["autostat.secondary.move"] = "while Moving"
-L["autostat.secondary.oddreload"] = "every Odd Reload"
-L["autostat.secondary.oddshot"] = "every Odd Shot"
-L["autostat.secondary.recoil"] = "from Recoil" --"With Each Shot"
-L["autostat.secondary.shooting"] = "while Shooting"
-L["autostat.secondary.sighted"] = "while Sighted"
-L["autostat.secondary.sights"] = "in Sights"
-L["autostat.secondary.silenced"] = "when Silenced"
-L["autostat.secondary.sprint"] = "when Sprinting"
-L["autostat.secondary.true"] = "when TrueNames is on"
-L["autostat.secondary.ubgl"] = "in UBGL"
+L["autostat.secondary.bipod"] = "%s on Bipod"
+L["autostat.secondary.crouch"] = "%s while Crouching"
+L["autostat.secondary.empty"] = "%s on Last round in mag"
+L["autostat.secondary.evenreload"] = "%s every Even Reload"
+L["autostat.secondary.evenshot"] = "%s every Even Shot"
+L["autostat.secondary.first"] = "%s on First Shot"
+L["autostat.secondary.firstshot"] = "%s on First Shot"
+L["autostat.secondary.heated"] = "%s while Heated"
+L["autostat.secondary.hipfire"] = "%s in Hipfire"
+L["autostat.secondary.hot"] = "%s from Heat"
+L["autostat.secondary.last"] = "%s on Last round in mag"
+L["autostat.secondary.lastshot"] = "%s on Last round in mag"
+L["autostat.secondary.midair"] = "%s in Mid-Air"
+L["autostat.secondary.move"] = "%s while Moving"
+L["autostat.secondary.oddreload"] = "%s every Odd Reload"
+L["autostat.secondary.oddshot"] = "%s every Odd Shot"
+L["autostat.secondary.recoil"] = "%s from Recoil" --"With Each Shot"
+L["autostat.secondary.shooting"] = "%s while Shooting"
+L["autostat.secondary.sighted"] = "%s while Sighted"
+L["autostat.secondary.sights"] = "%s in Sights"
+L["autostat.secondary.silenced"] = "%s when Silenced"
+L["autostat.secondary.sprint"] = "%s when Sprinting"
+L["autostat.secondary.true"] = "%s when TrueNames is on"
+L["autostat.secondary.ubgl"] = "%s in UBGL"
 
 ////////////////////// Universal Trivia
 /////////// Country of Origin
