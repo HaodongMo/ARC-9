@@ -230,7 +230,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.gameplay.autoreload.title", desc = "settings.gameplay.autoreload.desc", convar = "autoreload" },
         { sv = true, type = "bool", text = "settings.server.gameplay.recoilshake.title", desc = "settings.server.gameplay.recoilshake.desc", convar = "recoilshake" },
 		
-        { type = "label", text = "settings.tabname.features" },
+        { type = "label", text = "settings.tabname.features", desc = "settings.tabname.features.desc" },
         { sv = true, type = "bool", text = "settings.server.gameplay.mod_sway.title", desc = "settings.server.gameplay.mod_sway.desc", convar = "mod_sway" },
         { type = "bool", text = "settings.gameplay.togglebreath.title", desc = "settings.gameplay.togglebreath.desc", convar = "togglebreath", parentconvar = "mod_sway" },
         { sv = true, type = "bool", text = "settings.server.gameplay.breath_slowmo.title", desc = "settings.server.gameplay.breath_slowmo.desc", convar = "breath_slowmo", parentconvar = "mod_sway" },
@@ -292,7 +292,7 @@ ARC9.SettingsTable = {
         TabName = "settings.tabname.attachmentsnpcs",
 		sv = true,
 
-        { type = "label", text = "settings.tabname.customization" },
+        { type = "label", text = "settings.tabname.customization", desc = "settings.tabname.customization.desc" },
         { sv = true, type = "bool", text = "settings.server.custmenu.atts_nocustomize.title", desc = "settings.server.custmenu.atts_nocustomize.desc", convar = "atts_nocustomize" },
         { sv = true, type = "button", text = "settings.server.custmenu.blacklist.title", desc = "settings.server.custmenu.blacklist.desc", content = "settings.server.custmenu.blacklist.open", func = function(self2)
             RunConsoleCommand("arc9_blacklist")
@@ -303,7 +303,7 @@ ARC9.SettingsTable = {
         { sv = true, type = "bool", text = "settings.server.custmenu.atts_loseondie.title", desc = "settings.server.custmenu.atts_loseondie.desc", convar = "atts_loseondie", parentconvar = "free_atts", parentinvert = true },
         { sv = true, type = "bool", text = "settings.server.custmenu.atts_generateentities.title", desc = "settings.server.custmenu.atts_generateentities.desc", convar = "atts_generateentities" },
 		
-        { type = "label", text = "settings.tabname.npc" },
+        { type = "label", text = "settings.tabname.npc", desc = "settings.tabname.npc.desc" },
         { sv = true, type = "bool", text = "settings.server.npc.npc_autoreplace.title", desc = "settings.server.npc.npc_autoreplace.desc", convar = "npc_autoreplace" },
         { sv = true, type = "bool", text = "settings.server.npc.npc_atts.title", desc = "settings.server.npc.npc_atts.desc", convar = "npc_atts", parentconvar = "npc_autoreplace" },
         { sv = true, type = "bool", text = "settings.server.npc.replace_spawned.title", desc = "settings.server.npc.replace_spawned.desc", convar = "replace_spawned" },
@@ -316,7 +316,7 @@ ARC9.SettingsTable = {
         TabName = "settings.tabname.bulletphysics", -- idk where to fit bullets
 		sv = true,
 
-        { type = "label", text = "settings.tabname.bulletphysics" },
+        { type = "label", text = "settings.tabname.bulletphysics", desc = "settings.tabname.bulletphysics.desc" },
         { sv = true, type = "bool", text = "settings.server.bulletphysics.bullet_physics.title", desc = "settings.server.bulletphysics.bullet_physics.desc", convar = "bullet_physics" },
         { sv = true, type = "slider", text = "settings.server.bulletphysics.bullet_gravity.title", desc = "settings.server.bulletphysics.bullet_gravity.desc", convar = "bullet_gravity", min = 0, max = 10, decimals = 1, parentconvar = "bullet_physics" },
         { sv = true, type = "slider", text = "settings.server.bulletphysics.bullet_drag.title", desc = "settings.server.bulletphysics.bullet_drag.desc", convar = "bullet_drag", min = 0, max = 10, decimals = 1, parentconvar = "bullet_physics" },
@@ -329,7 +329,7 @@ ARC9.SettingsTable = {
         TabName = "settings.tabname.modifiers",
 		sv = true,
 
-        { type = "label", text = "settings.tabname.quickstat" },
+        { type = "label", text = "settings.tabname.quickstat", desc = "settings.tabname.quickstat.desc" },
         { sv = true, type = "slider", text = "settings.server.quickstat.mod_damage.title", desc = "settings.server.quickstat.mod_damage.desc", convar = "mod_damage", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.spread", desc = "settings.server.quickstat.mod_spread.desc", convar = "mod_spread", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.recoil", desc = "settings.server.quickstat.mod_recoil.desc", convar = "mod_recoil", min = 0, max = 10, decimals = 1 },
@@ -793,26 +793,39 @@ local function DrawSettings(bg, page)
 
             local bump = cvarrealm and ARC9ScreenScale(37.5) or ARC9ScreenScale(30)
             surface.SetTextColor(ARC9.GetHUDColor("hint"))
-
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
-            -- surface.DrawText(freshcvar)
+			
+			surface.SetTextColor(ARC9.GetHUDColor("fg"))
+			surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
+			-- surface.DrawText(freshcvar)
 			ARC9.DrawTextRot(self2, freshcvar, w-ARC9ScreenScale(90), h-bump, w-ARC9ScreenScale(90), h-bump, ARC9ScreenScale(85), false)
-            bump = bump - ARC9ScreenScale(7.5)
+			bump = bump - ARC9ScreenScale(7.5)
 
-            surface.SetTextColor(ARC9.GetHUDColor("hint"))
-            if cvarrealm then
-                surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
-                surface.DrawText(ARC9:GetPhrase(cvarrealm))
-                bump = bump - ARC9ScreenScale(7.5)
-            end
+			surface.SetTextColor(ARC9.GetHUDColor("hint"))
+			if cvarrealm then
+				surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
+				surface.DrawText(ARC9:GetPhrase(cvarrealm))
+				bump = bump - ARC9ScreenScale(7.5)
+			end
 
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
-            surface.DrawText(ARC9:GetPhrase("settings.default_convar") .. ": " .. defaultvalue)
-            bump = bump - ARC9ScreenScale(7.5)
+			surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
+			surface.DrawText(ARC9:GetPhrase("settings.default_convar") .. ": " .. defaultvalue)
+			bump = bump - ARC9ScreenScale(7.5)
 
-            surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
-            surface.DrawText(defaultvalue2)
+			surface.SetTextPos(w-ARC9ScreenScale(90), h-bump)
+			surface.DrawText(defaultvalue2)
+			
+			local translator = {
+				name = ARC9:GetPhrase("translation.name"),
+				author = ARC9:GetPhrase("translation.authors")
+			}
+			
+			if activecvar == "arc9_language" and translator.name then
+				surface.SetTextColor(ARC9.GetHUDColor("fg"))
+				surface.SetTextPos(w-ARC9ScreenScale(90), h-bump - ARC9ScreenScale(40))
+				surface.DrawText(translator.name)
+				
+				ARC9.DrawTextRot(self2, translator.author, w-ARC9ScreenScale(90), h-bump - ARC9ScreenScale(32.5), w-ARC9ScreenScale(90), h-bump - ARC9ScreenScale(32.5), ARC9ScreenScale(85), false)
+			end
         end
 
         surface.SetFont("ARC9_16")

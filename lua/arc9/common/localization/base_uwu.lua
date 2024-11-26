@@ -1,9 +1,22 @@
-L = {} -- UwU strings by darsu
+L = {}
 
 /////////////////////////////////////// Font
 ////////////////////// See "font_en" file
 
 /////////////////////////////////////// General
+////////////////////// Translation
+L["translation.name"] = "UwU by"
+L["translation.authors"] = "darsu"
+
+--[[
+"translation.name" should be changed to "English Translation" but translated
+		for example "Deutsche Übersetzung", "Svensk Översättning", etc.
+
+If set to false, both of these will not show.
+
+"translation.authors" should include the list of the translators. For example, "Moka" or "darsu".
+--]]
+
 ////////////////////// Units of measurement
 L["unit.second"] = "s"
 L["unit.meter"] = "m"
@@ -327,7 +340,7 @@ L["incompatible.never.confirm"] = "You hawe chowwen to newew showww INCOwOMPATIB
 
 -- L["badconf.directx.title"] = "Outdated DirectX version"
 -- L["badconf.directx.desc"] = "You are currently running DirectX 8 or 8.1. Modern GMod isn't meant for this, you might not be able to see models on most weapon packs. (dx9 was introduced 21 years ago!)"
--- L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
+-- L["badconf.directx.solution"] = "Solution: Go to Garry's Mod's launch options and insert \"-dxlevel 95 +mat_directx 95\" into the launch parameters. If \"-dxlevel 70/80/85\" is listed there, remove it."
 
 -- L["badconf.tickrate.title"] = "Too low server tickrate"
 -- L["badconf.tickrate.desc"] = "The server you are on is running on very low tickrate. ARC9 runs best if you run a minimum of 20 tickrate (66+ is recommended)."
@@ -440,9 +453,6 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 
 -- L["settings.aimassist.enable.desc2"] = "Tweak in \"Gameplay\"\n\nEnables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
 
--- L["settings.gameplay.controller.title"] = "Enable Controller Mode"
--- L["settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements.\n\nCustom glyphs can be customized via the Spawnmenu (Options > ARC9 > Controller)."
-
 ////////////////////// Reset Settings
 -- L["settings.tabname.reset"] = "Reset Settings"
 -- L["settings.tabname.reset.desc"] = "Press the \"Reset\" button to fully reset ARC9 settings back to their default values."
@@ -459,19 +469,22 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.tabname.hud_game"] = "Game HUD"
 
 ////////// ARC9 HUD
+-- L["settings.server.hud_game.hud_arc9.title"] = "Globally Disable ARC9 HUD"
+-- L["settings.server.hud_game.hud_arc9.desc"] = "Disables the ability for users to utilize the ARC9 HUD."
+
 -- L["settings.tabname.arc9_hud"] = "ARC9 HUD"
 -- L["settings.tabname.arc9_hud.desc"] = "Everything related to ARC9's custom HUD and its elements."
 
 -- L["settings.hud_game.hud_arc9.title"] = "Enable ARC9 HUD"
 -- L["settings.hud_game.hud_arc9.desc"] = "Enable a custom LCD display HUD when using ARC9 weapons."
--- L["settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
--- L["settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
 -- L["settings.hud_game.hud_compact.title"] = "Compact mode"
 -- L["settings.hud_game.hud_compact.desc"] = "Hides certain elements on the ARC9 HUD, providing a more compact look."
+-- L["settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
+-- L["settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
 
 -- L["settings.hud_game.keephints.title"] = "Always Display Hints"
 -- L["settings.hud_game.keephints.desc"] = "Disables the fadeaway of the control hints."
--- L["settings.hud_game.nohints.title"] = "or Disable Hints"
+-- L["settings.hud_game.nohints.title"] = "Fully Disable Hints"
 -- L["settings.hud_game.nohints.desc"] = "Completely disables ARC9 hints.\n\nNot compatible with \"Always Display Hints\"."
 
 -- L["settings.hud_game.hints.title"] = "Hint Behavior"
@@ -483,6 +496,12 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.hud_game.killfeed_dynamic.desc"] = "Dynamically generates icons when getting kills or altering attachments."
 -- L["settings.hud_game.killfeed_colour.title"] = "Display in Color"
 -- L["settings.hud_game.killfeed_colour.desc"] = "Generates icons in full color rather than black and white."
+
+-- L["settings.hud_game.hud_scale.title"] = "HUD Scale"
+-- L["settings.hud_game.hud_scale.desc"] = "Alter the size scale of the ARC9 HUD and the customization menu.\n\nNote: If set below 1, the ARC9 HUD will be disabled."
+
+-- L["settings.hud_game.hud_deadzonex.title"] = "HUD Horizontal Deadzone"
+-- L["settings.hud_game.hud_deadzonex.desc"] = "Alters the horizontal deadzone of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
 
 ////////// Glyphs
 -- L["settings.tabname.glyphs"] = "Glyphs"
@@ -500,11 +519,6 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 ////////// Display Tooltips
 -- L["settings.tabname.centerhint"] = "Display Tooltips"
 -- L["settings.tabname.centerhint.desc"] = "Display tooltips on your HUD when certain criteria are met."
-
--- L["settings.centerhint.breath_hud.title"] = "When Holding Breath"
--- L["settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
--- L["settings.centerhint.breath_pp.title"] = "Post-Processing"
--- L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
 
 -- L["settings.centerhint.reload.title"] = "When Low on Ammo"
 -- L["settings.centerhint.reload.desc"] = "Displays a tooltip when the magazine reaches a certain percentage value.\n\nAlso displays which button to press."
@@ -525,16 +539,6 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 
 -- L["settings.centerhint.overheat.title"] = "When Overheating"
 -- L["settings.centerhint.overheat.desc"] = "Displays a tooltip when the weapon is about to overheat."
-
-////////// Advanced ARC9 HUD Settings
--- L["settings.tabname.arc9_hud_adv"] = "Advanced ARC9 HUD Settings"
--- L["settings.tabname.arc9_hud_adv.desc"] = "Tweak more advanced settings related to ARC9's HUD and its elements."
-
--- L["settings.hud_game.hud_scale.title"] = "HUD Scale"
--- L["settings.hud_game.hud_scale.desc"] = "Alter the size scale of the ARC9 HUD and the customization menu.\n\nNote: If set below 1, the ARC9 HUD will be disabled."
-
--- L["settings.hud_game.hud_deadzonex.title"] = "HUD Width"
--- L["settings.hud_game.hud_deadzonex.desc"] = "Alters the maximum width of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
 
 ////////////////////// Visuals
 -- L["settings.tabname.visuals"] = "Visuals"
@@ -618,62 +622,9 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.vm.vm_cambobintensity.title"] = "Intensity"
 -- L["settings.vm.vm_cambobintensity.desc"] = "How intense the sprint and walk bobbing should be."
 
-////////// Other
--- L["settings.tabname.other"] = "Other"
--- L["settings.tabname.other.desc"] = "Adjust various miscellaneous settings."
-
-////////////////////// Gameplay
--- L["settings.tabname.gameplay"] = "Gameplay"
-
-////////// General
--- L["settings.tabname.general"] = "General"
--- L["settings.tabname.general.desc"] = "Various general gameplay settings."
-
--- L["settings.gameplay.toggleads.title"] = "Toggle ADS"
--- L["settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
-
--- L["settings.gameplay.dtap_sights.title"] = "Double-Tap USE to Cycle Sights"
--- L["settings.gameplay.dtap_sights.desc"] = "Allows you to double-tap your USE button to cycle through optics."
-
--- L["settings.gameplay.autoreload.title"] = "Automatic Reload"
--- L["settings.gameplay.autoreload.desc"] = "Automatically reloads your weapon when it is empty."
-
--- L["settings.gameplay.autolean.title"] = "Automatic Lean"
--- L["settings.gameplay.autolean.desc"] = "Automatically tries to lean when near cover."
-
--- L["settings.gameplay.togglelean.title"] = "Toggle Lean"
--- L["settings.gameplay.togglelean.desc"] = "Pressing your left or right lean button toggles leaning."
-
--- L["settings.gameplay.togglepeek.title"] = "Toggle Peek"
--- L["settings.gameplay.togglepeek.desc"] = "Pressing your peek button toggles peeking."
-
--- L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek After Aiming"
--- L["settings.gameplay.togglepeek_reset.desc"] = "Disables peek when you stop aiming."
-
--- L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
--- L["settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
-
-////////// Optics
--- L["settings.tabname.optics"] = "Optics"
--- L["settings.tabname.optics.desc"] = "Adjust settings related to optics and their functionality."
-
--- L["settings.gameplay.cheapscopes.title"] = "Cheap Scopes"
--- L["settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
-
--- L["settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
--- L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
-
--- L["settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
--- L["settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
-
--- L["settings.gameplay.sensmult.title"] = "Multiply ADS Sensitivity"
--- L["settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity globally with this value.\n\nThe lower it is, the slower your sensitivity will be."
-
--- L["settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
--- L["settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
-
--- L["settings.gameplay.color.scope.title"] = "Magnified Scope Color"
--- L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
+////////////////////// Crosshair & Scopes
+-- L["settings.tabname.crosshairscopes"] = "Crosshair & Scopes"
+-- L["settings.tabname.crosshairscopes.desc"] = "Adjust settings related to the crosshair and scopes."
 
 ////////// Crosshair
 -- L["settings.tabname.crosshair"] = "Crosshair"
@@ -715,14 +666,124 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.crosshair.cross_size_prong.title"] = "Crosshair Prong Width"
 -- L["settings.crosshair.cross_size_prong.desc"] = "Multiplies the width of the crosshair prongs by this value."
 
-////////// Aim Assist
--- L["settings.tabname.aimassist"] = "Aim Assist"
--- L["settings.tabname.aimassist.desc"] = "Adjust settings related to aiming assistance."
+////////// Optics
+-- L["settings.tabname.optics"] = "Optics"
+-- L["settings.tabname.optics.desc"] = "Adjust settings related to optics and their functionality."
+
+-- L["settings.gameplay.toggleads.title"] = "Toggle ADS"
+-- L["settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
+
+-- L["settings.gameplay.cheapscopes.title"] = "Cheap Scopes"
+-- L["settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
+
+-- L["settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
+-- L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
+
+-- L["settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
+-- L["settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
+
+-- L["settings.gameplay.sensmult.title"] = "Multiply ADS Sensitivity"
+-- L["settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity globally with this value.\n\nThe lower it is, the slower your sensitivity will be."
+
+-- L["settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
+-- L["settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
+
+-- L["settings.gameplay.color.scope.title"] = "Scope Reticle Color"
+-- L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
+
+////////////////////// Gameplay
+-- L["settings.tabname.gameplay"] = "Gameplay"
+
+////////// General
+-- L["settings.tabname.general"] = "General"
+-- L["settings.tabname.general.desc"] = "Various general gameplay settings."
+
+-- L["settings.gameplay.dtap_sights.title"] = "Double-Tap USE to Cycle Sights"
+-- L["settings.gameplay.dtap_sights.desc"] = "Allows you to double-tap your USE button to cycle through optics."
+
+-- L["settings.gameplay.autoreload.title"] = "Automatic Reload"
+-- L["settings.gameplay.autoreload.desc"] = "Automatically reloads your weapon when it is empty."
+
+-- L["settings.server.gameplay.recoilshake.title"] = "Enable Recoil FOV Shake"
+-- L["settings.server.gameplay.recoilshake.desc"] = "Snaps the field of view when shooting."
+
+////////// Functionality
+-- L["settings.tabname.features"] = "Features"
+-- L["settings.tabname.features.desc"] = "Adjust settings related to various ARC9 features."
+
+-- L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway & Breath Hold"
+-- L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway (if the weapon supports it) and the ability to hold your breath.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen.\n\nAdditionally, you can press and hold your sprint button to steady your aim."
+
+-- L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
+-- L["settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
+
+-- L["settings.centerhint.breath_hud.title"] = "Show Breath on HUD"
+-- L["settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
+
+-- L["settings.server.gameplay.breath_slowmo.title"] = "Slow-Mo Breathing in Singleplayer"
+-- L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
+
+-- L["settings.centerhint.breath_pp.title"] = "Post-Processing"
+-- L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
+
+-- L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
+-- L["settings.server.gameplay.mod_peek.desc"] = "Enable peeking, if the weapon supports it.\n\nAllows the user to lower their weapon while aiming while still having aiming benefits."
+
+-- L["settings.gameplay.togglepeek.title"] = "Toggle Peek"
+-- L["settings.gameplay.togglepeek.desc"] = "Pressing your peek button toggles peeking."
+
+-- L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek After Aiming"
+-- L["settings.gameplay.togglepeek_reset.desc"] = "Disables peek when you stop aiming."
+
+-- L["settings.server.aimassist.enable.title"] = "Allow Aim Assist"
+-- L["settings.server.aimassist.enable.desc"] = "Enables the ability for users to utilize aiming assistance."
 
 -- L["settings.aimassist.enable.title"] = "Enable Aim Assist"
 -- L["settings.aimassist.enable.desc"] = "Enables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
 
 -- L["settings.aimassist.sensmult.desc"] = "Multiplies the aiming sensitivity by this value when aiming close to valid targets if one is detected close to your crosshair."
+
+-- L["settings.server.aimassist.intensity.title"] = "Aim Assist Intensity"
+-- L["settings.server.aimassist.intensity.desc"] = "How intense the aim assistance should be."
+
+-- L["settings.server.aimassist.cone.title"] = "Aim Assist Cone"
+-- L["settings.server.aimassist.cone.desc"] = "How large of an area the aim assist should take affect in. The larger, the further away the valid targets can be."
+
+-- L["settings.server.aimassist.heads.title"] = "Lock onto Heads"
+-- L["settings.server.aimassist.heads.desc"] = "Enable if the aim assist should target the target's head rather than its chest."
+
+-- L["settings.server.gameplay.manualbolt.title"] = "Require Manual Cycling"
+-- L["settings.server.gameplay.manualbolt.desc"] = "Enable if the user should manually cycle manual operated weapons by pressing their reload key."
+
+-- L["settings.server.gameplay.lean.title"] = "Allow Leaning"
+-- L["settings.server.gameplay.lean.desc"] = "Allows users to lean left or right. Also applies to Automatic Lean."
+
+-- L["settings.gameplay.autolean.title"] = "Automatic Lean"
+-- L["settings.gameplay.autolean.desc"] = "Automatically tries to lean when near cover."
+
+-- L["settings.gameplay.togglelean.title"] = "Toggle Lean"
+-- L["settings.gameplay.togglelean.desc"] = "Pressing your left or right lean button toggles leaning."
+
+-- L["settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
+-- L["settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
+
+-- L["settings.server.gameplay.never_ready.title"] = "Disable Readying Animations"
+-- L["settings.server.gameplay.never_ready.desc"] = "Enable to disable weapon readying animations when you first pull out a weapon."
+
+-- L["settings.server.gameplay.infinite_ammo.title"] = "Enable Infinite Ammo"
+-- L["settings.server.gameplay.infinite_ammo.desc"] = "Weapons no longer require ammunition when reloading."
+
+-- L["settings.server.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
+-- L["settings.server.gameplay.mult_defaultammo.desc"] = "How many spare magazines or pieces of equipment the player gets when a weapon is spawned."
+
+-- L["settings.server.gameplay.equipment_generate_ammo.title"] = "Generate Unique Ammo for Equipment"
+-- L["settings.server.gameplay.equipment_generate_ammo.desc"] = "The Source engine has a limit of 255 ammo types. Disabling this option could help fix errors if you have many addons installed.\n\nRequires restart."
+
+-- L["settings.server.gameplay.realrecoil.title"] = "Enable Physical Visual Recoil"
+-- L["settings.server.gameplay.realrecoil.desc"] = "Various weapons are set up for physical muzzle rise, meaning that they will shoot where their viewmodel points rather than the center of the screen.\n\nVery important for some weapon packs' balancing schemes."
+
+-- L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
+-- L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
 
 ////////////////////// Customization
 -- L["settings.tabname.customization"] = "Customization"
@@ -734,10 +795,8 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.custmenu.hud_color.title"] = "Customization Menu Accent"
 -- L["settings.custmenu.hud_color.desc"] = "Alter the accent color for the customization menu."
 
--- L["settings.custmenu.hud_darkmode.title"] = "Dark Mode"
--- L["settings.custmenu.hud_darkmode.desc"] = "Changes the color scheme of the customization menu to a darker one."
 -- L["settings.custmenu.hud_lightmode.title"] = "Light Mode"
--- L["settings.custmenu.hud_lightmode.desc"] = "Changes the color scheme of the customization menu to a lighter one. (original color scheme)"
+-- L["settings.custmenu.hud_lightmode.desc"] = "Changes the color scheme of the customization menu to a lighter one.\n\nThe original ARC9 color scheme."
 
 -- L["settings.custmenu.hud_holiday.title"] = "Festive Mode"
 -- L["settings.custmenu.hud_holiday.desc"] = "Changes the color scheme of the customization menu to match certain holidays.\n\nOverrides \"Customization Menu Accent\"."
@@ -754,90 +813,38 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.custmenu.cust_tips.title"] = "Enable General Hints"
 -- L["settings.custmenu.cust_tips.desc"] = "Displays general hints in the bottom left of the customization menu."
 
+-- L["settings.custmenu.cust_exit_reset_sel.title"] = "Reset Active Slot on Close"
+-- L["settings.custmenu.cust_exit_reset_sel.desc"] = "If enabled, the active customization slot will be reset when the menu is re-opened."
+
 -- L["settings.custmenu.autosave.title"] = "Auto-Save Attachments"
 -- L["settings.custmenu.autosave.desc"] = "Automatically saves equipped attachments when you exit the customization menu. Reloads them automatically when you respawn the weapon."
+
+-- L["settings.server.gameplay.truenames.title"] = "Enable True Names"
+-- L["settings.server.gameplay.truenames.desc"] = "Enable to have weapons that utilize fictional names to display their real ones instead.\n\nNot all weapons support this."
 
 -- L["settings.custmenu.units.title"] = "Display Units"
 -- L["settings.custmenu.units.desc"] = "Choose to display either metric or imperial units in the customization menu."
 -- L["settings.custmenu.units.metric"] = "Metric"
 -- L["settings.custmenu.units.imperial"] = "Imperial"
 
--- L["settings.custmenu.cust_exit_reset_sel.title"] = "Reset Active Slot on Close"
--- L["settings.custmenu.cust_exit_reset_sel.desc"] = "If enabled, the active customization slot will be reset when the menu is re-opened."
+-- L["settings.gameplay.controller.title"] = "Enable Controller Mode"
+-- L["settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements.\n\nCustom glyphs can be customized via the Spawnmenu (Options > ARC9 > Controller)."
 
-////////////////////// Server
--- L["settings.tabname.server"] = "Server"
+-- L["settings.gameplay.font.title"] = "Custom Font"
+-- L["settings.gameplay.font.desc"] = "Write the custom font that should be used on ARC9.\n\nNote 1: The font must be installed on your current machine.\n\nNote 2: The name should be the font name displayed in the TTF file, not the file name of the TTF."
 
-////////// ARC9 HUD
--- L["settings.server.hud_game.hud_arc9.title"] = "Globally Disable ARC9 HUD"
--- L["settings.server.hud_game.hud_arc9.desc"] = "Disables the ability for users to utilize the ARC9 HUD."
-
-////////// Visuals
--- L["settings.server.gameplay.truenames.title"] = "Enable True Names"
--- L["settings.server.gameplay.truenames.desc"] = "Enable to have weapons that utilize fictional names to display their real ones instead.\n\nNot all weapons support this."
-
-////////// Gameplay
--- L["settings.server.aimassist.enable.title"] = "Allow Aim Assist"
--- L["settings.server.aimassist.enable.desc"] = "Enables the ability for users to utilize aiming assistance."
-
--- L["settings.server.aimassist.intensity.title"] = "Aim Assist Intensity"
--- L["settings.server.aimassist.intensity.desc"] = "How intense the aim assistance should be."
-
--- L["settings.server.aimassist.cone.title"] = "Aim Assist Cone"
--- L["settings.server.aimassist.cone.desc"] = "How large of an area the aim assist should take affect in. The larger, the further away the valid targets can be."
-
--- L["settings.server.aimassist.heads.title"] = "Lock onto Heads"
--- L["settings.server.aimassist.heads.desc"] = "Enable if the aim assist should target the target's head rather than its chest."
-
--- L["settings.server.gameplay.infinite_ammo.title"] = "Enable Infinite Ammo"
--- L["settings.server.gameplay.infinite_ammo.desc"] = "Weapons no longer require ammunition when reloading."
-
--- L["settings.server.gameplay.realrecoil.title"] = "Enable Physical Visual Recoil"
--- L["settings.server.gameplay.realrecoil.desc"] = "Various weapons are set up for physical muzzle rise, meaning that they will shoot where their viewmodel points rather than the center of the screen.\n\nVery important for some weapon packs' balancing schemes."
-
--- L["settings.server.gameplay.lean.title"] = "Allow Leaning"
--- L["settings.server.gameplay.lean.desc"] = "Allows users to lean left or right. Also applies to Automatic Lean."
-
--- L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway"
--- L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway, if the weapon supports it.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen."
-
--- L["settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
--- L["settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
-
--- L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
--- L["settings.server.gameplay.mod_peek.desc"] = "Enable pee king"
-
--- L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
--- L["settings.server.gameplay.mod_overheat.desc"] = "Enable Overheating on certain guns blah blah"
-
--- L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
--- L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
-
--- L["settings.server.gameplay.breath_slowmo.title"] = "Slow-Mo Breathing in Singleplayer"
--- L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
-
--- L["settings.server.gameplay.manualbolt.title"] = "Require Manual Cycling"
--- L["settings.server.gameplay.manualbolt.desc"] = "Enable if the user should manually cycle manual operated weapons by pressing their reload key."
-
--- L["settings.server.gameplay.never_ready.title"] = "Disable Readying Animations"
--- L["settings.server.gameplay.never_ready.desc"] = "Enable to disable weapon readying animations when you first pull out a weapon."
-
--- L["settings.server.gameplay.recoilshake.title"] = "Enable Recoil FOV Shake"
--- L["settings.server.gameplay.recoilshake.desc"] = "Snaps the field of view when shooting."
-
--- L["settings.server.gameplay.equipment_generate_ammo.title"] = "Generate Unique Ammo for Equipment"
--- L["settings.server.gameplay.equipment_generate_ammo.desc"] = "The Source engine has a limit of 255 ammo types. Disabling this option could help fix errors if you have many addons installed.\n\nRequires restart."
-
--- L["settings.server.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
--- L["settings.server.gameplay.mult_defaultammo.desc"] = "How many spare magazines or pieces of equipment the player gets when a weapon is spawned."
+////////////////////// Attachments & NPCs
+-- L["settings.tabname.attachmentsnpcs"] = "Attachments & NPCs"
 
 ////////// Customization
--- L["settings.server.custmenu.blacklist.title"] = "Blacklist Menu"
--- L["settings.server.custmenu.blacklist.desc"] = "Opens a menu that allows certain attachments to be completely disabled."
--- L["settings.server.custmenu.blacklist.open"] = "OPEN MENU"
+-- L["settings.tabname.customization.desc"] = "Adjust settings related to weapon customizing."
 
 -- L["settings.server.custmenu.atts_nocustomize.title"] = "Disable Customizing"
 -- L["settings.server.custmenu.atts_nocustomize.desc"] = "Disables the ability for users to open the customization menu.\n\nDoes not affect admins."
+
+-- L["settings.server.custmenu.blacklist.title"] = "Blacklist Menu"
+-- L["settings.server.custmenu.blacklist.desc"] = "Opens a menu that allows certain attachments to be completely disabled."
+-- L["settings.server.custmenu.blacklist.open"] = "OPEN MENU"
 
 -- L["settings.server.custmenu.atts_max.title"] = "Max Attachments"
 -- L["settings.server.custmenu.atts_max.desc"] = "The maximum number of attachments a user can equip onto a weapon, including cosmetic ones."
@@ -854,8 +861,36 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.server.custmenu.atts_generateentities.title"] = "Generate Attachment Entities"
 -- L["settings.server.custmenu.atts_generateentities.desc"] = "Generate entities that can be spawned via the Spawnmenu, allowing you to pick up attachments when \"Free Attachments\" is disabled.\n\nIncreases loading times."
 
-////////// Bullet Physics
+////////// NPC Settings
+-- L["settings.tabname.npc"] = "NPC Settings"
+-- L["settings.tabname.npc.desc"] = "Adjust settings for interaction with NPC's."
+
+-- L["settings.server.npc.npc_autoreplace.title"] = "Replace NPC Weapons"
+-- L["settings.server.npc.npc_autoreplace.desc"] = "NPC's that spawn with HL2 weapons will have them be replaced with ARC9 weapons."
+
+-- L["settings.server.npc.npc_atts.title"] = "Give NPC Weapons Random Attachments"
+-- L["settings.server.npc.npc_atts.desc"] = "NPC's with ARC9 weapons will receive a random set of attachments"
+
+-- L["settings.server.npc.replace_spawned.title"] = "Replace Ground Weapons"
+-- L["settings.server.npc.replace_spawned.desc"] = "Replace map or spawned HL2 weapons with randomly chosen ARC9 weapons"
+
+-- L["settings.server.npc.ground_atts.title"] = "Give Ground Weapons Random Attachments"
+-- L["settings.server.npc.ground_atts.desc"] = "Weapons spawned on the ground will receive a random set of attachments."
+
+-- L["settings.server.npc.npc_give_weapons.title"] = "Allow Weapon Swapping between Players & NPCs"
+-- L["settings.server.npc.npc_give_weapons.desc"] = "Allow the players to press their USE key on NPC's to give them or swap their ARC9 weapons."
+
+-- L["settings.server.npc.npc_equality.title"] = "Enable NPC Damage Equality"
+-- L["settings.server.npc.npc_equality.desc"] = "NPC's do equal damage with ARC9 weapons as players do."
+
+-- L["settings.server.npc.npc_spread.title"] = "NPC Spread"
+-- L["settings.server.npc.npc_spread.desc"] = "Multiply the accuracy for weapons when NPC's are shooting them."
+
+////////////////////// Bullet Physics
 -- L["settings.tabname.bulletphysics"] = "Bullet Physics"
+
+////////// Bullet Physics
+-- L["settings.tabname.bulletphysics.desc"] = "Adjust settings related to physical bullets."
 
 -- L["settings.server.bulletphysics.bullet_physics.title"] = "Enable Physical Bullets"
 -- L["settings.server.bulletphysics.bullet_physics.desc"] = "Weapons that support this shoot physical projectiles which are affected by bullet drop, drag and travel time."
@@ -875,32 +910,12 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.server.bulletphysics.mod_penetration.title"] = "Enable Bullet Penetration"
 -- L["settings.server.bulletphysics.mod_penetration.desc"] = "Allows bullets to pierce cover, potentially striking foes hiding behind it.\n\nEffectiveness depends on the weapon."
 
-////////// NPC Settings
--- L["settings.tabname.npc"] = "NPC Settings"
-
--- L["settings.server.npc.npc_autoreplace.title"] = "Replace NPC Weapons"
--- L["settings.server.npc.npc_autoreplace.desc"] = "NPC's that spawn with HL2 weapons will have them be replaced with ARC9 weapons."
-
--- L["settings.server.npc.npc_atts.title"] = "Give NPC Weapons Random Attachments"
--- L["settings.server.npc.npc_atts.desc"] = "NPC's with ARC9 weapons will receive a random set of attachments"
-
--- L["settings.server.npc.replace_spawned.title"] = "Replace Ground Weapons"
--- L["settings.server.npc.replace_spawned.desc"] = "Replace map or spawned HL2 weapons with randomly chosen ARC9 weapons"
-
--- L["settings.server.npc.ground_atts.title"] = "Give Ground Weapons Random Attachments"
--- L["settings.server.npc.ground_atts.desc"] = "Weapons spawned on the ground will receive a random set of attachments."
-
--- L["settings.server.npc.npc_give_weapons.title"] = "Allow NPC Weapon Swapping"
--- L["settings.server.npc.npc_give_weapons.desc"] = "Allow the players to press their USE key on NPC's to give them or swap their ARC9 weapons."
-
--- L["settings.server.npc.npc_equality.title"] = "Enable NPC Damage Equality"
--- L["settings.server.npc.npc_equality.desc"] = "NPC's do equal damage with ARC9 weapons as players do."
-
--- L["settings.server.npc.npc_spread.title"] = "NPC Spread"
--- L["settings.server.npc.npc_spread.desc"] = "Multiply the accuracy for weapons when NPC's are shooting them."
+////////////////////// Modifiers
+-- L["settings.tabname.modifiers"] = "Modifiers"
 
 ////////// Quick Stat Modifiers
 -- L["settings.tabname.quickstat"] = "Quick Stat Modifiers"
+-- L["settings.tabname.quickstat.desc"] = "Quickly adjust specific weapon modifiers."
 
 -- L["settings.server.quickstat.mod_damage.title"] = "Damage"
 
@@ -917,6 +932,9 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.server.quickstat.mod_rpm.desc"] = "Multiply how quickly the weapon fires."
 -- L["settings.server.quickstat.mod_headshotdamage.desc"] = "Multiply how much damage the weapon deals on headshots."
 -- L["settings.server.quickstat.mod_malfunction.desc"] = "Multiply how likely it is for the weapon to malfunction."
+
+-- L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
+-- L["settings.server.gameplay.mod_overheat.desc"] = "If the weapon supports it, it can overheat when firing too often, which could lead to a malfunction."
 
 ////////////////////// Developer
 -- L["settings.tabname.developer"] = "Developer"
@@ -1018,523 +1036,3 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.server.printconsole.dev_getjson.desc"] = "Prints a JSON entry for the weapon."
 
 -- L["settings.server.printconsole"] = "PRINT"
-
-////////////////////// General
-L["settings.tabname.general"] = "Genewal"
-
-L["settings.general.client"] = "Cwient"
-L["settings.language_id.title"] = "Wanguwage"
-L["settings.language_id.desc"] = "Wanguwage pawck to uwuse fow AWC9\n\n\nyuwe soo pawesom fow uwusing de UwU wanguage :3"
-L["settings.truenames.title"] = "Twue names"
-L["settings.truenames.desc"] = "Set whedew to use weapons' weal names ow fictional names made by de developews. Not all weapons utilize dis.\n\nSewvew setting may ovewwide dis pwefewence"
-L["settings.resetsettings.cl.title"] = "Weset aww CWIENT setings"
-
-L["settings.general.server"] = "Sewvewwr"
-L["settings.truenames_default.title"] = "Default Twue Names"
-L["settings.truenames_default.desc"] = "Set de default twue names mode on de sewvew. All playews using \"Default\" in pwefewence will use dis"
-L["settings.truenames_enforced.title"] = "Default Twue Names Enfowced"
-L["settings.truenames_enforced.desc"] = "Set to fowce all playews to use de sewvew setting fow twue names"
-
-L["settings.resetsettings.sv.title"] = "Weset aww SErrWWEW setings"
-
-L["settings.reset"] = "UwU Weset!!!"
-
-////////////////////// Performance
-L["settings.tabname.performance"] = "Perawawmance"
-
-L["settings.performance.important"] = "High Pewfowmance Impact"
-L["settings.cheapscopes.title"] = "Chweap Scopes"
-L["settings.cheapscopes.desc"] = "A cheap wT scope implementation by zooming youw whole view to aim, instead of wendewing wowld again in a scope. Significantly incweases pewfowmance on lawge maps"
-L["settings.tpik.title"] = "TPIK"
-L["settings.tpik.desc"] = "TPIK (Thiwd Pewson Invewse Kinematics) is a system that allows most weapons display detailed and same as in fiwst pewson hands positions, weload and fiwing animations in thiwd pewson.\n\nConfiguwe it in Visuals tab"
-L["settings.allflash.title"] = "All Flashlights"
-L["settings.allflash.desc"] = "Fully wendew all flashlights fwom odew playews.\n\nVewy expensive on sewvews"
-
-L["settings.performance.blur.title"] = "Bluw"
-L["settings.cust_blur.title"] = "Customization Backgwound"
-L["settings.cust_blur.desc"] = "Bluws customization backgwound"
-L["settings.fx_reloadblur.title"] = "While weloading"
-L["settings.fx_reloadblur.desc"] = "Bluws de wowld while weloading"
-L["settings.fx_animblur.title"] = "While weadying"
-L["settings.fx_animblur.desc"] = "Bluws de wowld while deploying a weapon fow de fiwst time"
-L["settings.fx_rtblur.title"] = "In Scopes"
-L["settings.fx_rtblur.desc"] = "Bluws de wowld while using a magnified scope"
-L["settings.fx_adsblur.title"] = "In Sights"
-L["settings.fx_adsblur.desc"] = "Bluws de weapon while aiming down sights"
-L["settings.fx_rtvm.title"] = "Wendew Wewapown dwough WT Scowpes"
-L["settings.fx_rtvm.desc"] = "! EXPEWIMENTAW !\nWendwrs de wewapon and its attwachments dwough WT scwopes. Wequiwes \"Chewp Scowpes\" to be disablewd.\nSigniwicantwy weduces pewwormance."
--- L["settings.fx_rtblur.title2"] = "Blur behind Scopes"
-
-L["settings.performance.shelleject.title"] = "Sheww Eject"
-L["settings.eject_fx.title"] = "Smoke Effects"
-L["settings.eject_fx.desc"] = "Pwoduce smoke effects fwom ejected shell casings, whewe de weapon suppowts dis featuwe"
-L["settings.eject_time.title"] = "Add Life Time"
-L["settings.eject_time.desc"] = "Allow shell casings to stay in de wowld fow longew. Can be expensive"
-
-L["settings.performance.fx.title"] = "Efwects"
-L["settings.muzzle_light.title"] = "Nuzzle Light"
-L["settings.muzzle_light.desc"] = "Enable light emitted fwom nuzzle flashes when fiwing a weapon"
-L["settings.muzzle_others.title"] = "Otter nuzzle ewwekts"
-L["settings.muzzle_others.desc"] = "Enabwe nuzzle ewwekts fwom othew pwayews guns :3"
-
-////////////////////// Optics
-L["settings.tabname.optics"] = "OwOptics"
-
-L["settings.optics.control"] = "Contwol"
-L["settings.optics.sensmult.title"] = "Muwtipwy ADS sensitiwity"
-L["settings.optics.sensmult.desc"] = "Muwtipwy de wook sensitiwity by dis amouwunt wwen awiming.\nDe wowew de wawue, de wowew de sensitiwity.\nUwUsewuw wen uwusing controwwews or iw de usew juwust wants wowew awiming sensitiwity."
-L["settings.optics.compensate_sens.title"] = "Compensate Sensitivity"
-L["settings.optics.compensate_sens.desc"] = "Compensate sensitivity fow magnification"
-L["settings.optics.toggleads.title"] = "Towggle ADS"
-L["settings.optics.toggleads.desc"] = "Awiming wiw togwe sights."
-
--- L["settings.optics.dtap_sights.title"] = "Double-Tap to Switch Sights"
--- L["settings.optics.dtap_sights.desc"] = "Allows double-tapping the USE key to switch sights."
-
-L["settings.optics.color"] = "Colow"
-L["settings.optics.reflex.title"] = "weflex Sights"
-L["settings.optics.reflex.desc"] = "Colow to use fow weflex/hologwaphic sights.\n\nNot all optics suppowt dis featuwe"
-L["settings.optics.scope.title"] = "Scopes"
-L["settings.optics.scope.desc"] = "Colow to use fow magnified scopes.\n\nNot all optics suppowt dis featuwe"
-
-////////////////////// Crosshair
-L["settings.tabname.crosshair"] = "Cwosshaiw"
-
-L["settings.crosshair.crosshair"] = "Cwosshaiw"
-L["settings.crosshair.cross_enable.title"] = "Enable cwosshaiw"
-L["settings.crosshair.cross_enable.desc"] = "Enable cwosshaiw. Some guns do not allow you to use de cwosshair"
-L["settings.crosshair.cross.title"] = "Cwosshaiw Colow"
-L["settings.crosshair.cross.desc"] = "de colow of youw cwosshaiw"
-L["settings.crosshair.cross_size_mult.title"] = "Cwosshaiw Size"
-L["settings.crosshair.cross_size_mult.desc"] = "Muwtipwy de size of youw cwosshaiw"
-L["settings.crosshair.cross_size_dot.title"] = "Dot Size"
-L["settings.crosshair.cross_size_dot.desc"] = "Muwtipwy de size of de middle dot"
-L["settings.crosshair.cross_size_prong.title"] = "Pwong Size"
-L["settings.crosshair.cross_size_prong.desc"] = "Muwtipwy de size of de outew pwongs"
-L["settings.crosshair.crosshair_static.title"] = "Static Cwosshaiw"
-L["settings.crosshair.crosshair_static.desc"] = "Enable static cwosshaiw, which does not move when shooting"
-L["settings.crosshair.crosshair_force.title"] = "Fowce Cwosshaiw"
-L["settings.crosshair.crosshair_force.desc"] = "Fowce de cwosshaiw even on guns that don't want you to see it.\n\nSewvew setting"
-L["settings.crosshair.crosshair_target.title"] = "Wed cwosshaiw on tawget"
-L["settings.crosshair.crosshair_target.desc"] = "Make the cwosshaiw wed wen awiming on a tawget.\nAwso activates awim assist if it is tuwned on."
-L["settings.crosshair.crosshair_peeking.title"] = "Dispway cwosshaiw when peeking"
-L["settings.crosshair.crosshair_peeking.desc"] = "Dispways de cwosshaiw wen aiwming and uswing de pewek wunction."
-
--- L["settings.crosshair.crosshair_sgstyle.title"] = "Shotgun Crosshair"
--- L["settings.crosshair.crosshair_sgstyle.desc"] = "Change the crosshair style used on weapons that shoot two or more projectiles at once.\n\nThe last option draws the amount of dots equal to the amount of projectiles fired."
--- L["settings.crosshair.crosshair_sgstyle_fullcircle"] = "Enclosed Circle"
--- L["settings.crosshair.crosshair_sgstyle_four"] = "4 Half-Circles"
--- L["settings.crosshair.crosshair_sgstyle_two"] = "2 Half-Circles"
--- L["settings.crosshair.crosshair_sgstyle_dots"] = "Original Dots"
--- L["settings.crosshair.crosshair_sgstyle_dots_accurate"] = "Proj. Nr. Dots"
-
-////////////////////// Customization
-L["settings.tabname.hud_cust"] = "Cuwustomiawon"
-
-L["settings.hud_cust.hud"] = "HUD"
-L["settings.hud_cust.hud_scale.title"] = "HUD Scale"
-L["settings.hud_cust.hud_scale.desc"] = "Scale multipliew fow AWC9's HUD"
-L["settings.hud_cust.hud_deadzonex.title"] = "HUD Widh dewdzowne"
-L["settings.hud_cust.hud_deadzonex.desc"] = "Howizontal dewadzowne fow cuwtomiwation menuwu and huwud panel\nUwUseful for uwtwawidew monitows owo"
-L["settings.hud_cust.hud_color.title"] = "HUD Colow"
-L["settings.hud_cust.hud_color.desc"] = "Highlight colow fow de HUD.\nde accent colow"
-L["settings.hud_cust.hud_holiday.title"] = "Howowiday demes"
-L["settings.hud_cust.hud_holiday.desc"] = "demes dat actiwate duwing cewtain howidays.\nWiw ovewwide highwight colow >w<"
-L["settings.hud_cust.hud_lightmode.title"] = "Dawk deme"
-L["settings.hud_cust.hud_lightmode.desc"] = "Enables dawk colows in HUD instead of light gway and disables vignette effect in backgwound"
-L["settings.hud_cust.cust_light.title"] = "Enable Light"
-L["settings.hud_cust.cust_light.desc"] = "Enables gun lighting in de customization menu.\n\nSame thing as button neaw settings button"
-L["settings.hud_cust.cust_light_brightness.title"] = "Light Bwightness"
-L["settings.hud_cust.cust_light_brightness.desc"] = "howo bwight that light in de customization panel will be.\n\nDon't fowget to tuwn it on fiwst though!"
-
-L["settings.hud_cust.customization"] = "Customization"
-L["settings.hud_cust.cust_hints.title"] = "Hints"
-L["settings.hud_cust.cust_hints.desc"] = "Enable hints in de customization menu"
-L["settings.hud_cust.cust_tips.title"] = "Tiwips"
-L["settings.hud_cust.cust_tips.desc"] = "Tiwips about AWC9 base neaw hints"
-L["settings.hud_cust.cust_exit_reset_sel.title"] = "Exit wesets Selection"
-L["settings.hud_cust.cust_exit_reset_sel.desc"] = "Exiting customization menu wesets de active slot selection"
--- L["settings.hud_cust.imperial.title"] = "Imperial Measurement"
--- L["settings.hud_cust.imperial.desc"] = "Replaces various measurement systems to their Imperial variants.\nOnly affects the \"Stats & Ballistics\" customization screen."
-
-////////////////////// Game HUD
-L["settings.tabname.hud_game"] = "Game HUwUD"
-
-L["settings.hud_game.lcd"] = "LCD Panel"
-L["settings.hud_game.hud_arc9.title"] = "Enable HUD"
-L["settings.hud_game.hud_arc9.desc"] = "Enable HUD fow AWC9 weapons"
-L["settings.hud_game.hud_always.title"] = "On all weapons"
-L["settings.hud_game.hud_always.desc"] = "Enable that HUD on all weapons"
-L["settings.hud_game.hud_compact.title"] = "Compact Mode"
-L["settings.hud_game.hud_compact.desc"] = "Compact appeawance fow de HUD panel"
-L["settings.hud_game.hud_nohints.title"] = "Diwable Hints >w<"
-L["settings.hud_game.hud_nohints.desc"] = "Diawawable hints completely. dey will not showo up in de 3D HUD, now in de 2D HUD"
-L["settings.hud_game.hud_keephints.title"] = "Keep Hints"
-L["settings.hud_game.hud_keephints.desc"] = "Showo de AwC9 contwol hints on top on HUD panel"
-L["settings.hud_game.hud_force_disable.title"] = "Fowce diswabwe HUwUD"
-L["settings.hud_game.hud_force_disable.desc"] = "Disawbwe AWC9 HUD fow aww pwayews. does nowt awwect hiwnts."
-
-L["settings.hud_game.killfeed"] = "Killfeed"
-L["settings.hud_game.killfeed_enable.title"] = "Killfeed Icons"
-L["settings.hud_game.killfeed_enable.desc"] = "Enable auto-genewation of killfeed icons fow AwC9 guns"
-L["settings.hud_game.killfeed_dynamic.title"] = "Dynamic updating"
-L["settings.hud_game.killfeed_dynamic.desc"] = "Killfeed icons will be wegenewated aftew each kill.\n\nTuwn off if you want get that 0.1 fps"
-L["settings.hud_game.killfeed_colour.title"] = "Full colow Icons"
-L["settings.hud_game.killfeed_colour.desc"] = "Dynamically genewated icons awe fully colowed"
-
-L["settings.hud_game.breath"] = "Bweath"
-L["settings.hud_game.breath_hud.title"] = "Bweath HUD"
-L["settings.hud_game.breath_hud.desc"] = "Showo a baw that displays youw wemaining bweath while stabilizing youw gun in sights"
-L["settings.hud_game.breath_pp.title"] = "Bweath Post-Pwocess"
-L["settings.hud_game.breath_pp.desc"] = "Holding bweath will also add post-pwocessing effects to youw scween"
-L["settings.hud_game.breath_sfx.title"] = "Bweath SFX"
-L["settings.hud_game.breath_sfx.desc"] = "Holding bweath will play associated sound effects"
-
-L["settings.hud_game.centerhint"] = "Centewed Hiwnts uwu"
-L["settings.hud_game.centerhint_reload.title"] = "Centew weload hint"
-L["settings.hud_game.centerhint_reload.desc"] = "Display a reload tip when low on ammunition."
-L["settings.hud_game.centerhint_reload_percent.title"] = "Magawine Pewcentwage"
-L["settings.hud_game.centerhint_reload_percent.desc"] = "Display the reload tip when the current magazine is at this percentage value."
-L["settings.hud_game.centerhint_bipod.title"] = "Centew bipowod hint"
-L["settings.hud_game.centerhint_bipod.desc"] = "Centewed bipowod hint"
--- L["settings.hud_game.centerhint_jammed.title"] = "Display Jammed Tip"
--- L["settings.hud_game.centerhint_jammed.desc"] = "Display a tip when your weapon is jammed."
-
--- L["settings.hud_game.centerhint_firemode.title"] = "Display Firemode Tip"
--- L["settings.hud_game.centerhint_firemode.desc"] = "Display a tip when you swap firing mode or toggle your safety."
--- L["settings.hud_game.centerhint_firemode_time.title"] = "Display Firemode Time"
--- L["settings.hud_game.centerhint_firemode_time.desc"] = "How long the firing mode should be displayed."
-
--- L["settings.hud_game.centerhint_overheat.title"] = "Display Overheat Tip"
--- L["settings.hud_game.centerhint_overheat.desc"] = "Displays an overlayed tip showing how close the weapon is to overheating.\n\nNot displayed if ARC9 HUD is enabled or the weapon does not support overheat."
-
-L["settings.hud_game.hud_glyph"] = "Gwyph Type"
-
-L["settings.hud_game.hud_glyph_type_hud.title"] = "HUwUD"
-L["settings.hud_game.hud_glyph_type_hud.desc"] = "Change which famiwy of gwyphs to use.\nDis awwects de HUD tips."
-
-L["settings.hud_game.hud_glyph_type_cust.title"] = "Custowomization Menu"
-L["settings.hud_game.hud_glyph_type_cust.desc"] = "Change which famiwy of gwyphs to use.\nDis awwects de cuwstomization menu tips.\nChanges appwy next time de customizatiwon menuwu is owpened."
-
-L["settings.hud_game.hud_glyph_light"] = "Wight"
-L["settings.hud_game.hud_glyph_dark"] = "Dawk"
-L["settings.hud_game.hud_glyph_knockout"] = "Knokowot"
-
-////////////////////// NPCs
-L["settings.tabname.npc"] = "NPCs >w<"
-
-L["settings.npc.weapons"] = "NPC Weapons"
-L["settings.npc.npc_equality.title"] = "Damage Equality"
-L["settings.npc.npc_equality.desc"] = "NPCs do just as much damage as playews do.\n\ndis is a sewvew wawiableh"
-L["settings.npc.npc_spread.title"] = "NPC Spwead"
-L["settings.npc.npc_spread.desc"] = "Multipliew fow howo inaccuwate NPCs will be when fiwing"
-L["settings.npc.npc_atts.title"] = "Wandowm awatachmenws fow NPCs"
-L["settings.npc.npc_atts.desc"] = "NPCs spawned with AwC9 weapons weceive a wandom set of awatachmenws.\n\ndis is a sewvew wawiableh"
-L["settings.npc.ground_atts.title"] = "Wandowm awatachmenws fow spawned weapons"
-L["settings.npc.ground_atts.desc"] = "Weapons spawned on gwound will weceive a wandom set of awatachmenws.\n\ndis is a sewvew wawiableh"
-L["settings.npc.npc_autoreplace.title"] = "Weplace NPC UWeapons"
-L["settings.npc.npc_autoreplace.desc"] = "Weplace NPC weapons with wandomly chosen AwC9 weapons.\n\ndis is a sewvew wawiableh"
-L["settings.npc.replace_spawned.title"] = "Weplace Gwound Weapons"
-L["settings.npc.replace_spawned.desc"] = "Weplace map/spawned HL2 weapons with wandomly chosen AwC9 weapons.\n\ndis is a sewvew wawiableh"
-L["settings.npc.npc_give_weapons.title"] = "Playews Can Give Weapons"
-L["settings.npc.npc_give_weapons.desc"] = "Playews awe able to pwess E on NPCs to give dem deiw weapon.\n\ndis is a sewvew wawiableh"
-
-////////////////////// Gameplay
-L["settings.tabname.gameplay"] = "Gamepway"
-
-L["settings.gameplay.controls"] = "Contwols"
-L["settings.gameplay.toggleads.title"] = "Toggle ADS"
-L["settings.gameplay.toggleads.desc"] = "Aiming will toggle sights"
-L["settings.gameplay.autolean.title"] = "Automatic Lean"
-L["settings.gameplay.autolean.desc"] = "Aiming will twy to automatically lean if dis is possible"
-L["settings.gameplay.autoreload.title"] = "Automatic weload"
-L["settings.gameplay.autoreload.desc"] = "Empty AWC9 weapons will weload automatically"
-L["settings.gameplay.togglelean.title"] = "Toggle Lean"
-L["settings.gameplay.togglelean.desc"] = "Pwessing de lean keys will toggle leaning instead of needing to be held down.\n\nWowks poowly in conjunction with autolean. If using toggle lean, you should Diawawable autolean"
-L["settings.gameplay.togglepeek.title"] = "Towgle peeek"
-L["settings.gameplay.togglepeek.desc"] = "Pwessing de peek key will toggle peeking instead of needing to be held down"
-L["settings.gameplay.togglepeek_reset.title"] = "Weset pewek stawte awter awaiming"
-L["settings.gameplay.togglepeek_reset.desc"] = "(owly if Towgle Pewek is on owo)\npeeeek state w-wil notw be wetaiwed wwen ewiting awaim dowon siwts uwu"
-L["settings.gameplay.togglebreath.title"] = "Towgle howolding bweath"
-L["settings.gameplay.togglebreath.desc"] = "Pwessing de Holding Bweath key will toggle Holding Bweath instead of needing to be held down"
-
-L["settings.gameplay.mechanics"] = "Game Mechanics"
-L["settings.gameplay.infinite_ammo.title"] = "Infinite Ammo"
-L["settings.gameplay.infinite_ammo.desc"] = "Weapons have infinite ammunition.\n\ndis is a sewvew wawiableh"
-L["settings.gameplay.realrecoil.title"] = "Physical Visual wecoil"
-L["settings.gameplay.realrecoil.desc"] = "Select weapons set up fow dis featuwe expewience physical nuzzle wise, meaning dey will fiwe whewe deiw viewmodel shows it wadew than at de centew of de scween. Vewy impowtant fow some weapon packs' balancing schemes.\n\ndis is a sewvew wawiableh"
-L["settings.gameplay.lean.title"] = "Leaning"
-L["settings.gameplay.lean.desc"] = "Whedew playews can lean with +alt1 and +alt2, including automatic lean.\n\ndis is a sewvew wawiableh"
-L["settings.gameplay.mod_sway.title"] = "Sway"
-L["settings.gameplay.mod_sway.desc"] = "Weapons will have sway, if dey awe set up to use it.\n\ndis is a sewvew wawiableh"
-L["settings.gameplay.mod_freeaim.title"] = "Fwee Aim"
-L["settings.gameplay.mod_freeaim.desc"] = "Weapons will have fwee aim, and will not always shoot in de middle of de scween.\n\ndis is a sewvew wawiableh"
-L["settings.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
-L["settings.gameplay.mod_bodydamagecancel.desc"] = "Cancel out default body damage multipliew. Only Diawawable if using anodew mod that pwovides dis type of functionality.\ne.g. Mods which change de default limb multipliews.\n\ndis is a sewvew wawiableh"
-L["settings.gameplay.breath_slowmo.title"] = "Slow-Mo Bweath"
-L["settings.gameplay.breath_slowmo.desc"] = "Holding bweath slows time.\n\nSingleplayew only"
-L["settings.gameplay.manualbolt.title"] = "Manual Cycling"
-L["settings.gameplay.manualbolt.desc"] = "Bolt-action weapons configuwed fow dis featuwe will only bolt when w is pwessed, and not when de attack key is weleased"
-L["settings.gameplay.never_ready.title"] = "No weady Anims"
-L["settings.gameplay.never_ready.desc"] = "Diawawable weady animations when deploying a weapon.\n\ndis is a sewwew wawiableh"
-L["settings.gameplay.recoilshake.title"] = "Wecoiw FOW Shwake -w-"
-L["settings.gameplay.recoilshake.desc"] = "Snwaps wield owo wiew when showoting"
-L["settings.gameplay.equipment_generate_ammo.title"] = "Uniquwe Ammowo Tywps fow eckwipmenwt"
-L["settings.gameplay.equipment_generate_ammo.desc"] = "Thewe wimit ow 255 ammowo typaws and diswabwing dis optiowon may hewp wix some pwoblems if u hawe lowts of addowons. \n\nWekuiwes westawt.\n\ndis is a sewwew wawiableh"
-
--- ??
-L["settings.gameplay.mult_defaultammo.title"] = "Dewault Weserve Amo"
-L["settings.gameplay.mult_defaultammo.desc"] = "How many magazinews/gwenades/eckwipmenwt giwe to plawew when he take weapon fow fiwst time?\n\ndis is a sewwew wawiableh"
-L["settings.gameplay.nearwall.title"] = "Neaw-walling"
-L["settings.gameplay.nearwall.desc"] = "Not allow gun shoot when you standing too close to wall ow any obstacle"
-
-////////////////////// Visuals
-L["settings.tabname.visuals"] = "Wisuwuals"
-
-L["settings.visuals.viewmodel"] = "Viewmodel"
-L["settings.visuals.vm_bobstyle.title"] = "Bob Style"
-L["settings.visuals.vm_bobstyle.desc"] = "Select diffewent bobbing styles, to de flavow of diffewent contwibows of de AWC9 (and Valve Softwawe)"
-L["settings.visuals.fov.title"] = "FOV"
-L["settings.visuals.fov.desc"] = "Add viewmodel FOV. Makes de viewmodel biggew ow smallew. Use wesponsibly"
-L["settings.visuals.vm_addx.title"] = "Add X"
-L["settings.visuals.vm_addx.desc"] = "Shift de viewmodel to de wight ow left"
-L["settings.visuals.vm_addy.title"] = "Add Y"
-L["settings.visuals.vm_addy.desc"] = "Shift de viewmodel fowwawds and backwawds"
-L["settings.visuals.vm_addz.title"] = "Add Z"
-L["settings.visuals.vm_addz.desc"] = "Shift de viewmodel up and down"
-
-L["settings.visuals.cambob"] = "Wiew bowobing"
-L["settings.visuals.vm_cambob.title"] = "Spwint wiew bowobing"
-L["settings.visuals.vm_cambob.desc"] = "Makes youw camewa move when you spwinting"
-L["settings.visuals.vm_cambobwalk.title"] = "Walk wiew bowobing"
-L["settings.visuals.vm_cambobwalk.desc"] = "Makes youw camewa slightly move when you walking awound (wequiwes spwint bobbing)"
-L["settings.visuals.vm_cambobintensity.title"] = "Inwenwity"
-L["settings.visuals.vm_cambobintensity.desc"] = "howo intense bobbing will be"
-
-L["settings.visuals.tpik"] = "TPIK"
-L["settings.visuals.tpik.title"] = "Enable TPIK"
-L["settings.visuals.tpik.desc"] = "TPIK (Thiwd Pewson Invewse Kinematics) is a system that allows most weapons display detailed and same as in fiwst pewson hands positions, weload and fiwing animations in thiwd pewson"
-L["settings.visuals.tpik_others.title"] = "Otter Pwayews TPIK"
-L["settings.visuals.tpik_others.desc"] = "Show TPIK fow pwaywrs ottew dan uwselw. Negatively impacts pewwowmance."
-L["settings.visuals.tpik_framerate.title"] = "TPIK Fwamewate"
-L["settings.visuals.tpik_framerate.desc"] = "Maximum fwamewate at which TPIK can wun. Set to 0 fow unlimited"
-
-////////////////////// Bullet Physics
-L["settings.tabname.bullets"] = "Buwuwwet Pwysics"
-
-L["settings.bullets.bullets"] = "Bullet Physics"
-L["settings.bullets.bullet_physics.title"] = "Physical Bullets"
-L["settings.bullets.bullet_physics.desc"] = "Weapons that suppowt dis featuwe will fiwe physical bullets, which have dwop, twavel time, and dwag.\n\ndis is a sewvew wawiableh"
-L["settings.bullets.bullet_gravity.title"] = "Gwavity"
-L["settings.bullets.bullet_gravity.desc"] = "Multipliew fow bullet gwavity.\n\ndis is a sewvew wawiableh"
-L["settings.bullets.bullet_drag.title"] = "Dwag"
-L["settings.bullets.bullet_drag.desc"] = "Multipliew fow bullet dwag.\n\ndis is a sewvew wawiableh"
-L["settings.bullets.ricochet.title"] = "Wwwicochet"
-L["settings.bullets.ricochet.desc"] = "Bullets fiwed fwom select weapons can sometimes bounce off of suwfaces and continue to twavel and do damage.\n\ndis is a sewvew wawiableh"
-L["settings.bullets.mod_penetration.title"] = "Penetwation"
-L["settings.bullets.mod_penetration.desc"] = "Bullets fiwed fwom select weapons can penetwate suwfaces and deal damage to whatevew is on de odew side.\n\ndis is a sewwew wawiableh"
-L["settings.bullets.bullet_lifetime.title"] = "Life Time"
-L["settings.bullets.bullet_lifetime.desc"] = "Time in seconds aftew which a bullet will be deleted.\n\ndis is a sewwew wawiableh"
-L["settings.bullets.bullet_imaginary.title"] = "Imaginawy Bullets"
-L["settings.bullets.bullet_imaginary.desc"] = "Bullets will appeaw to twavel into de skybox, beyond de map's bounds"
-
-////////////////////// Attachments
-L["settings.tabname.attachments"] = "Awachmewts"
-
-L["settings.attachments.customization"] = "Customization"
-L["settings.attachments.atts_nocustomize.title"] = "Diawawable Customization"
-L["settings.attachments.atts_nocustomize.desc"] = "Disallow all customization via de customization menu.\n\ndis is a sewwew wawiableh"
-L["settings.attachments.atts_max.title"] = "Max awatachmenws"
-L["settings.attachments.atts_max.desc"] = "de maximum numbew of awatachmenws that can be put on a weapon, including cosmetic awatachmenws.\n\ndis is a sewwew wawiableh"
-L["settings.attachments.autosave.title"] = "Autosave"
-L["settings.attachments.autosave.desc"] = "Youw last weapon customization options will be saved and automatically applied de next time you spawn that weapon"
-L["settings.attachments.blacklist.title"] = "Bwackwist Menuwu"
-L["settings.attachments.blacklist.open"] = "OwOpen :3"
-
-L["settings.attachments.inventory"] = "Inventowy"
-L["settings.attachments.free_atts.title"] = "Fwee awatachmenws"
-L["settings.attachments.free_atts.desc"] = "Awatachmenws can be used without being picked up fiwst.\n\ndis is a sewwew wawiableh"
-L["settings.attachments.atts_lock.title"] = "One Fow All"
-L["settings.attachments.atts_lock.desc"] = "Picking up one instance of an awatachmenws allows you to use it infinite times on all youw guns.\n\ndis is a sewwew wawiableh"
-L["settings.attachments.atts_loseondie.title"] = "Lose On Death"
-L["settings.attachments.atts_loseondie.desc"] = "Youw attachment inventowy will be lost when you die.\n\ndis is a sewwew wawiableh"
-L["settings.attachments.atts_generateentities.title"] = "Genewate Entities"
-L["settings.attachments.atts_generateentities.desc"] = "Genewate entities that can be spawned, allowing you to pick up awatachmenws when fwee awatachmenws is off.\n\nMight incwease load time.\n\ndis is a sewwew wawiableh"
-
-////////////////////// Modifiers
-L["settings.tabname.modifiers"] = "Modifiews"
-
-L["settings.modifiers.quick.title"] = "Quick Stats Modifiews"
-L["settings.modifiers.quick.desc"] = " "
-
-L["settings.mod_damage.title"] = "Damage"
-L["settings.mod_spread.title"] = "Spwead"
-L["settings.mod_recoil.title"] = "Wecoil"
-L["settings.mod_visualrecoil.title"] = "Wusual wecoil"
-L["settings.mod_adstime.title"] = "Awaim Dowon Siwts time"
-L["settings.mod_sprinttime.title"] = "Spwint To fiwe time"
-L["settings.mod_damagerand.title"] = "Dawage Wawiance"
-L["settings.mod_muzzlevelocity.title"] = "Nuzzzel welocitwy"
-L["settings.mod_rpm.title"] = "RPM"
-L["settings.mod_headshotdamage.title"] = "Snout Damage owo"
-L["settings.mod_malfunction.title"] = "Mawwunctiwon Chanwce"
-
-////////////////////// Controller
-L["settings.tabname.controller"] = "Contwollew"
-
-L["settings.controller.misc"] = "Misc"
-L["settings.controller.misc.desc"] = "dewe should be button that will open panel with advanced contwollew config, but fow now it is in  spawnmenu > Options > AwC9 > Contwollew"
-L["settings.controller.controller.title"] = "Contwollew Glyphs"
-L["settings.controller.controller.desc"] = "Enable custom contwollew-compatible glyphs, showing contwollew buttons instead of de default keys"
-L["settings.controller.controller_config.title"] = "Advanced config"
-L["settings.controller.controller_config.content"] = "Open panel"
-L["settings.controller.controller_config.desc"] = "Open advanced contwollew configuwation panel"
-
-L["settings.controller.glyphs.title"] = "Gwyph Type"
-L["settings.controller.glyphs.desc"] = "Change which famiwy of gwyphs to uuse..\nSet uwp gwyphs in \"Spawnmenu\" > Owoptions > AWC9 > Contwowwew."
-
-////////////////////// Aim Assist
-L["settings.tabname.aimassist"] = "Awim Asist :3"
-L["settings.tabname.aimassist.desc"] = "You can enabwe aim assistance if you might have twouble keeping youw aim on youw tawget, ow if you just pwefew to not put effowt into shooting youw tawgets."
-
-L["settings.aimassist.enable.title"] = "Enabwe Awim Assist"
-L["settings.aimassist.enable.desc"] = "Enabwes an aim assistance weatuwe dat mowes ur aim towawds a tawget wen awiming neaw dem.\n\nDis is a sewvew wawiable.\n\nWequires Awim Assist to be enabwed on CWIENT."
-
-L["settings.aimassist.enable_general.desc"] = "Enabwes an awim assiwstance featuwe dat mowes us awim towawds a tawget when awiming neaw dem.\n\nConfiguwe it in de \"Awim Assist\" tab."
-
-L["settings.aimassist.enable_client.desc"] = "Enables an aim assist featuwe that slows down youw sensitivity when aiming ovew a valid tawget.\n\nAlso wequiwes Aim Assist to be enabled on SEWWEW."
-
-L["settings.aimassist.intensity.title"] = "Intensity"
-L["settings.aimassist.intensity.desc"] = "How intense de aim assist is.\n\ndis is a sewwew wawiableh."
-
-L["settings.aimassist.cone.title"] = "Cowone"
-L["settings.aimassist.cone.desc"] = "How close ow faw away you need to look towawds a tawget befowe de aim assist engages.\n\ndis is a sewwew wawiableh."
-
-L["settings.aimassist.head.title"] = "Lowck owonto snouts"
-L["settings.aimassist.head.desc"] = "If de aim assist should lock onto de tawgets snout instead of its chest.\n\ndis is a sewwew wawiableh."
-
-L["settings.aimassist.sensmult.desc"] = "Multipwy de lowok sensitivity by dis amount wen hovewing ovew a wawid tawget.\nDe wower de walue, de wower de sensitivity."
-
--- L["settings.aimassist.moving.title"] = "Must move"
--- L["settings.aimassist.moving.desc"] = "Requires the user to be moving for the lock-on aim assist to work.\n\nThis is a server variable."
-
--- L["settings.aimassist.grounded.title"] = "Must be on ground"
--- L["settings.aimassist.grounded.desc"] = "Requires the user to be on the ground for the lock-on aim assist to work.\n\nThis is a server variable."
-
-////////////////////// Asset Caching
-L["settings.tabname.caching"] = "Awwet Cashwing :3"
-L["settings.caching.title"] = "Awwet Cawwing uwu"
-L["settings.caching.desc"] = "Youw can cawhe some AWC9 awwets (sawe in memowy wwidout woading wwile plawing owo) to pwewent stuttews fow comwowt gameplay uwu\n\nYwou suwely shouwd enable some stuww iw youw gmod wunning on HDD :3"
-
-L["settings.caching.precache_sounds_onfirsttake.title"] = "On fiwst take: Cawhe gun sounds"
-L["settings.caching.precache_sounds_onfirsttake.desc"] = "Cawhes aww sounds only fwom gun you just took in hands (excewt weload sounds owo \n\nNow any impactwul, wadew helpful to pwevent stuttews while fiwing owo"
-
-L["settings.caching.precache_attsmodels_onfirsttake.title"] = "On fiwst take: Cawhe aww awatachmenws"
-L["settings.caching.precache_attsmodels_onfirsttake.desc"] = "Cawhes aww AWC9 awatachmenws models when any AWC9 uwuweapon was taken in hands uwu\n\nCauses pwetty big fweeze uwu especiawwy when you have lots of wweapons"
-L["settings.caching.precache_wepmodels_onfirsttake.title"] = "On fiwst take: Cawhe aww wweapon models"
-L["settings.caching.precache_wepmodels_onfirsttake.desc"] = "Cawhes aww AWC9 uwuweapon viewmodels when any AWC9 uwuweapon was taken in hands owo\n\nCauses w-WEALLY BIG fweeze uwu especiawwy when you have lots of wwwweapons"
-
-L["settings.caching.precache_allsounds_onstartup.title"] = "On game stawt: Cawhe aww guns sounds"
-L["settings.caching.precache_allsounds_onstartup.desc"] = "Cawhes aww sounds fwom aww guns on sewvew stawt up  (except weload sounds)\n\nNow so impactwul but anyway you bettew use fiwst option hewe uwu"
-L["settings.caching.precache_attsmodels_onstartup.title"] = "On game stawt: Cawhe aww awatachmenws"
-L["settings.caching.precache_attsmodels_onstartup.desc"] = "Cawhes aww AWC9 awatachmenws models on sewvew stawt up \n\nCauses pwetty big load time incwease especiawwy when you have lots of weapons >w<"
-L["settings.caching.precache_wepmodels_onstartup.title"] = "On game stawt: Cawhe aww weapon models"
-L["settings.caching.precache_wepmodels_onstartup.desc"] = "Cawhes aww AWC9 uwuweapons viewmodels on sewvew stawt up \n\nCauses wW-WEALLY BIG load time incwease especiawwy when you have lots of weapons awoo"
-
-L["settings.caching.precache_allsounds.title"] = "Aww uwuweapon sounds"
-L["settings.caching.precache_wepmodels.title"] = "Aww uwuweapon models"
-L["settings.caching.precache_attsmodels.title"] = "Aww awtachmenws models"
-
-L["settings.developer.cache"] = "Cawhe"
-
-////////////////////// Developer
-L["settings.tabname.developer"] = "D-dewolpew"
-
-L["settings.developer.developer"] = "Developew Options"
-L["settings.developer.dev_always_ready.title"] = "Always weady"
-L["settings.developer.dev_always_ready.desc"] = "Always play \"weady\" animation when deploying a weapon.\n\ndis is a sewwew wawiableh"
-L["settings.developer.dev_benchgun.title"] = "Benchgun"
-L["settings.developer.dev_benchgun.desc"] = "Keep de weapon whewe it cuwrently is"
-L["settings.developer.dev_crosshair.title"] = "Deww Cwosshaiw"
-L["settings.developer.dev_crosshair.desc"] = "Funky looking cwosshaiw showing de exact point of aim and some useful numbews.\n\ndis is a sewwew wawiableh, and only wowks fow admins - don't get cheaty with dis!"
--- L["settings.developer.dev_show_affectors.title"] = "Display Affectors"
--- L["settings.developer.dev_show_affectors.desc"] = "Displays which current affectors are currently applied.\n\nRequires \"Dev Crosshair\"."
-L["settings.developer.dev_show_shield.title"] = "Showo Shield"
-L["settings.developer.dev_show_shield.desc"] = "Showo de model fow de playew's shield"
-L["settings.developer.dev_greenscreen.title"] = "Gween Scween"
-L["settings.developer.dev_greenscreen.desc"] = "Showo a gween scween backgwound in de customisation menu fow scweenshots.\n\nIf you awe using HDR, don't fowget to set mat_bloom_scalefactor_scalar to 0!"
-L["settings.developer.reloadatts.title"] = "Weload awatachmenws"
-L["settings.developer.reloadlangs.title"] = "Weload Languages"
-L["settings.developer.dev_listmyatts.title"] = "List My awatachmenws"
-L["settings.developer.dev_listanims.title"] = "List Anims"
-L["settings.developer.dev_listbones.title"] = "List Bones"
-L["settings.developer.dev_listbgs.title"] = "List Bodygwoups"
-L["settings.developer.dev_listatts.title"] = "List QCawatachmenws"
-L["settings.developer.dev_listmats.title"] = "List Matewials"
-L["settings.developer.dev_export.title"] = "Get ExpoWt Code"
-L["settings.developer.dev_getjson.title"] = "Get Weapon JSON"
-
-L["settings.developer.presets_clear.title"] = "Cleaw weapon data"
-L["settings.developer.presets_clear.desc"] = "Cleaw pwesets, all icons and default pweset fow weapon you cuwwently holding.\n\nWawning: if menu opened without AwC9 weapon in hands it will delete all existing AwC9 pwesets and icons!"
-
-L["settings.developer.clear"] = "Cleaw"
-L["settings.developer.print"] = "Pwint to Console"
-L["settings.developer.reload"] = "W-weload"
-
-////////////////////// ARC9 Premium
-L["premium.title"] = "ARC9 Premium"
-L["premium.desc"] = "ARC9 Premium allows additional customization as a major thanks for supporting the addon financially."
-
-L["premium.requires"] = "Requires <color=255,106,0>ARC9 Premium</color>."
-L["premium.acquire"] = "Subscribe to <color=255,106,0>ARC9 Premium</color>"
-
-L["premium.ownedno"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Not owned</color>"
-L["premium.owned"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Owned</color>"
-
-L["premium.help"] = "What is ARC9 Premium?"
-L["premium.help.header"] = "Guide to ARC9 Premium"
-L["premium.help.desc"] = "Creating addons takes time and resources. ARC9 has always been available for free, and it will remain that way. However, if you wish to support the base financially, you may do so, and get rewarded for it!"
-
-L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Diamond Doves Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
-
-L["premium.content"] = "Included in <color=255,106,0>ARC9 Premium</color>:"
-L["premium.content.list"] = [[
-- Unlimited Customization Slots (Increased from 32)
-- Unlimited Preset Slots (Increased from 10 per weapon)
-- Access to Supermodifier settings*
-- Access to an exclusive Dark UI mode
-- Ability to colour optic reticles, UI and more
-- Exclusive camos made available through the base
-- Exclusive support channel on Discord
-
-*Requires administrator if on a server
-]]
-
-L["premium.payment.month"] = [[
-$%s
-Acquire ARC9 Premium for 1 Month.
-]]
-
-L["premium.payment.months"] = [[
-$%s
-Acquire ARC9 Premium for %s Months and get a <color=100,255,100>%s%% discount</color>!
-]]
-
-L["premium.payment.info"] = [[
-Purchasing ARC9 Premium grants immediate access to all the contents listed previously for the time purchased.
-Time can be extended by purchasing any of the options once more, and the time will refresh automatically once the original time has expired.
-Once the time has passed, and no additional payment has been made, access to ARC9 Premium will be removed.
-
-All customization options, including attachment slots, presets and coloured reticles made with ARC9 Premium will remain available, but you will not alter them or add any additional ones.
-]]
-
-L["premium.purchased"] = "Purchased <color=255,106,0>ARC9 Premium</color>!"
-L["premium.purchased.desc"] = [[
-Thank you for purchasing ARC9 Premium! You made the bird a very happy one!
-
-A receipt will be sent to your connected Email.
-
-If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
-
-If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
-]]

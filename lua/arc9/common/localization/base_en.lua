@@ -1,9 +1,22 @@
-L = {} -- English strings by arctic, darsu, Moka, and various others
+L = {}
 
 /////////////////////////////////////// Font
 ////////////////////// See "font_en" file
 
 /////////////////////////////////////// General
+////////////////////// Translation
+L["translation.name"] = false
+L["translation.authors"] = " "
+
+--[[
+"translation.name" should be changed to "English Translation" but translated
+		for example "Deutsche Übersetzung", "Svensk Översättning", etc.
+
+If set to false, both of these will not show.
+
+"translation.authors" should include the list of the translators. For example, "Moka" or "darsu".
+--]]
+
 ////////////////////// Units of measurement
 L["unit.second"] = "s"
 L["unit.meter"] = "m"
@@ -299,65 +312,6 @@ L["autostat.secondary.sprint"] = "%s when Sprinting"
 L["autostat.secondary.true"] = "%s when TrueNames is on"
 L["autostat.secondary.ubgl"] = "%s in UBGL"
 
-////////////////////// Universal Trivia
-/////////// Country of Origin
-L["trivia.country"] = "Country of Origin"
-
-L["country.ar"] = "Argentina"
-L["country.au"] = "Australia"
-L["country.at"] = "Austria"
-L["country.by"] = "Belarus"
-L["country.be"] = "Belgium"
-L["country.br"] = "Brazil"
-L["country.ca"] = "Canada"
-L["country.cn"] = "China"
-L["country.hr"] = "Croatia"
-L["country.dk"] = "Denmark"
-L["country.eg"] = "Egypt"
-L["country.fi"] = "Finland"
-L["country.fr"] = "France"
-L["country.de"] = "Germany"
-L["country.gr"] = "Greece"
-L["country.hk"] = "Hong Kong"
-L["country.hu"] = "Hungary"
-L["country.is"] = "Iceland"
-L["country.id"] = "Indonesia"
-L["country.ir"] = "Iran"
-L["country.iq"] = "Iraq"
-L["country.ie"] = "Ireland"
-L["country.il"] = "Israel"
-L["country.it"] = "Italy"
-L["country.jp"] = "Japan"
-L["country.kz"] = "Kazakstan"
-L["country.kp"] = "North Korea"
-L["country.kr"] = "South Korea"
-L["country.lt"] = "Lithuania"
-L["country.mx"] = "Mexico"
-L["country.nl"] = "Netherlands"
-L["country.nz"] = "New Zealand"
-L["country.no"] = "Norway"
-L["country.pk"] = "Pakistan"
-L["country.ph"] = "Philippines"
-L["country.pl"] = "Poland"
-L["country.pt"] = "Portugal"
-L["country.ro"] = "Romania"
-L["country.ru"] = "Russia"
-L["country.sa"] = "Saudi Arabia"
-L["country.sg"] = "Singapore"
-L["country.sk"] = "Slovakia"
-L["country.si"] = "Slovenia"
-L["country.za"] = "South Africa"
-L["country.es"] = "Spain"
-L["country.se"] = "Sweden"
-L["country.ch"] = "Switzerland"
-L["country.tw"] = "Taiwan"
-L["country.th"] = "Thailand"
-L["country.tr"] = "Turkey"
-L["country.ua"] = "Ukraine"
-L["country.ae"] = "United Arab Emirates"
-L["country.gb"] = "United Kingdom"
-L["country.us"] = "United States"
-
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 Attachment Blacklist"
 L["blacklist.desc"] = "Attachments checked here will be blocked from use"
@@ -499,9 +453,6 @@ L["settings.tpik.desc2"] = "Tweak in \"Visuals\"\n\nEnables TPIK (Third Person I
 
 L["settings.aimassist.enable.desc2"] = "Tweak in \"Gameplay\"\n\nEnables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
 
-L["settings.gameplay.controller.title"] = "Enable Controller Mode"
-L["settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements.\n\nCustom glyphs can be customized via the Spawnmenu (Options > ARC9 > Controller)."
-
 ////////////////////// Reset Settings
 L["settings.tabname.reset"] = "Reset Settings"
 L["settings.tabname.reset.desc"] = "Press the \"Reset\" button to fully reset ARC9 settings back to their default values."
@@ -518,15 +469,18 @@ L["settings.reset"] = "RESET"
 L["settings.tabname.hud_game"] = "Game HUD"
 
 ////////// ARC9 HUD
+L["settings.server.hud_game.hud_arc9.title"] = "Globally Disable ARC9 HUD"
+L["settings.server.hud_game.hud_arc9.desc"] = "Disables the ability for users to utilize the ARC9 HUD."
+
 L["settings.tabname.arc9_hud"] = "ARC9 HUD"
 L["settings.tabname.arc9_hud.desc"] = "Everything related to ARC9's custom HUD and its elements."
 
 L["settings.hud_game.hud_arc9.title"] = "Enable ARC9 HUD"
 L["settings.hud_game.hud_arc9.desc"] = "Enable a custom LCD display HUD when using ARC9 weapons."
-L["settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
-L["settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
 L["settings.hud_game.hud_compact.title"] = "Compact mode"
 L["settings.hud_game.hud_compact.desc"] = "Hides certain elements on the ARC9 HUD, providing a more compact look."
+L["settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
+L["settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
 
 L["settings.hud_game.keephints.title"] = "Always Display Hints"
 L["settings.hud_game.keephints.desc"] = "Disables the fadeaway of the control hints."
@@ -542,6 +496,12 @@ L["settings.hud_game.killfeed_dynamic.title"] = "Dynamic Icons"
 L["settings.hud_game.killfeed_dynamic.desc"] = "Dynamically generates icons when getting kills or altering attachments."
 L["settings.hud_game.killfeed_colour.title"] = "Display in Color"
 L["settings.hud_game.killfeed_colour.desc"] = "Generates icons in full color rather than black and white."
+
+L["settings.hud_game.hud_scale.title"] = "HUD Scale"
+L["settings.hud_game.hud_scale.desc"] = "Alter the size scale of the ARC9 HUD and the customization menu.\n\nNote: If set below 1, the ARC9 HUD will be disabled."
+
+L["settings.hud_game.hud_deadzonex.title"] = "HUD Horizontal Deadzone"
+L["settings.hud_game.hud_deadzonex.desc"] = "Alters the horizontal deadzone of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
 
 ////////// Glyphs
 L["settings.tabname.glyphs"] = "Glyphs"
@@ -559,11 +519,6 @@ L["settings.hud_glyph.knockout"] = "Knockout"
 ////////// Display Tooltips
 L["settings.tabname.centerhint"] = "Display Tooltips"
 L["settings.tabname.centerhint.desc"] = "Display tooltips on your HUD when certain criteria are met."
-
-L["settings.centerhint.breath_hud.title"] = "Bar on HUD idk how to name it"
-L["settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
-L["settings.centerhint.breath_pp.title"] = "Post-Processing"
-L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
 
 L["settings.centerhint.reload.title"] = "When Low on Ammo"
 L["settings.centerhint.reload.desc"] = "Displays a tooltip when the magazine reaches a certain percentage value.\n\nAlso displays which button to press."
@@ -584,16 +539,6 @@ L["settings.centerhint.firemode_time.desc"] = "How long, in seconds, the tooltip
 
 L["settings.centerhint.overheat.title"] = "When Overheating"
 L["settings.centerhint.overheat.desc"] = "Displays a tooltip when the weapon is about to overheat."
-
-////////// Advanced ARC9 HUD Settings
--- L["settings.tabname.arc9_hud_adv"] = "Advanced ARC9 HUD Settings"
--- L["settings.tabname.arc9_hud_adv.desc"] = "Tweak more advanced settings related to ARC9's HUD and its elements."
-
-L["settings.hud_game.hud_scale.title"] = "HUD Scale"
-L["settings.hud_game.hud_scale.desc"] = "Alter the size scale of the ARC9 HUD and the customization menu.\n\nNote: If set below 1, the ARC9 HUD will be disabled."
-
-L["settings.hud_game.hud_deadzonex.title"] = "HUD Horizontal Deadzone"
-L["settings.hud_game.hud_deadzonex.desc"] = "Alters the dorizontal deadzone of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
 
 ////////////////////// Visuals
 L["settings.tabname.visuals"] = "Visuals"
@@ -677,73 +622,13 @@ L["settings.vm.vm_cambobwalk.desc"] = "Makes the camera move when walking."
 L["settings.vm.vm_cambobintensity.title"] = "Intensity"
 L["settings.vm.vm_cambobintensity.desc"] = "How intense the sprint and walk bobbing should be."
 
-////////// Other
-L["settings.tabname.other"] = "Other"
-L["settings.tabname.other.desc"] = "Adjust various miscellaneous settings."
-
-////////////////////// Gameplay
-L["settings.tabname.gameplay"] = "Gameplay"
-L["settings.tabname.modifiers"] = "Modifiers"
-L["settings.tabname.attachmentsnpcs"] = "Attachments & NPCs"
-L["settings.tabname.features"] = "Attachments & NPCs"
-L["settings.tabname.features"] = "Features"
-
-////////// General
-L["settings.tabname.general"] = "General"
-L["settings.tabname.general.desc"] = "Various general gameplay settings."
-
-L["settings.gameplay.toggleads.title"] = "Toggle ADS"
-L["settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
-
-L["settings.gameplay.dtap_sights.title"] = "Double-Tap USE to Cycle Sights"
-L["settings.gameplay.dtap_sights.desc"] = "Allows you to double-tap your USE button to cycle through optics."
-
-L["settings.gameplay.autoreload.title"] = "Automatic Reload"
-L["settings.gameplay.autoreload.desc"] = "Automatically reloads your weapon when it is empty."
-
-L["settings.gameplay.autolean.title"] = "Automatic Lean"
-L["settings.gameplay.autolean.desc"] = "Automatically tries to lean when near cover."
-
-L["settings.gameplay.togglelean.title"] = "Toggle Lean"
-L["settings.gameplay.togglelean.desc"] = "Pressing your left or right lean button toggles leaning."
-
-L["settings.gameplay.togglepeek.title"] = "Toggle Peek"
-L["settings.gameplay.togglepeek.desc"] = "Pressing your peek button toggles peeking."
-
-L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek After Aiming"
-L["settings.gameplay.togglepeek_reset.desc"] = "Disables peek when you stop aiming."
-
-L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
-L["settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
-
-////////// Optics
-L["settings.tabname.optics"] = "Optics"
-L["settings.tabname.optics.desc"] = "Adjust settings related to optics and their functionality."
-
-L["settings.gameplay.cheapscopes.title"] = "Cheap Scopes"
-L["settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
-
-L["settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
-L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
-
-L["settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
-L["settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
-
-L["settings.gameplay.sensmult.title"] = "Multiply ADS Sensitivity"
-L["settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity globally with this value.\n\nThe lower it is, the slower your sensitivity will be."
-
-L["settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
-L["settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
-
-L["settings.gameplay.color.scope.title"] = "Scope Reticle Color"
-L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
+////////////////////// Crosshair & Scopes
+L["settings.tabname.crosshairscopes"] = "Crosshair & Scopes"
+L["settings.tabname.crosshairscopes.desc"] = "Adjust settings related to the crosshair and scopes."
 
 ////////// Crosshair
 L["settings.tabname.crosshair"] = "Crosshair"
 L["settings.tabname.crosshair.desc"] = "Adjust settings related to the crosshair."
-
-L["settings.tabname.crosshairscopes"] = "Crosshair & Scopes"
-L["settings.tabname.crosshairscopes.desc"] = "Adjust settings related to the crosshair."
 
 L["settings.crosshair.cross_enable.title"] = "Enable Crosshair"
 L["settings.crosshair.cross_enable.desc"] = "Enables the crosshair."
@@ -781,14 +666,124 @@ L["settings.crosshair.cross_size_dot.desc"] = "Multiplies the size of the center
 L["settings.crosshair.cross_size_prong.title"] = "Crosshair Prong Width"
 L["settings.crosshair.cross_size_prong.desc"] = "Multiplies the width of the crosshair prongs by this value."
 
-////////// Aim Assist
-L["settings.tabname.aimassist"] = "Aim Assist"
-L["settings.tabname.aimassist.desc"] = "Adjust settings related to aiming assistance."
+////////// Optics
+L["settings.tabname.optics"] = "Optics"
+L["settings.tabname.optics.desc"] = "Adjust settings related to optics and their functionality."
+
+L["settings.gameplay.toggleads.title"] = "Toggle ADS"
+L["settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
+
+L["settings.gameplay.cheapscopes.title"] = "Cheap Scopes"
+L["settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
+
+L["settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
+L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
+
+L["settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
+L["settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
+
+L["settings.gameplay.sensmult.title"] = "Multiply ADS Sensitivity"
+L["settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity globally with this value.\n\nThe lower it is, the slower your sensitivity will be."
+
+L["settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
+L["settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
+
+L["settings.gameplay.color.scope.title"] = "Scope Reticle Color"
+L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
+
+////////////////////// Gameplay
+L["settings.tabname.gameplay"] = "Gameplay"
+
+////////// General
+L["settings.tabname.general"] = "General"
+L["settings.tabname.general.desc"] = "Various general gameplay settings."
+
+L["settings.gameplay.dtap_sights.title"] = "Double-Tap USE to Cycle Sights"
+L["settings.gameplay.dtap_sights.desc"] = "Allows you to double-tap your USE button to cycle through optics."
+
+L["settings.gameplay.autoreload.title"] = "Automatic Reload"
+L["settings.gameplay.autoreload.desc"] = "Automatically reloads your weapon when it is empty."
+
+L["settings.server.gameplay.recoilshake.title"] = "Enable Recoil FOV Shake"
+L["settings.server.gameplay.recoilshake.desc"] = "Snaps the field of view when shooting."
+
+////////// Functionality
+L["settings.tabname.features"] = "Features"
+L["settings.tabname.features.desc"] = "Adjust settings related to various ARC9 features."
+
+L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway & Breath Hold"
+L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway (if the weapon supports it) and the ability to hold your breath.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen.\n\nAdditionally, you can press and hold your sprint button to steady your aim."
+
+L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
+L["settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
+
+L["settings.centerhint.breath_hud.title"] = "Show Breath on HUD"
+L["settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
+
+L["settings.server.gameplay.breath_slowmo.title"] = "Slow-Mo Breathing in Singleplayer"
+L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
+
+L["settings.centerhint.breath_pp.title"] = "Post-Processing"
+L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
+
+L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
+L["settings.server.gameplay.mod_peek.desc"] = "Enable peeking, if the weapon supports it.\n\nAllows the user to lower their weapon while aiming while still having aiming benefits."
+
+L["settings.gameplay.togglepeek.title"] = "Toggle Peek"
+L["settings.gameplay.togglepeek.desc"] = "Pressing your peek button toggles peeking."
+
+L["settings.gameplay.togglepeek_reset.title"] = "Reset Peek After Aiming"
+L["settings.gameplay.togglepeek_reset.desc"] = "Disables peek when you stop aiming."
+
+L["settings.server.aimassist.enable.title"] = "Allow Aim Assist"
+L["settings.server.aimassist.enable.desc"] = "Enables the ability for users to utilize aiming assistance."
 
 L["settings.aimassist.enable.title"] = "Enable Aim Assist"
 L["settings.aimassist.enable.desc"] = "Enables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
 
 L["settings.aimassist.sensmult.desc"] = "Multiplies the aiming sensitivity by this value when aiming close to valid targets if one is detected close to your crosshair."
+
+L["settings.server.aimassist.intensity.title"] = "Aim Assist Intensity"
+L["settings.server.aimassist.intensity.desc"] = "How intense the aim assistance should be."
+
+L["settings.server.aimassist.cone.title"] = "Aim Assist Cone"
+L["settings.server.aimassist.cone.desc"] = "How large of an area the aim assist should take affect in. The larger, the further away the valid targets can be."
+
+L["settings.server.aimassist.heads.title"] = "Lock onto Heads"
+L["settings.server.aimassist.heads.desc"] = "Enable if the aim assist should target the target's head rather than its chest."
+
+L["settings.server.gameplay.manualbolt.title"] = "Require Manual Cycling"
+L["settings.server.gameplay.manualbolt.desc"] = "Enable if the user should manually cycle manual operated weapons by pressing their reload key."
+
+L["settings.server.gameplay.lean.title"] = "Allow Leaning"
+L["settings.server.gameplay.lean.desc"] = "Allows users to lean left or right. Also applies to Automatic Lean."
+
+L["settings.gameplay.autolean.title"] = "Automatic Lean"
+L["settings.gameplay.autolean.desc"] = "Automatically tries to lean when near cover."
+
+L["settings.gameplay.togglelean.title"] = "Toggle Lean"
+L["settings.gameplay.togglelean.desc"] = "Pressing your left or right lean button toggles leaning."
+
+L["settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
+L["settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
+
+L["settings.server.gameplay.never_ready.title"] = "Disable Readying Animations"
+L["settings.server.gameplay.never_ready.desc"] = "Enable to disable weapon readying animations when you first pull out a weapon."
+
+L["settings.server.gameplay.infinite_ammo.title"] = "Enable Infinite Ammo"
+L["settings.server.gameplay.infinite_ammo.desc"] = "Weapons no longer require ammunition when reloading."
+
+L["settings.server.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
+L["settings.server.gameplay.mult_defaultammo.desc"] = "How many spare magazines or pieces of equipment the player gets when a weapon is spawned."
+
+L["settings.server.gameplay.equipment_generate_ammo.title"] = "Generate Unique Ammo for Equipment"
+L["settings.server.gameplay.equipment_generate_ammo.desc"] = "The Source engine has a limit of 255 ammo types. Disabling this option could help fix errors if you have many addons installed.\n\nRequires restart."
+
+L["settings.server.gameplay.realrecoil.title"] = "Enable Physical Visual Recoil"
+L["settings.server.gameplay.realrecoil.desc"] = "Various weapons are set up for physical muzzle rise, meaning that they will shoot where their viewmodel points rather than the center of the screen.\n\nVery important for some weapon packs' balancing schemes."
+
+L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
+L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
 
 ////////////////////// Customization
 L["settings.tabname.customization"] = "Customization"
@@ -800,10 +795,8 @@ L["settings.tabname.custmenu.desc"] = "Adjust settings related to the customizat
 L["settings.custmenu.hud_color.title"] = "Customization Menu Accent"
 L["settings.custmenu.hud_color.desc"] = "Alter the accent color for the customization menu."
 
--- L["settings.custmenu.hud_darkmode.title"] = "Dark Mode"
--- L["settings.custmenu.hud_darkmode.desc"] = "Changes the color scheme of the customization menu to a darker one."
 L["settings.custmenu.hud_lightmode.title"] = "Light Mode"
-L["settings.custmenu.hud_lightmode.desc"] = "Changes the color scheme of the customization menu to a lighter one. (original color scheme)"
+L["settings.custmenu.hud_lightmode.desc"] = "Changes the color scheme of the customization menu to a lighter one.\n\nThe original ARC9 color scheme."
 
 L["settings.custmenu.hud_holiday.title"] = "Festive Mode"
 L["settings.custmenu.hud_holiday.desc"] = "Changes the color scheme of the customization menu to match certain holidays.\n\nOverrides \"Customization Menu Accent\"."
@@ -820,90 +813,38 @@ L["settings.custmenu.cust_hints.desc"] = "Displays control tips in the bottom ri
 L["settings.custmenu.cust_tips.title"] = "Enable General Hints"
 L["settings.custmenu.cust_tips.desc"] = "Displays general hints in the bottom left of the customization menu."
 
+L["settings.custmenu.cust_exit_reset_sel.title"] = "Reset Active Slot on Close"
+L["settings.custmenu.cust_exit_reset_sel.desc"] = "If enabled, the active customization slot will be reset when the menu is re-opened."
+
 L["settings.custmenu.autosave.title"] = "Auto-Save Attachments"
 L["settings.custmenu.autosave.desc"] = "Automatically saves equipped attachments when you exit the customization menu. Reloads them automatically when you respawn the weapon."
+
+L["settings.server.gameplay.truenames.title"] = "Enable True Names"
+L["settings.server.gameplay.truenames.desc"] = "Enable to have weapons that utilize fictional names to display their real ones instead.\n\nNot all weapons support this."
 
 L["settings.custmenu.units.title"] = "Display Units"
 L["settings.custmenu.units.desc"] = "Choose to display either metric or imperial units in the customization menu."
 L["settings.custmenu.units.metric"] = "Metric"
 L["settings.custmenu.units.imperial"] = "Imperial"
 
-L["settings.custmenu.cust_exit_reset_sel.title"] = "Reset Active Slot on Close"
-L["settings.custmenu.cust_exit_reset_sel.desc"] = "If enabled, the active customization slot will be reset when the menu is re-opened."
+L["settings.gameplay.controller.title"] = "Enable Controller Mode"
+L["settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements.\n\nCustom glyphs can be customized via the Spawnmenu (Options > ARC9 > Controller)."
 
-////////////////////// Server
-L["settings.tabname.server"] = "Server"
+L["settings.gameplay.font.title"] = "Custom Font"
+L["settings.gameplay.font.desc"] = "Write the custom font that should be used on ARC9.\n\nNote 1: The font must be installed on your current machine.\n\nNote 2: The name should be the font name displayed in the TTF file, not the file name of the TTF."
 
-////////// ARC9 HUD
-L["settings.server.hud_game.hud_arc9.title"] = "Globally Disable ARC9 HUD"
-L["settings.server.hud_game.hud_arc9.desc"] = "Disables the ability for users to utilize the ARC9 HUD."
-
-////////// Visuals
-L["settings.server.gameplay.truenames.title"] = "Enable True Names"
-L["settings.server.gameplay.truenames.desc"] = "Enable to have weapons that utilize fictional names to display their real ones instead.\n\nNot all weapons support this."
-
-////////// Gameplay
-L["settings.server.aimassist.enable.title"] = "Allow Aim Assist"
-L["settings.server.aimassist.enable.desc"] = "Enables the ability for users to utilize aiming assistance."
-
-L["settings.server.aimassist.intensity.title"] = "Aim Assist Intensity"
-L["settings.server.aimassist.intensity.desc"] = "How intense the aim assistance should be."
-
-L["settings.server.aimassist.cone.title"] = "Aim Assist Cone"
-L["settings.server.aimassist.cone.desc"] = "How large of an area the aim assist should take affect in. The larger, the further away the valid targets can be."
-
-L["settings.server.aimassist.heads.title"] = "Lock onto Heads"
-L["settings.server.aimassist.heads.desc"] = "Enable if the aim assist should target the target's head rather than its chest."
-
-L["settings.server.gameplay.infinite_ammo.title"] = "Enable Infinite Ammo"
-L["settings.server.gameplay.infinite_ammo.desc"] = "Weapons no longer require ammunition when reloading."
-
-L["settings.server.gameplay.realrecoil.title"] = "Enable Physical Visual Recoil"
-L["settings.server.gameplay.realrecoil.desc"] = "Various weapons are set up for physical muzzle rise, meaning that they will shoot where their viewmodel points rather than the center of the screen.\n\nVery important for some weapon packs' balancing schemes."
-
-L["settings.server.gameplay.lean.title"] = "Allow Leaning"
-L["settings.server.gameplay.lean.desc"] = "Allows users to lean left or right. Also applies to Automatic Lean."
-
-L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway & Breath Hold"
-L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway, if the weapon supports it.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen."
-
-L["settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
-L["settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
-
-L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
-L["settings.server.gameplay.mod_peek.desc"] = "Enable pee king"
-
-L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
-L["settings.server.gameplay.mod_overheat.desc"] = "Enable Overheating on certain guns blah blah"
-
-L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
-L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
-
-L["settings.server.gameplay.breath_slowmo.title"] = "Slow-Mo Breathing in Singleplayer"
-L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
-
-L["settings.server.gameplay.manualbolt.title"] = "Require Manual Cycling"
-L["settings.server.gameplay.manualbolt.desc"] = "Enable if the user should manually cycle manual operated weapons by pressing their reload key."
-
-L["settings.server.gameplay.never_ready.title"] = "Disable Readying Animations"
-L["settings.server.gameplay.never_ready.desc"] = "Enable to disable weapon readying animations when you first pull out a weapon."
-
-L["settings.server.gameplay.recoilshake.title"] = "Enable Recoil FOV Shake"
-L["settings.server.gameplay.recoilshake.desc"] = "Snaps the field of view when shooting."
-
-L["settings.server.gameplay.equipment_generate_ammo.title"] = "Generate Unique Ammo for Equipment"
-L["settings.server.gameplay.equipment_generate_ammo.desc"] = "The Source engine has a limit of 255 ammo types. Disabling this option could help fix errors if you have many addons installed.\n\nRequires restart."
-
-L["settings.server.gameplay.mult_defaultammo.title"] = "Default Reserve Ammo"
-L["settings.server.gameplay.mult_defaultammo.desc"] = "How many spare magazines or pieces of equipment the player gets when a weapon is spawned."
+////////////////////// Attachments & NPCs
+L["settings.tabname.attachmentsnpcs"] = "Attachments & NPCs"
 
 ////////// Customization
-L["settings.server.custmenu.blacklist.title"] = "Blacklist Menu"
-L["settings.server.custmenu.blacklist.desc"] = "Opens a menu that allows certain attachments to be completely disabled."
-L["settings.server.custmenu.blacklist.open"] = "OPEN MENU"
+L["settings.tabname.customization.desc"] = "Adjust settings related to weapon customizing."
 
 L["settings.server.custmenu.atts_nocustomize.title"] = "Disable Customizing"
 L["settings.server.custmenu.atts_nocustomize.desc"] = "Disables the ability for users to open the customization menu.\n\nDoes not affect admins."
+
+L["settings.server.custmenu.blacklist.title"] = "Blacklist Menu"
+L["settings.server.custmenu.blacklist.desc"] = "Opens a menu that allows certain attachments to be completely disabled."
+L["settings.server.custmenu.blacklist.open"] = "OPEN MENU"
 
 L["settings.server.custmenu.atts_max.title"] = "Max Attachments"
 L["settings.server.custmenu.atts_max.desc"] = "The maximum number of attachments a user can equip onto a weapon, including cosmetic ones."
@@ -920,8 +861,36 @@ L["settings.server.custmenu.atts_loseondie.desc"] = "If the user dies, they'll l
 L["settings.server.custmenu.atts_generateentities.title"] = "Generate Attachment Entities"
 L["settings.server.custmenu.atts_generateentities.desc"] = "Generate entities that can be spawned via the Spawnmenu, allowing you to pick up attachments when \"Free Attachments\" is disabled.\n\nIncreases loading times."
 
-////////// Bullet Physics
+////////// NPC Settings
+L["settings.tabname.npc"] = "NPC Settings"
+L["settings.tabname.npc.desc"] = "Adjust settings for interaction with NPC's."
+
+L["settings.server.npc.npc_autoreplace.title"] = "Replace NPC Weapons"
+L["settings.server.npc.npc_autoreplace.desc"] = "NPC's that spawn with HL2 weapons will have them be replaced with ARC9 weapons."
+
+L["settings.server.npc.npc_atts.title"] = "Give NPC Weapons Random Attachments"
+L["settings.server.npc.npc_atts.desc"] = "NPC's with ARC9 weapons will receive a random set of attachments"
+
+L["settings.server.npc.replace_spawned.title"] = "Replace Ground Weapons"
+L["settings.server.npc.replace_spawned.desc"] = "Replace map or spawned HL2 weapons with randomly chosen ARC9 weapons"
+
+L["settings.server.npc.ground_atts.title"] = "Give Ground Weapons Random Attachments"
+L["settings.server.npc.ground_atts.desc"] = "Weapons spawned on the ground will receive a random set of attachments."
+
+L["settings.server.npc.npc_give_weapons.title"] = "Allow Weapon Swapping between Players & NPCs"
+L["settings.server.npc.npc_give_weapons.desc"] = "Allow the players to press their USE key on NPC's to give them or swap their ARC9 weapons."
+
+L["settings.server.npc.npc_equality.title"] = "Enable NPC Damage Equality"
+L["settings.server.npc.npc_equality.desc"] = "NPC's do equal damage with ARC9 weapons as players do."
+
+L["settings.server.npc.npc_spread.title"] = "NPC Spread"
+L["settings.server.npc.npc_spread.desc"] = "Multiply the accuracy for weapons when NPC's are shooting them."
+
+////////////////////// Bullet Physics
 L["settings.tabname.bulletphysics"] = "Bullet Physics"
+
+////////// Bullet Physics
+L["settings.tabname.bulletphysics.desc"] = "Adjust settings related to physical bullets."
 
 L["settings.server.bulletphysics.bullet_physics.title"] = "Enable Physical Bullets"
 L["settings.server.bulletphysics.bullet_physics.desc"] = "Weapons that support this shoot physical projectiles which are affected by bullet drop, drag and travel time."
@@ -941,32 +910,12 @@ L["settings.server.bulletphysics.ricochet.desc"] = "Allows bullets to bounce off
 L["settings.server.bulletphysics.mod_penetration.title"] = "Enable Bullet Penetration"
 L["settings.server.bulletphysics.mod_penetration.desc"] = "Allows bullets to pierce cover, potentially striking foes hiding behind it.\n\nEffectiveness depends on the weapon."
 
-////////// NPC Settings
-L["settings.tabname.npc"] = "NPC Settings"
-
-L["settings.server.npc.npc_autoreplace.title"] = "Replace NPC Weapons"
-L["settings.server.npc.npc_autoreplace.desc"] = "NPC's that spawn with HL2 weapons will have them be replaced with ARC9 weapons."
-
-L["settings.server.npc.npc_atts.title"] = "Give NPC Weapons Random Attachments"
-L["settings.server.npc.npc_atts.desc"] = "NPC's with ARC9 weapons will receive a random set of attachments"
-
-L["settings.server.npc.replace_spawned.title"] = "Replace Ground Weapons"
-L["settings.server.npc.replace_spawned.desc"] = "Replace map or spawned HL2 weapons with randomly chosen ARC9 weapons"
-
-L["settings.server.npc.ground_atts.title"] = "Give Ground Weapons Random Attachments"
-L["settings.server.npc.ground_atts.desc"] = "Weapons spawned on the ground will receive a random set of attachments."
-
-L["settings.server.npc.npc_give_weapons.title"] = "Allow Weapon Swapping between Players and NPCs"
-L["settings.server.npc.npc_give_weapons.desc"] = "Allow the players to press their USE key on NPC's to give them or swap their ARC9 weapons."
-
-L["settings.server.npc.npc_equality.title"] = "Enable NPC Damage Equality"
-L["settings.server.npc.npc_equality.desc"] = "NPC's do equal damage with ARC9 weapons as players do."
-
-L["settings.server.npc.npc_spread.title"] = "NPC Spread"
-L["settings.server.npc.npc_spread.desc"] = "Multiply the accuracy for weapons when NPC's are shooting them."
+////////////////////// Modifiers
+L["settings.tabname.modifiers"] = "Modifiers"
 
 ////////// Quick Stat Modifiers
 L["settings.tabname.quickstat"] = "Quick Stat Modifiers"
+L["settings.tabname.quickstat.desc"] = "Quickly adjust specific weapon modifiers."
 
 L["settings.server.quickstat.mod_damage.title"] = "Damage"
 
@@ -983,6 +932,9 @@ L["settings.server.quickstat.mod_muzzlevelocity.desc"] = "Multiply how fast the 
 L["settings.server.quickstat.mod_rpm.desc"] = "Multiply how quickly the weapon fires."
 L["settings.server.quickstat.mod_headshotdamage.desc"] = "Multiply how much damage the weapon deals on headshots."
 L["settings.server.quickstat.mod_malfunction.desc"] = "Multiply how likely it is for the weapon to malfunction."
+
+L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
+L["settings.server.gameplay.mod_overheat.desc"] = "If the weapon supports it, it can overheat when firing too often, which could lead to a malfunction."
 
 ////////////////////// Developer
 L["settings.tabname.developer"] = "Developer"

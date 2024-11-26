@@ -31,7 +31,7 @@ for Lang in ToBeFormatted:
                     break
                 if j == Text[-1]:
                     print(Lang + " missing string " + i[1])
-                    i[1] = "-- " + i[1] + " = "+ i[2] + "\n"
+                    i[1] = "-- " + i[1] + " = "+ i[2]
     with open(BaseDir + Lang + ".lua", "w", encoding='utf-8') as f:
         for line in FormattedText:
             f.write(line[1])
