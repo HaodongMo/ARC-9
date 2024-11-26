@@ -87,7 +87,7 @@ local function FesiugBob(self, pos, ang)
     if self:GetCustomize() then return pos, ang end
     local owner = self:GetOwner()
 
-    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
+    local sharedmult = self:GetIsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local cv = owner:GetVelocity():Length()
     v = math.Approach(v, cv, FrameTime()*400/0.4)
@@ -181,7 +181,7 @@ local function ArcticBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
 
-    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
+    local sharedmult = self:GetIsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local v = owner:GetVelocity():Length()
     v = math.Clamp(v, 0, 350)
@@ -227,7 +227,7 @@ local function ArcticBreadBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
 
-    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
+    local sharedmult = self:GetIsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local velocityangle = owner:GetVelocity()
     local v = velocityangle:Length()
@@ -265,7 +265,7 @@ local function ArcticBreadBob(self, pos, ang)
 
     if owner.GetSliding then if owner:GetSliding() then mag = 0 step = 5 smoothsidemove = 0 end end
 
-    if owner:IsSprinting() then 
+    if self:GetIsSprinting() then 
         pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.45 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag * sharedmult)
         pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.11 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 1) * ((math.sin(self.BobCT * 0.615) * 0.2) + 2) * mag * sharedmult)
         pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.55 * mag * sharedmult)
@@ -303,8 +303,7 @@ local function ArcticBreadDarsuBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
 
-    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
-
+    local sharedmult = self:GetIsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
     local velocityangle = owner:GetVelocity()
     local v = velocityangle:Length()
     v = math.Clamp(v, 0, 350)
@@ -342,7 +341,7 @@ local function ArcticBreadDarsuBob(self, pos, ang)
     if owner.GetSliding then if owner:GetSliding() then mag = 0 step = 5 smoothsidemove = 0 end end
     
 
-    if owner:IsSprinting() then 
+    if self:GetIsSprinting() then 
         pos = pos - (ang:Up() * math.sin(self.BobCT * step) * 0.45 * ((math.sin(self.BobCT * 3.515) * 0.2) + 1) * mag * sharedmult)
         pos = pos + (ang:Forward() * math.sin(self.BobCT * step * 0.3) * 0.13 * ((math.sin(self.BobCT * 2) * ts * 1.25) + 2) * ((math.sin(self.BobCT * 0.615) * 0.2) + 2) * mag * sharedmult)
         pos = pos + (ang:Right() * (math.sin(self.BobCT * step * 0.5) + (math.cos(self.BobCT * step * 0.5))) * 0.55 * mag * sharedmult)
@@ -386,7 +385,7 @@ local function DarsuBob(self, pos, ang)
     local sightamount = self:GetSightAmount() - (self.Peeking and 0.72 or 0)
     local sprintamount = self:GetSprintAmount()
 
-    local sharedmult = owner:IsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
+    local sharedmult = self:GetIsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)
 
     local velocity = math.Clamp(velocityangle:Length(), 0, 350)
 
@@ -421,7 +420,7 @@ local function DarsuBob(self, pos, ang)
     local sidemove = (owner:GetVelocity():Dot(owner:EyeAngles():Right()) / owner:GetMaxSpeed()) * 4 * (1.5-sightamount)
     smoothsidemove = Lerp(math.Clamp(ft*8, 0, 1), smoothsidemove, sidemove)
 
-    local crouchmult = (owner:Crouching() and not owner:IsSprinting()) and 2.5*(1.3-sightamount)  or 1
+    local crouchmult = (owner:Crouching() and not self:GetIsSprinting()) and 2.5*(1.3-sightamount)  or 1
     
     if owner.GetSliding then if owner:GetSliding() then speedmult = 0.01 d3 = 0 smoothsidemove = -10 end end
 

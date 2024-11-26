@@ -100,7 +100,7 @@ local lastpressed = false
 SWEP.IsHoldingBreath = false
 
 function SWEP:HoldingBreath()
-    if !swayconvar:GetBool() then return end
+    if !swayconvar:GetBool() then self.IsHoldingBreath = false return end
     if self:GetSightAmount() < 0.05 then self.IsHoldingBreath = false return end
 
     local ownerkeydownspeed = self:GetOwner():KeyDown(IN_SPEED)
