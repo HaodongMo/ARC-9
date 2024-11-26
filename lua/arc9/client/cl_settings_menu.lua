@@ -114,7 +114,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.hud_game.hud_compact.title", desc = "settings.hud_game.hud_compact.desc", convar = "hud_compact", parentconvar = "hud_arc9", requireconvaroff = "hud_force_disable" },
         { type = "bool", text = "settings.hud_game.hud_always.title", desc = "settings.hud_game.hud_always.desc", convar = "hud_always", parentconvar = "hud_arc9", requireconvaroff = "hud_force_disable" },
 		
-        { type = "slider", text = "settings.hud_game.hud_scale.title", desc = "settings.hud_game.hud_scale.desc", parentconvar = "hud_arc9", requireconvaroff = "hud_force_disable", convar = "hud_arc9", min = 0.5, max = 1.5, decimals = 2, func = afterscalefunc},
+        { type = "slider", text = "settings.hud_game.hud_scale.title", desc = "settings.hud_game.hud_scale.desc", parentconvar = "hud_arc9", requireconvaroff = "hud_force_disable", convar = "hud_scalefake", min = 0.5, max = 1.5, decimals = 2, func = afterscalefunc},
 
         { type = "bool", text = "settings.hud_game.keephints.title", desc = "settings.hud_game.keephints.desc", convar = "hud_keephints" },
         { type = "bool", text = "settings.hud_game.nohints.title", desc = "settings.hud_game.nohints.desc", convar = "hud_nohints" },
@@ -267,7 +267,7 @@ ARC9.SettingsTable = {
 
         { type = "label", text = "settings.tabname.custmenu", desc = "settings.tabname.custmenu.desc" },
         { type = "color", text = "settings.custmenu.hud_color.title", desc = "settings.custmenu.hud_color.desc", convar = "hud_color" },
-        { type = "slider", text = "settings.hud_game.hud_scale.title", desc = "settings.hud_game.hud_scale.desc", convar = "hud_arc9", min = 0.5, max = 1.5, decimals = 2, func = afterscalefunc },
+        { type = "slider", text = "settings.hud_game.hud_scale.title", desc = "settings.hud_game.hud_scale.desc", convar = "hud_scalefake", min = 0.5, max = 1.5, decimals = 2, func = afterscalefunc },
 
         { type = "bool", text = "settings.custmenu.hud_lightmode.title", desc = "settings.custmenu.hud_lightmode.desc", convar = "hud_lightmode" },
         { type = "bool", text = "settings.custmenu.hud_holiday.title", desc = "settings.custmenu.hud_holiday.desc", convar = "hud_holiday" },
@@ -459,9 +459,8 @@ local function DrawSettings(bg, page)
                 local txt = ""
 				local txt_desc = ARC9:GetPhrase(v2.desc) or v2.desc or ""
 
-				if v2.sv then 
-					-- txt = "[ SERVER ] "
-					-- txt_desc = txt_desc .. ARC9:GetPhrase("settings.server")
+				if v2.sv then
+					txt_desc = txt_desc .. ARC9:GetPhrase("settings.server")
 				end
 
                 if v2.requireconvar then

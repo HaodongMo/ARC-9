@@ -530,7 +530,7 @@ L["settings.hud_game.hud_compact.desc"] = "Hides certain elements on the ARC9 HU
 
 L["settings.hud_game.keephints.title"] = "Always Display Hints"
 L["settings.hud_game.keephints.desc"] = "Disables the fadeaway of the control hints."
-L["settings.hud_game.nohints.title"] = "or Disable Hints"
+L["settings.hud_game.nohints.title"] = "Fully Disable Hints"
 L["settings.hud_game.nohints.desc"] = "Completely disables ARC9 hints.\n\nNot compatible with \"Always Display Hints\"."
 
 L["settings.hud_game.hints.title"] = "Hint Behavior"

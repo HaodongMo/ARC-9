@@ -425,6 +425,7 @@ L["settings.convar_client"] = "Client-variabel"
 
 L["settings.disabled"] = "(Avstängd) "
 L["settings.disabled.desc"] = "! AVSTÄNGD !\n\n"
+-- L["settings.disabled.desc"] = "! Disabled by server admin !\n\n"
 L["settings.server"] = "\n\nDetta är en servervariabel."
 
 ////////////////////// Quick Access
@@ -809,6 +810,12 @@ L["settings.server.gameplay.mod_sway.desc"] = "Aktivera vapensvängning om vapen
 
 L["settings.server.gameplay.mod_freeaim.title"] = "Aktivera Fri Vy"
 L["settings.server.gameplay.mod_freeaim.desc"] = "Aktiverar fri vy om vapnet stödjer det.\n\nTillåter siktepunkten att vara separat från skärmens center."
+
+-- L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
+-- L["settings.server.gameplay.mod_peek.desc"] = "Enable pee king"
+
+-- L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
+-- L["settings.server.gameplay.mod_overheat.desc"] = "Enable Overheating on certain guns blah blah"
 
 L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Kroppskada Avbrytning"
 L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Stänger av standard kroppskada multiplikatorn.\n\nStäng endast av om ett annat tillägg erbjuder denna funktion."

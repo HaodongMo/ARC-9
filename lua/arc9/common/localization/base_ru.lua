@@ -421,66 +421,66 @@ L["settings.default_convar"] = "Значение по умолчанию"
 L["settings.convar_server"] = "Серверная переменная"
 L["settings.convar_client"] = "Клиентская переменная"
 
--- L["settings.disabled"] = "(Disabled) "
--- L["settings.disabled.desc"] = "! DISABLED !\n\n"
--- L["settings.server"] = "\n\nThis is a server variable."
+L["settings.disabled"] = "(Отключено) "
+L["settings.disabled.desc"] = "! Отключено админом сервера !\n\n"
+L["settings.server"] = "\n\nЭто серверная переменная."
 
 ////////////////////// Quick Access
--- L["settings.tabname.quick"] = "Quick Access"
--- L["settings.tabname.quick.desc"] = "Get quick access to the more important settings right here."
+L["settings.tabname.quick"] = "Быстрый доступ"
+L["settings.tabname.quick.desc"] = "Важные настройки здесь."
 
--- L["settings.quick.lang.title"] = "ARC9 Language"
--- L["settings.quick.lang.desc"] = "Change the displayed language for ARC9.\n\nNote: Not all languages are supported on weapon packs!"
+L["settings.quick.lang.title"] = "Язык ARC9"
+L["settings.quick.lang.desc"] = "Изменить язык интерфейса ARC9.\n\nПримечание: Не все паки оружия переведены на другие языки!"
 
--- L["settings.hud_game.hud_arc9.desc2"] = "Tweak in \"Game HUD\"\n\nEnable a custom LCD display HUD when using ARC9 weapons."
+L["settings.hud_game.hud_arc9.desc2"] = "Настройка в \"Интерфейс\"\n\nВключение своего HUD при использовании оружия ARC9."
 
--- L["settings.tpik.desc2"] = "Tweak in \"Visuals\"\n\nEnables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
+L["settings.tpik.desc2"] = "Настройка в \"Внешний вид\"\n\nВключение TPIK (Обратной кинематики третьего лица).\n\nВлияет на производительность."
 
--- L["settings.aimassist.enable.desc2"] = "Tweak in \"Gameplay\"\n\nEnables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
+L["settings.aimassist.enable.desc2"] = "Настройка в \"Геймплей\"\n\nВключает помошь при прицеливании, которая приблизит камеру к валидным целям, если они обнаружены вблизи прицела."
 
--- L["settings.gameplay.controller.title"] = "Enable Controller Mode"
--- L["settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements.\n\nCustom glyphs can be customized via the Spawnmenu (Options > ARC9 > Controller)."
+L["settings.gameplay.controller.title"] = "Включить режим геймпада"
+L["settings.gameplay.controller.desc"] = "Включает элементы, дружественные контроллеру.\n\nПользовательские глифы могут быть настроены через меню появления (Опции > ARC9 > Контроллер)."
 
 ////////////////////// Reset Settings
--- L["settings.tabname.reset"] = "Reset Settings"
--- L["settings.tabname.reset.desc"] = "Press the \"Reset\" button to fully reset ARC9 settings back to their default values."
+L["settings.tabname.reset"] = "Сброс настроек"
+L["settings.tabname.reset.desc"] = "Нажмите \"Сброс\", чтобы полностью сбросить настройки ARC9 до значений по умолчанию."
 
--- L["settings.client.reset.title"] = "Reset Client Settings"
--- L["settings.client.reset.desc"] = "Fully resets all ARC9 client settings.\n\nWarning: Cannot be reversed."
+L["settings.client.reset.title"] = "Сброс клиентских настроек"
+L["settings.client.reset.desc"] = "Полностью сбрасывает все клиентские настройки ARC9.\n\nПримечание: откатить обратно нельзя."
 
--- L["settings.server.reset.title"] = "Reset Server Settings"
--- L["settings.server.reset.desc"] = "Fully resets all ARC9 server settings.\n\nWarning: Cannot be reversed."
+L["settings.server.reset.title"] = "Сброс серверных настроек"
+L["settings.server.reset.desc"] = "Полностью сбрасывает все серверные настройки ARC9.\n\nПримечание: откатить обратно нельзя."
 
 -- L["settings.reset"] = "RESET"
 
 ////////////////////// Game HUD
--- L["settings.tabname.hud_game"] = "Game HUD"
+L["settings.tabname.hud_game"] = "Интерфейс"
 
 ////////// ARC9 HUD
--- L["settings.tabname.arc9_hud"] = "ARC9 HUD"
--- L["settings.tabname.arc9_hud.desc"] = "Everything related to ARC9's custom HUD and its elements."
+L["settings.tabname.arc9_hud"] = "LCD Панель"
+L["settings.tabname.arc9_hud.desc"] = "Всё, что связано с пользовательским интерфейсом ARC9 и его элементами."
 
--- L["settings.hud_game.hud_arc9.title"] = "Enable ARC9 HUD"
--- L["settings.hud_game.hud_arc9.desc"] = "Enable a custom LCD display HUD when using ARC9 weapons."
--- L["settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
--- L["settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
--- L["settings.hud_game.hud_compact.title"] = "Compact mode"
--- L["settings.hud_game.hud_compact.desc"] = "Hides certain elements on the ARC9 HUD, providing a more compact look."
+L["settings.hud_game.hud_arc9.title"] = "Включить HUD"
+L["settings.hud_game.hud_arc9.desc"] = "Включает HUD на ARC9 пушках."
+L["settings.hud_game.hud_always.title"] = "На всех оружиях"
+L["settings.hud_game.hud_always.desc"] = "Включает этот HUD на всех пушках."
+L["settings.hud_game.hud_compact.title"] = "Компактный режим"
+L["settings.hud_game.hud_compact.desc"] = "Компактный режим для панели HUD."
 
--- L["settings.hud_game.keephints.title"] = "Always Display Hints"
--- L["settings.hud_game.keephints.desc"] = "Disables the fadeaway of the control hints."
--- L["settings.hud_game.nohints.title"] = "or Disable Hints"
--- L["settings.hud_game.nohints.desc"] = "Completely disables ARC9 hints.\n\nNot compatible with \"Always Display Hints\"."
+L["settings.hud_game.keephints.title"] = "Подсказки"
+L["settings.hud_game.keephints.desc"] = "Показывать подсказки по управлению оружием ARC9 наверху панели."
+L["settings.hud_game.nohints.title"] = "Полностью отключить подсказки"
+L["settings.hud_game.nohints.desc"] = "Отключить подсказки вообще. Их не будет ни в 3D интерфейсе, ни в 2D."
 
--- L["settings.hud_game.hints.title"] = "Hint Behavior"
--- L["settings.hud_game.hints.desc"] = "Choose to always display, fade away or completely disable control hints."
+L["settings.hud_game.hints.title"] = "Поведение подсказок"
+L["settings.hud_game.hints.desc"] = "Choose to always display, fade away or completely disable control hints."
 
--- L["settings.hud_game.killfeed_enable.title"] = "Auto-Generate Killfeed Icons"
--- L["settings.hud_game.killfeed_enable.desc"] = "Generate killfeed icons automatically on ARC9 weapons."
--- L["settings.hud_game.killfeed_dynamic.title"] = "Dynamic Icons"
--- L["settings.hud_game.killfeed_dynamic.desc"] = "Dynamically generates icons when getting kills or altering attachments."
--- L["settings.hud_game.killfeed_colour.title"] = "Display in Color"
--- L["settings.hud_game.killfeed_colour.desc"] = "Generates icons in full color rather than black and white."
+L["settings.hud_game.killfeed_enable.title"] = "Иконки в киллфиде"
+L["settings.hud_game.killfeed_enable.desc"] = "Включает автогенерацию иконок ARC9 пушек."
+L["settings.hud_game.killfeed_dynamic.title"] = "Динамичное обновление"
+L["settings.hud_game.killfeed_dynamic.desc"] = "Иконки оружия в киллфиде будет обновлятся после каждого убийства.\n\nВыключи, если хочешь эти самые 0.1 фпс."
+L["settings.hud_game.killfeed_colour.title"] = "Цветные иконки"
+L["settings.hud_game.killfeed_colour.desc"] = "Динамически генерируемые иконки не будут залиты белым цветом (киллфид и хотбар)."
 
 ////////// Glyphs
 -- L["settings.tabname.glyphs"] = "Glyphs"
@@ -801,6 +801,12 @@ L["settings.convar_client"] = "Клиентская переменная"
 
 -- L["settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
 -- L["settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
+
+-- L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
+-- L["settings.server.gameplay.mod_peek.desc"] = "Enable pee king"
+
+-- L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
+-- L["settings.server.gameplay.mod_overheat.desc"] = "Enable Overheating on certain guns blah blah"
 
 -- L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
 -- L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."

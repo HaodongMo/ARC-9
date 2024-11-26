@@ -424,7 +424,7 @@ L["settings.convar_server"] = "Variable del servidor"
 L["settings.convar_client"] = "Variable del cliente"
 
 -- L["settings.disabled"] = "(Disabled) "
--- L["settings.disabled.desc"] = "! DISABLED !\n\n"
+-- L["settings.disabled.desc"] = "! Disabled by server admin !\n\n"
 -- L["settings.server"] = "\n\nThis is a server variable."
 
 ////////////////////// Quick Access
@@ -803,6 +803,12 @@ L["settings.convar_client"] = "Variable del cliente"
 
 -- L["settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
 -- L["settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
+
+-- L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
+-- L["settings.server.gameplay.mod_peek.desc"] = "Enable pee king"
+
+-- L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
+-- L["settings.server.gameplay.mod_overheat.desc"] = "Enable Overheating on certain guns blah blah"
 
 -- L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
 -- L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
