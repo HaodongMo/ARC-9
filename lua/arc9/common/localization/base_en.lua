@@ -483,7 +483,7 @@ L["settings.convar_server"] = "Server variable"
 L["settings.convar_client"] = "Client variable"
 
 L["settings.disabled"] = "(Disabled) "
-L["settings.disabled.desc"] = "! DISABLED !\n\n"
+L["settings.disabled.desc"] = "! Disabled by server admin !\n\n"
 L["settings.server"] = "\n\nThis is a server variable."
 
 ////////////////////// Quick Access
@@ -560,7 +560,7 @@ L["settings.hud_glyph.knockout"] = "Knockout"
 L["settings.tabname.centerhint"] = "Display Tooltips"
 L["settings.tabname.centerhint.desc"] = "Display tooltips on your HUD when certain criteria are met."
 
-L["settings.centerhint.breath_hud.title"] = "When Holding Breath"
+L["settings.centerhint.breath_hud.title"] = "Bar on HUD idk how to name it"
 L["settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
 L["settings.centerhint.breath_pp.title"] = "Post-Processing"
 L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
@@ -586,14 +586,14 @@ L["settings.centerhint.overheat.title"] = "When Overheating"
 L["settings.centerhint.overheat.desc"] = "Displays a tooltip when the weapon is about to overheat."
 
 ////////// Advanced ARC9 HUD Settings
-L["settings.tabname.arc9_hud_adv"] = "Advanced ARC9 HUD Settings"
-L["settings.tabname.arc9_hud_adv.desc"] = "Tweak more advanced settings related to ARC9's HUD and its elements."
+-- L["settings.tabname.arc9_hud_adv"] = "Advanced ARC9 HUD Settings"
+-- L["settings.tabname.arc9_hud_adv.desc"] = "Tweak more advanced settings related to ARC9's HUD and its elements."
 
 L["settings.hud_game.hud_scale.title"] = "HUD Scale"
 L["settings.hud_game.hud_scale.desc"] = "Alter the size scale of the ARC9 HUD and the customization menu.\n\nNote: If set below 1, the ARC9 HUD will be disabled."
 
-L["settings.hud_game.hud_deadzonex.title"] = "HUD Width"
-L["settings.hud_game.hud_deadzonex.desc"] = "Alters the maximum width of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
+L["settings.hud_game.hud_deadzonex.title"] = "HUD Horizontal Deadzone"
+L["settings.hud_game.hud_deadzonex.desc"] = "Alters the dorizontal deadzone of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
 
 ////////////////////// Visuals
 L["settings.tabname.visuals"] = "Visuals"
@@ -683,6 +683,10 @@ L["settings.tabname.other.desc"] = "Adjust various miscellaneous settings."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"
+L["settings.tabname.modifiers"] = "Modifiers"
+L["settings.tabname.attachmentsnpcs"] = "Attachments & NPCs"
+L["settings.tabname.features"] = "Attachments & NPCs"
+L["settings.tabname.features"] = "Features"
 
 ////////// General
 L["settings.tabname.general"] = "General"
@@ -731,12 +735,15 @@ L["settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity global
 L["settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
 L["settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
 
-L["settings.gameplay.color.scope.title"] = "Magnified Scope Color"
+L["settings.gameplay.color.scope.title"] = "Scope Reticle Color"
 L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
 
 ////////// Crosshair
 L["settings.tabname.crosshair"] = "Crosshair"
 L["settings.tabname.crosshair.desc"] = "Adjust settings related to the crosshair."
+
+L["settings.tabname.crosshairscopes"] = "Crosshair & Scopes"
+L["settings.tabname.crosshairscopes.desc"] = "Adjust settings related to the crosshair."
 
 L["settings.crosshair.cross_enable.title"] = "Enable Crosshair"
 L["settings.crosshair.cross_enable.desc"] = "Enables the crosshair."
@@ -793,8 +800,6 @@ L["settings.tabname.custmenu.desc"] = "Adjust settings related to the customizat
 L["settings.custmenu.hud_color.title"] = "Customization Menu Accent"
 L["settings.custmenu.hud_color.desc"] = "Alter the accent color for the customization menu."
 
-L["settings.custmenu.hud_darkmode.title"] = "Dark Mode"
-L["settings.custmenu.hud_darkmode.desc"] = "Changes the color scheme of the customization menu to a darker one."
 -- L["settings.custmenu.hud_darkmode.title"] = "Dark Mode"
 -- L["settings.custmenu.hud_darkmode.desc"] = "Changes the color scheme of the customization menu to a darker one."
 L["settings.custmenu.hud_lightmode.title"] = "Light Mode"
@@ -859,11 +864,17 @@ L["settings.server.gameplay.realrecoil.desc"] = "Various weapons are set up for 
 L["settings.server.gameplay.lean.title"] = "Allow Leaning"
 L["settings.server.gameplay.lean.desc"] = "Allows users to lean left or right. Also applies to Automatic Lean."
 
-L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway"
+L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway & Breath Hold"
 L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway, if the weapon supports it.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen."
 
 L["settings.server.gameplay.mod_freeaim.title"] = "Enable Free Aim"
 L["settings.server.gameplay.mod_freeaim.desc"] = "Enable free aim, if the weapon supports it.\n\nAllows the aiming point to be separate from the center of the screen."
+
+L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
+L["settings.server.gameplay.mod_peek.desc"] = "Enable pee king"
+
+L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
+L["settings.server.gameplay.mod_overheat.desc"] = "Enable Overheating on certain guns blah blah"
 
 L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
 L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
@@ -945,7 +956,7 @@ L["settings.server.npc.replace_spawned.desc"] = "Replace map or spawned HL2 weap
 L["settings.server.npc.ground_atts.title"] = "Give Ground Weapons Random Attachments"
 L["settings.server.npc.ground_atts.desc"] = "Weapons spawned on the ground will receive a random set of attachments."
 
-L["settings.server.npc.npc_give_weapons.title"] = "Allow NPC Weapon Swapping"
+L["settings.server.npc.npc_give_weapons.title"] = "Allow Weapon Swapping between Players and NPCs"
 L["settings.server.npc.npc_give_weapons.desc"] = "Allow the players to press their USE key on NPC's to give them or swap their ARC9 weapons."
 
 L["settings.server.npc.npc_equality.title"] = "Enable NPC Damage Equality"
