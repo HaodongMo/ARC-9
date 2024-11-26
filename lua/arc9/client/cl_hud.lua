@@ -229,7 +229,7 @@ end
 local arc9_hud_color_r = GetConVar("arc9_hud_color_r")
 local arc9_hud_color_g = GetConVar("arc9_hud_color_g")
 local arc9_hud_color_b = GetConVar("arc9_hud_color_b")
-local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
+local arc9_hud_lightmode = GetConVar("arc9_hud_lightmode")
 local arc9_hud_holiday = GetConVar("arc9_hud_holiday")
 
 function ARC9.GetHUDColor(part, alpha)
@@ -254,7 +254,7 @@ function ARC9.GetHUDColor(part, alpha)
         if holidayenabled then
             col = holidaycol.bg
         end
-        if arc9_hud_darkmode:GetBool() then
+        if !arc9_hud_lightmode:GetBool() then
             col = ARC9.Colors["bgdark"]
             if holidayenabled then
                 col = holidaycol.bgdark

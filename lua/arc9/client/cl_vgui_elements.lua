@@ -41,7 +41,7 @@ end
 function ARC9TopButton:Init()
     self:SetText("")
     self:SetSize(ARC9ScreenScale(21), ARC9ScreenScale(21))
-    self.DarkMode = GetConVar("arc9_hud_darkmode"):GetBool()
+    self.DarkMode = !GetConVar("arc9_hud_lightmode"):GetBool()
 end
 
 function ARC9TopButton:Paint(w, h)

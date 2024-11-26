@@ -224,7 +224,7 @@ ARC9.SettingsTable = {
 
         { type = "label", text = "settings.tabname.custmenu", desc = "settings.tabname.custmenu.desc" },
         { type = "color", text = "settings.custmenu.hud_color.title", desc = "settings.custmenu.hud_color.desc", convar = "hud_color" },
-        { type = "bool", text = "settings.custmenu.hud_darkmode.title", desc = "settings.custmenu.hud_darkmode.desc", convar = "hud_darkmode" },
+        { type = "bool", text = "settings.custmenu.hud_lightmode.title", desc = "settings.custmenu.hud_lightmode.desc", convar = "hud_lightmode" },
         { type = "bool", text = "settings.custmenu.hud_holiday.title", desc = "settings.custmenu.hud_holiday.desc", convar = "hud_holiday" },
         { type = "bool", text = "settings.custmenu.cust_light.title", desc = "settings.custmenu.cust_light.desc", convar = "cust_light" },
         { type = "slider", text = "settings.custmenu.cust_light_brightness.title", desc = "settings.custmenu.cust_light_brightness.desc", convar = "cust_light_brightness", min = -20, max = 30, decimals = 1, parentconvar = "cust_light" },
@@ -787,7 +787,7 @@ end
 local hoversound = "arc9/newui/uimouse_hover.ogg"
 local clicksound = "arc9/newui/uimouse_click_return.ogg"
 
-local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
+local arc9_hud_lightmode = GetConVar("arc9_hud_lightmode")
 
 function ARC9_OpenSettings(page)
     page = page or ARC9.SettingsActiveTab
@@ -803,7 +803,7 @@ function ARC9_OpenSettings(page)
     -- bg:MakePopup()
 
     bg.Paint = function(self2, w, h)
-        if arc9_hud_darkmode:GetBool() then
+        if !arc9_hud_lightmode:GetBool() then
             surface.SetDrawColor(58, 58, 58, 206)
         else
             surface.SetDrawColor(20, 20, 20, 224)

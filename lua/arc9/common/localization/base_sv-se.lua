@@ -740,8 +740,10 @@ L["settings.tabname.custmenu.desc"] = "Justera inställningar relaterade till an
 L["settings.custmenu.hud_color.title"] = "Anpassningsmenyns Accent"
 L["settings.custmenu.hud_color.desc"] = "Justera accentfärgen på anpassningsmenyn."
 
-L["settings.custmenu.hud_darkmode.title"] = "Mörkt Läge"
-L["settings.custmenu.hud_darkmode.desc"] = "Ändrar anpassningsmenyns färgschema till en mörkare."
+-- L["settings.custmenu.hud_darkmode.title"] = "Mörkt Läge"
+-- L["settings.custmenu.hud_darkmode.desc"] = "Ändrar anpassningsmenyns färgschema till en mörkare."
+-- L["settings.custmenu.hud_lightmode.title"] = "Light Mode"
+-- L["settings.custmenu.hud_lightmode.desc"] = "Changes the color scheme of the customization menu to a lighter one. (original color scheme)"
 
 L["settings.custmenu.hud_holiday.title"] = "Festligt Läge"
 L["settings.custmenu.hud_holiday.desc"] = "Ändrar anpassningsmenyns färgschema för att matcha vissa helgdagar.\n\nÖverskriver \"Anpassningsmenyns Accent\""

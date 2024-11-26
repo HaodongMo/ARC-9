@@ -24,7 +24,7 @@ local arc9_fx_rtblur = GetConVar("arc9_fx_rtblur")
 local arc9_fx_animblur = GetConVar("arc9_fx_animblur")
 local arc9_fx_reloadblur = GetConVar("arc9_fx_reloadblur")
 local arc9_cust_blur = GetConVar("arc9_cust_blur")
-local arc9_hud_darkmode = GetConVar("arc9_hud_darkmode")
+local arc9_hud_lightmode = GetConVar("arc9_hud_lightmode")
 local arc9_dev_greenscreen = GetConVar("arc9_dev_greenscreen")
 local arc9_cust_light = GetConVar("arc9_cust_light")
 local arc9_cust_light_brightness = GetConVar("arc9_cust_light_brightness")
@@ -89,7 +89,7 @@ function SWEP:PreDrawViewModel()
             surface.SetDrawColor(15, 15, 15, 180 * custdelta)
             surface.DrawRect(0, 0, scrw, scrh)
             surface.SetDrawColor(0, 0, 0, 255 * custdelta)
-            if !arc9_hud_darkmode:GetBool() then
+            if arc9_hud_lightmode:GetBool() then
                 surface.SetMaterial(vignette)
                 surface.DrawTexturedRect(0, 0, scrw, scrh)
             end

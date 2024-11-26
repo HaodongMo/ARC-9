@@ -736,6 +736,8 @@ L["settings.desc"] = "简介"
 
 -- L["settings.custmenu.hud_darkmode.title"] = "Dark Mode"
 -- L["settings.custmenu.hud_darkmode.desc"] = "Changes the color scheme of the customization menu to a darker one."
+-- L["settings.custmenu.hud_lightmode.title"] = "Light Mode"
+-- L["settings.custmenu.hud_lightmode.desc"] = "Changes the color scheme of the customization menu to a lighter one. (original color scheme)"
 
 -- L["settings.custmenu.hud_holiday.title"] = "Festive Mode"
 -- L["settings.custmenu.hud_holiday.desc"] = "Changes the color scheme of the customization menu to match certain holidays.\n\nOverrides \"Customization Menu Accent\"."
