@@ -491,8 +491,8 @@ local function DrawSettings(bg, page)
                         end
                     end
                 end
-
-                txt = txt .. ARC9:GetPhrase(v2.text) or ARC9:GetPhrase("settings" .. "." .. (v2.convar or "") .. ".title") or v2.text or ""
+                
+                txt = txt .. (ARC9:GetPhrase(v2.text) or ARC9:GetPhrase("settings" .. "." .. (v2.convar or "") .. ".title") or v2.text or "")
 
                 surface.SetFont("ARC9_12_Slim")
                 local tw, th = surface.GetTextSize(txt)

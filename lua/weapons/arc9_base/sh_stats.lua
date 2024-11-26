@@ -47,7 +47,7 @@ function SWEP:InvalidateCache()
     self.ElementsCache = nil
     self.ElementTablesCache = nil
     self.RecoilPatternCache = {}
-    self.ScrollLevels = {}
+    -- self.ScrollLevels = {} -- moved to PostModify
     self.HasNoAffectors = {}
     self:SetBaseSettings()
 end

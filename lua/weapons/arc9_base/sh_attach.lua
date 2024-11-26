@@ -91,6 +91,7 @@ SWEP.LastAmmo = ""
 
 function SWEP:PostModify(toggleonly)
     self:InvalidateCache()
+    self.ScrollLevels = {} -- moved from invalidcache
 
     if !toggleonly then
         self:CancelReload()
