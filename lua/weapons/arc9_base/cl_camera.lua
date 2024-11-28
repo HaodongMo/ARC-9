@@ -110,6 +110,9 @@ SWEP.ProceduralSpeedLimit = 5
 
 function SWEP:GetCameraControl()
     local seqprox = self:GetSequenceProxy()
+	
+	if self:GetCustomize() then return end
+	
     if seqprox != 0 then
         local slottbl = self:LocateSlotFromAddress(seqprox)
         local atttbl = self:GetFinalAttTable(slottbl)
