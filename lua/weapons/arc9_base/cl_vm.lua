@@ -175,7 +175,7 @@ function SWEP:PreDrawViewModel()
 
     vm:SetMaterial(self:GetProcessedValue("Material", true))
 
-    cam.IgnoreZ(true)
+    render.DepthRange( 0.0, 0.1 )
 
     self:SetFiremodePose()
     
@@ -192,7 +192,7 @@ end
 
 function SWEP:ViewModelDrawn()
     self:DrawCustomModel(false)
-    cam.IgnoreZ(true)
+    render.DepthRange( 0.0, 0.1 )
     self:DoRHIK()
     if ARC9.RTScopeRender then return end
     self:PreDrawThirdArm()
