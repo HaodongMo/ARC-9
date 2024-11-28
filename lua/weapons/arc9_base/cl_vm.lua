@@ -176,6 +176,7 @@ function SWEP:PreDrawViewModel()
     vm:SetMaterial(self:GetProcessedValue("Material", true))
 
     render.DepthRange( 0.0, 0.1 )
+    if ARC9.PresetCam then cam.IgnoreZ(true) end
 
     self:SetFiremodePose()
     
