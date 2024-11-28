@@ -453,6 +453,7 @@ function SWEP:GetViewModelBob(pos, ang)
     elseif bobb == 0 then
         return ArcticBreadDarsuBob(self, pos, ang)
     else
+        if self:GetCustomize() then return pos, ang end
         self.SwayScale = Lerp(self:GetSightDelta(), 1, 0.01)
         self.BobScale = Lerp(self:GetSightDelta(), 1, 0.01)
 
