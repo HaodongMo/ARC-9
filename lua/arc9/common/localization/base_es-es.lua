@@ -424,6 +424,458 @@ L["atts.favourites"] = "Favoritos"
 L["atts.filter"] = "Filtrar"
 
 /////////////////////////////////////// Settings menu
+///////////////////////////////// Legacy
+--[[
+These strings are from the old settings menu.
+If you wish to translate, these are to be removed, and only used as inspiration.
+]]--
+
+////////////////////// General
+L["settings.tabname.general"] = "General"
+
+L["settings.general.client"] = "Cliente"
+L["settings.quick.lang.title"] = "Idioma"
+L["settings.quick.lang.desc"] = "Paquete de idiomas a utilizar para ARC9."
+L["settings.truenames.title"] = "Nombres reales"
+L["settings.truenames.desc"] = "Establece si usar los nombres reales de las armas o nombres ficticios hechos por los desarrolladores. No todas las armas lo utilizan.\n\nLa configuración del servidor puede anular esta preferencia."
+L["settings.client.reset.title"] = "Restablecer todos los ajustes del CLIENTE"
+
+L["settings.general.server"] = "Servidor"
+L["settings.server.gameplay.truenames.title"] = "Nombres reales por defecto"
+L["settings.server.gameplay.truenames.desc"] = "Establece el modo de nombres reales por defecto en el servidor. Todos los jugadores que utilicen \"Default\" en preferencia lo utilizarán."
+L["settings.truenames_enforced.title"] = "Nombres reales por defecto forcado"
+L["settings.truenames_enforced.desc"] = "Establecer para obligar a todos los jugadores a utilizar la configuración del servidor para los nombres verdaderos."
+
+L["settings.server.reset.title"] = "Restablecer todos los ajustes del SERVIDOR"
+
+L["settings.reset"] = "Restablecer!"
+
+////////////////////// Performance
+L["settings.tabname.performance"] = "Rendimiento"
+
+L["settings.performance.important"] = "Importante"
+L["settings.gameplay.cheapscopes.title"] = "Miras Baratas"
+L["settings.gameplay.cheapscopes.desc"] = "Una implementación barata de miras RT mediante el zoom de toda la vista para apuntar, en lugar de renderizar el mundo de nuevo en una mira. Aumenta significativamente el rendimiento en mapas grandes."
+L["settings.tpik.title"] = "TPIK"
+L["settings.tpik.desc"] = "TPIK (Third Person Inverse Kinematics) es un sistema que permite que la mayoría de las armas se muestren detalladas e igual que en primera persona, posiciones de manos, recarga y animaciones de disparo en tercera persona.\n\nConfigúralo en la pestaña Visuales."
+L["settings.effects.allflash.title"] = "Todas las Linternas"
+L["settings.effects.allflash.desc"] = "Renderiza completamente todas las linternas de otros jugadores.\n\nMuy caro en los servidores."
+
+L["settings.tabname.blur"] = "Difuminacion"
+L["settings.blur.cust_blur.title"] = "Fondo de personalización"
+L["settings.blur.cust_blur.desc"] = "Difumina Fondo de personalización."
+L["settings.blur.fx_reloadblur.title"] = "Mientras Recarga"
+L["settings.blur.fx_reloadblur.desc"] = "Difumina el Mundo Mientras Recarga."
+L["settings.blur.fx_animblur.title"] = "Mientras se Prepara"
+L["settings.blur.fx_animblur.desc"] = "Difumina el mundo mientras despliegas un arma por primera vez."
+L["settings.blur.fx_rtblur.title"] = "En miras telescópicas"
+L["settings.blur.fx_rtblur.desc"] = "Difumina el mundo mientras utilizas un miras telescópicas."
+L["settings.blur.fx_adsblur.title"] = "En miras normales"
+L["settings.blur.fx_adsblur.desc"] = "Difumina el arma mientras apuntas con miras de hierro u holográficas."
+L["settings.fx_rtvm.title"] = "Renderizar Arma a través de Miras RT"
+L["settings.fx_rtvm.desc"] = "! EXPERIMENTAL !\nRenderiza el arma y sus accesorios a través de miras RT. Requiere que \"Miras Baratas\" se desactiven.\nReduce significativamente el rendimiento."
+L["settings.blur.fx_rtblur.title2"] = "Desenfoque detrás de los visores"
+
+L["settings.performance.shelleject.title"] = "Expulsión del proyectil"
+L["settings.effects.eject_fx.title"] = "Efectos de Humo"
+L["settings.effects.eject_fx.desc"] = "Producir efectos de humo a partir de los casquillos expulsados, cuando el arma admita esta función."
+L["settings.effects.eject_time.title"] = "Tiemp. Vida"
+L["settings.effects.eject_time.desc"] = "Permiten que los casquillos permanezcan más tiempo en el mundo. Puede afectar al rendimiento."
+
+L["settings.tabname.effects"] = "Efectos"
+L["settings.effects.muzzle_light.title"] = "Fogonazo"
+L["settings.effects.muzzle_light.desc"] = "Habilita la luz emitida por los fogonazos al disparar un arma."
+L["settings.effects.muzzle_others.title"] = "Otros efectos de fogonazos"
+L["settings.effects.muzzle_others.desc"] = "Activa los efectos de boca de las armas de otros jugadores."
+
+////////////////////// Optics
+L["settings.tabname.optics"] = "Miras"
+
+L["settings.optics.control"] = "Control"
+L["settings.gameplay.sensmult.title"] = "Multiplicar sensibilidad ADS"
+L["settings.gameplay.sensmult.desc"] = "Multiplique la sensibilidad de la mirada por esta cantidad al apuntar.\nCuanto menor sea el valor, menor será la sensibilidad.\nÚtil cuando se utilizan mandos, o si el usuario sólo desea una menor sensibilidad de puntería."
+L["settings.gameplay.compensate_sens.title"] = "Compensar Sensibilidad"
+L["settings.gameplay.compensate_sens.desc"] = "Compensar sensibilidad por ampliados."
+L["settings.gameplay.toggleads.title"] = "Alternar ADS"
+L["settings.gameplay.toggleads.desc"] = "Al apuntar se alternará la mira."
+
+L["settings.optics.dtap_sights.title"] = "Doble Toque para Cambiar las Miras"
+L["settings.optics.dtap_sights.desc"] = "Permite Pulsar Dos Veces la Tecla USAR para Cambiar de Mira."
+
+L["settings.optics.color"] = "Color"
+L["settings.gameplay.color.reflex.title"] = "Miras Holográficas"
+L["settings.gameplay.color.reflex.desc"] = "Color a utilizar para miras holográficas.\n\nNo todas las miras admiten esta función."
+L["settings.gameplay.color.scope.title"] = "Visores"
+L["settings.gameplay.color.scope.desc"] = "Color a utilizar para visores ampliados.\n\nNo todas las miras admiten esta función."
+
+////////////////////// Crosshair
+L["settings.tabname.crosshair"] = "Punto de Mira"
+
+L["settings.crosshair.crosshair"] = "Punto de Mira"
+L["settings.crosshair.cross_enable.title"] = "Habilitar Punto de Mira"
+L["settings.crosshair.cross_enable.desc"] = "Habilitar el punto de mira. Algunas armas no permiten utilizar el punto de mira."
+L["settings.crosshair.cross.title"] = "Color de Punto de Mira"
+L["settings.crosshair.cross.desc"] = "El color de tu punto de mira."
+L["settings.crosshair.cross_size_mult.title"] = "Tamaño de Punto de Mira"
+L["settings.crosshair.cross_size_mult.desc"] = "Multiplica el tamaño de tu punto de mira"
+L["settings.crosshair.cross_size_dot.title"] = "Tamaño de Punto"
+L["settings.crosshair.cross_size_dot.desc"] = "Multiplica el tamaño del punto medio"
+L["settings.crosshair.cross_size_prong.title"] = "Tamaño de Puntas"
+L["settings.crosshair.cross_size_prong.desc"] = "Multiplica el tamaño de las puntas exteriores."
+L["settings.crosshair.crosshair_static.title"] = "Punto de Mira Estático"
+L["settings.crosshair.crosshair_static.desc"] = "Activa el punto de mira estática, que no se mueve al disparar."
+L["settings.crosshair.crosshair_force.title"] = "Forzar Punto de Mira"
+L["settings.crosshair.crosshair_force.desc"] = "Fuerza el punto de mira incluso en armas que no quieren que la veas.\n\nConfiguracion del servidor."
+L["settings.crosshair.crosshair_target.title"] = "Punto de mira rojo en el blanco"
+L["settings.crosshair.crosshair_target.desc"] = "Haz que la retícula sea roja al apuntar a un objetivo.\nTambién activa el asistente de puntería si está activado."
+L["settings.crosshair.crosshair_peeking.title"] = "Mostrar la retícula al dar vistazo"
+L["settings.crosshair.crosshair_peeking.desc"] = "Muestra la retícula al apuntar y utilizar la función de vistazo."
+
+////////////////////// Customization
+L["settings.tabname.arc9_hud"] = "Customización"
+
+L["settings.custmenu.hud"] = "HUD"
+L["settings.hud_game.hud_scale.title"] = "Tamaño del HUD"
+L["settings.hud_game.hud_scale.desc"] = "Multiplicador de escala para el HUD de ARC9."
+L["settings.hud_game.hud_deadzonex.title"] = "Anchura de zona muerta del HUD"
+L["settings.hud_game.hud_deadzonex.desc"] = "\"Zona Muerta\" Horizontal para el menú de personalización y el panel HUD.\nÚtil para monitores ultrawide."
+L["settings.custmenu.hud_color.title"] = "Color del HUD"
+L["settings.custmenu.hud_color.desc"] = "Color de realce para el HUD.\nEl color de acento."
+L["settings.custmenu.hud_holiday.title"] = "Temas Festivos"
+L["settings.custmenu.hud_holiday.desc"] = "Temas que se activan durante determinadas fiestas.\nAnulará el color de resaltado"
+L["settings.custmenu.hud_darkmode.title"] = "Tema Oscuro"
+L["settings.custmenu.hud_darkmode.desc"] = "Activa los colores oscuros en el HUD en lugar del gris claro y desactiva el efecto viñeta en el fondo."
+L["settings.custmenu.cust_light.title"] = "Habilitar Luz"
+L["settings.custmenu.cust_light.desc"] = "Activa la iluminación del arma en el menú de personalización.\n\nLo mismo que el botón cerca del botón de configuración."
+L["settings.custmenu.cust_light_brightness.title"] = "Brillo de Luz"
+L["settings.custmenu.cust_light_brightness.desc"] = "Cómo de brillante será la luz del panel de personalización.\n\nPero no olvides encenderlo antes!"
+
+L["settings.custmenu.customization"] = "Customización"
+L["settings.custmenu.cust_hints.title"] = "Pistas"
+L["settings.custmenu.cust_hints.desc"] = "Habilita pistas en el menu de modificacion."
+L["settings.custmenu.cust_tips.title"] = "Consejos"
+L["settings.custmenu.cust_tips.desc"] = "Consejos sobre la base ARC9 cerca de pistas."
+L["settings.custmenu.cust_exit_reset_sel.title"] = "Salir Restablece la selección"
+L["settings.custmenu.cust_exit_reset_sel.desc"] = "Al salir del menú de personalización se restablece la selección de ranura activa."
+L["settings.custmenu.imperial.title"] = "Medida Imperial"
+L["settings.custmenu.imperial.desc"] = "Sustituye varios sistemas de medida por sus variantes imperiales.\nSólo afecta a la pantalla de personalización \"Estadísticas y balísticas\"."
+
+////////////////////// Game HUD
+L["settings.tabname.hud_game"] = "HUD"
+
+L["settings.hud_game.lcd"] = "Panel LCD"
+L["settings.hud_game.hud_arc9.title"] = "Habilitar HUD"
+L["settings.hud_game.hud_arc9.desc"] = "Habilita HUD para armas ARC9."
+L["settings.hud_game.hud_always.title"] = "En todas las armas"
+L["settings.hud_game.hud_always.desc"] = "Habilita el HUD en todas las armas."
+L["settings.hud_game.hud_compact.title"] = "Modo Compacto"
+L["settings.hud_game.hud_compact.desc"] = "Aspecto compacto para el panel HUD."
+L["settings.hud_game.nohints.title"] = "Deshabilita Pistas"
+L["settings.hud_game.nohints.desc"] = "Deshabilita completamente las pistas. No aparecerán en el HUD 3D ni en el HUD 2D."
+L["settings.hud_game.keephints.title"] = "Mantener Pistas"
+L["settings.hud_game.keephints.desc"] = "Mostrar las pistas de control ARC9 en la parte superior en el panel HUD."
+L["settings.server.hud_game.hud_arc9.title"] = "Forzar Desactivación del HUD"
+L["settings.server.hud_game.hud_arc9.desc"] = "Desactivar HUD ARC9 para todos los jugadores. No afecta a las pistas."
+
+L["settings.hud_game.killfeed"] = "Killfeed"
+L["settings.hud_game.killfeed_enable.title"] = "Iconos del Killfeed"
+L["settings.hud_game.killfeed_enable.desc"] = "Activar la generación automática de iconos de killfeed para armas ARC9."
+L["settings.hud_game.killfeed_dynamic.title"] = "Actualizacion Dinamica"
+L["settings.hud_game.killfeed_dynamic.desc"] = "Los iconos de Killfeed se regenerarán después de cada muerte.\n\nDesactívalo si quieres conseguir esos 0,1 fps."
+L["settings.hud_game.killfeed_colour.title"] = "Iconos a todo color"
+L["settings.hud_game.killfeed_colour.desc"] = "Los iconos generados dinámicamente están totalmente coloreados."
+
+L["settings.hud_game.breath"] = "Respiración"
+L["settings.centerhint.breath_hud.title"] = "HUD de respiración"
+L["settings.centerhint.breath_hud.desc"] = "Muestra una barra que indica el aliento que te queda mientras estabilizas el arma en la mira."
+L["settings.centerhint.breath_pp.title"] = "Post-procesado de respiración"
+L["settings.centerhint.breath_pp.desc"] = "Mantener la respiración también añadirá efectos de post-procesado a tu pantalla."
+L["settings.hud_game.breath_sfx.title"] = "SFX de respiración"
+L["settings.hud_game.breath_sfx.desc"] = "Si mantienes la respiración, se reproducirán los efectos de sonido asociados."
+
+L["settings.tabname.centerhint"] = "Consejos"
+L["settings.centerhint.reload.title"] = "Mostrar Consejo de Recarga"
+L["settings.centerhint.reload.desc"] = "Muestra un aviso de recarga cuando te quede poca munición."
+L["settings.centerhint.reload_percent.title"] = "Porcentaje de Cargador"
+L["settings.centerhint.reload_percent.desc"] = "Muestra un aviso de recarga cuando el cargador actual está en este valor porcentual."
+L["settings.centerhint.bipod.title"] = "Mostrar Alternar Bípode"
+L["settings.centerhint.bipod.desc"] = "Mostrar un aviso cuando el bípode se puede conmutar."
+L["settings.centerhint.jammed.title"] = "Mostrar Consejo de Atascamiento"
+L["settings.centerhint.jammed.desc"] = "Muestra un aviso cuando tu arma se atasca."
+
+L["settings.centerhint.firemode.title"] = "Mostrar Consejo de Modo de Fuego"
+L["settings.centerhint.firemode.desc"] = "Muestra un aviso cuando cambias de modo de disparo o activas el seguro."
+L["settings.centerhint.firemode_time.title"] = "Mostrar Tiempo de Modo de Fuego"
+L["settings.centerhint.firemode_time.desc"] = "Cuánto tiempo debe mostrarse el modo de disparo."
+
+L["settings.centerhint.overheat.title"] = "Mostrar Consejo de Sobrecalentamiento"
+L["settings.centerhint.overheat.desc"] = "Muestra un aviso superpuesto que indica lo cerca que está el arma de sobrecalentarse.\n\nNo se muestra si el HUD ARC9 está activado o el arma no admite sobrecalentamiento."
+
+L["settings.hud_game.hud_glyph"] = "Tipo de Glifo"
+
+L["settings.hud_game.hud_glyph_type_hud.title"] = "HUD"
+L["settings.hud_game.hud_glyph_type_hud.desc"] = "Cambia la familia de glifos a utilizar.\nEsto afecta los consejos del HUD."
+
+L["settings.hud_game.hud_glyph_type_cust.title"] = "Menú de Personalización"
+L["settings.hud_game.hud_glyph_type_cust.desc"] = "Cambia la familia de glifos a utilizar.\nEsto afecta a los consejos del menú de personalización.\nLos cambios se aplicarán la próxima vez que se abra el menú de personalización."
+
+L["settings.hud_game.hud_glyph_light"] = "Claro"
+L["settings.hud_game.hud_glyph_dark"] = "Oscuro"
+L["settings.hud_game.hud_glyph_knockout"] = "Knockout"
+
+////////////////////// NPCs
+L["settings.tabname.npc"] = "NPCs"
+
+L["settings.npc.weapons"] = "Armas de NPCs"
+L["settings.server.npc.npc_equality.title"] = "Igualdad de daños"
+L["settings.server.npc.npc_equality.desc"] = "Los NPCs hacen tanto daño como los jugadores.\n\nEsto es una variable del servidor."
+L["settings.server.npc.npc_spread.title"] = "Precisión de NPCs"
+L["settings.server.npc.npc_spread.desc"] = "Multiplicador de la imprecisión de los NPCs al disparar."
+L["settings.server.npc.npc_autoreplace.title"] = "Reemplazar armas de NPCs"
+L["settings.server.npc.npc_autoreplace.desc"] = "Reemplazar armas NPCs con armas ARC9 elegidas al azar.\n\nEsta es una variable del servidor."
+L["settings.server.npc.replace_spawned.title"] = "Sustituir armas terrestres"
+L["settings.server.npc.replace_spawned.desc"] = "Reemplazar armas de HL2 del mapa/generadas con armas ARC9 elegidos al azar.\n\nEsta es una variable de servidor."
+L["settings.server.npc.npc_give_weapons.title"] = "Jugadores pueden dar armas"
+L["settings.server.npc.npc_give_weapons.desc"] = "Los jugadores pueden pulsar E en los NPCs para darles su arma.\n\nEsta es una variable del servidor."
+
+////////////////////// Gameplay
+L["settings.tabname.gameplay"] = "Gameplay"
+
+L["settings.gameplay.controls"] = "Controles"
+L["settings.gameplay.toggleads.title"] = "Habilitar ADS"
+L["settings.gameplay.toggleads.desc"] = "Al apuntar se alternarán las miras."
+L["settings.gameplay.autolean.title"] = "Inclinacion Automatica"
+L["settings.gameplay.autolean.desc"] = "La puntería intentará inclinarse automáticamente si es posible."
+L["settings.gameplay.autoreload.title"] = "Recarga Automatica"
+L["settings.gameplay.autoreload.desc"] = "Las armas de ARC9 vacías se recargarán automáticamente."
+L["settings.gameplay.togglelean.title"] = "Alternar Inclinación"
+L["settings.gameplay.togglelean.desc"] = "Al pulsar las teclas de inclinación se alternará la inclinación en lugar de tener que mantenerlas pulsadas.\n\nFunciona mal en conjunto a autoinclinacion. Si se utiliza la alternacion de inclinación, debe desactivar autoinclinacion"
+L["settings.gameplay.togglepeek.title"] = "Alternar Vistazo"
+L["settings.gameplay.togglepeek.desc"] = "Al pulsar la tecla de vistazo se activará el vistazo en lugar de tener que mantenerla pulsada."
+L["settings.gameplay.togglepeek_reset.title"] = "Restablecer estado de Vistazo después de apuntar"
+L["settings.gameplay.togglepeek_reset.desc"] = "(Sólo si Alternar Vistazo está activado)\nEl estado de vistazo no se conservará al salir de las miras de puntería."
+L["settings.gameplay.togglebreath.title"] = "Alternar contener la respiración"
+L["settings.gameplay.togglebreath.desc"] = "Al pulsar la tecla Contener la respiración se activará Contener la respiración en lugar de tener que mantenerla pulsada."
+
+L["settings.gameplay.mechanics"] = "Mecánicas de Juego"
+L["settings.server.gameplay.infinite_ammo.title"] = "Munición Infinita"
+L["settings.server.gameplay.infinite_ammo.desc"] = "Las armas tienen munición infinita.\n\nEsta es una variable del servidor."
+L["settings.server.gameplay.realrecoil.title"] = "Retroceso Visual Fisico"
+L["settings.server.gameplay.realrecoil.desc"] = "Las armas configuradas para esta función experimentan una elevación física de la boca del cañón, lo que significa que dispararán donde lo muestre su modelo de vista y no en el centro de la pantalla. Esto es muy importante para el equilibrio de algunos paquetes de armas.\n\nEsta es una variable del servidor."
+L["settings.server.gameplay.lean.title"] = "Inclinacion"
+L["settings.server.gameplay.lean.desc"] = "Si los jugadores pueden inclinarse con +alt1 y +alt2, incluyendo inclinación automática.\n\nEsta es una variable del servidor."
+L["settings.server.gameplay.mod_sway.title"] = "Estabilidad"
+L["settings.server.gameplay.mod_sway.desc"] = "Las armas tendrán estabilidad, si están configuradas para usarlo.\n\nEsta es una variable del servidor."
+L["settings.server.gameplay.mod_freeaim.title"] = "Vista Libre"
+L["settings.server.gameplay.mod_freeaim.desc"] = "Las armas tendrán puntería libre, y no siempre dispararán en el centro de la pantalla.\n\nEsta es una variable del servidor."
+L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Cancelación del daño corporal"
+L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Anula el multiplicador de daño corporal por defecto. Sólo desactivar si se utiliza otro mod que proporciona este tipo de funcionalidad.\ne.g. Mods que cambian los multiplicadores de las extremidades por defecto.\n\nEsta es una variable de servidor."
+L["settings.server.gameplay.breath_slowmo.title"] = "Respiración Slow-Mo"
+L["settings.server.gameplay.breath_slowmo.desc"] = "Contener la respiración ralentiza el tiempo.\n\nNo disponible en multijugador."
+L["settings.server.gameplay.manualbolt.title"] = "Ciclado Manual"
+L["settings.server.gameplay.manualbolt.desc"] = "Las armas de cerrojo o bombeo configuradas para esta función sólo se cerrojarán cuando se pulse R, y no cuando se suelte la tecla de ataque."
+L["settings.server.gameplay.never_ready.title"] = "Anims \"No Preparado\""
+L["settings.server.gameplay.never_ready.desc"] = "Deshabilitar animaciones de preparacion al desplegar arma."
+L["settings.server.gameplay.recoilshake.title"] = "Sacudida FOV de retroceso"
+L["settings.server.gameplay.recoilshake.desc"] = "Sacude el campo de visión al disparar"
+L["settings.server.gameplay.equipment_generate_ammo.title"] = "Tipos de munición únicos para equipamiento"
+L["settings.server.gameplay.equipment_generate_ammo.desc"] = "Hay un límite de 255 tipos de munición, y desactivar esta opción puede ayudar a solucionar algunos problemas si tienes muchos addons.\n\nEsta es una variable del servidor.\n\nRequiere reinicio."
+
+-- ??
+L["settings.server.gameplay.mult_defaultammo.title"] = "Munición de reserva por defecto"
+L["settings.server.gameplay.mult_defaultammo.desc"] = "¿Cuántos cargadores/granadas/equipos se dan al jugador cuando coge el arma por primera vez?\n\nEsta es una variable del servidor."
+L["settings.gameplay.nearwall.title"] = "Cerca de la pared"
+L["settings.gameplay.nearwall.desc"] = "No permite disparar el arma cuando se está demasiado cerca de la pared o cualquier obstáculo."
+
+////////////////////// Visuals
+L["settings.tabname.visuals"] = "Visuales"
+
+L["settings.tabname.vm"] = "Modelo de 1ra Persona"
+L["settings.vm.vm_bobstyle.title"] = "Estilo de Balanceo"
+L["settings.vm.vm_bobstyle.desc"] = "Seleccione diferentes estilos de balanceo, al gusto de los diferentes miembros del equipo ARC9 (y valve software)."
+L["settings.vm.fov.title"] = "FOV"
+L["settings.vm.fov.desc"] = "Añade FOV (CAMPO DE VISION) al modelo de 1ra persona. Aumenta o disminuye el modelo. Uso responsable."
+L["settings.vm.vm_addx.title"] = "Agregar X"
+L["settings.vm.vm_addx.desc"] = "Desplaza el modelo a la derecha o a la izquierda."
+L["settings.vm.vm_addy.title"] = "Agregar Y"
+L["settings.vm.vm_addy.desc"] = "Desplaza el modelo hacia delante y hacia atrás."
+L["settings.vm.vm_addz.title"] = "Agregar Z"
+L["settings.vm.vm_addz.desc"] = "Desplaza el modelo arriba y abajo."
+
+L["settings.visuals.cambob"] = "Balanceo de Vista"
+L["settings.vm.vm_cambob.title"] = "Balanceo al Esprintar"
+L["settings.vm.vm_cambob.desc"] = "Hace que tu cámara se mueva cuando esprintas"
+L["settings.vm.vm_cambobwalk.title"] = "Balanceo de Vista al Caminar"
+L["settings.vm.vm_cambobwalk.desc"] = "Hace que tu cámara se mueva ligeramente cuando caminas (requiere balanceo al esprintar)"
+L["settings.vm.vm_cambobintensity.title"] = "Intensidad"
+L["settings.vm.vm_cambobintensity.desc"] = "Qué tan intenso será el balanceo"
+
+L["settings.tpik"] = "TPIK"
+L["settings.tpik.title"] = "Habilitar TPIK"
+L["settings.tpik.desc"] = "TPIK (Third Person Inverse Kinematics) es un sistema que permite que la mayoría de las armas se muestren detalladas e igual que en primera persona, posiciones de manos, recarga y animaciones de disparo en tercera persona."
+L["settings.tpik_others.title"] = "TPIK de otros jugadores"
+L["settings.tpik_others.desc"] = "Mostrar TPIK para otros jugadores que no seas tú. Impacta negativamente en el rendimiento."
+L["settings.tpik_framerate.title"] = "TPIK FPS"
+L["settings.tpik_framerate.desc"] = "Velocidad de fotogramas máxima a la que puede funcionar TPIK. Establecer a 0 para ilimitado."
+
+////////////////////// Bullet Physics
+L["settings.tabname.bulletphysics"] = "Balas Fisicas"
+
+L["settings.bullets.bullets"] = "Balas Físicas"
+L["settings.server.bulletphysics.bullet_physics.title"] = "Balas Físicas"
+L["settings.server.bulletphysics.bullet_physics.desc"] = "Las armas que admitan esta característica dispararán balas físicas, que tienen caída, tiempo de recorrido y arrastre.\n\nEsta es una variable del servidor."
+L["settings.server.bulletphysics.bullet_gravity.title"] = "Gravedad"
+L["settings.server.bulletphysics.bullet_gravity.desc"] = "Multiplicador para la gravedad de la bala.\n\nEsta es una variable del servidor."
+L["settings.server.bulletphysics.bullet_drag.title"] = "Arrastre"
+L["settings.server.bulletphysics.bullet_drag.desc"] = "Multiplicador para el arrastre de balas.\n\nEsta es una variable del servidor."
+L["settings.server.bulletphysics.ricochet.title"] = "Rebote"
+L["settings.server.bulletphysics.ricochet.desc"] = "Las balas disparadas con armas seleccionadas a veces pueden rebotar en las superficies y seguir viajando y causando daño.\n\nEsta es una variable del servidor."
+L["settings.server.bulletphysics.mod_penetration.title"] = "Penetracion"
+L["settings.server.bulletphysics.mod_penetration.desc"] = "Las balas disparadas desde armas seleccionadas pueden penetrar superficies e infligir daño a lo que haya al otro lado.\n\nEsta es una variable del servidor."
+L["settings.server.bulletphysics.bullet_lifetime.title"] = "Tiempo De Vida"
+L["settings.server.bulletphysics.bullet_lifetime.desc"] = "Tiempo en segundos tras el cual se borrará una bala.\n\nEsta es una variable del servidor."
+L["settings.bullets.bullet_imaginary.title"] = "Balas Imaginarias"
+L["settings.bullets.bullet_imaginary.desc"] = "Las balas parecerán viajar hacia la skybox, más allá de los límites del mapa."
+
+////////////////////// Attachments
+L["settings.tabname.attachments"] = "Accesorios"
+
+L["settings.tabname.customization"] = "Customización"
+L["settings.server.custmenu.atts_nocustomize.title"] = "Deshabilitar Customización"
+L["settings.server.custmenu.atts_nocustomize.desc"] = "Deshabilita toda customización a través del menú.\n\nEsta es una variable del servidor."
+L["settings.server.custmenu.atts_max.title"] = "Accesorios Máx."
+L["settings.server.custmenu.atts_max.desc"] = "El número máximo de accesorios que se pueden poner en un arma, incluidos los accesorios cosméticos.\n\nEsta es una variable del servidor."
+L["settings.custmenu.autosave.title"] = "Autoguardado"
+L["settings.custmenu.autosave.desc"] = "Tus últimas opciones de customización del arma se guardarán y se aplicarán automáticamente la próxima vez que aparezca esa arma."
+L["settings.server.custmenu.blacklist.title"] = "Menú Lista negra"
+L["settings.server.custmenu.blacklist.open"] = "Abrir"
+
+L["settings.attachments.inventory"] = "Inventario"
+L["settings.server.custmenu.free_atts.title"] = "Accesorios Gratis"
+L["settings.server.custmenu.free_atts.desc"] = "Los archivos adjuntos se pueden utilizar sin ser recogidos primero.\n\nEsta es una variable del servidor."
+L["settings.server.custmenu.atts_lock.title"] = "Uno Para Todos"
+L["settings.server.custmenu.atts_lock.desc"] = "Recoger una instancia de un accesorio te permite usarlo infinitas veces en todas tus armas.\n\nEsta es una variable del servidor."
+L["settings.server.custmenu.atts_loseondie.title"] = "Perder En Muerte"
+L["settings.server.custmenu.atts_loseondie.desc"] = "Tu inventario de accesorios se perderá cuando mueras.\n\nEsta es una variable del servidor."
+L["settings.server.custmenu.atts_generateentities.title"] = "Generar Entidades"
+L["settings.server.custmenu.atts_generateentities.desc"] = "Genera entidades que pueden ser engendradas, permitiéndote recoger accesorios cuando los accesorios gratis están desactivados.\n\nPuede aumentar el tiempo de carga.\n\nEsta es una variable del servidor."
+
+////////////////////// Modifiers
+L["settings.tabname.modifiers"] = "Modificadores"
+
+L["settings.tabname.quickstat"] = "Modificadores rápidos de estadísticas"
+L["settings.tabname.quickstat.desc"] = " "
+
+L["settings.server.quickstat.mod_damage.title"] = "Daño"
+L["settings.mod_spread.title"] = "Precisión"
+L["settings.mod_recoil.title"] = "Retroceso"
+L["settings.mod_visualrecoil.title"] = "Retroceso Visual"
+L["settings.mod_adstime.title"] = "Tiempo para apuntar con mira"
+L["settings.mod_sprinttime.title"] = "Tiempo de Esprint a Disparo"
+L["settings.server.quickstat.mod_damagerand.title"] = "Variación de daños"
+L["settings.mod_muzzlevelocity.title"] = "Velocidad de salida"
+L["settings.mod_rpm.title"] = "DPM"
+L["settings.mod_headshotdamage.title"] = "Daño por tiro a cabeza"
+L["settings.server.quickstat.mod_malfunction.title"] = "Probabilidad de fallo"
+
+////////////////////// Controller
+L["settings.tabname.controller"] = "Mando"
+
+L["settings.controller.misc"] = "Varios"
+L["settings.controller.misc.desc"] = "Debería haber un botón que abra el panel con la configuración avanzada del controlador, pero por ahora está en spawnmenu > Options > ARC9 > Controller."
+L["settings.controller.controller.title"] = "Glifos del mando"
+L["settings.controller.controller.desc"] = "Habilitar glifos personalizados compatibles con el mando, mostrando los botones del controlador en lugar de las teclas predeterminadas."
+L["settings.controller.controller_config.title"] = "Configuracion avanzada"
+L["settings.controller.controller_config.content"] = "Abrir panel"
+L["settings.controller.controller_config.desc"] = "Abra el panel de configuración avanzada del mando."
+
+L["settings.controller.glyphs.title"] = "Tipo de Glifo"
+L["settings.controller.glyphs.desc"] = "Cambia la familia de glifos a utilizar.\nConfigurar glifos en \"Menu de Spawn\" > Options > ARC9 > Controller."
+
+////////////////////// Aim Assist
+L["settings.tabname.aimassist"] = "Asistente de Apuntado"
+L["settings.tabname.aimassist.desc"] = "Puedes activar la asistencia para apuntar si tienes problemas para mantener la puntería en el blanco o si prefieres no esforzarte en disparar."
+
+L["settings.server.aimassist.enable.title"] = "Habilitar Asistencia de Apuntado"
+L["settings.server.aimassist.enable.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nEsta es una variable del servidor.\n\nTambién requiere que Asistente de Apuntado esté activado en CLIENTE."
+
+L["settings.aimassist.enable_general.desc"] = "Activa una función de ayuda a la puntería que desplaza tu puntería hacia un objetivo cuando apuntas cerca de él.\n\nConfigúrelo en la pestaña de \"Asistente de Apuntado\"."
+
+L["settings.aimassist.enable_client.desc"] = "Activa una función de ayuda a la puntería que ralentiza la sensibilidad al apuntar sobre un objetivo válido.\n\nTambién requiere que Asistente de Apuntado esté activado en SERVIDOR."
+
+L["settings.server.aimassist.intensity.title"] = "Intensidad"
+L["settings.server.aimassist.intensity.desc"] = "Que tan intenso es el Asistente de Apuntado\n\nEsto es una variable del servidor."
+
+L["settings.server.aimassist.cone.title"] = "Cono"
+L["settings.server.aimassist.cone.desc"] = "Lo cerca o lejos que debe mirar hacia un objetivo antes de que se active el asistente de puntería.\n\nEsto es una variable del servidor."
+
+L["settings.server.aimassist.heads.title"] = "Fijación en la cabeza"
+L["settings.server.aimassist.heads.desc"] = "Si el asistente de apuntado debe fijarse en la cabeza del objetivo en lugar de en su pecho.\n\nEsto es una variable del servidor."
+
+L["settings.aimassist.sensmult.desc"] = "Multiplica la sensibilidad de la mirada por esta cantidad cuando se cierne sobre un objetivo válido.\nCuanto menor sea el valor, menor será la sensibilidad."
+
+////////////////////// Asset Caching
+L["settings.tabname.caching"] = "Almac. en caché"
+L["settings.tabname.assetcache"] = "Almac. en caché"
+L["settings.tabname.assetcache.desc"] = "¡Puede almacenar en caché algunos recursos ARC9 (guardarlos en memoria sin cargarlos mientras juega) para evitar tartamudeos y disfrutar de un juego más cómodo!\n\nSeguramente deberías habilitar algunas cosas si tu gmod funciona en HDD."
+
+L["settings.server.assetcache.precache_sounds_onfirsttake.title"] = "Al equipar: Almacena los sonidos de arma"
+L["settings.server.assetcache.precache_sounds_onfirsttake.desc"] = "Almacena todos los sonidos del arma que acabas de recoger (excepto los sonidos de recarga).\n\nNo es nada impactante, más bien ayuda a evitar tartamudeos al disparar."
+
+L["settings.server.assetcache.precache_attsmodels_onfirsttake.title"] = "Al equipar: Almacena los accesorios"
+L["settings.server.assetcache.precache_attsmodels_onfirsttake.desc"] = "Almacena todos los modelos de accesorios ARC9 cuando cualquier arma ARC9 fue equipada por primera vez.\n\nCausa un gran congelamiento, especialmente cuando tienes muchas armas."
+L["settings.server.assetcache.precache_wepmodels_onfirsttake.title"] = "Al equipar: Almacena los modelos de arma"
+L["settings.server.assetcache.precache_wepmodels_onfirsttake.desc"] = "Almacena en caché todos los modelos de armas ARC9 cuando cualquier arma ARC9 se equipa por primera vez.\n\nCausa GRAN congelación, especialmente cuando tienes muchas armas."
+
+L["settings.server.assetcache.precache_allsounds_onstartup.title"] = "Al inicio: Almacena los sonidos de arma"
+L["settings.server.assetcache.precache_allsounds_onstartup.desc"] = "Almacena en caché todos los sonidos de todas las armas al iniciar el servidor. (excepto los sonidos de recarga).\n\nNo es tan impactante, pero de todos modos es mejor utilizar la primera opción aquí."
+L["settings.server.assetcache.precache_attsmodels_onstartup.title"] = "Al inicio: Almacena los accesorios"
+L["settings.server.assetcache.precache_attsmodels_onstartup.desc"] = "Almacena en caché todos los modelos de accesorios ARC9 al iniciar el servidor.\n\nProvoca un aumento bastante grande del tiempo de carga, especialmente cuando tienes muchas armas."
+L["settings.server.assetcache.precache_wepmodels_onstartup.title"] = "Al inicio: Almacena los modelos de arma"
+L["settings.server.assetcache.precache_wepmodels_onstartup.desc"] = "Almacena en caché todos los modelos de armas ARC9 al iniciar el servidor.\n\nProvoca un aumento REALMENTE GRANDE del tiempo de carga, especialmente cuando tienes muchas armas."
+
+L["settings.server.assetcache.precache_allsounds.title"] = "Todos los sonidos de armas"
+L["settings.server.assetcache.precache_wepmodels.title"] = "Todos los modelos de armas"
+L["settings.server.assetcache.precache_attsmodels.title"] = "Todos los modelos de accesorios"
+
+L["settings.server.assetcache"] = "Almacenar Caché"
+
+////////////////////// Developer
+L["settings.tabname.developer"] = "Desarollador"
+
+L["settings.tabname.developer.settings"] = "Opciones de Desarollador"
+L["settings.server.developer.dev_always_ready.title"] = "Siempre listo"
+L["settings.server.developer.dev_always_ready.desc"] = "Reproduce siempre la animación \"listo\"cuando despliegues un arma.\n\nEsta es una variable del servidor."
+L["settings.server.developer.dev_benchgun.title"] = "Modelo de Arma Estático"
+L["settings.server.developer.dev_benchgun.desc"] = "Mantén el modelo arma donde está actualmente. Utilidad para ayudar a posicionar accesorios correctamente."
+L["settings.server.developer.dev_crosshair.title"] = "Punto de Mira Dev"
+L["settings.server.developer.dev_crosshair.desc"] = "Un punto de mira de aspecto gracioso que muestra el punto exacto de puntería y algunos números útiles.\n\nEsta es una variable del servidor, y sólo funciona para los administradores - ¡no hagas trampas con esto!"
+L["settings.server.developer.dev_show_affectors.title"] = "Mostrar Afectores"
+L["settings.server.developer.dev_show_affectors.desc"] = "Muestra los afectores que se están aplicando actualmente.\n\nRequiere \"Punto de Mira Dev\"."
+L["settings.server.developer.dev_show_shield.title"] = "Mostrar Escudo"
+L["settings.server.developer.dev_show_shield.desc"] = "Muestra el modelo del escudo del jugador."
+L["settings.server.developer.dev_greenscreen.title"] = "Pantalla Verde"
+L["settings.server.developer.dev_greenscreen.desc"] = "Mostrar un fondo de pantalla verde en el menú de personalización para capturas de pantalla.\n\nSi estas utilizando HDR, no olvides de ajustar mat_bloom_scalefactor_scalar a 0!"
+L["settings.server.developer.reloadatts.title"] = "Recargar Accesorios"
+L["settings.server.developer.reloadlangs.title"] = "Recargar Idiomas"
+L["settings.server.printconsole.dev_listmyatts.title"] = "Listar mis accesorios"
+L["settings.server.printconsole.dev_listanims.title"] = "Lista de Animaciones"
+L["settings.server.printconsole.dev_listbones.title"] = "Lista de Huesos"
+L["settings.server.printconsole.dev_listbgs.title"] = "Lista de Bodygroups"
+L["settings.server.printconsole.dev_listatts.title"] = "Lista de QCAttachments"
+L["settings.server.printconsole.dev_listmats.title"] = "Lista de Materiales"
+L["settings.server.printconsole.dev_export.title"] = "Exportar Código"
+L["settings.server.printconsole.dev_getjson.title"] = "JSON del Arma"
+
+L["settings.server.developer.presets_clear.title"] = "Limpiar datos de armas"
+L["settings.server.developer.presets_clear.desc"] = "Borrar preajustes, todos los iconos y preajustes por defecto para el arma que actualmente sostiene.\n\nAdvertencia: Si el menú se abre sin un arma de ARC9 en las manos, se borrarán todos los preajustes e iconos de ARC9 existentes!"
+
+L["settings.server.developer.clear"] = "Limpiar"
+L["settings.server.printconsole"] = "Imprimir en Consola"
+L["settings.server.developer.reload"] = "Recargar"
+
+-- End of Legacy
+
 ////////////////////// Universal
 -- Use this method to localize convars in settings menu:
 -- settings.convar.title = "Convar Title"
