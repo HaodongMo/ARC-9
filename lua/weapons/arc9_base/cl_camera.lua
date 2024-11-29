@@ -6,6 +6,7 @@ SWEP.FOV = 90
 local arc9_vm_cambob = GetConVar("arc9_vm_cambob")
 local arc9_vm_cambobwalk = GetConVar("arc9_vm_cambobwalk")
 local arc9_vm_cambobintensity = GetConVar("arc9_vm_cambobintensity")
+local arc9_vm_camdisable = GetConVar("arc9_vm_camdisable")
 
 local SmoothRecoilAmount = 0
 
@@ -112,6 +113,8 @@ function SWEP:GetCameraControl()
     local seqprox = self:GetSequenceProxy()
 	
 	if self:GetCustomize() then return end
+	
+	if arc9_vm_camdisable:GetBool() then return end
 	
     if seqprox != 0 then
         local slottbl = self:LocateSlotFromAddress(seqprox)

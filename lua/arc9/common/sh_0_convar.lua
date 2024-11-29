@@ -918,6 +918,11 @@ local conVars = {
         default = "0",
         client = true,
     },
+    {
+        name = "vm_camdisable",
+        default = "0",
+        client = true,
+    },
 }
 ARC9.ConVarData = {}
 

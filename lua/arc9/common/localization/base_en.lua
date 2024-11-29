@@ -622,6 +622,9 @@ L["settings.vm.vm_cambobwalk.desc"] = "Makes the camera move when walking."
 L["settings.vm.vm_cambobintensity.title"] = "Intensity"
 L["settings.vm.vm_cambobintensity.desc"] = "How intense the sprint and walk bobbing should be."
 
+L["settings.vm.vm_camdisable.title"] = "Disable Viewmodel Camera Movement"
+L["settings.vm.vm_camdisable.desc"] = "Completely disables the camera movement used by weapon animations, such as when reloading or inspecting.\n\nNote: Could potentially break the behavior of some weapon packs."
+
 ////////////////////// Crosshair & Scopes
 L["settings.tabname.crosshairscopes"] = "Crosshair & Scopes"
 L["settings.tabname.crosshairscopes.desc"] = "Adjust settings related to the crosshair and scopes."
