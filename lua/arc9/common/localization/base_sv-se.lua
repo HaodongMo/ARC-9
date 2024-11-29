@@ -550,11 +550,11 @@ L["settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" är ett s
 L["settings.tpik.title"] = "Aktivera TPIK"
 L["settings.tpik.desc"] = "Aktiverar TPIK (Third Person Inverse Kinematics).\n\nPåverkar prestandan."
 
-L["settings.tpik_others.title"] = "Other Players' TPIK"
-L["settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
+L["settings.tpik_others.title"] = "Andra spelares TPIK"
+L["settings.tpik_others.desc"] = "Visa andra spelares TPIK.\n\nPåverkar prestandan."
 
-L["settings.tpik_framerate.title"] = "TPIK Frame Rate"
-L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK runs at.\n\nSet to 0 for unlimited.\n\nUnlimited or higher values impact performance."
+L["settings.tpik_framerate.title"] = "TPIK Bildfrekvens"
+L["settings.tpik_framerate.desc"] = "Vilken bildfrekvens (FPS) TPIK använder.\n\nSätt till 0 för oändlig.\n\nOändlig eller högre värden påverkar prestandan."
 
 ////////// Blur
 L["settings.tabname.blur"] = "Oskärpa"
@@ -621,6 +621,9 @@ L["settings.vm.vm_cambobwalk.desc"] = "Gör att kameran rör på sig under gång
 
 L["settings.vm.vm_cambobintensity.title"] = "Styrka"
 L["settings.vm.vm_cambobintensity.desc"] = "Hur intensiv guppande vyn vid springande och under gång borde vara."
+
+L["settings.vm.vm_camdisable.title"] = "Stäng Av Vy Modell Kamerarörelse"
+L["settings.vm.vm_camdisable.desc"] = "Stänger helt av kamerarörelsen som används av vapnets animationer, exempelvis under omladdning eller inspektion.\n\nNotera: Detta kan möjligtvis ta sönder beteendet på vissa vapenpaket."
 
 ////////////////////// Crosshair & Scopes
 L["settings.tabname.crosshairscopes"] = "Hårkors & Sikten"

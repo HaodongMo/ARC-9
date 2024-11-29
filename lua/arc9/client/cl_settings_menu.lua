@@ -220,6 +220,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.vm.vm_cambob.title", desc = "settings.vm.vm_cambob.desc", convar = "vm_cambob" },
         { type = "bool", text = "settings.vm.vm_cambobwalk.title", desc = "settings.vm.vm_cambobwalk.desc", convar = "vm_cambobwalk", parentconvar = "vm_cambob" },
         { type = "slider", text = "settings.vm.vm_cambobintensity.title", desc = "settings.vm.vm_cambobintensity.desc", convar = "vm_cambobintensity", min = 0.1, max = 3, decimals = 2, parentconvar = "vm_cambob" },
+        { type = "bool", text = "settings.vm.vm_camdisable.title", desc = "settings.vm.vm_camdisable.desc", convar = "vm_camdisable" },
 	},
     {
         TabName = "settings.tabname.gameplay",
