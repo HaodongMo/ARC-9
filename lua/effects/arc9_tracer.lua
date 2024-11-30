@@ -25,6 +25,12 @@ function EFFECT:Init(data)
     local start = (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart()
 
     local diff = hit - start
+    self.Dir = diff:GetNormalized()
+    local hitt = util.QuickTrace(hit, self.Dir)
+    if hitt.HitSky then
+        self.Dir = wep:GetOwner():GetAimVector()
+        hit = start + self.Dir * 32768
+    end
 
     if speed > 0 then
         self.Speed = speed
@@ -36,7 +42,6 @@ function EFFECT:Init(data)
 
     self.StartPos = start
     self.EndPos = hit
-    self.Dir = diff:GetNormalized()
 
     -- Sometimes it freaks out and, I dunno, gets invalid
     if wep.GetProcessedValue then
@@ -77,7 +82,7 @@ function EFFECT:Render()
 
     local tail = (self.Dir * math.min(self.Speed / 25, 512, (endpos - startpos):Length() - 64))
     render.SetMaterial(tracer)
-    render.DrawBeam(endpos, endpos - tail, size * 0.75, 0, 1, col)
+    render.DrawBeam(endpos, endpos - tail, size * 0.75, 1, 0, col)
 
     render.SetMaterial(smoke)
     render.DrawBeam( endpos - tail, startpos, size * d2, 0, 1, col2)
