@@ -23,6 +23,7 @@ local bluramt = 0
 local arc9_fx_rtblur = GetConVar("arc9_fx_rtblur")
 local arc9_fx_animblur = GetConVar("arc9_fx_animblur")
 local arc9_fx_reloadblur = GetConVar("arc9_fx_reloadblur")
+local arc9_fx_inspectblur = GetConVar("arc9_fx_inspectblur")
 local arc9_cust_blur = GetConVar("arc9_cust_blur")
 local arc9_hud_lightmode = GetConVar("arc9_hud_lightmode")
 local arc9_dev_greenscreen = GetConVar("arc9_dev_greenscreen")
@@ -72,7 +73,7 @@ function SWEP:PreDrawViewModel()
         blurtarget = 2 * sightamount
     end
 
-    if (arc9_fx_reloadblur:GetBool() and self:GetReloading()) or (arc9_fx_animblur:GetBool() and self:GetReadyTime() >= CurTime()) then
+    if (arc9_fx_reloadblur:GetBool() and self:GetReloading()) or (arc9_fx_animblur:GetBool() and self:GetReadyTime() >= CurTime()) or (arc9_fx_inspectblur:GetBool() and self:GetInspecting()) then
         blurtarget = 1.5
         shouldrtblur = true
     end

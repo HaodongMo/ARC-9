@@ -116,8 +116,15 @@ ARC9.SettingsTable = {
 		
         { type = "slider", text = "settings.hud_game.hud_scale.title", desc = "settings.hud_game.hud_scale.desc", parentconvar = "hud_arc9", requireconvaroff = "hud_force_disable", convar = "hud_scalefake", min = 0.5, max = 1.5, decimals = 2, func = afterscalefunc},
 
-        { type = "bool", text = "settings.hud_game.keephints.title", desc = "settings.hud_game.keephints.desc", convar = "hud_keephints" },
-        { type = "bool", text = "settings.hud_game.nohints.title", desc = "settings.hud_game.nohints.desc", convar = "hud_nohints" },
+        -- { type = "bool", text = "settings.hud_game.keephints.title", desc = "settings.hud_game.keephints.desc", convar = "hud_keephints" },
+        -- { type = "bool", text = "settings.hud_game.nohints.title", desc = "settings.hud_game.nohints.desc", convar = "hud_nohints" },
+		
+        { type = "combo", text = "settings.hud_game.hints.title", desc = "settings.hud_game.hints.desc", convar = "hud_hints", content = {
+				{"1" .. ARC9:GetPhrase("settings.hud_game.hints.off"), "0"},
+				{"2" .. ARC9:GetPhrase("settings.hud_game.hints.fade"), "1"},
+				{"3" .. ARC9:GetPhrase("settings.hud_game.hints.on"), "2"},
+			},
+        },
 		
         { type = "bool", text = "settings.hud_game.killfeed_enable.title", desc = "settings.hud_game.killfeed_enable.desc", convar = "killfeed_enable" },
         { type = "bool", text = "settings.hud_game.killfeed_dynamic.title", desc = "settings.hud_game.killfeed_dynamic.desc", convar = "killfeed_dynamic", parentconvar = "killfeed_enable" },
@@ -193,6 +200,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.blur.cust_blur.title", desc = "settings.blur.cust_blur.desc", convar = "cust_blur" },
         { type = "bool", text = "settings.blur.fx_reloadblur.title", desc = "settings.blur.fx_reloadblur.desc", convar = "fx_reloadblur" },
         { type = "bool", text = "settings.blur.fx_animblur.title", desc = "settings.blur.fx_animblur.desc", convar = "fx_animblur", parentconvar = "fx_reloadblur" },
+        { type = "bool", text = "settings.blur.fx_inspectblur.title", desc = "settings.blur.fx_inspectblur.desc", convar = "fx_inspectblur", parentconvar = "fx_reloadblur" },
         { type = "bool", text = "settings.blur.fx_rtblur.title", desc = "settings.blur.fx_rtblur.desc", convar = "fx_rtblur" },
         { type = "bool", text = "settings.blur.fx_adsblur.title", desc = "settings.blur.fx_adsblur.desc", convar = "fx_adsblur", parentconvar = "fx_rtblur" },
 		

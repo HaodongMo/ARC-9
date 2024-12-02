@@ -482,13 +482,12 @@ L["settings.hud_game.hud_compact.desc"] = "Gömmer visa element på ARC9-gränss
 L["settings.hud_game.hud_always.title"] = "Visa på icke-ARC9-vapen"
 L["settings.hud_game.hud_always.desc"] = "Aktivera det anpassade gränssnittet på icke-ARC9-vapen."
 
-L["settings.hud_game.keephints.title"] = "Visa Alltid Tips"
-L["settings.hud_game.keephints.desc"] = "Stänger av försvinnandet av kontrolltips."
-L["settings.hud_game.nohints.title"] = "eller Stäng Av Tips"
-L["settings.hud_game.nohints.desc"] = "Stänger helt av ARC9-kontrolltipsen.\n\nEj kompatibel med \"Visa Alltid Tips\"."
-
 L["settings.hud_game.hints.title"] = "Tips Beteenden"
-L["settings.hud_game.hints.desc"] = "Välj att alltid visa, försvinna eller helt stänga av kontrolltips."
+L["settings.hud_game.hints.desc"] = "Välj att alltid visa, tyna bort eller helt stänga av kontrolltips."
+
+L["settings.hud_game.hints.off"] = "Alltid Av"
+L["settings.hud_game.hints.fade"] = "Tyna Bort"
+L["settings.hud_game.hints.on"] = "Alltid På"
 
 L["settings.hud_game.killfeed_enable.title"] = "Auto-Skapa Killfeed-ikoner"
 L["settings.hud_game.killfeed_enable.desc"] = "Skapa killfeed-ikoner automatiskt till ARC9-vapen."
@@ -568,6 +567,9 @@ L["settings.blur.fx_reloadblur.desc"] = "Bakgrunden blir suddig när vapen ladda
 
 L["settings.blur.fx_animblur.title"] = "Oskärpa världen under Redogörelse"
 L["settings.blur.fx_animblur.desc"] = "Bakgrunden blir suddig när ett vapen tas fram."
+
+L["settings.blur.fx_inspectblur.title"] = "Oskärpa värld under Inspektering"
+L["settings.blur.fx_inspectblur.desc"] = "Bakgrunden blir suddig när ett vapen inspekteras."
 
 L["settings.blur.fx_rtblur.title"] = "Oskärpa världen i sikten med RT"
 L["settings.blur.fx_rtblur.desc"] = "Bakgrunden blir suddig när du siktar med ett RT-sikte"

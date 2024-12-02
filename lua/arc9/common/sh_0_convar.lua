@@ -513,16 +513,6 @@ local conVars = {
         replicated = true,
     },
     {
-        name = "hud_keephints",
-        default = "0",
-        client = true
-    },
-    {
-        name = "hud_nohints",
-        default = "0",
-        client = true
-    },
-    {
         name = "infinite_ammo",
         default = "0",
         replicated = true
@@ -922,6 +912,16 @@ local conVars = {
         name = "vm_camdisable",
         default = "0",
         client = true,
+    },
+    {
+        name = "hud_hints",
+        default = "1",
+        client = true,
+    },
+    {
+        name = "fx_inspectblur",
+        default = "0",
+        client = true
     },
 }
 ARC9.ConVarData = {}

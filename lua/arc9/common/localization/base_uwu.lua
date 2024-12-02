@@ -482,13 +482,12 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
 -- L["settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
 
--- L["settings.hud_game.keephints.title"] = "Always Display Hints"
--- L["settings.hud_game.keephints.desc"] = "Disables the fadeaway of the control hints."
--- L["settings.hud_game.nohints.title"] = "Fully Disable Hints"
--- L["settings.hud_game.nohints.desc"] = "Completely disables ARC9 hints.\n\nNot compatible with \"Always Display Hints\"."
-
 -- L["settings.hud_game.hints.title"] = "Hint Behavior"
 -- L["settings.hud_game.hints.desc"] = "Choose to always display, fade away or completely disable control hints."
+
+-- L["settings.hud_game.hints.off"] = "Always Off"
+-- L["settings.hud_game.hints.fade"] = "Fade Away"
+-- L["settings.hud_game.hints.on"] = "Always On"
 
 -- L["settings.hud_game.killfeed_enable.title"] = "Auto-Generate Killfeed Icons"
 -- L["settings.hud_game.killfeed_enable.desc"] = "Generate killfeed icons automatically on ARC9 weapons."
@@ -568,6 +567,9 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 
 -- L["settings.blur.fx_animblur.title"] = "Blur world when Readying"
 -- L["settings.blur.fx_animblur.desc"] = "Blurs the background when pulling out a weapon."
+
+-- L["settings.blur.fx_inspectblur.title"] = "Blur world when Inspecting"
+-- L["settings.blur.fx_inspectblur.desc"] = "Blurs the background when inspecting a weapon."
 
 -- L["settings.blur.fx_rtblur.title"] = "Blur world when aiming RT scopes"
 -- L["settings.blur.fx_rtblur.desc"] = "Blurs the background when aiming with any RT scope."

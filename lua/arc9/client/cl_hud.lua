@@ -278,6 +278,7 @@ local lasthintcount = 0
 local hidefadetime = 0
 local first = true
 local convar_keephints = GetConVar("arc9_hud_keephints")
+local convar_hints = GetConVar("arc9_hud_hints")
 
 local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
 local hud_t_full = Material("arc9/thermometer_full.png", "mips")
@@ -492,7 +493,7 @@ local arc9_hud_compact = GetConVar("arc9_hud_compact")
 local deadzonex = GetConVar("arc9_hud_deadzonex")
 
 local function DrawSimpleHints()
-    if arc9_hud_nohints:GetBool() then return end
+    if convar_hints:GetFloat() == 0 then return end
 
     local weapon = LocalPlayer():GetActiveWeapon()
     if !weapon.ARC9 or weapon.NotAWeapon then return end
@@ -532,7 +533,7 @@ local function DrawSimpleHints()
     else
         hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
     end
-    if convar_keephints:GetBool() then hint_alpha = 1 end
+    if convar_hints:GetFloat() == 2 then hint_alpha = 1 end
 
     local hints_w = ARC9ScreenScale(100)
     local hints_h = ARC9ScreenScale(11) * table.Count(hints)
@@ -1259,7 +1260,7 @@ function ARC9.DrawHUD()
         else
             hint_alpha = math.Approach(hint_alpha, 0, FrameTime() / 1)
         end
-        if convar_keephints:GetBool() then hint_alpha = 1 end
+        if convar_hints:GetFloat() == 2 then hint_alpha = 1 end
 
         cam.Start3D2D(pos - (ang:Right() * ((20 * #hints * 0.0125) + 0.25)), ang, 0.0125)
             surface.SetDrawColor(ARC9.GetHUDColor("shadow", 150 * hint_alpha))
