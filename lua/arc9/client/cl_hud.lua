@@ -277,7 +277,6 @@ local hint_alpha = 1
 local lasthintcount = 0
 local hidefadetime = 0
 local first = true
-local convar_keephints = GetConVar("arc9_hud_keephints")
 local convar_hints = GetConVar("arc9_hud_hints")
 
 local hud_bg = Material("arc9/hud_bg.png", "mips smooth")
@@ -488,7 +487,6 @@ local function GetHintsTable(capabilities)
     return hints
 end
 
-local arc9_hud_nohints = GetConVar("arc9_hud_nohints")
 local arc9_hud_compact = GetConVar("arc9_hud_compact")
 local deadzonex = GetConVar("arc9_hud_deadzonex")
 
@@ -1210,7 +1208,7 @@ function ARC9.DrawHUD()
 
     cam.End3D2D()
 
-    if weapon.ARC9 and !arc9_hud_nohints:GetBool() then
+    if weapon.ARC9 and convar_hints:GetFloat() > 0 then
         local capabilities = GetWeaponCapabilities(weapon)
 
         -- local hints = {
