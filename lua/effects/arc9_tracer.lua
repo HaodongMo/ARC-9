@@ -28,7 +28,7 @@ function EFFECT:Init(data)
     self.Dir = diff:GetNormalized()
     local hitt = util.QuickTrace(hit, self.Dir)
     if hitt.HitSky then
-        self.Dir = wep:GetOwner():GetAimVector()
+        self.Dir = (self.Dir + wep:GetOwner():GetAimVector()):GetNormalized()
         hit = start + self.Dir * 32768
     end
 
