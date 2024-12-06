@@ -283,47 +283,47 @@ L["sticker_skibidi_arctic.printname"] = "Skibidi Arctic"
 L["sticker_skibidi_arctic.compactname"] = "Skibidi"
 L["sticker_skibidi_arctic.description"] = [[Design by Stan_Jacobs.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_arcobson.printname"] = "Arcobson"
 L["sticker_arcobson.compactname"] = "Arcobson"
 L["sticker_arcobson.description"] = [[Design by Stan_Jacobs.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_slopfox.printname"] = "Slop Fox"
 L["sticker_slopfox.compactname"] = "Fox"
 L["sticker_slopfox.description"] = [[In memory of that guy.
 Design by Stan_Jacobs.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_malbert.printname"] = "Malbert"
 L["sticker_malbert.compactname"] = "Malbert"
 L["sticker_malbert.description"] = [[For every brainless gamers' brainless needs.
 Design by Elorus.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_screw.printname"] = "Screw"
 L["sticker_screw.compactname"] = "Screw"
 L["sticker_screw.description"] = [[Design by Stan_Jacobs.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_northern_petrol.printname"] = "Northern Petrol"
 L["sticker_northern_petrol.compactname"] = "Petrol"
 L["sticker_northern_petrol.description"] = [[Northern Petrol from hit game Half-Life Two.
 Design by Stan_Jacobs.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_polygonal_pineapple.printname"] = "Polygonal Pineapple"
 L["sticker_polygonal_pineapple.compactname"] = "Pineapple"
 L["sticker_polygonal_pineapple.description"] = [["My dad told me if I want his respect that I'd have to make a polygonal pineapple and eat the extra sharp piece of fruit... Half way there"
 Design by Ender2point0.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_nervos.printname"] = "NervOS Eye"
 L["sticker_nervos.compactname"] = "NervOS"
@@ -331,13 +331,19 @@ L["sticker_nervos.description"] = [["We See You"
 From Neosun's upcoming book, "Tom Aero 0".
 Design by Neosun.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
 L["sticker_puzzle.printname"] = "Take A Crack At It"
 L["sticker_puzzle.compactname"] = "Puzzle"
 L["sticker_puzzle.description"] = [["symbol of gmod community struggling with basic tasks"
 Design by Stan_Jacobs.
 
-Sticker included in the ARC9 Base.]]
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]
 
+L["sticker_loverealism.printname"] = "I <3 Realism"
+L["sticker_loverealism.compactname"] = "Realism"
+L["sticker_loverealism.description"] = [["I LOVE REALISM"
+"hey i got question why does it take so long to load garrys mod??"
+Design by Neosun.
 
+Sticker included in the ARC9 Base, part of Community Sticker Contest 2.]]

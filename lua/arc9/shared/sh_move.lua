@@ -307,7 +307,7 @@ function ARC9.StartCommand(ply, cmd)
 
         ARC9.RecoilRise = ARC9.RecoilRise + Angle(diff_p, diff_y, 0)
 
-        local recreset = ARC9.RecoilRise * wpn:GetProcessedValue("RecoilAutoControl", true) * cft * 2
+        local recreset = ARC9.RecoilRise * wpn:GetProcessedValue("RecoilAutoControl") * cft * 2
 
         if math.abs(recreset.p) > 1e-5 then
             eyeang.p = eyeang.p - recreset.p
