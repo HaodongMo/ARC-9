@@ -625,7 +625,10 @@ L["settings.convar_client"] = "Client-Variable"
 -- L["settings.vm.vm_cambobintensity.desc"] = "How intense the sprint and walk bobbing should be."
 
 -- L["settings.vm.vm_camdisable.title"] = "Disable Viewmodel Camera Movement"
--- L["settings.vm.vm_camdisable.desc"] = "Completely disables the camera movement used by weapon animations, such as when reloading or inspecting.\n\nNote: Could potentially break the behavior of some weapon packs."
+-- L["settings.vm.vm_camdisable.desc"] = "Completely disables the camera movement used by weapon animations, such as when reloading or inspecting.\n\nCould help in reducing motion sickness.\n\nNote: Could potentially break the behavior of some weapon packs."
+
+-- L["settings.vm.vm_camrollstrength.title"] = "Viewmodel Camera Roll Strength"
+-- L["settings.vm.vm_camrollstrength.desc"] = "Alters the strength of the camera roll movement used by weapon animations, such as when reloading or inspecting."
 
 ////////////////////// Crosshair & Scopes
 -- L["settings.tabname.crosshairscopes"] = "Crosshair & Scopes"

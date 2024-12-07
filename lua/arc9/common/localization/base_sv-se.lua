@@ -625,7 +625,10 @@ L["settings.vm.vm_cambobintensity.title"] = "Styrka"
 L["settings.vm.vm_cambobintensity.desc"] = "Hur intensiv guppande vyn vid springande och under gång borde vara."
 
 L["settings.vm.vm_camdisable.title"] = "Stäng Av Vy Modell Kamerarörelse"
-L["settings.vm.vm_camdisable.desc"] = "Stänger helt av kamerarörelsen som används av vapnets animationer, exempelvis under omladdning eller inspektion.\n\nNotera: Detta kan möjligtvis ta sönder beteendet på vissa vapenpaket."
+L["settings.vm.vm_camdisable.desc"] = "Stänger helt av kamerarörelsen som används av vapnets animationer, exempelvis under omladdning eller inspektion.\n\nKan hjälpa till att sänka rörelsesjuka.\n\nNotera: Detta kan möjligtvis ta sönder beteendet på vissa vapenpaket."
+
+L["settings.vm.vm_camrollstrength.title"] = "Vy Modell Kamera Rullstyrka"
+L["settings.vm.vm_camrollstrength.desc"] = "Justerar styrkan av kamerans rullrörelse som används av vapnets animationer, exempelvis under omladdning eller inspektion."
 
 ////////////////////// Crosshair & Scopes
 L["settings.tabname.crosshairscopes"] = "Hårkors & Sikten"
