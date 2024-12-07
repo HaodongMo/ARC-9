@@ -6,6 +6,7 @@ SWEP.FOV = 90
 local arc9_vm_cambob = GetConVar("arc9_vm_cambob")
 local arc9_vm_cambobwalk = GetConVar("arc9_vm_cambobwalk")
 local arc9_vm_cambobintensity = GetConVar("arc9_vm_cambobintensity")
+local arc9_vm_camrollstrength = GetConVar("arc9_vm_camrollstrength")
 local arc9_vm_camdisable = GetConVar("arc9_vm_camdisable")
 
 local SmoothRecoilAmount = 0
@@ -136,6 +137,7 @@ function SWEP:GetCameraControl()
         if !ang then return end
 
         ang = mdl:WorldToLocalAngles(ang)
+        ang.r = ang.r * arc9_vm_camrollstrength:GetFloat()
         ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
         ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
 
@@ -190,7 +192,7 @@ function SWEP:GetCameraControl()
 
             self.ProceduralViewOffset.p = mathapproach(self.ProceduralViewOffset.p, 0, (1 - progress) * ft * -self.ProceduralViewOffset.p)
             self.ProceduralViewOffset.y = mathapproach(self.ProceduralViewOffset.y, 0, (1 - progress) * ft * -self.ProceduralViewOffset.y)
-            self.ProceduralViewOffset.r = mathapproach(self.ProceduralViewOffset.r, 0, (1 - progress) * ft * -self.ProceduralViewOffset.r)
+            self.ProceduralViewOffset.r = mathapproach(self.ProceduralViewOffset.r, 0, (1 - progress) * ft * -self.ProceduralViewOffset.r) * arc9_vm_camrollstrength:GetFloat()
 
             self.LastMuzzleAngle = ang
 
@@ -198,6 +200,7 @@ function SWEP:GetCameraControl()
         else
             ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
             ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS", true) or 0.5)))
+            ang.r = ang.r * arc9_vm_camrollstrength:GetFloat()
         end
 
         return ang

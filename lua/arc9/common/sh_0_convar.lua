@@ -914,6 +914,11 @@ local conVars = {
         client = true,
     },
     {
+        name = "vm_camrollstrength",
+        default = "1",
+        client = true,
+    },
+    {
         name = "hud_hints",
         default = "1",
         client = true,
