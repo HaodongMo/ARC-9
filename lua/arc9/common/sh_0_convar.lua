@@ -909,8 +909,8 @@ local conVars = {
         client = true,
     },
     {
-        name = "vm_camdisable",
-        default = "0",
+        name = "vm_camstrength",
+        default = "1",
         client = true,
     },
     {

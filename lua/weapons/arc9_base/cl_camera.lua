@@ -7,7 +7,7 @@ local arc9_vm_cambob = GetConVar("arc9_vm_cambob")
 local arc9_vm_cambobwalk = GetConVar("arc9_vm_cambobwalk")
 local arc9_vm_cambobintensity = GetConVar("arc9_vm_cambobintensity")
 local arc9_vm_camrollstrength = GetConVar("arc9_vm_camrollstrength")
-local arc9_vm_camdisable = GetConVar("arc9_vm_camdisable")
+local arc9_vm_camstrength = GetConVar("arc9_vm_camstrength")
 
 local SmoothRecoilAmount = 0
 
@@ -114,9 +114,7 @@ function SWEP:GetCameraControl()
     local seqprox = self:GetSequenceProxy()
 	
 	if self:GetCustomize() then return end
-	
-	if arc9_vm_camdisable:GetBool() then return end
-	
+
     if seqprox != 0 then
         local slottbl = self:LocateSlotFromAddress(seqprox)
         local atttbl = self:GetFinalAttTable(slottbl)
@@ -137,6 +135,8 @@ function SWEP:GetCameraControl()
         if !ang then return end
 
         ang = mdl:WorldToLocalAngles(ang)
+        ang.p = ang.p * arc9_vm_camstrength:GetFloat()
+        ang.y = ang.y * arc9_vm_camstrength:GetFloat()
         ang.r = ang.r * arc9_vm_camrollstrength:GetFloat()
         ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
         ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
@@ -200,6 +200,8 @@ function SWEP:GetCameraControl()
         else
             ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
             ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS", true) or 0.5)))
+			ang.p = ang.p * arc9_vm_camstrength:GetFloat()
+			ang.y = ang.y * arc9_vm_camstrength:GetFloat()
             ang.r = ang.r * arc9_vm_camrollstrength:GetFloat()
         end
 

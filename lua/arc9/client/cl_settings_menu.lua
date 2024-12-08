@@ -228,8 +228,8 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.vm.vm_cambob.title", desc = "settings.vm.vm_cambob.desc", convar = "vm_cambob" },
         { type = "bool", text = "settings.vm.vm_cambobwalk.title", desc = "settings.vm.vm_cambobwalk.desc", convar = "vm_cambobwalk", parentconvar = "vm_cambob" },
         { type = "slider", text = "settings.vm.vm_cambobintensity.title", desc = "settings.vm.vm_cambobintensity.desc", convar = "vm_cambobintensity", min = 0.1, max = 3, decimals = 2, parentconvar = "vm_cambob" },
-        { type = "bool", text = "settings.vm.vm_camdisable.title", desc = "settings.vm.vm_camdisable.desc", convar = "vm_camdisable" },
-        { type = "slider", text = "settings.vm.vm_camrollstrength.title", desc = "settings.vm.vm_camrollstrength.desc", convar = "vm_camrollstrength", min = 0, max = 1, decimals = 2, parentconvar = "vm_camdisable", parentinvert = true },
+        { type = "slider", text = "settings.vm.vm_camstrength.title", desc = "settings.vm.vm_camstrength.desc", convar = "vm_camstrength", min = 0, max = 3, decimals = 2 },
+        { type = "slider", text = "settings.vm.vm_camrollstrength.title", desc = "settings.vm.vm_camrollstrength.desc", convar = "vm_camrollstrength", min = 0, max = 3, decimals = 2 },
 	},
     {
         TabName = "settings.tabname.gameplay",
