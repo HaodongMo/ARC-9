@@ -16,7 +16,7 @@ function SWEP:ThinkHoldBreath()
 
     local target_ts = 1
 
-    if swayconvar:GetBool() and self:HoldingBreath() then
+    if self:HoldingBreath() then
         self:SetBreath(self:GetBreath() - (FrameTime() * 100 / holdbreathtime))
         if self:GetBreath() < 0 then
             self:SetOutOfBreath(true)
