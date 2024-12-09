@@ -8,7 +8,7 @@ local hudconvar = GetConVar("arc9_breath_hud")
 local swayconvar = GetConVar("arc9_mod_sway")
 
 function SWEP:ThinkHoldBreath()
-    if !swayconvar:GetBool() or !slomoconvar:GetBool() then return end
+    if !swayconvar:GetBool() and !slomoconvar:GetBool() then return end
     if !self:GetOwner():IsPlayer() then return end
     local holdbreathtime = self:GetValue("HoldBreathTime")
     if holdbreathtime <= 0 then return end
@@ -100,7 +100,7 @@ local lastpressed = false
 SWEP.IsHoldingBreath = false
 
 function SWEP:HoldingBreath()
-    if !swayconvar:GetBool() or !slomoconvar:GetBool() then return end
+    if !swayconvar:GetBool() and !slomoconvar:GetBool() then return end
     if self:GetSightAmount() < 0.05 then self.IsHoldingBreath = false return end
 
     local ownerkeydownspeed = self:GetOwner():KeyDown(IN_SPEED)
@@ -121,7 +121,7 @@ end
 local pp_amount = 0
 
 function SWEP:HoldBreathPP()
-    if !swayconvar:GetBool() or !slomoconvar:GetBool() then return end
+    if !swayconvar:GetBool() and !slomoconvar:GetBool() then return end
     if self:GetValue("HoldBreathTime") <= 0 then return end
     if !ppconvar:GetBool() then return end
     local amt_d = (100 - self:GetBreath()) / 100
