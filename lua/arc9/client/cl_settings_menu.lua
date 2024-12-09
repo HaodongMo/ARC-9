@@ -242,10 +242,10 @@ ARC9.SettingsTable = {
 		
         { type = "label", text = "settings.tabname.features", desc = "settings.tabname.features.desc" },
         { sv = true, type = "bool", text = "settings.server.gameplay.mod_sway.title", desc = "settings.server.gameplay.mod_sway.desc", convar = "mod_sway" },
-        { type = "bool", text = "settings.gameplay.togglebreath.title", desc = "settings.gameplay.togglebreath.desc", convar = "togglebreath", parentconvar = "mod_sway" },
-        { sv = true, type = "bool", text = "settings.server.gameplay.breath_slowmo.title", desc = "settings.server.gameplay.breath_slowmo.desc", convar = "breath_slowmo", parentconvar = "mod_sway" },
-        { type = "bool", text = "settings.centerhint.breath_hud.title", desc = "settings.centerhint.breath_hud.desc", convar = "breath_hud", parentconvar = "mod_sway" },
-        { type = "bool", text = "settings.centerhint.breath_pp.title", desc = "settings.centerhint.breath_pp.desc", convar = "breath_pp", parentconvar = "breath_hud", parentconvar = "mod_sway" },
+        { type = "bool", text = "settings.gameplay.togglebreath.title", desc = "settings.gameplay.togglebreath.desc", convar = "togglebreath" },
+        { sv = true, type = "bool", text = "settings.server.gameplay.breath_slowmo.title", desc = "settings.server.gameplay.breath_slowmo.desc", convar = "breath_slowmo" },
+        { type = "bool", text = "settings.centerhint.breath_hud.title", desc = "settings.centerhint.breath_hud.desc", convar = "breath_hud" },
+        { type = "bool", text = "settings.centerhint.breath_pp.title", desc = "settings.centerhint.breath_pp.desc", convar = "breath_pp" },
         
         { sv = true, type = "bool", text = "settings.server.gameplay.mod_peek.title", desc = "settings.server.gameplay.mod_peek.desc", convar = "mod_peek" },
         { type = "bool", text = "settings.gameplay.togglepeek.title", desc = "settings.gameplay.togglepeek.desc", convar = "togglepeek", parentconvar = "mod_peek" },
