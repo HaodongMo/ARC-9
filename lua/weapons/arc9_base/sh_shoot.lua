@@ -655,7 +655,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 local distance = self:GetProcessedValue("Distance")
 
                 fireBullets.Damage = self:GetProcessedValue("DamageMax")
-                fireBullets.Force = self:GetProcessedValue("ImpactForce", true)
+                fireBullets.Force = self:GetProcessedValue("ImpactForce", true) / numm
                 fireBullets.Tracer = tr
                 fireBullets.TracerName = self:GetProcessedValue("TracerEffect", true)
                 fireBullets.Num = numm
