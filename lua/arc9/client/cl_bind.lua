@@ -33,6 +33,17 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     if !pressed then return end
 
     if bind == "+use" and !LocalPlayer():KeyDown(IN_USE) then
+        if wpn:GetCustomize() then
+            if wpn.CustomizeLastHovered and wpn.CustomizeLastHovered:IsHovered() then
+                local addr = wpn.CustomizeLastHovered.address
+                wpn:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
+                wpn:ToggleStat(addr)
+                wpn:PostModify()
+            end
+
+            return true
+        end
+
         return ARC9.AttemptGiveNPCWeapon()
     end
 

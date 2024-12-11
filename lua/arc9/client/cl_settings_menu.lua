@@ -503,11 +503,7 @@ local function DrawSettings(bg, page)
 
                 if v2.parentconvar then
                     local boolll = GetConVar("arc9_" .. v2.parentconvar)
-                    if v2.parentinvert then 
-						boolll = boolll:GetFloat() > 0.001
-					else
-						boolll = boolll:GetFloat() < 0.001
-					end
+                    if v2.parentinvert then boolll = !(boolll:GetFloat() > 0.001) end
 
                     if boolll then
                         self2:SetTall(1)
