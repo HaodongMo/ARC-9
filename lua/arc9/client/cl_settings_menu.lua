@@ -242,8 +242,8 @@ ARC9.SettingsTable = {
 		
         { type = "label", text = "settings.tabname.features", desc = "settings.tabname.features.desc" },
         { sv = true, type = "bool", text = "settings.server.gameplay.mod_sway.title", desc = "settings.server.gameplay.mod_sway.desc", convar = "mod_sway" },
-        { type = "bool", text = "settings.gameplay.togglebreath.title", desc = "settings.gameplay.togglebreath.desc", convar = "togglebreath" },
         { sv = true, type = "bool", text = "settings.server.gameplay.breath_slowmo.title", desc = "settings.server.gameplay.breath_slowmo.desc", convar = "breath_slowmo" },
+        { type = "bool", text = "settings.gameplay.togglebreath.title", desc = "settings.gameplay.togglebreath.desc", convar = "togglebreath" },
         { type = "bool", text = "settings.centerhint.breath_hud.title", desc = "settings.centerhint.breath_hud.desc", convar = "breath_hud" },
         { type = "bool", text = "settings.centerhint.breath_pp.title", desc = "settings.centerhint.breath_pp.desc", convar = "breath_pp" },
         
@@ -473,18 +473,18 @@ local function DrawSettings(bg, page)
 					txt_desc = txt_desc .. ARC9:GetPhrase("settings.server")
 				end
 
-                if v2.requireconvar then
-                    local boolll = !GetConVar("arc9_" .. v2.requireconvar):GetBool()
-					if v2.requireconvaroff then boolll = !boolll end
+                -- if v2.requireconvar then
+                    -- local boolll = !GetConVar("arc9_" .. v2.requireconvar):GetBool()
+					-- if v2.requireconvaroff then boolll = !boolll end
 
-					if boolll then
-						txt = txt .. ARC9:GetPhrase("settings.disabled")
-						txt_desc = ARC9:GetPhrase("settings.disabled.desc") .. txt_desc
-					end
-                end
+					-- if boolll then
+						-- txt = txt .. ARC9:GetPhrase("settings.disabled")
+						-- txt_desc = ARC9:GetPhrase("settings.disabled.desc") .. txt_desc
+					-- end
+                -- end
 
                 if v2.requireconvaroff then
-                    local boolll = GetConVar("arc9_" .. v2.requireconvaroff):GetBool()
+                    local boolll = GetConVar("arc9_" .. v2.requireconvaroff):GetFloat() > 0.001
 
                     if v2.parentconvar then -- if both requireconvaroff and parentconvar hide it
                         if boolll then
@@ -502,8 +502,12 @@ local function DrawSettings(bg, page)
                 end
 
                 if v2.parentconvar then
-                    local boolll = !GetConVar("arc9_" .. v2.parentconvar):GetBool()
-                    if v2.parentinvert then boolll = !boolll end
+                    local boolll = GetConVar("arc9_" .. v2.parentconvar)
+                    if v2.parentinvert then 
+						boolll = boolll:GetFloat() > 0.001
+					else
+						boolll = boolll:GetFloat() < 0.001
+					end
 
                     if boolll then
                         self2:SetTall(1)
@@ -515,8 +519,8 @@ local function DrawSettings(bg, page)
                     txt = "   › "
                 end
 				
-				local convarperms = ( v2.requireconvar and !GetConVar("arc9_" .. v2.requireconvar):GetBool() ) or 
-				( v2.requireconvaroff and GetConVar("arc9_" .. v2.requireconvaroff):GetBool() )
+				local convarperms = ( v2.requireconvar and GetConVar("arc9_" .. v2.requireconvar):GetFloat() < 0.001 ) or 
+				( v2.requireconvaroff and GetConVar("arc9_" .. v2.requireconvaroff):GetFloat() > 0.001 )
 				
                 -- desc!!!!!!!!
 

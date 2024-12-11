@@ -719,20 +719,20 @@ L["settings.server.gameplay.recoilshake.desc"] = "Snaps the field of view when s
 L["settings.tabname.features"] = "Features"
 L["settings.tabname.features.desc"] = "Adjust settings related to various ARC9 features."
 
-L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway & Breath Hold"
-L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway (if the weapon supports it) and the ability to hold your breath.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen.\n\nAdditionally, you can press and hold your sprint button to steady your aim."
+L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway"
+L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway (if the weapon supports it).\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen."
+
+L["settings.server.gameplay.breath_slowmo.title"] = "Enable Slow-Mo when Holding Breath (Singleplayer)"
+L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
 
 L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
 L["settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
 
-L["settings.centerhint.breath_hud.title"] = "Show Breath on HUD"
+L["settings.centerhint.breath_hud.title"] = "Hold Breath Tooltip"
 L["settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
 
-L["settings.server.gameplay.breath_slowmo.title"] = "Slow-Mo Breathing in Singleplayer"
-L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
-
-L["settings.centerhint.breath_pp.title"] = "Post-Processing"
-L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
+L["settings.centerhint.breath_pp.title"] = "Hold Breath Post-Processing"
+L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath.\n\nRequires either Weapon Sway or Slow-Mo when Holding Breath."
 
 L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
 L["settings.server.gameplay.mod_peek.desc"] = "Enable peeking, if the weapon supports it.\n\nAllows the user to lower their weapon while aiming while still having aiming benefits."
@@ -985,22 +985,22 @@ L["settings.server.developer.clear"] = "CLEAR"
 L["settings.tabname.assetcache"] = "Asset Caching"
 L["settings.tabname.assetcache.desc"] = "Caching certain assets can prevent stutters for more comfortable gameplay.\n\nIf running on an HDD, or with a lot of addons, these options will improve initial loading times."
 
-L["settings.server.assetcache.precache_sounds_onfirsttake.title"] = "On Weapon Equip: Cache Sounds"
+L["settings.server.assetcache.precache_sounds_onfirsttake.title"] = "On Weapon Equip: Pre-Cache Sounds"
 L["settings.server.assetcache.precache_sounds_onfirsttake.desc"] = "Caches the firing sounds for the ARC9 weapon you equip.\n\nCan cause a small game freeze when equipping weapons for the first time."
 
-L["settings.server.assetcache.precache_attsmodels_onfirsttake.title"] = "On Weapon Equip: Cache Attachments"
+L["settings.server.assetcache.precache_attsmodels_onfirsttake.title"] = "On Weapon Equip: Pre-Cache Attachments"
 L["settings.server.assetcache.precache_attsmodels_onfirsttake.desc"] = "Caches all ARC9 attachment models when any ARC9 weapon is equipped.\n\nCan cause a long game freeze, depending on how many ARC9 weapons you have."
 
-L["settings.server.assetcache.precache_wepmodels_onfirsttake.title"] = "On Weapon Equip: Cache Weapon Models"
+L["settings.server.assetcache.precache_wepmodels_onfirsttake.title"] = "On Weapon Equip: Pre-Cache Weapon Models"
 L["settings.server.assetcache.precache_wepmodels_onfirsttake.desc"] = "Caches all ARC9 viewmodels when any ARC9 weapon is equipped.\n\nCan cause a very long game freeze, depending on how many ARC9 weapons you have."
 
-L["settings.server.assetcache.precache_allsounds_onstartup.title"] = "On Game Start: Cache Sounds"
+L["settings.server.assetcache.precache_allsounds_onstartup.title"] = "On Game Start: Pre-Cache Sounds"
 L["settings.server.assetcache.precache_allsounds_onstartup.desc"] = "Caches all firing sounds for all ARC9 weapons when the server starts up.\n\nCan cause a temporary game freeze."
 
-L["settings.server.assetcache.precache_attsmodels_onstartup.title"] = "On Game Start: Cache Attachments"
+L["settings.server.assetcache.precache_attsmodels_onstartup.title"] = "On Game Start: Pre-Cache Attachments"
 L["settings.server.assetcache.precache_attsmodels_onstartup.desc"] = "Caches all ARC9 attachment models when the server starts up.\n\nCan cause a long game freeze, depending on how many ARC9 weapons you have."
 
-L["settings.server.assetcache.precache_wepmodels_onstartup.title"] = "On Game Start: Cache Weapon Models"
+L["settings.server.assetcache.precache_wepmodels_onstartup.title"] = "On Game Start: Pre-Cache Weapon Models"
 L["settings.server.assetcache.precache_wepmodels_onstartup.desc"] = "Caches all ARC9 viewmodels when the server starts up.\n\nCan cause a very long game freeze, depending on how many ARC9 weapons you have."
 
 L["settings.server.assetcache.precache_allsounds.title"] = "Cache All Sounds"

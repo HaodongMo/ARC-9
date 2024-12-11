@@ -1163,20 +1163,20 @@ L["settings.tabname.crosshairscopes"] = "Прицелы"
 -- L["settings.tabname.features"] = "Features"
 -- L["settings.tabname.features.desc"] = "Adjust settings related to various ARC9 features."
 
--- L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway & Breath Hold"
--- L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway (if the weapon supports it) and the ability to hold your breath.\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen.\n\nAdditionally, you can press and hold your sprint button to steady your aim."
+-- L["settings.server.gameplay.mod_sway.title"] = "Enable Weapon Sway"
+-- L["settings.server.gameplay.mod_sway.desc"] = "Enable weapon sway (if the weapon supports it).\n\nWeapons will move around, resulting in the viewmodel and crosshair to move away from the center of the screen."
+
+-- L["settings.server.gameplay.breath_slowmo.title"] = "Enable Slow-Mo when Holding Breath (Singleplayer)"
+-- L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
 
 -- L["settings.gameplay.togglebreath.title"] = "Toggle Holding Breath"
 -- L["settings.gameplay.togglebreath.desc"] = "Pressing your sprint button toggles holding breath."
 
--- L["settings.centerhint.breath_hud.title"] = "Show Breath on HUD"
+-- L["settings.centerhint.breath_hud.title"] = "Hold Breath Tooltip"
 -- L["settings.centerhint.breath_hud.desc"] = "Displays a bar with your remaining breath when holding your breath."
 
--- L["settings.server.gameplay.breath_slowmo.title"] = "Slow-Mo Breathing in Singleplayer"
--- L["settings.server.gameplay.breath_slowmo.desc"] = "! Singleplayer Only !\nHolding your breath slows down time."
-
--- L["settings.centerhint.breath_pp.title"] = "Post-Processing"
--- L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath."
+-- L["settings.centerhint.breath_pp.title"] = "Hold Breath Post-Processing"
+-- L["settings.centerhint.breath_pp.desc"] = "Also applies post-processing effects when holding your breath.\n\nRequires either Weapon Sway or Slow-Mo when Holding Breath."
 
 -- L["settings.server.gameplay.mod_peek.title"] = "Enable Peeking"
 -- L["settings.server.gameplay.mod_peek.desc"] = "Enable peeking, if the weapon supports it.\n\nAllows the user to lower their weapon while aiming while still having aiming benefits."

@@ -1076,6 +1076,12 @@ function SWEP:CreateCustomizeHUD()
                 glyph = ARC9.GetBindKey("+reload"),
                 hidden = true,
             },
+            {
+                action = "customize.hint.toggleatts",
+                glyph = ARC9.GetBindKey("invnext"),
+                glyph2 = ARC9.GetBindKey("invprev"),
+                hidden = true,
+            },
         }
     else
         trolling = {
@@ -1131,6 +1137,12 @@ function SWEP:CreateCustomizeHUD()
             {
                 action = "customize.hint.random",
                 glyph = ARC9.GetBindKey("+reload"),
+                hidden = true,
+            },
+            {
+                action = "customize.hint.toggleatts",
+                glyph = ARC9.GetBindKey("invnext"),
+                glyph2 = ARC9.GetBindKey("invprev"),
                 hidden = true,
             },
         }

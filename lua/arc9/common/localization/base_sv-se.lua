@@ -720,18 +720,18 @@ L["settings.tabname.features"] = "Funktioner"
 L["settings.tabname.features.desc"] = "Justera inställningar relaterade till olika ARC9-funktioner."
 
 L["settings.server.gameplay.mod_sway.title"] = "Aktivera Vapensvängning"
-L["settings.server.gameplay.mod_sway.desc"] = "Aktivera vapensvängning om vapen stödjer det.\n\nVapen kommer röra sig vilket gör att vymodellen och hårkorset förflyttar sig bort från skärmens center."
+L["settings.server.gameplay.mod_sway.desc"] = "Aktivera vapensvängning (om vapnet stödjer det).\n\nVapen kommer röra sig vilket gör att vymodellen och hårkorset förflyttar sig bort från skärmens center."
+
+L["settings.server.gameplay.breath_slowmo.title"] = "Aktivera Slow-Mo när du Håller Andan (Enspelare)"
+L["settings.server.gameplay.breath_slowmo.desc"] = "! Endast Enspelareläge !\nTiden saktar ner när du håller andan."
 
 L["settings.gameplay.togglebreath.title"] = "Växla Håll Andan"
 L["settings.gameplay.togglebreath.desc"] = "Trycker du på din spring knapp så växlar det på/av att du håller andan."
 
-L["settings.centerhint.breath_hud.title"] = "När du Håller Andan"
+L["settings.centerhint.breath_hud.title"] = "Håll Andan Verktygstips"
 L["settings.centerhint.breath_hud.desc"] = "Visar en bar med kvarstående anda när du håller andan."
 
-L["settings.server.gameplay.breath_slowmo.title"] = "Andning i Slow-Mo i Enspelareläge"
-L["settings.server.gameplay.breath_slowmo.desc"] = "! Endast Enspelareläge !\nTiden saktar ner när du håller andan."
-
-L["settings.centerhint.breath_pp.title"] = "Efterbearbetning"
+L["settings.centerhint.breath_pp.title"] = "Håll Andan Efterbearbetning"
 L["settings.centerhint.breath_pp.desc"] = "Tillämpar också efterbehandlingseffekter när du håller andan."
 
 L["settings.server.gameplay.mod_peek.title"] = "Aktivera Kikande"
