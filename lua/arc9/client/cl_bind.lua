@@ -138,6 +138,10 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
         return true
     end
 
+    if wpn:GetCustomize() and (code == MOUSE_4 or code == MOUSE_5 or code == KEY_PAGEUP or code == KEY_PAGEDOWN) then
+        print(code)
+    end
+
     if wpn:GetInSights() then
         if bind == "invnext" then
             wpn:Scroll(1)
