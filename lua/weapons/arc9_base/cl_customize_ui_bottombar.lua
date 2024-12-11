@@ -318,9 +318,9 @@ local function enterfolder(self, scroll, slottbl, fname)
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.attach"
                 elseif self2.slottbl.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
-					-- if atttbl.ToggleStats then
-						-- self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
-					-- end
+					if atttbl.ToggleStats then
+						self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
+					end
                 end
 
                 if ARC9.Favorites[att.att] then

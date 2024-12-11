@@ -814,6 +814,9 @@ function SWEP:CreateCustomizeHUD()
                     self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
                     if slot.Installed then
                         self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
+						if atttbl.ToggleStats then
+							self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
+						end
                     end
                 end
 
@@ -1021,7 +1024,7 @@ function SWEP:CreateCustomizeHUD()
 
     local trolling = ""
     if ARC9.ControllerMode() then
-        trolling = {
+        trolling = { -- Controller Mode
             {
                 action = "customize.hint.select",
                 glyph = ARC9.GetBindKey("+jump"),
@@ -1078,12 +1081,12 @@ function SWEP:CreateCustomizeHUD()
             },
             {
                 action = "customize.hint.toggleatts",
-                glyph = ARC9.GetBindKey("+use"),
+                glyph = ARC9.GetBindKey("+zoom"),
                 hidden = true,
             },
         }
     else
-        trolling = {
+        trolling = { -- Mouse & Keyboard
             {
                 action = "customize.hint.select",
                 glyph = ARC9.GetBindKey("+attack"),
@@ -1140,8 +1143,7 @@ function SWEP:CreateCustomizeHUD()
             },
             {
                 action = "customize.hint.toggleatts",
-                glyph = ARC9.GetBindKey("invnext"),
-                glyph2 = ARC9.GetBindKey("invprev"),
+                glyph = ARC9.GetBindKey("+use"),
                 hidden = true,
             },
         }
