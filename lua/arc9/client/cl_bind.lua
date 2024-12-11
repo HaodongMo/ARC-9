@@ -32,19 +32,17 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
 
     if !pressed then return end
 
-    if (ARC9.ControllerMode() and bind == "+zoom" and !LocalPlayer():KeyDown(IN_ZOOM)) -- Gamepad
-	or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE)) then -- Mouse + KB
+    if ((ARC9.ControllerMode() and bind == "+zoom" and !LocalPlayer():KeyDown(IN_ZOOM)) -- Gamepad
+	or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE)) and wpn:GetCustomize()) then -- Mouse + KB
         local attpnl = wpn.CustomizeLastHovered
-		local addr = attpnl.address
-		local atttbl = wpn:GetFinalAttTable(wpn:GetFilledMergeSlot(addr))
 
-        if wpn:GetCustomize() then
-            if attpnl and attpnl:IsHovered() then
-				if atttbl.ToggleStats then
-					wpn:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
-					wpn:ToggleStat(addr)
-					wpn:PostModify()
-				end
+        if attpnl then
+            local addr = attpnl.address
+            local atttbl = wpn:GetFinalAttTable(wpn:GetFilledMergeSlot(addr))
+            if attpnl:IsHovered() and atttbl.ToggleStats then
+                wpn:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
+                wpn:ToggleStat(addr)
+                wpn:PostModify()
 			end
 
             return true
@@ -144,9 +142,9 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
         return true
     end
 
-    if wpn:GetCustomize() and (code == MOUSE_4 or code == MOUSE_5 or code == KEY_PAGEUP or code == KEY_PAGEDOWN) then
-        print(code)
-    end
+    -- if wpn:GetCustomize() and (code == MOUSE_4 or code == MOUSE_5 or code == KEY_PAGEUP or code == KEY_PAGEDOWN) then
+    --     print(code)
+    -- end
 
     if wpn:GetInSights() then
         if bind == "invnext" then
