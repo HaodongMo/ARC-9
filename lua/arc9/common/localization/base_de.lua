@@ -79,9 +79,6 @@ L["hud.hint.quicknade"] = "Schnellwurf „%s“"
 L["hud.hint.lowammo"] = "Wenig Munition"
 L["hud.hint.noammo"] = "Keine Munition"
 
-L["hud.hint.overheating"] = "! Überhitzen !"
--- L["hud.hint.overheating.critical"] = "! Malfunction Imminent !"
-
 L["hud.error.missingbind"] = "Keine Tastenbelegung für %s"
 L["hud.error.missingbind_zoom"] = "Belege \"Suit Zoom\" in den Einstellungen!"
 L["hud.error.missingbind_context"] = "Belege \"Open Context Menu\" in den Einstellungen!"

@@ -79,9 +79,6 @@ L["hud.hint.zoom"] = "瞄具缩放"
 -- L["hud.hint.lowammo"] = "Low Ammo"
 -- L["hud.hint.noammo"] = "No Ammo"
 
-L["hud.hint.overheating"] = "! 过热 !"
--- L["hud.hint.overheating.critical"] = "！Malfunction Imminent！"
-
 -- L["hud.error.missingbind"] = "No button bound to %s"
 -- L["hud.error.missingbind_zoom"] = "Bind \"Suit Zoom\" in settings!"
 -- L["hud.error.missingbind_context"] = "Bind \"Open Context Menu\" in settings!"

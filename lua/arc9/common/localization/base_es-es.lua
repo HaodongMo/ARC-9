@@ -79,9 +79,6 @@ L["hud.hint.quicknade"] = "Tiro-rápido \"%s\""
 L["hud.hint.lowammo"] = "Munición Baja"
 L["hud.hint.noammo"] = "Sin Munición"
 
-L["hud.hint.overheating"] = "! Sobrecalentamiento !"
--- L["hud.hint.overheating.critical"] = "! Malfunction Imminent !"
-
 L["hud.error.missingbind"] = "Ningún botón vinculado a %s"
 L["hud.error.missingbind_zoom"] = "Vincular \"Zoom de Traje\" en ajustes!"
 L["hud.error.missingbind_context"] = "Vincular \"Open Context Menu\" en ajustes!"
