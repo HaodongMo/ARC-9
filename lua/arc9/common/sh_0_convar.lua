@@ -250,8 +250,8 @@ local conVars = {
         default = "1",
     },
     {
-        name = "atts_generateentities",
-        default = "1",
+        name = "atts_generate_entities",
+        default = "0",
         replicated = true
     },
     {

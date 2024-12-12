@@ -311,7 +311,7 @@ ARC9.SettingsTable = {
         { sv = true, type = "bool", text = "settings.server.custmenu.free_atts.title", desc = "settings.server.custmenu.free_atts.desc", convar = "free_atts" },
         { sv = true, type = "bool", text = "settings.server.custmenu.atts_lock.title", desc = "settings.server.custmenu.atts_lock.desc", convar = "atts_lock", parentconvar = "free_atts", parentinvert = true },
         { sv = true, type = "bool", text = "settings.server.custmenu.atts_loseondie.title", desc = "settings.server.custmenu.atts_loseondie.desc", convar = "atts_loseondie", parentconvar = "free_atts", parentinvert = true },
-        { sv = true, type = "bool", text = "settings.server.custmenu.atts_generateentities.title", desc = "settings.server.custmenu.atts_generateentities.desc", convar = "atts_generateentities" },
+        { sv = true, type = "bool", text = "settings.server.custmenu.atts_generateentities.title", desc = "settings.server.custmenu.atts_generateentities.desc", convar = "atts_generate_entities" },
 		
         { type = "label", text = "settings.tabname.npc", desc = "settings.tabname.npc.desc" },
         { sv = true, type = "bool", text = "settings.server.npc.npc_autoreplace.title", desc = "settings.server.npc.npc_autoreplace.desc", convar = "npc_autoreplace" },

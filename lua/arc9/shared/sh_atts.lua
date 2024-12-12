@@ -36,7 +36,7 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
     ARC9.Attachments[shortname] = atttbl
     ARC9.Attachments_Index[atttbl.ID] = shortname
 
-    if GetConVar("arc9_atts_generateentities"):GetBool() and !atttbl.DoNotRegister and !atttbl.InvAtt and !atttbl.Free then
+    if GetConVar("arc9_atts_generate_entities"):GetBool() and !atttbl.DoNotRegister and !atttbl.InvAtt and !atttbl.Free then
         local attent = {}
         attent.Base = "arc9_att_base"
         attent.Icon = atttbl.Icon or defaulticon
