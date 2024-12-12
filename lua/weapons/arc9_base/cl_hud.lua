@@ -717,6 +717,9 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
         self:DoIconCapture()
 
         local filename = ARC9.PresetPath .. self:GetPresetBase() .. "_icon." .. ARC9.PresetIconFormat
+        if !file.Exists(filename, "DATA") then
+            filename = ARC9.PresetPath .. self:GetPresetBase() .. "/default." .. ARC9.PresetIconFormat
+        end
         selecticon = Material("data/" .. filename, "smooth")
     end
 
