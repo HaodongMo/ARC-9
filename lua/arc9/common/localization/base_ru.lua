@@ -79,6 +79,9 @@ L["hud.hint.quicknade"] = "КИНУТЬ «%s»"
 L["hud.hint.lowammo"] = "Мало патрон"
 L["hud.hint.noammo"] = "Нет патрон"
 
+L["hud.hint.overheating"] = "! Перегревы !"
+-- L["hud.hint.overheating.critical"] = "! Malfunction Imminent !"
+
 L["hud.error.missingbind"] = "Нет бинда для %s"
 L["hud.error.missingbind_zoom"] = "Забиндь \"Приблизить\" в настройках!"
 L["hud.error.missingbind_context"] = "Забиндь \"Open Context Menu\" в настройках!"

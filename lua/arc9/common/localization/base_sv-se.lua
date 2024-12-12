@@ -79,6 +79,9 @@ L["hud.hint.quicknade"] = "Snabbkasta \"%s\""
 L["hud.hint.lowammo"] = "Låg Ammo"
 L["hud.hint.noammo"] = "Ingen Ammo"
 
+L["hud.hint.overheating"] = "! Överhettas !"
+L["hud.hint.overheating.critical"] = "! Felfunktion Nära !"
+
 L["hud.error.missingbind"] = "Ingen knapp bunden till %s"
 L["hud.error.missingbind_zoom"] = "Bind \"Suit Zoom\" i inställningarna!"
 L["hud.error.missingbind_context"] = "Bind \"Open Context Menu\" i inställningarna!"
