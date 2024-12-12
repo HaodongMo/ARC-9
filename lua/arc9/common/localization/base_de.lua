@@ -485,9 +485,9 @@ L["settings.hud_game.hud_always.desc"] = "Aktivere das Custom-HUD, bei Verwendun
 L["settings.hud_game.hints.title"] = "Tipp-Verhalten"
 L["settings.hud_game.hints.desc"] = "Wähle, ob Tipps zur Steuerung immer angezeigt, ausgeblendet oder komplett deaktiviert werden."
 
--- L["settings.hud_game.hints.off"] = "Always Off"
--- L["settings.hud_game.hints.fade"] = "Fade Away"
--- L["settings.hud_game.hints.on"] = "Always On"
+L["settings.hud_game.hints.off"] = "Immer aus"
+L["settings.hud_game.hints.fade"] = "Ausblenden"
+L["settings.hud_game.hints.on"] = "Immer an"
 
 L["settings.hud_game.killfeed_enable.title"] = "Killfeed-Icons autogenerieren"
 L["settings.hud_game.killfeed_enable.desc"] = "Generiere Killfeed-Icons für ARC9-Waffen automatisch."
@@ -568,8 +568,8 @@ L["settings.blur.fx_reloadblur.desc"] = "Verschwimmen des Hintergrunds, während
 L["settings.blur.fx_animblur.title"] = "Welt verschwimmen, beim Waffezücken"
 L["settings.blur.fx_animblur.desc"] = "Verschwimmen des Hintergrunds, während des Zückens einer Waffe."
 
--- L["settings.blur.fx_inspectblur.title"] = "Blur world when Inspecting"
--- L["settings.blur.fx_inspectblur.desc"] = "Blurs the background when inspecting a weapon."
+L["settings.blur.fx_inspectblur.title"] = "Welt verschwimmen, beim Inspizieren"
+L["settings.blur.fx_inspectblur.desc"] = "Verschwimmen des Hintergrunds, während des Inspizierens einer Waffe."
 
 L["settings.blur.fx_rtblur.title"] = "Welt verschwimmen, beim Zielen durch RT-Scopes."
 L["settings.blur.fx_rtblur.desc"] = "Verschwimmt den Hintergrund, wenn durch jedes RT-Scope gezielt wird."
@@ -624,11 +624,11 @@ L["settings.vm.vm_cambobwalk.desc"] = "Wippt die Kamera beim Gehen."
 L["settings.vm.vm_cambobintensity.title"] = "Intensität"
 L["settings.vm.vm_cambobintensity.desc"] = "Wie intensiv das Wippen beim Sprinten und Gehen sein soll."
 
--- L["settings.vm.vm_camstrength.title"] = "Viewmodel Camera Strength"
--- L["settings.vm.vm_camstrength.desc"] = "Alters the strength of the camera movement used by weapon animations, such as when reloading or inspecting.\n\nCould help in reducing (or increasing) motion sickness.\n\nNote: Could potentially break the behavior of some weapon packs."
+L["settings.vm.vm_camstrength.title"] = "Viewmodel-Kamera-Stärke"
+L["settings.vm.vm_camstrength.desc"] = "Verändert den Einfluss von Waffen-Animationen auf die Kamera-Bewegung, beispielsweise beim Nachladen oder Inspizieren\n\nKann helfen Schwindel zu reduzieren (oder zu verschlimmern).\n\nHinweise: Kann möglicherweise das Verhalten mancher Waffen-Packs stören."
 
--- L["settings.vm.vm_camrollstrength.title"] = "Viewmodel Camera Roll Strength"
--- L["settings.vm.vm_camrollstrength.desc"] = "Alters the strength of the camera roll movement used by weapon animations, such as when reloading or inspecting.\n\nCould help in reducing (or increasing) motion sickness"
+L["settings.vm.vm_camrollstrength.title"] = "Viewmodel-Kamera-Roll-Stärke"
+L["settings.vm.vm_camrollstrength.desc"] = "Verändert den Einfluss von Waffen-Animationen auf die Roll-Bewegung der Kamera, beispielsweise beim Nachladen oder Inspiziere.\n\nKann helfen Schwindel zu reduzieren (oder zu verschlimmern)."
 
 ////////////////////// Crosshair & Scopes
 L["settings.tabname.crosshairscopes"] = "Fadenkreuze & Optiken"
@@ -722,16 +722,16 @@ L["settings.tabname.features.desc"] = "Passe Einstellung bezüglich verschiedene
 L["settings.server.gameplay.mod_sway.title"] = "Waffen-Schwanken aktivieren"
 L["settings.server.gameplay.mod_sway.desc"] = "Aktiviert Waffen-Schwanken (wenn die Waffe es unterstützt).\n\nWaffen werden sich hin und her bewegen, wodurch sich Viewmodel und Fadenkreuz von der Bildmitte entfernen."
 
--- L["settings.server.gameplay.breath_slowmo.title"] = "Enable Slow-Mo when Holding Breath (Singleplayer)"
+L["settings.server.gameplay.breath_slowmo.title"] = "Zeitlupe beim Atemanhalten aktiveren (Einzelspieler)"
 L["settings.server.gameplay.breath_slowmo.desc"] = "! Nur Einzelspieler !\nAnhalten des Atems verlangsamt die Zeit."
 
 L["settings.gameplay.togglebreath.title"] = "Atemanhalten umschalten"
 L["settings.gameplay.togglebreath.desc"] = "Drücken des Sprinten-Knopfes schaltet das Luftanhalten um."
 
--- L["settings.centerhint.breath_hud.title"] = "Hold Breath Tooltip"
+L["settings.centerhint.breath_hud.title"] = "Atemanhalten-Tooltip"
 L["settings.centerhint.breath_hud.desc"] = "Zeigt einen Balken mit verbleibender Luft, beim Anhalten des Atems."
 
--- L["settings.centerhint.breath_pp.title"] = "Hold Breath Post-Processing"
+L["settings.centerhint.breath_pp.title"] = "Atemanhalten-Post-Processing"
 L["settings.centerhint.breath_pp.desc"] = "Wendet zusätzlich Post-Processing-Effekte während des Luftanhaltens an."
 
 L["settings.server.gameplay.mod_peek.title"] = "Spähen aktivieren"
@@ -785,7 +785,7 @@ L["settings.server.gameplay.mult_defaultammo.title"] = "Vorgegebene Reservemunit
 L["settings.server.gameplay.mult_defaultammo.desc"] = "Wie viele Ersatzmagazine oder Ausrüstungsgegenstände der Spieler erhält, wenn eine Waffe gespawnt wird."
 
 L["settings.server.gameplay.equipment_generate_ammo.title"] = "Einzigartige Munition für Ausrüstung generieren"
--- L["settings.server.gameplay.equipment_generate_ammo.desc"] = "The Source engine has a limit of 255 ammo types. Disabling this option could help fix errors if you have many addons installed.\n\nRequires restart."
+L["settings.server.gameplay.equipment_generate_ammo.desc"] = "Die Source-Engine hat ein Limit in Höhe von 255 Munitionstypen. Diese Option zu deaktivieren kann helfen Fehler zu beheben, solltest du viele Addons installiert haben.\n\nNeustart erforderlich."
 
 L["settings.server.gameplay.realrecoil.title"] = "Physisch-visuellen Rückstoß aktivieren"
 L["settings.server.gameplay.realrecoil.desc"] = "Manche Waffen sind für ein physisches Verziehen durch Rückstoß konfiguriert. Das bedeutet, dass der Zielpunkt beim Schießen von der Ausrichtung des Viewmodels abhängig ist, statt der Bildschirmmitte.\n\nSehr wichtig für Balancing-Strategien mancher Waffen-Packs."
