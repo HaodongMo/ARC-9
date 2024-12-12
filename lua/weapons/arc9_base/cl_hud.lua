@@ -386,19 +386,19 @@ function SWEP:DrawHUD()
         surface.SetDrawColor(255, 255, 255, bipodhint)
         surface.SetFont("ARC9_16")
 		
-        local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (twbp * 0.5) + ScreenScale(5), y = scrh / 2 + ScreenScale(97), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
+        local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (surface.GetTextSize(text) * 0.35) + ScreenScale(5), y = scrh / 2 + ScreenScale(97), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 
         surface.SetFont("ARC9_10")
 		
 		surface.SetDrawColor(0, 0, 0, math.Clamp(bipodhint, 0, 175))
-		surface.DrawRect(scrw / 2 + 2 - twbp / 2 + ScreenScale(5) - 4, scrh / 2 + 2 + ScreenScale(96), twbp + 7, 27.5)
+		surface.DrawRect(scrw / 2 + 2 - surface.GetTextSize(text) / 2 + ScreenScale(5) - 4, scrh / 2 + 2 + ScreenScale(96), surface.GetTextSize(text) + 5, 27.5)
 	
         surface.SetTextColor(0, 0, 0, bipodhint) -- Black
-        surface.SetTextPos(scrw / 2 + 2 - twbp / 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97))
+        surface.SetTextPos(scrw / 2 + 2 - surface.GetTextSize(text) / 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97))
         surface.DrawText(text)
 		
         surface.SetTextColor(255, 255, 255, bipodhint) -- White
-        surface.SetTextPos(scrw / 2 - twbp / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97))
+        surface.SetTextPos(scrw / 2 - surface.GetTextSize(text) / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97))
         surface.DrawText(text)
     end
 
@@ -484,16 +484,16 @@ function SWEP:DrawHUD()
             surface.SetFont("ARC9_12")
             
             surface.SetTextColor(255, 255, 255, 255)
-			local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (twunjam * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
+			local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (surface.GetTextSize(textunjam) * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 
 			surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(CurTime() * 5)))
-			surface.DrawRect(scrw / 2 - twunjam / 2 + ScreenScale(4.75), scrh / 2 + ScreenScale(98) + (bipodhint / 7.5), twunjam + 30, 27.5)
+			surface.DrawRect(scrw / 2 - surface.GetTextSize(textunjam) / 2 + ScreenScale(4.75), scrh / 2 + ScreenScale(98) + (bipodhint / 7.5), surface.GetTextSize(textunjam) + 5, 27.5)
 
-			surface.SetTextPos(scrw / 2 - twunjam / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
+			surface.SetTextPos(scrw / 2 - surface.GetTextSize(textunjam) / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
 			surface.SetTextColor(0, 0, 0, blink)
 			surface.DrawText(textunjam)
 			
-			surface.SetTextPos(scrw / 2 - twunjam / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
+			surface.SetTextPos(scrw / 2 - surface.GetTextSize(textunjam) / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
 			surface.SetTextColor(255, 255, 255, blink)
 			surface.DrawText(textunjam)
 
