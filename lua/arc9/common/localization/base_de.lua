@@ -690,7 +690,7 @@ L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTELL !\n\nRendert die Waffe (u
 L["settings.gameplay.compensate_sens.title"] = "Dynamische ADS-Empfindlichkeit"
 L["settings.gameplay.compensate_sens.desc"] = "Passt die Ziel-Empfindlichkeit dynamisch an, je nach Waffen-Zoom und -Vergrößerung."
 
-L["settings.gameplay.sensmult.title"] = "ADS-Empfindlichkeit multiplizieren"
+L["settings.gameplay.sensmult.title"] = "ADS-Empfindlichkeit multi."
 L["settings.gameplay.sensmult.desc"] = "Multipliziert global die Ziel-Empfindlichkeit mit diesem Wert.\n\nJe niedriger er ist, desto langsamer verhält sich die Empfindlichkeit."
 
 L["settings.gameplay.color.reflex.title"] = "Reflexvisier-Farbe"
