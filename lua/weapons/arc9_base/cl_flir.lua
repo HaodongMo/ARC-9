@@ -18,6 +18,7 @@ local monochrometable = {
 }
 
 local ref = 32
+local r_def = 160
 
 function SWEP:DoFLIR(atttbl)
 
@@ -29,6 +30,7 @@ function SWEP:DoFLIR(atttbl)
     -- local targets = ents.FindInCone(EyePos(), EyeAngles():Forward(), atttbl.RTScopeFLIRRange or 30000, math.cos(fov + 5))
     local targets = lastents
     local entcount = ents.GetCount()
+    local range = (atttbl.FLIRRange or r_def)/ARC9.HUToM
 
     if lastentcount != entcount then
         targets = ents.GetAll()
@@ -56,7 +58,7 @@ function SWEP:DoFLIR(atttbl)
 
     for _, ent in ipairs(targets) do
         if ent == self:GetOwner() then continue end
-        local hot = self:GetEntityHot(ent)
+        local hot = self:GetEntityHot(ent, range)
         if atttbl.FLIRHotFunc then
             hot = atttbl.FLIRHotFunc(self, ent)
         end
@@ -111,12 +113,12 @@ function SWEP:DoFLIR(atttbl)
     render.SetStencilEnable(false)
 end
 
-local maxrange = (160/ARC9.HUToM)^2 -- 160 m
+-- local maxrange = (160/ARC9.HUToM)^2 -- 160 m
 
-function SWEP:GetEntityHot(ent)
+function SWEP:GetEntityHot(ent, range)
     if !ent:IsValid() or ent:IsWorld() then return false end
 
-    if self:GetPos():DistToSqr(ent:GetPos()) > maxrange then return end
+    if self:GetPos():DistToSqr(ent:GetPos()) > range^2 then return end
 
     if ent:IsPlayer() then
         if ent.ArcticMedShots_ActiveEffects and ent.ArcticMedShots_ActiveEffects["coldblooded"] or ent:Health() <= 0 then return false end -- arc stims
