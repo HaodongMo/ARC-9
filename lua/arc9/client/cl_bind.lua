@@ -33,10 +33,10 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     if !pressed then return end
 
     if ((ARC9.ControllerMode() and bind == "+zoom" and !LocalPlayer():KeyDown(IN_ZOOM)) -- Gamepad
-	or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE)) and wpn:GetCustomize()) then -- Mouse + KB
+	or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE))) then -- Mouse + KB
         local attpnl = wpn.CustomizeLastHovered
 
-        if attpnl then
+        if wpn:GetCustomize() and attpnl then
             local addr = attpnl.address
             local atttbl = wpn:GetFinalAttTable(wpn:GetFilledMergeSlot(addr))
             if attpnl:IsHovered() and atttbl.ToggleStats then
