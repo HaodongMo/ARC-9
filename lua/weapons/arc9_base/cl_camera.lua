@@ -46,7 +46,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     self.FOV = fov
 
-    ang = ang + (self:GetCameraControl() or angle_zero)
+    ang = ang + (self.StoredVMAngles or angle_zero)
 
     if arc9_vm_cambob:GetBool() then
         local sprintmult = arc9_vm_cambobwalk:GetBool() and 1 or Lerp(self:GetSprintAmount(), 0, 1)

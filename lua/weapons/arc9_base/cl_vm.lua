@@ -206,6 +206,7 @@ function SWEP:ViewModelDrawn()
 	for ind = 0, 31 do
 		self:GetVM():SetSubMaterial(ind, "")
 	end
+    self.StoredVMAngles = self:GetCameraControl()
 end
 
 function SWEP:PostDrawViewModel()
