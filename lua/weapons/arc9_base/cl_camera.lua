@@ -119,6 +119,7 @@ function SWEP:GetCameraControl()
 
     if camstrength == 0 then return end
 
+    local rollstrength = arc9_vm_camrollstrength:GetFloat()
     if seqprox != 0 then
         local slottbl = self:LocateSlotFromAddress(seqprox)
         local atttbl = self:GetFinalAttTable(slottbl)
@@ -141,7 +142,7 @@ function SWEP:GetCameraControl()
         ang = mdl:WorldToLocalAngles(ang)
         ang.p = ang.p * camstrength
         ang.y = ang.y * camstrength
-        ang.r = ang.r * camstrength * arc9_vm_camrollstrength:GetFloat()
+        ang.r = ang.r * camstrength * rollstrength
         ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
         ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
 
@@ -196,7 +197,7 @@ function SWEP:GetCameraControl()
 
             self.ProceduralViewOffset.p = mathapproach(self.ProceduralViewOffset.p, 0, (1 - progress) * ft * -self.ProceduralViewOffset.p)
             self.ProceduralViewOffset.y = mathapproach(self.ProceduralViewOffset.y, 0, (1 - progress) * ft * -self.ProceduralViewOffset.y)
-            self.ProceduralViewOffset.r = mathapproach(self.ProceduralViewOffset.r, 0, (1 - progress) * ft * -self.ProceduralViewOffset.r) * arc9_vm_camrollstrength:GetFloat()
+            self.ProceduralViewOffset.r = mathapproach(self.ProceduralViewOffset.r, 0, (1 - progress) * ft * -self.ProceduralViewOffset.r) * rollstrength
 
             self.LastMuzzleAngle = ang
 
@@ -206,7 +207,7 @@ function SWEP:GetCameraControl()
             ang:Mul(1 - self:GetSightAmount() * (1 - (self:GetProcessedValue("CamQCA_Mult_ADS", true) or 0.5)))
 			ang.p = ang.p * camstrength
 			ang.y = ang.y * camstrength
-            ang.r = ang.r * camstrength * arc9_vm_camrollstrength:GetFloat()
+            ang.r = ang.r * camstrength * rollstrength
         end
 
         return ang
