@@ -194,6 +194,7 @@ function SWEP:PreDrawViewModel()
 end
 
 function SWEP:ViewModelDrawn()
+    self.StoredVMAngles = self:GetCameraControl()
     self:DrawCustomModel(false)
     render.DepthRange( 0.0, 0.1 )
     self:DoRHIK()
@@ -206,7 +207,6 @@ function SWEP:ViewModelDrawn()
 	for ind = 0, 31 do
 		self:GetVM():SetSubMaterial(ind, "")
 	end
-    self.StoredVMAngles = self:GetCameraControl()
 end
 
 function SWEP:PostDrawViewModel()
