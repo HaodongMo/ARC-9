@@ -204,28 +204,27 @@ function SWEP:ViewModelDrawn()
 
     self:DrawLasers(false)
     self:GetVM():SetMaterial("")
-    for ind = 0, 31 do
-        self:GetVM():SetSubMaterial(ind, "")
-    end
+	for ind = 0, 31 do
+		self:GetVM():SetSubMaterial(ind, "")
+	end
 end
 
 function SWEP:PostDrawViewModel()
     local inrt = ARC9.RTScopeRender
 
-    cam.Start3D()
-        render.DepthRange( 0.0, 0.1 )
+    local newmzpcfs = {}
 
-        local newmzpcfs = {}
-
-        for _, pcf in ipairs(self.MuzzPCFs) do
-            if IsValid(pcf) then
-                pcf:Render()
-                table.insert(newmzpcfs, pcf)
-            end
+    for _, pcf in ipairs(self.MuzzPCFs) do
+        if IsValid(pcf) then
+            pcf:Render()
+            table.insert(newmzpcfs, pcf)
         end
+    end
 
-        if !inrt then self.MuzzPCFs = newmzpcfs end
+    if !inrt then self.MuzzPCFs = newmzpcfs end
 
+    cam.Start3D()
+        cam.IgnoreZ(false)
         local newpcfs = {}
 
         for _, pcf in ipairs(self.PCFs) do
@@ -248,9 +247,6 @@ function SWEP:PostDrawViewModel()
         end
 
         if !inrt then self.ActiveEffects = newfx end
-
-        cam.IgnoreZ(false)
-
     cam.End3D()
 
     if ARC9.PresetCam then return end
