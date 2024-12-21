@@ -52,6 +52,8 @@ SWEP.LastTPIKTime = 0
 
 local cachelastcycle = 0 -- probably bad
 
+local headcontrol = {"ValveBiped.Bip01_Neck1", "ValveBiped.Bip01_Head1"}
+
 function SWEP:DoTPIK()
     local wm = self:GetWM()
 
@@ -146,6 +148,23 @@ function SWEP:DoTPIK()
     if !ply_spine_index then return end
     local ply_spine_matrix = ply:GetBoneMatrix(ply_spine_index)
     local wmpos = ply_spine_matrix:GetTranslation()
+
+    local headcam = self:GetCameraControl(wm)
+    if headcam then
+        for _, bone in ipairs(headcontrol) do
+            local ply_boneindex = ply:LookupBone(bone)
+            if !ply_boneindex then continue end
+            local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
+            if !ply_bonematrix then continue end
+    
+            local boneang = ply_bonematrix:GetAngles()
+            boneang:Add(headcam)
+    
+            ply_bonematrix:SetAngles(boneang)
+    
+            ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+        end
+    end
 
     for _, bone in ipairs(bones) do
         local wm_boneindex = wm:LookupBone(bone)

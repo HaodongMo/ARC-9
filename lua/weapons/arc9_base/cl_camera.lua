@@ -110,16 +110,19 @@ SWEP.MuzzleAngleVelocity = Angle(0, 0, 0)
 SWEP.ProceduralViewOffset = Angle(0, 0, 0)
 SWEP.ProceduralSpeedLimit = 5
 
-function SWEP:GetCameraControl()
+function SWEP:GetCameraControl(wm)
     local seqprox = self:GetSequenceProxy()
 	
 	if self:GetCustomize() then return end
 
-    local camstrength = arc9_vm_camstrength:GetFloat()
+    local camstrength, rollstrength = 1, 1
+    if !wm then
+        camstrength = arc9_vm_camstrength:GetFloat()
 
-    if camstrength == 0 then return end
+        if camstrength == 0 then return end
 
-    local rollstrength = arc9_vm_camrollstrength:GetFloat()
+        rollstrength = arc9_vm_camrollstrength:GetFloat()
+    end
     if seqprox != 0 then
         local slottbl = self:LocateSlotFromAddress(seqprox)
         local atttbl = self:GetFinalAttTable(slottbl)
