@@ -56,6 +56,7 @@ function ARC9.GiveNPCPlayerWeapon(npc, ply)
         wpn:SetClip1(weapon:Clip1())
 
         ply:StripWeapon(weapon:GetClass())
+        ply:SetCanZoom(true) -- bandaid fix for 225
     end)
 end
 
