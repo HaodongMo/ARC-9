@@ -169,8 +169,12 @@ function ARC9.GetBindKey(bind)
     if CTRL then
         return bind
     elseif !key then
-        if bind == "+zoom" then return ARC9:GetPhrase("hud.error.missingbind_zoom") end -- fucking blind stupid retards please open settings
-        if bind == "+menu_context" then return ARC9:GetPhrase("hud.error.missingbind_context") end
+        if bind == "+zoom" then return ARC9:GetPhrase("hud.error.missingbind_zoom") -- fucking blind stupid retards please open settings
+        elseif bind == "+menu_context" then return ARC9:GetPhrase("hud.error.missingbind_context")
+        elseif bind == "impulse 100" then return ARC9:GetPhrase("hud.error.missingbind_flight")
+        elseif bind == "+use" then return ARC9:GetPhrase("hud.error.missingbind_use")
+        elseif bind == "invnext" then return ARC9:GetPhrase("hud.error.missingbind_invnext")
+        elseif bind == "invprev" then return ARC9:GetPhrase("hud.error.missingbind_invprev") end
         -- return "bind KEY " ..  bind
 		
 		return string.format(ARC9:GetPhrase("hud.error.missingbind"), bind)
