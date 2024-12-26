@@ -80,8 +80,12 @@ L["hud.hint.lowammo"] = "Мало патрон"
 L["hud.hint.noammo"] = "Нет патрон"
 
 L["hud.error.missingbind"] = "Нет бинда для %s"
-L["hud.error.missingbind_zoom"] = "Забиндь \"Приблизить\" в настройках!"
-L["hud.error.missingbind_context"] = "Забиндь \"Open Context Menu\" в настройках!"
+L["hud.error.missingbind_zoom"] = "Забиндь \"Приблизить\" в настройках игры!"
+L["hud.error.missingbind_context"] = "Забиндь \"Open Context Menu\" в настройках игры!"
+L["hud.error.missingbind_flight"] = "Забиндь \"Фонарик\" в настройках игры!"
+L["hud.error.missingbind_use"] = "Забиндь \"Использовать\" в настройках игры!"
+L["hud.error.missingbind_invnext"] = "Забиндь \"След. оруж.\" в настройках игры!"
+L["hud.error.missingbind_invprev"] = "Забиндь \"Пред. оруж.\" в настройках игры!"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "КАСТОМИЗАЦИЯ"
