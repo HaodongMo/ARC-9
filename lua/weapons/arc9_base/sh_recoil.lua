@@ -232,6 +232,70 @@ do
         self:SetVisualRecoilAng(vaa)
         self:SetVisualRecoilAcc(new_vac)
         self:SetVisualRecoilVel(vav)
+
+
+
+
+        -- SUBTLE RECOIL MOVEMENT
+        if CLIENT and self.SubtleVisualRecoil and (self:GetLastRecoilTime() + 0.75 > CurTime()) then
+            local springconstant2 = 150 * (self.SubtleVisualRecoilSpeed or 1)
+            local springmagnitude2 = 0.3
+            local springdamping2 = 2.8
+    
+            -- if self.VisualRecoilThinkFunc then
+            --     springconstant2, springmagnitude2, springdamping2 = self.VisualRecoilThinkFunc(springconstant2, springmagnitude2, springdamping2, self:GetRecoilAmount())
+            -- end
+    
+            local vpa2 = self.SubtleVisualRecoilPos
+            local vpv2 = self.SubtleVisualRecoilPosVel
+            local vpc2 = self.SubtleVisualRecoilPosAcc
+    
+            vpa2 = vpa2 + (vpv2 * ft) + (vpc2 * ft * ft * 0.5)
+            local vpdrag2 = -(vpv2 * vpv2:Length() * 0.5)
+            local vpreturn2 = (-vpa2 * vpa2:Length() * springconstant2) + (-vpa2 / vpa2:Length() * springmagnitude2) + (-vpv2 * springdamping2)
+            local new_vpc2 = vpdrag2 + vpreturn2
+            vpv2 = vpv2 + ((vpc2 + new_vpc2) * (ft * 0.5))
+    
+            for i = 1, 3 do
+                vpa2[i] = math_Clamp(vpa2[i], -MAGIC1, MAGIC1)
+                vpv2[i] = math_Clamp(vpv2[i], -MAGIC1, MAGIC1)
+                new_vpc2[i] = math_Clamp(new_vpc2[i], -MAGIC1, MAGIC1)
+            end
+    
+            self.SubtleVisualRecoilPos = vpa2
+            self.SubtleVisualRecoilPosAcc = new_vpc2
+            self.SubtleVisualRecoilPosVel = vpv2
+    
+            -- New spring algorithm using the velocity Verlet integration
+    
+            local vaa2 = self.SubtleVisualRecoilAng
+            local vav2 = self.SubtleVisualRecoilVel
+            local vac2 = self.SubtleVisualRecoilAcc
+
+            vaa2 = vaa2 + (vav2 * ft) + (vac2 * ft * ft * 0.5)
+            local vdrag2 = -(vav2 * vav2:Length() * 0.5)
+            local vreturn2 = (-vaa2 * vaa2:Length() * springconstant2) + (-vaa2 / vaa2:Length() * springmagnitude2) + (-vav2 * springdamping2)
+            local new_vac2 = vdrag2 + vreturn2
+            vav2 = vav2 + ((vac2 + new_vac2) * (ft * 0.5))
+    
+            for i = 1, 3 do
+                vaa2[i] = math_Clamp(vaa2[i], -MAGIC2, MAGIC2)
+                vav2[i] = math_Clamp(vav2[i], -MAGIC2, MAGIC2)
+                new_vac2[i] = math_Clamp(new_vac2[i], -MAGIC2, MAGIC2)
+            end
+            
+            self.SubtleVisualRecoilAng = vaa2
+            self.SubtleVisualRecoilAcc = new_vac2
+            self.SubtleVisualRecoilVel = vav2
+
+            self:SetVisualRecoilPos(vpa + vpa2)
+            self:SetVisualRecoilPosAcc(new_vpc + new_vpc2)
+            self:SetVisualRecoilPosVel(vpv + vpv2)
+
+            self:SetVisualRecoilAng(vaa + vaa2)
+            self:SetVisualRecoilAcc(new_vac + new_vac2)
+            self:SetVisualRecoilVel(vav + vav2)
+        end
     end
 end
 
@@ -278,6 +342,27 @@ end
 local lastrft = 0
 local realrecoilconvar = GetConVar("arc9_realrecoil")
 
+SWEP.SubtleVisualRecoilPos = Vector(0, 0, 0)
+SWEP.SubtleVisualRecoilPosAcc = Vector(0, 0, 0)
+SWEP.SubtleVisualRecoilPosVel = Vector(0, 0, 0)
+SWEP.SubtleVisualRecoilAng = Vector(0, 0, 0)
+SWEP.SubtleVisualRecoilAcc = Vector(0, 0, 0)
+SWEP.SubtleVisualRecoilVel = Vector(0, 0, 0)
+
+local randdirectstable = { -1.35, -1.25, -1.125, -1, -0.75, -0.75, 0.75, 0.75, 1, 1.125, 1.25, 1.35 } -- regular random will provide near zero values most of the time
+local randuptable = { 0.1, 0.125, 0.15, 0.175, 0.2 }
+
+function SWEP:DoSubtleVisualRecoil(mult) -- cl only
+    if SERVER or !self.SubtleVisualRecoil then return end
+    
+    -- mult = mult * self:GetProcessedValue("Recoil", true)
+    
+    mult = self.SubtleVisualRecoil * 0.75
+    
+    self.SubtleVisualRecoilPos = self.SubtleVisualRecoilPos + Vector(math.Rand(-0.05, 0.03), -1.5, math.Rand(-0.06, 0.03)) * mult
+    self.SubtleVisualRecoilAng = self.SubtleVisualRecoilAng + Vector(randuptable[math.random(#randuptable)], 0, (self.SubtleVisualRecoilDirection or 0) + randdirectstable[math.random(#randdirectstable)]) * mult
+end
+
 function SWEP:DoVisualRecoil()
     if !self:GetProcessedValue("UseVisualRecoil", true) then return end
 
@@ -318,6 +403,7 @@ function SWEP:DoVisualRecoil()
             self:SetVisualRecoilPos(self:GetVisualRecoilPos() - ((Vector(0, punch, up * bumpup) * fake) - Vector(side, 0, 0)))
         end
 
+        self:DoSubtleVisualRecoil(mult)
     end
 end
 
