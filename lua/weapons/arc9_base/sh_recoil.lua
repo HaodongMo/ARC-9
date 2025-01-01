@@ -358,9 +358,11 @@ function SWEP:DoSubtleVisualRecoil(mult) -- cl only
     -- mult = mult * self:GetProcessedValue("Recoil", true)
     
     mult = self.SubtleVisualRecoil * 0.75
-    
-    self.SubtleVisualRecoilPos = self.SubtleVisualRecoilPos + Vector(math.Rand(-0.05, 0.03), -1.5, math.Rand(-0.06, 0.03)) * mult
-    self.SubtleVisualRecoilAng = self.SubtleVisualRecoilAng + Vector(randuptable[math.random(#randuptable)], 0, (self.SubtleVisualRecoilDirection or 0) + randdirectstable[math.random(#randdirectstable)]) * mult
+    if !self:GetInSights() then mult = mult * 2 end
+    local funnynumber = 1.3 - math.min(self:GetRecoilAmount(), 4.5) / 4.5
+
+    self.SubtleVisualRecoilPos = self.SubtleVisualRecoilPos + Vector(math.Rand(-0.05, 0.03), -1.0, math.Rand(-0.06, 0.03)) * mult
+    self.SubtleVisualRecoilAng = self.SubtleVisualRecoilAng + Vector(randuptable[math.random(#randuptable)], 0, (self.SubtleVisualRecoilDirection or 0) * funnynumber + randdirectstable[math.random(#randdirectstable)]) * mult
 end
 
 function SWEP:DoVisualRecoil()
