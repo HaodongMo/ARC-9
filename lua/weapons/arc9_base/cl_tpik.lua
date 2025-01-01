@@ -38,9 +38,14 @@ function SWEP:ShouldTPIK()
         wm.slottbl.Pos = (should and self.WorldModelOffset.TPIKPos) or self.WorldModelOffset.Pos
         wm.slottbl.Ang = (should and self.WorldModelOffset.TPIKAng) or self.WorldModelOffset.Ang
 
-        if should and lp == owner and self.CustomizeDelta == 0 then 
-            wm.slottbl.Pos = wm.slottbl.Pos - self.ViewModelPos * somevector3
-            wm.slottbl.Ang = wm.slottbl.Ang + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
+        if should and lp == owner and self.CustomizeDelta == 0 then
+            if !self.NoTPIKVMPos then
+                wm.slottbl.Pos = wm.slottbl.Pos - self.ViewModelPos * somevector3
+                wm.slottbl.Ang = wm.slottbl.Ang + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
+            else
+                wm.slottbl.Pos = wm.slottbl.Pos
+                wm.slottbl.Ang = wm.slottbl.Ang
+            end
         end
     end
 
