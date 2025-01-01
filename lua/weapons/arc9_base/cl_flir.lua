@@ -18,7 +18,7 @@ local monochrometable = {
 }
 
 local ref = 32
-local r_def = 160
+local r_def = 2048
 
 function SWEP:DoFLIR(atttbl)
 
@@ -118,7 +118,7 @@ end
 function SWEP:GetEntityHot(ent, range)
     if !ent:IsValid() or ent:IsWorld() then return false end
 
-    if self:GetPos():DistToSqr(ent:GetPos()) > range^2 then return end
+    if self:GetPos():DistToSqr(ent:GetPos()) > (range or r_def) ^ 2 then return end
 
     if ent:IsPlayer() then
         if ent.ArcticMedShots_ActiveEffects and ent.ArcticMedShots_ActiveEffects["coldblooded"] or ent:Health() <= 0 then return false end -- arc stims
