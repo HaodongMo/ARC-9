@@ -318,14 +318,14 @@ do
             end
     
             if pratt then
-                swepBuildMultiSight(self)
+                self:BuildMultiSight()
             end
         else
             if sighted and !inatt then
                 swepExitSights(self)
             elseif not sighted and inatt then
                 self:EnterSights()
-                swepBuildMultiSight(self)
+                self:BuildMultiSight()
             end
         end
 

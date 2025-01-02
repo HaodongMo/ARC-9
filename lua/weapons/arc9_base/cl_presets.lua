@@ -513,6 +513,7 @@ function SWEP:ImportPresetCode(str)
 end
 
 function SWEP:SplitPresetContents(str)
+    if !isstring(str) then return end
     if str[1] != "[" then return end
     if !string.find(str, "]X") then return end
     local name = string.sub(string.Split(str, "]")[1], 2)
