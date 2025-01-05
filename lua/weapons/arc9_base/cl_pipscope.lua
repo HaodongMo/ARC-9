@@ -205,7 +205,7 @@ function SWEP:DoRTScope(model, atttbl, active)
         if self:ShouldDoScope() then
             self.RenderingRTScope = true
             local sight = self:GetSight()
-            sightzang = sight.Ang.z
+            sightzang = sight.Ang.z - self.SubtleVisualRecoilAng.z -- less shaky with negation of subtle recoil
             local sightpos = sight.ShadowPos or (sight.OriginalSightTable or {}).Pos or sight.Pos or Vector(0, 0, 0)
             sightpos = sightpos * ((sight.slottbl or {}).Scale or 1)
 
@@ -301,7 +301,7 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
                 -- surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
-                surface.DrawTexturedRectRotated(size / 2 + rtr_x, size / 2 + rtr_y, size, size, -self.ViewModelAng.z + sightzang)
+                surface.DrawTexturedRectRotated(size / 2 + rtr_x, size / 2 + rtr_y, size, size, -self.LastViewModelAng.z + sightzang)
             end
 
             if atttbl.RTScopeDrawFunc then
@@ -345,8 +345,7 @@ function SWEP:DoRTScope(model, atttbl, active)
         if sd > 0.5 then render.SetToneMappingScaleLinear(vec1) end
 
         rtsurf:SetTexture("$basetexture", rtmat)
-        rtsurf:SetFloat("$rot", ((atttbl.RTScopeShadowIntensity or 0) > 1 or atttbl.RTCollimator) and self.ViewModelAng.z - sightzang or 0)
-
+        rtsurf:SetFloat("$rot", ((atttbl.RTScopeShadowIntensity or 0) > 1 or atttbl.RTCollimator) and self.LastViewModelAng.z - sightzang or 0)
         -- rtsurf:SetMatrix("$basetexturetransform", Matrix({{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}))
 
         -- model:SetSubMaterial()

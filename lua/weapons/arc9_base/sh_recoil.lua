@@ -358,11 +358,12 @@ function SWEP:DoSubtleVisualRecoil(mult) -- cl only
     -- mult = mult * self:GetProcessedValue("Recoil", true)
     
     mult = self.SubtleVisualRecoil * 0.75
-    if !self:GetInSights() then mult = mult * 2 end
+    local upp = randuptable[math.random(#randuptable)]
+    if !self:GetInSights() then mult = mult * (self.SubtleVisualRecoilHipFire or 2) end
     local funnynumber = 1.3 - math.min(self:GetRecoilAmount(), 4.5) / 4.5
 
     self.SubtleVisualRecoilPos = self.SubtleVisualRecoilPos + Vector(math.Rand(-0.05, 0.03), -1.0, math.Rand(-0.06, 0.03)) * mult
-    self.SubtleVisualRecoilAng = self.SubtleVisualRecoilAng + Vector(randuptable[math.random(#randuptable)], 0, (self.SubtleVisualRecoilDirection or 0) * funnynumber + randdirectstable[math.random(#randdirectstable)]) * mult
+    self.SubtleVisualRecoilAng = self.SubtleVisualRecoilAng + Vector(upp, 0, (self.SubtleVisualRecoilDirection or 0) * funnynumber + randdirectstable[math.random(#randdirectstable)]) * mult
 end
 
 function SWEP:DoVisualRecoil()
@@ -388,13 +389,9 @@ function SWEP:DoVisualRecoil()
             up, side, roll, punch = self.VisualRecoilDoingFunc(up, side, roll, punch, self:GetRecoilAmount(), self)
         end
 
-        local fake = 0
+        local fake = self:GetProcessedValue("VisualRecoilPositionBump", true) or 1.5
 
-        fake = self:GetProcessedValue("VisualRecoilPositionBump", true) or 1.5
-
-        local isRTscoped = CLIENT and self:GetSight() and self:GetSight().atttbl and self:GetSight().atttbl.RTScope -- horible
-
-        local bumpup = (isRTscoped and self:GetProcessedValue("VisualRecoilPositionBumpUpRTScope", true) or self:GetProcessedValue("VisualRecoilPositionBumpUp", true)) or 0.08
+        local bumpup = (self:IsUsingRTScope() and self.VisualRecoilPositionBumpUpRTScope or self:GetProcessedValue("VisualRecoilPositionBumpUp")) or 0.08
 
         fake = Lerp(self:GetSightDelta(), fake, 1)
 
