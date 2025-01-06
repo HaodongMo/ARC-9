@@ -45,9 +45,11 @@ function SWEP:MeleeAttack(bypass, bash2)
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
             self:SetLungeEntity(tr.Entity)
 
-            local dot = owner:EyeAngles():Forward():Dot(tr.Entity:EyeAngles():Forward())
+			if self:GetProcessedValue("Backstab") then
+            	local dot = owner:EyeAngles():Forward():Dot(tr.Entity:EyeAngles():Forward())
 
-            backstab = dot > 0
+            	backstab = dot > 0
+			end
         end
     end
 
