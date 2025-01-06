@@ -134,8 +134,8 @@ function SWEP:Think()
 
             if weaponGetNextPrimaryFire(self) + delay + swepGetProcessedValue(self, "AfterShotParticleDelay") < now then
                 self:SetAfterShot(false)
-                if swepGetProcessedValue(self, "AfterShotParticle", true) then
-                    local att = swepGetProcessedValue(self, "AfterShotQCA") or swepGetProcessedValue(self, "MuzzleEffectQCA", true)
+                if swepGetProcessedValue(self, "AfterShotParticle") then
+                    local att = swepGetProcessedValue(self, "AfterShotQCA", true) or swepGetProcessedValue(self, "MuzzleEffectQCA", true)
 
                     local data = EffectData()
                     data:SetEntity(self)

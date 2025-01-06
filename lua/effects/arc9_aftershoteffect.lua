@@ -5,39 +5,39 @@ function EFFECT:Init(data)
 
 	local smoke = wpn:GetProcessedValue("AfterShotParticle", true)
 
-	local att = data:GetAttachment() or 1
+	if smoke and isstring(smoke) then
+		local att = data:GetAttachment() or 1
 
-	local vm = LocalPlayer():GetViewModel()
+		local vm = LocalPlayer():GetViewModel()
 
-	local wm = false
+		local wm = false
 
-	if (LocalPlayer():ShouldDrawLocalPlayer() or wpn.Owner != LocalPlayer()) then
-		wm = true
-		att = 1
-	end
+		if (LocalPlayer():ShouldDrawLocalPlayer() or wpn.Owner != LocalPlayer()) then
+			wm = true
+			att = 1
+		end
 
-	local parent = wpn
+		local parent = wpn
 
-	if !wm then
-		parent = vm
-	else
-		parent = (wpn.WModel or {})[1] or wpn
-	end
+		if !wm then
+			parent = vm
+		else
+			parent = (wpn.WModel or {})[1] or wpn
+		end
 
-	local muz = wpn:GetMuzzleDevice(wm)
+		local muz = wpn:GetMuzzleDevice(wm)
 
-	if !IsValid(muz) then
-		muz = wpn
-	end
+		if !IsValid(muz) then
+			muz = wpn
+		end
 
-	if !IsValid(muz) then
-		self:Remove()
-		return
-	end
+		if !IsValid(muz) then
+			self:Remove()
+			return
+		end
 
-	-- if !IsValid(parent) then return end
+		-- if !IsValid(parent) then return end
 
-	if smoke then
 		if IsValid(wpn.ActiveAfterShotPCF) then
 			wpn.ActiveAfterShotPCF:StopEmission()
 		end
@@ -53,6 +53,9 @@ function EFFECT:Init(data)
 				table.insert(wpn.PCFs, pcf)
 			end
 		end
+	else
+		self:Remove()
+		return
 	end
 end
 
