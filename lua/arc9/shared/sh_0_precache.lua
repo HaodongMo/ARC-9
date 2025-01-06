@@ -101,7 +101,7 @@ function ARC9.CacheWepSounds(wep, class, cmdl)
 
         for i, sfx in ipairs(SoundsToPrecacheList) do
             timer.Simple(i * 0.01, function()
-                CacheASound(sfx, cmdl)
+                CacheASound(sfx, cmdl or wep)
             end)
         end
         
