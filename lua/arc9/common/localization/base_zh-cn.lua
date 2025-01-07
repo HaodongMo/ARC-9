@@ -82,6 +82,10 @@ L["hud.hint.zoom"] = "瞄具缩放"
 -- L["hud.error.missingbind"] = "No button bound to %s"
 -- L["hud.error.missingbind_zoom"] = "Bind \"Suit Zoom\" in settings!"
 -- L["hud.error.missingbind_context"] = "Bind \"Open Context Menu\" in settings!"
+-- L["hud.error.missingbind_flight"] = "Bind \"Flashlight\" in game settings!"
+-- L["hud.error.missingbind_use"] = "Bind \"Use item\" in game settings!"
+-- L["hud.error.missingbind_invnext"] = "Bind \"Next weap.\" in game settings!"
+-- L["hud.error.missingbind_invprev"] = "Bind \"Previous weap.\" in game settings!"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "自定义"

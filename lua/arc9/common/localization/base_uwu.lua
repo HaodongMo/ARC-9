@@ -82,6 +82,10 @@ L["hud.hint.noammo"] = "Nyo Ammowo!! 0_0"
 L["hud.error.missingbind"] = "awooga! %s isnt bindwed!!"
 L["hud.error.missingbind_zoom"] = "wetawd!! bind \"Suit Zoom\" in setings o.o"
 L["hud.error.missingbind_context"] = "wetawd!! bind \"Open Context Menu\" in setings o.o"
+L["hud.error.missingbind_flight"] = "wetawd!! bind \"Flashlight\" in setings o.o"
+L["hud.error.missingbind_use"] = "wetawd!! bind \"Use item\" in setings o.o"
+L["hud.error.missingbind_invnext"] = "wetawd!! bind \"Next weap.\" in setings o.o"
+L["hud.error.missingbind_invprev"] = "wetawd!! bind \"Previous weap.\" in setings o.o"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUwUSTOwOMIZE"

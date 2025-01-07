@@ -82,6 +82,10 @@ L["hud.hint.noammo"] = "Keine Munition"
 L["hud.error.missingbind"] = "Keine Tastenbelegung für %s"
 L["hud.error.missingbind_zoom"] = "Belege \"Suit Zoom\" in den Einstellungen!"
 L["hud.error.missingbind_context"] = "Belege \"Open Context Menu\" in den Einstellungen!"
+L["hud.error.missingbind_flight"] = "Belege \"Flashlight\" in den Einstellungen!"
+L["hud.error.missingbind_use"] = "Belege \"Use item\" in den Einstellungen!"
+L["hud.error.missingbind_invnext"] = "Belege \"Next weap.\" in den Einstellungen!"
+L["hud.error.missingbind_invprev"] = "Belege \"Previous weap.\" in den Einstellungen!"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "ANPASSEN"

@@ -82,6 +82,10 @@ L["hud.hint.noammo"] = "Sin Munición"
 L["hud.error.missingbind"] = "Ningún botón vinculado a %s"
 L["hud.error.missingbind_zoom"] = "Vincular \"Zoom de Traje\" en ajustes!"
 L["hud.error.missingbind_context"] = "Vincular \"Open Context Menu\" en ajustes!"
+L["hud.error.missingbind_flight"] = "Vincular \"Flashlight\" en ajustes!"
+L["hud.error.missingbind_use"] = "Vincular \"Use item\" en ajustes!"
+L["hud.error.missingbind_invnext"] = "Vincular \"Next weap.\" en ajustes!"
+L["hud.error.missingbind_invprev"] = "Vincular \"Previous weap.\" en ajustes!"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "CUSTOMIZAR"

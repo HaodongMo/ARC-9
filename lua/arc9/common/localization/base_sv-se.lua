@@ -82,6 +82,10 @@ L["hud.hint.noammo"] = "Ingen Ammo"
 L["hud.error.missingbind"] = "Ingen knapp bunden till %s"
 L["hud.error.missingbind_zoom"] = "Bind \"Suit Zoom\" i inställningarna!"
 L["hud.error.missingbind_context"] = "Bind \"Open Context Menu\" i inställningarna!"
+L["hud.error.missingbind_flight"] = "Bind \"Flashlight\" i inställningarna!"
+L["hud.error.missingbind_use"] = "Bind \"Use item\" i inställningarna!"
+L["hud.error.missingbind_invnext"] = "Bind \"Next weap.\" i inställningarna!"
+L["hud.error.missingbind_invprev"] = "Bind \"Previous weap.\" i inställningarna!"
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "ANPASSA"
