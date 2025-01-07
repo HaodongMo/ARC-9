@@ -143,7 +143,7 @@ end
 
 function SWEP:SetHoloSightRenderDepth(mdl, depthadj)
     local eyedist = WorldToLocal(mdl:GetPos(), mdl:GetAngles(), EyePos(), EyeAngles()).x
-    local canum = 0.1+(depthadj or 0.0093) + (0.0005 * eyedist / 20)
+    local canum = 0.1 + (depthadj or -0.005) + (0.0005 * eyedist / 20)
     render.DepthRange(0, canum)
     -- render.DepthRange(0, (eyedist + 77.99) / 10000)
 end
