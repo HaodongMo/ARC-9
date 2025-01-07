@@ -50,7 +50,7 @@ function SWEP:PreDrawViewModel()
         vmpso = vmpso - vmagn:Right() * spso.x
 
         cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 100040)
-        render.DepthRange( 0.0, 0.1 )
+        render.DepthRange( 0.1, 0.1 )
 
         return
     end
