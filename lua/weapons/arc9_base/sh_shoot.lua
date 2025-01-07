@@ -1014,11 +1014,11 @@ function SWEP:GetShootPos()
     return pos, ang
 end
 
-function SWEP:GetShootDir()
+function SWEP:GetShootDir(quick)
     local owner = self:GetOwner()
     if !owner:IsValid() then return self:GetAngles() end
     local dir = owner:EyeAngles()
-    local shootangoffset = self:GetProcessedValue("ShootAngOffset", true)
+    local shootangoffset = self:GetProcessedValue("ShootAngOffset", !quick)
 
     dir:RotateAroundAxis(dir:Right(), shootangoffset[1])
     dir:RotateAroundAxis(dir:Up(), shootangoffset[2])
@@ -1041,7 +1041,7 @@ function SWEP:ShootRocket()
     local owner = self:GetOwner()
 
     local src = self:GetShootPos()
-    local dir = self:GetShootDir()
+    local dir = self:GetShootDir(true)
 
     local num = self:GetProcessedValue("Num")
     local ent = self:GetProcessedValue("ShootEnt", true)
