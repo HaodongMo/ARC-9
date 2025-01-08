@@ -293,7 +293,16 @@ local arc9_never_ready = GetConVar("arc9_never_ready")
 local arc9_dev_always_ready = GetConVar("arc9_dev_always_ready")
 
 function SWEP:DoDeployAnimation()
-    if self.IsQuickGrenade then self:QuicknadeDeploy() return end
+    if self.IsQuickGrenade then
+        if self:HasAnimation("quicknade") or self:GetProcessedValue("Detonator", true) then self:QuicknadeDeploy() return end -- a real quicknade
+
+        local owner = self:GetOwner() -- a fake one, this thing to holster after throwing
+        self.WasThrownByBind = owner.ARC9QuickthrowPls
+        owner.ARC9QuickthrowPls = nil
+        
+        owner.ARC9LastSelectedGrenade = self:GetClass()
+    end
+
     if !arc9_never_ready:GetBool() and (arc9_dev_always_ready:GetBool() or !self:GetReady()) and self:HasAnimation("ready") then
         local t, min = self:PlayAnimation("ready", self:GetProcessedValue("DeployTime", true, 1), true)
 
