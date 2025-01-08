@@ -195,6 +195,7 @@ local vec1 = Vector(1, 1, 1)
 local arc9_scope_r = GetConVar("arc9_scope_r")
 local arc9_scope_g = GetConVar("arc9_scope_g")
 local arc9_scope_b = GetConVar("arc9_scope_b")
+local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 
 function SWEP:DoRTScope(model, atttbl, active)
     local pos = model:GetPos()
@@ -345,7 +346,7 @@ function SWEP:DoRTScope(model, atttbl, active)
         -- if sd > 0 then render.SetToneMappingScaleLinear(render.GetToneMappingScaleLinear()*0.2) end
         if sd > 0.5 then render.SetToneMappingScaleLinear(vec1) end
 
-        local counterrotation = self.LastViewModelAng.z - sightzang + self.SubtleVisualRecoilAng.z * 2
+        local counterrotation = self.LastViewModelAng.z - sightzang + (arc9_cheapscopes:GetBool() and 0 or self.SubtleVisualRecoilAng.z * 2)
         rtsurf:SetTexture("$basetexture", rtmat)
         rtsurf:SetFloat("$rot", ((atttbl.RTScopeShadowIntensity or 0) > 1 or atttbl.RTCollimator) and counterrotation or 0)
         -- rtsurf:SetMatrix("$basetexturetransform", Matrix({{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}))
