@@ -32,7 +32,7 @@ end
 
 function SWEP:Detach(addr, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
-    if !slottbl.Installed then return false end
+    if !slottbl or !slottbl.Installed then return false end
     if !self:CanDetach(addr) then return false end
     local atttbl = ARC9.GetAttTable(slottbl.Installed) or {}
 

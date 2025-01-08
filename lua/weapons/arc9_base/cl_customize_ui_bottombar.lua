@@ -588,6 +588,8 @@ function SWEP:CreateHUD_AttInfo()
 
             slot = self:LocateSlotFromAddress(self2.addr)
 
+            if !slot then return end
+
             if slot.Installed == self.AttInfoBarAtt then
                 curmode = atttbl.ToggleStats[slot.ToggleNum] and atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
                 

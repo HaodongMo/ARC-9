@@ -250,7 +250,7 @@ function SWEP:SwitchMultiSight(amt)
             self.MultiSightTable[msi].OnSwitchToSight(self, self.MultiSightTable[msi].slottbl)
         end
 
-        if self.MultiSightTable[old_msi].OnSwitchFromSight then
+        if self.MultiSightTable[old_msi] and self.MultiSightTable[old_msi].OnSwitchFromSight then
             self.MultiSightTable[old_msi].OnSwitchFromSight(self, self.MultiSightTable[msi].slottbl)
         end
     end
