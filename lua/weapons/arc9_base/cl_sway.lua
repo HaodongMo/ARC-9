@@ -19,9 +19,25 @@ function SWEP:GetViewModelSway(pos, ang)
 
     smoothswayroll = Lerp(math.Clamp(ft * 24, 0.075, 1), smoothswayroll, smootheyeang.y)
     if self.SprintVerticalOffset then
-        local sprintoffset = (ang.p * 0.06) * Lerp(self:GetSprintAmount(), 0, 1)
-        pos:Add(ang:Up() * sprintoffset)
-        pos:Add(ang:Forward() * sprintoffset)
+        -- local sprintoffset = (ang.p * 0.06) * Lerp(self:GetSprintAmount(), 0, 1)
+        -- print(sprintoffset)
+        -- pos:Add(ang:Up() * sprintoffset)
+        -- pos:Add(ang:Forward() * sprintoffset)
+        
+        -- old thing was wrong as it used vm ang pitch and not eyes pitch so value was  always offsetted by 1.2
+        -- so sprint pos was incorrect
+        -- keeping it to not mess up old guns
+
+        local sprintoffset = math.Clamp(EyeAngles().p * 0.1, -9, 4.5)
+        local sprintoffset2 = sprintoffset + 1.2
+        local lerrppp = Lerp(self:GetSprintAmount(), 0, 1)
+        sprintoffset, sprintoffset2 = sprintoffset * lerrppp, sprintoffset2 * lerrppp
+
+        pos:Add(ang:Up() * (sprintoffset2 + 10) * 0.1 * lerrppp)
+        pos:Add(ang:Right() * sprintoffset2 * 0.2)
+        pos:Add(ang:Forward() *  (sprintoffset2 + 10) * 0.1 * lerrppp)
+        ang.z = ang.z + math.min(0, sprintoffset * -6)
+        ang.y = ang.y + math.min(0, sprintoffset * -2)
     end
 
     smootheyeang.p = math.Clamp(smootheyeang.p * 0.95, -10, 10)
