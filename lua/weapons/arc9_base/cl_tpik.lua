@@ -155,7 +155,7 @@ function SWEP:DoTPIK()
     local wmpos = ply_spine_matrix:GetTranslation()
 
     local headcam = self:GetCameraControl(wm)
-    if headcam then
+    if IsValid(headcam) then
         for _, bone in ipairs(headcontrol) do
             local ply_boneindex = ply:LookupBone(bone)
             if !ply_boneindex then continue end
