@@ -156,6 +156,8 @@ function SWEP:GetCameraControl(wm)
         if !camqca then return end
 
         local vm = self:GetVM()
+        
+        if !IsValid(vm) then return end
 
         local ang = (vm:GetAttachment(camqca) or {}).Ang
 
