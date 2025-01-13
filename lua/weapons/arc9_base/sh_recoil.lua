@@ -243,7 +243,7 @@ do
 
         -- SUBTLE RECOIL MOVEMENT
         if CLIENT and self.SubtleVisualRecoil and (self:GetLastRecoilTime() + 0.75 > CurTime()) then
-            local springconstant2 = 150 * (self.SubtleVisualRecoilSpeed or 1)
+            local springconstant2 = 150 * (self.SubtleVisualRecoilSpeed or 1) * (isSingleplayer and 1 or math.Clamp(20 / LocalPlayer():Ping(), 0.1, 1))
             local springmagnitude2 = 0.3
             local springdamping2 = 2.8
     
@@ -362,7 +362,7 @@ function SWEP:DoSubtleVisualRecoil(mult) -- cl only
     
     -- mult = mult * self:GetProcessedValue("Recoil", true)
     
-    mult = self.SubtleVisualRecoil * 0.75
+    mult = self.SubtleVisualRecoil * 0.75 * (isSingleplayer and 1 or math.Clamp(20 / LocalPlayer():Ping(), 0.1, 1))
     local upp = randuptable[math.random(#randuptable)]
     if !self:GetInSights() then mult = mult * (self.SubtleVisualRecoilHipFire or 2) end
     local funnynumber = 1.3 - math.min(self:GetRecoilAmount(), 4.5) / 4.5

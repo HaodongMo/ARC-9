@@ -24,6 +24,7 @@ local vmAddX = GetConVar("arc9_vm_addx")
 local vmAddY = GetConVar("arc9_vm_addy")
 local vmAddZ = GetConVar("arc9_vm_addz")
 local arc9DevBenchGun = GetConVar("arc9_dev_benchgun")
+local isSingleplayer = game.SinglePlayer()
 
 local Lerp = function(a, v1, v2)
     local d = v2 - v1
@@ -86,24 +87,24 @@ end
 --     return Lerp(1 - math.pow(a, FrameTime()), v2, v1)
 -- end
 local DampVector = function(a, v1, v2)
-    a = 1 - math.pow(a, FrameTime())
+    a = 1 - math.pow(a, RealFrameTime())
 
     return LerpVector(a, v2, v1)
 end
 
 local DampVectorEdit = function(a, v1, v2)
-    a = math.pow(a, FrameTime())
+    a = math.pow(a, RealFrameTime())
     LerpVectorEdit(a, v1, v2)
 end
 
 local DampAngle = function(a, v1, v2)
-    a = 1 - math.pow(a, FrameTime())
+    a = 1 - math.pow(a, RealFrameTime())
 
     return LerpAngle(a, v2, v1)
 end
 
 local DampAngleEdit = function(a, v1, v2)
-    a = math.pow(a, FrameTime())
+    a = math.pow(a, RealFrameTime())
     LerpAngleEdit(a, v1, v2)
 end
 
@@ -466,8 +467,10 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     -- No point checking IsFirstTimePredicted in a client function (this is not predicted!!)
     -- This was causing choppy viewmodel movement at lower tickrates in dedicated servers
-    DampVectorEdit(0.0000005, pos, self.ViewModelPos)
-    DampAngleEdit(0.00001, ang, self.ViewModelAng)
+    -- DampVectorEdit(0.0000005, pos, self.ViewModelPos)
+    -- DampAngleEdit(0.00001, ang, self.ViewModelAng)
+    DampVectorEdit(0.0000005 * (isSingleplayer and 1 or 200), pos, self.ViewModelPos)
+    DampAngleEdit(0.00001 * (isSingleplayer and 1 or 200), ang, self.ViewModelAng)
     self.ViewModelPos = pos
     self.ViewModelAng = ang
 
