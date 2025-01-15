@@ -52,7 +52,7 @@ function SWEP:ThinkGrenade()
         owner:KeyDown(IN_ATTACK)) and
             self:HasAmmoInClip() and
             (!owner:KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash", true)) and
-            !IsValid(self:GetDetonatorEntity())
+            !IsValid(self:GetDetonatorEntity()) and !self:RunHook("HookP_BlockFire") 
             then
             self:SetGrenadePrimed(true)
             self:SetGrenadePrimedTime(CurTime())

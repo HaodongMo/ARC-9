@@ -9,6 +9,8 @@ function SWEP:MeleeAttack(bypass, bash2)
         if !self:GetProcessedValue("BashWhileSprint", true) and self:SprintLock() then return end
     end
 
+    if self:RunHook("HookP_BlockFire") then return end
+    
 	self:CancelReload()
 	
     self:CallOnClient("CallNonTPIKAnim", "AnimMelee")
