@@ -211,11 +211,22 @@ function ARC9.StartCommand(ply, cmd)
     local isScope = wpn:IsUsingRTScope()
 
     if isScope then
-        local swayspeed = 2
-        local swayamt = wpn:GetFreeSwayAmount()
-        local swayang = Angle(math.sin(CurTime() * 0.6 * swayspeed) + (math.cos(CurTime() * 2) * 0.5), math.sin(CurTime() * 0.4 * swayspeed) + (math.cos(CurTime() * 1.6) * 0.5), 0)
+        local ct = CurTime()
 
-        swayang = swayang * wpn:GetSightAmount() * swayamt * 0.2
+        local swayspeed = 1.5
+        local swayamt = wpn:GetFreeSwayAmount()
+        
+        if wpn:GetOutOfBreath() then swayspeed = 2.25 end
+
+        local swayang = Angle(math.sin(ct * 0.6 * swayspeed) + (math.cos(ct * 2 * swayspeed) * 0.5), math.sin(ct * 0.4 * swayspeed) + (math.cos(ct * 1.6 * swayspeed) * 0.5), 0)
+        
+        swayang.p = swayang.p + (math.cos(ct * 5 * swayspeed) + math.cos(ct * 2)) * -0.15 -- smaller movement
+        swayang.y = swayang.y + (math.cos(ct * 2.9 * swayspeed) + (math.sin(ct * 7.1)) - (math.sin(ct * 4) * 2)) * 0.1
+
+        swayang.p = swayang.p - math.exp(math.exp((math.cos(ct * 1.33 * swayspeed)))) * -0.07 -- random drags
+        swayang.y = swayang.y - math.exp(math.exp((math.sin(ct * 0.8 * swayspeed)))) * 0.07
+
+        swayang = swayang * wpn:GetSightAmount() * swayamt * 0.2 * 0.75
 
         local eyeang = cmd:GetViewAngles()
 

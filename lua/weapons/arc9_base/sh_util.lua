@@ -168,7 +168,7 @@ function SWEP:RotateAroundPoint2(pos, ang, point, offset, offset_ang)
 end
 
 function SWEP:IsUsingRTScope()
-    return self:GetSightAmount() > 0.5 and self:GetSight() and self:GetSight().atttbl and self:GetSight().atttbl.RTScope
+    return self:GetSightAmount() > 0.5 and self:GetSight() and self:GetSight().atttbl and self:GetSight().atttbl.RTScope and !self:GetSight().Disassociate
 end
 
 if CLIENT then
