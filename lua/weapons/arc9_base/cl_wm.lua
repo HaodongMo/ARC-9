@@ -1,3 +1,5 @@
+-- local goodmin, goodmax, extramax = Vector(-16, -16, -16), Vector(16, 16, 16), Vector(16, 16, 2048)
+
 function SWEP:DrawWorldModel()
     local owner = self:GetOwner()
 
@@ -15,6 +17,12 @@ function SWEP:DrawWorldModel()
         self:DoTPIK()
         -- self:DrawFlashlightsWM()
         self.LastWMDrawn = UnPredictedCurTime()
+
+        -- if self:GetValue("Laser") and self:GetTactical() then -- too hard to know if any laser is active
+        --     self:SetRenderBounds(goodmin, extramax)
+        -- else
+        --     self:SetRenderBounds(goodmin, goodmax)
+        -- end
     end
 end
 
@@ -24,8 +32,6 @@ hook.Add("PostDrawTranslucentRenderables", "ARC9_TranslucentDraw", function() --
         if IsValid(wep) and wep.ARC9 then
             wep:DrawLasers(true)
             wep:DrawFlashlightsWM()
-            -- wep:DrawFlashlightGlares()
-            -- wep:DoScopeGlint()
         end
     end
 end)

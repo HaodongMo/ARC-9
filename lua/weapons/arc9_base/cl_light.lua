@@ -84,6 +84,7 @@ function SWEP:KillFlashlights()
 end
 
 local fuckingbullshit = Vector(0, 0, 0.001)
+local gunoffset = Vector(0, 0, -16)
 
 function SWEP:DrawFlashlightsWM()
     local owner = self:GetOwner()
@@ -98,6 +99,7 @@ function SWEP:DrawFlashlightsWM()
     end
     
     if isotherplayer and lp:EyePos():DistToSqr(owner:EyePos()) > 2048^2 then self:KillFlashlights() return end
+    local wmnotdrawn = self.LastWMDrawn != UnPredictedCurTime() and isotherplayer
 
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).WModel
@@ -107,8 +109,8 @@ function SWEP:DrawFlashlightsWM()
         local pos, ang
 
 
-        if isotherplayer or !IsValid(model) then
-            pos = owner:EyePos()
+        if wmnotdrawn or !IsValid(model) then
+            pos = owner:EyePos() + gunoffset
             ang = owner:EyeAngles()
         else
             pos = model:GetPos()
@@ -121,7 +123,7 @@ function SWEP:DrawFlashlightsWM()
             end
         end
         
-        self:DrawLightFlare(pos + fuckingbullshit, ang, k.col, k.br * 20, i, nil, k.nodotter)
+        self:DrawLightFlare(pos + fuckingbullshit, ang, k.col, k.br / 6, nil, k.nodotter)
         local tr = util.TraceLine({
             start = pos,
             endpos = pos + ang:Forward() * 16,
@@ -182,7 +184,7 @@ function SWEP:DrawFlashlightsVM()
             end
         end
 
-        self:DrawLightFlare(pos, ang, k.col, k.br * 25, i, true, k.nodotter)
+        -- self:DrawLightFlare(pos, ang, k.col, k.br * 25, i, true, k.nodotter, ang:Forward())
 
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
@@ -207,5 +209,48 @@ function SWEP:DrawFlashlightsVM()
         k.light:SetPos(pos)
         k.light:SetAngles(ang)
         k.light:Update()
+    end
+end
+
+local flaremat = Material("effects/arc9_lensflare", "mips smooth")
+local badcolor = Color(255, 255, 255)
+
+function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter) -- mostly tacrp
+    col = col or badcolor
+    size = size or 1
+
+    local dot = -ang:Forward():Dot(EyeAngles():Forward())
+    local dot2 = ang:Forward():Dot((EyePos() - pos):GetNormalized())
+    dot = (dot + dot2) / 2
+    
+    if nodotter then dot, dot2 = 1, 1 end
+
+    if dot < 0 then return end
+
+    local diff = EyePos() - pos
+
+    dot = dot ^ 4
+    local tr = util.QuickTrace(pos, diff, {self:GetOwner(), LocalPlayer()})
+    local s = math.Clamp(1 - diff:Length() / 700, 0, 1) ^ 1 * dot * 500 * math.Rand(0.95, 1.05) * size
+
+    if tr.Fraction == 1 then
+        s = ScreenScale(s)
+        local toscreen = pos:ToScreen()
+        cam.Start2D()
+            surface.SetMaterial(flaremat)
+            surface.SetDrawColor(col, 128)
+            surface.DrawTexturedRect(toscreen.x - s / 2, toscreen.y - s / 2, s, s)
+        cam.End2D()
+        
+        if !vm then
+            local rad = 128 * size * dot2
+            col.a = 50 + size * 205
+
+            pos = pos + ang:Forward() * 2
+            pos = pos + diff:GetNormalized() * (2 + 14 * size)
+
+            render.SetMaterial(flaremat)
+            render.DrawSprite(pos, rad, rad, col)
+        end
     end
 end
