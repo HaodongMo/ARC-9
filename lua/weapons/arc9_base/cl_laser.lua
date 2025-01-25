@@ -100,6 +100,8 @@ function SWEP:DrawLasers(wm, behav)
     local owner = self:GetOwner()
     if !wm and !IsValid(owner) then return end
     if !wm and owner:IsNPC() then return end
+    local lp = LocalPlayer()
+    if wm and owner == lp and self.LastWMDrawn != UnPredictedCurTime() then return end
 
     local mdl = self.VModel
 
@@ -118,7 +120,7 @@ function SWEP:DrawLasers(wm, behav)
         end
     end
 
-    local wmnotdrawn = wm and self.LastWMDrawn != UnPredictedCurTime() and owner != LocalPlayer()
+    local wmnotdrawn = wm and self.LastWMDrawn != UnPredictedCurTime() and owner != lp
 
     for _, model in ipairs(mdl) do
         local slottbl = model.slottbl
@@ -165,7 +167,7 @@ function SWEP:DrawLasers(wm, behav)
 			
             self:DrawLightFlare(a.Pos, lasang, color, 0.075, !wm, false, -lasang:Right())
 
-            if !wm or owner == LocalPlayer() or wm and owner:IsNPC() then
+            if !wm or owner == lp or wm and owner:IsNPC() then
                 if behav then
                     self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
                 else
