@@ -11,6 +11,8 @@ function SWEP:GetHasFlashlights()
     return false
 end
 
+local arc9_allflash = GetConVar("arc9_allflash")
+
 function SWEP:CreateFlashlights()
     self:KillFlashlights()
     self.Flashlights = {}
@@ -61,7 +63,7 @@ function SWEP:CreateFlashlights()
         end
     end
 
-    if total_lights > 1 then -- you are a madman
+    if total_lights > 1 or (arc9_allflash:GetBool() and self:GetOwner() != LocalPlayer()) then -- you are a madman
         for i, k in ipairs(self.Flashlights) do
             if k.light:IsValid() then k.light:SetEnableShadows(false) end
         end
@@ -80,7 +82,6 @@ function SWEP:KillFlashlights()
     self.Flashlights = nil
 end
 
-local arc9_allflash = GetConVar("arc9_allflash")
 local fuckingbullshit = Vector(0, 0, 0.001)
 
 function SWEP:DrawFlashlightsWM()
@@ -96,30 +97,26 @@ function SWEP:DrawFlashlightsWM()
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).WModel
 
-        if !IsValid(model) then continue end
+        -- if !IsValid(model) then continue end
 
         local pos, ang
 
 
-        if !model then
+        if owner != lp or !IsValid(model) then
             pos = owner:EyePos()
             ang = owner:EyeAngles()
         else
             pos = model:GetPos()
             ang = model:GetAngles()
-        end
-
-
-        if k.qca then
-            local a = model:GetAttachment(k.qca)
-            if a then pos, ang = a.Pos, a.Ang end
+            
+            if k.qca then
+                local a = model:GetAttachment(k.qca)
+                if a then pos, ang = a.Pos, a.Ang end
+                ang:RotateAroundAxis(ang:Up(), 90)
+            end
         end
         
         self:DrawLightFlare(pos + fuckingbullshit, ang, k.col, k.br * 20, i, nil, k.nodotter)
-
-        if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
-
-        -- ang:RotateAroundAxis(ang:Up(), 90)
 
         local tr = util.TraceLine({
             start = pos,
@@ -198,7 +195,7 @@ function SWEP:DrawFlashlightsVM()
                 filter = lp,
             })
             -- push it as back as the area behind us allows
-            pos = pos + -ang:Forward() * 128 * math.min(1 - tr.Fraction, tr2.Fraction)
+            pos = pos + -ang:Forward() * 32 * math.min(1 - tr.Fraction, tr2.Fraction)
         end
 
         k.light:SetPos(pos)

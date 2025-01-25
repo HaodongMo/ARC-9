@@ -36,17 +36,20 @@ end)
 
 timer.Create("ARC9 CSModel Garbage Collector", 5, 0, ARC9.CollectGarbage)
 
+local arc9_allflash = GetConVar("arc9_allflash")
 hook.Add("PostDrawEffects", "ARC9_CleanFlashlights", function()
     local newflashlightpile = {}
 
     for _, k in ipairs(ARC9.FlashlightPile) do
-        if IsValid(k.Weapon) and k.Weapon == LocalPlayer():GetActiveWeapon() then
-            table.insert(newflashlightpile, k)
-
-            continue
+        if IsValid(k.Weapon) then
+            local owner = k.Weapon:GetOwner()
+            if IsValid(owner) and owner:IsPlayer() and owner:GetActiveWeapon() == k.Weapon and (arc9_allflash:GetBool() or owner == LocalPlayer()) then 
+                table.insert(newflashlightpile, k)
+                continue
+            end
         end
 
-        if k.ProjectedTexture and k.ProjectedTexture:IsValid() then
+        if IsValid(k.ProjectedTexture) then
             k.ProjectedTexture:Remove()
         end
     end
