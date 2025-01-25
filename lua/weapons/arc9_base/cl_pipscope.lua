@@ -344,7 +344,8 @@ function SWEP:DoRTScope(model, atttbl, active)
 
         render.PopRenderTarget()
         -- if sd > 0 then render.SetToneMappingScaleLinear(render.GetToneMappingScaleLinear()*0.2) end
-        if sd > 0.5 then render.SetToneMappingScaleLinear(vec1) end
+
+        if sd > 0.33 then render.SetToneMappingScaleLinear(LerpVector(sd * 1.5 - 0.5, render.GetToneMappingScaleLinear(), vec1)) end
 
         local counterrotation = self.LastViewModelAng.z - sightzang + (arc9_cheapscopes:GetBool() and 0 or self.SubtleVisualRecoilAng.z * 2)
         rtsurf:SetTexture("$basetexture", rtmat)
