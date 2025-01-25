@@ -118,12 +118,16 @@ function SWEP:DrawLasers(wm, behav)
         end
     end
 
+    local wmnotdrawn = wm and self.LastWMDrawn != UnPredictedCurTime() and owner != LocalPlayer()
+
     for _, model in ipairs(mdl) do
         local slottbl = model.slottbl
         local atttbl = self:GetFinalAttTable(slottbl)
 
         if atttbl.Laser then
             local pos, ang = self:GetAttachmentPos(slottbl, wm, false)
+            if wmnotdrawn then pos, ang = owner:EyePos(), owner:EyeAngles() end
+
             model:SetPos(pos)
             model:SetAngles(ang)
 
@@ -141,6 +145,7 @@ function SWEP:DrawLasers(wm, behav)
             end
 
             if !a then return end
+            if wmnotdrawn then a.Pos, a.Ang = pos, ang end
 
             local lasercorrectionangle = model.LaserCorrectionAngle
             local lasang = a.Ang

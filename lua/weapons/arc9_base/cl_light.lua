@@ -44,7 +44,8 @@ function SWEP:CreateFlashlights()
 
 
             l:SetFarZ(atttbl.FlashlightDistance or 1024)
-            l:SetNearZ(4)
+            -- l:SetNearZ(4)
+            l:SetNearZ(0) -- setting to 4 when drawing to prevent flicker (position here is undefined)
 
             l:SetQuadraticAttenuation(100)
 
@@ -88,12 +89,16 @@ function SWEP:DrawFlashlightsWM()
     local owner = self:GetOwner()
     local lp = LocalPlayer()
 
-    if (!arc9_allflash:GetBool()) and owner != lp then return end
+    local isotherplayer = owner != lp
+    if isotherplayer and !arc9_allflash:GetBool() then return end
+    if !isotherplayer and !owner:ShouldDrawLocalPlayer() then return end
 
     if !self.Flashlights then
         self:CreateFlashlights()
     end
     
+    if isotherplayer and lp:EyePos():DistToSqr(owner:EyePos()) > 2048^2 then self:KillFlashlights() return end
+
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).WModel
 
@@ -102,7 +107,7 @@ function SWEP:DrawFlashlightsWM()
         local pos, ang
 
 
-        if owner != lp or !IsValid(model) then
+        if isotherplayer or !IsValid(model) then
             pos = owner:EyePos()
             ang = owner:EyeAngles()
         else
@@ -117,7 +122,6 @@ function SWEP:DrawFlashlightsWM()
         end
         
         self:DrawLightFlare(pos + fuckingbullshit, ang, k.col, k.br * 20, i, nil, k.nodotter)
-
         local tr = util.TraceLine({
             start = pos,
             endpos = pos + ang:Forward() * 16,
@@ -137,6 +141,7 @@ function SWEP:DrawFlashlightsWM()
             pos = tr.HitPos
         end
 
+        k.light:SetNearZ(4)
         k.light:SetPos(pos)
         k.light:SetAngles(ang)
         k.light:Update()
@@ -198,6 +203,7 @@ function SWEP:DrawFlashlightsVM()
             pos = pos + -ang:Forward() * 32 * math.min(1 - tr.Fraction, tr2.Fraction)
         end
 
+        k.light:SetNearZ(4)
         k.light:SetPos(pos)
         k.light:SetAngles(ang)
         k.light:Update()
