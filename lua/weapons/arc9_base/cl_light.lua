@@ -184,7 +184,7 @@ function SWEP:DrawFlashlightsVM()
             end
         end
 
-        -- self:DrawLightFlare(pos, ang, k.col, k.br * 25, i, true, k.nodotter, ang:Forward())
+        self:DrawLightFlare(pos, ang, k.col, k.br / 6, true, k.nodotter, -ang:Right())
 
         if k.qca then ang:RotateAroundAxis(ang:Up(), 90) end
 
@@ -215,12 +215,14 @@ end
 local flaremat = Material("effects/arc9_lensflare", "mips smooth")
 local badcolor = Color(255, 255, 255)
 
-function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter) -- mostly tacrp
+function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter, dir) -- mostly tacrp
     col = col or badcolor
     size = size or 1
 
-    local dot = -ang:Forward():Dot(EyeAngles():Forward())
-    local dot2 = ang:Forward():Dot((EyePos() - pos):GetNormalized())
+    dir = dir or ang:Forward()
+
+    local dot = -dir:Dot(EyeAngles():Forward())
+    local dot2 = dir:Dot((EyePos() - pos):GetNormalized())
     dot = (dot + dot2) / 2
     
     if nodotter then dot, dot2 = 1, 1 end
@@ -233,7 +235,7 @@ function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter) -- mostly tacrp
     local tr = util.QuickTrace(pos, diff, {self:GetOwner(), LocalPlayer()})
     local s = math.Clamp(1 - diff:Length() / 700, 0, 1) ^ 1 * dot * 500 * math.Rand(0.95, 1.05) * size
 
-    if tr.Fraction == 1 then
+    if vm or tr.Fraction == 1 then
         s = ScreenScale(s)
         local toscreen = pos:ToScreen()
         cam.Start2D()
@@ -241,8 +243,8 @@ function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter) -- mostly tacrp
             surface.SetDrawColor(col, 128)
             surface.DrawTexturedRect(toscreen.x - s / 2, toscreen.y - s / 2, s, s)
         cam.End2D()
-        
-        if !vm then
+
+        if !vm and size > 0.1 then
             local rad = 128 * size * dot2
             col.a = 50 + size * 205
 

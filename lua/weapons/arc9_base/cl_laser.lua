@@ -163,7 +163,7 @@ function SWEP:DrawLasers(wm, behav)
 
 			if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer or color end
 			
-            self:DrawLightFlare(a.Pos, wm and self:GetShootDir() or lasang, color, 0.075, (slottbl.Address or 0) + 69, !wm)
+            self:DrawLightFlare(a.Pos, lasang, color, 0.075, !wm, false, -lasang:Right())
 
             if !wm or owner == LocalPlayer() or wm and owner:IsNPC() then
                 if behav then
