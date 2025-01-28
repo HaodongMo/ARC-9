@@ -34,17 +34,17 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
 
         if !selecticon then -- not cached
             local filename = ARC9.PresetPath .. name .. "_icon." .. ARC9.PresetIconFormat
-            -- local loadedmat = Material("data/" .. filename, "smooth")
-            local loadedmat
+            local loadedmat = Material("data/" .. filename, "smooth")
+            -- local loadedmat
 
-            -- if !loadedmat or loadedmat:IsError() then -- there is no fucking icon in data folder!!!!
+            if !loadedmat or loadedmat:IsError() then -- there is no fucking icon in data folder!!!!
                 local found
 
                 if game.SinglePlayer() then -- trying find in your hands
                     local probablythegun = LocalPlayer():GetActiveWeapon()
 
                     if IsValid(probablythegun) and probablythegun:GetClass() == name then
-                        loadedmat = probablythegun:DoIconCapture()
+                        loadedmat = probablythegun:DoIconCapture(true)
                         found = true
                     end
                 end
@@ -52,13 +52,13 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
                 if !found then -- nah, bruteforcing all ents until we find gun with same classname
                     for _, v in ipairs(ents.GetAll()) do
                         if v:GetClass() == name then
-                            loadedmat = v:DoIconCapture()
+                            loadedmat = v:DoIconCapture(true)
                         end
                     end
                 end
-            -- end
-
-            loadedmat = Material("data/" .. filename, "smooth")
+            end
+            
+            loadedmat = loadedmat or Material("data/" .. filename, "smooth")
 
             killicons_cachedicons[name] = loadedmat
             selecticon = loadedmat

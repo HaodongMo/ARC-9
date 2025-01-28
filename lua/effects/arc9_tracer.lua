@@ -28,8 +28,11 @@ function EFFECT:Init(data)
     self.Dir = diff:GetNormalized()
     local hitt = util.QuickTrace(hit, self.Dir)
     if hitt.HitSky then
-        self.Dir = (self.Dir + wep:GetOwner():GetAimVector()):GetNormalized()
-        hit = start + self.Dir * 32768
+        local owner = wep:GetOwner()
+        if owner.GetAimVector then -- not on some npcs i guess
+            self.Dir = (self.Dir + owner:GetAimVector()):GetNormalized()
+            hit = start + self.Dir * 32768
+        end
     end
 
     if speed > 0 then
