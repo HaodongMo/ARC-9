@@ -219,6 +219,9 @@ function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter, dir) -- mostly t
     col = col or badcolor
     size = size or 1
 
+    local lp = LocalPlayer()
+    if !vm and !lp:ShouldDrawLocalPlayer() then return end
+    
     dir = dir or ang:Forward()
 
     local dot = -dir:Dot(EyeAngles():Forward())
@@ -232,9 +235,12 @@ function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter, dir) -- mostly t
     local diff = EyePos() - pos
 
     dot = dot ^ 4
-    local tr = util.QuickTrace(pos, diff, {self:GetOwner(), LocalPlayer()})
+    local tr = util.QuickTrace(pos, diff, {self:GetOwner(), lp, lp:GetViewEntity()})
     local s = math.Clamp(1 - diff:Length() / 700, 0, 1) ^ 1 * dot * 500 * math.Rand(0.95, 1.05) * size
-
+    
+    local rtt = render.GetRenderTarget()
+    if rtt and rtt:GetName() == "_rt_waterreflection" then tr.Fraction = 1 end -- mirror fix
+    
     if vm or tr.Fraction == 1 then
         s = ScreenScale(s)
         local toscreen = pos:ToScreen()
