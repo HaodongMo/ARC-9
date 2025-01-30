@@ -219,8 +219,8 @@ function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter, dir) -- mostly t
     col = col or badcolor
     size = size or 1
 
-    local lp = LocalPlayer()
-    if !vm and !lp:ShouldDrawLocalPlayer() then return end
+    local lp, owner = LocalPlayer(), self:GetOwner()
+    if !vm and owner == lp and !lp:ShouldDrawLocalPlayer() then return end
     
     dir = dir or ang:Forward()
 
@@ -235,7 +235,7 @@ function SWEP:DrawLightFlare(pos, ang, col, size, vm, nodotter, dir) -- mostly t
     local diff = EyePos() - pos
 
     dot = dot ^ 4
-    local tr = util.QuickTrace(pos, diff, {self:GetOwner(), lp, lp:GetViewEntity()})
+    local tr = util.QuickTrace(pos, diff, {owner, lp, lp:GetViewEntity()})
     local s = math.Clamp(1 - diff:Length() / 700, 0, 1) ^ 1 * dot * 500 * math.Rand(0.95, 1.05) * size
     
     local rtt = render.GetRenderTarget()

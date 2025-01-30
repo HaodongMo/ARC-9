@@ -102,7 +102,7 @@ function SWEP:DrawLasers(wm, behav)
     if !wm and owner:IsNPC() then return end
     local lp = LocalPlayer()
     if wm and owner == lp and self.LastWMDrawn != UnPredictedCurTime() then return end
-    if wm and !lp:ShouldDrawLocalPlayer() then return end
+    if wm and owner == lp and !lp:ShouldDrawLocalPlayer() then return end
 
     local mdl = self.VModel
 
