@@ -64,9 +64,12 @@ function SWEP:DoTPIK()
 
     if !IsValid(wm) then return end
 
+    local everythingfucked = false
+
     if wm:GetPos():IsZero() and self.wmnormalpos then -- VERY STUPID BUT SetupModel() on wm makes wm go to 0 0 0 BUT ONLY ON CERTAIN PLAYERMODELS???????
         wm:SetPos(self.wmnormalpos) 
-        wm:SetAngles(self.wmnormalang) 
+        wm:SetAngles(self.wmnormalang)
+        everythingfucked = true
     else 
         self.wmnormalpos = wm:GetPos()
         self.wmnormalang = wm:GetAngles()
@@ -134,7 +137,7 @@ function SWEP:DoTPIK()
         wm:InvalidateBoneCache()
     end
 
-    self:DoRHIK(true)
+    if !everythingfucked then self:DoRHIK(true) end
 
     self:SetFiremodePose(true)
 

@@ -169,4 +169,8 @@ else
     function ENT:Draw()
         self:DrawModel()
     end
+
+    function ENT:DrawTranslucent(flags) -- doesn't draw wtf? or this is something with my addons
+        self:Draw(flags)    -- fix from wiki anyway
+    end
 end
