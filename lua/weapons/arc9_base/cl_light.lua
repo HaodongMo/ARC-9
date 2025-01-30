@@ -11,14 +11,29 @@ function SWEP:GetHasFlashlights()
     return false
 end
 
+local nvgon = false
+local function checknvg(wpn) -- this func a bit different than what in cl_laser
+    local lp = LocalPlayer()
+    if lp.quadnodsonlight or lp:GetNWBool("nvg_on", false) then return true end -- arctic nvgs and mw nvgs
+    if lp.EZarmor and lp.EZarmor.effects and lp.EZarmor.effects.nightVision then return true end -- jmod
+    local sight = wpn:GetSight()
+    if sight and wpn:GetSightAmount() > 0.8 and !wpn.Peeking and sight.atttbl and sight.atttbl.RTScopeNightVision and ARC9.RTScopeRender then return true end
+
+    return false
+end
+
 local arc9_allflash = GetConVar("arc9_allflash")
+
+local irflashcolor = Color(106, 255, 218)
 
 function SWEP:CreateFlashlights()
     self:KillFlashlights()
     self.Flashlights = {}
 
     local total_lights = 0
-
+    local lp = LocalPlayer()
+    nvgon = checknvg(self)
+    
     for _, k in ipairs(self:GetSubSlotList()) do
         if !k.Installed then continue end
         local atttbl = self:GetFinalAttTable(k)
@@ -32,6 +47,11 @@ function SWEP:CreateFlashlights()
                 qca = atttbl.FlashlightAttachment,
                 nodotter = atttbl.Flashlight360
             }
+
+            if nvgon and atttbl.FlashlightIR then
+                newlight.col = irflashcolor
+                newlight.br = 1
+            end
 
             total_lights = total_lights + 1
 
@@ -52,6 +72,16 @@ function SWEP:CreateFlashlights()
             l:SetColor(atttbl.FlashlightColor or color_white)
             l:SetTexture(atttbl.FlashlightMaterial or "effects/flashlight001")
             l:SetBrightness(atttbl.FlashlightBrightness or 3)
+
+            
+            if nvgon and atttbl.FlashlightIR then
+                l:SetFOV((atttbl.FlashlightFOV or 50) * 1.5)
+                l:SetFarZ(2048)
+                l:SetColor(irflashcolor)
+                -- l:SetTexture(atttbl.FlashlightMaterial or "effects/flashlight001")
+                l:SetBrightness(1)
+            end
+
             l:SetEnableShadows(true)
             l:Update()
 
@@ -64,7 +94,7 @@ function SWEP:CreateFlashlights()
         end
     end
 
-    if total_lights > 1 or (arc9_allflash:GetBool() and self:GetOwner() != LocalPlayer()) then -- you are a madman
+    if total_lights > 1 or (arc9_allflash:GetBool() and self:GetOwner() != lp) then -- you are a madman
         for i, k in ipairs(self.Flashlights) do
             if k.light:IsValid() then k.light:SetEnableShadows(false) end
         end
@@ -101,10 +131,13 @@ function SWEP:DrawFlashlightsWM()
     if isotherplayer and lp:EyePos():DistToSqr(owner:EyePos()) > 2048^2 then self:KillFlashlights() return end
     local wmnotdrawn = self.LastWMDrawn != UnPredictedCurTime() and isotherplayer
 
+    local anydrawn = false
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).WModel
 
         -- if !IsValid(model) then continue end
+        anydrawn = true
+        if k.br == 0 then continue end
 
         local pos, ang
 
@@ -148,6 +181,10 @@ function SWEP:DrawFlashlightsWM()
         k.light:SetAngles(ang)
         k.light:Update()
     end
+    
+    if anydrawn and nvgon != checknvg(self) then
+        self:CreateFlashlights()
+    end
 end
 
 function SWEP:DrawFlashlightsVM()
@@ -159,10 +196,13 @@ function SWEP:DrawFlashlightsVM()
     local lp = LocalPlayer()
     local eyepos = owner:EyePos()
 
+    local anydrawn = false
     for i, k in ipairs(self.Flashlights) do
         local model = (k.slottbl or {}).VModel
 
         if !IsValid(model) then continue end
+        anydrawn = true
+        if k.br == 0 then continue end
 
         local pos, ang
 
@@ -209,6 +249,10 @@ function SWEP:DrawFlashlightsVM()
         k.light:SetPos(pos)
         k.light:SetAngles(ang)
         k.light:Update()
+    end
+    
+    if anydrawn and nvgon != checknvg(self) then
+        self:CreateFlashlights()
     end
 end
 

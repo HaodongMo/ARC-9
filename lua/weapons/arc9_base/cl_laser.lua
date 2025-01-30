@@ -2,12 +2,38 @@ local defaulttracemat = Material("arc9/laser2")
 local defaultflaremat = Material("sprites/light_glow02_add", "mips smooth")
 local lasercolorred = Color(255, 0, 0)
 local lasercolor200 = Color(200, 200, 200)
+local irlasercolor = Color(106, 255, 218)
+
+local function checknvg(wpn)
+    local lp = LocalPlayer()
+    if lp.quadnodsonlight or lp:GetNWBool("nvg_on", false) then return true end -- arctic nvgs and mw nvgs
+    if lp.EZarmor and lp.EZarmor.effects and lp.EZarmor.effects.nightVision then return true end -- jmod
+    local sight = wpn:GetSight()
+    if sight and wpn:GetSightAmount() > 0.8 and !wpn.Peeking and sight.atttbl and sight.atttbl.RTScopeNightVision then return true end
+
+    return false
+end
+
 
 function SWEP:DrawLaser(pos, dir, atttbl, behav)
     behav = behav or false
     local strength = atttbl.LaserStrength or 1
     local flaremat = atttbl.LaserFlareMat or defaultflaremat
     local lasermat = atttbl.LaserTraceMat or defaulttracemat
+
+    local width = math.Rand(0.1, 0.5) * strength
+
+    local nvgon
+    if atttbl.LaserIR then
+        nvgon = checknvg(self)
+        if nvgon then
+            width = width + 0.25
+            strength = strength + 1
+        end
+    end
+
+    if strength == 0 then return end
+
     local owner = self:GetOwner()
 
     local dist = 5000
@@ -20,8 +46,6 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
     })
 
     if tr.StartSolid then return end
-
-    local width = math.Rand(0.1, 0.5) * strength
 
     local hit = tr.Hit
     local hitpos = tr.HitPos
@@ -75,6 +99,10 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
 
 	if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer or color end
 
+    if nvgon and atttbl.LaserIR then
+        color = irlasercolor
+    end
+
     if !behav then
         render.SetMaterial(lasermat)
         render.DrawBeam(pos, laspos, width * 0.2, 0, fraction, lasercolor200)
@@ -122,6 +150,7 @@ function SWEP:DrawLasers(wm, behav)
     end
 
     local wmnotdrawn = wm and self.LastWMDrawn != UnPredictedCurTime() and owner != lp
+    local nvgon = checknvg(self)
 
     for _, model in ipairs(mdl) do
         local slottbl = model.slottbl
@@ -135,8 +164,14 @@ function SWEP:DrawLasers(wm, behav)
             model:SetAngles(ang)
 
             local a
-
-            if atttbl.LaserAttachment then
+            if wmnotdrawn then
+                a = {
+                    Pos = pos,
+                    Ang = ang
+                }
+                
+                a.Ang:RotateAroundAxis(a.Ang:Up(), -90)
+            elseif atttbl.LaserAttachment then
                 a = model:GetAttachment(atttbl.LaserAttachment)
             else
                 a = {
@@ -148,7 +183,6 @@ function SWEP:DrawLasers(wm, behav)
             end
 
             if !a then return end
-            if wmnotdrawn then a.Pos, a.Ang = pos, ang end
 
             local lasercorrectionangle = model.LaserCorrectionAngle
             local lasang = a.Ang
@@ -165,8 +199,14 @@ function SWEP:DrawLasers(wm, behav)
 			local colorplayer = !owner:IsNPC() and owner:GetWeaponColor():ToColor()
 
 			if (atttbl.LaserColorPlayer or atttbl.LaserPlayerColor) then color = colorplayer or color end
+
+            local flaresize = 0.075
+            if atttbl.LaserIR then
+                flaresize = 0
+                if nvgon then flaresize = 0.2 color = irlasercolor end
+            end
 			
-            self:DrawLightFlare(a.Pos, lasang, color, 0.075, !wm, false, -lasang:Right())
+            self:DrawLightFlare(a.Pos, lasang, color, flaresize, !wm, false, -lasang:Right())
 
             if !wm or owner == lp or wm and owner:IsNPC() then
                 if behav then
@@ -175,7 +215,7 @@ function SWEP:DrawLasers(wm, behav)
                     self:DrawLaser(a.Pos, -lasang:Right(), atttbl, behav)
                 end
             else
-                self:DrawLaser(a.Pos, self:GetShootDir():Forward(), atttbl, behav)
+                self:DrawLaser(a.Pos, -lasang:Right(), atttbl, behav)
             end
         end
     end
