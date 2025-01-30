@@ -15,6 +15,11 @@ local conVars = {
         client = true
     },
     {
+        name = "lod_distance",
+        default = "1",
+        client = true
+    },
+    {
         name = "truenames",
         default = "2",
         client = true,

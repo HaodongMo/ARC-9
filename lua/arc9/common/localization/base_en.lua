@@ -600,6 +600,9 @@ L["settings.effects.muzzle_others.desc"] = "Display the muzzle effects from othe
 L["settings.effects.allflash.title"] = "Other's Flashlights"
 L["settings.effects.allflash.desc"] = "Renders the flashlights from all players.\n\nImpacts performance."
 
+L["settings.effects.lod.title"] = "LOD (Level of Detail) Distance"
+L["settings.effects.lod.desc"] = "How far away you have to be from models for them to change into lower quality variants without attachments. Lower values make the models change at lower distances, and could improve performance. Higher values could impact performance, but keeps the highest quality models loaded at further distances.\n\nTPIK Distance also affected by this setting."
+
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Viewmodel Settings"
 L["settings.tabname.vm.desc"] = "Alter various settings related to the viewmodels."

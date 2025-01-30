@@ -210,6 +210,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.effects.muzzle_light.title", desc = "settings.effects.muzzle_light.desc", convar = "muzzle_light" },
         { type = "bool", text = "settings.effects.muzzle_others.title", desc = "settings.effects.muzzle_others.desc", convar = "muzzle_others" },
         { type = "bool", text = "settings.effects.allflash.title", desc = "settings.effects.allflash.desc", convar = "allflash" },
+        { type = "slider", text = "settings.effects.lod.title", desc = "settings.effects.lod.desc", convar = "lod_distance", min = 0.3, max = 3, decimals = 1 },
 		
         { type = "label", text = "settings.tabname.vm", desc = "settings.tabname.vm.desc" },
 		{ type = "combo", text = "settings.vm.vm_bobstyle.title", desc = "settings.vm.vm_bobstyle.desc", convar = "vm_bobstyle", content = {

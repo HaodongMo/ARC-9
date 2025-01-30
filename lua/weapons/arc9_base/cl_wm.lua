@@ -16,7 +16,7 @@ function SWEP:DrawWorldModel()
         -- self:DrawLasers(true)
         self:DoTPIK()
         -- self:DrawFlashlightsWM()
-        self.LastWMDrawn = UnPredictedCurTime()
+        if self:ShouldLOD() < 2 then self.LastWMDrawn = UnPredictedCurTime() end
 
         -- if self:GetValue("Laser") and self:GetTactical() then -- too hard to know if any laser is active
         --     self:SetRenderBounds(goodmin, extramax)
