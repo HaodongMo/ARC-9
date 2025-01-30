@@ -7,7 +7,8 @@ local colbcvar = GetConVar("arc9_reflex_b")
 function SWEP:DoHolosight(mdl, atttbl)
     if self:GetSightAmount() <= 0 and !self:GetCustomize() and !atttbl.HoloSightAlwaysOn then return end
     if ARC9.OverDraw then return end
-    if self:GetOwner() != LocalPlayer() then return end
+    local owner = self:GetOwner()
+    if owner != LocalPlayer() or owner.ARC9NoScopes then return end
     self.RenderingHolosight = true 
     
     local ref = 56

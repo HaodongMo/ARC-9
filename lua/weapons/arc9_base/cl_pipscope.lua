@@ -4,7 +4,7 @@ local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)
 local rtmat_spare = GetRenderTarget("arc9_rtmat_spare", ScrW(), ScrH(), false)
 
 function SWEP:ShouldDoScope()
-    if self:GetSight().Disassociate then return false end
+    if self:GetSight().Disassociate or self:GetOwner().ARC9NoScopes then return false end
 	
     return true
 end
