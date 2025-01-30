@@ -56,6 +56,14 @@ function SWEP:SwitchFiremode()
         self:CallOnClient("InvalidateCache")
     end
 	
+	-- self.FMHintTimeP = self.FMHintTime or "N/A"
+	
+	-- self.FMHintTime = CurTime()
+	-- print( " " )
+	-- print( "SWITCHED FIRING MODE" )
+	-- print( "Cur. " .. string.format( "%.3f", self.FMHintTime ) )
+	-- print( "Pre. " .. string.format( "%.3f", self.FMHintTimeP ) )
+	
 end
 
 function SWEP:SetFiremodePose(wm)
@@ -140,7 +148,15 @@ function SWEP:ToggleSafety(onoff)
             self:ExitSights()
         end
     end
-
+	
+	-- self.FMHintTimeP = self.FMHintTime or "N/A"
+	
+	-- self.FMHintTime = CurTime()
+	-- print( " " )
+	-- print( "TOGGLED SAFETY" )
+	-- print( "Cur. " .. string.format( "%.3f", self.FMHintTime ) )
+	-- print( "Pre. " .. string.format( "%.3f", self.FMHintTimeP ) )
+	
 end
 
 function SWEP:ThinkFiremodes()
@@ -149,13 +165,11 @@ function SWEP:ThinkFiremodes()
 
     if self:GetOwner():KeyPressed(IN_ZOOM) and self:GetOwner():KeyDown(IN_USE) then
         self:ToggleSafety()
-		self.FMHintTime = CurTime()
         return
     end
 
     if self:GetOwner():KeyPressed(IN_ZOOM) then
         self:SwitchFiremode()
-		self.FMHintTime = CurTime()
     end
 end
 

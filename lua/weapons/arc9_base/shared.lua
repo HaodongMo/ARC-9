@@ -1495,6 +1495,8 @@ SWEP.Secondary.Ammo = "none"
 
 SWEP.DrawCrosshair = true
 
+SWEP.FMHintTime = 0
+
 SWEP.ARC9 = true
 
 SWEP.m_bPlayPickupSound = false

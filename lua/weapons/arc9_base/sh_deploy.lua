@@ -96,6 +96,14 @@ function SWEP:Deploy()
     if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
     if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
 
+	-- self.FMHintTimeP = self.FMHintTime or "N/A"
+	
+	-- self.FMHintTime = CurTime()
+	-- print( " " )
+	-- print( "DEPLOYED WEAPON" )
+	-- print( "Cur. " .. string.format( "%.3f", self.FMHintTime ) )
+	-- print( "Pre. " .. string.format( "%.3f", self.FMHintTimeP ) )
+	
     return true
 end
 

@@ -600,6 +600,9 @@ L["settings.effects.muzzle_others.desc"] = "Visa mynningseffekter från andra sp
 L["settings.effects.allflash.title"] = "Andras Ficklampor"
 L["settings.effects.allflash.desc"] = "Framställer ficklampor från alla spelare.\n\nPåverkar prestandan."
 
+L["settings.effects.lod.title"] = "LOD-Avstånd (Level of Detail)"
+L["settings.effects.lod.desc"] = "Hur långt borta du behöver vara från modeller för att dem ska ändra till sina lägre kvalitets varianter utan tillbehör.\n\nLägre värden gör att modellerna ändras vid lägre avstånd, och kan förbättra prestandan.\n\nHögre värden kan påverka prestandan, men behåller dem högsta kvalitets modellerna laddade vid högre avstånd.\n\nAvståndet i TPIK påverkas också."
+
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Vymodell Inställningar"
 L["settings.tabname.vm.desc"] = "Justera diverse inställningar relaterade till vymodeller."

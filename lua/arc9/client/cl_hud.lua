@@ -1782,7 +1782,7 @@ function ARC9MultiLineText(text, maxw, font)
             local match = {string.match(word, "<color=%d+,%d+,%d+>")}
             local matchend = {string.match(word, "</color>")}
             
-            local matchfont = {string.match(word, "<font=^.*$>")}
+            local matchfont = {string.match(word, "<font=([^>]+)>")}
             local matchfontend = {string.match(word, "</font>")}
             
             for _, v in ipairs(match) do
