@@ -199,17 +199,17 @@ function SWEP:GetIndoor()
         traceTable.filter = wo
         t_influ = t_influ + (tin.Influence or 1)
         local result = util.TraceLine(traceTable)
-        if ARC9.Dev(2) then
-            debugoverlay.Line(wop - (vector_up * 4), result.HitPos - (vector_up * 4), 5, Color((_ / 4) * 255, 0, (1 - (_ / 4)) * 255))
-            debugoverlay.Text(result.HitPos - (vector_up * 4), math.Round((result.HitSky and 1 or result.Fraction) * 100) .. "%", 5)
-        end
+        -- if ARC9.Dev(2) then
+        --     debugoverlay.Line(wop - (vector_up * 4), result.HitPos - (vector_up * 4), 5, Color((_ / 4) * 255, 0, (1 - (_ / 4)) * 255))
+        --     debugoverlay.Text(result.HitPos - (vector_up * 4), math.Round((result.HitSky and 1 or result.Fraction) * 100) .. "%", 5)
+        -- end
         vol = vol + (result.HitSky and 1 or result.Fraction) ^ 1.5 * tin.Influence
     end
 
     self.IsIndoors = 1 - vol / t_influ
-    if ARC9.Dev(2) then
-        print(self.IsIndoors)
-    end
+    -- if ARC9.Dev(2) then
+    --     print(self.IsIndoors)
+    -- end
 
     return self.IsIndoors
 end

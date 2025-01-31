@@ -100,7 +100,8 @@ function SWEP:BuildMultiSight()
     local keepbaseirons = true
     local keepmodularirons = true
 
-    local dev3 = ARC9.Dev(3)
+    -- local dev3 = ARC9.Dev(3)
+    local dev3 = false
 
     for i, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
@@ -364,9 +365,9 @@ do
 end
 
 function SWEP:GetSight()
-    if ARC9.Dev(2) then
-        self:BuildMultiSight() -- this is what was fixing toggle sights
-    end
+    -- if ARC9.Dev(2) then
+    --     self:BuildMultiSight() -- this is what was fixing toggle sights
+    -- end
     -- if !self.MultiSightTable and self:GetValue("Sights") then self:BuildMultiSight() end
     return self.MultiSightTable[self:GetMultiSight()] or self:GetValue("IronSights")
 end

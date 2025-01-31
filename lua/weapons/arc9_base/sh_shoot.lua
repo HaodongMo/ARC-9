@@ -670,13 +670,13 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     self.Penned = 0
                     self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration", true), {})
 
-                    if ARC9.Dev(2) then
-                        if SERVER then
-                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
-                        else
-                            debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
-                        end
-                    end
+                    -- if ARC9.Dev(2) then
+                    --     if SERVER then
+                    --         debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
+                    --     else
+                    --         debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
+                    --     end
+                    -- end
                 end
 
                 owner:FireBullets(fireBullets)

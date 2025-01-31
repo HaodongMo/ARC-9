@@ -90,7 +90,7 @@ function EFFECT:Init(data)
         end
     end
 
-    if ARC9.Dev(2) then debugoverlay.Sphere(pos, 2, 1, Color(255, 255, 255, 1)) end
+    -- if ARC9.Dev(2) then debugoverlay.Sphere(pos, 2, 1, Color(255, 255, 255, 1)) end
 end
 
 function EFFECT:Think()

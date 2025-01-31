@@ -131,6 +131,7 @@ function SWEP:GetCameraControl(wm)
         if !camqca then return end
 
         local mdl = slottbl.GunDriverModel
+        if !IsValid(mdl) then return end
 
         mdl:SetPos(vector_origin)
         mdl:SetAngles(angle_zero)

@@ -9,9 +9,9 @@ local function IsPenetrating(ptr, ptrent)
         mins = mins + (mins - wsc) * 0.25
         maxs = maxs + (maxs - wsc) * 0.25
         local withinbounding = ptr.HitPos:WithinAABox(mins, maxs)
-        if ARC9.Dev(2) then
-            debugoverlay.Cross(ptr.HitPos, withinbounding and 2 or 6, 5, withinbounding and Color(255, 255, 0) or Color(128, 255, 0), true)
-        end
+        -- if ARC9.Dev(2) then
+        --     debugoverlay.Cross(ptr.HitPos, withinbounding and 2 or 6, 5, withinbounding and Color(255, 255, 0) or Color(128, 255, 0), true)
+        -- end
 
         if withinbounding then return true end
     end
@@ -126,9 +126,9 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
             --     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, colorlr, colorlr), true)
             -- end
 
-            if ARC9.Dev(2) then
-                debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, 0, 0), true)
-            end
+            -- if ARC9.Dev(2) then
+            --     debugoverlay.Line(endpos, endpos + (dir * pentracelen), 10, Color(255, 0, 0), true)
+            -- end
 
             endpos = endpos + (dir * pentracelen)
             range = range + pentracelen
@@ -203,13 +203,13 @@ function SWEP:Penetrate(tr, range, penleft, alreadypenned)
 						range = range + (btr.HitPos - btr.StartPos):Length()
 						self:AfterShotFunction(btr, dmg, range, penleft, alreadypenned)
 
-						if ARC9.Dev(2) then
-							if SERVER then
-								debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
-							else
-								debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
-							end
-						end
+						-- if ARC9.Dev(2) then
+						-- 	if SERVER then
+						-- 		debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 0, 0), false)
+						-- 	else
+						-- 		debugoverlay.Cross(btr.HitPos, 4, 5, Color(255, 255, 255), false)
+						-- 	end
+						-- end
 					end
 				}
 				if(table.Count(alreadypenned) == 1) then
