@@ -28,11 +28,13 @@ function SWEP:DoEffects()
 end
 
 function SWEP:GetQCAMuzzle()
-    return self:GetProcessedValue("MuzzleEffectQCA", false)
+    local processedValue = self.GetProcessedValue
+    return processedValue(self, "MuzzleEffectQCA", processedValue(self, "Akimbo", true))
 end
 
 function SWEP:GetQCAEject()
-    return self:GetProcessedValue("CaseEffectQCA", false)
+    local processedValue = self.GetProcessedValue
+    return processedValue(self, "CaseEffectQCA", processedValue(self, "Akimbo", true))
 end
 
 function SWEP:GetQCAMagdrop()
@@ -43,6 +45,7 @@ SWEP.EjectedShells = {}
 
 function SWEP:DoEject(index, attachment)
     if !IsFirstTimePredicted() then return end
+    local processedValue = self.GetProcessedValue
 
     -- if self:GetProcessedValue("NoShellEject") then return end
 
@@ -53,8 +56,8 @@ function SWEP:DoEject(index, attachment)
     data:SetAttachment(eject_qca)
     data:SetFlags(index or 0)
 
-    for i = 1, self:GetProcessedValue("ShellEffectCount", true) do
-        util.Effect(self:GetProcessedValue("ShellEffect", true) or "ARC9_shelleffect", data, true)
+    for i = 1, processedValue(self, "ShellEffectCount", true) do
+        util.Effect(processedValue(self, "ShellEffect", true) or "ARC9_shelleffect", data, true)
     end
 end
 

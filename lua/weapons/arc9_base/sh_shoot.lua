@@ -1,5 +1,7 @@
 local cancelmults = ARC9.CancelMultipliers[engine.ActiveGamemode()] or ARC9.CancelMultipliers[1]
 
+local swepGetProcessedValue = SWEP.GetProcessedValue
+
 function SWEP:StillWaiting()
     local time = CurTime()
 
@@ -33,7 +35,7 @@ local dryfireSoundTab = {
 function SWEP:DryFire()
     local nthShot = self:GetNthShot()
 
-    local delay = self:GetProcessedValue("DryFireDelay", true)
+    local delay = swepGetProcessedValue(self, "DryFireDelay", true)
 
     if delay then
         self:PlayAnimation("dryfire", 1, false)
@@ -44,10 +46,10 @@ function SWEP:DryFire()
     self:SetBurstCount(0)
     self:SetNeedTriggerPress(true)
 
-    if nthShot > 0 and self:GetProcessedValue("DryFireSingleAction", true) then return end
+    if nthShot > 0 and swepGetProcessedValue(self, "DryFireSingleAction", true) then return end
 
     dryfireSoundTab.channel = ARC9.CHAN_FIDDLE
-    dryfireSoundTab.sound = self:RandomChoice(self:GetProcessedValue("DryFireSound", true))
+    dryfireSoundTab.sound = self:RandomChoice(swepGetProcessedValue(self, "DryFireSound", true))
     self:PlayTranslatedSound(dryfireSoundTab)
 
     self:SetNthShot(nthShot + 1)
@@ -86,28 +88,29 @@ local soundtab6 = {
 }
 
 function SWEP:DoShootSounds()
-    local pvar = self:GetProcessedValue("ShootPitchVariation", true)
+    local randomChoice = self.RandomChoice
+    local pvar = swepGetProcessedValue(self, "ShootPitchVariation", true)
     local pvrand = util.SharedRandom("ARC9_sshoot", -pvar, pvar)
 
     local sstr = lsstr
     local sslr = lsslr
     local dsstr = ldsstr
 
-    local silenced = self:GetProcessedValue("Silencer", true) and !self:GetUBGL()
+    local silenced = swepGetProcessedValue(self, "Silencer", true) and !self:GetUBGL()
     local indoor = self:GetIndoor()
 
     local indoormix = 1 - indoor
-    local havedistant = self:GetProcessedValue(dsstr, true)
+    local havedistant = swepGetProcessedValue(self, dsstr, true)
 
-    if silenced and self:GetProcessedValue(sstrSilenced, true) then
+    if silenced and swepGetProcessedValue(self, sstrSilenced, true) then
         sstr = sstrSilenced
     end
 
-    if silenced and self:GetProcessedValue(sslrSilenced, true) then
+    if silenced and swepGetProcessedValue(self, sslrSilenced, true) then
         sslr = sslrSilenced
     end
 
-    if havedistant and silenced and self:GetProcessedValue(dsstrSilenced, true) then
+    if havedistant and silenced and swepGetProcessedValue(self, dsstrSilenced, true) then
         dsstr = dsstrSilenced
     end
 
@@ -116,28 +119,28 @@ function SWEP:DoShootSounds()
         local sstrFirst = "First" .. sstr
         local dsstrFirst = "First" .. dsstr
 
-        if burstCountZero and self:GetProcessedValue(sstrFirst, true) then
+        if burstCountZero and swepGetProcessedValue(self, sstrFirst, true) then
             sstr = sstrFirst
         end
 
-        if havedistant and burstCountZero and self:GetProcessedValue(dsstrFirst, true) then
+        if havedistant and burstCountZero and swepGetProcessedValue(self, dsstrFirst, true) then
             dsstr = dsstrFirst
         end
     end
 
-    local ss = self:RandomChoice(self:GetProcessedValue(sstr, true))
-    local sl = self:RandomChoice(self:GetProcessedValue(sslr, true))
+    local ss = randomChoice(self, swepGetProcessedValue(self, sstr, true))
+    local sl = randomChoice(self, swepGetProcessedValue(self, sslr, true))
     local dss
 
     if havedistant then
-        dss = self:RandomChoice(self:GetProcessedValue(dsstr, true))
+        dss = randomChoice(self, swepGetProcessedValue(self, dsstr, true))
     end
 
-    local svolume, spitch, svolumeactual = self:GetProcessedValue("ShootVolume", true), self:GetProcessedValue("ShootPitch", true) + pvrand, self:GetProcessedValue("ShootVolumeActual", true) or 1
+    local svolume, spitch, svolumeactual = swepGetProcessedValue(self, "ShootVolume", true), swepGetProcessedValue(self, "ShootPitch", true) + pvrand, swepGetProcessedValue(self, "ShootVolumeActual", true) or 1
     local dvolume, dpitch, dvolumeactual
 
     if havedistant then
-        dvolume, dpitch, dvolumeactual = math.min(149, (self:GetProcessedValue("DistantShootVolume", true) or svolume) * 2), (self:GetProcessedValue("DistantShootPitch", true) or spitch) + pvrand, self:GetProcessedValue("DistantShootVolumeActual", true) or svolumeactual or 1
+        dvolume, dpitch, dvolumeactual = math.min(149, (swepGetProcessedValue(self, "DistantShootVolume", true) or svolume) * 2), (swepGetProcessedValue(self, "DistantShootPitch", true) or spitch) + pvrand, swepGetProcessedValue(self, "DistantShootVolumeActual", true) or svolumeactual or 1
     end
 
     local volumeMix = svolumeactual * indoormix
@@ -152,6 +155,7 @@ function SWEP:DoShootSounds()
         indoor = 0
     end
 
+    local playTranslatedSound = self.PlayTranslatedSound
     if indoormix > 0 then
 
         -- doing this cuz it uses only 1 cached table and it works way faster
@@ -163,7 +167,7 @@ function SWEP:DoShootSounds()
             soundtab1.channel = ARC9.CHAN_WEAPON
         end
 
-        self:PlayTranslatedSound(soundtab1)
+        playTranslatedSound(self, soundtab1)
 
         do
             soundtab2.sound = sl or ""
@@ -173,7 +177,7 @@ function SWEP:DoShootSounds()
             soundtab2.channel = ARC9.CHAN_LAYER + 4
         end
 
-        self:PlayTranslatedSound(soundtab2)
+        playTranslatedSound(self, soundtab2)
 
         if havedistant then
             do
@@ -184,14 +188,14 @@ function SWEP:DoShootSounds()
                 soundtab3.channel = ARC9.CHAN_DISTANT
             end
 
-            self:PlayTranslatedSound(soundtab3)
+            playTranslatedSound(self, soundtab3)
         end
     end
 
     if indoor > 0 then
-        local ssIN = self:RandomChoice(self:GetProcessedValue(sstr .. "Indoor", true))
-        local slIN = self:RandomChoice(self:GetProcessedValue(sslr .. "Indoor", true))
-        local dssIN = havedistant and self:RandomChoice(self:GetProcessedValue(dsstr .. "Indoor", true))
+        local ssIN = randomChoice(self, swepGetProcessedValue(self, sstr .. "Indoor", true))
+        local slIN = randomChoice(self, swepGetProcessedValue(self, sslr .. "Indoor", true))
+        local dssIN = havedistant and randomChoice(self, swepGetProcessedValue(self, dsstr .. "Indoor", true))
         local indoorVolumeMix = svolumeactual * indoor
 
 
@@ -203,7 +207,7 @@ function SWEP:DoShootSounds()
             soundtab4.channel = ARC9.CHAN_INDOOR
         end
 
-        self:PlayTranslatedSound(soundtab4)
+        playTranslatedSound(self, soundtab4)
 
         do
             soundtab5.sound = slIN or ""
@@ -213,7 +217,7 @@ function SWEP:DoShootSounds()
             soundtab5.channel = ARC9.CHAN_INDOOR + 7
         end
 
-        self:PlayTranslatedSound(soundtab5)
+        playTranslatedSound(self, soundtab5)
 
         if havedistant then
             do
@@ -224,7 +228,7 @@ function SWEP:DoShootSounds()
                 soundtab6.channel = ARC9.CHAN_INDOORDISTANT
             end
 
-            self:PlayTranslatedSound(soundtab6)
+            playTranslatedSound(self, soundtab6)
         end
     end
 
@@ -235,22 +239,21 @@ function SWEP:PrimaryAttack()
     if self.NotAWeapon then return end
 
     local owner = self:GetOwner()
-    local processedValue = self.GetProcessedValue
 
     if owner:IsNPC() then
         self:NPC_PrimaryAttack()
         return
     end
 
-    if processedValue(self,"Throwable", true) then
+    if swepGetProcessedValue(self,"Throwable", true) then
         return
     end
 
-    if processedValue(self,"PrimaryBash", true) then
+    if swepGetProcessedValue(self,"PrimaryBash", true) then
         return
     end
 
-    if processedValue(self,"UBGLInsteadOfSights", true) then
+    if swepGetProcessedValue(self,"UBGLInsteadOfSights", true) then
         self:ToggleUBGL(false)
     end
 
@@ -267,7 +270,7 @@ function SWEP:PrimaryAttack()
 
     if self:GetCustomize() then return end
 
-    if processedValue(self,"Bash", true) and owner:KeyDown(IN_USE) and !self:GetInSights() then
+    if swepGetProcessedValue(self,"Bash", true) and owner:KeyDown(IN_USE) and !self:GetInSights() then
 		if self:GetIsSprinting() and !self.ShootWhileSprint then return end
         self:MeleeAttack()
         self:SetNeedTriggerPress(true)
@@ -279,17 +282,17 @@ function SWEP:PrimaryAttack()
 	local nthShot = self:GetNthShot()
 
     if self:HasAmmoInClip() then
-        if processedValue(self,"TriggerDelay") then
+        if swepGetProcessedValue(self,"TriggerDelay") then
             local primedAttack = self:GetPrimedAttack()
             local time = CurTime()
 
             if self:GetBurstCount() == 0 and !primedAttack and !self:StillWaiting() then
-                self:SetTriggerDelay(time + processedValue(self,"TriggerDelayTime"))
-                local isEmpty = self:Clip1() == processedValue(self, "AmmoPerShot")
+                self:SetTriggerDelay(time + swepGetProcessedValue(self,"TriggerDelayTime"))
+                local isEmpty = self:Clip1() == swepGetProcessedValue(self, "AmmoPerShot")
                 local anim = "trigger"
 				
-		if processedValue(self,"Akimbo", true) then
-            if processedValue(self, "AkimboBoth", true) then
+		if swepGetProcessedValue(self,"Akimbo", true) then
+            if swepGetProcessedValue(self, "AkimboBoth", true) then
                 anim = "trigger_both"
             elseif nthShot % 2 == 0 then
                 anim = "trigger_right"
@@ -298,9 +301,9 @@ function SWEP:PrimaryAttack()
             end
         end
 		
-                if processedValue(self,"TriggerStartFireAnim", true) then
-				if processedValue(self,"Akimbo", true) then
-					if processedValue(self, "AkimboBoth", true) then
+                if swepGetProcessedValue(self,"TriggerStartFireAnim", true) then
+				if swepGetProcessedValue(self,"Akimbo", true) then
+					if swepGetProcessedValue(self, "AkimboBoth", true) then
 						anim = "fire_both"
 					elseif nthShot % 2 == 0 then
 						anim = "fire_right"
@@ -310,17 +313,17 @@ function SWEP:PrimaryAttack()
 				else anim = "fire"
 			end
                 end
-                if self:HasAnimation(anim .. "_empty") and isEmpty then
+                if self:HasAnimation(anim .. "_empty", true) and isEmpty then
                     anim = anim .. "_empty"
                 end
                 self:PlayAnimation(anim)
                 self:SetPrimedAttack(true)
                 return
-            elseif primedAttack and (self:GetTriggerDelay() <= time and (!processedValue(self, "TriggerDelayReleaseToFire", true) or !owner:KeyDown(IN_ATTACK))) then
+            elseif primedAttack and (self:GetTriggerDelay() <= time and (!swepGetProcessedValue(self, "TriggerDelayReleaseToFire", true) or !owner:KeyDown(IN_ATTACK))) then
                 self:SetPrimedAttack(false)
             end
         end
-    elseif !processedValue(self,"TriggerDelay") or !processedValue(self, "TriggerDelayReleaseToFire", true) or !owner:KeyDown(IN_ATTACK) then
+    elseif !swepGetProcessedValue(self,"TriggerDelay") or !swepGetProcessedValue(self, "TriggerDelayReleaseToFire", true) or !owner:KeyDown(IN_ATTACK) then
         self:SetPrimedAttack(false)
     end
 
@@ -338,7 +341,6 @@ end
 
 function SWEP:DoPrimaryAttack()
 
-    local processedValue = self.GetProcessedValue
     if self.FireInterruptInspect and self:GetInspecting() then self:CancelInspect() end
     if self:StillWaiting() then return end
     if self.NoFireDuringSighting and (self:GetInSights() and self:GetSightAmount() < 0.8 or false) then return end
@@ -350,12 +352,12 @@ function SWEP:DoPrimaryAttack()
 
     local clip = self:GetLoadedClip()
 
-    if processedValue(self,"BottomlessClip", true) then
+    if swepGetProcessedValue(self,"BottomlessClip", true) then
         self:RestoreClip(math.huge)
     end
 
     if !self:HasAmmoInClip() then
-        if self:GetUBGL() and !processedValue(self,"UBGLInsteadOfSights", true) then
+        if self:GetUBGL() and !swepGetProcessedValue(self,"UBGLInsteadOfSights", true) then
             if self:GetMaxClip2() < 2 then -- mytton doesn't like auto ubgl reload
                 if self:CanReload() then 
                     self:Reload()
@@ -373,7 +375,7 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    if !processedValue(self,"CanFireUnderwater", true) then
+    if !swepGetProcessedValue(self,"CanFireUnderwater", true) then
         if bit.band(util.PointContents(self:GetShootPos()), CONTENTS_WATER) == CONTENTS_WATER then
             self:DryFire()
             return
@@ -394,14 +396,14 @@ function SWEP:DoPrimaryAttack()
     self:SetEmptyReload(false)
     self:TakeAmmo()
 
-    local triggerStartFireAnim = processedValue(self,"TriggerStartFireAnim", true)
+    local triggerStartFireAnim = swepGetProcessedValue(self,"TriggerStartFireAnim", true)
     local nthShot = self:GetNthShot()
 
-    if processedValue(self,"DoFireAnimation", true) and !triggerStartFireAnim then
+    if swepGetProcessedValue(self,"DoFireAnimation", true) and !triggerStartFireAnim then
         local anim = "fire"
 
-        if processedValue(self,"Akimbo", true) then
-            if processedValue(self, "AkimboBoth", true) then
+        if swepGetProcessedValue(self,"Akimbo", true) then
+            if swepGetProcessedValue(self, "AkimboBoth", true) then
                 anim = "fire_both"
             elseif nthShot % 2 == 0 then
                 anim = "fire_right"
@@ -414,7 +416,7 @@ function SWEP:DoPrimaryAttack()
 
         if !self.SuppressCumulativeShoot then
             for i = 1, burstCount + 1 do
-                if self:HasAnimation(anim .. "_" .. i) then
+                if self:HasAnimation(anim .. "_" .. i, true) then
                     banim = anim .. "_" .. i
                 end
             end
@@ -427,10 +429,10 @@ function SWEP:DoPrimaryAttack()
 
     self:SetLoadedRounds(clip1)
 
-    local manualaction = processedValue(self,"ManualAction")
+    local manualaction = swepGetProcessedValue(self,"ManualAction", true)
 
-    if !processedValue(self,"NoShellEject") and !(manualaction and !processedValue(self,"ManualActionEjectAnyway", true)) then
-        local ejectdelay = processedValue(self,"EjectDelay", true)
+    if !swepGetProcessedValue(self,"NoShellEject", true) and !(manualaction and !swepGetProcessedValue(self,"ManualActionEjectAnyway", true)) then
+        local ejectdelay = swepGetProcessedValue(self,"EjectDelay", true)
 
         if ejectdelay == 0 then
             self:DoEject()
@@ -445,9 +447,9 @@ function SWEP:DoPrimaryAttack()
 
     self:DoShootSounds()
 
-    self:DoPlayerAnimationEvent(processedValue(self,"AnimShoot", true))
+    self:DoPlayerAnimationEvent(swepGetProcessedValue(self,"AnimShoot", true))
 
-    local delay = 60 / processedValue(self, "RPM")
+    local delay = 60 / swepGetProcessedValue(self, "RPM")
     local time = CurTime()
 
     local curatt = self:GetNextPrimaryFire()
@@ -464,15 +466,15 @@ function SWEP:DoPrimaryAttack()
     self:DoEffects()
 
     if self:HoldingBreath() then
-        self:SetBreath(self:GetBreath() - self:GetValue("HoldBreathTime", true)/20)
+        self:SetBreath(self:GetBreath() - swepGetProcessedValue(self,  "HoldBreathTime", true)/20)
     end
 
     -- ewww
-    if processedValue(self, "AkimboBoth", true) then
+    if swepGetProcessedValue(self, "AkimboBoth", true) then
         self:SetNthShot(nthShot + 2)
         self:DoEffects()
-        if !processedValue(self,"NoShellEject") and !(manualaction and !processedValue(self,"ManualActionEjectAnyway", true)) then
-            local ejectdelay = processedValue(self,"EjectDelay", true)
+        if !swepGetProcessedValue(self,"NoShellEject", true) and !(manualaction and !swepGetProcessedValue(self,"ManualActionEjectAnyway", true)) then
+            local ejectdelay = swepGetProcessedValue(self,"EjectDelay", true)
             if ejectdelay == 0 then
                 self:DoEject()
             else
@@ -494,13 +496,13 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    local spread = processedValue(self,"Spread")
+    local spread = swepGetProcessedValue(self,"Spread")
 
     spread = math.Max(spread, 0)
 
     local sp, sa = self:GetShootPos()
 
-    if IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and processedValue(self,"LockOnAutoaim", true) then
+    if IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and swepGetProcessedValue(self,"LockOnAutoaim", true) then
         sa = (self:GetLockOnTarget():EyePos() - sp):Angle()
     end
 
@@ -509,16 +511,16 @@ function SWEP:DoPrimaryAttack()
     self:ApplyRecoil()
     self:DoVisualRecoil()
 
-    if burstCount == 0 and currentFiremode > 1 and processedValue(self,"RunawayBurst", true) then
-        if !processedValue(self,"AutoBurst") then
+    if burstCount == 0 and currentFiremode > 1 and swepGetProcessedValue(self,"RunawayBurst", true) then
+        if !swepGetProcessedValue(self,"AutoBurst", true) then
             self:SetNeedTriggerPress(true)
         end
     end
 
     if manualaction then
         nthShot = nthShot + 1
-        if clip1 > 0 or !processedValue(self,"ManualActionNoLastCycle", true) then
-            if nthShot % processedValue(self,"ManualActionChamber", true) == 0 then
+        if clip1 > 0 or !swepGetProcessedValue(self,"ManualActionNoLastCycle", true) then
+            if nthShot % swepGetProcessedValue(self,"ManualActionChamber", true) == 0 then
                 self:SetNeedsCycle(true)
             end
         end
@@ -541,8 +543,8 @@ function SWEP:DoPrimaryAttack()
         self:SetNthShot(0)
     end
 
-    if processedValue(self,"TriggerDelayRepeat", true) and self:GetOwner():KeyDown(IN_ATTACK) and currentFiremode != 1 then
-        self:SetTriggerDelay(time + processedValue(self,"TriggerDelayTime"))
+    if swepGetProcessedValue(self,"TriggerDelayRepeat", true) and self:GetOwner():KeyDown(IN_ATTACK) and currentFiremode != 1 then
+        self:SetTriggerDelay(time + swepGetProcessedValue(self,"TriggerDelayTime"))
         if triggerStartFireAnim then
             self:PlayAnimation("fire")
         else
@@ -579,7 +581,7 @@ local fireBullets = {}
 local black = Color(0,0,0) -- if anything, let's just safe ourselves.
 
 function SWEP:DoProjectileAttack(pos, ang, spread)
-    if self:GetProcessedValue("ShootEnt", true) then
+    if swepGetProcessedValue(self, "ShootEnt", true) then
         self:ShootRocket()
     else
         local shouldtracer = self:ShouldTracer()
@@ -596,18 +598,18 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
             tr = 1
         end
 
-        bullettbl.Size = self:GetProcessedValue("TracerSize", true)
+        bullettbl.Size = swepGetProcessedValue(self, "TracerSize", true)
 
         local ang2 = Angle(ang)
-        local numm = self:GetProcessedValue("Num")
+        local numm = swepGetProcessedValue(self, "Num")
         if numm > 0 then
-            if (bulletPhysics:GetBool() or self:GetProcessedValue("AlwaysPhysBullet", true)) and !self:GetProcessedValue("NeverPhysBullet", true) then
+            if (bulletPhysics:GetBool() or swepGetProcessedValue(self, "AlwaysPhysBullet", true)) and !swepGetProcessedValue(self, "NeverPhysBullet", true) then
                 if SERVER or (CLIENT and IsFirstTimePredicted()) then
-                    if self:GetProcessedValue("UseDispersion", true) then 
+                    if swepGetProcessedValue(self, "UseDispersion", true) then 
                         local seed = 1337 + self:EntIndex() + engine.TickCount()
                         local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
                         local angleRand = Angle(math.sin(a), math.cos(a), 0)
-                        angleRand:Mul(self:GetProcessedValue("DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
+                        angleRand:Mul(swepGetProcessedValue(self, "DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
                         ang:Add(angleRand)
                     end
 
@@ -623,7 +625,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                         ang2:Add(angleRand)
 
                         local vec = ang2:Forward()
-                        vec:Mul(self:GetProcessedValue("PhysBulletMuzzleVelocity", true))
+                        vec:Mul(swepGetProcessedValue(self, "PhysBulletMuzzleVelocity", true))
 
                         ARC9:ShootPhysBullet(self, pos, vec, bullettbl)
                     end
@@ -635,7 +637,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     owner:LagCompensation(true)
                 end
 
-                -- local tr = self:GetProcessedValue("TracerNum")
+                -- local tr = swepGetProcessedValue(self, "TracerNum")
 
                 local veh = NULL
 
@@ -644,20 +646,20 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 end
 
 
-                if self:GetProcessedValue("UseDispersion", true) then
+                if swepGetProcessedValue(self, "UseDispersion", true) then
                     local seed = 1337 + self:EntIndex() + engine.TickCount()
                     local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
                     local angleRand = Angle(math.sin(a), math.cos(a), 0)
-                    angleRand:Mul(self:GetProcessedValue("DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
+                    angleRand:Mul(swepGetProcessedValue(self, "DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
                     ang:Add(angleRand)
                 end
 
-                local distance = self:GetProcessedValue("Distance")
+                local distance = swepGetProcessedValue(self, "Distance")
 
-                fireBullets.Damage = self:GetProcessedValue("DamageMax")
-                fireBullets.Force = self:GetProcessedValue("ImpactForce", true) / numm
+                fireBullets.Damage = swepGetProcessedValue(self, "DamageMax")
+                fireBullets.Force = swepGetProcessedValue(self, "ImpactForce", true) / numm
                 fireBullets.Tracer = tr
-                fireBullets.TracerName = self:GetProcessedValue("TracerEffect", true)
+                fireBullets.TracerName = swepGetProcessedValue(self, "TracerEffect", true)
                 fireBullets.Num = numm
                 fireBullets.Dir = ang:Forward()
                 fireBullets.Src = pos
@@ -668,7 +670,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     local range = btr.Fraction * distance
 
                     self.Penned = 0
-                    self:AfterShotFunction(btr, dmg, range, self:GetProcessedValue("Penetration", true), {})
+                    self:AfterShotFunction(btr, dmg, range, swepGetProcessedValue(self, "Penetration", true), {})
 
                     -- if ARC9.Dev(2) then
                     --     if SERVER then
@@ -704,7 +706,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
     self:SetUBGL(secondary)
 
-    dmg:SetDamageType(self:GetProcessedValue("DamageType", true) or DMG_BULLET)
+    dmg:SetDamageType(swepGetProcessedValue(self, "DamageType", true) or DMG_BULLET)
 
     local dmgv = self:GetDamageAtRange(range)
     local dmgvoriginal = dmgv
@@ -719,8 +721,8 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     self:RunHook("Hook_BulletImpact", runHook)
 
     -- Penetration
-    local pen = self:GetProcessedValue("Penetration", true)
-    local pendeltaval = self:GetProcessedValue("PenetrationDelta", true)
+    local pen = swepGetProcessedValue(self, "Penetration", true)
+    local pendeltaval = swepGetProcessedValue(self, "PenetrationDelta", true)
     if pen > 0 then
         local pendelta = penleft / pen
         pendelta = Lerp(pendelta, pendeltaval, 1) -- it arleady clamps inside
@@ -738,26 +740,26 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     local hitGroup = tr.HitGroup
     
     if !ARC9.NoBodyPartsDamageMults then
-        local bodydamage = self:GetProcessedValue("BodyDamageMults", true)
+        local bodydamage = swepGetProcessedValue(self, "BodyDamageMults", true)
 
         if bodydamage[hitGroup] then
             dmgv = dmgv * bodydamage[hitGroup]
         end
         if hitGroup == HITGROUP_HEAD then
-            dmgv = dmgv * self:GetProcessedValue("HeadshotDamage", true)
+            dmgv = dmgv * swepGetProcessedValue(self, "HeadshotDamage", true)
         elseif hitGroup == HITGROUP_CHEST then
-            dmgv = dmgv * self:GetProcessedValue("ChestDamage", true)
+            dmgv = dmgv * swepGetProcessedValue(self, "ChestDamage", true)
         elseif hitGroup == HITGROUP_STOMACH then
-            dmgv = dmgv * self:GetProcessedValue("StomachDamage", true)
+            dmgv = dmgv * swepGetProcessedValue(self, "StomachDamage", true)
         elseif hitGroup == HITGROUP_LEFTARM or hitGroup == HITGROUP_RIGHTARM then
-            dmgv = dmgv * self:GetProcessedValue("ArmDamage", true)
+            dmgv = dmgv * swepGetProcessedValue(self, "ArmDamage", true)
         elseif hitGroup == HITGROUP_LEFTLEG or hitGroup == HITGROUP_RIGHTLEG then
-            dmgv = dmgv * self:GetProcessedValue("LegDamage", true)
+            dmgv = dmgv * swepGetProcessedValue(self, "LegDamage", true)
         end
     end
 
     -- Armor piercing (done after weapon's limb multipliers but BEFORE body damage cancel)
-    local ap = math.Clamp(self:GetProcessedValue("ArmorPiercing", true), 0, 1)
+    local ap = math.Clamp(swepGetProcessedValue(self, "ArmorPiercing", true), 0, 1)
     if ap > 0 and !alreadypenned[traceEntity] then
         if traceEntity:GetClass() == "npc_helicopter" then
             local apdmg = DamageInfo()
@@ -790,7 +792,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 
                 traceEntity.ARC9APPower = pen
                 traceEntity.ARC9APDelta = pendeltaval
-                traceEntity.ARC9APRangeMult = dmgvoriginal / self:GetProcessedValue("DamageMax", true)
+                traceEntity.ARC9APRangeMult = dmgvoriginal / swepGetProcessedValue(self, "DamageMax", true)
             end
         end
     end
@@ -806,30 +808,30 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     local hitPos = tr.HitPos
     local hitNormal = tr.HitNormal
 
-    if self:GetProcessedValue("ImpactDecal", true) then
-        util.Decal(self:GetProcessedValue("ImpactDecal", true), tr.StartPos, hitPos - (hitNormal * 2), owner)
+    if swepGetProcessedValue(self, "ImpactDecal", true) then
+        util.Decal(swepGetProcessedValue(self, "ImpactDecal", true), tr.StartPos, hitPos - (hitNormal * 2), owner)
     end
 
-    if self:GetProcessedValue("ImpactEffect", true) then
+    if swepGetProcessedValue(self, "ImpactEffect", true) then
         local fx = EffectData()
         fx:SetOrigin(hitPos)
         fx:SetNormal(hitNormal)
-        util.Effect(self:GetProcessedValue("ImpactEffect", true), fx, true)
+        util.Effect(swepGetProcessedValue(self, "ImpactEffect", true), fx, true)
     end
 
-    if self:GetProcessedValue("ImpactSound", true) then
-        soundTab2.sound = self:GetProcessedValue("ImpactSound", true)
+    if swepGetProcessedValue(self, "ImpactSound", true) then
+        soundTab2.sound = swepGetProcessedValue(self, "ImpactSound", true)
 
         soundTab2 = self:RunHook("HookP_TranslateSound", soundTab2) or soundTab2
 
         sound.Play(soundTab2.sound, hitPos, soundTab2.level, soundTab2.pitch, soundTab2.volume)
     end
 
-    if self:GetProcessedValue("ExplosionDamage") > 0 then
-        util.BlastDamage(self, owner, hitPos, self:GetProcessedValue("ExplosionRadius", true), self:GetProcessedValue("ExplosionDamage"))
+    if swepGetProcessedValue(self, "ExplosionDamage") > 0 then
+        util.BlastDamage(self, owner, hitPos, swepGetProcessedValue(self, "ExplosionRadius", true), swepGetProcessedValue(self, "ExplosionDamage"))
     end
 
-    if self:GetProcessedValue("ExplosionEffect", true) then
+    if swepGetProcessedValue(self, "ExplosionEffect", true) then
         local fx = EffectData()
         fx:SetOrigin(hitPos)
         fx:SetNormal(hitNormal)
@@ -838,7 +840,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         if bit.band(util.PointContents(hitPos), CONTENTS_WATER) == CONTENTS_WATER then
             util.Effect("WaterSurfaceExplosion", fx, true)
         else
-            util.Effect(self:GetProcessedValue("ExplosionEffect", true), fx, true)
+            util.Effect(swepGetProcessedValue(self, "ExplosionEffect", true), fx, true)
         end
     end
 
@@ -854,13 +856,13 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
 end
 
 function SWEP:ShouldTracer()
-    local tracerNum = self:GetProcessedValue("TracerNum", true)
+    local tracerNum = swepGetProcessedValue(self, "TracerNum", true)
 
     if tracerNum <= 0 then return false end
 
     local shouldtracer = self:GetNthShot() % tracerNum == 0
 
-    if self:Clip1() <= self:GetProcessedValue("TracerFinalMag", true) then
+    if self:Clip1() <= swepGetProcessedValue(self, "TracerFinalMag", true) then
         shouldtracer = true
     end
 
@@ -870,8 +872,8 @@ end
 function SWEP:GetDamageDeltaAtRange(range)
     local d = 1
 
-    local r_min = self:GetProcessedValue("RangeMin", true)
-    local r_max = self:GetProcessedValue("RangeMax", true)
+    local r_min = swepGetProcessedValue(self, "RangeMin", true)
+    local r_max = swepGetProcessedValue(self, "RangeMax", true)
 
     if range <= r_min then
         d = 0
@@ -881,7 +883,7 @@ function SWEP:GetDamageDeltaAtRange(range)
         d = (range - r_min) / (r_max - r_min)
     end
 
-    if self:GetProcessedValue("CurvedDamageScaling", true) then
+    if swepGetProcessedValue(self, "CurvedDamageScaling", true) then
         d = math.cos((d + 1) * math.pi) / 2 + 0.5
     end
 
@@ -889,11 +891,11 @@ function SWEP:GetDamageDeltaAtRange(range)
 end
 
 function SWEP:GetSweetSpotDeltaAtRange(range)
-    if !self:GetProcessedValue("SweetSpot", true) then return 0 end
+    if !swepGetProcessedValue(self, "SweetSpot", true) then return 0 end
 
-    local ss_range = self:GetProcessedValue("SweetSpotRange", true)
-    local ss_width = self:GetProcessedValue("SweetSpotWidth", true)
-    local ss_peak = self:GetProcessedValue("SweetSpotPeak", true)
+    local ss_range = swepGetProcessedValue(self, "SweetSpotRange", true)
+    local ss_width = swepGetProcessedValue(self, "SweetSpotWidth", true)
+    local ss_peak = swepGetProcessedValue(self, "SweetSpotPeak", true)
     local ss_size = ss_width + ss_peak
 
     if range <= ss_range + ss_size / 2 and range >= ss_range - ss_size / 2 then
@@ -906,7 +908,7 @@ function SWEP:GetSweetSpotDeltaAtRange(range)
             else
                 f = 1 - math.Clamp(math.abs((ss_range - ss_peak / 2) - range) / (ss_width / 2), 0, 1)
             end
-            if self:GetProcessedValue("CurvedDamageScaling", true) then
+            if swepGetProcessedValue(self, "CurvedDamageScaling", true) then
                 f = math.cos((f + 1) * math.pi) / 2 + 0.5
             end
             return f
@@ -920,11 +922,11 @@ local damageAtRangeHook = {}
 local emptyTable = {}
 
 function SWEP:GetDamageAtRange(range)
-    local damagelut = self:GetProcessedValue("DamageLookupTable", true)
+    local damagelut = swepGetProcessedValue(self, "DamageLookupTable", true)
 
-    local dmgMin = self:GetProcessedValue("DamageMin")
+    local dmgMin = swepGetProcessedValue(self, "DamageMin")
 
-    local num = self:GetProcessedValue("Num")
+    local num = swepGetProcessedValue(self, "Num")
     if num <= 0 then
         return 0 -- avoid divide-by-zero
     end
@@ -934,7 +936,7 @@ function SWEP:GetDamageAtRange(range)
     if damagelut then
         for i, tbl in ipairs(damagelut) do
             if range < tbl[1] then
-                if self:GetProcessedValue("CurvedDamageScaling", true) and i > 1 then
+                if swepGetProcessedValue(self, "CurvedDamageScaling", true) and i > 1 then
                     local tbl2 = damagelut[i - 1]
                     dmgv = Lerp(1 - math.Clamp((tbl[1] - range) / (tbl[1] - tbl2[1]), 0, 1), tbl2[2], tbl[2])
                 else
@@ -945,18 +947,18 @@ function SWEP:GetDamageAtRange(range)
         end
     else
         local d = self:GetDamageDeltaAtRange(range)
-        dmgv = Lerp(d, self:GetProcessedValue("DamageMax"), dmgMin)
-        dmgv = self:GetProcessedValue("Damage", nil, dmgv)
+        dmgv = Lerp(d, swepGetProcessedValue(self, "DamageMax"), dmgMin)
+        dmgv = swepGetProcessedValue(self, "Damage", nil, dmgv)
     end
 
     local sweetspot_d = self:GetSweetSpotDeltaAtRange(range)
     if sweetspot_d > 0 then
-        dmgv = Lerp(sweetspot_d, dmgv, self:GetProcessedValue("SweetSpotDamage", true))
+        dmgv = Lerp(sweetspot_d, dmgv, swepGetProcessedValue(self, "SweetSpotDamage", true))
     end
 
-    if self:GetProcessedValue("DistributeDamage", true) then
+    if swepGetProcessedValue(self, "DistributeDamage", true) then
         dmgv = dmgv / num
-    elseif self:GetProcessedValue("NormalizeNumDamage", true) then
+    elseif swepGetProcessedValue(self, "NormalizeNumDamage", true) then
         dmgv = dmgv / (num / self.Num)
     end
 
@@ -985,7 +987,7 @@ function SWEP:GetShootPos()
     local ang = self:GetShootDir()
     local height = ang:Up()
 
-    height:Mul(self:GetProcessedValue("HeightOverBore", true))
+    height:Mul(swepGetProcessedValue(self, "HeightOverBore", true))
     pos:Add(height)
 
     --pos = pos + (owner:EyeAngles():Right() * self:GetLeanOffset())
@@ -995,7 +997,7 @@ function SWEP:GetShootPos()
 
     pos:Add(rightVec)
 
-    local shootposoffset = self:GetProcessedValue("ShootPosOffset", true)
+    local shootposoffset = swepGetProcessedValue(self, "ShootPosOffset", true)
 
     local angRight = ang:Right()
     local angForward = ang:Forward()
@@ -1018,7 +1020,7 @@ function SWEP:GetShootDir(quick)
     local owner = self:GetOwner()
     if !owner:IsValid() then return self:GetAngles() end
     local dir = owner:EyeAngles()
-    local shootangoffset = self:GetProcessedValue("ShootAngOffset", !quick)
+    local shootangoffset = swepGetProcessedValue(self, "ShootAngOffset", !quick)
 
     dir:RotateAroundAxis(dir:Right(), shootangoffset[1])
     dir:RotateAroundAxis(dir:Up(), shootangoffset[2])
@@ -1043,15 +1045,15 @@ function SWEP:ShootRocket()
     local src = self:GetShootPos()
     local dir = self:GetShootDir(true)
 
-    local num = self:GetProcessedValue("Num")
-    local ent = self:GetProcessedValue("ShootEnt", true)
+    local num = swepGetProcessedValue(self, "Num")
+    local ent = swepGetProcessedValue(self, "ShootEnt", true)
 
     local spread
 
     if owner:IsNPC() then
         spread = self:GetNPCBulletSpread()
     else
-        spread = self:GetProcessedValue("Spread")
+        spread = swepGetProcessedValue(self, "Spread")
     end
 
     spread = math.max(spread, 0)
@@ -1070,12 +1072,12 @@ function SWEP:ShootRocket()
         rocket.Owner = owner
         rocket.Weapon = self
 
-        rocket.ShootEntData = table.Copy(self:GetProcessedValue("ShootEntData", true) or {})
+        rocket.ShootEntData = table.Copy(swepGetProcessedValue(self, "ShootEntData", true) or {})
         rocket.ShootEntData.Target = IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and self:GetLockOnTarget()
         rocket.ShootEntData = self:RunHook("Hook_GetShootEntData", rocket.ShootEntData)
         rocket.ARC9Projectile = true
 
-        if self:GetProcessedValue("Detonator", true) then
+        if swepGetProcessedValue(self, "Detonator", true) then
             self:SetDetonatorEntity(rocket)
         end
 
@@ -1083,10 +1085,10 @@ function SWEP:ShootRocket()
 
         if phys:IsValid() then
             local vec = dispersion:Forward()
-            vec:Mul(self:GetProcessedValue("ShootEntForce"))
+            vec:Mul(swepGetProcessedValue(self, "ShootEntForce"))
 
             phys:AddVelocity(vec)
-            if self:GetProcessedValue("ShootEntInheritPlayerVelocity", true) then
+            if swepGetProcessedValue(self, "ShootEntInheritPlayerVelocity", true) then
                 phys:AddVelocity(owner:GetVelocity())
             end
         end

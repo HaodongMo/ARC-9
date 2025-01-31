@@ -99,7 +99,13 @@ function SWEP:TranslateAnimation(seq)
     return seq
 end
 
+local alwayshave = {
+    ["idle"] = true,
+    ["fire"] = true,
+}
+
 function SWEP:HasAnimation(seq, lq)
+    if alwayshave[seq] then return true end
     local seqr = self:RunHook("Hook_BlockHasAnimation", seq)
 
     if !seqr then return false end

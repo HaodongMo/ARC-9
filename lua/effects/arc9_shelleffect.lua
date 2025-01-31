@@ -53,20 +53,21 @@ function EFFECT:Init(data)
     -- ang:RotateAroundAxis(ang:Up(), (ent.ShellRotateAngle or Angle(0, 0, 0))[2])
     -- ang:RotateAroundAxis(ang:Forward(), (ent.ShellRotateAngle or Angle(0, 0, 0))[3])
 
-    local model = ent:GetProcessedValue("ShellModel", true)
-    local material = ent:GetProcessedValue("ShellMaterial", true)
-    local scale = ent:GetProcessedValue("ShellScale", true)
-    local physbox = ent:GetProcessedValue("ShellPhysBox", true)
-    local pitch = ent:GetProcessedValue("ShellPitch", true)
-    local sounds = ent:GetProcessedValue("ShellSounds", true)
-    local soundsvolume = ent:GetProcessedValue("ShellVolume", true)
-    local smoke = ent:GetProcessedValue("ShellSmoke", true)
-    local velocity = ent:GetProcessedValue("ShellVelocity", true) or math.Rand(1, 2)
+    local processedValue = ent.GetProcessedValue
+    local model = processedValue(ent, "ShellModel", true)
+    local material = processedValue(ent, "ShellMaterial", true)
+    local scale = processedValue(ent, "ShellScale", true)
+    local physbox = processedValue(ent, "ShellPhysBox", true)
+    local pitch = processedValue(ent, "ShellPitch", true)
+    local sounds = processedValue(ent, "ShellSounds", true)
+    local soundsvolume = processedValue(ent, "ShellVolume", true)
+    local smoke = processedValue(ent, "ShellSmoke", true)
+    local velocity = processedValue(ent, "ShellVelocity", true) or math.Rand(1, 2)
 
     local index = data:GetFlags()
 
     if index != 0 then
-        local shelldata = ent:GetProcessedValue("ExtraShellModels", true)[index]
+        local shelldata = processedValue(ent, "ExtraShellModels", true)[index]
 
         if shelldata then
             model = shelldata.model or model
@@ -88,7 +89,7 @@ function EFFECT:Init(data)
 
     local dir = ang:Forward()
 
-    local correctang = ent:GetProcessedValue("ShellCorrectAng", true) or angle_zero
+    local correctang = processedValue(ent, "ShellCorrectAng", true) or angle_zero
     ang:RotateAroundAxis(ang:Forward(), 90 + correctang.p)
     ang:RotateAroundAxis(ang:Right(), correctang.y)
     ang:RotateAroundAxis(ang:Up(), correctang.r)
@@ -190,7 +191,7 @@ end
 
 function EFFECT:Think()
     if self:GetVelocity():Length() > 20 then self.SpawnTime = CurTime() end
-    self:StopSound("Default.ScrapeRough")
+    -- self:StopSound("Default.ScrapeRough")
 
     if (self.SpawnTime + self.ShellTime) <= CurTime() then
         if !IsValid(self) then return end

@@ -80,7 +80,7 @@ end
 
 do
     local entityGetTable = ENTITY.GetTable
-    local swepGetCurrentFiremodeTable = SWEP.GetCurrentFiremodeTable
+    -- local swepGetCurrentFiremodeTable = SWEP.GetCurrentFiremodeTable
     local swepGetElements = SWEP.GetElements
     local swepGetFinalAttTable = SWEP.GetFinalAttTable
     local cvarArcModifiers = GetConVar("arc9_modifiers")
@@ -142,7 +142,7 @@ do
         if not ARC9.OverrunFiremodes then
             ARC9.OverrunFiremodes = true
             affLength = affLength + 1
-            aff[affLength] = swepGetCurrentFiremodeTable(self)
+            aff[affLength] = self:GetCurrentFiremodeTable()
             ARC9.OverrunFiremodes = false
         end
 

@@ -10,6 +10,9 @@ function SWEP:DoPlayerAnimationEvent(event)
     if SERVER then self:CallOnClient("DoPlayerAnimationEvent", event) end
 end
 
+local ENTITY = FindMetaTable("Entity")
+local entityEmitSound = ENTITY.EmitSound
+
 function SWEP:PlayTranslatedSound(soundtab)
     soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
 
@@ -20,7 +23,7 @@ function SWEP:PlayTranslatedSound(soundtab)
             pitch = math.random(pitch[1], pitch[2])
         end
 
-        self:EmitSound(
+        entityEmitSound(self,
             soundtab.sound,
             soundtab.level,
             pitch,
