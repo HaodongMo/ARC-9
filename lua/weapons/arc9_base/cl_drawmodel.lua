@@ -39,7 +39,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             mdl = self.WModel
             lod = self:ShouldLOD()
 
-            if mdl and mdl[1]:IsValid() then
+            if lod == 0 and mdl and mdl[1]:IsValid() then
                 mdl[1]:SetMaterial(self:GetProcessedValue("Material", true))
 
                 for ind = 0, 31 do
@@ -71,11 +71,11 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         end
     end
 
-    local onground = wm and !IsValid(owner)
-
-    local hidebones = self:GetHiddenBones(wm)
-
     if lod < 2 then
+        local onground = wm and !IsValid(owner)
+    
+        local hidebones = self:GetHiddenBones(wm)
+
         for _, model in ipairs(mdl or {}) do
             if model.IsAnimationProxy then continue end
             local slottbl = model.slottbl

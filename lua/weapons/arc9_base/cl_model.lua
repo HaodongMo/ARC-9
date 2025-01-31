@@ -1,4 +1,5 @@
 SWEP.ModelVersion = 0
+local v0, a0 = Vector(0, 0, 0), Angle(0, 0, 0)
 
 function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, customang, dupli)
     dupli = dupli or 0
@@ -63,10 +64,10 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
         atttbl = self:GetFinalAttTable(slottbl)
     end
 
-    local icon_offset = slottbl.Icon_Offset or Vector()
+    local icon_offset = slottbl.Icon_Offset or v0
 
-    local offset_pos = slottbl.Pos or Vector(0, 0, 0)
-    local offset_ang = slottbl.Ang or Angle(0, 0, 0)
+    local offset_pos = slottbl.Pos or v0
+    local offset_ang = slottbl.Ang or a0
     local bpos, bang
 
     if dupli > 0 then
@@ -79,7 +80,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     if parentmdl and bone then
         local boneindex = parentmdl:LookupBone(bone)
 
-        if !boneindex then return vector_origin, angle_zero, vector_origin end
+        if !boneindex then return v0, a0, v0 end
 
         if parentmdl == self:GetOwner() then
             parentmdl:SetupBones()
@@ -92,7 +93,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
         end
     elseif custompos then
         bpos = custompos
-        bang = customang or Angle(0, 0, 0)
+        bang = customang or a0
     end
 
     if slottbl.OriginalAddress then
@@ -130,7 +131,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     apos = apos + aang:Up() * offset_pos.z
 
     if !nomodeloffset then
-        offset_ang = offset_ang + (atttbl.ModelAngleOffset or angle_zero)
+        offset_ang = offset_ang + (atttbl.ModelAngleOffset or a0)
     end
 
     aang:Set(bang)
@@ -144,7 +145,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     aang:RotateAroundAxis(up, offset_ang.y)
 
     if !nomodeloffset then
-        local moffset = (atttbl.ModelOffset or Vector(0, 0, 0)) * (slottbl.Scale or 1)
+        local moffset = (atttbl.ModelOffset or v0) * (slottbl.Scale or 1)
         if wm then
             moffset = moffset * (self.WorldModelOffset.Scale or 1)
         end
