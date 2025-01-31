@@ -57,18 +57,22 @@ function SWEP:GetFinalAttTableFromAddress(address)
     return self:GetFinalAttTable(self:LocateSlotFromAddress(address))
 end
 
+local tableCopy = table.Copy
+local tableMerge = table.Merge
+local ARC9GetAttTable = ARC9.GetAttTable
+
 function SWEP:GetFinalAttTable(slot)
     if !slot then return {} end
     if !slot.Installed then return {} end
-    local atttbl = table.Copy(ARC9.GetAttTable(slot.Installed) or {})
+    local atttbl = tableCopy(ARC9GetAttTable(slot.Installed) or {})
 
     if self.AttachmentTableOverrides and self.AttachmentTableOverrides[slot.Installed] then
-        atttbl = table.Merge(atttbl, self.AttachmentTableOverrides[slot.Installed])
+        atttbl = tableMerge(atttbl, self.AttachmentTableOverrides[slot.Installed])
     end
 
     if atttbl.ToggleStats then
         local toggletbl = atttbl.ToggleStats[slot.ToggleNum or 1] or {}
-        table.Merge(atttbl, toggletbl)
+        tableMerge(atttbl, toggletbl)
     end
 
     return atttbl
@@ -85,7 +89,7 @@ do
     function SWEP:GetAllAffectors()
         if self.AffectorsCache then return self.AffectorsCache end
 
-        local aff = {table.Copy(entityGetTable(self))}
+        local aff = {tableCopy(entityGetTable(self))}
 
         local affLength = 1
 
@@ -421,6 +425,7 @@ do
     local entityIsValid = ENTITY.IsValid
     local entityGetMoveType = ENTITY.GetMoveType
     local entityIsPlayer = ENTITY.IsPlayer
+    -- local entityIsNPC = ENTITY.IsNPC
     local entityGetAbsVelocity = ENTITY.GetAbsVelocity
     local WEAPON = FindMetaTable("Weapon")
     local weaponClip1 = WEAPON.Clip1
@@ -432,6 +437,8 @@ do
     local vectorLength = FindMetaTable("Vector").Length
     local engineTickInterval = engine.TickInterval
     local engineTickCount = engine.TickCount
+    local CurTime = CurTime
+    local UnPredictedCurTime = UnPredictedCurTime
 
     local getmetatable = getmetatable
     local numberMeta = getmetatable(1)
@@ -511,6 +518,7 @@ do
         local owner = entityOwner(self)
         -- if true then return stat end
         local ownerIsNPC = owner:IsNPC()
+        -- local ownerIsNPC = entityIsNPC(owner)
 
         if ownerIsNPC then
             stat = arcGetValue(self, val, stat, "NPC")
@@ -701,7 +709,8 @@ do
         end
 
         -- if CLIENT then
-            self.PV_Tick = ticks + engineTickInterval()
+            -- self.PV_Tick = ticks + (ownerIsNPC and engineTickInterval() * 16 or engineTickInterval())
+            self.PV_Tick = ticks + (ownerIsNPC and 16 or 1)
             self.PV_Cache[processedValueName] = stat
         -- end
 
