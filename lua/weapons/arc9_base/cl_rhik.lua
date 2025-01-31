@@ -361,7 +361,7 @@ function SWEP:GunControllerRHIK(pos, ang)
 
         local anim_mdl = slottbl.GunDriverModel
 
-        if !anim_mdl then return pos, ang end
+        if !IsValid(anim_mdl) then return pos, ang end
 
         local refl_mdl = slottbl.ReflectDriverModel
 
@@ -377,7 +377,9 @@ function SWEP:GunControllerRHIK(pos, ang)
             self:RecalculateIKGunMotionOffset()
         end
 
-        local attpos, attang = anim_mdl:GetAttachment(qca).Pos, anim_mdl:GetAttachment(qca).Ang
+        local getatt = anim_mdl:GetAttachment(qca)
+        if !getatt then return pos, ang end
+        local attpos, attang = getatt.Pos, getatt.Ang
 
         attang:Sub( self.IKGunMotionOffsetAngle )
 
