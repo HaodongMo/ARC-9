@@ -21,13 +21,13 @@ function ARC9.CollectGarbage()
 
     ARC9.CSModelPile = newpile
     
-    if ARC9.Dev(2) then
-        if removed > 0 then
-            print("ARC9 GC: Removed " .. tostring(removed) .. " CSModels")
-        else
-            -- print("ARC9 GC: Nothing removed")
-        end
-    end
+    -- if ARC9.Dev(2) then
+    --     if removed > 0 then
+    --         print("ARC9 GC: Removed " .. tostring(removed) .. " CSModels")
+    --     else
+    --         -- print("ARC9 GC: Nothing removed")
+    --     end
+    -- end
 end
 
 hook.Add("PostCleanupMap", "ARC9.CleanGarbage", function()

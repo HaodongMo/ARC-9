@@ -25,7 +25,9 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
     local owner = self:GetOwner()
 
     if !wm and !IsValid(owner) then return end
-    if !wm and owner:IsNPC() then return end
+    local lod = self:ShouldLOD()
+    local isnpc = owner:IsNPC() or lod > 0
+    if !wm and isnpc then return end
     if wm and ARC9.RTScopeRender then return end
     if custompos then wm = true end
 
@@ -37,7 +39,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             mdl = self.CModel
         else
             mdl = self.WModel
-            lod = self:ShouldLOD()
 
             if lod == 0 and mdl and mdl[1]:IsValid() then
                 mdl[1]:SetMaterial(self:GetProcessedValue("Material", true))
@@ -74,7 +75,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
     if lod < 2 then
         local onground = wm and !IsValid(owner)
     
-        local hidebones = self:GetHiddenBones(wm)
+        local hidebones = isnpc and {} or self:GetHiddenBones(wm)
 
         for _, model in ipairs(mdl or {}) do
             if model.IsAnimationProxy then continue end
