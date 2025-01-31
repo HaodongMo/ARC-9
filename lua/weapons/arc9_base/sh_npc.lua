@@ -103,6 +103,9 @@ function SWEP:NPC_Initialize()
     self.LoadedPreset = true
 
     if CLIENT then return end
+    
+    self.Primary.DefaultClip = self:GetProcessedValue("ClipSize")
+    self:SetClip1(self.ClipSize > 0 and math.max(1, self.Primary.DefaultClip) or self.Primary.DefaultClip)
 
     timer.Simple(0.1, function()
         if IsValid(self) and !self.WeaponWasGiven and arc9_npc_atts:GetBool() then
