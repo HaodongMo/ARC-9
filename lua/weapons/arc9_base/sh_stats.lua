@@ -43,6 +43,7 @@ function SWEP:InvalidateCache()
 
     self.StatCache = {}
     self.HookCache = {}
+    self.AttPosCache = {}
     self.AffectorsCache = nil
     self.ElementsCache = nil
     self.ElementTablesCache = nil
