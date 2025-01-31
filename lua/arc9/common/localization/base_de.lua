@@ -600,8 +600,8 @@ L["settings.effects.muzzle_others.desc"] = "Zeige die Mündungs-Effekte der ARC9
 L["settings.effects.allflash.title"] = "Taschenlampen anderer"
 L["settings.effects.allflash.desc"] = "Zeigt die Taschenlampen aller Spieler an.\n\nBeeinträchtigt die Performance."
 
--- L["settings.effects.lod.title"] = "LOD (Level of Detail) Distance"
--- L["settings.effects.lod.desc"] = "How far away you have to be from models for them to change into lower quality variants without attachments.\n\nLower values make the models change at lower distances, and could improve performance.\n\nHigher values could impact performance, but keeps the highest quality models loaded at further distances.\n\nTPIK distance is also affected."
+L["settings.effects.lod.title"] = "LOD (Level of Detail) Distanz"
+L["settings.effects.lod.desc"] = "Wie weit du von Models entfernt sein musst, um sie durch Varianten niedrigerer Qualität ohne Zubehör zu ersetzen.\nNiedrigere Werte ersetzt Modelle bei näherer Distanz, wodurch Performance verbessert werden kann. Höhere Werte können die Performance beeinträchtigen, stellen Modelle jedoch auch auf weitere Entfernung bei höchstmöglicher Qualität dar.\n\nTPIK-Distanz wird ebenfalls beeinflusst."
 
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Viewmodel-Einstellungen"
