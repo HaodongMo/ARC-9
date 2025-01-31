@@ -21,13 +21,14 @@ function EFFECT:Init(data)
     local ent = data:GetEntity()
 
     if !IsValid(ent) then self:Remove() return end
-    if !IsValid(ent:GetOwner()) then self:Remove() return end
+    local owner, lp = ent:GetOwner(), LocalPlayer()
+    if !IsValid(owner) then self:Remove() return end
 
-    if ent:GetOwner() != LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
+    if owner != lp or lp:ShouldDrawLocalPlayer() then
         mdl = (ent.WModel or {})[1] or ent
         self.VMContext = false
     else
-        mdl = LocalPlayer():GetViewModel()
+        mdl = lp:GetViewModel()
 
         if ent:ShouldTPIK() then
             self.VMContext = false
@@ -42,7 +43,7 @@ function EFFECT:Init(data)
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
 
-    if (LocalPlayer():ShouldDrawLocalPlayer() or ent.Owner != LocalPlayer()) then
+    if (lp:ShouldDrawLocalPlayer() or ent.Owner != lp) then
         wm = true
     end
 
@@ -144,7 +145,7 @@ function EFFECT:Init(data)
     phys:AddAngleVelocity(VectorRand() * 100)
     phys:AddAngleVelocity(ang:Up() * 2500 * velocity / 0.75)
 
-    if !arc9_eject_fx:GetBool() then
+    if owner:IsNPC() or !arc9_eject_fx:GetBool() then
         smoke = false
     end
 
