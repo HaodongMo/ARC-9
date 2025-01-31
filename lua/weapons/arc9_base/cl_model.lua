@@ -73,7 +73,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
 
     local offset_pos = slottbl.Pos or v0
     local offset_ang = slottbl.Ang or a0
-    local bpos, bang
+    local bpos, bang = v0, a0
 
     if dupli > 0 then
         offset_pos = slottbl.DuplicateModels[dupli].Pos or offset_pos
