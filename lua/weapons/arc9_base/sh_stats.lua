@@ -429,6 +429,8 @@ do
     local cvarArc9Truenames = GetConVar("arc9_truenames")
     local cvarGetBool = FindMetaTable("ConVar").GetBool
     local vectorLength = FindMetaTable("Vector").Length
+    local engineTickInterval = engine.TickInterval
+    local engineTickCount = engine.TickCount
 
     local getmetatable = getmetatable
     local numberMeta = getmetatable(1)
@@ -454,12 +456,13 @@ do
         local ct = CurTime()
         local upct = UnPredictedCurTime()
         local processedValueName = tostring(val) .. tostring(base)
+        local ticks = engineTickCount()
 
         -- if CLIENT then -- why cache was client only???
-            if self.PV_Cache[processedValueName] ~= nil and self.PV_Tick == upct then
+            if self.PV_Cache[processedValueName] ~= nil and self.PV_Tick >= ticks then
                 return self.PV_Cache[processedValueName]
             end
-            if self.PV_Tick ~= upct then
+            if self.PV_Tick < ticks then
                 self.PV_Cache = {}
             end
         -- end
@@ -697,7 +700,7 @@ do
         end
 
         -- if CLIENT then
-            self.PV_Tick = upct
+            self.PV_Tick = ticks + engineTickInterval()
             self.PV_Cache[processedValueName] = stat
         -- end
 
