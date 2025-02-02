@@ -29,12 +29,12 @@ end
 
 function SWEP:GetQCAMuzzle()
     local processedValue = self.GetProcessedValue
-    return processedValue(self, "MuzzleEffectQCA", processedValue(self, "Akimbo", true))
+    return processedValue(self, "MuzzleEffectQCA", !processedValue(self, "Akimbo", true))
 end
 
 function SWEP:GetQCAEject()
     local processedValue = self.GetProcessedValue
-    return processedValue(self, "CaseEffectQCA", processedValue(self, "Akimbo", true))
+    return processedValue(self, "CaseEffectQCA", !processedValue(self, "Akimbo", true))
 end
 
 function SWEP:GetQCAMagdrop()
