@@ -84,6 +84,11 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
                     -- Create the subcategory header, if more than one exists for this category
                     if (table.Count(catSubcats) > 1) then
                         local label = vgui.Create("ContentHeader", container)
+						
+						if subcatName:sub(1, 1):match("%d") then
+							subcatName = string.sub(subcatName, 2)
+						end
+						
                         label:SetText(subcatName)
                         self.PropPanel:Add(label)
                     end
