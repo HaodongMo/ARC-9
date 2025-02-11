@@ -5,7 +5,7 @@ function SWEP:ThinkInspect()
     if self.NextUBGLSwitch and self.NextUBGLSwitch > CurTime() then return end
     if self:GetUBGL() and !self:HasAnimation("inspect_ubgl") then return end
     if self:GetGrenadePrimed() then return end
-    if !(self:HasAnimation("enter_inspect") or self:HasAnimation("inspect")) then return end
+	if !(self:HasAnimation( "enter_inspect" ) or self:HasAnimation( "inspect" ) or self:HasAnimation( string.match( "inspect_%d*" ))) then return end
 
     local owner = self:GetOwner()
     local inspecting = self:GetInspecting()
