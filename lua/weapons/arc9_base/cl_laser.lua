@@ -147,6 +147,8 @@ function SWEP:DrawLasers(wm, behav)
         if wm then
             mdl = self.WModel
         end
+
+        if !mdl then return end -- still not valid?? 
     end
 
     local wmnotdrawn = wm and self.LastWMDrawn != UnPredictedCurTime() and owner != lp
