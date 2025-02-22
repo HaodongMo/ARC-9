@@ -332,7 +332,7 @@ local function ArcticBreadDarsuBob(self, pos, ang)
         self.ViewModelNotOnGround = math.Approach(self.ViewModelNotOnGround, 1, ft / 0.1)
     end
     
-    local sightamount = self:GetSightAmount() - (self.Peeking and 0.72 or 0.1)
+    local sightamount = self:GetSightAmount() - ((self.Peeking and !self.PeekingIsSight) and 0.72 or 0.1)
 
     d = d * Lerp(sightamount, 1,0.03) * Lerp(ts, 1, 1.5)
     mag = d * 2
@@ -398,7 +398,7 @@ local function DarsuBob(self, pos, ang)
     local owner = self:GetOwner()
     local ft = FrameTime()
     local velocityangle = owner:GetVelocity()
-    local sightamount = self:GetSightAmount() - (self.Peeking and 0.72 or 0)
+    local sightamount = self:GetSightAmount() - ((self.Peeking and !self.PeekingIsSight) and 0.72 or 0)
     local sprintamount = self:GetSprintAmount()
 
     local sharedmult = self:GetIsSprinting() and self:GetProcessedValue("BobSprintMult", true) or self:GetProcessedValue("BobWalkMult", true)

@@ -134,7 +134,7 @@ function SWEP:AdjustMouseSensitivity()
 			mag = mag + (fov / (self:GetRTScopeFOV() or 90))
 		end
 
-		if self.Peeking then
+		if self.Peeking and !self.PeekingIsSight then
 			mag = magdef
 		end
 

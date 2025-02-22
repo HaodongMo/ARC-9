@@ -2,8 +2,8 @@ SWEP.ViewModelPos = Vector(0, 0, 0)
 SWEP.ViewModelAng = Angle(0, 0, 0)
 SWEP.VMZOffsetForCamera = 0
 
-SWEP.BenchGunViewModelPos = Vector(0, 0, 0)
-SWEP.BenchGunViewModelAng = Angle(0, 0, 0)
+SWEP.BenchGunViewModelPos = nil
+SWEP.BenchGunViewModelAng = nil
 local lht = 0
 local sht = 0
 
@@ -511,7 +511,7 @@ function SWEP:GetViewModelPosition(pos, ang)
     --     end
     -- end
 
-    if arc9DevBenchGun:GetBool() then return self.BenchGunViewModelPos, self.BenchGunViewModelAng end
+    if arc9DevBenchGun:GetBool() and self.BenchGunViewModelPos then return self.BenchGunViewModelPos, self.BenchGunViewModelAng end
     self.BenchGunViewModelPos = pos
     self.BenchGunViewModelAng = ang
 
