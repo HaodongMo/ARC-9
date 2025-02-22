@@ -1425,6 +1425,12 @@ function SWEP:CreateHUD_RHP()
         oldlightdoclick(self2)
         surface.PlaySound(self2:GetChecked() and lightonsound or lightoffsound)
     end
+    topleft_light.OnMouseWheeled = function(self2, state)
+        if state != 0 then
+            surface.PlaySound(hoversound)
+            RunConsoleCommand("arc9_cust_light_brightness", math.Clamp(GetConVar("arc9_cust_light_brightness"):GetFloat() + state * 0.5, -20, 30))
+        end
+    end
 
     if ARC9.Dev(0) and ARC9.ATTsHaveBeenReloaded then
         local topleft_devreload = vgui.Create("ARC9TopButton", topleft_panel)
