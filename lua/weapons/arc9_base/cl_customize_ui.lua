@@ -684,11 +684,6 @@ function SWEP:CreateCustomizeHUD()
         ]]
 
         if ARC9.ControllerMode() then
-            surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(4))
-            surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            surface.SetFont("ARC9_8")
-            surface.DrawText(ARC9:GetPhrase("customize.hint.controller"))
-
             --[[surface.SetMaterial(Material("arc9/gamepad/corner.png", ""))
             surface.SetDrawColor(255, 255, 255, 255)
 
@@ -1399,9 +1394,29 @@ function SWEP:CreateHUD_RHP()
     self.CustomizeHUD.topleft_panel = topleft_panel
     topleft_panel:SetPos(-ARC9ScreenScale(70) + deadzonexx, -ARC9ScreenScale(40)) -- w = 0, h = 0
     topleft_panel:MoveTo(deadzonexx, 0.1, 0.4, 0, 0.1, nil)
-    topleft_panel:SetSize(ARC9ScreenScale(70+29), ARC9ScreenScale(40))
+    topleft_panel:SetSize(ARC9ScreenScale(70+40), ARC9ScreenScale(40 + 29))
     topleft_panel:MoveToFront()
-    topleft_panel.Paint = function(self2, w, h) end
+    topleft_panel.Paint = function(self2, w, h) 
+	
+		if ARC9.ControllerMode() then
+			surface.SetFont("ARC9_8")
+			surface.SetTextColor(ARC9.GetHUDColor("fg"))
+			surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(4))
+			surface.DrawText(ARC9:GetPhrase("customize.hint.controller"))
+		end
+
+		if GetConVar("arc9_cust_light"):GetBool() then
+			local clt = math.Round(GetConVar("arc9_cust_light_brightness"):GetFloat(), 3)
+			local cltw = surface.GetTextSize(clt)
+			
+			surface.SetTextPos(ARC9ScreenScale(58.5) - cltw / 2, ARC9ScreenScale(40))
+			
+			surface.SetFont("ARC9_8")
+			surface.SetTextColor(ARC9.GetHUDColor("fg"))
+			surface.DrawText( clt )
+		end
+
+	end
 
     local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
     topleft_settings:SetPos(ARC9ScreenScale(19), ARC9ScreenScale(19))
