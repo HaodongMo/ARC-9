@@ -1389,6 +1389,7 @@ function SWEP:CreateHUD_RHP()
     end
 
     local deadzonexx = deadzonex:GetInt()
+    local lighthintbrightness = 0
 
     local topleft_panel = vgui.Create("DPanel", bg)
     self.CustomizeHUD.topleft_panel = topleft_panel
@@ -1405,17 +1406,21 @@ function SWEP:CreateHUD_RHP()
 			surface.DrawText(ARC9:GetPhrase("customize.hint.controller"))
 		end
 
-		if GetConVar("arc9_cust_light"):GetBool() then
-			local clt = math.Round(GetConVar("arc9_cust_light_brightness"):GetFloat(), 3)
-			local cltw = surface.GetTextSize(clt)
-			
-			surface.SetTextPos(ARC9ScreenScale(58.5) - cltw / 2, ARC9ScreenScale(40))
-			
-			surface.SetFont("ARC9_8")
-			surface.SetTextColor(ARC9.GetHUDColor("fg"))
-			surface.DrawText( clt )
+        if self2.topleft_light and self2.topleft_light:IsHovered() and GetConVar("arc9_cust_light"):GetBool() then
+            lighthintbrightness = math.Approach(lighthintbrightness, 1, FrameTime() * 10)
+        else
+            lighthintbrightness = math.Approach(lighthintbrightness, 0, FrameTime() * 10)
 		end
 
+        if lighthintbrightness > 0 then
+            local clt = (math.Round(GetConVar("arc9_cust_light_brightness"):GetFloat(), 3) + 20) * 2 .. "%"
+
+            surface.SetFont("ARC9_8")
+            local cltw = surface.GetTextSize(clt)
+            surface.SetTextPos(ARC9ScreenScale(47.5 + 21/2) - cltw /2, ARC9ScreenScale(42))
+            surface.SetTextColor(255, 255, 255, lighthintbrightness * 255)
+            surface.DrawText(clt)
+        end
 	end
 
     local topleft_settings = vgui.Create("ARC9TopButton", topleft_panel)
@@ -1435,11 +1440,16 @@ function SWEP:CreateHUD_RHP()
     topleft_light:SetIsCheckbox(true)
     topleft_light:SetConVar("arc9_cust_light")
     topleft_light:SetValue(GetConVar("arc9_cust_light"):GetBool())
+    topleft_panel.topleft_light = topleft_light
     local oldlightdoclick = topleft_light.DoClick
     topleft_light.DoClick = function(self2)
         oldlightdoclick(self2)
+
+        topleft_light:SetCursor(self2:GetChecked() and "sizens" or "hand")
+
         surface.PlaySound(self2:GetChecked() and lightonsound or lightoffsound)
-    end
+    end    
+
     topleft_light.OnMouseWheeled = function(self2, state)
         if state != 0 then
             surface.PlaySound(hoversound)
