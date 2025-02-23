@@ -37,6 +37,8 @@ ARC9.IncompatibleAddons = {
     ["2301721246"] = "Breaks stickers for ARC9 and many other addons.",
     -- Immersive Weapons & Immersive Camera
     ["2916953531"] = "Breaks movement speed on ARC9 guns.",
+    -- LeyHitreg
+    ["3421440369"] = "Breaks bullet spread on ARC9 guns.",
 
 
 
