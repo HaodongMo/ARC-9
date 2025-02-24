@@ -87,10 +87,10 @@ local soundtab6 = {
     name = "shootdistantindoor"
 }
 
-function SWEP:DoShootSounds(npc)
+function SWEP:DoShootSounds()
     local randomChoice = self.RandomChoice
     local pvar = swepGetProcessedValue(self, "ShootPitchVariation", true)
-    local pvrand = npc and math.Rand(-pvar, pvar) or util.SharedRandom("ARC9_sshoot", -pvar, pvar)
+    local pvrand = math.Rand(-pvar, pvar) -- util.SharedRandom("ARC9_sshoot", -pvar, pvar) -- who gives a shit??? plus it broke af
 
     local sstr = lsstr
     local sslr = lsslr

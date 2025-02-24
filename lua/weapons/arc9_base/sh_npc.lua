@@ -6,7 +6,7 @@ function SWEP:NPC_PrimaryAttack()
 
     self:SetBaseSettings()
     self:SetShouldHoldType()
-    self:DoShootSounds(true)
+    self:DoShootSounds()
     self:DoEffects()
     self:DoEject()
 
