@@ -602,6 +602,8 @@ function SWEP:CanDetach(addr)
 
     if slottbl and slottbl.Integral then return false end
 
+    if self:RunHook("Hook_CanDetachAttachment", {addr = addr, slottbl = slottbl}) == false then return false end
+
     return true
 end
 
