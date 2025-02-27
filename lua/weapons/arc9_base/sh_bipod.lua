@@ -94,6 +94,9 @@ function SWEP:EnterBipod()
     self:SetBipodPos(owner:EyePos() + (owner:EyeAngles():Forward() * 4) - Vector(0, 0, 2))
 
     self:ExitSights()
+
+    owner.ARC9_HadNoDMGForceEFlag = owner:IsEFlagSet( EFL_NO_DAMAGE_FORCES )
+    owner:AddEFlags( EFL_NO_DAMAGE_FORCES )
 end
 
 function SWEP:ExitBipod(force)
@@ -112,6 +115,11 @@ function SWEP:ExitBipod(force)
     self:CancelReload()
 
     self:ExitSights()
+
+    local owner = self:GetOwner()
+
+    if !owner.ARC9_HadNoDMGForceEFlag then owner:RemoveEFlags( EFL_NO_DAMAGE_FORCES ) end
+    owner.ARC9_HadNoDMGForceEFlag = nil
 end
 
 SWEP.BipodTime = 0.5
