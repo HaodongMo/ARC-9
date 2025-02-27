@@ -14,6 +14,7 @@ end
 local nvgon = false
 local function checknvg(wpn) -- this func a bit different than what in cl_laser
     local lp = LocalPlayer()
+    if !IsValid(lp) then return end
     if lp.quadnodsonlight or lp:GetNWBool("nvg_on", false) then return true end -- arctic nvgs and mw nvgs
     if lp.EZarmor and lp.EZarmor.effects and lp.EZarmor.effects.nightVision then return true end -- jmod
     local sight = wpn:GetSight()
