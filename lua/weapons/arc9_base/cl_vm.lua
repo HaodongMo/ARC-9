@@ -133,6 +133,7 @@ function SWEP:PreDrawViewModel()
 
     local bipodamount = self:GetBipodAmount()
     local vm = self:GetVM()
+    if !IsValid(vm) then return end
 
     if self.HasSightsPoseparam then
         vm:SetPoseParameter("sights", math.max(sightamount, bipodamount, custdelta))
@@ -203,13 +204,16 @@ function SWEP:ViewModelDrawn()
     self:DrawFlashlightsVM()
 
     self:DrawLasers(false)
-    self:GetVM():SetMaterial("")
+    local vm = self:GetVM()
+    if !IsValid(vm) then return end
+    vm:SetMaterial("")
 	for ind = 0, 31 do
-		self:GetVM():SetSubMaterial(ind, "")
+		vm:SetSubMaterial(ind, "")
 	end
 end
 
 function SWEP:PostDrawViewModel()
+    if !IsValid(self:GetVM()) then return end
     local inrt = ARC9.RTScopeRender
 
     local newmzpcfs = {}

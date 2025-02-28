@@ -528,6 +528,7 @@ local arc9Fov = GetConVar("arc9_fov")
 
 function SWEP:GetViewModelFOV()
     local owner = self:GetOwner()
+    if !IsValid(owner) then return end
     local ownerfov = owner:GetFOV()
     local convarfov = arc9Fov:GetInt()
     -- local curTime = UnPredictedCurTime()

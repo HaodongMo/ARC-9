@@ -22,7 +22,6 @@ function SWEP:ShouldTPIK()
     -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
     if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
-    if self:RunHook("Hook_BlockTPIK") then return end
     -- if !arc9_tpik:GetBool() then return false end
 
     local should = false
@@ -32,6 +31,8 @@ function SWEP:ShouldTPIK()
     else
         should = arc9_tpik:GetBool()
     end
+    
+    if self:RunHook("Hook_BlockTPIK") then should = false end
 
     local wm = self:GetWM()
     if IsValid(wm) and wm.slottbl then

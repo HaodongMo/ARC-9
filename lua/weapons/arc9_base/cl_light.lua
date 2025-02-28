@@ -195,6 +195,7 @@ function SWEP:DrawFlashlightsVM()
 
     local owner = self:GetOwner()
     local lp = LocalPlayer()
+    if !IsValid(owner) then return end
     local eyepos = owner:EyePos()
 
     local anydrawn = false
