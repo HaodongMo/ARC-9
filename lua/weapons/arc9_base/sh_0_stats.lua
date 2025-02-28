@@ -192,7 +192,10 @@ do
                 any = true
             end
 
-            data = hook.Run("ARC9_" .. val, self, data) or data
+            data2 = hook.Run("ARC9_" .. val, self, data)
+            if data2 ~= nil then
+                data = data2
+            end
 
             return data, any
         end
@@ -229,7 +232,10 @@ do
         end
 
         self.HookCache[val] = newCache
-        data = hook.Run("ARC9_" .. val, self, data) or data
+        data2 = hook.Run("ARC9_" .. val, self, data)
+        if data2 ~= nil then
+            data = data2
+        end
 
         return data, any
     end
