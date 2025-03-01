@@ -181,13 +181,14 @@ do
             MAGIC2 = 210 / (engine.TickInterval() / 0.015)
         end
 
-        if CLIENT and RealFrameTime() > 0.09 then -- super lag detected, clamping recoil
+        local ft = CLIENT and RealFrameTime() or FrameTime()
+        if ft == 0 then return end -- game is paused
+
+        if CLIENT and ft > 0.09 then -- super lag detected, clamping recoil
             MAGIC1 = 0.1
             MAGIC2 = 0.1
         end
-
-        local ft = FrameTime()
-
+        
         local springconstant = swepGetProcessedValue(self, "VisualRecoilDampingConst", true) or 120
         local springmagnitude = swepGetProcessedValue(self, "VisualRecoilSpringMagnitude", true) or 1
         local springdamping = swepGetProcessedValue(self, "VisualRecoilSpringPunchDamping", true) or 6
