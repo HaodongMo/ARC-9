@@ -130,6 +130,10 @@ ARC9AttButton.Color = ARC9.GetHUDColor("fg")
 ARC9AttButton.ColorBlock = ARC9.GetHUDColor("con")
 ARC9AttButton.Icon = Material("arc9/ui/settings.png", "mips")
 ARC9AttButton.MatIdle = Material("arc9/ui/att.png", "mips")
+ARC9AttButton.MatFolderBack = Material("arc9/ui/folder_back.png", "mips smooth")
+ARC9AttButton.MatFolderFront = Material("arc9/ui/folder_front.png", "mips smooth")
+ARC9AttButton.MatFolderFrontFav = Material("arc9/ui/folder_front_fav.png", "mips smooth")
+ARC9AttButton.MatFolderHeart = Material("arc9/ui/folder_heart.png", "mips smooth")
 ARC9AttButton.MatEmpty = Material("arc9/ui/att_empty.png", "mips")
 -- ARC9AttButton.MatHover = Material("arc9/ui/att_hover.png", "mips")
 ARC9AttButton.MatBlock = Material("arc9/ui/att_block.png", "mips")
@@ -230,12 +234,37 @@ function ARC9AttButton:Paint(w, h)
         surface.DrawTexturedRect(w - ARC9ScreenScale(11), ARC9ScreenScale(3), ARC9ScreenScale(8), ARC9ScreenScale(8))
     end
 
-    if self.FolderContain then
+    if self.FolderContain then -- is folder
         surface.SetFont("ARC9_12")
         local tww = surface.GetTextSize(self.FolderContain)
         surface.SetTextColor(iconcolor)
         surface.SetTextPos((w - tww) / 2, h - ARC9ScreenScale(28))
         surface.DrawText(self.FolderContain)
+
+
+        if self.FolderIcon1 then
+            surface.SetMaterial(self.FolderIcon1)
+            surface.SetDrawColor(iconcolor) -- icon
+            -- draw shadow here, idk how 
+            surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625*1.07, w/2.625*1.07, 20.4) -- 512/168, 512/155, 512/195
+            surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625, w/2.625, 20.4) -- 512/168, 512/155, 512/195
+        end
+        if self.FolderIcon2 then
+            surface.SetMaterial(self.FolderIcon2)
+            surface.SetDrawColor(iconcolor)
+            surface.DrawTexturedRectRotated(w/1.45, w/3.0, w/2.625*1.07, w/2.625*1.07, -18) -- 512/358, 512/155, 512/195
+            surface.DrawTexturedRectRotated(w/1.45, w/3.0, w/2.625, w/2.625, -18) -- 512/358, 512/155, 512/195
+        end
+        
+        surface.SetDrawColor(color)
+        surface.SetMaterial(self.FolderFav and self.MatFolderFrontFav or self.MatFolderFront)
+        surface.DrawTexturedRect(0, 0, w, w)
+
+        if self.FolderFav then
+            surface.SetDrawColor(colorclicked)
+            surface.SetMaterial(self.MatFolderHeart)
+            surface.DrawTexturedRect(0, 0, w, w)
+        end
     end
 
     -- text
@@ -339,6 +368,14 @@ end
 
 function ARC9AttButton:SetFullColorIcon(bool)
     self.FullColorIcon = bool
+end
+
+function ARC9AttButton:SetFolderIcon(id, mat, isfav)
+    self.Icon = ARC9AttButton.MatFolderBack
+    if id == 1 then self.FolderIcon1 = mat
+    elseif id == 2 then self.FolderIcon2 = mat end
+
+    if isfav then self.FolderFav = true end
 end
 
 vgui.Register("ARC9AttButton", ARC9AttButton, "DCheckBox") -- DButton

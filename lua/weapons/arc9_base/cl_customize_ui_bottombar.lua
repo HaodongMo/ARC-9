@@ -76,6 +76,24 @@ local function recursivefoldercount(folder)
     return count
 end
 
+local function tworandomstrings(tbl)
+    local valid_strings = {}
+    for key, _ in pairs(tbl) do
+        if isstring(key) and !string.find(key, "%u") then table.insert(valid_strings, key) end
+    end
+    
+    local count = #valid_strings
+    if count < 2 then return false end
+
+    local first, second = math.random(count), math.random(count)
+    while second == first do
+        second = math.random(count)
+    end
+
+    return valid_strings[first], valid_strings[second]
+end
+
+
 local function enterfolder(self, scroll, slottbl, fname)
     if fname != true then
         if fname == nil then
@@ -174,9 +192,25 @@ local function enterfolder(self, scroll, slottbl, fname)
 
             local folderbtn = vgui.Create("ARC9AttButton", scroll)
 
-            folderbtn:SetButtonText(folder == "!favorites" and ARC9:GetPhrase("folder.favorites") or ARC9:GetPhrase("folder." .. folder) or folder)
-            folderbtn:SetIcon(folder == "!favorites" and folderfavicon or foldericon)
+            local isfav = folder == "!favorites"
+            folderbtn:SetButtonText(isfav and ARC9:GetPhrase("folder.favorites") or ARC9:GetPhrase("folder." .. folder) or folder)
+            folderbtn:SetIcon(isfav and folderfavicon or foldericon)
             folderbtn:SetEmpty(true)
+
+            local randomatt1, randomatt2 = tworandomstrings(children)
+
+            if randomatt1 then
+                randomatt1 = ARC9.GetAttTable(randomatt1)
+                randomatt2 = ARC9.GetAttTable(randomatt2)
+
+                if istable(randomatt1) and randomatt1.Icon then
+                    folderbtn:SetFolderIcon(1, randomatt1.Icon, isfav)
+                end
+                
+                if istable(randomatt2) and randomatt2.Icon then
+                    folderbtn:SetFolderIcon(2, randomatt2.Icon, isfav)
+                end
+            end
 
             folderbtn:DockMargin(0, 0, ARC9ScreenScale(4), 0)
             folderbtn:Dock(LEFT)
