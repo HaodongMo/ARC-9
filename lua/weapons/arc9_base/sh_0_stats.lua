@@ -494,6 +494,7 @@ do
                         
 
                         self.PV_CacheLong[processedValueName].time = upct + 60 -- idk whats number here should be
+                        if self.DynamicConditions[val] then self.PV_CacheLong[processedValueName].time = upct end
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
                         
                 -- if istable(self.PV_CacheLong[processedValueName].value) then
