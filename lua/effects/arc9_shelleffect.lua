@@ -15,6 +15,8 @@ EFFECT.PCFs = {}
 local arc9_eject_time = GetConVar("arc9_eject_time")
 local arc9_eject_fx = GetConVar("arc9_eject_fx")
 
+local FormatViewModelAttachment = ARC9.FormatViewModelAttachment
+
 function EFFECT:Init(data)
 
     local att = data:GetAttachment()
@@ -93,17 +95,15 @@ function EFFECT:Init(data)
     ang:RotateAroundAxis(ang:Forward(), 90 + correctang.p)
     ang:RotateAroundAxis(ang:Right(), correctang.y)
     ang:RotateAroundAxis(ang:Up(), correctang.r)
-
-    self:SetPos(origin)
+    
+    self:SetPos(FormatViewModelAttachment(origin, false))
     self:SetModel(model or "")
     self:SetMaterial(material or "")
     self:DrawShadow(true)
     self:SetAngles(ang)
     self:SetModelScale(scale or 1)
 
-    if self.VMContext then
-        self:SetNoDraw(true)
-    end
+    self:SetNoDraw(true)
 
     self.ShellPitch = pitch
 

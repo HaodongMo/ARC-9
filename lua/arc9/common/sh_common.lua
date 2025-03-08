@@ -400,3 +400,53 @@ function ARC9.IsPointOutOfBounds(vec)
         return true
     end
 end
+
+if CLIENT then
+    function ARC9.FormatViewModelAttachment(vOrigin, bFrom) -- from wiki
+        local view = render.GetViewSetup()
+
+        local vEyePos = view.origin
+        local aEyesRot = view.angles
+        local vOffset = vOrigin - vEyePos
+        local vForward = aEyesRot:Forward()
+
+        local nViewX = math.tan( view.fovviewmodel_unscaled * math.pi / 360)
+
+        if (nViewX == 0) then
+            vForward:Mul(vForward:Dot(vOffset))
+            vEyePos:Add(vForward)
+
+            return vEyePos
+        end
+
+        local nWorldX = math.tan( view.fov_unscaled * math.pi / 360)
+
+        if (nWorldX == 0) then
+            vForward:Mul(vForward:Dot(vOffset))
+            vEyePos:Add(vForward)
+
+            return vEyePos
+        end
+
+        local vRight = aEyesRot:Right()
+        local vUp = aEyesRot:Up()
+
+        if (bFrom) then
+            local nFactor = nWorldX / nViewX
+            vRight:Mul(vRight:Dot(vOffset) * nFactor)
+            vUp:Mul(vUp:Dot(vOffset) * nFactor)
+        else
+            local nFactor = nViewX / nWorldX
+            vRight:Mul(vRight:Dot(vOffset) * nFactor)
+            vUp:Mul(vUp:Dot(vOffset) * nFactor)
+        end
+
+        vForward:Mul(vForward:Dot(vOffset))
+
+        vEyePos:Add(vRight)
+        vEyePos:Add(vUp)
+        vEyePos:Add(vForward)
+
+        return vEyePos
+    end
+end

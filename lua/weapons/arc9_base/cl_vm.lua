@@ -210,6 +210,30 @@ function SWEP:ViewModelDrawn()
 	for ind = 0, 31 do
 		vm:SetSubMaterial(ind, "")
 	end
+
+    
+    local newpcfs = {}
+
+    for _, pcf in ipairs(self.PCFs) do
+        if IsValid(pcf) then
+            pcf:Render()
+            table.insert(newpcfs, pcf)
+        end
+    end
+
+    if !inrt then self.PCFs = newpcfs end
+
+    local newfx = {}
+
+    for _, fx in ipairs(self.ActiveEffects) do
+        if IsValid(fx) then
+            if !fx.VMContext then continue end
+            fx:DrawModel()
+            table.insert(newfx, fx)
+        end
+    end
+
+    if !inrt then self.ActiveEffects = newfx end
 end
 
 function SWEP:PostDrawViewModel()
@@ -226,32 +250,6 @@ function SWEP:PostDrawViewModel()
     end
 
     if !inrt then self.MuzzPCFs = newmzpcfs end
-
-    cam.Start3D()
-        cam.IgnoreZ(false)
-        local newpcfs = {}
-
-        for _, pcf in ipairs(self.PCFs) do
-            if IsValid(pcf) then
-                pcf:Render()
-                table.insert(newpcfs, pcf)
-            end
-        end
-
-        if !inrt then self.PCFs = newpcfs end
-
-        local newfx = {}
-
-        for _, fx in ipairs(self.ActiveEffects) do
-            if IsValid(fx) then
-                if !fx.VMContext then continue end
-                fx:DrawModel()
-                table.insert(newfx, fx)
-            end
-        end
-
-        if !inrt then self.ActiveEffects = newfx end
-    cam.End3D()
 
     if ARC9.PresetCam then return end
 

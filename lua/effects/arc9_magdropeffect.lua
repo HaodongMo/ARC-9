@@ -6,19 +6,23 @@ EFFECT.AlreadyPlayedSound = false
 EFFECT.LifeTime = 3
 EFFECT.SpawnTime = 0
 
+EFFECT.VMContext = true
+
+local FormatViewModelAttachment = ARC9.FormatViewModelAttachment
 
 function EFFECT:Init(data)
     local att = data:GetAttachment()
     local ent = data:GetEntity()
 
     if !IsValid(ent) then self:Remove() return end
-    if !IsValid(ent:GetOwner()) then self:Remove() return end
+    local owner, lp = ent:GetOwner(), LocalPlayer()
+    if !IsValid(owner) then self:Remove() return end
 
-    if ent:GetOwner() != LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
+    if owner != lp or lp:ShouldDrawLocalPlayer() then
         mdl = (ent.WModel or {})[1] or ent
         self.VMContext = false
     else
-        mdl = LocalPlayer():GetViewModel()
+        mdl = lp:GetViewModel()
 
         if ent:ShouldTPIK() then
             self.VMContext = false
@@ -33,6 +37,10 @@ function EFFECT:Init(data)
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
 
+    if (lp:ShouldDrawLocalPlayer() or ent.Owner != lp) then
+        wm = true
+    end
+    
     local model = ent:GetProcessedValue("DropMagazineModel", true)
     local skinn = ent:GetProcessedValue("DropMagazineSkin", true)
     local sounds = ent:GetProcessedValue("DropMagazineSounds", true)
@@ -49,15 +57,13 @@ function EFFECT:Init(data)
     origin:Add(ang:Up() * correctpos.y)
     origin:Add(ang:Forward() * correctpos.z)
 
-    self:SetPos(origin)
+    self:SetPos(FormatViewModelAttachment(origin, false))
     self:SetModel(model or "")
     self:SetSkin(skinn)
     self:DrawShadow(true)
     self:SetAngles(ang)
 
-    if self.VMContext then
-        self:SetNoDraw(true)
-    end
+    self:SetNoDraw(true)
 
     self.Sounds = sounds or ARC9.ShellSoundsTable
 
