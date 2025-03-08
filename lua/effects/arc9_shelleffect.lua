@@ -47,6 +47,7 @@ function EFFECT:Init(data)
 
     if (lp:ShouldDrawLocalPlayer() or ent.Owner != lp) then
         wm = true
+        self.VMContext = false
     end
 
     -- ang:RotateAroundAxis(ang:Up(), -90)
@@ -103,7 +104,7 @@ function EFFECT:Init(data)
     self:SetAngles(ang)
     self:SetModelScale(scale or 1)
 
-    self:SetNoDraw(true)
+    if self.VMContext then self:SetNoDraw(true) end
 
     self.ShellPitch = pitch
 

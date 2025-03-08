@@ -39,6 +39,7 @@ function EFFECT:Init(data)
 
     if (lp:ShouldDrawLocalPlayer() or ent.Owner != lp) then
         wm = true
+        self.VMContext = false
     end
     
     local model = ent:GetProcessedValue("DropMagazineModel", true)
@@ -63,7 +64,7 @@ function EFFECT:Init(data)
     self:DrawShadow(true)
     self:SetAngles(ang)
 
-    self:SetNoDraw(true)
+    if self.VMContext then self:SetNoDraw(true) end
 
     self.Sounds = sounds or ARC9.ShellSoundsTable
 
