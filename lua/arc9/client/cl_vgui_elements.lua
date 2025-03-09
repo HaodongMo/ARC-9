@@ -242,18 +242,27 @@ function ARC9AttButton:Paint(w, h)
         surface.DrawText(self.FolderContain)
 
 
-        if self.FolderIcon1 then
+        if self.FolderIcon1 and !self.FolderIcon2 then -- single icon
             surface.SetMaterial(self.FolderIcon1)
             surface.SetDrawColor(iconcolor) -- icon
             -- draw shadow here, idk how 
-            surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625*1.07, w/2.625*1.07, 20.4) -- 512/168, 512/155, 512/195
-            surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625, w/2.625, 20.4) -- 512/168, 512/155, 512/195
-        end
-        if self.FolderIcon2 then
-            surface.SetMaterial(self.FolderIcon2)
-            surface.SetDrawColor(iconcolor)
-            surface.DrawTexturedRectRotated(w/1.45, w/3.0, w/2.625*1.07, w/2.625*1.07, -18) -- 512/358, 512/155, 512/195
-            surface.DrawTexturedRectRotated(w/1.45, w/3.0, w/2.625, w/2.625, -18) -- 512/358, 512/155, 512/195
+            surface.DrawTexturedRectRotated(w/2, w/3.3, w/2*1.05, w/2*1.05, 0)
+            surface.DrawTexturedRectRotated(w/2, w/3.3, w/2, w/2, 0)
+        else
+            if self.FolderIcon1 then
+                surface.SetMaterial(self.FolderIcon1)
+                surface.SetDrawColor(iconcolor) -- icon
+                -- draw shadow here, idk how 
+                surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625*1.07, w/2.625*1.07, 20.4) -- 512/168, 512/155, 512/195
+                surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625, w/2.625, 20.4) -- 512/168, 512/155, 512/195
+            end
+
+            if self.FolderIcon2 then
+                surface.SetMaterial(self.FolderIcon2)
+                surface.SetDrawColor(iconcolor)
+                surface.DrawTexturedRectRotated(w/1.45, w/3.0, w/2.625*1.07, w/2.625*1.07, -18) -- 512/358, 512/155, 512/195
+                surface.DrawTexturedRectRotated(w/1.45, w/3.0, w/2.625, w/2.625, -18) -- 512/358, 512/155, 512/195
+            end
         end
         
         surface.SetDrawColor(color)

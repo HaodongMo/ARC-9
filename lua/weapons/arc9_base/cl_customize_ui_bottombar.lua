@@ -210,6 +210,11 @@ local function enterfolder(self, scroll, slottbl, fname)
                 if istable(randomatt2) and randomatt2.Icon then
                     folderbtn:SetFolderIcon(2, randomatt2.Icon, isfav)
                 end
+            elseif count == 1 then
+                randomatt1 = ARC9.GetAttTable(table.GetKeys(children)[1])
+                if istable(randomatt1) and randomatt1.Icon then
+                    folderbtn:SetFolderIcon(1, randomatt1.Icon, isfav)
+                end
             end
 
             folderbtn:DockMargin(0, 0, ARC9ScreenScale(4), 0)
