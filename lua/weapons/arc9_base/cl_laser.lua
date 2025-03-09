@@ -197,6 +197,17 @@ function SWEP:DrawLasers(wm, behav)
                 lasang:RotateAroundAxis(forward, lasercorrectionangle.r)
             end
 
+            if self.LaserCorrectBySightAng and self:GetInSights() then
+                local sight = self:GetSight()
+                if sight and sight.Ang then
+                    local up, right, forward = lasang:Up(), lasang:Right(), lasang:Forward()
+
+                    lasang:RotateAroundAxis(up, sight.Ang.y)
+                    lasang:RotateAroundAxis(right, sight.Ang.p)
+                    -- lasang:RotateAroundAxis(forward, sight.Ang.r)
+                end
+            end
+
 			local color = atttbl.LaserColor or lasercolorred
 			local colorplayer = !owner:IsNPC() and owner:GetWeaponColor():ToColor()
 
