@@ -58,7 +58,8 @@ function EFFECT:Init(data)
     origin:Add(ang:Up() * correctpos.y)
     origin:Add(ang:Forward() * correctpos.z)
 
-    self:SetPos(FormatViewModelAttachment(origin, false))
+    if self.VMContext then origin = FormatViewModelAttachment(origin, false) end
+    self:SetPos(origin)
     self:SetModel(model or "")
     self:SetSkin(skinn)
     self:DrawShadow(true)

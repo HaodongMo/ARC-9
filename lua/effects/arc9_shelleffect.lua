@@ -97,7 +97,8 @@ function EFFECT:Init(data)
     ang:RotateAroundAxis(ang:Right(), correctang.y)
     ang:RotateAroundAxis(ang:Up(), correctang.r)
     
-    self:SetPos(FormatViewModelAttachment(origin, false))
+    if self.VMContext then origin = FormatViewModelAttachment(origin, false) end
+    self:SetPos(origin)
     self:SetModel(model or "")
     self:SetMaterial(material or "")
     self:DrawShadow(true)
