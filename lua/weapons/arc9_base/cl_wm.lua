@@ -32,6 +32,8 @@ hook.Add("PostDrawTranslucentRenderables", "ARC9_TranslucentDraw", function() --
         if IsValid(wep) and wep.ARC9 then
             wep:DrawLasers(true)
             wep:DrawFlashlightsWM()
+            
+            wep:DrawTranslucentPass(true)
         end
     end
 end)

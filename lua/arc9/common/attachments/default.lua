@@ -52,6 +52,7 @@ ATT.ModelSkin = 0
 ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
 ATT.NoDraw = false
+ATT.TranslucentPass = false -- if that model has $translucent 1 in vmt, will be drawn behind c_hands otherwise
 
 ATT.Material = "material/path"
 

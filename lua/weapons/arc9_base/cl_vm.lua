@@ -240,6 +240,8 @@ function SWEP:PostDrawViewModel()
     if !IsValid(self:GetVM()) then return end
     local inrt = ARC9.RTScopeRender
 
+    self:DrawTranslucentPass()
+    
     local newmzpcfs = {}
 
     for _, pcf in ipairs(self.MuzzPCFs) do

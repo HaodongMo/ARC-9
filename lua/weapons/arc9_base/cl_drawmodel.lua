@@ -166,7 +166,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             model.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", true)
 
 
-            if !model.NoDraw then
+            if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam) then
                 model:DrawModel()
             end
 
@@ -187,6 +187,27 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         --     --         self:DrawLightFlare(apos, aang:Forward(), model.Flare.Color, model.Flare.Size, model.Flare.Focus)
         --     --     end
         --     -- end
+        end
+    end
+end
+
+function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
+    if !wm then
+        if self.VModel then
+            for _, model in ipairs(self.VModel) do
+                if model.istranslucent and IsValid(model) then
+                    if self.CustomizeDelta > 0 then cam.IgnoreZ(true) end
+                    model:DrawModel()
+                end
+            end
+        end
+    else
+        if self.WModel then
+            for _, model in ipairs(self.WModel) do
+                if model.istranslucent and IsValid(model) then
+                    model:DrawModel()
+                end
+            end
         end
     end
 end
