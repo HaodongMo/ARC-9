@@ -88,11 +88,14 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 model.OptimizPrevWMPos = onground and self:GetPos() or nil
 
                 if ARC9.RTScopeRender and atttbl.RTScope then continue end -- dont draw scope model while drawing vm from scope position
+                
+                model.hidden = false
 
                 if model.charmparent then
                     continue
                 else
                     if hidebones[slottbl.Bone or -1] then
+                        model.hidden = true
                         continue
                     end
 
@@ -100,6 +103,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                         local duplitbl = (slottbl.DuplicateModels or {})[model.Duplicate]
 
                         if hidebones[(duplitbl or {}).Bone or -1] then
+                            model.hidden = true
                             continue
                         end
                     end
@@ -195,7 +199,7 @@ function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
     if !wm then
         if self.VModel then
             for _, model in ipairs(self.VModel) do
-                if model.istranslucent and IsValid(model) then
+                if model.istranslucent and !model.hidden and IsValid(model) then
                     if self.CustomizeDelta > 0 then cam.IgnoreZ(true) end
                     model:DrawModel()
                 end
@@ -204,7 +208,7 @@ function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
     else
         if self.WModel then
             for _, model in ipairs(self.WModel) do
-                if model.istranslucent and IsValid(model) then
+                if model.istranslucent and !model.hidden and IsValid(model) then
                     model:DrawModel()
                 end
             end
