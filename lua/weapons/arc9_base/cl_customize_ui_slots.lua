@@ -134,9 +134,9 @@ function SWEP:CreateHUD_Slots(scroll)
                 self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
                 if self2.slot.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
-					if atttbl.ToggleStats then
-						self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
-					end
+					-- if atttbl.ToggleStats then
+						-- self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
+					-- end
                 end
                 self2.slot.hovered = true
                 self.CustomizeLastHoveredSlot = self2
