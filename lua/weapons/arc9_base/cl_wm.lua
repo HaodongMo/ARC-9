@@ -16,7 +16,7 @@ function SWEP:DrawWorldModel()
         -- self:DrawLasers(true)
         self:DoTPIK()
         -- self:DrawFlashlightsWM()
-        if self:ShouldLOD() < 2 then self.LastWMDrawn = UnPredictedCurTime() end
+        if self:ShouldLOD() < 2 then self.LastWMDrawn = FrameNumber() end
 
         -- if self:GetValue("Laser") and self:GetTactical() then -- too hard to know if any laser is active
         --     self:SetRenderBounds(goodmin, extramax)
@@ -33,7 +33,7 @@ hook.Add("PostDrawTranslucentRenderables", "ARC9_TranslucentDraw", function() --
             wep:DrawLasers(true)
             wep:DrawFlashlightsWM()
             
-            wep:DrawTranslucentPass(true)
+            if FrameNumber() == wep.LastWMDrawn then wep:DrawTranslucentPass(true) end -- hacky
         end
     end
 end)

@@ -129,7 +129,7 @@ function SWEP:DrawLasers(wm, behav)
     if !wm and !IsValid(owner) then return end
     if !wm and owner:IsNPC() then return end
     local lp = LocalPlayer()
-    if wm and owner == lp and self.LastWMDrawn != UnPredictedCurTime() then return end
+    if wm and owner == lp and self.LastWMDrawn != FrameNumber() then return end
     if wm and owner == lp and !lp:ShouldDrawLocalPlayer() then return end
 
     local mdl = self.VModel
@@ -151,7 +151,7 @@ function SWEP:DrawLasers(wm, behav)
         if !mdl then return end -- still not valid?? 
     end
 
-    local wmnotdrawn = wm and self.LastWMDrawn != UnPredictedCurTime() and owner != lp
+    local wmnotdrawn = wm and self.LastWMDrawn != FrameNumber() and owner != lp
     local nvgon = checknvg(self)
 
     for _, model in ipairs(mdl) do

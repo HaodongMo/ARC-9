@@ -130,7 +130,7 @@ function SWEP:DrawFlashlightsWM()
     end
     
     if isotherplayer and lp:EyePos():DistToSqr(owner:EyePos()) > 2048^2 then self:KillFlashlights() return end
-    local wmnotdrawn = self.LastWMDrawn != UnPredictedCurTime() and isotherplayer
+    local wmnotdrawn = self.LastWMDrawn != FrameNumber() and isotherplayer
 
     local anydrawn = false
     for i, k in ipairs(self.Flashlights) do
