@@ -624,9 +624,10 @@ local function DrawSettings(bg, page)
 
                 if noperms then newel:SetEnabled(false) end
             elseif v2.type == "input" then
-                local newel = vgui.Create("DTextEntry", elpanel)
+                local newel = vgui.Create("ARC9InputField", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
                 newel:SetText(v2.text)
+                if v2.convar then newel:SetConVar("arc9_" .. v2.convar) end
             elseif v2.type == "combo" then
                 local newel = vgui.Create("ARC9ComboBox", elpanel)
                 newel:SetPos(elpw-ARC9ScreenScale(65), ARC9ScreenScale(6))
