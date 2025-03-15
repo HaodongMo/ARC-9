@@ -1055,3 +1055,42 @@ function ARC9ColorButton:Paint(w, h)
 end
 
 vgui.Register("ARC9ColorButton", ARC9ColorButton, "DButton")
+
+local ARC9InputField = {}
+ARC9InputField.Color = ARC9.GetHUDColor("fg")
+ARC9InputField.ColorClicked = ARC9.GetHUDColor("hi")
+ARC9InputField.MatIdle = Material("arc9/ui/button.png", "mips")
+ARC9InputField.MatSel = Material("arc9/ui/button_sel.png", "mips")
+
+function ARC9InputField:Init()
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(13))
+
+    self:SetPaintBackground(false)
+    self:SetTextColor(color_white)
+    self:SetFont("ARC9_10_Slim")
+end
+
+function ARC9InputField:Paint(w, h)
+    local color = self.Color
+    local color2 = ARC9.GetHUDColor("hi")
+
+    if self:IsEditing() then
+        color = color2
+    end
+
+    surface.SetDrawColor(color)
+    surface.SetMaterial(self.MatIdle)
+    surface.DrawTexturedRect(0, 0, w, h)
+
+    if self:IsHovered() then
+        surface.SetDrawColor(color2)
+        surface.SetMaterial(self.MatSel)
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+
+    derma.SkinHook("Paint", "TextEntry", self, w, h)
+
+    return false
+end
+
+vgui.Register("ARC9InputField", ARC9InputField, "DTextEntry")
