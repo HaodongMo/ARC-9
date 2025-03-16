@@ -1067,7 +1067,8 @@ function ARC9InputField:Init()
 
     self:SetPaintBackground(false)
     self:SetTextColor(color_white)
-    self:SetFont("ARC9_10_Slim")
+    self:SetFont("ARC9_10")
+    self:SetDrawLanguageID(false)
 end
 
 function ARC9InputField:Paint(w, h)
@@ -1088,7 +1089,14 @@ function ARC9InputField:Paint(w, h)
         surface.DrawTexturedRect(0, 0, w, h)
     end
 
-    derma.SkinHook("Paint", "TextEntry", self, w, h)
+    if self:IsEditing() then
+        derma.SkinHook("Paint", "TextEntry", self, w, h) -- stupid bitch gmod does not allow editing DTextEntry text field
+    else
+        surface.SetFont("ARC9_10")
+        surface.SetTextColor(color)
+        surface.SetTextPos(ARC9ScreenScale(4), ARC9ScreenScale(1))
+        surface.DrawText(self:GetText() == "" and self:GetPlaceholderText() or self:GetValue())
+    end
 
     return false
 end
