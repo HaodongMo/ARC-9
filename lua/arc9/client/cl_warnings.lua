@@ -39,6 +39,8 @@ ARC9.IncompatibleAddons = {
     ["2916953531"] = "Breaks movement speed on ARC9 guns.",
     -- LeyHitreg
     ["3421440369"] = "Breaks bullet spread on ARC9 guns.",
+    -- "optimization" lol
+    ["2140391568"] = "Rotates scopes picture 90 degrees.",
 
 
 

@@ -45,7 +45,7 @@ function EFFECT:Init(data)
 
     local origin, ang = mdl:GetAttachment(att).Pos, mdl:GetAttachment(att).Ang
 
-    if (lp:ShouldDrawLocalPlayer() or ent.Owner != lp) then
+    if (lp:ShouldDrawLocalPlayer() or owner != lp) then
         wm = true
         self.VMContext = false
     end
@@ -131,11 +131,7 @@ function EFFECT:Init(data)
 
     local phys = self:GetPhysicsObject()
 
-    local plyvel = vector_origin
-
-    if IsValid(ent.Owner) then
-        plyvel = ent.Owner:GetAbsVelocity()
-    end
+    local plyvel = owner:GetAbsVelocity() * 1.1
 
     phys:Wake()
     phys:SetDamping(0, 0)
