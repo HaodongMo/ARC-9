@@ -297,7 +297,7 @@ ARC9.SettingsTable = {
 		{ type = "combo", text = "settings.quick.lang.title", convar = "language", desc = "settings.quick.lang.desc", content = ARC9.LanguagesTable, func = function(self2)
             RunConsoleCommand("arc9_reloadlangs")
         end},
-		{ type = "input", text = "settings.quick.font.title", convar = "font", desc = "settings.quick.font.desc", placeholder = "Venryn Sans", func = function(self2)
+		{ type = "input", text = "settings.gameplay.font.title", convar = "font", desc = "settings.gameplay.font.desc", placeholder = "Venryn Sans", func = function(self2)
             RunConsoleCommand("arc9_font_reload")
         end},
         { type = "bool", text = "settings.gameplay.controller.title", desc = "settings.gameplay.controller.desc", convar = "controller" },
