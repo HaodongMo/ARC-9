@@ -106,6 +106,13 @@ SWEP.WorldModelOffset = nil
 --     Ang = Angle(0, 0, 0),
 --     TPIKPos = Vector(0, 0, 0), -- arc9_tpik 1, you can make cool poses with it
 --     TPIKAng = Angle(0, 0, 0),
+-- 
+--     TPIKPosSightOffset = Vector(0, 0, 0), -- ironsights offset, disable NoTPIKVMPos
+--     TPIKPosReloadOffset = Vector(0, 0, 0), -- reload offset if arms stretching too much during reloads
+--     TPIKAngReloadOffset = Angle(0, 0, 0),
+
+--     TPIKPosAlternative = Vector(0, 0, 0) -- enabled with SWEP/ATT.TPIKAlternativePos = true
+-- 
 --     Scale = 1
 -- }
 SWEP.NoTPIK = false
