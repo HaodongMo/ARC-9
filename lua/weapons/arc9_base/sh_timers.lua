@@ -115,6 +115,10 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
                 if isnumber(v.shelleject) then
                     index = v.shelleject
+
+                    if index > 1000 then
+                        index = self:Clip1() >= (index - 1000) and 1 or 0
+                    end
                 elseif istable(v.shelleject) then
                     index = v.shelleject.index
                     if v.shelleject.upto then
