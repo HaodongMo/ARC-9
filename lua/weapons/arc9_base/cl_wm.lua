@@ -14,7 +14,7 @@ function SWEP:DrawWorldModel()
     if IsValid(owner) and owner:GetActiveWeapon() == self then -- gravgun moment
         self:DoBodygroups(true)
         -- self:DrawLasers(true)
-        self:DoTPIK()
+        -- self:DoTPIK()
         -- self:DrawFlashlightsWM()
         if self:ShouldLOD() < 2 then self.LastWMDrawn = FrameNumber() end
 
