@@ -34,10 +34,21 @@ ARC9.ShellSoundsTable = {
     "arc9/casings/casing_556_2.ogg",
     "arc9/casings/casing_556_3.ogg",
     "arc9/casings/casing_556_4.ogg",
+    "arc9/casings/casing_556_1.ogg",
+    "arc9/casings/casing_556_2.ogg",
+    "arc9/casings/casing_556_3.ogg",
+    "arc9/casings/casing_556_4.ogg",
+}
+
+ARC9.Shell308SoundsTable = {
     "arc9/casings/casing_308_1.ogg",
     "arc9/casings/casing_308_2.ogg",
     "arc9/casings/casing_308_3.ogg",
-    "arc9/casings/casing_308_4.ogg"
+    "arc9/casings/casing_308_4.ogg",
+    "arc9/casings/casing_308_1.ogg",
+    "arc9/casings/casing_308_2.ogg",
+    "arc9/casings/casing_308_3.ogg",
+    "arc9/casings/casing_308_4.ogg",
 }
 
 ARC9.PistolShellSoundsTable = {
