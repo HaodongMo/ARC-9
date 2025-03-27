@@ -57,9 +57,11 @@ function SWEP:ToggleUBGL(on)
 
         self:PlayTranslatedSound(soundtab)
 
-        self:PlayAnimation("enter_ubgl", 1, true)
+        local t, min = self:PlayAnimation("enter_ubgl", 1, true)
         self:ExitSights()
 
+		self:SetFiremodeTime(CurTime() + (t * min))
+	
         if singleplayer then
             self:CallOnClient("RecalculateIKGunMotionOffset")
         end
@@ -72,6 +74,9 @@ function SWEP:ToggleUBGL(on)
 
         self:PlayTranslatedSound(soundtab)
 
-        self:PlayAnimation("exit_ubgl", 1, true)
+        local t, min = self:PlayAnimation("exit_ubgl", 1, true)
+
+		self:SetFiremodeTime(CurTime() + (t * min))
+	
     end
 end

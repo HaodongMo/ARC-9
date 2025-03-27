@@ -563,33 +563,22 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
         end
     end
 
-	local function fmhintignore()
-		local fmodes = self:GetValue("Firemodes")
-
-		-- if !self:GetOwner():KeyDown(IN_USE) and #fmodes < 2 then return end
-		if self:StillWaiting() then return end
-		if self:GetProcessedValue("NoFiremodeWhenEmpty", true) and self:Clip1() <= 0 then return end
-		if self:GetUBGL() then return end
-	
-		self.FMHintTime = CurTime()
-	end
-
-	local bzoom = self:GetOwner():KeyPressed(IN_ZOOM)
-	local batt = self:GetOwner():KeyDown(IN_ATTACK)
-
-	if bzoom or (self:GetSafe() and batt) then fmhintignore() end
-
     local ft1000 = RealFrameTime() * 2000
     fmhint = math.max(0, fmhint - ft1000 * 1.25)
+	local CT = CurTime()
+	local dhint, rhint, fhint = self:GetDrawTime(), self:GetReadyTime(), self:GetFiremodeTime()
 	
-    if self.FMHintTime and CurTime() > self.FMHintTime + 0.15 and CurTime() < self.FMHintTime + 0.15 + 1 then
+	if (dhint and CT > dhint + 0.15 and CT < dhint + 1) or 
+	(rhint and CT > rhint + 0.15 and CT < rhint + 1) or
+	(fhint and CT > fhint + 0.15 and CT < fhint + 1) then
         fmhint = math.min(255, fmhint + ft1000 * 2)
     end
 
     if GetConVar("arc9_center_firemode"):GetBool() and fmhint > 0 then
 		local text = self:GetFiremodeName()
         local tw = surface.GetTextSize(text)
-		local blink = 255 * math.abs(math.sin(CurTime() * 10))
+		local blink = math.abs(math.sin(CurTime() * 10))
+		local c1, c2, c3 = 255, 255, 255
 
         surface.SetFont("ARC9_10")
 		
@@ -599,9 +588,11 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
         surface.SetTextPos(scrw / 2 - surface.GetTextSize(text) / 2, scrh / 2 + ScreenScale(60))
         surface.DrawText(text)
 		
-		-- fmhint > 254 and blink or 255 -- if it should start blinking at 255 fmhint value
+		-- c1 = GetConVar("arc9_hud_color_r"):GetInt()
+		-- c2 = GetConVar("arc9_hud_color_g"):GetInt()
+		-- c3 = GetConVar("arc9_hud_color_b"):GetInt()
+		surface.SetTextColor(c1, c2, c3, fmhint) -- Blinking Col.
 		
-        surface.SetTextColor(255, 255, 255, fmhint) -- White
         surface.SetTextPos(scrw / 2 - surface.GetTextSize(text) / 2 - 2, scrh / 2 + ScreenScale(60) - 2)
         surface.DrawText(text)
     end
