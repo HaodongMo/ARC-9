@@ -8,6 +8,8 @@ EFFECT.SpawnTime = 0
 
 EFFECT.VMContext = true
 
+local arc9_eject_time = GetConVar("arc9_eject_time")
+
 local FormatViewModelAttachment = ARC9.FormatViewModelAttachment
 
 function EFFECT:Init(data)
@@ -108,6 +110,8 @@ function EFFECT:Init(data)
     -- phys:AddAngleVelocity(ang:Up() * 2500 * velocity/0.75)
 
     self.SpawnTime = CurTime()
+    self.LifeTime = self.LifeTime + arc9_eject_time:GetFloat()
+    
 end
 
 function EFFECT:PhysicsCollide()
