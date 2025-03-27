@@ -50,6 +50,8 @@ function SWEP:SwitchFiremode()
 
 		self:SetFiremodeTime(CurTime() + (t * min))
         self:SetFinishFiremodeAnimTime(CurTime() + t)
+	else
+		self:SetFiremodeTime(CurTime())
     end
 
     self:InvalidateCache()
