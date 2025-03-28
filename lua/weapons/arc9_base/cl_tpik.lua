@@ -5,9 +5,95 @@ local arc9_tpik_others = GetConVar("arc9_tpik_others")
 local arc9_tpik_framerate = GetConVar("arc9_tpik_framerate")
 
 local somevector3 = Vector(-1, -1, 1)
-local somevector4 = Vector(0, 2, 4)
+local peekvector = Vector(0, 2, 4)
+local crouchvector = Vector(-3, 0, 2)
+local custvector = Vector(-5, 0, -5)
+local passiveholdtypefixvector = Vector(-6, -1, -4)
 local someang = Angle(3, -3, -8)
 local forcednotpik = ARC9.NoTPIK
+
+local function SetTPIKOffset(self, wm, owner, lp)
+    local pos, ang = Vector(self.WorldModelOffset.TPIKPos), Angle(self.WorldModelOffset.TPIKAng)
+    local sightdelta = self:GetSightAmount()
+
+    if self.WorldModelOffset.TPIKPosAlternative and self:GetValue("TPIKAlternativePos") then
+        pos = self.WorldModelOffset.TPIKPosAlternative
+    end
+
+    if self.WorldModelOffset.TPIKPosSightOffset then
+        if sightdelta > 0 then -- sight offset
+            local sightdelta2 = math.ease.InOutCubic(sightdelta)
+            pos:Add(self.WorldModelOffset.TPIKPosSightOffset * sightdelta2)
+            ang:Add(someang * math.sin(3.1415926 * math.ease.InOutSine(sightdelta)))
+        end
+
+        if self.WorldModelOffset.TPIKPosReloadOffset then
+            if self:GetReloading() and !self:GetProcessedValue("ShotgunReload", true) then -- reused from reloadpos vm code
+                local fuckingreloadprocessinfluence = 1
+                local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+                if fuckingreloadprocess <= 0.1 then
+                    fuckingreloadprocessinfluence = fuckingreloadprocess * 10
+                elseif fuckingreloadprocess > 0.75 then
+                    fuckingreloadprocessinfluence = math.max(0, 1 - ((fuckingreloadprocess - 0.75) * 8))
+                end
+                
+                fuckingreloadprocessinfluence = math.ease.InCirc(fuckingreloadprocessinfluence)
+
+                pos:Add(self.WorldModelOffset.TPIKPosReloadOffset * fuckingreloadprocessinfluence)
+                ang:Add(self.WorldModelOffset.TPIKAngReloadOffset * fuckingreloadprocessinfluence)
+            end
+        end
+    end
+
+    local ht = self:GetHoldType()
+    
+    do
+        local viewOffsetZ = owner:GetViewOffset().z
+        local crouchdelta = math.Clamp((viewOffsetZ - owner:GetCurrentViewOffset().z) / (viewOffsetZ - owner:GetViewOffsetDucked().z), 0, 1)
+        if ht == "revolver" then crouchdelta = crouchdelta * -2
+        elseif ht == "ar2" or ht == "smg" then crouchdelta = crouchdelta * -1 end
+        if prone and owner:IsProne() then crouchdelta = 1 end
+        pos:Add(crouchvector * crouchdelta)
+    end
+
+    do -- passive holdtype fix
+        self.TPIKSmoothPassiveHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothPassiveHoldType or 0, ht == "passive" and 1 or 0)
+        pos:Add(passiveholdtypefixvector * self.TPIKSmoothPassiveHoldType)
+    end
+
+    if !self.NoTPIKVMPos then -- and ht != "passive"
+        if self.CustomizeDelta == 0 then
+            -- if lp == owner then -- old
+            --     pos:Sub(self.ViewModelPos * somevector3)
+            --     ang:Add(Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r))
+            -- else
+                local apos = Vector(self.ActivePos.y, -self.ActivePos.x, self.ActivePos.z) * somevector3
+                pos:Sub(apos)
+
+
+                if sightdelta > 0 then -- fake sights
+                    local sightdelta2 = math.ease.InOutCubic(sightdelta)
+                    local ispos = Vector(self.IronSights.Pos.x * -0.1, self.IronSights.Pos.y * 0.4, self.IronSights.Pos.z * 1.5)
+                    pos:Sub(ispos * sightdelta2)
+                    ang:Add(someang * math.sin(3.1415926 * math.ease.InOutSine(sightdelta)))
+                end
+            -- end
+        else
+            pos:Add(custvector * self.CustomizeDelta)
+        end
+    end
+
+    if lp == owner then -- peeking is clientside
+        self.PeekingSmooth = Lerp(FrameTime() * 2, self.PeekingSmooth or 0, self.Peeking and 1 or 0)
+        if self.PeekingSmooth > 0.1 then
+            pos:Add(peekvector * sightdelta * self.PeekingSmooth)
+            ang:Add(self.PeekAng * sightdelta * self.PeekingSmooth)
+        end
+    end
+
+    wm.slottbl.Pos = pos
+    wm.slottbl.Ang = ang
+end
 
 function SWEP:ShouldTPIK()
     if self.NoTPIK or forcednotpik then return end
@@ -38,62 +124,11 @@ function SWEP:ShouldTPIK()
 
     local wm = self:GetWM()
     if IsValid(wm) and wm.slottbl then
-        wm.slottbl.Pos = (should and self.WorldModelOffset.TPIKPos) or self.WorldModelOffset.Pos
-        wm.slottbl.Ang = (should and self.WorldModelOffset.TPIKAng) or self.WorldModelOffset.Ang
-
-        if should then
-            if self.WorldModelOffset.TPIKPosAlternative and self:GetValue("TPIKAlternativePos") then
-                wm.slottbl.Pos = self.WorldModelOffset.TPIKPosAlternative
-            end
-
-            if self.WorldModelOffset.TPIKPosSightOffset then
-                local sightdelta = self:GetSightAmount()
-
-                if sightdelta > 0 then
-                    -- sightdelta = self:GetInSights() and math.ease.OutBack(sightdelta) or math.ease.InBack(sightdelta) -- InOutBack
-                    local sightdelta2 = math.ease.InOutCubic(sightdelta)
-                    wm.slottbl.Pos = wm.slottbl.Pos + self.WorldModelOffset.TPIKPosSightOffset * sightdelta2
-                    wm.slottbl.Ang = wm.slottbl.Ang + someang * math.sin(3.1415926 * math.ease.InOutSine(sightdelta))
-
-                    
-                    if lp == owner then -- peeking is clientside
-                        self.PeekingSmooth = Lerp(FrameTime() * 2, self.PeekingSmooth or 0, self.Peeking and 1 or 0)
-                        if self.PeekingSmooth > 0.1 then
-                            wm.slottbl.Pos = wm.slottbl.Pos + somevector4 * sightdelta * self.PeekingSmooth
-                            wm.slottbl.Ang = wm.slottbl.Ang + self.PeekAng * sightdelta * self.PeekingSmooth
-                        end
-                    end
-                end
-
-                if self.WorldModelOffset.TPIKPosReloadOffset then
-                    -- self.GetReloadingSmooth = Lerp(FrameTime() * 2, self.GetReloadingSmooth or 0, self:GetReloading() and 1 or 0)
-                    -- if self.GetReloadingSmooth > 0.1 then
-                    --     wm.slottbl.Pos = wm.slottbl.Pos + self.WorldModelOffset.TPIKPosReloadOffset * self.GetReloadingSmooth
-                    -- end
-            
-                    if self:GetReloading() and !self:GetProcessedValue("ShotgunReload", true) then -- reused from reloadpos vm code
-                        local fuckingreloadprocessinfluence = 1
-                        local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
-                        if fuckingreloadprocess <= 0.1 then
-                            fuckingreloadprocessinfluence = fuckingreloadprocess * 10
-                        elseif fuckingreloadprocess > 0.75 then
-                            fuckingreloadprocessinfluence = math.max(0, 1 - ((fuckingreloadprocess - 0.75) * 8))
-                        end
-                        
-                        fuckingreloadprocessinfluence = math.ease.InCirc(fuckingreloadprocessinfluence)
-
-                        wm.slottbl.Pos = wm.slottbl.Pos + self.WorldModelOffset.TPIKPosReloadOffset * fuckingreloadprocessinfluence
-                        wm.slottbl.Ang = wm.slottbl.Ang + self.WorldModelOffset.TPIKAngReloadOffset * fuckingreloadprocessinfluence
-                    end
-                end
-            end
-
-            if lp == owner and self.CustomizeDelta == 0 then
-                if !self.NoTPIKVMPos then
-                    wm.slottbl.Pos = wm.slottbl.Pos - self.ViewModelPos * somevector3
-                    wm.slottbl.Ang = wm.slottbl.Ang + Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r)
-                end
-            end
+        if !should then
+            wm.slottbl.Pos = self.WorldModelOffset.Pos
+            wm.slottbl.Ang = self.WorldModelOffset.Ang
+        else
+            SetTPIKOffset(self, wm, owner, lp)
         end
     end
 
