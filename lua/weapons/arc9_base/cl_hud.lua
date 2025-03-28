@@ -341,16 +341,21 @@ local bipodreloadmove = 0 -- ??
 local bipodhintstate = false -- enter or exit
 local fmhint = 0 -- alpha
 
-local cv1, cv2, cv3, cv4
+local arc9_center_reload_enable = GetConVar("arc9_center_reload_enable")
+local arc9_center_reload = GetConVar("arc9_center_reload")
+local arc9_center_jam = GetConVar("arc9_center_jam")
+local arc9_center_bipod = GetConVar("arc9_center_bipod")
+local arc9_infinite_ammo = GetConVar("arc9_infinite_ammo")
+local arc9_center_overheat = GetConVar("arc9_center_overheat")
+local arc9_hud_arc9 = GetConVar("arc9_hud_arc9")
+local arc9_center_overheat_dark = GetConVar("arc9_center_overheat_dark")
+local arc9_center_firemode = GetConVar("arc9_center_firemode")
+local arc9_cruelty_reload = GetConVar("arc9_cruelty_reload")
 
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
     local scrw, scrh = ScrW(), ScrH()
     local getsight = self:GetSight()
-
-	cv4 = cv4 or GetConVar("arc9_center_reload_enable")
-	cv1 = cv1 or GetConVar("arc9_center_reload")
-	jamcom = GetConVar("arc9_center_jam")
 
     local ubgl = self:GetUBGL()
 	local rel = self:GetReloading()
@@ -370,8 +375,7 @@ function SWEP:DrawHUD()
         bipodhintstate = false
     end
 
-	cv3 = cv3 or GetConVar("arc9_center_bipod")
-    if cv3:GetBool() and bipodhint > 0 then
+    if arc9_center_bipod:GetBool() and bipodhint > 0 then
         local glyph = ARC9.GetBindKey(bipodhintstate and "+back" or "+attack2")
         -- local text = bipodhintstate and "Exit bipod" or "Enter bipod"
 		-- local text = bipodhintstate and ARC9:GetPhrase("hud.hint.bipod.exit") or ARC9:GetPhrase("hud.hint.bipod.enter")
@@ -404,11 +408,11 @@ function SWEP:DrawHUD()
 
 	if !ubgl then
 		magazine = self:Clip1()
-		mag = magazine <= self:GetMaxClip1()*cv1:GetFloat()
+		mag = magazine <= self:GetMaxClip1() * arc9_center_reload:GetFloat()
 		maxmag = self.Owner:GetAmmoCount(self.Primary.Ammo)
 	else
 		magazine = self:Clip2()
-		mag = magazine <= self:GetMaxClip2()*cv1:GetFloat()
+		mag = magazine <= self:GetMaxClip2() * cvarc9_center_reload1:GetFloat()
 		maxmag = self.Owner:GetAmmoCount(self.Secondary.Ammo)
 	end
 
@@ -420,7 +424,7 @@ function SWEP:DrawHUD()
 	if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
 	if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "mips smooth" ) end
 
-    if (cv4:GetBool() and (cv1:GetFloat() > 0.02)) and !self:GetInspecting() and !self:GetJammed() then
+    if (arc9_center_reload_enable:GetBool() and (arc9_center_reload:GetFloat() > 0.02)) and !self:GetInspecting() and !self:GetJammed() then
 		if !rel and !throw and !primbash and mag then
 			local text = ARC9:GetPhrase("hud.hint.reload")
 			local textlow = ARC9:GetPhrase("hud.hint.lowammo")
@@ -432,7 +436,7 @@ function SWEP:DrawHUD()
 			local tw = surface.GetTextSize(text)
 			local twlow = surface.GetTextSize(textlow)
 			local twempty = surface.GetTextSize(textempty)
-			local ia = GetConVar("arc9_infinite_ammo"):GetBool()
+			local ia = arc9_infinite_ammo:GetBool()
 
 			if !ia and (magazine == 0 and maxmag == 0) then -- If no ammo and no reserve
 				surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(CurTime() * 5)))
@@ -475,7 +479,7 @@ function SWEP:DrawHUD()
 		end
     end
 			
-	if jamcom:GetBool() and self:GetJammed() and not self:StillWaiting() then -- If weapon is Jammed
+	if arc9_center_jam:GetBool() and self:GetJammed() and not self:StillWaiting() then -- If weapon is Jammed
         if !self:GetProcessedValue("Overheat", true) then -- overheat makes guns auto unjam so hint is useless
             local textunjam = ARC9:GetPhrase("hud.hint.unjam")
             local twunjam = surface.GetTextSize(textunjam)
@@ -500,10 +504,7 @@ function SWEP:DrawHUD()
         end
 	end
 
-local cvo = GetConVar("arc9_center_overheat"):GetBool()
-local ah = GetConVar("arc9_hud_arc9"):GetBool()
-
-	if cvo and !ah and self:GetProcessedValue("Overheat", true) then
+	if arc9_center_overheat:GetBool() and !arc9_hud_arc9:GetBool() and self:GetProcessedValue("Overheat", true) then
 		local heat = self:GetHeatAmount()
 		local heatcap = self:GetProcessedValue("HeatCapacity", true)
 		local heatlocked = self:GetHeatLockout()
@@ -524,7 +525,7 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
 
 		local heat_col = col["white"]
 
-		if GetConVar("arc9_center_overheat_dark"):GetBool() then heat_col = col["black"] end
+		if arc9_center_overheat_dark:GetBool() then heat_col = col["black"] end
 
 		if heat > (heatcap * 0.75) then
 			heat_col = col["redblink"]
@@ -574,7 +575,7 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
         fmhint = math.min(255, fmhint + ft1000 * 2)
     end
 
-    if GetConVar("arc9_center_firemode"):GetBool() and fmhint > 0 then
+    if arc9_center_firemode:GetBool() and fmhint > 0 then
 		local text = self:GetFiremodeName()
         local tw = surface.GetTextSize(text)
 		local blink = math.abs(math.sin(CurTime() * 10))
@@ -597,8 +598,7 @@ local ah = GetConVar("arc9_hud_arc9"):GetBool()
         surface.DrawText(text)
     end
 
-	cv2 = cv2 or GetConVar("arc9_cruelty_reload")
-    if cv2:GetBool() and input.IsKeyDown(input.GetKeyCode(self:GetBinding("+reload"))) then
+    if arc9_cruelty_reload:GetBool() and input.IsKeyDown(input.GetKeyCode(self:GetBinding("+reload"))) then
         -- Draw vertical line
 
         local col = Color(255, 255, 255, 255)
@@ -740,7 +740,8 @@ function SWEP:DoIconCapture(instant)
     end)
 end
 
+local arc9_imperial = GetConVar("arc9_imperial")
 function SWEP:RangeUnitize(range)
-	if GetConVar("arc9_imperial"):GetBool() then return tostring(math.Round(range * ARC9.HUToM * 1.0936)) .. ARC9:GetPhrase("unit.yard") end
+	if arc9_imperial:GetBool() then return tostring(math.Round(range * ARC9.HUToM * 1.0936)) .. ARC9:GetPhrase("unit.yard") end
     return tostring(math.Round(range * ARC9.HUToM)) .. ARC9:GetPhrase("unit.meter")
 end

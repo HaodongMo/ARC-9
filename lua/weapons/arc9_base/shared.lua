@@ -1574,8 +1574,6 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 26, "LeanAmount")
     self:NetworkVar("Float", 27, "NearWallAmount")
     self:NetworkVar("Float", 28, "ReadyTime")
-    self:NetworkVar("Float", 29, "DrawTime")
-    self:NetworkVar("Float", 30, "FiremodeTime")
 
     self:NetworkVar("Int", 0, "BurstCount")
     self:NetworkVar("Int", 1, "NthShot")
@@ -1688,8 +1686,6 @@ function SWEP:SetupDataTables()
     self:SetLeanAmount(0)
     self:SetNearWallAmount(0)
     self:SetReadyTime(0)
-    self:SetDrawTime(0)
-    self:SetFiremodeTime(0)
 end
 
 function SWEP:SecondaryAttack()

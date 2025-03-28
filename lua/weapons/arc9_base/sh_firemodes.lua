@@ -40,15 +40,13 @@ function SWEP:SwitchFiremode()
     local lock = self:GetValue("FiremodeAnimLock")
 
     if self:HasAnimation(anim) then
-        local t, min = self:PlayAnimation(anim, 1, lock)
+        local t = self:PlayAnimation(anim, 1, lock)
 
-		self:SetFiremodeTime(CurTime() + (t * min))
         self:SetFinishFiremodeAnimTime(CurTime() + t)
         -- self:SetFiremodePose()
     elseif self:HasAnimation("firemode") then
-        local t, min = self:PlayAnimation("firemode", 1, lock)
+        local t = self:PlayAnimation("firemode", 1, lock)
 
-		self:SetFiremodeTime(CurTime() + (t * min))
         self:SetFinishFiremodeAnimTime(CurTime() + t)
     end
 
@@ -57,7 +55,15 @@ function SWEP:SwitchFiremode()
     if game.SinglePlayer() then
         self:CallOnClient("InvalidateCache")
     end
-
+	
+	-- self.FMHintTimeP = self.FMHintTime or "N/A"
+	
+	-- self.FMHintTime = CurTime()
+	-- print( " " )
+	-- print( "SWITCHED FIRING MODE" )
+	-- print( "Cur. " .. string.format( "%.3f", self.FMHintTime ) )
+	-- print( "Pre. " .. string.format( "%.3f", self.FMHintTimeP ) )
+	
 end
 
 function SWEP:SetFiremodePose(wm)

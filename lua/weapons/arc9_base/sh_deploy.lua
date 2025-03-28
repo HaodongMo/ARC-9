@@ -319,15 +319,13 @@ function SWEP:DoDeployAnimation()
     else
         if self:GetDoAFastDraw() then
             if self:HasAnimation("draw_quick") then
-                local t, min = self:PlayAnimation("draw_quick", self:GetProcessedValue("DeployTime", true, 1), true)
+                self:PlayAnimation("draw_quick", self:GetProcessedValue("DeployTime", true, 1), true)
             else
-                local t, min = self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1) * 0.65, true, true) -- + delayedidle
+                self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1) * 0.65, true, true) -- + delayedidle
             end
         else
-            local t, min = self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
+            self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)
         end
-
-        self:SetDrawTime(CurTime() + (t * min))
         self:SetDoAFastDraw(false)
         self:SetReady(true)
     end
