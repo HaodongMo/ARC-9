@@ -350,12 +350,14 @@ local arc9_hud_arc9 = GetConVar("arc9_hud_arc9")
 local arc9_center_overheat_dark = GetConVar("arc9_center_overheat_dark")
 local arc9_center_firemode = GetConVar("arc9_center_firemode")
 local arc9_cruelty_reload = GetConVar("arc9_cruelty_reload")
+local cl_drawhud = GetConVar("cl_drawhud")
 
 
 local firemodealpha, lastfiremode, lastfiremodetime = 0, 0, 0
 
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
+    if !cl_drawhud:GetBool() then return end
     local scrw, scrh = ScrW(), ScrH()
     local getsight = self:GetSight()
     local ct = CurTime()
