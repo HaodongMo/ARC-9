@@ -339,7 +339,6 @@ end
 local bipodhint = 0 -- alpha
 local bipodreloadmove = 0 -- ??
 local bipodhintstate = false -- enter or exit
-local fmhint = 0 -- alpha
 
 local arc9_center_reload_enable = GetConVar("arc9_center_reload_enable")
 local arc9_center_reload = GetConVar("arc9_center_reload")
@@ -352,10 +351,14 @@ local arc9_center_overheat_dark = GetConVar("arc9_center_overheat_dark")
 local arc9_center_firemode = GetConVar("arc9_center_firemode")
 local arc9_cruelty_reload = GetConVar("arc9_cruelty_reload")
 
+
+local firemodealpha, lastfiremode, lastfiremodetime = 0, 0, 0
+
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
     local scrw, scrh = ScrW(), ScrH()
     local getsight = self:GetSight()
+    local ct = CurTime()
 
     local ubgl = self:GetUBGL()
 	local rel = self:GetReloading()
@@ -412,11 +415,11 @@ function SWEP:DrawHUD()
 		maxmag = self.Owner:GetAmmoCount(self.Primary.Ammo)
 	else
 		magazine = self:Clip2()
-		mag = magazine <= self:GetMaxClip2() * cvarc9_center_reload1:GetFloat()
+		mag = magazine <= self:GetMaxClip2() * arc9_center_reload:GetFloat()
 		maxmag = self.Owner:GetAmmoCount(self.Secondary.Ammo)
 	end
 
-	local blink = 255 * math.abs(math.sin(CurTime() * 5))
+	local blink = 255 * math.abs(math.sin(ct * 5))
 
 	local glyph = ARC9.GetBindKey("+reload")
 	
@@ -439,7 +442,7 @@ function SWEP:DrawHUD()
 			local ia = arc9_infinite_ammo:GetBool()
 
 			if !ia and (magazine == 0 and maxmag == 0) then -- If no ammo and no reserve
-				surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(CurTime() * 5)))
+				surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(ct * 5)))
 				surface.DrawRect(scrw / 2 + 2 - twempty / 2 - 5, scrh / 2 + 2 + ScreenScale(98) + (bipodhint / 7.5), twempty + 7, 27.5)
 	
 				surface.SetTextPos(scrw / 2 + 2 - twempty / 2, scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
@@ -450,7 +453,7 @@ function SWEP:DrawHUD()
 				surface.SetTextColor(255, 100, 100, blink)
 				surface.DrawText(textempty)
 			elseif !ia and mag and maxmag == 0 then -- If low on ammo with no reserve ammo				
-				surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(CurTime() * 5)))
+				surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(ct * 5)))
 				surface.DrawRect(scrw / 2 + 2 - twlow / 2 - 5, scrh / 2 + 2 + ScreenScale(98) + (bipodhint / 7.5), twlow + 7, 27.5)
 
 				surface.SetTextPos(scrw / 2 + 2 - twlow / 2, scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
@@ -464,7 +467,7 @@ function SWEP:DrawHUD()
 				surface.SetTextColor(255, 255, 255, 255)
 				local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (tw * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 								
-				surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(CurTime() * 5)))
+				surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(ct * 5)))
 				surface.DrawRect(scrw / 2 - tw / 2 + ScreenScale(4.75), scrh / 2 + ScreenScale(98) + (bipodhint / 7.5), tw + 5, 27.5)
 	
 				surface.SetTextPos(scrw / 2 - tw / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
@@ -490,7 +493,7 @@ function SWEP:DrawHUD()
             surface.SetTextColor(255, 255, 255, 255)
 			local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (surface.GetTextSize(textunjam) * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 
-			surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(CurTime() * 5)))
+			surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(ct * 5)))
 			surface.DrawRect(scrw / 2 - surface.GetTextSize(textunjam) / 2 + ScreenScale(4.75), scrh / 2 + ScreenScale(98) + (bipodhint / 7.5), surface.GetTextSize(textunjam) + 5, 27.5)
 
 			surface.SetTextPos(scrw / 2 - surface.GetTextSize(textunjam) / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
@@ -517,7 +520,7 @@ function SWEP:DrawHUD()
 			white = Color(255,255,255, heat * 1.5),
 			black = Color(0,0,0, heat * 1.5),
 			red = Color(255,255,255, heat * 1.5),
-			redblink = Color(255, 255 * math.abs(math.sin(CurTime() * 5)), 255 * math.abs(math.sin(CurTime() * 5)), heat * 1.5),
+			redblink = Color(255, 255 * math.abs(math.sin(ct * 5)), 255 * math.abs(math.sin(ct * 5)), heat * 1.5),
 		}
 
 		local flashheatbar = false
@@ -564,38 +567,37 @@ function SWEP:DrawHUD()
         end
     end
 
-    local ft1000 = RealFrameTime() * 2000
-    fmhint = math.max(0, fmhint - ft1000 * 1.25)
-	local CT = CurTime()
-	local dhint, rhint, fhint = self:GetDrawTime(), self:GetReadyTime(), self:GetFiremodeTime()
-	
-	if (dhint and CT > dhint + 0.15 and CT < dhint + 1) or 
-	(rhint and CT > rhint + 0.15 and CT < rhint + 1) or
-	(fhint and CT > fhint + 0.15 and CT < fhint + 1) then
-        fmhint = math.min(255, fmhint + ft1000 * 2)
-    end
+    if arc9_center_firemode:GetBool() then
+        local fm = self:GetFiremodeName()
 
-    if arc9_center_firemode:GetBool() and fmhint > 0 then
-		local text = self:GetFiremodeName()
-        local tw = surface.GetTextSize(text)
-		local blink = math.abs(math.sin(CurTime() * 10))
-		local c1, c2, c3 = 255, 255, 255
+        if lastfiremode != fm then
+            -- if   more than 1 fm   OR   fm is safety   OR   switched from safety
+            if (#self:GetValue("Firemodes") or 0) > 1 or self:GetSafe() or lastfiremode == ARC9:GetPhrase("hud.firemode.safe") then 
+                lastfiremodetime = ct 
+                lastfiremode = fm
+            end
+        end
 
-        surface.SetFont("ARC9_10")
-		
-        surface.SetDrawColor(255, 255, 255, fmhint)
+        if ct - lastfiremodetime < 1 then 
+            local funnynumber = math.min(1, math.sin(3.5 * math.Clamp(ct - lastfiremodetime, 0, 1)) * 2.5)
+            firemodealpha = funnynumber * 255
+            
+            local text = fm
+            local tw = surface.GetTextSize(fm)
+            -- local blink = math.abs(math.sin(ct * 10))
 
-        surface.SetTextColor(0, 0, 0, fmhint) -- Black BG
-        surface.SetTextPos(scrw / 2 - surface.GetTextSize(text) / 2, scrh / 2 + ScreenScale(60))
-        surface.DrawText(text)
-		
-		-- c1 = GetConVar("arc9_hud_color_r"):GetInt()
-		-- c2 = GetConVar("arc9_hud_color_g"):GetInt()
-		-- c3 = GetConVar("arc9_hud_color_b"):GetInt()
-		surface.SetTextColor(c1, c2, c3, fmhint) -- Blinking Col.
-		
-        surface.SetTextPos(scrw / 2 - surface.GetTextSize(text) / 2 - 2, scrh / 2 + ScreenScale(60) - 2)
-        surface.DrawText(text)
+            surface.SetFont("ARC9_10")
+            
+            surface.SetDrawColor(255, 255, 255, firemodealpha)
+
+            surface.SetTextColor(0, 0, 0, firemodealpha) -- Black BG
+            surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(60))
+            surface.DrawText(fm)
+            
+            surface.SetTextColor(255, 255, 255, firemodealpha)
+            surface.SetTextPos(scrw / 2 - tw / 2 - 2, scrh / 2 + ScreenScale(60) - 2)
+            surface.DrawText(fm)
+        end
     end
 
     if arc9_cruelty_reload:GetBool() and input.IsKeyDown(input.GetKeyCode(self:GetBinding("+reload"))) then
@@ -626,7 +628,7 @@ function SWEP:DrawHUD()
         local text2_w, text2_h = surface.GetTextSize(text2)
 
         surface.SetTextPos(reloadline_x + ARC9ScreenScale(2), reloadline_target_y + ARC9ScreenScale(2))
-        surface.SetTextColor(Color(255, 255, 255, 255 * math.abs(math.sin(CurTime() * 5))))
+        surface.SetTextColor(Color(255, 255, 255, 255 * math.abs(math.sin(ct * 5))))
         surface.DrawText(text2)
 
         local reloadline_mover_y = reloadline_target_y * ARC9.ReloadAmount

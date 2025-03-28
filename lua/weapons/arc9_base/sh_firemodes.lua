@@ -55,15 +55,6 @@ function SWEP:SwitchFiremode()
     if game.SinglePlayer() then
         self:CallOnClient("InvalidateCache")
     end
-	
-	-- self.FMHintTimeP = self.FMHintTime or "N/A"
-	
-	-- self.FMHintTime = CurTime()
-	-- print( " " )
-	-- print( "SWITCHED FIRING MODE" )
-	-- print( "Cur. " .. string.format( "%.3f", self.FMHintTime ) )
-	-- print( "Pre. " .. string.format( "%.3f", self.FMHintTimeP ) )
-	
 end
 
 function SWEP:SetFiremodePose(wm)
@@ -148,15 +139,6 @@ function SWEP:ToggleSafety(onoff)
             self:ExitSights()
         end
     end
-	
-	-- self.FMHintTimeP = self.FMHintTime or "N/A"
-	
-	-- self.FMHintTime = CurTime()
-	-- print( " " )
-	-- print( "TOGGLED SAFETY" )
-	-- print( "Cur. " .. string.format( "%.3f", self.FMHintTime ) )
-	-- print( "Pre. " .. string.format( "%.3f", self.FMHintTimeP ) )
-	
 end
 
 function SWEP:ThinkFiremodes()
