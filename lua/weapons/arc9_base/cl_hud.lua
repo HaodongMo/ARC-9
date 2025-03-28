@@ -572,7 +572,7 @@ function SWEP:DrawHUD()
     if arc9_center_firemode:GetBool() then
         local fm = self:GetFiremodeName()
 
-        if lastfiremode != fm then
+        if lastfiremode != fm and self:GetReadyTime() - ct <= 0 then
             -- if   more than 1 fm   OR   fm is safety   OR   switched from safety
             if (#self:GetValue("Firemodes") or 0) > 1 or self:GetSafe() or lastfiremode == ARC9:GetPhrase("hud.firemode.safe") then 
                 lastfiremodetime = ct 
