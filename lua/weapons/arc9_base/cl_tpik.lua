@@ -89,6 +89,13 @@ local function SetTPIKOffset(self, wm, owner, lp)
             pos:Add(peekvector * sightdelta * self.PeekingSmooth)
             ang:Add(self.PeekAng * sightdelta * self.PeekingSmooth)
         end
+
+        -- visual recoil, cuz we don't add vm pos anymore
+        local vrp, vra = self:GetVisualRecoilPos(), self:GetVisualRecoilAng() * 2.5
+        self.TPIKSmoothRecoilPos = LerpVector(FrameTime() * 1, self.TPIKSmoothRecoilPos or vrp, Vector(-vrp.y, vrp.x, vrp.z * -10))
+        self.TPIKSmoothRecoilAng = LerpVector(FrameTime() * 1, self.TPIKSmoothRecoilAng or vra, vra)
+        pos:Sub(self.TPIKSmoothRecoilPos)
+        ang:Add(Angle(-self.TPIKSmoothRecoilAng.x, self.TPIKSmoothRecoilAng.y, self.TPIKSmoothRecoilAng.z))
     end
 
     wm.slottbl.Pos = pos
