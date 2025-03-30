@@ -294,6 +294,7 @@ ARC9.SettingsTable = {
             {"2" .. ARC9:GetPhrase("settings.custmenu.units.imperial"), "1" },
 			},
 		},
+        { type = "bool", text = "settings.fancyspawnmenu.title", desc = "settings.fancyspawnmenu.desc", convar = "fancy_spawnmenu" },
 		{ type = "combo", text = "settings.quick.lang.title", convar = "language", desc = "settings.quick.lang.desc", content = ARC9.LanguagesTable, func = function(self2)
             RunConsoleCommand("arc9_reloadlangs")
         end},
