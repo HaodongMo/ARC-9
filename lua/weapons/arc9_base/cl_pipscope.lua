@@ -302,7 +302,7 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
                 -- surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
-                local counterrotation = self.LastViewModelAng.z - sightzang + self.SubtleVisualRecoilAng.z * 2
+                local counterrotation = self.LastViewModelAng.z - sightzang + self.SubtleVisualRecoilAng.z * 2 - EyeAngles().z
                 surface.DrawTexturedRectRotated(size / 2 + rtr_x, size / 2 + rtr_y, size, size, -counterrotation)
             end
 
@@ -347,7 +347,7 @@ function SWEP:DoRTScope(model, atttbl, active)
 
         if sd > 0.33 then render.SetToneMappingScaleLinear(LerpVector(sd * 1.5 - 0.5, render.GetToneMappingScaleLinear(), vec1)) end
 
-        local counterrotation = self.LastViewModelAng.z - sightzang + (arc9_cheapscopes:GetBool() and 0 or self.SubtleVisualRecoilAng.z * 2)
+        local counterrotation = self.LastViewModelAng.z - sightzang + (arc9_cheapscopes:GetBool() and 0 or self.SubtleVisualRecoilAng.z * 2) - EyeAngles().z
         rtsurf:SetTexture("$basetexture", rtmat)
         rtsurf:SetFloat("$rot", ((atttbl.RTScopeShadowIntensity or 0) > 1 or atttbl.RTCollimator) and counterrotation or 0)
         -- rtsurf:SetMatrix("$basetexturetransform", Matrix({{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}))
