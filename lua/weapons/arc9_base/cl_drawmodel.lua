@@ -170,7 +170,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             model.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", true)
 
 
-            if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam) then
+            if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam and !onground and !isnpc) then
                 model:DrawModel()
             end
 
