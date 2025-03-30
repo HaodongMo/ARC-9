@@ -456,7 +456,7 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
                     end
 
                     fireBullets2.Damage = weapon:GetProcessedValue("DamageMax")
-                    fireBullets2.Force = weapon:GetProcessedValue("ImpactForce")
+                    fireBullets2.Force = weapon:GetProcessedValue("ImpactForce") / (weapon:GetProcessedValue("Num", true) or 1)
                     fireBullets2.Dir = bullet.Vel:GetNormalized()
                     fireBullets2.Src = oldpos
                     fireBullets2.Spread = vector_origin
