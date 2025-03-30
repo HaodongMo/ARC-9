@@ -12,6 +12,89 @@
 -- category, then it doesn't print any subtitle as it's redundant.
 -- Writted by Buu342, Still a work in progress.
 
+local function getpresetname(preset, wpn, class)
+    local filename = ARC9.PresetPath .. (wpn.SaveBase or class) .. "/" .. preset
+
+    if !file.Exists(filename, "DATA") then return end
+
+    local f = file.Open(filename, "r", "DATA")
+    if !f then return end
+
+    local str = f:Read()
+
+    if string.sub(str, 1, 5) == "name=" then
+        local strs = string.Split(str, "\n")
+        f:Close()
+        return string.sub(strs[1], 6)
+    else
+        f:Close()
+        return preset
+    end
+end
+
+local function getpresetsforweapon(wpn, class)
+    local path = ARC9.PresetPath .. (wpn.SaveBase or class) .. "/*.txt"
+
+    local files = file.Find(path, "DATA")
+    local output = {}
+
+    for i, k in pairs(files) do
+        local shortname = string.sub(k, 1, string.len(k) - 4)
+        if shortname == "default" or shortname == "autosave" then continue end
+        output[shortname] = (getpresetname(k, wpn, class) or "Unknown")
+    end
+    
+    return output
+end
+
+
+-- nice thing for extra options, stolen from SWCS
+local function OpenMenuExtra(pan, menu)
+	pan:_OpenMenuExtra(menu)
+    menu:AddSpacer()
+    menu:AddSpacer()
+
+    local classname = pan:GetSpawnName()
+	local swep = weapons.Get(classname)
+	if !swep then return end -- ??
+    if swep.NotAWeapon then return end
+
+    if swep.Attachments and !table.IsEmpty(swep.Attachments) then
+        menu:AddOption("Give default preset", function()
+            RunConsoleCommand( "arc9_giveswep_preset", classname, "default" )
+        end):SetIcon( "icon16/arrow_rotate_anticlockwise.png" )
+
+        menu:AddOption("Give random preset", function()
+            RunConsoleCommand( "arc9_giveswep_preset", classname, "random" )
+        end):SetIcon( "icon16/arrow_switch.png" )
+
+        local subMenu, parentMenuOption = menu:AddSubMenu("Give existing preset")
+        parentMenuOption:SetIcon("icon16/application_cascade.png")
+
+        local existingones = 0
+        for k, v in pairs(getpresetsforweapon(swep, classname)) do
+            subMenu:AddOption(v, function()
+                RunConsoleCommand( "arc9_giveswep_preset", classname, k )
+            end):SetIcon("icon16/bullet_green.png")
+
+            existingones = existingones + 1
+        end
+
+        if existingones == 0 then
+            subMenu:Remove()
+            parentMenuOption:Remove()
+        end
+    end
+
+    if game.SinglePlayer() then
+        menu:AddOption("Give ammo", function()
+            RunConsoleCommand( "givecurrentammo" )
+        end):SetIcon( "icon16/emoticon_tongue.png" )
+    end
+end
+
+
+
 
 -- I HATE GARRY NEWMAN
 
@@ -95,12 +178,14 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
 
                     -- Create the clickable icon
                     for _, ent in SortedPairsByMemberValue(subcatWeps, "PrintName") do
-                        spawnmenu.CreateContentIcon(ent.ScriptedEntityType or "weapon", self.PropPanel, {
+                        local newpanel = spawnmenu.CreateContentIcon(ent.ScriptedEntityType or "weapon", self.PropPanel, {
                             nicename  = ent.PrintName or ent.ClassName,
                             spawnname = ent.ClassName,
                             material  = ent.IconOverride or "entities/" .. ent.ClassName .. ".png",
                             admin     = ent.AdminOnly
                         })
+                        newpanel._OpenMenuExtra = newpanel._OpenMenuExtra or newpanel.OpenMenuExtra
+                        newpanel.OpenMenuExtra = OpenMenuExtra
                     end
                 end
             end
@@ -120,9 +205,6 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
     end)
 end)
 
-
--- As of 2023-11-12, this feature is only available on dev branch.
--- Won't break anything on release branch though.
 list.Set("ContentCategoryIcons", "ARC9 - Ammo", "arc9/icon_16.png")
 list.Set("ContentCategoryIcons", "ARC9 - Attachments", "arc9/icon_16.png")
 

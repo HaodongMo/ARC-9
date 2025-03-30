@@ -217,3 +217,69 @@ function ARC9.TryRandomize()
 end
 
 hook.Add("Think", "ARC9_Think_TryRandomize", ARC9.TryRandomize)
+
+local function randomizaegun(wpn)
+    if !GetConVar("arc9_free_atts"):GetBool() then return end
+    wpn:SetNoPresets(true)
+
+    timer.Simple(0.1, function()
+        if !IsValid(wpn) then return end
+        if wpn.NextRandomize and wpn.NextRandomize > CurTime() then return end
+        wpn.NextRandomize = CurTime() + 0.2
+    
+        wpn:QueueForRandomize()
+        timer.Simple(0.2, function() 
+            if !IsValid(wpn) then return end
+            wpn:PruneAttachments()
+            wpn:PostModify()
+            wpn:SendWeapon()
+        end)
+    end)
+end
+
+ -- shit from base game but for presets
+function ARC9_CCGiveSWEP_Preset( ply, command, arguments )
+	if !IsValid( ply ) then return end
+	if arguments[1] == nil then return end
+	if !ply:Alive() then return end
+	local swep = list.Get( "Weapon" )[ arguments[1] ]
+	if swep == nil then return end
+	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
+	if ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) then
+		return
+	end
+	if !gamemode.Call( "PlayerGiveSWEP", ply, arguments[1], swep ) then return end
+
+    if ply:HasWeapon( swep.ClassName ) then
+        local wpn = ply:GetWeapon( swep.ClassName )
+        if IsValid(wpn) then
+            if arguments[2] == "default" then
+                wpn:SetNoPresets(true)
+                wpn:CallOnClient("LoadPreset", "default")
+            elseif arguments[2] == "random" then
+                randomizaegun(wpn)
+            elseif isstring(arguments[2]) then
+                wpn:SetNoPresets(true)
+                wpn:CallOnClient("LoadPreset", arguments[2])
+            end
+            
+            wpn:DoDeployAnimation()
+        end
+    else
+		MsgAll( "Giving " .. ply:Nick() .. " a " .. swep.ClassName .. "\n" )
+		local wpn = ply:Give( swep.ClassName )
+
+        if arguments[2] == "default" then
+            wpn:SetNoPresets(true)
+        elseif arguments[2] == "random" then
+            randomizaegun(wpn)
+        elseif isstring(arguments[2]) then
+            wpn:SetNoPresets(true)
+            timer.Simple(0.1, function() if IsValid(wpn) then wpn:CallOnClient("LoadPreset", arguments[2]) end end)
+        end
+    end
+    
+	ply:SelectWeapon( swep.ClassName )
+end
+
+concommand.Add( "arc9_giveswep_preset", ARC9_CCGiveSWEP_Preset)
