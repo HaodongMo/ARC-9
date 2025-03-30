@@ -60,15 +60,15 @@ local function OpenMenuExtra(pan, menu)
     if swep.NotAWeapon then return end
 
     if swep.Attachments and !table.IsEmpty(swep.Attachments) then
-        menu:AddOption("Give default preset", function()
+        menu:AddOption("#arc9.spawnpreset.default", function()
             RunConsoleCommand( "arc9_giveswep_preset", classname, "default" )
         end):SetIcon( "icon16/arrow_rotate_anticlockwise.png" )
 
-        menu:AddOption("Give random preset", function()
+        menu:AddOption("#arc9.spawnpreset.random", function()
             RunConsoleCommand( "arc9_giveswep_preset", classname, "random" )
         end):SetIcon( "icon16/arrow_switch.png" )
 
-        local subMenu, parentMenuOption = menu:AddSubMenu("Give existing preset")
+        local subMenu, parentMenuOption = menu:AddSubMenu("#arc9.spawnpreset")
         parentMenuOption:SetIcon("icon16/application_cascade.png")
 
         local existingones = 0
@@ -87,7 +87,7 @@ local function OpenMenuExtra(pan, menu)
     end
 
     if game.SinglePlayer() then
-        menu:AddOption("Give ammo", function()
+        menu:AddOption("#arc9.giveammo", function()
             RunConsoleCommand( "givecurrentammo" )
         end):SetIcon( "icon16/emoticon_tongue.png" )
     end
@@ -367,7 +367,6 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
 
                     -- Create the clickable icon
                     for _, ent in SortedPairsByMemberValue(subcatWeps, "PrintName") do
-                        if ent.PrintName == "G36K" then continue end
                         local newpanel = spawnmenu.CreateContentIcon(ent.ScriptedEntityType or "weapon", self.PropPanel, {
                             nicename  = ent.PrintName or ent.ClassName,
                             spawnname = ent.ClassName,

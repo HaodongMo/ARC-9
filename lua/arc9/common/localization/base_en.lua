@@ -837,7 +837,7 @@ L["settings.server.gameplay.truenames.title"] = "Enable True Names"
 L["settings.server.gameplay.truenames.desc"] = "Enable to have weapons that utilize fictional names to display their real ones instead.\n\nNot all weapons support this."
 
 L["settings.fancyspawnmenu.title"] = "Enable Fancy Spawnmenu"
-L["settings.fancyspawnmenu.desc"] = "woo cool new spawnicons! Type spawnmenu_reload in console to apply this setting."
+L["settings.fancyspawnmenu.desc"] = "Enables an updated, fancy Spawnmenu in all ARC9 weapon categories.\n\nRequires the spawnmenu to be reloaded in order to be applied (console command: \"spawnmenu_reload\")"
 
 L["settings.custmenu.units.title"] = "Display Units"
 L["settings.custmenu.units.desc"] = "Choose to display either metric or imperial units in the customization menu."

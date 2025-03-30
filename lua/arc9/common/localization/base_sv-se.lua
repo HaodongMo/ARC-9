@@ -836,6 +836,9 @@ L["settings.custmenu.autosave.desc"] = "Spara automatiskt utrustade tillbehör n
 L["settings.server.gameplay.truenames.title"] = "Aktivera Verkliga Namn"
 L["settings.server.gameplay.truenames.desc"] = "Aktivera för att få vapen som använder fiktiva namn att visa deras verkliga namn istället.\n\nInte alla vapen stödjer detta."
 
+L["settings.fancyspawnmenu.title"] = "Aktivera Snygg Spawnmeny"
+L["settings.fancyspawnmenu.desc"] = "Aktiverar en uppdaterad, snyggade Spawnmeny i alla ARC9-vapen kategorier.\n\nKräver att spawnmenyn laddas om för att tillämpas. (konsolkommando: \"spawnmenu_reload\")"
+
 L["settings.custmenu.units.title"] = "Displayenheter"
 L["settings.custmenu.units.desc"] = "Välj att antingen visa metriska eller brittiska enheter i anpassningsmenyn."
 L["settings.custmenu.units.metric"] = "Metriska"

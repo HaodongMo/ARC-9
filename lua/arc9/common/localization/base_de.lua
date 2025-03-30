@@ -836,6 +836,9 @@ L["settings.custmenu.autosave.desc"] = "Speichert ausgerüstetes Zubehör automa
 L["settings.server.gameplay.truenames.title"] = "Echte Namen aktivieren"
 L["settings.server.gameplay.truenames.desc"] = "Aktiveren, um für Waffen, die fiktive Namen verwenden, stattdessen ihre realen Bezeichnungen anzuzeigen.\n\nWird nicht von allen Waffen unterstützt."
 
+L["settings.fancyspawnmenu.title"] = "Fancy Spawnmenü aktivieren"
+L["settings.fancyspawnmenu.desc"] = "Aktiviert ein geupdatetes, schickes Spawnmenü in allen ARC9-Waffen-Kategorien.\n\nZur Anwendung muss das Spawnmenü neugeladen werden (Console-Command: \"spawnmenu_reload\")"
+
 L["settings.custmenu.units.title"] = "Anzeige-Maßeinheiten"
 L["settings.custmenu.units.desc"] = "Wähle, ob im Anpassunges-Menü entweder metrische oder angloamerikanische (imperial) Maßeinheiten verwendet werden sollen."
 L["settings.custmenu.units.metric"] = "Metrisch"
