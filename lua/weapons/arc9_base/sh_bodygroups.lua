@@ -7,7 +7,7 @@ function SWEP:DoBodygroups(wm, cm)
     
     local isnpc = owner:IsNPC() or self:ShouldLOD() > 0
 
-    if !wm and !IsValid(owner) or isnpc then return end
+    if !wm and !IsValid(owner) then return end
 
     local dbg = self.DefaultBodygroups
 
@@ -48,7 +48,7 @@ function SWEP:DoBodygroups(wm, cm)
 
         local bbg = self.BulletBodygroups
 
-        if bbg and !isnpc then
+        if bbg then
             local amt = self:Clip1()
 
             if self:GetReloading() then
@@ -135,6 +135,17 @@ function SWEP:DoBodygroups(wm, cm)
                     end
                 end
             end
+        end
+    else -- only hidebones for npcs for not having flying mags
+        local hidebones = self:GetHiddenBones(wm)
+
+        for bone, a in pairs(hidebones or {}) do
+            if !a then continue end
+            local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
+
+            if !boneid then continue end
+
+            mdl:ManipulateBoneScale(boneid, v0)
         end
     end
 
