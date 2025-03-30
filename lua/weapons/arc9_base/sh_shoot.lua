@@ -920,6 +920,7 @@ end
 
 local damageAtRangeHook = {}
 local emptyTable = {}
+local dmgmodcvar = GetConVar("arc9_mod_damage") -- stats handled in sh_0_stats, but dmg lookuptable is table so we doing this here
 
 function SWEP:GetDamageAtRange(range)
     local damagelut = swepGetProcessedValue(self, "DamageLookupTable", true)
@@ -945,6 +946,8 @@ function SWEP:GetDamageAtRange(range)
                 break
             end
         end
+
+        dmgv = dmgv * dmgmodcvar:GetFloat()
     else
         local d = self:GetDamageDeltaAtRange(range)
         dmgv = Lerp(d, swepGetProcessedValue(self, "DamageMax"), dmgMin)
