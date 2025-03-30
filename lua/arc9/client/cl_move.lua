@@ -1,7 +1,7 @@
-local arc9_lean_direction = nil
+-- local arc9_lean_direction = nil
 
 local arc9_autoreload = GetConVar("arc9_autoreload")
-local arc9_autolean = GetConVar("arc9_autolean")
+-- local arc9_autolean = GetConVar("arc9_autolean")
 
 ARC9.ReloadAmount = 0
 
@@ -92,6 +92,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
         cmd:SetButtons(buttons)
     end
 
+    --[[
     if arc9_autolean:GetBool() then
         if cmd:KeyDown(IN_ATTACK2) or (wpn:ToggleADS() and arc9_lean_direction != nil and arc9_lean_direction != 0) then
             if arc9_lean_direction != nil and arc9_lean_direction != 0 then
@@ -206,6 +207,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
             arc9_lean_direction = nil
         end
     end
+    ]]--
 end)
 
 local performedAprilFoolsCheck = false

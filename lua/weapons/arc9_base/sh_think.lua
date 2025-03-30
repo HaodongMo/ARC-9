@@ -29,7 +29,7 @@ local swepThinkGrenade = SWEP.ThinkGrenade
 local swepThinkRecoil = SWEP.ThinkRecoil
 local swepThinkHoldBreath = SWEP.ThinkHoldBreath
 local swepThinkLockOn = SWEP.ThinkLockOn
-local swepThinkLean = SWEP.ThinkLean
+-- local swepThinkLean = SWEP.ThinkLean
 local swepThinkFiremodes = SWEP.ThinkFiremodes
 local swepThinkInspect = SWEP.ThinkInspect
 local swepThinkSprint = SWEP.ThinkSprint
@@ -169,7 +169,7 @@ function SWEP:Think()
     end
 
     if shouldRunPredicted then
-        swepThinkLean(self)
+        -- swepThinkLean(self)
         swepThinkFiremodes(self)
         swepThinkInspect(self)
     end

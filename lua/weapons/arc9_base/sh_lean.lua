@@ -1,3 +1,5 @@
+--[[
+
 SWEP.MaxLeanOffset = 16
 SWEP.MaxLeanAngle = 15
 
@@ -142,3 +144,4 @@ function SWEP:DoPlayerModelLean(cancel, forceupdate)
 
     owner:ManipulateBoneAngles(bone, (amt < 0 and leanang_left or leanang_right) * amt * self.MaxLeanAngle, game.SinglePlayer() or cancel or forceupdate)
 end
+]]--

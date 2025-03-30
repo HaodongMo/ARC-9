@@ -302,7 +302,7 @@ local automatics = {
     ["weapon_egon"] = true
 }
 
-local arc9_lean = GetConVar("arc9_lean")
+-- local arc9_lean = GetConVar("arc9_lean")
 
 local function GetWeaponCapabilities(wpn)
     cap = {
@@ -317,7 +317,7 @@ local function GetWeaponCapabilities(wpn)
         HoldBreath = tobool(wpn:GetInSights() and wpn:GetValue("HoldBreathTime") > 0),
         VariableZoom = tobool(wpn:GetInSights() and (wpn:GetSight().atttbl or {}).RTScopeAdjustable),
         ManualCycle = tobool(wpn:GetNeedsCycle() and wpn:ShouldManualCycle()),
-        Lean = tobool(wpn:GetProcessedValue("CanLean", true) and arc9_lean:GetBool()),
+        -- Lean = tobool(wpn:GetProcessedValue("CanLean", true) and arc9_lean:GetBool()),
     }
 
     return cap
@@ -450,13 +450,13 @@ local function GetHintsTable(capabilities)
         })
     end
 
-    if capabilities.Lean and input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
-        table.insert(hints, {
-            glyph = ARC9.GetBindKey("+alt1"),
-            glyph2 = ARC9.GetBindKey("+alt2"),
-            action = ARC9:GetPhrase("hud.hint.lean")
-        })
-    end
+    -- if capabilities.Lean and input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
+    --     table.insert(hints, {
+    --         glyph = ARC9.GetBindKey("+alt1"),
+    --         glyph2 = ARC9.GetBindKey("+alt2"),
+    --         action = ARC9:GetPhrase("hud.hint.lean")
+    --     })
+    -- end
 
     local owner = weapon:GetOwner()
     local quicknade = owner.ARC9LastSelectedGrenade

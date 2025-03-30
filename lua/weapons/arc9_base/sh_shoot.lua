@@ -997,7 +997,7 @@ function SWEP:GetShootPos()
     --pos = pos + (owner:EyeAngles():Right() * self:GetLeanOffset())
 
     local rightVec = owner:EyeAngles():Right()
-    rightVec:Mul(self:GetLeanOffset())
+    -- rightVec:Mul(self:GetLeanOffset())
 
     pos:Add(rightVec)
 

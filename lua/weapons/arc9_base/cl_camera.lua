@@ -56,7 +56,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
         ang:RotateAroundAxis(ang:Forward(), math.sin(self.BobCT * 6)    * totalmult * -0.36)
     end
 
-    pos, ang = self:DoCameraLean(pos, ang)
+    -- pos, ang = self:DoCameraLean(pos, ang)
 
     return pos, ang, fov
 end

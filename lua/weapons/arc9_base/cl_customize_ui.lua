@@ -1149,7 +1149,7 @@ function SWEP:CreateCustomizeHUD()
         "tips.custombinds",
         "tips.blacklist",
         "tips.hints",
-        "tips.lean",
+        -- "tips.lean",
         "tips.discord",
         "tips.arc-9",
         "tips.development",

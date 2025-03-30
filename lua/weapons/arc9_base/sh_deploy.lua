@@ -25,7 +25,7 @@ function SWEP:Deploy()
     self:SetCycleFinishTime(0)
     self:SetRequestReload(false)
     self:SetEmptyReload(false)
-    self:SetLeanState(0)
+    -- self:SetLeanState(0)
 
     owner:SetCanZoom(false)
     -- self:SetTraversalSprint(false)
@@ -53,7 +53,7 @@ function SWEP:Deploy()
     self:SetLoadedRounds(self:Clip1())
     self:SetGrenadeRecovering(false)
     self:SetUBGL(false)
-    self:SetLeanAmount(0)
+    -- self:SetLeanAmount(0)
     
     self.StartedFixingJam = nil
 
@@ -199,7 +199,7 @@ function SWEP:Holster(wep)
         end
 
         self:SetLastHolsterTime(CurTime())
-        self:DoPlayerModelLean(true)
+        -- self:DoPlayerModelLean(true)
 
         return true 
     end
@@ -238,7 +238,7 @@ function SWEP:Holster(wep)
 
         self:SetLastHolsterTime(CurTime())
 
-        self:DoPlayerModelLean(true)
+        -- self:DoPlayerModelLean(true)
 
         return true
     else

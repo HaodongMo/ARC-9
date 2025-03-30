@@ -116,7 +116,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     local curTime = UnPredictedCurTime()
 
-    pos, ang = self:DoCameraLean(pos, ang)
+    -- pos, ang = self:DoCameraLean(pos, ang)
     oldpos:Set(pos)
     oldang:Set(ang)
     -- pos = Vector(0, 0, 0)

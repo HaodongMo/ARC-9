@@ -47,7 +47,6 @@ You could also opt to combine these methods together - it's common for an attach
  - Physical visual recoil (Tarkov style)
  - Lock-on system
  - Reworked standardized weapon stat handling
- - Integrated leaning system with autolean 
  - Looping sounds
  - Reworked LHIK system
  - Melee lunge
