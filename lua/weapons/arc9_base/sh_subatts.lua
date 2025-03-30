@@ -222,7 +222,7 @@ function SWEP:BuildSubAttachments(tbl)
         if !k.Installed then continue end
 
         local atttbl = ARC9.GetAttTable(k.Installed)
-        self.Attachments[i].ToggleNum = k.ToggleNum or 1
+        self.Attachments[i].ToggleNum = k.ToggleNum or k.t or 1
 
         if atttbl then
             if atttbl.Attachments then
