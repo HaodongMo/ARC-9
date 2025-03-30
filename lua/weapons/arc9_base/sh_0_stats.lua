@@ -17,6 +17,7 @@ local quickmodifiers = {
     ["DamageMax"] = GetConVar("arc9_mod_damage"),
     -- ["SweetSpotDamage"] = GetConVar("arc9_mod_damage"),
     ["Spread"] = GetConVar("arc9_mod_spread"),
+    ["DispersionSpread"] = GetConVar("arc9_mod_dispersionspread"),
     ["Recoil"] = GetConVar("arc9_mod_recoil"),
     ["VisualRecoil"] = GetConVar("arc9_mod_visualrecoil"),
     ["AimDownSightsTime"] = GetConVar("arc9_mod_adstime"),

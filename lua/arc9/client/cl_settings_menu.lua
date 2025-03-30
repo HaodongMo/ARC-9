@@ -346,6 +346,7 @@ ARC9.SettingsTable = {
         { type = "label", text = "settings.tabname.quickstat", desc = "settings.tabname.quickstat.desc" },
         { sv = true, type = "slider", text = "settings.server.quickstat.mod_damage.title", desc = "settings.server.quickstat.mod_damage.desc", convar = "mod_damage", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.spread", desc = "settings.server.quickstat.mod_spread.desc", convar = "mod_spread", min = 0, max = 10, decimals = 1 },
+        { sv = true, type = "slider", text = "autostat.dispersionspread", desc = "settings.server.quickstat.mod_dispersionspread.desc", convar = "mod_dispersionspread", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.recoil", desc = "settings.server.quickstat.mod_recoil.desc", convar = "mod_recoil", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.visualrecoil", desc = "settings.server.quickstat.mod_visualrecoil.desc", convar = "mod_visualrecoil", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.aimdownsightstime", desc = "settings.server.quickstat.mod_adstime.desc", convar = "mod_adstime", min = 0, max = 10, decimals = 1 },

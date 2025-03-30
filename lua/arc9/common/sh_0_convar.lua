@@ -706,6 +706,11 @@ local conVars = {
         replicated = true
     },
     {
+        name = "mod_dispersionspread",
+        default = "1",
+        replicated = true
+    },
+    {
         name = "mod_recoil",
         default = "1",
         replicated = true
@@ -1264,7 +1269,7 @@ c1 = {
     ["RecoilAutoControl"] = true,
     ["RecoilKick"] = true,
     ["Spread"] = true,
-    ["PelletSpread"] = true,
+    ["DispersionSpread"] = true,
     ["FreeAimRadius"] = true,
     ["Sway"] = true,
     ["AimDownSightsTime"] = true,
