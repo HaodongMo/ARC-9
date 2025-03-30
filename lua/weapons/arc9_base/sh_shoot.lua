@@ -957,6 +957,7 @@ function SWEP:GetDamageAtRange(range)
     local sweetspot_d = self:GetSweetSpotDeltaAtRange(range)
     if sweetspot_d > 0 then
         dmgv = Lerp(sweetspot_d, dmgv, swepGetProcessedValue(self, "SweetSpotDamage", true))
+        dmgv = dmgv * dmgmodcvar:GetFloat()
     end
 
     if swepGetProcessedValue(self, "DistributeDamage", true) then

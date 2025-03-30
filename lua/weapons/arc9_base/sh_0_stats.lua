@@ -15,6 +15,7 @@ SWEP.DynamicConditions = { -- Never cache these conditions because they will alw
 local quickmodifiers = {
     ["DamageMin"] = GetConVar("arc9_mod_damage"),
     ["DamageMax"] = GetConVar("arc9_mod_damage"),
+    -- ["SweetSpotDamage"] = GetConVar("arc9_mod_damage"),
     ["Spread"] = GetConVar("arc9_mod_spread"),
     ["Recoil"] = GetConVar("arc9_mod_recoil"),
     ["VisualRecoil"] = GetConVar("arc9_mod_visualrecoil"),
@@ -392,7 +393,7 @@ do
         local newstat, any = swepRunHook(self, val .. "Hook" .. condition, stat)
         stat = newstat or stat
 
-        if quickmodifiers[val] and isnumber(val) then
+        if quickmodifiers[val] and isnumber(stat) then
             local convarvalue = quickmodifiers[val]:GetFloat()
             
             if val == "MalfunctionMeanShotsToFail" then  -- dont kill me for this pls
