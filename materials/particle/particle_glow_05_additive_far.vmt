@@ -10,7 +10,7 @@
 	//$ENDFADESIZE .75
 	$depthblendscale 8
 	$minsize 5
-	$maxsize 10
+	// $maxsize 10
 	$additive 1
 	$ignorez 1
 	$STARTFADESIZE 5
