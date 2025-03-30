@@ -133,10 +133,6 @@ function SWEP:ReceiveWeapon()
         self:SetupModel(true)
         self:SetupModel(false)
         self:RefreshCustomizeMenu()
-
-        if !IsValid(self:GetOwner()) and (arc9_npc_autoreplace:GetBool() or arc9_replace_spawned:GetBool()) then -- very awful but i dont know how to make that value network properly
-            self.LoadedPreset = true
-        end
         
         if !self.HasSightsPoseparam then -- fuck you
             if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end

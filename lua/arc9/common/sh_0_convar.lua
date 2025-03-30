@@ -943,6 +943,11 @@ local conVars = {
         default = "0",
         client = true
     },
+    {
+        name = "fancy_spawnmenu",
+        default = "1",
+        client = true
+    },
 }
 ARC9.ConVarData = {}
 

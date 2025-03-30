@@ -100,7 +100,7 @@ function SWEP:NPC_Initialize()
     self:BuildSubAttachments(self.DefaultAttachments)
     self:SetBaseSettings()
 
-    self.LoadedPreset = true
+    self:SetNoPresets(true)
 
     if CLIENT then return end
     
@@ -116,7 +116,7 @@ end
 
 function SWEP:NoOwner_Initialize()
     self:CallOnClient("NoOwner_Initialize")
-    self.LoadedPreset = true
+    self:SetNoPresets(true)
     
     if CLIENT then return end
 

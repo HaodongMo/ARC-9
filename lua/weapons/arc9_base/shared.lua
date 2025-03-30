@@ -1617,6 +1617,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 25, "LockedOn")
     self:NetworkVar("Bool", 26, "MidMeleeAttack")
     self:NetworkVar("Bool", 27, "DoAFastDraw")
+    self:NetworkVar("Bool", 28, "NoPresets")
     -- self:NetworkVar("Bool", 12, "BlindFire")
     -- self:NetworkVar("Bool", 15, "TraversalSprint")
 
