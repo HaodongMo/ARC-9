@@ -60,15 +60,15 @@ local function OpenMenuExtra(pan, menu)
     if swep.NotAWeapon then return end
 
     if swep.Attachments and !table.IsEmpty(swep.Attachments) then
-        menu:AddOption("#arc9.spawnpreset.default", function()
+        menu:AddOption( ARC9:GetPhrase( "spawnmenu.spawnpreset.default" ), function()
             RunConsoleCommand( "arc9_giveswep_preset", classname, "default" )
         end):SetIcon( "icon16/arrow_rotate_anticlockwise.png" )
 
-        menu:AddOption("#arc9.spawnpreset.random", function()
+        menu:AddOption( ARC9:GetPhrase( "spawnmenu.spawnpreset.random" ), function()
             RunConsoleCommand( "arc9_giveswep_preset", classname, "random" )
         end):SetIcon( "icon16/arrow_switch.png" )
 
-        local subMenu, parentMenuOption = menu:AddSubMenu("#arc9.spawnpreset")
+        local subMenu, parentMenuOption = menu:AddSubMenu( ARC9:GetPhrase( "spawnmenu.spawnpreset" ) )
         parentMenuOption:SetIcon("icon16/application_cascade.png")
 
         local existingones = 0
@@ -87,7 +87,7 @@ local function OpenMenuExtra(pan, menu)
     end
 
     if game.SinglePlayer() then
-        menu:AddOption("#arc9.giveammo", function()
+        menu:AddOption( ARC9:GetPhrase( "spawnmenu.giveammo" ), function()
             RunConsoleCommand( "givecurrentammo" )
         end):SetIcon( "icon16/emoticon_tongue.png" )
     end

@@ -426,6 +426,48 @@ L["tips.tolerance"] = "All weapon bases work fine together. There's no need for 
 L["atts.favourites"] = "Favourites"
 L["atts.filter"] = "Filter"
 
+////////////////////// Spawnmenu
+////////// Fancy
+L["spawnmenu.spawnpreset"] = "Spawn with preset"
+L["spawnmenu.spawnpreset.default"] = "Spawn with default preset"
+L["spawnmenu.spawnpreset.random"] = "Spawn with random preset"
+L["spawnmenu.giveammo"] = "Give full ammo"
+
+L["spawnmenu.resetpreset"] = "Reset weapon presets"
+L["spawnmenu.resetpreset.rmb"] = "Confirm with Right-Click"
+
+////////// Options
+L["spawnmenu.settings"] = "ARC9 Settings"
+L["spawnmenu.settings.open"] = "Open ARC9 Settings"
+L["spawnmenu.settings.info"] = "Access the ARC9 Settings by pressing this button without having to equip a weapon!"
+
+L["spawnmenu.controller"] = "Controller Mode"
+L["spawnmenu.controller.enable"] = "Enable Controller Mode"
+L["spawnmenu.controller.enable.desc"] = "Enables a more controller-friendly mode when using ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and Randomly Select attachments.\n\nController glyphs can be customized below!"
+L["spawnmenu.controller.input"] = "Input"
+L["spawnmenu.controller.output"] = "Output"
+L["spawnmenu.controller.glyphreplace"] = "Write which input the glyph should replace"
+L["spawnmenu.controller.glyphappear"] = "Which glyph should appear; Click an icon below"
+L["spawnmenu.controller.addapply"] = "Add & Apply"
+L["spawnmenu.controller.remove"] = "Remove Selected"
+L["spawnmenu.controller.filter"] = "Filter by Controller Type"
+L["spawnmenu.controller.displayall"] = "! Display All !"
+
+L["spawnmenu.supermod"] = "Super Modifiers"
+L["spawnmenu.supermod.info"] = "Add ANY modifier with ANY special conditions."
+L["spawnmenu.supermod.stat"] = "Stat"
+L["spawnmenu.supermod.modifier"] = "Modifier"
+L["spawnmenu.supermod.selectstat"] = "Select a stat to modify"
+L["spawnmenu.supermod.selectmod"] = "Add a modification type; Some stats don't have these"
+L["spawnmenu.supermod.selectspec"] = "Special condition, such as when crouching"
+L["spawnmenu.supermod.examples"] = [[
+Examples: 
+- "Overheat" "true" to disable overheating
+- "BottomlessClip" "true" to enable Bottomless Clip"
+- "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
+- "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
+]]
+
 /////////////////////////////////////// Settings menu
 ////////////////////// Universal
 -- Use this method to localize convars in settings menu:
@@ -799,6 +841,9 @@ L["settings.server.gameplay.realrecoil.desc"] = "Various weapons are set up for 
 L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Body Damage Cancel"
 L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Cancel out the default body damage multiplier.\n\nDisable only if another mod provides this sort of functionality."
 
+L["settings.gameplay.controllermode.title"] = "Controller Mode"
+L["settings.gameplay.controllermode.desc"] = "Open a separate menu that allows you to fine-tune controller-friendly options, such as altering custom glyphs."
+
 ////////////////////// Customization
 L["settings.tabname.customization"] = "Customization"
 
@@ -953,6 +998,9 @@ L["settings.server.quickstat.mod_malfunction.desc"] = "Multiply how likely it is
 
 L["settings.server.gameplay.mod_overheat.title"] = "Enable Overheating"
 L["settings.server.gameplay.mod_overheat.desc"] = "If the weapon supports it, it can overheat when firing too often, which could lead to a malfunction."
+
+L["settings.server.gameplay.supermod.title"] = "Super Modifiers"
+L["settings.server.gameplay.supermod.desc"] = "Open a separate menu that allows you to apply any modifier on all weapons.\n\nWarning: Could cause weapons to no longer function if done incorrectly."
 
 ////////////////////// Developer
 L["settings.tabname.developer"] = "Developer"
