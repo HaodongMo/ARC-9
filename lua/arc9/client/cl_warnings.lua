@@ -350,7 +350,7 @@ ARC9.BadConfigStuff = {
         title = ARC9:GetPhrase("badconf.directx.title"),
         desc = ARC9:GetPhrase("badconf.directx.desc"),
         solution = ARC9:GetPhrase("badconf.directx.solution"),
-        cause = function() return (render.GetDXLevel() or 0) < 90 end
+        cause = function() return (render.GetDXLevel() or 0) < 90 and !GetConVar("arc9_ignore_dx"):GetBool() end
     },
     tickrate = {
         title = ARC9:GetPhrase("badconf.tickrate.title"),

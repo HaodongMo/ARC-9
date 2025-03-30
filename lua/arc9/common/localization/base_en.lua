@@ -987,6 +987,9 @@ L["settings.server.developer.presets_clear.desc"] = "Clears presets, icons and d
 L["settings.server.developer.reload"] = "RELOAD"
 L["settings.server.developer.clear"] = "CLEAR"
 
+L["settings.developer.ignore_dx.title"] = "Ignore DirectX warning"
+L["settings.developer.ignore_dx.desc"] = "Ignore the warning about current DirectX warning not being 9, useful on linux or something."
+
 ////////// Asset Caching
 L["settings.tabname.assetcache"] = "Asset Caching"
 L["settings.tabname.assetcache.desc"] = "Caching certain assets can prevent stutters for more comfortable gameplay.\n\nIf running on an HDD, or with a lot of addons, these options will improve initial loading times."

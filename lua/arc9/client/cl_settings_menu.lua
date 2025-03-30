@@ -377,6 +377,7 @@ ARC9.SettingsTable = {
         { sv = true, type = "button", text = "settings.server.developer.presets_clear.title", desc = "settings.server.developer.presets_clear.desc", content = "settings.server.developer.clear", func = function(self2)
             RunConsoleCommand("arc9_presets_clear")
         end},
+        { type = "bool", text = "settings.developer.ignore_dx.title", desc = "settings.developer.ignore_dx.desc", convar = "ignore_dx" },
 		
         { type = "label", text = "settings.tabname.assetcache", desc = "settings.tabname.assetcache.desc" },
         { sv = true, type = "bool", text = "settings.server.assetcache.precache_sounds_onfirsttake.title", desc = "settings.server.assetcache.precache_sounds_onfirsttake.desc", convar = "precache_sounds_onfirsttake" },
