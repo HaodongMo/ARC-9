@@ -1336,30 +1336,14 @@ L["premium.content.list"] = [[
 - 无限定制插槽（从 32 个增加到 32 个）
 - 无限预设插槽（每种武器从 10 个增加到 10 个）
 - 访问超级修改器设置*
-- 访问独有的黑暗用户界面模式
-- 可为光学视网膜、用户界面等着色
-- 通过基地提供专属迷彩
-- Discord 上的专属支持频道
+- 存取獨家 RGB UI 模式
+- 透過基地提供的獨家迷彩
+- Discord 上的獨家支援頻道**
+- 全新、改良且獨特的 Spawnmenu 設計**
+- 改進了 TPIK 性能和外觀**
 
 *如果在服务器上，需要管理员帮助
-]]
-
-L["premium.payment.month"] = [[
-%s RMB
-购买 ARC9 Premium 1 个月。
-]]
-
-L["premium.payment.months"] = [[
-%s RMB
-购买 %s 个月的 ARC9 Premium，可享受 <color=100,255,100>%s%% 的折扣</color>！
-]]
-
-L["premium.payment.info"] = [[
-购买 ARC9 Premium 可在购买时间内立即访问前面列出的所有内容。
-您可以通过再次购买任何选项来延长时间，一旦原定时间到期，时间将自动刷新。
-一旦时间过期，且未支付额外费用，ARC9 高级版的访问权限将被取消。
-
-所有自定义选项，包括使用 ARC9 Premium 制作的附件插槽、预设和彩色视网膜仍将可用，但您将无法更改或添加任何其他选项。
+**不適用於<color=255,106,0>免費試用</color>
 ]]
 
 L["premium.purchased"] = "已购买 <color=255,106,0>ARC9 Premium</color>！"
@@ -1371,4 +1355,52 @@ L["premium.purchased.desc"] = [[
 如果您没有立即获得 ARC9 Premium 奖励，请重新加入服务器或重启游戏。
 
 如果您仍有问题，或仍未获得高级奖励，请访问钻石鸽 Discord 服务器并提供有效的购买证明，我们会为您修复。
+]]
+
+L["premium.freetrial"] = "Received <color=255,106,0>ARC9 Premium (Free Trial)</color>!"
+L["premium.freetrial.desc"] = [[
+感谢您支持 ARC9！
+
+为了表达我们的谢意，我们赠送您 <color=255,106,0>3 天</color> 的 ARC9 Premium！
+
+如果您没有立即获得 ARC9 Premium 奖励，请重新加入服务器或重启游戏。
+
+如果您仍有问题，或仍未获得高级奖励，请访问钻石鸽 Discord 服务器并提供有效的购买证明，我们会为您修复。
+]]
+
+L["premium.payment.info"] = [[
+购买 ARC9 Premium 可在购买时间内立即访问前面列出的所有内容。
+您可以通过再次购买任何选项来延长时间，一旦原定时间到期，时间将自动刷新。
+一旦时间过期，且未支付额外费用，ARC9 高级版的访问权限将被取消。
+
+所有自定义选项，包括使用 ARC9 Premium 制作的附件插槽、预设和彩色视网膜仍将可用，但您将无法更改或添加任何其他选项。
+]]
+
+L["premium.payment.free.title"] = "ARC9 Premium（免費試用）"
+L["premium.payment.free.desc"] = [[
+價格：<color=100,255,100>免費</color>
+
+购买 ARC9 Premium <color=255,106,0>3 天</color>。
+]]
+
+L["premium.payment.month.title"] = "ARC9 Premium (1 个月)"
+L["premium.payment.month.desc"] = [[
+價格：<color=100,255,100>35 RMB</color>
+
+购买 ARC9 Premium <color=255,106,0>1 个月</color>。
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (3 个月)"
+L["premium.payment.6mon.desc"] = [[
+價格：<color=100,255,100>110 RMB</color>
+
+购买 ARC9 Premium <color=255,106,0>3 个月</color>。
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (6+1 个月)"
+L["premium.payment.6mon.desc"] = [[
+價格：<color=100,255,100>215 RMB</color> [ HOT! ]
+
+购买 ARC9 Premium <color=255,106,0>6 个月</color>。
+包括 <color=100,255,100>一个月免费</color>！
 ]]

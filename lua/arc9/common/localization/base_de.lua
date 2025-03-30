@@ -1072,30 +1072,14 @@ L["premium.content.list"] = [[
 - Unbegrenzte Anpassungs-Slots (erhöht von 32)
 - Unbegrenzte Voreinstellungs-Slots (erhöht von 10 pro Waffe)
 - Zugang zu Supermodifier-Einstellungen*
-- Zugang zu einem exklusiven dunklen UI-Modus
-- Möglichkeit, optische Fadenkreuze, UI und mehr einzufärben
-- Exklusive Tarnungen, die über die Basis verfügbar sind
-- Exklusiver Support-Kanal auf Discord
+– Zugriff auf einen exklusiven RGB-UI-Modus
+– Exklusive Tarnungen über die Basis verfügbar
+– Exklusiver Support-Kanal auf Discord**
+– Neues, verbessertes und exklusives Spawnmenü-Design**
+– Verbesserte TPIK-Leistung und -Darstellung**
 
 *Erfordert einen Administrator, wenn auf einem Server
-]]
-
-L["premium.payment.month"] = [[
-€%s
-Erwerben Sie ARC9 Premium für 1 Monat.
-]]
-
-L["premium.payment.months"] = [[
-€%s
-Erwerben Sie ARC9 Premium für %s Monate und erhalten Sie einen <color=100,255,100>Rabatt von %s%%</color>!
-]]
-
-L["premium.payment.info"] = [[
-Mit dem Erwerb von ARC9 Premium erhalten Sie sofortigen Zugriff auf alle oben aufgeführten Inhalte für die erworbene Zeit.
-Die Zeit kann durch den erneuten Kauf einer der Optionen verlängert werden, und die Zeit wird automatisch aktualisiert, sobald die ursprüngliche Zeit abgelaufen ist.
-Sobald die Zeit abgelaufen ist und keine weitere Zahlung erfolgt ist, wird der Zugang zu ARC9 Premium entfernt.
-
-Alle mit ARC9 Premium erstellten Anpassungsoptionen, einschließlich der Zubehörslots, Voreinstellungen und farbigen Absehen, bleiben verfügbar, aber Sie können sie nicht ändern oder zusätzliche hinzufügen.
+**Nicht verfügbar mit der <color=255,106,0>Kostenlosen Testversion</color>
 ]]
 
 L["premium.purchased"] = "<color=255,106,0>ARC9 Premium</color> gekauft!"
@@ -1107,4 +1091,52 @@ Eine Quittung wird Ihnen an die von Ihnen angegebene E-Mail-Adresse gesendet.
 Wenn Sie nicht sofort Zugang zu den ARC9 Premium-Boni erhalten haben, verbinden Sie sich bitte erneut mit dem Server oder starten Sie Ihr Spiel neu.
 
 Wenn Sie immer noch Probleme damit haben, oder wenn Sie immer noch keinen Premium-Zugang erhalten haben, dann besuchen Sie den Diamond Doves Discord Server und geben Sie einen gültigen Kaufnachweis an, und wir werden das Problem für Sie lösen.
+]]
+
+L["premium.freetrial"] = "Received <color=255,106,0>ARC9 Premium (Free Trial)</color>!"
+L["premium.freetrial.desc"] = [[
+Vielen Dank für Ihre Unterstützung von ARC9!
+
+Als Zeichen unserer Wertschätzung erhalten Sie ARC9 Premium für <color=255,106,0>3 Tage</color>!
+
+Wenn Sie nicht sofort Zugang zu den ARC9 Premium-Boni erhalten haben, verbinden Sie sich bitte erneut mit dem Server oder starten Sie Ihr Spiel neu.
+
+Wenn Sie immer noch Probleme damit haben, oder wenn Sie immer noch keinen Premium-Zugang erhalten haben, dann besuchen Sie den Diamond Doves Discord Server und geben Sie einen gültigen Kaufnachweis an, und wir werden das Problem für Sie lösen.
+]]
+
+L["premium.payment.info"] = [[
+Mit dem Erwerb von ARC9 Premium erhalten Sie sofortigen Zugriff auf alle oben aufgeführten Inhalte für die erworbene Zeit.
+Die Zeit kann durch den erneuten Kauf einer der Optionen verlängert werden, und die Zeit wird automatisch aktualisiert, sobald die ursprüngliche Zeit abgelaufen ist.
+Sobald die Zeit abgelaufen ist und keine weitere Zahlung erfolgt ist, wird der Zugang zu ARC9 Premium entfernt.
+
+Alle mit ARC9 Premium erstellten Anpassungsoptionen, einschließlich der Zubehörslots, Voreinstellungen und farbigen Absehen, bleiben verfügbar, aber Sie können sie nicht ändern oder zusätzliche hinzufügen.
+]]
+
+L["premium.payment.free.title"] = "ARC9 Premium (Kostenlose Testversion)"
+L["premium.payment.free.desc"] = [[
+Preis: <color=100,255,100>KOSTENLOS</color>
+
+Aktion ARC9 Premium für <color=255,106,0>3 Tage</color>.
+]]
+
+L["premium.payment.month.title"] = "ARC9 Premium (1 Monat)"
+L["premium.payment.month.desc"] = [[
+Preis: <color=100,255,100>€5</color>
+
+Aktion ARC9 Premium für <color=255,106,0>1 Monat</color>.
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (3 Monate)"
+L["premium.payment.6mon.desc"] = [[
+Preis: <color=100,255,100>€15</color>
+
+Aktion ARC9 Premium für <color=255,106,0>3 Monate</color>.
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (6 + 1 Monat)"
+L["premium.payment.6mon.desc"] = [[
+Preis: <color=100,255,100>€30</color> [ EXTRA! ]
+
+Aktion ARC9 Premium für <color=255,106,0>6 Monate</color>.
+Inklusive <color=100,255,100>einem Gratismonat</color>!
 ]]

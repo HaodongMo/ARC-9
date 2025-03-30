@@ -1076,22 +1076,36 @@ L["premium.content.list"] = [[
 - Unlimited Customization Slots (Increased from 32)
 - Unlimited Preset Slots (Increased from 10 per weapon)
 - Access to Supermodifier settings*
-- Access to an exclusive Dark UI mode
-- Ability to colour optic reticles, UI and more
+- Access to an exclusive RGB UI mode
 - Exclusive camos made available through the base
-- Exclusive support channel on Discord
+- Exclusive support channel on Discord**
+- New, improved and exclusive Spawnmenu design**
+- Improved TPIK performance and appearance**
 
 *Requires administrator if on a server
+**Not available with the <color=255,106,0>Free Trial</color>
 ]]
 
-L["premium.payment.month"] = [[
-$%s
-Acquire ARC9 Premium for 1 Month.
+L["premium.purchased"] = "<color=255,106,0>ARC9 Premium</color> Purchased!"
+L["premium.purchased.desc"] = [[
+Thank you for purchasing ARC9 Premium! You made the bird a very happy one!
+
+A receipt will be sent to your connected Email.
+
+If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
+
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
 ]]
 
-L["premium.payment.months"] = [[
-$%s
-Acquire ARC9 Premium for %s Months and get a <color=100,255,100>%s%% discount</color>!
+L["premium.freetrial"] = "You've been gifted <color=255,106,0>ARC9 Premium (Free Trial)</color>!"
+L["premium.freetrial.desc"] = [[
+Thank you for supporting ARC9! You've made the bird a very happy bird!
+
+As a token of our appreciation, you've been gifted ARC9 Premium for <color=255,106,0>3 Days</color>!
+
+If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
+
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
 ]]
 
 L["premium.payment.info"] = [[
@@ -1102,13 +1116,31 @@ Once the time has passed, and no additional payment has been made, access to ARC
 All customization options, including attachment slots, presets and coloured reticles made with ARC9 Premium will remain available, but you will not alter them or add any additional ones.
 ]]
 
-L["premium.purchased"] = "Purchased <color=255,106,0>ARC9 Premium</color>!"
-L["premium.purchased.desc"] = [[
-Thank you for purchasing ARC9 Premium! You made the bird a very happy one!
+L["premium.payment.free.title"] = "ARC9 Premium (Free Trial)"
+L["premium.payment.free.desc"] = [[
+Price: <color=100,255,100>FREE</color>
 
-A receipt will be sent to your connected Email.
+Acquire ARC9 Premium for <color=255,106,0>3 Days</color>.
+]]
 
-If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
+L["premium.payment.month.title"] = "ARC9 Premium (1 Month)"
+L["premium.payment.month.desc"] = [[
+Price: <color=100,255,100>$5</color>
 
-If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
+Acquire ARC9 Premium for <color=255,106,0>1 Month</color>.
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (3 Months)"
+L["premium.payment.6mon.desc"] = [[
+Price: <color=100,255,100>$15</color>
+
+Acquire ARC9 Premium for <color=255,106,0>3 Months</color>.
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (6 + 1 Months)"
+L["premium.payment.6mon.desc"] = [[
+Price: <color=100,255,100>$30</color> [ HOT! ]
+
+Acquire ARC9 Premium for <color=255,106,0>6 Months</color>.
+Includes <color=100,255,100>one free month</color>!
 ]]

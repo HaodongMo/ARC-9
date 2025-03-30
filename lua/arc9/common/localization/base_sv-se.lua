@@ -1072,30 +1072,14 @@ L["premium.content.list"] = [[
 - Oändliga Anpassningsplatser (Ökat från 32)
 - Oändliga Förinställningar (Ökat från 10 per vapen)
 - Tillgång till "Supermodifier"-inställningar*
-- Tillgång till exklusivt Mörkt Gränssnittläge
-- Förmåga att färga riktmedel hårkors, gränssnitt och mer
+- Tillgång till exklusivt RGB-Gränssnittläge
 - Exklusiva kamouflage gjort tillgängliga via basen
-- Exklusiv supportkanal på Discord
+- Exklusiv supportkanal på Discord**
+- Ny, förbättrad och exklusive Spawnmeny design**
+- Förbättrad TPIK-prestanda och utseende**
 
 *Kräver administratör på servrar
-]]
-
-L["premium.payment.month"] = [[
-%s SEK
-Skaffa ARC9 Premium i 1 Månad.
-]]
-
-L["premium.payment.months"] = [[
-%s SEK
-Skaffa ARC9 Premium i %s Månader och få <color=100,255,100>%s%% rabatt</color>!
-]]
-
-L["premium.payment.info"] = [[
-Köp av ARC9 Premium ger omedelbar tillgång till all innehåll som visats innan efter köp.
-Tid kan förlängas genom att köpa valfritt alternativ en gång till, och tiden ändras automatiskt när originaltiden har gått ut.
-När tiden har gått ut, och ingen tillagd betalning har gjorts, så tas tillgång till ARC9 Premium bort.
-
-All anpassningsalternativ, inklusive anpassningsplatser, förinställningar och färgade hårkors gjorda med ARC9 Premium kommer fortsätta vara tillgängliga, men du kan inte längre ändra dem eller lägga till fler.
+**Ej tillgänglig under <color=255,106,0>Gratis Prövning</color>
 ]]
 
 L["premium.purchased"] = "<color=255,106,0>ARC9 Premium</color> köpt!"
@@ -1107,4 +1091,52 @@ Ett kvitto kommer skickas till din kopplad E-post.
 Om du inte omedelbart får tillgång till ARC9 Premium bonusarna, vänligen återanslut till servern, eller starta om spelet.
 
 Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Diamond Doves Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
+]]
+
+L["premium.freetrial"] = "Mottog <color=255,106,0>ARC9 Premium (Gratis Prövning)</color>!"
+L["premium.freetrial.desc"] = [[
+Tack för att du stöttat ARC9!
+
+Som ett tecken på vår uppskattning så har du blivit begåvad ARC9 Premium i <color=255,106,0>3 Dagar</color>!
+
+Om du inte omedelbart får tillgång till ARC9 Premium bonusarna, vänligen återanslut till servern, eller starta om spelet.
+
+Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Diamond Doves Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
+]]
+
+L["premium.payment.info"] = [[
+Köp av ARC9 Premium ger omedelbar tillgång till all innehåll som visats innan efter köp.
+Tid kan förlängas genom att köpa valfritt alternativ en gång till, och tiden ändras automatiskt när originaltiden har gått ut.
+När tiden har gått ut, och ingen tillagd betalning har gjorts, så tas tillgång till ARC9 Premium bort.
+
+All anpassningsalternativ, inklusive anpassningsplatser, förinställningar och färgade hårkors gjorda med ARC9 Premium kommer fortsätta vara tillgängliga, men du kan inte längre ändra dem eller lägga till fler.
+]]
+
+L["premium.payment.free.title"] = "ARC9 Premium (Gratis Prövning)"
+L["premium.payment.free.desc"] = [[
+Kostnad: <color=100,255,100>GRATIS</color>
+
+Motta ARC9 Premium i <color=255,106,0>3 Dagar</color>.
+]]
+
+L["premium.payment.month.title"] = "ARC9 Premium (1 Månad)"
+L["premium.payment.month.desc"] = [[
+Kostnad: <color=100,255,100>49,99 SEK</color>
+
+Motta ARC9 Premium i <color=255,106,0>1 Månad</color>.
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (3 Månader)"
+L["premium.payment.6mon.desc"] = [[
+Kostnad: <color=100,255,100>149,99 SEK</color>
+
+Motta ARC9 Premium i <color=255,106,0>3 Månader</color>.
+]]
+
+L["premium.payment.6mon.title"] = "ARC9 Premium (6 + 1 Månader)"
+L["premium.payment.6mon.desc"] = [[
+Kostnad: <color=100,255,100>299,99 SEK</color> [ HET! ]
+
+Motta ARC9 Premium i <color=255,106,0>6 Månader</color>.
+Innehåller <color=100,255,100>en gratis månad</color>!
 ]]
