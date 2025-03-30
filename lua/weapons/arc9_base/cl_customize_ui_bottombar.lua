@@ -57,6 +57,8 @@ function SWEP:ClearBottomBar()
 end
 
 local function recursivefoldercount(folder)
+    if !istable(folder) then return 0 end
+
     local count = 0
 
     for i, k in pairs(folder) do

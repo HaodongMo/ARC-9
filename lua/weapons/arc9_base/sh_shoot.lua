@@ -828,7 +828,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     end
 
     if swepGetProcessedValue(self, "ExplosionDamage") > 0 then
-        util.BlastDamage(self, owner, hitPos, swepGetProcessedValue(self, "ExplosionRadius", true), swepGetProcessedValue(self, "ExplosionDamage"))
+        util.BlastDamage(self, IsValid(owner) and owner or self, hitPos, swepGetProcessedValue(self, "ExplosionRadius", true), swepGetProcessedValue(self, "ExplosionDamage"))
     end
 
     if swepGetProcessedValue(self, "ExplosionEffect", true) then
