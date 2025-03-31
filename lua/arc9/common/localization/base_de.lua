@@ -741,6 +741,9 @@ L["settings.gameplay.compensate_sens.desc"] = "Passt die Ziel-Empfindlichkeit dy
 L["settings.gameplay.sensmult.title"] = "ADS-Empfindlichkeit multi."
 L["settings.gameplay.sensmult.desc"] = "Multipliziert global die Ziel-Empfindlichkeit mit diesem Wert.\n\nJe niedriger er ist, desto langsamer verhält sich die Empfindlichkeit."
 
+-- L["settings.gameplay.gradualsens.title"] = "Gradual ADS Sensitivity"
+-- L["settings.gameplay.gradualsens.desc"] = "Gradually adjusts the aiming sensitivity when entering or exiting ADS."
+
 L["settings.gameplay.color.reflex.title"] = "Reflexvisier-Farbe"
 L["settings.gameplay.color.reflex.desc"] = "Bestimmt Farbe des Fadenkreuzes, das von Reflex- und holografischen Visieren benutzt werden soll.\n\nWird nicht von allen Optiken unterstützt."
 

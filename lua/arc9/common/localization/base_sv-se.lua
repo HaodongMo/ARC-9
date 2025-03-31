@@ -741,6 +741,9 @@ L["settings.gameplay.compensate_sens.desc"] = "Justerar dynamiskt känsligheten 
 L["settings.gameplay.sensmult.title"] = "Multiplicera Känslighet i Siktet"
 L["settings.gameplay.sensmult.desc"] = "Multiplicerar känsligheten i siktet globalt med detta värde.\n\nJu lägre den är, ju lägre blir känsligheten."
 
+L["settings.gameplay.gradualsens.title"] = "Gradvis Känslighet i Siktet"
+L["settings.gameplay.gradualsens.desc"] = "Justerar gradvist känsligheten i siktet när du siktar in eller ut."
+
 L["settings.gameplay.color.reflex.title"] = "Reflexsikte Färg"
 L["settings.gameplay.color.reflex.desc"] = "Vilken färg hårkorset i reflex- och holografiska sikten borde vara.\n\nInte alla sikten stödjer detta."
 

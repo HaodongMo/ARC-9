@@ -1005,6 +1005,9 @@ L["settings.desc"] = "简介"
 -- L["settings.gameplay.sensmult.title"] = "Multiply ADS Sensitivity"
 -- L["settings.gameplay.sensmult.desc"] = "Multiplies the aiming sensitivity globally with this value.\n\nThe lower it is, the slower your sensitivity will be."
 
+-- L["settings.gameplay.gradualsens.title"] = "Gradual ADS Sensitivity"
+-- L["settings.gameplay.gradualsens.desc"] = "Gradually adjusts the aiming sensitivity when entering or exiting ADS."
+
 -- L["settings.gameplay.color.reflex.title"] = "Reflex Sight Color"
 -- L["settings.gameplay.color.reflex.desc"] = "Which color the reticle used on reflex or holographic sights should be.\n\nNot all optics support this."
 

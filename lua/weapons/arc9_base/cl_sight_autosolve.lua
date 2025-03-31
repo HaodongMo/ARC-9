@@ -100,6 +100,7 @@ local aac = GetConVar("arc9_aimassist_cl")
 local aai = GetConVar("arc9_aimassist_intensity")
 local aams = GetConVar("arc9_aimassist_multsens")
 local sensmult = GetConVar("arc9_mult_sens")
+local gradualaim = GetConVar("arc9_gradual_sens")
 
 function SWEP:AdjustMouseSensitivity()
 	if self:GetOwner().ARC9_AATarget != nil and (!self:GetProcessedValue("NoAimAssist", true) and aa:GetBool() and aac:GetBool()) then
@@ -142,10 +143,12 @@ function SWEP:AdjustMouseSensitivity()
 			local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
 
 			amt = math.sqrt(amt)
-
-			-- return amt * aamult * ( 1 - math.Clamp( gsa, 0, math.Clamp(sensmult:GetFloat(), 0, 0.99) ) ) -- Gradually reduces sensitivity. Experimental.
-			return amt * sensmult:GetFloat() * aamult
-
+			
+			if gradualaim:GetBool() then
+				return amt * aamult * ( 1 - math.Clamp(gsa, 0.1, math.Clamp(1 - sensmult:GetFloat(), 0.1, 1)) )
+			else
+				return amt * sensmult:GetFloat() * aamult
+			end
 		end
 	end
 

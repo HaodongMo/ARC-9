@@ -948,6 +948,11 @@ local conVars = {
         default = "1",
         client = true
     },
+    {
+        name = "gradual_sens",
+        default = "0",
+        client = true
+    },
 }
 ARC9.ConVarData = {}
 
