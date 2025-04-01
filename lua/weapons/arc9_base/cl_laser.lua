@@ -64,22 +64,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
         local sightamount = self:GetSightAmount()
         if sightamount > 0 and self.Peeking then
 
-            local fuckingreloadprocess
-            local fuckingreloadprocessinfluence = 1
-
-            if self:GetReloading() then
-                if !self:GetProcessedValue("ShotgunReload", true) then
-                    fuckingreloadprocess = math.Clamp((self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime(self:GetIKAnimation())), 0, 1)
-
-                    if fuckingreloadprocess <= 0.2 then
-                        fuckingreloadprocessinfluence = 1 - (fuckingreloadprocess * 5)
-                    elseif fuckingreloadprocess >= 0.9 then
-                        fuckingreloadprocessinfluence = (fuckingreloadprocess - 0.9) * 10
-                    else
-                        fuckingreloadprocessinfluence = 0
-                    end
-                end
-            end
+            local fuckingreloadprocessinfluence = self:GetReloadingProgress()
 
             local trrr = util.TraceLine({
                 start = self:GetShootPos(),
@@ -89,8 +74,8 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
             })
 
             local realhitpos = trrr.HitPos
-            laspos = LerpVector(sightamount*fuckingreloadprocessinfluence, laspos, realhitpos)
-            hitpos = LerpVector(sightamount*fuckingreloadprocessinfluence, hitpos, realhitpos)
+            laspos = LerpVector(sightamount * fuckingreloadprocessinfluence, laspos, realhitpos)
+            hitpos = LerpVector(sightamount * fuckingreloadprocessinfluence, hitpos, realhitpos)
         end
     end
 

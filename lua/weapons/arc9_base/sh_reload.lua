@@ -594,3 +594,19 @@ function SWEP:Ammo2()
     return self:GetOwner():GetAmmoCount(self:GetProcessedValue("UBGLAmmo"))
 end
 
+function SWEP:GetReloadingProgress()
+    local fuckingreloadprocessinfluence, fuckingreloadprocess = 0, 0
+    if self:GetReloading() and !self:GetProcessedValue("ShotgunReload", true) then
+        fuckingreloadprocessinfluence = 1
+        fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+        if fuckingreloadprocess <= 0.1 then
+            fuckingreloadprocessinfluence = fuckingreloadprocess * 10
+        elseif fuckingreloadprocess > 0.75 then
+            fuckingreloadprocessinfluence = math.max(0, 1 - ((fuckingreloadprocess - 0.75) * 8))
+        end
+        
+        fuckingreloadprocessinfluence = math.ease.InCirc(fuckingreloadprocessinfluence)
+    end
+
+    return fuckingreloadprocessinfluence, fuckingreloadprocess
+end

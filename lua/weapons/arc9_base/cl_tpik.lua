@@ -17,7 +17,7 @@ local function SetTPIKOffset(self, wm, owner, lp)
     local sightdelta = self:GetSightAmount()
 
     if self.WorldModelOffset.TPIKPosAlternative and self:GetValue("TPIKAlternativePos") then
-        pos = self.WorldModelOffset.TPIKPosAlternative
+        pos = Vector(self.WorldModelOffset.TPIKPosAlternative)
     end
 
     if self.WorldModelOffset.TPIKPosSightOffset then
@@ -28,17 +28,8 @@ local function SetTPIKOffset(self, wm, owner, lp)
         end
 
         if self.WorldModelOffset.TPIKPosReloadOffset then
-            if self:GetReloading() and !self:GetProcessedValue("ShotgunReload", true) then -- reused from reloadpos vm code
-                local fuckingreloadprocessinfluence = 1
-                local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
-                if fuckingreloadprocess <= 0.1 then
-                    fuckingreloadprocessinfluence = fuckingreloadprocess * 10
-                elseif fuckingreloadprocess > 0.75 then
-                    fuckingreloadprocessinfluence = math.max(0, 1 - ((fuckingreloadprocess - 0.75) * 8))
-                end
-                
-                fuckingreloadprocessinfluence = math.ease.InCirc(fuckingreloadprocessinfluence)
-
+            local fuckingreloadprocessinfluence = self:GetReloadingProgress()
+            if fuckingreloadprocessinfluence > 0 then    
                 pos:Add(self.WorldModelOffset.TPIKPosReloadOffset * fuckingreloadprocessinfluence)
                 ang:Add(self.WorldModelOffset.TPIKAngReloadOffset * fuckingreloadprocessinfluence)
             end
@@ -90,12 +81,14 @@ local function SetTPIKOffset(self, wm, owner, lp)
             ang:Add(self.PeekAng * sightdelta * self.PeekingSmooth)
         end
 
-        -- visual recoil, cuz we don't add vm pos anymore
-        local vrp, vra = self:GetVisualRecoilPos(), self:GetVisualRecoilAng() * 2.5
-        self.TPIKSmoothRecoilPos = LerpVector(FrameTime() * 1, self.TPIKSmoothRecoilPos or vrp, Vector(-vrp.y, vrp.x, vrp.z * -10))
-        self.TPIKSmoothRecoilAng = LerpVector(FrameTime() * 1, self.TPIKSmoothRecoilAng or vra, vra)
-        pos:Sub(self.TPIKSmoothRecoilPos)
-        ang:Add(Angle(-self.TPIKSmoothRecoilAng.x, self.TPIKSmoothRecoilAng.y, self.TPIKSmoothRecoilAng.z))
+        if self.VisualRecoilUp > 3 then -- only eft (or those who rely on visrec only) cuz this is not ideal
+            -- visual recoil, cuz we don't add vm pos anymore
+            local vrp, vra = self:GetVisualRecoilPos(), self:GetVisualRecoilAng() * 2.5
+            self.TPIKSmoothRecoilPos = LerpVector(FrameTime() * 1, self.TPIKSmoothRecoilPos or vrp, Vector(-vrp.y, vrp.x, vrp.z * -10))
+            self.TPIKSmoothRecoilAng = LerpVector(FrameTime() * 1, self.TPIKSmoothRecoilAng or vra, vra)
+            pos:Sub(self.TPIKSmoothRecoilPos)
+            ang:Add(Angle(-self.TPIKSmoothRecoilAng.x, self.TPIKSmoothRecoilAng.y, self.TPIKSmoothRecoilAng.z))
+        end
     end
 
     wm.slottbl.Pos = pos
@@ -147,7 +140,7 @@ SWEP.LastTPIKTime = 0
 
 local cachelastcycle = 0 -- probably bad
 
-local headcontrol = {"ValveBiped.Bip01_Neck1", "ValveBiped.Bip01_Head1"}
+-- local headcontrol = {"ValveBiped.Bip01_Neck1", "ValveBiped.Bip01_Head1"}
 
 function SWEP:DoTPIK()
     local wm = self:GetWM()
@@ -247,22 +240,42 @@ function SWEP:DoTPIK()
     local ply_spine_matrix = ply:GetBoneMatrix(ply_spine_index)
     local wmpos = ply_spine_matrix:GetTranslation()
 
-    local headcam = self:GetCameraControl(wm)
-    if IsValid(headcam) then
-        for _, bone in ipairs(headcontrol) do
-            local ply_boneindex = ply:LookupBone(bone)
-            if !ply_boneindex then continue end
+    -- local headcam = self:GetCameraControl(wm)
+    -- if IsValid(headcam) then
+    --     for _, bone in ipairs(headcontrol) do
+    --         local ply_boneindex = ply:LookupBone(bone)
+    --         if !ply_boneindex then continue end
+    --         local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
+    --         if !ply_bonematrix then continue end
+    
+    --         local boneang = ply_bonematrix:GetAngles()
+    --         boneang:Add(headcam)
+    
+    --         ply_bonematrix:SetAngles(boneang)
+    
+    --         ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+    --     end
+    -- end
+    
+    local sightdelta = self:GetSightAmount()
+    local reloadprogress = math.max(0, self:GetReloadingProgress() - sightdelta)
+
+    if sightdelta > 0 or self:GetReloading() then
+        local ply_boneindex = ply:LookupBone("ValveBiped.Bip01_Head1")
+        if ply_boneindex then
             local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
-            if !ply_bonematrix then continue end
-    
-            local boneang = ply_bonematrix:GetAngles()
-            boneang:Add(headcam)
-    
-            ply_bonematrix:SetAngles(boneang)
-    
-            ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+            if ply_bonematrix then
+                local boneang = ply_bonematrix:GetAngles()
+                self.TPIKReloadProgressSmooth = Lerp(FrameTime() * 6, self.TPIKReloadProgressSmooth or 0, reloadprogress)
+
+                boneang:Add(Angle(5, -15, 15) * sightdelta + Angle(9, -5, -2) * self.TPIKReloadProgressSmooth)
+
+                ply_bonematrix:SetAngles(boneang)
+
+                ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+            end
         end
-    end
+    else self.TPIKReloadProgressSmooth = 0 end
 
     for _, bone in ipairs(bones) do
         local wm_boneindex = wm:LookupBone(bone)
