@@ -183,8 +183,8 @@ local function paintcoolicon(self, w, h)
     
     if progress > 0.1 then
         local _, mousechecky = self:LocalToScreen( 64, 64)
-        local anticlipoffset = 0
-        if mousechecky > ScrH() - 200 then anticlipoffset = -256 end
+        local anticlipoffset = 1
+        if mousechecky > ScrH() - 200 then anticlipoffset = -0.66 end
         mxx, myy = mxx * 0.75, myy * 0.75
 
         surface.SetFont( "ARC9_Spawnmenu_Header" )
@@ -192,12 +192,12 @@ local function paintcoolicon(self, w, h)
 
         surface.SetDrawColor( 10, 10, 10, 200 *progress)
         surface.SetMaterial( matOverlay_Shadow )
-        surface.DrawTexturedRect( 64 + mxx - tW/2 - 64, 3 + self.Border + myy + 128 - 8 - self.Border * 2-16 + anticlipoffset, tW + 128, tH+32 )
+        surface.DrawTexturedRect( 64 + mxx - tW/2 - 64, (3 + self.Border + myy + 128 - 8 - self.Border * 2-16) * anticlipoffset, tW + 128, tH+32 )
 
         surface.SetDrawColor( 34, 34, 34, 220 *progress)
-        surface.DrawRect( 64 + mxx - tW/2 - 16, 3 + self.Border + myy + 128 - 8 - self.Border * 2 -4 + anticlipoffset, tW + 32, tH+8 )
+        surface.DrawRect( 64 + mxx - tW/2 - 16, (3 + self.Border + myy + 128 - 8 - self.Border * 2 - 4) * anticlipoffset, tW + 32, tH+8 )
 
-        DrawTextShadow2( self.m_NiceName, 64 + mxx - tW/2, 3 + self.Border + myy + 128 - 8 - self.Border * 2 + anticlipoffset )
+        DrawTextShadow2( self.m_NiceName, 64 + mxx - tW/2, (3 + self.Border + myy + 128 - 8 - self.Border * 2) * anticlipoffset )
     end
 
 
