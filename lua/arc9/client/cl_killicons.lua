@@ -33,7 +33,7 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
         end
 
         if !selecticon then -- not cached
-            local filename = ARC9.PresetPath .. name .. "_icon." .. ARC9.PresetIconFormat
+            local filename = ARC9.PresetPath .. (wpn.SaveBase or name) .. "_icon." .. ARC9.PresetIconFormat
             local loadedmat = Material("data/" .. filename, "smooth")
             -- local loadedmat
 

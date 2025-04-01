@@ -209,6 +209,8 @@ end
 
 -- Call this after changing the attachment structure
 function SWEP:BuildSubAttachments(tbl)
+    if !istable(tbl) then print("Invalid attachment structure!!") return end
+    
     for i, k in ipairs(self.Attachments) do
         k.OriginalAddress = i
         k.SubAttachments = {}
