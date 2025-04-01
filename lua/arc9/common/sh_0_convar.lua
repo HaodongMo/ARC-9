@@ -1071,6 +1071,9 @@ local function menu_client_controller(panel)
     panel:ControlHelp( "Activate a controller-friendly mode for ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and\nRandomly Select attachments.\n\nController glyphs can be customized down below!" )
     -- panel:CheckBox("Controller Rumble w/ SInput", "arc9_controller_rumble")
     -- panel:ControlHelp( "Use Fesiug's SInput to interact with ARC9.\nFound at github.com/Fesiug/gmod-sinput" )
+    
+    local presetss = panel:ToolPresets( "arc9controller", { arc9_controller_glyphset = "" } )
+
     local listview = vgui.Create("DListView", panel)
     listview:SetSize( 99, 200 )
     panel:AddItem( listview )
@@ -1226,8 +1229,8 @@ local function menu_client_controller(panel)
         end
 
         matselect:SetAutoHeight( true )
-        matselect:SetItemWidth( 0.1875 )
-        matselect:SetItemHeight( 0.1875 )
+        matselect:SetItemWidth( 0.1875 * 0.66 )
+        matselect:SetItemHeight( 0.1875 * 0.66 )
 
         matselect.InputPanel = tex_inp
         matselect.OutputPanel = tex_out
@@ -1240,6 +1243,16 @@ local function menu_client_controller(panel)
         GenerateMatSelect()
     end
 
+    presetss.OnSelect = function( self, index, value, data )
+        if !data then return end
+        for k, v in pairs( data ) do
+            RunConsoleCommand( k, v )
+        end
+        
+        timer.Simple(0.1, function()
+            but_upd:DoClick()
+        end)
+	end
 end
 
 c1 = {
@@ -1572,14 +1585,34 @@ local function opensupermodifers()
     frame:SetTitle("ARC9 Super Modifiers Popup Edition")
     frame:MakePopup()
     frame:Center()
+
+    local scroller = vgui.Create( "DScrollPanel", frame )
+    scroller:Dock( FILL )
     
     local cpanle = vgui.Create( "ControlPanel", frame )
     cpanle:SetName(":3")
-    cpanle:SetPos( 10, 30 )
-    cpanle:SetSize( 280, 700 ) 
+    cpanle:Dock( FILL )
     menu_server_modifiers(cpanle)
+end
+
+local function opencontroller()
+    local frame = vgui.Create( "DFrame" )
+    frame:SetPos( 10, 30 )
+    frame:SetSize( 400, 750 )
+    frame:SetTitle("ARC9 Advanced Controller Popup Edition")
+    frame:MakePopup()
+    frame:Center()
+    
+    local scroller = vgui.Create( "DScrollPanel", frame )
+    scroller:Dock( FILL )
+
+    local cpanle = vgui.Create( "ControlPanel", scroller )
+    cpanle:SetName(":3")
+    cpanle:Dock( FILL )
+    menu_client_controller(cpanle)
 end
     
 concommand.Add("arc9_settings_supermodifiers", opensupermodifers)
+concommand.Add("arc9_settings_controller", opencontroller)
 
 end

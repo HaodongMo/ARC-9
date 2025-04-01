@@ -303,7 +303,10 @@ ARC9.SettingsTable = {
             RunConsoleCommand("arc9_font_reload")
         end},
         { type = "bool", text = "settings.gameplay.controller.title", desc = "settings.gameplay.controller.desc", convar = "controller" },
-	},
+        { type = "button", text = "spawnmenu.controller.title", desc = "spawnmenu.controller.desc", content = "settings.server.custmenu.blacklist.open", func = function(self2)
+            RunConsoleCommand("arc9_settings_controller")
+        end},
+    },
     {
         TabName = "settings.tabname.attachmentsnpcs",
 		sv = true,

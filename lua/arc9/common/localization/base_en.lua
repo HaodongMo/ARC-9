@@ -443,6 +443,8 @@ L["spawnmenu.settings.open"] = "Open ARC9 Settings"
 L["spawnmenu.settings.info"] = "Access the ARC9 Settings by pressing this button without having to equip a weapon!"
 
 L["spawnmenu.controller"] = "Controller Mode"
+L["spawnmenu.controller.title"] = "Controller Glyph Customization"
+L["spawnmenu.controller.desc"] = "Customize glyphs in this menu bro."
 L["spawnmenu.controller.enable"] = "Enable Controller Mode"
 L["spawnmenu.controller.enable.desc"] = "Enables a more controller-friendly mode when using ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and Randomly Select attachments.\n\nController glyphs can be customized below!"
 L["spawnmenu.controller.input"] = "Input"
