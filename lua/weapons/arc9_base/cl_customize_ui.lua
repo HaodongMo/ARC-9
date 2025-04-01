@@ -58,7 +58,7 @@ end
 
 local deadzonex = GetConVar("arc9_hud_deadzonex")
 
-SWEP.CustomizeButtons = {
+SWEP.CustomizeButtonsOriginal = {
     {
         title = "customize.panel.customize",
         func = function(self2)
@@ -211,6 +211,8 @@ SWEP.CustomizeButtons = {
         cutcorner = 3
     },
 }
+
+SWEP.CustomizeButtons = table.Copy(SWEP.CustomizeButtonsOriginal)
 
 SWEP.TabPanel = nil
 
