@@ -432,41 +432,39 @@ L["spawnmenu.spawnpreset"] = "Mit Preset spawnen"
 L["spawnmenu.spawnpreset.default"] = "Mit Default-Preset spawnen"
 L["spawnmenu.spawnpreset.random"] = "Mit zufälligem Preset spawnen"
 L["spawnmenu.giveammo"] = "Munition auffüllen"
+L["spawnmenu.adminonly"] = "Nur Admin"
 
--- L["spawnmenu.resetpreset"] = "Reset weapon presets"
--- L["spawnmenu.resetpreset.rmb"] = "Confirm with Right-Click"
+L["spawnmenu.resetpreset"] = "Waffen-Presets zurücksetzen"
+L["spawnmenu.resetpreset.rmb"] = "Mit Rechtsklick bestätigen"
 
 ////////// Options
--- L["spawnmenu.settings"] = "ARC9 Settings"
--- L["spawnmenu.settings.open"] = "Open ARC9 Settings"
--- L["spawnmenu.settings.info"] = "Access the ARC9 Settings by pressing this button without having to equip a weapon!"
+L["spawnmenu.settings"] = "ARC9-Einstellungen"
+L["spawnmenu.settings.open"] = "ARC9-Einstellungen öffnen"
 
--- L["spawnmenu.controller"] = "Controller Mode"
--- L["spawnmenu.controller.enable"] = "Enable Controller Mode"
--- L["spawnmenu.controller.enable.desc"] = "Enables a more controller-friendly mode when using ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and Randomly Select attachments.\n\nController glyphs can be customized below!"
--- L["spawnmenu.controller.input"] = "Input"
--- L["spawnmenu.controller.output"] = "Output"
--- L["spawnmenu.controller.glyphreplace"] = "Write which input the glyph should replace"
--- L["spawnmenu.controller.glyphappear"] = "Which glyph should appear; Click an icon below"
--- L["spawnmenu.controller.addapply"] = "Add & Apply"
--- L["spawnmenu.controller.remove"] = "Remove Selected"
--- L["spawnmenu.controller.filter"] = "Filter by Controller Type"
--- L["spawnmenu.controller.displayall"] = "! Display All !"
+L["spawnmenu.controller.input"] = "Eingabe"
+L["spawnmenu.controller.output"] = "Ausgabe"
+L["spawnmenu.controller.glyphreplace"] = "Schreib welche Eingabe die Glyphe ersetzen soll"
+L["spawnmenu.controller.glyphappear"] = "Welche Glyphe angezeigt werden soll; klick auf ein Icon unten"
+L["spawnmenu.controller.addapply"] = "Hinzufügen & Anwenden"
+L["spawnmenu.controller.remove"] = "Selektierte entfernen"
+L["spawnmenu.controller.filter"] = "Filter nach Controller-Typ"
+L["spawnmenu.controller.displayall"] = "! Alle anzeigen !"
 
--- L["spawnmenu.supermod"] = "Super Modifiers"
--- L["spawnmenu.supermod.info"] = "Add ANY modifier with ANY special conditions."
--- L["spawnmenu.supermod.stat"] = "Stat"
--- L["spawnmenu.supermod.modifier"] = "Modifier"
--- L["spawnmenu.supermod.selectstat"] = "Select a stat to modify"
--- L["spawnmenu.supermod.selectmod"] = "Add a modification type; Some stats don't have these"
--- L["spawnmenu.supermod.selectspec"] = "Special condition, such as when crouching"
--- L["spawnmenu.supermod.examples"] = [[
--- Examples: 
--- - "Overheat" "true" to disable overheating
--- - "BottomlessClip" "true" to enable Bottomless Clip"
--- - "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
--- - "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
--- ]]
+L["spawnmenu.supermod.info"] = "Füge einen BELIEBIGEN Modifikator mit BELIEBIGEN Spezialkonditionen hinzu."
+L["spawnmenu.supermod.stat"] = "Stat"
+L["spawnmenu.supermod.modifier"] = "Modifikator"
+L["spawnmenu.supermod.selectstat"] = "Wähle einen Stat zum Modifizieren"
+L["spawnmenu.supermod.selectmod"] = "Füge einen Modifikations-Typ hinzu; einige Stats haben keine"
+L["spawnmenu.supermod.selectspec"] = "Spezialkondition, bspw. beim Ducken"
+L["spawnmenu.supermod.selectval"] = "Schreib einen numerischen Wert, oder \"true\" / \"false\""
+L["spawnmenu.supermod.result"] = "Ergebnis erscheint hier"
+L["spawnmenu.supermod.examples"] = [[
+Examples: 
+∟ "Overheat" "true", um Überhitzen zu deaktivieren
+∟ "BottomlessClip" "true", um 'Bodenloses Magazin' zu aktivieren
+∟ "RecoilMultCrouch" "0.1", um Rückstoß beim Ducken auf 10% zu reduzieren
+∟ "RPMMultOddShot" "0.5", um jeden zweiten Schuß bei halber Feuerrate abzufeuern
+]]
 
 /////////////////////////////////////// Settings menu
 ////////////////////// Universal
@@ -741,8 +739,8 @@ L["settings.gameplay.compensate_sens.desc"] = "Passt die Ziel-Empfindlichkeit dy
 L["settings.gameplay.sensmult.title"] = "ADS-Empfindlichkeit multi."
 L["settings.gameplay.sensmult.desc"] = "Multipliziert global die Ziel-Empfindlichkeit mit diesem Wert.\n\nJe niedriger er ist, desto langsamer verhält sich die Empfindlichkeit."
 
--- L["settings.gameplay.gradualsens.title"] = "Gradual ADS Sensitivity"
--- L["settings.gameplay.gradualsens.desc"] = "Gradually adjusts the aiming sensitivity when entering or exiting ADS."
+L["settings.gameplay.gradualsens.title"] = "Schrittweise ADS-Empfindlichkeit"
+L["settings.gameplay.gradualsens.desc"] = "Verändert die Ziel-Empfindlichkeit Schritt für Schritt, beim Aktivieren oder Deaktivieren des Zielens durch eine Optik (ADS)."
 
 L["settings.gameplay.color.reflex.title"] = "Reflexvisier-Farbe"
 L["settings.gameplay.color.reflex.desc"] = "Bestimmt Farbe des Fadenkreuzes, das von Reflex- und holografischen Visieren benutzt werden soll.\n\nWird nicht von allen Optiken unterstützt."
@@ -889,11 +887,14 @@ L["settings.custmenu.units.desc"] = "Wähle, ob im Anpassunges-Menü entweder me
 L["settings.custmenu.units.metric"] = "Metrisch"
 L["settings.custmenu.units.imperial"] = "Imperial"
 
-L["settings.gameplay.controller.title"] = "Controller-Modus aktivieren"
-L["settings.gameplay.controller.desc"] = "Aktiviert controller-freundliche Custom-Elemente.\n\nCustom-Glyphen können via dem Spawnmenü angepasst werden (Optionen > ARC9 > Controller)."
-
 L["settings.gameplay.font.title"] = "Benutzerdef. Schriftart"
 L["settings.gameplay.font.desc"] = "Schreib den Namen der benutzerdefinierten Schriftart, die von ARC9 verwendet werden soll.\n\nHinweis 1: Die Schriftart muss auf deinem aktuellen Gerät installiert sein.\n\nHinweis 2: Der Name muss der Bezeichnung in der .TTF-Datei entsprechen, nicht dem Dateinamen."
+
+L["settings.gameplay.controller.title"] = "Controller-Modus"
+L["settings.gameplay.controller.desc"] = "Aktiviert controller-freundliche Custom-Elemente."
+
+L["settings.gameplay.controllerglyphs.title"] = "Controller-Glyphen"
+L["settings.gameplay.controllerglyphs.desc"] = "Öffne ein separates Menü, das es erlaubt die Glyphen anzupassen, die angezeigt werden, wenn der Controller-Mouds aktiviert ist."
 
 ////////////////////// Attachments & NPCs
 L["settings.tabname.attachmentsnpcs"] = "Zubehör & NPCs"
@@ -997,6 +998,9 @@ L["settings.server.quickstat.mod_malfunction.desc"] = "Multipliziere wie wahrsch
 
 L["settings.server.gameplay.mod_overheat.title"] = "Überhitzen aktivieren"
 L["settings.server.gameplay.mod_overheat.desc"] = "Wenn die Waffe es unterstützt, kann sie bei anhaltenden Feuern überhitzen und eventuell so eine Fehlfunktion verursachen."
+
+L["settings.server.gameplay.supermod.title"] = "Super-Modifikatoren"
+L["settings.server.gameplay.supermod.desc"] = "Öffne ein separates Menü, das dir erlaubt jeder Waffe einen beliebigen Modifikator hinzuzufügen.\n\nWarnung: Kann bei falscher Anwendung Waffen funktionsunfähig machen."
 
 ////////////////////// Developer
 L["settings.tabname.developer"] = "Entwickler"

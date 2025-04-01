@@ -432,41 +432,39 @@ L["spawnmenu.spawnpreset"] = "Skapa med förinställning"
 L["spawnmenu.spawnpreset.default"] = "Skapa med standard förinställning"
 L["spawnmenu.spawnpreset.random"] = "Skapa med slumpmässig förinställning"
 L["spawnmenu.giveammo"] = "Ge full ammo"
+L["spawnmenu.adminonly"] = "Endast Admin"
 
--- L["spawnmenu.resetpreset"] = "Reset weapon presets"
--- L["spawnmenu.resetpreset.rmb"] = "Confirm with Right-Click"
+L["spawnmenu.resetpreset"] = "Återställ vapenförinställningar"
+L["spawnmenu.resetpreset.rmb"] = "Godkänn med Högerklick"
 
 ////////// Options
--- L["spawnmenu.settings"] = "ARC9 Settings"
--- L["spawnmenu.settings.open"] = "Open ARC9 Settings"
--- L["spawnmenu.settings.info"] = "Access the ARC9 Settings by pressing this button without having to equip a weapon!"
+L["spawnmenu.settings"] = "ARC9-Inställningar"
+L["spawnmenu.settings.open"] = "Öppna ARC9-Inställningarna"
 
--- L["spawnmenu.controller"] = "Controller Mode"
--- L["spawnmenu.controller.enable"] = "Enable Controller Mode"
--- L["spawnmenu.controller.enable.desc"] = "Enables a more controller-friendly mode when using ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and Randomly Select attachments.\n\nController glyphs can be customized below!"
--- L["spawnmenu.controller.input"] = "Input"
--- L["spawnmenu.controller.output"] = "Output"
--- L["spawnmenu.controller.glyphreplace"] = "Write which input the glyph should replace"
--- L["spawnmenu.controller.glyphappear"] = "Which glyph should appear; Click an icon below"
--- L["spawnmenu.controller.addapply"] = "Add & Apply"
--- L["spawnmenu.controller.remove"] = "Remove Selected"
--- L["spawnmenu.controller.filter"] = "Filter by Controller Type"
--- L["spawnmenu.controller.displayall"] = "! Display All !"
+L["spawnmenu.controller.input"] = "Inmatning"
+L["spawnmenu.controller.output"] = "Utmatning"
+L["spawnmenu.controller.glyphreplace"] = "Skriv in vilken inmatning glyfen skall ersätta"
+L["spawnmenu.controller.glyphappear"] = "Vilken glyf som skall visas; Klicka en ikon nedanför"
+L["spawnmenu.controller.addapply"] = "Lägg till & Tillämpa"
+L["spawnmenu.controller.remove"] = "Ta Bort Vald"
+L["spawnmenu.controller.filter"] = "Filtrera via Kontrollertyp"
+L["spawnmenu.controller.displayall"] = "! Visa Alla !"
 
--- L["spawnmenu.supermod"] = "Super Modifiers"
--- L["spawnmenu.supermod.info"] = "Add ANY modifier with ANY special conditions."
--- L["spawnmenu.supermod.stat"] = "Stat"
--- L["spawnmenu.supermod.modifier"] = "Modifier"
--- L["spawnmenu.supermod.selectstat"] = "Select a stat to modify"
--- L["spawnmenu.supermod.selectmod"] = "Add a modification type; Some stats don't have these"
--- L["spawnmenu.supermod.selectspec"] = "Special condition, such as when crouching"
--- L["spawnmenu.supermod.examples"] = [[
--- Examples: 
--- - "Overheat" "true" to disable overheating
--- - "BottomlessClip" "true" to enable Bottomless Clip"
--- - "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
--- - "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
--- ]]
+L["spawnmenu.supermod.info"] = "Lägg till VILKEN modifierare som helst med VILKET speciellt vilkor som helst."
+L["spawnmenu.supermod.stat"] = "Statistik"
+L["spawnmenu.supermod.modifier"] = "Modifierare"
+L["spawnmenu.supermod.selectstat"] = "Statistiken att modifiera"
+L["spawnmenu.supermod.selectmod"] = "Lägg till en typ av modifikation; Vissa statistik har inte dessa"
+L["spawnmenu.supermod.selectspec"] = "Specialvillkor, exempelvis när du hukar dig"
+L["spawnmenu.supermod.selectval"] = "Skriv ett numeriskt värde, eller \"true\" / \"false\""
+L["spawnmenu.supermod.result"] = "Resultat visas här"
+L["spawnmenu.supermod.examples"] = [[
+Exempel: 
+∟ "Overheat" "true" för att avaktivera överhettning
+∟ "BottomlessClip" "true" för att aktivera Bottenlöst Magasin
+∟ "RecoilMultCrouch" "0.1" för att sänka rekylen till 10% när du hukar dig
+∟ "RPMMultOddShot" "0.5" för att göra att vart andre skott skjuts hälften så snabbt
+]]
 
 /////////////////////////////////////// Settings menu
 ////////////////////// Universal
@@ -844,6 +842,9 @@ L["settings.server.gameplay.realrecoil.desc"] = "Diverse vapen har tillgång til
 L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Kroppskada Avbrytning"
 L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Stänger av standard kroppskada multiplikatorn.\n\nStäng endast av om ett annat tillägg erbjuder denna funktion."
 
+L["settings.gameplay.controllerglyphs.title"] = "Kontrollerläge"
+L["settings.gameplay.controllerglyphs.desc"] = "Öppna en separat meny som tillåter dig att finjustera kontrollervänliga alternativ, exempelvis ändra anpassade glyfer."
+
 ////////////////////// Customization
 L["settings.tabname.customization"] = "Anpassning"
 
@@ -889,11 +890,14 @@ L["settings.custmenu.units.desc"] = "Välj att antingen visa metriska eller brit
 L["settings.custmenu.units.metric"] = "Metriska"
 L["settings.custmenu.units.imperial"] = "Brittiska"
 
-L["settings.gameplay.controller.title"] = "Aktivera Kontrollerläge"
-L["settings.gameplay.controller.desc"] = "Aktiverar anpassade kontrollervänliga element.\n\nAnpassade glyfer kan anpassas via Spawnmenyn (Options > ARC9 > Controller)."
-
 L["settings.gameplay.font.title"] = "Anpassat Teckensnitt"
 L["settings.gameplay.font.desc"] = "Skriv in ett anpassat teckensnitt som borde användas i ARC9.\n\nNotis 1: Teckensnittet måste vara installerat på din nuvarande maskin.\n\nNotis 2: Namnet borde vara teckensnittets namn som visas i dess TTF-fil, inte filnamnet på TTF:en."
+
+L["settings.gameplay.controller.title"] = "Kontrollerläge"
+L["settings.gameplay.controller.desc"] = "Aktiverar anpassade kontrollervänliga element."
+
+L["settings.gameplay.controllerglyphs.title"] = "Kontrollerglyfer"
+L["settings.gameplay.controllerglyphs.desc"] = "Öppna en separat meny som tillåter dig att justera glyferna som visas när Kontrollerläget är aktiverat."
 
 ////////////////////// Attachments & NPCs
 L["settings.tabname.attachmentsnpcs"] = "Tillbehör & NPC:er"
@@ -997,6 +1001,9 @@ L["settings.server.quickstat.mod_malfunction.desc"] = "Multiplicerar hur stor ch
 
 L["settings.server.gameplay.mod_overheat.title"] = "Aktivera Överhettning"
 L["settings.server.gameplay.mod_overheat.desc"] = "Om vapnet stödjer det så kan den överhettas om den sjuts för länge, vilket kan leda till eldavbrott."
+
+L["settings.server.gameplay.supermod.title"] = "Super Modifierare"
+L["settings.server.gameplay.supermod.desc"] = "Öppna en separat meny som tillåter dig att tillämpa alla modifierare på alla vapen.\n\nVarning: Kan göra att vapen inte längre fungerar om gjort på fel sätt."
 
 ////////////////////// Developer
 L["settings.tabname.developer"] = "Tillverkare"

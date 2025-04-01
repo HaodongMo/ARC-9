@@ -430,6 +430,7 @@ L["atts.filter"] = "Фильтр"
 -- L["spawnmenu.spawnpreset.default"] = "Spawn with default preset"
 -- L["spawnmenu.spawnpreset.random"] = "Spawn with random preset"
 -- L["spawnmenu.giveammo"] = "Give full ammo"
+-- L["spawnmenu.adminonly"] = "Admin Only"
 
 -- L["spawnmenu.resetpreset"] = "Reset weapon presets"
 -- L["spawnmenu.resetpreset.rmb"] = "Confirm with Right-Click"
@@ -437,11 +438,7 @@ L["atts.filter"] = "Фильтр"
 ////////// Options
 -- L["spawnmenu.settings"] = "ARC9 Settings"
 -- L["spawnmenu.settings.open"] = "Open ARC9 Settings"
--- L["spawnmenu.settings.info"] = "Access the ARC9 Settings by pressing this button without having to equip a weapon!"
 
--- L["spawnmenu.controller"] = "Controller Mode"
--- L["spawnmenu.controller.enable"] = "Enable Controller Mode"
--- L["spawnmenu.controller.enable.desc"] = "Enables a more controller-friendly mode when using ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and Randomly Select attachments.\n\nController glyphs can be customized below!"
 -- L["spawnmenu.controller.input"] = "Input"
 -- L["spawnmenu.controller.output"] = "Output"
 -- L["spawnmenu.controller.glyphreplace"] = "Write which input the glyph should replace"
@@ -451,19 +448,20 @@ L["atts.filter"] = "Фильтр"
 -- L["spawnmenu.controller.filter"] = "Filter by Controller Type"
 -- L["spawnmenu.controller.displayall"] = "! Display All !"
 
--- L["spawnmenu.supermod"] = "Super Modifiers"
 -- L["spawnmenu.supermod.info"] = "Add ANY modifier with ANY special conditions."
 -- L["spawnmenu.supermod.stat"] = "Stat"
 -- L["spawnmenu.supermod.modifier"] = "Modifier"
 -- L["spawnmenu.supermod.selectstat"] = "Select a stat to modify"
 -- L["spawnmenu.supermod.selectmod"] = "Add a modification type; Some stats don't have these"
 -- L["spawnmenu.supermod.selectspec"] = "Special condition, such as when crouching"
+-- L["spawnmenu.supermod.selectval"] = "Write a numerical value, or \"true\" / \"false\""
+-- L["spawnmenu.supermod.result"] = "Result appears here"
 -- L["spawnmenu.supermod.examples"] = [[
 -- Examples: 
--- - "Overheat" "true" to disable overheating
--- - "BottomlessClip" "true" to enable Bottomless Clip"
--- - "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
--- - "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
+-- ∟ "Overheat" "true" to disable overheating
+-- ∟ "BottomlessClip" "true" to enable Bottomless Clip
+-- ∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
+-- ∟ "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
 -- ]]
 
 /////////////////////////////////////// Settings menu
@@ -1333,11 +1331,14 @@ L["settings.custmenu.units.title"] = "Единицы измерения"
 -- L["settings.custmenu.units.metric"] = "Metric"
 -- L["settings.custmenu.units.imperial"] = "Imperial"
 
-L["settings.gameplay.controller.title"] = "Включить режим геймпада"
--- L["settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements.\n\nCustom glyphs can be customized via the Spawnmenu (Options > ARC9 > Controller)."
-
 -- L["settings.gameplay.font.title"] = "Custom Font"
 -- L["settings.gameplay.font.desc"] = "Write the custom font that should be used on ARC9.\n\nNote 1: The font must be installed on your current machine.\n\nNote 2: The name should be the font name displayed in the TTF file, not the file name of the TTF."
+
+L["settings.gameplay.controller.title"] = "Режим геймпада"
+-- L["settings.gameplay.controller.desc"] = "Enables custom controller-friendly elements."
+
+-- L["settings.gameplay.controllerglyphs.title"] = "Controller Glyphs"
+-- L["settings.gameplay.controllerglyphs.desc"] = "Open a separate menu that allows you to alter the glyphs that are displayed when Controller Mode is enabled."
 
 ////////////////////// Attachments & NPCs
 L["settings.tabname.attachmentsnpcs"] = "Обвесы и NPC"
@@ -1441,6 +1442,9 @@ L["settings.tabname.attachmentsnpcs"] = "Обвесы и NPC"
 
 L["settings.server.gameplay.mod_overheat.title"] = "Включить перегревы"
 -- L["settings.server.gameplay.mod_overheat.desc"] = "If the weapon supports it, it can overheat when firing too often, which could lead to a malfunction."
+
+-- L["settings.server.gameplay.supermod.title"] = "Super Modifiers"
+-- L["settings.server.gameplay.supermod.desc"] = "Open a separate menu that allows you to apply any modifier on all weapons.\n\nWarning: Could cause weapons to no longer function if done incorrectly."
 
 ////////////////////// Developer
 -- L["settings.tabname.developer"] = "Developer"
