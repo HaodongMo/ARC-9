@@ -139,7 +139,7 @@ function SWEP:Reload()
     end
 
     if !self:PredictionFilter() then
-        if self:GetProcessedValue("ShouldDropMag", true) or self:GetProcessedValue("ShouldDropMagEmpty", true) and clip == 0 then
+        if self:GetProcessedValue("ShouldDropMag") or self:GetProcessedValue("ShouldDropMagEmpty") and clip == 0 then
             self:SetTimer(self:GetProcessedValue("DropMagazineTime", true), function()
                 self:DropMagazine()
             end)
