@@ -263,6 +263,7 @@ function ARC9_CCGiveSWEP_Preset( ply, command, arguments )
                 wpn:CallOnClient("LoadPreset", arguments[2])
             end
             
+            wpn:PostModify()
             -- wpn:DoDeployAnimation()
             timer.Simple(0.05, function() if IsValid(wpn) then wpn:DoDeployAnimation() end end)
         end

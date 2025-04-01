@@ -551,14 +551,35 @@ local function deletefolder(path)
     file.Delete(path)
 end
 
-concommand.Add("arc9_presets_clear", function(ply)
+concommand.Add("arc9_presets_clear", function(ply, command, arguments)
     if !IsValid(ply) then return end
 
     local weapon = ply:GetActiveWeapon()
+    local arg = arguments[1]
+    local hasgun = IsValid(weapon) and weapon.ARC9
 
-    if IsValid(weapon) and weapon.ARC9 then
-        deletefolder(ARC9.PresetPath .. (weapon.SaveBase or weapon:GetClass()) .. "/")
-    else
+	if arg == "all" or (arg == nil and !hasgun) then
         deletefolder(ARC9.PresetPath)
+    elseif arg == nil then
+        deletefolder(ARC9.PresetPath .. (weapon.SaveBase or weapon:GetClass()) .. "/")
+        
+        weapon:BuildSubAttachments(weapons.Get(weapon:GetClass()).Attachments) -- from original table
+        weapon:ClientInitialize()
+
+        timer.Simple(0.1, function() RunConsoleCommand( "arc9_giveswep_preset", arg, "default" ) end)
+    elseif isstring(arg) then
+        local weapon2 = weapons.Get(arg)
+        if weapon2 then
+            deletefolder(ARC9.PresetPath .. (weapon2.SaveBase or arg) .. "/")
+            
+            if ply:HasWeapon( arg ) then
+                local weapon = ply:GetWeapon( arg )
+
+                weapon:BuildSubAttachments(weapon2.Attachments) -- from original table
+                weapon:ClientInitialize()
+
+                timer.Simple(0.1, function() RunConsoleCommand( "arc9_giveswep_preset", arg, "default" ) end)
+            end
+        end
     end
 end)

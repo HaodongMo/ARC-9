@@ -432,6 +432,7 @@ L["spawnmenu.spawnpreset"] = "Spawn with preset"
 L["spawnmenu.spawnpreset.default"] = "Spawn with default preset"
 L["spawnmenu.spawnpreset.random"] = "Spawn with random preset"
 L["spawnmenu.giveammo"] = "Give full ammo"
+L["spawnmenu.adminonly"] = "Only for administrators"
 
 L["spawnmenu.resetpreset"] = "Reset weapon presets"
 L["spawnmenu.resetpreset.rmb"] = "Confirm with Right-Click"

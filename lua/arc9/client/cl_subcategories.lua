@@ -12,6 +12,9 @@
 -- category, then it doesn't print any subtitle as it's redundant.
 -- Writted by Buu342, Still a work in progress.
 
+-- now it also adds custom icons and custom options   :-)
+
+
 local function getpresetname(preset, wpn, class)
     local filename = ARC9.PresetPath .. (wpn.SaveBase or class) .. "/" .. preset
 
@@ -53,6 +56,8 @@ local function OpenMenuExtra(pan, menu)
 	pan:_OpenMenuExtra(menu)
     menu:AddSpacer()
     menu:AddSpacer()
+    menu:AddSpacer()
+    menu:AddSpacer()
 
     local classname = pan:GetSpawnName()
 	local swep = weapons.Get(classname)
@@ -83,7 +88,27 @@ local function OpenMenuExtra(pan, menu)
         if existingones == 0 then
             subMenu:Remove()
             parentMenuOption:Remove()
+        else
+            subMenu:AddSpacer()
+            subMenu:AddSpacer()
+            subMenu:AddSpacer()
+            subMenu:AddSpacer()
+            subMenu:AddSpacer()
+
+            local subMenu2, parentMenuOption2 = subMenu:AddSubMenu( ARC9:GetPhrase( "spawnmenu.resetpreset" ) )
+            parentMenuOption2:SetIcon("icon16/bug_delete.png")
+            
+            local rmbme = subMenu2:AddOption(ARC9:GetPhrase( "spawnmenu.resetpreset.rmb" ), function() 
+                surface.PlaySound("buttons/button8.wav")
+            end)
+            rmbme:SetIcon("icon16/bullet_error.png")
+            rmbme.DoRightClick = function()
+                surface.PlaySound("buttons/button5.wav")
+                RunConsoleCommand( "arc9_presets_clear", classname )
+                menu:Remove()
+            end
         end
+        
     end
 
     if game.SinglePlayer() then
@@ -91,6 +116,11 @@ local function OpenMenuExtra(pan, menu)
             RunConsoleCommand( "givecurrentammo" )
         end):SetIcon( "icon16/emoticon_tongue.png" )
     end
+
+    menu:AddSpacer()
+    menu:AddOption( ARC9:GetPhrase( "spawnmenu.settings.open" ), function()
+        RunConsoleCommand( "arc9_settings_open" )
+    end):SetIcon( "arc9/icon_16.png" )
 end
 
 
@@ -104,13 +134,16 @@ local matOverlay_NPCWeapon = Material( "icon16/monkey.png" )
 local matOverlay_NPCWeaponSelected = Material( "icon16/monkey_tick.png" )
 local shadowColor = Color( 0, 0, 0, 200 )
 local hoversound = "arc9/newui/uimouse_hover.ogg"
+local ahmad = Material( "arc9/ahmad.png" )
 
 surface.CreateFont( "ARC9_Spawnmenu_Name", { font = ARC9:GetFont(), size = 20, weight = 600, antialias = true, extended = true } )
 surface.CreateFont( "ARC9_Spawnmenu_Header", { font = ARC9:GetFont(), size = 56, weight = 650, antialias = true, extended = true } )
+local color_white = Color( 255, 255, 255, 255)
+local yellowwww = Color( 255, 208, 0)
 
-local function DrawTextShadow( text, x, y )
+local function DrawTextShadow( text, x, y, yellow )
 	draw.SimpleText( text, "ARC9_Spawnmenu_Name", x + 1, y + 1, shadowColor )
-	draw.SimpleText( text, "ARC9_Spawnmenu_Name", x, y, color_white )
+	draw.SimpleText( text, "ARC9_Spawnmenu_Name", x, y, yellow and yellowwww or color_white )
 end
 
 local function DrawTextShadow2( text, x, y )
@@ -139,11 +172,8 @@ local function paintcoolicon(self, w, h)
     render.PopFilterMin()
     render.PopFilterMag()
 
-    if self:GetAdminOnly() then
-        surface.SetDrawColor( 255, 208, 0, 200)
-    else
-        surface.SetDrawColor( 255, 255, 255, 200)
-    end
+    local adminn = self:GetAdminOnly()
+    if adminn then surface.SetDrawColor( 251, 255, 0) else surface.SetDrawColor( 255, 255, 255, 200) end
     
     local fakepressed = self.Depressed
     if self.SubMenu and self.SubMenu:IsVisible() then fakepressed = true else fakepressed = self.Depressed end
@@ -170,7 +200,7 @@ local function paintcoolicon(self, w, h)
     -- self:NoClipping(self.Border < 0)
 
     local progress = self.Border / -30
-    surface.SetDrawColor( 10, 10, 10, 160 *progress)
+    if adminn then surface.SetDrawColor( 255, 200, 0, 40 * progress) else surface.SetDrawColor( 10, 10, 10, 160 * progress) end
     surface.SetMaterial( matOverlay_Shadow )
     local localborder = self.Border * 1.3
     surface.DrawTexturedRect( localborder, localborder, w - localborder * 2, h - localborder * 2 )
@@ -182,6 +212,14 @@ local function paintcoolicon(self, w, h)
     self.Image:PaintAt( 3 + self.Border + mxx, 3 + self.Border + myy, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
     
     if progress > 0.1 then
+        if !self.Image.m_Material then
+            -- self.Image.m_Material = ahmad
+            
+            surface.SetDrawColor( 255, 255, 255, 128 *progress)
+            surface.SetMaterial( ahmad )
+            surface.DrawTexturedRect( 3 + self.Border + mxx, 3 + self.Border + myy, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
+        end
+        
         local _, mousechecky = self:LocalToScreen( 64, 64)
         local anticlipoffset = 1
         if mousechecky > ScrH() - 200 then anticlipoffset = -0.66 end
@@ -198,12 +236,24 @@ local function paintcoolicon(self, w, h)
         surface.DrawRect( 64 + mxx - tW/2 - 16, (3 + self.Border + myy + 128 - 8 - self.Border * 2 - 4) * anticlipoffset, tW + 32, tH+8 )
 
         DrawTextShadow2( self.m_NiceName, 64 + mxx - tW/2, (3 + self.Border + myy + 128 - 8 - self.Border * 2) * anticlipoffset )
+
+        
+        if adminn then
+            local adminonly = ARC9:GetPhrase("spawnmenu.adminonly")
+            surface.SetFont( "ARC9_Spawnmenu_Name" )
+            local tW2, tH2 = surface.GetTextSize( adminonly )
+
+            surface.SetDrawColor( 34, 34, 34, 220 *progress)
+            surface.DrawRect( 64 + mxx - tW2/2 - 12, (3 + self.Border + myy + 128 - 8 - self.Border * 2 - 2) * anticlipoffset + 64, tW2 + 24, tH2+4 )
+
+            DrawTextShadow( adminonly, 64 + mxx - tW2/2, (3 + self.Border + myy + 128 - 8 - self.Border * 2) * anticlipoffset + 64, true )
+        end
     end
 
 
     if drawText then
         -- Admin only icon
-        if self:GetAdminOnly() then
+        if adminn then
             surface.SetMaterial( matOverlay_AdminOnly )
             surface.DrawTexturedRect( self.Border + 8, self.Border + 8, 16, 16 )
         end
