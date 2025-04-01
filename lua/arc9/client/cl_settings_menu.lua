@@ -346,6 +346,9 @@ ARC9.SettingsTable = {
 		sv = true,
 
         { type = "label", text = "settings.tabname.quickstat", desc = "settings.tabname.quickstat.desc" },
+        { type = "button", text = "settings.server.gameplay.supermod.title", desc = "settings.server.gameplay.supermod.desc", content = "settings.server.custmenu.blacklist.open", func = function(self2)
+            RunConsoleCommand("arc9_settings_supermodifiers")
+        end},
         { sv = true, type = "slider", text = "settings.server.quickstat.mod_damage.title", desc = "settings.server.quickstat.mod_damage.desc", convar = "mod_damage", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.spread", desc = "settings.server.quickstat.mod_spread.desc", convar = "mod_spread", min = 0, max = 10, decimals = 1 },
         { sv = true, type = "slider", text = "autostat.dispersionspread", desc = "settings.server.quickstat.mod_dispersionspread.desc", convar = "mod_dispersionspread", min = 0, max = 10, decimals = 1 },

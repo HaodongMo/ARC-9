@@ -1369,6 +1369,8 @@ c3 = {
 }
 
 local function menu_server_modifiers(panel)
+    local presetss = panel:ToolPresets( "arc9modifiers", { arc9_modifiers = "" } )
+
     panel:AddControl( "header", { description = "Add ANY modifier with ANY special conditions." } )
     local listview = vgui.Create("DListView", panel)
     listview:SetSize( 99, 200 )
@@ -1504,6 +1506,18 @@ local function menu_server_modifiers(panel)
         RunConsoleCommand("arc9_modifiers", toapply)
         RunConsoleCommand("arc9_modifiers_invalidateall")
     end
+
+    presetss.OnSelect = function( self, index, value, data )
+        if !data then return end
+        for k, v in pairs( data ) do
+            RunConsoleCommand( k, v )
+        end
+        
+        timer.Simple(0.1, function()
+            but_upd:DoClick()
+            RunConsoleCommand("arc9_modifiers_invalidateall")
+        end)
+	end
 end
 
 concommand.Add( "arc9_modifiers_invalidateall", function( ply, cmd, args )
@@ -1550,5 +1564,22 @@ hook.Add("PopulateToolMenu", "ARC9_MenuOptions", function()
         spawnmenu.AddToolMenuOption("Options", "ARC9", "ARC9_" .. tostring(smenu), data.text, "", "", data.func)
     end
 end)
+
+local function opensupermodifers()
+    local frame = vgui.Create( "DFrame" )
+    frame:SetPos( 10, 30 )
+    frame:SetSize( 300, 750 )
+    frame:SetTitle("ARC9 Super Modifiers Popup Edition")
+    frame:MakePopup()
+    frame:Center()
+    
+    local cpanle = vgui.Create( "ControlPanel", frame )
+    cpanle:SetName(":3")
+    cpanle:SetPos( 10, 30 )
+    cpanle:SetSize( 280, 700 ) 
+    menu_server_modifiers(cpanle)
+end
+    
+concommand.Add("arc9_settings_supermodifiers", opensupermodifers)
 
 end
