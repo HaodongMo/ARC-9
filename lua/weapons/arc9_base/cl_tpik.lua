@@ -38,7 +38,7 @@ local function SetTPIKOffset(self, wm, owner, lp)
 
     local ht = self:GetHoldType()
     
-    do
+    if !DynamicHeightTwo then -- Dynamic height 2 breaks crouching 👍
         local viewOffsetZ = owner:GetViewOffset().z
         local crouchdelta = math.Clamp((viewOffsetZ - owner:GetCurrentViewOffset().z) / (viewOffsetZ - owner:GetViewOffsetDucked().z), 0, 1)
         if ht == "revolver" then crouchdelta = crouchdelta * -2
