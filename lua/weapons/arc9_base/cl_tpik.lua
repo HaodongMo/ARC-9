@@ -13,7 +13,7 @@ local someang = Angle(3, -3, -8)
 local forcednotpik = ARC9.NoTPIK
 
 local function SetTPIKOffset(self, wm, owner, lp)
-    local pos, ang = Vector(self.WorldModelOffset.TPIKPos), Angle(self.WorldModelOffset.TPIKAng)
+    local pos, ang = Vector(self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos), Angle(self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) -- how come you don't have tpikpos in 2025
     local sightdelta = self:GetSightAmount()
 
     if self.WorldModelOffset.TPIKPosAlternative and self:GetValue("TPIKAlternativePos") then
@@ -81,7 +81,7 @@ local function SetTPIKOffset(self, wm, owner, lp)
             ang:Add(self.PeekAng * sightdelta * self.PeekingSmooth)
         end
 
-        if self.VisualRecoilUp > 3 then -- only eft (or those who rely on visrec only) cuz this is not ideal
+        if self.EFTErgo then -- only eft cuz this is not ideal
             -- visual recoil, cuz we don't add vm pos anymore
             local vrp, vra = self:GetVisualRecoilPos(), self:GetVisualRecoilAng() * 2.5
             self.TPIKSmoothRecoilPos = LerpVector(FrameTime() * 1, self.TPIKSmoothRecoilPos or vrp, Vector(-vrp.y, vrp.x, vrp.z * -10))
