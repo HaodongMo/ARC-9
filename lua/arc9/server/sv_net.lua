@@ -13,6 +13,7 @@ util.AddNetworkString("arc9_sendblacklist")
 util.AddNetworkString("arc9_proppickup")
 util.AddNetworkString("arc9_stoppickup")
 util.AddNetworkString("arc9_sendnpckill")
+util.AddNetworkString("arc9_sendpreset")
 
 if game.SinglePlayer() then
 

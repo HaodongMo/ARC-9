@@ -583,3 +583,12 @@ concommand.Add("arc9_presets_clear", function(ply, command, arguments)
         end
     end
 end)
+
+net.Receive("arc9_sendpreset", function(len)
+    local wpn = net.ReadEntity()
+    local preset = net.ReadString()
+    
+    if IsValid(wpn) and wpn.ARC9 then
+        wpn:LoadPresetFromTable(wpn:ImportPresetCode(preset))
+    end
+end)
