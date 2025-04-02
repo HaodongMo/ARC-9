@@ -11,6 +11,22 @@ local fullreload
 
 local defaulticon = Material("arc9/logo/logo_lowvis.png", "mips smooth")
 
+local function FixVertexLitMaterial(mat) -- from DImage code
+	if string.find(mat:GetShader(), "VertexLitGeneric") then
+		local t = mat:GetString( "$basetexture" )
+		if t then
+			local params = {}
+			params[ "$basetexture" ] = t
+			params[ "$vertexcolor" ] = 1
+			params[ "$vertexalpha" ] = 1
+
+			mat = CreateMaterial( mat:GetName() .. "_Icon", "UnlitGeneric", params )
+		end
+	end
+
+	return mat
+end
+
 function ARC9.LoadAttachment(atttbl, shortname, id)
     if hook.Run("ARC9_LoadAttachment", atttbl, shortname, id) then return end
     if atttbl.Ignore then return end
@@ -23,6 +39,10 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
     atttbl.ShortName = shortname
     atttbl.ID = id or ARC9.Attachments_Count
     atttbl.Icon = atttbl.Icon or defaulticon
+
+    -- only checking stickers and camos cuz rest of icons are usually normal and use png
+    -- parsing all thousands of icons of atts might technically take more time otherwise
+    if CLIENT and (atttbl.StickerMaterial or atttbl.CustomCamoTexture) then atttbl.Icon = FixVertexLitMaterial(atttbl.Icon) end
 
     -- for stat, val in ipairs(atttbl) do
     --     local stat2 = string.Replace(stat, "Override", "")
