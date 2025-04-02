@@ -461,3 +461,15 @@ if CLIENT then
         return vEyePos
     end
 end
+
+
+hook.Add("InitPostEntity", "ARC9_phystweak", function() -- stolen from tacrp
+    if GetConVar("arc9_phystweak"):GetBool() then
+        local v = physenv.GetPerformanceSettings().MaxVelocity
+        if v < 10000 then
+            physenv.SetPerformanceSettings({MaxVelocity = 10000})
+            print("[ARC9] Increasing MaxVelocity for projectiles to behave as intended! (" .. v .. "-> 10000)")
+            print("[ARC9] Disable this behavior with 'arc9_phystweak 0'.")
+        end
+    end
+end)

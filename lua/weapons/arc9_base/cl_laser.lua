@@ -64,7 +64,7 @@ function SWEP:DrawLaser(pos, dir, atttbl, behav)
         local sightamount = self:GetSightAmount()
         if sightamount > 0 and self.Peeking then
 
-            local fuckingreloadprocessinfluence = self:GetReloadingProgress()
+            local fuckingreloadprocessinfluence = 1 - self:GetReloadingProgress()
 
             local trrr = util.TraceLine({
                 start = self:GetShootPos(),

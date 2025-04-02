@@ -953,6 +953,10 @@ local conVars = {
         default = "0",
         client = true
     },
+    {
+        name = "phystweak",
+        default = "1",
+    },
 }
 ARC9.ConVarData = {}
 
