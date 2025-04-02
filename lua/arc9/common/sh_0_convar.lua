@@ -1388,13 +1388,13 @@ c3 = {
 local function menu_server_modifiers(panel)
     local presetss = panel:ToolPresets( "arc9modifiers", { arc9_modifiers = "" } )
 
-    panel:AddControl( "header", { description = ARC9:GetPhrase("spawnmenu.supermod.info") } )
+    panel:AddControl( "header", { description = ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.info") or "Add ANY modifier with ANY special conditions." } )
     local listview = vgui.Create("DListView", panel)
     listview:SetSize( 99, 200 )
     panel:AddItem( listview )
     listview:SetMultiSelect( true )
-    listview:AddColumn( ARC9:GetPhrase("spawnmenu.supermod.stat") )
-    listview:AddColumn( ARC9:GetPhrase("spawnmenu.supermod.modifier") )
+    listview:AddColumn( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.stat") or "Stat" )
+    listview:AddColumn( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.modifier") or "Modifier" )
 
     local tex_inp = vgui.Create( "DTextEntry", panel )
     local tex_out = vgui.Create( "DTextEntry", panel )
@@ -1405,18 +1405,18 @@ local function menu_server_modifiers(panel)
     local com_3 = vgui.Create( "DComboBox", panel )
     -- tex_inp:SetPlaceholderText("Alternatively, type which stat manually you'd like to modify here.")
     panel:AddItem( com_1 )
-    panel:ControlHelp( ARC9:GetPhrase("spawnmenu.supermod.selectstat") )
+    panel:ControlHelp( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.selectstat") or "First, select a stat to modify" )
     panel:AddItem( com_2 )
-    panel:ControlHelp( ARC9:GetPhrase("spawnmenu.supermod.selectmod") )
+    panel:ControlHelp( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.selectmod") or "Optional: Add a modification type; Not all stats have these" )
     panel:AddItem( com_3 )
-    panel:ControlHelp( ARC9:GetPhrase("spawnmenu.supermod.selectspec") )
+    panel:ControlHelp( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.selectspec") or "Optional: Add a special condition, such as when crouching" )
 	
     panel:AddItem( tex_out )
-    tex_out:SetPlaceholderText( ARC9:GetPhrase("spawnmenu.supermod.selectval") )
+    tex_out:SetPlaceholderText( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.selectval") or "Write a numerical value, or \"true\" or \"false\"" )
 	
     panel:ControlHelp( "" )
     panel:AddItem( tex_inp )
-    tex_inp:SetPlaceholderText( ARC9:GetPhrase("spawnmenu.supermod.result") )
+    tex_inp:SetPlaceholderText( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.result") or "Alternatively, type which stat manually you'd like to modify here." )
 
     function listview:DoDoubleClick( lineID, line )
         tex_inp:SetValue( line:GetColumnText( 1 ) )
@@ -1455,17 +1455,21 @@ local function menu_server_modifiers(panel)
     panel:AddItem( but_rem )
     panel:AddItem( but_upd )
     panel:AddItem( but_app )
-    but_add:SetText( ARC9:GetPhrase("spawnmenu.controller.addapply") )
-    but_rem:SetText( ARC9:GetPhrase("spawnmenu.controller.remove") )
+    but_add:SetText( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.controller.addapply") or "Add & Apply" )
+    but_rem:SetText( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.controller.remove") or "Remove Selected" )
     but_upd:SetText("Restore From Memory")
     but_app:SetText("Apply")
 
     panel:ControlHelp( "" )
-    panel:ControlHelp( ARC9:GetPhrase("spawnmenu.supermod.examples") )
-    -- panel:ControlHelp( "∟ Overheat | true - Disables overheating" )
-    -- panel:ControlHelp( "∟ BottomlessClip | true - Enables Bottomless Clip" )
-    -- panel:ControlHelp( "∟ RecoilMultCrouch | 0.1 - Lowers recoil to 10% when crouching" )
-    -- panel:ControlHelp( "∟ RPMMultOddShot | 0.5 - Every other shot shoots at half RPM" )
+
+    if ARC9.GetPhrase then 
+        panel:ControlHelp( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.examples") )
+    else
+        panel:ControlHelp( "∟ Overheat | true - Disables overheating" )
+        panel:ControlHelp( "∟ BottomlessClip | true - Enables Bottomless Clip" )
+        panel:ControlHelp( "∟ RecoilMultCrouch | 0.1 - Lowers recoil to 10% when crouching" )
+        panel:ControlHelp( "∟ RPMMultOddShot | 0.5 - Every other shot shoots at half RPM" )
+    end
 
     function listview:OnRowRightClick( lineID, line )
         local menu = DermaMenu()
@@ -1571,9 +1575,9 @@ local clientmenus_ti = {
     -- {
     --     text = "Server - Ballistics", func = menu_server_ballistics
     -- },
-    -- {
-        -- text = "Super Modifiers", func = menu_server_modifiers
-    -- },
+    {
+        text = "Super Modifiers", func = menu_server_modifiers
+    },
 }
 
 hook.Add("PopulateToolMenu", "ARC9_MenuOptions", function()
