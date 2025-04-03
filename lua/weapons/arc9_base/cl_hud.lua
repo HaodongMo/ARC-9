@@ -586,10 +586,10 @@ function SWEP:DrawHUD()
                 firemodealpha = funnynumber * 255
                 
                 local text = fm
+                surface.SetFont("ARC9_10")
                 local tw = surface.GetTextSize(fm)
                 -- local blink = math.abs(math.sin(ct * 10))
 
-                surface.SetFont("ARC9_10")
                 
                 surface.SetDrawColor(255, 255, 255, firemodealpha)
 
