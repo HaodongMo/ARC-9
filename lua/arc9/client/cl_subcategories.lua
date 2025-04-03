@@ -270,7 +270,7 @@ local function paintcoolicon(self, w, h)
         --     surface.DrawTexturedRect( w - self.Border - 24, self.Border + 8, 16, 16 )
         -- end
     
-        -- self:ScanForNPCWeapons()
+        self:ScanForNPCWeapons()
 
 
         local buffere = self.Border + 10
