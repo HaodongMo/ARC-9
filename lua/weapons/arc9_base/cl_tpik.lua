@@ -263,16 +263,18 @@ function SWEP:DoTPIK()
     if sightdelta > 0 or self:GetReloading() then
         local ply_boneindex = ply:LookupBone("ValveBiped.Bip01_Head1")
         if ply_boneindex then
-            local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
-            if ply_bonematrix then
-                local boneang = ply_bonematrix:GetAngles()
-                self.TPIKReloadProgressSmooth = Lerp(FrameTime() * 6, self.TPIKReloadProgressSmooth or 0, reloadprogress)
+            if #ply:GetChildBones(ply_boneindex) < 2 then -- dont move if more than 1 child bone on head
+                local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
+                if ply_bonematrix then
+                    local boneang = ply_bonematrix:GetAngles()
+                    self.TPIKReloadProgressSmooth = Lerp(FrameTime() * 6, self.TPIKReloadProgressSmooth or 0, reloadprogress)
 
-                boneang:Add(Angle(5, -15, 15) * sightdelta + Angle(9, -5, -2) * self.TPIKReloadProgressSmooth)
+                    boneang:Add(Angle(5, -15, 15) * sightdelta + Angle(9, -5, -2) * self.TPIKReloadProgressSmooth)
 
-                ply_bonematrix:SetAngles(boneang)
+                    ply_bonematrix:SetAngles(boneang)
 
-                ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+                    ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+                end
             end
         end
     else self.TPIKReloadProgressSmooth = 0 end
