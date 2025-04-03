@@ -394,7 +394,7 @@ do
         local newstat, any = swepRunHook(self, val .. "Hook" .. condition, stat)
         stat = newstat or stat
 
-        if quickmodifiers[val] and isnumber(stat) then
+        if quickmodifiers[val] and isnumber(val) then
             local convarvalue = quickmodifiers[val]:GetFloat()
             
             if val == "MalfunctionMeanShotsToFail" then  -- dont kill me for this pls

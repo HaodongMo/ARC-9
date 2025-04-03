@@ -935,19 +935,21 @@ function SWEP:GetDamageAtRange(range)
     local dmgv = dmgMin
 
     if damagelut then
+        local stupidmult = dmgmodcvar:GetFloat()
+        
         for i, tbl in ipairs(damagelut) do
             if range < tbl[1] then
                 if swepGetProcessedValue(self, "CurvedDamageScaling", true) and i > 1 then
                     local tbl2 = damagelut[i - 1]
-                    dmgv = Lerp(1 - math.Clamp((tbl[1] - range) / (tbl[1] - tbl2[1]), 0, 1), tbl2[2], tbl[2])
+                    dmgv = Lerp(1 - math.Clamp((tbl[1] - range) / (tbl[1] - tbl2[1]), 0, 1), tbl2[2] * stupidmult, tbl[2] * stupidmult)
                 else
-                    dmgv = tbl[2]
+                    dmgv = tbl[2] * stupidmult
                 end
                 break
             end
         end
 
-        dmgv = dmgv * dmgmodcvar:GetFloat()
+        -- dmgv = dmgv * dmgmodcvar:GetFloat()
     else
         local d = self:GetDamageDeltaAtRange(range)
         dmgv = Lerp(d, swepGetProcessedValue(self, "DamageMax"), dmgMin)
@@ -956,8 +958,7 @@ function SWEP:GetDamageAtRange(range)
 
     local sweetspot_d = self:GetSweetSpotDeltaAtRange(range)
     if sweetspot_d > 0 then
-        dmgv = Lerp(sweetspot_d, dmgv, swepGetProcessedValue(self, "SweetSpotDamage", true))
-        dmgv = dmgv * dmgmodcvar:GetFloat()
+        dmgv = Lerp(sweetspot_d, dmgv, swepGetProcessedValue(self, "SweetSpotDamage", true) * dmgmodcvar:GetFloat())
     end
 
     if swepGetProcessedValue(self, "DistributeDamage", true) then
