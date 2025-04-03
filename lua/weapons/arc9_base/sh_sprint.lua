@@ -117,6 +117,10 @@ function SWEP:ThinkSprint()
 
     local sprinting = self:GetSafe() or self:GetIsSprinting()
 
+    if self:GetIsSprinting() and self:GetProcessedValue("SprintCancelsReload", true) then
+		self:CancelReload()
+    end
+
     if self:GetSightAmount() >= 1 or (self:GetProcessedValue("ReloadNoSprintPos", true) and self:GetReloading() or self:StillWaiting()) then
         sprinting = false
     end

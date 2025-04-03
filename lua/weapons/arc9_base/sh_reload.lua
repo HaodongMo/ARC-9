@@ -23,6 +23,8 @@ function SWEP:Reload()
         return
     end
 
+    if self:GetIsSprinting() and self:GetProcessedValue("SprintCancelsReload", true) then return end
+
     -- if !self:GetProcessedValue("UBGLInsteadOfSights") and self:GetValue("UBGL") then
     --     if self:GetOwner():KeyDown(IN_USE) then
     --         return

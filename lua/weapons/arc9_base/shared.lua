@@ -1112,6 +1112,7 @@ SWEP.SprintPos = nil
 SWEP.SprintAng = nil
 SWEP.SprintVerticalOffset = true -- Moves vm when looking up/down while sprinting (set to false if gun clips into camera)
 SWEP.ReloadNoSprintPos = true -- No sprintpos during reloads
+SWEP.SprintCancelsReload = nil -- If sprinting should immediately cancel the reload, and prevent reloading while sprinting
 
 SWEP.NearWallPos = nil
 SWEP.NearWallAng = nil
