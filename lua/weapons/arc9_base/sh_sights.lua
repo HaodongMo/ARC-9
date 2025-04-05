@@ -13,7 +13,7 @@ function SWEP:EnterSights()
     if self.SightsInterruptInspect and self:GetInspecting() then self:CancelInspect() end
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
     if self:GetValue("UBGL") and self:GetOwner():KeyDown(IN_USE) then return end
-    if self:GetIsNearWall() then return end
+    if self:GetIsNearWall() and math.abs(self:GetOwner():GetNW2Float("leaning_fraction", 0)) < 0.1 then return end -- leaning mod support
 	if self:HasAnimation("bash") and self.SetNextAiming then
 		if self.SetNextAiming > CurTime() then return end
 	end

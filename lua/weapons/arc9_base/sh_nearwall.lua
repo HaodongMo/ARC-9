@@ -58,8 +58,11 @@ local math_Approach = math.Approach
 local FrameTime = FrameTime
 
 function SWEP:ThinkNearWall()
+    local time = self:GetProcessedValue("SprintToFireTime", true) * 0.75 -- less time
+    if math.abs(self:GetOwner():GetNW2Float("leaning_fraction", 0)) > 0.1 then time = 0.1 end -- leaning mod support
+
     self:SetNearWallAmount(math_Approach(
         self.dt.NearWallAmount,
         swepGetIsNearWall(self) and 1 or 0,
-        FrameTime() / self:GetProcessedValue("SprintToFireTime", true)))
+        FrameTime() / time))
 end
