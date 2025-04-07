@@ -816,7 +816,7 @@ local function DrawSettings(bg, page)
                 defaultvalue2 = ""
 
                 if !game.SinglePlayer() and !LocalPlayer():IsListenServerHost() then
-                    if ARC9.ConVarData[activecvar].client then
+                    if ARC9.ConVarData[activecvar] and ARC9.ConVarData[activecvar].client then
                         cvarrealm = "settings.convar_client"
                     else
                         cvarrealm = "settings.convar_server"
