@@ -118,11 +118,11 @@ function SWEP:ClientInitialize()
         self:CreateStandardPresets()
     end
 
-    if LocalPlayer().ARC9_IncompatibilityCheck != true then
-        LocalPlayer().ARC9_IncompatibilityCheck = true
+    -- if LocalPlayer().ARC9_IncompatibilityCheck != true then
+    --     LocalPlayer().ARC9_IncompatibilityCheck = true
 
-        ARC9.DoCompatibilityCheck()
-    end
+    --     ARC9.DoCompatibilityCheck()
+    -- end
 end
 
 function SWEP:SetBaseSettings()

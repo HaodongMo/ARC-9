@@ -220,6 +220,12 @@ function SWEP:Think()
             self.ClientStarted = true
             self:SetReady(false)
             self:DoDeployAnimation()
+            
+            if LocalPlayer().ARC9_IncompatibilityCheck != true then
+                LocalPlayer().ARC9_IncompatibilityCheck = true
+
+                ARC9.DoCompatibilityCheck()
+            end
         end
 
         if isSingleplayer and self.IsQuickGrenade then owner.ARC9LastSelectedGrenade = self:GetClass() end
