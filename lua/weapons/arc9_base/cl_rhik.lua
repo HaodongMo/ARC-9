@@ -1,3 +1,7 @@
+
+local Lerp = Lerp
+local LerpVector = LerpVector
+
 local function qerp(delta, a, b)
     local qdelta = -(delta ^ 2) + (delta * 2)
     qdelta = math.Clamp(qdelta, 0, 1)

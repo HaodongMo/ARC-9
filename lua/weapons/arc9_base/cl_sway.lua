@@ -8,6 +8,7 @@ local smootheyeang = Angle()
 local posoffset = Vector()
 local smoothswayroll = 0
 local smoothswaypitch = 0
+local Lerp = Lerp
 
 function SWEP:GetViewModelSway(pos, ang)
     local ft = FrameTime()

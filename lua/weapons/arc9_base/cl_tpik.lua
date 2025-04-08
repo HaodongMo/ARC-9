@@ -11,6 +11,7 @@ local custvector = Vector(-5, 0, -5)
 local passiveholdtypefixvector = Vector(-6, -1, -4)
 local someang = Angle(3, -3, -8)
 local forcednotpik = ARC9.NoTPIK
+local Lerp = Lerp
 
 local function SetTPIKOffset(self, wm, owner, lp)
     local pos, ang = Vector(self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos), Angle(self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) -- how come you don't have tpikpos in 2025
