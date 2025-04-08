@@ -22,7 +22,7 @@ function EFFECT:Init(data)
     if !wep.ARC9 then return end
 
     local speed = data:GetScale()
-    local start = (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart()
+    local start = !ARC9.RTScopeRender and (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart()
 
     local diff = hit - start
     self.Dir = diff:GetNormalized()
@@ -30,8 +30,9 @@ function EFFECT:Init(data)
     if hitt.HitSky then
         local owner = wep:GetOwner()
         if owner.GetAimVector then -- not on some npcs i guess
-            self.Dir = (self.Dir + owner:GetAimVector()):GetNormalized()
+            self.Dir = (owner:GetAimVector()):GetNormalized()
             hit = start + self.Dir * 32768
+            hitt.HitPos = hit
         end
     end
 
@@ -44,7 +45,7 @@ function EFFECT:Init(data)
     self.DieTime = UnPredictedCurTime() + math.max(self.LifeTime, self.LifeTime2)
 
     self.StartPos = start
-    self.EndPos = hit
+    self.EndPos = hitt.HitPos
 
     self.Weapon = wep
 
@@ -60,6 +61,7 @@ function EFFECT:Think()
     return self.DieTime > UnPredictedCurTime()
 end
 
+local Lerp = Lerp
 local function LerpColor(d, col1, col2)
     local r = Lerp(d, col1.r, col2.r)
     local g = Lerp(d, col1.g, col2.g)
@@ -76,6 +78,10 @@ function EFFECT:Render()
     local endpos = self.StartPos + (d * (self.EndPos - self.StartPos))
     local size = self.Size * math.Clamp(math.log(EyePos():DistToSqr(endpos) - math.pow(256, 2)), 0, math.huge)
 
+    -- debugoverlay.Axis( startpos, Angle(), 16, 0, true )
+    -- debugoverlay.Axis( endpos, Angle(), 16, 0, true )
+    -- debugoverlay.Line( startpos, endpos, 0.1, color_white, true )
+    
     local col = self.Color --LerpColor(d, self.Color, Color(0, 0, 0, 0))
     local col2 = LerpColor(d2, smoker, smoked)
 
