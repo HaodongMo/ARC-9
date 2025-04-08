@@ -46,11 +46,13 @@ function EFFECT:Init(data)
     self.StartPos = start
     self.EndPos = hit
 
+    self.Weapon = wep
+
     -- Sometimes it freaks out and, I dunno, gets invalid
     if wep.GetProcessedValue then
-        self.Color = wep:GetProcessedValue("TracerColor")
+        self.Color = wep:GetProcessedValue("TracerColor", true)
 
-        self.Size = wep:GetProcessedValue("TracerSize")
+        self.Size = wep:GetProcessedValue("TracerSize", true)
     end
 end
 
@@ -67,6 +69,7 @@ local function LerpColor(d, col1, col2)
 end
 
 function EFFECT:Render()
+    if self.Cancelled or (IsValid(self.Weapon) and self.Weapon.TracerCancelled) then self.Cancelled = true return end
     local d = (UnPredictedCurTime() - self.StartTime) / self.LifeTime
     local d2 = (UnPredictedCurTime() - self.StartTime) / self.LifeTime2
     local startpos = self.StartPos + (d * 0.1 * (self.EndPos - self.StartPos))

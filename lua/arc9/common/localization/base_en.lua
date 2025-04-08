@@ -967,6 +967,9 @@ L["settings.server.bulletphysics.bullet_drag.desc"] = "How much air resistance p
 L["settings.server.bulletphysics.bullet_lifetime.title"] = "Bullet Life Time"
 L["settings.server.bulletphysics.bullet_lifetime.desc"] = "How long, in seconds, it takes for a physical bullet to be removed from existence."
 
+L["settings.server.bulletphysics.bullet_physics_shotguns.title"] = "Physical bullets for Shotguns"
+L["settings.server.bulletphysics.bullet_physics_shotguns.desc"] = "Use physical bullets for shotguns too, otherwise they will use hitscan."
+
 L["settings.server.bulletphysics.ricochet.title"] = "Enable Bullet Ricochet"
 L["settings.server.bulletphysics.ricochet.desc"] = "Allows bullets to bounce off of hard surfaces, potentially striking unsuspecting foes.\n\nEffectiveness depends on the weapon."
 

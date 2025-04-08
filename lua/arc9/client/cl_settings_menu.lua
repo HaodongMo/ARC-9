@@ -340,6 +340,7 @@ ARC9.SettingsTable = {
         { sv = true, type = "slider", text = "settings.server.bulletphysics.bullet_gravity.title", desc = "settings.server.bulletphysics.bullet_gravity.desc", convar = "bullet_gravity", min = 0, max = 10, decimals = 1, parentconvar = "bullet_physics" },
         { sv = true, type = "slider", text = "settings.server.bulletphysics.bullet_drag.title", desc = "settings.server.bulletphysics.bullet_drag.desc", convar = "bullet_drag", min = 0, max = 10, decimals = 1, parentconvar = "bullet_physics" },
         { sv = true, type = "slider", text = "settings.server.bulletphysics.bullet_lifetime.title", desc = "settings.server.bulletphysics.bullet_lifetime.desc", convar = "bullet_lifetime", min = 0, max = 120, parentconvar = "bullet_physics" },
+        { sv = true, type = "bool", text = "settings.server.bulletphysics.bullet_physics_shotguns.title", desc = "settings.server.bulletphysics.bullet_physics_shotguns.desc", convar = "bullet_physics_shotguns", parentconvar = "bullet_physics" },
         { sv = true, type = "bool", text = "settings.server.bulletphysics.ricochet.title", desc = "settings.server.bulletphysics.ricochet.desc", convar = "ricochet" },
         { sv = true, type = "bool", text = "settings.server.bulletphysics.mod_penetration.title", desc = "settings.server.bulletphysics.mod_penetration.desc", convar = "mod_penetration" },
 		

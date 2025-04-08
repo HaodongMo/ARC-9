@@ -395,6 +395,11 @@ local conVars = {
         replicated = true
     },
     {
+        name = "bullet_physics_shotguns",
+        default = "0",
+        replicated = true
+    },
+    {
         name = "bullet_drag",
         default = "1",
         replicated = true
