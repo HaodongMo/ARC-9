@@ -31,6 +31,7 @@
 	
 	[*] And [b]much more[/b]!
 [/list]
+
 [hr][/hr][h3] FAQ [/h3]
 [b][u] Users & Admins [/u][/b]
 [table]
@@ -59,6 +60,7 @@
         [td]You can ensure controls are always visible, only visible when performing certain actions (such as aiming) or always hidden through the ARC9 Settings (under 'Game HUD'). You can also use the console command [u]arc9_hud_hints[/u], setting it to 0 for always off, 1 for partially on, or 2 for always on.[/td]
     [/tr]
 [/table]
+
 [b][u] Developers [/u][/b]
 [table]
     [tr]
@@ -78,6 +80,7 @@
         [td]You can easily make stickers by using [url=https://github.com/HaodongMo/ARC9-Sticker-Pack-Maker/releases] this Sticker Pack Maker[/url]![/td]
     [/tr]
 [/table]
+
 [hr][/hr][h3] Credits [/h3]
 [table]
     [tr]
