@@ -141,6 +141,7 @@ ARC9AttButton.MatMarkerInstalled = Material("arc9/ui/mark_installed.png", "mips 
 ARC9AttButton.MatMarkerLock = Material("arc9/ui/mark_lock.png", "mips smooth")
 ARC9AttButton.MatMarkerLinked = Material("arc9/ui/mark_linked.png", "mips smooth")
 ARC9AttButton.MatMarkerModes = Material("arc9/ui/mark_modes.png", "mips smooth")
+ARC9AttButton.MatMarkerPaint = Material("arc9/ui/paint.png", "mips smooth")
 ARC9AttButton.MatMarkerSlots = Material("arc9/ui/mark_slots.png", "mips smooth")
 ARC9AttButton.MatMarkerFavorite = Material("arc9/ui/mark_favorite.png", "mips smooth")
 
@@ -170,7 +171,9 @@ function ARC9AttButton:Paint(w, h)
         textcolor = colorclicked
     end
 
-    if self.HasModes then
+    if self.HasPaint then
+        matmarker = self.MatMarkerPaint
+    elseif self.HasModes then
         matmarker = self.MatMarkerModes
     elseif self.HasSlots then
         matmarker = self.MatMarkerSlots
@@ -369,6 +372,10 @@ end
 
 function ARC9AttButton:SetHasModes(bool)
     self.HasModes = bool
+end
+
+function ARC9AttButton:SetHasPaint(bool)
+    self.HasPaint = bool
 end
 
 function ARC9AttButton:SetHasSlots(bool)

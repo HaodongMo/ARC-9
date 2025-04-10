@@ -71,6 +71,7 @@ L["hud.hint.reload"] = "Reload"
 L["hud.hint.safe"] = "Toggle Safe"
 L["hud.hint.switchsights"] = "Switch Sights"
 L["hud.hint.toggleatts"] = "Toggle Attachments"
+L["hud.hint.togglecamos"] = "Toggle Camo Slot"
 L["hud.hint.ubgl"] = "Toggle"
 L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Change Zoom"
@@ -1199,3 +1200,10 @@ Price: <color=100,255,100>$30</color> [ HOT! ]
 Acquire ARC9 Premium for <color=255,106,0>6 Months</color>.
 Includes <color=100,255,100>one free month</color>!
 ]]
+
+-- idk where to put
+L["customize.camoslot"] = "Camo Slot "
+-- L["customize.canpaint"] = "\n\n<color=100,255,100>This attachment can be painted using Advanced Camo Slots!</color>"
+-- L["customize.canpaint.no"] = " But this weapon doesn't have them. Use Camo Support attachment from <color=255,106,0>EFT Extras</color>."
+L["customize.cantpaint"] = "\n\nThis attachment could be painted using <color=255,224,86>Camo Slots</color>, but this weapon <color=255,106,0>doesn't provide full support</color>."
+L["customize.cantpaint.eft"] = "\nYou can use <color=114,255,86>\"Camo Support\"</color> attachment from <color=255,106,0>EFT Extras</color> to paint this attachment."

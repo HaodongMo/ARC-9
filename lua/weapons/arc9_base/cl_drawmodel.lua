@@ -221,3 +221,34 @@ function SWEP:GetActiveSightSlotTable()
 
     return sight.slottbl or {}
 end
+
+-- advanced camos
+
+-- SWEP.AdvancedCamoCache = {}
+
+function SWEP:GetAdvancedCamo(att)
+    if self.AdvancedCamoCache == false then return end -- disable this bitch if no super camo slots
+    if !att then att = "" end
+    if self.AdvancedCamoCache == nil then self.AdvancedCamoCache = {} end
+
+    if self.AdvancedCamoCache[att] then return self.AdvancedCamoCache[att] end
+
+    local state = att != "" and self:GetValue(att .. "_camoslot") or 1
+
+    local atts = {}
+
+    local hasadvcamoslots, result = false, nil
+
+    for _, i in ipairs(self:GetSubSlotList()) do
+        if i["IsAdvancedCamo" .. state] then
+            hasadvcamoslots = true
+            if i.Installed then result = self:GetFinalAttTable(i).CustomCamoTexture end
+        end
+    end
+
+    self.AdvancedCamoCache[att] = result
+
+    if !hasadvcamoslots then self.AdvancedCamoCache = false end -- disable this bitch if no super camo slots
+    
+    return result
+end

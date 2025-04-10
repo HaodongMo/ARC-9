@@ -111,7 +111,8 @@ function EFFECT:Init(data)
 
     self.SpawnTime = CurTime()
     self.LifeTime = self.LifeTime + arc9_eject_time:GetFloat()
-    
+
+    self.weapon = ent -- for camos
 end
 
 function EFFECT:PhysicsCollide()

@@ -811,9 +811,11 @@ function SWEP:CreateCustomizeHUD()
                     self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
                     if slot.Installed then
                         self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
-						if atttbl.ToggleStats then
+                        if atttbl.ToggleStats and !atttbl.AdvancedCamoSupport then
 							self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
-						end
+                        elseif atttbl.ToggleStats and (atttbl.AdvancedCamoSupport and self.AdvancedCamoCache) then
+                            self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.togglecamos"
+                        end
                     end
                 end
 

@@ -39,7 +39,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
         if wpn:GetCustomize() and attpnl then
             local addr = attpnl.address
             local atttbl = wpn:GetFinalAttTable(wpn:GetFilledMergeSlot(addr))
-            if attpnl:IsHovered() and atttbl.ToggleStats then
+            if attpnl:IsHovered() and ((atttbl.ToggleStats and !atttbl.AdvancedCamoSupport) or (atttbl.AdvancedCamoSupport and wpn.AdvancedCamoCache)) then
                 wpn:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
                 wpn:ToggleStat(addr)
                 wpn:PostModify()

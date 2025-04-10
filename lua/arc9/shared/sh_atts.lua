@@ -53,6 +53,19 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
         table.insert(ARC9.ModelToPrecacheList, atttbl.Model)
     end
 
+    if atttbl.AdvancedCamoSupport then
+        local camotoggles = {}
+        
+        for i = 1, 3 do
+            table.insert(camotoggles, {
+                PrintName = ARC9:GetPhrase("customize.camoslot") .. i,
+                [shortname .. "_camoslot"] = i
+            })
+        end
+
+        atttbl.ToggleStats = camotoggles
+    end
+
     ARC9.Attachments[shortname] = atttbl
     ARC9.Attachments_Index[atttbl.ID] = shortname
 

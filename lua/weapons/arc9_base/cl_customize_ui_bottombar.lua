@@ -4,6 +4,8 @@ local foldericon = Material("arc9/ui/folder.png", "mips smooth")
 local folderfavicon = Material("arc9/ui/folder_favorites.png", "mips smooth")
 local backicon = Material("arc9/ui/back.png", "mips smooth")
 local adminicon = Material("arc9/admin.png", "mips smooth")
+local modesicon = Material("arc9/ui/modes.png", "mips smooth")
+local camosicon = Material("arc9/ui/paint.png", "mips smooth")
 
 local ARC9ScreenScale = ARC9.ScreenScale
 
@@ -11,6 +13,7 @@ local clicksound = "arc9/newui/uimouse_click.ogg"
 local foldersound = "arc9/newui/uimouse_click_forward.ogg"
 local backsound = "arc9/newui/uimouse_click_return.ogg"
 local tabsound = "arc9/newui/uimouse_click_tab.ogg"
+local favsound = "arc9/newui/ui_part_favourite1.ogg"
 
 local function spacer(self, scroll, margin)
     local spacer = vgui.Create("DPanel", scroll)
@@ -349,6 +352,7 @@ local function enterfolder(self, scroll, slottbl, fname)
 
             attbtn2:SetInstalled(slot.Installed == att.att)
             attbtn2:SetHasModes(!!atttbl.ToggleStats)
+            attbtn2:SetHasPaint(!!atttbl.AdvancedCamoSupport)
             attbtn2:SetHasSlots(!!atttbl.Attachments)
             attbtn2:SetCanAttach(self:CanAttach(slot.Address, att.att, slot, true))
             attbtn2:SetMissingDependents(self:GetSlotMissingDependents(slot.Address, att.att, slot))
@@ -359,9 +363,11 @@ local function enterfolder(self, scroll, slottbl, fname)
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.attach"
                 elseif self2.slottbl.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
-					if atttbl.ToggleStats then
+					if atttbl.ToggleStats and !atttbl.AdvancedCamoSupport then
 						self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
-					end
+                    elseif atttbl.ToggleStats and (atttbl.AdvancedCamoSupport and self.AdvancedCamoCache) then
+                        self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.togglecamos"
+                    end
                 end
 
                 if ARC9.Favorites[att.att] then
@@ -580,6 +586,11 @@ function SWEP:CreateHUD_AttInfo()
 
     local multiline = {}
     local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "Description") or atttbl.Description
+    
+    if atttbl.AdvancedCamoSupport and !self.AdvancedCamoCache then 
+        desc = desc .. (ARC9:GetPhrase("customize.cantpaint") or "")
+        if self.EFTErgo then desc = desc .. (ARC9:GetPhrase("customize.cantpaint.eft") or "") end
+    end
 
     multiline = ARC9MultiLineText(desc, descscroller:GetWide() - (ARC9ScreenScale(3.5)), "ARC9_9_Slim")
 
@@ -598,7 +609,9 @@ function SWEP:CreateHUD_AttInfo()
 
     local slot = self.AttInfoBarAttSlot
 
-    if slot and atttbl.ToggleStats then
+    local camotoggle = atttbl.AdvancedCamoSupport and self.AdvancedCamoCache
+    
+    if slot and ((atttbl.ToggleStats and !atttbl.AdvancedCamoSupport) or camotoggle) then
         local mode_toggle = vgui.Create("ARC9TopButton", infopanel)
         mode_toggle.addr = slot.Address
         surface.SetFont("ARC9_12")
@@ -607,11 +620,11 @@ function SWEP:CreateHUD_AttInfo()
         mode_toggle:SetPos(descscroller:GetWide()/2-(ARC9ScreenScale(24)+tw)/2, ARC9ScreenScale(50))
         mode_toggle:SetSize(0, 0) -- ARC9ScreenScale(24)+tw, ARC9ScreenScale(21*0.75)
         mode_toggle:SetButtonText(curmode, "ARC9_12")
-        mode_toggle:SetIcon(Material("arc9/ui/modes.png", "mips smooth"))
+        mode_toggle:SetIcon(camotoggle and camosicon or modesicon)
         mode_toggle.DoClick = function(self2)
             -- surface.PlaySound(clicksound)
             -- self:PlayAnimation("toggle")
-            self:EmitSound(self:RandomChoice(self:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
+            self:EmitSound(camotoggle and favsound or self:RandomChoice(self:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
             self:ToggleStat(self2.addr)
             self:PostModify()
         end
@@ -619,13 +632,14 @@ function SWEP:CreateHUD_AttInfo()
         mode_toggle.DoRightClick = function(self2)
             -- surface.PlaySound(clicksound)
             -- self:PlayAnimation("toggle")
-            self:EmitSound(self:RandomChoice(self:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
+            self:EmitSound(camotoggle and favsound or self:RandomChoice(self:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
             self:ToggleStat(self2.addr, -1)
             self:PostModify()
         end
 
         mode_toggle.Think = function(self2)
             if !IsValid(self) then return end
+            if self.AdvancedCamoCache == false then self2:Remove() return end
 
             slot = self:LocateSlotFromAddress(self2.addr)
 

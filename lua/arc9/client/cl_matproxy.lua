@@ -69,6 +69,84 @@ matproxy.Add({
     end
 })
 
+
+
+
+
+--[[ 
+    Advanced camo usage:
+
+
+    "$detailblendmode" "4"
+    "$detailblendfactor" "1"
+
+    ...
+
+    "Arc9CustomCamoAdvanced" 
+        {
+            "camoTexture" $detail
+            "phonk" $phongboost
+            "attName" "eft_mag_ak_ak12_545_30"
+            "color" "[0.99 0.99 0.99]"
+        }
+        
+]]--
+
+matproxy.Add({
+    name = "Arc9CustomCamoAdvanced",
+    init = function( self, mat, values )
+        -- Store the name of the variable we want to set
+        self.DetailResult = values.camotexture or ""
+        self.PhongResult = values.phonk or ""
+        self.AttName = values.attname or ""
+
+        if self.PhongResult then
+            self.DefaultPhong = mat:GetFloat(self.PhongResult)
+        end
+
+        if self.DetailResult then
+            self.DefaultTexture = mat:GetTexture(self.DetailResult)
+        end
+    end,
+    bind = function( self, mat, ent )
+        local wep, camo
+
+        if IsValid(ent) then
+            if ent.weapon and ent.weapon.ARC9 then
+                wep = ent.weapon
+            else
+                local owner = ent:GetOwner()
+                if IsValid(owner) then
+                    local weapon = owner:GetActiveWeapon()
+                    if IsValid(weapon) then wep = weapon end
+                end
+            end
+
+            if wep then camo = wep.GetAdvancedCamo and wep:GetAdvancedCamo(self.AttName) end
+        end
+
+        if camo and self.DetailResult then
+            -- mat:SetString(self.DetailResult, camo)
+            mat:SetTexture(self.DetailResult, camo)
+            mat:SetFloat(self.PhongResult, 0.4)
+            self.ShouldRecomputeIfSet = true
+        elseif self.DetailResult then
+            self.DefaultTexture = nil
+            if !self.DefaultTexture then
+                mat:SetUndefined(self.DetailResult)
+                mat:SetFloat(self.PhongResult, self.DefaultPhong)
+                if self.ShouldRecomputeIfSet then
+                    mat:Recompute()
+                    self.ShouldRecomputeIfSet = false
+                end
+            else
+                mat:SetTexture(self.DetailResult, self.DefaultTexture)
+                mat:SetFloat(self.PhongResult, self.DefaultPhong)
+            end
+        end
+    end
+})
+
 matproxy.Add({
     name = "ARC9_Heat",
     init = function( self, mat, values )
