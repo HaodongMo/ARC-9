@@ -164,14 +164,6 @@ local function paintcoolicon(self, w, h)
         end
     end
 
-
-    render.PushFilterMag( TEXFILTER.ANISOTROPIC )
-    render.PushFilterMin( TEXFILTER.ANISOTROPIC )
-
-
-    render.PopFilterMin()
-    render.PopFilterMag()
-
     local adminn = self:GetAdminOnly()
     if adminn then surface.SetDrawColor( 251, 255, 0) else surface.SetDrawColor( 255, 255, 255, 200) end
     
@@ -209,9 +201,27 @@ local function paintcoolicon(self, w, h)
     mxx, myy = math.Clamp((mxx - 64)/64, -1, 1) * 8 * progress, math.Clamp((myy - 64)/64, -1, 1) * 8 * progress
     
     surface.SetDrawColor( 255, 255, 255, 255 )
-    self.Image:PaintAt( 3 + self.Border + mxx, 3 + self.Border + myy, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
+
+    if progress > 0.1 then
+        render.PushFilterMag( TEXFILTER.LINEAR )
+        render.PushFilterMin( TEXFILTER.LINEAR )
+    end
+    
+    if !self.IconMaterial then
+        self.IconMaterial = Material(self.icon, "mips")
+    end
+    
+	if self.IconMaterial and !self.IconMaterial:IsError() then
+        surface.SetDrawColor( 255, 255, 255, 255)
+        surface.SetMaterial( self.IconMaterial or ahmad )
+        surface.DrawTexturedRect( 3 + self.Border + mxx, 3 + self.Border + myy, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
+    end
+    -- self.Image:PaintAt( 3 + self.Border + mxx, 3 + self.Border + myy, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
     
     if progress > 0.1 then
+        render.PopFilterMin()
+        render.PopFilterMag()
+
         if !self.Image.m_Material then
             -- self.Image.m_Material = ahmad
             
@@ -431,6 +441,7 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
                         newpanel._OpenMenuExtra = newpanel._OpenMenuExtra or newpanel.OpenMenuExtra
                         newpanel.OpenMenuExtra = OpenMenuExtra
 	                    newpanel.OpenMenu = OpenGenericSpawnmenuRightClickMenu
+	                    newpanel.icon = ent.IconOverride or "entities/" .. ent.ClassName .. ".png"
                     end
                 end
             end
