@@ -58,8 +58,8 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
         
         for i = 1, 3 do
             table.insert(camotoggles, {
-                PrintName = ARC9:GetPhrase("customize.camoslot") .. i,
-                [shortname .. "_camoslot"] = i
+				PrintName = string.format( ARC9:GetPhrase("customize.camoslot"), i),
+				[shortname .. "_camoslot"] = i
             })
         end
 

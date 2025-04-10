@@ -175,10 +175,38 @@ L["customize.bench.effect"] = "EFECTO A DISTANCIA"
 L["customize.bench.ballistics"] = "EVALUACIÓN DEL RENDIMIENTO BALÍSTICO TERMINAL"
 L["customize.bench.precision"] = "ENSAYO MECÁNICO DE PRECISIÓN"
 
+-- L["customize.camoslot"] = "Camo (%s)"
+-- L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."
+-- L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
+-- L["customize.camoslot.eftextra"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."
+
 L["folder.back"] = "Atras"
 L["folder.deselect"] = "Deseleccionar"
 L["folder.favorites"] = "Favoritos"
 L["folder.select"] = "Seleccionar"
+
+////////////////////// Numerical
+L["number.1"] = "1"
+L["number.2"] = "2"
+L["number.3"] = "3"
+L["number.4"] = "4"
+L["number.5"] = "5"
+L["number.6"] = "6"
+L["number.7"] = "7"
+L["number.8"] = "8"
+L["number.9"] = "9"
+L["number.10"] = "10"
+
+L["number.alt.1"] = "I"
+L["number.alt.2"] = "II"
+L["number.alt.3"] = "III"
+L["number.alt.4"] = "IV"
+L["number.alt.5"] = "V"
+L["number.alt.6"] = "VI"
+L["number.alt.7"] = "VII"
+L["number.alt.8"] = "VIII"
+L["number.alt.9"] = "IX"
+L["number.alt.10"] = "X"
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Habilita"

@@ -176,10 +176,38 @@ L["customize.bench.effect"] = "EFFECT AT RANGE"
 L["customize.bench.ballistics"] = "TERMINAL BALLISTICS PERFORMANCE EVALUATION"
 L["customize.bench.precision"] = "MECHANICAL PRECISION TEST"
 
+L["customize.camoslot"] = "Camo (%s)"
+L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."
+L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
+L["customize.camoslot.eftextra"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."
+
 L["folder.back"] = "Back"
 L["folder.deselect"] = "Deselect"
 L["folder.favorites"] = "Favorites"
 L["folder.select"] = "Select"
+
+////////////////////// Numerical
+L["number.1"] = "1"
+L["number.2"] = "2"
+L["number.3"] = "3"
+L["number.4"] = "4"
+L["number.5"] = "5"
+L["number.6"] = "6"
+L["number.7"] = "7"
+L["number.8"] = "8"
+L["number.9"] = "9"
+L["number.10"] = "10"
+
+L["number.alt.1"] = "I"
+L["number.alt.2"] = "II"
+L["number.alt.3"] = "III"
+L["number.alt.4"] = "IV"
+L["number.alt.5"] = "V"
+L["number.alt.6"] = "VI"
+L["number.alt.7"] = "VII"
+L["number.alt.8"] = "VIII"
+L["number.alt.9"] = "IX"
+L["number.alt.10"] = "X"
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Enables"
@@ -1200,10 +1228,3 @@ Price: <color=100,255,100>$30</color> [ HOT! ]
 Acquire ARC9 Premium for <color=255,106,0>6 Months</color>.
 Includes <color=100,255,100>one free month</color>!
 ]]
-
--- idk where to put
-L["customize.camoslot"] = "Camo Slot "
--- L["customize.canpaint"] = "\n\n<color=100,255,100>This attachment can be painted using Advanced Camo Slots!</color>"
--- L["customize.canpaint.no"] = " But this weapon doesn't have them. Use Camo Support attachment from <color=255,106,0>EFT Extras</color>."
-L["customize.cantpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
-L["customize.cantpaint.eft"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."

@@ -175,10 +175,40 @@ L["customize.bench.effect"] = "测试距离"
 L["customize.bench.ballistics"] = "弹道射程测试记录"
 L["customize.bench.precision"] = "机械准度测试"
 
+-- L["customize.camoslot"] = "Camo (%s)"
+-- L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."
+-- L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
+-- L["customize.camoslot.eftextra"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."
+
 L["folder.back"] = "返回"
 L["folder.deselect"] = "取消选择"
 L["folder.favorites"] = "收藏夹"
 L["folder.select"] = "选择"
+
+////////////////////// Numerical
+L["number.1"] = "1"
+L["number.2"] = "2"
+L["number.3"] = "3"
+L["number.4"] = "4"
+L["number.5"] = "5"
+L["number.6"] = "6"
+L["number.7"] = "7"
+L["number.8"] = "8"
+L["number.9"] = "9"
+L["number.10"] = "10"
+
+L["number.alt.1"] = "一"
+L["number.alt.2"] = "二"
+L["number.alt.3"] = "三"
+L["number.alt.4"] = "四"
+L["number.alt.5"] = "五"
+L["number.alt.6"] = "六"
+L["number.alt.7"] = "七"
+L["number.alt.8"] = "八"
+L["number.alt.9"] = "九"
+L["number.alt.10"] = "十"
+
+
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "启用"

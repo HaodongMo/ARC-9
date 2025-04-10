@@ -588,8 +588,8 @@ function SWEP:CreateHUD_AttInfo()
     local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "Description") or atttbl.Description
     
     if atttbl.AdvancedCamoSupport and !self.AdvancedCamoCache then 
-        desc = desc .. (ARC9:GetPhrase("customize.cantpaint") or "")
-        if self.EFTErgo then desc = desc .. (ARC9:GetPhrase("customize.cantpaint.eft") or "") end
+        desc = desc .. (ARC9:GetPhrase("customize.camoslot.nosupport") or "")
+        if self.EFTErgo then desc = desc .. (ARC9:GetPhrase("customize.camoslot.eftextra") or "") end
     end
 
     multiline = ARC9MultiLineText(desc, descscroller:GetWide() - (ARC9ScreenScale(3.5)), "ARC9_9_Slim")
