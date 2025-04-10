@@ -1205,5 +1205,5 @@ Includes <color=100,255,100>one free month</color>!
 L["customize.camoslot"] = "Camo Slot "
 -- L["customize.canpaint"] = "\n\n<color=100,255,100>This attachment can be painted using Advanced Camo Slots!</color>"
 -- L["customize.canpaint.no"] = " But this weapon doesn't have them. Use Camo Support attachment from <color=255,106,0>EFT Extras</color>."
-L["customize.cantpaint"] = "\n\nThis attachment could be painted using <color=255,224,86>Camo Slots</color>, but this weapon <color=255,106,0>doesn't provide full support</color>."
-L["customize.cantpaint.eft"] = "\nYou can use <color=114,255,86>\"Camo Support\"</color> attachment from <color=255,106,0>EFT Extras</color> to paint this attachment."
+L["customize.cantpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
+L["customize.cantpaint.eft"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."

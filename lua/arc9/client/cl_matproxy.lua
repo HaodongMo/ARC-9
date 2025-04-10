@@ -123,6 +123,7 @@ matproxy.Add({
             end
 
             if wep then camo = wep.GetAdvancedCamo and wep:GetAdvancedCamo(self.AttName) end
+            if !camo and ent.CustomCamoTexture and wep.AdvancedCamoCache == false then camo = ent.CustomCamoTexture end -- fallback if regular camo slot exists
         end
 
         if camo and self.DetailResult then
