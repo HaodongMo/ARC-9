@@ -13,6 +13,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
     if !wpn.ARC9 then return end
 
     if (arc9_autoreload:GetBool() or wpn:GetRequestReload()) and
+		!wpn:GetReloading() and
         !wpn:GetCustomize() and
         !wpn:GetCustomize() and
         wpn:CanReload() and

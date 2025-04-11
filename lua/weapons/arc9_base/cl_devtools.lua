@@ -762,6 +762,16 @@ function SWEP:DevStuffCrosshair()
     surface.SetTextColor(255, 255, 255, 255)
 	surface.DrawText( "Mouse Sens: " .. string.format("%d%%", self:AdjustMouseSensitivity() * 100 ))
 	
+	-- if self:GetReloading() then
+		-- surface.SetTextPos(x + 5, y - 200 + 40 + 2)
+		-- surface.SetTextColor(0, 0, 0, 255)
+		-- surface.DrawText( "Is Reloading!" )
+		
+		-- surface.SetTextPos(x + 5 - 2, y - 200 + 40)
+		-- surface.SetTextColor(255, 255, 255, 255)
+		-- surface.DrawText( "Is Reloading!" )
+	-- end
+	
     local sgspread_txt = ""
     if self:GetProcessedValue("UseDispersion") then
         local sgspread_val = math.max(0, self:GetProcessedValue("DispersionSpread"))

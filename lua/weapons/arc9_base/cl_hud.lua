@@ -430,7 +430,7 @@ function SWEP:DrawHUD()
         if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
         if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "mips smooth" ) end
 
-        if (arc9_center_reload_enable:GetBool() and (arc9_center_reload:GetFloat() > 0.02)) and !self:GetInspecting() and !self:GetJammed() then
+        if (arc9_center_reload_enable:GetBool() and (self.ClipSize > 0 and arc9_center_reload:GetFloat() > 0.02)) and !self:GetInspecting() and !self:GetJammed() then
             if !rel and !throw and !primbash and mag then
                 local text = ARC9:GetPhrase("hud.hint.reload")
                 local textlow = ARC9:GetPhrase("hud.hint.lowammo")
