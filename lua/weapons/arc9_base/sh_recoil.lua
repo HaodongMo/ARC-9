@@ -176,14 +176,17 @@ do
 
         local MAGIC1 = 210
         local MAGIC2 = 210
-        if weirdfix then
-            MAGIC1 = 210 / (engine.TickInterval() / 0.015)
-            MAGIC2 = 210 / (engine.TickInterval() / 0.015)
-        end
 
         local ft = CLIENT and RealFrameTime() or FrameTime()
         if ft == 0 then return end -- game is paused
 
+        if weirdfix then
+            -- MAGIC1 = 210 / (engine.TickInterval() / 0.015)
+            -- MAGIC2 = 210 / (engine.TickInterval() / 0.015)
+            MAGIC1 = math.min(MAGIC1, 210 / (ft / 0.015))
+            MAGIC2 = math.min(MAGIC2, 210 / (ft / 0.015))
+        end
+        
         if CLIENT and ft > 0.09 then -- super lag detected, clamping recoil
             MAGIC1 = 0.1
             MAGIC2 = 0.1
