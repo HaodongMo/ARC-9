@@ -962,6 +962,10 @@ local conVars = {
         name = "phystweak",
         default = "1",
     },
+    {
+        name = "atts_maxcamos",
+        default = "3",
+    },
 }
 ARC9.ConVarData = {}
 

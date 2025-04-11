@@ -226,6 +226,8 @@ end
 
 -- SWEP.AdvancedCamoCache = {}
 
+local maxcamos = GetConVar("arc9_atts_maxcamos")
+
 function SWEP:GetAdvancedCamo(att)
     if self.AdvancedCamoCache == false then return end -- disable this bitch if no super camo slots
     if !att then att = "" end
@@ -233,15 +235,16 @@ function SWEP:GetAdvancedCamo(att)
 
     if self.AdvancedCamoCache[att] then return self.AdvancedCamoCache[att] end
 
-    local state = att != "" and self:GetValue(att .. "_camoslot") or 1
+    local state = (att != "" and att != "second") and self:GetValue(att .. "_camoslot") or 1
+    if att == "second" then state = 2 end
 
     local atts = {}
 
     local hasadvcamoslots, result = false, nil
 
     for _, i in ipairs(self:GetSubSlotList()) do
+        if i["IsAdvancedCamo1"] then hasadvcamoslots = true end
         if i["IsAdvancedCamo" .. state] then
-            hasadvcamoslots = true
             if i.Installed then result = self:GetFinalAttTable(i).CustomCamoTexture end
         end
     end

@@ -10,6 +10,7 @@ ARC9.ModelToPrecacheList = {}
 local fullreload
 
 local defaulticon = Material("arc9/logo/logo_lowvis.png", "mips smooth")
+local maxcamos = GetConVar("arc9_atts_maxcamos")
 
 local function FixVertexLitMaterial(mat) -- from DImage code
 	if string.find(mat:GetShader(), "VertexLitGeneric") then
@@ -55,11 +56,13 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
 
     if atttbl.AdvancedCamoSupport then
         local camotoggles = {}
-        
-        for i = 1, 3 do
+        local maxcamos = maxcamos:GetInt() + 1
+
+        for i = 1, maxcamos do
+            local printtnamee = i == maxcamos and ARC9:GetPhrase("customize.camoslot.none") or string.format( ARC9:GetPhrase("customize.camoslot"), i)
             table.insert(camotoggles, {
-				PrintName = string.format( ARC9:GetPhrase("customize.camoslot"), i),
-				[shortname .. "_camoslot"] = i
+				PrintName = printtnamee,
+				[(isstring(atttbl.AdvancedCamoSupport) and atttbl.AdvancedCamoSupport or shortname) .. "_camoslot"] = i
             })
         end
 

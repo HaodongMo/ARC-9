@@ -122,14 +122,16 @@ matproxy.Add({
                 end
             end
 
-            if wep then camo = wep.GetAdvancedCamo and wep:GetAdvancedCamo(self.AttName) end
-            if !camo and ent.CustomCamoTexture and wep.AdvancedCamoCache == false then camo = ent.CustomCamoTexture end -- fallback if regular camo slot exists
+            if wep then 
+                camo = wep.GetAdvancedCamo and wep:GetAdvancedCamo(self.AttName)
+                if !camo and ent.CustomCamoTexture and wep.AdvancedCamoCache == false then camo = ent.CustomCamoTexture end -- fallback if regular camo slot exists
+            end
         end
 
         if camo and self.DetailResult then
             -- mat:SetString(self.DetailResult, camo)
             mat:SetTexture(self.DetailResult, camo)
-            mat:SetFloat(self.PhongResult, 0.4)
+            mat:SetFloat(self.PhongResult, 0.6)
             self.ShouldRecomputeIfSet = true
         elseif self.DetailResult then
             self.DefaultTexture = nil
