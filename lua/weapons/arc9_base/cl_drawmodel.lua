@@ -240,18 +240,28 @@ function SWEP:GetAdvancedCamo(att)
 
     local atts = {}
 
-    local hasadvcamoslots, result = false, nil
+    local hasadvcamoslots = false
+    local camoatt
 
     for _, i in ipairs(self:GetSubSlotList()) do
         if i["IsAdvancedCamo1"] then hasadvcamoslots = true end
         if i["IsAdvancedCamo" .. state] then
-            if i.Installed then result = self:GetFinalAttTable(i).CustomCamoTexture end
+            if i.Installed then camoatt = self:GetFinalAttTable(i) end
         end
     end
 
-    self.AdvancedCamoCache[att] = result
+    if camoatt then
+        self.AdvancedCamoCache[att] = {
+            Texture = camoatt.CustomCamoTexture,
+            Scale = camoatt.CustomCamoScale,
+            Rotate = camoatt.CustomCamoRotate,
+            BlendMode = camoatt.CustomCamoBlendMode,
+            Factor = camoatt.CustomBlendFactor,
+            PhongMult = camoatt.CustomCamoPhongMult,
+        }
+    end
 
     if !hasadvcamoslots then self.AdvancedCamoCache = false end -- disable this bitch if no super camo slots
     
-    return result
+    return self.AdvancedCamoCache[att]
 end

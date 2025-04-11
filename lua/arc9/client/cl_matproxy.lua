@@ -78,16 +78,29 @@ matproxy.Add({
 
 
     "$detailblendmode" "4"
-    "$detailblendfactor" "1"
+    "$detailblendfactor" "0.5"
+    "$detailscale" "1.0"
+
+    "$detailangle" 90.0
+    "$attname" eft_ak12_stock_tube
 
     ...
 
     "Arc9CustomCamoAdvanced" 
         {
             "camoTexture" $detail
+            "camoScale" $detailscale
+            "camoAngle" $detailangle
+            "camoBlendMode" $detailblendmode
+            "camoBlendFactor" $detailblendfactor
             "phonk" $phongboost
-            "attName" "eft_mag_ak_ak12_545_30"
             "color" "[0.99 0.99 0.99]"
+        }
+
+        "TextureTransform"
+        {
+            "rotateVar" "$detailangle"
+            "resultVar" "$detailtexturetransform"
         }
         
 ]]--
@@ -98,18 +111,20 @@ matproxy.Add({
         -- Store the name of the variable we want to set
         self.DetailResult = values.camotexture or ""
         self.PhongResult = values.phonk or ""
-        self.AttName = values.attname or ""
+        self.ScaleResult = values.camoscale
+        self.AngleResult = values.camoangle
+        self.BlendModeResult = values.camoblendmode
+        self.BlendFactorResult = values.camoblendfactor
+        self.AttName = mat:GetString("$attname") or values.attname or ""
+        if self.PhongResult then self.DefaultPhong = mat:GetFloat(self.PhongResult) end
+        if self.ScaleResult then self.DefaultScale = mat:GetFloat(self.ScaleResult) end
+        if self.AngleResult then self.DefaultAngle = mat:GetFloat(self.AngleResult) end
+        if self.BlendFactorResult then self.DefaultFactor = mat:GetFloat(self.BlendFactorResult) end
 
-        if self.PhongResult then
-            self.DefaultPhong = mat:GetFloat(self.PhongResult)
-        end
-
-        if self.DetailResult then
-            self.DefaultTexture = mat:GetTexture(self.DetailResult)
-        end
+        if self.DetailResult then self.DefaultTexture = mat:GetTexture(self.DetailResult) end
     end,
     bind = function( self, mat, ent )
-        local wep, camo
+        local wep, camo, camotex, camoscale, camorotate
 
         if IsValid(ent) then
             if ent.weapon and ent.weapon.ARC9 then
@@ -124,27 +139,43 @@ matproxy.Add({
 
             if wep then 
                 camo = wep.GetAdvancedCamo and wep:GetAdvancedCamo(self.AttName)
+                if camo and !camo.Texture then camo = nil end
                 if !camo and ent.CustomCamoTexture and wep.AdvancedCamoCache == false then camo = ent.CustomCamoTexture end -- fallback if regular camo slot exists
             end
         end
 
         if camo and self.DetailResult then
             -- mat:SetString(self.DetailResult, camo)
-            mat:SetTexture(self.DetailResult, camo)
-            mat:SetFloat(self.PhongResult, 0.6)
+            mat:SetTexture(self.DetailResult, camo.Texture)
+            -- if self.PhongResult then mat:SetFloat(self.PhongResult, 0.6) end
+            if self.PhongResult then 
+                mat:SetFloat(self.PhongResult, (self.DefaultPhong or 1) * (camo.PhongMult or 0.1)) 
+                if camo.PhongMult and camo.PhongMult <= 0.1 then ent.PhongMultSoLowerEnvmapPls = true end
+            end
+            if self.ScaleResult then mat:SetFloat(self.ScaleResult, (self.DefaultScale or 1) * (camo.Scale or 1)) end
+            if self.AngleResult then mat:SetFloat(self.AngleResult, (self.DefaultAngle or 0) + (camo.Rotate or 0)) end
+            if self.BlendModeResult then mat:SetFloat(self.BlendModeResult, camo.BlendMode or 4) end
+            if self.BlendFactorResult then mat:SetFloat(self.BlendFactorResult, (self.DefaultFactor or 1) * (camo.Factor or 0.5)) end
+            
             self.ShouldRecomputeIfSet = true
         elseif self.DetailResult then
             self.DefaultTexture = nil
             if !self.DefaultTexture then
                 mat:SetUndefined(self.DetailResult)
                 mat:SetFloat(self.PhongResult, self.DefaultPhong)
+                ent.PhongMultSoLowerEnvmapPls = nil
                 if self.ShouldRecomputeIfSet then
                     mat:Recompute()
                     self.ShouldRecomputeIfSet = false
                 end
             else
                 mat:SetTexture(self.DetailResult, self.DefaultTexture)
-                mat:SetFloat(self.PhongResult, self.DefaultPhong)
+
+                if self.PhongResult then mat:SetFloat(self.PhongResult, self.DefaultPhong or 0) ent.PhongMultSoLowerEnvmapPls = nil end
+                if self.ScaleResult then mat:SetFloat(self.ScaleResult, self.DefaultScale or 0) end
+                if self.AngleResult then mat:SetFloat(self.AngleResult, self.DefaultAngle or 0) end
+                if self.BlendModeResult then mat:SetFloat(self.BlendModeResult, 4) end
+                if self.BlendFactorResult then mat:SetFloat(self.BlendFactorResult, self.DefaultFactor or 0) end
             end
         end
     end
@@ -211,19 +242,20 @@ matproxy.Add( {
 			color = string.Explode(" ", string.Replace(string.Replace(values.color, "[", ""), "]", ""))
 		end
 
-		self.min = values.min || 0
-		self.max = values.max || 1
+		self.min = values.min or 0
+		self.max = values.max or 1
 		self.color = Vector(color[1], color[2], color[3])
-		--mat:SetTexture("$envmap", values.envmap || "arc9/shared/envmaps/specularity_50")
+        
+		--mat:SetTexture("$envmap", values.envmap or "arc9/shared/envmaps/specularity_50")
 		if (values.envmap != "env_cubemap") then
-		   mat:SetTexture("$envmap", values.envmap || "arc9/shared/envmaps/specularity_50")
+		   mat:SetTexture("$envmap", values.envmap or "arc9/shared/envmaps/specularity_50")
 		else
 		   mat:SetString("$envmap", "env_cubemap")
 		end
 	end,
 
 	bind = function(self, mat, ent)
-		if (!IsValid(ent)) then return end
+		if !IsValid(ent) then return end
         local getpos = entityGetPos(ent)
 		if !vectorIsEqualTol(lastPos, getpos, 1) then
 			local c = renderGetLightColor(getpos)
@@ -231,8 +263,8 @@ matproxy.Add( {
 			lastValue = mathmin(lastValue * 2, 1)
 			lastPos = getpos
 		end
-
 		ent.m_Arc9EnvMapTint = lerp(10 * RealFrameTime(), ent.m_Arc9EnvMapTint || 0, lastValue)
+        if ent.PhongMultSoLowerEnvmapPls then ent.m_Arc9EnvMapTint = ent.m_Arc9EnvMapTint * 0.3 end
 		mat:SetVector("$envmaptint", self.color * lerp(ent.m_Arc9EnvMapTint, self.min, self.max))
 	end
 })
