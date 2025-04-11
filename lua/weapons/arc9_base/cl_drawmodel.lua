@@ -261,7 +261,7 @@ function SWEP:GetAdvancedCamo(att)
         }
     end
 
-    if !hasadvcamoslots then self.AdvancedCamoCache = false end -- disable this bitch if no super camo slots
+    if !hasadvcamoslots then self.AdvancedCamoCache = false return end -- disable this bitch if no super camo slots
     
     return self.AdvancedCamoCache[att]
 end
