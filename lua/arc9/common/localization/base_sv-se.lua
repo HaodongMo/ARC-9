@@ -50,7 +50,7 @@ L["ammo.alyxgun"] = "Alyxs Vapenammo"
 
 /////////////////////////////////////// HUD
 L["hud.version"] = "ARCTIC SYSTEMS HUD v"
-L["hud.jammed"] = "ELDAVBROTT!"
+L["hud.jammed"] = "ELDAVBR.!"
 L["hud.therm_deco"] = "ELDRÖR TEMP"
 
 L["hud.firemode.single"] = "ENKEL"

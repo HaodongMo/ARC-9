@@ -1265,14 +1265,21 @@ function ARC9.DrawHUD()
             surface.SetMaterial(hud_bigblur)
             surface.DrawTexturedRect(-32, 0, 300, 20 * #hints)
 
+			local lang = ARC9:GetLanguage()
             for _, hint in ipairs(hints) do
+				local hintcaps = hint.action
+			
+				if lang == "ru" then
+					hintcaps = ARC9:UperCyrillic(hint.action)
+				end
+
                 local strreturn = 0
                 surface.SetFont("ARC9_16_Unscaled")
                 surface.SetDrawColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
                 surface.SetTextColor(ARC9.GetHUDColor("shadow", 100 * hint_alpha))
                 surface.SetTextPos(hx + 4, hy + 2)
                 strreturn = CreateControllerKeyLine( {x = hx + 2, y = hy + 1, size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
-                CreateControllerKeyLine( {x = hx + 4 + math.max(strreturn, 48), y = hy + 2, size = 16, font = "ARC9_16_Unscaled" }, " " .. hint.action )
+                CreateControllerKeyLine( {x = hx + 4 + math.max(strreturn, 48), y = hy + 2, size = 16, font = "ARC9_16_Unscaled" }, " " .. hintcaps )
 
 
                 surface.SetFont("ARC9_16_Unscaled")
@@ -1280,7 +1287,7 @@ function ARC9.DrawHUD()
                 surface.SetTextColor(ARC9.GetHUDColor("fg", 200 * hint_alpha))
                 surface.SetTextPos(hx, hy)
                 strreturn = CreateControllerKeyLine( {x = hx, y = hy, size = 16, font = "ARC9_16_Unscaled" }, { hint.glyph, SIZE }, (hint.glyph2 and " " or ""), (hint.glyph2 and { hint.glyph2, SIZE } or "") )
-                CreateControllerKeyLine( {x = hx + math.max(strreturn, 48), y = hy, size = 16, font = "ARC9_16_Unscaled" }, " " .. hint.action )
+                CreateControllerKeyLine( {x = hx + math.max(strreturn, 48), y = hy, size = 16, font = "ARC9_16_Unscaled" }, " " .. hintcaps )
 
                 hy = hy + 22
             end
