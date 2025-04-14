@@ -15,7 +15,7 @@ local Lerp = Lerp
 
 local cached_children = {}
 
-local function recursive_get_children(ent, bone, bones, endbone)//evil recursive children hack (works only one time for each model)
+local function recursive_get_children(ent, bone, bones, endbone) -- evil recursive children hack (works only one time for each model)
     local bone = isstring(bone) and ent:LookupBone(bone) or bone
 
     if not bone or isstring(bone) or bone == -1 then return end
@@ -36,7 +36,7 @@ local function get_children(ent, bone, endbone)
     local bones = {}
 
     local mdl = ent:GetModel()
-    if cached_children[mdl] and cached_children[mdl][bone] then return cached_children[mdl][bone] end//cache that shit or else...........
+    if cached_children[mdl] and cached_children[mdl][bone] then return cached_children[mdl][bone] end -- cache that shit or else...........
 
     recursive_get_children(ent, bone, bones, endbone)
 
@@ -57,15 +57,14 @@ local function bone_apply_matrix(ent, bone, new_matrix, endbone)
     if not inv_matrix then return end
 
     local children = get_children(ent, bone, endbone)
-    //print(bone, ent:GetBoneName(bone))
-    //PrintTable(children)
+    
     local translate = (new_matrix * inv_matrix)
     local id
     for i = 1,#children do
         id = children[i]
         local mat = ent:GetBoneMatrix(id)
         if not mat then continue end
-        ent:SetBoneMatrix(id, translate * mat)//WTF
+        ent:SetBoneMatrix(id, translate * mat) -- WTF
     end
 
     ent:SetBoneMatrix(bone, new_matrix)
@@ -402,7 +401,7 @@ function SWEP:DoTPIK()
         ply_r_forearm_pos, ply_r_forearm_angle = LocalToWorld(self.TPIKCache.r_forearm_pos, self.TPIKCache.ply_r_forearm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
     end
 
-    //play rain world!!!
+    -- play rain world!!!
 
     -- if ARC9.Dev(2) then
         -- debugoverlay.Line(ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1)
@@ -413,7 +412,7 @@ function SWEP:DoTPIK()
     ply_r_upperarm_matrix:SetAngles(ply_r_upperarm_angle)
     ply_r_forearm_matrix:SetTranslation(ply_r_upperarm_pos)
     ply_r_forearm_matrix:SetAngles(ply_r_forearm_angle)
-    ply_r_hand_matrix:SetTranslation(ply_r_forearm_pos)//weird shit with left hand??? idk cant figure, here's a bandaid
+    ply_r_hand_matrix:SetTranslation(ply_r_forearm_pos) -- weird shit with left hand??? idk cant figure, here's a bandaid
 
     bone_apply_matrix(ply, ply_r_upperarm_index, ply_r_upperarm_matrix, ply_r_forearm_index)
     bone_apply_matrix(ply, ply_r_forearm_index, ply_r_forearm_matrix, ply_r_hand_index)
