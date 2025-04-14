@@ -13,6 +13,63 @@ local someang = Angle(3, -3, -8)
 local forcednotpik = ARC9.NoTPIK
 local Lerp = Lerp
 
+local cached_children = {}
+
+local function recursive_get_children(ent, bone, bones, endbone) -- evil recursive children hack (works only one time for each model)
+    local bone = isstring(bone) and ent:LookupBone(bone) or bone
+
+    if not bone or isstring(bone) or bone == -1 then return end
+    
+    local children = ent:GetChildBones(bone)
+    if #children > 0 then
+        local id
+        for i = 1,#children do
+            id = children[i]
+            if id == endbone then continue end
+            recursive_get_children(ent, id, bones, endbone)
+            table.insert(bones, id)
+        end
+    end
+end
+
+local function get_children(ent, bone, endbone)
+    local bones = {}
+
+    local mdl = ent:GetModel()
+    if cached_children[mdl] and cached_children[mdl][bone] then return cached_children[mdl][bone] end -- cache that shit or else...........
+
+    recursive_get_children(ent, bone, bones, endbone)
+
+    cached_children[mdl] = cached_children[mdl] or {}
+    cached_children[mdl][bone] = bones
+
+    return bones
+end
+
+local function bone_apply_matrix(ent, bone, new_matrix, endbone)
+    local bone = isstring(bone) and ent:LookupBone(bone) or bone
+
+    if not bone or isstring(bone) or bone == -1 then return end
+
+    local matrix = ent:GetBoneMatrix(bone)
+    if not matrix then return end
+    local inv_matrix = matrix:GetInverse()
+    if not inv_matrix then return end
+
+    local children = get_children(ent, bone, endbone)
+    
+    local translate = (new_matrix * inv_matrix)
+    local id
+    for i = 1,#children do
+        id = children[i]
+        local mat = ent:GetBoneMatrix(id)
+        if not mat then continue end
+        ent:SetBoneMatrix(id, translate * mat) -- WTF
+    end
+
+    ent:SetBoneMatrix(bone, new_matrix)
+end
+
 local function SetTPIKOffset(self, wm, owner, lp)
     local pos, ang = Vector(self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos), Angle(self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) -- how come you don't have tpikpos in 2025
     local sightdelta = self:GetSightAmount()
@@ -305,46 +362,25 @@ function SWEP:DoTPIK()
         ply:SetBonePosition(ply_boneindex, bonepos, boneang)
     end
 
-    local ply_l_shoulder_index = ply:LookupBone("ValveBiped.Bip01_L_UpperArm")
-    local ply_r_shoulder_index = ply:LookupBone("ValveBiped.Bip01_R_UpperArm")
-    local ply_l_elbow_index = ply:LookupBone("ValveBiped.Bip01_L_Forearm")
-    local ply_r_elbow_index = ply:LookupBone("ValveBiped.Bip01_R_Forearm")
+    local ply_l_upperarm_index = ply:LookupBone("ValveBiped.Bip01_L_UpperArm")
+    local ply_r_upperarm_index = ply:LookupBone("ValveBiped.Bip01_R_UpperArm")
+    local ply_l_forearm_index = ply:LookupBone("ValveBiped.Bip01_L_Forearm")
+    local ply_r_forearm_index = ply:LookupBone("ValveBiped.Bip01_R_Forearm")
     local ply_l_hand_index = ply:LookupBone("ValveBiped.Bip01_L_Hand")
     local ply_r_hand_index = ply:LookupBone("ValveBiped.Bip01_R_Hand")
 
-    local ply_l_HELPERelbow_index = ply:LookupBone("ValveBiped.Bip01_L_Elbow")
-    if ply_l_HELPERelbow_index and !ply:BoneHasFlag(ply_l_HELPERelbow_index, 524032) then ply_l_HELPERelbow_index = nil end -- ply:GetBoneName(ply_l_HELPERelbow_index) == "__INVALIDBONE__" can work too, same performance hit
-
-    local ply_l_bicep_index = ply:LookupBone("ValveBiped.Bip01_L_Bicep")
-    local ply_l_ulna_index = ply:LookupBone("ValveBiped.Bip01_L_Ulna") or ply:LookupBone("HumanLForearm2") -- THANK YOU MAl0 FOR NOT RENAMING YOUR BONES
-    local ply_l_wrist_index = ply:LookupBone("ValveBiped.Bip01_L_Wrist") or ply:LookupBone("HumanLForearm3")
-
-    local ply_r_HELPERelbow_index = ply:LookupBone("ValveBiped.Bip01_R_Elbow")
-    if ply_r_HELPERelbow_index and !ply:BoneHasFlag(ply_r_HELPERelbow_index, 524032) then ply_r_HELPERelbow_index = nil end
-
-    local ply_r_bicep_index = ply:LookupBone("ValveBiped.Bip01_R_Bicep")
-    local ply_r_ulna_index = ply:LookupBone("ValveBiped.Bip01_R_Ulna") or ply:LookupBone("HumanRForearm2")
-    local ply_r_wrist_index = ply:LookupBone("ValveBiped.Bip01_R_Wrist") or ply:LookupBone("HumanRForearm3")
-
-    if ply_l_bicep_index and !ply:BoneHasFlag(ply_l_bicep_index, 524032) then ply_l_bicep_index = nil end
-    if ply_l_ulna_index and !ply:BoneHasFlag(ply_l_ulna_index, 524032) then ply_l_ulna_index = nil end
-    if ply_r_bicep_index and !ply:BoneHasFlag(ply_r_bicep_index, 524032) then ply_r_bicep_index = nil end
-    if ply_r_ulna_index and !ply:BoneHasFlag(ply_r_ulna_index, 524032) then ply_r_ulna_index = nil end
-    if ply_l_wrist_index and !ply:BoneHasFlag(ply_l_wrist_index, 524032) then ply_l_wrist_index = nil end
-    if ply_r_wrist_index and !ply:BoneHasFlag(ply_r_wrist_index, 524032) then ply_r_wrist_index = nil end
-
-    if !ply_l_shoulder_index then return end
-    if !ply_r_shoulder_index then return end
-    if !ply_l_elbow_index then return end
-    if !ply_r_elbow_index then return end
+    if !ply_l_upperarm_index then return end
+    if !ply_r_upperarm_index then return end
+    if !ply_l_forearm_index then return end
+    if !ply_r_forearm_index then return end
     if !ply_l_hand_index then return end
     if !ply_r_hand_index then return end
 
-    local ply_r_shoulder_matrix = ply:GetBoneMatrix(ply_r_shoulder_index)
-    local ply_r_elbow_matrix = ply:GetBoneMatrix(ply_r_elbow_index)
+    local ply_r_upperarm_matrix = ply:GetBoneMatrix(ply_r_upperarm_index)
+    local ply_r_forearm_matrix = ply:GetBoneMatrix(ply_r_forearm_index)
     local ply_r_hand_matrix = ply:GetBoneMatrix(ply_r_hand_index)
 
-    local limblength = ply:BoneLength(ply_l_elbow_index)
+    local limblength = ply:BoneLength(ply_l_forearm_index)
     if !limblength or limblength == 0 then limblength = 12 end
 
     local r_upperarm_length = limblength
@@ -352,119 +388,72 @@ function SWEP:DoTPIK()
     local l_upperarm_length = limblength
     local l_forearm_length = limblength
 
-    local ply_r_upperarm_pos, ply_r_forearm_pos
+    local ply_r_upperarm_pos, ply_r_forearm_pos, ply_r_upperarm_angle, ply_r_forearm_angle
 
     if shouldfulltpik then
-        ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
+        ply_r_upperarm_pos, ply_r_forearm_pos, ply_r_upperarm_angle, ply_r_forearm_angle = self:Solve2PartIK(ply_r_upperarm_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -1.3, ply:EyeAngles())
         self.LastTPIKTime = CurTime()
 
-        self.TPIKCache.r_upperarm_pos = WorldToLocal(ply_r_upperarm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
-        self.TPIKCache.r_forearm_pos = WorldToLocal(ply_r_forearm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        self.TPIKCache.r_upperarm_pos, self.TPIKCache.ply_r_upperarm_angle = WorldToLocal(ply_r_upperarm_pos, ply_r_upperarm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
+        self.TPIKCache.r_forearm_pos, self.TPIKCache.ply_r_forearm_angle = WorldToLocal(ply_r_forearm_pos, ply_r_forearm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
     else
-        ply_r_upperarm_pos = LocalToWorld(self.TPIKCache.r_upperarm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
-        ply_r_forearm_pos = LocalToWorld(self.TPIKCache.r_forearm_pos, angle_zero, ply_r_shoulder_matrix:GetTranslation(), ply_r_shoulder_matrix:GetAngles())
+        ply_r_upperarm_pos, ply_r_upperarm_angle = LocalToWorld(self.TPIKCache.r_upperarm_pos, self.TPIKCache.ply_r_upperarm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
+        ply_r_forearm_pos, ply_r_forearm_angle = LocalToWorld(self.TPIKCache.r_forearm_pos, self.TPIKCache.ply_r_forearm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
     end
 
+    -- play rain world!!!
+
     -- if ARC9.Dev(2) then
-        -- debugoverlay.Line(ply_r_shoulder_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1)
+        -- debugoverlay.Line(ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_pos, 0.1)
         -- debugoverlay.Line(ply_r_upperarm_pos, ply_r_forearm_pos, 0.1)
         -- debugoverlay.Line(ply_r_forearm_pos, ply_r_hand_matrix:GetTranslation(), 0.1)
     -- end
-    -- ply_r_shoulder_matrix:SetTranslation(ply_r_upperarm_pos)
-    ply_r_elbow_matrix:SetTranslation(ply_r_upperarm_pos)
 
-    local ply_r_shoulder_angle = (ply_r_upperarm_pos - ply_r_shoulder_matrix:GetTranslation()):GetNormalized():Angle()
-    ply_r_shoulder_angle.r = 180
-    ply_r_shoulder_matrix:SetAngles(ply_r_shoulder_angle)
+    ply_r_upperarm_matrix:SetAngles(ply_r_upperarm_angle)
+    ply_r_forearm_matrix:SetTranslation(ply_r_upperarm_pos)
+    ply_r_forearm_matrix:SetAngles(ply_r_forearm_angle)
+    ply_r_hand_matrix:SetTranslation(ply_r_forearm_pos) -- weird shit with left hand??? idk cant figure, here's a bandaid
 
-    local ply_r_elbow_angle = (ply_r_forearm_pos - ply_r_upperarm_pos):GetNormalized():Angle()
-    ply_r_elbow_angle.r = -90
-    ply_r_elbow_matrix:SetAngles(ply_r_elbow_angle)
-
-    ply:SetBoneMatrix(ply_r_elbow_index, ply_r_elbow_matrix)
-    ply:SetBoneMatrix(ply_r_shoulder_index, ply_r_shoulder_matrix)
+    bone_apply_matrix(ply, ply_r_upperarm_index, ply_r_upperarm_matrix, ply_r_forearm_index)
+    bone_apply_matrix(ply, ply_r_forearm_index, ply_r_forearm_matrix, ply_r_hand_index)
+    bone_apply_matrix(ply, ply_r_hand_index, ply_r_hand_matrix)
 
     if nolefthand then return end
 
-    local ply_l_shoulder_matrix = ply:GetBoneMatrix(ply_l_shoulder_index)
-    local ply_l_elbow_matrix = ply:GetBoneMatrix(ply_l_elbow_index)
+    local ply_l_upperarm_matrix = ply:GetBoneMatrix(ply_l_upperarm_index)
+    local ply_l_forearm_matrix = ply:GetBoneMatrix(ply_l_forearm_index)
     local ply_l_hand_matrix = ply:GetBoneMatrix(ply_l_hand_index)
-
-    local ply_l_HELPERelbow_matrix = ply_l_HELPERelbow_index and ply:GetBoneMatrix(ply_l_HELPERelbow_index)
-    local ply_l_bicep_matrix = ply_l_bicep_index and ply:GetBoneMatrix(ply_l_bicep_index)
-    local ply_l_ulna_matrix = ply_l_ulna_index and ply:GetBoneMatrix(ply_l_ulna_index)
-    local ply_l_wrist_matrix = ply_l_wrist_index and ply:GetBoneMatrix(ply_l_wrist_index)
-
-    local ply_r_HELPERelbow_matrix = ply_r_HELPERelbow_index and ply:GetBoneMatrix(ply_r_HELPERelbow_index)
-    local ply_r_bicep_matrix = ply_r_bicep_index and ply:GetBoneMatrix(ply_r_bicep_index)
-    local ply_r_ulna_matrix = ply_r_ulna_index and ply:GetBoneMatrix(ply_r_ulna_index)
-    local ply_r_wrist_matrix = ply_r_wrist_index and ply:GetBoneMatrix(ply_r_wrist_index)
 
     -- local ply_r_upperarm_pos = ply:LocalToWorld(self.TPIKCache.r_upperarm_pos)
     -- local ply_r_forearm_pos = ply:LocalToWorld(self.TPIKCache.r_forearm_pos)
 
     -- if shouldfulltpik then
-    --     ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_shoulder_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
+    --     ply_r_upperarm_pos, ply_r_forearm_pos = self:Solve2PartIK(ply_r_upperarm_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -35)
     --     self.LastTPIKTime = CurTime()
 
     --     self.TPIKCache.r_upperarm_pos = ply:WorldToLocal(ply_r_upperarm_pos)
     --     self.TPIKCache.r_forearm_pos = ply:WorldToLocal(ply_r_forearm_pos)
     -- end
 
-    local ply_l_upperarm_pos, ply_l_forearm_pos
+    local ply_l_upperarm_pos, ply_l_forearm_pos, ply_l_upperarm_angle, ply_l_forearm_angle
 
-    if shouldfulltpik or !(self.TPIKCache.l_upperarm_pos and self.TPIKCache.l_forearm_pos) then
-        ply_l_upperarm_pos, ply_l_forearm_pos = self:Solve2PartIK(ply_l_shoulder_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 35)
+    if shouldfulltpik or !(self.TPIKCache.l_upperarm_pos and self.TPIKCache.l_forearm_pos and self.TPIKCache.ply_l_upperarm_angle and self.TPIKCache.ply_l_forearm_angle) then
+        ply_l_upperarm_pos, ply_l_forearm_pos, ply_l_upperarm_angle, ply_l_forearm_angle = self:Solve2PartIK(ply_l_upperarm_matrix:GetTranslation(), ply_l_hand_matrix:GetTranslation(), l_upperarm_length, l_forearm_length, 1, ply:EyeAngles())
 
         self.LastTPIKTime = CurTime()
-        self.TPIKCache.l_upperarm_pos = WorldToLocal(ply_l_upperarm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
-        self.TPIKCache.l_forearm_pos = WorldToLocal(ply_l_forearm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        self.TPIKCache.l_upperarm_pos, self.TPIKCache.ply_l_upperarm_angle = WorldToLocal(ply_l_upperarm_pos, ply_l_upperarm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
+        self.TPIKCache.l_forearm_pos, self.TPIKCache.ply_l_forearm_angle = WorldToLocal(ply_l_forearm_pos, ply_l_forearm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
     else
-        ply_l_upperarm_pos = LocalToWorld(self.TPIKCache.l_upperarm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
-        ply_l_forearm_pos = LocalToWorld(self.TPIKCache.l_forearm_pos, angle_zero, ply_l_shoulder_matrix:GetTranslation(), ply_l_shoulder_matrix:GetAngles())
+        ply_l_upperarm_pos, ply_l_upperarm_angle = LocalToWorld(self.TPIKCache.l_upperarm_pos, self.TPIKCache.ply_l_upperarm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
+        ply_l_forearm_pos, ply_l_forearm_angle = LocalToWorld(self.TPIKCache.l_forearm_pos, self.TPIKCache.ply_l_forearm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
     end
 
-    -- if ARC9.Dev(2) then
-        -- debugoverlay.Line(ply_l_shoulder_matrix:GetTranslation(), ply_l_upperarm_pos, 0.1, Color(255, 255, 255), true)
-        -- debugoverlay.Line(ply_l_upperarm_pos, ply_l_forearm_pos, 0.1, Color(255, 255, 255), true)
-        -- debugoverlay.Line(ply_l_forearm_pos, ply_l_hand_matrix:GetTranslation(), 0.1, Color(255, 255, 255), true)
-    -- end
-
-    -- ply_l_shoulder_matrix:SetTranslation(ply_l_upperarm_pos)
+    ply_l_upperarm_matrix:SetAngles(ply_l_upperarm_angle)
+    ply_l_forearm_matrix:SetTranslation(ply_l_upperarm_pos)
+    ply_l_forearm_matrix:SetAngles(ply_l_forearm_angle)
     ply_l_hand_matrix:SetTranslation(ply_l_forearm_pos)
-    ply_l_elbow_matrix:SetTranslation(ply_l_upperarm_pos)
 
-    if ply_l_HELPERelbow_matrix then ply_l_HELPERelbow_matrix:SetTranslation(ply_l_forearm_pos) end
-    if ply_l_bicep_matrix then ply_l_bicep_matrix:SetTranslation(ply_l_forearm_pos) end
-    if ply_l_ulna_matrix then ply_l_ulna_matrix:SetTranslation(ply_l_forearm_pos) end
-    if ply_l_wrist_matrix then ply_l_wrist_matrix:SetTranslation(ply_l_forearm_pos) end
-
-    if ply_r_HELPERelbow_matrix then ply_r_HELPERelbow_matrix:SetTranslation(ply_r_forearm_pos) end
-    if ply_r_bicep_matrix then ply_r_bicep_matrix:SetTranslation(ply_r_forearm_pos) end
-    if ply_r_ulna_matrix then ply_r_ulna_matrix:SetTranslation(ply_r_forearm_pos) end
-    if ply_r_wrist_matrix then ply_r_wrist_matrix:SetTranslation(ply_r_forearm_pos) end
-
-    -- print(ply:GetBoneName(ply_l_ulna_index), ply:GetBoneName(ply_l_wrist_index))
-
-    local ply_l_shoulder_angle = (ply_l_upperarm_pos - ply_l_shoulder_matrix:GetTranslation()):GetNormalized():Angle()
-    ply_l_shoulder_angle.r = -45
-    ply_l_shoulder_matrix:SetAngles(ply_l_shoulder_angle)
-
-    local ply_l_elbow_angle = (ply_l_forearm_pos - ply_l_upperarm_pos):GetNormalized():Angle()
-    ply_l_elbow_angle.r = -90
-    ply_l_elbow_matrix:SetAngles(ply_l_elbow_angle)
-
-    if ply_l_HELPERelbow_index then ply:SetBoneMatrix(ply_l_HELPERelbow_index, ply_l_elbow_matrix) end
-    if ply_l_bicep_index then ply:SetBoneMatrix(ply_l_bicep_index, ply_l_shoulder_matrix) end
-    if ply_l_ulna_index then ply:SetBoneMatrix(ply_l_ulna_index, ply_l_hand_matrix) end
-    if ply_l_wrist_index then ply:SetBoneMatrix(ply_l_wrist_index, ply_l_hand_matrix) end
-
-    if ply_r_HELPERelbow_index then ply:SetBoneMatrix(ply_r_HELPERelbow_index, ply_r_elbow_matrix) end
-    if ply_r_bicep_index then ply:SetBoneMatrix(ply_r_bicep_index, ply_r_shoulder_matrix) end
-    if ply_r_ulna_index then ply:SetBoneMatrix(ply_r_ulna_index, ply_r_hand_matrix) end
-    if ply_r_wrist_index then ply:SetBoneMatrix(ply_r_wrist_index, ply_r_hand_matrix) end
-
-    ply:SetBoneMatrix(ply_l_hand_index, ply_l_hand_matrix)
-    ply:SetBoneMatrix(ply_l_elbow_index, ply_l_elbow_matrix)
-    ply:SetBoneMatrix(ply_l_shoulder_index, ply_l_shoulder_matrix)
+    bone_apply_matrix(ply, ply_l_upperarm_index, ply_l_upperarm_matrix, ply_l_forearm_index)
+    bone_apply_matrix(ply, ply_l_forearm_index, ply_l_forearm_matrix, ply_l_hand_index)
+    bone_apply_matrix(ply, ply_l_hand_index, ply_l_hand_matrix)
 end

@@ -151,8 +151,8 @@ ARC9.RHIKHandBones = {
 }
 
 ARC9.TPIKBones = {
-    "ValveBiped.Bip01_L_Wrist",
-    "ValveBiped.Bip01_L_Ulna",
+    //"ValveBiped.Bip01_L_Wrist",
+    //"ValveBiped.Bip01_L_Ulna", --//better to not use these!
     "ValveBiped.Bip01_L_Hand",
     "ValveBiped.Bip01_L_Finger4",
     "ValveBiped.Bip01_L_Finger41",
@@ -169,8 +169,8 @@ ARC9.TPIKBones = {
     "ValveBiped.Bip01_L_Finger0",
     "ValveBiped.Bip01_L_Finger01",
     "ValveBiped.Bip01_L_Finger02",
-    "ValveBiped.Bip01_R_Wrist",
-    "ValveBiped.Bip01_R_Ulna",
+    //"ValveBiped.Bip01_R_Wrist",
+    //"ValveBiped.Bip01_R_Ulna", --//better to not use these!
     "ValveBiped.Bip01_R_Hand",
     "ValveBiped.Bip01_R_Finger4",
     "ValveBiped.Bip01_R_Finger41",
