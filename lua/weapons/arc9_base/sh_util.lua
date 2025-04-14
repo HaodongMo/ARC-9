@@ -97,39 +97,30 @@ end
 -- rotation: rotates??? prevents chicken winging
 function SWEP:Solve2PartIK(start_p, end_p, length0, length1, sign, angs)
     local length2 = (start_p - end_p):Length()
-
-    if length0 + length1 < length2 then
-        local add = length2 - length1 - length0
-        --length0 = length0 + add * length0 / (length2 - add)
-        --length1 = length1 + add * length1 / (length2 - add)
-    end
-
-    //local prev_ang0 = Quaternion():SetMatrix(mat0)
-    //local prev_ang1 = Quaternion():SetMatrix(mat1)
-
     local cosAngle0 = math.Clamp(((length2 * length2) + (length0 * length0) - (length1 * length1)) / (2 * length2 * length0), -1, 1)
     local angle0 = -math.deg(math.acos(cosAngle0))
     local cosAngle1 = math.Clamp(((length1 * length1) + (length0 * length0) - (length2 * length2)) / (2 * length1 * length0), -1, 1)
     local angle1 = -math.deg(math.acos(cosAngle1))
-    local diff = end_p - start_p-- + LocalPlayer():EyeAngles():Forward() * 555
+
+    local diff = end_p - start_p
     diff:Normalize()
+
     local angle2 = math.deg(math.atan2(-math.sqrt(diff.x * diff.x + diff.y * diff.y), diff.z)) - 90
     local angle3 = -math.deg(math.atan2(diff.x, diff.y)) - 90
     angle3 = math.NormalizeAngle(angle3)
 
-    local diff2 = -vector_up:Angle()//-torsomat:GetAngles():Forward()
-    --debugoverlay.Line(start_p,start_p + diff2 * 10,0.1,color_white,true)
-    --debugoverlay.Line(start_p,start_p + diff * 10,0.1,color_red,true)
+    local diff2 = -vector_up:Angle()
+
     local axis = diff * 1
     axis:Normalize()
     
-    local torsoang = vector_up:Angle()//torsomat:GetAngles()
+    local torsoang = vector_up:Angle()
 
     local Joint0 = Angle(angle0 + angle2, angle3, 0)
 
     local asdot = -vector_up:Dot(torsoang:Up())
     local diffa = math.deg(math.acos(asdot)) + (sign < 0 and -0 or 0)
-    local diffa2 = 90 + (sign > 0 and -30 or 30)--math.deg(math.acos(asdot))
+    local diffa2 = 90 + (sign > 0 and -30 or 30)
     
     local tors = torsoang:Up()
     local torsoright = -math.deg(math.atan2(tors.x, tors.y)) - 120 - 60 * sign
@@ -137,24 +128,15 @@ function SWEP:Solve2PartIK(start_p, end_p, length0, length1, sign, angs)
     
     Joint0:RotateAroundAxis(Joint0:Forward(), diffa2)
     Joint0:RotateAroundAxis(axis, angle3 - torsoright)
-    //prev_ang0:SetAngle(Joint0)
     local ang1 = -(-Joint0)
 
-    --debugoverlay.Line(start_p,start_p + -diff:Angle():Up() * 10,0.1,color_black,true)
-    --debugoverlay.Line(start_p,start_p + torsoang:Up() * sign * 10,0.1,color_red,true)
-    
-    --render.DrawLine(start_p,start_p + -diff:Angle():Up() * 10,color_black, true)
-    --render.DrawLine(start_p,start_p + torsoang:Up() * sign * 10,color_red, true)
-
     local Joint0 = Joint0:Forward() * length0
-    //local diffa2 = ang[3] + 90
 
     local Joint1 = Angle(angle0 + angle2 + 180 + angle1, angle3, 0)
-    Joint1:RotateAroundAxis(Joint1:Forward(), diffa2)//+ ang[3] / 4 + 60)
+    Joint1:RotateAroundAxis(Joint1:Forward(), diffa2)
     Joint1:RotateAroundAxis(axis, angle3 - torsoright)
-    //prev_ang1:SetAngle(Joint1)
-    --prev_ang1:SetDirection(Joint1:Forward(), torsomat:GetAngles():Up() * 1)
     local ang2 = -(-Joint1)
+
     local Joint1 = Joint1:Forward() * length1
 
     local Joint0_F = start_p + Joint0
@@ -162,8 +144,8 @@ function SWEP:Solve2PartIK(start_p, end_p, length0, length1, sign, angs)
 
     return Joint0_F, Joint1_F, ang1, ang2
 end
--- returns two vectors
--- upper arm and forearm
+-- returns two vectors and then two angles
+-- upper arm and forearm respectively
 
 function SWEP:RotateAroundPoint(pos, ang, point, offset, offset_ang)
     local v = Vector(0, 0, 0)
