@@ -7,6 +7,8 @@ local arc9_tpik_framerate = GetConVar("arc9_tpik_framerate")
 local activeposvector = Vector(-1, -1, 1)
 local peekvector = Vector(0, 2, 4)
 local someangforsights = Angle(3, -3, -8)
+local nearwallpos = Vector(1, 0, 18)
+local nearwallang = Angle(-70, 0, 0)
 
 local PlayerReanimsOffsets = {
     default = {
@@ -162,7 +164,7 @@ local function SetTPIKOffset(self, wm, owner, lp)
         if HasCustomOffset("crouch") then pos:Add(GetCustomOffset("crouch") * crouchdelta) end
     end
 
-    do -- passive holdtype fix
+    do -- holdtype offsets
         self.TPIKSmoothPassiveHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothPassiveHoldType or 0, ht == "passive" and 1 or 0)
         pos:Add(GetCustomOffset("passive") * self.TPIKSmoothPassiveHoldType)
         self.TPIKSmoothNormalHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothNormalHoldType or 0, ht == "normal" and 1 or 0)
@@ -175,6 +177,16 @@ local function SetTPIKOffset(self, wm, owner, lp)
         end
 
         if HasCustomOffset("active") then pos:Add(GetCustomOffset("active")) end
+    end
+
+    do -- nearwalling
+        local nearwalldelta = self:GetNearWallAmount()
+
+        if nearwalldelta > 0 then
+            nearwalldelta = math.ease.InOutQuad(nearwalldelta) - self.CustomizeDelta
+            pos:Add(nearwallpos * nearwalldelta)
+            ang:Add(nearwallang * nearwalldelta)
+        end
     end
 
     if !self.NoTPIKVMPos then -- and ht != "passive"
