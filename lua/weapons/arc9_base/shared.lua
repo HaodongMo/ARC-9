@@ -110,6 +110,7 @@ SWEP.WorldModelOffset = nil
 --     TPIKPosSightOffset = Vector(0, 0, 0), -- ironsights offset, disable NoTPIKVMPos
 --     TPIKPosReloadOffset = Vector(0, 0, 0), -- reload offset if arms stretching too much during reloads
 --     TPIKAngReloadOffset = Angle(0, 0, 0),
+--     TPIKHolsterOffset = Angle(0, 0, 0), -- for passive/normal holdtype
 
 --     TPIKPosAlternative = Vector(0, 0, 0) -- enabled with SWEP/ATT.TPIKAlternativePos = true
 -- 

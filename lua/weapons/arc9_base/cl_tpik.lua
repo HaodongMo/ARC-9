@@ -4,12 +4,69 @@ local arc9_tpik = GetConVar("arc9_tpik")
 local arc9_tpik_others = GetConVar("arc9_tpik_others")
 local arc9_tpik_framerate = GetConVar("arc9_tpik_framerate")
 
-local somevector3 = Vector(-1, -1, 1)
+local activeposvector = Vector(-1, -1, 1)
 local peekvector = Vector(0, 2, 4)
-local crouchvector = Vector(-3, 0, 2)
-local custvector = Vector(-5, 0, -5)
-local passiveholdtypefixvector = Vector(-6, -1, -4)
-local someang = Angle(3, -3, -8)
+local someangforsights = Angle(3, -3, -8)
+
+local PlayerReanimsOffsets = {
+    default = {
+        passive = { Pos = Vector(-8, -1, -3) },
+        normal = { Pos = Vector(-8, -1, 0) },
+        crouch = { Pos = Vector(-3, 0, 2) },
+        customization = { Pos = Vector(-5, 0, -5) }
+    },
+
+    csgo = {
+        crouch = { Pos = Vector(-2, -3, 1) },
+        revolver = { Pos = Vector(4.5, -3, -6) },
+    },
+
+    l4d = {
+        passive = { Pos = Vector(-4, -1, -1) },
+        normal = { Pos = Vector(-7, -1, 0) },
+        crouch = { Pos = Vector(-5, 0, 1) },
+        revolver = { Pos = Vector(3, -1, 1) },
+    },
+
+    payday2 = {
+        active = { Pos = Vector(-1, -2, 0) },
+        passive = { Pos = Vector(-2, 1, 2) },
+        normal = { Pos = Vector(-7, 1, 0) },
+        crouch = { Pos = Vector(-1, 0, 1) },
+        revolver = { Pos = Vector(3.6, 2, 1) },
+    },
+}
+
+local playeranimset = "default"
+
+local xdrlist = { -- idk what else mods have custom anims
+    ["3267580122"] = "payday2",
+    ["2916762576"] = "l4d",
+    ["2261825706"] = "csgo",
+}
+
+for _, addon in pairs(engine.GetAddons()) do
+    if addon.mounted and xdrlist[tostring(addon.wsid)] then
+        playeranimset = xdrlist[tostring(addon.wsid)]
+    end
+end
+
+local function HasCustomOffset(holdtype)
+    local animsetlocal = playeranimset
+    if !PlayerReanimsOffsets[animsetlocal] or !PlayerReanimsOffsets[animsetlocal][holdtype] then animsetlocal = "default" end
+
+    if PlayerReanimsOffsets[animsetlocal] then
+        return PlayerReanimsOffsets[animsetlocal][holdtype]
+    end
+
+    return false
+end
+
+local function GetCustomOffset(holdtype)
+    return HasCustomOffset(holdtype) and HasCustomOffset(holdtype).Pos
+end
+
+
 local forcednotpik = ARC9.NoTPIK
 local Lerp = Lerp
 
@@ -82,7 +139,7 @@ local function SetTPIKOffset(self, wm, owner, lp)
         if sightdelta > 0 then -- sight offset
             local sightdelta2 = math.ease.InOutCubic(sightdelta)
             pos:Add(self.WorldModelOffset.TPIKPosSightOffset * sightdelta2)
-            ang:Add(someang * math.sin(3.1415926 * math.ease.InOutSine(sightdelta)))
+            ang:Add(someangforsights * math.sin(3.1415926 * math.ease.InOutSine(sightdelta)))
         end
 
         if self.WorldModelOffset.TPIKPosReloadOffset then
@@ -102,21 +159,31 @@ local function SetTPIKOffset(self, wm, owner, lp)
         if ht == "revolver" then crouchdelta = crouchdelta * -2
         elseif ht == "ar2" or ht == "smg" then crouchdelta = crouchdelta * -1 end
         if prone and owner:IsProne() then crouchdelta = 1 end
-        pos:Add(crouchvector * crouchdelta)
+        if HasCustomOffset("crouch") then pos:Add(GetCustomOffset("crouch") * crouchdelta) end
     end
 
     do -- passive holdtype fix
         self.TPIKSmoothPassiveHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothPassiveHoldType or 0, ht == "passive" and 1 or 0)
-        pos:Add(passiveholdtypefixvector * self.TPIKSmoothPassiveHoldType)
+        pos:Add(GetCustomOffset("passive") * self.TPIKSmoothPassiveHoldType)
+        self.TPIKSmoothNormalHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothNormalHoldType or 0, ht == "normal" and 1 or 0)
+        pos:Add(GetCustomOffset("normal") * self.TPIKSmoothNormalHoldType)
+        if self.WorldModelOffset.TPIKHolsterOffset then pos:Add(self.WorldModelOffset.TPIKHolsterOffset * self.TPIKSmoothNormalHoldType) end
+        
+        if HasCustomOffset("revolver") then
+            self.TPIKSmoothRevolverHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothRevolverHoldType or 0, ht == "revolver" and 1 or 0)
+            pos:Add(GetCustomOffset("revolver") * self.TPIKSmoothRevolverHoldType)
+        end
+
+        if HasCustomOffset("active") then pos:Add(GetCustomOffset("active")) end
     end
 
     if !self.NoTPIKVMPos then -- and ht != "passive"
         if self.CustomizeDelta == 0 then
             -- if lp == owner then -- old
-            --     pos:Sub(self.ViewModelPos * somevector3)
+            --     pos:Sub(self.ViewModelPos * activeposvector)
             --     ang:Add(Angle(self.ViewModelAng.p, -self.ViewModelAng.y, self.ViewModelAng.r))
             -- else
-                local apos = Vector(self.ActivePos.y, -self.ActivePos.x, self.ActivePos.z) * somevector3
+                local apos = Vector(self.ActivePos.y, -self.ActivePos.x, self.ActivePos.z) * activeposvector
                 pos:Sub(apos)
 
 
@@ -124,11 +191,11 @@ local function SetTPIKOffset(self, wm, owner, lp)
                     local sightdelta2 = math.ease.InOutCubic(sightdelta)
                     local ispos = Vector(self.IronSights.Pos.x * -0.1, self.IronSights.Pos.y * 0.4, self.IronSights.Pos.z * 1.5)
                     pos:Sub(ispos * sightdelta2)
-                    ang:Add(someang * math.sin(3.1415926 * math.ease.InOutSine(sightdelta)))
+                    ang:Add(someangforsights * math.sin(3.1415926 * math.ease.InOutSine(sightdelta)))
                 end
             -- end
         else
-            pos:Add(custvector * self.CustomizeDelta)
+            pos:Add(GetCustomOffset("customization") * self.CustomizeDelta)
         end
     end
 
@@ -269,6 +336,7 @@ function SWEP:DoTPIK()
         if self:GetSequenceProxy() != 0 then seq = wm:LookupSequence("idle") end -- lhik ubgls fix
         
         if self.TPIKNoSprintAnim and self:GetIsSprinting() then seq = wm:LookupSequence("idle") end -- no sprint anim in tpik (less ugly)
+        if (htype == "normal" or htype == "passive") and (seq == wm:LookupSequence("draw") or seq == wm:LookupSequence("holster")) then seq = wm:LookupSequence("idle") end -- no draw/holster with some holdtypes. bad code but whatever.
 
         wm:SetSequence(seq)
 
