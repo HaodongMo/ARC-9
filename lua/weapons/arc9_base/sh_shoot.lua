@@ -686,7 +686,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 fireBullets.Distance = distance
                 fireBullets.Callback = function(att, btr, dmg)
                     rangecheck = true -- callback only called if bullet hits something
-                    local range = btr.Fraction * (distance == minphysrange and swepGetProcessedValue(self, "Distance") or distance)
+                    local range = distance * btr.Fraction
 
                     dmg:SetDamage(swepGetProcessedValue(self, "DamageMax"))
 
