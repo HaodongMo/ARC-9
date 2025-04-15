@@ -182,7 +182,7 @@ local function SetTPIKOffset(self, wm, owner, lp)
     do -- nearwalling
         local nearwalldelta = self:GetNearWallAmount()
 
-        if nearwalldelta > 0 then
+        if nearwalldelta > 0 and ht != "passive" and ht != "normal" then
             nearwalldelta = math.ease.InOutQuad(nearwalldelta) - self.CustomizeDelta
             pos:Add(nearwallpos * nearwalldelta)
             ang:Add(nearwallang * nearwalldelta)
