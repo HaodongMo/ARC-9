@@ -73,7 +73,7 @@ function SWEP:PreDrawViewModel()
         blurtarget = 2 * sightamount
     end
 
-    if (arc9_fx_reloadblur:GetBool() and self:GetReloading()) or (arc9_fx_animblur:GetBool() and self:GetReadyTime() >= CurTime()) or (arc9_fx_inspectblur:GetBool() and self:GetInspecting()) then
+    if (arc9_fx_reloadblur:GetBool() and self:GetReloading()) or (arc9_fx_animblur:GetBool() and self:GetReadyTime() >= CurTime()) or (arc9_fx_inspectblur:GetBool() and self:GetInspecting() and sightamount < 0.01) then
         blurtarget = 1.5
         shouldrtblur = true
     end

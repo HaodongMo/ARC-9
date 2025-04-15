@@ -620,7 +620,7 @@ function SWEP:CreateHUD_AttInfo()
         mode_toggle:SetPos(descscroller:GetWide()/2-(ARC9ScreenScale(24)+tw)/2, ARC9ScreenScale(50))
         mode_toggle:SetSize(0, 0) -- ARC9ScreenScale(24)+tw, ARC9ScreenScale(21*0.75)
         mode_toggle:SetButtonText(curmode, "ARC9_12")
-        mode_toggle:SetIcon(camotoggle and camosicon or modesicon)
+        mode_toggle:SetIcon(camotoggle and camosicon or (atttbl.ToggleStats[slot.ToggleNum].ToggleIcon or modesicon))
         mode_toggle.DoClick = function(self2)
             -- surface.PlaySound(clicksound)
             -- self:PlayAnimation("toggle")
@@ -653,6 +653,9 @@ function SWEP:CreateHUD_AttInfo()
                 mode_toggle:SetPos(descscroller:GetWide() / 2-(ARC9ScreenScale(24) + tw) / 2, ARC9ScreenScale(50))
                 mode_toggle:SetSize(ARC9ScreenScale(21) + tw, ARC9ScreenScale(21 * 0.75))
                 mode_toggle:SetButtonText(curmode, "ARC9_12")
+				if atttbl.ToggleStats[slot.ToggleNum].ToggleIcon then
+					mode_toggle:SetIcon(atttbl.ToggleStats[slot.ToggleNum].ToggleIcon)
+				end
             else
                 mode_toggle:SetSize(0, 0)
             end
