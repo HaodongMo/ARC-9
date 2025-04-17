@@ -169,7 +169,8 @@ local function SetTPIKOffset(self, wm, owner, lp)
         pos:Add(GetCustomOffset("passive") * self.TPIKSmoothPassiveHoldType)
         self.TPIKSmoothNormalHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothNormalHoldType or 0, ht == "normal" and 1 or 0)
         pos:Add(GetCustomOffset("normal") * self.TPIKSmoothNormalHoldType)
-        if self.WorldModelOffset.TPIKHolsterOffset then pos:Add(self.WorldModelOffset.TPIKHolsterOffset * self.TPIKSmoothNormalHoldType) end
+
+        if self.WorldModelOffset.TPIKHolsterOffset then pos:Add(self.WorldModelOffset.TPIKHolsterOffset * math.max(self.TPIKSmoothPassiveHoldType, self.TPIKSmoothNormalHoldType)) end
         
         if HasCustomOffset("revolver") then
             self.TPIKSmoothRevolverHoldType = Lerp(FrameTime() * 1, self.TPIKSmoothRevolverHoldType or 0, ht == "revolver" and 1 or 0)
