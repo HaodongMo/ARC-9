@@ -347,15 +347,15 @@ function ARC9.GetProsAndCons(atttbl, weapon)
     -- custom stats
     if istable(atttbl.CustomPros) then
         for stat, value in pairs(atttbl.CustomPros) do
-            table.insert(prosname, stat)
-            table.insert(prosnum, value)
+            table.insert(prosname, ARC9:GetPhrase(stat) or stat)
+            table.insert(prosnum, ARC9:GetPhrase(value) or value)
         end
     end
 
     if istable(atttbl.CustomCons) then
         for stat, value in pairs(atttbl.CustomCons) do
-            table.insert(consname, stat)
-            table.insert(consnum, value)
+            table.insert(consname, ARC9:GetPhrase(stat) or stat)
+            table.insert(consnum, ARC9:GetPhrase(value) or value)
         end
     end
 
