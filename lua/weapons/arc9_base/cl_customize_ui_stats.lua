@@ -468,7 +468,7 @@ function SWEP:CreateHUD_Stats()
         },
         {
             title = "Ergonomics",
-            desc = "EFT: Ergonomics affects the speed that the player aims down their sights and stamina drain.",
+            desc = "Ergonomics.desc",
             stat = "EFTErgo",
             fifty = 50,
             cond = function()
