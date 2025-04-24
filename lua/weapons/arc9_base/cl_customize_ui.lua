@@ -868,7 +868,7 @@ function SWEP:CreateCustomizeHUD()
                     surface.SetDrawColor(col)
                     surface.DrawTexturedRect(x, y, s, s)
 
-                    local atttxt = ms_slot.PrintName or "SLOT"
+                    local atttxt = ARC9:GetPhrase(ms_slot.PrintName) or ms_slot.PrintName or "SLOT"
 
                     if ms_slot.Installed then
                         atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
@@ -1369,12 +1369,12 @@ function SWEP:CreateHUD_RHP()
 
         -- class
         surface.SetFont("ARC9_12")
-        local tw2 = surface.GetTextSize(self.Class or "No class ??? wtf")
+        local tw2 = surface.GetTextSize(ARC9:GetPhrase(self.Class) or self.Class or "No class ??? wtf")
 
         surface.SetFont("ARC9_12")
         surface.SetTextPos(w/2 - tw2/2, ARC9ScreenScale(25))
         surface.SetTextColor(ARC9.GetHUDColor("fg"))
-        surface.DrawText(self.Class or "No class ??? wtf")
+        surface.DrawText(ARC9:GetPhrase(self.Class) or self.Class or "No class ??? wtf")
 
         surface.SetDrawColor(ARC9.GetHUDColor("bg"))
         surface.DrawRect(w/2 - tw2/2, ARC9ScreenScale(23), tw2, ARC9ScreenScale(1.5))

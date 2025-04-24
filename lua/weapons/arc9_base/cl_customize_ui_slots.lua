@@ -56,7 +56,7 @@ function SWEP:CreateHUD_Slots(scroll)
 
         local atttbl = self:GetFinalAttTable(ms_slot)
 
-        local atttxt = ms_slot.PrintName or "Slot"
+        local atttxt = ARC9:GetPhrase(ms_slot.PrintName) or ms_slot.PrintName or "Slot"
 
         local slotbtn = vgui.Create("ARC9AttButton", scroll)
 

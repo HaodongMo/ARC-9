@@ -38,7 +38,8 @@ function SWEP:CreateHUD_Trivia()
     end
 
     local descmultiline = {}
-    descmultiline = ARC9MultiLineText(self.Description, desc:GetWide() - ARC9ScreenScale(1), "ARC9_8")
+	descstring = ARC9:GetPhrase(self.Description) or self.Description
+    descmultiline = ARC9MultiLineText(descstring, desc:GetWide() - ARC9ScreenScale(1), "ARC9_8")
     for i, text in ipairs(descmultiline) do
         local desc_line = vgui.Create("DPanel", desc)
         desc_line:SetSize(desc:GetWide(), ARC9ScreenScale(8))
@@ -90,7 +91,7 @@ function SWEP:CreateHUD_Trivia()
 
         creditline:SetSize(creditsscroll:GetWide(), ARC9ScreenScale(17))
         creditline:Dock(TOP)
-        creditline.title = credittbl.title
+        creditline.title = ARC9:GetPhrase(credittbl.title) or credittbl.title
         creditline.credit = credittbl.credit
         creditline.Paint = function(self2, w, h)
             if !IsValid(self) then return end
@@ -141,8 +142,8 @@ function SWEP:CreateHUD_Trivia()
         local trivialine = triviascroll:Add("DPanel")
         trivialine:SetSize(triviascroll:GetWide(), ARC9ScreenScale(17))
         trivialine:Dock(TOP)
-        trivialine.title = triviatbl.title
-        trivialine.trivia = triviatbl.trivia
+        trivialine.title = ARC9:GetPhrase(triviatbl.title) or triviatbl.title
+        trivialine.trivia = ARC9:GetPhrase(triviatbl.trivia) or triviatbl.trivia
         trivialine.Paint = function(self2, w, h)
             if !IsValid(self) then return end
             

@@ -399,6 +399,7 @@ hook.Add("PopulateWeapons", "zzz_ARC9_SubCategories", function(pnlContent, tree,
 
                 -- Iterate through the subcategories
                 for subcatName, subcatWeps in SortedPairs(catSubcats) do
+					if ARC9:GetPhrase(subcatName) then subcatName = ARC9:GetPhrase(subcatName) end
 
                     -- Create the subcategory header, if more than one exists for this category
                     if (table.Count(catSubcats) > 1) then
