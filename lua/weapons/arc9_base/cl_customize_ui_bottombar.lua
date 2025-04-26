@@ -646,7 +646,7 @@ function SWEP:CreateHUD_AttInfo()
             if !slot then return end
 
             if slot.Installed == self.AttInfoBarAtt then
-                curmode = atttbl.ToggleStats[slot.ToggleNum] and atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
+                curmode = atttbl.ToggleStats[slot.ToggleNum] and ARC9:GetPhrase(atttbl.ToggleStats[slot.ToggleNum].PrintName) or atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
                 
                 surface.SetFont("ARC9_12")
                 tw = surface.GetTextSize(curmode)
