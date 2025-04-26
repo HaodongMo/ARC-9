@@ -991,6 +991,7 @@ SWEP.RicochetSounds = ARC9.RicochetSounds
 SWEP.ShellCorrectPos = Vector(0, 0, 0)
 SWEP.ShellCorrectAng = Angle(0, 0, 0)
 SWEP.ShellVelocity = nil -- nothing for random, otherwise keep this 0 - 2
+SWEP.ShellAngleVelocity = nil -- mult for angular velocity
 SWEP.ShellTime = 0.5 -- Extra time these shells stay on the ground for.
 
 SWEP.IgnoreMuzzleDevice = false -- Do not use the attachment muzzle device, use QCA muzzle instead.

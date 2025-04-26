@@ -65,6 +65,7 @@ function EFFECT:Init(data)
     local sounds = processedValue(ent, "ShellSounds", true)
     local soundsvolume = processedValue(ent, "ShellVolume", true)
     local smoke = processedValue(ent, "ShellSmoke", true)
+    local rotate = processedValue(ent, "ShellAngleVelocity", true) or 1
     local velocity = processedValue(ent, "ShellVelocity", true) or math.Rand(1, 2)
 
     local index = data:GetFlags()
@@ -141,8 +142,8 @@ function EFFECT:Init(data)
 
     phys:SetVelocity((dir * mag * velocity) + plyvel)
 
-    phys:AddAngleVelocity(VectorRand() * 100)
-    phys:AddAngleVelocity(ang:Up() * 2500 * velocity / 0.75)
+    phys:AddAngleVelocity(VectorRand() * 100 * rotate)
+    phys:AddAngleVelocity((ang:Up() * 2500 * velocity / 0.75) * rotate)
 
     if owner:IsNPC() or !arc9_eject_fx:GetBool() then
         smoke = false
@@ -188,7 +189,10 @@ function EFFECT:PhysicsCollide(colData)
 end
 
 function EFFECT:Think()
-    if self:GetVelocity():Length() > 20 then self.SpawnTime = CurTime() end
+    local vel = self:GetVelocity():Length()
+    if vel > 20 then self.SpawnTime = CurTime() end
+    if vel < 5 and self.VMContext then self.VMContext = false self:SetNoDraw(false) end
+
     -- self:StopSound("Default.ScrapeRough")
 
     if (self.SpawnTime + self.ShellTime) <= CurTime() then
