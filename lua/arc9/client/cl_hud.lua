@@ -329,16 +329,17 @@ local function GetHintsTable(capabilities)
     local hints = {}
 
     if capabilities.UBGL then
+		local ubgltext = weapon:GetProcessedValue("UBGLFiremodeName", true)
         if ARC9.GetKeyIsBound("+arc9_ubgl") then
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+arc9_ubgl"),
-                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName", true))
+                action = string.format(ARC9:GetPhrase("hud.hint.ubgl"), tostring(ARC9:GetPhrase(ubgltext) or ubgltext))
             })
         else
             table.insert(hints, {
                 glyph = ARC9.GetBindKey("+use"),
                 glyph2 = ARC9.GetBindKey("+attack2"),
-                action = ARC9:GetPhrase("hud.hint.ubgl") .. " " .. tostring(weapon:GetProcessedValue("UBGLFiremodeName", true))
+                action = string.format(ARC9:GetPhrase("hud.hint.ubgl"), tostring(ARC9:GetPhrase(ubgltext) or ubgltext))
             })
         end
     end

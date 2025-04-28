@@ -156,16 +156,17 @@ function SWEP:ThinkFiremodes()
 end
 
 function SWEP:GetFiremodeName()
-    if self:GetUBGL() then
-        return self:GetProcessedValue("UBGLFiremodeName", true)
-    end
+    -- if self:GetUBGL() then
+        -- return self:GetProcessedValue("UBGLFiremodeName", true)
+    -- end
+	local ubgltext = self:GetProcessedValue("UBGLFiremodeName", true)
 
     local arc9_mode = self:GetCurrentFiremodeTable()
 
     local firemode_text = "UNKNOWN"
 
     if arc9_mode.PrintName then
-        firemode_text = arc9_mode.PrintName
+        firemode_text = ARC9:GetPhrase(arc9_mode.PrintName) or arc9_mode.PrintName
     else
         if arc9_mode.Mode == 1 then
             firemode_text = ARC9:GetPhrase("hud.firemode.single")
@@ -177,6 +178,10 @@ function SWEP:GetFiremodeName()
             firemode_text = tostring(arc9_mode.Mode) .. "-" .. ARC9:GetPhrase("hud.firemode.burst")
         end
     end
+
+	if self:GetUBGL() then
+		firemode_text = ARC9:GetPhrase(ubgltext) or ubgltext
+	end
 
     if self:GetSafe() then
         firemode_text = ARC9:GetPhrase("hud.firemode.safe")
