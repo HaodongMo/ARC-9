@@ -13,6 +13,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/arc9"
 
@@ -30,6 +31,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/arctic"
 
@@ -47,6 +49,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/black"
 
@@ -64,6 +67,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blackblue"
 
@@ -81,6 +85,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blackgreen"
 
@@ -98,6 +103,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blacktan"
 
@@ -132,6 +138,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blue"
 
@@ -149,6 +156,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/bronze"
 
@@ -183,6 +191,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/error"
 
@@ -200,6 +209,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/fox"
 
@@ -217,6 +227,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/fullcolor"
 
@@ -234,6 +245,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/green"
 
@@ -251,6 +263,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/grey"
 
@@ -285,6 +298,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/navytan"
 
@@ -302,6 +316,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/pink"
 
@@ -319,6 +334,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/purple"
 
@@ -336,6 +352,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/tan"
 
@@ -353,6 +370,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/teal"
 
@@ -372,6 +390,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/trans"
 
@@ -389,6 +408,7 @@ ATT.Free = true
 ATT.Category = "stickers"
 ATT.Folder = "ARC9/Doves International"
 ATT.SortOrder = 9999
+ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/white"
 
