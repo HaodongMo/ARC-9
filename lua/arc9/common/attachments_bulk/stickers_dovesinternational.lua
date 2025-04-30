@@ -11,8 +11,7 @@ ATT.Icon = Material("stickers/dovesinternational/arc9")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/arc9"
@@ -29,8 +28,7 @@ ATT.Icon = Material("stickers/dovesinternational/arctic")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/arctic"
@@ -47,8 +45,7 @@ ATT.Icon = Material("stickers/dovesinternational/black")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/black"
@@ -65,8 +62,7 @@ ATT.Icon = Material("stickers/dovesinternational/blackblue")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blackblue"
@@ -83,8 +79,7 @@ ATT.Icon = Material("stickers/dovesinternational/blackgreen")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blackgreen"
@@ -101,8 +96,7 @@ ATT.Icon = Material("stickers/dovesinternational/blacktan")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blacktan"
@@ -119,8 +113,8 @@ ATT.Icon = Material("stickers/dovesinternational/blacktrans")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 2
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
+ATT.SortOrder = -2
 
 ATT.StickerMaterial = "stickers/dovesinternational/blacktrans"
 
@@ -136,8 +130,7 @@ ATT.Icon = Material("stickers/dovesinternational/blue")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/blue"
@@ -154,8 +147,7 @@ ATT.Icon = Material("stickers/dovesinternational/bronze")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/bronze"
@@ -172,8 +164,8 @@ ATT.Icon = Material("stickers/dovesinternational/dovesinternational")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 1
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
+ATT.SortOrder = -3
 
 ATT.StickerMaterial = "stickers/dovesinternational/dovesinternational"
 
@@ -189,8 +181,7 @@ ATT.Icon = Material("stickers/dovesinternational/error")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/error"
@@ -207,8 +198,7 @@ ATT.Icon = Material("stickers/dovesinternational/fox")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/fox"
@@ -225,8 +215,7 @@ ATT.Icon = Material("stickers/dovesinternational/fullcolor")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/fullcolor"
@@ -243,8 +232,7 @@ ATT.Icon = Material("stickers/dovesinternational/green")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/green"
@@ -261,8 +249,7 @@ ATT.Icon = Material("stickers/dovesinternational/grey")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/grey"
@@ -279,8 +266,8 @@ ATT.Icon = Material("stickers/dovesinternational/monochrome")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 2
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
+ATT.SortOrder = -1
 
 ATT.StickerMaterial = "stickers/dovesinternational/monochrome"
 
@@ -296,8 +283,7 @@ ATT.Icon = Material("stickers/dovesinternational/navytan")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/navytan"
@@ -314,8 +300,7 @@ ATT.Icon = Material("stickers/dovesinternational/pink")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/pink"
@@ -332,8 +317,7 @@ ATT.Icon = Material("stickers/dovesinternational/purple")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/purple"
@@ -350,8 +334,7 @@ ATT.Icon = Material("stickers/dovesinternational/tan")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/tan"
@@ -368,8 +351,7 @@ ATT.Icon = Material("stickers/dovesinternational/teal")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/teal"
@@ -388,8 +370,7 @@ ATT.Icon = Material("stickers/dovesinternational/trans")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/trans"
@@ -406,8 +387,7 @@ ATT.Icon = Material("stickers/dovesinternational/white")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 9999
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
 ATT.NotForNPCs = true
 
 ATT.StickerMaterial = "stickers/dovesinternational/white"
@@ -424,8 +404,8 @@ ATT.Icon = Material("stickers/dovesinternational/whitetrans")
 ATT.Free = true
 
 ATT.Category = "stickers"
-ATT.Folder = "ARC9/Doves International"
-ATT.SortOrder = 2
+ATT.Folder = ARC9:GetPhrase("folder.arc9.dovesinternational")
+ATT.SortOrder = -2
 
 ATT.StickerMaterial = "stickers/dovesinternational/whitetrans"
 

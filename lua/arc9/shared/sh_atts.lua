@@ -249,7 +249,7 @@ function ARC9.GetFoldersForAtts(atts)
         if !atttbl.Folder then
             folders[atttbl.ShortName] = true
         else
-            local names = string.Explode("/", atttbl.Folder)
+            local names = string.Explode("/", ARC9:GetPhrase("folder." .. atttbl.Folder) or atttbl.Folder)
             local cur = folders
             for _, v in ipairs(names) do
                 cur[v] = cur[v] or {}
