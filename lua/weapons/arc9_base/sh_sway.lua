@@ -124,7 +124,7 @@ function SWEP:HoldBreathPP()
     if !swayconvar:GetBool() and !slomoconvar:GetBool() then return end
     if self:GetValue("HoldBreathTime") <= 0 then return end
     if !ppconvar:GetBool() then return end
-    local amt_d = (100 - self:GetBreath()) / 100
+    local amt_d = math.min(1, (100 - self:GetBreath()) / 100)
     local holding = self:HoldingBreath()
     local out = self:GetOutOfBreath()
 

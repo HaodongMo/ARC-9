@@ -468,7 +468,7 @@ function SWEP:DoPrimaryAttack()
     self:DoEffects()
 
     if self:HoldingBreath() then
-        self:SetBreath(self:GetBreath() - swepGetProcessedValue(self,  "HoldBreathTime", true)/20)
+        self:SetBreath(math.max(0, self:GetBreath() - math.max(10, swepGetProcessedValue(self,  "HoldBreathTime", true) / 20)))
     end
 
     -- ewww
