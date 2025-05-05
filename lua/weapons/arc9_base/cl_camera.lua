@@ -144,11 +144,11 @@ function SWEP:GetCameraControl(wm)
         if !ang then return end
 
         ang = mdl:WorldToLocalAngles(ang)
+        ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
         ang.p = ang.p * camstrength
         ang.y = ang.y * camstrength
         ang.r = ang.r * camstrength * rollstrength
-        ang:Sub(atttbl.IKCameraMotionOffsetAngle or angle_zero)
-        ang:Mul(self:GetProcessedValue("CamQCA_Mult", true) or 1)
+        ang:Mul(self:GetProcessedValue("IKCameraMotionQCA_Mult", true) or self:GetProcessedValue("CamQCA_Mult", true) or 1)
 
         return ang
     else
