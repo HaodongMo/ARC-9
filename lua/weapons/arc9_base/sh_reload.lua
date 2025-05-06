@@ -110,7 +110,9 @@ function SWEP:Reload()
 
     anim = self:RunHook("Hook_SelectReloadAnimation", anim) or anim
 
-    local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime"), true)
+    local reloadtimemult = self:GetProcessedValue("ReloadTime")
+
+    local t = self:PlayAnimation(anim, reloadtimemult, true)
 
     if !self:GetShouldShotgunReload() then
 		local animation = self:GetAnimationEntry(self:TranslateAnimation(anim))
@@ -126,7 +128,7 @@ function SWEP:Reload()
 
         if !getUBGL then
             if !self:GetAnimationEntry(self:TranslateAnimation(anim)).NoMagSwap then
-                self:SetTimer(self:GetProcessedValue("ReloadTime") * newcliptime, function()
+                self:SetTimer(reloadtimemult * newcliptime, function()
                     local ammo1 = self:Ammo1()
 
                     if self:GetInfiniteAmmo() then
@@ -142,7 +144,7 @@ function SWEP:Reload()
 
     if !self:PredictionFilter() then
         if self:GetProcessedValue("ShouldDropMag") or self:GetProcessedValue("ShouldDropMagEmpty") and clip == 0 then
-            self:SetTimer(self:GetProcessedValue("DropMagazineTime", true), function()
+            self:SetTimer(self:GetProcessedValue("DropMagazineTime", true) * reloadtimemult, function()
                 self:DropMagazine()
             end)
         end
