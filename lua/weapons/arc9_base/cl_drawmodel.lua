@@ -32,7 +32,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
     if custompos then wm = true end
 
     local mdl = self.VModel
-    local lod = 0
 
     if wm then
         if custompos then
