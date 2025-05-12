@@ -193,7 +193,7 @@ function EFFECT:Think()
     if vel > 20 then self.SpawnTime = CurTime() end
     if vel < 5 and self.VMContext then self.VMContext = false self:SetNoDraw(false) end
 
-    -- self:StopSound("Default.ScrapeRough")
+    self:StopSound("Default.ScrapeRough")
 
     if (self.SpawnTime + self.ShellTime) <= CurTime() then
         if !IsValid(self) then return end
