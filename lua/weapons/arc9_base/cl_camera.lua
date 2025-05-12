@@ -187,7 +187,7 @@ function SWEP:GetCameraControl(wm)
                 mult = 0
             end
 
-            self.MuzzleAngleVelocity = self.MuzzleAngleVelocity + delta * 2 * mult
+            self.MuzzleAngleVelocity = self.MuzzleAngleVelocity + delta * 2 * mult * camstrength
             self.MuzzleAngleVelocity.p = mathapproach(self.MuzzleAngleVelocity.p, -self.ProceduralViewOffset.p * 2, ft * 20)
             self.MuzzleAngleVelocity.p = math.Clamp(self.MuzzleAngleVelocity.p, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
             self.ProceduralViewOffset.p = self.ProceduralViewOffset.p + self.MuzzleAngleVelocity.p * ft
@@ -197,13 +197,13 @@ function SWEP:GetCameraControl(wm)
             self.ProceduralViewOffset.y = self.ProceduralViewOffset.y + self.MuzzleAngleVelocity.y * ft
             self.ProceduralViewOffset.y = math.Clamp(self.ProceduralViewOffset.y, -90, 90)
             self.MuzzleAngleVelocity.r = mathapproach(self.MuzzleAngleVelocity.r, -self.ProceduralViewOffset.r * 2, ft * 20)
-            self.MuzzleAngleVelocity.r = math.Clamp(self.MuzzleAngleVelocity.r, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
+            self.MuzzleAngleVelocity.r = math.Clamp(self.MuzzleAngleVelocity.r * rollstrength, -self.ProceduralSpeedLimit, self.ProceduralSpeedLimit)
             self.ProceduralViewOffset.r = self.ProceduralViewOffset.r + self.MuzzleAngleVelocity.r * ft
             self.ProceduralViewOffset.r = math.Clamp(self.ProceduralViewOffset.r, -90, 90)
 
             self.ProceduralViewOffset.p = mathapproach(self.ProceduralViewOffset.p, 0, (1 - progress) * ft * -self.ProceduralViewOffset.p)
             self.ProceduralViewOffset.y = mathapproach(self.ProceduralViewOffset.y, 0, (1 - progress) * ft * -self.ProceduralViewOffset.y)
-            self.ProceduralViewOffset.r = mathapproach(self.ProceduralViewOffset.r, 0, (1 - progress) * ft * -self.ProceduralViewOffset.r) * rollstrength
+            self.ProceduralViewOffset.r = mathapproach(self.ProceduralViewOffset.r, 0, (1 - progress) * ft * -self.ProceduralViewOffset.r)
 
             self.LastMuzzleAngle = ang
 
