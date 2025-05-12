@@ -40,13 +40,16 @@ local function getpresetsforweapon(wpn, class)
 
     local files = file.Find(path, "DATA")
     local output = {}
+    local wasgenerated = false
 
     for i, k in pairs(files) do
         local shortname = string.sub(k, 1, string.len(k) - 4)
-        if shortname == "default" or shortname == "autosave" then continue end
+        if shortname == "default" or shortname == "autosave" then wasgenerated = true continue end
         output[shortname] = (getpresetname(k, wpn, class) or "Unknown")
     end
     
+    if table.IsEmpty(output) then return wasgenerated end
+
     return output
 end
 
@@ -77,12 +80,28 @@ local function OpenMenuExtra(pan, menu)
         parentMenuOption:SetIcon("icon16/application_cascade.png")
 
         local existingones = 0
-        for k, v in pairs(getpresetsforweapon(swep, classname)) do
-            subMenu:AddOption(v, function()
-                RunConsoleCommand( "arc9_giveswep_preset", classname, k )
-            end):SetIcon("icon16/bullet_green.png")
+        local presettbl = getpresetsforweapon(swep, classname)
+        if istable(presettbl) then
+            for k, v in pairs(presettbl) do
+                subMenu:AddOption(v, function()
+                    RunConsoleCommand( "arc9_giveswep_preset", classname, k )
+                end):SetIcon("icon16/bullet_green.png")
 
-            existingones = existingones + 1
+                existingones = existingones + 1
+            end
+        elseif presettbl == true then
+            local subMenu2, parentMenuOption2 = menu:AddSubMenu( ARC9:GetPhrase( "spawnmenu.resetpreset" ) )
+            parentMenuOption2:SetIcon("icon16/bug_delete.png")
+            
+            local rmbme = subMenu2:AddOption(ARC9:GetPhrase( "spawnmenu.resetpreset.rmb" ), function() 
+                surface.PlaySound("buttons/button8.wav")
+            end)
+            rmbme:SetIcon("icon16/bullet_error.png")
+            rmbme.DoRightClick = function()
+                surface.PlaySound("buttons/button5.wav")
+                RunConsoleCommand( "arc9_presets_clear", classname )
+                menu:Remove()
+            end
         end
 
         if existingones == 0 then
