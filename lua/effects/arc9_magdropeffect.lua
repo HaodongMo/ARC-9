@@ -130,24 +130,48 @@ function EFFECT:PhysicsCollide()
 end
 
 function EFFECT:Think()
-    local vel = self:GetVelocity():Length()
-    if vel > 20 then self.SpawnTime = CurTime() end
-    if vel < 5 and self.VMContext then self.VMContext = false self:SetNoDraw(false) end
+    local vel = self:GetVelocity()
+    local vellength = vel:Length()
+    local ct = CurTime()
+    if vellength > 20 then self.SpawnTime = ct end
+    if vellength < 5 and self.VMContext then self.VMContext = false self:SetNoDraw(false) end
 
     self:StopSound("Default.ScrapeRough")
     
-    if (self.SpawnTime + self.LifeTime) <= CurTime() then
+    if (self.SpawnTime + self.LifeTime) <= ct then
         if !IsValid(self) then return end
         self:SetRenderFX( kRenderFxFadeFast )
-        if (self.SpawnTime + self.LifeTime + 0.25) <= CurTime() then
+        if (self.SpawnTime + self.LifeTime + 0.25) <= ct then
             if !IsValid(self:GetPhysicsObject()) then return end
             self:GetPhysicsObject():EnableMotion(false)
-            if (self.SpawnTime + self.LifeTime + 0.5) <= CurTime() then
+            if (self.SpawnTime + self.LifeTime + 0.5) <= ct then
                 self:Remove()
                 return
             end
         end
     end
+
+    -- fake collisions
+    -- (for some reason effects collide only with brushes)
+    if !self.AlreadyPlayedSound and (self.NextPhysCheck or 0) < ct then
+        self.NextPhysCheck = ct + FrameTime() * 2
+        local poss = self:GetPos()
+        local tr = util.TraceLine({
+            start = poss,
+            endpos = poss + (vel * 0.05),
+            mask = MASK_PLAYERSOLID,
+            filter = LocalPlayer()
+        })
+
+        -- debugoverlay.Line(poss, tr.HitPos)
+        
+        if tr.Hit and tr.HitTexture == "**studio**" then
+            tr.HitNormal = tr.Normal * -2
+            self:PhysicsCollide(tr)
+        end
+    end
+
+
     return true
 end
 
