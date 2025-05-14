@@ -2,16 +2,14 @@ local arc9_free_atts = GetConVar("arc9_free_atts")
 local arc9_atts_lock = GetConVar("arc9_atts_lock")
 local arc9_atts_loseondie = GetConVar("arc9_atts_loseondie")
 
-function ARC9:PlayerGetAtts(ply, att)
+function ARC9:PlayerGetAtts(ply, att, wepclass)
     if !IsValid(ply) then return 0 end
-    if arc9_free_atts:GetBool() then return 999 end
-
     if att == "" then return 999 end
+    if arc9_free_atts:GetBool() then return 999 end
 
     local atttbl = ARC9.GetAttTable(att)
 
     if !atttbl then return 0 end
-
     if atttbl.Free then return 999 end
 
     if !IsValid(ply) or !ply:IsPlayer() then return end
@@ -22,11 +20,12 @@ function ARC9:PlayerGetAtts(ply, att)
 
     if atttbl.InvAtt then att = atttbl.InvAtt end
 
+    local ret = hook.Run("ARC9_PlayerGetAtts", ply, att, wepclass)
+    if ret != nil then return ret end
+
     if !ply.ARC9_AttInv then return 0 end
 
-    if !ply.ARC9_AttInv[att] then return 0 end
-
-    return ply.ARC9_AttInv[att]
+    return ply.ARC9_AttInv[att] or 0
 end
 
 function ARC9:PlayerGiveAtt(ply, att, amt)
@@ -45,6 +44,9 @@ function ARC9:PlayerGiveAtt(ply, att, amt)
     if atttbl.AdminOnly and !(ply:IsPlayer() and ply:IsAdmin()) then return false end
 
     if atttbl.InvAtt then att = atttbl.InvAtt end
+
+    local ret = hook.Run("ARC9_PlayerGiveAtt", ply, att, amt)
+    if ret != nil then return ret end
 
     if arc9_atts_lock:GetBool() then
         if ply.ARC9_AttInv[att] == 1 then return end
@@ -69,6 +71,9 @@ function ARC9:PlayerTakeAtt(ply, att, amt)
     if !atttbl or atttbl.Free then return end
 
     if atttbl.InvAtt then att = atttbl.InvAtt end
+
+    local ret = hook.Run("ARC9_PlayerTakeAtt", ply, att, amt)
+    if ret != nil then return ret end
 
     ply.ARC9_AttInv[att] = ply.ARC9_AttInv[att] or 0
 
