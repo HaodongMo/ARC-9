@@ -968,7 +968,7 @@ local conVars = {
     },
     {
         name = "indoorsound",
-        default = "1",
+        default = "0",
         replicated = true
     },
 }
