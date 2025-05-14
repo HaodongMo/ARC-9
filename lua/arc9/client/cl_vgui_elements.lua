@@ -181,6 +181,10 @@ function ARC9AttButton:Paint(w, h)
 
     if self.Empty then
         mat = self.MatEmpty
+        if self.EmptyGreyOut then
+            color = colorgrey
+            iconcolor = colorgrey
+        end
     elseif not self.CanAttach and not self.Installed then
         if self.MissingDependents then
             matmarker = self.MatMarkerLinked
@@ -248,14 +252,14 @@ function ARC9AttButton:Paint(w, h)
         if self.FolderIcon1 and !self.FolderIcon2 then -- single icon
             surface.SetMaterial(self.FolderIcon1)
             surface.SetDrawColor(iconcolor) -- icon
-            -- draw shadow here, idk how 
+            -- draw shadow here, idk how
             surface.DrawTexturedRectRotated(w/2, w/3.3, w/2*1.05, w/2*1.05, 0)
             surface.DrawTexturedRectRotated(w/2, w/3.3, w/2, w/2, 0)
         else
             if self.FolderIcon1 then
                 surface.SetMaterial(self.FolderIcon1)
                 surface.SetDrawColor(iconcolor) -- icon
-                -- draw shadow here, idk how 
+                -- draw shadow here, idk how
                 surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625*1.07, w/2.625*1.07, 20.4) -- 512/168, 512/155, 512/195
                 surface.DrawTexturedRectRotated(w/3.05, w/3.3, w/2.625, w/2.625, 20.4) -- 512/168, 512/155, 512/195
             end
@@ -267,7 +271,7 @@ function ARC9AttButton:Paint(w, h)
                 surface.DrawTexturedRectRotated(w/1.45, w/3.0, w/2.625, w/2.625, -18) -- 512/358, 512/155, 512/195
             end
         end
-        
+
         surface.SetDrawColor(color)
         surface.SetMaterial(self.FolderFav and self.MatFolderFrontFav or self.MatFolderFront)
         surface.DrawTexturedRect(0, 0, w, w)
@@ -342,6 +346,10 @@ end
 
 function ARC9AttButton:SetEmpty(bool)
     self.Empty = bool
+end
+
+function ARC9AttButton:SetEmptyGreyOut(bool)
+    self.EmptyGreyOut = bool
 end
 
 function ARC9AttButton:SetOverrideHovered(bool)

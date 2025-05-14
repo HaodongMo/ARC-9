@@ -59,26 +59,34 @@ function SWEP:ClearBottomBar()
     self:ClearAttInfoBar()
 end
 
-local function recursivefoldercount(folder)
+local function recursivefoldercount(folder, ownedtbl)
     if !istable(folder) then return 0 end
 
+    local owned = 0
     local count = 0
 
     for i, k in pairs(folder) do
         if istable(k) then
-            count = count + recursivefoldercount(k)
+            local cowned, ccount = recursivefoldercount(k, ownedtbl)
+            owned = owned + cowned
+            count = count + ccount
         else
             local atttbl = ARC9.GetAttTable(i)
-
             if !atttbl then continue end
 
-            if atttbl.Free or GetConVar("arc9_hud_showunowned"):GetBool() or GetConVar("arc9_free_atts"):GetBool() or ARC9:PlayerGetAtts(i) > 0 then
+            if ARC9:PlayerGetAtts(LocalPlayer(), i) > 0 then
+                if ownedtbl then
+                    ownedtbl[i] = true
+                end
+                owned = owned + 1
+                count = count + 1
+            elseif GetConVar("arc9_hud_showunowned"):GetBool() then
                 count = count + 1
             end
         end
     end
 
-    return count
+    return owned, count
 end
 
 local function tworandomstrings(tbl)
@@ -86,7 +94,7 @@ local function tworandomstrings(tbl)
     for key, _ in pairs(tbl) do
         if isstring(key) and !string.find(key, "%u") then table.insert(valid_strings, key) end
     end
-    
+
     local count = #valid_strings
     if count < 2 then return false end
 
@@ -187,11 +195,14 @@ local function enterfolder(self, scroll, slottbl, fname)
             end
             if isbool(children) then continue end
 
-            local count = recursivefoldercount(children)
+            local ownedchildren = {}
+            local owned, count = recursivefoldercount(children, ownedchildren)
 
             -- if count > 99 then count = "99+" end
 
             if count == 0 then continue end
+
+            local display_count = count > owned and (owned .. "/" .. count) or count
 
             foldercount = foldercount + 1
 
@@ -201,22 +212,23 @@ local function enterfolder(self, scroll, slottbl, fname)
             folderbtn:SetButtonText(isfav and ARC9:GetPhrase("folder.favorites") or ARC9:GetPhrase("folder." .. folder) or folder)
             folderbtn:SetIcon(isfav and folderfavicon or foldericon)
             folderbtn:SetEmpty(true)
+            folderbtn:SetEmptyGreyOut(owned == 0)
 
-            local randomatt1, randomatt2 = tworandomstrings(children)
+            local randomatt1, randomatt2 = tworandomstrings(ownedchildren)
 
-            if randomatt1 then
+            if randomatt1 and randomatt2 then
                 randomatt1 = ARC9.GetAttTable(randomatt1)
                 randomatt2 = ARC9.GetAttTable(randomatt2)
 
                 if istable(randomatt1) and randomatt1.Icon then
                     folderbtn:SetFolderIcon(1, randomatt1.Icon, isfav)
                 end
-                
+
                 if istable(randomatt2) and randomatt2.Icon then
                     folderbtn:SetFolderIcon(2, randomatt2.Icon, isfav)
                 end
-            elseif count == 1 then
-                randomatt1 = ARC9.GetAttTable(table.GetKeys(children)[1])
+            elseif randomatt1 then
+                randomatt1 = ARC9.GetAttTable(table.GetKeys(ownedchildren)[1])
                 if istable(randomatt1) and randomatt1.Icon then
                     folderbtn:SetFolderIcon(1, randomatt1.Icon, isfav)
                 end
@@ -229,7 +241,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             table.insert(scrolleles, folderbtn)
             folderbtn.folder = folder
 
-            folderbtn:SetFolderContain(tostring(count))
+            folderbtn:SetFolderContain(tostring(display_count))
 
             folderbtn.OnMousePressed = function(self2, kc)
                 if kc == MOUSE_LEFT then
@@ -246,18 +258,18 @@ local function enterfolder(self, scroll, slottbl, fname)
 
                 --         local pathprefix = string.Implode("/", self.BottomBarPath)
                 --         if pathprefix != "" then checkfolder = pathprefix .. "/" .. self2.folder end
-                        
+
                 --         if atbl.Folder == checkfolder or (self2.folder == "!favorites" and ARC9.Favorites[v.att]) then
                 --             table.insert(randompool, atbl)
                 --             randompool[#randompool].fuckthis = v.slot
-                --         end               
+                --         end
                 --     end
-                    
+
                 --     local thatatt = randompool[math.random(0, #randompool)]
                 --     if thatatt then
                 --         self:Attach(thatatt.fuckthis, thatatt.ShortName, true)
                 --     end
-                    
+
                 --     surface.PlaySound(tabsound)
                 -- end
             end
@@ -363,8 +375,8 @@ local function enterfolder(self, scroll, slottbl, fname)
                     self.CustomizeHints["customize.hint.select"] = "customize.hint.attach"
                 elseif self2.slottbl.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
-					if atttbl.ToggleStats and !atttbl.AdvancedCamoSupport then
-						self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
+                    if atttbl.ToggleStats and !atttbl.AdvancedCamoSupport then
+                        self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
                     elseif atttbl.ToggleStats and (atttbl.AdvancedCamoSupport and self.AdvancedCamoCache) then
                         self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.togglecamos"
                     end
@@ -586,8 +598,8 @@ function SWEP:CreateHUD_AttInfo()
 
     local multiline = {}
     local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "Description") or atttbl.Description
-    
-    if atttbl.AdvancedCamoSupport and !self.AdvancedCamoCache then 
+
+    if atttbl.AdvancedCamoSupport and !self.AdvancedCamoCache then
         desc = desc .. (ARC9:GetPhrase("customize.camoslot.nosupport") or "")
         if self.EFTErgo then desc = desc .. (ARC9:GetPhrase("customize.camoslot.eftextra") or "") end
     end
@@ -610,7 +622,7 @@ function SWEP:CreateHUD_AttInfo()
     local slot = self.AttInfoBarAttSlot
 
     local camotoggle = atttbl.AdvancedCamoSupport and self.AdvancedCamoCache
-    
+
     if slot and ((atttbl.ToggleStats and !atttbl.AdvancedCamoSupport) or camotoggle) then
         local mode_toggle = vgui.Create("ARC9TopButton", infopanel)
         mode_toggle.addr = slot.Address
@@ -647,15 +659,15 @@ function SWEP:CreateHUD_AttInfo()
 
             if slot.Installed == self.AttInfoBarAtt then
                 curmode = atttbl.ToggleStats[slot.ToggleNum] and ARC9:GetPhrase(atttbl.ToggleStats[slot.ToggleNum].PrintName) or atttbl.ToggleStats[slot.ToggleNum].PrintName or "Toggle"
-                
+
                 surface.SetFont("ARC9_12")
                 tw = surface.GetTextSize(curmode)
                 mode_toggle:SetPos(descscroller:GetWide() / 2-(ARC9ScreenScale(24) + tw) / 2, ARC9ScreenScale(50))
                 mode_toggle:SetSize(ARC9ScreenScale(21) + tw, ARC9ScreenScale(21 * 0.75))
                 mode_toggle:SetButtonText(curmode, "ARC9_12")
-				if atttbl.ToggleStats[slot.ToggleNum].ToggleIcon then
-					mode_toggle:SetIcon(atttbl.ToggleStats[slot.ToggleNum].ToggleIcon)
-				end
+                if atttbl.ToggleStats[slot.ToggleNum].ToggleIcon then
+                    mode_toggle:SetIcon(atttbl.ToggleStats[slot.ToggleNum].ToggleIcon)
+                end
             else
                 mode_toggle:SetSize(0, 0)
             end
