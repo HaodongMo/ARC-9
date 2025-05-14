@@ -33,7 +33,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     if !pressed then return end
 
     if ((ARC9.ControllerMode() and bind == "+zoom" and !LocalPlayer():KeyDown(IN_ZOOM)) -- Gamepad
-	or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE))) then -- Mouse + KB
+    or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE))) then -- Mouse + KB
         local attpnl = wpn.CustomizeLastHovered
 
         if wpn:GetCustomize() and attpnl then
@@ -43,7 +43,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                 wpn:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
                 wpn:ToggleStat(addr)
                 wpn:PostModify()
-			end
+            end
 
             return true
         end
@@ -95,26 +95,30 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
 
                 local pathprefix = string.Implode("/", wpn.BottomBarPath)
                 if pathprefix != "" then checkfolder = pathprefix .. "/" .. foldpnl.folder end
-                
-                if atbl.Folder == checkfolder or (foldpnl.folder == "!favorites" and ARC9.Favorites[v.att]) then
+
+                if (atbl.Folder == checkfolder or (foldpnl.folder == "!favorites" and ARC9.Favorites[v.att]))
+                        and wpn:CanAttach(v.slot, v.att) then
                     table.insert(randompool, atbl)
                     randompool[#randompool].fuckthis = v.slot
-                end               
+                end
             end
 
             local thatatt = randompool[math.random(0, #randompool)]
-            if thatatt then
-                wpn:Attach(thatatt.fuckthis, thatatt.ShortName, true)
+            if thatatt and wpn:Attach(thatatt.fuckthis, thatatt.ShortName, true) then
+                wpn:PruneAttachments()
+                wpn:PostModify()
+                wpn:SendWeapon()
+
+                timer.Simple(0, function() wpn:CreateHUD_Bottom() end)
             end
 
             surface.PlaySound(randsound)
         end
-        
-        
+
         if slotpnl and slotpnl.slot then
             if !wpn:GetSlotBlocked(slotpnl.slot) then
-                wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl.slot.Address)}, true)
-                
+                wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl.slot.Address)}, true, true, true)
+
                 wpn:PruneAttachments()
                 wpn:PostModify()
                 wpn:SendWeapon()
@@ -127,8 +131,8 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
 
         if slotpnl2 and slotpnl2.fuckinghovered then
             if !wpn:GetSlotBlocked(slotpnl2) then
-                wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl2.Address)}, true)
-                
+                wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl2.Address)}, true, true, true)
+
                 wpn:PruneAttachments()
                 wpn:PostModify()
                 wpn:SendWeapon()
@@ -138,6 +142,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                 surface.PlaySound(randsound)
             end
         end
+
 
         return true
     end
@@ -149,12 +154,12 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
     if wpn:GetInSights() then
         if bind == "invnext" then
             wpn:Scroll(1)
-            wpn.Peeking = false 
+            wpn.Peeking = false
 
             return true
         elseif bind == "invprev" then
             wpn:Scroll(-1)
-            wpn.Peeking = false 
+            wpn.Peeking = false
 
             return true
         end
@@ -176,8 +181,8 @@ function ARC9.GetBindKey(bind)
         elseif bind == "invnext" then return ARC9:GetPhrase("hud.error.missingbind_invnext")
         elseif bind == "invprev" then return ARC9:GetPhrase("hud.error.missingbind_invprev") end
         -- return "bind KEY " ..  bind
-		
-		return string.format(ARC9:GetPhrase("hud.error.missingbind"), bind)
+
+        return string.format(ARC9:GetPhrase("hud.error.missingbind"), bind)
     else
         return string.upper(key)
     end

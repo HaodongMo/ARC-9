@@ -148,7 +148,7 @@ local alwaysinstallcats = {
     "_charge",
 }
 
-function SWEP:RollRandomAtts(tree, nofuther)
+function SWEP:RollRandomAtts(tree, nofuther, isplayer, validate)
     local attchance = 66
     if nofuther then attchance = 9999 end
 
@@ -156,7 +156,7 @@ function SWEP:RollRandomAtts(tree, nofuther)
         if slottbl.MergeSlots then
             if math.Rand(0, 100) > (100 / table.Count(slottbl.MergeSlots)) then continue end
         end
-        
+
         local cat = slottbl.Category and (isstring(slottbl.Category) and slottbl.Category or slottbl.Category[1]) or nil
         -- print(cat)
         for _, needle in ipairs(alwaysinstallcats) do
@@ -177,7 +177,9 @@ function SWEP:RollRandomAtts(tree, nofuther)
         for _, maybethisatt in ipairs(atts) do
             local atttbl = ARC9.GetAttTable(maybethisatt)
             if !atttbl then continue end
-            if atttbl.Ignore or slottbl.Hidden or atttbl.AttNotForNPCs or self:GetAttBlocked(atttbl) then continue end
+            if atttbl.Ignore or slottbl.Hidden or self:GetAttBlocked(atttbl) then continue end
+            if !isplayer and atttbl.AttNotForNPCs then continue end
+            if validate and !self:CanAttach(slottbl.Address, maybethisatt, slottbl) then continue end
 
             table.insert(randompool, maybethisatt)
         end
