@@ -966,6 +966,11 @@ local conVars = {
         name = "atts_maxcamos",
         default = "3",
     },
+    {
+        name = "indoorsound",
+        default = "1",
+        replicated = true
+    },
 }
 ARC9.ConVarData = {}
 

@@ -1,22 +1,24 @@
 SWEP.LoopingSound = nil
 SWEP.LoopingSoundIndoor = nil
 
+local soundmode = GetConVar("arc9_indoorsound")
+
 function SWEP:StartLoop()
-	if self:GetUBGL() then return end
+    if self:GetUBGL() then return end
 
     if self.LoopingSound then return end
-	
-	local sil = self:GetProcessedValue("Silencer", true)
+
+    local sil = self:GetProcessedValue("Silencer", true)
     local s = self:GetProcessedValue("ShootSoundLooping", true)
-	local ss = self:GetProcessedValue("ShootSoundLoopingSilenced", true)
+    local ss = self:GetProcessedValue("ShootSoundLoopingSilenced", true)
 
     if !s then return end
 
-	if sil and ss then
-		self.LoopingSound = CreateSound(self, ss)
-	else
-		self.LoopingSound = CreateSound(self, s)
-	end
+    if sil and ss then
+        self.LoopingSound = CreateSound(self, ss)
+    else
+        self.LoopingSound = CreateSound(self, s)
+    end
     self.LoopingSound:Play()
     self.LoopingSound:SetSoundLevel(math.Clamp(self:GetProcessedValue("ShootVolume", true), 51, 149))
     self.LoopingSound:ChangePitch(self:GetProcessedValue("ShootPitch", true), 0)
@@ -27,79 +29,79 @@ function SWEP:StartLoop()
     local sis = self:GetProcessedValue("ShootSoundLoopingSilencedIndoor")
 
     if !si then return end
-	
-	if sil and sis then
-		self.LoopingSoundIndoor = CreateSound(self, sis)
-	else
-		self.LoopingSoundIndoor = CreateSound(self, si)
-	end
-	self.LoopingSoundIndoor:Play()
-	self.LoopingSoundIndoor:SetSoundLevel(math.Clamp(self:GetProcessedValue("ShootVolume", true), 51, 149))
-	self.LoopingSoundIndoor:ChangePitch(self:GetProcessedValue("ShootPitch", true), 0)
-	self.LoopingSoundIndoor:ChangeVolume(0)
-	
+
+    if sil and sis then
+        self.LoopingSoundIndoor = CreateSound(self, sis)
+    else
+        self.LoopingSoundIndoor = CreateSound(self, si)
+    end
+    self.LoopingSoundIndoor:Play()
+    self.LoopingSoundIndoor:SetSoundLevel(math.Clamp(self:GetProcessedValue("ShootVolume", true), 51, 149))
+    self.LoopingSoundIndoor:ChangePitch(self:GetProcessedValue("ShootPitch", true), 0)
+    self.LoopingSoundIndoor:ChangeVolume(0)
+
 end
 
 function SWEP:EndLoop()
     if !self.LoopingSound then return end
-	
-	local sil = self:GetProcessedValue("Silencer", true)
+
+    local sil = self:GetProcessedValue("Silencer", true)
 
     self.LoopingSound:Stop()
     -- self:StopLoopingSound(self.LoopingSound)
     self.LoopingSound = nil
-	
-	if sil then
-		if self.LoopingSoundIndoor then
-			self.LoopingSoundIndoor:Stop()
-			self.LoopingSoundIndoor = nil
 
-			if self:GetIndoor() then
-				local soundtab1 = {
-					name = "shootlooptailindoorsilenced",
-					sound = self:GetProcessedValue("ShootSoundTailIndoorSilenced", true) or self:GetProcessedValue("ShootSoundWindDownSilencedIndoor", true) or "",
-				}
-				self:PlayTranslatedSound(soundtab1)
-			else
-				local soundtab1 = {
-					name = "shootlooptailsilenced",
-					sound = self:GetProcessedValue("ShootSoundTailSilenced", true) or self:GetProcessedValue("ShootSoundWindDownSilenced", true) or "",
-				}
-				self:PlayTranslatedSound(soundtab1)
-			end
-		else
-			local soundtab1 = {
-				name = "shootlooptailsilenced",
-				sound = self:GetProcessedValue("ShootSoundTailSilenced", true) or self:GetProcessedValue("ShootSoundWindDownSilenced", true) or "",
-			}
-			self:PlayTranslatedSound(soundtab1)
-		end
-	else
-		if self.LoopingSoundIndoor then
-			self.LoopingSoundIndoor:Stop()
-			self.LoopingSoundIndoor = nil
+    if sil then
+        if self.LoopingSoundIndoor then
+            self.LoopingSoundIndoor:Stop()
+            self.LoopingSoundIndoor = nil
 
-			if self:GetIndoor() then
-				local soundtab1 = {
-					name = "shootlooptailindoor",
-					sound = self:GetProcessedValue("ShootSoundTailIndoor", true) or self:GetProcessedValue("ShootSoundWindDownIndoor", true) or "",
-				}
-				self:PlayTranslatedSound(soundtab1)
-			else
-				local soundtab1 = {
-					name = "shootlooptail",
-					sound = self:GetProcessedValue("ShootSoundTail", true) or self:GetProcessedValue("ShootSoundWindDown", true) or "",
-				}
-				self:PlayTranslatedSound(soundtab1)
-			end
-		else
-			local soundtab1 = {
-				name = "shootlooptail",
-				sound = self:GetProcessedValue("ShootSoundTail", true) or self:GetProcessedValue("ShootSoundWindDown", true) or "",
-			}
-			self:PlayTranslatedSound(soundtab1)
-		end
-	end
+            if self:GetIndoor() then
+                local soundtab1 = {
+                    name = "shootlooptailindoorsilenced",
+                    sound = self:GetProcessedValue("ShootSoundTailIndoorSilenced", true) or self:GetProcessedValue("ShootSoundWindDownSilencedIndoor", true) or "",
+                }
+                self:PlayTranslatedSound(soundtab1)
+            else
+                local soundtab1 = {
+                    name = "shootlooptailsilenced",
+                    sound = self:GetProcessedValue("ShootSoundTailSilenced", true) or self:GetProcessedValue("ShootSoundWindDownSilenced", true) or "",
+                }
+                self:PlayTranslatedSound(soundtab1)
+            end
+        else
+            local soundtab1 = {
+                name = "shootlooptailsilenced",
+                sound = self:GetProcessedValue("ShootSoundTailSilenced", true) or self:GetProcessedValue("ShootSoundWindDownSilenced", true) or "",
+            }
+            self:PlayTranslatedSound(soundtab1)
+        end
+    else
+        if self.LoopingSoundIndoor then
+            self.LoopingSoundIndoor:Stop()
+            self.LoopingSoundIndoor = nil
+
+            if self:GetIndoor() then
+                local soundtab1 = {
+                    name = "shootlooptailindoor",
+                    sound = self:GetProcessedValue("ShootSoundTailIndoor", true) or self:GetProcessedValue("ShootSoundWindDownIndoor", true) or "",
+                }
+                self:PlayTranslatedSound(soundtab1)
+            else
+                local soundtab1 = {
+                    name = "shootlooptail",
+                    sound = self:GetProcessedValue("ShootSoundTail", true) or self:GetProcessedValue("ShootSoundWindDown", true) or "",
+                }
+                self:PlayTranslatedSound(soundtab1)
+            end
+        else
+            local soundtab1 = {
+                name = "shootlooptail",
+                sound = self:GetProcessedValue("ShootSoundTail", true) or self:GetProcessedValue("ShootSoundWindDown", true) or "",
+            }
+            self:PlayTranslatedSound(soundtab1)
+        end
+    end
 end
 
 function SWEP:ThinkLoopingSound()
@@ -129,41 +131,69 @@ SWEP.IndoorTick = 0
 SWEP.IsIndoors = 0
 
 local traces = {
-    -- Up
-    {
-        Distance = Vector(0, 0, 1024),
-        Influence = 1,
+    [0] = {
+        {
+            Distance = Vector(0, 0, 1024),
+            Influence = 1,
+        }, -- Up
     },
-    {
-        Distance = Vector(512, 0, 768),
-        Influence = 1,
+    [1] = {
+        {
+            Distance = Vector(0, 0, 1024),
+            Influence = 1,
+        }, -- Up
+        {
+            Distance = Vector(768, 768, 0),
+            Influence = 0.5,
+        }, -- Right
+        {
+            Distance = Vector(-768, 768, 0),
+            Influence = 0.5,
+        }, -- Left
     },
-    {
-        Distance = Vector(-512, 0, 768),
-        Influence = 1,
-    },
-    {
-        Distance = Vector(0, 512, 768),
-        Influence = 1,
-    },
-    {
-        Distance = Vector(0, -512, 768),
-        Influence = 1,
-    },
-    -- Forward
-    {
-        Distance = Vector(0, 768, 128),
-        Influence = 0.5,
-    },
-    -- Left/Right
-    {
-        Distance = Vector(768, 768, 256),
-        Influence = 0.5,
-    },
-    {
-        Distance = Vector(-768, 768, 256),
-        Influence = 0.5,
-    },
+    [2] = {
+        -- Up
+        {
+            Distance = Vector(0, 0, 1024),
+            Influence = 1,
+        },
+        {
+            Distance = Vector(512, 0, 768),
+            Influence = 1,
+        },
+        {
+            Distance = Vector(-512, 0, 768),
+            Influence = 1,
+        },
+        {
+            Distance = Vector(0, 512, 768),
+            Influence = 1,
+        },
+        {
+            Distance = Vector(0, -512, 768),
+            Influence = 1,
+        },
+        -- Forward
+        {
+            Distance = Vector(0, 768, 128),
+            Influence = 0.5,
+        },
+        -- Left/Right
+        {
+            Distance = Vector(768, 768, 256),
+            Influence = 0.5,
+        },
+        {
+            Distance = Vector(-768, 768, 256),
+            Influence = 0.5,
+        },
+    }
+}
+
+local cachedelay = {
+    [0] = 0.25,
+    [1] = 0.1,
+    [2] = 0.02,
 }
 
 
@@ -179,7 +209,10 @@ local traceTable = {
 function SWEP:GetIndoor()
     if !self.ShootSoundIndoor and !self.DistantShootSoundIndoor and !self.ShootSoundSilencedIndoor and !self.DistantShootSoundSilencedIndoor then return 0 end -- non realism guns!!!
 
-    if self.IndoorTick == UnPredictedCurTime() then return self.IsIndoors end
+    local mode = math.Clamp(soundmode:GetInt(), 0, 2)
+
+    -- cache aggressively for automatic weapons
+    if self.IndoorTick + cachedelay[mode] >= UnPredictedCurTime() then return self.IsIndoors end
     self.IndoorTick = UnPredictedCurTime()
 
     local vol = 0
@@ -189,7 +222,7 @@ function SWEP:GetIndoor()
     local woa = Angle(0, wo:EyeAngles().y, 0)
     local t_influ = 0
 
-    for _, tin in ipairs(traces) do
+    for _, tin in ipairs(traces[mode]) do
         traceTable.start = wop
         offset = Vector()
         offset = offset + (tin.Distance.x * woa:Right())

@@ -672,6 +672,9 @@ L["settings.effects.allflash.desc"] = "Renders the flashlights from all players.
 L["settings.effects.lod.title"] = "LOD (Level of Detail) Distance"
 L["settings.effects.lod.desc"] = "How far away you have to be from models for them to change into lower quality variants without attachments.\n\nLower values make the models change at lower distances, and could improve performance.\n\nHigher values could impact performance, but keeps the highest quality models loaded at further distances.\n\nTPIK distance is also affected."
 
+L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
+L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
+
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Viewmodel Settings"
 L["settings.tabname.vm.desc"] = "Alter various settings related to the viewmodels."

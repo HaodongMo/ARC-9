@@ -90,30 +90,29 @@ local soundtab6 = {
 }
 
 function SWEP:DoShootSounds()
-    local randomChoice = self.RandomChoice
     local pvar = swepGetProcessedValue(self, "ShootPitchVariation", true)
     local pvrand = math.Rand(-pvar, pvar) -- util.SharedRandom("ARC9_sshoot", -pvar, pvar) -- who gives a shit??? plus it broke af
+    local randomChoice = self.RandomChoice
 
     local sstr = lsstr
     local sslr = lsslr
     local dsstr = ldsstr
 
-    local silenced = swepGetProcessedValue(self, "Silencer", true) and !self:GetUBGL()
     local indoor = self:GetIndoor()
 
     local indoormix = 1 - indoor
     local havedistant = swepGetProcessedValue(self, dsstr, true)
 
-    if silenced and swepGetProcessedValue(self, sstrSilenced, true) then
-        sstr = sstrSilenced
-    end
-
-    if silenced and swepGetProcessedValue(self, sslrSilenced, true) then
-        sslr = sslrSilenced
-    end
-
-    if havedistant and silenced and swepGetProcessedValue(self, dsstrSilenced, true) then
-        dsstr = dsstrSilenced
+    if swepGetProcessedValue(self, "Silencer", true) and !self:GetUBGL() then
+        if swepGetProcessedValue(self, sstrSilenced, true) then
+            sstr = sstrSilenced
+        end
+        if swepGetProcessedValue(self, sslrSilenced, true) then
+            sslr = sslrSilenced
+        end
+        if havedistant and swepGetProcessedValue(self, dsstrSilenced, true) then
+            dsstr = dsstrSilenced
+        end
     end
 
     do
