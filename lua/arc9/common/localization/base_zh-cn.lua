@@ -575,7 +575,7 @@ L["settings.crosshair.crosshair_force.title"] = "强制启用准心"
 L["settings.crosshair.crosshair_force.desc"] = "在所有武器上开启准心。\n\n服务器端设置。"
 
 ////////////////////// Customization
-L["settings.tabname.arc9_hud"] = "自定义"
+L["settings.tabname.customization"] = "自定义"
 
 L["settings.custmenu.hud"] = "HUD"
 L["settings.hud_game.hud_scale.title"] = "HUD 大小"
@@ -594,7 +594,13 @@ L["settings.custmenu.cust_exit_reset_sel.title"] = "退出时重置选择"
 L["settings.custmenu.cust_exit_reset_sel.desc"] = "退出自定义菜单会同时取消选择当前槽位。"
 
 ////////////////////// Game HUD
-L["settings.tabname.hud_game"] = "HUD"
+L["settings.tabname.hud_game"] = "游戏界面"
+
+L["settings.server.hud_game.hud_arc9.title"] = "全局禁用 ARC9 HUD"
+L["settings.server.hud_game.hud_arc9.desc"] = "让用户无法自行使用 ARC9 HUD。"
+
+L["settings.tabname.arc9_hud"] = "ARC9 HUD"
+L["settings.tabname.arc9_hud.desc"] = "ARC9 自带界面的相关参数。"
 
 L["settings.hud_game.lcd"] = "LCD 屏幕"
 L["settings.hud_game.hud_arc9.title"] = "启用 HUD"
@@ -606,11 +612,26 @@ L["settings.hud_game.hud_compact.desc"] = "精简 HUD 上的信息。"
 L["settings.hud_game.keephints.title"] = "一直显示提示"
 L["settings.hud_game.keephints.desc"] = "HUD 上分的操作提示不会消失。"
 
-L["settings.hud_game.killfeed"] = "击杀显示"
+L["settings.hud_game.hints.title"] = "提示显示模式"
+L["settings.hud_game.hints.desc"] = "调整提示如何显示。"
+
+L["settings.hud_game.hints.off"] = "不显示"
+L["settings.hud_game.hints.fade"] = "显示并淡出"
+L["settings.hud_game.hints.on"] = "一直显示"
+
+L["settings.hud_game.killfeed"] = "击杀图标"
 L["settings.hud_game.killfeed_enable.title"] = "自动生成击杀菜单图标"
 L["settings.hud_game.killfeed_enable.desc"] = "用模型生成 ARC9 武器的击杀图标而不是现有材质。"
 L["settings.hud_game.killfeed_dynamic.title"] = "动态生成菜单图标"
 L["settings.hud_game.killfeed_dynamic.desc"] = "击杀图标会自动刷新，显示当前武器配件。\n\n关掉可能影响性能。"
+L["settings.hud_game.killfeed_colour.title"] = "全彩击杀图标"
+L["settings.hud_game.killfeed_colour.desc"] = "启用后击杀图标带有颜色，禁用则图标为黑白。"
+
+L["settings.hud_game.hud_scale.title"] = "HUD 比例"
+L["settings.hud_game.hud_scale.desc"] = "缩放 ARC9 的自定义菜单和 HUD 大小。\n\n注意：若设置为小于 1 的值， ARC9 的 HUD 会被禁用。"
+
+L["settings.hud_game.hud_deadzonex.title"] = "HUD 横轴空白"
+L["settings.hud_game.hud_deadzonex.desc"] = "调整 HUD 和自定义菜单横向空白。参数越大，界面越会往屏幕中间平移。\n\n适合超宽屏幕。"
 
 L["settings.hud_game.breath"] = "屏气"
 L["settings.centerhint.breath_hud.title"] = "屏气条"
@@ -625,18 +646,22 @@ L["settings.tabname.npc"] = "NPC"
 
 L["settings.npc.weapons"] = "NPC 武器"
 L["settings.server.npc.npc_equality.title"] = "伤害平等"
-L["settings.server.npc.npc_equality.desc"] = "NPC 使用 ARC9 武器时造成的伤害和玩家一样。\n\n服务器参数。"
+L["settings.server.npc.npc_equality.desc"] = "NPC 使用 ARC9 武器时造成的伤害和玩家一样。"
 L["settings.server.npc.npc_spread.title"] = "NPC 散射"
 L["settings.server.npc.npc_spread.desc"] = "NPC 的开火准度。"
 L["settings.server.npc.npc_autoreplace.title"] = "替换 NPC 武器"
-L["settings.server.npc.npc_autoreplace.desc"] = "NPC 的 HL2 武器会替换成随机 ARC9 武器。.\n\n服务器参数。"
+L["settings.server.npc.npc_autoreplace.desc"] = "NPC 的 HL2 武器会替换成随机 ARC9 武器。."
 L["settings.server.npc.replace_spawned.title"] = "替换地面武器"
-L["settings.server.npc.replace_spawned.desc"] = "地图上自带和生成的 HL2 武器会替换成随机 ARC9 武器。\n\n服务器参数。"
+L["settings.server.npc.replace_spawned.desc"] = "地图上自带和生成的 HL2 武器会替换成随机 ARC9 武器。"
 L["settings.server.npc.npc_give_weapons.title"] = "玩家给予 NPC 武器"
-L["settings.server.npc.npc_give_weapons.desc"] = "对 NPC 按使用键会把玩家的武器交给 NPC。\n\n服务器参数。"
+L["settings.server.npc.npc_give_weapons.desc"] = "对 NPC 按使用键会把玩家的武器交给 NPC。"
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "游戏性"
+
+////////// General
+L["settings.tabname.general"] = "通用"
+L["settings.tabname.general.desc"] = "各种通用游戏设置。"
 
 L["settings.gameplay.controls"] = "操作"
 L["settings.gameplay.toggleads.title"] = "切换瞄准"
@@ -652,23 +677,23 @@ L["settings.gameplay.togglepeek.desc"] = "按一下窥视键会进入或退出�
 
 L["settings.gameplay.mechanics"] = "游戏机制"
 L["settings.server.gameplay.infinite_ammo.title"] = "无限子弹"
-L["settings.server.gameplay.infinite_ammo.desc"] = "ARC9 武器不需要消耗子弹进行装填。\n\n服务器参数。"
+L["settings.server.gameplay.infinite_ammo.desc"] = "ARC9 武器不需要消耗子弹进行装填。"
 L["settings.server.gameplay.realrecoil.title"] = "视觉后坐力影响散射"
-L["settings.server.gameplay.realrecoil.desc"] = "部分武器的开火位置会受到视觉后坐力的影响。这个设置对它们的平衡很重要。\n\n服务器参数。"
+L["settings.server.gameplay.realrecoil.desc"] = "部分武器的开火位置会受到视觉后坐力的影响。这个设置对它们的平衡很重要。"
 L["settings.server.gameplay.lean.title"] = "侧身"
-L["settings.server.gameplay.lean.desc"] = "玩家可以使用 +alt1 和 +alt2，以及自动侧身功能，进行探头开火。\n\n服务器参数。"
+L["settings.server.gameplay.lean.desc"] = "玩家可以使用 +alt1 和 +alt2，以及自动侧身功能，进行探头开火。"
 L["settings.server.gameplay.mod_sway.title"] = "偏移"
-L["settings.server.gameplay.mod_sway.desc"] = "部分武器会有随机偏移。\n\n服务器参数。"
+L["settings.server.gameplay.mod_sway.desc"] = "部分武器会有随机偏移。"
 L["settings.server.gameplay.mod_freeaim.title"] = "自由腰射"
-L["settings.server.gameplay.mod_freeaim.desc"] = "部分武器腰射时子弹不会从屏幕中间出现，而是随着鼠标移动。\n\n服务器参数。"
+L["settings.server.gameplay.mod_freeaim.desc"] = "部分武器腰射时子弹不会从屏幕中间出现，而是随着鼠标移动。"
 L["settings.server.gameplay.mod_bodydamagecancel.title"] = "调整身体伤害倍率"
-L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "调整伤害抵消默认的伤害倍率。如果你的游戏模式没有这个倍率，可禁用此功能。\n\n服务器参数。"
+L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "调整伤害抵消默认的伤害倍率。如果你的游戏模式没有这个倍率，可禁用此功能。"
 L["settings.server.gameplay.breath_slowmo.title"] = "屏气慢动作"
 L["settings.server.gameplay.breath_slowmo.desc"] = "屏气时会进入子弹时间。\n\n单人模式专用。"
 L["settings.server.gameplay.manualbolt.title"] = "手动上膛"
 L["settings.server.gameplay.manualbolt.desc"] = "需要单发上膛的武器需要按 R 上膛而不是自动上膛。"
 L["settings.server.gameplay.never_ready.title"] = "禁用准备动画"
-L["settings.server.gameplay.never_ready.desc"] = "不显示武器首次掏出的特殊动画。\n\n服务器参数。"
+L["settings.server.gameplay.never_ready.desc"] = "不显示武器首次掏出的特殊动画。"
 
 L["settings.gameplay.nearwall.title"] = "枪管近身"
 L["settings.gameplay.nearwall.desc"] = "如果离墙壁或者其他东西太近时，武器会没空间开火。"
@@ -677,9 +702,12 @@ L["settings.gameplay.nearwall.desc"] = "如果离墙壁或者其他东西太近�
 L["settings.tabname.visuals"] = "视觉"
 
 L["settings.tabname.vm"] = "第一人称模型"
+L["settings.tabname.vm.desc"] = "调整关于第一人称模型的参数。"
+
+
 L["settings.vm.vm_bobstyle.title"] = "视觉晃动效果"
 L["settings.vm.vm_bobstyle.desc"] = "可选不同 ARC9 成员（以及 Valve）配置的第一人称模型晃动，从新到旧排序。" -- developer of arc9 team -> contributors of arc9; remove mention of new to old 
-L["settings.vm.fov.title"] = "FOV"
+L["settings.vm.fov.title"] = "增加 FOV"
 L["settings.vm.fov.desc"] = "缩放第一人称模型。极端数值会导致模型很怪，请妥善利用。"
 L["settings.vm.vm_addx.title"] = "X 轴偏移"
 L["settings.vm.vm_addx.desc"] = "调整第一人称模型的左右位置。"
@@ -688,54 +716,43 @@ L["settings.vm.vm_addy.desc"] = "调整第一人称模型的前后位置。"
 L["settings.vm.vm_addz.title"] = "Z 轴偏移"
 L["settings.vm.vm_addz.desc"] = "调整第一人称模型的上下位置。"
 
-L["settings.tpik"] = "TPIK"
-L["settings.tpik.title"] = "TPIK"
-L["settings.tpik.desc"] = "TPIK (第三人称逆运动动画) 可将第一人称的手部动作表现在你的第三人称角色上。"
-L["settings.tpik_others.title"] = "其他玩家的 TPIK"
-L["settings.tpik_others.desc"] = "可以在其他玩家身上看到第一人称动画。对性能有较大影响。"
-L["settings.tpik_framerate.title"] = "TPIK 帧率"
-L["settings.tpik_framerate.desc"] = "限制 TPIK 动画的帧率。设为 0 时没有上限。"
+L["settings.vm.vm_cambob.title"] = "冲刺视觉晃动"
+L["settings.vm.vm_cambob.desc"] = "让摄像机在冲刺时晃动。"
+
+L["settings.vm.vm_cambobwalk.title"] = "走动视觉晃动"
+L["settings.vm.vm_cambobwalk.desc"] = "让摄像机在走动时晃动。"
+
+L["settings.vm.vm_cambobintensity.title"] = "强度"
+L["settings.vm.vm_cambobintensity.desc"] = "调整视觉晃动的强度。"
+
+L["settings.vm.vm_camstrength.title"] = "武器动画晃动强度"
+L["settings.vm.vm_camstrength.desc"] = "调整部分武器包在装填或其他动画时附加的摄像机移动效果。\n\n也许会帮助（或恶化）晕动症。\n\n注意：调整这个参数可能会导致部分武器包故障。"
+
+L["settings.vm.vm_camrollstrength.title"] = "武器动画侧摇强度"
+L["settings.vm.vm_camrollstrength.desc"] = "调整部分武器包在装填或其他动画时附加的摄像机侧摇效果。\n\n也许会帮助（或恶化）晕动症。"
+
+////////////////////// Crosshair & Scopes
+L["settings.tabname.crosshairscopes"] = "准星和瞄准镜"
+L["settings.tabname.crosshairscopes.desc"] = "调整十字准星和瞄准镜相关的参数。"
 
 ////////////////////// Bullet Physics
 L["settings.tabname.bulletphysics"] = "物理子弹"
 
 L["settings.bullets.bullets"] = "物理子弹"
 L["settings.server.bulletphysics.bullet_physics.title"] = "物理子弹"
-L["settings.server.bulletphysics.bullet_physics.desc"] = "支持此功能的武器子弹会在世界里飞到目标点而不是在开火时立刻中弹。子弹会受到重力和阻力影响。\n\n服务器参数。"
+L["settings.server.bulletphysics.bullet_physics.desc"] = "支持此功能的武器子弹会在世界里飞到目标点而不是在开火时立刻中弹。子弹会受到重力和阻力影响。"
 L["settings.server.bulletphysics.bullet_gravity.title"] = "重力"
-L["settings.server.bulletphysics.bullet_gravity.desc"] = "子弹重力倍率。\n\n服务器参数。"
+L["settings.server.bulletphysics.bullet_gravity.desc"] = "子弹重力倍率。"
 L["settings.server.bulletphysics.bullet_drag.title"] = "阻力"
-L["settings.server.bulletphysics.bullet_drag.desc"] = "子弹阻力倍率。\n\n服务器参数。"
+L["settings.server.bulletphysics.bullet_drag.desc"] = "子弹阻力倍率。"
 L["settings.server.bulletphysics.ricochet.title"] = "子弹反弹"
-L["settings.server.bulletphysics.ricochet.desc"] = "子弹打中后会根据材质，子弹属性和角度有概率改变角度继续飞行。\n\n服务器参数。"
+L["settings.server.bulletphysics.ricochet.desc"] = "子弹打中后会根据材质，子弹属性和角度有概率改变角度继续飞行。"
 L["settings.server.bulletphysics.mod_penetration.title"] = "子弹穿透"
-L["settings.server.bulletphysics.mod_penetration.desc"] = "子弹打中后可以穿透一定量的材质，然后继续飞行。\n\n服务器参数。"
+L["settings.server.bulletphysics.mod_penetration.desc"] = "子弹打中后可以穿透一定量的材质，然后继续飞行。"
 L["settings.server.bulletphysics.bullet_lifetime.title"] = "存在时间"
-L["settings.server.bulletphysics.bullet_lifetime.desc"] = "子弹如果存在超过这个时间就会消失。\n\n服务器参数。"
+L["settings.server.bulletphysics.bullet_lifetime.desc"] = "子弹如果存在超过这个时间就会消失。"
 L["settings.bullets.bullet_imaginary.title"] = "视觉子弹"
 L["settings.bullets.bullet_imaginary.desc"] = "打进天空墙的子弹会生成一个假子弹继续飞行。"
-
-////////////////////// Attachments
-L["settings.tabname.attachments"] = "配件"
-
-L["settings.tabname.customization"] = "自定义"
-L["settings.server.custmenu.atts_nocustomize.title"] = "禁用自定义"
-L["settings.server.custmenu.atts_nocustomize.desc"] = "玩家不可进行任何配件改动。\n\n服务器参数。"
-L["settings.server.custmenu.atts_max.title"] = "最大配件量"
-L["settings.server.custmenu.atts_max.desc"] = "武器最多能装的配件数量。\n\n服务器参数。"
-L["settings.custmenu.autosave.title"] = "自动保存"
-L["settings.custmenu.autosave.desc"] = "你的上一个武器配置会在获得下一把同样武器时应用。"
-L["settings.server.custmenu.blacklist.open"] = "打开"
-
-L["settings.attachments.inventory"] = "配件背包"
-L["settings.server.custmenu.free_atts.title"] = "免费配件"
-L["settings.server.custmenu.free_atts.desc"] = "不需要捡起配件实体也可以使用所有配件。\n\n服务器参数。"
-L["settings.server.custmenu.atts_lock.title"] = "捡起即解锁"
-L["settings.server.custmenu.atts_lock.desc"] = "捡起一个配件可以给多个武器配置而不消耗。\n\n服务器参数。"
-L["settings.server.custmenu.atts_loseondie.title"] = "死亡时掉落"
-L["settings.server.custmenu.atts_loseondie.desc"] = "死亡的时候配件会消失。\n\n服务器参数。"
-L["settings.server.custmenu.atts_generateentities.title"] = "生成实体"
-L["settings.server.custmenu.atts_generateentities.desc"] = "在菜单里为每个配件生成一个实体。\n\n会增加加载时间。\n\n服务器参数。"
 
 ////////////////////// Modifiers
 L["settings.tabname.modifiers"] = "属性修改"
@@ -769,75 +786,35 @@ L["settings.tabname.developer.settings"] = "开发者设置"
 L["settings.title"] = "ARC9 设定"
 L["settings.desc"] = "简介"
 
--- L["settings.default_convar"] = "Default value"
--- L["settings.convar_server"] = "Server variable"
--- L["settings.convar_client"] = "Client variable"
+L["settings.default_convar"] = "默认值"
+L["settings.convar_server"] = "服务器端参数"
+L["settings.convar_client"] = "客户端参数"
 
--- L["settings.disabled"] = "(Disabled) "
--- L["settings.disabled.desc"] = "! Disabled by server admin !\n\n"
--- L["settings.server"] = "\n\nThis is a server variable."
+L["settings.disabled"] = "(禁用) "
+L["settings.disabled.desc"] = "! 被服务器管理员禁用 !\n\n"
+L["settings.server"] = "\n\n这是服务器端参数。"
 
 ////////////////////// Quick Access
--- L["settings.tabname.quick"] = "Quick Access"
--- L["settings.tabname.quick.desc"] = "Get quick access to the more important settings right here."
+L["settings.tabname.quick"] = "快捷菜单"
+L["settings.tabname.quick.desc"] = "在这里调整特定重要的参数。"
 
--- L["settings.quick.lang.title"] = "ARC9 Language"
--- L["settings.quick.lang.desc"] = "Change the displayed language for ARC9.\n\nNote: Not all languages are supported on weapon packs!"
+L["settings.hud_game.hud_arc9.desc2"] = "Tweak in \"Game HUD\"\n\nEnable a custom LCD display HUD when using ARC9 weapons."
 
--- L["settings.hud_game.hud_arc9.desc2"] = "Tweak in \"Game HUD\"\n\nEnable a custom LCD display HUD when using ARC9 weapons."
+L["settings.tpik.desc2"] = "Tweak in \"Visuals\"\n\nEnables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
 
--- L["settings.tpik.desc2"] = "Tweak in \"Visuals\"\n\nEnables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
-
--- L["settings.aimassist.enable.desc2"] = "Tweak in \"Gameplay\"\n\nEnables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
+L["settings.aimassist.enable.desc2"] = "Tweak in \"Gameplay\"\n\nEnables aim assist, which moves your camera closer to valid targets if one is detected close to your crosshair."
 
 ////////////////////// Reset Settings
--- L["settings.tabname.reset"] = "Reset Settings"
--- L["settings.tabname.reset.desc"] = "Press the \"Reset\" button to fully reset ARC9 settings back to their default values."
+L["settings.tabname.reset"] = "重置设定"
+L["settings.tabname.reset.desc"] = "按 \"重置\" 把所有参数设成默认值。"
 
--- L["settings.client.reset.title"] = "Reset Client Settings"
--- L["settings.client.reset.desc"] = "Fully resets all ARC9 client settings.\n\nWarning: Cannot be reversed."
+L["settings.client.reset.title"] = "重置客户端参数"
+L["settings.client.reset.desc"] = "将所有 ARC9 的客户端端参数设置成默认值。\n\n注意：这个操作不可逆。"
 
--- L["settings.server.reset.title"] = "Reset Server Settings"
--- L["settings.server.reset.desc"] = "Fully resets all ARC9 server settings.\n\nWarning: Cannot be reversed."
+L["settings.server.reset.title"] = "重置服务器端参数"
+L["settings.server.reset.desc"] = "将所有 ARC9 的服务器端参数设置成默认值。\n\n注意：这个操作不可逆。"
 
--- L["settings.reset"] = "RESET"
-
-////////////////////// Game HUD
--- L["settings.tabname.hud_game"] = "Game HUD"
-
-////////// ARC9 HUD
--- L["settings.server.hud_game.hud_arc9.title"] = "Globally Disable ARC9 HUD"
--- L["settings.server.hud_game.hud_arc9.desc"] = "Disables the ability for users to utilize the ARC9 HUD."
-
--- L["settings.tabname.arc9_hud"] = "ARC9 HUD"
--- L["settings.tabname.arc9_hud.desc"] = "Everything related to ARC9's custom HUD and its elements."
-
--- L["settings.hud_game.hud_arc9.title"] = "Enable ARC9 HUD"
--- L["settings.hud_game.hud_arc9.desc"] = "Enable a custom LCD display HUD when using ARC9 weapons."
--- L["settings.hud_game.hud_compact.title"] = "Compact mode"
--- L["settings.hud_game.hud_compact.desc"] = "Hides certain elements on the ARC9 HUD, providing a more compact look."
--- L["settings.hud_game.hud_always.title"] = "Display on non-ARC9 Weapons"
--- L["settings.hud_game.hud_always.desc"] = "Enable the custom HUD when using non-ARC9 weapons."
-
--- L["settings.hud_game.hints.title"] = "Hint Behavior"
--- L["settings.hud_game.hints.desc"] = "Choose to always display, fade away or completely disable control hints."
-
--- L["settings.hud_game.hints.off"] = "Always Off"
--- L["settings.hud_game.hints.fade"] = "Fade Away"
--- L["settings.hud_game.hints.on"] = "Always On"
-
--- L["settings.hud_game.killfeed_enable.title"] = "Auto-Generate Killfeed Icons"
--- L["settings.hud_game.killfeed_enable.desc"] = "Generate killfeed icons automatically on ARC9 weapons."
--- L["settings.hud_game.killfeed_dynamic.title"] = "Dynamic Icons"
--- L["settings.hud_game.killfeed_dynamic.desc"] = "Dynamically generates icons when getting kills or altering attachments."
--- L["settings.hud_game.killfeed_colour.title"] = "Display in Color"
--- L["settings.hud_game.killfeed_colour.desc"] = "Generates icons in full color rather than black and white."
-
--- L["settings.hud_game.hud_scale.title"] = "HUD Scale"
--- L["settings.hud_game.hud_scale.desc"] = "Alter the size scale of the ARC9 HUD and the customization menu.\n\nNote: If set below 1, the ARC9 HUD will be disabled."
-
--- L["settings.hud_game.hud_deadzonex.title"] = "HUD Horizontal Deadzone"
--- L["settings.hud_game.hud_deadzonex.desc"] = "Alters the horizontal deadzone of the HUD and customization menu. The higher the value, the more towards the center it is.\n\nUseful for ultrawide monitors."
+L["settings.reset"] = "RESET"
 
 ////////// Glyphs
 -- L["settings.tabname.glyphs"] = "Glyphs"
@@ -876,21 +853,18 @@ L["settings.desc"] = "简介"
 -- L["settings.centerhint.overheat.title"] = "When Overheating"
 -- L["settings.centerhint.overheat.desc"] = "Displays a tooltip when the weapon is about to overheat."
 
-////////////////////// Visuals
--- L["settings.tabname.visuals"] = "Visuals"
-
 ////////// TPIK
--- L["settings.tabname.tpik"] = "TPIK - Third Person Inverse Kinematics"
--- L["settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions."
+L["settings.tabname.tpik"] = "TPIK - 第三人称逆运动动画"
+L["settings.tabname.tpik.desc"] = "\"第三人称逆运动动画\" 是一个能将第一人称的手部动作\n表现在第三人称角色上的系统。"
 
--- L["settings.tpik.title"] = "Enable TPIK"
--- L["settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
+L["settings.tpik.title"] = "启用 TPIK"
+L["settings.tpik.desc"] = "启用 TPIK 系统（第三人称逆运动动画）。\n\n这个参数会影响性能。"
 
--- L["settings.tpik_others.title"] = "Other Players' TPIK"
--- L["settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
+L["settings.tpik_others.title"] = "其他玩家的 TPIK"
+L["settings.tpik_others.desc"] = "在其他玩家上也启用 TPIK 系统。\n\n这个参数会影响性能。"
 
--- L["settings.tpik_framerate.title"] = "TPIK Frame Rate"
--- L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK runs at.\n\nSet to 0 for unlimited.\n\nUnlimited or higher values impact performance."
+L["settings.tpik_framerate.title"] = "TPIK 帧率"
+L["settings.tpik_framerate.desc"] = "限制 TPIK 动画的关键帧频率。\n\n设为 0 则没有上限。\n\n高帧率或无限帧率会影响性能。"
 
 ////////// Blur
 -- L["settings.tabname.blur"] = "Blur"
@@ -935,6 +909,9 @@ L["settings.desc"] = "简介"
 
 -- L["settings.effects.lod.title"] = "LOD (Level of Detail) Distance"
 -- L["settings.effects.lod.desc"] = "How far away you have to be from models for them to change into lower quality variants without attachments.\n\nLower values make the models change at lower distances, and could improve performance.\n\nHigher values could impact performance, but keeps the highest quality models loaded at further distances.\n\nTPIK distance is also affected."
+
+L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
+L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
 
 ////////// Viewmodel Settings
 -- L["settings.tabname.vm"] = "Viewmodel Settings"
@@ -1191,32 +1168,34 @@ L["settings.desc"] = "简介"
 -- L["settings.gameplay.controllerglyphs.desc"] = "Open a separate menu that allows you to alter the glyphs that are displayed when Controller Mode is enabled."
 
 ////////////////////// Attachments & NPCs
--- L["settings.tabname.attachmentsnpcs"] = "Attachments & NPCs"
+L["settings.tabname.attachmentsnpcs"] = "配件和 NPC"
 
 ////////// Customization
--- L["settings.tabname.customization.desc"] = "Adjust settings related to weapon customizing."
+L["settings.tabname.customization.desc"] = "调整影响武器自定义的参数。"
+L["settings.tabname.attachments"] = "配件"
 
--- L["settings.server.custmenu.atts_nocustomize.title"] = "Disable Customizing"
--- L["settings.server.custmenu.atts_nocustomize.desc"] = "Disables the ability for users to open the customization menu.\n\nDoes not affect admins."
+L["settings.tabname.customization"] = "自定义"
+L["settings.server.custmenu.atts_nocustomize.title"] = "禁用自定义"
+L["settings.server.custmenu.atts_nocustomize.desc"] = "玩家不可进行任何配件改动。"
+L["settings.server.custmenu.atts_max.title"] = "最大配件量"
+L["settings.server.custmenu.atts_max.desc"] = "武器最多能装的配件数量。"
+L["settings.custmenu.autosave.title"] = "自动保存"
+L["settings.custmenu.autosave.desc"] = "你的上一个武器配置会在获得下一把同样武器时应用。"
+L["settings.server.custmenu.blacklist.open"] = "打开"
 
--- L["settings.server.custmenu.blacklist.title"] = "Blacklist Menu"
--- L["settings.server.custmenu.blacklist.desc"] = "Opens a menu that allows certain attachments to be completely disabled."
--- L["settings.server.custmenu.blacklist.open"] = "OPEN MENU"
+L["settings.attachments.inventory"] = "配件背包"
+L["settings.server.custmenu.free_atts.title"] = "免费配件"
+L["settings.server.custmenu.free_atts.desc"] = "不需要捡起配件实体也可以使用所有配件。"
+L["settings.server.custmenu.atts_lock.title"] = "捡起即解锁"
+L["settings.server.custmenu.atts_lock.desc"] = "捡起一个配件可以给多个武器配置而不消耗。"
+L["settings.server.custmenu.atts_loseondie.title"] = "死亡时掉落"
+L["settings.server.custmenu.atts_loseondie.desc"] = "死亡的时候配件会消失。"
+L["settings.server.custmenu.atts_generateentities.title"] = "生成实体"
+L["settings.server.custmenu.atts_generateentities.desc"] = "在菜单里为每个配件生成一个实体。\n\n会增加加载时间。"
 
--- L["settings.server.custmenu.atts_max.title"] = "Max Attachments"
--- L["settings.server.custmenu.atts_max.desc"] = "The maximum number of attachments a user can equip onto a weapon, including cosmetic ones."
-
--- L["settings.server.custmenu.free_atts.title"] = "Free Attachments"
--- L["settings.server.custmenu.free_atts.desc"] = "Attachments can be used without the need of picking them up first."
-
--- L["settings.server.custmenu.atts_lock.title"] = "Unlimited Attachment Units"
--- L["settings.server.custmenu.atts_lock.desc"] = "If disabled, the user has an attachment and has it equipped onto a weapon, they cannot put it onto another weapon unless they have more than one of that attachment."
-
--- L["settings.server.custmenu.atts_loseondie.title"] = "Lose Attachments on Death"
--- L["settings.server.custmenu.atts_loseondie.desc"] = "If the user dies, they'll lose all of their attachments."
-
--- L["settings.server.custmenu.atts_generateentities.title"] = "Generate Attachment Entities"
--- L["settings.server.custmenu.atts_generateentities.desc"] = "Generate entities that can be spawned via the Spawnmenu, allowing you to pick up attachments when \"Free Attachments\" is disabled.\n\nIncreases loading times."
+L["settings.server.custmenu.blacklist.title"] = "黑名单菜单"
+L["settings.server.custmenu.blacklist.desc"] = "用这个界面可以禁用特定配件。"
+L["settings.server.custmenu.blacklist.open"] = "打开"
 
 ////////// NPC Settings
 -- L["settings.tabname.npc"] = "NPC Settings"
