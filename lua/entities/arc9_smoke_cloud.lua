@@ -24,8 +24,12 @@ ENT.ArcCWSmoke = true
 AddCSLuaFile()
 
 function ENT:Initialize()
+    local mins, maxs = Vector(-self.SmokeRadius / 2, -self.SmokeRadius / 2, -self.SmokeRadius / 2), Vector(self.SmokeRadius / 2, self.SmokeRadius / 2, self.SmokeRadius / 2)
+    self.SmokeRadiusSqr = self.SmokeRadius * self.SmokeRadius
     if SERVER then
         self:SetModel( "models/weapons/w_eq_smokegrenade_thrown.mdl" )
+        self:PhysicsInitSphere(self.SmokeRadius / 2)
+        self:SetCollisionBounds(mins, maxs)
         self:SetMoveType( MOVETYPE_NONE )
         self:SetSolid( SOLID_NONE )
         self:DrawShadow( false )
@@ -97,6 +101,10 @@ function ENT:Initialize()
         emitter:Finish()
     end
 
+    self:EnableCustomCollisions()
+    self:SetCustomCollisionCheck(true)
+    self:CollisionRulesChanged()
+
     self.dt = CurTime() + self.Life + self.BillowTime
 end
 
@@ -121,3 +129,43 @@ end
 function ENT:Draw()
     return false
 end
+
+function ENT:TestCollision( startpos, delta, isbox, extents, mask )
+    if (mask == MASK_BLOCKLOS or mask == MASK_BLOCKLOS_AND_NPCS) then
+        local len = delta:Length()
+        if len <= 128 then return false end -- NPCs can see very close
+
+        local rad = self.SmokeRadiusSqr or (self.SmokeRadius * self.SmokeRadius)
+        local pos = self:GetPos()
+        local dir = delta:GetNormalized()
+
+        -- Trace started within the smoke
+        if startpos:DistToSqr(pos) <= rad then
+            return {
+                HitPos = startpos,
+                Fraction = 0,
+                Normal = -dir,
+            }
+        end
+
+        -- Find the closest point on the original trace to the smoke's origin point
+        local t = (pos - startpos):Dot(dir)
+        local p = startpos + t * dir
+
+        -- If the point is within smoke radius, the trace is intersecting the smoke
+        if p:DistToSqr(pos) <= rad then
+            return {
+                HitPos = p,
+                Fraction = math.Clamp(t / len, 0, 0.95),
+                Normal = -dir,
+            }
+        end
+    else
+        return false
+    end
+end
+
+hook.Add("ShouldCollide", "ARC9_Smoke", function(ent1, ent2)
+    if ent1.ARC9Smoke and !ent2:IsNPC() then return false end
+    if ent2.ARC9Smoke and !ent1:IsNPC()  then return false end
+end)
