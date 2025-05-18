@@ -26,6 +26,8 @@ local vmAddZ = GetConVar("arc9_vm_addz")
 local arc9DevBenchGun = GetConVar("arc9_dev_benchgun")
 local isSingleplayer = game.SinglePlayer()
 
+local newadsstyle = GetConVar("arc9_vm_adsstyle")
+
 local Lerp = function(a, v1, v2)
     local d = v2 - v1
 
@@ -35,7 +37,18 @@ end
 local LerpVector = function(a, v1, v2)
     local d = v2 - v1
 
-    return v1 + (a * d)
+    if !newadsstyle:GetBool() then
+        return v1 + (a * d)
+    else
+        local funkymidoffset1 = math.sin(3.1415926 * math.ease.OutSine(a))
+        local funkymidoffset2 = math.sin(3.1415926 * math.ease.InExpo(a))
+
+        local a1 = (math.ease.InOutExpo(a) + math.ease.InBack(a)) / 2 + 0.2 * funkymidoffset1
+        local a2 = math.ease.InQuart(a) - 0.25 * funkymidoffset2
+        local a3 = math.ease.OutQuart(a) - 0.9 * funkymidoffset1
+
+        return Vector(v1[1] + (a1 * d[1]), v1[2] + (a2 * d[2]), v1[3] + (a3 * d[3])) --v1 + (a * d)
+    end
 end
 
 local LerpVectorEdit = function(a, v1, v2)
@@ -45,6 +58,8 @@ local LerpVectorEdit = function(a, v1, v2)
     v1[2] = Lerp(a, v12, v22)
     v1[3] = Lerp(a, v13, v23)
 end
+
+local funnyangle = Angle(1, 2, -3)
 
 local LerpAngle = function(a, v1, v2)
     -- angle aware lerp with Angles()
@@ -57,9 +72,21 @@ local LerpAngle = function(a, v1, v2)
     local d1 = math.AngleDifference(v21, v11)
     local d2 = math.AngleDifference(v22, v12)
     local d3 = math.AngleDifference(v23, v13)
-    local v3 = Angle(v11 + (a * d1), v12 + (a * d2), v13 + (a * d3))
+    
+    if !newadsstyle:GetBool() then
+        return Angle(v11 + (a * d1), v12 + (a * d2), v13 + (a * d3))
+    else
+        local a1 = a
+        local a2 = math.ease.InBack(a)
+        local a3 = a
 
-    return v3
+        local v3 = Angle(v11 + (a1 * d1), v12 + (a2 * d2), v13 + (a3 * d3))
+
+        local funkymidoffset = math.sin(3.1415926 * math.ease.InSine(a))
+        v3:Add(funnyangle * funkymidoffset)
+
+        return v3
+    end
 end
 
 local LerpAngleEdit = function(a, v1, v2)
