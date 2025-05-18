@@ -71,6 +71,7 @@ L["hud.hint.reload"] = "Nachladen"
 L["hud.hint.safe"] = "Sicherung"
 L["hud.hint.switchsights"] = "Visierung umschalten"
 L["hud.hint.toggleatts"] = "Zubehör umschalten"
+L["hud.hint.togglecamos"] = "Tarnung umschalten"
 L["hud.hint.ubgl"] = "Umschalten %s"
 L["hud.hint.unjam"] = "Hemmung beheben"
 L["hud.hint.zoom"] = "Zoom ändern"
@@ -184,29 +185,6 @@ L["folder.back"] = "Zurück"
 L["folder.deselect"] = "Deselektieren"
 L["folder.favorites"] = "Favoriten"
 L["folder.select"] = "Auswählen"
-
-////////////////////// Numerical
-L["number.1"] = "1"
-L["number.2"] = "2"
-L["number.3"] = "3"
-L["number.4"] = "4"
-L["number.5"] = "5"
-L["number.6"] = "6"
-L["number.7"] = "7"
-L["number.8"] = "8"
-L["number.9"] = "9"
-L["number.10"] = "10"
-
-L["number.alt.1"] = "I"
-L["number.alt.2"] = "II"
-L["number.alt.3"] = "III"
-L["number.alt.4"] = "IV"
-L["number.alt.5"] = "V"
-L["number.alt.6"] = "VI"
-L["number.alt.7"] = "VII"
-L["number.alt.8"] = "VIII"
-L["number.alt.9"] = "IX"
-L["number.alt.10"] = "X"
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Aktivierungen"
@@ -669,6 +647,9 @@ L["settings.effects.allflash.desc"] = "Zeigt die Taschenlampen aller Spieler an.
 
 L["settings.effects.lod.title"] = "LOD (Level of Detail) Distanz"
 L["settings.effects.lod.desc"] = "Wie weit du von Models entfernt sein musst, um sie durch Varianten niedrigerer Qualität ohne Zubehör zu ersetzen.\nNiedrigere Werte ersetzt Modelle bei näherer Distanz, wodurch Performance verbessert werden kann. Höhere Werte können die Performance beeinträchtigen, stellen Modelle jedoch auch auf weitere Entfernung bei höchstmöglicher Qualität dar.\n\nTPIK-Distanz wird ebenfalls beeinflusst."
+
+-- L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
+-- L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
 
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Viewmodel-Einstellungen"

@@ -1,283 +1,283 @@
 L = {}
 
 //////// Folders
--- L["folder.arc9"] = "ARC9"
--- L["folder.arc9.community"] = "ARC9/Community"
-L["folder.arc9.dovesinternational"] = "ARC9/Doves International"
+L["folder.arc9"] = "ARC9"
+L["folder.arc9.community"] = "ARC9/社区"
+-- L["folder.arc9.dovesinternational"] = "ARC9/Doves International"
 
--- L["attachment.sticker"] = "Sticker"
+L["attachment.sticker"] = "贴纸"
 
 //////// Flat Camo
--- L["camo_arc9_base_flat_od.printname"] = "Olive Drab"
--- L["camo_arc9_base_flat_od.compactname"] = "OD"
--- L["camo_arc9_base_flat_od.description"] = "Standard Olive Drab camouflage."
+L["camo_arc9_base_flat_od.printname"] = "橄榄色"
+L["camo_arc9_base_flat_od.compactname"] = "橄榄色"
+L["camo_arc9_base_flat_od.description"] = "标准的橄榄色迷彩."
 
--- L["camo_arc9_base_flat_deserttan.printname"] = "Desert Tan"
--- L["camo_arc9_base_flat_deserttan.compactname"] = "Tan"
--- L["camo_arc9_base_flat_deserttan.description"] = "Standard Desert Tan camouflage."
+L["camo_arc9_base_flat_deserttan.printname"] = "沙漠棕褐色"
+L["camo_arc9_base_flat_deserttan.compactname"] = "沙漠棕褐色"
+L["camo_arc9_base_flat_deserttan.description"] = "标准的沙漠棕褐色迷彩."
 
--- L["camo_arc9_base_flat_arctic.printname"] = "Arctic White"
--- L["camo_arc9_base_flat_arctic.compactname"] = "Arctic"
--- L["camo_arc9_base_flat_arctic.description"] = "Standard Arctic White camouflage."
+L["camo_arc9_base_flat_arctic.printname"] = "北极白"
+L["camo_arc9_base_flat_arctic.compactname"] = "北极白"
+L["camo_arc9_base_flat_arctic.description"] = "标准的北极白色迷彩."
 
--- L["camo_arc9_base_flat_black.printname"] = "Factory Black"
--- L["camo_arc9_base_flat_black.compactname"] = "Black"
--- L["camo_arc9_base_flat_black.description"] = "Standard Factory Issue Black."
+L["camo_arc9_base_flat_black.printname"] = "原厂黑"
+L["camo_arc9_base_flat_black.compactname"] = "原厂黑"
+L["camo_arc9_base_flat_black.description"] = "标准的原厂黑色."
 
--- L["camo_arc9_base_flat_urbangray.printname"] = "Urban Gray"
--- L["camo_arc9_base_flat_urbangray.compactname"] = "Urban"
--- L["camo_arc9_base_flat_urbangray.description"] = "Standard Urban Gray camouflage."
+L["camo_arc9_base_flat_urbangray.printname"] = "都市灰"
+L["camo_arc9_base_flat_urbangray.compactname"] = "都市灰"
+L["camo_arc9_base_flat_urbangray.description"] = "标准的都市灰色迷彩."
 
--- L["camo_arc9_base_flat_forestgreen.printname"] = "Forest Green"
--- L["camo_arc9_base_flat_forestgreen.compactname"] = "Forest"
--- L["camo_arc9_base_flat_forestgreen.description"] = "Standard Forest Green camouflage."
+L["camo_arc9_base_flat_forestgreen.printname"] = "丛林绿"
+L["camo_arc9_base_flat_forestgreen.compactname"] = "丛林绿"
+L["camo_arc9_base_flat_forestgreen.description"] = "标准的丛林绿色迷彩."
 
--- L["camo_arc9_base_flat_navy.printname"] = "Navy Blue"
--- L["camo_arc9_base_flat_navy.compactname"] = "Navy"
--- L["camo_arc9_base_flat_navy.description"] = "Standard Navy Blue color."
+L["camo_arc9_base_flat_navy.printname"] = "深蓝色"
+L["camo_arc9_base_flat_navy.compactname"] = "深蓝色"
+L["camo_arc9_base_flat_navy.description"] = "标准的深蓝色."
 
--- L["camo_arc9_base_flat_mountbattenpink.printname"] = "Mountbatten Pink"
--- L["camo_arc9_base_flat_mountbattenpink.compactname"] = "MP"
--- L["camo_arc9_base_flat_mountbattenpink.description"] = "Standard Mountbatten Pink camouflage.\nShockingly effective in desert conditions."
+L["camo_arc9_base_flat_mountbattenpink.printname"] = "蒙巴顿粉"
+L["camo_arc9_base_flat_mountbattenpink.compactname"] = "蒙巴顿粉"
+L["camo_arc9_base_flat_mountbattenpink.description"] = "标准的蒙巴顿粉色迷彩.\n在沙漠环境下效果惊人."
 
--- L["camo_arc9_base_flat_fde.printname"] = "Flat Dark Earth"
--- L["camo_arc9_base_flat_fde.compactname"] = "FDE"
--- L["camo_arc9_base_flat_fde.description"] = "Standard Flat Dark Earth camouflage."
+L["camo_arc9_base_flat_fde.printname"] = "深棕色"
+L["camo_arc9_base_flat_fde.compactname"] = "深棕色"
+L["camo_arc9_base_flat_fde.description"] = "标准的深棕色平地迷彩."
 
 //////// Flat Colour
--- L["camo_arc9_base_flat_red.printname"] = "Red"
--- L["camo_arc9_base_flat_red.compactname"] = "Red"
--- L["camo_arc9_base_flat_red.description"] = "Basic red color."
+L["camo_arc9_base_flat_red.printname"] = "红色"
+L["camo_arc9_base_flat_red.compactname"] = "红色"
+L["camo_arc9_base_flat_red.description"] = "最基本的红色."
 
--- L["camo_arc9_base_flat_orange.printname"] = "Orange"
--- L["camo_arc9_base_flat_orange.compactname"] = "Orange"
--- L["camo_arc9_base_flat_orange.description"] = "Basic orange color."
+L["camo_arc9_base_flat_orange.printname"] = "橙色"
+L["camo_arc9_base_flat_orange.compactname"] = "橙色"
+L["camo_arc9_base_flat_orange.description"] = "最基本的橙色."
 
--- L["camo_arc9_base_flat_yellow.printname"] = "Yellow"
--- L["camo_arc9_base_flat_yellow.compactname"] = "Yellow"
--- L["camo_arc9_base_flat_yellow.description"] = "Basic yellow color."
+L["camo_arc9_base_flat_yellow.printname"] = "黄色"
+L["camo_arc9_base_flat_yellow.compactname"] = "黄色"
+L["camo_arc9_base_flat_yellow.description"] = "最基本的黄色."
 
--- L["camo_arc9_base_flat_green.printname"] = "Green"
--- L["camo_arc9_base_flat_green.compactname"] = "Green"
--- L["camo_arc9_base_flat_green.description"] = "Basic green color."
+L["camo_arc9_base_flat_green.printname"] = "绿色"
+L["camo_arc9_base_flat_green.compactname"] = "绿色"
+L["camo_arc9_base_flat_green.description"] = "最基本的绿色."
 
--- L["camo_arc9_base_flat_blue.printname"] = "Blue"
--- L["camo_arc9_base_flat_blue.compactname"] = "Blue"
--- L["camo_arc9_base_flat_blue.description"] = "Basic blue color."
+L["camo_arc9_base_flat_blue.printname"] = "蓝色"
+L["camo_arc9_base_flat_blue.compactname"] = "蓝色"
+L["camo_arc9_base_flat_blue.description"] = "最基本的蓝色."
 
--- L["camo_arc9_base_flat_purple.printname"] = "Purple"
--- L["camo_arc9_base_flat_purple.compactname"] = "Purple"
--- L["camo_arc9_base_flat_purple.description"] = "Basic purple color."
+L["camo_arc9_base_flat_purple.printname"] = "紫色"
+L["camo_arc9_base_flat_purple.compactname"] = "紫色"
+L["camo_arc9_base_flat_purple.description"] = "最基本的紫色."
 
--- L["camo_arc9_base_flat_pink.printname"] = "Pink"
--- L["camo_arc9_base_flat_pink.compactname"] = "Pink"
--- L["camo_arc9_base_flat_pink.description"] = "Eye searingly bright pink color."
+L["camo_arc9_base_flat_pink.printname"] = "粉色"
+L["camo_arc9_base_flat_pink.compactname"] = "粉色"
+L["camo_arc9_base_flat_pink.description"] = "灼人眼球的亮粉色."
 
--- L["camo_arc9_base_flat_arc9orange.printname"] = "ARC9 Orange"
--- L["camo_arc9_base_flat_arc9orange.compactname"] = "ARC9 Orange"
--- L["camo_arc9_base_flat_arc9orange.description"] = "The perfect shade of orange for that cute little ARC9 Logo sticker."
+L["camo_arc9_base_flat_arc9orange.printname"] = "ARC9的橙色"
+L["camo_arc9_base_flat_arc9orange.compactname"] = "ARC9的橙色"
+L["camo_arc9_base_flat_arc9orange.description"] = "完美的橙色色调，与可爱的ARC9小徽标贴纸相得益彰."
 
 //////// Charms
--- L["charm_gs_killcounter.printname"] = "Kill Counter"
--- L["charm_gs_killcounter.compactname"] = "KILL"
--- L["charm_gs_killcounter.description"] = "Device for tracking your weapon's kill stats."
+L["charm_gs_killcounter.printname"] = "杀敌计数器"
+L["charm_gs_killcounter.compactname"] = "杀敌计数器"
+L["charm_gs_killcounter.description"] = "用于记录武器击杀数统计的装置."
 
--- L["charm_gs_clock.printname"] = "Basic Clock"
--- L["charm_gs_clock.compactname"] = "CLOCK"
--- L["charm_gs_clock.description"] = "Device that displays the real-world time."
+L["charm_gs_clock.printname"] = "基础时钟"
+L["charm_gs_clock.compactname"] = "时钟"
+L["charm_gs_clock.description"] = "显示现实世界时间的装置."
 
--- L["charm_gs_sticker.printname"] = "Sticker Panel"
--- L["charm_gs_sticker.compactname"] = "STICKER"
--- L["charm_gs_sticker.description"] = "Device that allows a custom sticker to be applied onto its screen."
+L["charm_gs_sticker.printname"] = "贴纸板"
+L["charm_gs_sticker.compactname"] = "贴纸板"
+L["charm_gs_sticker.description"] = "可在屏幕上贴上定制贴纸的设备."
 
 //////// Stickers, Base
--- L["sticker_spray.printname"] = "Player Spray"
--- L["sticker_spray.compactname"] = "Spray"
--- L["sticker_spray.description"] = [[Your own spray as a sticker!
--- You will only be able to see your own and not ones from other players.
+L["sticker_spray.printname"] = "玩家喷漆"
+L["sticker_spray.compactname"] = "喷漆"
+L["sticker_spray.description"] = [[将自己的喷漆作为贴纸!
+你只能看到自己的图片，不能看到其他玩家的图片.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_arc9.printname"] = "ARC9 Logo (Low Vis.)"
--- L["sticker_arc9.compactname"] = "ARC9"
--- L["sticker_arc9.description"] = [[Dark version of the ARC9 logo.
--- Design by The Villain.
+L["sticker_arc9.printname"] = "ARC9 徽标 (低可见度.)"
+L["sticker_arc9.compactname"] = "ARC9"
+L["sticker_arc9.description"] = [[深色版的 ARC9 徽标.
+设计者 Villain.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_arc9_lowvis.printname"] = "ARC9 Logo"
--- L["sticker_arc9_lowvis.compactname"] = "ARC9"
--- L["sticker_arc9_lowvis.description"] = [[Here's to you.
--- Design by The Villain.
+L["sticker_arc9_lowvis.printname"] = "ARC9 徽标"
+L["sticker_arc9_lowvis.compactname"] = "ARC9"
+L["sticker_arc9_lowvis.description"] = [[这是给你的.
+设计者 Villain.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_a9k.printname"] = "ARCTICTHRON 9.000 WEAPON BASE"
--- L["sticker_a9k.compactname"] = "A9K"
--- L["sticker_a9k.description"] = [[this is what "arc9" actually means
+L["sticker_a9k.printname"] = "ARCTICTHRON 9.000 WEAPON BASE"
+L["sticker_a9k.compactname"] = "A9K"
+L["sticker_a9k.description"] = [[这就是 “arc9 ”的实际含义
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_a9cylo.printname"] = "ARC9 Concept logo by CyloWalker"
--- L["sticker_a9cylo.compactname"] = "A9 Cylo"
--- L["sticker_a9cylo.description"] = [[One of the first concepts for ARC9 logo/icon by CyloWalker (he's cool!)
+L["sticker_a9cylo.printname"] = "ARC9 概念徽标，由 CyloWalker 设计"
+L["sticker_a9cylo.compactname"] = "A9 Cylo"
+L["sticker_a9cylo.description"] = [[CyloWalker 设计的 ARC9 徽标/图标的最初概念之一 (他很酷!)
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_sus9.printname"] = "Sus 9"
--- L["sticker_sus9.compactname"] = "Sus 9"
--- L["sticker_sus9.description"] = [[The impostor could be anywhere among us...
--- Design by Darsu.
+L["sticker_sus9.printname"] = "Sus 9"
+L["sticker_sus9.compactname"] = "Sus 9"
+L["sticker_sus9.description"] = [[内鬼可能就在我们之中的任何地方...
+设计者为 Darsu.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
 //////// Stickers, Com. Wave 1
--- L["sticker_alien_lean.printname"] = "Legalize Alien Lean"
--- L["sticker_alien_lean.compactname"] = "Alien Lean"
--- L["sticker_alien_lean.description"] = [[Hop down to Agartha with the white boys for a cup of alien lean and... other things.
--- Design by Opt1ca.
+L["sticker_alien_lean.printname"] = "外星人合法化"
+L["sticker_alien_lean.compactname"] = "外星人合法化"
+L["sticker_alien_lean.description"] = [[与白人男孩一起跳到阿加莎，喝杯外星酒，还有......其他事情.
+设计者为 Opt1ca.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_tomatocat.printname"] = "Tomato Cat"
--- L["sticker_tomatocat.compactname"] = "Tomato Cat"
--- L["sticker_tomatocat.description"] = [[Sometimes people ask whether tomatoes are fruits or vegetables... This one might be a tougher question.
--- Design by Ender2Point0.
+L["sticker_tomatocat.printname"] = "番茄猫"
+L["sticker_tomatocat.compactname"] = "番茄猫"
+L["sticker_tomatocat.description"] = [[有时人们会问，西红柿是水果还是蔬菜？这个问题可能比较难回答.
+设计者为 Ender2Point0.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_actionbird.printname"] = "Action Bird"
--- L["sticker_actionbird.compactname"] = "Action Bird"
--- L["sticker_actionbird.description"] = [[This is what Arctic looks like in real life.
--- Design by CyloWalker.
+L["sticker_actionbird.printname"] = "作战中的鸟"
+L["sticker_actionbird.compactname"] = "作战中的鸟"
+L["sticker_actionbird.description"] = [[这就是Arctic在现实生活中的样子.
+设计者为 CyloWalker.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_warcrimes.printname"] = "War Crimes"
--- L["sticker_warcrimes.compactname"] = "War Crimes"
--- L["sticker_warcrimes.description"] = [[You're already doing them, so why not shout it out loud? Who's gonna stop you, the UN?
--- Design by Rimuchii. Made using Project Sekai sticker base.
+L["sticker_warcrimes.printname"] = "战争罪"
+L["sticker_warcrimes.compactname"] = "战争罪"
+L["sticker_warcrimes.description"] = [[你们已经在做了，为什么不大声喊出来呢？谁会阻止你，联合国吗？
+设计者为 Rimuchii. 使用Project Sekai sticker base制作.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_sillycat.printname"] = "Silly Cat"
--- L["sticker_sillycat.compactname"] = "Silly Cat"
--- L["sticker_sillycat.description"] = [[imsillyimsillyimsillyimsillyimsillyimsillyimsillyimsilly
--- Design by Stan_Jacobs.
+L["sticker_sillycat.printname"] = "傻猫"
+L["sticker_sillycat.compactname"] = "傻猫"
+L["sticker_sillycat.description"] = [[我是蠢逼我是蠢逼我是蠢逼我是蠢逼我是蠢逼我是蠢逼我是蠢逼我是蠢逼
+设计者为 Stan_Jacobs.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_muertosskull.printname"] = "Dia De Los Muertos Calavera"
--- L["sticker_muertosskull.compactname"] = "Los Muertos"
--- L["sticker_muertosskull.description"] = [["this should be my final version i think, unless anyone gives me suggestions to change it, the name: "Dia de los muertos calavera" the description: i cant think of one, something about day of the dead skull mexico blah blah blah"
--- Design by rooneyviz.
+L["sticker_muertosskull.printname"] = "亡灵节 Calavera"
+L["sticker_muertosskull.compactname"] = "亡灵"
+L["sticker_muertosskull.description"] = [["我想这应该是我的最终版本了，除非有人建议我修改它，名称：“Dia de los muertos calavera”，描述：我想不出来，关于墨西哥亡灵日头骨的描述，等等等等。"
+设计者为 rooneyviz.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_bandaid.printname"] = "Band-Aid"
--- L["sticker_bandaid.compactname"] = "Band-Aid"
--- L["sticker_bandaid.description"] = [[Put it on your boo-boo and kiss it all better.
--- Design by Itzal.
+L["sticker_bandaid.printname"] = "创可贴"
+L["sticker_bandaid.compactname"] = "创可贴"
+L["sticker_bandaid.description"] = [[把它涂在你的逼上然后亲吻它，一切都会好起来的.
+设计者为 Itzal.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_peacedove.printname"] = "Peace Through Superior Firepower"
--- L["sticker_peacedove.compactname"] = "PTSF"
--- L["sticker_peacedove.description"] = [[The dove brings peace, but the gun brings peace through superior firepower.
--- Design by Xipil.
+L["sticker_peacedove.printname"] = "通过强大火力实现和平"
+L["sticker_peacedove.compactname"] = "PTSF"
+L["sticker_peacedove.description"] = [[鸽子带来和平，而枪炮通过强大的火力带来和平.
+设计者为 Xipil.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_borntomodify.printname"] = "Born To Modify"
--- L["sticker_borntomodify.compactname"] = "BTM"
--- L["sticker_borntomodify.description"] = [[Another sight - another scope - a grenade launcher, here and there...
--- Design by Duck.
+L["sticker_borntomodify.printname"] = "为改造而生"
+L["sticker_borntomodify.compactname"] = "BTM"
+L["sticker_borntomodify.description"] = [[另一个瞄准镜 - 另一个瞄准镜 - 一个榴弹发射器，这里和那里...
+设计者为 Duck.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_cad.printname"] = "cad"
--- L["sticker_cad.compactname"] = "cad"
--- L["sticker_cad.description"] = [[cad
--- Design by Opt1ca.
+L["sticker_cad.printname"] = "cad"
+L["sticker_cad.compactname"] = "cad"
+L["sticker_cad.description"] = [[cad
+设计者为 Opt1ca.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_fumo.printname"] = "Fumo"
--- L["sticker_fumo.compactname"] = "Fumo"
--- L["sticker_fumo.description"] = [[D-don't look at me like that, raifu-kun...
--- Design by Itzal.
+L["sticker_fumo.printname"] = "Fumo"
+L["sticker_fumo.compactname"] = "Fumo"
+L["sticker_fumo.description"] = [[别这样看着我，来福君...
+设计者为 Itzal.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_hotlead.printname"] = "Hot Lead"
--- L["sticker_hotlead.compactname"] = "Hot Lead"
--- L["sticker_hotlead.description"] = [[Careful! It's hot!
--- Design by Arqu.
+L["sticker_hotlead.printname"] = "热导"
+L["sticker_hotlead.compactname"] = "热导"
+L["sticker_hotlead.description"] = [[小心点!这很烫!
+设计者为 Arqu.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_steamhappy.printname"] = ":steamhappy:"
--- L["sticker_steamhappy.compactname"] = ":steamhappy:"
--- L["sticker_steamhappy.description"] = [[Happy about it
--- Design from Steam.
+L["sticker_steamhappy.printname"] = ":steamhappy:"
+L["sticker_steamhappy.compactname"] = ":steamhappy:"
+L["sticker_steamhappy.description"] = [[为此感到高兴
+设计源于 Steam.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_amidstus.printname"] = "Amidstus"
--- L["sticker_amidstus.compactname"] = "Amidstus"
--- L["sticker_amidstus.description"] = [[Why settle for the original when you could have a cheap knockoff?!
--- Design from Optica.
+L["sticker_amidstus.printname"] = "Amidstus"
+L["sticker_amidstus.compactname"] = "Amidstus"
+L["sticker_amidstus.description"] = [[有了便宜的山寨货，为什么还要满足于原版呢？?!
+设计源于 Optica.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_arcglory.printname"] = "Glory!"
--- L["sticker_arcglory.compactname"] = "Glory!"
--- L["sticker_arcglory.description"] = [[Took nine brain cells to scribble this
--- Design from Optica.
+L["sticker_arcglory.printname"] = "荣耀!"
+L["sticker_arcglory.compactname"] = "荣耀!"
+L["sticker_arcglory.description"] = [[花了九个脑细胞才写下了这些
+设计源于 Optica.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_wp.printname"] = "World Peace!"
--- L["sticker_wp.compactname"] = "World Peace!"
--- L["sticker_wp.description"] = [[A delusion!
--- Design from Fidget.
+L["sticker_wp.printname"] = "世界和平!"
+L["sticker_wp.compactname"] = "世界和平!"
+L["sticker_wp.description"] = [[一种错觉!
+设计源于 Fidget.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_tonkr.printname"] = "Send It"
--- L["sticker_tonkr.compactname"] = "Send It"
--- L["sticker_tonkr.description"] = [[Yeah, it's that heavy. Yeah, it's that powerful.
--- Design from CyloWalker.
+L["sticker_tonkr.printname"] = "Send It"
+L["sticker_tonkr.compactname"] = "Send It"
+L["sticker_tonkr.description"] = [[是的，它就是那么重。是的，它就是那么强大.
+设计源于 CyloWalker.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_s6amblem.printname"] = "Section 6"
--- L["sticker_s6amblem.compactname"] = "Section 6"
--- L["sticker_s6amblem.description"] = [[Reach for the stars. Forward to Glory!
--- Design from CyloWalker.
+L["sticker_s6amblem.printname"] = "第六部分"
+L["sticker_s6amblem.compactname"] = "第六部分"
+L["sticker_s6amblem.description"] = [[冲向星空.走向辉煌!
+设计源于 CyloWalker.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_babies.printname"] = "Baby Hazard"
--- L["sticker_babies.compactname"] = "Baby Hazard"
--- L["sticker_babies.description"] = [[Children ages 0-3 should be kept away from this.. firearm.
--- Design from Itzal.
+L["sticker_babies.printname"] = "危害婴儿"
+L["sticker_babies.compactname"] = "危害婴儿"
+L["sticker_babies.description"] = [[0-3岁的儿童应远离这种...枪支.
+设计源于 Itzal.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_drawberf.printname"] = "Berf"
--- L["sticker_drawberf.compactname"] = "Berf"
--- L["sticker_drawberf.description"] = [[Draw Berf.
--- Design by The Villain.
+L["sticker_drawberf.printname"] = "Berf"
+L["sticker_drawberf.compactname"] = "Berf"
+L["sticker_drawberf.description"] = [[画出 Berf.
+设计者 Villain.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
--- L["sticker_arcbird.printname"] = "Arc Bird"
--- L["sticker_arcbird.compactname"] = "Arc Bird"
--- L["sticker_arcbird.description"] = [[Arc Bird.
--- Design by Nori/Chewable.
+L["sticker_arcbird.printname"] = "Arc 鸟"
+L["sticker_arcbird.compactname"] = "Arc 鸟"
+L["sticker_arcbird.description"] = [[Arc 鸟.
+设计者为 Nori/Chewable.
 
--- Sticker included in the ARC9 Base.]]
+贴纸包含在 ARC9 Base.]]
 
 //////// Stickers, International
 -- L["sticker_dovesinternational_arc9.printname"] = "Doves International - ARC9"

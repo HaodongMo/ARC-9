@@ -71,6 +71,7 @@ L["hud.hint.reload"] = "Weload!!! Now!"
 L["hud.hint.safe"] = "Towgle Sawe"
 L["hud.hint.switchsights"] = "S-switch siwts"
 L["hud.hint.toggleatts"] = "Towgle awatachmewws"
+-- L["hud.hint.togglecamos"] = "Toggle Camo Slot"
 L["hud.hint.ubgl"] = "Towgwle %s"
 -- L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Chawanwe zowom"
@@ -184,29 +185,6 @@ L["folder.back"] = "Rawr"
 L["folder.deselect"] = "Desewect"
 L["folder.favorites"] = "Fowowites"
 L["folder.select"] = "Sewect >w<"
-
-////////////////////// Numerical
-L["number.1"] = "1"
-L["number.2"] = "2"
-L["number.3"] = "3"
-L["number.4"] = "4"
-L["number.5"] = "5"
-L["number.6"] = "6"
-L["number.7"] = "7"
-L["number.8"] = "8"
-L["number.9"] = "9"
-L["number.10"] = "10"
-
-L["number.alt.1"] = "I"
-L["number.alt.2"] = "II"
-L["number.alt.3"] = "III"
-L["number.alt.4"] = "IV"
-L["number.alt.5"] = "V"
-L["number.alt.6"] = "VI"
-L["number.alt.7"] = "VII"
-L["number.alt.8"] = "VIII"
-L["number.alt.9"] = "IX"
-L["number.alt.10"] = "X"
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Makes"
@@ -669,6 +647,9 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 
 -- L["settings.effects.lod.title"] = "LOD (Level of Detail) Distance"
 -- L["settings.effects.lod.desc"] = "How far away you have to be from models for them to change into lower quality variants without attachments.\n\nLower values make the models change at lower distances, and could improve performance.\n\nHigher values could impact performance, but keeps the highest quality models loaded at further distances.\n\nTPIK distance is also affected."
+
+-- L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
+-- L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
 
 ////////// Viewmodel Settings
 -- L["settings.tabname.vm"] = "Viewmodel Settings"

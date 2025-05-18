@@ -71,6 +71,7 @@ L["hud.hint.reload"] = "Ladda om"
 L["hud.hint.safe"] = "Växla Säkring"
 L["hud.hint.switchsights"] = "Växla Sikten"
 L["hud.hint.toggleatts"] = "Växla Tillbehör"
+L["hud.hint.togglecamos"] = "Växla Kamouflage"
 L["hud.hint.ubgl"] = "Växla %s"
 L["hud.hint.unjam"] = "Fixa Eldavbrott"
 L["hud.hint.zoom"] = "Ändra Zoom"
@@ -184,29 +185,6 @@ L["folder.back"] = "Tillbaka"
 L["folder.deselect"] = "Välj Bort"
 L["folder.favorites"] = "Favoriter"
 L["folder.select"] = "Välj"
-
-////////////////////// Numerical
-L["number.1"] = "1"
-L["number.2"] = "2"
-L["number.3"] = "3"
-L["number.4"] = "4"
-L["number.5"] = "5"
-L["number.6"] = "6"
-L["number.7"] = "7"
-L["number.8"] = "8"
-L["number.9"] = "9"
-L["number.10"] = "10"
-
-L["number.alt.1"] = "I"
-L["number.alt.2"] = "II"
-L["number.alt.3"] = "III"
-L["number.alt.4"] = "IV"
-L["number.alt.5"] = "V"
-L["number.alt.6"] = "VI"
-L["number.alt.7"] = "VII"
-L["number.alt.8"] = "VIII"
-L["number.alt.9"] = "IX"
-L["number.alt.10"] = "X"
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Aktiverar"
@@ -669,6 +647,9 @@ L["settings.effects.allflash.desc"] = "Framställer ficklampor från alla spelar
 
 L["settings.effects.lod.title"] = "LOD-Avstånd (Level of Detail)"
 L["settings.effects.lod.desc"] = "Hur långt borta du behöver vara från modeller för att dem ska ändra till sina lägre kvalitets varianter utan tillbehör.\n\nLägre värden gör att modellerna ändras vid lägre avstånd, och kan förbättra prestandan.\n\nHögre värden kan påverka prestandan, men behåller dem högsta kvalitets modellerna laddade vid högre avstånd.\n\nAvståndet i TPIK påverkas också."
+
+L["settings.effects.indoorsound.title"] = "Ljudkvalitet inomhus"
+L["settings.effects.indoorsound.desc"] = "Hur detaljerad ljudkontrollen inomhus borde vara.\n\nLägre kvalitet förbättrar prestandan, men kan göra att ljud inomhus inte är lika korrekt."
 
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Vymodell Inställningar"

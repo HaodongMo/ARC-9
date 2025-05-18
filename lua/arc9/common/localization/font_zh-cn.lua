@@ -5,3 +5,4 @@ L = {}
 ////////// Do not create a font file if your language does not need it.
 
 L["font"] = "Microsoft YaHei UI"
+-- L["font"] = "Noto Sans CJK SC" -- WhatUziname7 choice of Font

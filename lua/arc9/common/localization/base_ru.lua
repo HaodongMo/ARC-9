@@ -186,29 +186,6 @@ L["folder.deselect"] = "Назад"
 L["folder.favorites"] = "В избранное"
 L["folder.select"] = "Выбрать"
 
-////////////////////// Numerical
-L["number.1"] = "1"
-L["number.2"] = "2"
-L["number.3"] = "3"
-L["number.4"] = "4"
-L["number.5"] = "5"
-L["number.6"] = "6"
-L["number.7"] = "7"
-L["number.8"] = "8"
-L["number.9"] = "9"
-L["number.10"] = "10"
-
-L["number.alt.1"] = "I"
-L["number.alt.2"] = "II"
-L["number.alt.3"] = "III"
-L["number.alt.4"] = "IV"
-L["number.alt.5"] = "V"
-L["number.alt.6"] = "VI"
-L["number.alt.7"] = "VII"
-L["number.alt.8"] = "VIII"
-L["number.alt.9"] = "IX"
-L["number.alt.10"] = "X"
-
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "Вкл."
 L["autostat.disable.pre"] = "Выкл."
@@ -1115,6 +1092,9 @@ L["settings.tabname.tpik"] = "TPIK - Инверсивная кинематика
 
 L["settings.effects.lod.title"] = "Дистанция LOD (Уровни детализации)"
 L["settings.effects.lod.desc"] = "Насколько далеко нужно находиться от оружия, чтобы оно поменяло модель на модель более низкого качества без обвесов.\n\nБолее низкие значения приводят к изменению моделей на меньших расстояниях и могут улучшить производительность.\n\nБолее высокие значения могут повлиять на производительность, но позволяют загружать модели самого высокого качества на больших расстояниях..\n\nЭта настройка также отвечает за дальность работы."
+
+-- L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
+-- L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
 
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Настройки Вьюмодели"
