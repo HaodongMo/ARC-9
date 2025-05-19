@@ -183,7 +183,7 @@ L["customize.bench.precision"] = "ИСПЫТАНИЕ ТОЧНОСТИ"
 
 L["folder.back"] = "Назад"
 L["folder.deselect"] = "Назад"
-L["folder.favorites"] = "В избранное"
+L["folder.favorites"] = "Избранное"
 L["folder.select"] = "Выбрать"
 
 ////////////////////// Automatic stats
