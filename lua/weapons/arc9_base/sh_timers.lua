@@ -72,7 +72,6 @@ SWEP.SoundTablePoseParams = {}
 function SWEP:PlaySoundTable(soundtable, mult)
     if !IsFirstTimePredicted() then return end
     local owner = self:GetOwner()
-    start = start or 0
     mult = mult
 
     self:KillSoundTable()

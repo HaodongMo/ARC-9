@@ -451,6 +451,14 @@ local function GetHintsTable(capabilities)
         })
     end
 
+    if weapon.EFT_HasTacReloads and (!weapon:GetProcessedValue("ShotgunReload", true) or weapon.EFT_HasTacReloadsAlways) then 
+        table.insert(hints, {
+            glyph = ARC9.GetBindKey("+reload"),
+            glyph2 = ARC9.GetBindKey("+reload"),
+            action = ARC9:GetPhrase("hud.hint.quickreload")
+        })
+    end
+
     -- if capabilities.Lean and input.LookupBinding("+alt1") and input.LookupBinding("+alt2") then
     --     table.insert(hints, {
     --         glyph = ARC9.GetBindKey("+alt1"),

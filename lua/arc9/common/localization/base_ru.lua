@@ -76,6 +76,7 @@ L["hud.hint.ubgl"] = "Перекл. на %s"
 L["hud.hint.unjam"] = "Починить"
 L["hud.hint.zoom"] = "Смена кратности"
 L["hud.hint.quicknade"] = "Кинуть «%s»"
+L["hud.hint.quickreload"] = "Быстрая перезарядка"
 
 L["hud.hint.lowammo"] = "Мало патрон"
 L["hud.hint.noammo"] = "Нет патрон"

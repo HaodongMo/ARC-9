@@ -76,6 +76,7 @@ L["hud.hint.ubgl"] = "Toggle %s"
 L["hud.hint.unjam"] = "Unjam"
 L["hud.hint.zoom"] = "Change Zoom"
 L["hud.hint.quicknade"] = "Quickthrow \"%s\""
+L["hud.hint.quickreload"] = "Quick Reload"
 
 L["hud.hint.lowammo"] = "Low Ammo"
 L["hud.hint.noammo"] = "No Ammo"
