@@ -32,38 +32,9 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
 
     if !pressed then return end
 
-    if ((ARC9.ControllerMode() and bind == "+zoom" and !LocalPlayer():KeyDown(IN_ZOOM)) -- Gamepad
-    or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE))) then -- Mouse + KB
-        local attpnl = wpn.CustomizeLastHovered
+    local plususe = ((ARC9.ControllerMode() and bind == "+zoom" and !LocalPlayer():KeyDown(IN_ZOOM)) -- Gamepad
+                    or (!ARC9.ControllerMode() and bind == "+use" and !LocalPlayer():KeyDown(IN_USE)))
 
-        if wpn:GetCustomize() then
-            local addr
-
-            local slotpnl2 = wpn.CustomizeLastHoveredSlot2
-
-            if attpnl and attpnl:IsHovered() then
-                addr = attpnl.address
-            end
-
-            if slotpnl2 and slotpnl2.fuckinghovered then
-                addr = slotpnl2.Address
-            end
-
-            if addr then
-                local atttbl = wpn:GetFinalAttTable(wpn:GetFilledMergeSlot(addr))
-
-                if ((atttbl.ToggleStats and !atttbl.AdvancedCamoSupport) or (atttbl.AdvancedCamoSupport and wpn.AdvancedCamoCache)) then
-                    wpn:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
-                    wpn:ToggleStat(addr)
-                    wpn:PostModify()
-                end
-            end
-            
-            return true
-        end
-
-        return ARC9.AttemptGiveNPCWeapon()
-    end
 
     if wpn:GetCustomize() then
         if bind == "+showscores" then
@@ -161,7 +132,39 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
 
             return true
         end
+
+        if plususe then
+            local attpnl = wpn.CustomizeLastHovered
+            local addr
+
+            local slotpnl2 = wpn.CustomizeLastHoveredSlot2
+
+            if attpnl and attpnl:IsHovered() then
+                addr = attpnl.address
+            end
+
+            if slotpnl2 and slotpnl2.fuckinghovered then
+                addr = slotpnl2.Address
+            end
+
+            if addr then
+                local atttbl = wpn:GetFinalAttTable(wpn:GetFilledMergeSlot(addr))
+
+                if ((atttbl.ToggleStats and !atttbl.AdvancedCamoSupport) or (atttbl.AdvancedCamoSupport and wpn.AdvancedCamoCache)) then
+                    wpn:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
+                    wpn:ToggleStat(addr, input.IsKeyDown(KEY_LSHIFT) and -1 or 1)
+                    wpn:PostModify()
+                end
+            end
+            
+            return true
+        end
+    else
+        if plususe then
+            return ARC9.AttemptGiveNPCWeapon()
+        end
     end
+
     if wpn:GetInSights() then
         if bind == "invnext" then
             wpn:Scroll(1)
