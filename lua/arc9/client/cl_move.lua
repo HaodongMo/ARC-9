@@ -103,7 +103,7 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
 
             local pagedown, pageup = input.WasMousePressed(MOUSE_5), input.WasMousePressed(MOUSE_4)
             if pageup then
-                nav_nextmeowpress = CurTime() + 0.015
+                nav_nextmeowpress = CurTime() + engine.TickInterval() * 1.5
                 local didanything = false
 
                 if wpn.BottomBarPath and #wpn.BottomBarPath > 0 then
