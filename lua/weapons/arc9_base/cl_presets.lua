@@ -436,7 +436,7 @@ function SWEP:PruneUnnecessaryAttachmentDataRecursive(tbl)
     tbl.s = tbl.SubAttachments
 
     for i, k in pairs(tbl) do
-        if i != "i" and i != "s" and i != "t" then
+        if i != "i" and i != "s" and i != "t" and i != "ToggleNum" then
             tbl[i] = nil
         end
     end
