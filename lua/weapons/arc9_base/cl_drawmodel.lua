@@ -227,15 +227,28 @@ end
 
 local maxcamos = GetConVar("arc9_atts_maxcamos")
 
-function SWEP:GetAdvancedCamo(att)
+function SWEP:GetAdvancedCamo(att, address)
     if self.AdvancedCamoCache == false then return end -- disable this bitch if no super camo slots
     if !att then att = "" end
+    if address then att = address end
     if self.AdvancedCamoCache == nil then self.AdvancedCamoCache = {} end
 
     if self.AdvancedCamoCache[att] then return self.AdvancedCamoCache[att] end
 
-    local state = (att != "" and att != "second") and self:GetValue(att .. "_camoslot") or 1
-    if att == "second" then state = 2 end
+    local state = 1
+
+    if att != "second" and att != "third" then
+        if !address then
+            state = (att != "") and self:GetValue(att .. "_camoslot") or 1
+        else
+            local slott = self:LocateSlotFromAddress(address)
+            if istable(slott) and slott.ToggleNum then
+                state = slott.ToggleNum
+            end
+        end
+    end
+
+    if att == "second" then state = 2 elseif att == "third" then state = 3 end
 
     local atts = {}
 
