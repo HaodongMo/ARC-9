@@ -243,12 +243,14 @@ local lastmousey = 0
 
 local dragging = false
 local dragging_r = false
+local dragging_m = false
 
 SWEP.CustomizePanX = 0
 SWEP.CustomizePanY = 0
 
 SWEP.CustomizePitch = 0
 SWEP.CustomizeYaw = 0
+SWEP.CustomizeRoll = 0
 
 SWEP.CustomizeZoom = 0
 
@@ -985,7 +987,20 @@ function SWEP:CreateCustomizeHUD()
                 self.CustomizePitch = self.CustomizePitch - (dx / ARC9ScreenScale(4)) * 3
                 -- self.CustomizeYaw = math.Clamp(self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * (math.floor(self.CustomizePitch / 90) % 2 == 0 and 1 or -1), -30, 30)
                 self.CustomizeYaw = self.CustomizeYaw + (dy / ARC9ScreenScale(8)) * 3
+            end
+        
+        elseif dragging_m then
+            self2:SetCursor("sizenesw")
 
+            if !input.IsMouseDown(MOUSE_MIDDLE) then
+                dragging_m = false
+            else
+                local mousex, mousey = input.GetCursorPos()
+
+                local dx = mousex - lastmousex
+                local dy = mousey - lastmousey
+
+                self.CustomizeRoll = self.CustomizeRoll + (dx / ARC9ScreenScale(8)) * 3
             end
         elseif input.IsKeyDown(KEY_R) and self2:IsHovered() then
             if self.CustomizeLastHoveredSlot2 then
@@ -995,6 +1010,7 @@ function SWEP:CreateCustomizeHUD()
             self.CustomizePanY = Lerp(0.25, self.CustomizePanY, 0)
             self.CustomizePitch = Lerp(0.25, self.CustomizePitch, 0)
             self.CustomizeYaw = Lerp(0.25, self.CustomizeYaw, 0)
+            self.CustomizeRoll = Lerp(0.25, self.CustomizeRoll, 0)
             self.CustomizeZoom = Lerp(0.25, self.CustomizeZoom, 0)
         elseif !anyhovered then
             self2:SetCursor("arrow")
@@ -1003,8 +1019,14 @@ function SWEP:CreateCustomizeHUD()
                 dragging = true
                 lastmousex, lastmousey = input.GetCursorPos()
             end
+
             if input.IsMouseDown(MOUSE_RIGHT) and !rmbdown and self2:IsHovered() then
                 dragging_r = true
+                lastmousex, lastmousey = input.GetCursorPos()
+            end
+
+            if input.IsMouseDown(MOUSE_MIDDLE) and !rmbdown and self2:IsHovered() then
+                dragging_m = true
                 lastmousex, lastmousey = input.GetCursorPos()
             end
         elseif anyhovered then
