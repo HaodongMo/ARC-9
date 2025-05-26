@@ -135,6 +135,12 @@ local DampAngleEdit = function(a, v1, v2)
     LerpAngleEdit(a, v1, v2)
 end
 
+local function GoodAngleLerp(from, to, t)
+    local diff = to - from
+    local shortestAngle = ((diff + 180) % 360) - 180
+    return from + shortestAngle * t
+end
+
 function SWEP:GetViewModelPosition(pos, ang)
     local owner = self:GetOwner()
     if !IsValid(owner) then return end
@@ -498,9 +504,17 @@ function SWEP:GetViewModelPosition(pos, ang)
         if !self.CustomizeNoRotate then
             self.CustomizePitch = math.NormalizeAngle(self.CustomizePitch) * curvedcustomizedelta
             self.CustomizeYaw = math.NormalizeAngle(self.CustomizeYaw) * curvedcustomizedelta
+            self.CustomizeRoll = math.NormalizeAngle(self.CustomizeRoll) * curvedcustomizedelta
+
+            self.CustomizePitchSmooth = GoodAngleLerp((self.CustomizePitchSmooth or 0), self.CustomizePitch, FrameTime() * 13)
+            self.CustomizeYawSmooth = GoodAngleLerp((self.CustomizeYawSmooth or 0), self.CustomizeYaw, FrameTime() * 13)
+            self.CustomizeRollSmooth = GoodAngleLerp((self.CustomizeRollSmooth or 0), self.CustomizeRoll, FrameTime() * 13)
+
             -- local CustomizeRotateAnchor = Vector(21.5, -4.27, -5.23)
-            rotateAroundAngle[2] = self.CustomizePitch
-            rotateAroundAngle[3] = self.CustomizeYaw
+            rotateAroundAngle[2] = self.CustomizePitchSmooth
+            rotateAroundAngle[3] = self.CustomizeYawSmooth
+            rotateAroundAngle[1] = self.CustomizeRollSmooth
+            
             local rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, self:GetProcessedValue("CustomizeRotateAnchor", true), vector_origin, rotateAroundAngle)
             pos:Set(rap_pos)
             ang:Set(rap_ang)
