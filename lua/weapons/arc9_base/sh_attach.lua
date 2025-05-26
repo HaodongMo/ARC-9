@@ -91,9 +91,9 @@ SWEP.LastAmmo = ""
 
 function SWEP:PostModify(toggleonly)
     self:InvalidateCache()
-    self.ScrollLevels = {} -- moved from invalidcache
 
     if !toggleonly then
+        self.ScrollLevels = {} -- moved from invalidcache
         self:CancelReload()
         -- self:PruneAttachments()
         self:SetNthReload(0)
@@ -643,7 +643,7 @@ function SWEP:ToggleAllStatsOnF()
 
     if toggled then
         self:RunHook("Hook_ToggleAtts")
-        self:PostModify()
+        self:PostModify(true)
         return true
     end
 end
