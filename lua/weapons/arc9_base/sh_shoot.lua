@@ -164,7 +164,7 @@ function SWEP:DoShootSounds()
             soundtab1.sound = ss or ""
             soundtab1.level = svolume
             soundtab1.pitch = spitch
-            soundtab1.volume = volumeMix
+            soundtab1.volume = self.ShootSoundIndoor and volumeMix or 1
             soundtab1.channel = ARC9.CHAN_WEAPON
             -- soundtab1.networktoeveryone = true
         end
@@ -175,7 +175,7 @@ function SWEP:DoShootSounds()
             soundtab2.sound = sl or ""
             soundtab2.level = svolume
             soundtab2.pitch = spitch
-            soundtab2.volume = volumeMix
+            soundtab2.volume = self.LayerSoundIndoor and volumeMix or 1
             soundtab2.channel = ARC9.CHAN_LAYER + 4
             -- soundtab2.networktoeveryone = true
         end
