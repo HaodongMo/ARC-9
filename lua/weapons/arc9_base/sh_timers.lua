@@ -88,7 +88,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
         if ttime < 0 then continue end
         if !(IsValid(self) and IsValid(owner)) then continue end
 
-        self:SetTimer(ttime, function()
+        local thatfunc = function()
             if v.s then
                 local soundtab = {
                     name = "soundtable",
@@ -160,7 +160,13 @@ function SWEP:PlaySoundTable(soundtable, mult)
             elseif !game.SinglePlayer() and CLIENT then
                 SInputAnimRumble(v.v1 or 0, v.v2 or 0, v.vt or 0.1)
             end
-        end, "soundtable_" .. tostring(i))
+        end, "soundtable_" .. tostring(i)
+    
+        if ttime <= 0 then
+            thatfunc()
+        else
+            self:SetTimer(ttime, thatfunc)
+        end
     end
 end
 
