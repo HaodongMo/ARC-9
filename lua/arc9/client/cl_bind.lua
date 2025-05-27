@@ -64,12 +64,9 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
             local foldpnl = wpn.CustomizeLastHoveredFolder
             local slotpnl = wpn.CustomizeLastHoveredSlot
             local slotpnl2 = wpn.CustomizeLastHoveredSlot2
+            local addr
 
-            -- if attpnl and attpnl:IsHovered() then
-                -- print("att", attpnl.att)
-            -- end
-
-            if foldpnl and foldpnl:IsHovered() then
+            if foldpnl and foldpnl:IsHovered() then -- when hovering folder
                 -- print("folder", foldpnl)
 
                 local randompool = {}
@@ -101,7 +98,7 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                 surface.PlaySound(randsound)
             end
 
-            if slotpnl and slotpnl.slot then
+            if slotpnl and slotpnl.slot then -- when hovering slot in bottom bar
                 if !wpn:GetSlotBlocked(slotpnl.slot) then
                     wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl.slot.Address)}, true, true, true)
 
@@ -114,21 +111,29 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                     surface.PlaySound(randsound)
                 end
             end
+            
 
-            if slotpnl2 and slotpnl2.fuckinghovered then
-                if !wpn:GetSlotBlocked(slotpnl2) then
-                    wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(slotpnl2.Address)}, true, true, true)
+            local slotpnl2 = wpn.CustomizeLastHoveredSlot2
 
-                    wpn:PruneAttachments()
-                    wpn:PostModify()
-                    wpn:SendWeapon()
-
-                    timer.Simple(0, function() wpn:CreateHUD_Bottom() end)
-
-                    surface.PlaySound(randsound)
-                end
+            if attpnl and attpnl:IsHovered() then -- when hovering att in attachment selector. not really rqeuired
+                addr = attpnl.address
             end
 
+            if slotpnl2 and slotpnl2.fuckinghovered then -- when hovering slot in 3d space
+                addr = slotpnl2.Address
+            end
+
+            if addr then
+                wpn:RollRandomAtts({[1] = wpn:LocateSlotFromAddress(addr)}, true, true, true)
+
+                wpn:PruneAttachments()
+                wpn:PostModify()
+                wpn:SendWeapon()
+
+                timer.Simple(0, function() wpn:CreateHUD_Bottom() end)
+
+                surface.PlaySound(randsound)
+            end
 
             return true
         end
