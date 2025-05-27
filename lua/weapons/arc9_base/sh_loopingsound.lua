@@ -19,10 +19,10 @@ function SWEP:StartLoop()
     else
         self.LoopingSound = CreateSound(self, s)
     end
-    self.LoopingSound:Play()
     self.LoopingSound:SetSoundLevel(math.Clamp(self:GetProcessedValue("ShootVolume", true), 51, 149))
     self.LoopingSound:ChangePitch(self:GetProcessedValue("ShootPitch", true), 0)
     self.LoopingSound:ChangeVolume(self:GetProcessedValue("ShootVolumeActual", true))
+    self.LoopingSound:Play()
     -- self.LoopingSound = self:StartLoopingSound(s)
 
     local si = self:GetProcessedValue("ShootSoundLoopingIndoor")
@@ -35,10 +35,10 @@ function SWEP:StartLoop()
     else
         self.LoopingSoundIndoor = CreateSound(self, si)
     end
-    self.LoopingSoundIndoor:Play()
     self.LoopingSoundIndoor:SetSoundLevel(math.Clamp(self:GetProcessedValue("ShootVolume", true), 51, 149))
     self.LoopingSoundIndoor:ChangePitch(self:GetProcessedValue("ShootPitch", true), 0)
     self.LoopingSoundIndoor:ChangeVolume(0)
+    self.LoopingSoundIndoor:Play()
 
 end
 
