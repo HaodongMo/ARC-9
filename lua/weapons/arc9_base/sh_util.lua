@@ -12,6 +12,7 @@ end
 
 local ENTITY = FindMetaTable("Entity")
 local entityEmitSound = ENTITY.EmitSound
+local sp = game.SinglePlayer()
 
 function SWEP:PlayTranslatedSound(soundtab)
     soundtab = self:RunHook("HookP_TranslateSound", soundtab) or soundtab
@@ -23,6 +24,9 @@ function SWEP:PlayTranslatedSound(soundtab)
             pitch = math.random(pitch[1], pitch[2])
         end
 
+        local cfilter = nil
+        if SERVER and !sp then cfilter = soundtab.networktoeveryone and ARC9.EveryoneRecipientFilter end
+        
         entityEmitSound(self,
             soundtab.sound,
             soundtab.level,
@@ -30,7 +34,8 @@ function SWEP:PlayTranslatedSound(soundtab)
             soundtab.volume,
             soundtab.channel,
             soundtab.flags,
-            soundtab.dsp
+            soundtab.dsp,
+            cfilter
         )
     end
 end

@@ -166,6 +166,7 @@ function SWEP:DoShootSounds()
             soundtab1.pitch = spitch
             soundtab1.volume = volumeMix
             soundtab1.channel = ARC9.CHAN_WEAPON
+            -- soundtab1.networktoeveryone = true
         end
 
         playTranslatedSound(self, soundtab1)
@@ -176,6 +177,7 @@ function SWEP:DoShootSounds()
             soundtab2.pitch = spitch
             soundtab2.volume = volumeMix
             soundtab2.channel = ARC9.CHAN_LAYER + 4
+            -- soundtab2.networktoeveryone = true
         end
 
         playTranslatedSound(self, soundtab2)
@@ -187,6 +189,7 @@ function SWEP:DoShootSounds()
                 soundtab3.pitch = dpitch
                 soundtab3.volume = dvolume * indoormix
                 soundtab3.channel = ARC9.CHAN_DISTANT
+                soundtab3.networktoeveryone = true
             end
 
             playTranslatedSound(self, soundtab3)
@@ -206,6 +209,7 @@ function SWEP:DoShootSounds()
             soundtab4.pitch = spitch
             soundtab4.volume = indoorVolumeMix
             soundtab4.channel = ARC9.CHAN_INDOOR
+            -- soundtab4.networktoeveryone = true
         end
 
         playTranslatedSound(self, soundtab4)
@@ -216,6 +220,7 @@ function SWEP:DoShootSounds()
             soundtab5.pitch = spitch
             soundtab5.volume = indoorVolumeMix
             soundtab5.channel = ARC9.CHAN_INDOOR + 7
+            -- soundtab5.networktoeveryone = true
         end
 
         playTranslatedSound(self, soundtab5)
@@ -227,6 +232,7 @@ function SWEP:DoShootSounds()
                 soundtab6.pitch = dpitch
                 soundtab6.volume = indoor
                 soundtab6.channel = ARC9.CHAN_INDOORDISTANT
+                soundtab6.networktoeveryone = true
             end
 
             playTranslatedSound(self, soundtab6)
