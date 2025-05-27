@@ -230,7 +230,7 @@ function SWEP:DoShootSounds()
                 soundtab6.sound = dssIN or ""
                 soundtab6.level = dvolume
                 soundtab6.pitch = dpitch
-                soundtab6.volume = indoor
+                soundtab6.volume = dvolume * indoor
                 soundtab6.channel = ARC9.CHAN_INDOORDISTANT
                 soundtab6.networktoeveryone = true
             end
