@@ -30,76 +30,76 @@ ARC9.CosmeticCategories = {
     ["stickers"] = true,
 }
 ARC9.ShellSoundsTable = {
-    "arc9/casings/casing_556_1.ogg",
-    "arc9/casings/casing_556_2.ogg",
-    "arc9/casings/casing_556_3.ogg",
-    "arc9/casings/casing_556_4.ogg",
-    "arc9/casings/casing_556_1.ogg",
-    "arc9/casings/casing_556_2.ogg",
-    "arc9/casings/casing_556_3.ogg",
-    "arc9/casings/casing_556_4.ogg",
+    ")arc9/casings/casing_556_1.wav",
+    ")arc9/casings/casing_556_2.wav",
+    ")arc9/casings/casing_556_3.wav",
+    ")arc9/casings/casing_556_4.wav",
+    ")arc9/casings/casing_556_1.wav",
+    ")arc9/casings/casing_556_2.wav",
+    ")arc9/casings/casing_556_3.wav",
+    ")arc9/casings/casing_556_4.wav",
 }
 
 ARC9.Shell308SoundsTable = {
-    "arc9/casings/casing_308_1.ogg",
-    "arc9/casings/casing_308_2.ogg",
-    "arc9/casings/casing_308_3.ogg",
-    "arc9/casings/casing_308_4.ogg",
-    "arc9/casings/casing_308_1.ogg",
-    "arc9/casings/casing_308_2.ogg",
-    "arc9/casings/casing_308_3.ogg",
-    "arc9/casings/casing_308_4.ogg",
+    ")arc9/casings/casing_308_1.wav",
+    ")arc9/casings/casing_308_2.wav",
+    ")arc9/casings/casing_308_3.wav",
+    ")arc9/casings/casing_308_4.wav",
+    ")arc9/casings/casing_308_1.wav",
+    ")arc9/casings/casing_308_2.wav",
+    ")arc9/casings/casing_308_3.wav",
+    ")arc9/casings/casing_308_4.wav",
 }
 
 ARC9.PistolShellSoundsTable = {
-    "arc9/casings/casing_9mm_1.ogg",
-    "arc9/casings/casing_9mm_2.ogg",
-    "arc9/casings/casing_9mm_3.ogg",
-    "arc9/casings/casing_9mm_4.ogg",
-    "arc9/casings/casing_9mm_1.ogg",
-    "arc9/casings/casing_9mm_2.ogg",
-    "arc9/casings/casing_9mm_3.ogg",
-    "arc9/casings/casing_9mm_4.ogg"
+    ")arc9/casings/casing_9mm_1.wav",
+    ")arc9/casings/casing_9mm_2.wav",
+    ")arc9/casings/casing_9mm_3.wav",
+    ")arc9/casings/casing_9mm_4.wav",
+    ")arc9/casings/casing_9mm_1.wav",
+    ")arc9/casings/casing_9mm_2.wav",
+    ")arc9/casings/casing_9mm_3.wav",
+    ")arc9/casings/casing_9mm_4.wav"
 }
 
 ARC9.TinyShellSoundsTable = {
-    "arc9/casings/casing_22_1.ogg",
-    "arc9/casings/casing_22_2.ogg",
-    "arc9/casings/casing_22_3.ogg",
-    "arc9/casings/casing_22_4.ogg",
-    "arc9/casings/casing_22_1.ogg",
-    "arc9/casings/casing_22_2.ogg",
-    "arc9/casings/casing_22_3.ogg",
-    "arc9/casings/casing_22_4.ogg"
+    ")arc9/casings/casing_22_1.wav",
+    ")arc9/casings/casing_22_2.wav",
+    ")arc9/casings/casing_22_3.wav",
+    ")arc9/casings/casing_22_4.wav",
+    ")arc9/casings/casing_22_1.wav",
+    ")arc9/casings/casing_22_2.wav",
+    ")arc9/casings/casing_22_3.wav",
+    ")arc9/casings/casing_22_4.wav"
 }
 
 ARC9.ShotgunShellSoundsTable = {
-    "arc9/casings/casing_12ga_1.ogg",
-    "arc9/casings/casing_12ga_2.ogg",
-    "arc9/casings/casing_12ga_3.ogg",
-    "arc9/casings/casing_12ga_4.ogg",
-    "arc9/casings/casing_12ga_1.ogg",
-    "arc9/casings/casing_12ga_2.ogg",
-    "arc9/casings/casing_12ga_3.ogg",
-    "arc9/casings/casing_12ga_4.ogg"
+    ")arc9/casings/casing_12ga_1.wav",
+    ")arc9/casings/casing_12ga_2.wav",
+    ")arc9/casings/casing_12ga_3.wav",
+    ")arc9/casings/casing_12ga_4.wav",
+    ")arc9/casings/casing_12ga_1.wav",
+    ")arc9/casings/casing_12ga_2.wav",
+    ")arc9/casings/casing_12ga_3.wav",
+    ")arc9/casings/casing_12ga_4.wav"
 }
 
 ARC9.RicochetSounds = {
-    "arc9/fx/ricochet_01.ogg",
-	"arc9/fx/ricochet_02.ogg",
-	"arc9/fx/ricochet_03.ogg",
-	"arc9/fx/ricochet_04.ogg",
-	"arc9/fx/ricochet_05.ogg",
-	"arc9/fx/ricochet_06.ogg",
-	"arc9/fx/ricochet_07.ogg",
-	"arc9/fx/ricochet_08.ogg",
-	"arc9/fx/ricochet_09.ogg",
-	"arc9/fx/ricochet_10.ogg",
-	"arc9/fx/ricochet_11.ogg",
-	"arc9/fx/ricochet_12.ogg",
-	"arc9/fx/ricochet_13.ogg",
-	"arc9/fx/ricochet_14.ogg",
-	"arc9/fx/ricochet_15.ogg"
+    ")arc9/fx/ricochet_01.wav",
+	")arc9/fx/ricochet_02.wav",
+	")arc9/fx/ricochet_03.wav",
+	")arc9/fx/ricochet_04.wav",
+	")arc9/fx/ricochet_05.wav",
+	")arc9/fx/ricochet_06.wav",
+	")arc9/fx/ricochet_07.wav",
+	")arc9/fx/ricochet_08.wav",
+	")arc9/fx/ricochet_09.wav",
+	")arc9/fx/ricochet_10.wav",
+	")arc9/fx/ricochet_11.wav",
+	")arc9/fx/ricochet_12.wav",
+	")arc9/fx/ricochet_13.wav",
+	")arc9/fx/ricochet_14.wav",
+	")arc9/fx/ricochet_15.wav"
  }
 
 ARC9.PresetPath = "arc9_presets/"

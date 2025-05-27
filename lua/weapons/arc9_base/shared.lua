@@ -939,7 +939,7 @@ SWEP.MalfunctionSound = ""
 SWEP.MeleeHitSound = "arc9/melee_hitbody.ogg"
 SWEP.MeleeHitWallSound = "arc9/melee_hitworld.ogg"
 SWEP.MeleeSwingSound = "arc9/melee_miss.ogg"
-SWEP.BackstabSound = "weapons/knife/knife_stab.wav"
+SWEP.BackstabSound = ")weapons/knife/knife_stab.wav"
 
 SWEP.BreathInSound = "arc9/breath_inhale.ogg"
 SWEP.BreathOutSound = "arc9/breath_exhale.ogg"
