@@ -465,6 +465,7 @@ end
 
 hook.Add("InitPostEntity", "ARC9_phystweak", function() -- stolen from tacrp
     if GetConVar("arc9_phystweak"):GetBool() then
+        if !physenv or !physenv.GetPerformanceSettings then print("[ARC9] How the hell you don't have physenv???? wtf wrong with your game") return end
         local v = physenv.GetPerformanceSettings().MaxVelocity
         if v < 10000 then
             physenv.SetPerformanceSettings({MaxVelocity = 10000})
