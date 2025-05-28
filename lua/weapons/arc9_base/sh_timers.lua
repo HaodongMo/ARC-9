@@ -160,12 +160,12 @@ function SWEP:PlaySoundTable(soundtable, mult)
             elseif !game.SinglePlayer() and CLIENT then
                 SInputAnimRumble(v.v1 or 0, v.v2 or 0, v.vt or 0.1)
             end
-        end, "soundtable_" .. tostring(i)
+        end
     
         if ttime <= 0 then
             thatfunc()
         else
-            self:SetTimer(ttime, thatfunc)
+            self:SetTimer(ttime, thatfunc, "soundtable_" .. tostring(i))
         end
     end
 end
