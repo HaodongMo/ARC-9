@@ -162,7 +162,7 @@ function SWEP:PlaySoundTable(soundtable, mult)
             end
         end
     
-        if ttime <= 0 then
+        if ttime <= 0 and v.s then
             thatfunc()
         else
             self:SetTimer(ttime, thatfunc, "soundtable_" .. tostring(i))
