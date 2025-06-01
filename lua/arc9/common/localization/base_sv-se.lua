@@ -220,7 +220,7 @@ L["autostat.damagemin"] = "Minimum Skada"
 L["autostat.damagerand"] = "Skadevariering"
 L["autostat.deploytime"] = "Ta Fram Tid"
 L["autostat.distance"] = "Skottavstånd"
-L["autostat.entitymuzzlevelocity"] = "Projektilens Utgångshastighet"
+L["autostat.muzzlevelocity"] = "Projektilens Utgångshastighet"
 L["autostat.explosiondamage"] = "Explosiv Skada"
 L["autostat.explosionradius"] = "Explosion Stänkradie"
 L["autostat.fixtime"] = "Fixa Felfunktion Tid"
@@ -465,7 +465,7 @@ L["spawnmenu.supermod.selectspec"] = "Specialvillkor, exempelvis när du hukar d
 L["spawnmenu.supermod.selectval"] = "Skriv ett numeriskt värde, eller \"true\" / \"false\""
 L["spawnmenu.supermod.result"] = "Resultat visas här"
 L["spawnmenu.supermod.examples"] = [[
-Exempel: 
+Exempel:
 ∟ "Overheat" "true" för att avaktivera överhettning
 ∟ "BottomlessClip" "true" för att aktivera Bottenlöst Magasin
 ∟ "RecoilMultCrouch" "0.1" för att sänka rekylen till 10% när du hukar dig

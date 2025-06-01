@@ -220,7 +220,7 @@ L["autostat.damagemin"] = "远距离伤害"
 L["autostat.damagerand"] = "伤害随机性"
 L["autostat.deploytime"] = "部署耗时"
 L["autostat.distance"] = "子弹距离"
-L["autostat.entitymuzzlevelocity"] = "出膛速度"
+L["autostat.muzzlevelocity"] = "出膛速度"
 L["autostat.explosiondamage"] = "爆炸伤害"
 L["autostat.explosionradius"] = "爆炸范围"
 L["autostat.fixtime"] = "卡弹修理耗时"
@@ -468,7 +468,7 @@ L["spawnmenu.supermod.selectspec"] = "特殊情况，如蹲下时"
 L["spawnmenu.supermod.selectval"] = "写入一个数值，或者 \"true\" / \"false\""
 L["spawnmenu.supermod.result"] = "结果显示在此处"
 L["spawnmenu.supermod.examples"] = [[
-示例: 
+示例:
 ∟ "Overheat" "true" 禁用过热功能
 ∟ "BottomlessClip" "true" 以启用无限弹药
 ∟ "RecoilMultCrouch" "0.1" 将蹲下时的后坐力降低到 10%

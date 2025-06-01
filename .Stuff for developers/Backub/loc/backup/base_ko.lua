@@ -14,7 +14,7 @@ L["autostat.penetration"] = "Material Penetration"
 L["autostat.ricochetanglemax"] = "Ricochet Angle"
 L["autostat.ricochetchance"] = "Ricochet Chance"
 L["autostat.armorpiercing"] = "Armor Piercing"
-L["autostat.entitymuzzlevelocity"] = "Projectile Muzzle Velocity"
+L["autostat.muzzlevelocity"] = "Projectile Muzzle Velocity"
 L["autostat.physbulletmuzzlevelocity"] = "Muzzle Velocity"
 L["autostat.physbulletdrag"] = "Bullet Drag"
 L["autostat.physbulletgravity"] = "Bullet Drop"
@@ -667,7 +667,7 @@ L["customize.presets.deldef2"] = "You would have to reset weapon in developer se
 L["customize.presets.yes"] = "Yes"
 
 
--- april 2 
+-- april 2
 
 L["settings.tabname.caching"] = "Asset Caching"
 L["settings.caching.title"] = "Asset Caching"

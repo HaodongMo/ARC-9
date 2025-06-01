@@ -221,7 +221,7 @@ L["autostat.damagemin"] = "Урон на расстоянии"
 L["autostat.damagerand"] = "Разброс урона"
 L["autostat.deploytime"] = "Скорость доставания"
 L["autostat.distance"] = "Дальность поражения"
-L["autostat.entitymuzzlevelocity"] = "Скорость снаряда"
+L["autostat.muzzlevelocity"] = "Скорость снаряда"
 L["autostat.explosiondamage"] = "Урон взрывом"
 L["autostat.explosionradius"] = "Радиус взрыва"
 L["autostat.fixtime"] = "Скорость починки клина"
@@ -465,7 +465,7 @@ L["spawnmenu.supermod.selectval"] = "Напиши числовое значен�
 L["spawnmenu.supermod.result"] = "Результат появится здесь"
 
 L["spawnmenu.supermod.examples"] = [[
-Примеры: 
+Примеры:
 ∟ "Overheat" "true" чтобы отключить перегрев
 ∟ "BottomlessClip" "true" чтобы включить бесконечный боезапас
 ∟ "RecoilMultCrouch" "0.1" чтобы уменьшить отдачу до 10% при присяде

@@ -221,7 +221,7 @@ L["autostat.damagemin"] = "Lowong Wange Dawage"
 L["autostat.damagerand"] = "Dawage Owarawriance"
 L["autostat.deploytime"] = "D-dwaw time"
 L["autostat.distance"] = "Buwullet diwwtancwe"
-L["autostat.entitymuzzlevelocity"] = "Prowekwtile muzzzel welocitwy"
+L["autostat.muzzlevelocity"] = "Prowekwtile muzzzel welocitwy"
 L["autostat.explosiondamage"] = "E-explowosion Dawage >w<"
 L["autostat.explosionradius"] = "E-explowosion Swlawsh Wadius >w<"
 L["autostat.fixtime"] = "Uwunjam wime uwu"
@@ -466,7 +466,7 @@ L["atts.filter"] = "Filtew"
 -- L["spawnmenu.supermod.selectval"] = "Write a numerical value, or \"true\" / \"false\""
 -- L["spawnmenu.supermod.result"] = "Result appears here"
 -- L["spawnmenu.supermod.examples"] = [[
--- Examples: 
+-- Examples:
 -- ∟ "Overheat" "true" to disable overheating
 -- ∟ "BottomlessClip" "true" to enable Bottomless Clip
 -- ∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching

@@ -220,7 +220,7 @@ L["autostat.damagemin"] = "Daño Mínimo"
 L["autostat.damagerand"] = "Variación de Daños"
 L["autostat.deploytime"] = "Tiempo de Desenfundar"
 L["autostat.distance"] = "Distancia de la Bala"
-L["autostat.entitymuzzlevelocity"] = "Velocidad del Proyectil"
+L["autostat.muzzlevelocity"] = "Velocidad del Proyectil"
 L["autostat.explosiondamage"] = "Daño por Explosión"
 L["autostat.explosionradius"] = "Radio de la Explosión"
 L["autostat.fixtime"] = "Tiempo de Desatasco"
@@ -465,7 +465,7 @@ L["atts.filter"] = "Filtrar"
 -- L["spawnmenu.supermod.selectval"] = "Write a numerical value, or \"true\" / \"false\""
 -- L["spawnmenu.supermod.result"] = "Result appears here"
 -- L["spawnmenu.supermod.examples"] = [[
--- Examples: 
+-- Examples:
 -- ∟ "Overheat" "true" to disable overheating
 -- ∟ "BottomlessClip" "true" to enable Bottomless Clip
 -- ∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching

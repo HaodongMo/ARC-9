@@ -13,7 +13,7 @@ L["autostat.penetration"] = "Пробивная способность"
 L["autostat.ricochetanglemax"] = "Угол рикошета"
 L["autostat.ricochetchance"] = "Шанс рикошета"
 L["autostat.armorpiercing"] = "Бронепробиваемость"
-L["autostat.entitymuzzlevelocity"] = "Скорость снаряда"
+L["autostat.muzzlevelocity"] = "Скорость снаряда"
 L["autostat.physbulletmuzzlevelocity"] = "Скорость пули"
 L["autostat.physbulletdrag"] = "Баллистика пули"
 L["autostat.physbulletgravity"] = "Баллистика пули"
@@ -657,7 +657,7 @@ L["customize.presets.deldef2"] = "Чтобы его вернуть, тебе п�
 L["customize.presets.yes"] = "Да"
 
 
--- april 2 
+-- april 2
 
 L["settings.tabname.caching"] = "Кэширование"
 L["settings.caching.title"] = "Кэширование ассетов"

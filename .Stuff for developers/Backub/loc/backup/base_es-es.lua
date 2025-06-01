@@ -13,7 +13,7 @@ L["autostat.penetration"] = "Penetración de Material"
 L["autostat.ricochetanglemax"] = "Ángulo de Rebote"
 L["autostat.ricochetchance"] = "Probablidad de Rebote"
 L["autostat.armorpiercing"] = "Penetración de Armadura"
-L["autostat.entitymuzzlevelocity"] = "Velocidad del Proyectil"
+L["autostat.muzzlevelocity"] = "Velocidad del Proyectil"
 L["autostat.physbulletmuzzlevelocity"] = "Velocidad de Salida de la Bala"
 L["autostat.physbulletdrag"] = "Arrastre de Bala"
 L["autostat.physbulletgravity"] = "Caída de Bala"
@@ -659,7 +659,7 @@ L["customize.presets.deldef2"] = "Tendrías que resetear arma en ajustes de desa
 L["customize.presets.yes"] = "Si"
 
 
--- april 2 
+-- april 2
 
 L["settings.tabname.caching"] = "Almac. en caché"
 L["settings.caching.title"] = "Almac. en caché"

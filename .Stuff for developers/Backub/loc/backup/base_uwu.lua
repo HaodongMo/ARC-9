@@ -13,7 +13,7 @@ L["autostat.penetration"] = "Matewial p-penewawion UwU"
 L["autostat.ricochetanglemax"] = "Rrricwowhet AWangwle"
 L["autostat.ricochetchance"] = "Rrricwowhet Chwancwe"
 L["autostat.armorpiercing"] = "Awrmow Purrrcing >w<"
-L["autostat.entitymuzzlevelocity"] = "Prowekwtile muzzzel welocitwy"
+L["autostat.muzzlevelocity"] = "Prowekwtile muzzzel welocitwy"
 L["autostat.physbulletmuzzlevelocity"] = "Muzzzel welocitwy"
 L["autostat.physbulletdrag"] = "Buwullet Dwag"
 L["autostat.physbulletgravity"] = "Buwullet Dwop"
@@ -666,7 +666,7 @@ L["customize.presets.deldef2"] = "Youw woulwd hawe to weset uwuweapon in dewelop
 L["customize.presets.yes"] = "MEOW !"
 
 
--- april 2 
+-- april 2
 
 L["settings.tabname.caching"] = "Awwet Cashwing :3"
 L["settings.caching.title"] = "Awwet Cawwing uwu"
