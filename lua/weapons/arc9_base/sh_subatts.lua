@@ -249,7 +249,7 @@ function SWEP:ValidateInventoryForNewTree(tree)
 
         if atttbl.Free then continue end
 
-        local has = (currcount[att] or 0) + ARC9:PlayerGetAtts(self:GetOwner(), att)
+        local has = (currcount[att] or 0) + ARC9:PlayerGetAtts(self:GetOwner(), att, self)
         local need = attc
 
         if has >= need then
@@ -301,7 +301,7 @@ function SWEP:FillIntegralSlots()
     for _, slot in ipairs(self:GetSubSlotList()) do
         if !slot.Integral or slot.Installed then continue end
 
-        if isstring(slot.Integral) and ARC9:PlayerGetAtts(self:GetOwner(), slot.Integral) > 0 then
+        if isstring(slot.Integral) and ARC9:PlayerGetAtts(self:GetOwner(), slot.Integral, self) > 0 then
             slot.Installed = slot.Integral
             ARC9:PlayerTakeAtt(self:GetOwner(), slot.Installed, 1)
         else

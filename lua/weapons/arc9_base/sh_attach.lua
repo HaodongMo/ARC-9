@@ -422,7 +422,7 @@ end
 function SWEP:FirstAttForSlot(slottbl)
     local atts = ARC9.GetAttsForCats(slottbl.Category)
     for _, v in ipairs(atts) do
-        if ARC9:PlayerGetAtts(self:GetOwner(), v) > 0 then return v end
+        if ARC9:PlayerGetAtts(self:GetOwner(), v, self) > 0 then return v end
     end
     return false
 end
@@ -539,7 +539,7 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
 
     local curtbl = ARC9.GetAttTable(slottbl.Installed) or {}
 
-    if !ignorecount and ARC9:PlayerGetAtts(self:GetOwner(), att) == 0 and (curtbl.InvAtt or slottbl.Installed) != invatt then return false end
+    if !ignorecount and ARC9:PlayerGetAtts(self:GetOwner(), att, self) == 0 and (curtbl.InvAtt or slottbl.Installed) != invatt then return false end
 
     if self:RunHook("Hook_BlockAttachment", {att = att, slottbl = slottbl}) == false then return false end
 

@@ -59,7 +59,7 @@ function SWEP:ClearBottomBar()
     self:ClearAttInfoBar()
 end
 
-local function recursivefoldercount(folder, ownedtbl)
+local function recursivefoldercount(wep, folder, ownedtbl)
     if !istable(folder) then return 0 end
 
     local owned = 0
@@ -67,14 +67,14 @@ local function recursivefoldercount(folder, ownedtbl)
 
     for i, k in pairs(folder) do
         if istable(k) then
-            local cowned, ccount = recursivefoldercount(k, ownedtbl)
+            local cowned, ccount = recursivefoldercount(wep, k, ownedtbl)
             owned = owned + cowned
             count = count + ccount
         else
             local atttbl = ARC9.GetAttTable(i)
             if !atttbl then continue end
 
-            if ARC9:PlayerGetAtts(LocalPlayer(), i) > 0 then
+            if ARC9:PlayerGetAtts(LocalPlayer(), i, wep) > 0 then
                 if ownedtbl then
                     ownedtbl[i] = true
                 end
@@ -196,7 +196,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             if isbool(children) then continue end
 
             local ownedchildren = {}
-            local owned, count = recursivefoldercount(children, ownedchildren)
+            local owned, count = recursivefoldercount(self, children, ownedchildren)
 
             -- if count > 99 then count = "99+" end
 
@@ -290,7 +290,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     local strpath = string.Implode("/", self.BottomBarPath)
 
     for _, att in pairs(self.BottomBarAtts) do
-        local qty = ARC9:PlayerGetAtts(self:GetOwner(), att.att)
+        local qty = ARC9:PlayerGetAtts(self:GetOwner(), att.att, self)
 
         local atttbl = ARC9.GetAttTable(att.att)
         local aslottbl = self:LocateSlotFromAddress(att.slot)
@@ -503,8 +503,8 @@ function SWEP:CreateHUD_Bottom()
             if ARC9.Favorites[a] then order_a = order_a - ARC9.FavoritesWeight end
             if ARC9.Favorites[b] then order_b = order_b - ARC9.FavoritesWeight end
 
-            local qty_a = ARC9:PlayerGetAtts(self:GetOwner(), a)
-            local qty_b = ARC9:PlayerGetAtts(self:GetOwner(), b)
+            local qty_a = ARC9:PlayerGetAtts(self:GetOwner(), a, self)
+            local qty_b = ARC9:PlayerGetAtts(self:GetOwner(), b, self)
 
             if ( (qty_a <= 0) and (slottbl.Installed != a) ) then order_a = order_a - ARC9.UnownedWeight end
             if ( (qty_b <= 0) and (slottbl.Installed != b) ) then order_b = order_b - ARC9.UnownedWeight end
