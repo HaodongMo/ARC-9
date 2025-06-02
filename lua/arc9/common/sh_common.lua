@@ -335,7 +335,7 @@ do
     local cvarDeveloper = GetConVar("developer")
     local cvarGetInt = FindMetaTable("ConVar").GetInt
 
-    ARC9.DevCheckCached = false 
+    ARC9.DevCheckCached = false
 
     local engineTickCount = engine.TickCount
     local ARC9DevCheckTick, ARC9DevCheckCached, ARC9DevCheckLast = 0, false, 0
@@ -358,33 +358,33 @@ do
 
         function ARC9.Dev(level)
             local now = engineTickCount()
-    
+
             if ARC9DevCheckTick == now then return ARC9DevCheckCached end
-    
+
             if (ARC9DevCheckLast or 0) > now then return ARC9DevCheckCached end
             ARC9DevCheckLast = now + 64 -- 64 ticks before next check
-            
+
             local output = IsValid(localPlayer) and PlayerIsSuperAdmin(localPlayer) and cvarGetInt(cvarDeveloper) >= level
 
             ARC9DevCheckCached = output
             ARC9DevCheckTick = now
-    
+
             return output
         end
     else
         function ARC9.Dev(level)
             local now = engineTickCount()
-    
+
             if ARC9DevCheckTick == now then return ARC9DevCheckCached end
-    
+
             if (ARC9DevCheckLast or 0) > now then return ARC9DevCheckCached end
             ARC9DevCheckLast = now + 64 -- 64 ticks before next check
-            
+
             local output = cvarGetInt(cvarDeveloper) >= level
-            
+
             ARC9DevCheckCached = output
             ARC9DevCheckTick = now
-    
+
             return output
         end
     end
@@ -465,12 +465,14 @@ end
 
 hook.Add("InitPostEntity", "ARC9_phystweak", function() -- stolen from tacrp
     if GetConVar("arc9_phystweak"):GetBool() then
-        if !physenv or !physenv.GetPerformanceSettings then print("[ARC9] How the hell you don't have physenv???? wtf wrong with your game") return end
-        local v = physenv.GetPerformanceSettings().MaxVelocity or 10000
-        if v < 10000 then
-            physenv.SetPerformanceSettings({MaxVelocity = 10000})
-            print("[ARC9] Increasing MaxVelocity for projectiles to behave as intended! (" .. v .. "-> 10000)")
-            print("[ARC9] Disable this behavior with 'arc9_phystweak 0'.")
-        end
+        timer.Simple(0, function()
+            if !physenv or !physenv.GetPerformanceSettings then print("[ARC9] How the hell you don't have physenv???? wtf wrong with your game") return end
+            local v = physenv.GetPerformanceSettings().MaxVelocity or 10000
+            if v < 10000 then
+                physenv.SetPerformanceSettings({MaxVelocity = 10000})
+                print("[ARC9] Increasing MaxVelocity for projectiles to behave as intended! (" .. v .. "-> 10000)")
+                print("[ARC9] Disable this behavior with 'arc9_phystweak 0'.")
+            end
+        end)
     end
 end)
