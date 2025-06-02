@@ -28,7 +28,7 @@ ENT.Lift = 0
 
 ENT.Damage = 150
 ENT.Radius = 300
-ENT.ImpactDamage = nil
+ENT.ImpactDamage = 10
 ENT.ExplodeOnImpact = false
 ENT.LifeTime = 3
 
@@ -80,19 +80,18 @@ if SERVER then
         if data.Speed > 100 then
             local tgt = data.HitEntity
 
-            if IsValid(tgt) and (self.NextHit or 0) < CurTime() then
+            if IsValid(tgt) and (self.NextHit or 0) < CurTime() and self.ImpactDamage > 0 then
                 self.NextHit = CurTime() + 0.1
                 local dmginfo = DamageInfo()
-                dmginfo:SetDamageType(DMG_GENERIC)
-                dmginfo:SetDamage(10)
+                dmginfo:SetDamageType(DMG_CRUSH)
+                dmginfo:SetDamage(self.ImpactDamage)
                 if IsValid(self:GetOwner()) then dmginfo:SetAttacker(self:GetOwner()) end
                 dmginfo:SetInflictor(self)
-                dmginfo:SetDamageForce(data.OurOldVelocity * 0.5)
+                dmginfo:SetDamageForce(data.OurOldVelocity)
                 tgt:TakeDamageInfo(dmginfo)
 
                 if (IsValid(tgt) and (tgt:IsNPC() or tgt:IsPlayer() or tgt:IsNextBot()) and tgt:Health() <= 0) or (not tgt:IsWorld() and not IsValid(tgt)) or string.find(tgt:GetClass(), "breakable") then
                     local pos, ang, vel = self:GetPos(), self:GetAngles(), data.OurOldVelocity
-
                     timer.Simple(0, function()
                         if IsValid(self) then
                             self:SetAngles(ang)
