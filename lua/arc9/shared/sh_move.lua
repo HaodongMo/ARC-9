@@ -27,9 +27,9 @@ function ARC9.Move(ply, mv, cmd)
     if wpn:GetInMeleeAttack() and wpn:GetLungeEntity():IsValid() then
         mv:SetMaxSpeed(10000)
         mv:SetMaxClientSpeed(10000)
-        local targetpos = wpn:GetLungeEntity():EyePos()
-        targetpos.z = math.min(targetpos.z, ply:EyePos().z) --wontt make you jump if you attack while in crouch
-        local lungevec = targetpos - ply:EyePos()
+        local targetpos = wpn:GetLungeEntity():WorldSpaceCenter()
+        targetpos.z = math.min(targetpos.z, ply:WorldSpaceCenter().z) --wontt make you jump if you attack while in crouch
+        local lungevec = targetpos - ply:WorldSpaceCenter()
         local lungedir = lungevec:GetNormalized()
         local lungedist = lungevec:Length()
         local lungespd = (2 * (lungedist / math.Max(0.01, wpn:GetProcessedValue("PreBashTime", true))))
@@ -104,7 +104,7 @@ function ARC9.StartCommand(ply, cmd)
     -- if cmd:KeyDown(IN_GRENADE1) and ply:Alive() then
     --     local switchto = ply.ARC9LastSelectedGrenade or false
 
-    --     if !switchto or !ply:HasWeapon(switchto) then 
+    --     if !switchto or !ply:HasWeapon(switchto) then
     --         print("roll")
     --         for _, v in ipairs(ply:GetWeapons()) do
     --             if v.IsQuickGrenade then switchto = v:GetClass() break end
@@ -122,68 +122,68 @@ function ARC9.StartCommand(ply, cmd)
     -- end
     -- end
 
-    
+
     if !wpn.ARC9 then ARC9.RecoilRise = Angle(0, 0, 0) return end
 
     if ply:IsBot() then timescalefactor = 1 end -- ping is infinite for them lol
-	
+
     -- Aim assist imported from ArcCW
     if CLIENT and IsValid(wpn) then
-		local cone = arc9_aimassist_cone:GetFloat()
-		-- local dist = arc9_aimassist_distance:GetFloat() * (wpn:GetProcessedValue("AARangeMult") or 1)
-		local dist = wpn:GetProcessedValue("AimAssistRange", true) or math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
-		local inte = arc9_aimassist_intensity:GetFloat()
-		local head = arc9_aimassist_head:GetBool()
+        local cone = arc9_aimassist_cone:GetFloat()
+        -- local dist = arc9_aimassist_distance:GetFloat() * (wpn:GetProcessedValue("AARangeMult") or 1)
+        local dist = wpn:GetProcessedValue("AimAssistRange", true) or math.min(wpn.RangeMax * 0.95, 4000) -- 4000hu is somewhat about 100m
+        local inte = arc9_aimassist_intensity:GetFloat()
+        local head = arc9_aimassist_head:GetBool()
 
-		local fav = GetConVar("arc9_mod_freeaim")
-		local far = wpn:GetProcessedValue("FreeAimRadius")
+        local fav = GetConVar("arc9_mod_freeaim")
+        local far = wpn:GetProcessedValue("FreeAimRadius")
 
-		-- Check if current target is beyond tracking cone
-		local tgt = ply.ARC9_AATarget
-		if IsValid(tgt) and (tgt_pos(tgt, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length() > cone * 2 then ply.ARC9_AATarget = nil end -- lost track
+        -- Check if current target is beyond tracking cone
+        local tgt = ply.ARC9_AATarget
+        if IsValid(tgt) and (tgt_pos(tgt, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length() > cone * 2 then ply.ARC9_AATarget = nil end -- lost track
 
-		-- Try to seek target if not exists
-		tgt = ply.ARC9_AATarget
-		if !IsValid(tgt) or (tgt.Health and tgt:Health() <= 0) or util.QuickTrace(ply:EyePos(), tgt_pos(tgt, head) - ply:EyePos(), ply).Entity ~= tgt then
-			local min_diff
-			ply.ARC9_AATarget = nil
-			-- for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), 244, math.cos(math.rad(cone)))) do
-			for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), dist, math.cos(math.rad(cone + (fav:GetBool() and far or 0))))) do
-				if ent == ply or (!ent:IsNPC() and !ent:IsNextBot() and !ent:IsPlayer()) or ent:Health() <= 0
-						or (ent:IsPlayer() and ent:Team() ~= TEAM_UNASSIGNED and ent:Team() == ply:Team()) then continue end
-				local tr = util.TraceLine({
-					start = ply:EyePos(),
-					endpos = tgt_pos(ent, head),
-					mask = MASK_SHOT,
-					filter = ply
-				})
-				if tr.Entity ~= ent then continue end
-				local diff = (tgt_pos(ent, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
-				if !ply.ARC9_AATarget or diff < min_diff then
-					ply.ARC9_AATarget = ent
-					min_diff = diff
-				end
-			end
-		end
+        -- Try to seek target if not exists
+        tgt = ply.ARC9_AATarget
+        if !IsValid(tgt) or (tgt.Health and tgt:Health() <= 0) or util.QuickTrace(ply:EyePos(), tgt_pos(tgt, head) - ply:EyePos(), ply).Entity ~= tgt then
+            local min_diff
+            ply.ARC9_AATarget = nil
+            -- for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), 244, math.cos(math.rad(cone)))) do
+            for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), dist, math.cos(math.rad(cone + (fav:GetBool() and far or 0))))) do
+                if ent == ply or (!ent:IsNPC() and !ent:IsNextBot() and !ent:IsPlayer()) or ent:Health() <= 0
+                        or (ent:IsPlayer() and ent:Team() ~= TEAM_UNASSIGNED and ent:Team() == ply:Team()) then continue end
+                local tr = util.TraceLine({
+                    start = ply:EyePos(),
+                    endpos = tgt_pos(ent, head),
+                    mask = MASK_SHOT,
+                    filter = ply
+                })
+                if tr.Entity ~= ent then continue end
+                local diff = (tgt_pos(ent, head) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
+                if !ply.ARC9_AATarget or diff < min_diff then
+                    ply.ARC9_AATarget = ent
+                    min_diff = diff
+                end
+            end
+        end
 
-		-- Aim towards target
-		tgt = ply.ARC9_AATarget
-		if arc9_aimassist:GetBool() and ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
-			if IsValid(tgt) and !wpn:GetCustomize() then
-				if !wpn:GetProcessedValue("NoAimAssist", true) then
-					local ang = cmd:GetViewAngles()
-					local pos = tgt_pos(tgt, head)
-					local tgt_ang = (pos - ply:EyePos()):Angle() - (wpn:GetFreeSwayAngles() or angle_zero) - (wpn:GetFreeAimOffset() or angle_zero)
-					local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
-					if ang_diff > 0.1 then
-						ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 0.1), ang, tgt_ang)
-						cmd:SetViewAngles(ang)
-					end
-				end
-			end
-		end
+        -- Aim towards target
+        tgt = ply.ARC9_AATarget
+        if arc9_aimassist:GetBool() and ply:GetInfoNum("arc9_aimassist_cl", 0) == 1 then
+            if IsValid(tgt) and !wpn:GetCustomize() then
+                if !wpn:GetProcessedValue("NoAimAssist", true) then
+                    local ang = cmd:GetViewAngles()
+                    local pos = tgt_pos(tgt, head)
+                    local tgt_ang = (pos - ply:EyePos()):Angle() - (wpn:GetFreeSwayAngles() or angle_zero) - (wpn:GetFreeAimOffset() or angle_zero)
+                    local ang_diff = (pos - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
+                    if ang_diff > 0.1 then
+                        ang = LerpAngle(math.Clamp(inte / ang_diff, 0, 0.1), ang, tgt_ang)
+                        cmd:SetViewAngles(ang)
+                    end
+                end
+            end
+        end
     end
-	
+
     if wpn:GetBipod() then
         local bipang = wpn:GetBipodAng()
 
@@ -215,16 +215,16 @@ function ARC9.StartCommand(ply, cmd)
 
         local swayspeed = 1.5
         local swayamt = wpn:GetFreeSwayAmount()
-        
+
         if wpn:GetOutOfBreath() then swayspeed = 2.25 end
 
         local swayang = Angle(math.sin(ct * 0.6 * swayspeed) + (math.cos(ct * 2 * swayspeed) * 0.5), math.sin(ct * 0.4 * swayspeed) + (math.cos(ct * 1.6 * swayspeed) * 0.5), 0)
-        
+
         swayang.p = swayang.p + (math.cos(ct * 5 * swayspeed) + math.cos(ct * 2)) * -0.15 -- smaller movement
         swayang.y = swayang.y + (math.cos(ct * 2.9 * swayspeed) + (math.sin(ct * 7.1)) - (math.sin(ct * 4) * 2)) * 0.1
 
-        swayang.p = swayang.p - math.exp(math.exp((math.cos(ct * 1.33 * swayspeed)))) * -0.07 -- random drags
-        swayang.y = swayang.y - math.exp(math.exp((math.sin(ct * 0.8 * swayspeed)))) * 0.07
+        swayang.p = swayang.p - math.exp(math.exp(math.cos(ct * 1.33 * swayspeed))) * -0.07 -- random drags
+        swayang.y = swayang.y - math.exp(math.exp(math.sin(ct * 0.8 * swayspeed))) * 0.07
 
         swayang = swayang * wpn:GetSightAmount() * swayamt * 0.2 * 0.75
 
@@ -255,7 +255,7 @@ function ARC9.StartCommand(ply, cmd)
     if CLIENT then
         local diff = ARC9.LastEyeAngles - cmd:GetViewAngles()
         local recrise = ARC9.RecoilRise
-        
+
         if !wpn.RecoilAutoControl_DontTryToReturnBack then
             -- 0 can be negative or positive!!!!! Insane
             if approxEqualsZero(recrise.p) then
@@ -367,7 +367,7 @@ hook.Add("KeyPress", "ARC9_Quickgrenade", function( ply, key )
         if key == IN_GRENADE1 and ply:Alive() then
             local switchto = ply.ARC9LastSelectedGrenade or false
 
-            if !switchto or !ply:HasWeapon(switchto) then 
+            if !switchto or !ply:HasWeapon(switchto) then
                 for _, v in ipairs(ply:GetWeapons()) do
                     if v.IsQuickGrenade then switchto = v:GetClass() break end
                 end
@@ -379,5 +379,5 @@ hook.Add("KeyPress", "ARC9_Quickgrenade", function( ply, key )
                 ply:SelectWeapon(switchto) -- idk which way better
             end
         end
-	end
+    end
 end)

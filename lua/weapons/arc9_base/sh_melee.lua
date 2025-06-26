@@ -55,6 +55,23 @@ function SWEP:MeleeAttack(bypass, bash2)
         end
     end
 
+    if !backstab and self:GetProcessedValue("Backstab", true) then
+        local tr2 = util.TraceHull({
+            start = owner:EyePos(),
+            endpos = owner:EyePos() + (owner:GetAimVector() * self:GetProcessedValue("BackstabRange")),
+            mask = MASK_SHOT,
+            filter = {owner, self:GetShieldEntity(), self.ShieldProp},
+            maxs = vmaxs,
+            mins = vmins
+        })
+        if tr2.Hit then
+            if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() then
+                local dot = owner:EyeAngles():Forward():Dot(tr2.Entity:EyeAngles():Forward())
+                backstab = dot > 0
+            end
+        end
+    end
+
     if backstab then
         prefix = "Backstab"
     end
@@ -89,11 +106,15 @@ function SWEP:MeleeAttack(bypass, bash2)
         end
     end
 
+    --[[]
     if !backstab then
         self:SetInMeleeAttack(true)
     else
         self:MeleeAttackShoot(bash2, true)
     end
+    ]]
+    self:SetBackstab(backstab)
+    self:SetInMeleeAttack(true)
 
     self.RecentMelee = true
 
@@ -127,6 +148,13 @@ function SWEP:MeleeAttackShoot(bash2, backstab)
 
     if tr.Hit then
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
+            if backstab then
+                local dot = owner:EyeAngles():Forward():Dot(tr.Entity:EyeAngles():Forward())
+                if dot <= 0 then
+                    backstab = false
+                    prefix = bash2 and "Bash2" or "Bash"
+                end
+            end
             if backstab then
                 local soundtab = {
                     name = "backstab",
@@ -226,6 +254,11 @@ function SWEP:ThinkMelee()
         postbash = self:GetProcessedValue("PostBash2Time", true)
     end
 
+    if self:GetBackstab() and self:GetProcessedValue("Backstab", true) then
+        prebash = self:GetProcessedValue("PreBackstabTime", true) / bashsped
+        postbash = self:GetProcessedValue("PostBackstabTime", true)
+    end
+
     if !self:GetGrenadePrimed() then
         if m2 then b2 = true else b2 = false end
 
@@ -258,6 +291,6 @@ function SWEP:ThinkMelee()
     end
 
     if self:GetInMeleeAttack() and self:GetLastMeleeTime() + prebash <= CurTime() then
-        self:MeleeAttackShoot(self:GetBash2(), false)
+        self:MeleeAttackShoot(self:GetBash2(), self:GetBackstab())
     end
 end
