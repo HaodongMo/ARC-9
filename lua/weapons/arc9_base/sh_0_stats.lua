@@ -443,7 +443,7 @@ do
     local arcGetValue = SWEP.GetValue
     local cvarArc9Truenames = GetConVar("arc9_truenames")
     local cvarGetBool = FindMetaTable("ConVar").GetBool
-    local vectorLength = FindMetaTable("Vector").Length
+    local vectorLength2D = FindMetaTable("Vector").Length2D
     local engineTickInterval = engine.TickInterval
     local engineTickCount = engine.TickCount
     local CurTime = CurTime
@@ -703,7 +703,7 @@ do
             local maxspd = entityIsPlayer(owner) and playerGetWalkSpeed(owner) or 250
 
             --if singleplayer or CLIENT or self.PV_Tick ~= upct then
-                spd = math.min(vectorLength(entityGetAbsVelocity(owner)), maxspd) / maxspd
+                spd = math.min(vectorLength2D(entityGetAbsVelocity(owner)), maxspd) / maxspd
                 self.PV_Move = spd
             --end
 
