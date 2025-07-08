@@ -751,3 +751,15 @@ function SWEP:RangeUnitize(range)
     if arc9_imperial:GetBool() then return tostring(math.Round(range * ARC9.HUToM * 1.0936)) .. ARC9:GetPhrase("unit.yard") end
     return tostring(math.Round(range * ARC9.HUToM)) .. ARC9:GetPhrase("unit.meter")
 end
+
+function SWEP:CustomAmmoDisplay()
+    if self:GetProcessedValue("BottomlessClip") then
+        self.AmmoDisplay = self.AmmoDisplay or {}
+        self.AmmoDisplay.Draw = true
+
+        self.AmmoDisplay.PrimaryClip = -1
+        self.AmmoDisplay.PrimaryAmmo = self:Ammo1() + self:Clip1()
+
+        return self.AmmoDisplay
+    end
+end
