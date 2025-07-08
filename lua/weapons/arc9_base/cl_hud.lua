@@ -18,10 +18,10 @@ function SWEP:ShouldDrawCrosshair()
     if self:GetInSights() then
 
         if (self.Peeking and !self:GetProcessedValue("NoPeekCrosshair", true) and arc9_crosshair_peek:GetFloat() == 1) and crossh then
-			return true
-		end
+            return true
+        end
 
-		return self:GetSight().CrosshairInSights
+        return self:GetSight().CrosshairInSights
     end
     if !crossh and !ARC9.ShouldThirdPerson() then return false end
     if self:GetCustomize() then return false end
@@ -52,7 +52,7 @@ function SWEP:DoDrawCrosshair(x, y)
     if !arc9_cross_enable:GetBool() then return end
 
     if self:GetInspecting() then lasthelperalpha = 0 return true end
-    
+
     local scrw, scrh = ScrW(), ScrH()
     local owner = self:GetOwner()
 
@@ -66,7 +66,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
         local endpos = sp + (sa:Forward() * 9000)
         local toscreen = endpos:ToScreen()
-    
+
         if ARC9.ShouldThirdPerson() then
             local tr = util.TraceLine({
                 start = sp,
@@ -74,10 +74,10 @@ function SWEP:DoDrawCrosshair(x, y)
                 mask = MASK_SHOT,
                 filter = owner
             })
-    
+
             toscreen = tr.HitPos:ToScreen()
         end
-    
+
         x, y = toscreen.x, toscreen.y
     end
 
@@ -91,7 +91,7 @@ function SWEP:DoDrawCrosshair(x, y)
     local miniprong_2 = ARC9ScreenScale(2) * m * sizeprong
     local gap = 0
     local staticgap = ARC9ScreenScale(4)
-	local hidedot = self:GetProcessedValue("CrosshairHideDot", true)
+    local hidedot = self:GetProcessedValue("CrosshairHideDot", true)
 
     -- local col = Color(255, 255, 255, 255)
     -- col.r = arc9_cross_r:GetFloat()
@@ -99,16 +99,16 @@ function SWEP:DoDrawCrosshair(x, y)
     -- col.b = arc9_cross_b:GetFloat()
     -- col.a =  arc9_cross_a:GetFloat()
 
-	if owner.ARC9_AATarget != nil and arc9_crosshair_target:GetBool() then
-		col = Color(255,0,0,255)
-	else
-		col = Color(255, 255, 255, 255)
-		col.r = arc9_cross_r:GetFloat()
-		col.g = arc9_cross_g:GetFloat()
-		col.b = arc9_cross_b:GetFloat()
-		col.a =  arc9_cross_a:GetFloat()
-	end
-		
+    if owner.ARC9_AATarget != nil and arc9_crosshair_target:GetBool() then
+        col = Color(255,0,0,255)
+    else
+        col = Color(255, 255, 255, 255)
+        col.r = arc9_cross_r:GetFloat()
+        col.g = arc9_cross_g:GetFloat()
+        col.b = arc9_cross_b:GetFloat()
+        col.a =  arc9_cross_a:GetFloat()
+    end
+
 
     local d = self:GetSightDelta()
 
@@ -136,7 +136,7 @@ function SWEP:DoDrawCrosshair(x, y)
 
         lasthelperalpha = math.Approach(lasthelperalpha, helpertarget, FrameTime() / 0.1)
 
-		if !hidedot then drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col) end
+        if !hidedot then drawshadowrect(x - (dotsize / 2), y - (dotsize / 2), dotsize, dotsize, col) end
 
         return true
     else
@@ -177,22 +177,22 @@ function SWEP:DoDrawCrosshair(x, y)
     local forcestd = self:GetProcessedValue("ForceStandardCrosshair", true)
 
     if self:GetProcessedValue("CustomCrosshair", true) then
-		surface.SetDrawColor(col)
-		
-		surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial", true) or Material("arc9/ui/share.png", "mips smooth") )
-		
-		local size = self:GetProcessedValue("CustomCrosshairSize", true) or 100
-		
-		if self:GetProcessedValue("CustomCrosshairSingle", true) then
-			surface.DrawTexturedRectRotated(x, y, (dotsize + gap) + size, (dotsize + gap) + size, 0) -- Central
-		else
-			surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
-			surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 180) -- Right
-			
-			surface.DrawTexturedRectRotated(x - (dotsize / 2), y - (dotsize / 2) - gap - prong - ARC9.ScreenScale(7), size, size, -90) -- Top
-			surface.DrawTexturedRectRotated(x - (dotsize / 2), y + (dotsize / 2) + gap + ARC9.ScreenScale(10), size, size, 90) -- Bottom
-		end
-	elseif self:GetProcessedValue("MissileCrosshair", true) then
+        surface.SetDrawColor(col)
+
+        surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial", true) or Material("arc9/ui/share.png", "mips smooth") )
+
+        local size = self:GetProcessedValue("CustomCrosshairSize", true) or 100
+
+        if self:GetProcessedValue("CustomCrosshairSingle", true) then
+            surface.DrawTexturedRectRotated(x, y, (dotsize + gap) + size, (dotsize + gap) + size, 0) -- Central
+        else
+            surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap - ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 0) -- Left
+            surface.DrawTexturedRectRotated(x - (dotsize / 2) + gap + ARC9.ScreenScale(11), y - (dotsize / 2), size, size, 180) -- Right
+
+            surface.DrawTexturedRectRotated(x - (dotsize / 2), y - (dotsize / 2) - gap - prong - ARC9.ScreenScale(7), size, size, -90) -- Top
+            surface.DrawTexturedRectRotated(x - (dotsize / 2), y + (dotsize / 2) + gap + ARC9.ScreenScale(10), size, size, 90) -- Bottom
+        end
+    elseif self:GetProcessedValue("MissileCrosshair", true) then
         -- local dotcount = 4
 
         -- for i = 1, dotcount do
@@ -280,9 +280,9 @@ function SWEP:DoDrawCrosshair(x, y)
             surface.SetDrawColor(col)
             surface.SetMaterial(sgcircleprong)
 
-			surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap, y - (dotsize / 2) + 1, size, size, 0) -- Left
-			surface.DrawTexturedRectRotated(x - (dotsize / 2) + 2 + gap, y - (dotsize / 2) + 1, size, size, 180) -- Right
-			if style == 2 then
+            surface.DrawTexturedRectRotated(x - (dotsize / 2) - gap, y - (dotsize / 2) + 1, size, size, 0) -- Left
+            surface.DrawTexturedRectRotated(x - (dotsize / 2) + 2 + gap, y - (dotsize / 2) + 1, size, size, 180) -- Right
+            if style == 2 then
                 surface.DrawTexturedRectRotated(x - (dotsize / 2) + 1, y - (dotsize / 2) - gap - 1 , size, size, -90) -- Top
                 surface.DrawTexturedRectRotated(x - (dotsize / 2) + 1, y + (dotsize / 2) + gap , size, size, 90) -- Bottom
             end
@@ -291,10 +291,10 @@ function SWEP:DoDrawCrosshair(x, y)
             surface.SetMaterial((gap > 75 and sgcirclethin) or (gap < 30 and sgcirclethick) or sgcircle)
             surface.DrawTexturedRectRotated(x, y, (dotsize + gap) * 2, (dotsize + gap) * 2, 0) -- Central
         end
-        
-		-- surface.DrawCircle(x, y, dotsize + gap - 1, col.r, col.g, col.b, 255) -- Middle White / Coloured One
-		-- surface.DrawCircle(x, y, dotsize + gap, 0, 0, 0, 100) -- Outside Gray
-		-- surface.DrawCircle(x, y, dotsize + gap -2, 0, 0, 0, 100) -- Inside Gra
+
+        -- surface.DrawCircle(x, y, dotsize + gap - 1, col.r, col.g, col.b, 255) -- Middle White / Coloured One
+        -- surface.DrawCircle(x, y, dotsize + gap, 0, 0, 0, 100) -- Outside Gray
+        -- surface.DrawCircle(x, y, dotsize + gap -2, 0, 0, 0, 100) -- Inside Gra
     else
         if mode > 1 then
             -- Burst crosshair
@@ -395,18 +395,18 @@ function SWEP:DrawHUD()
             surface.SetTextColor(255, 255, 255, bipodhint)
             surface.SetDrawColor(255, 255, 255, bipodhint)
             surface.SetFont("ARC9_16")
-            
+
             local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (surface.GetTextSize(text) * 0.35) + ScreenScale(5), y = scrh / 2 + ScreenScale(97), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 
             surface.SetFont("ARC9_10")
-            
+
             surface.SetDrawColor(0, 0, 0, math.Clamp(bipodhint, 0, 175))
             surface.DrawRect(scrw / 2 + 2 - surface.GetTextSize(text) / 2 + ScreenScale(5) - 4, scrh / 2 + 2 + ScreenScale(96), surface.GetTextSize(text) + 5, 27.5)
-        
+
             surface.SetTextColor(0, 0, 0, bipodhint) -- Black
             surface.SetTextPos(scrw / 2 + 2 - surface.GetTextSize(text) / 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97))
             surface.DrawText(text)
-            
+
             surface.SetTextColor(255, 255, 255, bipodhint) -- White
             surface.SetTextPos(scrw / 2 - surface.GetTextSize(text) / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97))
             surface.DrawText(text)
@@ -425,7 +425,7 @@ function SWEP:DrawHUD()
         local blink = 255 * math.abs(math.sin(ct * 5))
 
         local glyph = ARC9.GetBindKey("+reload")
-        
+
         if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
         if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
         if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "mips smooth" ) end
@@ -438,7 +438,7 @@ function SWEP:DrawHUD()
 
                 surface.SetDrawColor(255, 255, 255, 255)
                 surface.SetFont("ARC9_12")
-                
+
                 local tw = surface.GetTextSize(text)
                 local twlow = surface.GetTextSize(textlow)
                 local twempty = surface.GetTextSize(textempty)
@@ -447,36 +447,36 @@ function SWEP:DrawHUD()
                 if !ia and (magazine == 0 and maxmag == 0) then -- If no ammo and no reserve
                     surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(ct * 5)))
                     surface.DrawRect(scrw / 2 + 2 - twempty / 2 - 5, scrh / 2 + 2 + ScreenScale(98) + (bipodhint / 7.5), twempty + 7, 27.5)
-        
+
                     surface.SetTextPos(scrw / 2 + 2 - twempty / 2, scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
                     surface.SetTextColor(0, 0, 0, blink)
                     surface.DrawText(textempty)
-                    
+
                     surface.SetTextPos(scrw / 2 - twempty / 2, scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
                     surface.SetTextColor(255, 100, 100, blink)
                     surface.DrawText(textempty)
-                elseif !ia and mag and maxmag == 0 then -- If low on ammo with no reserve ammo				
+                elseif !ia and mag and maxmag == 0 then -- If low on ammo with no reserve ammo
                     surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(ct * 5)))
                     surface.DrawRect(scrw / 2 + 2 - twlow / 2 - 5, scrh / 2 + 2 + ScreenScale(98) + (bipodhint / 7.5), twlow + 7, 27.5)
 
                     surface.SetTextPos(scrw / 2 + 2 - twlow / 2, scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
                     surface.SetTextColor(0, 0, 0, blink)
                     surface.DrawText(textlow)
-                    
+
                     surface.SetTextPos(scrw / 2 - twlow / 2, scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
                     surface.SetTextColor(255, 255, 100, blink)
                     surface.DrawText(textlow)
                 elseif (ia and mag) or (!ia and mag and maxmag > 0) then -- If low on ammo and have reserve ammo
                     surface.SetTextColor(255, 255, 255, 255)
                     local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (tw * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
-                                    
+
                     surface.SetDrawColor(0, 0, 0, 175 * math.abs(math.sin(ct * 5)))
                     surface.DrawRect(scrw / 2 - tw / 2 + ScreenScale(4.75), scrh / 2 + ScreenScale(98) + (bipodhint / 7.5), tw + 5, 27.5)
-        
+
                     surface.SetTextPos(scrw / 2 - tw / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
                     surface.SetTextColor(0, 0, 0, blink)
                     surface.DrawText(text)
-                    
+
                     surface.SetTextPos(scrw / 2 - tw / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
                     surface.SetTextColor(255, 255, 255, blink)
                     surface.DrawText(text)
@@ -484,15 +484,15 @@ function SWEP:DrawHUD()
                 end
             end
         end
-                
+
         if arc9_center_jam:GetBool() and self:GetJammed() and not self:StillWaiting() then -- If weapon is Jammed
             if !self:GetProcessedValue("Overheat", true) then -- overheat makes guns auto unjam so hint is useless
                 local textunjam = ARC9:GetPhrase("hud.hint.unjam")
                 local twunjam = surface.GetTextSize(textunjam)
-                
+
                 surface.SetDrawColor(255, 255, 255, 255)
                 surface.SetFont("ARC9_12")
-                
+
                 surface.SetTextColor(255, 255, 255, 255)
                 local symbol = CreateControllerKeyLine({x = scrw / 2-ScreenScale(10) - (surface.GetTextSize(textunjam) * 0.5) + ScreenScale(5), y = scrh / 2 + 7.5 + ScreenScale(96) + (bipodhint / 7.5), size = ScreenScale(8), font = "ARC9_12", font_keyb = "ARC9_12" }, { glyph, ScreenScale(7) })
 
@@ -502,7 +502,7 @@ function SWEP:DrawHUD()
                 surface.SetTextPos(scrw / 2 - surface.GetTextSize(textunjam) / 2 + 2 + ScreenScale(5), scrh / 2 + 2 + ScreenScale(97) + (bipodhint / 7.5)) -- Black
                 surface.SetTextColor(0, 0, 0, blink)
                 surface.DrawText(textunjam)
-                
+
                 surface.SetTextPos(scrw / 2 - surface.GetTextSize(textunjam) / 2 + ScreenScale(5), scrh / 2 + ScreenScale(97) + (bipodhint / 7.5)) -- White
                 surface.SetTextColor(255, 255, 255, blink)
                 surface.DrawText(textunjam)
@@ -575,28 +575,28 @@ function SWEP:DrawHUD()
 
             if lastfiremode != fm and self:GetReadyTime() - ct <= 0 then
                 -- if   more than 1 fm   OR   fm is safety   OR   switched from safety
-                if (#self:GetValue("Firemodes") or 0) > 1 or self:GetSafe() or lastfiremode == ARC9:GetPhrase("hud.firemode.safe") then 
-                    lastfiremodetime = ct 
+                if (#self:GetValue("Firemodes") or 0) > 1 or self:GetSafe() or lastfiremode == ARC9:GetPhrase("hud.firemode.safe") then
+                    lastfiremodetime = ct
                     lastfiremode = fm
                 end
             end
 
-            if ct - lastfiremodetime < 1 then 
+            if ct - lastfiremodetime < 1 then
                 local funnynumber = math.min(1, math.sin(3.5 * math.Clamp(ct - lastfiremodetime, 0, 1)) * 2.5)
                 firemodealpha = funnynumber * 255
-                
+
                 local text = fm
                 surface.SetFont("ARC9_10")
                 local tw = surface.GetTextSize(fm)
                 -- local blink = math.abs(math.sin(ct * 10))
 
-                
+
                 surface.SetDrawColor(255, 255, 255, firemodealpha)
 
                 surface.SetTextColor(0, 0, 0, firemodealpha) -- Black BG
                 surface.SetTextPos(scrw / 2 - tw / 2, scrh / 2 + ScreenScale(60))
                 surface.DrawText(fm)
-                
+
                 surface.SetTextColor(255, 255, 255, firemodealpha)
                 surface.SetTextPos(scrw / 2 - tw / 2 - 2, scrh / 2 + ScreenScale(60) - 2)
                 surface.DrawText(fm)
@@ -653,7 +653,7 @@ function SWEP:DrawHUD()
             -- surface.SetTextPos(hx + ARC9ScreenScale(1.5), hy + ARC9ScreenScale(1.5)) -- Black
             -- surface.SetTextColor(0, 0, 0, 175)
             -- surface.DrawText(self:GetPrintName())
-            
+
             -- surface.SetTextPos(hx, hy) -- White
             -- surface.SetTextColor(255, 255, 255, 255)
             -- surface.DrawText(self:GetPrintName())
@@ -662,7 +662,7 @@ function SWEP:DrawHUD()
             -- surface.SetTextPos(hx + ARC9ScreenScale(1.5), hy + ARC9ScreenScale(11.5)) -- Black
             -- surface.SetTextColor(0, 0, 0, 175)
             -- surface.DrawText(self.Class or " ")
-            
+
             -- surface.SetTextPos(hx, hy + ARC9ScreenScale(10)) -- White
             -- surface.SetTextColor(255, 255, 255, 255)
             -- surface.DrawText(self.Class or " ")
@@ -721,7 +721,7 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
     if !selecticon then return end
 
     self.WepSelectIcon = selecticon:GetTexture("$basetexture")
-    if self:GetJammed() then  
+    if self:GetJammed() then
         surface.SetDrawColor(200, 50, 50, a)
     else
         surface.SetDrawColor(255, 255, 255, a)
@@ -748,6 +748,6 @@ end
 
 local arc9_imperial = GetConVar("arc9_imperial")
 function SWEP:RangeUnitize(range)
-	if arc9_imperial:GetBool() then return tostring(math.Round(range * ARC9.HUToM * 1.0936)) .. ARC9:GetPhrase("unit.yard") end
+    if arc9_imperial:GetBool() then return tostring(math.Round(range * ARC9.HUToM * 1.0936)) .. ARC9:GetPhrase("unit.yard") end
     return tostring(math.Round(range * ARC9.HUToM)) .. ARC9:GetPhrase("unit.meter")
 end

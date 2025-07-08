@@ -305,7 +305,7 @@ do
             -- if istable(stat) then
             --     stat.BaseClass = nil
             -- end
-            
+
             if quickmodifiers[val] and isnumber(stat) then
                 local convarvalue = quickmodifiers[val]:GetFloat()
 
@@ -327,7 +327,7 @@ do
             for i = 1, affectorsCount do
                 local tbl = allAffectors[i]
                 if !tbl then continue end
-                
+
                 local att_priority = tbl[valContCondition .. "_Priority"] or 1
 
                 if att_priority >= priority and tbl[valContCondition] ~= nil then
@@ -397,7 +397,7 @@ do
 
         if quickmodifiers[val] and isnumber(val) then
             local convarvalue = quickmodifiers[val]:GetFloat()
-            
+
             if val == "MalfunctionMeanShotsToFail" then  -- dont kill me for this pls
                 stat = stat / math.max(0.00000001, convarvalue)
             else
@@ -428,7 +428,7 @@ do
     local PLAYER = FindMetaTable("Player")
     local playerCrouching = PLAYER.Crouching
     local playerGetWalkSpeed = PLAYER.GetWalkSpeed
-	local playerSprinting = PLAYER.IsSprinting
+    local playerSprinting = PLAYER.IsSprinting
     local entityOwner = ENTITY.GetOwner
     local entityOnGround = ENTITY.OnGround
     local entityIsValid = ENTITY.IsValid
@@ -494,12 +494,12 @@ do
                 if cachetime then
                     if upct > cachetime then
                         -- print("Renewing cache for - ", processedValueName)
-                        
+
 
                         self.PV_CacheLong[processedValueName].time = upct + 60 -- idk whats number here should be
                         if self.DynamicConditions[val] then self.PV_CacheLong[processedValueName].time = upct end
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
-                        
+
                 -- if istable(self.PV_CacheLong[processedValueName].value) then
                     -- print("Renewed value is a table!")
                     -- PrintTable(self.PV_CacheLong[processedValueName].value)
@@ -521,7 +521,6 @@ do
 
             return self.PV_CacheLong[processedValueName].value
         end
-
 
         local stat = arcGetValue(self, val, base)
         local ubgl = swepDt.UBGL
@@ -548,10 +547,10 @@ do
             if ownerOnGround and playerCrouching(owner) then
                 stat = arcGetValue(self, val, stat, "Crouch")
             end
-			
-			if ownerOnGround and playerSprinting(owner) and !self:StillWaiting() then
+
+            if ownerOnGround and playerSprinting(owner) and !self:StillWaiting() then
                 stat = arcGetValue(self, val, stat, "Sprint")
-			end
+            end
         end
 
         if swepDt.Reloading then
