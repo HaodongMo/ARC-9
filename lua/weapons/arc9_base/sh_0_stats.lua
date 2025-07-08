@@ -484,7 +484,6 @@ do
             end
         -- end
 
-
         -- mega cool thing to not calculate mostly static values
 
         if cachedelay then
@@ -498,7 +497,7 @@ do
 
                         self.PV_CacheLong[processedValueName].time = upct + 60 -- idk whats number here should be
                         if self.DynamicConditions[val] then self.PV_CacheLong[processedValueName].time = upct end
-                        self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
+                        self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, false, base, cmd)
 
                 -- if istable(self.PV_CacheLong[processedValueName].value) then
                     -- print("Renewed value is a table!")
@@ -512,7 +511,7 @@ do
                         -- print("Didn't found cache for - ", processedValueName, ", generating!")
                 self.PV_CacheLong[processedValueName] = {}
                 self.PV_CacheLong[processedValueName].time = upct
-                self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, base, cmd, false)
+                self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, false, base, cmd)
                 -- if istable(self.PV_CacheLong[processedValueName].value) then
                     -- print("That generated value is a table!")
                     -- PrintTable(self.PV_CacheLong[processedValueName].value)
@@ -719,7 +718,7 @@ do
 
         -- if CLIENT then
             -- self.PV_Tick = ticks + (ownerIsNPC and engineTickInterval() * 16 or engineTickInterval())
-            self.PV_Tick = ticks + (ownerIsNPC and 16 or 1)
+            self.PV_Tick = ticks + (ownerIsNPC and 16 or 0)
             self.PV_Cache[processedValueName] = stat
         -- end
 
