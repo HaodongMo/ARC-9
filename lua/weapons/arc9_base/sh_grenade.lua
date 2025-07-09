@@ -191,6 +191,8 @@ function SWEP:ThrowGrenade(nttype, delaytime)
                 self:SetDetonatorEntity(nade)
             end
 
+            nade:SetPhysicsAttacker(self:GetOwner(), 600)
+
             local phys = nade:GetPhysicsObject()
 
             if IsValid(phys) then

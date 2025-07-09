@@ -1118,6 +1118,8 @@ function SWEP:ShootRocket()
             self:SetDetonatorEntity(rocket)
         end
 
+        rocket:SetPhysicsAttacker(self:GetOwner(), 600)
+
         local phys = rocket:GetPhysicsObject()
 
         if phys:IsValid() then
