@@ -302,7 +302,7 @@ function SWEP:DoRTScope(model, atttbl, active)
                 surface.SetDrawColor(color)
                 surface.SetMaterial(reticle)
                 -- surface.DrawTexturedRect(rtr_x, rtr_y, size, size)
-                local counterrotation = self.LastViewModelAng.z - sightzang + self.SubtleVisualRecoilAng.z * 2 - EyeAngles().z
+                local counterrotation = (self.LastViewModelAng and self.LastViewModelAng.z or 0) - sightzang + self.SubtleVisualRecoilAng.z * 2 - EyeAngles().z
                 surface.DrawTexturedRectRotated(size / 2 + rtr_x, size / 2 + rtr_y, size, size, -counterrotation)
             end
 
