@@ -150,7 +150,8 @@ function ARC9.StartCommand(ply, cmd)
             -- for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), 244, math.cos(math.rad(cone)))) do
             for _, ent in ipairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), dist, math.cos(math.rad(cone + (fav:GetBool() and far or 0))))) do
                 if ent == ply or (!ent:IsNPC() and !ent:IsNextBot() and !ent:IsPlayer()) or ent:Health() <= 0
-                        or (ent:IsPlayer() and ent:Team() ~= TEAM_UNASSIGNED and ent:Team() == ply:Team()) then continue end
+                        or (ent:IsPlayer() and ent:Team() ~= TEAM_UNASSIGNED and ent:Team() == ply:Team())
+                        or (ent:IsNPC() and IsFriendEntityName(ent:GetClass())) then continue end
                 local tr = util.TraceLine({
                     start = ply:EyePos(),
                     endpos = tgt_pos(ent, head),
