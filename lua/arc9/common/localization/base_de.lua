@@ -106,7 +106,7 @@ L["customize.stats.explosive"] = "Explosivschaden"
 L["customize.stats.firemodes"] = "Feuermodi"
 L["customize.stats.firepower"] = "Feuerkraft"
 L["customize.stats.freeaim"] = "Freiziel-Radius"
-L["customize.stats.muzzlevelocity"] = "Mündungsgeschwindigkeit"
+L["customize.stats.shootentforce"] = "Mündungsgeschwindigkeit"
 L["customize.stats.noise"] = "Lärm"
 L["customize.stats.penetration"] = "Penetration"
 L["customize.stats.precision"] = "Präzision"
@@ -154,7 +154,7 @@ L["customize.stats.explain.cyclic"] = "Zyklische Feuerrate der Waffe. Ignoriert 
 L["customize.stats.explain.capacity"] = "Menge der Munition, die Magazin + Kammer fassen können."
 L["customize.stats.explain.range"] = "Entfernung bei der die Waffe minimalen Schaden verursacht."
 L["customize.stats.explain.precision"] = "Genauigkeit der Waffe. Gemessen in Winkelminuten (engl. MOA)."
-L["customize.stats.explain.muzzlevelocity"] = "Mündungsgeschwindigkeit eines Projektils, das durch diese Waffe abgefeuert wurde."
+L["customize.stats.explain.shootentforce"] = "Mündungsgeschwindigkeit eines Projektils, das durch diese Waffe abgefeuert wurde."
 L["customize.stats.explain.ammo"] = "Munitionsart die diese Waffe verwendet."
 L["customize.stats.explain.penetration"] = "Materialdicke, die diese Waffe durchschlagen kann."
 L["customize.stats.explain.ricochet"] = "Maximale Wahrscheinlichkeit, dass von dieser Waffe abgefeuerte Geschosse zu Querschlägern werden."
@@ -220,7 +220,7 @@ L["autostat.damagemin"] = "Minimalschaden"
 L["autostat.damagerand"] = "Schadensvarianz"
 L["autostat.deploytime"] = "Zücke-Zeit"
 L["autostat.distance"] = "Projektilentfernung"
-L["autostat.muzzlevelocity"] = "Projektil-Mündungsgeschwindigkeit"
+L["autostat.shootentforce"] = "Projektil-Mündungsgeschwindigkeit"
 L["autostat.explosiondamage"] = "Explosionsschaden"
 L["autostat.explosionradius"] = "Explosionsradius"
 L["autostat.fixtime"] = "Enthemm-Zeit"
@@ -465,7 +465,7 @@ L["spawnmenu.supermod.selectspec"] = "Spezialkondition, bspw. beim Ducken"
 L["spawnmenu.supermod.selectval"] = "Schreib einen numerischen Wert, oder \"true\" / \"false\""
 L["spawnmenu.supermod.result"] = "Ergebnis erscheint hier"
 L["spawnmenu.supermod.examples"] = [[
-Examples: 
+Examples:
 ∟ "Overheat" "true", um Überhitzen zu deaktivieren
 ∟ "BottomlessClip" "true", um 'Bodenloses Magazin' zu aktivieren
 ∟ "RecoilMultCrouch" "0.1", um Rückstoß beim Ducken auf 10% zu reduzieren

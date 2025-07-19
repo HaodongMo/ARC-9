@@ -1094,7 +1094,7 @@ local function menu_client_controller(panel)
     -- panel:ControlHelp( "Activate a controller-friendly mode for ARC9.\n- JUMP, RELOAD and USE can be used to Select, Deselect and\nRandomly Select attachments.\n\nController glyphs can be customized down below!" )
     -- panel:CheckBox("Controller Rumble w/ SInput", "arc9_controller_rumble")
     -- panel:ControlHelp( "Use Fesiug's SInput to interact with ARC9.\nFound at github.com/Fesiug/gmod-sinput" )
-    
+
     local presetss = panel:ToolPresets( "arc9controller", { arc9_controller_glyphset = "" } )
 
     local listview = vgui.Create("DListView", panel)
@@ -1199,7 +1199,7 @@ local function menu_client_controller(panel)
     matselect_filter:AddChoice( "Steam Controller", "sc_" )
     matselect_filter:AddChoice( "Steam Deck", "sd_" )
     matselect_filter:AddChoice( "Nintendo Switch", "switchpro_" )
-	
+
     -- matselect_filter:AddChoice( "Refresh", "" )
     -- matselect_filter:AddChoice( "! Mouse !", "mouse" )
     -- matselect_filter:AddChoice( "Amazon Luna", "AmazonLuna/" )
@@ -1271,7 +1271,7 @@ local function menu_client_controller(panel)
         for k, v in pairs( data ) do
             RunConsoleCommand( k, v )
         end
-        
+
         timer.Simple(0.1, function()
             but_upd:DoClick()
         end)
@@ -1290,7 +1290,7 @@ c1 = {
     ["RicochetAngleMax"] = true,
     ["RicochetChance"] = true,
     ["ArmorPiercing"] = true,
-    ["MuzzleVelocity"] = true,
+    ["ShootEntForce"] = true,
     ["PhysBulletMuzzleVelocity"] = true,
     ["PhysBulletDrag"] = true,
     ["PhysBulletGravity"] = true,
@@ -1429,14 +1429,14 @@ local function menu_server_modifiers(panel)
     panel:ControlHelp( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.selectmod") or "Add a modification type; Not all stats have these" )
     panel:AddItem( com_3 )
     panel:ControlHelp( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.selectspec") or "Add a special condition, such as when crouching" )
-	
+
     panel:ControlHelp( "" )
     panel:AddItem( tex_inp )
     tex_inp:SetPlaceholderText( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.result") or "Result appears here" )
 
     panel:AddItem( tex_out )
     tex_out:SetPlaceholderText( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.selectval") or "Write a numerical value, or \"true\" / \"false\"" )
-	
+
     function listview:DoDoubleClick( lineID, line )
         tex_inp:SetValue( line:GetColumnText( 1 ) )
         tex_out:SetValue( line:GetColumnText( 2 ) )
@@ -1481,7 +1481,7 @@ local function menu_server_modifiers(panel)
 
     panel:ControlHelp( "" )
 
-    if ARC9.GetPhrase then 
+    if ARC9.GetPhrase then
         panel:ControlHelp( ARC9.GetPhrase and ARC9:GetPhrase("spawnmenu.supermod.examples") )
     else
         panel:ControlHelp( "Examples:" )
@@ -1553,7 +1553,7 @@ local function menu_server_modifiers(panel)
         for k, v in pairs( data ) do
             RunConsoleCommand( k, v )
         end
-        
+
         timer.Simple(0.1, function()
             but_upd:DoClick()
             RunConsoleCommand("arc9_modifiers_invalidateall")
@@ -1616,7 +1616,7 @@ local function opensupermodifers()
 
     local scroller = vgui.Create( "DScrollPanel", frame )
     scroller:Dock( FILL )
-    
+
     local cpanle = vgui.Create( "ControlPanel", frame )
     cpanle:SetName( ARC9:GetPhrase("settings.server.gameplay.supermod.title") )
     cpanle:Dock( FILL )
@@ -1630,7 +1630,7 @@ local function opencontroller()
     frame:SetTitle( ARC9:GetPhrase("spawnmenu.settings") )
     frame:MakePopup()
     frame:Center()
-    
+
     local scroller = vgui.Create( "DScrollPanel", frame )
     scroller:Dock( FILL )
 
@@ -1639,7 +1639,7 @@ local function opencontroller()
     cpanle:Dock( FILL )
     menu_client_controller(cpanle)
 end
-    
+
 concommand.Add("arc9_settings_supermodifiers", opensupermodifers)
 concommand.Add("arc9_settings_controller", opencontroller)
 

@@ -278,7 +278,7 @@ function SWEP:PrimaryAttack()
     if self:GetCustomize() then return end
 
     if swepGetProcessedValue(self,"Bash", true) and owner:KeyDown(IN_USE) and !self:GetInSights() then
-		if self:GetIsSprinting() and !self.ShootWhileSprint then return end
+        if self:GetIsSprinting() and !self.ShootWhileSprint then return end
         self:MeleeAttack()
         self:SetNeedTriggerPress(true)
         return
@@ -286,7 +286,7 @@ function SWEP:PrimaryAttack()
 
     if self:SprintLock() then return end
 
-	local nthShot = self:GetNthShot()
+    local nthShot = self:GetNthShot()
 
     if self:HasAmmoInClip() then
         if swepGetProcessedValue(self,"TriggerDelay") then
@@ -297,8 +297,8 @@ function SWEP:PrimaryAttack()
                 self:SetTriggerDelay(time + swepGetProcessedValue(self,"TriggerDelayTime"))
                 local isEmpty = self:Clip1() == swepGetProcessedValue(self, "AmmoPerShot")
                 local anim = "trigger"
-				
-		if swepGetProcessedValue(self,"Akimbo", true) then
+
+        if swepGetProcessedValue(self,"Akimbo", true) then
             if swepGetProcessedValue(self, "AkimboBoth", true) then
                 anim = "trigger_both"
             elseif nthShot % 2 == 0 then
@@ -307,18 +307,18 @@ function SWEP:PrimaryAttack()
                 anim = "trigger_left"
             end
         end
-		
+
                 if swepGetProcessedValue(self,"TriggerStartFireAnim", true) then
-				if swepGetProcessedValue(self,"Akimbo", true) then
-					if swepGetProcessedValue(self, "AkimboBoth", true) then
-						anim = "fire_both"
-					elseif nthShot % 2 == 0 then
-						anim = "fire_right"
-					else
-						anim = "fire_left"
-					end
-				else anim = "fire"
-			end
+                if swepGetProcessedValue(self,"Akimbo", true) then
+                    if swepGetProcessedValue(self, "AkimboBoth", true) then
+                        anim = "fire_both"
+                    elseif nthShot % 2 == 0 then
+                        anim = "fire_right"
+                    else
+                        anim = "fire_left"
+                    end
+                else anim = "fire"
+            end
                 end
                 if self:HasAnimation(anim .. "_empty", true) and isEmpty then
                     anim = anim .. "_empty"
@@ -339,10 +339,10 @@ function SWEP:PrimaryAttack()
     end
 
     self:DoPrimaryAttack()
-		
-	if self.RecentMelee then
-		self.RecentMelee = nil
-	end
+
+    if self.RecentMelee then
+        self.RecentMelee = nil
+    end
 
 end
 
@@ -366,7 +366,7 @@ function SWEP:DoPrimaryAttack()
     if !self:HasAmmoInClip() then
         if self:GetUBGL() and !swepGetProcessedValue(self,"UBGLInsteadOfSights", true) then
             if self:GetMaxClip2() < 2 then -- mytton doesn't like auto ubgl reload
-                if self:CanReload() then 
+                if self:CanReload() then
                     self:Reload()
                 else
                     self:ToggleUBGL(false)
@@ -594,7 +594,7 @@ function SWEP:SPAddTracer() self.TracerCancelled = false end
 
 function SWEP:ShootPhysBulletBinding(pos, ang, spread, bullettbl, numm)
     if SERVER or (CLIENT and IsFirstTimePredicted()) then
-        if swepGetProcessedValue(self, "UseDispersion", true) then 
+        if swepGetProcessedValue(self, "UseDispersion", true) then
             local seed = 1337 + self:EntIndex() + engine.TickCount()
             local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
             local angleRand = Angle(math.sin(a), math.cos(a), 0)
@@ -676,7 +676,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 local distance = !shouldphys and swepGetProcessedValue(self, "Distance") or minphysrange
                 local rangecheck = false
                 self.TracerCancelled = false
-                
+
                 if sp and SERVER then self:CallOnClient("SPAddTracer") end
 
                 fireBullets.Damage = 2 -- minimal perf hit, setting dmg in callback only if it actually hitted something
@@ -770,7 +770,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     -- Limb multipliers
     local traceEntity = tr.Entity
     local hitGroup = tr.HitGroup
-    
+
     if !ARC9.NoBodyPartsDamageMults then
         local bodydamage = swepGetProcessedValue(self, "BodyDamageMults", true)
 
@@ -968,7 +968,7 @@ function SWEP:GetDamageAtRange(range)
 
     if damagelut then
         local stupidmult = dmgmodcvar:GetFloat()
-        
+
         for i, tbl in ipairs(damagelut) do
             if range < tbl[1] then
                 if swepGetProcessedValue(self, "CurvedDamageScaling", true) and i > 1 then

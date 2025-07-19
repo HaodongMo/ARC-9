@@ -1,47 +1,47 @@
 local imperial = GetConVar("arc9_imperial"):GetBool()
 
 local hutom = function(i)
-	if imperial then 
-		impv = 1.0936
-		impn = "unit.yard"
-	else 
-		impv = 1
-		impn = "unit.meter"
-	end
-	return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "m") 
+    if imperial then
+        impv = 1.0936
+        impn = "unit.yard"
+    else
+        impv = 1
+        impn = "unit.meter"
+    end
+    return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "m")
 end
 
 local hutomm = function(i)
-	if imperial then 
-		impv = 39.370
-		impn = "unit.inch"
-	else 
-		impv = 1000
-		impn = "unit.millimeter"
-	end
-	return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "mm") 
+    if imperial then
+        impv = 39.370
+        impn = "unit.inch"
+    else
+        impv = 1000
+        impn = "unit.millimeter"
+    end
+    return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "mm")
 end
 
-local hutoms = function(i) 
-	if imperial then 
-		impv = 3.2808399
-		impn = "unit.footpersecond"
-	else 
-		impv = 1
-		impn = "unit.meterpersecond"
-	end
-	return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "m/s")
+local hutoms = function(i)
+    if imperial then
+        impv = 3.2808399
+        impn = "unit.footpersecond"
+    else
+        impv = 1
+        impn = "unit.meterpersecond"
+    end
+    return math.Round(i * ARC9.HUToM * impv) .. (ARC9:GetPhrase(impn) or "m/s")
 end
 
-local hutoms_1 = function(i) 
-	if imperial then 
-		impv = 3.2808399
-		impn = "unit.footpersecond"
-	else 
-		impv = 1
-		impn = "unit.meterpersecond"
-	end
-	return math.Round(i * ARC9.HUToM * impv, 1) .. (ARC9:GetPhrase(impn) or "m/s")
+local hutoms_1 = function(i)
+    if imperial then
+        impv = 3.2808399
+        impn = "unit.footpersecond"
+    else
+        impv = 1
+        impn = "unit.meterpersecond"
+    end
+    return math.Round(i * ARC9.HUToM * impv, 1) .. (ARC9:GetPhrase(impn) or "m/s")
 end
 
 local degtomoa = function(i) return math.Round(i / ARC9.TrueMOAToAcc, 1) .. (ARC9:GetPhrase("unit.moa") or "MOA") end
@@ -65,7 +65,7 @@ ARC9.AutoStatsMains = {
     ["RicochetAngleMax"] = {"°", false},
     ["RicochetChance"] = {false, false},
     ["ArmorPiercing"] = {false, false},
-    ["MuzzleVelocity"] = {hutoms, false},
+    ["ShootEntForce"] = {hutoms, false},
     ["PhysBulletMuzzleVelocity"] = {hutoms, false},
     ["PhysBulletDrag"] = {false, true},
     ["PhysBulletGravity"] = {false, true},
@@ -253,7 +253,7 @@ ARC9.AutoStatsConditions = {
     ["BlindFire"] = "While Blind Firing",
     ["UBGL"] = "In UBGL",
     ["Bipod"] = "On Bipod",
-	["Sprint"] = "when Sprinting",
+    ["Sprint"] = "when Sprinting",
 }
 
 function ARC9.GetProsAndCons(atttbl, weapon)
@@ -329,7 +329,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
             for cond, postfix in pairs(ARC9.AutoStatsConditions) do
                 if string.StartWith(stat, cond) then
                     local phrase = (ARC9:GetPhrase("autostat.secondary." .. string.lower(cond)) or "%s")
-						autostat = string.format(phrase, autostat)
+                        autostat = string.format(phrase, autostat)
                     break
                 end
             end

@@ -107,7 +107,7 @@ L["customize.stats.explosive"] = "Explosive Damage"
 L["customize.stats.firemodes"] = "Fire Modes"
 L["customize.stats.firepower"] = "Firepower"
 L["customize.stats.freeaim"] = "Free Aim Radius"
-L["customize.stats.muzzlevelocity"] = "Muzzle Velocity"
+L["customize.stats.shootentforce"] = "Muzzle Velocity"
 L["customize.stats.noise"] = "Noise"
 L["customize.stats.penetration"] = "Penetration"
 L["customize.stats.precision"] = "Precision"
@@ -155,7 +155,7 @@ L["customize.stats.explain.cyclic"] = "The weapon's cyclic rate of fire. Ignores
 L["customize.stats.explain.capacity"] = "How much ammo the gun can hold in the magazine + chamber."
 L["customize.stats.explain.range"] = "The range at which the gun deals minimum damage."
 L["customize.stats.explain.precision"] = "The weapon's accuracy. Measured in Minutes of Accuracy (MOA)."
-L["customize.stats.explain.muzzlevelocity"] = "The muzzle velocity of bullets fired from this gun."
+L["customize.stats.explain.shootentforce"] = "The muzzle velocity of bullets fired from this gun."
 L["customize.stats.explain.ammo"] = "The type of ammo this gun uses."
 L["customize.stats.explain.penetration"] = "Amount of material this gun can penetrate."
 L["customize.stats.explain.ricochet"] = "Maximum chance for bullets from this gun to ricochet."
@@ -222,7 +222,7 @@ L["autostat.damagemin"] = "Minimum Damage"
 L["autostat.damagerand"] = "Damage Variance"
 L["autostat.deploytime"] = "Draw Time"
 L["autostat.distance"] = "Bullet Distance"
-L["autostat.muzzlevelocity"] = "Projectile Muzzle Velocity"
+L["autostat.shootentforce"] = "Projectile Muzzle Velocity"
 L["autostat.explosiondamage"] = "Explosion Damage"
 L["autostat.explosionradius"] = "Explosion Splash Radius"
 L["autostat.fixtime"] = "Unjam Time"
@@ -467,7 +467,7 @@ L["spawnmenu.supermod.selectspec"] = "Special condition, such as when crouching"
 L["spawnmenu.supermod.selectval"] = "Write a numerical value, or \"true\" / \"false\""
 L["spawnmenu.supermod.result"] = "Result appears here"
 L["spawnmenu.supermod.examples"] = [[
-Examples: 
+Examples:
 ∟ "Overheat" "true" to disable overheating
 ∟ "BottomlessClip" "true" to enable Bottomless Clip
 ∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching

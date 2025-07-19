@@ -19,11 +19,11 @@ local function GetTrueRPM(self, base)
             end
 
             if self.ManualAction then
-				-- What is self.cycle .
-				local cyclelen = self:GetAnimationTime("cycle")
-				local cycleent = self:GetAnimationEntry("cycle")
-				cyclelen = cyclelen * (cycleent.Mult or 1)
-				cyclelen = cyclelen * (cycleent.MinProgress or 1)
+                -- What is self.cycle .
+                local cyclelen = self:GetAnimationTime("cycle")
+                local cycleent = self:GetAnimationEntry("cycle")
+                cyclelen = cyclelen * (cycleent.Mult or 1)
+                cyclelen = cyclelen * (cycleent.MinProgress or 1)
                 delay = delay + (cyclelen * self.CycleTime)
             end
 
@@ -36,7 +36,7 @@ local function GetTrueRPM(self, base)
 
             a = 60 / delay
 
-			a = math.Round(a)
+            a = math.Round(a)
 
             return a
         end
@@ -58,10 +58,10 @@ local function GetTrueRPM(self, base)
             end
 
             if self:GetProcessedValue("ManualAction") then
-				local cyclelen = self:GetAnimationTime("cycle")
-				local cycleent = self:GetAnimationEntry("cycle")
-				cyclelen = cyclelen * (cycleent.Mult or 1)
-				cyclelen = cyclelen * (cycleent.MinProgress or 1)
+                local cyclelen = self:GetAnimationTime("cycle")
+                local cycleent = self:GetAnimationEntry("cycle")
+                cyclelen = cyclelen * (cycleent.Mult or 1)
+                cyclelen = cyclelen * (cycleent.MinProgress or 1)
                 delay = delay + (cyclelen * self:GetProcessedValue("CycleTime"))
             end
 
@@ -74,7 +74,7 @@ local function GetTrueRPM(self, base)
 
             a = 60 / delay
 
-			a = math.Round(a)
+            a = math.Round(a)
 
             return a
         end
@@ -83,7 +83,7 @@ end
 
 function SWEP:CreateHUD_Stats()
     local lowerpanel = self.CustomizeHUD.lowerpanel
-	local imperial = GetConVar("arc9_imperial"):GetBool()
+    local imperial = GetConVar("arc9_imperial"):GetBool()
 
     -- if true then return end
     self:ClearTabPanel()
@@ -217,7 +217,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 500,
             stat = "RangeMax",
             conv = function(a)
-				if imperial then return a * ARC9.HUToM * 1.0936 end
+                if imperial then return a * ARC9.HUToM * 1.0936 end
                 return a * ARC9.HUToM
             end,
             cond = function()
@@ -237,15 +237,15 @@ function SWEP:CreateHUD_Stats()
             end
         },
         {
-            title = "customize.stats.muzzlevelocity",
-            desc = "customize.stats.explain.muzzlevelocity",
+            title = "customize.stats.shootentforce",
+            desc = "customize.stats.explain.shootentforce",
             stat = "PhysBulletMuzzleVelocity",
             fifty = 500,
             unit = imperial and "unit.footpersecond" or "unit.meterpersecond",
-            conv = function(a) 
-				if imperial then return math.Round(a * ARC9.HUToM * 3.2808399) end
-				return math.Round(a * ARC9.HUToM) 
-			end,
+            conv = function(a)
+                if imperial then return math.Round(a * ARC9.HUToM * 3.2808399) end
+                return math.Round(a * ARC9.HUToM)
+            end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
@@ -268,10 +268,10 @@ function SWEP:CreateHUD_Stats()
             stat = "Penetration",
             fifty = 50,
             unit = imperial and "unit.inch" or "unit.millimeter",
-            conv = function(a) 
-				if imperial then return math.Round(a * ARC9.HUToM * 39.370, 2) end -- not using it directly because hutom
-				return math.Round(a * ARC9.HUToM * 1000, 2)
-			end,
+            conv = function(a)
+                if imperial then return math.Round(a * ARC9.HUToM * 39.370, 2) end -- not using it directly because hutom
+                return math.Round(a * ARC9.HUToM * 1000, 2)
+            end,
             cond = function()
                 return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("ShootEnt")
             end
@@ -613,8 +613,8 @@ function SWEP:CreateHUD_Stats()
                 ry = ry + ARC9ScreenScale(8)
 
                 local desc = ARC9:GetPhrase(self2.stats.desc) or self2.stats.desc
-				
-				-- self.CustomizeHints["customize.hint.select"] = self2.stats.desc
+
+                -- self.CustomizeHints["customize.hint.select"] = self2.stats.desc
 
                 surface.SetFont("ARC9_10")
                 local btw = surface.GetTextSize(desc)
