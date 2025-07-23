@@ -243,6 +243,8 @@ function SWEP:ThinkMelee()
 
     if !self.ShootWhileSprint and self:GetIsSprinting() then return end
 
+    if !self:GetBipod() then return end
+
     local bashsped = self:GetProcessedValue("BashSpeed", true)
 
     local prebash = self:GetProcessedValue("PreBashTime", true) / bashsped
