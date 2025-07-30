@@ -146,10 +146,13 @@ function SWEP:DoDrawCrosshair(x, y)
     end
 
     local mode = self:GetCurrentFiremode()
+    local shoottimegap = 0
 
-    local shoottimegap = math.Clamp((self:GetNextPrimaryFire() - CurTime()) / (60 / (self:GetProcessedValue("RPM", true) * 0.1)), 0, 1)
+    if !self:GetProcessedValue("NoCrosshairShootTimeGap") then
+        math.Clamp((self:GetNextPrimaryFire() - CurTime()) / (60 / (self:GetProcessedValue("RPM", true) * 0.1)), 0, 1)
+        shoottimegap = math.ease.OutCirc(shoottimegap)
+    end
 
-    shoottimegap = math.ease.OutCirc(shoottimegap)
 
     if staticcs then shoottimegap = 0 end
 

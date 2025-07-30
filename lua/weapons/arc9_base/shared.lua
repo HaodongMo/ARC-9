@@ -131,6 +131,7 @@ SWEP.Crosshair = false
 SWEP.LauncherCrosshair = false -- Force the launcher crosshair
 SWEP.MissileCrosshair = false -- Force the missile launcher crosshair
 SWEP.ForceStandardCrosshair = nil -- Force default + or T crosshair no matter what!
+SWEP.NoCrosshairShootTimeGap = nil -- Disables the fake crosshair bump when firing
 
 SWEP.CustomCrosshair = false -- Enables custom crosshair use.
 SWEP.CustomCrosshairSingle = false -- Enables a single image to be used as the custom crosshair.
