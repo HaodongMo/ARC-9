@@ -598,7 +598,7 @@ function SWEP:ShootPhysBulletBinding(pos, ang, spread, bullettbl, numm)
             local seed = 1337 + self:EntIndex() + engine.TickCount()
             local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
             local angleRand = Angle(math.sin(a), math.cos(a), 0)
-            angleRand:Mul(swepGetProcessedValue(self, "DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
+            angleRand:Mul(math.max(0, swepGetProcessedValue(self, "DispersionSpread")) * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
             ang:Add(angleRand)
         end
 
@@ -669,7 +669,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                     local seed = 1337 + self:EntIndex() + engine.TickCount()
                     local a = util.SharedRandom("arc9_physbullet3", 0, 360, seed)
                     local angleRand = Angle(math.sin(a), math.cos(a), 0)
-                    angleRand:Mul(swepGetProcessedValue(self, "DispersionSpread") * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
+                    angleRand:Mul(math.max(swepGetProcessedValue(self, "DispersionSpread"), 0) * util.SharedRandom("arc9_physbullet4", 0, 45, seed) * 1.4142135623730)
                     ang:Add(angleRand)
                 end
 
