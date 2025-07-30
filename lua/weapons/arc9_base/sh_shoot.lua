@@ -298,27 +298,27 @@ function SWEP:PrimaryAttack()
                 local isEmpty = self:Clip1() == swepGetProcessedValue(self, "AmmoPerShot")
                 local anim = "trigger"
 
-        if swepGetProcessedValue(self,"Akimbo", true) then
-            if swepGetProcessedValue(self, "AkimboBoth", true) then
-                anim = "trigger_both"
-            elseif nthShot % 2 == 0 then
-                anim = "trigger_right"
-            else
-                anim = "trigger_left"
-            end
-        end
-
-                if swepGetProcessedValue(self,"TriggerStartFireAnim", true) then
                 if swepGetProcessedValue(self,"Akimbo", true) then
                     if swepGetProcessedValue(self, "AkimboBoth", true) then
-                        anim = "fire_both"
+                        anim = "trigger_both"
                     elseif nthShot % 2 == 0 then
-                        anim = "fire_right"
+                        anim = "trigger_right"
                     else
-                        anim = "fire_left"
+                        anim = "trigger_left"
                     end
-                else anim = "fire"
-            end
+                end
+
+                if swepGetProcessedValue(self,"TriggerStartFireAnim", true) then
+                        if swepGetProcessedValue(self,"Akimbo", true) then
+                            if swepGetProcessedValue(self, "AkimboBoth", true) then
+                                anim = "fire_both"
+                            elseif nthShot % 2 == 0 then
+                                anim = "fire_right"
+                            else
+                                anim = "fire_left"
+                            end
+                        else anim = "fire"
+                    end
                 end
                 if self:HasAnimation(anim .. "_empty", true) and isEmpty then
                     anim = anim .. "_empty"

@@ -14,10 +14,10 @@ function SWEP:EnterSights()
     if self:GetAnimLockTime() > CurTime() and !self:GetReloading() then return end -- i hope this won't cause any issues later
     if self:GetValue("UBGL") and self:GetOwner():KeyDown(IN_USE) then return end
     if self:GetIsNearWall() and math.abs(self:GetOwner():GetNW2Float("leaning_fraction", 0)) < 0.1 then return end -- leaning mod support
-	if self:HasAnimation("bash") and self.SetNextAiming then
-		if self.SetNextAiming > CurTime() then return end
-	end
-	
+    if self:HasAnimation("bash") and self.SetNextAiming then
+        if self.SetNextAiming > CurTime() then return end
+    end
+
     -- self:ToggleBlindFire(false)
     self:SetInSights(true)
     if IsFirstTimePredicted() then
@@ -222,11 +222,11 @@ end
 function SWEP:SwitchMultiSight(amt)
     if self.NextSightSwitch and self.NextSightSwitch > CurTime() then return end
     self.NextSightSwitch = CurTime() + 0.15
-	
-	if self.SwitchSightTime and self.SwitchSightTime > CurTime() then
-		if self.SwitchSightDP then self.SwitchSightDP = 0 end
-	end
-	
+
+    if self.SwitchSightTime and self.SwitchSightTime > CurTime() then
+        if self.SwitchSightDP then self.SwitchSightDP = 0 end
+    end
+
     if game.SinglePlayer() then
         self:CallOnClient("InvalidateCache")
     end
@@ -235,13 +235,13 @@ function SWEP:SwitchMultiSight(amt)
     local old_msi = self:GetMultiSight()
     msi = old_msi
     msi = msi + amt
-    
+
     if msi > #self.MultiSightTable then
         msi = 1
     elseif msi <= 0 then
         msi = #self.MultiSightTable
     end
-    
+
     self:SetMultiSight(msi)
 
     self:RunHook("Hook_SwitchSight", self.MultiSightTable[msi])
@@ -259,8 +259,8 @@ function SWEP:SwitchMultiSight(amt)
     self:InvalidateCache()
 
     if msi != old_msi then
-		if self:StillWaiting() then return end
-		
+        if self:StillWaiting() then return end
+
         if (self.MultiSightTable[old_msi].atttbl or {}).ID == (self.MultiSightTable[msi].atttbl or {}).ID then
             if !self:GetUBGL() then -- for me
                 self:PlayAnimation("switchsights", 1, false)
@@ -317,7 +317,7 @@ do
             elseif not sighted and (inatt and self:GetSprintAmount() > 0 or pratt) then
                 self:EnterSights()
             end
-    
+
             if pratt then
                 self:BuildMultiSight()
             end
@@ -333,27 +333,27 @@ do
         if sighted and playerKeyPressed(owner, ARC9.IN_SWITCHSIGHTS) then
             swepSwitchMultiSight(self)
         end
-	
-		if cvarGetBool(dtapconvar) then -- Double-Tap Switching Code
-			if sighted and playerKeyPressed(owner, IN_USE) and !self:StillWaiting() then
-				self.SwitchSightDP = (self.SwitchSightDP or 0) + 1
-				
-				if self.SwitchSightDP > 0 then
-				self.SwitchSightTime = CurTime() + 0.3
-					if self.SwitchSightDP == 2 then
-						swepSwitchMultiSight(self)
-					end
-				end
-			end
 
-			if self.SwitchSightDP and self.SwitchSightDP > 2 then
-				self.SwitchSightDP = 1
-			end
-			
-			if self.SwitchSightTime and CurTime() > self.SwitchSightTime then
-				if self.SwitchSightDP then self.SwitchSightDP = 0 end
-			end
-		end
+        if cvarGetBool(dtapconvar) then -- Double-Tap Switching Code
+            if sighted and playerKeyPressed(owner, IN_USE) and !self:StillWaiting() then
+                self.SwitchSightDP = (self.SwitchSightDP or 0) + 1
+
+                if self.SwitchSightDP > 0 then
+                self.SwitchSightTime = CurTime() + 0.3
+                    if self.SwitchSightDP == 2 then
+                        swepSwitchMultiSight(self)
+                    end
+                end
+            end
+
+            if self.SwitchSightDP and self.SwitchSightDP > 2 then
+                self.SwitchSightDP = 1
+            end
+
+            if self.SwitchSightTime and CurTime() > self.SwitchSightTime then
+                if self.SwitchSightDP then self.SwitchSightDP = 0 end
+            end
+        end
 
         if self.HasSightsPoseparam then
             if CLIENT then
@@ -376,7 +376,7 @@ local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 
 function SWEP:GetRTScopeFOV()
     local sights = self:GetSight()
-    
+
     if !sights then return self:GetOwner():GetFOV() end
 
     local realzoom = self:GetRealZoom(sights)

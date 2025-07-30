@@ -220,7 +220,7 @@ function SWEP:Think()
             self.ClientStarted = true
             self:SetReady(false)
             self:DoDeployAnimation()
-            
+
             if LocalPlayer().ARC9_IncompatibilityCheck != true then
                 LocalPlayer().ARC9_IncompatibilityCheck = true
 
