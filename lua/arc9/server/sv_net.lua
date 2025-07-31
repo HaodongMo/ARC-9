@@ -65,19 +65,18 @@ net.Receive("arc9_randomizeatts", function(len, ply)
 end)
 
 if !game.SinglePlayer() then
-    ARC9.EveryoneRecipientFilter = RecipientFilter()
-    ARC9.EveryoneRecipientFilter:AddAllPlayers()
+    local function updatefilter()
+        if !ARC9.EveryoneRecipientFilter then ARC9.EveryoneRecipientFilter = RecipientFilter() end
+        ARC9.EveryoneRecipientFilter:AddAllPlayers()
+    end
+
+    updatefilter()
 
     gameevent.Listen("player_connect")
     gameevent.Listen("player_disconnect")
 
-    hook.Add("player_connect", "ARC9_UpdateFilter_Connect", function(_)
-        if !ARC9.EveryoneRecipientFilter then ARC9.EveryoneRecipientFilter = RecipientFilter() end
-        ARC9.EveryoneRecipientFilter:AddAllPlayers()
-    end)
+    hook.Add("player_connect", "ARC9_UpdateFilter_Connect", updatefilter)
+    hook.Add("player_disconnect", "ARC9_UpdateFilter_Disconnect", updatefilter)
 
-    hook.Add("player_disconnect", "ARC9_UpdateFilter_Disconnect", function(_)
-        if !ARC9.EveryoneRecipientFilter then ARC9.EveryoneRecipientFilter = RecipientFilter() end
-        ARC9.EveryoneRecipientFilter:AddAllPlayers()
-    end)
+    timer.Simple(10, updatefilter) -- just in case
 end
