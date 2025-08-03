@@ -882,7 +882,7 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
         alreadypenned[traceEntity] = true
     end
 
-    self:Penetrate(tr, range, penleft, alreadypenned)
+    self:Penetrate(table.Copy(tr), range, penleft, alreadypenned)
 
     self:SetUBGL(lastsecondary)
 end
