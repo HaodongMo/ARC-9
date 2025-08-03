@@ -211,6 +211,7 @@ end
 
 SWEP.Num = 1 -- Number of bullets to shoot
 SWEP.NumUBGL = 1 -- Fixes broken UBGLs firing multiple entities when not defined properly in their LUAs
+SWEP.HullSize = 0 -- bigger boolet
 
 SWEP.DistributeDamage = false -- If true, damage is distributed evenly across all bullets. If false, damage is dealt to the first bullet only.
 SWEP.NormalizeNumDamage = false -- If true, total damage will not change if Num is modified. Does not work with DistributeDamage.

@@ -687,6 +687,7 @@ function SWEP:DoProjectileAttack(pos, ang, spread)
                 fireBullets.Dir = ang:Forward()
                 fireBullets.Src = pos
                 fireBullets.Spread = Vector(spread, spread, spread)
+                fireBullets.HullSize = swepGetProcessedValue(self, "HullSize", true)
                 fireBullets.IgnoreEntity = veh
                 fireBullets.Distance = distance
                 fireBullets.Callback = function(att, btr, dmg)
