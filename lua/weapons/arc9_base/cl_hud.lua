@@ -156,8 +156,13 @@ function SWEP:DoDrawCrosshair(x, y)
 
     if staticcs then shoottimegap = 0 end
 
+    local spread = self:GetProcessedValue("Spread")
+    if self:GetProcessedValue("UseDispersion") then
+        spread = spread + self:GetProcessedValue("DispersionSpread")
+    end
+
     cam.Start3D()
-        local lool = ( EyePos() + ( EyeAngles():Forward() ) + ( (self:GetProcessedValue("Spread")) * EyeAngles():Up() ) ):ToScreen()
+        local lool = ( EyePos() + ( EyeAngles():Forward() ) + ( spread * EyeAngles():Up() ) ):ToScreen()
     cam.End3D()
 
     local gau = 0
