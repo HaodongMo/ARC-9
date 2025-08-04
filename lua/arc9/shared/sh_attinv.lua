@@ -2,7 +2,7 @@ local arc9_free_atts = GetConVar("arc9_free_atts")
 local arc9_atts_lock = GetConVar("arc9_atts_lock")
 local arc9_atts_loseondie = GetConVar("arc9_atts_loseondie")
 
-function ARC9:PlayerGetAtts(ply, att, wepclass)
+function ARC9:PlayerGetAtts(ply, att, wep)
     if !IsValid(ply) then return 0 end
     if att == "" then return 999 end
     if arc9_free_atts:GetBool() then return 999 end
@@ -20,7 +20,7 @@ function ARC9:PlayerGetAtts(ply, att, wepclass)
 
     if atttbl.InvAtt then att = atttbl.InvAtt end
 
-    local ret = hook.Run("ARC9_PlayerGetAtts", ply, att, wepclass)
+    local ret = hook.Run("ARC9_PlayerGetAtts", ply, att, wep)
     if ret != nil then return ret end
 
     if !ply.ARC9_AttInv then return 0 end

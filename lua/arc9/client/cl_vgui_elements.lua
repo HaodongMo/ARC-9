@@ -164,7 +164,7 @@ function ARC9AttButton:Paint(w, h)
     local favmarker = nil
     local att = self.att
 
-    local qty = ARC9:PlayerGetAtts(LocalPlayer(), att)
+    local qty = ARC9:PlayerGetAtts(LocalPlayer(), att, self.Weapon)
     local free_or_lock = false
 
     if self:IsHovered() or self.OverrideHovered then

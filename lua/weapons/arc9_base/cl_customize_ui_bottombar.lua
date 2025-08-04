@@ -140,6 +140,7 @@ local function enterfolder(self, scroll, slottbl, fname)
     self.BottomBarAnchor = anchor
 
     local backbtn = vgui.Create("ARC9AttButton", anchor)
+    backbtn.Weapon = self
     backbtn:SetIcon(backicon)
     backbtn:SetEmpty(true)
 
@@ -209,6 +210,7 @@ local function enterfolder(self, scroll, slottbl, fname)
             local folderbtn = vgui.Create("ARC9AttButton", scroll)
 
             local isfav = folder == "!favorites"
+            folderbtn.Weapon = self
             folderbtn:SetButtonText(isfav and ARC9:GetPhrase("folder.favorites") or ARC9:GetPhrase("folder." .. folder) or folder)
             folderbtn:SetIcon(isfav and folderfavicon or foldericon)
             folderbtn:SetEmpty(true)
@@ -307,6 +309,7 @@ local function enterfolder(self, scroll, slottbl, fname)
         local attname = ARC9:GetPhraseForAtt(att.att, "CompactName") or ARC9:GetPhraseForAtt(att.att, "PrintName") or ARC9:GetPhraseForAtt(att.att, "ShortName") or ""
 
         local attbtn2 = vgui.Create("ARC9AttButton", scroll)
+        attbtn2.Weapon = self
         attbtn2:DockMargin(0, 0, ARC9ScreenScale(4), 0)
         attbtn2:Dock(LEFT)
         attbtn2:SetButtonText(attname)

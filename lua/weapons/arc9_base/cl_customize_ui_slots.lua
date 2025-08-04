@@ -60,6 +60,7 @@ function SWEP:CreateHUD_Slots(scroll)
 
         local slotbtn = vgui.Create("ARC9AttButton", scroll)
 
+        slotbtn.Weapon = self
         slotbtn:SetCanAttach(true)
         slotbtn:SetEmpty(!ms_slot.Installed)
         slotbtn:SetHasModes(!!atttbl.ToggleStats)
