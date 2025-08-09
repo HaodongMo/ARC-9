@@ -41,32 +41,18 @@ ARC9.IncompatibleAddons = {
     ["3421440369"] = "Breaks bullet spread on ARC9 guns.",
     -- "optimization" lol
     ["2140391568"] = "Rotates scopes picture 90 degrees.",
-
-
-
-    -- Perhaps we should not express personal opinions here in incompat list? Those addons aren't incompatible, literally just shitty stickers 
-    -- Workshop is open for everyone, if this is truly "hate speech" then complain to steam/facepunch support
-
-    -- This is literally just a troll and hatred fuel towards people behind arc9 for "censoring" addons
-    -- You would not be able to change opinions of people who use those addons through restrictions (it will only make them more anger), but some day they will grow up anyway
-    -- so should you, stop caring about meaningless shit and take this a bit more serious :-)
-
-
-    -- -- ARC9 Anti-Furry Pack "Sigma Edition"
-    -- ["3287204618"] = "The values expressed by this mod are not compatible with ARC9. We suggest going outside and touching grass.",
-    -- -- ARC9 dudebros' Ultimate Anti-Furry Pack
-    -- ["3288589622"] = "The values expressed by this mod are not compatible with ARC9. We suggest going outside and touching grass.",
+    -- zinv original
+    ["179517028"] = "Causes errors each time sound is played. Can be fixed but it's an ancient addon with tons of reuploads. (getZINVProfiles() \"_ =\" is the culprit); Use NPC Daemon instead.",
+    -- zinv coffee
+    ["3073162490"] = "Causes errors each time sound is played. Can be fixed but it's an ancient addon with tons of reuploads. (getZINVProfiles() \"_ =\" is the culprit); Use NPC Daemon instead.",
+    -- zinv ++
+    ["2550261416"] = "Causes errors each time sound is played. Can be fixed but it's an ancient addon with tons of reuploads. (getZINVProfiles() \"_ =\" is the culprit); Use NPC Daemon instead.",
+    -- zinv ++ snorps
+    ["2757203958"] = "Causes errors each time sound is played. Can be fixed but it's an ancient addon with tons of reuploads. (getZINVProfiles() \"_ =\" is the culprit); Use NPC Daemon instead.",
+    -- zinv +
+    ["597017711"] = "Causes errors each time sound is played. Can be fixed but it's an ancient addon with tons of reuploads. (getZINVProfiles() \"_ =\" is the culprit); Use NPC Daemon instead.",
 }
 
--- -- ZINV Zombie/NPC Invasion and variants.
--- -- Original by Jason
--- ["179517028"] = "Breaks pretty much everything.",
--- -- ZINV++ by Gus "Sussy Gussy" Fring
--- ["2550261416"] = "Breaks pretty much everything.",
--- -- ZINV+ by moomoohk
--- ["597017711"] = "Breaks pretty much everything.",
--- -- ZINV++ by snorts
--- ["2757203958"] = "Breaks pretty much everything.",
 local ScreenScaleMulti = ARC9.ScreenScale
 
 function ARC9.MakeIncompatibleWindow(tbl)
