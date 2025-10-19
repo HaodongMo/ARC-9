@@ -331,7 +331,8 @@ SWEP.ShootAngOffset = Angle(0, 0, 0)
 
 -------------------------- MAGAZINE
 
-SWEP.Ammo = "pistol" -- What ammo type this gun uses.
+SWEP.Ammo = "" -- What ammo type this gun uses.
+SWEP.Primary.Ammo = SWEP.Ammo
 
 SWEP.ChamberSize = 1 -- The amount of rounds this gun can chamber.
 SWEP.ClipSize = 25 -- Self-explanatory.
