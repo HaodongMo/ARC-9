@@ -54,6 +54,7 @@ function SWEP:InvalidateCache()
     self.CachedToggleAttsStatus = nil
     -- self.ScrollLevels = {} -- moved to PostModify
     self.HasNoAffectors = {}
+    self.ListOfToggleableAttSlots = nil
     self:SetBaseSettings()
 end
 

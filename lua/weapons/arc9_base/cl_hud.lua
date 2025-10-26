@@ -686,6 +686,7 @@ function SWEP:DrawHUD()
     end
 
     self:HoldBreathHUD()
+    self:DrawRadialMenu()
     self:DrawCustomizeHUD()
 
     self:DrawLockOnHUD(false)

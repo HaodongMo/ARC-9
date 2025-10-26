@@ -109,6 +109,7 @@ end
 
 function SWEP:ClientDeploy()
     if SERVER then return end
+    if self:GetOwner() != LocalPlayer() then return end
 
     if game.SinglePlayer() then
         self:CallOnClient("ClientDeploy")
@@ -118,7 +119,9 @@ function SWEP:ClientDeploy()
         if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
         if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
     end
-    
+
+    gui.EnableScreenClicker(false)
+
     self:KillModel()
 end
 

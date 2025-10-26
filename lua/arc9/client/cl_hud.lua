@@ -443,7 +443,7 @@ local function GetHintsTable(capabilities)
         })
     end
 
-    if !weapon.CantSafety then 
+    if !weapon.CantSafety then
         table.insert(hints, {
             glyph = ARC9.GetBindKey("+use"),
             glyph2 = ARC9.GetBindKey("+zoom"),
@@ -456,6 +456,14 @@ local function GetHintsTable(capabilities)
             glyph = ARC9.GetBindKey("+reload"),
             glyph2 = ARC9.GetBindKey("+reload"),
             action = ARC9:GetPhrase("hud.hint.quickreload")
+        })
+    end
+
+    if ARC9.RadialMenuOpen and weapon.MouseAngle then
+        table.insert(hints, {
+            glyph = "shared_mouse_l_click_lg",
+            glyph2 = "shared_mouse_r_click_lg",
+            action = ARC9:GetPhrase("customize.hint.nextmode") .. "/" .. ARC9:GetPhrase("customize.hint.lastmode")
         })
     end
 
@@ -521,6 +529,10 @@ local function DrawSimpleHints()
     end
 
     if weapon:GetInSights() and hidefadetime + 1.5 < ct then
+        hidefadetime = ct
+    end
+
+    if ARC9.RadialMenuOpen and hidefadetime + 1.5 < ct then
         hidefadetime = ct
     end
 
