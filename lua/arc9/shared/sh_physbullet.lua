@@ -67,7 +67,8 @@ function ARC9:SendBullet(bullet, attacker)
     end
 end
 
-function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
+function ARC9:ShootPhysBullet(wep, pos, vel, tbl, pred)
+    pred = pred or false
 
     local physmdl = wep:GetProcessedValue("PhysBulletModel", true)
     local mdlindex = ARC9.PhysBulletModelsLookup[string.lower(physmdl or "")] or 0
@@ -129,9 +130,7 @@ function ARC9:ShootPhysBullet(wep, pos, vel, tbl)
             table.insert(ARC9.CSModelPile, {Model = bullet.ClientModel, Weapon = wep})
         end
 
-        if SERVER then
-            -- ARC9:ProgressPhysBullet(bullet, FrameTime())
-
+        if SERVER and !pred then
             ARC9:SendBullet(bullet, wep:GetOwner())
         end
 

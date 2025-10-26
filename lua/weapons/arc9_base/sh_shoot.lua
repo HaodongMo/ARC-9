@@ -616,7 +616,7 @@ function SWEP:ShootPhysBulletBinding(pos, ang, spread, bullettbl, numm)
             local vec = ang2:Forward()
             vec:Mul(swepGetProcessedValue(self, "PhysBulletMuzzleVelocity", true))
 
-            ARC9:ShootPhysBullet(self, pos, vec, bullettbl)
+            ARC9:ShootPhysBullet(self, pos, vec, bullettbl, true)
         end
     end
 end
