@@ -177,6 +177,8 @@ if CLIENT then
 
         if game.SinglePlayer() then
             ent = net.ReadEntity()
+        else
+            ent = weapon:IsValid() and weapon:GetOwner()
         end
 
         if !IsValid(weapon) then return end
@@ -337,9 +339,6 @@ function ARC9:ProgressPhysBullet(bullet, timestep)
     local newvel = oldvel - (dir * drag)
 
     newvel[3] = newvel[3] - gravity
-
-    local IsPlayer = attacker:IsPlayer()
-
 
     if bullet.Imaginary then
         -- the bullet has exited the map, but will continue being visible.
