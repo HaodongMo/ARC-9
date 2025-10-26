@@ -163,7 +163,7 @@ function SWEP:DrawRadialMenu()
 
         local textX = attX
         local textY = attY - ARC9ScreenScale(24)
-        local textTop = atttbl.CompactName or atttbl.PrintName or ""
+        local textTop = ARC9:GetPhraseForAtt(atttbl.ShortName , "CompactName") or atttbl.CompactName or ARC9:GetPhraseForAtt(atttbl.ShortName , "PrintName") or atttbl.PrintName or atttbl.ShortName
 
         if isSelected then
             surface.SetTextColor(ARC9.GetHUDColor("hi", 255 * a))
