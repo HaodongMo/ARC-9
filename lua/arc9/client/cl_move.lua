@@ -149,6 +149,18 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
             wpn.BottomBarAddress = nil
             wpn.BottomBarMode = 0
         end
+
+        if ARC9.RadialMenuOpen and wpn.LastSelectedAttSlot then
+            if input.WasMousePressed(MOUSE_FIRST) then
+                ARC9.DeferFakeToggleAtts = true
+                wpn:ToggleStat(wpn.LastSelectedAttSlot.Slot.Address)
+                wpn:PostModify()
+            elseif input.WasMousePressed(MOUSE_RIGHT) then
+                ARC9.DeferFakeToggleAtts = true
+                wpn:ToggleStat(wpn.LastSelectedAttSlot.Slot.Address, -1)
+                wpn:PostModify()
+            end
+        end
     end
 end)
 

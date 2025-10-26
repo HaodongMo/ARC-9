@@ -47,16 +47,6 @@ function SWEP:ThinkRadialMenu()
         end
 
         self.MouseAngle = angle
-
-        if input.WasMousePressed(MOUSE_FIRST) then
-            ARC9.DeferFakeToggleAtts = true
-            self:ToggleStat(self.LastSelectedAttSlot.Slot.Address)
-            self:PostModify()
-        elseif input.WasMousePressed(MOUSE_RIGHT) then
-            ARC9.DeferFakeToggleAtts = true
-            self:ToggleStat(self.LastSelectedAttSlot.Slot.Address, -1)
-            self:PostModify()
-        end
     end
 
     lastRadialMenuState = ARC9.RadialMenuOpen
