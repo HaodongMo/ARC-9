@@ -648,8 +648,14 @@ function SWEP:ToggleAllStatsOnF()
     end
 end
 
+SWEP.CachedToggleAttsStatus = nil
+
 function SWEP:CanToggleAllStatsOnF()
-    local toggled = false
+    if self.CachedToggleAttsStatus != nil then
+        return self.CachedToggleAttsStatus
+    end
+
+    local toggled = 0
 
     for _, slottbl in ipairs(self:GetSubSlotList()) do
         if !slottbl.Installed then continue end
@@ -659,7 +665,11 @@ function SWEP:CanToggleAllStatsOnF()
         if !atttbl.ToggleStats then continue end
         if !atttbl.ToggleOnF then continue end
 
-        toggled = true
+        toggled = toggled + 1
+
+        if toggled > 1 then
+            break
+        end
     end
 
     return toggled

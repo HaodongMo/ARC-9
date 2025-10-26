@@ -28,7 +28,7 @@ ARC9.LanguagesTable = {
 {"2Español", "es-es"},
 {"2Русский", "ru"},
 {"2Svenska", "sv-se"},
-{"2中國", "zh-cn"},
+{"2中文", "zh-cn"},
 
 {"9UwU :3", "uwu"},
 }

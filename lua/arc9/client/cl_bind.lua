@@ -1,4 +1,6 @@
 ARC9.KeyPressed_Menu = false
+ARC9.DeferToggleAtts = false
+ARC9.DeferFakeToggleAtts = false
 
 local randsound = "arc9/newui/ui_part_randomize.ogg"
 
@@ -161,10 +163,19 @@ hook.Add("PlayerBindPress", "ARC9_Binds", function(ply, bind, pressed, code)
                     wpn:PostModify()
                 end
             end
-            
+
             return true
         end
     else
+        if bind == "impulse 100" then
+            if wpn:CanToggleAllStatsOnF() > 1 and !ARC9.DeferToggleAtts then
+                -- We are going to defer the logic to cl_radialmenu
+                return true
+            else
+                ARC9.DeferToggleAtts = false
+            end
+        end
+
         if plususe then
             return ARC9.AttemptGiveNPCWeapon()
         end

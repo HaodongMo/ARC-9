@@ -47,6 +47,7 @@ local sgcircle = Material("arc9/circlehollow.png", "mips smooth")
 local sgcirclethick = Material("arc9/circlehollowsmall.png", "mips smooth")
 local sgcirclethin = Material("arc9/circlehollowbig.png", "mips smooth")
 local sgcircleprong = Material("arc9/circleprong.png", "mips smooth")
+local sharemat = Material("arc9/ui/share.png", "mips smooth")
 
 function SWEP:DoDrawCrosshair(x, y)
     if !arc9_cross_enable:GetBool() then return end
@@ -187,7 +188,7 @@ function SWEP:DoDrawCrosshair(x, y)
     if self:GetProcessedValue("CustomCrosshair", true) then
         surface.SetDrawColor(col)
 
-        surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial", true) or Material("arc9/ui/share.png", "mips smooth") )
+        surface.SetMaterial( self:GetProcessedValue("CustomCrosshairMaterial", true) or sharemat )
 
         local size = self:GetProcessedValue("CustomCrosshairSize", true) or 100
 
@@ -363,6 +364,9 @@ local cl_drawhud = GetConVar("cl_drawhud")
 
 local firemodealpha, lastfiremode, lastfiremodetime = 0, 0, 0
 
+local hud_t_full = Material("arc9/thermometer_full.png", "mips smooth")
+local hud_t_empty = Material("arc9/thermometer_empty.png", "mips smooth")
+
 function SWEP:DrawHUD()
     self:RunHook("Hook_HUDPaintBackground")
 
@@ -398,7 +402,10 @@ function SWEP:DrawHUD()
 
             if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
             if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
-            if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "mips smooth" ) end
+            if ARC9.CTRL_Exists[glyph] then
+                ARC9.CTRL_Lookup.glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "mips smooth" )
+                glyph = ARC9.CTRL_Lookup[glyph]
+            end
 
             surface.SetTextColor(255, 255, 255, bipodhint)
             surface.SetDrawColor(255, 255, 255, bipodhint)
@@ -436,7 +443,10 @@ function SWEP:DrawHUD()
 
         if ARC9.CTRL_Lookup[glyph] then glyph = ARC9.CTRL_Lookup[glyph] end
         if ARC9.CTRL_ConvertTo[glyph] then glyph = ARC9.CTRL_ConvertTo[glyph] end
-        if ARC9.CTRL_Exists[glyph] then glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "mips smooth" ) end
+        if ARC9.CTRL_Exists[glyph] then
+                ARC9.CTRL_Lookup.glyph = Material( "arc9/" .. ARC9.GlyphFamilyHUD() .. glyph .. ".png", "mips smooth" )
+                glyph = ARC9.CTRL_Lookup[glyph]
+            end
 
         if (arc9_center_reload_enable:GetBool() and (self.ClipSize > 0 and arc9_center_reload:GetFloat() > 0.02)) and !self:GetInspecting() and !self:GetJammed() then
             if !rel and !throw and !primbash and mag then
@@ -522,8 +532,6 @@ function SWEP:DrawHUD()
             local heat = self:GetHeatAmount()
             local heatcap = self:GetProcessedValue("HeatCapacity", true)
             local heatlocked = self:GetHeatLockout()
-            local hud_t_full = Material("arc9/thermometer_full.png", "mips smooth")
-            local hud_t_empty = Material("arc9/thermometer_empty.png", "mips smooth")
             local fill = math.Clamp(0.035 + (0.9 * heat) / heatcap, 0, 1)
             local wp = 25
             local xp = 70

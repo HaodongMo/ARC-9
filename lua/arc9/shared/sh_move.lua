@@ -48,7 +48,7 @@ function ARC9.Move(ply, mv, cmd)
         end
     end
 
-    if cmd:GetImpulse() == ARC9.IMPULSE_TOGGLEATTS then
+    if cmd:GetImpulse() == ARC9.IMPULSE_TOGGLEATTS or cmd:GetImpulse() == ARC9.IMPULSE_FAKETOGGLEATTS then
         if !wpn:StillWaiting() and !wpn:GetUBGL() then
             ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
             wpn:PlayAnimation("toggle")
@@ -338,7 +338,18 @@ function ARC9.StartCommand(ply, cmd)
         ARC9.LastEyeAngles = eyeang
     end
 
-    if cmd:GetImpulse() == 100 and wpn:CanToggleAllStatsOnF() and !wpn:GetCustomize() then
+    if cmd:GetImpulse() == ARC9.IMPULSE_FAKETOGGLEATTS then
+        if !wpn:GetReloading() and !wpn:GetUBGL() then
+            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
+        end
+    elseif cmd:GetImpulse() == ARC9.IMPULSE_TOGGLEATTS then
+        if !wpn:GetReloading() and !wpn:GetUBGL() then
+            ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
+            if CLIENT then
+                wpn:ToggleAllStatsOnF()
+            end
+        end
+    elseif cmd:GetImpulse() == 100 and (wpn:CanToggleAllStatsOnF() > 0) and !wpn:GetCustomize() then
         if !wpn:GetReloading() and !wpn:GetUBGL() then
             ply:EmitSound(wpn:RandomChoice(wpn:GetProcessedValue("ToggleAttSound", true)), 75, 100, 1, CHAN_ITEM)
             if CLIENT then

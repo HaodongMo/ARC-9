@@ -41,6 +41,7 @@ local swepThinkCustomize = SWEP.ThinkCustomize
 local swepRunHook = SWEP.RunHook
 local swepThinkThirdArm = SWEP.ThinkThirdArm
 local swepThinkPeek = SWEP.ThinkPeek
+local swepThinkRadialMenu = SWEP.ThinkRadialMenu
 
 local WEAPON = FindMetaTable("Weapon")
 local weaponSetNextPrimaryFire = WEAPON.SetNextPrimaryFire
@@ -187,6 +188,7 @@ function SWEP:Think()
     if CLIENT then
         swepThinkThirdArm(self)
         swepThinkPeek(self)
+        swepThinkRadialMenu(self)
     end
 
     self:ProcessTimers()
