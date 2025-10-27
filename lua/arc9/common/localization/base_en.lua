@@ -418,7 +418,7 @@ L["tips.custombinds"] = "ARC9 key combos can be replaced with custom binds. Star
 L["tips.cyberdemon"] = "To kill the terrorist, shoot him until he is dead."
 L["tips.description"] = "We advise you to read the descriptions of addons before commenting."
 L["tips.development"] = "Keen to develop ARC9 content? The official Discord server has plenty of resources to help!"
-L["tips.discord"] = "Join Diamond Doves on Discord! The link is in the ARC9 description and in top of settings."
+L["tips.discord"] = "Join Doves International on Discord! The link is in the ARC9 description and in top of settings."
 L["tips.external"] = "If using the Github version of ARC9, make sure to update frequently!"
 L["tips.hints"] = "Keep ARC9's HUD on to see control hints."
 L["tips.lean"] = "To manually lean, bind keys to +alt1 and +alt2."
@@ -429,6 +429,7 @@ L["tips.presets"] = "Share your favorite presets with your friends by exporting 
 L["tips.settings"] = "You can turn these tips off, and much more, in the ARC9 settings. Click the button in the top left corner!"
 L["tips.tips"] = "Tips have a fixed order. Keep reading and you'll eventually see them all."
 L["tips.tolerance"] = "All weapon bases work fine together. There's no need for favoritism."
+L["tips.togglehold"] = "If you have lots of lasers and flashlights, hold the toggle key to open a menu to adjust them all easily."
 
 ////////////////////// Other
 L["atts.favourites"] = "Favourites"
@@ -1135,7 +1136,7 @@ L["premium.help"] = "What is ARC9 Premium?"
 L["premium.help.header"] = "Guide to ARC9 Premium"
 L["premium.help.desc"] = "Creating addons takes time and resources. ARC9 has always been available for free, and it will remain that way. However, if you wish to support the base financially, you may do so, and get rewarded for it!"
 
-L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Diamond Doves Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
+L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Doves International Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
 
 L["premium.content"] = "Included in <color=255,106,0>ARC9 Premium</color>:"
 L["premium.content.list"] = [[
@@ -1160,7 +1161,7 @@ A receipt will be sent to your connected Email.
 
 If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
 
-If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Doves International Discord server and provide valid proof of purchase, and we will have it fixed for you.
 ]]
 
 L["premium.freetrial"] = "You've been gifted <color=255,106,0>ARC9 Premium (Free Trial)</color>!"
@@ -1171,7 +1172,7 @@ As a token of our appreciation, you've been gifted ARC9 Premium for <color=255,1
 
 If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
 
-If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Doves International Discord server and provide valid proof of purchase, and we will have it fixed for you.
 ]]
 
 L["premium.payment.info"] = [[

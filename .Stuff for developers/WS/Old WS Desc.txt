@@ -58,7 +58,7 @@ And if these aren't enough to sway you, the following features make a return fro
 
 [h3]FAQ[/h3]
 Q: How can I get started with development?
-A: Join Diamond Doves! We have plenty of developers who can help, and Arctic is very active there. You can also check the Github repository: https://github.com/HaodongMo/ARC-9
+A: Join Doves International! We have plenty of developers who can help, and Arctic is very active there. You can also check the Github repository: https://github.com/HaodongMo/ARC-9
 If you just want to make stickers, try this: https://github.com/HaodongMo/ARC9-Sticker-Pack-Maker/releases
 
 Q: Where are my attachments?

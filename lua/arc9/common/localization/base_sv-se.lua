@@ -416,7 +416,7 @@ L["tips.custombinds"] = "ARC9-knappkombinationer kan ersättas med anpassade kna
 L["tips.cyberdemon"] = "För att döda en terrorist så skjuter du honom tills han dör."
 L["tips.description"] = "Vi föreslår att du läser beskrivningen på tilläggen innan du kommenterar."
 L["tips.development"] = "Vill du skapa ARC9-innehåll? Den officiella Discord-servern har massvis med resurser för att hjälpa till!"
-L["tips.discord"] = "Gå med Diamond Doves på Discord! Länken är i ARC9-beskrivningen."
+L["tips.discord"] = "Gå med Doves International på Discord! Länken är i ARC9-beskrivningen."
 L["tips.external"] = "Om du använder Github-versionen av ARC9, försäkra dig att du ofta uppdaterar den!"
 L["tips.hints"] = "Behåll ARC9-gränssnittet för att se kontrolltips."
 L["tips.lean"] = "För att manuellt luta på dig, koppla knappar till +alt1 och +alt2."
@@ -1129,7 +1129,7 @@ L["premium.help"] = "Vad är ARC9 Premium?"
 L["premium.help.header"] = "Guide till ARC9 Premium"
 L["premium.help.desc"] = "Det tar tid och resurser för att skapa tillägg. ARC9 har alltid varit gratis, och det kommer fortsätta vara det. Däremot, om du vill stötta basen finansiellt, så kan du göra det och bli belönad för det!"
 
-L["premium.help.ownedbutnoaccess"] = "Har du nyligen köpt ARC9 Premium men inte fått automatisk tillgång till det? Kontakta oss på Diamond Doves Discord-servern för hjälp.\nHa med dig bevis på köpet innan du tar kontakt. Att du bara säger \"Jag köpte, ge mig nu\" är inte bra nog."
+L["premium.help.ownedbutnoaccess"] = "Har du nyligen köpt ARC9 Premium men inte fått automatisk tillgång till det? Kontakta oss på Doves International Discord-servern för hjälp.\nHa med dig bevis på köpet innan du tar kontakt. Att du bara säger \"Jag köpte, ge mig nu\" är inte bra nog."
 
 L["premium.content"] = "Inkluderat i <color=255,106,0>ARC9 Premium</color>:"
 L["premium.content.list"] = [[
@@ -1154,7 +1154,7 @@ Ett kvitto kommer skickas till din kopplad E-post.
 
 Om du inte omedelbart får tillgång till ARC9 Premium bonusarna, vänligen återanslut till servern, eller starta om spelet.
 
-Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Diamond Doves Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
+Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Doves International Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
 ]]
 
 L["premium.freetrial"] = "Mottog <color=255,106,0>ARC9 Premium (Gratis Prövning)</color>!"
@@ -1165,7 +1165,7 @@ Som ett tecken på vår uppskattning så har du blivit begåvad ARC9 Premium i <
 
 Om du inte omedelbart får tillgång till ARC9 Premium bonusarna, vänligen återanslut till servern, eller starta om spelet.
 
-Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Diamond Doves Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
+Om du fortfarande har problem med det, eller du inte fått tillgång till Premium, besök då Doves International Discord-servern och ge giltigt bevis av köp så fixar vi till det åt dig.
 ]]
 
 L["premium.payment.info"] = [[

@@ -895,7 +895,7 @@ L["premium.help"] = "What is ARC9 Premium?"
 L["premium.help.header"] = "Guide to ARC9 Premium"
 L["premium.help.desc"] = "Creating addons takes time and resources. ARC9 has always been available for free, and it will remain that way. However, if you wish to support the base financially, you may do so, and get rewarded for it!"
 
-L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Diamond Doves Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
+L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Doves International Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
 
 L["premium.content"] = "Included in <color=255,106,0>ARC9 Premium</color>:"
 L["premium.content.list"] = [[
@@ -936,5 +936,5 @@ A receipt will be sent to your connected Email.
 
 If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
 
-If you are still having problems with it, or if you still have not been granted Premium, then do visit the Diamond Doves Discord server and provide valid proof of purchase, and we will have it fixed for you.
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Doves International Discord server and provide valid proof of purchase, and we will have it fixed for you.
 ]]

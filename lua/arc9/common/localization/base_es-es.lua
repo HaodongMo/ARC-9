@@ -416,7 +416,7 @@ L["tips.custombinds"] = "Las combinaciones de teclas ARC9 se pueden sustituir po
 L["tips.cyberdemon"] = "Para matar al terrorista, dispárale hasta que esté muerto."
 L["tips.description"] = "Le aconsejamos que lea las descripciones de los addons antes de hacer comentarios."
 L["tips.development"] = "¿Quieres desarrollar contenido para ARC9? El servidor oficial de Discord tiene muchos recursos para ayudarte."
-L["tips.discord"] = "¡Únete a Diamond Doves en Discord! El enlace está en la descripción ARC9 y en la parte superior de la configuración."
+L["tips.discord"] = "¡Únete a Doves International en Discord! El enlace está en la descripción ARC9 y en la parte superior de la configuración."
 L["tips.external"] = "Si utiliza la versión Github de ARC9, asegúrese de actualizarla con frecuencia."
 L["tips.hints"] = "Mantén encendido el HUD de ARC9 para ver las pistas de controles."
 L["tips.lean"] = "Para inclinarse manualmente, vincule las teclas a +alt1 y +alt2."
@@ -1578,7 +1578,7 @@ L["premium.help"] = "¿Qué es ARC9 Premium?"
 L["premium.help.header"] = "Guía de ARC9 Premium"
 L["premium.help.desc"] = "Crear addons lleva tiempo y recursos. ARC9 siempre ha estado disponible de forma gratuita, y seguirá siendo así. Sin embargo, si desea apoyar financieramente la base, puede hacerlo, ¡y ser recompensado por ello!"
 
-L["premium.help.ownedbutnoaccess"] = "¿Ha comprado recientemente ARC9 Premium, pero no tiene acceso automático a él? Ponte en contacto con nosotros en el servidor Discord de Diamond Doves para obtener ayuda.\nAsegúrese de que puede proporcionar una prueba de compra antes de ponerse en contacto. Decir simplemente \"compro, ahora doy\" no es suficiente."
+L["premium.help.ownedbutnoaccess"] = "¿Ha comprado recientemente ARC9 Premium, pero no tiene acceso automático a él? Ponte en contacto con nosotros en el servidor Discord de Doves International para obtener ayuda.\nAsegúrese de que puede proporcionar una prueba de compra antes de ponerse en contacto. Decir simplemente \"compro, ahora doy\" no es suficiente."
 
 L["premium.content"] = "Incluido en <color=255,106,0>ARC9 Premium</color>:"
 L["premium.content.list"] = [[
@@ -1603,7 +1603,7 @@ Un recibo será enviado a su Email conectado.
 
 Si usted no ha adquirido inmediatamente el acceso a las bonificaciones ARC9 Premium, por favor vuelva a unirse al servidor, o reinicie su juego.
 
-Si sigues teniendo problemas, o si todavía no se te ha concedido Premium, entonces visita el servidor Discord de Diamond Doves y proporciona una prueba válida de compra, y lo arreglaremos para ti.
+Si sigues teniendo problemas, o si todavía no se te ha concedido Premium, entonces visita el servidor Discord de Doves International y proporciona una prueba válida de compra, y lo arreglaremos para ti.
 ]]
 
 L["premium.freetrial"] = "Received <color=255,106,0>ARC9 Premium (Free Trial)</color>!"
@@ -1614,7 +1614,7 @@ Como muestra de nuestro agradecimiento, ¡te regalamos ARC9 Premium por <color=2
 
 Si usted no ha adquirido inmediatamente el acceso a las bonificaciones ARC9 Premium, por favor vuelva a unirse al servidor, o reinicie su juego.
 
-Si sigues teniendo problemas, o si todavía no se te ha concedido Premium, entonces visita el servidor Discord de Diamond Doves y proporciona una prueba válida de compra, y lo arreglaremos para ti.
+Si sigues teniendo problemas, o si todavía no se te ha concedido Premium, entonces visita el servidor Discord de Doves International y proporciona una prueba válida de compra, y lo arreglaremos para ti.
 ]]
 
 L["premium.payment.info"] = [[
