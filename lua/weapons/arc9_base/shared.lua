@@ -904,6 +904,7 @@ SWEP.DistantShootSoundIndoor = nil              -- Distant fire indoors
 SWEP.DistantShootSoundSilenced = nil            -- Distant fire silenced
 SWEP.DistantShootSoundSilencedIndoor = nil      -- Distant fire indoors silenced
 SWEP.FirstDistantShootSoundSilenced = nil       -- First distant fire silenced
+-- SWEP.NoShootSoundAfterFirstShot = true -- if you want burst guns have only one sound
 
 SWEP.ShootSoundLooping = nil
 SWEP.ShootSoundLoopingSilenced = nil

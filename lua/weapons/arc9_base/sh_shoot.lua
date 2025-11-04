@@ -1,6 +1,7 @@
 local cancelmults = ARC9.CancelMultipliers[engine.ActiveGamemode()] or ARC9.CancelMultipliers[1]
 
 local swepGetProcessedValue = SWEP.GetProcessedValue
+local swepGetValue = SWEP.GetValue
 
 local sp = game.SinglePlayer()
 
@@ -90,6 +91,8 @@ local soundtab6 = {
 }
 
 function SWEP:DoShootSounds()
+    if swepGetValue(self, "NoShootSoundAfterFirstShot") and self:GetNthShot() > 0 then return end
+
     local pvar = swepGetProcessedValue(self, "ShootPitchVariation", true)
     local pvrand = math.Rand(-pvar, pvar) -- util.SharedRandom("ARC9_sshoot", -pvar, pvar) -- who gives a shit??? plus it broke af
     local randomChoice = self.RandomChoice
