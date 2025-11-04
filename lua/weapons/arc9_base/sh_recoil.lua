@@ -55,7 +55,7 @@ local recoilshake = GetConVar("arc9_recoilshake")
 function SWEP:ApplyRecoil()
     local rec = self:GetRecoilAmount()
 
-    local rps = self:GetProcessedValue("RecoilPerShot", true)
+    local rps = self:GetProcessedValue("RecoilPerShot")
 
     rec = math.Clamp(rec + rps, 0, self:GetProcessedValue("RecoilMax", true) or math.huge)
 
