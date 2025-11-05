@@ -116,7 +116,7 @@ function SWEP:PostModify(toggleonly)
         self.PrintName = base.PrintName
         self.PrintName = self:GetValue("PrintName")
     end
-    
+
     self.Description = base.Description
 
     self.PrintName = self:RunHook("HookP_NameChange", self.PrintName)
@@ -144,7 +144,7 @@ function SWEP:PostModify(toggleonly)
                     self:Unload(self.LastAmmo)
                     self:SetRequestReload(true)
                 end
-                
+
                 self.LastAmmo = self:GetValue("Ammo")
                 self.LastClipSize = self:GetValue("ClipSize")
             end)

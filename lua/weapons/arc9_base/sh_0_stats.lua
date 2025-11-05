@@ -36,10 +36,20 @@ function SWEP:ClearLongCache()
     for _, v in pairs(self.PV_CacheLong) do v.time = 0 end
 end
 
+SWEP.NextInvalidateCacheTime = 0
+SWEP.WantToInvalidateCache = false
+
 function SWEP:InvalidateCache()
     if singleplayer and self:GetOwner():IsPlayer() then
         self:CallOnClient("InvalidateCache")
     end
+
+    self.WantToInvalidateCache = true
+
+    if CurTime() < self.NextInvalidateCacheTime then return end
+
+    self.WantToInvalidateCache = false
+    self.NextInvalidateCacheTime = CurTime() + 0.25
 
     self:ClearLongCache()
 

@@ -191,6 +191,10 @@ function SWEP:Think()
         swepThinkRadialMenu(self)
     end
 
+    if self.WantToInvalidateCache then
+        self:InvalidateCache()
+    end
+
     self:ProcessTimers()
 
     local holdingProp = owner.ARC9_HoldingProp
