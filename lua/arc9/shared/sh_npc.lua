@@ -95,6 +95,7 @@ properties.Add( "weapon_arc9_statueify", {
         if ( !self:Filter( ent, ply ) ) then return end
 
         ent.IsStatue = !ent.IsStatue
+        ent:SetIsStatue( ent.IsStatue )
 
     end
 
