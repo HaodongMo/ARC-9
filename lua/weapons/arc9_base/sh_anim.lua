@@ -119,7 +119,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, n
         if animation.DumpAmmo then
             self:SetTimer((animation.MinProgress or 0.5) * mult, function()
                 if SERVER then
-                    self:Unload()
+                    self:Unload(self:GetValue("Ammo"))
                 end
             end)
         end
