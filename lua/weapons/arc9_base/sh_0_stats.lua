@@ -45,9 +45,9 @@ function SWEP:InvalidateCache()
     end
 
     self.WantToInvalidateCache = true
+end
 
-    if CurTime() < self.NextInvalidateCacheTime then return end
-
+function SWEP:DoInvalidateCache()
     self.WantToInvalidateCache = false
     self.NextInvalidateCacheTime = CurTime() + 0.25
 

@@ -192,7 +192,7 @@ function SWEP:Think()
     end
 
     if self.WantToInvalidateCache then
-        self:InvalidateCache()
+        self:DoInvalidateCache()
     end
 
     self:ProcessTimers()
