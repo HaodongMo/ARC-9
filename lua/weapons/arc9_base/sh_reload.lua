@@ -198,7 +198,7 @@ end
 
 function SWEP:Unload(ammoType)
     if SERVER then
-        self:GetOwner():GiveAmmo(self:Clip1(), ammoType, false)
+        self:GetOwner():GiveAmmo(self:Clip1(), ammoType, true)
     end
     self:SetClip1(0)
     self:SetLoadedRounds(0)
