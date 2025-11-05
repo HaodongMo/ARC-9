@@ -1,6 +1,11 @@
 local lodcvar = GetConVar("arc9_lod_distance")
 function SWEP:ShouldLOD()
-    if self:GetIsStatue() then return 0 end
+    if self.IsStatue then return 0 end
+
+    if self:GetIsStatue() then
+        self.IsStatue = true
+        return 0
+    end
 
     if (self.NextLODCheck or 0) > CurTime() then return self.LastLOD or 0 end
     self.NextLODCheck = CurTime() + 0.5
