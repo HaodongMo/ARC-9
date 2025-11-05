@@ -196,9 +196,9 @@ function SWEP:CanReload()
     return true
 end
 
-function SWEP:Unload()
+function SWEP:Unload(ammoType)
     if SERVER then
-        self:GetOwner():GiveAmmo(self:Clip1(), self.Ammo, true)
+        self:GetOwner():GiveAmmo(self:Clip1(), ammoType, false)
     end
     self:SetClip1(0)
     self:SetLoadedRounds(0)
