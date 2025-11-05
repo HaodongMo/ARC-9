@@ -3,6 +3,8 @@ local startPressFTime = 0
 local lastRadialMenuState = false
 ARC9.RadialMenuOpen = false
 
+ARC9.NextRadialToggleTime = 0
+
 function SWEP:ThinkRadialMenu()
 
     ARC9.RadialMenuOpen = false

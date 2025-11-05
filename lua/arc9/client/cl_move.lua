@@ -150,15 +150,17 @@ hook.Add("CreateMove", "ARC9_CreateMove", function(cmd)
             wpn.BottomBarMode = 0
         end
 
-        if ARC9.RadialMenuOpen and wpn.LastSelectedAttSlot then
+        if ARC9.RadialMenuOpen and wpn.LastSelectedAttSlot and ARC9.NextRadialToggleTime < CurTime() then
             if input.WasMousePressed(MOUSE_FIRST) then
                 ARC9.DeferFakeToggleAtts = true
                 wpn:ToggleStat(wpn.LastSelectedAttSlot.Slot.Address)
                 wpn:PostModify()
+                ARC9.NextRadialToggleTime = CurTime() + 0.25
             elseif input.WasMousePressed(MOUSE_RIGHT) then
                 ARC9.DeferFakeToggleAtts = true
                 wpn:ToggleStat(wpn.LastSelectedAttSlot.Slot.Address, -1)
                 wpn:PostModify()
+                ARC9.NextRadialToggleTime = CurTime() + 0.25
             end
         end
     end

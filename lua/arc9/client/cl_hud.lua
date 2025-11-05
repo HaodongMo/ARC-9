@@ -1748,7 +1748,7 @@ function CreateControllerKeyLine( info, ... )
                 surface.DrawText( v[1] )
                 surface.SetFont(info.font)
                 strlength = strlength + keylength
-            else
+            elseif v[1] then
                 -- Draw a controller input.
                 surface.SetMaterial(v[1])
                 surface.DrawTexturedRect( info.x + strlength, info.y - ((size - info.size)*0), size * 1.25, size * 1.25 )
