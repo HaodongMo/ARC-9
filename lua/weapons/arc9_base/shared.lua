@@ -1520,6 +1520,8 @@ SWEP.MuzzPCFs = {}
 
 SWEP.ActiveEffects = {}
 
+SWEP.IsStatue = false
+
 local searchdir = "weapons/arc9_base"
 
 local function autoinclude(dir)
