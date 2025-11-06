@@ -39,7 +39,7 @@ function EFFECT:Init(data)
     if speed > 0 then
         self.Speed = speed
     end
-	
+
     self.LifeTime = (hit - start):Length() / self.Speed
     self.StartTime = UnPredictedCurTime()
     self.DieTime = UnPredictedCurTime() + math.max(self.LifeTime, self.LifeTime2)
@@ -72,6 +72,7 @@ end
 
 function EFFECT:Render()
     if self.Cancelled or (IsValid(self.Weapon) and self.Weapon.TracerCancelled) then self.Cancelled = true return end
+    if !self.Dir then self.Cancelled = true return end
     local d = (UnPredictedCurTime() - self.StartTime) / self.LifeTime
     local d2 = (UnPredictedCurTime() - self.StartTime) / self.LifeTime2
     local startpos = self.StartPos + (d * 0.1 * (self.EndPos - self.StartPos))
