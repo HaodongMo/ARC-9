@@ -1,7 +1,10 @@
 
 function SWEP:OnReloaded()
     self:InvalidateCache()
-    timer.Simple(0.1, function() self.CustomizeButtons = table.Copy(self.CustomizeButtonsOriginal) end)
+    timer.Simple(0.1, function()
+        self:BuildMultiSight()
+        self.CustomizeButtons = table.Copy(self.CustomizeButtonsOriginal)
+    end)
 end
 
 local arc9_precache_sounds_onfirsttake = GetConVar("arc9_precache_sounds_onfirsttake")
