@@ -127,7 +127,7 @@ function SWEP:ReceiveWeapon()
     self:BuildSubAttachments(tbl)
 
     if CLIENT then
-        self:InvalidateCache()
+        self:DoInvalidateCache()
         self:PruneAttachments()
         self:KillModel()
         self:SetupModel(true)
@@ -139,7 +139,7 @@ function SWEP:ReceiveWeapon()
             if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
         end
     else
-        self:InvalidateCache()
+        self:DoInvalidateCache()
         self:PruneAttachments()
         self:FillIntegralSlots()
         self:SendWeapon()

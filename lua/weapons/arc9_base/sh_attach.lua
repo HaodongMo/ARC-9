@@ -92,6 +92,9 @@ SWEP.LastAmmo = ""
 function SWEP:PostModify(toggleonly)
     self:InvalidateCache()
 
+    self.AffectorsCache = nil -- fixes printnames being late
+    self.ElementsCache = nil
+    
     if !toggleonly then
         self.ScrollLevels = {} -- moved from invalidcache
         self:CancelReload()
