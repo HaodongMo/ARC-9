@@ -213,6 +213,12 @@ function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
         end
     else
         if self.WModel then
+            -- local rtt = render.GetRenderTarget()
+            -- if rtt and rtt:GetName() == "_rt_waterreflection" then return end -- mirror fix -- doesn't work for some reason
+
+            local lp = LocalPlayer()
+            if (!IsValid(lp) or !lp:ShouldDrawLocalPlayer()) and lp == self:GetOwner() then return end -- mirror fix 2
+
             for _, model in ipairs(self.WModel) do
                 if model.istranslucent and !model.hidden and IsValid(model) then
                     model:DrawModel()
