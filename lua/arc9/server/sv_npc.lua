@@ -62,6 +62,7 @@ function ARC9.PopulateWeaponClasses()
     for _, wep in ipairs(weapons.GetList()) do
         if weapons.IsBasedOn(wep.ClassName, "arc9_base") then
             if wep.NotForNPCs then continue end
+            if wep.AdminOnly then continue end
             local weptype = ARC9.GuessWeaponType(wep)
             ARC9.WeaponClasses[weptype] = ARC9.WeaponClasses[weptype] or {}
             table.insert(ARC9.WeaponClasses[weptype], wep.ClassName)
