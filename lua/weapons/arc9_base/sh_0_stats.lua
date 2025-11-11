@@ -36,7 +36,6 @@ function SWEP:ClearLongCache()
     for _, v in pairs(self.PV_CacheLong) do v.time = 0 end
 end
 
-SWEP.NextInvalidateCacheTime = 0
 SWEP.WantToInvalidateCache = false
 
 function SWEP:InvalidateCache()
@@ -49,7 +48,6 @@ end
 
 function SWEP:DoInvalidateCache()
     self.WantToInvalidateCache = false
-    self.NextInvalidateCacheTime = CurTime() + 0.25
 
     self:ClearLongCache()
 
