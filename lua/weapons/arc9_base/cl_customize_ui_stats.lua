@@ -1,6 +1,6 @@
 local ARC9ScreenScale = ARC9.ScreenScale
 
-local function GetTrueRPM(self, base)
+function SWEP:GetTrueRPM(base)
     if base then
         if self:GetCapacity() == 1 then
             local reloadtime = self.ReloadTime * self:GetAnimationTime("reload")
@@ -137,7 +137,7 @@ function SWEP:CreateHUD_Stats()
             unit = "unit.rpm",
             conv = function(a)
                 local cyclic = self:GetProcessedValue("RPM")
-                a = GetTrueRPM(self)
+                a = self:GetTrueRPM()
 
                 local str = ""
 
@@ -148,8 +148,8 @@ function SWEP:CreateHUD_Stats()
                 return str .. tostring(a)
             end,
             eval = function()
-                local a = GetTrueRPM(self)
-                local b = GetTrueRPM(self, true)
+                local a = self:GetTrueRPM()
+                local b = self:GetTrueRPM(true)
 
                 if a == b then return 0 end
 
@@ -171,7 +171,7 @@ function SWEP:CreateHUD_Stats()
                 return a
             end,
             cond = function()
-                return self:GetProcessedValue("RPM") == GetTrueRPM(self) or self:GetProcessedValue("ManualAction") or self:GetCapacity() == 1
+                return self:GetProcessedValue("RPM") == self:GetTrueRPM() or self:GetProcessedValue("ManualAction") or self:GetCapacity() == 1
             end,
         },
         {

@@ -177,6 +177,11 @@ L["customize.bench.effect"] = "ЭФФЕКТ НА ДАЛЬНОСТИ"
 L["customize.bench.ballistics"] = "ОЦЕНКА БАЛЛИСТИЧЕСКИХ ХАРАКТЕРИСТИК"
 L["customize.bench.precision"] = "ИСПЫТАНИЕ ТОЧНОСТИ"
 
+L["customize.bench.ttk"] = "TTK: " -- not many space for those strings, be careful
+L["customize.bench.ttk.instant"] = "0 сек"
+L["customize.bench.ttk.shots"] = "Выстрелов: "
+L["customize.bench.ttk.withoneheadshot"] = "С 1 хэдшотом:"
+
 -- L["customize.camoslot"] = "Camo (%s)"
 -- L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."
 -- L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."

@@ -177,6 +177,12 @@ L["customize.bench.effect"] = "EFFECT AT RANGE"
 L["customize.bench.ballistics"] = "TERMINAL BALLISTICS PERFORMANCE EVALUATION"
 L["customize.bench.precision"] = "MECHANICAL PRECISION TEST"
 
+ -- not many space for those strings, be careful
+L["customize.bench.ttk"] = "TTK: " -- TTK, Time to kill
+L["customize.bench.ttk.instant"] = "Instant"
+L["customize.bench.ttk.shots"] = "Shots TK: " -- STK, Shots to kill, you can use just shots in your language
+L["customize.bench.ttk.withoneheadshot"] = "W/ 1 head:" -- TTK With One Headshot
+
 L["customize.camoslot"] = "Camo Slot %s"
 L["customize.camoslot.none"] = "No Camo"
 L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."

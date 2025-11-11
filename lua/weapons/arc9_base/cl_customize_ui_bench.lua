@@ -562,6 +562,40 @@ function SWEP:CreateHUD_Bench()
                 end
             end
 
+
+            -- ttk
+            local ttk_dmg = self:GetDamageAtRange(ranger_range)
+            if self:GetValue("Num") > 1 then ttk_dmg = ttk_dmg * self:GetValue("Num") end
+            local ttk_headdmg = ttk_dmg * self:GetProcessedValue("HeadshotDamage", true) * (self:GetProcessedValue("BodyDamageMults", true)[HITGROUP_HEAD] or 2)
+
+            local ttk_delay = self:GetProcessedValue("TriggerDelay") and self:GetProcessedValue("TriggerDelayTime") or 0
+
+            local ttk_rpm = self:GetTrueRPM()
+            local ttk_shots = math.ceil(100 / ttk_dmg)
+            local ttk = math.Round((ttk_shots - 1) * (60 / ttk_rpm), 3) + ttk_delay
+            local ttk_firsths = math.Round(math.max(0, math.ceil( (100 - ttk_headdmg) / ttk_dmg )) * (60 / ttk_rpm), 3) + ttk_delay
+
+            local txt_ttk =  ARC9:GetPhrase("customize.bench.ttk") .. (ttk == 0 and ARC9:GetPhrase("customize.bench.ttk.instant") or ttk .. ARC9:GetPhrase("unit.second"))
+            local txt_ttk2 = ARC9:GetPhrase("customize.bench.ttk.shots") .. ttk_shots
+            local txt_ttk3 = ARC9:GetPhrase("customize.bench.ttk.withoneheadshot")
+            local txt_ttk4 = ttk_firsths == 0 and ARC9:GetPhrase("customize.bench.ttk.instant") or ttk_firsths .. ARC9:GetPhrase("unit.second")
+            local txt_ttk_w = surface.GetTextSize(txt_ttk)
+            local txt_ttk2_w = surface.GetTextSize(txt_ttk2)
+            local txt_ttk3_w = surface.GetTextSize(txt_ttk3)
+            local txt_ttk4_w = surface.GetTextSize(txt_ttk4)
+            surface.SetTextPos((w / 5 / 2) - txt_ttk_w / 2, h - ARC9ScreenScale(50))
+            surface.DrawText(txt_ttk)
+            surface.SetTextPos((w / 5 / 2) - txt_ttk2_w / 2, h - ARC9ScreenScale(42))
+            surface.DrawText(txt_ttk2)
+            if ttk_headdmg != ttk_dmg then
+                surface.SetTextPos((w / 5 / 2) - txt_ttk3_w / 2, h - ARC9ScreenScale(27))
+                surface.DrawText(txt_ttk3)
+                surface.SetTextPos((w / 5 / 2) - txt_ttk4_w / 2, h - ARC9ScreenScale(19))
+                surface.DrawText(txt_ttk4)
+            end
+
+
+
             local txt_corner = ARC9:GetPhrase("customize.bench.ballistics") or ""
             surface.SetFont("ARC9_6")
             local tw = surface.GetTextSize(txt_corner)
