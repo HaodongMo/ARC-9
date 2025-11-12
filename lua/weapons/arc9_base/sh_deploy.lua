@@ -136,10 +136,13 @@ function SWEP:InitialDefaultClip()
 
     if self:GetOwner() and self:GetOwner():IsPlayer() then
         if self.ForceDefaultAmmo then
-            self:GetOwner():GiveAmmo(self.ForceDefaultAmmo, ammmmmo)
+            local amountOfClip1 = math.Clamp(self.ForceDefaultAmmo,0,self:GetValue("ClipSize")+ self:GetValue("ChamberSize"))
+			self:GetOwner():GetActiveWeapon():SetClip1(amountOfClip1)
+            self:GetOwner():GiveAmmo(self.ForceDefaultAmmo - amountOfClip1, ammmmmo)
         else
-            self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * GetConVar("arc9_mult_defaultammo"):GetInt(), ammmmmo)
-        end
+            self:GetOwner():GetActiveWeapon():SetClip1(self:GetValue("ClipSize")+ self:GetValue("ChamberSize"))
+			self:GetOwner():GiveAmmo(self:GetValue("ClipSize") * GetConVar("arc9_mult_defaultammo"):GetInt(), ammmmmo)
+		end
     end
 end
 
