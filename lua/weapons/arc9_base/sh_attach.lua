@@ -143,11 +143,14 @@ function SWEP:PostModify(toggleonly)
             end
 
             timer.Simple(0, function() -- PostModify gets called after each att attached
-                if self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize") then
-                    self:Unload(self.LastAmmo)
-                    self:SetRequestReload(true)
-                end
-
+                if (self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize")) and self.AlreadyGaveAmmo then
+                        self:Unload(self.LastAmmo)
+                        self:SetRequestReload(true)
+				elseif !self.AlreadyGaveAmmo then
+                        self:SetClip1(self:GetProcessedValue("ClipSize"))
+                        self.AlreadyGaveAmmo = true
+				end
+				
                 self.LastAmmo = self:GetValue("Ammo")
                 self.LastClipSize = self:GetValue("ClipSize")
             end)
