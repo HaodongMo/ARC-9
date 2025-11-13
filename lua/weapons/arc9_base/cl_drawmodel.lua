@@ -177,6 +177,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
 
 
             if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam and !onground and !isnpc) then
+                if !wm then model:SetRenderOrigin(self.ViewModelPos or (IsValid(self:GetVM()) and self:GetVM():GetPos() or self:GetPos())) end
                 model:DrawModel()
             end
 
