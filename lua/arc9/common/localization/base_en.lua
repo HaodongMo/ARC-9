@@ -660,6 +660,9 @@ L["settings.effects.lod.desc"] = "How far away you have to be from models for th
 L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
 L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
 
+L["settings.effects.drawprojectedlights.title"] = "Draw Projected Lights on Viewmodel"
+L["settings.effects.drawprojectedlights.desc"] = "! EXPERIMENTAL !\n\nDraws projected lights/flashlights/cascade shadows on attachments and viewmodel.\n\nMay impact performance.\n\nAuto enabled with \"Real CSM\" mod."
+
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Viewmodel Settings"
 L["settings.tabname.vm.desc"] = "Alter various settings related to the viewmodels."

@@ -213,6 +213,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.effects.allflash.title", desc = "settings.effects.allflash.desc", convar = "allflash" },
         { type = "slider", text = "settings.effects.lod.title", desc = "settings.effects.lod.desc", convar = "lod_distance", min = 0.3, max = 3, decimals = 1 },
         { type = "slider", text = "settings.effects.indoorsound.title", desc = "settings.effects.indoorsound.desc", convar = "indoorsound", min = 0, max = 2, decimals = 0 },
+        { type = "bool", text = "settings.effects.drawprojectedlights.title", desc = "settings.effects.drawprojectedlights.desc", convar = "drawprojectedlights" },
 
         { type = "label", text = "settings.tabname.vm", desc = "settings.tabname.vm.desc" },
         { type = "combo", text = "settings.vm.vm_bobstyle.title", desc = "settings.vm.vm_bobstyle.desc", convar = "vm_bobstyle", content = {
