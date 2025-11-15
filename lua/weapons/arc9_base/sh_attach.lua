@@ -144,10 +144,11 @@ function SWEP:PostModify(toggleonly)
 
             timer.Simple(0, function() -- PostModify gets called after each att attached
                 if (self.LastAmmo != self:GetValue("Ammo") or self.LastClipSize != self:GetValue("ClipSize")) and self.AlreadyGaveAmmo then
-                        self:Unload(self.LastAmmo)
+						self:Unload(self.LastAmmo)
                         self:SetRequestReload(true)
 				elseif !self.AlreadyGaveAmmo then
-                        self:SetClip1(self:GetProcessedValue("ClipSize"))
+                        
+						self:SetClip1(self:GetProcessedValue("ClipSize"))
                         self.AlreadyGaveAmmo = true
 				end
 				
@@ -173,17 +174,7 @@ function SWEP:PostModify(toggleonly)
                 self.LastUBGLAmmo = self:GetValue("UBGLAmmo")
                 self.LastUBGLClipSize = self:GetValue("UBGLClipSize")
 
-                local capacity = self:GetCapacity(true)
-                if capacity > 0 and self:Clip2() > capacity then
-                    client:GiveAmmo(self:Clip2() - capacity, self.LastUBGLAmmo)
-                    self:SetClip2(capacity)
-                end
-            end
 
-            local capacity = self:GetCapacity(false)
-            if capacity > 0 and self:Clip1() > capacity then
-                client:GiveAmmo(self:Clip1() - capacity, self.LastAmmo)
-                self:SetClip1(capacity)
             end
 
             if self:GetProcessedValue("BottomlessClip", true) then
