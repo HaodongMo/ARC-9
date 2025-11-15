@@ -27,7 +27,7 @@ function SWEP:Initialize()
 
     self:SetLastMeleeTime(0)
     self:SetNthShot(0)
-
+	
     self.SpawnTime = CurTime()
     self:SetSpawnEffect(false) -- lol gmod suck
     -- self:BuildAttachmentAddresses()
@@ -41,7 +41,7 @@ function SWEP:Initialize()
     -- PrintTable(base.Attachments)
 
     self.DefaultAttachments = table.Copy(self.Attachments)
-
+	self.AlreadyGaveAmmo = false
     self:BuildSubAttachments(self.DefaultAttachments)
 
     if !IsValid(owner) then -- player is nil here sometimes
