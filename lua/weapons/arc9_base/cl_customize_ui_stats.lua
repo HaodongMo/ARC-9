@@ -156,7 +156,7 @@ function SWEP:CreateHUD_Stats()
                 return a > b and 1 or -1
             end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", true)
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("Throwable", true)
             end,
         },
         {
@@ -194,7 +194,7 @@ function SWEP:CreateHUD_Stats()
                 return a > b and 1 or -1
             end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", true)
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("Throwable", true)
             end,
             conv = function(a)
                 a = tostring(a)
@@ -325,7 +325,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 0.3,
             unit = "unit.second",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", true)
+                return self:GetProcessedValue("PrimaryBash", true) or (self:GetProcessedValue("Throwable", true) and self:GetProcessedValue("Tossable", true))
             end
         },
         {
@@ -429,7 +429,7 @@ function SWEP:CreateHUD_Stats()
             fifty = 100,
             unit = "unit.decibel",
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", true)
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("Throwable", true)
             end
         },
         {
@@ -441,7 +441,7 @@ function SWEP:CreateHUD_Stats()
             unit = "%",
             conv = function(a) return math.Round(a * 60, 0) end,
             cond = function()
-                return self:GetProcessedValue("PrimaryBash", true) or !GetConVar("arc9_mod_sway"):GetBool()
+                return self:GetProcessedValue("PrimaryBash", true) or self:GetProcessedValue("Throwable", true) or !GetConVar("arc9_mod_sway"):GetBool()
             end
         },
         {
@@ -453,6 +453,18 @@ function SWEP:CreateHUD_Stats()
             unit = "°",
             cond = function()
                 return self:GetProcessedValue("PrimaryBash", true) or !GetConVar("arc9_mod_freeaim"):GetBool()
+            end
+        },
+        {
+            title = "customize.stats.fusetimer",
+            desc = "customize.stats.explain.fusetimer",
+            stat = "FuseTimer",
+            lowerisbetter = true,
+            fifty = 1,
+            unit = "unit.second",
+            conv = function(a) return math.Round(a, 1) end,
+            cond = function()
+                return !self:GetProcessedValue("Throwable", true) or self:GetProcessedValue("FuseTimer") <= 0
             end
         },
         {
