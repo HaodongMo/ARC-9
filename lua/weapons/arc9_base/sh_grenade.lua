@@ -2,11 +2,11 @@ function SWEP:ThinkGrenade()
     if !self:GetProcessedValue("Throwable", true) then return end
     local owner = self:GetOwner()
 
-    owner.ARC9QuickthrowPls = nil 
+    owner.ARC9QuickthrowPls = nil
     local QuicknadeBind = owner:KeyDown(IN_GRENADE1)
 
-	if self:GetSafe() and owner:KeyPressed(IN_ATTACK) then self:ToggleSafety(false) return end
-	
+    if self:GetSafe() and owner:KeyPressed(IN_ATTACK) then self:ToggleSafety(false) return end
+
     if IsValid(self:GetDetonatorEntity()) then
         if owner:KeyPressed(IN_ATTACK) then
             self:TouchOff()
@@ -52,7 +52,7 @@ function SWEP:ThinkGrenade()
         owner:KeyDown(IN_ATTACK)) and
             self:HasAmmoInClip() and
             (!owner:KeyDown(IN_USE) or !self:GetProcessedValue("PrimaryBash", true)) and
-            !IsValid(self:GetDetonatorEntity()) and !self:RunHook("HookP_BlockFire") 
+            !IsValid(self:GetDetonatorEntity()) and !self:RunHook("HookP_BlockFire")
             then
             self:SetGrenadePrimed(true)
             self:SetGrenadePrimedTime(CurTime())
@@ -127,6 +127,13 @@ function SWEP:ThrowGrenade(nttype, delaytime)
 
     force = override.force or force
     delaytime = override.delay or delaytime
+    time = time + delaytime
+
+    -- The fuse timer would run out during the throw animation, so make it explode in hand
+    if nttype != ARC9.NADETHROWTYPE_EXPLODEINHANDS and fusetimer >= 0 and fusetimer <= time then
+        delaytime = fusetimer - time
+        nttype = ARC9.NADETHROWTYPE_EXPLODEINHANDS
+    end
 
     self:SetTimer(delaytime, function()
 
@@ -175,17 +182,26 @@ function SWEP:ThrowGrenade(nttype, delaytime)
             nade:SetOwner(owner)
             nade:Spawn()
 
-            if fusetimer >= 0 then
-                nade.LifeTime = fusetimer - time
-            end
 
-            if nttype  == ARC9.NADETHROWTYPE_TOSS then
-                force = self:GetProcessedValue("TossForce", true)
-            elseif nttype == ARC9.NADETHROWTYPE_EXPLODEINHANDS then
+            if nttype == ARC9.NADETHROWTYPE_EXPLODEINHANDS then
                 force = 0
                 time = 0
                 nade:Detonate()
+            else
+                if nttype  == ARC9.NADETHROWTYPE_TOSS then
+                    force = self:GetProcessedValue("TossForce", true)
+                end
+                if fusetimer >= 0 then
+                    nade.LifeTime = fusetimer - time
+                    if nade.LifeTime <= 0 then
+                        force = 0
+                        time = 0
+                        nade:Detonate()
+                    end
+                end
             end
+
+
 
             if self:GetProcessedValue("Detonator", true) then
                 self:SetDetonatorEntity(nade)
