@@ -30,7 +30,7 @@ function SWEP:ThinkHoldBreath()
                     sound = self:RandomChoice(self:GetProcessedValue("BreathRunOutSound", true)),
                     channel = ARC9.CHAN_BREATH
                 }
-                
+
                 self.BreathOutPlayed = true
                 self.BreathInPlayed = nil
                 if CLIENT then self:PlayTranslatedSound(soundtab) end
@@ -46,7 +46,7 @@ function SWEP:ThinkHoldBreath()
             -- if sfx and !self.SetBreathDSP then
                 -- self:GetOwner():SetDSP(30)
                 -- self.SetBreathDSP = true
-                
+
                 self.BreathInPlayed = true
                 self.BreathOutPlayed = nil
 
@@ -88,7 +88,7 @@ function SWEP:ThinkHoldBreath()
 
         ts = math.Approach(ts, target_ts, FrameTime() / ts / 0.5)
         game.SetTimeScale(ts)
-        Entity(1):SetLaggedMovementValue(1 + ((1-ts)*2))
+        Entity(1):SetLaggedMovementValue(1 + ((1-ts) * 2))
     end
 end
 
@@ -114,7 +114,7 @@ function SWEP:HoldingBreath()
     end
 
     lastpressed = ownerkeydownspeed
-    
+
     return self:CanHoldBreath() and self.IsHoldingBreath and (self:GetSightAmount() >= 1) and self:GetValue("HoldBreathTime") > 0
 end
 
@@ -201,7 +201,7 @@ function SWEP:GetFreeSwayAmount()
 
     sway = math.Max(sway, 0)
     if sway == 0 then return 0 end
-    
+
     if self:HoldingBreath() then return sway * 0.15 end
 
     if self:GetOutOfBreath() then

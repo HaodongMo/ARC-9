@@ -475,8 +475,14 @@ function SWEP:DoPrimaryAttack()
 
     self:DoEffects()
 
+
     if self:HoldingBreath() then
-        self:SetBreath(math.max(0, self:GetBreath() - math.max(10, swepGetProcessedValue(self,  "HoldBreathTime", true) / 20)))
+        local d = 100 / math.max(1, swepGetProcessedValue(self, "HoldBreathTime", true))
+        local breathtake = math.Clamp(delay * d * 3, 1, 10)
+        if manualaction then
+            breathtake = d
+        end
+        self:SetBreath(math.max(0, self:GetBreath() - breathtake))
     end
 
     -- ewww
