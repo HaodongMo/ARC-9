@@ -748,7 +748,13 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
     if w > h then
         y = y - ((w - h) / 2)
     end
+    -- render.PushFilterMag( TEXFILTER.POINT )
+    -- render.PushFilterMin( TEXFILTER.POINT )
+    render.PushFilterMag( 0 )
+    render.PushFilterMin( 0 )
     surface.DrawTexturedRect(x, y, w, w)
+    render.PopFilterMin()
+    render.PopFilterMag()
     // surface.DrawTexturedRectUV(x, y, w, w, 0, 0, 1, 1)
 end
 

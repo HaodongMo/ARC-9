@@ -270,7 +270,7 @@ local colormodifyicontabll = {
 	[ "$pp_colour_addb" ] = 0,
 	[ "$pp_colour_brightness" ] = 0,
 	[ "$pp_colour_contrast" ] = 1.4,
-	[ "$pp_colour_colour" ] = 1.3,
+	[ "$pp_colour_colour" ] = 1.7,
 	[ "$pp_colour_mulr" ] = 0,
 	[ "$pp_colour_mulg" ] = 0,
 	[ "$pp_colour_mulb" ] = 0
@@ -279,6 +279,7 @@ local colormodifyicontabll = {
 function SWEP:DoPresetCapture(filename, foricon)
     local colorrr = arc9_killfeed_colour:GetBool()
 
+    ARC9.PresetCam = true
     render.PushRenderTarget(cammat)
 
     render.SetColorMaterial()
@@ -299,10 +300,9 @@ function SWEP:DoPresetCapture(filename, foricon)
 
     render.SetStencilReferenceValue(ref)
 
-    render.SetWriteDepthToDestAlpha(false)
+    render.SetWriteDepthToDestAlpha(true)
     render.OverrideAlphaWriteEnable(true, true)
 
-    ARC9.PresetCam = true
 
     -- local ppos, pang = EyePos(), EyeAngles()
     local campos, camang = Vector(0, 0, 0), Angle(0, 0, 0)
@@ -364,7 +364,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     self:DrawCustomModel(true, pos + Vector(0.5, -0.5, -0.5), ang)
     render.OverrideColorWriteEnable(false, false)
 
-    render.BlurRenderTarget(cammat, 3, 3, 2)
+    render.BlurRenderTarget(cammat, 6, 6, 2)
 
     render.MaterialOverride(matshiny)
     self:DrawCustomModel(true, pos, ang)
@@ -373,7 +373,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     
     if colorrr then
         render.SetWriteDepthToDestAlpha( true )
-        render.OverrideBlend( true, BLEND_ONE, BLEND_ZERO, BLENDFUNC_ADD, BLEND_ZERO, BLEND_ONE, BLENDFUNC_ADD )
+        -- render.OverrideBlend( true, BLEND_ONE, BLEND_ZERO, BLENDFUNC_ADD, BLEND_ZERO, BLEND_ONE, BLENDFUNC_ADD )
 
         self:DrawCustomModel(true, pos, ang)
 
@@ -381,7 +381,7 @@ function SWEP:DoPresetCapture(filename, foricon)
         render.SetWriteDepthToDestAlpha( false )
     end
 
-    DrawSharpen(0.2, 0.5)
+    DrawSharpen(0.3, 1)
     DrawColorModify(colormodifyicontabll)
 
     self:KillModel(true)
@@ -408,15 +408,15 @@ function SWEP:DoPresetCapture(filename, foricon)
     --     drawviewmodel = true
     -- })
 
-    local x = (pr_w - 256) / 2
+    local x = (pr_w - pr_h) / 2
 
     local data = render.Capture( {
         -- format = ARC9.PresetIconFormat,
         format = "png",
         x = x,
         y = 0,
-        w = 256,
-        h = 256
+        w = pr_h,
+        h = pr_h
     } )
 
     file.CreateDir(ARC9.PresetPath .. self:GetPresetBase())
