@@ -227,7 +227,10 @@ end
 local ratio = ScrW() / ScrH()
 local pr_h = 256
 local pr_w = 256 * ratio
-local cammat = GetRenderTarget("arc9_cammat", pr_w, pr_h, false)
+
+if ScrH() > 1100 then pr_h = pr_h * 2 pr_w = pr_w * 2 end
+
+local cammat = GetRenderTarget("arc9_cammat_", pr_w, pr_h, false)
 
 SWEP.PresetCapture = nil
 
