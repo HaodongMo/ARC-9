@@ -342,7 +342,7 @@ function SWEP:DoPresetCapture(filename, foricon)
     render.ClearDepth()
 
     render.SuppressEngineLighting(true)
-    -- render.SetWriteDepthToDestAlpha(false)
+    render.SetWriteDepthToDestAlpha(false)
 
     self:SetupModel(true, 0, true)
 
@@ -375,13 +375,14 @@ function SWEP:DoPresetCapture(filename, foricon)
     render.MaterialOverride()
     
     if colorrr then
-        render.SetWriteDepthToDestAlpha( true )
+        -- render.SetWriteDepthToDestAlpha( false  )
         -- render.OverrideBlend( true, BLEND_ONE, BLEND_ZERO, BLENDFUNC_ADD, BLEND_ZERO, BLEND_ONE, BLENDFUNC_ADD )
 
         self:DrawCustomModel(true, pos, ang)
 
         render.MaterialOverride()
-        render.SetWriteDepthToDestAlpha( false )
+        -- render.SetWriteDepthToDestAlpha( false )
+        self:DrawCustomModel(true, pos, ang)
     end
 
     DrawSharpen(0.3, 1)
