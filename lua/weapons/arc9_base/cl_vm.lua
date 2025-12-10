@@ -194,16 +194,23 @@ function SWEP:PreDrawViewModel()
     end
 end
 
-function SWEP:ViewModelDrawn()
+function SWEP:ViewModelDrawn(ent, flags)
+	flags = flags or STUDIO_RENDER
+    local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
+	
     self.StoredVMAngles = self:GetCameraControl()
     self:DrawCustomModel(false)
     render.DepthRange( 0.0, 0.1 )
     self:DoRHIK()
     if ARC9.RTScopeRender then return end
     self:PreDrawThirdArm()
-    self:DrawFlashlightsVM()
 
-    self:DrawLasers(false)
+	if !isDepthPass then
+    	self:DrawFlashlightsVM()
+
+    	self:DrawLasers(false)
+	end
+		
     local vm = self:GetVM()
     if !IsValid(vm) then return end
     vm:SetMaterial("")
