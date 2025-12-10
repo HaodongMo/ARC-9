@@ -218,17 +218,18 @@ function SWEP:ViewModelDrawn(ent, flags)
 		vm:SetSubMaterial(ind, "")
 	end
 
-    if isDepthPass then return end
-    local newpcfs = {}
-
-    for _, pcf in ipairs(self.PCFs) do
-        if IsValid(pcf) then
-            pcf:Render()
-            table.insert(newpcfs, pcf)
-        end
-    end
-
-    if !inrt then self.PCFs = newpcfs end
+    if !isDepthPass then
+	    local newpcfs = {}
+	
+	    for _, pcf in ipairs(self.PCFs) do
+	        if IsValid(pcf) then
+	            pcf:Render()
+	            table.insert(newpcfs, pcf)
+	        end
+	    end
+	
+	    if !inrt then self.PCFs = newpcfs end
+	end
 
     local newfx = {}
 
