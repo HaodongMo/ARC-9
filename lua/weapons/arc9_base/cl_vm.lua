@@ -218,7 +218,7 @@ function SWEP:ViewModelDrawn(ent, flags)
 		vm:SetSubMaterial(ind, "")
 	end
 
-    
+    if isDepthPass then return end
     local newpcfs = {}
 
     for _, pcf in ipairs(self.PCFs) do
