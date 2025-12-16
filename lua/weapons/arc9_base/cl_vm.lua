@@ -166,6 +166,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
     -- self:DrawCustomModel(true, EyePos() + EyeAngles():Forward() * 16, EyeAngles())
 
+	self.RenderingRTScope = false 
 	if !isDepthPass then
     	vm:SetSubMaterial()
 
@@ -175,14 +176,11 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     	        vm:SetSubMaterial(ind, val)
     	    end
     	end
-	end
 
-    self.RenderingRTScope = false 
-    if self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
-        self:DoRTScope(vm, self:GetTable(), sightamount > 0)
-    end
+    	if self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
+    	    self:DoRTScope(vm, self:GetTable(), sightamount > 0)
+    	end
 
-	if !isDepthPass then
     	vm:SetMaterial(self:GetProcessedValue("Material", true))
 	end
 
