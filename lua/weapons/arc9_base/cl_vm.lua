@@ -33,7 +33,7 @@ local arc9_dev_benchgun = GetConVar("arc9_dev_benchgun")
 local arc9_fx_adsblur = GetConVar("arc9_fx_adsblur")
 
 
-function SWEP:PreDrawViewModel()
+function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     if ARC9.RTScopeRender then -- basically a copy of code in that func for rt barrels but without useless stuff and bad stuff, and also offset of cam in scope
         self:DoBodygroups(false)
         local vm = self:GetVM()
@@ -63,70 +63,74 @@ function SWEP:PreDrawViewModel()
     local getsights = self:GetSight()
     local sightamount = self:GetSightAmount()
 
-    local blurtarget = 0
-
-    local blurenable = arc9_fx_rtblur:GetBool()
-
-    local shouldrtblur = sightamount > 0 and blurenable and !self.Peeking and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
-
-    if shouldrtblur then
-        blurtarget = 2 * sightamount
-    end
-
-    if (arc9_fx_reloadblur:GetBool() and self:GetReloading() and sightamount < 0.99) or (arc9_fx_animblur:GetBool() and self:GetReadyTime() >= CurTime()) or (arc9_fx_inspectblur:GetBool() and self:GetInspecting() and sightamount < 0.01) then
-        blurtarget = 1.5
-        shouldrtblur = true
-    end
-
+	flags = flags or STUDIO_RENDER
+    local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
     local custdelta = self.CustomizeDelta
 
-    if custdelta > 0 then
-        if arc9_cust_blur:GetBool() then
-            blurtarget = 5 * custdelta
-        end
+	if !isDepthPass then
+    	local blurtarget = 0
 
-        local scrw, scrh = ScrW(), ScrH()
+    	local blurenable = arc9_fx_rtblur:GetBool()
 
-        cam.Start2D()
-            surface.SetDrawColor(15, 15, 15, 180 * custdelta)
-            surface.DrawRect(0, 0, scrw, scrh)
-            surface.SetDrawColor(0, 0, 0, 255 * custdelta)
-            if arc9_hud_lightmode:GetBool() then
-                surface.SetMaterial(vignette)
-                surface.DrawTexturedRect(0, 0, scrw, scrh)
-            end
+    	local shouldrtblur = sightamount > 0 and blurenable and !self.Peeking and getsights.atttbl and getsights.atttbl.RTScope and !getsights.Disassociate and !getsights.atttbl.RTCollimator and !getsights.atttbl.RTScopeNoBlur
 
-            if arc9_dev_greenscreen:GetBool() then
-                -- print(GetConVar("mat_bloom_scalefactor_scalar"):SetFloat())
-                surface.SetDrawColor(0, 255, 0, 255 * custdelta)
-                surface.DrawRect(0, 0, scrw, scrh)
-            end
-        cam.End2D()
-    end
+    	if shouldrtblur then
+    	    blurtarget = 2 * sightamount
+    	end
 
-    if ((shouldrtblur and blurenable) or (custdelta > 0 and blurtarget > 0)) and system.HasFocus() then
-        DrawBokehDOF(bluramt, 1, 0)
-    end
+    	if (arc9_fx_reloadblur:GetBool() and self:GetReloading() and sightamount < 0.99) or (arc9_fx_animblur:GetBool() and self:GetReadyTime() >= CurTime()) or (arc9_fx_inspectblur:GetBool() and self:GetInspecting() and sightamount < 0.01) then
+    	    blurtarget = 1.5
+    	    shouldrtblur = true
+    	end
 
-    bluramt = math.Approach(bluramt, blurtarget, FrameTime() * 10)
+    	if custdelta > 0 then
+    	    if arc9_cust_blur:GetBool() then
+    	        blurtarget = 5 * custdelta
+    	    end
 
-    if arc9_cust_light:GetBool() and self:GetCustomize() then
-        -- render.SuppressEngineLighting(true)
-        -- render.ResetModelLighting(0.6, 0.6, 0.6)
-        -- render.SetModelLighting(BOX_TOP, 4, 4, 4)
-        local light = DynamicLight(self:EntIndex(), true)
-        light.pos = EyePos() + (EyeAngles():Up() * 12)
-        light.r = 255
-        light.g = 255
-        light.b = 255
-        light.brightness = 0.2 * (arc9_cust_light_brightness:GetFloat())
-        light.Decay = 1000
-        light.Size = 500
-        light.DieTime = CurTime() + 0.1
-    -- else
-    --     render.SuppressEngineLighting(false)
-    --     render.ResetModelLighting(1,1,1)
-    end
+    	    local scrw, scrh = ScrW(), ScrH()
+
+    	    cam.Start2D()
+            	surface.SetDrawColor(15, 15, 15, 180 * custdelta)
+            	surface.DrawRect(0, 0, scrw, scrh)
+            	surface.SetDrawColor(0, 0, 0, 255 * custdelta)
+            	if arc9_hud_lightmode:GetBool() then
+                	surface.SetMaterial(vignette)
+                	surface.DrawTexturedRect(0, 0, scrw, scrh)
+            	end
+
+            	if arc9_dev_greenscreen:GetBool() then
+                	-- print(GetConVar("mat_bloom_scalefactor_scalar"):SetFloat())
+                	surface.SetDrawColor(0, 255, 0, 255 * custdelta)
+                	surface.DrawRect(0, 0, scrw, scrh)
+            	end
+        	cam.End2D()
+    	end
+
+    	if ((shouldrtblur and blurenable) or (custdelta > 0 and blurtarget > 0)) and system.HasFocus() then
+        	DrawBokehDOF(bluramt, 1, 0)
+    	end
+
+    	bluramt = math.Approach(bluramt, blurtarget, FrameTime() * 10)
+
+    	if arc9_cust_light:GetBool() and self:GetCustomize() then
+        	-- render.SuppressEngineLighting(true)
+        	-- render.ResetModelLighting(0.6, 0.6, 0.6)
+        	-- render.SetModelLighting(BOX_TOP, 4, 4, 4)
+        	local light = DynamicLight(self:EntIndex(), true)
+        	light.pos = EyePos() + (EyeAngles():Up() * 12)
+        	light.r = 255
+        	light.g = 255
+        	light.b = 255
+        	light.brightness = 0.2 * (arc9_cust_light_brightness:GetFloat())
+        	light.Decay = 1000
+        	light.Size = 500
+        	light.DieTime = CurTime() + 0.1
+    	-- else
+    	--     render.SuppressEngineLighting(false)
+    	--     render.ResetModelLighting(1,1,1)
+    	end
+	end
 
     self:DoPoseParams()
     self:DoBodygroups(false)
@@ -162,21 +166,25 @@ function SWEP:PreDrawViewModel()
 
     -- self:DrawCustomModel(true, EyePos() + EyeAngles():Forward() * 16, EyeAngles())
 
-    vm:SetSubMaterial()
+	if !isDepthPass then
+    	vm:SetSubMaterial()
 
-    for ind = 0, 31 do
-        local val = self:GetProcessedValue("SubMaterial" .. ind, true)
-        if val then
-            vm:SetSubMaterial(ind, val)
-        end
-    end
+    	for ind = 0, 31 do
+    	    local val = self:GetProcessedValue("SubMaterial" .. ind, true)
+    	    if val then
+    	        vm:SetSubMaterial(ind, val)
+    	    end
+    	end
+	end
 
     self.RenderingRTScope = false 
     if self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
         self:DoRTScope(vm, self:GetTable(), sightamount > 0)
     end
 
-    vm:SetMaterial(self:GetProcessedValue("Material", true))
+	if !isDepthPass then
+    	vm:SetMaterial(self:GetProcessedValue("Material", true))
+	end
 
     render.DepthRange( 0.0, 0.1 )
     if ARC9.PresetCam or custdelta > 0 then cam.IgnoreZ(true) end
@@ -244,22 +252,27 @@ function SWEP:ViewModelDrawn(ent, flags)
     if !inrt then self.ActiveEffects = newfx end
 end
 
-function SWEP:PostDrawViewModel()
+function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     if !IsValid(self:GetVM()) then return end
+	flags = flags or STUDIO_RENDER
+    local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
+	
     local inrt = ARC9.RTScopeRender
 
     self:DrawTranslucentPass()
-    
-    local newmzpcfs = {}
 
-    for _, pcf in ipairs(self.MuzzPCFs) do
-        if IsValid(pcf) then
-            pcf:Render()
-            table.insert(newmzpcfs, pcf)
-        end
-    end
+	if !isDepthPass then
+    	local newmzpcfs = {}
 
-    if !inrt then self.MuzzPCFs = newmzpcfs end
+    	for _, pcf in ipairs(self.MuzzPCFs) do
+    	    if IsValid(pcf) then
+    	        pcf:Render()
+    	        table.insert(newmzpcfs, pcf)
+    	    end
+    	end
+
+    	if !inrt then self.MuzzPCFs = newmzpcfs end
+	end
 
     if ARC9.PresetCam then return end
 
@@ -270,6 +283,7 @@ function SWEP:PostDrawViewModel()
         cam.End3D()
     end
 
+	if isDepthPass then return end
     if inrt then return end
 
     self.RenderingHolosight = false
