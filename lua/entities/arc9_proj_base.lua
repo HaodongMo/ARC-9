@@ -8,41 +8,52 @@ ENT.Spawnable 			= false
 ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
 
 ENT.Model = "models/Items/grenadeAmmo.mdl"
-ENT.Ticks = 0
-ENT.FuseTime = 0
-ENT.Defused = false
-ENT.SphereSize = 2
-ENT.PhysMat = "grenade"
-ENT.SmokeTrail = true
-ENT.SmokeTrailMat = "trails/smoke"
-ENT.SmokeTrailSize = 6
-ENT.SmokeTrailTime = 0.5
-ENT.Flare = false
-ENT.LifeTime = 5
-
-ENT.Drag = true
-ENT.Gravity = true
-ENT.DragCoefficient = 0.25
-ENT.Boost = 0
-ENT.Lift = 0
-ENT.GunshipWorkaround = true
-ENT.HelicopterWorkaround = true
 
 ENT.Damage = 150
 ENT.Radius = 300
 ENT.ImpactDamage = nil
-ENT.ExplodeOnImpact = false
 
-ENT.Scorch = true
-ENT.ExplosionEffect = "explosion"
+ENT.SphereSize = 2
+ENT.PhysMat = "grenade"
 
-ENT.Dead = false
-ENT.DieTime = 0
-ENT.BounceSounds = {""}
+-- Detonation
+
+ENT.LifeTime = 5 -- After this much time the projectile detonates
+ENT.ExplodeOnImpact = false -- Projectile explodes on impact, regardless of LifeTime
+
+-- Traversal
+
+ENT.Drag = true -- Projectile is affected by drag, slowing down as it travels in the air
+ENT.Gravity = true -- Projectile is affected by gravity
+ENT.DragCoefficient = 0.25 -- Drag factor to apply
+ENT.Boost = 0 -- Forward velocity of the projectile
+ENT.Lift = 0 -- Upward added velocity of the projectile to counteract gravity
+
+-- Visuals
+
+ENT.SmokeTrail = true
+ENT.SmokeTrailColor = Color(255, 255, 255)
+ENT.SmokeTrailMat = "trails/smoke"
+ENT.SmokeTrailSize = 6
+ENT.SmokeTrailTime = 0.5
+
+ENT.Flare = false
+ENT.FlareColor = Color(255, 250, 240)
+
+ENT.Scorch = true -- Decal on impact surface
+ENT.ExplosionEffect = "explosion" -- util.Effect()
+
+-- Audio
+
+ENT.LoopingSound = nil -- Looping sound while projectile is alive
+ENT.BounceSounds = {""} -- Sound played on surface impact
+
+-- Lock-on variables
 
 ENT.SteerSpeed = 60 -- The maximum amount of degrees per second the missile can steer.
+ENT.SuperSteerSpeed = 6000 -- Steer speed when under "super steering", used for Top Attack.
 ENT.SeekerAngle = math.cos(35) -- The missile will lose tracking outside of this angle.
-ENT.SuperSeeker = false
+ENT.SuperSeeker = false -- Seeking ignores SeekerAngle
 ENT.SACLOS = false -- This missile is manually guided by its shooter.
 ENT.SemiActive = false -- This missile needs to be locked on to the target at all times.
 ENT.FireAndForget = false -- This missile automatically tracks its target.
@@ -51,13 +62,20 @@ ENT.TopAttackHeight = 5000
 ENT.SuperSteerBoostTime = 5 -- Time given for this projectile to adjust its trajectory from top attack to direct
 ENT.NoReacquire = false -- F&F target is permanently lost if it cannot reacquire
 
+-- Don't touch
+
+ENT.GunshipWorkaround = true
+ENT.HelicopterWorkaround = true
+ENT.Dead = false
+ENT.DieTime = 0
 ENT.ShootEntData = {}
-
+ENT.Ticks = 0
+ENT.FuseTime = 0
+ENT.Defused = false
 ENT.IsProjectile = true
-
 ENT.LastHitNormal = Vector(0, 0, 0)
-
 ENT.LoopingSound = nil
+ENT.DisableBallistics = true -- Tell LVS to not ricochet us
 
 if SERVER then
     local gunship = {["npc_combinegunship"] = true, ["npc_combinedropship"] = true}
@@ -79,7 +97,7 @@ if SERVER then
         self.SpawnTime = CurTime()
 
         if self.SmokeTrail then
-            util.SpriteTrail(self, 0, Color( 255 , 255 , 255 ), false, self.SmokeTrailSize, 0, self.SmokeTrailTime, 1 / self.SmokeTrailSize * 0.5, self.SmokeTrailMat)
+            util.SpriteTrail(self, 0, self.SmokeTrailColor, false, self.SmokeTrailSize, 0, self.SmokeTrailTime, 1 / self.SmokeTrailSize * 0.5, self.SmokeTrailMat)
         end
 
         if self.LoopingSound then
@@ -147,7 +165,7 @@ if SERVER then
 
                     local dist = (tpos - self:GetPos()):Length()
 
-                    if dist <= 2000 then
+                    if dist <= self.TopAttackHeight * 0.5 then
                         self.TopAttackReached = true
                         self.SuperSteerTime = CurTime() + self.SuperSteerBoostTime
                     end
@@ -156,12 +174,20 @@ if SERVER then
                 local dot = dir:Dot(self:GetAngles():Forward())
                 local ang = dir:Angle()
 
-                if self.SuperSeeker or dot >= self.SeekerAngle or !self.TopAttackReached or (self.SuperSteerTime and self.SuperSteerTime >= CurTime()) then
+                if target:GetPos():DistToSqr(self:GetPos()) <= 128 * 128 then
+                    self:SetPos(target:GetPos())
+                    self:Detonate()
+                elseif self.SuperSeeker or dot >= self.SeekerAngle or !self.TopAttackReached or (self.SuperSteerTime and self.SuperSteerTime >= CurTime()) then
                     local p = self:GetAngles().p
                     local y = self:GetAngles().y
 
-                    p = math.ApproachAngle(p, ang.p, FrameTime() * self.SteerSpeed)
-                    y = math.ApproachAngle(y, ang.y, FrameTime() * self.SteerSpeed)
+                    local speed = self.SteerSpeed
+                    if (self.SuperSteerTime and self.SuperSteerTime >= CurTime()) then
+                        speed = self.SuperSteerSpeed
+                    end
+
+                    p = math.ApproachAngle(p, ang.p, FrameTime() * speed)
+                    y = math.ApproachAngle(y, ang.y, FrameTime() * speed)
 
                     self:SetAngles(Angle(p, y, 0))
                     -- self:SetVelocity(dir * 15000)
@@ -364,7 +390,7 @@ local flaremat = Material("effects/arc9_lensflare")
 function ENT:Draw()
     if self.Flare and !self.Defused then
         render.SetMaterial(flaremat)
-        render.DrawSprite(self:GetPos(), math.Rand(90, 110), math.Rand(90, 110), Color(255, 250, 240))
+        render.DrawSprite(self:GetPos(), math.Rand(90, 110), math.Rand(90, 110), self.FlareColor)
     else
         self:DrawModel()
     end
