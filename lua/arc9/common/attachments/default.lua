@@ -53,6 +53,8 @@ ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
 ATT.NoDraw = false
 ATT.TranslucentPass = false -- if that model has $translucent 1 in vmt, will be drawn behind c_hands otherwise
+-- ATT.TranslucentPassExtraMat = Material( "models/" ) -- extra material to apply during translucent pass, use for vertexlit + refract
+-- ATT.TranslucentPassBlend = 0.75 -- blend to use during translucent pass
 
 ATT.Material = "material/path"
 

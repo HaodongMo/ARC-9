@@ -207,11 +207,24 @@ end
 
 function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
     if !wm then
+        local updatebitch = true
         if self.VModel then
             for _, model in ipairs(self.VModel) do
                 if model.istranslucent and !model.hidden and IsValid(model) then
                     if self.CustomizeDelta > 0 then cam.IgnoreZ(true) end
+                    if updatebitch then render.UpdatePowerOfTwoTexture() updatebitch = false end
+
                     model:DrawModel()
+                    
+                    if model.translucentpassextramat then
+                        render.MaterialOverride( model.translucentpassextramat )
+                        render.SetBlend( model.translucentpassblend or 0.75 )
+                        render.OverrideDepthEnable( true, true )
+                            model:DrawModel()
+                            render.OverrideDepthEnable( false, false )
+                        render.SetBlend( 1 )
+                        render.MaterialOverride()
+                    end
                 end
             end
         end

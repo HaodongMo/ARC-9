@@ -229,6 +229,8 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     csmodel.weapon = self -- for matproxy
 
     csmodel.istranslucent = atttbl.TranslucentPass
+    csmodel.translucentpassextramat = atttbl.TranslucentPassExtraMat
+    csmodel.translucentpassblend = atttbl.TranslucentPassBlend
 
     if atttbl.DrawFunc then
         csmodel.DrawFunc = atttbl.DrawFunc
