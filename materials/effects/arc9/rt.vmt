@@ -1,15 +1,26 @@
-"UnlitGeneric"
+// "UnlitGeneric"
+// {
+// 	"$baseTexture" "vgui/black"
+	
+// 	"$rot" "0"
+	
+// 	"Proxies"
+// 	{
+// 		"texturetransform"
+// 		{
+// 			"rotatevar" "$rot"
+// 			"resultvar" "$basetexturetransform"
+// 		}
+// 	}
+// }
+
+"Refract"
 {
-	"$baseTexture" "vgui/black"
-	
-	"$rot" "0"
-	
-	"Proxies"
-	{
-		"texturetransform"
-		{
-			"rotatevar" "$rot"
-			"resultvar" "$basetexturetransform"
-		}
-	}
+	"$basetexture" "_rt_FullFrameFB"
+	$refracttint "[1 1 1]"
+	$refractamount 0
+	$nowritez "0"
+	$model "1"
+	$bluramount 0
+	// $localrefract 1
 }

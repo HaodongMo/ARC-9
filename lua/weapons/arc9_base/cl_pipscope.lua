@@ -1,3 +1,136 @@
+local rtmat = GetRenderTargetEx(
+    "arc9_pipscope_awesome", 
+    ScrW(), 
+    ScrH(), 
+    RT_SIZE_FULL_FRAME_BUFFER, 
+    0, 
+    0, 
+    1, 
+    IMAGE_FORMAT_RGBA8888
+)
+
+function SWEP:ShouldDoScope()
+    if self:GetSight().Disassociate or self:GetOwner().ARC9NoScopes then return false end
+	
+    return true
+end
+
+local rtsurf = Material("effects/arc9/rt")
+local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
+local shadow = Material("arc9/shadow.png", "mips smooth")
+local shadow2 = Material("arc9/shadow2.png", "mips smooth")
+
+
+function SWEP:DoRT(magnification, atttbl)
+    if ARC9.OverDraw then return end
+    -- print(self.FOV, magnification)
+    local fov = (self.FOV) / magnification + 16.7
+    local rtvm = arc9_fx_rtvm:GetBool()
+    
+    ARC9.RTScopeRenderFOV = fov
+    
+    local rt = {
+        x = 0,
+        y = 0,
+        w = ScrW(),
+        h = ScrH(),
+        angles = EyeAngles(),
+        origin = EyePos(),
+        drawviewmodel = rtvm,
+        fov = fov,
+        znear = 16,
+        zfar = 30000
+    }
+
+    render.PushRenderTarget(rtmat)
+
+
+        ARC9.OverDraw = true
+        ARC9.RTScopeRender = rtvm
+        render.RenderView(rt)
+        ARC9.RTScopeRender = false
+        ARC9.OverDraw = false
+
+    render.PopRenderTarget()
+end
+
+
+function SWEP:DoRTScope(model, atttbl, active)
+    local pos = model:GetPos()
+    local ang = EyeAngles()
+
+    if active then
+        local sightzang = 0
+        if self:ShouldDoScope() then
+            self.RenderingRTScope = true
+            local sight = self:GetSight()
+
+            -- local sp, sa = self:GetShootPos()
+            local sp, sa = self.LastViewModelPos, self.LastViewModelAng
+            local endpos = sp + (sa:Forward() * 9000)
+            local toscreen = endpos:ToScreen()
+
+            local offsetx, offsety = toscreen.x - ScrW()/2, toscreen.y - ScrH()/2
+            render.PushRenderTarget(rtmat)
+            cam.Start2D()
+            render.ClearDepth(true)
+            local reticle = sight.Reticle or atttbl.RTScopeReticle
+            local color = atttbl.RTScopeColor or color_white
+            if reticle then
+                surface.SetDrawColor(color)
+                surface.SetMaterial(reticle)
+                surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
+            end
+
+            
+            surface.SetDrawColor(0, 0, 0)
+            -- surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
+            surface.DrawRect(ScrW()/2 - ScrH()*1 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- left
+            -- surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
+            surface.DrawRect(ScrW()/2 + ScrH()/2 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- right
+            surface.SetDrawColor(0, 0, 0)
+            surface.SetMaterial(shadow)
+            surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
+        else
+            render.PushRenderTarget(rtmat)
+            cam.Start2D()
+        end
+
+        cam.End2D()
+
+        render.PopRenderTarget()
+        rtsurf:SetTexture("$basetexture", rtmat)
+
+        -- model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
+    else
+        -- rtsurf:SetTexture("$basetexture", "vgui/black")
+        -- model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
+    end
+end
+
+function SWEP:GetCheapScopeScale(scale)
+    local ratio = scale - (!self.ExtraSightDistanceNoRT and self:GetSight().ExtraSightDistance or 0) * 0.045
+
+    return 1 / ratio * (ScrW() / ScrH() / 1.12)
+end
+
+
+
+local testmat = CreateMaterial( "example_rt_mat", "UnlitGeneric", {
+	["$basetexture"] = rtmat:GetName(), -- You can use "example_rt" as well
+	["$translucent"] = 1,
+	["$vertexcolor"] = 1
+} )
+
+hook.Add("HUDPaint", "arc9_test_pipscope", function()
+    surface.SetDrawColor(255, 255, 255)
+    surface.SetMaterial(testmat)
+    surface.DrawTexturedRect(0, 0, ScrW()/4, ScrH()/4)
+end)
+--[[
+
+
+
 local rtsize = math.min(1024, ScrW(), ScrH())
 
 local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)
@@ -348,7 +481,7 @@ function SWEP:DoRTScope(model, atttbl, active)
         if sd > 0.33 then render.SetToneMappingScaleLinear(LerpVector(sd * 1.5 - 0.5, render.GetToneMappingScaleLinear(), vec1)) end
 
         local counterrotation = self.LastViewModelAng.z - sightzang + (arc9_cheapscopes:GetBool() and 0 or self.SubtleVisualRecoilAng.z * 2) - EyeAngles().z
-        rtsurf:SetTexture("$basetexture", rtmat)
+        -- rtsurf:SetTexture("$basetexture", rtmat)
         rtsurf:SetFloat("$rot", ((atttbl.RTScopeShadowIntensity or 0) > 1 or atttbl.RTCollimator) and counterrotation or 0)
         -- rtsurf:SetMatrix("$basetexturetransform", Matrix({{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}))
 
@@ -463,3 +596,5 @@ function SWEP:DoCheapScope(fov, atttbl)
         render.PopRenderTarget()
     end
 end
+
+]]--

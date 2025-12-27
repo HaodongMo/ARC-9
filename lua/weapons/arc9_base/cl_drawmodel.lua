@@ -163,7 +163,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 --     self:DoHolosight(model, atttbl)
                 -- end
 
-                if !ARC9.PresetCam and !ARC9.RTScopeRender then
+                if !ARC9.PresetCam and !ARC9.RTScopeRender and !ARC9.OverDraw then
                     if !wm and atttbl.RTScope then
                         local active = slottbl.Address == self:GetActiveSightSlotTable().Address
                         self:DoRTScope(model, atttbl, active)

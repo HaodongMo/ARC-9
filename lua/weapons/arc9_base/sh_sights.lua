@@ -386,7 +386,7 @@ function SWEP:GetRTScopeFOV()
     local vmfovratio = arc9_cheapscopes:GetBool() and sights.Magnification or self:GetSmoothedFOVMag() -- sights.Magnification
     local funnyfov = self:ScaleFOVByWidthRatio(self:GetOwner():GetFOV(), 1 / vmfovratio * ratio / 1.5 / realzoom)
 
-    return funnyfov
+    return realzoom
 end
 
 SWEP.ScrollLevels = {}
