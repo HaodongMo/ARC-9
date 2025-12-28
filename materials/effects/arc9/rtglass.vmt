@@ -1,34 +1,66 @@
+// "VertexlitGeneric"
+// {
+// 	"$basetexture"             "effects/arc9/lens_d"
+// 	"$bumpmap"                 "effects/arc9/lens_n"
+//      "$phongexponenttexture"    "effects/arc9/lens_s"
+//      "$color2"                  "[0 0 0]"
+
+// 	"$translucent" "1"
+// 	"$phong" "1"
+// 	"$phongboost"	"1"
+// 	"$phongexponent"	"10"
+//      "$phongfresnelranges" "[1 0.5 0]"
+
+// 	"$envmap" "env_cubemap"
+//      "$envmaptint"	"[.5 .5 .5]"
+// 	"$normalmapalphaenvmapmask"	"1"
+// 	"$envmapfresnel" "5"
+
+// 	//"$alpha" "0"
+// 	//"$envmaptint" "[2 2 2]"
+
+// 	"$rimlight"	        "1"
+// 	"$rimmask"	             "1"
+// 	"$rimlightboost"       "1"
+// 	"$rimlightexponent"    "100"
+	
+// 	"Proxies"
+// 	{
+// 	   "arc9_scope_alpha"
+// 	   {
+// 		  "resultVar" "$envmaptint"
+// 	   }
+// 	}
+// }
+
+
 "VertexlitGeneric"
 {
-	"$basetexture"             "effects/arc9/lens_d"
-	"$bumpmap"                 "effects/arc9/lens_n"
-     "$phongexponenttexture"    "effects/arc9/lens_s"
-     "$color2"                  "[0 0 0]"
-
-	"$translucent" "1"
+	"$basetexture"             "effects/arc9/glass2"
+	"$bumpmap"                 "effects/arc9/glass_nm"
+	"$translucent" 1
+	
+	// "$softwareskin" "1"
 	"$phong" "1"
-	"$phongboost"	"1"
-	"$phongexponent"	"10"
-     "$phongfresnelranges" "[1 0.5 0]"
+	"$phongboost" "1"
+	"$phongalbedotint" "1"
+	"$phongexponent" "1000"
+	"$phongfresnelranges" "[5.22 5.856 20]"
 
 	"$envmap" "env_cubemap"
-     "$envmaptint"	"[.5 .5 .5]"
-	"$normalmapalphaenvmapmask"	"1"
-	"$envmapfresnel" "5"
+	"$envmaptint" "[1 1 1]"
+	"$envmapfresnel" "0.25"
+	"$normalmapalphaenvmapmask" "0"
+	"$basemapalphaenvmapmask" "0"
 
-	//"$alpha" "0"
-	//"$envmaptint" "[2 2 2]"
+	"$halflambert" 1
 
-	"$rimlight"	        "1"
-	"$rimmask"	             "1"
-	"$rimlightboost"       "1"
-	"$rimlightexponent"    "100"
-	
 	"Proxies"
 	{
-	   "arc9_scope_alpha"
-	   {
-		  "resultVar" "$envmaptint"
-	   }
+		"arc9_scope_alpha"
+		{
+           "max" "20"
+			"resultVar" "$envmaptint"
+		}
 	}
 }

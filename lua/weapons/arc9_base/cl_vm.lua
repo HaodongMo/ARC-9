@@ -178,7 +178,8 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
     	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
     	if self:GetHolsterTime() < CurTime() then
-    	    self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1)
+            if hook.Run("NeedsDepthPass") == true then self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1, true) end
+    	    -- self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1)
     	end
 
     	vm:SetMaterial(self:GetProcessedValue("Material", true))

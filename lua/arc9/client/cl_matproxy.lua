@@ -202,25 +202,6 @@ matproxy.Add({
     end
 })
 
-matproxy.Add({
-    name = "arc9_scope_alpha",
-    init = function(self, mat, values)
-        self.ResultTo = values.resultvar
-    end,
-    bind = function(self, mat, ent)
-        local ply = LocalPlayer()
-
-        if IsValid(ply) then
-            local weapon = ply:GetActiveWeapon()
-
-            if IsValid(weapon) and weapon.ARC9 then
-                local amt = 1 - weapon:GetSightAmount() / 1 
-                amt = amt * 0.2
-                mat:SetVector(self.ResultTo, Vector(amt*2.2, amt*1.8, amt*2.6))
-            end
-        end
-   end
-})
 
 local lastPos = Vector()
 local lastValue = 0
@@ -282,3 +263,44 @@ matproxy.Add( {
         -- }
     -- }
 -- }
+
+
+matproxy.Add({
+    name = "arc9_scope_alpha",
+    init = function(self, mat, values)
+        self.ResultTo = values.resultvar
+
+		local color = {1, 1, 1} 
+
+		if (values.color != nil) then
+			color = string.Explode(" ", string.Replace(string.Replace(values.color, "[", ""), "]", ""))
+		end
+
+		self.min = values.min or 0
+		self.max = values.max or 1
+		self.color = Vector(color[1], color[2], color[3])
+    end,
+    bind = function(self, mat, ent)
+        local ply = LocalPlayer()
+
+        if IsValid(ply) then
+            local weapon = ply:GetActiveWeapon()
+
+            if IsValid(weapon) and weapon.ARC9 then
+                local amt = 1 - weapon:GetSightAmount() / 1.2
+                
+                if !IsValid(ent) then return end
+                local getpos = entityGetPos(ent)
+                if !vectorIsEqualTol(lastPos, getpos, 1) then
+                    local c = renderGetLightColor(getpos)
+                    lastValue = (c.x * 0.2126) + (c.y * 0.7152) + (c.z * 0.0722)
+                    lastValue = mathmin(lastValue * 2, 1)
+                    lastPos = getpos
+                end
+                ent.m_Arc9EnvMapTint = lerp(10 * RealFrameTime(), ent.m_Arc9EnvMapTint || 0, lastValue)
+                mat:SetVector("$envmaptint", self.color * lerp(ent.m_Arc9EnvMapTint * amt, self.min, self.max))
+            end
+            
+        end
+   end
+})

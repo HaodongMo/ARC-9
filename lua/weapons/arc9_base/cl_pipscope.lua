@@ -22,7 +22,8 @@ local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 -- local black = Material("arc9/ahmad.png", "mips smooth")
 local black = Material("vgui/black")
 -- local fisheyelens = Material("models/props_c17/fisheyelens")
-local fisheyelens = Material("effects/shaders/merc_chromaticaberration")
+-- local fisheyelens = Material("effects/shaders/merc_chromaticaberration")
+local funnylense = Material("gmod_shader_guide/arc9lens2")
 -- local fisheyelens = Material("effects/shaders/merc_fisheye")
 local arc9_scope_r = GetConVar("arc9_scope_r")
 local arc9_scope_g = GetConVar("arc9_scope_g")
@@ -60,6 +61,8 @@ function SWEP:DoRT(magnification, atttbl)
         ARC9.OverDraw = false
 
     render.PopRenderTarget()
+    
+    if hook.Run("NeedsDepthPass") == false then self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1) end
 end
 
 local function drawscopequad(scale, range, ang, pos, mat, color)
@@ -69,7 +72,7 @@ local function drawscopequad(scale, range, ang, pos, mat, color)
     local v3 = pos - (up * scale / 2) + (right * scale / 2) + forward * range
     local v4 = pos - (up * scale / 2) - (right * scale / 2) + forward * range
     render.SetMaterial(mat)
-    render.DrawQuad(v1, v2, v3, v4, color)
+    -- render.DrawQuad(v1, v2, v3, v4, color)
 
     render.SetMaterial(black)
     scale = scale * 0.999 -- to prevent edges
@@ -110,7 +113,7 @@ local function getscopebound(model)
     return scopebounds[modelmodel]
 end
 
-function SWEP:DoRTScope(model, atttbl, active)
+function SWEP:DoRTScope(model, atttbl, active, althook)
     local eyeang = EyeAngles()
     local eyepos = EyePos()
 
@@ -126,7 +129,19 @@ function SWEP:DoRTScope(model, atttbl, active)
             -- local toscreen = endpos:ToScreen()
 
             -- local offsetx, offsety = toscreen.x - ScrW()/2, toscreen.y - ScrH()/2
+            if !IsValid(model) then return end
             render.PushRenderTarget(rtmat)
+
+            render.UpdateScreenEffectTexture()
+            funnylense:SetTexture("$basetexture", render.GetScreenEffectTexture())
+            funnylense:SetFloat("$c1_x", ScrW())
+            funnylense:SetFloat("$c1_y", ScrH())
+            funnylense:SetFloat("$c1_z", 1/ScrW())
+            funnylense:SetFloat("$c1_w", 1/ScrH())
+            funnylense:SetFloat("$c3_x", 0.5)
+            funnylense:SetFloat("$c3_y", 0.5)
+            render.SetMaterial(funnylense)
+            render.DrawScreenQuad()
             
             local modelang = model:GetAngles()
             local reticle = sight.Reticle or atttbl.RTScopeReticle
@@ -139,43 +154,6 @@ function SWEP:DoRTScope(model, atttbl, active)
                 color.b = arc9_scope_b:GetInt()
             end
 
-            -- drawscopequad(0.5, 1, modelang, eyepos, shadow, color_white)
-            -- drawscopequad(0.5, 1, modelang, reticle, color)
-            -- render.SetMaterial(fisheyelens)
-            -- render.DrawScreenQuad()
-            -- drawscopequad(0.5, 1, modelang, eyepos, fisheyelens, color)
-
-            -- local s = 5
-            -- local modelang = eyeang + (model:GetAngles() - eyeang) * -4
-            -- modelang.r = modelang.r / -4
-            -- local up, right, forward = modelang:Up(), modelang:Right(), modelang:Forward()
-            -- local v1 = eyepos + (up * s / 2) - (right * s / 2) + forward * s * 2
-            -- local v2 = eyepos + (up * s / 2) + (right * s / 2) + forward * s * 2
-            -- local v3 = eyepos - (up * s / 2) + (right * s / 2) + forward * s * 2
-            -- local v4 = eyepos - (up * s / 2) - (right * s / 2) + forward * s * 2
-            -- render.DrawQuad(v1, v2, v3, v4, color_white)
-
-            -- cam.End3D()
-
-
-            -- cam.Start2D()
-
-            -- if reticle then
-                -- surface.SetDrawColor(color)
-                -- surface.SetMaterial(reticle)
-                -- surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
-            -- end
-
-            
-            -- surface.SetDrawColor(0, 0, 0)
-            -- surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
-            -- surface.DrawRect(ScrW()/2 - ScrH()*1 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- left
-            -- surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
-            -- surface.DrawRect(ScrW()/2 + ScrH()/2 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- right
-            -- surface.SetDrawColor(0, 0, 0)
-            -- surface.SetMaterial(shadow)
-            -- surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
-
             local eyeforward = eyeang:Forward()
             
             cam.Start3D(eyepos + eyeforward * -1, nil, nil, nil, nil, nil, nil, 0.5, 10000)
@@ -184,33 +162,29 @@ function SWEP:DoRTScope(model, atttbl, active)
                 cam.IgnoreZ(false)
             cam.End3D()
 
-            cam.Start3D(eyepos + eyeforward * -10, nil, nil, nil, nil, nil, nil, 0.1, 10000)
-                cam.IgnoreZ(true)
+            -- cam.Start3D(eyepos + eyeforward * -10, nil, nil, nil, nil, nil, nil, 0.1, 10000)
+            --     cam.IgnoreZ(true)
                     -- drawscopequad(15, 6, modelang, eyepos, shadow, color_white)
                     -- drawscopequad(15, 6, modelang, eyepos, reticle, color)
-                cam.IgnoreZ(false)
-            cam.End3D()
-            -- PrintTable(sight)
-            
-            -- local modelpos = model:GetPos() + model:GetAngles():Forward() * -10 - sight.Pos
-            -- local modelpos = model:GetPos() + model:GetAngles():Forward() * -1 
-            -- local modelpos = model:GetPos() - model:GetAngles():Up() * sight.Pos.z
+            --     cam.IgnoreZ(false)
+            -- cam.End3D()
 
             local scopebound = getscopebound(model)
-            local modelpos = model:GetPos()
-             - model:GetAngles():Up() * sight.OriginalSightTable.Pos.z / (atttbl.Scale or 1)
-            --  - model:GetAngles():Forward() * (sight.OriginalSightTable.Pos.y * 0.5 - 2) / (atttbl.Scale or 1)
-             - model:GetAngles():Forward() * (-scopebound[1]) / (atttbl.Scale or 1)
-             - model:GetAngles():Right() * sight.OriginalSightTable.Pos.x / (atttbl.Scale or 1)
-            -- PrintTable(sight)
 
-            -- cam.Start3D(nil, nil, nil, nil, nil, nil, nil, 0.1, 10000)
+            local origsighttable = sight.OriginalSightTable
+            local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
+            
+            cam.Start3D(nil, nil, self.ViewModelFOV + 15, nil, nil, nil, nil, 0.1, 10000)
+            local modelpos = model:GetPos()
+             - model:GetAngles():Up() * origsighttablepos.z / (atttbl.Scale or 1)
+             - model:GetAngles():Forward() * (-scopebound[1]) / (atttbl.Scale or 1)
+             - model:GetAngles():Right() * origsighttablepos.x / (atttbl.Scale or 1)
+
                 cam.IgnoreZ(true)
                     local sightamt = self:GetSightDelta()
                     if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
                     else sightamt = math.ease.InQuart(sightamt) end
                     
-                    -- local lerpscale = Lerp(sightamt, 4, 0.3)
                     local lerpscale = Lerp(sightamt, 4, 0.6)
 
                     local modelpos2 = modelpos - model:GetAngles():Forward() * (scopebound[1] - scopebound[2])
@@ -225,13 +199,12 @@ function SWEP:DoRTScope(model, atttbl, active)
                     drawscopequad(Lerp(sightamt, 1, 0.6), 2, modelang, lerped3, shadow, color_white)
 
                 cam.IgnoreZ(false)
-            -- cam.End3D()
+            cam.End3D()
 
         else
             render.PushRenderTarget(rtmat)
         end
 
-	-- DrawMaterialOverlay( "models/props_c17/fisheyelens", 0.2 )
         render.PopRenderTarget()
         rtsurf:SetTexture("$basetexture", rtmat)
 
@@ -259,7 +232,7 @@ local testmat = CreateMaterial( "example_rt_mat2", "UnlitGeneric", {
 hook.Add("HUDPaint", "arc9_test_pipscope", function()
     surface.SetDrawColor(255, 255, 255)
     surface.SetMaterial(testmat)
-    surface.DrawTexturedRect(ScrW()-ScrW()/4, ScrH()/2-ScrH()/8, ScrW()/4, ScrH()/4)
+    surface.DrawTexturedRect(ScrW()-ScrW()/4, ScrH()/2-ScrH()/3, ScrW()/4, ScrH()/4)
 end)
 --[[
 
