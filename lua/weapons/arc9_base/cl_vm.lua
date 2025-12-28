@@ -164,9 +164,8 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
     end
 
-    -- self:DrawCustomModel(true, EyePos() + EyeAngles():Forward() * 16, EyeAngles())
-
 	self.RenderingRTScope = false 
+
 	if !isDepthPass then
     	vm:SetSubMaterial()
 
@@ -177,8 +176,9 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     	    end
     	end
 
-    	if self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
-    	    self:DoRTScope(vm, self:GetTable(), sightamount > 0)
+    	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
+    	if self:GetHolsterTime() < CurTime() then
+    	    self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1)
     	end
 
     	vm:SetMaterial(self:GetProcessedValue("Material", true))
@@ -283,6 +283,10 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
 
 	if isDepthPass then return end
     if inrt then return end
+
+
+
+    	    -- self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1)
 
     self.RenderingHolosight = false
     cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), nil, nil, nil, nil, 1, 10000)

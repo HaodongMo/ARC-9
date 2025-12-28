@@ -19,6 +19,14 @@ local rtsurf = Material("effects/arc9/rt")
 local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
 local shadow = Material("arc9/shadow.png", "mips smooth")
 local shadow2 = Material("arc9/shadow2.png", "mips smooth")
+-- local black = Material("arc9/ahmad.png", "mips smooth")
+local black = Material("vgui/black")
+-- local fisheyelens = Material("models/props_c17/fisheyelens")
+local fisheyelens = Material("effects/shaders/merc_chromaticaberration")
+-- local fisheyelens = Material("effects/shaders/merc_fisheye")
+local arc9_scope_r = GetConVar("arc9_scope_r")
+local arc9_scope_g = GetConVar("arc9_scope_g")
+local arc9_scope_b = GetConVar("arc9_scope_b")
 
 
 function SWEP:DoRT(magnification, atttbl)
@@ -38,7 +46,7 @@ function SWEP:DoRT(magnification, atttbl)
         origin = EyePos(),
         drawviewmodel = rtvm,
         fov = fov,
-        znear = 16,
+        znear = 8,
         zfar = 30000
     }
 
@@ -54,10 +62,57 @@ function SWEP:DoRT(magnification, atttbl)
     render.PopRenderTarget()
 end
 
+local function drawscopequad(scale, range, ang, pos, mat, color)
+    local up, right, forward = ang:Up(), ang:Right(), ang:Forward()
+    local v1 = pos + (up * scale / 2) - (right * scale / 2) + forward * range
+    local v2 = pos + (up * scale / 2) + (right * scale / 2) + forward * range
+    local v3 = pos - (up * scale / 2) + (right * scale / 2) + forward * range
+    local v4 = pos - (up * scale / 2) - (right * scale / 2) + forward * range
+    render.SetMaterial(mat)
+    render.DrawQuad(v1, v2, v3, v4, color)
+
+    render.SetMaterial(black)
+    scale = scale * 0.999 -- to prevent edges
+
+    local v1 = pos + (up * scale * 4) - (right * scale * 8) + forward * range
+    local v2 = pos + (up * scale * 4) - (right * scale * 0.5) + forward * range
+    local v3 = pos - (up * scale * 4) - (right * scale * 0.5) + forward * range
+    local v4 = pos - (up * scale * 4) - (right * scale * 8) + forward * range
+    -- render.DrawQuad(v1, v2, v3, v4, color)
+
+    local v1 = pos + (up * scale * 4) + (right * scale * 0.5) + forward * range
+    local v2 = pos + (up * scale * 4) + (right * scale * 8) + forward * range
+    local v3 = pos - (up * scale * 4) + (right * scale * 8) + forward * range
+    local v4 = pos - (up * scale * 4) + (right * scale * 0.5)+ forward * range
+    -- render.DrawQuad(v1, v2, v3, v4, color)
+
+    local v1 = pos - (up * scale / 2) - (right * scale / 2) + forward * range
+    local v2 = pos - (up * scale / 2) + (right * scale / 2) + forward * range
+    local v3 = pos - (up * scale * 4) + (right * scale / 2) + forward * range
+    local v4 = pos - (up * scale * 4) - (right * scale / 2) + forward * range
+    -- render.DrawQuad(v1, v2, v3, v4, color)
+
+    local v1 = pos + (up * scale * 4) - (right * scale / 2) + forward * range
+    local v2 = pos + (up * scale * 4) + (right * scale / 2) + forward * range
+    local v3 = pos + (up * scale / 2) + (right * scale / 2) + forward * range
+    local v4 = pos + (up * scale / 2) - (right * scale / 2) + forward * range
+    -- render.DrawQuad(v1, v2, v3, v4, color)
+end
+
+local scopebounds = {}
+
+local function getscopebound(model)
+    local modelmodel = model:GetModel()
+    if !scopebounds[modelmodel] then
+        local owo, uwu = model:GetModelBounds()
+        scopebounds[modelmodel] = {owo.x, uwu.x}
+    end
+    return scopebounds[modelmodel]
+end
 
 function SWEP:DoRTScope(model, atttbl, active)
-    local pos = model:GetPos()
-    local ang = EyeAngles()
+    local eyeang = EyeAngles()
+    local eyepos = EyePos()
 
     if active then
         local sightzang = 0
@@ -66,42 +121,121 @@ function SWEP:DoRTScope(model, atttbl, active)
             local sight = self:GetSight()
 
             -- local sp, sa = self:GetShootPos()
-            local sp, sa = self.LastViewModelPos, self.LastViewModelAng
-            local endpos = sp + (sa:Forward() * 9000)
-            local toscreen = endpos:ToScreen()
+            -- local sp, sa = self.LastViewModelPos, self.LastViewModelAng
+            -- local endpos = sp + (sa:Forward() * 9000)
+            -- local toscreen = endpos:ToScreen()
 
-            local offsetx, offsety = toscreen.x - ScrW()/2, toscreen.y - ScrH()/2
+            -- local offsetx, offsety = toscreen.x - ScrW()/2, toscreen.y - ScrH()/2
             render.PushRenderTarget(rtmat)
-            cam.Start2D()
-            render.ClearDepth(true)
+            
+            local modelang = model:GetAngles()
             local reticle = sight.Reticle or atttbl.RTScopeReticle
             local color = atttbl.RTScopeColor or color_white
-            if reticle then
-                surface.SetDrawColor(color)
-                surface.SetMaterial(reticle)
-                surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
+            
+            if atttbl.RTScopeColorable then
+                color = Color(0, 0, 0)
+                color.r = arc9_scope_r:GetInt()
+                color.g = arc9_scope_g:GetInt()
+                color.b = arc9_scope_b:GetInt()
             end
 
+            -- drawscopequad(0.5, 1, modelang, eyepos, shadow, color_white)
+            -- drawscopequad(0.5, 1, modelang, reticle, color)
+            -- render.SetMaterial(fisheyelens)
+            -- render.DrawScreenQuad()
+            -- drawscopequad(0.5, 1, modelang, eyepos, fisheyelens, color)
+
+            -- local s = 5
+            -- local modelang = eyeang + (model:GetAngles() - eyeang) * -4
+            -- modelang.r = modelang.r / -4
+            -- local up, right, forward = modelang:Up(), modelang:Right(), modelang:Forward()
+            -- local v1 = eyepos + (up * s / 2) - (right * s / 2) + forward * s * 2
+            -- local v2 = eyepos + (up * s / 2) + (right * s / 2) + forward * s * 2
+            -- local v3 = eyepos - (up * s / 2) + (right * s / 2) + forward * s * 2
+            -- local v4 = eyepos - (up * s / 2) - (right * s / 2) + forward * s * 2
+            -- render.DrawQuad(v1, v2, v3, v4, color_white)
+
+            -- cam.End3D()
+
+
+            -- cam.Start2D()
+
+            -- if reticle then
+                -- surface.SetDrawColor(color)
+                -- surface.SetMaterial(reticle)
+                -- surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
+            -- end
+
             
-            surface.SetDrawColor(0, 0, 0)
+            -- surface.SetDrawColor(0, 0, 0)
             -- surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
-            surface.DrawRect(ScrW()/2 - ScrH()*1 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- left
+            -- surface.DrawRect(ScrW()/2 - ScrH()*1 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- left
             -- surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
-            surface.DrawRect(ScrW()/2 + ScrH()/2 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- right
-            surface.SetDrawColor(0, 0, 0)
-            surface.SetMaterial(shadow)
-            surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
+            -- surface.DrawRect(ScrW()/2 + ScrH()/2 + offsetx, 0 + offsety, ScrH()/2, ScrH()) -- right
+            -- surface.SetDrawColor(0, 0, 0)
+            -- surface.SetMaterial(shadow)
+            -- surface.DrawTexturedRect(ScrW()/2 - ScrH()/2 + offsetx, 0 + offsety, ScrH(), ScrH())
+
+            local eyeforward = eyeang:Forward()
+            
+            cam.Start3D(eyepos + eyeforward * -1, nil, nil, nil, nil, nil, nil, 0.5, 10000)
+                cam.IgnoreZ(true)
+                    drawscopequad(2, 1, modelang, eyepos, shadow, color_white)
+                cam.IgnoreZ(false)
+            cam.End3D()
+
+            cam.Start3D(eyepos + eyeforward * -10, nil, nil, nil, nil, nil, nil, 0.1, 10000)
+                cam.IgnoreZ(true)
+                    -- drawscopequad(15, 6, modelang, eyepos, shadow, color_white)
+                    -- drawscopequad(15, 6, modelang, eyepos, reticle, color)
+                cam.IgnoreZ(false)
+            cam.End3D()
+            -- PrintTable(sight)
+            
+            -- local modelpos = model:GetPos() + model:GetAngles():Forward() * -10 - sight.Pos
+            -- local modelpos = model:GetPos() + model:GetAngles():Forward() * -1 
+            -- local modelpos = model:GetPos() - model:GetAngles():Up() * sight.Pos.z
+
+            local scopebound = getscopebound(model)
+            local modelpos = model:GetPos()
+             - model:GetAngles():Up() * sight.OriginalSightTable.Pos.z / (atttbl.Scale or 1)
+            --  - model:GetAngles():Forward() * (sight.OriginalSightTable.Pos.y * 0.5 - 2) / (atttbl.Scale or 1)
+             - model:GetAngles():Forward() * (-scopebound[1]) / (atttbl.Scale or 1)
+             - model:GetAngles():Right() * sight.OriginalSightTable.Pos.x / (atttbl.Scale or 1)
+            -- PrintTable(sight)
+
+            -- cam.Start3D(nil, nil, nil, nil, nil, nil, nil, 0.1, 10000)
+                cam.IgnoreZ(true)
+                    local sightamt = self:GetSightDelta()
+                    if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
+                    else sightamt = math.ease.InQuart(sightamt) end
+                    
+                    -- local lerpscale = Lerp(sightamt, 4, 0.3)
+                    local lerpscale = Lerp(sightamt, 4, 0.6)
+
+                    local modelpos2 = modelpos - model:GetAngles():Forward() * (scopebound[1] - scopebound[2])
+                    local lerped2 = LerpVector(sightamt, modelpos2, eyepos)
+                    drawscopequad(4, 10, modelang, lerped2, shadow, color_white)
+
+                    local lerped = LerpVector(sightamt, modelpos, eyepos)
+                    drawscopequad(lerpscale, 1.5, modelang, lerped, reticle, color)
+
+                    local modelpos3 = modelpos - model:GetAngles():Forward() * 2
+                    local lerped3 = LerpVector(sightamt, modelpos3, eyepos)
+                    drawscopequad(Lerp(sightamt, 1, 0.6), 2, modelang, lerped3, shadow, color_white)
+
+                cam.IgnoreZ(false)
+            -- cam.End3D()
+
         else
             render.PushRenderTarget(rtmat)
-            cam.Start2D()
         end
 
-        cam.End2D()
-
+	-- DrawMaterialOverlay( "models/props_c17/fisheyelens", 0.2 )
         render.PopRenderTarget()
         rtsurf:SetTexture("$basetexture", rtmat)
 
-        -- model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
+        model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
     else
         -- rtsurf:SetTexture("$basetexture", "vgui/black")
         -- model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
@@ -116,16 +250,16 @@ end
 
 
 
-local testmat = CreateMaterial( "example_rt_mat", "UnlitGeneric", {
+local testmat = CreateMaterial( "example_rt_mat2", "UnlitGeneric", {
 	["$basetexture"] = rtmat:GetName(), -- You can use "example_rt" as well
-	["$translucent"] = 1,
+	["$translucent"] = 0,
 	["$vertexcolor"] = 1
 } )
 
 hook.Add("HUDPaint", "arc9_test_pipscope", function()
     surface.SetDrawColor(255, 255, 255)
     surface.SetMaterial(testmat)
-    surface.DrawTexturedRect(0, 0, ScrW()/4, ScrH()/4)
+    surface.DrawTexturedRect(ScrW()-ScrW()/4, ScrH()/2-ScrH()/8, ScrW()/4, ScrH()/4)
 end)
 --[[
 

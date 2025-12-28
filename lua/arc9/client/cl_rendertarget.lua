@@ -11,9 +11,9 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 
     local atttbl = wpn:IsScoping()
 
-    if atttbl then
+    -- if atttbl then
         wpn:DoRT(wpn:GetRTScopeFOV(), atttbl)
-    end
+    -- end
 end)
 
 hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
