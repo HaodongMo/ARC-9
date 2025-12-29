@@ -160,6 +160,16 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
     self.ViewModelFOV = vmfov
 
+    
+
+	if !isDepthPass then
+    	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
+    	if self:GetHolsterTime() < CurTime() then
+            if hook.Run("NeedsDepthPass") == true then self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1, true) end
+    	    -- self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1)
+    	end
+    end
+
     if !arc9_dev_benchgun:GetBool() then
         cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
     end
@@ -174,12 +184,6 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     	    if val then
     	        vm:SetSubMaterial(ind, val)
     	    end
-    	end
-
-    	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
-    	if self:GetHolsterTime() < CurTime() then
-            if hook.Run("NeedsDepthPass") == true then self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1, true) end
-    	    -- self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1)
     	end
 
     	vm:SetMaterial(self:GetProcessedValue("Material", true))
