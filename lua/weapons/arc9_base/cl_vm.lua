@@ -32,6 +32,29 @@ local arc9_cust_light_brightness = GetConVar("arc9_cust_light_brightness")
 local arc9_dev_benchgun = GetConVar("arc9_dev_benchgun")
 local arc9_fx_adsblur = GetConVar("arc9_fx_adsblur")
 
+local scopeends = {}
+
+local function getscopebound(self, scopeent, worldvmpos, worldvmang)
+    if !IsValid(scopeent) then return 20 end
+    local modelmodel = scopeent:GetModel()
+    if !scopeends[modelmodel] then
+        scopeends[modelmodel] = 20 -- fallback until we get good one
+        timer.Simple(0.5, function() 
+            if !IsValid(scopeent) then return 20 end
+            local owo, uwu = scopeent:GetModelBounds()
+            owo = owo * (scopeent.Scale or Vector(1, 1, 1))
+            uwu = uwu * (scopeent.Scale or Vector(1, 1, 1))
+            local awoo, uwoo = self:GetAttachmentPos(scopeent.slottbl, false, false, true)
+
+            scopeends[modelmodel] = math.Clamp(WorldToLocal(awoo, uwoo, worldvmpos, worldvmang).x + uwu.x, 3, 20.5)
+            -- debugoverlay.BoxAngles(awoo, owo, uwu, uwoo, 0.1, color_white)
+        end)
+    end
+
+    return scopeends[modelmodel]
+end
+
+local meowector = Vector(1, 0, 0)
 
 function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     if ARC9.RTScopeRender then -- basically a copy of code in that func for rt barrels but without useless stuff and bad stuff, and also offset of cam in scope
@@ -43,13 +66,18 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         self:SetFiremodePose()
         vm:InvalidateBoneCache()
 
-        local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
+        local worldvmpos, worldvmang = vm:GetPos(), vm:GetAngles()
         
-        vmpso = vmpso - vmagn:Forward() * (spso.y - 15) -- i sure do hope fixed number will be good (clueless)
-        vmpso = vmpso - vmagn:Up() * spso.z
-        vmpso = vmpso - vmagn:Right() * spso.x
+        local vmvmpos = -self.ViewModelPos
+        
+        meowector.x = getscopebound(self, self.RTScopeModel, worldvmpos, worldvmang)
 
-        cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 100040)
+        worldvmpos = worldvmpos + worldvmang:Forward() * meowector.x
+        worldvmang = worldvmang - Angle(worldvmang.p, worldvmang.y, 0) + MainEyeAngles()
+
+        local vmpos, vmang = LocalToWorld(vmvmpos, -self.ViewModelAng, worldvmpos, worldvmang)
+
+        cam.Start3D(vmpos, vmang, ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 1600)
         render.DepthRange( 0.1, 0.1 )
 
         return

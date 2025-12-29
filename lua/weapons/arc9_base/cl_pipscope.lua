@@ -38,13 +38,20 @@ local function cropfovsqaure(fov, fullratio)
     return math.deg(properhorizontalfov)
 end
 
+local SHADER_EYE_OFFSET_INFLUENCE = 0.44
+local SHADER_EYE_DISTANCE_INFLUENCE = 0.05
+
+
 function SWEP:DoRT(magnification, atttbl)
     if ARC9.OverDraw then return end
     -- print(self.FOV, magnification)
+    -- magnification = 1   
     local fov = (self.FOV) / magnification + 16.7
     local rtvm = arc9_fx_rtvm:GetBool()
     
     ARC9.RTScopeRenderFOV = fov
+    
+    local rtpos = EyePos()
     
     local rt = {
         x = ScrW()/2-ScrH()/2,
@@ -52,12 +59,12 @@ function SWEP:DoRT(magnification, atttbl)
         w = ScrH(),
         h = ScrH(),
         angles = EyeAngles(),
-        origin = EyePos(),
+        origin = rtpos,
         drawviewmodel = rtvm,
         fov = cropfovsqaure(fov, ScrW()/ScrH()),
         znear = 8,
         zfar = 30000,
-        aspectratio = 1
+        aspectratio = 1,
     }
 
     render.PushRenderTarget(rtmat)
@@ -117,10 +124,10 @@ end
 
 local scopebounds = {}
 
-local function getscopebound(model)
-    local modelmodel = model:GetModel()
+local function getscopebound(scopeent)
+    local modelmodel = scopeent:GetModel()
     if !scopebounds[modelmodel] then
-        local owo, uwu = model:GetModelBounds()
+        local owo, uwu = scopeent:GetModelBounds()
         scopebounds[modelmodel] = {owo.x, uwu.x}
     end
     return scopebounds[modelmodel]
@@ -146,8 +153,8 @@ function SWEP:DoRTScope(model, atttbl, active, althook)
 
             render.PushRenderTarget(rtmat)
             
-            -- local globalscalie = 1.4
-            local globalscalie = 3
+            local globalscalie = 1.4
+            -- local globalscalie = 3
 
             local modelang = model:GetAngles()
             local reticle = sight.Reticle or atttbl.RTScopeReticle
@@ -175,27 +182,31 @@ function SWEP:DoRTScope(model, atttbl, active, althook)
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
 
             local fuck_fov = (hook.Run("NeedsDepthPass") and render.GetViewSetup().fov or render.GetViewSetup().fov_unscaled) -- ????
+            -- fuck_fov = fuck_fov + Lerp(sightamt, -15, 0)
+            fuck_fov = fuck_fov -15
 
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
-                    
+                    drawscopequad(8, 10, eyeang, eyepos, shadow, color_white) -- global shadow, fixed at your eyes             
 
                     local modelpos2 = modelpos - model:GetAngles():Forward() * (scopebound[1] - scopebound[2])
                     local lerped2 = LerpVector(sightamt, modelpos2, eyepos)
-                    drawscopequad(4 * globalscalie, 10, modelang, lerped2, shadow, color_white)
+                    drawscopequad(4 * globalscalie * 2, 10, modelang, lerped2, shadow, color_white) -- end of scope shadow
 
                     local lerped = LerpVector(sightamt, modelpos, eyepos)
-                    drawscopequad(Lerp(sightamt, 2, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color)
+                    drawscopequad(Lerp(sightamt, 2 * 2, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color) -- reticle
 
                     local modelpos3 = modelpos - model:GetAngles():Forward() * 2
                     local lerped3 = LerpVector(sightamt, modelpos3, eyepos)
-                    drawscopequad(Lerp(sightamt, 0.5, 0.6) * globalscalie, 2, modelang, lerped3, shadow, color_white)
+                    drawscopequad(Lerp(sightamt, 0.5 * 2, 0.6) * globalscalie, 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
 
-                    funnylense:SetFloat("$c0_x", lerped:Distance(eyepos) * 0.1  -0.15)
+                    -- funnylense:SetFloat("$c0_x", math.Clamp(lerped:Distance(eyepos) * 0.07 - 0.15, -0.15, 1.4))
+                    funnylense:SetFloat("$c0_x", math.Clamp(lerped:Distance(eyepos) * SHADER_EYE_DISTANCE_INFLUENCE - 0.15, -0.15, 1.4))
+
                     local toscreen = modelpos:ToScreen()
                     local offsetx, offsety = 
-                        (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * 0.5,
-                        (math.Clamp(toscreen.y / scrw, 0.3, 0.8) - 0.5) * 0.5 + 0.1 -- +0.1???
+                        (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE,
+                        (math.Clamp(toscreen.y / scrw, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE + 0.1 -- +0.1???
                         -- print(modelpos:ToScreen().y /ScrH(), offsety)
                     funnylense:SetFloat("$c3_x", offsetx + 0.5)
                     funnylense:SetFloat("$c3_y", offsety + 0.5)
