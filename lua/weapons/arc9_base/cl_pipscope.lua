@@ -27,7 +27,7 @@ local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 -- local black = Material("arc9/ahmad.png", "mips smooth")
 local black = Material("vgui/black")
 -- local black = Material("models/wireframe")
-local funnylense = Material("gmod_shader_guide/arc9lens2")
+local funnylense = Material("arc9/lense_shader")
 local arc9_scope_r = GetConVar("arc9_scope_r")
 local arc9_scope_g = GetConVar("arc9_scope_g")
 local arc9_scope_b = GetConVar("arc9_scope_b")
@@ -76,39 +76,43 @@ end
 
 local function drawscopequad(scale, range, ang, pos, mat, color)
     local up, right, forward = ang:Up(), ang:Right(), ang:Forward()
-    local v1 = pos + (up * scale / 2) - (right * scale / 2) + forward * range
-    local v2 = pos + (up * scale / 2) + (right * scale / 2) + forward * range
-    local v3 = pos - (up * scale / 2) + (right * scale / 2) + forward * range
-    local v4 = pos - (up * scale / 2) - (right * scale / 2) + forward * range
+    up, right, forward = up * scale, right * scale, forward * range
+    
+    local v1 = pos + (up / 2) - (right / 2) + forward
+    local v2 = pos + (up / 2) + (right / 2) + forward
+    local v3 = pos - (up / 2) + (right / 2) + forward
+    local v4 = pos - (up / 2) - (right / 2) + forward
+
     render.SetMaterial(mat)
     render.DrawQuad(v1, v2, v3, v4, color)
 
+    -- BLACK BOXXXX
     render.SetMaterial(black)
-    scale = scale * 0.999 -- to prevent edges
+    up, right = up * 0.999, right * 0.999 -- less scale to prevent visible pixel gaps
 
-    local v1 = pos + (up * scale * 4) - (right * scale * 8) + forward * range
-    local v2 = pos + (up * scale * 4) - (right * scale * 0.5) + forward * range
-    local v3 = pos - (up * scale * 4) - (right * scale * 0.5) + forward * range
-    local v4 = pos - (up * scale * 4) - (right * scale * 8) + forward * range
-    render.DrawQuad(v1, v2, v3, v4, color)
+    local v1 = pos + (up * 4) - (right * 8) + forward
+    local v2 = pos + (up * 4) - (right * 0.5) + forward
+    local v3 = pos - (up * 4) - (right * 0.5) + forward
+    local v4 = pos - (up * 4) - (right * 8) + forward
+    render.DrawQuad(v1, v2, v3, v4, color) -- LEFT
 
-    local v1 = pos + (up * scale * 4) + (right * scale * 0.5) + forward * range
-    local v2 = pos + (up * scale * 4) + (right * scale * 8) + forward * range
-    local v3 = pos - (up * scale * 4) + (right * scale * 8) + forward * range
-    local v4 = pos - (up * scale * 4) + (right * scale * 0.5)+ forward * range
-    render.DrawQuad(v1, v2, v3, v4, color)
+    local v1 = pos + (up * 4) + (right * 0.5) + forward
+    local v2 = pos + (up * 4) + (right * 8) + forward
+    local v3 = pos - (up * 4) + (right * 8) + forward
+    local v4 = pos - (up * 4) + (right * 0.5)+ forward
+    render.DrawQuad(v1, v2, v3, v4, color) -- RIGHT
 
-    local v1 = pos - (up * scale / 2) - (right * scale / 2) + forward * range
-    local v2 = pos - (up * scale / 2) + (right * scale / 2) + forward * range
-    local v3 = pos - (up * scale * 4) + (right * scale / 2) + forward * range
-    local v4 = pos - (up * scale * 4) - (right * scale / 2) + forward * range
-    render.DrawQuad(v1, v2, v3, v4, color)
+    local v1 = pos + (up * 4) - (right / 2) + forward
+    local v2 = pos + (up * 4) + (right / 2) + forward
+    local v3 = pos + (up / 2) + (right / 2) + forward
+    local v4 = pos + (up / 2) - (right / 2) + forward
+    render.DrawQuad(v1, v2, v3, v4, color) -- TOP
 
-    local v1 = pos + (up * scale * 4) - (right * scale / 2) + forward * range
-    local v2 = pos + (up * scale * 4) + (right * scale / 2) + forward * range
-    local v3 = pos + (up * scale / 2) + (right * scale / 2) + forward * range
-    local v4 = pos + (up * scale / 2) - (right * scale / 2) + forward * range
-    render.DrawQuad(v1, v2, v3, v4, color)
+    local v1 = pos - (up / 2) - (right / 2) + forward
+    local v2 = pos - (up / 2) + (right / 2) + forward
+    local v3 = pos - (up * 4) + (right / 2) + forward
+    local v4 = pos - (up * 4) - (right / 2) + forward
+    render.DrawQuad(v1, v2, v3, v4, color) -- BOTTOM
 end
 
 local scopebounds = {}
@@ -123,8 +127,11 @@ local function getscopebound(model)
 end
 
 function SWEP:DoRTScope(model, atttbl, active, althook)
+    if !IsValid(model) then return end
+
     local eyeang = EyeAngles()
     local eyepos = EyePos()
+    local scrw, scrh = ScrW(), ScrH()
 
     if active then
         local sightzang = 0
@@ -132,16 +139,15 @@ function SWEP:DoRTScope(model, atttbl, active, althook)
             self.RenderingRTScope = true
             local sight = self:GetSight()
 
-            -- local sp, sa = self:GetShootPos()
-            -- local sp, sa = self.LastViewModelPos, self.LastViewModelAng
-            -- local endpos = sp + (sa:Forward() * 9000)
-            -- local toscreen = endpos:ToScreen()
+            local sightamt = self:GetSightDelta()
+            if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
+            else sightamt = math.ease.InQuart(sightamt) end
 
-            -- local offsetx, offsety = toscreen.x - ScrW()/2, toscreen.y - ScrH()/2
-            if !IsValid(model) then return end
+
             render.PushRenderTarget(rtmat)
             
-            local globalscalie = 2
+            -- local globalscalie = 1.4
+            local globalscalie = 3
 
             local modelang = model:GetAngles()
             local reticle = sight.Reticle or atttbl.RTScopeReticle
@@ -155,19 +161,6 @@ function SWEP:DoRTScope(model, atttbl, active, althook)
             end
 
             local eyeforward = eyeang:Forward()
-            
-            -- cam.Start3D(eyepos + eyeforward * -1, nil, nil, nil, nil, nil, nil, 0.5, 10000)
-            --     cam.IgnoreZ(true)
-            --         drawscopequad(1 * globalscalie, 1, modelang, eyepos, shadow, color_white)
-            --     cam.IgnoreZ(false)
-            -- cam.End3D()
-
-            -- cam.Start3D(eyepos + eyeforward * -10, nil, nil, nil, nil, nil, nil, 0.1, 10000)
-            --     cam.IgnoreZ(true)
-                    -- drawscopequad(15, 6, modelang, eyepos, shadow, color_white)
-                    -- drawscopequad(15, 6, modelang, eyepos, reticle, color)
-            --     cam.IgnoreZ(false)
-            -- cam.End3D()
 
             local scopebound = getscopebound(model)
 
@@ -179,29 +172,33 @@ function SWEP:DoRTScope(model, atttbl, active, althook)
              - model:GetAngles():Forward() * (-scopebound[1]) / (atttbl.Scale or 1)
              - model:GetAngles():Right() * origsighttablepos.x / (atttbl.Scale or 1)
 
-
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
 
             local fuck_fov = (hook.Run("NeedsDepthPass") and render.GetViewSetup().fov or render.GetViewSetup().fov_unscaled) -- ????
 
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
-                    local sightamt = self:GetSightDelta()
-                    if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
-                    else sightamt = math.ease.InQuart(sightamt) end
                     
-                    local lerpscale = Lerp(sightamt, 4, 0.6)
 
                     local modelpos2 = modelpos - model:GetAngles():Forward() * (scopebound[1] - scopebound[2])
                     local lerped2 = LerpVector(sightamt, modelpos2, eyepos)
                     drawscopequad(4 * globalscalie, 10, modelang, lerped2, shadow, color_white)
 
                     local lerped = LerpVector(sightamt, modelpos, eyepos)
-                    drawscopequad(lerpscale * globalscalie, 1.5, modelang, lerped, reticle, color)
+                    drawscopequad(Lerp(sightamt, 2, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color)
 
                     local modelpos3 = modelpos - model:GetAngles():Forward() * 2
                     local lerped3 = LerpVector(sightamt, modelpos3, eyepos)
-                    drawscopequad(Lerp(sightamt, 1, 0.6) * globalscalie, 2, modelang, lerped3, shadow, color_white)
+                    drawscopequad(Lerp(sightamt, 0.5, 0.6) * globalscalie, 2, modelang, lerped3, shadow, color_white)
+
+                    funnylense:SetFloat("$c0_x", lerped:Distance(eyepos) * 0.1  -0.15)
+                    local toscreen = modelpos:ToScreen()
+                    local offsetx, offsety = 
+                        (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * 0.5,
+                        (math.Clamp(toscreen.y / scrw, 0.3, 0.8) - 0.5) * 0.5 + 0.1 -- +0.1???
+                        -- print(modelpos:ToScreen().y /ScrH(), offsety)
+                    funnylense:SetFloat("$c3_x", offsetx + 0.5)
+                    funnylense:SetFloat("$c3_y", offsety + 0.5)
 
                 cam.IgnoreZ(false)
             cam.End3D()
@@ -212,26 +209,15 @@ function SWEP:DoRTScope(model, atttbl, active, althook)
         funnylense:SetTexture("$basetexture", rtmat)
 
         render.PopRenderTarget()
--- 1440−(2560*1.7777777)+(1440*1.7777777)−1440=−992
-
+        
         render.PushRenderTarget(rtmat_shader)
-            -- cam.Start2D()
-                -- surface.SetDrawColor(255, 5, 0)
-                -- surface.DrawRect(0, 0, 1440, 1440)
-            -- render.SetMaterial(rtmat_shader)
-            -- render.DrawScreenQuad()
-            -- local ratio = ScrW()/ScrH()
-            -- local ratio = 1.777777777777777
-            --     surface.SetDrawColor(255, 255, 0, 255)
-            --     surface.DrawRect(0, 0, ScrH(), ScrH())
-                -- render.DrawTextureToScreenRect(rtmat, -ScrH()/2-ScrH()/2, 0, ScrH()*4, ScrH())
-                -- render.DrawTextureToScreenRect(rtmat,  -(ScrH()*ratio)/2.6, 0, ScrH()*ratio*ratio, ScrH())
-                
-            -- render.DrawTextureToScreenRect(rtmat, -1440/ratio, 1, ScrH()*ratio*ratio, 1440)
             render.SetMaterial(funnylense)
             render.DrawScreenQuad()
-
-            -- cam.End2D()
+            cam.Start2D() -- shader bleeds a bit, drawing a box to keep it square
+                surface.SetDrawColor(0, 0, 0, 255)
+                surface.DrawRect(0, 0, ScrW()/2 - ScrH()/2, ScrH())
+                surface.DrawRect(ScrW()/2 + ScrH()/2, 0, ScrW(), ScrH())
+            cam.End2D()
         render.PopRenderTarget()
 
         rtsurf:SetTexture("$basetexture", rtmat_shader)

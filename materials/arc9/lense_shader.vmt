@@ -1,0 +1,36 @@
+screenspace_general 
+{
+	$pixshader "arc9lens11_ps30"
+	$basetexture "_rt_FullFrameFB"
+	$ignorez 1
+	$vertextransform 1
+	$model 1
+	// $nocull 0
+	// $softwareskin 0
+	// $vertexnormal 1
+	// $vertexcolor 1
+	
+	// c0: Lens Physics
+	$c0_x -0.15	// x: EYE_DISTANCE (Default: 0.1)
+	$c0_y 0.0	// y: LENS_DIST_K Base (Default: -0.5)
+	// $c0_z 0.1	// z: CA_STRENGTH (Default: 0.25)
+	// $c0_w 1.15	// w: BLUR_STRENGTH (Default: 0.15)
+
+	// c1: Screen Resolution (width, height, 1/width, 1/height)
+	$c1_x 2560
+	$c1_y 1440
+	$c1_z 0.000390625 
+	$c1_w 0.00069444444444444
+
+	// c2: Vignette Shape Settings
+	$c2_x 2		// x: VIGNETTE_FORGIVENESS_FRAC (Default: 0.75)
+	$c2_y 4		// y: OFFSET_FRAC (Default: 0.75)
+	$c2_z 0.8	// z: RAD1_FRAC Base (Default: 0.9)
+	$c2_w 0.3	// w: RAD2_FRAC (Default: 0.5)
+
+	// c3: Positioning & Static Mask
+	// $c3_x 0.5	// x: Center X (Mouse X) (0.0 to 1.0)
+	// $c3_y 0.5	// y: Center Y (Mouse Y) (0.0 to 1.0)
+	// $c3_z 0.1	// z: STATIC_SIZE_FRAC (Default: 0.425)
+	// $c3_w 0.88	// w: STATIC_FADE_FRAC Base (Default: 0.025)
+}
