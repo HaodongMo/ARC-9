@@ -66,18 +66,29 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         self:SetFiremodePose()
         vm:InvalidateBoneCache()
 
-        local worldvmpos, worldvmang = vm:GetPos(), vm:GetAngles()
-        
-        local vmvmpos = -self.ViewModelPos
-        
-        meowector.x = getscopebound(self, self.RTScopeModel, worldvmpos, worldvmang)
+        if ARC9_ENABLE_NEWSCOPES_MEOW then
+            local worldvmpos, worldvmang = vm:GetPos(), vm:GetAngles()
+            
+            local vmvmpos = -self.ViewModelPos
+            
+            meowector.x = getscopebound(self, self.RTScopeModel, worldvmpos, worldvmang)
 
-        worldvmpos = worldvmpos + worldvmang:Forward() * meowector.x
-        worldvmang = worldvmang - Angle(worldvmang.p, worldvmang.y, 0) + MainEyeAngles()
+            worldvmpos = worldvmpos + worldvmang:Forward() * meowector.x
+            worldvmang = worldvmang - Angle(worldvmang.p, worldvmang.y, 0) + MainEyeAngles()
 
-        local vmpos, vmang = LocalToWorld(vmvmpos, -self.ViewModelAng, worldvmpos, worldvmang)
+            local vmpos, vmang = LocalToWorld(vmvmpos, -self.ViewModelAng, worldvmpos, worldvmang)
 
-        cam.Start3D(vmpos, vmang, ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 1600)
+            cam.Start3D(vmpos, vmang, ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 1600)
+        else
+            local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
+
+            vmpso = vmpso - vmagn:Forward() * (spso.y - 15) -- i sure do hope fixed number will be good (clueless)
+            vmpso = vmpso - vmagn:Up() * spso.z
+            vmpso = vmpso - vmagn:Right() * spso.x
+
+            cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 100040)
+
+        end
         render.DepthRange( 0.1, 0.1 )
 
         return
@@ -193,8 +204,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 	if !isDepthPass then
     	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
     	if self:GetHolsterTime() < CurTime() then
-            if hook.Run("NeedsDepthPass") == true then self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1, true) end
-    	    -- self:DoRTScope(self.RTScopeModel, self.RTScopeAtttbl, 1)
+            if hook.Run("NeedsDepthPass") == true then self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl, 1, true) end
     	end
     end
 
@@ -259,7 +269,7 @@ function SWEP:ViewModelDrawn(ent, flags)
 
     if !isDepthPass then
 	    local newpcfs = {}
-	
+
 	    for _, pcf in ipairs(self.PCFs) do
 	        if IsValid(pcf) then
 	            pcf:Render()
@@ -294,6 +304,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
 
 	if !isDepthPass then
     	local newmzpcfs = {}
+        if ARC9.RTScopeRender then cam.IgnoreZ(false) end
 
     	for _, pcf in ipairs(self.MuzzPCFs) do
     	    if IsValid(pcf) then

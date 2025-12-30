@@ -168,9 +168,9 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                         local active = slottbl.Address == self:GetActiveSightSlotTable().Address
                         self.RTScopeModel = model
                         self.RTScopeAtttbl = atttbl
-                        -- self:DoRTScope(model, atttbl, active)
+                        if !ARC9_ENABLE_NEWSCOPES_MEOW then self:DoRTScope(model, atttbl, active) end
                     elseif wm and atttbl.RTScope then
-                        -- self:DoRTScope(model, atttbl, false)
+                        if !ARC9_ENABLE_NEWSCOPES_MEOW then self:DoRTScope(model, atttbl, false) end
                         self.RTScopeModel = model
                         self.RTScopeAtttbl = atttbl
                     end

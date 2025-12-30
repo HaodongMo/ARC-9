@@ -1,0 +1,15 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "vgui/blackf"
+	
+	"$rot" "0"
+	
+	"Proxies"
+	{
+		"texturetransform"
+		{
+			"rotatevar" "$rot"
+			"resultvar" "$basetexturetransform"
+		}
+	}
+}
