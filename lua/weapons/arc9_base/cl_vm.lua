@@ -32,26 +32,26 @@ local arc9_cust_light_brightness = GetConVar("arc9_cust_light_brightness")
 local arc9_dev_benchgun = GetConVar("arc9_dev_benchgun")
 local arc9_fx_adsblur = GetConVar("arc9_fx_adsblur")
 
-local scopeends = {}
+SWEP.RT_ScopeModelsEndPositions = {}
 
 local function getscopebound(self, scopeent, worldvmpos, worldvmang)
     if !IsValid(scopeent) then return 20 end
     local modelmodel = scopeent:GetModel()
-    if !scopeends[modelmodel] then
-        scopeends[modelmodel] = 20 -- fallback until we get good one
-        timer.Simple(0.5, function() 
+    if !self.RT_ScopeModelsEndPositions[modelmodel] then
+        self.RT_ScopeModelsEndPositions[modelmodel] = 20 -- fallback until we get good one
+        timer.Simple(1.5, function() 
             if !IsValid(scopeent) then return 20 end
             local owo, uwu = scopeent:GetModelBounds()
             owo = owo * (scopeent.Scale or Vector(1, 1, 1))
             uwu = uwu * (scopeent.Scale or Vector(1, 1, 1))
             local awoo, uwoo = self:GetAttachmentPos(scopeent.slottbl, false, false, true)
 
-            scopeends[modelmodel] = math.Clamp(WorldToLocal(awoo, uwoo, worldvmpos, worldvmang).x + uwu.x, 3, 20.5)
+            self.RT_ScopeModelsEndPositions[modelmodel] = math.Clamp(WorldToLocal(awoo, uwoo, worldvmpos, worldvmang).x + uwu.x, 3, 20.5)
             -- debugoverlay.BoxAngles(awoo, owo, uwu, uwoo, 0.1, color_white)
         end)
     end
 
-    return scopeends[modelmodel]
+    return self.RT_ScopeModelsEndPositions[modelmodel]
 end
 
 local meowector = Vector(1, 0, 0)
