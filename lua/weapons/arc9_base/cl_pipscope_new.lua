@@ -2,7 +2,9 @@ ARC9_ENABLE_NEWSCOPES_MEOW = true
 ARC9_ENABLE_NEWSCOPES_SHADER = true
 
 
-local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome9", ScrW(), ScrH(), 
+local lenseshader = Material("arc9/lense_shader")
+
+local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome", ScrW(), ScrH(), 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_SHARED, 
     bit.bor(4,8,256,512), 
@@ -18,6 +20,106 @@ local rtmat_shader = GetRenderTargetEx("arc9_pipscope_awesome_shaderpass",  ScrW
     IMAGE_FORMAT_RGB888
 )
 
+-- Shader precalculations on cpu sideeeee
+
+local function smoothstep(edge0, edge1, x)
+    local t = math.Clamp((x - edge0) / (edge1 - edge0), 0, 1)
+    return t * t * (3 - 2 * t)
+end
+
+-- static stuff
+
+local shader_LENS_K = -0.525 -- lens K
+local shader_CA_STRENGTH = -5 -- CA
+
+local shader_VIG_FORG = 8.75 -- vignette forgiveness
+local shader_VIG_OFFSET = 4.75 -- vignette offset
+local shader_VIG_R1 = 0.124 -- vignette rad1
+local shader_VIG_R2 = 0.7 -- vignette rad2
+
+local scrw, scrh = ScrW(), ScrH()
+local scrlength = math.sqrt(scrw * scrw + scrh * scrh)
+
+do 
+    lenseshader:SetFloat("$c1_z", shader_VIG_R2 * scrh)
+    lenseshader:SetFloat("$c1_w", 0.8 * shader_VIG_R2 * scrh)
+    lenseshader:SetFloat("$c3_x", shader_LENS_K)
+    lenseshader:SetFloat("$c3_z", scrw)
+    lenseshader:SetFloat("$c3_w", scrh)
+end
+
+-- dynamic stuff
+
+local function CalculateShaderCPU(eye_x, eye_y, eye_dist) -- 0.5, 0.5, -0.05
+    local eyelength = math.sqrt(eye_x * eye_x + eye_y * eye_y)
+
+    local center_p_x = scrw * 0.5
+    local center_p_y = scrh * 0.5
+    local mouse_p_x = 0
+    local mouse_p_y = 0
+
+    if eyelength < 0.01 then
+        mouse_p_x = 0.5 * scrw
+        mouse_p_y = 0.5 * scrh
+    else
+        mouse_p_x = eye_x * scrw
+        mouse_p_y = eye_y * scrh
+    end
+
+    local dir_p_x = mouse_p_x - center_p_x
+    local dir_p_y = mouse_p_y - center_p_y
+    local dir_len = math.sqrt(dir_p_x * dir_p_x + dir_p_y * dir_p_y)
+
+    local norm_dir_x = 0
+    local norm_dir_y = 0
+
+    if dir_len >= 1 then
+        norm_dir_x = dir_p_x / dir_len
+        norm_dir_y = dir_p_y / dir_len
+    end
+
+    -- mouse
+    local max_dist = 0.25 * scrlength * shader_VIG_FORG
+    local t = math.Clamp(dir_len / max_dist, 0, 1)
+
+
+    local offset_len = shader_VIG_OFFSET * math.min(scrw, scrh) * t
+    local c1_p_x = center_p_x + norm_dir_x * offset_len * 1.75
+    local c1_p_y = center_p_y + norm_dir_y * offset_len * 1.75
+
+    lenseshader:SetFloat("$c0_x", c1_p_x)
+    lenseshader:SetFloat("$c0_y", c1_p_y)
+
+    -- some radius
+    local rad1_p = ((0.8 - eye_dist) + shader_VIG_R1) * scrh
+
+    lenseshader:SetFloat("$c0_z", rad1_p)
+    lenseshader:SetFloat("$c0_w", (0.55 - eye_dist) * rad1_p)
+
+    -- vignette
+    local c2_p_x = center_p_x - norm_dir_x * offset_len * t * t
+    local c2_p_y = center_p_y - norm_dir_y * offset_len * t * t
+
+    lenseshader:SetFloat("$c1_x", c2_p_x)
+    lenseshader:SetFloat("$c1_y", c2_p_y)
+    
+    -- ca
+    local mouse_ca_boost = t * 200
+    local LATERAL_CA = (0.025 + eye_dist / 15) * (1 + mouse_ca_boost)
+    local CA_STR_BASE = (0.5 + shader_CA_STRENGTH) * 1.5
+    local forg_scale = (1 / shader_VIG_FORG * shader_VIG_FORG) * 0.05
+    local ca_t = t * 0.5 + smoothstep(0.02, 0.2, t) * 100
+    local ca_scale = CA_STR_BASE * forg_scale * ca_t * 0.5
+
+    lenseshader:SetFloat("$c2_x", norm_dir_x * ca_scale * 2)
+    lenseshader:SetFloat("$c2_y", norm_dir_y * ca_scale * 2)
+    lenseshader:SetFloat("$c2_z", LATERAL_CA * 0.2)
+    lenseshader:SetFloat("$c2_w", LATERAL_CA * 0.8 * t)
+end
+
+
+
+
 function SWEP:ShouldDoScope()
     if self:GetSight().Disassociate or self:GetOwner().ARC9NoScopes then return false end
 	
@@ -31,7 +133,6 @@ local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 -- local black = Material("arc9/ahmad.png", "mips smooth")
 local black = Material("vgui/black")
 -- local black = Material("models/wireframe")
-local funnylense = Material("arc9/lense_shader")
 local arc9_scope_r = GetConVar("arc9_scope_r")
 local arc9_scope_g = GetConVar("arc9_scope_g")
 local arc9_scope_b = GetConVar("arc9_scope_b")
@@ -216,24 +317,28 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
                     local lerped3 = LerpVector(sightamt, modelpos3, eyepos)
                     drawscopequad(Lerp(sightamt, 0.7, 1) * globalscalie, 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
 
+                    if ARC9_ENABLE_NEWSCOPES_SHADER then
+                        local toscreen = modelpos:ToScreen()
+                        local offsetx, offsety = 
+                            (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE,
+                            (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE
+                            -- print(offsetx, offsety)
 
-                    local toscreen = modelpos:ToScreen()
-                    local offsetx, offsety = 
-                        (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE,
-                        (math.Clamp(toscreen.y / scrw, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE + 0.15 -- +0.15???
-                        -- print(offsetx, offsety)
-                    funnylense:SetFloat("$c3_x", offsetx + 0.5)
-                    funnylense:SetFloat("$c3_y", offsety + 0.5)
+                        -- lenseshader:SetFloat("$c3_x", offsetx + 0.5)
+                        -- lenseshader:SetFloat("$c3_y", offsety + 0.5)
 
-                    local mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
-                    funnylense:SetFloat("$c0_x", math.Clamp(lerped:Distance(eyepos) * SHADER_EYE_DISTANCE_INFLUENCE - 0.15 + mreow, -0.15, 1.4))
+                        local mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
+                        mreow = math.Clamp(lerped:Distance(eyepos) * SHADER_EYE_DISTANCE_INFLUENCE - 0.15 + mreow, -0.15, 0.8)
+                        -- lenseshader:SetFloat("$c0_x", mreow)
 
+                        CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, mreow)
+                    end
                 cam.IgnoreZ(false)
             cam.End3D()
 
             render.CopyRenderTargetToTexture(rtmat_shader)
 
-            funnylense:SetTexture("$basetexture", rtmat)
+            lenseshader:SetTexture("$basetexture", rtmat)
 
             render.PopRenderTarget()
         end
@@ -241,7 +346,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
         
         render.PushRenderTarget(rtmat_shader)
             if ARC9_ENABLE_NEWSCOPES_SHADER then
-                render.SetMaterial(funnylense)
+                render.SetMaterial(lenseshader)
                 render.DrawScreenQuad()
             end
             cam.Start2D() -- shader bleeds a bit, drawing a box to keep it square
