@@ -202,6 +202,17 @@ function SWEP:RenderRT(magnification, atttbl)
         ARC9.OverDraw = true
         ARC9.RTScopeRender = rtvm
         render.RenderView(rt)
+        
+        if !rtvm then
+            local laserthing = EyePos()
+            laserthing = laserthing + rt_eyeang:Forward() * 40
+            cam.Start3D(laserthing, rt_eyeang, rtfov, nil, nil, nil, nil, 1, 10000)
+                cam.IgnoreZ(true)
+                self:DrawLasers(false)
+                cam.IgnoreZ(false)
+            cam.End3D()
+        end
+
         ARC9.RTScopeRender = false
         ARC9.OverDraw = false
 

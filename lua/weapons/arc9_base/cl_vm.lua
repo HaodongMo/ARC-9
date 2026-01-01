@@ -78,6 +78,15 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
             local vmpos, vmang = LocalToWorld(vmvmpos, -self.ViewModelAng, worldvmpos, worldvmang)
 
+            local laserthing = EyePos()
+            local eyeang = EyeAngles()
+            laserthing = laserthing + eyeang:Forward() * meowector.x
+            cam.Start3D(laserthing, EyeAngles(), ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 16000)
+                cam.IgnoreZ(true)
+                self:DrawLasers(false)
+                cam.IgnoreZ(false)
+            cam.End3D()
+            
             cam.Start3D(vmpos, vmang, ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 1600)
         else
             local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
