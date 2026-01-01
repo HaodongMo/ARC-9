@@ -357,7 +357,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
             local legacydrawfunc = atttbl.RTScopeDrawFunc
             local newdrawfunc = atttbl.RTScopeNew_DrawFunc3D
 
-            if legacydrawfunc then -- LEGACY
+            if legacydrawfunc then
                 render.PushRenderTarget(rtmat_legacy)
                     render.Clear(0, 0, 0, 0)
                     cam.Start2D()
@@ -366,18 +366,25 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
                 render.PopRenderTarget()
             end
 
-            if atttbl.RTScopeNew_DrawFunc2D then
-                cam.Start2D()
-                    atttbl.RTScopeNew_DrawFunc2D(self, scrw, scrh, sight)
-                cam.End2D()
-            end
-
             local origsighttable = sight.OriginalSightTable
             local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
 
-            local scopebound = nonatt and {20, 10} or getscopebound(model)
+            if atttbl.RTScopeNew_DisableShaderEyeOffset then nonatt = true end
             
+            local scopebound = nonatt and {20, 10} or getscopebound(model)
+
             local modelang = model:GetAngles()
+
+            if atttbl.RTScopeNew_FixAngle then
+                if atttbl.RTScopeNew_FixAngle == "print" then
+                    print("Angle(".. modelang[1] .. ", " .. modelang[2] .. ", " .. modelang[3] .. ")")
+                else
+                    modelang:RotateAroundAxis(modelang:Forward(), -atttbl.RTScopeNew_FixAngle[3])
+                    modelang:RotateAroundAxis(modelang:Right(), -atttbl.RTScopeNew_FixAngle[1])
+                    modelang:RotateAroundAxis(modelang:Up(), -atttbl.RTScopeNew_FixAngle[2])
+                end
+            end
+
             local modelforward = modelang:Forward()
             local modelpos = model:GetPos()
             - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
@@ -399,11 +406,12 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
 
                     if reticle or legacydrawfunc or newdrawfunc then
                         local lerped = LerpVector(sightamt, modelpos, rt_eyepos)
-                        if reticle then drawscopequad(Lerp(sightamt, 3, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
 
                         if legacydrawfunc then drawscopequad(Lerp(sightamt, 3, 0.6) * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white) end
 
                         if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end
+
+                        if reticle then drawscopequad(Lerp(sightamt, 3, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
                     end
 
                     if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then
@@ -414,6 +422,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
 
                     if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
                         local toscreen = !nonatt and modelpos:ToScreen() or {x = scrw/2, y = scrh/2}
+                        
                         local offsetx, offsety = 
                             (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE,
                             (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE
@@ -440,8 +449,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
 
         render.PushRenderTarget(rtmat_shader)
             if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
-                -- render.SetMaterial(lenseshader)
-                -- render.DrawScreenQuad()
+                render.SetMaterial(lenseshader)
+                render.DrawScreenQuad()
             end
 
             cam.Start2D() -- shader bleeds a bit, drawing a box to keep it square
@@ -450,6 +459,10 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
                 surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
                 surface.SetMaterial(shadow2)
                 surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
+
+                if atttbl.RTScopeNew_DrawFunc2D then
+                    atttbl.RTScopeNew_DrawFunc2D(self, scrw, scrh, sight)
+                end
             cam.End2D()
         render.PopRenderTarget()
 
