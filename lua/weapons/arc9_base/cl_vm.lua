@@ -204,7 +204,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 	if !isDepthPass then
     	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
     	if self:GetHolsterTime() < CurTime() then
-            if hook.Run("NeedsDepthPass") == true then self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl, 1, true) end
+            if ARC9.DepthBufferEnabled == true then self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl, 1, true) end
     	end
     end
 

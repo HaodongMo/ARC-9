@@ -355,7 +355,7 @@ function SWEP:DoRTScope(model, atttbl, active)
         -- model:SetSubMaterial()
 
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt_old")
-        -- model:SetSubMaterial(1, "effects/arc9/rt_old")
+        model:SetSubMaterial(1, "effects/arc9/rt_old")
         -- model:SetSubMaterial(2, "effects/arc9/rt_old")
     else
         -- model:SetSubMaterial()

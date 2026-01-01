@@ -1,10 +1,12 @@
 ARC9_ENABLE_NEWSCOPES_MEOW = true
 ARC9_ENABLE_NEWSCOPES_SHADER = true
+ARC9.DepthBufferEnabled = false 
 
+local scrw, scrh = ScrW(), ScrH()
 
 local lenseshader = Material("arc9/lense_shader")
 
-local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome", ScrW(), ScrH(), 
+local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome", scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_SHARED, 
     bit.bor(4,8,256,512), 
@@ -12,7 +14,7 @@ local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome", ScrW(), ScrH(),
     IMAGE_FORMAT_RGB888
 )
 
-local rtmat_shader = GetRenderTargetEx("arc9_pipscope_awesome_shaderpass",  ScrW(), ScrH(), 
+local rtmat_shader = GetRenderTargetEx("arc9_pipscope_awesome_shaderpass",  scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_NONE, 
     bit.bor(4,8,256,512), 
@@ -37,16 +39,20 @@ local shader_VIG_OFFSET = 4.75 -- vignette offset
 local shader_VIG_R1 = 0.124 -- vignette rad1
 local shader_VIG_R2 = 0.7 -- vignette rad2
 
-local scrw, scrh = ScrW(), ScrH()
+local shader_EYE_OFFSET_INFLUENCE = 0.75
+local shader_EYE_DISTANCE_INFLUENCE = 0.05
+
 local scrlength = math.sqrt(scrw * scrw + scrh * scrh)
 
-do 
+local function shadersetstaticvalues()
     lenseshader:SetFloat("$c1_z", shader_VIG_R2 * scrh)
     lenseshader:SetFloat("$c1_w", 0.8 * shader_VIG_R2 * scrh)
     lenseshader:SetFloat("$c3_x", shader_LENS_K)
     lenseshader:SetFloat("$c3_z", scrw)
     lenseshader:SetFloat("$c3_w", scrh)
 end
+
+timer.Simple(10, shadersetstaticvalues)
 
 -- dynamic stuff
 
@@ -105,19 +111,20 @@ local function CalculateShaderCPU(eye_x, eye_y, eye_dist) -- 0.5, 0.5, -0.05
     
     -- ca
     local mouse_ca_boost = t * 200
-    local LATERAL_CA = (0.025 + eye_dist / 15) * (1 + mouse_ca_boost)
-    local CA_STR_BASE = (0.5 + shader_CA_STRENGTH) * 1.5
+    local lateral_ca = (0.025 + eye_dist / 15) * (1 + mouse_ca_boost)
+    local ca_base = (0.5 + shader_CA_STRENGTH) * 1.5
     local forg_scale = (1 / shader_VIG_FORG * shader_VIG_FORG) * 0.05
     local ca_t = t * 0.5 + smoothstep(0.02, 0.2, t) * 100
-    local ca_scale = CA_STR_BASE * forg_scale * ca_t * 0.5
+    local ca_scale = ca_base * forg_scale * ca_t * 0.5
 
     lenseshader:SetFloat("$c2_x", norm_dir_x * ca_scale * 2)
     lenseshader:SetFloat("$c2_y", norm_dir_y * ca_scale * 2)
-    lenseshader:SetFloat("$c2_z", LATERAL_CA * 0.2)
-    lenseshader:SetFloat("$c2_w", LATERAL_CA * 0.8 * t)
+    lenseshader:SetFloat("$c2_z", lateral_ca * 0.2)
+    lenseshader:SetFloat("$c2_w", lateral_ca * 0.8 * t)
 end
 
-
+local Lerp = Lerp
+local LerpVector = LerpVector
 
 
 function SWEP:ShouldDoScope()
@@ -143,39 +150,45 @@ local arc9_scope_b = GetConVar("arc9_scope_b")
 --     return math.deg(properhorizontalfov)
 -- end
 
-local SHADER_EYE_OFFSET_INFLUENCE = 0.75
-local SHADER_EYE_DISTANCE_INFLUENCE = 0.05
 
+local rt_eyeang = Angle()
+local rt_eyepos = Vector()
+local rt_viewsetup_fov = 90
+local rt_viewsetup_fov_unscaled = 90
 
 function SWEP:RenderRT(magnification, atttbl)
     if ARC9.OverDraw then return end
 
-    -- local rtfov = (self.FOV) / magnification + 16.7
-    -- rtfov = cropfovsqaure(rtfov, ScrW()/ScrH())
-
-    local rtfov = render.GetViewSetup().fov_unscaled / magnification
+    local viewstup = render.GetViewSetup()
+    rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
+    local rtfov = rt_viewsetup_fov_unscaled / magnification
     local rtvm = arc9_fx_rtvm:GetBool()
     
     ARC9.RTScopeRenderFOV = rtfov
     
+    ARC9.DepthBufferEnabled = hook.Run("NeedsDepthPass")
+    
     -- EyeAngles/Pos -- late for one frame!
     -- ply:EyeAngles/Pos -- not late but custom CalcViews and punch, probably more doesn't work
     -- MainEyeAngles/Pos -- good 👍 🐾
+    -- NO ITS NOT FUCKING GOOD
+    -- BREAKS model:GetPos GetAngles if depth buffer is off
+    -- Wtf is this shit
 
     -- local rtang = LocalPlayer():EyeAngles() + LocalPlayer():GetViewPunchAngles()
     -- local rtpos = LocalPlayer():EyePos()
     -- hook.Run("CalcView", LocalPlayer(), rtpos, rtang, self.FOV)
 
-    local rtang = MainEyeAngles()
-    local rtpos = MainEyePos()
+    rt_eyeang = ARC9.DepthBufferEnabled and MainEyeAngles() or EyeAngles()
+    rt_eyepos = ARC9.DepthBufferEnabled and MainEyePos() or EyePos()
     
     local rt = {
-        x = ScrW()/2-ScrH()/2,
+        x = scrw/2-scrh/2,
         y = 0,
-        w = ScrH(),
-        h = ScrH(),
-        angles = rtang,
-        origin = rtpos,
+        w = scrh,
+        h = scrh,
+        angles = rt_eyeang,
+        origin = rt_eyepos,
         drawviewmodel = rtvm,
         fov = rtfov,
         znear = 8,
@@ -194,7 +207,7 @@ function SWEP:RenderRT(magnification, atttbl)
 
     render.PopRenderTarget()
     
-    if !hook.Run("NeedsDepthPass") then self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl, 1) end
+    if !ARC9.DepthBufferEnabled then self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl, 1) end
 end
 
 local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
@@ -253,11 +266,7 @@ end
 
 function SWEP:DrawRTReticle(model, atttbl, active, althook)
     if !IsValid(model) then return end
-
-    local eyeang = EyeAngles()
-    local eyepos = EyePos()
-    local scrw, scrh = ScrW(), ScrH()
-
+    
     if active then
         local sightzang = 0
         if self:ShouldDoScope() then
@@ -268,12 +277,10 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
             if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
             else sightamt = math.ease.InQuart(sightamt) end
 
-
             render.PushRenderTarget(rtmat)
             
             local globalscalie = 1.41 * (atttbl.RTScopeReticleScale or 1)
 
-            local modelang = model:GetAngles()
             local reticle = sight.Reticle or atttbl.RTScopeReticle
             local color = atttbl.RTScopeColor or color_white
             
@@ -284,51 +291,51 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
                 color.b = arc9_scope_b:GetInt()
             end
 
-            local eyeforward = eyeang:Forward()
-
             local scopebound = getscopebound(model)
 
             local origsighttable = sight.OriginalSightTable
             local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
+
             
+            local modelang = model:GetAngles()
             local modelpos = model:GetPos()
-             - model:GetAngles():Up() * origsighttablepos.z / (atttbl.Scale or 1)
-             - model:GetAngles():Forward() * (-scopebound[1]) / (atttbl.Scale or 1)
-             - model:GetAngles():Right() * origsighttablepos.x / (atttbl.Scale or 1)
+             - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
+             - modelang:Forward() * (-scopebound[1]) / (atttbl.Scale or 1)
+             - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
 
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
 
-            local fuck_fov = (hook.Run("NeedsDepthPass") and render.GetViewSetup().fov or render.GetViewSetup().fov_unscaled) -- ????
-            fuck_fov = fuck_fov + Lerp(sightamt, self.SmoothedViewModelFOV - self.FOV, math.Remap(LocalPlayer():GetFOV(), 75, 100, 0, -21))
+            local fuck_fov = (ARC9.DepthBufferEnabled and rt_viewsetup_fov or rt_viewsetup_fov_unscaled) -- ????
+            fuck_fov = fuck_fov + Lerp(sightamt, (self.SmoothedViewModelFOV or 90) - self.FOV, math.Remap(LocalPlayer():GetFOV(), 75, 100, 0, -21))
 
             
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
-                    -- drawscopequad(9.25, 10, eyeang, eyepos, shadow, color_white) -- global shadow, fixed at your eyes             
+                    -- drawscopequad(9.25, 10, eyeang, rt_eyepos, shadow, color_white) -- global shadow, fixed at your eyes             
 
-                    local modelpos2 = modelpos - model:GetAngles():Forward() * (scopebound[1] - scopebound[2] - 5)
-                    local lerped2 = LerpVector(sightamt, modelpos2, eyepos)
+                    local modelpos2 = modelpos - modelang:Forward() * (scopebound[1] - scopebound[2] - 5)
+                    local lerped2 = LerpVector(sightamt, modelpos2, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 5, 7) * globalscalie, 13, modelang, lerped2, shadow, color_white) -- end of scope shadow
 
-                    local lerped = LerpVector(sightamt, modelpos, eyepos)
+                    local lerped = LerpVector(sightamt, modelpos, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 3, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color, true) -- reticle
 
-                    local modelpos3 = modelpos - model:GetAngles():Forward() * 2
-                    local lerped3 = LerpVector(sightamt, modelpos3, eyepos)
+                    local modelpos3 = modelpos - modelang:Forward() * 2
+                    local lerped3 = LerpVector(sightamt, modelpos3, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 0.7, 1) * globalscalie, 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
 
                     if ARC9_ENABLE_NEWSCOPES_SHADER then
                         local toscreen = modelpos:ToScreen()
                         local offsetx, offsety = 
-                            (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE,
-                            (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * SHADER_EYE_OFFSET_INFLUENCE
+                            (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE,
+                            (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE
                             -- print(offsetx, offsety)
 
                         -- lenseshader:SetFloat("$c3_x", offsetx + 0.5)
                         -- lenseshader:SetFloat("$c3_y", offsety + 0.5)
 
                         local mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
-                        mreow = math.Clamp(lerped:Distance(eyepos) * SHADER_EYE_DISTANCE_INFLUENCE - 0.15 + mreow, -0.15, 0.8)
+                        mreow = math.Clamp(lerped:Distance(rt_eyepos) * shader_EYE_DISTANCE_INFLUENCE - 0.15 + mreow, -0.15, 0.8)
                         -- lenseshader:SetFloat("$c0_x", mreow)
 
                         CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, mreow)
@@ -351,10 +358,10 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
             end
             cam.Start2D() -- shader bleeds a bit, drawing a box to keep it square
                 surface.SetDrawColor(0, 0, 0, 255)
-                surface.DrawRect(0, 0, ScrW()/2 - ScrH()/2, ScrH())
-                surface.DrawRect(ScrW()/2 + ScrH()/2, 0, ScrW(), ScrH())
+                surface.DrawRect(0, 0, scrw/2 - scrh/2, scrh)
+                surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
                 surface.SetMaterial(shadow2)
-                surface.DrawTexturedRect(ScrW()/2-ScrH()/2, 0, ScrH(), ScrH()) -- global shadow
+                surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
             cam.End2D()
         render.PopRenderTarget()
 
@@ -371,7 +378,7 @@ end
 function SWEP:GetCheapScopeScale(scale)
     local ratio = scale - (!self.ExtraSightDistanceNoRT and self:GetSight().ExtraSightDistance or 0) * 0.045
 
-    return 1 / ratio * (ScrW() / ScrH() / 1.12)
+    return 1 / ratio * (scrw / scrh / 1.12)
 end
 
 
@@ -385,6 +392,5 @@ local testmat = CreateMaterial( "example_rt_mat5", "UnlitGeneric", {
 hook.Add("HUDPaint", "arc9_test_pipscope", function()
     surface.SetDrawColor(255, 255, 255)
     surface.SetMaterial(testmat)
-    surface.DrawTexturedRect(ScrW()-ScrW()/4, ScrH()/2-ScrH()/3, ScrW()/4, ScrH()/4)
-    -- surface.DrawTexturedRect(0, 0, ScrH(), ScrH())
+    surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
 end)
