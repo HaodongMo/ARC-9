@@ -1,4 +1,4 @@
-ARC9_ENABLE_NEWSCOPES_MEOW = true
+ARC9_ENABLE_NEWSCOPES_MEOW = true 
 ARC9_ENABLE_NEWSCOPES_SHADER = true
 ARC9.DepthBufferEnabled = false 
 
@@ -207,7 +207,13 @@ function SWEP:RenderRT(magnification, atttbl)
 
     render.PopRenderTarget()
     
-    if !ARC9.DepthBufferEnabled then self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl, 1) end
+    if !ARC9.DepthBufferEnabled then
+        if !self.RTScope then -- integrated rt
+            self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl or {}, 1)
+        else
+            self:DrawRTReticle(self:GetVM(), self:GetTable(), 1, true)
+        end
+    end
 end
 
 local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
@@ -264,7 +270,7 @@ local function getscopebound(scopeent)
     return scopebounds[modelmodel]
 end
 
-function SWEP:DrawRTReticle(model, atttbl, active, althook)
+function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
     if !IsValid(model) then return end
     
     if active then
@@ -290,18 +296,18 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
                 color.b = arc9_scope_b:GetInt()
             end
 
-            local scopebound = getscopebound(model)
 
             local origsighttable = sight.OriginalSightTable
             local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
 
+            local scopebound = nonatt and {20, 10} or getscopebound(model)
             
             local modelang = model:GetAngles()
             local modelforward = modelang:Forward()
             local modelpos = model:GetPos()
-             - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
-             - modelforward * (-scopebound[1]) / (atttbl.Scale or 1)
-             - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
+            - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
+            - modelforward * (-scopebound[1]) / (atttbl.Scale or 1)
+            - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
 
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
 
@@ -311,21 +317,23 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
             
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
-                    -- drawscopequad(9.25, 10, eyeang, rt_eyepos, shadow, color_white) -- global shadow, fixed at your eyes             
+                    -- drawscopequad(9.25, 10, rt_eyeang, rt_eyepos, shadow, color_white) -- global shadow, fixed at your eyes             
 
                     local modelpos2 = modelpos - modelforward * (scopebound[1] - scopebound[2] - 5)
                     local lerped2 = LerpVector(sightamt, modelpos2, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 5, 7) * globalscalie, 13, modelang, lerped2, shadow, color_white) -- end of scope shadow
 
-                    local lerped = LerpVector(sightamt, modelpos, rt_eyepos)
-                    drawscopequad(Lerp(sightamt, 3, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color, true) -- reticle
+                    if reticle then
+                        local lerped = LerpVector(sightamt, modelpos, rt_eyepos)
+                        drawscopequad(Lerp(sightamt, 3, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color, true) -- reticle
+                    end
 
                     local modelpos3 = modelpos - modelforward * 2
                     local lerped3 = LerpVector(sightamt, modelpos3, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 0.7, 1) * globalscalie, 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
 
                     if ARC9_ENABLE_NEWSCOPES_SHADER then
-                        local toscreen = modelpos:ToScreen()
+                        local toscreen = !nonatt and modelpos:ToScreen() or {x = scrw/2, y = scrh/2}
                         local offsetx, offsety = 
                             (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE,
                             (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE
@@ -335,7 +343,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
                         -- lenseshader:SetFloat("$c3_y", offsety + 0.5)
 
                         local mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
-                        mreow = math.Clamp(lerped:Distance(rt_eyepos) * shader_EYE_DISTANCE_INFLUENCE - 0.15 + mreow, -0.15, 0.8)
+                        mreow = math.Clamp((lerped and lerped:Distance(rt_eyepos) or 0) * shader_EYE_DISTANCE_INFLUENCE - 0.15 + mreow, -0.15, 0.8)
                         -- lenseshader:SetFloat("$c0_x", mreow)
 
                         CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, mreow)
@@ -367,6 +375,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
 
         rtsurf:SetTexture("$basetexture", rtmat_shader)
 
+        model = model or self:GetVM()
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
         -- model:SetSubMaterial(1, "effects/arc9/rt")
     else
