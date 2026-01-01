@@ -46,9 +46,11 @@ end
 -- static stuff
 
 local shader_LENS_K = -0.525 -- lens K
-local shader_CA_STRENGTH = -5 -- CA
+local shader_CA_STRENGTH_Base = -5 -- CA
+local shader_CA_STRENGTH = shader_CA_STRENGTH_Base
 
-local shader_VIG_FORG = 8.75 -- vignette forgiveness
+local shader_VIG_FORG_Base = 8.75 -- vignette forgiveness
+local shader_VIG_FORG = shader_VIG_FORG_Base
 local shader_VIG_OFFSET = 4.75 -- vignette offset
 local shader_VIG_R1 = 0.124 -- vignette rad1
 local shader_VIG_R2 = 0.7 -- vignette rad2
@@ -421,11 +423,13 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
                     end
 
                     if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
+                        shader_VIG_FORG = shader_VIG_FORG_Base / ((atttbl.RTScopeNew_ShadowIntensity or 1) * 0.5)
+                        shader_CA_STRENGTH = shader_CA_STRENGTH_Base * (atttbl.RTScopeNew_ChromaticAberrationMult or 1)
                         local toscreen = !nonatt and modelpos:ToScreen() or {x = scrw/2, y = scrh/2}
                         
                         local offsetx, offsety = 
-                            (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE,
-                            (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE
+                            (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1),
+                            (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1)
                             -- print(offsetx, offsety)
 
                         local mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1

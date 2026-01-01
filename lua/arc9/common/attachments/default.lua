@@ -181,7 +181,7 @@ ATT.RTScopeNoPP = false
 -- RTScopeNoShadow   RTScopeBlackBox   RTScopeBlackBoxShadow   RTScopeShadowIntensity    RTScopeFOV     ScopeScreenRatio
 
 ATT.RTScopeNew_ShadowScale = 1 -- overall scale of shadows -- reticle scale also affects shadow scale so you can use this to combat this
-ATT.RTScopeNew_ShadowIntensity = 1
+ATT.RTScopeNew_ShadowIntensity = 1 -- do not set to zero
 ATT.RTScopeNew_FrontShadow = true -- shadow in front of scope
 ATT.RTScopeNew_FrontShadowScale = 1
 ATT.RTScopeNew_BackShadow = true -- shadow close to your eye, hides visible reticle when not aimed
@@ -189,6 +189,7 @@ ATT.RTScopeNew_BackShadowScale = 1
 ATT.RTScopeNew_ReticleBlackBox = false -- blackbox
 ATT.RTScopeNew_DisableShader = false
 ATT.RTScopeNew_DisableShaderEyeOffset = false -- disable dynamic eyeoffset (vignette & chrom aberation) from shader if your scope is fucked up
+ATT.RTScopeNew_ChromaticAberrationMult = 1
 -- ATT.RTScopeNew_FixAngle = Angle(-0.034, 84.588, 4.109) -- If scope angle isn't 0, 0, 0, it might look ASS. Fix this by setting this to "print" first, aim & setang 0 0 0 in console, copying angle from console to this
 
 ATT.RTScopeDrawFunc = function(swep, rtsize, sight) end -- Square reticle-like 2d context, works good as regular reticle  (remove counterrotation thing if you had it!)
