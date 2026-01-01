@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$baseTexture" "vgui/blackf"
+	"$baseTexture" "vgui/black"
 	
 	"$rot" "0"
 	

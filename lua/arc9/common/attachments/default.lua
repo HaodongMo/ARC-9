@@ -170,24 +170,36 @@ ATT.FLIRHotFunc = function(swep, ent) end -- return true for hot and false for c
 
 ATT.RTScope = true
 ATT.RTScopeSubmatIndex = 1
--- ATT.RTScopeFOV = 2.5 -- Do not use this anymore!!! use RTScopeMagnification
 ATT.RTScopeReticle = Material("")
 ATT.RTScopeReticleScale = 1
-ATT.RTScopeShadowIntensity = 1.5
+ATT.RTScopeColorable = true -- Scope takes color from player settings
 ATT.RTCollimator = false -- Disables cheap scopes fov boost, disables sensivity adjustements
 ATT.RTScopeNoBlur = false -- By default, if arc9_fx_rtblur 1 then world behind gun wil be blurred. Enable if your "scope" is not so scope.
 ATT.RTScopeNoPP = false
-ATT.RTScopeNoShadow = false
-ATT.RTScopeBlackBox = false
-ATT.RTScopeBlackBoxShadow = true
-ATT.RTScopeColorable = true -- Scope takes color from player settings
--- Lets you draw more things on to the reticle
-ATT.RTScopeDrawFunc = function(swep, rtsize) end
+
+-- list of removed variables (but kept as legacy fallback)   DO NOT INCLUDE THEM!   REMOVE FROM EXISTING SCOPES!!!
+-- RTScopeNoShadow   RTScopeBlackBox   RTScopeBlackBoxShadow   RTScopeShadowIntensity    RTScopeFOV     ScopeScreenRatio
+
+ATT.RTScopeNew_ShadowScale = 1 -- overall scale of shadows -- reticle scale also affects shadow scale so you can use this to combat this
+ATT.RTScopeNew_ShadowIntensity = 1
+ATT.RTScopeNew_FrontShadow = true -- shadow in front of scope
+ATT.RTScopeNew_FrontShadowScale = 1
+ATT.RTScopeNew_BackShadow = true -- shadow close to your eye, hides visible reticle when not aimed
+ATT.RTScopeNew_BackShadowScale = 1
+ATT.RTScopeNew_ReticleBlackBox = false -- blackbox
+ATT.RTScopeNew_DisableShader = false
+
+ATT.RTScopeDrawFunc = function(swep, rtsize, sight) end -- Square reticle-like 2d context, works good as regular reticle  (remove counterrotation thing if you had it!)
+ATT.RTScopeNew_DrawFunc3D = function(swep, scrh, sight, ang, pos) end -- Advanced drawfunc in 3d context
+ATT.RTScopeNew_DrawFunc2D = function(swep, scrw, scrh, sight) end -- Overlay drawfunc in 2d context, not moving unlike RTScopeDrawFunc. Also draws fullres
+
 -- Extra post processing like DrawMotionBlur() DrawSharpen() DrawBloom()
 ATT.RTScopeCustomPPFunc = function(swep) end
 
-ATT.ScopeScreenRatio = 0.5 -- Take a screenshot of full screen, select whole visible picture in it and divide by screen height (for example = 500/1080, you can just leave it like that here)
-ATT.RTScopeMagnification = 4 -- New zoom thing, 1 is 1x, 4 is 4x (crazy!)
+
+ATT.RTScopeMagnification = 4 -- New zoom thing, 1 is 1x, 4 is 4x (crazy!) Please use it.
+
+-- ATT.ScopeScreenRatio = 0.5 -- Not needed anymore!!  Take a screenshot of full screen, select whole visible picture in it and divide by screen height (for example = 500/1080, you can just leave it like that here) 
 
 ATT.RTScopeNightVision = true
 ATT.RTScopeNightVisionMonochrome = true
@@ -200,7 +212,8 @@ ATT.RTScopeNightVisionCC = {
     ["$pp_colour_colour"] = 1,
     ["$pp_colour_mulr"] = 0,
     ["$pp_colour_mulg"] = 0,
-    ["$pp_colour_mulb"] = 0
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
 }
 ATT.RTScopeNightVisionFunc = function(swep) end
 
@@ -219,7 +232,8 @@ ATT.RTScopeFLIRCCHot = { -- Color correction drawn only on FLIR targets
     ["$pp_colour_colour"] = 1,
     ["$pp_colour_mulr"] = 0,
     ["$pp_colour_mulg"] = 0,
-    ["$pp_colour_mulb"] = 0
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0,
 }
 ATT.RTScopeFLIRCCCold = { -- Color correction drawn only on FLIR targets
     ["$pp_colour_addr"] = 0,
@@ -230,7 +244,8 @@ ATT.RTScopeFLIRCCCold = { -- Color correction drawn only on FLIR targets
     ["$pp_colour_colour"] = 1,
     ["$pp_colour_mulr"] = 0,
     ["$pp_colour_mulg"] = 0,
-    ["$pp_colour_mulb"] = 0
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
 }
 ATT.RTScopeFLIRFunc = function(swep) end
 ATT.RTScopeFLIRHotOnlyFunc = function(swep) end -- same but only for hot targets (try `DrawSobel(0.05)` here!!))

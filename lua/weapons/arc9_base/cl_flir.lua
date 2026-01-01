@@ -14,7 +14,8 @@ local monochrometable = {
     ["$pp_colour_colour"] = 0,
     ["$pp_colour_mulr"] = 0,
     ["$pp_colour_mulg"] = 0,
-    ["$pp_colour_mulb"] = 0
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
 }
 
 local ref = 32
@@ -91,12 +92,14 @@ function SWEP:DoFLIR(atttbl)
 
     if atttbl.RTScopeFLIRCCCold then
         render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
+        if !atttbl.RTScopeFLIRCCCold["pp_colour_inv"] then atttbl.RTScopeFLIRCCCold["pp_colour_inv"] = 0 end
         DrawColorModify(atttbl.RTScopeFLIRCCCold)
         -- DrawColorModify(atttbl.RTScopeFLIRCCHot)
     end
 
     if atttbl.RTScopeFLIRCCHot then
         render.SetStencilCompareFunction(STENCIL_EQUAL)
+        if !atttbl.RTScopeFLIRCCHot["pp_colour_inv"] then atttbl.RTScopeFLIRCCHot["pp_colour_inv"] = 0 end
         DrawColorModify(atttbl.RTScopeFLIRCCHot)
     end
 
