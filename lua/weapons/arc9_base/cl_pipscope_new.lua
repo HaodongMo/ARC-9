@@ -268,7 +268,6 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
     if !IsValid(model) then return end
     
     if active then
-        local sightzang = 0
         if self:ShouldDoScope() then
             self.RenderingRTScope = true
             local sight = self:GetSight()
@@ -298,9 +297,10 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
 
             
             local modelang = model:GetAngles()
+            local modelforward = modelang:Forward()
             local modelpos = model:GetPos()
              - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
-             - modelang:Forward() * (-scopebound[1]) / (atttbl.Scale or 1)
+             - modelforward * (-scopebound[1]) / (atttbl.Scale or 1)
              - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
 
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
@@ -313,14 +313,14 @@ function SWEP:DrawRTReticle(model, atttbl, active, althook)
                 cam.IgnoreZ(true)
                     -- drawscopequad(9.25, 10, eyeang, rt_eyepos, shadow, color_white) -- global shadow, fixed at your eyes             
 
-                    local modelpos2 = modelpos - modelang:Forward() * (scopebound[1] - scopebound[2] - 5)
+                    local modelpos2 = modelpos - modelforward * (scopebound[1] - scopebound[2] - 5)
                     local lerped2 = LerpVector(sightamt, modelpos2, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 5, 7) * globalscalie, 13, modelang, lerped2, shadow, color_white) -- end of scope shadow
 
                     local lerped = LerpVector(sightamt, modelpos, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 3, 0.6) * globalscalie, 1.5, modelang, lerped, reticle, color, true) -- reticle
 
-                    local modelpos3 = modelpos - modelang:Forward() * 2
+                    local modelpos3 = modelpos - modelforward * 2
                     local lerped3 = LerpVector(sightamt, modelpos3, rt_eyepos)
                     drawscopequad(Lerp(sightamt, 0.7, 1) * globalscalie, 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
 
@@ -382,15 +382,18 @@ function SWEP:GetCheapScopeScale(scale)
 end
 
 
+if ARC9.Dev(2) then
+    local testmat = CreateMaterial( "testpipscope", "UnlitGeneric", {
+        ["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
+        ["$translucent"] = 0,
+        ["$vertexcolor"] = 1
+    } )
 
-local testmat = CreateMaterial( "example_rt_mat5", "UnlitGeneric", {
-	["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
-	["$translucent"] = 0,
-	["$vertexcolor"] = 1
-} )
-
-hook.Add("HUDPaint", "arc9_test_pipscope", function()
-    surface.SetDrawColor(255, 255, 255)
-    surface.SetMaterial(testmat)
-    surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
-end)
+    hook.Add("HUDPaint", "arc9_test_pipscope", function()
+        if ARC9.Dev(2) then
+            surface.SetDrawColor(255, 255, 255)
+            surface.SetMaterial(testmat)
+            surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
+        end
+    end)
+end
