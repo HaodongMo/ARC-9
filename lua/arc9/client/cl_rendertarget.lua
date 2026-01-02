@@ -13,7 +13,7 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 
     -- if atttbl then
     if ARC9_ENABLE_NEWSCOPES_MEOW then
-        wpn:RenderRT(wpn:GetRTScopeFOV(), atttbl)
+        wpn:RenderRT(wpn:GetRTScopeMagnification(), atttbl)
     end
 
     if !ARC9_ENABLE_NEWSCOPES_MEOW and atttbl then
@@ -31,10 +31,10 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     local atttbl = wpn:IsScoping()
 
     if atttbl then
-        local fov = wpn:GetRTScopeFOV()
+        local mag = wpn:GetRTScopeMagnification()
 
-        fov = wpn:WidescreenFix(wpn:GetViewModelFOV())
+        -- fov = wpn:WidescreenFix(wpn:GetViewModelFOV())
 
-        wpn:DoCheapScope(fov, atttbl)
+        wpn:DoCheapScope(mag, atttbl)
     end
 end)

@@ -389,6 +389,16 @@ function SWEP:GetRTScopeFOV()
     return ARC9_ENABLE_NEWSCOPES_MEOW and realzoom or funnyfov
 end
 
+function SWEP:GetRTScopeMagnification()
+    local sights = self:GetSight()
+
+    if !sights then return 2 end
+
+    local realzoom = self:GetRealZoom(sights)
+
+    return realzoom or 2
+end
+
 SWEP.ScrollLevels = {}
 
 function SWEP:Scroll(amt)

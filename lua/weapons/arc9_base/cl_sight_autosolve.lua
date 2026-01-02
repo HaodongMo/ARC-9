@@ -122,7 +122,6 @@ function SWEP:AdjustMouseSensitivity()
 
 		local magdef = self.IronSights.Magnification
 		local mag = self:GetMagnification()
-		local fov = fov_desired:GetFloat()
 
 		local sight = self:GetSight()
 		local atttbl = sight.atttbl
@@ -132,7 +131,7 @@ function SWEP:AdjustMouseSensitivity()
 		end
 
 		if atttbl and atttbl.RTScope and !sight.Disassociate and !sight.NoSensAdjustment and !atttbl.RTCollimator then
-			mag = mag + (fov / (self:GetRTScopeFOV() or 90))
+			mag = mag + ((self:GetRTScopeMagnification()) - 1) * 5
 		end
 
 		if self.Peeking and !self.PeekingIsSight then
