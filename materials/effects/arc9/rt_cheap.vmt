@@ -1,0 +1,16 @@
+"UnlitGeneric"
+{
+	"$basetexture" "_rt_FullFrameFB"
+	"$ignorez" "1"
+	"$scale" "0.85"
+	// "$translucent" "1"
+	// "$vertexalpha" "1"
+	"Proxies"
+	{
+		"texturetransform"
+		{
+			"scalevar" "$scale"
+			"resultvar" "$basetexturetransform"
+		}
+	}
+}

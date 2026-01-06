@@ -98,7 +98,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
             cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 100040)
 
         end
-        render.DepthRange( 0.1, 0.1 )
+        -- render.DepthRange( 0.1, 0.1 )
 
         return
     end
@@ -212,13 +212,13 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
 	if !isDepthPass then
     	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
-    	if ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() then
-            if ARC9.DepthBufferEnabled == true then self:DrawRTReticle(self.RTScopeModel or vm, self.RTScopeAtttbl or self:GetTable(), 1, true) end
-    	end
+    	-- if ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() then
+        --     if ARC9.DepthBufferEnabled == true then self:DrawRTReticle(self.RTScopeModel or vm, self.RTScopeAtttbl or self:GetTable(), 1, true) end
+    	-- end
         
-    	if !ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
-    	    self:DoRTScope(vm, self:GetTable(), sightamount > 0)
-    	end
+    	-- if !ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
+    	--     self:DoRTScope(vm, self:GetTable(), sightamount > 0)
+    	-- end
     end
 
     if !arc9_dev_benchgun:GetBool() then
