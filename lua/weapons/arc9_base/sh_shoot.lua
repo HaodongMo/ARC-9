@@ -499,7 +499,6 @@ function SWEP:DoPrimaryAttack()
                 end)
             end
         end
-        self:SetNthShot(nthShot + 1)
     end
 
     if sp then
