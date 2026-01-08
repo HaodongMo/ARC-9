@@ -518,6 +518,40 @@ end
 
 local arc9_atts_nocustomize = GetConVar("arc9_atts_nocustomize")
 
+function SWEP:WouldConflict(att, atttbl)
+    local eles = { [att] = true }
+    
+    if atttbl.ActivateElements then
+        for _, ele in pairs(atttbl.ActivateElements) do
+            eles[ele] = true
+        end
+    end
+
+    for _, slot in ipairs(self:GetSubSlotList()) do
+        if !slot.Installed then continue end
+
+        local installed = ARC9.GetAttTable(slot.Installed)
+        if !installed or !installed.ExcludeElements then continue end
+
+        for _, group in ipairs(installed.ExcludeElements) do
+            local req = istable(group) and group or {group}
+
+            local conflict = true
+            
+            for _, ele in ipairs(req) do
+                if !eles[ele] then
+                    conflict = false
+                    break
+                end
+            end
+
+            if conflict then return true end
+        end
+    end
+
+    return false
+end
+
 function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     if ARC9.Blacklist[att] then return false end
 
@@ -536,6 +570,7 @@ function SWEP:CanAttach(addr, att, slottbl, ignorecount)
     if self:RunHook("Hook_BlockAttachment", {att = att, slottbl = slottbl}) == false then return false end
 
     if self:GetSlotBlocked(slottbl) then return false end
+    if self:WouldConflict(att, atttbl) then return false end
 
     if (slottbl.RejectAttachments or {})[att] then return false end
 
