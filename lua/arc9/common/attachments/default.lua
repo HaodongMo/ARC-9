@@ -202,8 +202,6 @@ ATT.RTScopeCustomPPFunc = function(swep) end
 
 ATT.RTScopeMagnification = 4 -- New zoom thing, 1 is 1x, 4 is 4x (crazy!) Please use it.
 
--- ATT.ScopeScreenRatio = 0.5 -- Not needed anymore!!  Take a screenshot of full screen, select whole visible picture in it and divide by screen height (for example = 500/1080, you can just leave it like that here) 
-
 ATT.RTScopeNightVision = true
 ATT.RTScopeNightVisionMonochrome = true
 ATT.RTScopeNightVisionCC = {
