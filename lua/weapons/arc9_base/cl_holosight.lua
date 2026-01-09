@@ -21,7 +21,7 @@ function SWEP:DoHolosight(mdl, atttbl)
     render.SetStencilCompareFunction(STENCIL_ALWAYS)
     render.SetStencilPassOperation(STENCIL_REPLACE)
     render.SetStencilFailOperation(STENCIL_KEEP)
-    render.SetStencilZFailOperation(STENCIL_KEEP)
+    render.SetStencilZFailOperation(STENCIL_REPLACE)
     render.SetStencilWriteMask(255)
     render.SetStencilTestMask(255)
 
