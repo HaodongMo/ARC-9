@@ -12,9 +12,9 @@ hook.Add("PreRender", "ARC9_PreRender", function()
     local atttbl = wpn:IsScoping()
 
     -- if atttbl then
-    if ARC9_ENABLE_NEWSCOPES_MEOW then
-        wpn:RenderRT(wpn:GetRTScopeMagnification(), atttbl)
-    end
+    -- if ARC9_ENABLE_NEWSCOPES_MEOW then
+    --     wpn:RenderRT(wpn:GetRTScopeMagnification(), atttbl)
+    -- end
 
     if !ARC9_ENABLE_NEWSCOPES_MEOW and atttbl then
         wpn:DoRT(wpn:GetRTScopeFOV(), atttbl)
@@ -30,7 +30,7 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
 
     local atttbl = wpn:IsScoping()
         -- render.DepthRange( 0.1, 0.1 )
-        -- wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
+        wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
         -- wpn:RenderRT(wpn:GetRTScopeMagnification(), atttbl)
 
     -- if atttbl then
@@ -52,7 +52,7 @@ hook.Add("RenderScreenspaceEffects", "ARC9_PreDrawViewModels22222222222", functi
 
     local atttbl = wpn:IsScoping()
         -- render.DepthRange( 0.1, 0.1 )
-        wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
+        -- wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
         -- wpn:RenderRT(wpn:GetRTScopeMagnification(), atttbl)
 
     -- if atttbl then

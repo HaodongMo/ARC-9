@@ -1,5 +1,6 @@
 ARC9_ENABLE_NEWSCOPES_MEOW = true  
 ARC9_ENABLE_NEWSCOPES_SHADER = true
+ARC9.NewRTScopesEnabled = true
 ARC9.DepthBufferEnabled = false 
 
 local scrw, scrh = ScrW(), ScrH()
@@ -176,13 +177,6 @@ local arc9_scope_r = GetConVar("arc9_scope_r")
 local arc9_scope_g = GetConVar("arc9_scope_g")
 local arc9_scope_b = GetConVar("arc9_scope_b")
 
--- local function cropfovsqaure(fov, fullratio)
---     local verticalfov = 2 * math.atan(math.tan(math.rad(fov) / 2) * (1 / fullratio))
---     local properhorizontalfov = 2 * math.atan(math.tan(verticalfov / 2))
---     return math.deg(properhorizontalfov)
--- end
-
-
 local rt_eyeang = Angle()
 local rt_eyepos = Vector()
 local rt_viewsetup_fov = 90
@@ -196,116 +190,34 @@ local invertcolormodif = {
 }
 
 function SWEP:RenderRTCheap(magnification, atttbl)
-
+    if ARC9.OverDraw then return end
+    render.UpdateScreenEffectTexture()
+    rtcheapmat:SetTexture("$basetexture", render.GetScreenEffectTexture())
+    -- render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
+        
+    rt_eyepos = ARC9.DepthBufferEnabled and MainEyePos() or EyePos()
+    
     render.PushRenderTarget(rt_cheap)
-            -- cam.Start3D(EyePos(), EyeAngles(), 90, 0, 0, scrw, srch, 8, 30000)
-            --     cam.IgnoreZ(true)
-        -- render.SetMaterial( rtcheapmat )
-        -- render.DrawScreenQuad()
-        render.Clear(0,255,0,255)
-        -- render.CopyRenderTargetToTexture(rtmat)
-            --     cam.IgnoreZ(false)
-            -- cam.End3D()
+        ARC9.OverDraw = true
+        cam.IgnoreZ(true)
+
+        render.Clear(67, 67, 0, 255)
+
+        render.SetMaterial( rtcheapmat )
+        render.DrawScreenQuad()
+        render.SetMaterial( rtcheapsharpen )
+        render.DrawScreenQuad()
+
+        if !self.RTScope then -- integrated rt
+            self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl or {}, 1)
+        else
+            self:DrawRTReticle(self:GetVM(), self:GetTable(), 1, true)
+        end
+
+        cam.IgnoreZ(false)
+        ARC9.OverDraw = false
     render.PopRenderTarget()
 end
-
--- function SWEP:RenderRT(magnification, atttbl)
---     if ARC9.OverDraw then return end
-
---     local viewstup = render.GetViewSetup()
---     rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
---     local rtfov = rt_viewsetup_fov_unscaled / magnification
---     local rtvm = arc9_fx_rtvm:GetBool()
-    
---     ARC9.RTScopeRenderFOV = rtfov
-    
---     ARC9.DepthBufferEnabled = hook.Run("NeedsDepthPass")
-    
---     -- EyeAngles/Pos -- late for one frame!
---     -- ply:EyeAngles/Pos -- not late but custom CalcViews and punch, probably more doesn't work
---     -- MainEyeAngles/Pos -- good 👍 🐾
---     -- NO ITS NOT FUCKING GOOD
---     -- BREAKS model:GetPos GetAngles if depth buffer is off
---     -- Wtf is this shit
-
---     -- local rtang = LocalPlayer():EyeAngles() + LocalPlayer():GetViewPunchAngles()
---     -- local rtpos = LocalPlayer():EyePos()
---     -- hook.Run("CalcView", LocalPlayer(), rtpos, rtang, self.FOV)
-
---     rt_eyeang = ARC9.DepthBufferEnabled and MainEyeAngles() or EyeAngles()
---     rt_eyepos = ARC9.DepthBufferEnabled and MainEyePos() or EyePos()
-    
---     local rt = {
---         x = scrw/2-scrh/2,
---         y = 0,
---         w = scrh,
---         h = scrh,
---         angles = rt_eyeang,
---         origin = rt_eyepos,
---         drawviewmodel = rtvm,
---         fov = rtfov,
---         znear = 8,
---         zfar = 30000,
---         aspectratio = 1,
---     }
-
---     render.PushRenderTarget(rtmat)
---     -- render.Clear(0,0,0,0)
-
---         ARC9.OverDraw = true
---         ARC9.RTScopeRender = rtvm
---         render.RenderView(rt)
-        
---         if !rtvm then
---             local laserthing = EyePos()
---             laserthing = laserthing + rt_eyeang:Forward() * 40
---             cam.Start3D(laserthing, rt_eyeang, rtfov, nil, nil, nil, nil, 1, 10000)
---                 cam.IgnoreZ(true)
---                 self:DrawLasers(false)
---                 cam.IgnoreZ(false)
---             cam.End3D()
---         end
-
---         atttbl = atttbl or {}
-
---         if atttbl.RTScopeFLIR then
---             cam.Start3D()
---                 self:DoFLIR(atttbl)
---             cam.End3D()
---         end
-
---         if atttbl.RTScopeNightVision then
---             self:DoNightScopeEffects(atttbl)
---         end
-
---         cam.Start3D()
---             self:DrawLockOnHUD(true)
---         cam.End3D()
-
---         self:DoRTScopeEffects()
-
---         ARC9.RTScopeRender = false
---         ARC9.OverDraw = false
-
-
---         if self:GetSight().InvertColors then
---             DrawColorModify(invertcolormodif)
---             if atttbl.RTScopePostInvertFunc then
---                 atttbl.RTScopePostInvertFunc(self)
---             end
---         end
-
---     render.PopRenderTarget()
-
---     if !ARC9.DepthBufferEnabled then
---         if !self.RTScope then -- integrated rt
---             self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl or {}, 1)
---         else
---             self:DrawRTReticle(self:GetVM(), self:GetTable(), 1, true)
---         end
---     end
--- end
-
 
 function SWEP:RenderRT(magnification, atttbl)
     if ARC9.OverDraw then return end
@@ -318,21 +230,81 @@ function SWEP:RenderRT(magnification, atttbl)
     ARC9.RTScopeRenderFOV = rtfov
     
     ARC9.DepthBufferEnabled = hook.Run("NeedsDepthPass")
+    
+    -- EyeAngles/Pos -- late for one frame!
+    -- ply:EyeAngles/Pos -- not late but custom CalcViews and punch, probably more doesn't work
+    -- MainEyeAngles/Pos -- good 👍 🐾
+    -- NO ITS NOT FUCKING GOOD
+    -- BREAKS model:GetPos GetAngles if depth buffer is off
+    -- Wtf is this shit
+
+    -- local rtang = LocalPlayer():EyeAngles() + LocalPlayer():GetViewPunchAngles()
+    -- local rtpos = LocalPlayer():EyePos()
+    -- hook.Run("CalcView", LocalPlayer(), rtpos, rtang, self.FOV)
 
     rt_eyeang = ARC9.DepthBufferEnabled and MainEyeAngles() or EyeAngles()
     rt_eyepos = ARC9.DepthBufferEnabled and MainEyePos() or EyePos()
     
+    local rt = {
+        x = scrw/2-scrh/2,
+        y = 0,
+        w = scrh,
+        h = scrh,
+        angles = rt_eyeang,
+        origin = rt_eyepos,
+        drawviewmodel = rtvm,
+        fov = rtfov,
+        znear = 8,
+        zfar = 30000,
+        aspectratio = 1,
+    }
+
     render.PushRenderTarget(rtmat)
+    -- render.Clear(0,0,0,0)
+
         ARC9.OverDraw = true
         ARC9.RTScopeRender = rtvm
+        render.RenderView(rt)
+        
+        if !rtvm then
+            local laserthing = EyePos()
+            laserthing = laserthing + rt_eyeang:Forward() * 40
+            cam.Start3D(laserthing, rt_eyeang, rtfov, nil, nil, nil, nil, 1, 10000)
                 cam.IgnoreZ(true)
-        -- render.SetMaterial(mat_rt_cheap)
-        -- render.DrawScreenQuad()
-        render.SetMaterial( rtcheapmat )
-        render.DrawScreenQuad()
+                self:DrawLasers(false)
                 cam.IgnoreZ(false)
+            cam.End3D()
+        end
+
+        atttbl = atttbl or {}
+
+        if atttbl.RTScopeFLIR then
+            cam.Start3D()
+                self:DoFLIR(atttbl)
+            cam.End3D()
+        end
+
+        if atttbl.RTScopeNightVision then
+            self:DoNightScopeEffects(atttbl)
+        end
+
+        cam.Start3D()
+            self:DrawLockOnHUD(true)
+        cam.End3D()
+
+        self:DoRTScopeEffects()
+
         ARC9.RTScopeRender = false
         ARC9.OverDraw = false
+
+
+        if self:GetSight().InvertColors then
+            DrawColorModify(invertcolormodif)
+            if atttbl.RTScopePostInvertFunc then
+                atttbl.RTScopePostInvertFunc(self)
+            end
+        end
+
     render.PopRenderTarget()
 
     if !ARC9.DepthBufferEnabled then
@@ -343,7 +315,6 @@ function SWEP:RenderRT(magnification, atttbl)
         end
     end
 end
-
 
 local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
     local up, right, forward = ang:Up(), ang:Right(), ang:Forward()
@@ -411,7 +382,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
             if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
             else sightamt = math.ease.InQuart(sightamt) end
 
-            render.PushRenderTarget(rtmat)
+            -- render.PushRenderTarget(rtmat)
             
             local globalscalie = 1.41 * (atttbl.RTScopeReticleScale or 1)
 
@@ -515,9 +486,9 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
 
             render.CopyRenderTargetToTexture(rtmat_shader)
 
-            lenseshader:SetTexture("$basetexture", rtmat)
+            lenseshader:SetTexture("$basetexture", rt_cheap)
 
-            render.PopRenderTarget()
+            -- render.PopRenderTarget()
         end
 
         render.PushRenderTarget(rtmat_shader)
@@ -558,7 +529,7 @@ end
 
 
 if ARC9.Dev(2) then
-    local testmat = CreateMaterial( "testpipscope", "UnlitGeneric", {
+    local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
         ["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
         ["$translucent"] = 0,
         ["$vertexcolor"] = 1
@@ -567,7 +538,7 @@ if ARC9.Dev(2) then
     hook.Add("HUDPaint", "arc9_test_pipscope", function()
         if ARC9.Dev(2) then
             surface.SetDrawColor(255, 255, 255)
-            surface.SetMaterial(mat_rt_cheap)
+            surface.SetMaterial(testmat)
             surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
         end
     end)
