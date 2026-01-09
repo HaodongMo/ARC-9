@@ -60,7 +60,6 @@ local arc9_fx_adsblur = GetConVar("arc9_fx_adsblur")
 --     return modelmodel and RT_ScopeModelsEndPositions[modelmodel] or 20
 -- end
 
-local meowector = Vector(1, 0, 0)
 
 function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     if ARC9.RTScopeRender then -- basically a copy of code in that func for rt barrels but without useless stuff and bad stuff, and also offset of cam in scope
@@ -74,17 +73,17 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
         if ARC9_ENABLE_NEWSCOPES_MEOW then
             local worldvmpos, worldvmang = vm:GetPos(), vm:GetAngles()
-            
-            local vmvmpos = -self.ViewModelPos
-            
-            meowector.x = IsValid(self.RTScopeModel) and self.RTScopeModel.RTScopeLength or 20
+        
+            local scopelength = (IsValid(self.RTScopeModel) and self.RTScopeModel.RTScopeLength or 20) * 0.75
 
-            worldvmpos = worldvmpos + worldvmang:Forward() * meowector.x
-            worldvmang = worldvmang - Angle(worldvmang.p, worldvmang.y, 0) + MainEyeAngles()
+            worldvmpos = worldvmpos + worldvmang:Forward() * scopelength
 
-            local vmpos, vmang = LocalToWorld(vmvmpos, -self.ViewModelAng, worldvmpos, worldvmang)
+            local vmpos, vmang = LocalToWorld(-self.ViewModelPos, -self.ViewModelAng, worldvmpos, worldvmang)
+            vmang = MainEyeAngles()
             
-            cam.Start3D(vmpos, vmang, ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 16000)
+            local funnyfov = self:WidescreenFix(self:GetViewModelFOV()) / self:GetRealZoom(self:GetSight())
+
+            cam.Start3D(vmpos, vmang, funnyfov, nil, nil, nil, nil, scopelength - 5, 16000)
         else
             local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
 
