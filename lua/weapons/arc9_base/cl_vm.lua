@@ -1,6 +1,7 @@
 local vignette = Material("arc9/bgvignette.png", "mips smooth")
 -- local vignette2 = Material("arc9/bgvignette2.png", "mips smooth")
 
+local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
 
 local adsblur = Material("pp/arc9/adsblur")
 local function arc9toytown(amount) -- cool ass blur
@@ -212,13 +213,13 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
 	if !isDepthPass then
     	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
-    	-- if ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() then
-        --     if ARC9.DepthBufferEnabled == true then self:DrawRTReticle(self.RTScopeModel or vm, self.RTScopeAtttbl or self:GetTable(), 1, true) end
-    	-- end
+    	if ARC9_ENABLE_NEWSCOPES_MEOW and !ARC9_cheapscopes:GetBool() and self:GetHolsterTime() < CurTime() then
+            if ARC9.DepthBufferEnabled == true then self:DrawRTReticle(self.RTScopeModel or vm, self.RTScopeAtttbl or self:GetTable(), 1, false, true) end
+    	end
         
-    	-- if !ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
-    	--     self:DoRTScope(vm, self:GetTable(), sightamount > 0)
-    	-- end
+    	if !ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
+    	    self:DoRTScope(vm, self:GetTable(), sightamount > 0)
+    	end
     end
 
     if !arc9_dev_benchgun:GetBool() then

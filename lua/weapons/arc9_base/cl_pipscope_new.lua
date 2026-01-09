@@ -191,11 +191,15 @@ local invertcolormodif = {
 
 function SWEP:RenderRTCheap(magnification, atttbl)
     if ARC9.OverDraw then return end
+
+    ARC9.DepthBufferEnabled = hook.Run("NeedsDepthPass")
+
     render.UpdateScreenEffectTexture()
     rtcheapmat:SetTexture("$basetexture", render.GetScreenEffectTexture())
     -- render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
         
     rt_eyepos = ARC9.DepthBufferEnabled and MainEyePos() or EyePos()
+    -- rt_eyepos = LocalPlayer():EyePos()
     
     render.PushRenderTarget(rt_cheap)
         ARC9.OverDraw = true
@@ -217,6 +221,8 @@ function SWEP:RenderRTCheap(magnification, atttbl)
         cam.IgnoreZ(false)
         ARC9.OverDraw = false
     render.PopRenderTarget()
+    
+    lenseshader:SetTexture("$basetexture", rt_cheap)
 end
 
 function SWEP:RenderRT(magnification, atttbl)
@@ -305,15 +311,18 @@ function SWEP:RenderRT(magnification, atttbl)
             end
         end
 
-    render.PopRenderTarget()
 
     if !ARC9.DepthBufferEnabled then
         if !self.RTScope then -- integrated rt
-            self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl or {}, 1)
+            self:DrawRTReticle(self.RTScopeModel, self.RTScopeAtttbl or {}, 1, nil, true)
         else
-            self:DrawRTReticle(self:GetVM(), self:GetTable(), 1, true)
+            self:DrawRTReticle(self:GetVM(), self:GetTable(), 1, true, true)
         end
     end
+
+    render.PopRenderTarget()
+    
+    lenseshader:SetTexture("$basetexture", rtmat)
 end
 
 local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
@@ -370,7 +379,7 @@ local function getscopebound(scopeent)
     return scopebounds[modelmodel]
 end
 
-function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
+function SWEP:DrawRTReticle(model, atttbl, active, nonatt, expensive)
     if !IsValid(model) then return end
     
     if active then
@@ -382,7 +391,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
             if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
             else sightamt = math.ease.InQuart(sightamt) end
 
-            -- render.PushRenderTarget(rtmat)
+            if expensive then render.PushRenderTarget(rtmat) end
             
             local globalscalie = 1.41 * (atttbl.RTScopeReticleScale or 1)
 
@@ -485,10 +494,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt)
             cam.End3D()
 
             render.CopyRenderTargetToTexture(rtmat_shader)
-
-            lenseshader:SetTexture("$basetexture", rt_cheap)
-
-            -- render.PopRenderTarget()
+ 
+            if expensive then render.PopRenderTarget() end
         end
 
         render.PushRenderTarget(rtmat_shader)
@@ -543,3 +550,43 @@ if ARC9.Dev(2) then
         end
     end)
 end
+
+
+
+-- improves framerate ⬇️ ✅
+
+--[[⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠗⠀⠀⣀⣄⠀⢿⣿⣿⣿⠟⠁⢠⡆⠉⠙⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀⣴⣿⡟⠀⠘⣿⣿⠋⠀⠀⠀⢠⣶⡀⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⢠⣿⠛⣶⠀⠀⣿⡟⠀⠀⠀⢠⣿⣿⡇⠀⠠⣽⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠅⠀⠀⣿⠏⠀⣿⠀⠀⣿⠁⠀⠀⢠⣿⠟⢻⡇⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⣼⣿⠀⢰⡟⠀⠀⠛⠀⠀⠀⣾⡇⠀⢸⡇⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠿⠃⠀⠈⠀⢀⠀⣀⣀⠀⠘⠟⠀⠀⡾⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀⠀⠀⢀⠂⠀⠈⠉⢴⣽⣿⠵⣿⡶⣂⣄⡀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⡟⠡⠆⢀⠀⠀⠀⠀⠄⠀⠈⠘⠏⢿⣶⣿⡿⢟⣱⣖⠒⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⡟⣻⠏⣠⠄⠀⢀⡀⠀⠀⠀⠀⠈⠀⠀⠀⢸⣿⢦⠄⠙⣿⡇⠩⣭⣅⠈⢿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣟⣼⡇⠈⢀⣴⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠁⠀⢀⠀⠈⠰⣶⡤⠿⠃⢸⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⡟⠉⢠⡶⠋⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣴⣶⣤⣄⡀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⡏⢀⡠⠀⠀⠀⠀⠀⠀⠀⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣦⣄⠀⠀⠂⠀⠈⣿⣿⣿⣿
+⣿⣿⣿⢃⠈⠀⢠⠀⠀⠀⠀⠀⢠⣿⣿⣿⠿⣩⣏⡙⣛⣛⣿⣿⣿⣿⣿⣿⣿⡿⢇⠀⠀⠄⠀⠘⣿⣿⣿
+⣿⣿⣿⡎⠀⠀⠀⠀⠀⠀⠀⠠⣿⣿⣿⡟⣰⣿⠁⢀⠈⢿⣿⣿⣿⣿⢁⣴⠖⢲⣾⡇⠀⠀⠄⠀⣿⣿⣿
+⣿⣿⣿⢀⠀⠀⠀⠀⠀⠀⠀⠀⣏⢿⣿⡇⣿⡇⠀⠀⠀⣼⣿⣿⣿⡇⣼⡏⠀⠀⣿⡇⠀⠀⠀⠀⣻⣿⣿⣿
+⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⢸⣄⠻⣷⡘⣷⣀⣀⣴⣿⡟⠉⠛⠓⣿⡇⠀⢰⣿⡇⠀⠀⠀⣼⣿⣿⣿
+⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠙⢷⣌⠻⢿⣿⣿⣿⣿⣿⣦⣶⣿⣾⣧⣤⡾⠏⠀⠀⠀⠀⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⠶⢌⣉⣛⠛⠿⠿⠿⠿⠿⠛⠉⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣶⣄⠀⠀⠀⠀⠲⠀⠀⠀⠀⠀⠀⠉⠉⠉⠀⠀⠀⠈⠁⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠻⠿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡏⠛⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡘⡻⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⢨⡛⡛⣁⣿⣿⣿⣿
+⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠂⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⠇⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣄⣠⣴⣾⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⡿⠋⠠⣾⡇⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⡟⢁⣠⣤⣦⣌⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣏⡹⢿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⡿⠿⢶⡬⠙⠟⠋⣁⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣏⠛⠚⠃⠀⠀⢰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣧⣆⣤⣄⣤⣼⠁⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠠⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣧⣤⣴⣴⣦⠀⣄⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠐⠚⠛⠓⠂⢀⡄⠀⢰⢽⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣰⣤⣄⣀⢀⠀⢠⡅⠀⠀⢀⣤⣤⡼⠧⣤⣤⣠⣤⣤⣄⡀⡀⣰⣦⣣⠈⡡⣽
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣹⣿⣿⣿⣾⣷⣾⡗⣒⠶⣿⣿⣿⡷⣾⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿]]
