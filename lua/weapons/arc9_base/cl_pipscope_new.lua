@@ -365,7 +365,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                 cam.End3D()
             end
             
-            local globalscalie = 0.7 * (atttbl.RTScopeReticleScale or 1)
+            local globalscalie = 1.2 * (atttbl.RTScopeReticleScale or 1)
 
             globalscalie = globalscalie * (atttbl.ScopeScreenRatio or 0.5) * 1/0.7
             
@@ -434,13 +434,15 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                     end
 
                     if reticle or legacydrawfunc or newdrawfunc then
-                        local lerped = LerpVector(sightamt, modelpos, rt_eyepos)
+                        local dir = modelpos - rt_eyepos
+                        local eyedistance = dir:Dot(modelforward)
+                        local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
 
-                        if legacydrawfunc then drawscopequad(0.6 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end
+                        if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end
 
                         if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end
 
-                        if reticle then drawscopequad(0.6 * globalscalie, 2, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
+                        if reticle then drawscopequad(2 * globalscalie, 2, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
                     end
 
                     if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then

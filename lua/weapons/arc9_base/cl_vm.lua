@@ -33,27 +33,32 @@ local arc9_cust_light_brightness = GetConVar("arc9_cust_light_brightness")
 local arc9_dev_benchgun = GetConVar("arc9_dev_benchgun")
 local arc9_fx_adsblur = GetConVar("arc9_fx_adsblur")
 
-SWEP.RT_ScopeModelsEndPositions = {}
+-- local RT_ScopeModelsEndPositions = {}
 
-local function getscopebound(self, scopeent, worldvmpos, worldvmang)
-    if !IsValid(scopeent) then return 20 end
-    local modelmodel = scopeent:GetModel()
-    if !self.RT_ScopeModelsEndPositions[modelmodel] then
-        self.RT_ScopeModelsEndPositions[modelmodel] = 20 -- fallback until we get good one
-        timer.Simple(1.5, function() 
-            if !IsValid(scopeent) then return 20 end
-            local owo, uwu = scopeent:GetModelBounds()
-            owo = owo * (scopeent.Scale or Vector(1, 1, 1))
-            uwu = uwu * (scopeent.Scale or Vector(1, 1, 1))
-            local awoo, uwoo = self:GetAttachmentPos(scopeent.slottbl, false, false, true)
+-- local function getscopebound(self, worldvmpos, worldvmang) -- this is a wrong place to get att pos
+--     local modelmodel
+--     if IsValid(self.RTScopeModel) then
+--         modelmodel = self.RTScopeModel:GetModel()
+--         if !RT_ScopeModelsEndPositions[modelmodel] and (RT_ScopeModelsEndPositions[modelmodel] != 0 or RT_ScopeModelsEndPositions[modelmodel] != 20) then
+--                 local scopeent = self.RTScopeModel
+--                 local owo, uwu = scopeent:GetModelBounds()
+--                 owo = owo * (scopeent.Scale or Vector(1, 1, 1))
+--                 uwu = uwu * (scopeent.Scale or Vector(1, 1, 1))
+--                 local awoo, uwoo = self:GetAttachmentPos(scopeent.slottbl, false, false, true)
+--                 -- print(awoo, uwoo)
+--                 if awoo and awoo[1] != 0 then
+--                     local scopelength = WorldToLocal(awoo, uwoo, worldvmpos, worldvmang).x + uwu.x
+--                     print("calculated scope length of ", string.match(modelmodel, "([^/]+).mdl$"), scopelength)
+--                     if scopelength > 5 and scopelength < 40 then
+--                         RT_ScopeModelsEndPositions[modelmodel] = scopelength
+--                     end
+--                     -- debugoverlay.BoxAngles(awoo, owo, uwu, uwoo, 0.1, color_white)
+--             end
+--         end
+--     end
 
-            self.RT_ScopeModelsEndPositions[modelmodel] = math.Clamp(WorldToLocal(awoo, uwoo, worldvmpos, worldvmang).x + uwu.x, 0, 20.5)
-            -- debugoverlay.BoxAngles(awoo, owo, uwu, uwoo, 0.1, color_white)
-        end)
-    end
-
-    return self.RT_ScopeModelsEndPositions[modelmodel]
-end
+--     return modelmodel and RT_ScopeModelsEndPositions[modelmodel] or 20
+-- end
 
 local meowector = Vector(1, 0, 0)
 
@@ -72,7 +77,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
             
             local vmvmpos = -self.ViewModelPos
             
-            meowector.x = getscopebound(self, self.RTScopeModel, worldvmpos, worldvmang)
+            meowector.x = IsValid(self.RTScopeModel) and self.RTScopeModel.RTScopeLength or 20
 
             worldvmpos = worldvmpos + worldvmang:Forward() * meowector.x
             worldvmang = worldvmang - Angle(worldvmang.p, worldvmang.y, 0) + MainEyeAngles()
