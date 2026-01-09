@@ -29,15 +29,15 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     if !wpn.ARC9 then return end
 
     local atttbl = wpn:IsScoping()
-        -- render.DepthRange( 0.1, 0.1 )
-        wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
-        -- wpn:RenderRT(wpn:GetRTScopeMagnification(), atttbl)
+    
+    wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
+end)
 
-    -- if atttbl then
-    --     local mag = wpn:GetRTScopeMagnification()
+hook.Add("RenderScreenspaceEffects", "ARC9_PofsttDrawViewModels", function()
+    local wpn = LocalPlayer():GetActiveWeapon()
 
-    --     -- fov = wpn:WidescreenFix(wpn:GetViewModelFOV())
+    if !wpn.ARC9 then return end
 
-    --     wpn:DoCheapScope(mag, atttbl)
-    -- end
+    local atttbl = wpn:IsScoping()
+    wpn:DrawRTReticle(wpn.RTScopeModel, wpn.RTScopeAtttbl or {}, 1, nil, ARC9_cheapscopes:GetBool())
 end)

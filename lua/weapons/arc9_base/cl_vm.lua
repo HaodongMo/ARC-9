@@ -47,7 +47,7 @@ local function getscopebound(self, scopeent, worldvmpos, worldvmang)
             uwu = uwu * (scopeent.Scale or Vector(1, 1, 1))
             local awoo, uwoo = self:GetAttachmentPos(scopeent.slottbl, false, false, true)
 
-            self.RT_ScopeModelsEndPositions[modelmodel] = math.Clamp(WorldToLocal(awoo, uwoo, worldvmpos, worldvmang).x + uwu.x, 3, 20.5)
+            self.RT_ScopeModelsEndPositions[modelmodel] = math.Clamp(WorldToLocal(awoo, uwoo, worldvmpos, worldvmang).x + uwu.x, 0, 20.5)
             -- debugoverlay.BoxAngles(awoo, owo, uwu, uwoo, 0.1, color_white)
         end)
     end
@@ -78,17 +78,8 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
             worldvmang = worldvmang - Angle(worldvmang.p, worldvmang.y, 0) + MainEyeAngles()
 
             local vmpos, vmang = LocalToWorld(vmvmpos, -self.ViewModelAng, worldvmpos, worldvmang)
-
-            local laserthing = EyePos()
-            local eyeang = EyeAngles()
-            laserthing = laserthing + eyeang:Forward() * meowector.x
-            cam.Start3D(laserthing, EyeAngles(), ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 16000)
-                cam.IgnoreZ(true)
-                self:DrawLasers(false)
-                cam.IgnoreZ(false)
-            cam.End3D()
             
-            cam.Start3D(vmpos, vmang, ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 1600)
+            cam.Start3D(vmpos, vmang, ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 0.5, 16000)
         else
             local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
 
@@ -96,10 +87,10 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
             vmpso = vmpso - vmagn:Up() * spso.z
             vmpso = vmpso - vmagn:Right() * spso.x
 
-            cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 100040)
+            cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 16000)
 
         end
-        -- render.DepthRange( 0.1, 0.1 )
+        render.DepthRange( 0.1, 0.1 )
 
         return
     end
@@ -212,11 +203,6 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     
 
 	if !isDepthPass then
-    	-- if self:GetHolsterTime() < CurTime() and sightamount > 0 then
-    	if ARC9_ENABLE_NEWSCOPES_MEOW and !ARC9_cheapscopes:GetBool() and self:GetHolsterTime() < CurTime() then
-            if ARC9.DepthBufferEnabled == true then self:DrawRTReticle(self.RTScopeModel or vm, self.RTScopeAtttbl or self:GetTable(), 1, false, true) end
-    	end
-        
     	if !ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
     	    self:DoRTScope(vm, self:GetTable(), sightamount > 0)
     	end
@@ -264,8 +250,18 @@ function SWEP:ViewModelDrawn(ent, flags)
     self.StoredVMAngles = self:GetCameraControl()
     self:DrawCustomModel(false)
     render.DepthRange( 0.0, 0.1 )
+    
     self:DoRHIK()
-    if ARC9.RTScopeRender then return end
+
+    if ARC9.RTScopeRender then 
+        if !isDepthPass then
+            render.DepthRange( 0.1, 0.1 )
+            self:DrawLasers(false)
+            render.DepthRange( 0.0, 0.1 )
+        end
+        return 
+    end
+
     self:PreDrawThirdArm()
 
 	if !isDepthPass then
