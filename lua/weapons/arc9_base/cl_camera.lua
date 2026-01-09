@@ -60,8 +60,9 @@ function SWEP:GetSmoothedFOVMag()
     local speed = 1
 
     if self:GetInSights() then
-        local target = self:GetMagnification()
-        local sightdelta = self:GetSightAmount()
+        local target, target2 = self:GetMagnification()
+        local sightdelta_old = self:GetSightAmount()
+        local sightdelta = sightdelta_old
 		local curTime = UnPredictedCurTime()
 		local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
 		local reloadanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
@@ -82,12 +83,12 @@ function SWEP:GetSmoothedFOVMag()
 			
 		if shotgun and self:GetReloading() then target = target * 0.95 end
 		
-        mag = Lerp(sightdelta, 1, target)
+        local sightdelta2 = math.ease.InCirc(sightdelta_old)
+        mag = Lerp(sightdelta, 1, Lerp(sightdelta2, target2, target))
 
-        -- mag = target
-        speed = Lerp(self:GetSightAmount(), speed, 10)
+        speed = Lerp(sightdelta2, speed, (target > 2 and sightdelta2 < 1) and 50 or 10)
 	else
-		speed = Lerp(self:GetSightAmount(), 15, 10)
+		speed = Lerp(self:GetSightAmount(), 25, 10)
     end
 
     local diff = math.abs(self.SmoothedMagnification - mag)

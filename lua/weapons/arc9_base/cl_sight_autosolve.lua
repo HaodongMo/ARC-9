@@ -81,6 +81,7 @@ function SWEP:GetMagnification()
     local sight = self:GetSight()
 
     local target = sight.Magnification or 1
+    local target2 = target
 
     if arc9_cheapscopes:GetBool() and !sight.Disassociate then
         local atttbl = sight.atttbl
@@ -92,12 +93,12 @@ function SWEP:GetMagnification()
         if atttbl and atttbl.RTScope and !atttbl.RTCollimator then
             local realzoomzoom = self:GetRealZoom(sight)
             local cheapscale = math.max(1 / realzoomzoom, 0.85)
-            target = math.max(target * realzoomzoom, 1.0) * cheapscale -- 0.85 cuz scale in vmt
+            target2 = math.max(target2 * realzoomzoom, 1.0) * cheapscale -- 0.85 cuz scale in vmt
             rtcheapmat:SetFloat("$scale", cheapscale)
         end
     end
 
-    return target
+    return target2, target
 end
 
 local aa = GetConVar("arc9_aimassist")
