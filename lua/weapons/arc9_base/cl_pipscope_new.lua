@@ -208,6 +208,7 @@ function SWEP:RenderRTCheap(magnification, atttbl)
 
         render.SetMaterial( rtcheapmat )
         render.DrawScreenQuad()
+        render.UpdateScreenEffectTexture()
         render.SetMaterial( rtcheapsharpen )
         render.DrawScreenQuad()
 
@@ -372,7 +373,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                 cam.End3D()
             end
             
-            local globalscalie = 1.41 * (atttbl.RTScopeReticleScale or 1)
+            -- local globalscalie = 1.41 * (atttbl.RTScopeReticleScale or 1)
+            local globalscalie = 0.5 * (atttbl.RTScopeReticleScale or 1)
 
             local reticle = sight.Reticle or atttbl.RTScopeReticle
             local color = atttbl.RTScopeColor or color_white
@@ -424,8 +426,10 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
 
             -- local fuck_fov = (ARC9.DepthBufferEnabled and rt_viewsetup_fov or rt_viewsetup_fov_unscaled) -- ????
-            local fuck_fov = 99
-            fuck_fov = fuck_fov + Lerp(sightamt, (self.SmoothedViewModelFOV or 90) - self.FOV, math.Remap(LocalPlayer():GetFOV(), 75, 100, 0, -21))
+            -- local fuck_fov = 99
+            local fuck_fov = self.ViewModelFOV
+            -- print(self.ViewModelFOV)
+            -- fuck_fov = fuck_fov + Lerp(sightamt, (self.SmoothedViewModelFOV or 90) - self.FOV, math.Remap(LocalPlayer():GetFOV(), 75, 100, 0, -21))
 
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
@@ -485,11 +489,11 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             end
 
             cam.Start2D() -- shader bleeds a bit, drawing a box to keep it square
-                surface.SetDrawColor(0, 0, 0, 255)
-                surface.DrawRect(0, 0, scrw/2 - scrh/2, scrh)
-                surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
-                surface.SetMaterial(shadow2)
-                surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
+                -- surface.SetDrawColor(0, 0, 0, 255)
+                -- surface.DrawRect(0, 0, scrw/2 - scrh/2, scrh)
+                -- surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
+                -- surface.SetMaterial(shadow2)
+                -- surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
 
                 if atttbl.RTScopeNew_DrawFunc2D then
                     atttbl.RTScopeNew_DrawFunc2D(self, scrw, scrh, sight)
@@ -515,7 +519,7 @@ function SWEP:GetCheapScopeScale(scale)
 end
 
 
-if ARC9.Dev(2) then
+-- if ARC9.Dev(1) then
     local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
         ["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
         ["$translucent"] = 0,
@@ -523,13 +527,13 @@ if ARC9.Dev(2) then
     } )
 
     hook.Add("HUDPaint", "arc9_test_pipscope", function()
-        if ARC9.Dev(2) then
+        -- if ARC9.Dev(1) then
             surface.SetDrawColor(255, 255, 255)
             surface.SetMaterial(testmat)
             surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
-        end
+        -- end
     end)
-end
+-- end
 
 
 

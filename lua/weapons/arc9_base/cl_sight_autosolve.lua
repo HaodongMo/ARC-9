@@ -75,6 +75,8 @@ function SWEP:GetRealZoom(sight)
     end
 end
 
+local rtcheapmat = Material("effects/arc9/rt_cheap")
+
 function SWEP:GetMagnification()
     local sight = self:GetSight()
 
@@ -88,7 +90,10 @@ function SWEP:GetMagnification()
         end
 
         if atttbl and atttbl.RTScope and !atttbl.RTCollimator then
-            target = math.max(target * self:GetRealZoom(sight), 1)
+            local realzoomzoom = self:GetRealZoom(sight)
+            local cheapscale = math.max(1 / realzoomzoom, 0.85)
+            target = math.max(target * realzoomzoom, 1.0) * cheapscale -- 0.85 cuz scale in vmt
+            rtcheapmat:SetFloat("$scale", cheapscale)
         end
     end
 
