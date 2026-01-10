@@ -442,59 +442,50 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
 
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
-                    local eyedistance
-                    local mreow
+                    local toscreen = !nonatt and modelpos:ToScreen() or {x = scrw/2, y = scrh/2}
+                    
+                    local offsetx, offsety = 
+                        (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1),
+                        (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1)
 
+                    local mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
+                    
+                    local eyedistance2 = modelpos_original:Distance(rt_eyepos) - origsighttablepos.y + mreow * 20
+
+                    -- shader settings
                     if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
                         shader_VIG_FORG = shader_VIG_FORG_Base / ((atttbl.RTScopeNew_ShadowIntensity or 1) * 0.5)
                         shader_CA_STRENGTH = shader_CA_STRENGTH_Base * (atttbl.RTScopeNew_ChromaticAberrationMult or 1)
-                        local toscreen = !nonatt and modelpos:ToScreen() or {x = scrw/2, y = scrh/2}
-                        
-                        local offsetx, offsety = 
-                            (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1),
-                            (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1)
-                            -- print(offsetx, offsety)
+                        CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, math.Clamp((mreow + eyedistance2 * 0.1) * shader_EYE_DISTANCE_INFLUENCE, -0.15, 0.8))
+                    end
 
-                        mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
-                        
-                        eyedistance = modelpos_original:Distance(rt_eyepos) - origsighttablepos.y + mreow * 20
-                        -- mreow = math.Clamp(eyedistance * shader_EYE_DISTANCE_INFLUENCE + mreow, -0.15, 0.8)
-                        mreow = mreow + eyedistance * 0.1
-                        CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, math.Clamp(mreow * shader_EYE_DISTANCE_INFLUENCE, -0.15, 0.8))
-                        
-                        -- lenseshader:SetFloat("$c3_x", offsetx + 0.5)
-                        -- lenseshader:SetFloat("$c3_y", offsety + 0.5)
-                        -- lenseshader:SetFloat("$c0_x", mreow)
+                    -- drawing stuffs
+                    local dir = modelpos - rt_eyepos
+                    local eyedistance = dir:Dot(modelforward)
+                    local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
+
+                    if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end -- legacy reticle drawfunc
+
+                    if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end -- new drawfunc
+
+                    if reticle then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
+
+                    local diff = rt_eyepos - modelpos
+                    local funnynumber2 = ( 1 / math.max(0.1, mreow * 3)) - math.max(0, (-modelforward):Dot(diff) / diff:Length() - 0.9) * 20 + 2
+                    
+                    local diffy = (modelang - MainEyeAngles())
+                    diffy.x = math.Clamp(diffy.x, -3, 3)
+                    diffy.y = math.Clamp(diffy.y, -3, 3)
+                    diffy.z = math.Clamp(diffy.z, -1, 1)
+
+                    if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
+                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 10 + (scopebound[2] - scopebound[1]), modelang + diffy * 10, lerped, shadow, color_white) -- end of scope shadow
+                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 0 + (scopebound[2] - scopebound[1]), modelang + diffy * -5, lerped, shadow, color_white) -- end of scope shadow
                     end
                     
-                    if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
-                        local modelpos2 = modelpos - modelforward * (scopebound[1] - scopebound[2])
-                        local lerped2 = LerpVector(sightamt, modelpos2, rt_eyepos)
-                        -- drawscopequad(7 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 13, modelang, lerped2, shadow, color_white) -- end of scope shadow
-                        -- drawscopequad(25 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 25, modelang, modelpos2, shadow2, color_white) -- end of scope shadow
-                        drawscopequad(5 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 13, modelang, lerped2, shadow2, color_white) -- end of scope shadow
-                    end
-
-                    if reticle or legacydrawfunc or newdrawfunc then
-                        local dir = modelpos - rt_eyepos
-                        local eyedistance = dir:Dot(modelforward)
-                        local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
-
-                        if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end
-
-                        if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end
-
-                        if reticle then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
-                    end
-
                     if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then
-                        local modelpos3 = modelpos - modelforward * 2
-                        local lerped3 = LerpVector(sightamt, modelpos3, rt_eyepos)
-                        -- drawscopequad(1 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
-                        drawscopequad((1.2 - math.Clamp(mreow* 0.7, -0.1, 1)) * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -2, modelang, modelpos, shadow, color_white) -- small shadow before reticle
-    
+                        drawscopequad(12.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang, lerped, shadow, color_white) -- small shadow before reticle
                     end
-
                 cam.IgnoreZ(false)
             cam.End3D()
 
@@ -542,7 +533,7 @@ function SWEP:GetCheapScopeScale(scale)
 end
 
 
--- if ARC9.Dev(1) then
+if ARC9.Dev(2) then
     local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
         ["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
         ["$translucent"] = 0,
@@ -550,13 +541,13 @@ end
     } )
 
     hook.Add("HUDPaint", "arc9_test_pipscope", function()
-        -- if ARC9.Dev(1) then
+        if ARC9.Dev(2) then
             surface.SetDrawColor(255, 255, 255)
             surface.SetMaterial(testmat)
             surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
-        -- end
+        end
     end)
--- end
+end
 
 
 

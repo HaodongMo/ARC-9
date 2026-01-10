@@ -614,7 +614,7 @@ function SWEP:GetViewModelFOV()
     if self:GetInSights() then
         sightdelta = Lerp(0.21, math_ease.OutBack(sightdelta), math_ease.InOutSine(sightdelta))
     else
-        sightdelta = Lerp(0.65, math_ease.InOutSine(sightdelta), math_ease.InBack(sightdelta))
+        sightdelta = Lerp(0.65, math_ease.InOutSine(sightdelta), math_ease.InOutBack(sightdelta))
     end
 
     return Lerp(sightdelta, target_start, self.SmoothedViewModelFOV)
