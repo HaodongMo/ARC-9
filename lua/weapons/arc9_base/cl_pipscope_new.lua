@@ -170,6 +170,7 @@ local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
 local shadow = Material("arc9/shadow3.png", "mips smooth")
 local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 -- local black = Material("arc9/ahmad.png", "mips smooth")
+local black2 = Material("arc9/ahmad.png", "mips smooth")
 local black = Material("vgui/black")
 local rtcheapmat = Material("effects/arc9/rt_cheap")
 local rtcheapsharpen = Material("effects/arc9/rt_cheap_sharpen")
@@ -345,15 +346,26 @@ end
 
 function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
     if !IsValid(model) then return end
+
+    local modelang = model:GetAngles()
+    local modelforward = modelang:Forward()
+    local modelpos_original = model:GetPos()
+
+    local diff = MainEyePos() - modelpos_original
+    local dott = (-modelforward):Dot(diff) / diff:Length()
     
+    if dott < 0.9 then -- not looking at the scope
+        active = false
+    end
+
+    model.RTScopeDrawingRN = active
+
     if active then
         if self:ShouldDoScope() then
             self.RenderingRTScope = true
             local sight = self:GetSight()
 
-            local sightamt = self:GetSightDelta()
-            if self:GetInSights() then sightamt = math.ease.OutQuart(sightamt)
-            else sightamt = math.ease.InQuart(sightamt) end
+            local sightamt = math.ease.InBack(self:GetSightDelta())
 
             render.PushRenderTarget(cheap and rt_cheap or rtmat)
 
@@ -416,20 +428,16 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             
             local scopebound = nonatt and {20, 10} or getscopebound(model)
 
-            local modelang = model:GetAngles()
-
             if atttbl.RTScopeNew_FixAngle then
                 if atttbl.RTScopeNew_FixAngle == "print" then
                     print("Angle(".. modelang[1] .. ", " .. modelang[2] .. ", " .. modelang[3] .. ")")
                 else
-                    modelang:RotateAroundAxis(modelang:Forward(), -atttbl.RTScopeNew_FixAngle[3])
+                    modelang:RotateAroundAxis(modelforward, -atttbl.RTScopeNew_FixAngle[3])
                     modelang:RotateAroundAxis(modelang:Right(), -atttbl.RTScopeNew_FixAngle[1])
                     modelang:RotateAroundAxis(modelang:Up(), -atttbl.RTScopeNew_FixAngle[2])
                 end
             end
 
-            local modelforward = modelang:Forward()
-            local modelpos_original = model:GetPos()
             local modelpos = modelpos_original
             - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
             - modelforward * (-scopebound[1]) / (atttbl.Scale or 1)
@@ -470,11 +478,11 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
 
                     if reticle then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
 
-                    local diff = rt_eyepos - modelpos
-                    local funnynumber2 = ( 1 / math.max(0.1, mreow * 3)) - math.max(0, (-modelforward):Dot(diff) / diff:Length() - 0.9) * 20 + 2
+                    local funnynumber2 = ( 1 / math.max(0.1, mreow * 3)) - math.max(0, dott - 0.9) * 20 + 2
+                    funnynumber2 = funnynumber2 * math.max(0, (dott - 0.9) * 10)
                     
                     local diffy = (modelang - MainEyeAngles())
-                    diffy.x = math.Clamp(diffy.x, -3, 3)
+                    diffy.x = math.Clamp(diffy.x, -0, 0)
                     diffy.y = math.Clamp(diffy.y, -3, 3)
                     diffy.z = math.Clamp(diffy.z, -1, 1)
 
@@ -521,8 +529,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
         -- model:SetSubMaterial(1, "effects/arc9/rt")
     else
-        -- rtsurf:SetTexture("$basetexture", "vgui/black")
-        -- model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
+        rtsurf:SetTexture("$basetexture", "vgui/black")
+        model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
     end
 end
 
