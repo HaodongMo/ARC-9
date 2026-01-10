@@ -26,8 +26,6 @@ local vmAddZ = GetConVar("arc9_vm_addz")
 local arc9DevBenchGun = GetConVar("arc9_dev_benchgun")
 local isSingleplayer = game.SinglePlayer()
 
-local newadsstyle = GetConVar("arc9_vm_adsstyle")
-
 local Lerp = function(a, v1, v2)
     local d = v2 - v1
 

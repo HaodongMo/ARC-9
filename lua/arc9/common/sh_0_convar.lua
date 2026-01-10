@@ -972,11 +972,6 @@ local conVars = {
         replicated = true
     },
     {
-        name = "vm_adsstyle",
-        default = "0",
-        client = true
-    },
-    {
         name = "drawprojectedlights",
         default = "1",
         client = true
