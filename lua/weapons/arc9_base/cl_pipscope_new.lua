@@ -350,6 +350,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
     local modelang = model:GetAngles()
     local modelforward = modelang:Forward()
     local modelpos_original = model:GetPos()
+    local toscreen
 
     local diff = MainEyePos() - modelpos_original
     local dott = (-modelforward):Dot(diff) / diff:Length()
@@ -365,7 +366,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             self.RenderingRTScope = true
             local sight = self:GetSight()
 
-            local sightamt = math.ease.InBack(self:GetSightDelta())
+            local sightamt_orig = self:GetSightDelta()
+            local sightamt = math.ease.InBack(sightamt_orig)
 
             render.PushRenderTarget(cheap and rt_cheap or rtmat)
 
@@ -450,7 +452,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
 
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
-                    local toscreen = !nonatt and modelpos:ToScreen() or {x = scrw/2, y = scrh/2}
+                    toscreen = !nonatt and modelpos:ToScreen() or {x = scrw/2, y = scrh/2}
                     
                     local offsetx, offsety = 
                         (math.Clamp(toscreen.x / scrw, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1),
@@ -478,8 +480,12 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
 
                     if reticle then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
 
-                    local funnynumber2 = ( 1 / math.max(0.1, mreow * 3)) - math.max(0, dott - 0.9) * 20 + 2
-                    funnynumber2 = funnynumber2 * math.max(0, (dott - 0.9) * 10)
+                    -- local funnynumber2 = ( 1 / math.max(0.1, mreow * 2)) - math.max(0, dott - 0.9) * 20 + 2
+                    -- local funnynumber2 = ( 1 / math.max(0.1, mreow * 2)) - math.max(0, dott - 0.9) * 20 + 2
+                    -- funnynumber2 = math.max(1.5, funnynumber2 * math.max(0, (dott - 0.9) * 10))
+                    -- print(eyedistance2)
+                    -- local funnynumber2 = 
+                    local funnynumber2 = (self:GetInSights() and sightamt_orig <= 1) and Lerp(sightamt_orig, 2, 7.5) or 7.5 - math.Clamp(eyedistance2 * 1, 0, 6)
                     
                     local diffy = (modelang - MainEyeAngles())
                     diffy.x = math.Clamp(diffy.x, -0, 0)
@@ -487,12 +493,12 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                     diffy.z = math.Clamp(diffy.z, -1, 1)
 
                     if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
-                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 10 + (scopebound[2] - scopebound[1]), modelang + diffy * 10, lerped, shadow, color_white) -- end of scope shadow
-                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 0 + (scopebound[2] - scopebound[1]), modelang + diffy * -5, lerped, shadow, color_white) -- end of scope shadow
+                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 10 + (scopebound[2] - scopebound[1]), modelang + diffy * 7, lerped, shadow, color_white) -- end of scope shadow
+                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 0 + (scopebound[2] - scopebound[1]), modelang + diffy * -3, lerped, shadow, color_white) -- end of scope shadow
                     end
                     
                     if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then
-                        drawscopequad(12.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang, lerped, shadow, color_white) -- small shadow before reticle
+                        drawscopequad(12.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang + diffy * 5, lerped, shadow, color_white) -- small shadow before reticle
                     end
                 cam.IgnoreZ(false)
             cam.End3D()
@@ -509,14 +515,21 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                 surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
                 surface.SetMaterial(shadow2)
                 surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
-            cam.End2D()
+            -- cam.End2D()
 
             if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
+                -- surface.SetDrawColor(255, 255, 255, 255)
+                -- surface.SetMaterial(lenseshader)
+                -- surface.DrawTexturedRect(toscreen.x - scrw/2, toscreen.y - scrh/2, scrw, scrh)
+                -- surface.SetDrawColor(0, 0, 0, 255)
+                -- surface.DrawRect(toscreen.x - scrw/2 - scrw, toscreen.y - scrh/2 - scrh, scrw, scrh*3)
+                -- surface.DrawRect(toscreen.x - scrw/2, toscreen.y - scrh/2 - scrh, scrw, scrh)
+
                 render.SetMaterial(lenseshader)
                 render.DrawScreenQuad()
             end
 
-            cam.Start2D()
+            -- cam.Start2D()
                 if atttbl.RTScopeNew_DrawFunc2D then
                     atttbl.RTScopeNew_DrawFunc2D(self, scrw, scrh, sight)
                 end
