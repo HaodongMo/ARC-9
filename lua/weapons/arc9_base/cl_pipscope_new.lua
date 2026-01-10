@@ -72,7 +72,7 @@ local shader_VIG_R1 = 0.124 -- vignette rad1
 local shader_VIG_R2 = 0.7 -- vignette rad2
 
 local shader_EYE_OFFSET_INFLUENCE = 0.8
-local shader_EYE_DISTANCE_INFLUENCE = 10.1
+local shader_EYE_DISTANCE_INFLUENCE = 0.1
 
 local scrlength = math.sqrt(scrw * scrw + scrh * scrh)
 
@@ -458,11 +458,9 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                         mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
                         
                         eyedistance = modelpos_original:Distance(rt_eyepos) - origsighttablepos.y + mreow * 20
-                        -- print(eyedistance)
                         -- mreow = math.Clamp(eyedistance * shader_EYE_DISTANCE_INFLUENCE + mreow, -0.15, 0.8)
-                        mreow = mreow + math.Clamp(eyedistance * 0.3, -0.15, 0.8)
-                        -- print(mreow)
-                        CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, mreow)
+                        mreow = mreow + eyedistance * 0.1
+                        CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, math.Clamp(mreow * shader_EYE_DISTANCE_INFLUENCE, -0.15, 0.8))
                         
                         -- lenseshader:SetFloat("$c3_x", offsetx + 0.5)
                         -- lenseshader:SetFloat("$c3_y", offsety + 0.5)

@@ -1,8 +1,6 @@
 local vignette = Material("arc9/bgvignette.png", "mips smooth")
 -- local vignette2 = Material("arc9/bgvignette2.png", "mips smooth")
 
-local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
-
 local adsblur = Material("pp/arc9/adsblur")
 local function arc9toytown(amount) -- cool ass blur
     if amount > 0 then
