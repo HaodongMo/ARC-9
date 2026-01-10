@@ -74,7 +74,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         if ARC9_ENABLE_NEWSCOPES_MEOW then
             local worldvmpos, worldvmang = vm:GetPos(), vm:GetAngles()
         
-            local scopelength = (IsValid(self.RTScopeModel) and self.RTScopeModel.RTScopeLength or 20) * 0.75
+            local scopelength = (IsValid(self.RTScopeModel) and self.RTScopeModel.RTScopeLength or 20) * 0.9
 
             worldvmpos = worldvmpos + worldvmang:Forward() * scopelength
 
@@ -83,7 +83,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
             
             local funnyfov = self:WidescreenFix(self:GetViewModelFOV()) / self:GetRealZoom(self:GetSight())
 
-            cam.Start3D(vmpos, vmang, funnyfov, nil, nil, nil, nil, scopelength - 5, 16000)
+            if !arc9_dev_benchgun:GetBool() then cam.Start3D(vmpos, vmang, funnyfov, nil, nil, nil, nil, 0.1, 16000) end
         else
             local vmpso, vmagn, spso = self.LastViewModelPos, self.LastViewModelAng, self:GetSightPositions()
 
@@ -91,8 +91,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
             vmpso = vmpso - vmagn:Up() * spso.z
             vmpso = vmpso - vmagn:Right() * spso.x
 
-            cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 16000)
-
+            if !arc9_dev_benchgun:GetBool() then cam.Start3D(vmpso, nil, ARC9.RTScopeRenderFOV * 0.85, nil, nil, nil, nil, 3, 16000) end
         end
         render.DepthRange( 0.1, 0.1 )
 
@@ -318,7 +317,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
 
 	if !isDepthPass then
     	local newmzpcfs = {}
-        if ARC9.RTScopeRender then cam.IgnoreZ(false) end
+        if ARC9.RTScopeRender then render.DepthRange( 0.1, 0.1 ) end
 
     	for _, pcf in ipairs(self.MuzzPCFs) do
     	    if IsValid(pcf) then

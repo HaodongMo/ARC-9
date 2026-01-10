@@ -29,7 +29,7 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     if !wpn.ARC9 then return end
 
     local atttbl = wpn:IsScoping()
-    
+    ARC9.DrawPhysBullets()
     wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
 end)
 

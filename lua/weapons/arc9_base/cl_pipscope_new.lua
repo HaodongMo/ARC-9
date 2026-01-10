@@ -72,7 +72,7 @@ local shader_VIG_R1 = 0.124 -- vignette rad1
 local shader_VIG_R2 = 0.7 -- vignette rad2
 
 local shader_EYE_OFFSET_INFLUENCE = 0.8
-local shader_EYE_DISTANCE_INFLUENCE = 0.1
+local shader_EYE_DISTANCE_INFLUENCE = 10.1
 
 local scrlength = math.sqrt(scrw * scrw + scrh * scrh)
 
@@ -358,16 +358,34 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             render.PushRenderTarget(cheap and rt_cheap or rtmat)
 
             if cheap or !arc9_fx_rtvm:GetBool() then
-                cam.Start3D(EyePos() + MainEyeAngles():Forward() * 40, nil, rt_cheap and rt_viewsetup_fov or ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 1, 10000)
+                local fwd = MainEyeAngles():Forward()
+                -- lasers
+                cam.Start3D(rt_eyepos + fwd * 40, nil, rt_cheap and rt_viewsetup_fov_unscaled or ARC9.RTScopeRenderFOV, nil, nil, nil, nil, 1, 10000)
                     cam.IgnoreZ(true)
                     self:DrawLasers(false)
+                cam.End3D()
+
+                -- muzzleflasheas
+                cam.Start3D(rt_eyepos + fwd * (cheap and 5 or 30), nil, nil, nil, nil, nil, nil, nil, nil)
+                    local updateddepth = false
+                    local newmzpcfs = {}
+                    for _, pcf in ipairs(self.MuzzPCFs) do
+                        if IsValid(pcf) then
+                            if !updateddepth then render.UpdateFullScreenDepthTexture() updateddepth = true end
+                            pcf:Render()
+                            table.insert(newmzpcfs, pcf)
+                        end
+                    end
+
+                    self.MuzzPCFs = newmzpcfs
+                    
                     cam.IgnoreZ(false)
                 cam.End3D()
             end
             
-            local globalscalie = 1.2 * (atttbl.RTScopeReticleScale or 1)
+            local globalscalie = 4 * (atttbl.RTScopeReticleScale or 1)
 
-            globalscalie = globalscalie * (atttbl.ScopeScreenRatio or 0.5) * 1/0.7
+            globalscalie = globalscalie * (atttbl.ScopeScreenRatio or 0.5)
             
             local reticle = sight.Reticle or atttbl.RTScopeReticle
             local color = atttbl.RTScopeColor or color_white
@@ -411,47 +429,21 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             end
 
             local modelforward = modelang:Forward()
-            local modelpos = model:GetPos()
+            local modelpos_original = model:GetPos()
+            local modelpos = modelpos_original
             - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
             - modelforward * (-scopebound[1]) / (atttbl.Scale or 1)
             - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
 
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
 
-            -- local fuck_fov = (ARC9.DepthBufferEnabled and rt_viewsetup_fov or rt_viewsetup_fov_unscaled) -- ????
-            -- local fuck_fov = 99
-            local fuck_fov = self.ViewModelFOV
-            -- print(self.ViewModelFOV)
-            -- fuck_fov = fuck_fov + Lerp(sightamt, (self.SmoothedViewModelFOV or 90) - self.FOV, math.Remap(LocalPlayer():GetFOV(), 75, 100, 0, -21))
+            -- local fuck_fov = self.FOV
+            local fuck_fov = 90
 
             cam.Start3D(nil, nil, fuck_fov, nil, nil, nil, nil, 0.1, 10000)
                 cam.IgnoreZ(true)
-                    if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
-                        local modelpos2 = modelpos - modelforward * (scopebound[1] - scopebound[2] - 5)
-                        local lerped2 = LerpVector(sightamt, modelpos2, rt_eyepos)
-                        -- drawscopequad(7 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 13, modelang, lerped2, shadow, color_white) -- end of scope shadow
-                        drawscopequad(25 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 25, modelang, modelpos2, shadow2, color_white) -- end of scope shadow
-                    end
-
-                    if reticle or legacydrawfunc or newdrawfunc then
-                        local dir = modelpos - rt_eyepos
-                        local eyedistance = dir:Dot(modelforward)
-                        local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
-
-                        if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end
-
-                        if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end
-
-                        if reticle then drawscopequad(2 * globalscalie, 2, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
-                    end
-
-                    if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then
-                        local modelpos3 = modelpos - modelforward * 2
-                        local lerped3 = LerpVector(sightamt, modelpos3, rt_eyepos)
-                        -- drawscopequad(1 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
-                        drawscopequad(1 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 0, modelang, modelpos3, shadow, color_white) -- small shadow before reticle
-    
-                    end
+                    local eyedistance
+                    local mreow
 
                     if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
                         shader_VIG_FORG = shader_VIG_FORG_Base / ((atttbl.RTScopeNew_ShadowIntensity or 1) * 0.5)
@@ -463,15 +455,48 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                             (math.Clamp(toscreen.y / scrh, 0.3, 0.8) - 0.5) * shader_EYE_OFFSET_INFLUENCE * (atttbl.RTScopeNew_ShadowIntensity or 1)
                             -- print(offsetx, offsety)
 
-                        local mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
-                        mreow = math.Clamp((lerped and lerped:Distance(rt_eyepos) or 0) * shader_EYE_DISTANCE_INFLUENCE - 0.15 + mreow, -0.15, 0.8)
-
+                        mreow =  math.max(math.abs(offsetx), math.abs(offsety)) * 1
+                        
+                        eyedistance = modelpos_original:Distance(rt_eyepos) - origsighttablepos.y + mreow * 20
+                        -- print(eyedistance)
+                        -- mreow = math.Clamp(eyedistance * shader_EYE_DISTANCE_INFLUENCE + mreow, -0.15, 0.8)
+                        mreow = mreow + math.Clamp(eyedistance * 0.3, -0.15, 0.8)
+                        -- print(mreow)
                         CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, mreow)
                         
                         -- lenseshader:SetFloat("$c3_x", offsetx + 0.5)
                         -- lenseshader:SetFloat("$c3_y", offsety + 0.5)
                         -- lenseshader:SetFloat("$c0_x", mreow)
                     end
+                    
+                    if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
+                        local modelpos2 = modelpos - modelforward * (scopebound[1] - scopebound[2])
+                        local lerped2 = LerpVector(sightamt, modelpos2, rt_eyepos)
+                        -- drawscopequad(7 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 13, modelang, lerped2, shadow, color_white) -- end of scope shadow
+                        -- drawscopequad(25 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 25, modelang, modelpos2, shadow2, color_white) -- end of scope shadow
+                        drawscopequad(5 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 13, modelang, lerped2, shadow2, color_white) -- end of scope shadow
+                    end
+
+                    if reticle or legacydrawfunc or newdrawfunc then
+                        local dir = modelpos - rt_eyepos
+                        local eyedistance = dir:Dot(modelforward)
+                        local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
+
+                        if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end
+
+                        if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end
+
+                        if reticle then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
+                    end
+
+                    if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then
+                        local modelpos3 = modelpos - modelforward * 2
+                        local lerped3 = LerpVector(sightamt, modelpos3, rt_eyepos)
+                        -- drawscopequad(1 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 2, modelang, lerped3, shadow, color_white) -- small shadow before reticle
+                        drawscopequad((1.2 - math.Clamp(mreow* 0.7, -0.1, 1)) * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -2, modelang, modelpos, shadow, color_white) -- small shadow before reticle
+    
+                    end
+
                 cam.IgnoreZ(false)
             cam.End3D()
 
@@ -485,8 +510,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                 surface.SetDrawColor(0, 0, 0, 255)
                 surface.DrawRect(0, 0, scrw/2 - scrh/2, scrh)
                 surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
-                -- surface.SetMaterial(shadow2)
-                -- surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
+                surface.SetMaterial(shadow2)
+                surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
             cam.End2D()
 
             if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
@@ -494,11 +519,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                 render.DrawScreenQuad()
             end
 
-            cam.Start2D() -- shader bleeds a bit, drawing a box to keep it square
-                -- surface.SetDrawColor(0, 0, 0, 255)
-                -- surface.SetMaterial(shadow2)
-                -- surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
-
+            cam.Start2D()
                 if atttbl.RTScopeNew_DrawFunc2D then
                     atttbl.RTScopeNew_DrawFunc2D(self, scrw, scrh, sight)
                 end

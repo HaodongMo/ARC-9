@@ -2,11 +2,15 @@ local lodcvar = GetConVar("arc9_lod_distance")
 local drawprojlights = GetConVar("arc9_drawprojectedlights")
 
 local function getscopebound(self, scopeent)
+    local vm = self:GetVM()
+    if !IsValid(scopeent) or !IsValid(vm) or !self:GetInSights() then return nil end
     local owo, uwu = scopeent:GetModelBounds()
     local vm = self:GetVM()
     local awoo, uwoo = scopeent:GetPos(), scopeent:GetAngles()
     local scopelength = WorldToLocal(awoo, uwoo, vm:GetPos(), vm:GetAngles()).x + uwu.x
-    -- print("calculated scope length of ", scopeent:GetModel(), scopelength)
+    -- debugoverlay.BoxAngles(awoo, owo, uwu, uwoo, 2, color_white)
+    if scopelength < 5 or scopelength > 45 then return nil end
+    print("calculated scope length of", string.match(scopeent:GetModel(), "([^/]+).mdl$"), scopelength)
     return scopelength
 end
 
@@ -178,7 +182,6 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                         local active = slottbl.Address == self:GetActiveSightSlotTable().Address
                         if !ARC9_ENABLE_NEWSCOPES_MEOW then self:DoRTScope(model, atttbl, active) end
 
-                        if !model.RTScopeLength then model.RTScopeLength = getscopebound(self, model) end
 
                         self.RTScopeModel = model
                         self.RTScopeAtttbl = atttbl
@@ -196,6 +199,8 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
                 model:DrawModel()
                 if drawprojlights:GetBool() or rttenabled == false then render.RenderFlashlights(function() model:DrawModel() end) end
             end
+
+            if self.RTScopeModel == model and !model.RTScopeLength then model.RTScopeLength = getscopebound(self, model) end
 
             if atttbl.DrawFunc then
                 atttbl.DrawFunc(self, model, wm)
