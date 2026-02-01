@@ -803,7 +803,7 @@ ARC9ColorPanel.MatSelect = Material("arc9/ui/circle128.png", "mips smooth")
 ARC9ColorPanel.MatSelect2 = Material("arc9/ui/circle128_2.png", "mips smooth")
 
 function ARC9ColorPanel:Init()
-    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(96)) --108
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(110)) -- increased for hex input
     self:MakePopup()
     self:SetDraggable(true)
     self:SetAlpha(0)
@@ -818,6 +818,37 @@ function ARC9ColorPanel:Init()
     }
 
     self.ResultColor = self.startcolor or Color(255, 0, 0)
+
+    -- Hex input field
+    local hexentry = vgui.Create("DTextEntry", self)
+    hexentry:SetPos(ARC9ScreenScale(2.7), ARC9ScreenScale(84))
+    hexentry:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(12))
+    hexentry:SetFont("ARC9_8")
+    hexentry:SetTextColor(color_white)
+    hexentry:SetPaintBackground(false)
+    hexentry:SetText(string.format("#%02X%02X%02X", self.ResultColor.r, self.ResultColor.g, self.ResultColor.b))
+    self.hexentry = hexentry
+
+    hexentry.Paint = function(self2, w, h)
+        surface.SetDrawColor(0, 0, 0, 200)
+        surface.DrawRect(0, 0, w, h)
+        self2:DrawTextEntryText(color_white, ARC9.GetHUDColor("hi"), color_white)
+    end
+
+    hexentry.OnEnter = function(self2)
+        local txt = self2:GetText():gsub("#", ""):upper()
+        if #txt == 6 or #txt == 8 then
+            local r = tonumber(txt:sub(1, 2), 16)
+            local g = tonumber(txt:sub(3, 4), 16)
+            local b = tonumber(txt:sub(5, 6), 16)
+            local a = #txt == 8 and tonumber(txt:sub(7, 8), 16) or nil
+            if r and g and b then
+                local newcolor = Color(r, g, b, a or 255)
+                self:UpdateColor(newcolor)
+            end
+        end
+    end
+
     local huepanel = vgui.Create("DPanel", self)
     huepanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(13))
     huepanel:SetSize(ARC9ScreenScale(79), ARC9ScreenScale(10.5))
@@ -832,6 +863,7 @@ function ARC9ColorPanel:Init()
         self.hsvHUE = (x / self2:GetWide()) * 360
         self.ResultColor = HSVToColor(self.hsvHUE, self.hsvSAT, self.hsvVAL)
         self.hsvHUEonly = HSVToColor(self.hsvHUE, 1, 1)
+        self:UpdateHexText()
     end
 
     huepanel.OnMousePressed = function(self2, mcode)
@@ -886,6 +918,7 @@ function ARC9ColorPanel:Init()
         self.hsvSAT = x / self2:GetWide()
         self.hsvVAL = 1 - y / self2:GetTall()
         self.ResultColor = HSVToColor(self.hsvHUE, self.hsvSAT, self.hsvVAL)
+        self:UpdateHexText()
     end
 
     cube.OnMousePressed = function(self2, mcode)
@@ -921,12 +954,24 @@ function ARC9ColorPanel:UpdateColor(clr)
         self.Alpha = clr.a
         self.alphapanel.LastX = self.alphapanel:GetWide() * clr.a / 255
     end
+
+    self:UpdateHexText()
+end
+
+function ARC9ColorPanel:UpdateHexText()
+    if not IsValid(self.hexentry) then return end
+    if self.Alpha then
+        self.hexentry:SetText(string.format("#%02X%02X%02X%02X", self.ResultColor.r, self.ResultColor.g, self.ResultColor.b, math.floor(self.Alpha)))
+    else
+        self.hexentry:SetText(string.format("#%02X%02X%02X", self.ResultColor.r, self.ResultColor.g, self.ResultColor.b))
+    end
 end
 
 function ARC9ColorPanel:EnableAlpha()
     self.Alpha = 255
-    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(108)) --108
+    self:SetSize(ARC9ScreenScale(84), ARC9ScreenScale(122)) -- increased for hex input + alpha
     self.huepanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(13))
+    self.hexentry:SetPos(ARC9ScreenScale(2.7), ARC9ScreenScale(84))
     self.MatIdle = self.MatIdle2
     local alphapanel = vgui.Create("DPanel", self)
     alphapanel:SetPos(ARC9ScreenScale(2.7), self:GetTall() - ARC9ScreenScale(25.05))
@@ -940,6 +985,7 @@ function ARC9ColorPanel:EnableAlpha()
         x = math.Clamp(x, 0, self2:GetWide())
         self2.LastX = x
         self.Alpha = (x / self2:GetWide()) * 255
+        self:UpdateHexText()
     end
 
     alphapanel.OnMousePressed = function(self2, mcode)
