@@ -804,18 +804,19 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     if ap > 0 and !alreadypenned[traceEntity] then
         if traceEntity:GetClass() == "npc_helicopter" then
             local apdmg = DamageInfo()
+            apdmg:SetDamagePosition(tr.HitPos)
             apdmg:SetDamage(dmgv * ap)
             apdmg:SetDamageType(DMG_AIRBOAT)
-            apdmg:SetInflictor(dmg:GetInflictor())
-            apdmg:SetAttacker(dmg:GetAttacker())
+            apdmg:SetInflictor(self)
+            apdmg:SetAttacker(owner)
 
             if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:GetClass() == "npc_gunship" or traceEntity:GetClass() == "npc_strider" then
             local apdmg = DamageInfo()
             apdmg:SetDamage(dmgv * ap)
             apdmg:SetDamageType(DMG_BLAST)
-            apdmg:SetInflictor(dmg:GetInflictor())
-            apdmg:SetAttacker(dmg:GetAttacker())
+            apdmg:SetInflictor(self)
+            apdmg:SetAttacker(owner)
 
             if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:IsPlayer() then
