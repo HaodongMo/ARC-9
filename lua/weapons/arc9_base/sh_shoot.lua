@@ -804,12 +804,11 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     if ap > 0 and !alreadypenned[traceEntity] then
         if traceEntity:GetClass() == "npc_helicopter" then
             local apdmg = DamageInfo()
-            apdmg:SetDamagePosition(tr.HitPos) -- FIX(16.02.2026): for helicopter crashing effects
+            apdmg:SetDamagePosition(tr.HitPos)
             apdmg:SetDamage(dmgv * ap)
             apdmg:SetDamageType(DMG_AIRBOAT)
             apdmg:SetInflictor(self)
             apdmg:SetAttacker(owner)
-            -- FIX(16.02.2026): Use self as Inflictor instead of dmg:GetInflictor() to avoid NULL entity crashes.
 
             if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:GetClass() == "npc_gunship" or traceEntity:GetClass() == "npc_strider" then
@@ -819,7 +818,6 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
             apdmg:SetInflictor(self)
             apdmg:SetAttacker(owner)
 
-            -- FIX(16.02.2026): Use self as Inflictor instead of dmg:GetInflictor() to avoid NULL entity crashes.
             if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:IsPlayer() then
             if !ARC9.NoArmorPiercing then -- dumbass
