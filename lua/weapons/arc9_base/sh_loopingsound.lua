@@ -4,7 +4,6 @@ SWEP.LoopingSoundIndoor = nil
 local soundmode = GetConVar("arc9_indoorsound")
 
 function SWEP:StartLoop()
-    if self:GetUBGL() then return end
 
     if self.LoopingSound then return end
 
