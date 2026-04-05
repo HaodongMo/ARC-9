@@ -4,6 +4,16 @@ function SWEP:DoEffects()
 
     local muzz_qca = self:GetQCAMuzzle()
 
+    if vFireInstalled and self:GetProcessedValue("ShootEnt") == "vfire_ball" then
+        local data = EffectData()
+        data:SetEntity(self)
+        data:SetAttachment(muzz_qca)
+        -- We use the same QCA logic ARC9 already calculated
+        util.Effect("arc9_boc_flamethrower_vfire", data, true, true)
+        -- If you want to skip the standard muzzle flash when firing fire:
+        return
+    end
+
     local data = EffectData()
     data:SetEntity(self)
     data:SetAttachment(muzz_qca)
