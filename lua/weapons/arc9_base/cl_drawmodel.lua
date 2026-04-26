@@ -30,7 +30,7 @@ function SWEP:ShouldLOD()
     return result
 end
 
-function SWEP:DrawCustomModel(wm, custompos, customang)
+function SWEP:DrawCustomModel(wm, custompos, customang, isDepthPass)
     local owner = self:GetOwner()
 
     if !wm and !IsValid(owner) then return end
@@ -48,7 +48,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
         else
             mdl = self.WModel
 
-            if lod == 0 and mdl and mdl[1]:IsValid() then
+            if !isDepthPass and lod == 0 and mdl and mdl[1]:IsValid() then
                 mdl[1]:SetMaterial(self:GetProcessedValue("Material", true))
 
                 for ind = 0, 31 do
@@ -91,6 +91,8 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             local atttbl = self:GetFinalAttTable(slottbl)
 
             if !IsValid(model) then self:KillModel() return end
+
+            if isDepthPass and atttbl.StickerMaterial then return end
 
             if !onground or model.OptimizPrevWMPos != self:GetPos() then -- mega optimiz
                 model.OptimizPrevWMPos = onground and self:GetPos() or nil
@@ -181,7 +183,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang)
             if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam and !onground and !isnpc) then
                 -- if !wm then model:SetRenderOrigin(self.ViewModelPos or (IsValid(self:GetVM()) and self:GetVM():GetPos() or self:GetPos())) end
                 model:DrawModel()
-                if drawprojlights:GetBool() or rttenabled == false then render.RenderFlashlights(function() model:DrawModel() end) end
+                if !isDepthPass and drawprojlights:GetBool() or rttenabled == false then render.RenderFlashlights(function() model:DrawModel() end) end
             end
 
             if atttbl.DrawFunc then
