@@ -30,7 +30,9 @@ function SWEP:ShouldLOD()
     return result
 end
 
-function SWEP:DrawCustomModel(wm, custompos, customang, isDepthPass)
+function SWEP:DrawCustomModel(wm, custompos, customang, flags)
+    flags = flags or STUDIO_RENDER
+    local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
     local owner = self:GetOwner()
 
     if !wm and !IsValid(owner) then return end
