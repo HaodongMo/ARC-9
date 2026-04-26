@@ -92,7 +92,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang, isDepthPass)
 
             if !IsValid(model) then self:KillModel() return end
 
-            if isDepthPass and atttbl.StickerMaterial then return end
+            if isDepthPass and atttbl.StickerMaterial then continue end
 
             if !onground or model.OptimizPrevWMPos != self:GetPos() then -- mega optimiz
                 model.OptimizPrevWMPos = onground and self:GetPos() or nil
