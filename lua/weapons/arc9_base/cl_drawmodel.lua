@@ -185,7 +185,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
             if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam and !onground and !isnpc) then
                 -- if !wm then model:SetRenderOrigin(self.ViewModelPos or (IsValid(self:GetVM()) and self:GetVM():GetPos() or self:GetPos())) end
                 model:DrawModel()
-                if !isDepthPass and drawprojlights:GetBool() or rttenabled == false then render.RenderFlashlights(function() model:DrawModel() end) end
+                if !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then render.RenderFlashlights(function() model:DrawModel() end) end
             end
 
             if atttbl.DrawFunc then
