@@ -30,7 +30,7 @@ local rtmat_legacy = GetRenderTargetEx("arc9_pipscope_legacy_drawfunc",  scrh, s
     IMAGE_FORMAT_RGBA8888
 )
 
-local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap2",  scrw, scrh, 
+local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_NONE, 
     bit.bor(4,8,256,512), 
@@ -38,7 +38,7 @@ local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap2",  scrw, scrh,
     IMAGE_FORMAT_RGB888
 )
 
-local mat_rt_cheap = CreateMaterial( "arc9_pipscope_awesome_cheap_mat2", "UnlitGeneric", {
+local mat_rt_cheap = CreateMaterial( "arc9_pipscope_awesome_cheap_mat3", "UnlitGeneric", {
     ["$basetexture"] = rt_cheap:GetName(),
     ["$translucent"] = 0,
     ["$vertexcolor"] = 1
@@ -198,21 +198,46 @@ function SWEP:RenderRTCheap(atttbl)
 
     render.UpdateScreenEffectTexture()
     rtcheapmat:SetTexture("$basetexture", render.GetScreenEffectTexture())
-    -- render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
+    render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
         
     rt_eyepos = MainEyePos()
     
     render.PushRenderTarget(rt_cheap)
         ARC9.OverDraw = true
-        cam.IgnoreZ(true)
+        cam.IgnoreZ(false )
 
-        render.Clear(67, 67, 0, 255)
+        -- render.Clear(67, 67, 0, 255)
 
         render.SetMaterial( rtcheapmat )
         render.DrawScreenQuad()
         render.UpdateScreenEffectTexture()
         render.SetMaterial( rtcheapsharpen )
         render.DrawScreenQuad()
+
+        atttbl = atttbl or {}
+        
+        if atttbl.RTScopeFLIR then
+            -- cam.Start3D()
+                self:DoFLIR(atttbl)
+            -- cam.End3D()
+        end
+
+        if atttbl.RTScopeNightVision then
+            self:DoNightScopeEffects(atttbl)
+        end
+
+        cam.Start3D()
+            self:DrawLockOnHUD(true)
+        cam.End3D()
+
+        self:DoRTScopeEffects()
+
+        if self:GetSight().InvertColors then
+            -- DrawColorModify(invertcolormodif)
+            -- if atttbl.RTScopePostInvertFunc then
+            --     atttbl.RTScopePostInvertFunc(self)
+            -- end
+        end
 
         cam.IgnoreZ(false)
         ARC9.OverDraw = false
@@ -279,7 +304,7 @@ function SWEP:RenderRT(magnification, atttbl)
 
 
         if self:GetSight().InvertColors then
-            DrawColorModify(invertcolormodif)
+            -- DrawColorModify(invertcolormodif)
             if atttbl.RTScopePostInvertFunc then
                 atttbl.RTScopePostInvertFunc(self)
             end

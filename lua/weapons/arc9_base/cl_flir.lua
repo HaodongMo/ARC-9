@@ -41,13 +41,15 @@ function SWEP:DoFLIR(atttbl)
     lastentcount = entcount
 
     render.SuppressEngineLighting(true)
+    render.SetColorModulation(1, 1, 1)
+        render.SetBlend(1)
 
-    if !atttbl.RTScopeFLIRSolid then
-        render.SetBlend(atttbl.RTScopeFLIRBlend or 0.25)
-        render.SetColorModulation(250, 250, 250)
-    else
-        render.SetBlend(0)
-    end
+    -- if !atttbl.RTScopeFLIRSolid then
+    --     render.SetBlend(atttbl.RTScopeFLIRBlend or 0.25)
+        -- render.SetColorModulation(250, 250, 250)
+    -- else
+        -- render.SetBlend(1)
+    -- end
 
     cam.IgnoreZ(false)
 
@@ -69,48 +71,48 @@ function SWEP:DoFLIR(atttbl)
         ent:DrawModel()
     end
 
-    cam.IgnoreZ(true)
+    -- cam.IgnoreZ(true)
 
-    render.SetColorModulation(1, 1, 1)
+    -- render.SetColorModulation(1, 1, 1)
     render.SuppressEngineLighting(false)
-    render.MaterialOverride()
-    render.SetBlend(1)
+    -- render.MaterialOverride()
+    -- render.SetBlend(1)
 
     render.SetStencilReferenceValue(ref)
     render.SetStencilCompareFunction(STENCIL_EQUAL)
     render.SetStencilPassOperation(STENCIL_KEEP)
 
     if atttbl.RTScopeFLIRSolid then
-        render.SetColorMaterial()
-        render.DrawScreenQuad()
+        -- render.SetColorMaterial()
+        -- render.DrawScreenQuad()
     end
 
     if atttbl.RTScopeFLIRMonochrome then
-        render.SetStencilCompareFunction(STENCIL_ALWAYS)
-        DrawColorModify(monochrometable)
+        -- render.SetStencilCompareFunction(STENCIL_ALWAYS)
+        -- DrawColorModify(monochrometable)
     end
 
     if atttbl.RTScopeFLIRCCCold then
         render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
         if !atttbl.RTScopeFLIRCCCold["pp_colour_inv"] then atttbl.RTScopeFLIRCCCold["pp_colour_inv"] = 0 end
-        DrawColorModify(atttbl.RTScopeFLIRCCCold)
+        -- DrawColorModify(atttbl.RTScopeFLIRCCCold)
         -- DrawColorModify(atttbl.RTScopeFLIRCCHot)
     end
 
     if atttbl.RTScopeFLIRCCHot then
         render.SetStencilCompareFunction(STENCIL_EQUAL)
         if !atttbl.RTScopeFLIRCCHot["pp_colour_inv"] then atttbl.RTScopeFLIRCCHot["pp_colour_inv"] = 0 end
-        DrawColorModify(atttbl.RTScopeFLIRCCHot)
+        -- DrawColorModify(atttbl.RTScopeFLIRCCHot)
     end
 
     render.UpdateScreenEffectTexture()
 
     if atttbl.RTScopeFLIRFunc then
-        atttbl.RTScopeFLIRFunc(self)
+        -- atttbl.RTScopeFLIRFunc(self)
     end
 
     if atttbl.RTScopeFLIRHotOnlyFunc then
-        atttbl.RTScopeFLIRHotOnlyFunc(self)
+        -- atttbl.RTScopeFLIRHotOnlyFunc(self)
     end
 
     render.SetStencilEnable(false)
@@ -143,3 +145,17 @@ function SWEP:GetEntityHot(ent, range)
 
     return false
 end
+
+-- local mat = Material("effects/arc9/opaqueglass")
+
+-- hook.Add("PreDrawTranslucentRenderables", "GlassThermal", function()
+--     if !bDrawThermal then return end
+--     -- render.WorldMaterialOverride(mat)
+--     render.BrushMaterialOverride(mat)
+-- end)
+
+-- hook.Add("PostDrawTranslucentRenderables", "GlassThermal", function()
+--     if !bDrawThermal then return end
+--     -- render.WorldMaterialOverride()
+--     render.BrushMaterialOverride()
+-- end)
