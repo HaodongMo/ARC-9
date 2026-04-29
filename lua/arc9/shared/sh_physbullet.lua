@@ -603,7 +603,7 @@ local tracer = Material("arc9/tracer")
 
 local col = Color(255, 225, 200)
 
-function ARC9.DrawPhysBullets()
+function ARC9.DrawPhysBullets(inrt)
     cam.Start3D()
     for _, i in ipairs(ARC9.PhysBullets) do
         if i.Invisible then continue end
@@ -641,7 +641,7 @@ function ARC9.DrawPhysBullets()
 
         local size = 1
 
-        size = size * math.log(EyePos():DistToSqr(pos) - math.pow(512, 2))
+        size = size * math.log(EyePos():DistToSqr(pos) - (inrt and 400000 or 200000))
 
         size = math.Clamp(size, 0, math.huge)
 

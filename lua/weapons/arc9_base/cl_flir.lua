@@ -40,6 +40,22 @@ local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh,
     IMAGE_FORMAT_RGB888
 )
 
+local opaqueglass = Material("effects/arc9/opaqueglass")
+
+local function isglass(ent)
+    local class = ent:GetClass()
+    if class == "func_breakable_surf" then
+        return true
+    elseif class == "func_breakable" and ent.GetBrushSurfaces then 
+        local surfs = ent:GetBrushSurfaces()
+        local mat = surfs and surfs[1] and surfs[1]:GetMaterial()
+
+        if mat and string.find(mat:GetName(), "glass") then
+            return true
+        end
+    end
+end
+
 function SWEP:DoFLIR(atttbl, cheap)
     local screen
     if cheap then
@@ -87,6 +103,8 @@ function SWEP:DoFLIR(atttbl, cheap)
     render.SetStencilZFailOperation(STENCIL_KEEP)
     render.SetStencilCompareFunction(STENCIL_ALWAYS)
 
+    local glassstuff = {}
+
     for _, ent in ipairs(targets) do
         if ent == self:GetOwner() then continue end
         local hot = self:GetEntityHot(ent, range)
@@ -94,11 +112,32 @@ function SWEP:DoFLIR(atttbl, cheap)
             hot = atttbl.FLIRHotFunc(self, ent)
         end
 
+        if IsValid(ent) and isglass(ent) then
+            table.insert(glassstuff, ent)
+            hot = true
+        end
+
         if !hot then continue end
 
         ent:DrawModel()
     end
 
+
+
+    ARC9.DrawPhysBullets(true)
+
+    cam.Start3D()
+        cam.IgnoreZ(true)
+        for _, pcf in ipairs(self.MuzzPCFs) do
+            if IsValid(pcf) then
+                pcf:Render()
+            end
+        end
+        cam.IgnoreZ(false)
+    cam.End3D()
+
+
+        
     -- cam.IgnoreZ(true)
 
     render.SetColorModulation(1, 1, 1)
@@ -109,6 +148,13 @@ function SWEP:DoFLIR(atttbl, cheap)
     render.SetStencilReferenceValue(ref)
     render.SetStencilCompareFunction(STENCIL_EQUAL)
     render.SetStencilPassOperation(STENCIL_KEEP)
+
+    render.SetStencilEnable(false)
+    for _, ent in ipairs(glassstuff) do
+        render.BrushMaterialOverride(opaqueglass)
+        ent:DrawModel()
+    end
+    render.SetStencilEnable(true)
 
     if atttbl.RTScopeFLIRSolid then
         render.SetColorMaterial()
