@@ -104,12 +104,12 @@ function SWEP:GetMagnification()
 end
 
 function SWEP:IsCheapScope(sight)
-    if true then return arc9_cheapscopes:GetBool() end
     local real = arc9_cheapscopes:GetBool()
     if real then return true end
     sight = sight or self:GetSight()
 
-    return ((sight.atttbl and sight.atttbl.RTCollimator) or !arc9_fx_rtvm:GetBool()) and self:GetRealZoom(sight) <= 1.05
+    local at = sight.atttbl
+    return (at and at.RTCollimator) or not (at and at.RTScopeAdjustable and arc9_fx_rtvm:GetBool()) and self:GetRealZoom(sight) <= 1.05
 end
 
 

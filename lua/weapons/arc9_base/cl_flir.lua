@@ -154,6 +154,7 @@ function SWEP:DoFLIR(atttbl, cheap)
         render.BrushMaterialOverride(opaqueglass)
         ent:DrawModel()
     end
+    render.BrushMaterialOverride()
     render.SetStencilEnable(true)
 
     if atttbl.RTScopeFLIRSolid then
