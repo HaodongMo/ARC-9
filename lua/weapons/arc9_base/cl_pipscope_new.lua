@@ -204,9 +204,9 @@ function SWEP:RenderRTCheap(atttbl)
     
     render.PushRenderTarget(rt_cheap)
         ARC9.OverDraw = true
-        cam.IgnoreZ(false )
+        cam.IgnoreZ(false)
 
-        -- render.Clear(67, 67, 0, 255)
+        render.Clear(67, 67, 0, 255)
 
         render.SetMaterial( rtcheapmat )
         render.DrawScreenQuad()
@@ -216,11 +216,6 @@ function SWEP:RenderRTCheap(atttbl)
 
         atttbl = atttbl or {}
         
-        if atttbl.RTScopeFLIR then
-            -- cam.Start3D()
-                self:DoFLIR(atttbl)
-            -- cam.End3D()
-        end
 
         if atttbl.RTScopeNightVision then
             self:DoNightScopeEffects(atttbl)
@@ -230,19 +225,23 @@ function SWEP:RenderRTCheap(atttbl)
             self:DrawLockOnHUD(true)
         cam.End3D()
 
-        self:DoRTScopeEffects()
 
-        if self:GetSight().InvertColors then
+        -- if self:GetSight().InvertColors then
             -- DrawColorModify(invertcolormodif)
-            -- if atttbl.RTScopePostInvertFunc then
-            --     atttbl.RTScopePostInvertFunc(self)
-            -- end
-        end
+        --     if atttbl.RTScopePostInvertFunc then
+        --         atttbl.RTScopePostInvertFunc(self)
+        --     end
+        -- end
 
         cam.IgnoreZ(false)
         ARC9.OverDraw = false
     render.PopRenderTarget()
     
+    if atttbl.RTScopeFLIR then
+        cam.Start3D()
+            self:DoFLIR(atttbl, true)
+        cam.End3D()
+    end
 
     lenseshader:SetTexture("$basetexture", rt_cheap)
 end
@@ -297,18 +296,16 @@ function SWEP:RenderRT(magnification, atttbl)
             self:DrawLockOnHUD(true)
         cam.End3D()
 
-        self:DoRTScopeEffects()
-
         ARC9.RTScopeRender = false
         ARC9.OverDraw = false
 
 
-        if self:GetSight().InvertColors then
+        -- if self:GetSight().InvertColors then
             -- DrawColorModify(invertcolormodif)
-            if atttbl.RTScopePostInvertFunc then
-                atttbl.RTScopePostInvertFunc(self)
-            end
-        end
+        --     if atttbl.RTScopePostInvertFunc then
+        --         atttbl.RTScopePostInvertFunc(self)
+        --     end
+        -- end
         
     render.PopRenderTarget()
     
@@ -406,6 +403,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             local sightamt = math.ease.InBack(sightamt_orig)
 
             render.PushRenderTarget(cheap and rt_cheap or rtmat)
+
+            self:DoRTScopeEffects()
 
             if cheap or !arc9_fx_rtvm:GetBool() then
                 local fwd = MainEyeAngles():Forward()

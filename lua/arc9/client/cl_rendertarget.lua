@@ -34,11 +34,17 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     end
 end)
 
+local nextrendermeow = 0
+
 hook.Add("RenderScreenspaceEffects", "ARC9_PofsttDrawViewModels", function()
     local wpn = LocalPlayer():GetActiveWeapon()
 
     if !wpn.ARC9 then return end
 
     local atttbl = wpn:IsScoping()
+
+    if atttbl and atttbl.FPSLock and nextrendermeow >= CurTime() and wpn:GetSightAmount() > 0.99 then return end
+    if atttbl and atttbl.FPSLock then nextrendermeow = CurTime() + (atttbl.FPSLock or 45) end
+
     wpn:DrawRTReticle(wpn.RTScopeModel, wpn.RTScopeAtttbl or {}, 1, nil, wpn:IsCheapScope())
 end)

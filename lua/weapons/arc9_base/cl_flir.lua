@@ -21,7 +21,35 @@ local monochrometable = {
 local ref = 32
 local r_def = 2048
 
-function SWEP:DoFLIR(atttbl)
+
+local scrw, scrh = ScrW(), ScrH()
+
+local rt_spare = GetRenderTargetEx( "arc9_pipscope_awesome_cheapspare", scrw, scrh, 
+    RT_SIZE_FULL_FRAME_BUFFER, 
+    MATERIAL_RT_DEPTH_SHARED, 
+    bit.bor(4,8,256,512), 
+    0, 
+    IMAGE_FORMAT_RGB888
+)
+
+local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh, 
+    RT_SIZE_FULL_FRAME_BUFFER, 
+    MATERIAL_RT_DEPTH_NONE, 
+    bit.bor(4,8,256,512), 
+    0, 
+    IMAGE_FORMAT_RGB888
+)
+
+function SWEP:DoFLIR(atttbl, cheap)
+    local screen
+    if cheap then
+        screen = render.GetRenderTarget()
+        if screen and screen:GetName()  == "_rt_resolvedfullframedepth" then return end
+        render.CopyTexture( screen, rt_spare )
+
+        render.PushRenderTarget(screen)
+    end
+
 
     render.SetStencilEnable(true)
     render.SetStencilWriteMask(255)
@@ -44,12 +72,12 @@ function SWEP:DoFLIR(atttbl)
     render.SetColorModulation(1, 1, 1)
         render.SetBlend(1)
 
-    -- if !atttbl.RTScopeFLIRSolid then
-    --     render.SetBlend(atttbl.RTScopeFLIRBlend or 0.25)
-        -- render.SetColorModulation(250, 250, 250)
-    -- else
-        -- render.SetBlend(1)
-    -- end
+    if !atttbl.RTScopeFLIRSolid then
+        render.SetBlend(atttbl.RTScopeFLIRBlend or 0.25)
+        render.SetColorModulation(1, 1, 1)
+    else
+        render.SetBlend(1)
+    end
 
     cam.IgnoreZ(false)
 
@@ -73,49 +101,55 @@ function SWEP:DoFLIR(atttbl)
 
     -- cam.IgnoreZ(true)
 
-    -- render.SetColorModulation(1, 1, 1)
+    render.SetColorModulation(1, 1, 1)
     render.SuppressEngineLighting(false)
-    -- render.MaterialOverride()
-    -- render.SetBlend(1)
+    render.MaterialOverride()
+    render.SetBlend(1)
 
     render.SetStencilReferenceValue(ref)
     render.SetStencilCompareFunction(STENCIL_EQUAL)
     render.SetStencilPassOperation(STENCIL_KEEP)
 
     if atttbl.RTScopeFLIRSolid then
-        -- render.SetColorMaterial()
-        -- render.DrawScreenQuad()
+        render.SetColorMaterial()
+        render.DrawScreenQuad()
     end
 
     if atttbl.RTScopeFLIRMonochrome then
-        -- render.SetStencilCompareFunction(STENCIL_ALWAYS)
-        -- DrawColorModify(monochrometable)
+        render.SetStencilCompareFunction(STENCIL_ALWAYS)
+        DrawColorModify(monochrometable)
     end
 
     if atttbl.RTScopeFLIRCCCold then
         render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
         if !atttbl.RTScopeFLIRCCCold["pp_colour_inv"] then atttbl.RTScopeFLIRCCCold["pp_colour_inv"] = 0 end
-        -- DrawColorModify(atttbl.RTScopeFLIRCCCold)
-        -- DrawColorModify(atttbl.RTScopeFLIRCCHot)
+        DrawColorModify(atttbl.RTScopeFLIRCCCold)
     end
 
     if atttbl.RTScopeFLIRCCHot then
         render.SetStencilCompareFunction(STENCIL_EQUAL)
         if !atttbl.RTScopeFLIRCCHot["pp_colour_inv"] then atttbl.RTScopeFLIRCCHot["pp_colour_inv"] = 0 end
-        -- DrawColorModify(atttbl.RTScopeFLIRCCHot)
+        DrawColorModify(atttbl.RTScopeFLIRCCHot)
     end
 
     render.UpdateScreenEffectTexture()
 
     if atttbl.RTScopeFLIRFunc then
-        -- atttbl.RTScopeFLIRFunc(self)
+        atttbl.RTScopeFLIRFunc(self)
     end
 
     if atttbl.RTScopeFLIRHotOnlyFunc then
-        -- atttbl.RTScopeFLIRHotOnlyFunc(self)
+        atttbl.RTScopeFLIRHotOnlyFunc(self)
     end
 
     render.SetStencilEnable(false)
+
+    if cheap then
+        render.PopRenderTarget()
+        render.CopyTexture( screen, rt_cheap )
+        render.DrawTextureToScreen(rt_spare)
+        -- render.UpdateFullScreenDepthTexture()
+    end
 end
 
 -- local maxrange = (160/ARC9.HUToM)^2 -- 160 m
