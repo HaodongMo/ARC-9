@@ -1,5 +1,5 @@
 ARC9_ENABLE_NEWSCOPES_MEOW = true  
-ARC9_ENABLE_NEWSCOPES_SHADER = true
+ARC9_ENABLE_NEWSCOPES_SHADER = false 
 ARC9.NewRTScopesEnabled = true
 
 local scrw, scrh = ScrW(), ScrH()
@@ -190,7 +190,7 @@ local invertcolormodif = {
 	[ "$pp_colour_inv" ] = 1,
 }
 
-function SWEP:RenderRTCheap(magnification, atttbl)
+function SWEP:RenderRTCheap(atttbl)
     if ARC9.OverDraw then return end
 
     local viewstup = render.GetViewSetup()
@@ -218,6 +218,7 @@ function SWEP:RenderRTCheap(magnification, atttbl)
         ARC9.OverDraw = false
     render.PopRenderTarget()
     
+
     lenseshader:SetTexture("$basetexture", rt_cheap)
 end
 
@@ -352,10 +353,20 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
     local modelpos_original = model:GetPos()
     local toscreen
 
-    local diff = MainEyePos() - modelpos_original
-    local dott = (-modelforward):Dot(diff) / diff:Length()
+            local sight = self:GetSight()
+            local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
+            local modelpos2 = modelpos_original
+            - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
+            - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
+
+
+    local diff = MainEyePos() - modelpos2
+    local dott = math.abs((-modelforward):Dot(diff) / diff:Length())
     
-    if dott < 0.9 then -- not looking at the scope
+
+
+    -- print(dott)
+    if dott < 0.8 then -- not looking at the scope
         active = false
     end
 
@@ -471,7 +482,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
 
                     -- drawing stuffs
                     local dir = modelpos - rt_eyepos
-                    local eyedistance = dir:Dot(modelforward)
+                    local eyedistance = math.abs(dir:Dot(modelforward))
                     local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
 
                     if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end -- legacy reticle drawfunc
@@ -488,6 +499,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                     local funnynumber2 = (self:GetInSights() and sightamt_orig <= 1) and Lerp(sightamt_orig, 2, 7.5) or 7.5 - math.Clamp(eyedistance2 * 1, 0, 6)
                     
                     local diffy = (modelang - MainEyeAngles())
+                    diffy:Normalize()
                     diffy.x = math.Clamp(diffy.x, -0, 0)
                     diffy.y = math.Clamp(diffy.y, -3, 3)
                     diffy.z = math.Clamp(diffy.z, -1, 1)
@@ -498,7 +510,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                     end
                     
                     if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then
-                        drawscopequad(12.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang + diffy * 5, lerped, shadow, color_white) -- small shadow before reticle
+                        drawscopequad(1.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang + diffy * 5, lerped, shadow, color_white) -- small shadow before reticle
                     end
                 cam.IgnoreZ(false)
             cam.End3D()
@@ -518,12 +530,12 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             -- cam.End2D()
 
             if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
-                -- surface.SetDrawColor(255, 255, 255, 255)
-                -- surface.SetMaterial(lenseshader)
-                -- surface.DrawTexturedRect(toscreen.x - scrw/2, toscreen.y - scrh/2, scrw, scrh)
-                -- surface.SetDrawColor(0, 0, 0, 255)
-                -- surface.DrawRect(toscreen.x - scrw/2 - scrw, toscreen.y - scrh/2 - scrh, scrw, scrh*3)
-                -- surface.DrawRect(toscreen.x - scrw/2, toscreen.y - scrh/2 - scrh, scrw, scrh)
+                surface.SetDrawColor(255, 255, 255, 255)
+                surface.SetMaterial(lenseshader)
+                surface.DrawTexturedRect(toscreen.x - scrw/2, toscreen.y - scrh/2, scrw, scrh)
+                surface.SetDrawColor(0, 0, 0, 255)
+                surface.DrawRect(toscreen.x - scrw/2 - scrw, toscreen.y - scrh/2 - scrh, scrw, scrh*3)
+                surface.DrawRect(toscreen.x - scrw/2, toscreen.y - scrh/2 - scrh, scrw, scrh)
 
                 render.SetMaterial(lenseshader)
                 render.DrawScreenQuad()
@@ -547,14 +559,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
     end
 end
 
-function SWEP:GetCheapScopeScale(scale)
-    local ratio = scale - (!self.ExtraSightDistanceNoRT and self:GetSight().ExtraSightDistance or 0) * 0.045
-
-    return 1 / ratio * (scrw / scrh / 1.12)
-end
-
-
-if ARC9.Dev(2) then
+-- if ARC9.Dev(2) then
     local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
         ["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
         ["$translucent"] = 0,
@@ -562,13 +567,14 @@ if ARC9.Dev(2) then
     } )
 
     hook.Add("HUDPaint", "arc9_test_pipscope", function()
-        if ARC9.Dev(2) then
+        -- if ARC9.Dev(2) then
             surface.SetDrawColor(255, 255, 255)
             surface.SetMaterial(testmat)
-            surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
-        end
+            -- surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
+            surface.DrawTexturedRect(0, 20, scrw/6, scrh/6)
+        -- end
     end)
-end
+-- end
 
 
 

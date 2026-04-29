@@ -1,5 +1,3 @@
-local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
-
 hook.Add("PreRender", "ARC9_PreRender", function()
     local wpn = LocalPlayer():GetActiveWeapon()
 
@@ -7,7 +5,7 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 
     wpn:RunHook("Hook_DoRT")
 
-    if ARC9_cheapscopes:GetBool() then return end
+    if wpn:IsCheapScope() then return end
 
     local atttbl = wpn:IsScoping()
 
@@ -23,16 +21,16 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 end)
 
 hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
-    if !ARC9_cheapscopes:GetBool() then return end
-
     local wpn = LocalPlayer():GetActiveWeapon()
 
     if !wpn.ARC9 then return end
 
+    if !wpn:IsCheapScope() then return end
+
     if ARC9_ENABLE_NEWSCOPES_MEOW and wpn.RTScopeModel and wpn.RTScopeModel.RTScopeDrawingRN then
         local atttbl = wpn:IsScoping()
         ARC9.DrawPhysBullets()
-        wpn:RenderRTCheap(wpn:GetRTScopeMagnification(), atttbl)
+        wpn:RenderRTCheap(atttbl)
     end
 end)
 
@@ -42,5 +40,5 @@ hook.Add("RenderScreenspaceEffects", "ARC9_PofsttDrawViewModels", function()
     if !wpn.ARC9 then return end
 
     local atttbl = wpn:IsScoping()
-    wpn:DrawRTReticle(wpn.RTScopeModel, wpn.RTScopeAtttbl or {}, 1, nil, ARC9_cheapscopes:GetBool())
+    wpn:DrawRTReticle(wpn.RTScopeModel, wpn.RTScopeAtttbl or {}, 1, nil, wpn:IsCheapScope())
 end)

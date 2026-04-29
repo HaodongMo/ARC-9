@@ -54,6 +54,7 @@ end
 local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 local arc9_compensate_sens = GetConVar("arc9_compensate_sens")
 local fov_desired = GetConVar("fov_desired")
+local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
 
 function SWEP:GetRealZoom(sight)
     local atttbl
@@ -83,15 +84,16 @@ function SWEP:GetMagnification()
     local target = sight.Magnification or 1
     local target2 = target
 
-    if arc9_cheapscopes:GetBool() and !sight.Disassociate then
+    local realzoomzoom = self:GetRealZoom(sight)
+
+    if self:IsCheapScope(sight) and !sight.Disassociate then
         local atttbl = sight.atttbl
 
         if sight.BaseSight then
             atttbl = self:GetTable()
         end
 
-        if atttbl and atttbl.RTScope and !atttbl.RTCollimator then
-            local realzoomzoom = self:GetRealZoom(sight)
+        if atttbl and atttbl.RTScope then
             local cheapscale = math.max(1 / realzoomzoom, 0.85)
             target2 = math.max(target2 * realzoomzoom, 1.0) * cheapscale -- 0.85 cuz scale in vmt
             rtcheapmat:SetFloat("$scale", cheapscale)
@@ -100,6 +102,16 @@ function SWEP:GetMagnification()
 
     return target2, target
 end
+
+function SWEP:IsCheapScope(sight)
+    if true then return arc9_cheapscopes:GetBool() end
+    local real = arc9_cheapscopes:GetBool()
+    if real then return true end
+    sight = sight or self:GetSight()
+
+    return ((sight.atttbl and sight.atttbl.RTCollimator) or !arc9_fx_rtvm:GetBool()) and self:GetRealZoom(sight) <= 1.05
+end
+
 
 local aa = GetConVar("arc9_aimassist")
 local aac = GetConVar("arc9_aimassist_cl")

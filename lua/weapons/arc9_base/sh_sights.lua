@@ -383,7 +383,7 @@ function SWEP:GetRTScopeFOV()
 
     local ratio = ((sights.atttbl and sights.atttbl.ScopeScreenRatio or self.ScopeScreenRatio) or 0.5) - (!self.ExtraSightDistanceNoRT and sights.ExtraSightDistance or 0) * 0.045
     if self.PeekingIsSight and self.Peeking then ratio = ratio + 0.2 end
-    local vmfovratio = arc9_cheapscopes:GetBool() and sights.Magnification or self:GetSmoothedFOVMag() -- sights.Magnification
+    local vmfovratio = self:IsCheapScope(sights) and sights.Magnification or self:GetSmoothedFOVMag() -- sights.Magnification
     local funnyfov = self:ScaleFOVByWidthRatio(self:GetOwner():GetFOV(), 1 / vmfovratio * ratio / 1.5 / realzoom)
 
     return ARC9_ENABLE_NEWSCOPES_MEOW and realzoom or funnyfov

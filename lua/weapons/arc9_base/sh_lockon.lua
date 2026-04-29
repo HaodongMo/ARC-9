@@ -222,7 +222,7 @@ function SWEP:DrawLockOnHUD(iam3d)
         local size = 32
 
         if iam3d then
-            if !arc9_cheapscopes:GetBool() then
+            if !self:IsCheapScope() then
                 x = x / 2
                 size = ScreenScale(32)
             else
