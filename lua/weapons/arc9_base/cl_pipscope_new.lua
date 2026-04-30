@@ -174,8 +174,11 @@ local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
 local shadow = Material("arc9/shadow3.png", "mips smooth")
 local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 -- local black = Material("arc9/ahmad.png", "mips smooth")
-local black2 = Material("arc9/ahmad.png", "mips smooth")
-local black = Material("vgui/black")
+-- local black2 = Material("arc9/ahmad.png", "mips smooth")
+-- local black = Material("vgui/black")
+-- local black = Material("models/wireframe")
+local black = CreateMaterial("blackreal", "UnlitGeneric", { ["$basetexture"] = "vgui/black" }) -- vgui/black some reason turns transparent sometimes
+
 local rtcheapmat = Material("effects/arc9/rt_cheap")
 local rtcheapsharpen = Material("effects/arc9/rt_cheap_sharpen")
 local arc9_scope_r = GetConVar("arc9_scope_r")
@@ -339,6 +342,7 @@ local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
     if !nobox then
     -- if false  then
         render.SetMaterial(black)
+        -- render.SetMaterial(black2)
         up, right = up * 0.999, right * 0.999 -- less scale to prevent visible pixel gaps
 
         local v1 = pos + (up * 4) - (right * 8) + forward
@@ -409,10 +413,10 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
 
     model.RTScopeDrawingRN = active
 
-    if active then
+    if active and self:ShouldDoScope() then
         local shaderenabled = !atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool()
 
-        if self:ShouldDoScope() then
+        -- if  then
             self.RenderingRTScope = true
             local sight = self:GetSight()
 
@@ -432,18 +436,11 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
 
                 -- muzzleflasheas
                 cam.Start3D(rt_eyepos + fwd * (cheap and 5 or 30), nil, nil, nil, nil, nil, nil, nil, nil)
-                    local updateddepth = false
-                    local newmzpcfs = {}
                     for _, pcf in ipairs(self.MuzzPCFs) do
                         if IsValid(pcf) then
-                            if !updateddepth then render.UpdateFullScreenDepthTexture() updateddepth = true end
                             pcf:Render()
-                            table.insert(newmzpcfs, pcf)
                         end
                     end
-
-                    self.MuzzPCFs = newmzpcfs
-                    
                     cam.IgnoreZ(false)
                 cam.End3D()
             end
@@ -536,20 +533,26 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                     -- funnynumber2 = math.max(1.5, funnynumber2 * math.max(0, (dott - 0.9) * 10))
                     -- print(eyedistance2)
                     -- local funnynumber2 = 
+                    
                     local funnynumber2 = (self:GetInSights() and sightamt_orig <= 1) and Lerp(sightamt_orig, 2, 7.5) or 7.5 - math.Clamp(eyedistance2 * 1, 0, 6)
+                    local funnynumber3 = Lerp(sightamt_orig, 50, 20)
                     
                     local diffy = (modelang - MainEyeAngles())
                     diffy:Normalize()
-                    diffy.x = math.Clamp(diffy.x, -0, 0)
+                    diffy.x = math.Clamp(diffy.x, -2, 2)
                     diffy.y = math.Clamp(diffy.y, -3, 3)
-                    diffy.z = math.Clamp(diffy.z, -1, 1)
+                    diffy.z = math.Clamp(diffy.z, -2, 2)
+
+                    if atttbl.RTScopeAdjustable then
+                        funnynumber2 = funnynumber2 - math.ease.InCubic(1 - (sight.SmoothScrollLevel or 0)) * 1.5 * sightamt_orig
+                    end
 
                     if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
-                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 10 + (scopebound[2] - scopebound[1]), modelang + diffy * 7, lerped, shadow, color_white) -- end of scope shadow
+                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1) * 2, funnynumber3 + (scopebound[2] - scopebound[1]), modelang + diffy * 7, lerped, shadow, color_white) -- end of scope shadow
                         drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 0 + (scopebound[2] - scopebound[1]), modelang + diffy * -3, lerped, shadow, color_white) -- end of scope shadow
                     end
                     
-                    if atttbl.RTScopeNew_BackShadow != false or !atttbl.RTScopeNoShadow then
+                    if atttbl.RTScopeNew_BackShadow != false and atttbl.RTScopeNoShadow != true then
                         drawscopequad(1.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang + diffy * 5, lerped, shadow, color_white) -- small shadow before reticle
                     end
                 cam.IgnoreZ(false)
@@ -558,7 +561,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
             render.CopyRenderTargetToTexture(rtmat_shader)
  
             render.PopRenderTarget()
-        end
+        -- end
 
         render.PushRenderTarget(rtmat_shader)
             cam.Start2D()

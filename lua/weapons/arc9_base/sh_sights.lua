@@ -436,7 +436,7 @@ end
 
 function SWEP:IsScoping()
     local sight = self:GetSight()
-
+    
     local atttbl
 
     if sight.BaseSight then
@@ -450,5 +450,6 @@ function SWEP:IsScoping()
         table.Merge(atttbl, sight.ExtraSightData)
     end
 
-    return self:GetSightAmount() > 0 and atttbl.RTScope and atttbl
+    -- return self:GetSightAmount() > 0 and atttbl.RTScope and atttbl
+    return atttbl.RTScope and atttbl
 end

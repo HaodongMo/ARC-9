@@ -130,8 +130,8 @@ function SWEP:AdjustMouseSensitivity()
 
 	local gsa = self:GetSightAmount()
 	
-    rtcheapmat:SetFloat("$scale2", math.Clamp(gsa*10, 0.5, 1))
-    
+    local rtmagnif = self:GetRTScopeMagnification()
+
     if !self:GetInSights() then 
 	-- if gsa <= 0.01 then -- Active if "Sight amount" is over 1%. Experimental.
 		local amt = 1
@@ -152,7 +152,7 @@ function SWEP:AdjustMouseSensitivity()
 		end
 
 		if atttbl and atttbl.RTScope and !sight.Disassociate and !sight.NoSensAdjustment and !atttbl.RTCollimator then
-			mag = mag + ((self:GetRTScopeMagnification()) - 1) * 5
+			mag = mag + (rtmagnif - 1) * 5
 		end
 
 		if self.Peeking and !self.PeekingIsSight then
@@ -172,4 +172,5 @@ function SWEP:AdjustMouseSensitivity()
 		end
 	end
 
+    rtcheapmat:SetFloat("$scale2", math.Clamp(gsa*10, rtmagnif > 3 and 1 or 0.5, 1))
 end
