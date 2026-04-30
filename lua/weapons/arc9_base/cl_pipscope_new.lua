@@ -378,8 +378,12 @@ local function getscopebound(scopeent)
     return scopebounds[modelmodel]
 end
 
-function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
+function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     if !IsValid(model) then return end
+
+    local alwaydrwa = arc9_fx_rt_alwaysdraw:GetBool()
+    local sightamt_orig = self:GetSightDelta()
+    local active = alwaydrwa or sightamt_orig > 0.01
 
     local modelang = model:GetAngles()
     local modelforward = modelang:Forward()
@@ -412,7 +416,6 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
             self.RenderingRTScope = true
             local sight = self:GetSight()
 
-            local sightamt_orig = self:GetSightDelta()
             local sightamt = math.ease.InBack(sightamt_orig)
 
             render.PushRenderTarget(cheap and rt_cheap or rtmat)
@@ -578,6 +581,9 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                 render.DrawScreenQuad()
             end
 
+            surface.SetDrawColor(0, 0, 0, (1 - sightamt_orig) * (alwaydrwa and 128 or 255))
+            surface.DrawRect(0, 0, scrw, scrh)
+                
             -- cam.Start2D()
                 if atttbl.RTScopeNew_DrawFunc2D then
                     atttbl.RTScopeNew_DrawFunc2D(self, scrw, scrh, sight)

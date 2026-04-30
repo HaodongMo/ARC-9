@@ -241,6 +241,10 @@ function SWEP:GetEntityHot(ent, range)
         return true
     end
 
+    if ent:GetClass() == "class CLuaEffect" then
+        return true
+    end
+
     return false
 end
 
