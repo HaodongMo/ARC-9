@@ -1,6 +1,6 @@
 -- local goodmin, goodmax, extramax = Vector(-16, -16, -16), Vector(16, 16, 16), Vector(16, 16, 2048)
 
-function SWEP:DrawWorldModel()
+function SWEP:DrawWorldModel(flags)
     local owner = self:GetOwner()
 
     if !self.MirrorVMWM or (!IsValid(owner) and self.MirrorVMWMHeldOnly) then
@@ -8,7 +8,7 @@ function SWEP:DrawWorldModel()
         return
     end
 
-    self:DrawCustomModel(true)
+    self:DrawCustomModel(true, nil, nil, flags)
 
 
     if IsValid(owner) and owner:GetActiveWeapon() == self then -- gravgun moment

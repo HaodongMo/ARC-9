@@ -249,7 +249,7 @@ function SWEP:ViewModelDrawn(ent, flags)
     local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
 	
     self.StoredVMAngles = self:GetCameraControl()
-    self:DrawCustomModel(false)
+    self:DrawCustomModel(false, nil, nil, flags)
     render.DepthRange( 0.0, 0.1 )
     
     self:DoRHIK()

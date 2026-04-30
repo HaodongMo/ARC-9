@@ -156,7 +156,7 @@ function SWEP:PlayAnimation(anim, mult, lock, delayidle, noproxy, notranslate, n
         
         self:SetAnimLockTime(CurTime() + (time * mult * minprogress2))
     else
-        self:SetAnimLockTime(CurTime())
+        self:SetAnimLockTime(CurTime() - 0.01) -- a crutch cuz float->double update broke something
     end
 
     if !noidle and !animation.NoIdle then

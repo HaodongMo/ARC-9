@@ -507,7 +507,7 @@ SWEP.PenetrationUBGL = 5
 SWEP.DamageTypeUBGL = DMG_BULLET
 SWEP.ExplosionDamageUBGL = 0
 SWEP.ExplosionRadiusUBGL = 0
-SWEP.ExplosionEffectUBGL = false 
+SWEP.ExplosionEffectUBGL = false
 
 -------------------------- VISUAL RECOIL
 

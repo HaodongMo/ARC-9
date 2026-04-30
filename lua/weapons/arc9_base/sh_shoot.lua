@@ -385,11 +385,9 @@ function SWEP:DoPrimaryAttack()
         end
     end
 
-    if !swepGetProcessedValue(self,"CanFireUnderwater", true) then
-        if bit.band(util.PointContents(self:GetShootPos()), CONTENTS_WATER) == CONTENTS_WATER then
-            self:DryFire()
-            return
-        end
+    if !swepGetProcessedValue(self,"CanFireUnderwater", true) and bit.band(util.PointContents(self:GetShootPos()), CONTENTS_WATER) == CONTENTS_WATER then
+        self:DryFire()
+        return
     end
 
     self:SetBaseSettings()
@@ -515,13 +513,13 @@ function SWEP:DoPrimaryAttack()
 
     spread = math.Max(spread, 0)
 
-    local sp, sa = self:GetShootPos()
+    local shopos, shoang = self:GetShootPos()
 
     if IsValid(self:GetLockOnTarget()) and self:GetLockedOn() and swepGetProcessedValue(self,"LockOnAutoaim", true) then
-        sa = (self:GetLockOnTarget():EyePos() - sp):Angle()
+        sa = (self:GetLockOnTarget():EyePos() - shopos):Angle()
     end
 
-    self:DoProjectileAttack(sp, sa, spread)
+    self:DoProjectileAttack(shopos, shoang, spread)
 
     self:ApplyRecoil()
     self:DoVisualRecoil()
@@ -804,18 +802,19 @@ function SWEP:AfterShotFunction(tr, dmg, range, penleft, alreadypenned, secondar
     if ap > 0 and !alreadypenned[traceEntity] then
         if traceEntity:GetClass() == "npc_helicopter" then
             local apdmg = DamageInfo()
+            apdmg:SetDamagePosition(tr.HitPos)
             apdmg:SetDamage(dmgv * ap)
             apdmg:SetDamageType(DMG_AIRBOAT)
-            apdmg:SetInflictor(dmg:GetInflictor())
-            apdmg:SetAttacker(dmg:GetAttacker())
+            apdmg:SetInflictor(self)
+            apdmg:SetAttacker(owner)
 
             if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:GetClass() == "npc_gunship" or traceEntity:GetClass() == "npc_strider" then
             local apdmg = DamageInfo()
             apdmg:SetDamage(dmgv * ap)
             apdmg:SetDamageType(DMG_BLAST)
-            apdmg:SetInflictor(dmg:GetInflictor())
-            apdmg:SetAttacker(dmg:GetAttacker())
+            apdmg:SetInflictor(self)
+            apdmg:SetAttacker(owner)
 
             if traceEntity.TakeDamageInfo then traceEntity:TakeDamageInfo(apdmg) end
         elseif traceEntity:IsPlayer() then
@@ -1062,6 +1061,16 @@ function SWEP:GetShootPos()
     return pos, ang
 end
 
+function SWEP:GetShootPositionVFIRE()
+        local muzz_qca = self:GetQCAMuzzle()
+        local ent = self:GetVM() -- Default to viewmodel
+        if self:GetOwner():ShouldDrawLocalPlayer() or !CLIENT then
+            ent = self -- Use worldmodel for others/server
+        end
+        local ft_qca = ent:GetAttachment(muzz_qca)
+        return ft_qca and ft_qca.Pos or self:GetShootPos()
+    end
+
 function SWEP:GetShootDir(quick)
     local owner = self:GetOwner()
     if !owner:IsValid() then return self:GetAngles() end
@@ -1087,14 +1096,27 @@ function SWEP:ShootRocket()
     if CLIENT then return end
 
     local owner = self:GetOwner()
-
     local src = self:GetShootPos()
     local dir = self:GetShootDir(true)
-
     local num = swepGetProcessedValue(self, "Num")
     local ent = swepGetProcessedValue(self, "ShootEnt", true)
-
     local spread
+
+    if ent == "vfire_ball" and vFireInstalled then
+        local life = math.Rand(4, 8) * (swepGetProcessedValue(self, "ShootLife") or 2.15)
+        local forward = dir:Forward()
+        local vel = forward * math.Rand(900, 1000)
+        local feedCarry = math.Rand(3, 8) * (swepGetProcessedValue(self, "ShootFeed") or 1)
+        local forwardBoost = math.Rand(20, 40)
+        local tr = owner:GetEyeTrace()
+        if tr.Fraction < 0.001245 then
+            forwardBoost = 1
+        end
+        local spawnPos = src + (forward * forwardBoost)
+        CreateVFireBall(life, feedCarry, spawnPos, vel, owner)
+        -- Return here so the standard entity spawner does not run
+        return
+    end
 
     if owner:IsNPC() then
         spread = self:GetNPCBulletSpread()

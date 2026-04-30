@@ -247,7 +247,7 @@ function SWEP:ShouldTPIK()
     if self:ShouldLOD() == 2 then return end
     -- if self:GetSafe() then return end
     -- if self:GetBlindFireAmount() > 0 then return false end
-    if lp == owner and !owner:ShouldDrawLocalPlayer() then return end
+    -- if lp == owner and !owner:ShouldDrawLocalPlayer() then return end -- it's going to fix the mirrors and this shit get run anyway
     -- if !arc9_tpik:GetBool() then return false end
 
     local should = false
