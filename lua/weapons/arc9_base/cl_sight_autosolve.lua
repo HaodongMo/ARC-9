@@ -105,11 +105,14 @@ end
 
 function SWEP:IsCheapScope(sight)
     if self:GetSightAmount() == 0 and !self:GetCustomize() then return true end
-    local real = arc9_cheapscopes:GetBool()
-    if real then return true end
-    sight = sight or self:GetSight()
 
-    local at = sight.atttbl
+    sight = sight or self:GetSight()
+    local at = sight.atttbl or {}
+    if at.RTScopeNew_ForceExpensive or self.RTScopeNew_ForceExpensive then return false end
+    if at.RTScopeNew_ForceCheap or self.RTScopeNew_ForceCheap then return true end
+
+    if arc9_cheapscopes:GetBool() then return true end
+
     return (at and at.RTCollimator) or not (at and at.RTScopeAdjustable and arc9_fx_rtvm:GetBool()) and self:GetRealZoom(sight) <= 1.05
 end
 

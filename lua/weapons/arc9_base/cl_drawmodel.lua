@@ -182,12 +182,13 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
                 -- end
 
                 if !ARC9.PresetCam and !ARC9.RTScopeRender and !ARC9.OverDraw then
-                    if !wm and atttbl.RTScope then
+                    if !wm and atttbl.RTScope or self.RTScope then
                         local active = slottbl.Address == self:GetActiveSightSlotTable().Address
                         if !ARC9_ENABLE_NEWSCOPES_MEOW then self:DoRTScope(model, atttbl, active) end
 
                         if active then
                             self.RTScopeModel = model
+                            if self.RTScope then atttbl.RTScopeNew_DisableShaderEyeOffset = true end
                             self.RTScopeAtttbl = atttbl
                         end
                     end

@@ -174,9 +174,9 @@ local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
 local shadow = Material("arc9/shadow3.png", "mips smooth")
 local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 -- local black = Material("arc9/ahmad.png", "mips smooth")
--- local black2 = Material("arc9/ahmad.png", "mips smooth")
+local black2 = Material("arc9/ahmad.png", "mips smooth")
 -- local black = Material("vgui/black")
--- local black = Material("models/wireframe")
+-- local black2 = Material("models/wireframe")
 local black = CreateMaterial("blackreal", "UnlitGeneric", { ["$basetexture"] = "vgui/black" }) -- vgui/black some reason turns transparent sometimes
 
 local rtcheapmat = Material("effects/arc9/rt_cheap")
@@ -266,7 +266,7 @@ function SWEP:RenderRT(magnification, atttbl)
     local viewstup = render.GetViewSetup()
     rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
     local rtfov = rt_viewsetup_fov_unscaled / magnification
-    local rtvm = arc9_fx_rtvm:GetBool()
+    local rtvm = !atttbl.RTScopeNew_DisableRTVM and arc9_fx_rtvm:GetBool()
     
     ARC9.RTScopeRenderFOV = rtfov
 
@@ -385,7 +385,7 @@ end
 function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     if !IsValid(model) then return end
 
-    local alwaydrwa = arc9_fx_rt_alwaysdraw:GetBool()
+    local alwaydrwa = !atttbl.RTScopeNew_OnlyInSights and arc9_fx_rt_alwaysdraw:GetBool()
     local sightamt_orig = self:GetSightDelta()
     local active = alwaydrwa or sightamt_orig > 0.01
 
@@ -405,9 +405,10 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     local dott = math.abs((-modelforward):Dot(diff) / diff:Length())
     
 
+    if atttbl.RTScopeNew_DisableShaderEyeOffset then nonatt = true end
 
     -- print(dott)
-    if dott < 0.8 then -- not looking at the scope
+    if dott < 0.7 and !nonatt then -- not looking at the scope
         active = false
     end
 
@@ -474,10 +475,8 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
             local origsighttable = sight.OriginalSightTable
             local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
 
-            if atttbl.RTScopeNew_DisableShaderEyeOffset then nonatt = true end
             
-            local scopebound = nonatt and {20, 10} or getscopebound(model)
-
+            local scopebound = nonatt and {-2, 6} or getscopebound(model)
             if atttbl.RTScopeNew_FixAngle then
                 if atttbl.RTScopeNew_FixAngle == "print" then
                     print("Angle(".. modelang[1] .. ", " .. modelang[2] .. ", " .. modelang[3] .. ")")
@@ -492,6 +491,12 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
             - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
             - modelforward * (-scopebound[1]) / (atttbl.Scale or 1)
             - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
+
+            if nonatt then
+                modelpos = rt_eyepos
+                modelpos_original = rt_eyepos
+                modelforward = rt_eyeang:Forward()
+            end
 
             -- lua_run_cl hook.Add("NeedsDepthPass","a",function() return !LASTMEOW end) LASTMEOW = hook.Run("NeedsDepthPass") print(LASTMEOW)
 

@@ -191,6 +191,10 @@ ATT.RTScopeNew_DisableShader = false
 ATT.RTScopeNew_DisableShaderEyeOffset = false -- disable dynamic eyeoffset (vignette & chrom aberation) from shader if your scope is fucked up
 ATT.RTScopeNew_ChromaticAberrationMult = 1
 -- ATT.RTScopeNew_FixAngle = Angle(-0.034, 84.588, 4.109) -- If scope angle isn't 0, 0, 0, it might look ASS. Fix this by setting this to "print" first, aim & setang 0 0 0 in console, copying angle from console to this
+ATT.RTScopeNew_ForceExpensive = false -- highly specific
+ATT.RTScopeNew_ForceCheap = false -- highly specific
+ATT.RTScopeNew_OnlyInSights = false -- highly specific
+ATT.RTScopeNew_DisableRTVM = false -- if rendereing gun in this scopes renders it too much
 
 ATT.RTScopeDrawFunc = function(swep, rtsize, sight) end -- Square reticle-like 2d context, works good as regular reticle  (remove counterrotation thing if you had it!)
 ATT.RTScopeNew_DrawFunc3D = function(swep, scrh, sight, ang, pos) end -- Advanced drawfunc in 3d context
