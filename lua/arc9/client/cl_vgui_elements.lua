@@ -414,6 +414,7 @@ function ARC9ScrollPanel:Init()
     self.VBar.Paint = function(panel, w, h)
         surface.SetDrawColor(ARC9.GetHUDColor("bg"))
         surface.DrawRect(0, 0, w, h)
+        panel:AddScroll(0)
     end
 
     self.VBar.btnGrip.Paint = function(panel, w, h)
@@ -425,8 +426,8 @@ function ARC9ScrollPanel:Init()
 
     self.VBar.AddScroll = function(self2, dlta)
         local OldScroll = self2:GetScroll()
-        dlta = dlta * 35
-        smoothdlta = Lerp(0.08, smoothdlta, dlta)
+        dlta = dlta * 40
+        smoothdlta = Lerp(FrameTime() * 10, smoothdlta, dlta)
         self2:SetScroll(self2:GetScroll() + smoothdlta)
 
         return OldScroll ~= self2:GetScroll()
