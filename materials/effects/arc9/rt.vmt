@@ -6,5 +6,7 @@
 	$nowritez "0"
 	$model "1"
 	$bluramount 0
+	$alphatest 1
+	$normalmap  "vgui/black"
 	// $localrefract 1
 }

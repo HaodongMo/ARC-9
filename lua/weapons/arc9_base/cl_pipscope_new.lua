@@ -1,6 +1,4 @@
-ARC9_ENABLE_NEWSCOPES_MEOW = true  
-ARC9_ENABLE_NEWSCOPES_SHADER = false 
-ARC9.NewRTScopesEnabled = true
+ARC9_ENABLE_NEWSCOPES_MEOW = true
 
 local arc9_fx_rt_shader = GetConVar("arc9_fx_rt_shader")
 local arc9_fx_rt_alwaysdraw = GetConVar("arc9_fx_rt_alwaysdraw")
@@ -69,7 +67,7 @@ local shader_LENS_K = -0.9 -- lens K
 local shader_CA_STRENGTH_Base = 2 -- CA
 local shader_CA_STRENGTH = shader_CA_STRENGTH_Base
 
-local shader_VIG_FORG_Base = 6 -- vignette forgiveness
+local shader_VIG_FORG_Base = 5.5 -- vignette forgiveness
 local shader_VIG_FORG = shader_VIG_FORG_Base
 local shader_VIG_OFFSET = 4.75 -- vignette offset
 local shader_VIG_R1 = 0.124 -- vignette rad1
