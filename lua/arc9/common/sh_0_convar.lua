@@ -976,7 +976,23 @@ local conVars = {
         default = "1",
         client = true
     },
+    {
+        name = "fx_rt_shader",
+        default = "1",
+        client = true
+    },
+    {
+        name = "fx_rt_alwaysdraw",
+        default = "1",
+        client = true
+    },
+    {
+        name = "fx_rt_legacy",
+        default = "0",
+        client = true
+    },
 }
+
 ARC9.ConVarData = {}
 
 local prefix = "arc9_"

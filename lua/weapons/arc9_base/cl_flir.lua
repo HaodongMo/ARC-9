@@ -41,16 +41,29 @@ local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh,
 )
 
 local opaqueglass = Material("effects/arc9/opaqueglass")
+local opaqueglassbrush = Material("effects/arc9/opaqueglassbrush")
 
 local function isglass(ent)
+    if ent.ARC9_IsGlass then return true end
+
     local class = ent:GetClass()
     if class == "func_breakable_surf" then
+        ent.ARC9_IsGlass = true
         return true
     elseif class == "func_breakable" and ent.GetBrushSurfaces then 
         local surfs = ent:GetBrushSurfaces()
         local mat = surfs and surfs[1] and surfs[1]:GetMaterial()
 
         if mat and string.find(mat:GetName(), "glass") then
+            ent.ARC9_IsGlass = true
+            return true
+        end
+    elseif (class == "prop_dynamic" or class == "prop_static" or class == "prop_physics") and ent.GetMaterials then 
+        local mats = ent:GetMaterials()
+        local mat = mats and mats[1]
+
+        if mat and string.find(mat, "glass") then
+            ent.ARC9_IsGlass = true
             return true
         end
     end
@@ -142,7 +155,6 @@ function SWEP:DoFLIR(atttbl, cheap)
 
     render.SetColorModulation(1, 1, 1)
     render.SuppressEngineLighting(false)
-    render.MaterialOverride()
     render.SetBlend(1)
 
     render.SetStencilReferenceValue(ref)
@@ -150,11 +162,16 @@ function SWEP:DoFLIR(atttbl, cheap)
     render.SetStencilPassOperation(STENCIL_KEEP)
 
     render.SetStencilEnable(false)
+
+    
+    render.MaterialOverride(opaqueglass)
+    render.BrushMaterialOverride(opaqueglassbrush)
     for _, ent in ipairs(glassstuff) do
-        render.BrushMaterialOverride(opaqueglass)
         ent:DrawModel()
     end
+    render.MaterialOverride()
     render.BrushMaterialOverride()
+
     render.SetStencilEnable(true)
 
     if atttbl.RTScopeFLIRSolid then

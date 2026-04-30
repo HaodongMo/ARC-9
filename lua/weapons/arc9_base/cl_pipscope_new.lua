@@ -2,6 +2,10 @@ ARC9_ENABLE_NEWSCOPES_MEOW = true
 ARC9_ENABLE_NEWSCOPES_SHADER = false 
 ARC9.NewRTScopesEnabled = true
 
+local arc9_fx_rt_shader = GetConVar("arc9_fx_rt_shader")
+local arc9_fx_rt_alwaysdraw = GetConVar("arc9_fx_rt_alwaysdraw")
+local arc9_fx_rt_legacy = GetConVar("arc9_fx_rt_legacy")
+
 local scrw, scrh = ScrW(), ScrH()
 
 local lenseshader = Material("arc9/lense_shader")
@@ -190,6 +194,8 @@ local invertcolormodif = {
 	[ "$pp_colour_inv" ] = 1,
 }
 
+local tune_nohdr = Vector(1, 0, 0 )
+
 function SWEP:RenderRTCheap(atttbl)
     if ARC9.OverDraw then return end
 
@@ -203,6 +209,9 @@ function SWEP:RenderRTCheap(atttbl)
     rt_eyepos = MainEyePos()
     
     render.PushRenderTarget(rt_cheap)
+        local oldtune = render.GetToneMappingScaleLinear()
+        render.SetToneMappingScaleLinear( tune_nohdr ) -- Turns off hdr
+
         ARC9.OverDraw = true
         cam.IgnoreZ(false)
 
@@ -236,6 +245,8 @@ function SWEP:RenderRTCheap(atttbl)
         cam.IgnoreZ(false)
         ARC9.OverDraw = false
     render.PopRenderTarget()
+
+    render.SetToneMappingScaleLinear( oldtune ) -- Resets hdr
     
     if atttbl.RTScopeFLIR then
         cam.Start3D()
@@ -395,6 +406,8 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
     model.RTScopeDrawingRN = active
 
     if active then
+        local shaderenabled = !atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool()
+
         if self:ShouldDoScope() then
             self.RenderingRTScope = true
             local sight = self:GetSight()
@@ -498,7 +511,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                     local eyedistance2 = modelpos_original:Distance(rt_eyepos) - origsighttablepos.y + mreow * 20
 
                     -- shader settings
-                    if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
+                    if shaderenabled then
                         shader_VIG_FORG = shader_VIG_FORG_Base / ((atttbl.RTScopeNew_ShadowIntensity or 1) * 0.5)
                         shader_CA_STRENGTH = shader_CA_STRENGTH_Base * (atttbl.RTScopeNew_ChromaticAberrationMult or 1)
                         CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, math.Clamp((mreow + eyedistance2 * 0.1) * shader_EYE_DISTANCE_INFLUENCE, -0.15, 0.8))
@@ -553,7 +566,7 @@ function SWEP:DrawRTReticle(model, atttbl, active, nonatt, cheap)
                 surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
             -- cam.End2D()
 
-            if ARC9_ENABLE_NEWSCOPES_SHADER and !atttbl.RTScopeNew_DisableShader then
+            if shaderenabled then
                 surface.SetDrawColor(255, 255, 255, 255)
                 surface.SetMaterial(lenseshader)
                 surface.DrawTexturedRect(toscreen.x - scrw/2, toscreen.y - scrh/2, scrw, scrh)

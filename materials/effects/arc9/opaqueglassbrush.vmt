@@ -1,4 +1,4 @@
-"VertexLitGeneric"
+"LightmappedGeneric"
 {
 	"$basetexture" "Glass/glasswindowbreak070a"
 	"$envmap" "env_cubemap"

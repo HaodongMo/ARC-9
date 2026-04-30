@@ -42,7 +42,7 @@ hook.Add("RenderScreenspaceEffects", "ARC9_PofsttDrawViewModels", function()
     if !wpn.ARC9 then return end
 
     local atttbl = wpn:IsScoping()
-
+    
     if atttbl and atttbl.FPSLock and nextrendermeow >= CurTime() and wpn:GetSightAmount() > 0.99 then return end
     if atttbl and atttbl.FPSLock then nextrendermeow = CurTime() + (atttbl.FPSLock or 45) end
 

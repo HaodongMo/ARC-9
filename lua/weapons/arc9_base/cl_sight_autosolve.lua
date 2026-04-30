@@ -96,7 +96,7 @@ function SWEP:GetMagnification()
         if atttbl and atttbl.RTScope then
             local cheapscale = math.max(1 / realzoomzoom, 0.85)
             target2 = math.max(target2 * realzoomzoom, 1.0) * cheapscale -- 0.85 cuz scale in vmt
-            rtcheapmat:SetFloat("$scale", cheapscale)
+            rtcheapmat:SetFloat("$scale1", cheapscale)
         end
     end
 
@@ -104,6 +104,7 @@ function SWEP:GetMagnification()
 end
 
 function SWEP:IsCheapScope(sight)
+    if self:GetSightAmount() == 0 and !self:GetCustomize() then return true end
     local real = arc9_cheapscopes:GetBool()
     if real then return true end
     sight = sight or self:GetSight()
@@ -129,6 +130,8 @@ function SWEP:AdjustMouseSensitivity()
 
 	local gsa = self:GetSightAmount()
 	
+    rtcheapmat:SetFloat("$scale2", math.Clamp(gsa*10, 0.5, 1))
+    
     if !self:GetInSights() then 
 	-- if gsa <= 0.01 then -- Active if "Sight amount" is over 1%. Experimental.
 		local amt = 1
@@ -157,7 +160,7 @@ function SWEP:AdjustMouseSensitivity()
 		end
 
 		if mag > 0 then
-			local amt = 1 / (1 - (self:GetSightAmount() * (1 - mag)))
+			local amt = 1 / (1 - (gsa * (1 - mag)))
 
 			amt = math.sqrt(amt)
 			
