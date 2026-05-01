@@ -62,7 +62,8 @@ end
 -- static stuff
 
 -- local shader_LENS_K = -0.525 -- lens K
-local shader_LENS_K = -0.9 -- lens K
+-- local shader_LENS_K = -0.9 -- lens K
+local shader_LENS_K = -0.4 -- lens K
 -- local shader_CA_STRENGTH_Base = -3 -- CA
 local shader_CA_STRENGTH_Base = 2 -- CA
 local shader_CA_STRENGTH = shader_CA_STRENGTH_Base
@@ -260,6 +261,7 @@ end
 
 function SWEP:RenderRT(magnification, atttbl)
     if ARC9.OverDraw then return end
+    if !atttbl then return end
 
     local viewstup = render.GetViewSetup()
     rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
@@ -559,6 +561,17 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                         drawscopequad(1.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang + diffy * 5, lerped, shadow, color_white) -- small shadow before reticle
                     end
                 cam.IgnoreZ(false)
+
+                if !cheap then
+                    cam.Start2D()
+                        surface.SetDrawColor(0, 0, 0, 255)
+                        surface.DrawRect(0, 0, scrw/2 - scrh/2, scrh)
+                        surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
+                        surface.SetMaterial(shadow2)
+                        surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
+                    cam.End2D()
+                end
+
             cam.End3D()
 
             render.CopyRenderTargetToTexture(rtmat_shader)
@@ -568,29 +581,14 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
 
         render.PushRenderTarget(rtmat_shader)
             cam.Start2D()
-                surface.SetDrawColor(0, 0, 0, 255)
-                surface.DrawRect(0, 0, scrw/2 - scrh/2, scrh)
-                surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
-                surface.SetMaterial(shadow2)
-                surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
-            -- cam.End2D()
+                if shaderenabled then
+                    render.SetMaterial(lenseshader)
+                    render.DrawScreenQuad()
+                end
 
-            if shaderenabled then
-                surface.SetDrawColor(255, 255, 255, 255)
-                surface.SetMaterial(lenseshader)
-                surface.DrawTexturedRect(toscreen.x - scrw/2, toscreen.y - scrh/2, scrw, scrh)
-                surface.SetDrawColor(0, 0, 0, 255)
-                surface.DrawRect(toscreen.x - scrw/2 - scrw, toscreen.y - scrh/2 - scrh, scrw, scrh*3)
-                surface.DrawRect(toscreen.x - scrw/2, toscreen.y - scrh/2 - scrh, scrw, scrh)
-
-                render.SetMaterial(lenseshader)
-                render.DrawScreenQuad()
-            end
-
-            surface.SetDrawColor(0, 0, 0, (1 - sightamt_orig) * (alwaydrwa and 128 or 255))
-            surface.DrawRect(0, 0, scrw, scrh)
+                surface.SetDrawColor(0, 0, 0, (1 - sightamt_orig) * (alwaydrwa and 128 or 255))
+                surface.DrawRect(0, 0, scrw, scrh)
                 
-            -- cam.Start2D()
                 if atttbl.RTScopeNew_DrawFunc2D then
                     atttbl.RTScopeNew_DrawFunc2D(self, scrw, scrh, sight)
                 end
@@ -608,7 +606,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     end
 end
 
--- if ARC9.Dev(2) then
+if ARC9.Dev(2) then
     local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
         ["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
         ["$translucent"] = 0,
@@ -623,7 +621,7 @@ end
             surface.DrawTexturedRect(0, 20, scrw/6, scrh/6)
         -- end
     end)
--- end
+end
 
 
 

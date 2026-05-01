@@ -47,9 +47,9 @@ hook.Add("RenderScreenspaceEffects", "ARC9_PofsttDrawViewModels", function()
     
     local atttbl = wpn:IsScoping()
     
-    if atttbl and atttbl.FPSLock and nextrendermeow >= CurTime() and wpn:GetSightAmount() > 0.99 then return end
-    if atttbl and atttbl.FPSLock then nextrendermeow = CurTime() + (atttbl.FPSLock or 45) end
+    if atttbl and atttbl.RTScopeNew_FPSLock and nextrendermeow >= CurTime() and wpn:GetSightAmount() > 0.99 then return end
+    if atttbl and atttbl.RTScopeNew_FPSLock then nextrendermeow = CurTime() + 1 / (atttbl.RTScopeNew_FPSLock or 45) end
     if wpn.RTScope then wpn.RTScopeModel = wpn:GetVM() end
-    
+
     wpn:DrawRTReticle(wpn.RTScopeModel, atttbl or {}, nil, wpn:IsCheapScope())
 end)
