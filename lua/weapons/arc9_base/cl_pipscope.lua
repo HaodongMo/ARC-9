@@ -1,3 +1,20 @@
+-- outdated, can be deleted i think (back up some functions tho)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local rtsize = math.min(1024, ScrW(), ScrH())
 
 local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)

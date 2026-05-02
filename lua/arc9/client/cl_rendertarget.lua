@@ -38,7 +38,7 @@ end)
 
 local nextrendermeow = 0
 
-hook.Add("RenderScreenspaceEffects", "ARC9_PofsttDrawViewModels", function()
+hook.Add("RenderScreenspaceEffects", "ARC9_PostDrawViewModels", function()
     local lp = LocalPlayer()
     if lp:ShouldDrawLocalPlayer() then return end
     local wpn = lp:GetActiveWeapon()

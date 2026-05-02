@@ -2,7 +2,7 @@ ARC9_ENABLE_NEWSCOPES_MEOW = true
 
 local arc9_fx_rt_shader = GetConVar("arc9_fx_rt_shader")
 local arc9_fx_rt_alwaysdraw = GetConVar("arc9_fx_rt_alwaysdraw")
-local arc9_fx_rt_legacy = GetConVar("arc9_fx_rt_legacy")
+-- local arc9_fx_rt_legacy = GetConVar("arc9_fx_rt_legacy")
 
 local scrw, scrh = ScrW(), ScrH()
 
@@ -436,7 +436,8 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                 cam.End3D()
 
                 -- muzzleflasheas
-                cam.Start3D(rt_eyepos + fwd * (cheap and 5 or 30), nil, nil, nil, nil, nil, nil, nil, nil)
+                render.UpdateFullScreenDepthTexture()
+                cam.Start3D(rt_eyepos + fwd * (cheap and 0 or 30), nil, rt_cheap and rt_viewsetup_fov_unscaled - 15 or ARC9.RTScopeRenderFOV, nil, nil, nil, nil, nil, nil)
                     for _, pcf in ipairs(self.MuzzPCFs) do
                         if IsValid(pcf) then
                             pcf:Render()
