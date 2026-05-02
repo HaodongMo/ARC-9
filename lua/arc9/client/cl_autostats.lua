@@ -154,6 +154,9 @@ ARC9.AutoStatsMains = {
     ["ImpactForce"] = {false, false},
     ["RicochetSeeking"] = {false, true},
     ["RicochetSeekingAngle"] = {false, false},
+    -- ["RTScopeMagnification"] = {"×", false},
+    -- ["RTScopeMagnificationMin"] = {"×", false},
+    -- ["RTScopeMagnificationMax"] = {"×", false},
 }
 
 ARC9.AutoStatsOperations = {
@@ -342,6 +345,35 @@ function ARC9.GetProsAndCons(atttbl, weapon)
             table.insert(consname, autostat)
             table.insert(consnum, autostatnum)
         end
+    end
+
+    if atttbl.RTScope and !atttbl.RTCollimator and atttbl.Sights then
+        local minx, maxx, hastrue, magniftext = 999, -1, false, "?"
+
+        for _, b in ipairs(atttbl.Sights) do
+            if b.RTScopeMagnification then
+                minx = math.min(b.RTScopeMagnification, minx)
+                maxx = math.max(b.RTScopeMagnification, maxx)
+                hastrue = true
+            end
+        end
+
+        if atttbl.RTScopeMagnificationMin and atttbl.RTScopeMagnificationMax then
+            minx = math.min(atttbl.RTScopeMagnificationMin, minx)
+            maxx = math.max(atttbl.RTScopeMagnificationMax, maxx)
+        elseif !hastrue and atttbl.RTScopeMagnification then
+            minx = math.min(atttbl.RTScopeMagnification, minx)
+            maxx = math.max(atttbl.RTScopeMagnification, maxx)
+        end
+        
+        if maxx > minx then
+            magniftext = minx .. "× - " .. maxx .. "×"
+        else
+            magniftext = maxx .. "×"
+        end
+
+        table.insert(prosname, ARC9:GetPhrase("autostat." .. string.lower("RTScopeMagnification")))
+        table.insert(prosnum, magniftext)
     end
 
     -- custom stats

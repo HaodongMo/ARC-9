@@ -983,11 +983,6 @@ local conVars = {
     },
     {
         name = "fx_rt_alwaysdraw",
-        default = "1",
-        client = true
-    },
-    {
-        name = "fx_rt_legacy",
         default = "0",
         client = true
     },

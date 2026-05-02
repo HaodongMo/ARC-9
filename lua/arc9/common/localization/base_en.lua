@@ -299,6 +299,7 @@ L["autostat.visualrecoilpunch"] = "Visual Recoil Punch"
 L["autostat.visualrecoilroll"] = "Visual Recoil Roll"
 L["autostat.visualrecoilside"] = "Horizontal Visual Recoil"
 L["autostat.visualrecoilup"] = "Vertical Visual Recoil"
+L["autostat.rtscopemagnification"] = "Scope Magnification"
 
 --[[
 Secondary autostats are now controlled by string.format.
@@ -770,6 +771,12 @@ L["settings.gameplay.color.reflex.desc"] = "Which color the reticle used on refl
 
 L["settings.gameplay.color.scope.title"] = "Scope Reticle Color"
 L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
+
+L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Render RT Scope Preview"
+L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS (gimmick).\n\nDoesn't affect performance much, uses Cheap Scopes internally."
+
+L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
+L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, it's a simple GPU shader, based on shadertoy.com/view/WX2cRd by science6uru2."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"
