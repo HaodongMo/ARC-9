@@ -287,7 +287,7 @@ matproxy.Add({
             local weapon = ply:GetActiveWeapon()
 
             if IsValid(weapon) and weapon.ARC9 then
-                local amt = 1 - weapon:GetSightAmount() / 1.2
+                local amt = 1 - weapon:GetSightAmount() * 0.25
                 
                 if !IsValid(ent) then return end
                 local getpos = entityGetPos(ent)
