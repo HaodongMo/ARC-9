@@ -1,4 +1,4 @@
-ARC9OLDKilliconDraw = ARC9OLDKilliconDraw or killicon.Render or killicon.Draw
+ARC9OLDKilliconDraw = ARC9OLDKilliconDraw or killicon.Render
 local killicons_cachednames = {}
 local killicons_cachedicons = {}
 local killicons_cachedtimes = {}
@@ -6,15 +6,15 @@ local killiconmat = Material("arc9/arc9_logo.png", "mips smooth")
 
 local arc9_killfeed_enable = GetConVar("arc9_killfeed_enable")
 local arc9_killfeed_dynamic = GetConVar("arc9_killfeed_dynamic")
-ARC9NEWKillicondraw = function(x, y, name, alpha)
+ARC9NEWKillicondraw = function(x, y, name, alpha, dontEqualizeHeight)
     if !arc9_killfeed_enable:GetBool() then
-        return ARC9OLDKilliconDraw(x, y, name, alpha)
+        return ARC9OLDKilliconDraw(x, y, name, alpha, dontEqualizeHeight)
     end
 
     local wpn = weapons.Get(name)
 
     if wpn and wpn.ARC9 and wpn.NoDynamicKillIcon then
-        return ARC9OLDKilliconDraw(x, y, name, alpha)
+        return ARC9OLDKilliconDraw(x, y, name, alpha, dontEqualizeHeight)
     end
 
     if killicons_cachednames[name] == true then
@@ -72,7 +72,7 @@ ARC9NEWKillicondraw = function(x, y, name, alpha)
         if killicons_cachednames[name] == nil then -- not cached yet, checking for arc9
             killicons_cachednames[name] = (weapons.Get(name) and weapons.Get(name).ARC9) or false -- weapons.get() will return nil for any hl2 base gun
         else -- we know it is totally not arc9 gun
-            return ARC9OLDKilliconDraw(x, y, name, alpha)
+            return ARC9OLDKilliconDraw(x, y, name, alpha, dontEqualizeHeight)
         end
     end
 end
