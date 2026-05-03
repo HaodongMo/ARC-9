@@ -61,10 +61,10 @@ end
 
 -- static stuff
 
--- local shader_LENS_K = -0.525 -- lens K
--- local shader_LENS_K = -0.9 -- lens K
-local shader_LENS_K = -0.4 -- lens K
--- local shader_CA_STRENGTH_Base = -3 -- CA
+-- local shader_LENS_K_Base = -0.525 -- lens K
+-- local shader_LENS_K_Base = -0.9 -- lens K
+local shader_LENS_K_Base = -0.4 -- lens K
+local shader_LENS_K = shader_LENS_K_Base
 local shader_CA_STRENGTH_Base = 2 -- CA
 local shader_CA_STRENGTH = shader_CA_STRENGTH_Base
 
@@ -91,7 +91,7 @@ timer.Simple(10, shadersetstaticvalues)
 
 -- dynamic stuff
 
-local function CalculateShaderCPU(eye_x, eye_y, eye_dist) -- 0.5, 0.5, -0.05
+local function CalculateShaderCPU(eye_x, eye_y, eye_dist, camult, kmult) -- 0.5, 0.5, -0.05
     local eyelength = math.sqrt(eye_x * eye_x + eye_y * eye_y)
 
     local center_p_x = scrw * 0.5
@@ -145,9 +145,9 @@ local function CalculateShaderCPU(eye_x, eye_y, eye_dist) -- 0.5, 0.5, -0.05
     lenseshader:SetFloat("$c1_y", c2_p_y)
     
     -- ca
-    local mouse_ca_boost = t * 200
+    local mouse_ca_boost = t * 200 * camult
     local lateral_ca = (0.025 + eye_dist / 15) * (1 + mouse_ca_boost)
-    local ca_base = (0.5 + shader_CA_STRENGTH) * 1.5
+    local ca_base = (0.5 + camult) * 1.5
     local forg_scale = (1 / shader_VIG_FORG * shader_VIG_FORG) * 0.05
     local ca_t = t * 0.5 + smoothstep(0.02, 0.2, t) * 100
     local ca_scale = ca_base * forg_scale * ca_t * 0.5
@@ -156,6 +156,9 @@ local function CalculateShaderCPU(eye_x, eye_y, eye_dist) -- 0.5, 0.5, -0.05
     lenseshader:SetFloat("$c2_y", norm_dir_y * ca_scale * 2)
     lenseshader:SetFloat("$c2_z", lateral_ca * 0.2)
     lenseshader:SetFloat("$c2_w", lateral_ca * 0.8 * t)
+
+    -- distorsion
+    lenseshader:SetFloat("$c3_x", shader_LENS_K_Base * kmult)
 end
 
 local Lerp = Lerp
@@ -394,11 +397,12 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     local modelpos_original = model:GetPos()
     local toscreen
 
-            local sight = self:GetSight()
-            local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
-            local modelpos2 = modelpos_original
-            - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
-            - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
+    local sight = self:GetSight()
+    local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
+    origsighttablepos = origsighttablepos
+    local modelpos2 = modelpos_original
+    - modelang:Up() * origsighttablepos.z
+    - modelang:Right() * origsighttablepos.x
 
 
     local diff = MainEyePos() - modelpos2
@@ -473,10 +477,6 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                 render.PopRenderTarget()
             end
 
-            local origsighttable = sight.OriginalSightTable
-            local origsighttablepos = sight.OriginalSightTable and sight.OriginalSightTable.Pos or Vector(0, 0, 0)
-
-            
             local scopebound = nonatt and {-2, 6} or getscopebound(model)
             if atttbl.RTScopeNew_FixAngle then
                 if atttbl.RTScopeNew_FixAngle == "print" then
@@ -489,9 +489,9 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
             end
 
             local modelpos = modelpos_original
-            - modelang:Up() * origsighttablepos.z / (atttbl.Scale or 1)
-            - modelforward * (-scopebound[1]) / (atttbl.Scale or 1)
-            - modelang:Right() * origsighttablepos.x / (atttbl.Scale or 1)
+            - modelang:Up() * origsighttablepos.z
+            - modelforward * (-scopebound[1]) * (atttbl.Scale or 1) * (sight.Scale or 1)
+            - modelang:Right() * origsighttablepos.x
 
             if nonatt then
                 modelpos = rt_eyepos
@@ -520,7 +520,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                     if shaderenabled then
                         shader_VIG_FORG = shader_VIG_FORG_Base / ((atttbl.RTScopeNew_ShadowIntensity or 1) * 0.5)
                         shader_CA_STRENGTH = shader_CA_STRENGTH_Base * (atttbl.RTScopeNew_ChromaticAberrationMult or 1)
-                        CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, math.Clamp((mreow + eyedistance2 * 0.1) * shader_EYE_DISTANCE_INFLUENCE, -0.15, 0.8))
+                        CalculateShaderCPU(offsetx + 0.5, offsety + 0.5, math.Clamp((mreow + eyedistance2 * 0.1) * shader_EYE_DISTANCE_INFLUENCE, -0.15, 0.8), shader_CA_STRENGTH, (atttbl.RTScopeNew_ShaderDistorsionMult or 1))
                     end
 
                     -- drawing stuffs
