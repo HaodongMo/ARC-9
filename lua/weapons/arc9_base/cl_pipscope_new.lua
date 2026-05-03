@@ -201,6 +201,27 @@ local invertcolormodif = {
 
 local tune_nohdr = Vector(1, 0, 0 )
 
+local mat_MotionBlur = Material( "pp/motionblur" )
+local mat_Screen = Material( "pp/fb" )
+local tex_MotionBlur = render.GetMoBlurTex0()
+local mb_NextDraw = 0
+local mb_LastDraw = 0
+
+function SWEP:RenderRT(cheap, magnification)
+    local atttbl = self:IsScoping()
+    local renderedpicture
+
+    if cheap then
+        ARC9.DrawPhysBullets()
+        renderedpicture = self:RenderRTCheap(atttbl)
+    else
+        renderedpicture = self:RenderRTExpensive(atttbl, magnification)
+    end
+
+    lenseshader:SetTexture("$basetexture", renderedpicture)
+end
+
+
 function SWEP:RenderRTCheap(atttbl)
     if ARC9.OverDraw then return end
 
@@ -259,10 +280,10 @@ function SWEP:RenderRTCheap(atttbl)
         cam.End3D()
     end
 
-    lenseshader:SetTexture("$basetexture", rt_cheap)
+    return rt_cheap
 end
 
-function SWEP:RenderRT(magnification, atttbl)
+function SWEP:RenderRTExpensive(atttbl, magnification)
     if ARC9.OverDraw then return end
     if !atttbl then return end
 
@@ -326,7 +347,7 @@ function SWEP:RenderRT(magnification, atttbl)
         
     render.PopRenderTarget()
     
-    lenseshader:SetTexture("$basetexture", rtmat)
+    return rtmat
 end
 
 local function drawscopequad(scale, range, ang, pos, mat, color, nobox)

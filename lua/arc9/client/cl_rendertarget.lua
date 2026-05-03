@@ -9,16 +9,8 @@ hook.Add("PreRender", "ARC9_PreRender", function()
 
     if wpn:IsCheapScope() then return end
 
-    local atttbl = wpn:IsScoping()
-
-    if !ARC9_ENABLE_NEWSCOPES_MEOW and atttbl then
-        wpn:DoRT(wpn:GetRTScopeFOV(), atttbl)
-    end
-
-    
     if ARC9_ENABLE_NEWSCOPES_MEOW and wpn.RTScopeModel and wpn.RTScopeModel.RTScopeDrawingRN then
-        -- if atttbl then
-        wpn:RenderRT(wpn:GetRTScopeMagnification(), atttbl)
+        wpn:RenderRT(false, wpn:GetRTScopeMagnification())
     end
 end)
 
@@ -30,9 +22,7 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     if !wpn:IsCheapScope() then return end
 
     if ARC9_ENABLE_NEWSCOPES_MEOW and wpn.RTScopeModel and wpn.RTScopeModel.RTScopeDrawingRN then
-        local atttbl = wpn:IsScoping()
-        ARC9.DrawPhysBullets()
-        wpn:RenderRTCheap(atttbl)
+        wpn:RenderRT(true)
     end
 end)
 
@@ -49,6 +39,7 @@ hook.Add("RenderScreenspaceEffects", "ARC9_PostDrawViewModels", function()
     
     if atttbl and atttbl.RTScopeNew_FPSLock and nextrendermeow >= CurTime() and wpn:GetSightAmount() > 0.99 then return end
     if atttbl and atttbl.RTScopeNew_FPSLock then nextrendermeow = CurTime() + 1 / (atttbl.RTScopeNew_FPSLock or 45) end
+    
     if wpn.RTScope then wpn.RTScopeModel = wpn:GetVM() end
 
     wpn:DrawRTReticle(wpn.RTScopeModel, atttbl or {}, nil, wpn:IsCheapScope())
