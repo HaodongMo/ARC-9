@@ -179,7 +179,7 @@ local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 local black2 = Material("arc9/ahmad.png", "mips smooth")
 -- local black = Material("vgui/black")
 -- local black2 = Material("models/wireframe")
-local black = CreateMaterial("blackreal", "UnlitGeneric", { ["$basetexture"] = "vgui/black" }) -- vgui/black some reason turns transparent sometimes
+local black = CreateMaterial("blackreal2", "UnlitGeneric", { ["$basetexture"] = "vgui/black", ["$ignorez"] = 1 }) -- vgui/black some reason turns transparent sometimes
 
 local rtcheapmat = Material("effects/arc9/rt_cheap")
 local rtcheapsharpen = Material("effects/arc9/rt_cheap_sharpen")
@@ -202,29 +202,44 @@ local invertcolormodif = {
 local tune_nohdr = Vector(1, 0, 0 )
 
 local mat_MotionBlur = Material( "pp/motionblur" )
-local mat_Screen = Material( "pp/fb" )
 local tex_MotionBlur = render.GetMoBlurTex0()
 local mb_NextDraw = 0
-local mb_LastDraw = 0
 
 function SWEP:RenderRT(cheap, magnification)
     local atttbl = self:IsScoping()
     local renderedpicture
+    local fpslock = atttbl.RTScopeNew_FPSLock
 
-    if cheap then
-        ARC9.DrawPhysBullets()
-        renderedpicture = self:RenderRTCheap(atttbl)
-    else
-        renderedpicture = self:RenderRTExpensive(atttbl, magnification)
+    if atttbl and !ARC9.OverDraw then
+        if fpslock then
+            if mb_NextDraw > CurTime() then rt_eyepos = MainEyePos() return end
+        end
+        
+        if cheap then
+            ARC9.DrawPhysBullets()
+            renderedpicture = self:RenderRTCheap(atttbl)
+        else
+            renderedpicture = self:RenderRTExpensive(atttbl, magnification)
+        end
+
+        lenseshader:SetTexture("$basetexture", renderedpicture)
+
+        if fpslock then
+            render.UpdateScreenEffectTexture()
+            mat_MotionBlur:SetFloat( "$alpha", 1 )
+            mat_MotionBlur:SetTexture( "$basetexture", tex_MotionBlur )
+            if mb_NextDraw < CurTime() then
+                mb_NextDraw = CurTime() + 1/fpslock
+                render.PushRenderTarget( tex_MotionBlur )
+                    render.SetMaterial( lenseshader )
+                    render.DrawScreenQuad()
+                render.PopRenderTarget()
+            end
+        end
     end
-
-    lenseshader:SetTexture("$basetexture", renderedpicture)
 end
 
-
 function SWEP:RenderRTCheap(atttbl)
-    if ARC9.OverDraw then return end
-
     local viewstup = render.GetViewSetup()
     rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
 
@@ -248,9 +263,6 @@ function SWEP:RenderRTCheap(atttbl)
         render.UpdateScreenEffectTexture()
         render.SetMaterial( rtcheapsharpen )
         render.DrawScreenQuad()
-
-        atttbl = atttbl or {}
-        
 
         if atttbl.RTScopeNightVision then
             self:DoNightScopeEffects(atttbl)
@@ -284,9 +296,6 @@ function SWEP:RenderRTCheap(atttbl)
 end
 
 function SWEP:RenderRTExpensive(atttbl, magnification)
-    if ARC9.OverDraw then return end
-    if !atttbl then return end
-
     local viewstup = render.GetViewSetup()
     rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
     local rtfov = rt_viewsetup_fov_unscaled / magnification
@@ -449,6 +458,11 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
             local sightamt = math.ease.InBack(sightamt_orig)
 
             render.PushRenderTarget(cheap and rt_cheap or rtmat)
+
+            if atttbl.RTScopeNew_FPSLock then
+                render.SetMaterial( mat_MotionBlur )
+                render.DrawScreenQuad()
+            end
 
             self:DoRTScopeEffects()
 
