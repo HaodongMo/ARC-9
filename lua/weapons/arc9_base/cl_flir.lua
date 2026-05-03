@@ -14,103 +14,236 @@ local monochrometable = {
     ["$pp_colour_colour"] = 0,
     ["$pp_colour_mulr"] = 0,
     ["$pp_colour_mulg"] = 0,
-    ["$pp_colour_mulb"] = 0
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
 }
+
+local defaultcolortable = {
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = 0,
+    ["$pp_colour_brightness"] = 0,
+    ["$pp_colour_contrast"] = 1,
+    ["$pp_colour_colour"] = 1,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
+}
+
+local mat_ColorMod = Material( "pp/colour" )
 
 local ref = 32
 local r_def = 2048
 
-function SWEP:DoFLIR(atttbl)
-
-    render.SetStencilEnable(true)
-    render.SetStencilWriteMask(255)
-    render.SetStencilTestMask(255)
-    render.ClearStencil()
-
-    -- local targets = ents.FindInCone(EyePos(), EyeAngles():Forward(), atttbl.RTScopeFLIRRange or 30000, math.cos(fov + 5))
-    local targets = lastents
-    local entcount = ents.GetCount()
-    local range = (atttbl.FLIRRange or r_def)/ARC9.HUToM
-
-    if lastentcount != entcount then
-        targets = ents.GetAll()
-        lastents = targets
+local function resetcolormod()
+    for k, v in pairs( defaultcolortable ) do
+        mat_ColorMod:SetFloat( k, v )
     end
+end
 
-    lastentcount = entcount
+local scrw, scrh = ScrW(), ScrH()
 
-    render.SuppressEngineLighting(true)
+local rt_spare = GetRenderTargetEx( "arc9_pipscope_awesome_cheapspare", scrw, scrh, 
+    RT_SIZE_FULL_FRAME_BUFFER, 
+    MATERIAL_RT_DEPTH_SHARED, 
+    bit.bor(4,8,256,512), 
+    0, 
+    IMAGE_FORMAT_RGB888
+)
 
-    if !atttbl.RTScopeFLIRSolid then
-        render.SetBlend(atttbl.RTScopeFLIRBlend or 0.25)
-        render.SetColorModulation(250, 250, 250)
-    else
-        render.SetBlend(0)
+local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh, 
+    RT_SIZE_FULL_FRAME_BUFFER, 
+    MATERIAL_RT_DEPTH_NONE, 
+    bit.bor(4,8,256,512), 
+    0, 
+    IMAGE_FORMAT_RGB888
+)
+
+local opaqueglass = Material("effects/arc9/opaqueglass")
+local opaqueglassbrush = Material("effects/arc9/opaqueglassbrush")
+
+local function isglass(ent)
+    if ent.ARC9_IsGlass then return true end
+
+    local class = ent:GetClass()
+    if class == "func_breakable_surf" then
+        ent.ARC9_IsGlass = true
+        return true
+    elseif class == "func_breakable" and ent.GetBrushSurfaces then 
+        local surfs = ent:GetBrushSurfaces()
+        local mat = surfs and surfs[1] and surfs[1]:GetMaterial()
+
+        if mat and string.find(mat:GetName(), "glass") then
+            ent.ARC9_IsGlass = true
+            return true
+        end
+    elseif (class == "prop_dynamic" or class == "prop_static" or class == "prop_physics") and ent.GetMaterials then 
+        local mats = ent:GetMaterials()
+        local mat = mats and mats[1]
+
+        if mat and string.find(mat, "glass") then
+            ent.ARC9_IsGlass = true
+            return true
+        end
     end
+end
 
-    cam.IgnoreZ(false)
+function SWEP:DoFLIR(atttbl, cheap)
+    local screen
+        if cheap then
+            screen = render.GetRenderTarget()
+            if screen and screen:GetName()  == "_rt_resolvedfullframedepth" then return end
+            render.CopyTexture( screen, rt_spare )
 
-    render.SetStencilReferenceValue(ref)
-    render.SetStencilPassOperation(STENCIL_REPLACE)
-    render.SetStencilFailOperation(STENCIL_KEEP)
-    render.SetStencilZFailOperation(STENCIL_KEEP)
-    render.SetStencilCompareFunction(STENCIL_ALWAYS)
-
-    for _, ent in ipairs(targets) do
-        if ent == self:GetOwner() then continue end
-        local hot = self:GetEntityHot(ent, range)
-        if atttbl.FLIRHotFunc then
-            hot = atttbl.FLIRHotFunc(self, ent)
+            render.PushRenderTarget(screen)
         end
 
-        if !hot then continue end
+    if self:GetSightAmount() > 0.1 then
+        render.SetStencilEnable(true)
+        render.SetStencilWriteMask(255)
+        render.SetStencilTestMask(255)
+        render.ClearStencil()
 
-        ent:DrawModel()
-    end
+        -- local targets = ents.FindInCone(EyePos(), EyeAngles():Forward(), atttbl.RTScopeFLIRRange or 30000, math.cos(fov + 5))
+        local targets = lastents
+        local entcount = ents.GetCount()
+        local range = (atttbl.FLIRRange or r_def)/ARC9.HUToM
 
-    cam.IgnoreZ(true)
+        if lastentcount != entcount then
+            targets = ents.GetAll()
+            lastents = targets
+        end
 
-    render.SetColorModulation(1, 1, 1)
-    render.SuppressEngineLighting(false)
-    render.MaterialOverride()
-    render.SetBlend(1)
+        lastentcount = entcount
 
-    render.SetStencilReferenceValue(ref)
-    render.SetStencilCompareFunction(STENCIL_EQUAL)
-    render.SetStencilPassOperation(STENCIL_KEEP)
+        render.SuppressEngineLighting(true)
+        render.SetColorModulation(0, 0, 0)
+            render.SetBlend(1)
 
-    if atttbl.RTScopeFLIRSolid then
-        render.SetColorMaterial()
-        render.DrawScreenQuad()
-    end
+        if !atttbl.RTScopeFLIRSolid then
+            render.SetBlend(atttbl.RTScopeFLIRBlend or 0.25)
+            render.SetColorModulation(1, 1, 1)
+        else
+            render.SetBlend(1)
+        end
 
-    if atttbl.RTScopeFLIRMonochrome then
+        cam.IgnoreZ(false)
+        render.SetStencilReferenceValue(ref)
+        render.SetStencilPassOperation(STENCIL_REPLACE)
+        render.SetStencilFailOperation(STENCIL_KEEP)
+        render.SetStencilZFailOperation(STENCIL_KEEP)
         render.SetStencilCompareFunction(STENCIL_ALWAYS)
-        DrawColorModify(monochrometable)
-    end
 
-    if atttbl.RTScopeFLIRCCCold then
-        render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
-        DrawColorModify(atttbl.RTScopeFLIRCCCold)
-        -- DrawColorModify(atttbl.RTScopeFLIRCCHot)
-    end
+        local glassstuff = {}
 
-    if atttbl.RTScopeFLIRCCHot then
+        for _, ent in ipairs(targets) do
+            if ent == self:GetOwner() then continue end
+            local hot = self:GetEntityHot(ent, range)
+            if atttbl.FLIRHotFunc then
+                hot = atttbl.FLIRHotFunc(self, ent)
+            end
+
+            if IsValid(ent) and isglass(ent) then
+                table.insert(glassstuff, ent)
+                hot = true
+            end
+
+            if !hot then continue end
+
+            ent:DrawModel()
+        end
+
+
+
+        ARC9.DrawPhysBullets(true)
+
+        cam.Start3D()
+            cam.IgnoreZ(true)
+            for _, pcf in ipairs(self.MuzzPCFs) do
+                if IsValid(pcf) then
+                    pcf:Render()
+                end
+            end
+            cam.IgnoreZ(false)
+        cam.End3D()
+
+
+            
+        -- cam.IgnoreZ(true)
+
+        render.SetColorModulation(1, 1, 1)
+        render.SuppressEngineLighting(false)
+        render.SetBlend(1)
+
+        render.SetStencilReferenceValue(ref)
         render.SetStencilCompareFunction(STENCIL_EQUAL)
-        DrawColorModify(atttbl.RTScopeFLIRCCHot)
+        render.SetStencilPassOperation(STENCIL_KEEP)
+
+        render.SetStencilEnable(false)
+
+        
+        render.MaterialOverride(opaqueglass)
+        render.BrushMaterialOverride(opaqueglassbrush)
+        for _, ent in ipairs(glassstuff) do
+            ent:DrawModel()
+        end
+        render.MaterialOverride()
+        render.BrushMaterialOverride()
+
+        render.SetStencilEnable(true)
+
+        if atttbl.RTScopeFLIRSolid then
+            render.SetColorMaterial()
+            render.DrawScreenQuad()
+        end
+
+        if atttbl.RTScopeFLIRMonochrome then
+            render.SetStencilCompareFunction(STENCIL_ALWAYS)
+            DrawColorModify(monochrometable)
+        end
+
+        if atttbl.RTScopeFLIRCCCold then
+            render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
+            if !atttbl.RTScopeFLIRCCCold["pp_colour_inv"] then atttbl.RTScopeFLIRCCCold["pp_colour_inv"] = 0 end
+            DrawColorModify(atttbl.RTScopeFLIRCCCold)
+        end
+
+        if atttbl.RTScopeFLIRCCHot then
+            render.SetStencilCompareFunction(STENCIL_EQUAL)
+            if !atttbl.RTScopeFLIRCCHot["pp_colour_inv"] then atttbl.RTScopeFLIRCCHot["pp_colour_inv"] = 0 end
+            DrawColorModify(atttbl.RTScopeFLIRCCHot)
+        end
+
+        render.UpdateScreenEffectTexture()
+
+        if atttbl.RTScopeFLIRFunc then
+            atttbl.RTScopeFLIRFunc(self)
+        end
+
+        if atttbl.RTScopeFLIRHotOnlyFunc then
+            atttbl.RTScopeFLIRHotOnlyFunc(self)
+        end
+
+        render.SetStencilEnable(false)
+
+    else
+        if atttbl.RTScopeFLIRCCCold then
+            render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
+            if !atttbl.RTScopeFLIRCCCold["pp_colour_inv"] then atttbl.RTScopeFLIRCCCold["pp_colour_inv"] = 0 end
+            DrawColorModify(atttbl.RTScopeFLIRCCCold)
+        end
+        render.UpdateScreenEffectTexture()
     end
 
-    render.UpdateScreenEffectTexture()
-
-    if atttbl.RTScopeFLIRFunc then
-        atttbl.RTScopeFLIRFunc(self)
+    if cheap then
+        render.PopRenderTarget()
+        render.CopyTexture( screen, rt_cheap )
+        render.DrawTextureToScreen(rt_spare)
+        -- render.UpdateFullScreenDepthTexture()
     end
 
-    if atttbl.RTScopeFLIRHotOnlyFunc then
-        atttbl.RTScopeFLIRHotOnlyFunc(self)
-    end
-
-    render.SetStencilEnable(false)
+	resetcolormod() -- just in case
 end
 
 -- local maxrange = (160/ARC9.HUToM)^2 -- 160 m
@@ -138,5 +271,23 @@ function SWEP:GetEntityHot(ent, range)
         return true
     end
 
+    if ent:GetClass() == "class CLuaEffect" then
+        return true
+    end
+
     return false
 end
+
+-- local mat = Material("effects/arc9/opaqueglass")
+
+-- hook.Add("PreDrawTranslucentRenderables", "GlassThermal", function()
+--     if !bDrawThermal then return end
+--     -- render.WorldMaterialOverride(mat)
+--     render.BrushMaterialOverride(mat)
+-- end)
+
+-- hook.Add("PostDrawTranslucentRenderables", "GlassThermal", function()
+--     if !bDrawThermal then return end
+--     -- render.WorldMaterialOverride()
+--     render.BrushMaterialOverride()
+-- end)

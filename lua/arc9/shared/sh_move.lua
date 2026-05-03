@@ -67,8 +67,6 @@ ARC9.ClientRecoilSide = 0
 
 ARC9.ClientRecoilProgress = 0
 
-local ARC9_cheapscopes = GetConVar("ARC9_cheapscopes")
-
 local function approxEqualsZero(a)
     return math.abs(a) < 0.0001
 end

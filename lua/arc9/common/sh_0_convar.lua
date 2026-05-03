@@ -972,16 +972,22 @@ local conVars = {
         replicated = true
     },
     {
-        name = "vm_adsstyle",
-        default = "0",
-        client = true
-    },
-    {
         name = "drawprojectedlights",
         default = "1",
         client = true
     },
+    {
+        name = "fx_rt_shader",
+        default = "1",
+        client = true
+    },
+    {
+        name = "fx_rt_alwaysdraw",
+        default = "0",
+        client = true
+    },
 }
+
 ARC9.ConVarData = {}
 
 local prefix = "arc9_"

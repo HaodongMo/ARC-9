@@ -1,6 +1,20 @@
 local lodcvar = GetConVar("arc9_lod_distance")
 local drawprojlights = GetConVar("arc9_drawprojectedlights")
 
+local function getscopebound(self, scopeent)
+    local vm = self:GetVM()
+    if !IsValid(scopeent) or !IsValid(vm) or !self:GetInSights() then return nil end
+    local owo, uwu = scopeent:GetModelBounds()
+    local vm = self:GetVM()
+    local awoo, uwoo = scopeent:GetPos(), scopeent:GetAngles()
+    local scopelength = WorldToLocal(awoo, uwoo, vm:GetPos(), vm:GetAngles()).x + uwu.x
+    -- debugoverlay.BoxAngles(awoo, owo, uwu, uwoo, 2, color_white)
+    if scopelength < 5 or scopelength > 45 then return nil end
+    print("calculated scope length of", string.match(scopeent:GetModel(), "([^/]+).mdl$"), scopelength)
+    return scopelength
+end
+
+
 function SWEP:ShouldLOD()
     if self.IsStatue then return 0 end
 
@@ -167,12 +181,16 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
                 --     self:DoHolosight(model, atttbl)
                 -- end
 
-                if !ARC9.PresetCam and !ARC9.RTScopeRender then
-                    if !wm and atttbl.RTScope then
+                if !ARC9.PresetCam and !ARC9.RTScopeRender and !ARC9.OverDraw then
+                    if !wm and atttbl.RTScope or self.RTScope then
                         local active = slottbl.Address == self:GetActiveSightSlotTable().Address
-                        self:DoRTScope(model, atttbl, active)
-                    elseif wm and atttbl.RTScope then
-                        self:DoRTScope(model, atttbl, false)
+                        if !ARC9_ENABLE_NEWSCOPES_MEOW then self:DoRTScope(model, atttbl, active) end
+
+                        if active then
+                            self.RTScopeModel = model
+                            if self.RTScope then atttbl.RTScopeNew_DisableShaderEyeOffset = true end
+                            self.RTScopeAtttbl = atttbl
+                        end
                     end
                 end
             end
@@ -187,6 +205,8 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
                 model:DrawModel()
                 if !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then render.RenderFlashlights(function() model:DrawModel() end) end
             end
+
+            if self.RTScopeModel == model and !model.RTScopeLength then model.RTScopeLength = getscopebound(self, model) end
 
             if atttbl.DrawFunc then
                 atttbl.DrawFunc(self, model, wm)

@@ -1,3 +1,20 @@
+-- outdated, can be deleted i think (back up some functions tho)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local rtsize = math.min(1024, ScrW(), ScrH())
 
 local rtmat = GetRenderTarget("arc9_pipscope", rtsize, rtsize, false)
@@ -94,7 +111,7 @@ function SWEP:DoRT(fov, atttbl)
     end
 end
 
-local rtsurf = Material("effects/arc9/rt")
+local rtsurf = Material("effects/arc9/rt_old")
 local shadow = Material("arc9/shadow.png", "mips smooth")
 local shadow2 = Material("arc9/shadow2.png", "mips smooth")
 
@@ -109,7 +126,8 @@ local pp_cc_tab = {
     ["$pp_colour_colour"] = 1.1,
     ["$pp_colour_mulr"] = 0,
     ["$pp_colour_mulg"] = 0,
-    ["$pp_colour_mulb"] = 0
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
 }
 
 local monochrometable = {
@@ -121,7 +139,8 @@ local monochrometable = {
     ["$pp_colour_colour"] = 0,
     ["$pp_colour_mulr"] = 0,
     ["$pp_colour_mulg"] = 0,
-    ["$pp_colour_mulb"] = 0
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
 }
 
 local noise = Material("arc9/nvnoise")
@@ -143,6 +162,7 @@ function SWEP:DoNightScopeEffects(atttbl)
     end
 
     if atttbl.RTScopeNightVisionCC then
+        if !atttbl.RTScopeNightVisionCC["pp_colour_inv"] then atttbl.RTScopeNightVisionCC["pp_colour_inv"] = 0 end
         DrawColorModify(atttbl.RTScopeNightVisionCC)
     end
 
@@ -159,23 +179,6 @@ function SWEP:DoRTScopeEffects()
     render.UpdateScreenEffectTexture()
 
     if atttbl.RTScopeNoPP then return end
-
-    -- pp_ca_r:SetTexture("$basetexture", rtmat)
-    -- pp_ca_g:SetTexture("$basetexture", rtmat)
-    -- pp_ca_b:SetTexture("$basetexture", rtmat)
-
-    -- render.SetMaterial( pp_ca_r )
-    -- render.DrawScreenQuad()
-    -- render.SetMaterial( pp_ca_g )
-    -- render.DrawScreenQuad()
-    -- render.SetMaterial( pp_ca_b )
-    -- render.DrawScreenQuad()
-
-    -- Color modify
-    DrawColorModify( pp_cc_tab )
-
-    -- Sharpen
-    -- DrawSharpen(0.05, 12) -- dont work for some reason
 
     if atttbl.RTScopeCustomPPFunc then
         atttbl.RTScopeCustomPPFunc(self)
@@ -284,11 +287,11 @@ function SWEP:DoRTScope(model, atttbl, active)
                 local rtr_y = (rtsize - size) / 2
 
                 if atttbl.RTScopeBlackBox != false then
-                    surface.SetDrawColor(0, 0, 0)
-                    surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
-                    surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
-                    surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
-                    surface.DrawRect(rtr_x + size - 1, rtr_y - size * 4, size * 8, size * 8) -- right
+                    -- surface.SetDrawColor(0, 0, 0)
+                    -- surface.DrawRect(rtr_x - size * 4, rtr_y - size * 8, size * 8, size * 8) -- top
+                    -- surface.DrawRect(rtr_x - size * 8, rtr_y - size * 4, size * 8, size * 8) -- left
+                    -- surface.DrawRect(rtr_x - size * 4, rtr_y + size - 1, size * 8, size * 8) -- bottom
+                    -- surface.DrawRect(rtr_x + size - 1, rtr_y - size * 4, size * 8, size * 8) -- right
 
                     if atttbl.RTScopeBlackBoxShadow != false then
                         surface.SetMaterial(shadow2)
@@ -314,22 +317,22 @@ function SWEP:DoRTScope(model, atttbl, active)
             --     drawfunc(self, pos, model)
             -- end
 
-            if !atttbl.RTScopeNoShadow then
-                surface.SetDrawColor(0, 0, 0)
-                surface.SetMaterial(shadow)
-                surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
+            -- if !atttbl.RTScopeNoShadow then
+            --     surface.SetDrawColor(0, 0, 0)
+            --     surface.SetMaterial(shadow)
+            --     surface.DrawTexturedRect(sh_x, sh_y, sh_s, sh_s)
 
-                if !screenpos.visible then
-                    surface.SetDrawColor(0, 0, 0)
-                    surface.DrawRect(0, 0, rtsize, rtsize)
-                else
-                    surface.SetDrawColor(0, 0, 0)
-                    surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
-                    surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
-                    surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
-                    surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
-                end
-            end
+            --     -- if !screenpos.visible then
+            --     --     surface.SetDrawColor(0, 0, 0)
+            --     --     surface.DrawRect(0, 0, rtsize, rtsize)
+            --     -- else
+            --         surface.SetDrawColor(0, 0, 0)
+            --         surface.DrawRect(sh_x - sh_s * 4, sh_y - sh_s * 8, sh_s * 8, sh_s * 8) -- top
+            --         surface.DrawRect(sh_x - sh_s * 8, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- left
+            --         surface.DrawRect(sh_x - sh_s * 4, sh_y + sh_s, sh_s * 8, sh_s * 8) -- bottom
+            --         surface.DrawRect(sh_x + sh_s, sh_y - sh_s * 4, sh_s * 8, sh_s * 8) -- right
+            --     -- end
+            -- end
         else
             render.PushRenderTarget(rtmat)
             cam.Start2D()
@@ -354,7 +357,9 @@ function SWEP:DoRTScope(model, atttbl, active)
 
         -- model:SetSubMaterial()
 
-        model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
+        model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt_old")
+        model:SetSubMaterial(1, "effects/arc9/rt_old")
+        -- model:SetSubMaterial(2, "effects/arc9/rt_old")
     else
         -- model:SetSubMaterial()
         rtsurf:SetTexture("$basetexture", "vgui/black")

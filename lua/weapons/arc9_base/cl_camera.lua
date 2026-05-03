@@ -2,7 +2,6 @@ SWEP.SmoothedMagnification = 1
 SWEP.FOV = 90
 
 
--- local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 local arc9_vm_cambob = GetConVar("arc9_vm_cambob")
 local arc9_vm_cambobwalk = GetConVar("arc9_vm_cambobwalk")
 local arc9_vm_cambobintensity = GetConVar("arc9_vm_cambobintensity")
@@ -35,13 +34,6 @@ function SWEP:CalcView(ply, pos, ang, fov)
 
     local sightamount = self:GetSightAmount()
 
-    -- does anybody knows what this part of code for? seems to be useless and breaks lean mods 
-    -- if self:IsScoping() and arc9_cheapscopes:GetBool() then
-    --     local shootang = self:GetShootDir()
-
-    --     ang = LerpAngle(sightamount, ang, shootang)
-    -- end
-
     fov = fov / self:GetSmoothedFOVMag()
 
     self.FOV = fov
@@ -68,8 +60,9 @@ function SWEP:GetSmoothedFOVMag()
     local speed = 1
 
     if self:GetInSights() then
-        local target = self:GetMagnification()
-        local sightdelta = self:GetSightAmount()
+        local target, target2 = self:GetMagnification()
+        local sightdelta_old = self:GetSightAmount()
+        local sightdelta = sightdelta_old
 		local curTime = UnPredictedCurTime()
 		local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
 		local reloadanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
@@ -90,12 +83,12 @@ function SWEP:GetSmoothedFOVMag()
 			
 		if shotgun and self:GetReloading() then target = target * 0.95 end
 		
-        mag = Lerp(sightdelta, 1, target)
+        local sightdelta2 = math.ease.InCirc(sightdelta_old)
+        mag = Lerp(sightdelta, 1, Lerp(sightdelta2, target2, target))
 
-        -- mag = target
-        speed = Lerp(self:GetSightAmount(), speed, 10)
+        speed = Lerp(sightdelta2, speed, (target > 2 and sightdelta2 < 1) and 50 or 10)
 	else
-		speed = Lerp(self:GetSightAmount(), 15, 10)
+		speed = Lerp(self:GetSightAmount(), 25, 10)
     end
 
     local diff = math.abs(self.SmoothedMagnification - mag)

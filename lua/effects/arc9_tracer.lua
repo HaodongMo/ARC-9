@@ -22,7 +22,10 @@ function EFFECT:Init(data)
     if !wep.ARC9 then return end
 
     local speed = data:GetScale()
-    local start = !ARC9.RTScopeRender and (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart()
+    -- local start = !ARC9.RTScopeRender and (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart()
+    local viewsetup = render.GetViewSetup()
+    local fucky = viewsetup and viewsetup.fovviewmodel and viewsetup.fovviewmodel > 10
+    local start = fucky and (wep.GetTracerOrigin and wep:GetTracerOrigin()) or data:GetStart() + Vector(0, 0, -20)
 
     local diff = hit - start
     self.Dir = diff:GetNormalized()
