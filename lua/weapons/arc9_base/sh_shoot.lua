@@ -1032,15 +1032,13 @@ function SWEP:GetShootPos()
     local ang = self:GetShootDir()
     local height = ang:Up()
 
-    height:Mul(swepGetProcessedValue(self, "HeightOverBore", true))
-    pos:Add(height)
+    -- height:Mul(swepGetProcessedValue(self, "HeightOverBore", true))
+    -- pos:Add(height)
 
     --pos = pos + (owner:EyeAngles():Right() * self:GetLeanOffset())
 
     local rightVec = owner:EyeAngles():Right()
     -- rightVec:Mul(self:GetLeanOffset())
-
-    pos:Add(rightVec)
 
     local shootposoffset = swepGetProcessedValue(self, "ShootPosOffset", true)
 

@@ -1165,8 +1165,6 @@ SWEP.PeekPos = Vector(-1.5, 3, -4.5)
 SWEP.PeekAng = Angle(0, 0.4, -35)
 SWEP.NoPeekCrosshair = nil -- Not displays peek crosshair even if its enabled
 
-SWEP.HeightOverBore = 1
-
 -------------------------- HoldTypes
 
 SWEP.HoldType = "shotgun"
