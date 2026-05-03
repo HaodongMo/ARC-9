@@ -28,6 +28,43 @@ local function FixVertexLitMaterial(mat) -- from DImage code
 	return mat
 end
 
+ARC9.AttachmentPatches = {
+    ["doi_optic_"] = {
+        RTScopeNew_ShadowScale = 45,
+        RTScopeNew_ReticleBlackBox = true
+    },
+    ["csgo_optic_"] = {
+        RTScopeReticleScale = 1.35,
+        RTScopeNew_ReticleBlackBox = true
+    },
+    ["csgo_optic_acog"] = {
+        RTScopeReticleScale = 2.25,
+    },
+    ["gekolt_css_optic_"] = {
+        RTScopeNew_ReticleBlackBox = true
+    },
+}
+
+function ARC9.AddAttachmentPatch(tabl)
+    table.insert(ARC9.AttachmentPatches, tabl)
+end
+
+function ARC9.ApplyAttachmentPatches(attname, atttbl)
+	for prefix, stats in pairs(ARC9.AttachmentPatches) do
+        if string.StartsWith(attname, prefix) then
+			for stat, value in pairs(stats) do
+				atttbl[stat] = value
+			end
+		end
+	end
+
+	if ARC9.AttachmentPatches[attname] then
+		for stat, value in pairs(ARC9.AttachmentPatches[attname]) do
+			atttbl[stat] = value
+		end
+	end
+end
+
 function ARC9.LoadAttachment(atttbl, shortname, id)
     if hook.Run("ARC9_LoadAttachment", atttbl, shortname, id) then return end
     if atttbl.Ignore then return end
@@ -68,6 +105,8 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
 
         atttbl.ToggleStats = camotoggles
     end
+
+    ARC9.ApplyAttachmentPatches(shortname, atttbl)
 
     ARC9.Attachments[shortname] = atttbl
     ARC9.Attachments_Index[atttbl.ID] = shortname
