@@ -1090,10 +1090,10 @@ SWEP.IronSights = {
     FlatScopeCC = nil -- Color correction table, see default.lua
 }
 
-SWEP.SightMidPoint = { -- Where the gun should be at the middle of it's irons
-    Pos = Vector(-3, 15, -5),
-    Ang = Angle(0, 0, -45),
-}
+-- SWEP.SightMidPoint = { -- Where the gun should be at the middle of it's irons -- not used anymore?
+--     Pos = Vector(-3, 15, -5),
+--     Ang = Angle(0, 0, -45),
+-- }
 
 SWEP.HasSights = true
 

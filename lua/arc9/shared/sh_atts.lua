@@ -43,6 +43,11 @@ ARC9.AttachmentPatches = {
     ["gekolt_css_optic_"] = {
         RTScopeNew_ReticleBlackBox = true
     },
+    ["scpsl_disruptor_nv"] = {
+        RTScopeNew_DisableShader = true,
+        RTScopeReticleScale = 3,
+        RTScopeNew_FixAngle = Angle(0.8, 0.45, 0),
+    },
 }
 
 function ARC9.AddAttachmentPatch(tabl)
