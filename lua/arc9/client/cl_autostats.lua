@@ -366,7 +366,9 @@ function ARC9.GetProsAndCons(atttbl, weapon)
             maxx = math.max(atttbl.RTScopeMagnification, maxx)
         end
         
-        if maxx > minx then
+        if maxx == -1 then
+            magniftext = "Outdated :("
+        elseif maxx > minx then
             magniftext = minx .. "× - " .. maxx .. "×"
         else
             magniftext = maxx .. "×"
