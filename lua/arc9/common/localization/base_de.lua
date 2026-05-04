@@ -76,6 +76,7 @@ L["hud.hint.ubgl"] = "Umschalten %s"
 L["hud.hint.unjam"] = "Hemmung beheben"
 L["hud.hint.zoom"] = "Zoom ändern"
 L["hud.hint.quicknade"] = "Schnellwurf „%s“"
+-- L["hud.hint.quickreload"] = "Quick Reload"
 
 L["hud.hint.lowammo"] = "Wenig Munition"
 L["hud.hint.noammo"] = "Keine Munition"
@@ -118,6 +119,7 @@ L["customize.stats.sprinttofire"] = "Sprint-bis-Feuer-Zeit"
 L["customize.stats.supplylimit"] = "Nachschublimit"
 L["customize.stats.sway"] = "Schwanken"
 L["customize.stats.triggerdelay"] = "Abzugs-Verzögerung"
+-- L["customize.stats.fusetimer"] = "Fuse Timer"
 
 L["customize.hint.attach"] = "Montieren"
 L["customize.hint.controller"] = "Controller-Modus ist an."
@@ -170,13 +172,21 @@ L["customize.stats.explain.noise"] = "Lautstärke der Schüsse."
 L["customize.stats.explain.sway"] = "Wie sehr die Waffe schwankt."
 L["customize.stats.explain.freeaim"] = "Maximaler Winkel fürs freie Zielen. Niedriger ist besser."
 L["customize.stats.explain.supplylimit"] = "Munitionsmenge, die die Waffe durch ARC9-Munitionsquellen erhält."
+-- L["customize.stats.explain.fusetimer"] = "Time delay before the projectile detonates. The timer may start from pin pull or from release depending on the throwable."
 
 L["customize.bench.dummy"] = "BALLISTIK-ATTRAPPEN-TEST"
 L["customize.bench.effect"] = "EFFEKT AUF DISTANZ"
 L["customize.bench.ballistics"] = "TERMINAL-BALLISTIK LEISTUNGS-EVALUATION"
 L["customize.bench.precision"] = "MECHANISCHER PRÄZISIONSTEST"
 
--- L["customize.camoslot"] = "Camo (%s)"
+ -- not many space for those strings, be careful
+-- L["customize.bench.ttk"] = "TTK: " -- TTK, Time to kill
+-- L["customize.bench.ttk.instant"] = "Instant"
+-- L["customize.bench.ttk.shots"] = "Shots TK: " -- STK, Shots to kill, you can use just shots in your language
+-- L["customize.bench.ttk.withoneheadshot"] = "W/ 1 head:" -- TTK With One Headshot
+
+-- L["customize.camoslot"] = "Camo Slot %s"
+-- L["customize.camoslot.none"] = "No Camo"
 -- L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."
 -- L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
 -- L["customize.camoslot.eftextra"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."
@@ -289,6 +299,9 @@ L["autostat.visualrecoilpunch"] = "Visueller Rückstoß-Schlag"
 L["autostat.visualrecoilroll"] = "Visuelle Rückstoß-Drehung"
 L["autostat.visualrecoilside"] = "Horizontaler Visueller Rückstoß"
 L["autostat.visualrecoilup"] = "Vertikaler Visueller Rückstoß"
+-- L["autostat.rtscopemagnification"] = "Scope Magnification"
+-- L["autostat.rtscopenew_fpslock"] = "Display Framerate"
+-- L["autostat.rtscopenew_pixelation"] = "Display Resolution"
 
 --[[
 Secondary autostats are now controlled by string.format.
@@ -427,6 +440,7 @@ L["tips.presets"] = "Teile deine liebsten Presets mit Freunden, indem du sie exp
 L["tips.settings"] = "In den ARC9-Einstellungen kannst du diese Tipps abschalten und noch viel anderes tun. Drücke den Button in der oberen linken Ecke!"
 L["tips.tips"] = "Tipps haben eine vorgeschriebene Reihenfolge. Lies weiter und du wirst früher oder später alle sehen."
 L["tips.tolerance"] = "Alle Waffen-Bases arbeiten hervorragend zusammen. Es gibt keinen Grund eine ungleiche Bevorzugung."
+-- L["tips.togglehold"] = "If you have lots of lasers and flashlights, hold the toggle key to open a menu to adjust them all easily."
 
 ////////////////////// Other
 L["atts.favourites"] = "Favoriten"
@@ -651,6 +665,9 @@ L["settings.effects.lod.desc"] = "Wie weit du von Models entfernt sein musst, um
 -- L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
 -- L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
 
+-- L["settings.effects.drawprojectedlights.title"] = "Draw Projected Lights on Viewmodel"
+-- L["settings.effects.drawprojectedlights.desc"] = "! EXPERIMENTAL !\n\nDraws projected lights/flashlights/cascade shadows on attachments and viewmodel.\n\nMay impact performance.\n\nAuto enabled with \"Real CSM\" mod."
+
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Viewmodel-Einstellungen"
 L["settings.tabname.vm.desc"] = "Passe bestimmte Einstellungen der Viewmodels an."
@@ -756,6 +773,12 @@ L["settings.gameplay.color.reflex.desc"] = "Bestimmt Farbe des Fadenkreuzes, das
 
 L["settings.gameplay.color.scope.title"] = "Zielfernrohr-Fadenkreuz-Farbe"
 L["settings.gameplay.color.scope.desc"] = "Bestimmt Farbe des Fadenkreuzes, das von RT-Scopes benutzt werden soll.\n\nWird nicht von allen Optiken unterstützt."
+
+-- L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Render RT Scope Preview"
+-- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS (gimmick).\n\nDoesn't affect performance much, uses Cheap Scopes internally."
+
+-- L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
+-- L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"
@@ -912,7 +935,7 @@ L["settings.tabname.attachmentsnpcs"] = "Zubehör & NPCs"
 L["settings.tabname.customization.desc"] = "Passe Einstelungen bezüglich der Waffen-Anpassungen an."
 
 L["settings.server.custmenu.atts_nocustomize.title"] = "Anpassung deaktivieren"
- L["settings.server.custmenu.atts_nocustomize.desc"] = "Deaktiviert Spielern die Option das Anpassungs-Menü öffnen zu können.\n\nBetrifft nicht Admins."
+L["settings.server.custmenu.atts_nocustomize.desc"] = "Deaktiviert Spielern die Option das Anpassungs-Menü öffnen zu können.\n\nBetrifft nicht Admins."
 
 L["settings.server.custmenu.blacklist.title"] = "Blacklist-Menü"
 L["settings.server.custmenu.blacklist.desc"] = "Öffnet ein Menü, das es erlaubt bestimmtes Zubehör komplett zu deaktivieren."
@@ -976,6 +999,9 @@ L["settings.server.bulletphysics.bullet_drag.desc"] = "Wie viel Luftwiderstand p
 L["settings.server.bulletphysics.bullet_lifetime.title"] = "Geschoss-Lebensdauer"
 L["settings.server.bulletphysics.bullet_lifetime.desc"] = "Wie lang (in Sekunden) es braucht bis ein physikalisches Geschoss gelöscht wird."
 
+-- L["settings.server.bulletphysics.bullet_physics_shotguns.title"] = "Physical bullets for Shotguns"
+-- L["settings.server.bulletphysics.bullet_physics_shotguns.desc"] = "Use physical bullets for shotguns too, otherwise they will use hitscan."
+
 L["settings.server.bulletphysics.ricochet.title"] = "Querschläger aktivieren"
 L["settings.server.bulletphysics.ricochet.desc"] = "Erlaubt es Geschossen von harten Oberflächen abzuprallen und womöglich nichtsahnende Feinde zu treffen.\n\nEffektivität ist von der Waffe abhängig."
 
@@ -995,6 +1021,7 @@ L["settings.server.quickstat.mod_malfunction.title"] = "Fehlfunktions-Chance"
 
 L["settings.server.quickstat.mod_damage.desc"] = "Multipliziere wie viel Schaden die Waffe anrichtet."
 L["settings.server.quickstat.mod_spread.desc"] = "Multipliziere wie viel Streu die Waffe hat."
+-- L["settings.server.quickstat.mod_dispersionspread.desc"] = "Multiply how much dispersion spread the shotguns have."
 L["settings.server.quickstat.mod_recoil.desc"] = "Multipliziere wie viel Rückstoß die Waffe hat."
 L["settings.server.quickstat.mod_visualrecoil.desc"] = "Multipliziere wie viel visuellen Rückstoß die Waffe hat."
 L["settings.server.quickstat.mod_adstime.desc"] = "Multipliziere wie schnell sich die Waffe zum Zielen (ADS) anlegen und wieder herunternehmen lässt."
@@ -1048,6 +1075,9 @@ L["settings.server.developer.presets_clear.desc"] = "Löscht Presets, Icons und 
 L["settings.server.developer.reload"] = "NEULADEN"
 L["settings.server.developer.clear"] = "LÖSCHEN"
 
+-- L["settings.developer.ignore_dx.title"] = "Ignore DirectX warning"
+-- L["settings.developer.ignore_dx.desc"] = "Ignore the warning about current DirectX warning not being 9, useful on linux or something."
+
 ////////// Asset Caching
 L["settings.tabname.assetcache"] = "Asset-Caching"
 L["settings.tabname.assetcache.desc"] = "Das Cachen (Zwischenspeichern) bestimmer Assets kann Bildstottern verhindern, für ein angenehmeres Spielverhalten.\n\nBeim Spielen von einer Festplatte oder Verwendung einer Vielzahl von Addons, verbessern diese Optionen die initialen Ladezeiten."
@@ -1084,7 +1114,7 @@ L["settings.server.assetcache.all"] = "ALLES CACHEN"
 
 ////////// Print to Console
 L["settings.tabname.printconsole"] = "In Konsole ausgeben"
- L["settings.tabname.printconsole.desc"] = "\"Ausgabe\" drücken, um das Gewünschte in der Entwickler-Konsole auszugeben."
+L["settings.tabname.printconsole.desc"] = "\"Ausgabe\" drücken, um das Gewünschte in der Entwickler-Konsole auszugeben."
 
 L["settings.server.printconsole.dev_listmyatts.title"] = "Mein Zubehör ausgeben"
 L["settings.server.printconsole.dev_listmyatts.desc"] = "Gibt die internen Namen aller aktuell ausgerüsteten Zubehörteile aus."

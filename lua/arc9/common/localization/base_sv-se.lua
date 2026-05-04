@@ -76,6 +76,7 @@ L["hud.hint.ubgl"] = "Växla %s"
 L["hud.hint.unjam"] = "Fixa Eldavbrott"
 L["hud.hint.zoom"] = "Ändra Zoom"
 L["hud.hint.quicknade"] = "Snabbkasta \"%s\""
+L["hud.hint.quickreload"] = "Snabb omladdning"
 
 L["hud.hint.lowammo"] = "Låg Ammo"
 L["hud.hint.noammo"] = "Ingen Ammo"
@@ -118,6 +119,7 @@ L["customize.stats.sprinttofire"] = "Spring-till-Skjut Tid"
 L["customize.stats.supplylimit"] = "Påfyll Begränsning"
 L["customize.stats.sway"] = "Svängning"
 L["customize.stats.triggerdelay"] = "Avtryckare Fördröj."
+L["customize.stats.fusetimer"] = "Tid på stubin"
 
 L["customize.hint.attach"] = "Sätt På"
 L["customize.hint.controller"] = "Kontrollerläge är på."
@@ -170,16 +172,24 @@ L["customize.stats.explain.noise"] = "Hur höga vapnets skott är."
 L["customize.stats.explain.sway"] = "Antal svängning som tillämpas på vapnet."
 L["customize.stats.explain.freeaim"] = "Maximal fritt sikte vinkel. Lägre är bättre."
 L["customize.stats.explain.supplylimit"] = "Antal ammo vapnet kan motta från ARC9-ammo källor."
+L["customize.stats.explain.fusetimer"] = "Tidfördröjning innan projektilen sprängs. Timern kan påbörja när osäkrar den eller när man släpper den, boende på vapnet."
 
 L["customize.bench.dummy"] = "BALLISTIK DUMMY TEST"
 L["customize.bench.effect"] = "EFFEKT PÅ RÄCKVIDD"
 L["customize.bench.ballistics"] = "TERMINAL BALLISTISK PRESTANDA EVALUERING"
 L["customize.bench.precision"] = "MEKANISK TRÄFFSÄKERHET TEST"
 
--- L["customize.camoslot"] = "Camo (%s)"
--- L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."
--- L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
--- L["customize.camoslot.eftextra"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."
+ -- not many space for those strings, be careful
+L["customize.bench.ttk"] = "T.A.D.: " -- TTK, Time to kill
+L["customize.bench.ttk.instant"] = "Omedelbar"
+L["customize.bench.ttk.shots"] = "Skott A.D.: " -- STK, Shots to kill, you can use just shots in your language
+L["customize.bench.ttk.withoneheadshot"] = "Med 1 HS:" -- TTK With One Headshot
+
+L["customize.camoslot"] = "Kamo-Plats %s"
+L["customize.camoslot.none"] = "Ingen Kamo"
+L["customize.camoslot.canpaint"] = "\n\nDetta tillbehör kan <color=255,224,86>kamoufleras individuellt</color>."
+L["customize.camoslot.nosupport"] = "\n\nDetta tillbehör kan <color=255,224,86>kamoufleras individuellt</color>, men vapnet <color=255,106,0>saknar stödet till det</color>."
+L["customize.camoslot.eftextra"] = "\nAnvänd <color=114,255,86>Camo Support</color>-tillbehöret från <color=255,106,0>EFT Extras</color> för att tillämpa individuella kamouflage."
 
 L["folder.back"] = "Tillbaka"
 L["folder.deselect"] = "Välj Bort"
@@ -289,6 +299,9 @@ L["autostat.visualrecoilpunch"] = "Visuell Rekylkick"
 L["autostat.visualrecoilroll"] = "Visuell Rekylrullning"
 L["autostat.visualrecoilside"] = "Horisontell Visuell Rekyl"
 L["autostat.visualrecoilup"] = "Vertikal Visuell Rekyl"
+L["autostat.rtscopemagnification"] = "Magnifiering i siktet"
+L["autostat.rtscopenew_fpslock"] = "Bilduppdateringsfrekvens"
+L["autostat.rtscopenew_pixelation"] = "Bildupplösning"
 
 --[[
 Secondary autostats are now controlled by string.format.
@@ -427,6 +440,7 @@ L["tips.presets"] = "Dela med dig av dina favorita förinställningar med dina v
 L["tips.settings"] = "Du kan stänga av dessa tips, och mycket mer, via ARC9-inställningarna. Klicka på knappen i topphögra hörnet!"
 L["tips.tips"] = "Tips har en fast ordning. Fortsätt läsa så ser du till sist allihopa."
 L["tips.tolerance"] = "Alla vapenpaket fungerar bra tillsammans. Det finns ingen anledning för favorisering."
+L["tips.togglehold"] = "Om du har många lasrar och ficklampor så kan du hålla nere växla-knappen för att öppna en meny för att lätt ändra dem."
 
 ////////////////////// Other
 L["atts.favourites"] = "Favoriter"
@@ -651,6 +665,9 @@ L["settings.effects.lod.desc"] = "Hur långt borta du behöver vara från modell
 L["settings.effects.indoorsound.title"] = "Ljudkvalitet inomhus"
 L["settings.effects.indoorsound.desc"] = "Hur detaljerad ljudkontrollen inomhus borde vara.\n\nLägre kvalitet förbättrar prestandan, men kan göra att ljud inomhus inte är lika korrekt."
 
+L["settings.effects.drawprojectedlights.title"] = "Aktivera projekterade ljus på vymodell"
+L["settings.effects.drawprojectedlights.desc"] = "! EXPERIMENTAL !\n\nSkapar projicerade ljus/ficklampor/kaskade skuggor på tillbehör och vymodellen.\n\nKan påverka prestandan.\n\nAktiveras automatiskt med \"Real CSM\"-tillägget."
+
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "Vymodell Inställningar"
 L["settings.tabname.vm.desc"] = "Justera diverse inställningar relaterade till vymodeller."
@@ -757,6 +774,12 @@ L["settings.gameplay.color.reflex.desc"] = "Vilken färg hårkorset i reflex- oc
 L["settings.gameplay.color.scope.title"] = "Magnifierat Sikte Färg"
 L["settings.gameplay.color.scope.desc"] = "Vilken färg hårkorset som används av RT-sikten borde vara.\n\nInte alla sikten stödjer detta."
 
+L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Skapa förhandsvisning i RT-sikten"
+L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Sikten kommer visa en förhandsvisning med hårkorset när den är i skärmens mittpunkt och ur siktet (gimmick).\n\nPåverkar inte prestandan mycket och använder internt Billiga Sikten."
+
+L["settings.gameplay.fx_rt_shader.title"] = "Snygg shader i RT-sikten"
+L["settings.gameplay.fx_rt_shader.desc"] = "Skapar en häftig kromatisk aberration, distorsion i linsen, och komplexa parallaxeffekter inne i RT-sikten.\n\nIngen aning om detta påverkar prestandan, då det är en GPU-shader.\n\nBaserad på shadertoy.com/view/WX2cRd av science6uru2."
+
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"
 
@@ -851,9 +874,6 @@ L["settings.server.gameplay.realrecoil.desc"] = "Diverse vapen har tillgång til
 L["settings.server.gameplay.mod_bodydamagecancel.title"] = "Kroppskada Avbrytning"
 L["settings.server.gameplay.mod_bodydamagecancel.desc"] = "Stänger av standard kroppskada multiplikatorn.\n\nStäng endast av om ett annat tillägg erbjuder denna funktion."
 
-L["settings.gameplay.controllerglyphs.title"] = "Kontrollerläge"
-L["settings.gameplay.controllerglyphs.desc"] = "Öppna en separat meny som tillåter dig att finjustera kontrollervänliga alternativ, exempelvis ändra anpassade glyfer."
-
 ////////////////////// Customization
 L["settings.tabname.customization"] = "Anpassning"
 
@@ -905,8 +925,8 @@ L["settings.gameplay.font.desc"] = "Skriv in ett anpassat teckensnitt som borde 
 L["settings.gameplay.controller.title"] = "Kontrollerläge"
 L["settings.gameplay.controller.desc"] = "Aktiverar anpassade kontrollervänliga element."
 
-L["settings.gameplay.controllerglyphs.title"] = "Kontrollerglyfer"
-L["settings.gameplay.controllerglyphs.desc"] = "Öppna en separat meny som tillåter dig att justera glyferna som visas när Kontrollerläget är aktiverat."
+L["settings.gameplay.controllerglyphs.title"] = "Kontrollerläge"
+L["settings.gameplay.controllerglyphs.desc"] = "Öppna en separat meny som tillåter dig att finjustera kontrollervänliga alternativ, exempelvis ändra anpassade glyfer."
 
 ////////////////////// Attachments & NPCs
 L["settings.tabname.attachmentsnpcs"] = "Tillbehör & NPC:er"
@@ -979,6 +999,9 @@ L["settings.server.bulletphysics.bullet_drag.desc"] = "Hur mycket luftmotstånd 
 L["settings.server.bulletphysics.bullet_lifetime.title"] = "Skottlivstid"
 L["settings.server.bulletphysics.bullet_lifetime.desc"] = "Hur länge, i sekunder, det tar för att fysiska skott tas bort från existens."
 
+L["settings.server.bulletphysics.bullet_physics_shotguns.title"] = "Fysiska skott på hagelbössor"
+L["settings.server.bulletphysics.bullet_physics_shotguns.desc"] = "Använder också fysiska skott på hagelbössor, annars är dem \"hitscan\"."
+
 L["settings.server.bulletphysics.ricochet.title"] = "Aktivera Skottrikoschetter"
 L["settings.server.bulletphysics.ricochet.desc"] = "Tillåter skott att studsa på hårda ytor vilket kan möjligtvis träffa omisstänksamma motståndare.\n\nEffektivitet beror på vapnet."
 
@@ -998,6 +1021,7 @@ L["settings.server.quickstat.mod_malfunction.title"] = "Chans för Eldavbrott"
 
 L["settings.server.quickstat.mod_damage.desc"] = "Multiplicerar hur mycket skada vapen gör."
 L["settings.server.quickstat.mod_spread.desc"] = "Multiplicerar hur mycket spridning vapen har."
+L["settings.server.quickstat.mod_dispersionspread.desc"] = "Multiplicerar hur mycket spridning hagelbössor har."
 L["settings.server.quickstat.mod_recoil.desc"] = "Multiplicerar hur mycket rekyl vapen har."
 L["settings.server.quickstat.mod_visualrecoil.desc"] = "Multiplicerar hur mycket visuell rekyl vapen har."
 L["settings.server.quickstat.mod_adstime.desc"] = "Multiplicerar hur snabbt vapen går in och ur siktet."
@@ -1050,6 +1074,9 @@ L["settings.server.developer.presets_clear.desc"] = "Rensar förinställningar, 
 
 L["settings.server.developer.reload"] = "LADDA OM"
 L["settings.server.developer.clear"] = "RENSA"
+
+L["settings.developer.ignore_dx.title"] = "Ignorera DirectX-varning"
+L["settings.developer.ignore_dx.desc"] = "Ignorerar varningen om nuvarande DirectX-nivån om den inte är 9, vilket kan vara användbart på Linux eller så."
 
 ////////// Asset Caching
 L["settings.tabname.assetcache"] = "Tillgång Förladdning"

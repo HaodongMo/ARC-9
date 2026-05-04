@@ -119,6 +119,7 @@ L["customize.stats.sprinttofire"] = "Spwint to fiwe time"
 L["customize.stats.supplylimit"] = "Suwuply wimit owo"
 L["customize.stats.sway"] = "Swaway"
 L["customize.stats.triggerdelay"] = "Twiwger delay"
+-- L["customize.stats.fusetimer"] = "Fuse Timer"
 
 L["customize.hint.attach"] = "Atwaach uwu"
 L["customize.hint.controller"] = "Cowntwowwew Modwe is on >w<"
@@ -171,13 +172,21 @@ L["customize.stats.explain.noise"] = "howo loud de gun's gunshots awe"
 L["customize.stats.explain.sway"] = "amount of sway applied to de gun"
 L["customize.stats.explain.freeaim"] = "maximum fwee aim angle, Lowew is bettew"
 L["customize.stats.explain.supplylimit"] = "amount of ammowo that de gun can weceive fwom AWC9 ammo souwces"
+-- L["customize.stats.explain.fusetimer"] = "Time delay before the projectile detonates. The timer may start from pin pull or from release depending on the throwable."
 
 L["customize.bench.dummy"] = "BAWWIWTICS DUM TEWST uwu"
 L["customize.bench.effect"] = "EWWEKT AT WANGE"
 L["customize.bench.ballistics"] = "TEWMINAL BAWWIWTICS PERAWROWMANCE EWAwALUAWION"
 L["customize.bench.precision"] = "MECHANICAL PWECIWWION TEWT"
 
--- L["customize.camoslot"] = "Camo (%s)"
+ -- not many space for those strings, be careful
+-- L["customize.bench.ttk"] = "TTK: " -- TTK, Time to kill
+-- L["customize.bench.ttk.instant"] = "Instant"
+-- L["customize.bench.ttk.shots"] = "Shots TK: " -- STK, Shots to kill, you can use just shots in your language
+-- L["customize.bench.ttk.withoneheadshot"] = "W/ 1 head:" -- TTK With One Headshot
+
+-- L["customize.camoslot"] = "Camo Slot %s"
+-- L["customize.camoslot.none"] = "No Camo"
 -- L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>."
 -- L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
 -- L["customize.camoslot.eftextra"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."
@@ -290,6 +299,9 @@ L["autostat.visualrecoilpunch"] = "Wisual Wecoil Puwnch"
 L["autostat.visualrecoilroll"] = "Wisual Wecoil wwroll"
 L["autostat.visualrecoilside"] = "H-Howisontawal Wisual Wecoil"
 L["autostat.visualrecoilup"] = "W-wertical wisual Wecoil"
+-- L["autostat.rtscopemagnification"] = "Scope Magnification"
+-- L["autostat.rtscopenew_fpslock"] = "Display Framerate"
+-- L["autostat.rtscopenew_pixelation"] = "Display Resolution"
 
 --[[
 Secondary autostats are now controlled by string.format.
@@ -428,6 +440,7 @@ L["tips.presets"] = "Shawe yuw fowowite pwesews with yuww furwiends by expowting
 L["tips.settings"] = "You can tuwn dese tips off and much mowe in de AWC9 settings owo c-click de button in de top left cownew"
 L["tips.tips"] = "Tips hawwe a fixed owdew. Kewep weading and yuw ewwentuawy see dem all"
 L["tips.tolerance"] = "Aww weapon basews wowk fine togeww thewes no need fow fowowoitiswm"
+-- L["tips.togglehold"] = "If you have lots of lasers and flashlights, hold the toggle key to open a menu to adjust them all easily."
 
 ////////////////////// Other
 L["atts.favourites"] = "Fowowites"
@@ -652,6 +665,9 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
 -- L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
 
+-- L["settings.effects.drawprojectedlights.title"] = "Draw Projected Lights on Viewmodel"
+-- L["settings.effects.drawprojectedlights.desc"] = "! EXPERIMENTAL !\n\nDraws projected lights/flashlights/cascade shadows on attachments and viewmodel.\n\nMay impact performance.\n\nAuto enabled with \"Real CSM\" mod."
+
 ////////// Viewmodel Settings
 -- L["settings.tabname.vm"] = "Viewmodel Settings"
 -- L["settings.tabname.vm.desc"] = "Alter various settings related to the viewmodels."
@@ -757,6 +773,12 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 
 -- L["settings.gameplay.color.scope.title"] = "Scope Reticle Color"
 -- L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
+
+-- L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Render RT Scope Preview"
+-- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS (gimmick).\n\nDoesn't affect performance much, uses Cheap Scopes internally."
+
+-- L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
+-- L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
 
 ////////////////////// Gameplay
 -- L["settings.tabname.gameplay"] = "Gameplay"
@@ -977,6 +999,9 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.server.bulletphysics.bullet_lifetime.title"] = "Bullet Life Time"
 -- L["settings.server.bulletphysics.bullet_lifetime.desc"] = "How long, in seconds, it takes for a physical bullet to be removed from existence."
 
+-- L["settings.server.bulletphysics.bullet_physics_shotguns.title"] = "Physical bullets for Shotguns"
+-- L["settings.server.bulletphysics.bullet_physics_shotguns.desc"] = "Use physical bullets for shotguns too, otherwise they will use hitscan."
+
 -- L["settings.server.bulletphysics.ricochet.title"] = "Enable Bullet Ricochet"
 -- L["settings.server.bulletphysics.ricochet.desc"] = "Allows bullets to bounce off of hard surfaces, potentially striking unsuspecting foes.\n\nEffectiveness depends on the weapon."
 
@@ -996,6 +1021,7 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 
 -- L["settings.server.quickstat.mod_damage.desc"] = "Multiply how much damage weapons deal."
 -- L["settings.server.quickstat.mod_spread.desc"] = "Multiply how much spread the weapons have."
+-- L["settings.server.quickstat.mod_dispersionspread.desc"] = "Multiply how much dispersion spread the shotguns have."
 -- L["settings.server.quickstat.mod_recoil.desc"] = "Multiply how much recoil the weapon has."
 -- L["settings.server.quickstat.mod_visualrecoil.desc"] = "Multiply how much visual recoil the weapon has."
 -- L["settings.server.quickstat.mod_adstime.desc"] = "Multiply how quickly the weapon goes in and out of ADS."
@@ -1049,26 +1075,29 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.server.developer.reload"] = "RELOAD"
 -- L["settings.server.developer.clear"] = "CLEAR"
 
+-- L["settings.developer.ignore_dx.title"] = "Ignore DirectX warning"
+-- L["settings.developer.ignore_dx.desc"] = "Ignore the warning about current DirectX warning not being 9, useful on linux or something."
+
 ////////// Asset Caching
 -- L["settings.tabname.assetcache"] = "Asset Caching"
 -- L["settings.tabname.assetcache.desc"] = "Caching certain assets can prevent stutters for more comfortable gameplay.\n\nIf running on an HDD, or with a lot of addons, these options will improve initial loading times."
 
--- L["settings.server.assetcache.precache_sounds_onfirsttake.title"] = "On Weapon Equip: Cache Sounds"
+-- L["settings.server.assetcache.precache_sounds_onfirsttake.title"] = "On Weapon Equip: Pre-Cache Sounds"
 -- L["settings.server.assetcache.precache_sounds_onfirsttake.desc"] = "Caches the firing sounds for the ARC9 weapon you equip.\n\nCan cause a small game freeze when equipping weapons for the first time."
 
--- L["settings.server.assetcache.precache_attsmodels_onfirsttake.title"] = "On Weapon Equip: Cache Attachments"
+-- L["settings.server.assetcache.precache_attsmodels_onfirsttake.title"] = "On Weapon Equip: Pre-Cache Attachments"
 -- L["settings.server.assetcache.precache_attsmodels_onfirsttake.desc"] = "Caches all ARC9 attachment models when any ARC9 weapon is equipped.\n\nCan cause a long game freeze, depending on how many ARC9 weapons you have."
 
--- L["settings.server.assetcache.precache_wepmodels_onfirsttake.title"] = "On Weapon Equip: Cache Weapon Models"
+-- L["settings.server.assetcache.precache_wepmodels_onfirsttake.title"] = "On Weapon Equip: Pre-Cache Weapon Models"
 -- L["settings.server.assetcache.precache_wepmodels_onfirsttake.desc"] = "Caches all ARC9 viewmodels when any ARC9 weapon is equipped.\n\nCan cause a very long game freeze, depending on how many ARC9 weapons you have."
 
--- L["settings.server.assetcache.precache_allsounds_onstartup.title"] = "On Game Start: Cache Sounds"
+-- L["settings.server.assetcache.precache_allsounds_onstartup.title"] = "On Game Start: Pre-Cache Sounds"
 -- L["settings.server.assetcache.precache_allsounds_onstartup.desc"] = "Caches all firing sounds for all ARC9 weapons when the server starts up.\n\nCan cause a temporary game freeze."
 
--- L["settings.server.assetcache.precache_attsmodels_onstartup.title"] = "On Game Start: Cache Attachments"
+-- L["settings.server.assetcache.precache_attsmodels_onstartup.title"] = "On Game Start: Pre-Cache Attachments"
 -- L["settings.server.assetcache.precache_attsmodels_onstartup.desc"] = "Caches all ARC9 attachment models when the server starts up.\n\nCan cause a long game freeze, depending on how many ARC9 weapons you have."
 
--- L["settings.server.assetcache.precache_wepmodels_onstartup.title"] = "On Game Start: Cache Weapon Models"
+-- L["settings.server.assetcache.precache_wepmodels_onstartup.title"] = "On Game Start: Pre-Cache Weapon Models"
 -- L["settings.server.assetcache.precache_wepmodels_onstartup.desc"] = "Caches all ARC9 viewmodels when the server starts up.\n\nCan cause a very long game freeze, depending on how many ARC9 weapons you have."
 
 -- L["settings.server.assetcache.precache_allsounds.title"] = "Cache All Sounds"
