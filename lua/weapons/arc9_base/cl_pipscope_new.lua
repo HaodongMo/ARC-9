@@ -659,22 +659,77 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     end
 end
 
--- if ARC9.Dev(2) then
---     local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
---         ["$basetexture"] = rt_shaderpass:GetName(), -- You can use "example_rt" as well
---         ["$translucent"] = 0,
---         ["$vertexcolor"] = 1
---     } )
+local monochrometable = {
+    ["$pp_colour_addr"] = 0,
+    ["$pp_colour_addg"] = 0,
+    ["$pp_colour_addb"] = 0,
+    ["$pp_colour_brightness"] = 0,
+    ["$pp_colour_contrast"] = 1,
+    ["$pp_colour_colour"] = 0,
+    ["$pp_colour_mulr"] = 0,
+    ["$pp_colour_mulg"] = 0,
+    ["$pp_colour_mulb"] = 0,
+    ["$pp_colour_inv"] = 0
+}
 
---     hook.Add("HUDPaint", "arc9_test_pipscope", function()
---         -- if ARC9.Dev(2) then
---             surface.SetDrawColor(255, 255, 255)
---             surface.SetMaterial(testmat)
---             -- surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
---             surface.DrawTexturedRect(0, 20, scrw/6, scrh/6)
---         -- end
---     end)
--- end
+local noise = Material("arc9/nvnoise")
+
+function SWEP:DoNightScopeEffects(atttbl)
+    if atttbl.RTScopeNightVisionMonochrome then
+        DrawColorModify(monochrometable)
+    end
+
+    if !atttbl.RTScopeNightVisionNoPP then
+        cam.Start2D()
+        surface.SetMaterial(noise)
+        surface.SetDrawColor(atttbl.RTScopeNightVisionNoiseColor or color_white)
+        surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), (rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), rtsize, rtsize, math.Rand(0, 360))
+        surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), (rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), rtsize * 2, rtsize * 2, math.Rand(0, 360))
+        cam.End2D()
+
+        DrawBloom(0, 1, 10, 1, 1, 1, 1, 1, 1)
+    end
+
+    if atttbl.RTScopeNightVisionCC then
+        if !atttbl.RTScopeNightVisionCC["pp_colour_inv"] then atttbl.RTScopeNightVisionCC["pp_colour_inv"] = 0 end
+        DrawColorModify(atttbl.RTScopeNightVisionCC)
+    end
+
+    if atttbl.RTScopeNightVisionFunc then
+        atttbl.RTScopeNightVisionFunc(self)
+    end
+end
+
+function SWEP:DoRTScopeEffects()
+    local atttbl = ((self:GetSight() or {}).atttbl or {})
+
+    render.UpdateScreenEffectTexture()
+
+    if atttbl.RTScopeNoPP then return end
+
+    if atttbl.RTScopeCustomPPFunc then
+        atttbl.RTScopeCustomPPFunc(self)
+    end
+end
+
+
+
+if ARC9.Dev(2) then
+    local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
+        ["$basetexture"] = rt_shaderpass:GetName(), -- You can use "example_rt" as well
+        ["$translucent"] = 0,
+        ["$vertexcolor"] = 1
+    } )
+
+    hook.Add("HUDPaint", "arc9_test_pipscope", function()
+        -- if ARC9.Dev(2) then
+            surface.SetDrawColor(255, 255, 255)
+            surface.SetMaterial(testmat)
+            -- surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
+            surface.DrawTexturedRect(0, 20, scrw/6, scrh/6)
+        -- end
+    end)
+end
 
 
 
