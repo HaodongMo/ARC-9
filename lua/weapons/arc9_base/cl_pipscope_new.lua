@@ -2,14 +2,14 @@ ARC9_ENABLE_NEWSCOPES_MEOW = true
 
 local arc9_fx_rt_shader = GetConVar("arc9_fx_rt_shader")
 local arc9_fx_rt_alwaysdraw = GetConVar("arc9_fx_rt_alwaysdraw")
--- local arc9_fx_rt_legacy = GetConVar("arc9_fx_rt_legacy")
+local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
+local arc9_scope_r = GetConVar("arc9_scope_r")
+local arc9_scope_g = GetConVar("arc9_scope_g")
+local arc9_scope_b = GetConVar("arc9_scope_b")
 
 local scrw, scrh = ScrW(), ScrH()
 
-local lenseshader = Material("arc9/lense_shader")
-local pixelshader = Material("arc9/pixelation_shader")
-
-local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome", scrw, scrh, 
+local rt_main = GetRenderTargetEx( "arc9_optic_main", scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_SHARED, 
     bit.bor(4,8,256,512), 
@@ -17,7 +17,7 @@ local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome", scrw, scrh,
     IMAGE_FORMAT_RGB888
 )
 
-local rtmat_shader = GetRenderTargetEx("arc9_pipscope_awesome_shaderpass",  scrw, scrh, 
+local rt_shaderpass = GetRenderTargetEx("arc9_optic_shaderpass",  scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_NONE, 
     bit.bor(4,8,256,512), 
@@ -25,7 +25,7 @@ local rtmat_shader = GetRenderTargetEx("arc9_pipscope_awesome_shaderpass",  scrw
     IMAGE_FORMAT_RGB888
 )
 
-local rtmat_legacy = GetRenderTargetEx("arc9_pipscope_legacy_drawfunc",  scrh, scrh,
+local rt_legacy_reticle = GetRenderTargetEx("arc9_optic_legacy_reticle",  scrh, scrh,
     RT_SIZE_LITERAL, 
     MATERIAL_RT_DEPTH_NONE, 
     bit.bor(4,8,256,512), 
@@ -33,7 +33,7 @@ local rtmat_legacy = GetRenderTargetEx("arc9_pipscope_legacy_drawfunc",  scrh, s
     IMAGE_FORMAT_RGBA8888
 )
 
-local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh, 
+local rt_cheap = GetRenderTargetEx("arc9_optic_cheap",  scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_NONE, 
     bit.bor(4,8,256,512), 
@@ -41,23 +41,26 @@ local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh,
     IMAGE_FORMAT_RGB888
 )
 
-local mat_rt_expensive = CreateMaterial( "arc9_pipscope_awesome_expensive", "UnlitGeneric", {
-    ["$basetexture"] = rtmat:GetName(),
+local mat_rt_expensive = CreateMaterial( "arc9_mat_optic", "UnlitGeneric", {
+    ["$basetexture"] = rt_main:GetName(),
     ["$translucent"] = 0,
     ["$vertexcolor"] = 1
 } )
 
-local mat_rt_cheap = CreateMaterial( "arc9_pipscope_awesome_cheap_mat3", "UnlitGeneric", {
+local mat_rt_cheap = CreateMaterial( "arc9_mat_optic_cheap", "UnlitGeneric", {
     ["$basetexture"] = rt_cheap:GetName(),
     ["$translucent"] = 0,
     ["$vertexcolor"] = 1
 } )
 
-local mat_rtmat_legacy = CreateMaterial( "arc9_pipscope_legacy_mat", "UnlitGeneric", {
-    ["$basetexture"] = rtmat_legacy:GetName(),
+local mat_legacy_reticle = CreateMaterial( "arc9_mat_optic_legacy_reticle", "UnlitGeneric", {
+    ["$basetexture"] = rt_legacy_reticle:GetName(),
     ["$translucent"] = 1,
     ["$vertexcolor"] = 1
 } )
+
+local mat_shader_lense = Material("arc9/lense_shader")
+local mat_pixel_lense = Material("arc9/pixelation_shader")
 
 -- Shader precalculations on cpu sideeeee
 
@@ -87,13 +90,13 @@ local shader_EYE_DISTANCE_INFLUENCE = 0.1
 local scrlength = math.sqrt(scrw * scrw + scrh * scrh)
 
 local function shadersetstaticvalues()
-    lenseshader:SetFloat("$c1_z", shader_VIG_R2 * scrh)
-    lenseshader:SetFloat("$c1_w", 0.8 * shader_VIG_R2 * scrh)
-    lenseshader:SetFloat("$c3_x", shader_LENS_K)
-    lenseshader:SetFloat("$c3_z", scrw)
-    lenseshader:SetFloat("$c3_w", scrh)
+    mat_shader_lense:SetFloat("$c1_z", shader_VIG_R2 * scrh)
+    mat_shader_lense:SetFloat("$c1_w", 0.8 * shader_VIG_R2 * scrh)
+    mat_shader_lense:SetFloat("$c3_x", shader_LENS_K)
+    mat_shader_lense:SetFloat("$c3_z", scrw)
+    mat_shader_lense:SetFloat("$c3_w", scrh)
 
-    pixelshader:SetFloat("c0_z", scrw/scrh)
+    mat_pixel_lense:SetFloat("c0_z", scrw/scrh)
 end
 
 timer.Simple(10, shadersetstaticvalues)
@@ -137,21 +140,21 @@ local function CalculateShaderCPU(eye_x, eye_y, eye_dist, camult, kmult) -- 0.5,
     local c1_p_x = center_p_x + norm_dir_x * offset_len * 1.75
     local c1_p_y = center_p_y + norm_dir_y * offset_len * 1.75
 
-    lenseshader:SetFloat("$c0_x", c1_p_x)
-    lenseshader:SetFloat("$c0_y", c1_p_y)
+    mat_shader_lense:SetFloat("$c0_x", c1_p_x)
+    mat_shader_lense:SetFloat("$c0_y", c1_p_y)
 
     -- some radius
     local rad1_p = ((0.8 - eye_dist) + shader_VIG_R1) * scrh
 
-    lenseshader:SetFloat("$c0_z", rad1_p)
-    lenseshader:SetFloat("$c0_w", (0.55 - eye_dist) * rad1_p)
+    mat_shader_lense:SetFloat("$c0_z", rad1_p)
+    mat_shader_lense:SetFloat("$c0_w", (0.55 - eye_dist) * rad1_p)
 
     -- vignette
     local c2_p_x = center_p_x - norm_dir_x * offset_len * t * t
     local c2_p_y = center_p_y - norm_dir_y * offset_len * t * t
 
-    lenseshader:SetFloat("$c1_x", c2_p_x)
-    lenseshader:SetFloat("$c1_y", c2_p_y)
+    mat_shader_lense:SetFloat("$c1_x", c2_p_x)
+    mat_shader_lense:SetFloat("$c1_y", c2_p_y)
     
     -- ca
     local mouse_ca_boost = t * 200 * camult
@@ -161,18 +164,17 @@ local function CalculateShaderCPU(eye_x, eye_y, eye_dist, camult, kmult) -- 0.5,
     local ca_t = t * 0.5 + smoothstep(0.02, 0.2, t) * 100
     local ca_scale = ca_base * forg_scale * ca_t * 0.5
 
-    lenseshader:SetFloat("$c2_x", norm_dir_x * ca_scale * 2)
-    lenseshader:SetFloat("$c2_y", norm_dir_y * ca_scale * 2)
-    lenseshader:SetFloat("$c2_z", lateral_ca * 0.2)
-    lenseshader:SetFloat("$c2_w", lateral_ca * 0.8 * t)
+    mat_shader_lense:SetFloat("$c2_x", norm_dir_x * ca_scale * 2)
+    mat_shader_lense:SetFloat("$c2_y", norm_dir_y * ca_scale * 2)
+    mat_shader_lense:SetFloat("$c2_z", lateral_ca * 0.2)
+    mat_shader_lense:SetFloat("$c2_w", lateral_ca * 0.8 * t)
 
     -- distorsion
-    lenseshader:SetFloat("$c3_x", shader_LENS_K_Base * kmult)
+    mat_shader_lense:SetFloat("$c3_x", shader_LENS_K_Base * kmult)
 end
 
 local Lerp = Lerp
 local LerpVector = LerpVector
-
 
 function SWEP:ShouldDoScope()
     if self:GetSight().Disassociate or self:GetOwner().ARC9NoScopes then return false end
@@ -180,21 +182,14 @@ function SWEP:ShouldDoScope()
     return true
 end
 
-local rtsurf = Material("effects/arc9/rt")
-local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
-local shadow = Material("arc9/shadow3.png", "mips smooth")
-local shadow2 = Material("arc9/shadow2.png", "mips smooth")
--- local black = Material("arc9/ahmad.png", "mips smooth")
-local black2 = Material("arc9/ahmad.png", "mips smooth")
--- local black = Material("vgui/black")
--- local black2 = Material("models/wireframe")
-local black = CreateMaterial("blackreal2", "UnlitGeneric", { ["$basetexture"] = "vgui/black", ["$ignorez"] = 1 }) -- vgui/black some reason turns transparent sometimes
+local mat_optic_surface = Material("effects/arc9/rt")
+local mat_cheap = Material("effects/arc9/rt_cheap")
+local mat_cheap_sharpen = Material("effects/arc9/rt_cheap_sharpen")
 
-local rtcheapmat = Material("effects/arc9/rt_cheap")
-local rtcheapsharpen = Material("effects/arc9/rt_cheap_sharpen")
-local arc9_scope_r = GetConVar("arc9_scope_r")
-local arc9_scope_g = GetConVar("arc9_scope_g")
-local arc9_scope_b = GetConVar("arc9_scope_b")
+local mat_shadow = Material("arc9/shadow3.png", "mips smooth")
+local mat_shadow_2 = Material("arc9/shadow2.png", "mips smooth")
+local mat_ahmad = Material("arc9/ahmad.png", "mips smooth")
+local mat_black = CreateMaterial("arc9_real_black_mat", "UnlitGeneric", { ["$basetexture"] = "vgui/black", ["$ignorez"] = 1 }) -- vgui/black some reason turns transparent sometimes
 
 local rt_eyeang = Angle()
 local rt_eyepos = Vector()
@@ -210,9 +205,9 @@ local invertcolormodif = {
 
 local tune_nohdr = Vector(1, 0, 0 )
 
-local mat_MotionBlur = Material( "pp/motionblur" )
-local tex_MotionBlur = render.GetMoBlurTex0()
-local mb_NextDraw = 0
+local fpslock_mat = Material( "pp/motionblur" )
+local fpslock_texture = render.GetMoBlurTex0()
+local fpslock_nextdraw = 0
 
 function SWEP:RenderRT(cheap, magnification)
     local atttbl = self:IsScoping()
@@ -221,7 +216,7 @@ function SWEP:RenderRT(cheap, magnification)
     if atttbl and !ARC9.OverDraw then
         local fpslock = atttbl.RTScopeNew_FPSLock
 
-        if fpslock then if mb_NextDraw > CurTime() then rt_eyepos = MainEyePos() return end end
+        if fpslock then if fpslock_nextdraw > CurTime() then rt_eyepos = MainEyePos() return end end
         
         if cheap then
             ARC9.DrawPhysBullets()
@@ -231,28 +226,28 @@ function SWEP:RenderRT(cheap, magnification)
         end
             
         if atttbl.RTScopeNew_Pixelation then
-            pixelshader:SetFloat("$c0_x", atttbl.RTScopeNew_Pixelation)
-            pixelshader:SetTexture("$basetexture", renderedpicture)
+            mat_pixel_lense:SetFloat("$c0_x", atttbl.RTScopeNew_Pixelation)
+            mat_pixel_lense:SetTexture("$basetexture", renderedpicture)
             render.PushRenderTarget( renderedpicture )
-                render.SetMaterial( pixelshader )
+                render.SetMaterial( mat_pixel_lense )
                 render.DrawScreenQuad()
             render.PopRenderTarget()
         end
 
-        lenseshader:SetTexture("$basetexture", renderedpicture)
+        mat_shader_lense:SetTexture("$basetexture", renderedpicture)
         -- mat_rt_cheap:SetTexture("$basetexture", renderedpicture)
         -- mat_rt_expensive:SetTexture("$basetexture", renderedpicture)
 
         if fpslock then
             render.UpdateScreenEffectTexture()
-            mat_MotionBlur:SetFloat( "$alpha", 1 )
-            mat_MotionBlur:SetTexture( "$basetexture", tex_MotionBlur )
+            fpslock_mat:SetFloat( "$alpha", 1 )
+            fpslock_mat:SetTexture( "$basetexture", fpslock_texture )
             
-            if mb_NextDraw < CurTime() then
-                mb_NextDraw = CurTime() + 1 / fpslock
-                render.PushRenderTarget( tex_MotionBlur )
+            if fpslock_nextdraw < CurTime() then
+                fpslock_nextdraw = CurTime() + 1 / fpslock
+                render.PushRenderTarget( fpslock_texture )
                     -- render.SetMaterial( cheap and mat_rt_cheap or mat_rt_expensive )
-                    render.SetMaterial( atttbl.RTScopeNew_Pixelation and pixelshader or lenseshader )
+                    render.SetMaterial( atttbl.RTScopeNew_Pixelation and mat_pixel_lense or mat_shader_lense )
                     render.DrawScreenQuad()
                 render.PopRenderTarget()
             end
@@ -265,7 +260,7 @@ function SWEP:RenderRTCheap(atttbl)
     rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
 
     render.UpdateScreenEffectTexture()
-    rtcheapmat:SetTexture("$basetexture", render.GetScreenEffectTexture())
+    mat_cheap:SetTexture("$basetexture", render.GetScreenEffectTexture())
     render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
         
     rt_eyepos = MainEyePos()
@@ -279,10 +274,10 @@ function SWEP:RenderRTCheap(atttbl)
 
         render.Clear(67, 67, 0, 255)
 
-        render.SetMaterial( rtcheapmat )
+        render.SetMaterial( mat_cheap )
         render.DrawScreenQuad()
         render.UpdateScreenEffectTexture()
-        render.SetMaterial( rtcheapsharpen )
+        render.SetMaterial( mat_cheap_sharpen )
         render.DrawScreenQuad()
 
         if atttbl.RTScopeNightVision then
@@ -341,7 +336,7 @@ function SWEP:RenderRTExpensive(atttbl, magnification)
         aspectratio = 1,
     }
 
-    render.PushRenderTarget(rtmat)
+    render.PushRenderTarget(rt_main)
     -- render.Clear(0,0,0,0)
 
         ARC9.OverDraw = true
@@ -377,7 +372,7 @@ function SWEP:RenderRTExpensive(atttbl, magnification)
         
     render.PopRenderTarget()
     
-    return rtmat
+    return rt_main
 end
 
 local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
@@ -395,8 +390,8 @@ local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
         -- BLACK BOXXXX
     if !nobox then
     -- if false  then
-        render.SetMaterial(black)
-        -- render.SetMaterial(black2)
+        render.SetMaterial(mat_black)
+        -- render.SetMaterial(mat_ahmad)
         up, right = up * 0.999, right * 0.999 -- less scale to prevent visible pixel gaps
 
         local v1 = pos + (up * 4) - (right * 8) + forward
@@ -478,10 +473,10 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
 
             local sightamt = math.ease.InBack(sightamt_orig)
 
-            render.PushRenderTarget(cheap and rt_cheap or rtmat)
+            render.PushRenderTarget(cheap and rt_cheap or rt_main)
 
             if atttbl.RTScopeNew_FPSLock then
-                render.SetMaterial( mat_MotionBlur )
+                render.SetMaterial( fpslock_mat )
                 render.DrawScreenQuad()
             end
 
@@ -525,7 +520,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
             local newdrawfunc = atttbl.RTScopeNew_DrawFunc3D
 
             if legacydrawfunc then
-                render.PushRenderTarget(rtmat_legacy)
+                render.PushRenderTarget(rt_legacy_reticle)
                     render.Clear(0, 0, 0, 0)
                     cam.Start2D()
                         legacydrawfunc(self, scrh, sight)
@@ -584,7 +579,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                     local eyedistance = math.abs(dir:Dot(modelforward))
                     local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
 
-                    if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_rtmat_legacy, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end -- legacy reticle drawfunc
+                    if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_legacy_reticle, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end -- legacy reticle drawfunc
 
                     if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end -- new drawfunc
 
@@ -610,12 +605,12 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                     end
 
                     if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
-                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1) * 2, funnynumber3 + (scopebound[2] - scopebound[1]), modelang + diffy * 7, lerped, shadow, color_white) -- end of scope shadow
-                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 0 + (scopebound[2] - scopebound[1]), modelang + diffy * -3, lerped, shadow, color_white) -- end of scope shadow
+                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1) * 2, funnynumber3 + (scopebound[2] - scopebound[1]), modelang + diffy * 7, lerped, mat_shadow, color_white) -- end of scope shadow
+                        drawscopequad(funnynumber2 * globalscalie * (atttbl.RTScopeNew_FrontShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), 0 + (scopebound[2] - scopebound[1]), modelang + diffy * -3, lerped, mat_shadow, color_white) -- end of scope shadow
                     end
                     
                     if atttbl.RTScopeNew_BackShadow != false and atttbl.RTScopeNoShadow != true then
-                        drawscopequad(1.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang + diffy * 5, lerped, shadow, color_white) -- small shadow before reticle
+                        drawscopequad(1.5 * globalscalie * (atttbl.RTScopeNew_BackShadowScale or 1) * (atttbl.RTScopeNew_ShadowScale or 1), -3, modelang + diffy * 5, lerped, mat_shadow, color_white) -- small shadow before reticle
                     end
                 cam.IgnoreZ(false)
 
@@ -624,23 +619,23 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                         surface.SetDrawColor(0, 0, 0, 255)
                         surface.DrawRect(0, 0, scrw/2 - scrh/2, scrh)
                         surface.DrawRect(scrw/2 + scrh/2, 0, scrw, scrh)
-                        surface.SetMaterial(shadow2)
+                        surface.SetMaterial(mat_shadow_2)
                         surface.DrawTexturedRect(scrw/2-scrh/2, 0, scrh, scrh) -- global shadow
                     cam.End2D()
                 end
 
             cam.End3D()
 
-            render.CopyRenderTargetToTexture(rtmat_shader)
+            render.CopyRenderTargetToTexture(rt_shaderpass)
  
             render.PopRenderTarget()
         -- end
 
-        render.PushRenderTarget(rtmat_shader)
+        render.PushRenderTarget(rt_shaderpass)
             render.Clear(0, 0, 0, 255, true)
             cam.Start2D()
                 if shaderenabled then
-                    render.SetMaterial(lenseshader)
+                    render.SetMaterial(mat_shader_lense)
                     render.DrawScreenQuad()
                 end
 
@@ -653,33 +648,33 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
             cam.End2D()
         render.PopRenderTarget()
 
-        rtsurf:SetTexture("$basetexture", rtmat_shader)
+        mat_optic_surface:SetTexture("$basetexture", rt_shaderpass)
 
         model = model or self:GetVM()
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
         -- model:SetSubMaterial(1, "effects/arc9/rt")
     else
-        rtsurf:SetTexture("$basetexture", "vgui/black")
+        mat_optic_surface:SetTexture("$basetexture", "vgui/black")
         model:SetSubMaterial(atttbl.RTScopeSubmatIndex, "vgui/black")
     end
 end
 
-if ARC9.Dev(2) then
-    local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
-        ["$basetexture"] = rtmat_shader:GetName(), -- You can use "example_rt" as well
-        ["$translucent"] = 0,
-        ["$vertexcolor"] = 1
-    } )
+-- if ARC9.Dev(2) then
+--     local testmat = CreateMaterial( "testpipscope23", "UnlitGeneric", {
+--         ["$basetexture"] = rt_shaderpass:GetName(), -- You can use "example_rt" as well
+--         ["$translucent"] = 0,
+--         ["$vertexcolor"] = 1
+--     } )
 
-    hook.Add("HUDPaint", "arc9_test_pipscope", function()
-        -- if ARC9.Dev(2) then
-            surface.SetDrawColor(255, 255, 255)
-            surface.SetMaterial(testmat)
-            -- surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
-            surface.DrawTexturedRect(0, 20, scrw/6, scrh/6)
-        -- end
-    end)
-end
+--     hook.Add("HUDPaint", "arc9_test_pipscope", function()
+--         -- if ARC9.Dev(2) then
+--             surface.SetDrawColor(255, 255, 255)
+--             surface.SetMaterial(testmat)
+--             -- surface.DrawTexturedRect(scrw-scrw/4, scrh/2-scrh/3, scrw/4, scrh/4)
+--             surface.DrawTexturedRect(0, 20, scrw/6, scrh/6)
+--         -- end
+--     end)
+-- end
 
 
 

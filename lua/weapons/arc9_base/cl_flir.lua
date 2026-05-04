@@ -44,16 +44,15 @@ end
 
 local scrw, scrh = ScrW(), ScrH()
 
-local rt_spare = GetRenderTargetEx( "arc9_pipscope_awesome_cheapspare", scrw, scrh, 
+local rt_spare = GetRenderTargetEx( "arc9_optic_cheap_spare", scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_SHARED, 
     bit.bor(4,8,256,512), 
     0, 
     IMAGE_FORMAT_RGB888
 )
--- arc9_optic_cheap
--- arc9_optic_cheap_spare
-local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh, 
+
+local rt_cheap = GetRenderTargetEx("arc9_optic_cheap",  scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_NONE, 
     bit.bor(4,8,256,512), 
