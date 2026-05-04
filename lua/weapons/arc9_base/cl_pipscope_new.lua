@@ -609,8 +609,8 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                     
                     local diffy = (modelang - MainEyeAngles())
                     diffy:Normalize()
-                    diffy.x = math.Clamp(diffy.x, -2, 2)
-                    diffy.y = math.Clamp(diffy.y, -3, 3)
+                    diffy.x = math.Clamp(diffy.x, -4, 4)
+                    diffy.y = math.Clamp(diffy.y, -4, 4)
                     diffy.z = math.Clamp(diffy.z, -2, 2)
 
                     if atttbl.RTScopeAdjustable then
@@ -696,8 +696,8 @@ function SWEP:DoNightScopeEffects(atttbl)
         cam.Start2D()
         surface.SetMaterial(noise)
         surface.SetDrawColor(atttbl.RTScopeNightVisionNoiseColor or color_white)
-        surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), (rtsize / 2) + (rtsize * math.Rand(-0.25, 0.25)), rtsize, rtsize, math.Rand(0, 360))
-        surface.DrawTexturedRectRotated((rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), (rtsize / 2) + (rtsize * math.Rand(-0.5, 0.5)), rtsize * 2, rtsize * 2, math.Rand(0, 360))
+        surface.DrawTexturedRectRotated((scrh / 2) + (scrh * math.Rand(-0.25, 0.25)), (scrh / 2) + (scrh * math.Rand(-0.25, 0.25)), scrh, scrh, math.Rand(0, 360))
+        surface.DrawTexturedRectRotated((scrh / 2) + (scrh * math.Rand(-0.5, 0.5)), (scrh / 2) + (scrh * math.Rand(-0.5, 0.5)), scrh * 2, scrh * 2, math.Rand(0, 360))
         cam.End2D()
 
         DrawBloom(0, 1, 10, 1, 1, 1, 1, 1, 1)

@@ -114,7 +114,7 @@ function SWEP:IsCheapScope(sight)
 
     if arc9_cheapscopes:GetBool() then return true end
 
-    return (at and at.RTCollimator) or not (at and at.RTScopeAdjustable and arc9_fx_rtvm:GetBool()) and self:GetRealZoom(sight) <= 1.05
+    return (at and at.RTCollimator) or !arc9_fx_rtvm:GetBool() and self:GetRealZoom(sight) <= 1.05
 end
 
 

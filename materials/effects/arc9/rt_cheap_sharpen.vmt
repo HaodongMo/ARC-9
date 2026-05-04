@@ -2,6 +2,6 @@
 {
 	"$ignorez" "1"
 	"$fbtexture" "_rt_FullFrameFB"
-	"$contrast" "2"
+	"$contrast" "1"
 	"$distance" "0.00011"
 }
