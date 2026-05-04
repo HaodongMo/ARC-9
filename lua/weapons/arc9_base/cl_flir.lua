@@ -51,7 +51,8 @@ local rt_spare = GetRenderTargetEx( "arc9_pipscope_awesome_cheapspare", scrw, sc
     0, 
     IMAGE_FORMAT_RGB888
 )
-
+-- arc9_optic_cheap
+-- arc9_optic_cheap_spare
 local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
     MATERIAL_RT_DEPTH_NONE, 

@@ -240,6 +240,8 @@ function SWEP:RenderRT(cheap, magnification)
         end
 
         lenseshader:SetTexture("$basetexture", renderedpicture)
+        -- mat_rt_cheap:SetTexture("$basetexture", renderedpicture)
+        -- mat_rt_expensive:SetTexture("$basetexture", renderedpicture)
 
         if fpslock then
             render.UpdateScreenEffectTexture()
@@ -249,7 +251,8 @@ function SWEP:RenderRT(cheap, magnification)
             if mb_NextDraw < CurTime() then
                 mb_NextDraw = CurTime() + 1 / fpslock
                 render.PushRenderTarget( tex_MotionBlur )
-                    render.SetMaterial( cheap and mat_rt_cheap or mat_rt_expensive )
+                    -- render.SetMaterial( cheap and mat_rt_cheap or mat_rt_expensive )
+                    render.SetMaterial( atttbl.RTScopeNew_Pixelation and pixelshader or lenseshader )
                     render.DrawScreenQuad()
                 render.PopRenderTarget()
             end
@@ -467,7 +470,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     model.RTScopeDrawingRN = active
 
     if active and self:ShouldDoScope() then
-        local shaderenabled = !atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool()
+        local shaderenabled = !atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool() or (atttbl.RTScopeNew_FPSLock and !atttbl.RTScopeNew_Pixelation)
 
         -- if  then
             self.RenderingRTScope = true

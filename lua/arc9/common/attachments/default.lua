@@ -192,7 +192,7 @@ ATT.RTScopeNew_DisableShaderEyeOffset = false -- disable dynamic eyeoffset (vign
 ATT.RTScopeNew_ChromaticAberrationMult = 1
 ATT.RTScopeNew_ShaderDistorsionMult = 1
 
-ATT.RTScopeNew_FPSLock = 30 -- digital scope thing
+ATT.RTScopeNew_FPSLock = 30 -- digital scope thing -- for fpslock work properly, you need either pixelation either shader enabled. sory.
 ATT.RTScopeNew_Pixelation = 240 -- same, vertical resolution i think
 
 -- ATT.RTScopeNew_FixAngle = Angle(-0.034, 84.588, 4.109) -- If scope angle isn't 0, 0, 0, it might look ASS. Fix this by setting this to "print" first, aim & setang 0 0 0 in console, copying angle from console to this
