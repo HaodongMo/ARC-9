@@ -157,6 +157,8 @@ ARC9.AutoStatsMains = {
     -- ["RTScopeMagnification"] = {"×", false},
     -- ["RTScopeMagnificationMin"] = {"×", false},
     -- ["RTScopeMagnificationMax"] = {"×", false},
+    ["RTScopeNew_FPSLock"] = {" FPS", true},
+    ["RTScopeNew_Pixelation"] = {"px", true},
 }
 
 ARC9.AutoStatsOperations = {

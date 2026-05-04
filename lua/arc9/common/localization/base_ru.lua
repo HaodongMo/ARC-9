@@ -296,6 +296,8 @@ L["autostat.visualrecoilroll"] = "Физ. угловая отдача"
 L["autostat.visualrecoilside"] = "Физ. горизонтальная отдача"
 L["autostat.visualrecoilup"] = "Физ. вертикальная отдача"
 L["autostat.rtscopemagnification"] = "Кратность прицела"
+L["autostat.rtscopenew_fpslock"] = "Частота кадров дисплея"
+L["autostat.rtscopenew_pixelation"] = "Разрешение дисплея"
 
 --[[
 Secondary autostats are now controlled by string.format.

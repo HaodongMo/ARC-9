@@ -300,6 +300,8 @@ L["autostat.visualrecoilroll"] = "Visual Recoil Roll"
 L["autostat.visualrecoilside"] = "Horizontal Visual Recoil"
 L["autostat.visualrecoilup"] = "Vertical Visual Recoil"
 L["autostat.rtscopemagnification"] = "Scope Magnification"
+L["autostat.rtscopenew_fpslock"] = "Display Framerate"
+L["autostat.rtscopenew_pixelation"] = "Display Resolution"
 
 --[[
 Secondary autostats are now controlled by string.format.
