@@ -748,26 +748,6 @@ end
 local cheapscopes_last_change_time = CurTime()
 local cheapscopes_last_value = GetConVar("arc9_cheapscopes"):GetBool()
 
-hook.Add("HUDPaint", "arc9_test_pipscopge", function()
-    local current_value = GetConVar("arc9_cheapscopes"):GetBool()
-    
-    -- Check if convar value changed
-    if current_value ~= cheapscopes_last_value then
-        cheapscopes_last_change_time = CurTime()
-        cheapscopes_last_value = current_value
-    end
-    
-    local aw = LocalPlayer():GetActiveWeapon()
-    if IsValid(aw) then
-        if aw.ARC9 and aw:GetInSights() then
-            -- Only show text for 5 seconds after the convar changed
-            if CurTime() - cheapscopes_last_change_time < 1.5 then
-                local text = cheapscopes_last_value and "Perfomance scopes" or "PiP scopes"
-                draw.SimpleText(text, "CloseCaption_Bold", ScrW()/2, ScrH()-100, nil, 1, 1)
-            end
-        end
-    end
-end)
 
 -- improves framerate ⬇️ ✅
 
