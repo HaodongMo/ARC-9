@@ -191,6 +191,10 @@ ATT.RTScopeNew_DisableShader = false
 ATT.RTScopeNew_DisableShaderEyeOffset = false -- disable dynamic eyeoffset (vignette & chrom aberation) from shader if your scope is fucked up
 ATT.RTScopeNew_ChromaticAberrationMult = 1
 ATT.RTScopeNew_ShaderDistorsionMult = 1
+
+ATT.RTScopeNew_FPSLock = 30 -- digital scope thing
+ATT.RTScopeNew_Pixelation = 240 -- same, vertical resolution i think
+
 -- ATT.RTScopeNew_FixAngle = Angle(-0.034, 84.588, 4.109) -- If scope angle isn't 0, 0, 0, it might look ASS. Fix this by setting this to "print" first, aim & setang 0 0 0 in console, copying angle from console to this
 ATT.RTScopeNew_ForceExpensive = false -- highly specific
 ATT.RTScopeNew_ForceCheap = false -- highly specific

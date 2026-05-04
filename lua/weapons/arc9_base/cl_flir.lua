@@ -89,15 +89,16 @@ local function isglass(ent)
     end
 end
 
-function SWEP:DoFLIR(atttbl, cheap)
-    local screen
-        if cheap then
-            screen = render.GetRenderTarget()
-            if screen and screen:GetName()  == "_rt_resolvedfullframedepth" then return end
-            render.CopyTexture( screen, rt_spare )
+-- touching anything here breaks everything i don't know how this works
+-- i think every second frame it draws "screen" outside of gun, but it kinda works
 
-            render.PushRenderTarget(screen)
-        end
+function SWEP:DoFLIR(atttbl, cheap)
+    if cheap then
+        if screen and screen:GetName()  == "_rt_resolvedfullframedepth" then return end
+        render.CopyTexture( screen, rt_spare )
+
+        render.PushRenderTarget(screen)
+    end
 
     if self:GetSightAmount() > 0.1 then
         render.SetStencilEnable(true)

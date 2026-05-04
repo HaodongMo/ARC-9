@@ -7,6 +7,7 @@ local arc9_fx_rt_alwaysdraw = GetConVar("arc9_fx_rt_alwaysdraw")
 local scrw, scrh = ScrW(), ScrH()
 
 local lenseshader = Material("arc9/lense_shader")
+local pixelshader = Material("arc9/pixelation_shader")
 
 local rtmat = GetRenderTargetEx( "arc9_pipscope_awesome", scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
@@ -39,6 +40,12 @@ local rt_cheap = GetRenderTargetEx("arc9_pipscope_awesome_cheap3",  scrw, scrh,
     0, 
     IMAGE_FORMAT_RGB888
 )
+
+local mat_rt_expensive = CreateMaterial( "arc9_pipscope_awesome_expensive", "UnlitGeneric", {
+    ["$basetexture"] = rtmat:GetName(),
+    ["$translucent"] = 0,
+    ["$vertexcolor"] = 1
+} )
 
 local mat_rt_cheap = CreateMaterial( "arc9_pipscope_awesome_cheap_mat3", "UnlitGeneric", {
     ["$basetexture"] = rt_cheap:GetName(),
@@ -85,6 +92,8 @@ local function shadersetstaticvalues()
     lenseshader:SetFloat("$c3_x", shader_LENS_K)
     lenseshader:SetFloat("$c3_z", scrw)
     lenseshader:SetFloat("$c3_w", scrh)
+
+    pixelshader:SetFloat("c0_z", scrw/scrh)
 end
 
 timer.Simple(10, shadersetstaticvalues)
@@ -208,18 +217,26 @@ local mb_NextDraw = 0
 function SWEP:RenderRT(cheap, magnification)
     local atttbl = self:IsScoping()
     local renderedpicture
-    local fpslock = atttbl.RTScopeNew_FPSLock
 
     if atttbl and !ARC9.OverDraw then
-        if fpslock then
-            if mb_NextDraw > CurTime() then rt_eyepos = MainEyePos() return end
-        end
+        local fpslock = atttbl.RTScopeNew_FPSLock
+
+        if fpslock then if mb_NextDraw > CurTime() then rt_eyepos = MainEyePos() return end end
         
         if cheap then
             ARC9.DrawPhysBullets()
             renderedpicture = self:RenderRTCheap(atttbl)
         else
             renderedpicture = self:RenderRTExpensive(atttbl, magnification)
+        end
+            
+        if atttbl.RTScopeNew_Pixelation then
+            pixelshader:SetFloat("$c0_x", atttbl.RTScopeNew_Pixelation)
+            pixelshader:SetTexture("$basetexture", renderedpicture)
+            render.PushRenderTarget( renderedpicture )
+                render.SetMaterial( pixelshader )
+                render.DrawScreenQuad()
+            render.PopRenderTarget()
         end
 
         lenseshader:SetTexture("$basetexture", renderedpicture)
@@ -228,10 +245,11 @@ function SWEP:RenderRT(cheap, magnification)
             render.UpdateScreenEffectTexture()
             mat_MotionBlur:SetFloat( "$alpha", 1 )
             mat_MotionBlur:SetTexture( "$basetexture", tex_MotionBlur )
+            
             if mb_NextDraw < CurTime() then
-                mb_NextDraw = CurTime() + 1/fpslock
+                mb_NextDraw = CurTime() + 1 / fpslock
                 render.PushRenderTarget( tex_MotionBlur )
-                    render.SetMaterial( lenseshader )
+                    render.SetMaterial( cheap and mat_rt_cheap or mat_rt_expensive )
                     render.DrawScreenQuad()
                 render.PopRenderTarget()
             end
@@ -616,6 +634,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
         -- end
 
         render.PushRenderTarget(rtmat_shader)
+            render.Clear(0, 0, 0, 255, true)
             cam.Start2D()
                 if shaderenabled then
                     render.SetMaterial(lenseshader)
