@@ -986,6 +986,11 @@ local conVars = {
         default = "0",
         client = true
     },
+    {
+        name = "fx_rt_fxaa",
+        default = "1",
+        client = true
+    },
 }
 
 ARC9.ConVarData = {}

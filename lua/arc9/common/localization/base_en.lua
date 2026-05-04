@@ -780,6 +780,9 @@ L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image wi
 L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
 L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, it's a simple GPU shader, based on shadertoy.com/view/WX2cRd by science6uru2."
 
+L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
+L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on rendertargets (they do work in Cheap Scopes though). Ported by Evgeny Akabenko, used with permission."
+
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"
 

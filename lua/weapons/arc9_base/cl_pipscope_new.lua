@@ -3,9 +3,12 @@ ARC9_ENABLE_NEWSCOPES_MEOW = true
 local arc9_fx_rt_shader = GetConVar("arc9_fx_rt_shader")
 local arc9_fx_rt_alwaysdraw = GetConVar("arc9_fx_rt_alwaysdraw")
 local arc9_fx_rtvm = GetConVar("arc9_fx_rtvm")
+local arc9_fx_rt_fxaa = GetConVar("arc9_fx_rt_fxaa")
 local arc9_scope_r = GetConVar("arc9_scope_r")
 local arc9_scope_g = GetConVar("arc9_scope_g")
 local arc9_scope_b = GetConVar("arc9_scope_b")
+
+local stupidpenguin = system.IsLinux()
 
 local scrw, scrh = ScrW(), ScrH()
 
@@ -224,9 +227,10 @@ function SWEP:RenderRT(cheap, magnification)
         else
             renderedpicture = self:RenderRTExpensive(atttbl, magnification)
         end
-            
-        if atttbl.RTScopeNew_Pixelation then
-            mat_pixel_lense:SetFloat("$c0_x", atttbl.RTScopeNew_Pixelation)
+        
+        local pixely = !stupidpenguin and atttbl.RTScopeNew_Pixelation
+        if pixely then
+            mat_pixel_lense:SetFloat("$c0_x", pixely)
             mat_pixel_lense:SetTexture("$basetexture", renderedpicture)
             render.PushRenderTarget( renderedpicture )
                 render.SetMaterial( mat_pixel_lense )
@@ -247,7 +251,7 @@ function SWEP:RenderRT(cheap, magnification)
                 fpslock_nextdraw = CurTime() + 1 / fpslock
                 render.PushRenderTarget( fpslock_texture )
                     -- render.SetMaterial( cheap and mat_rt_cheap or mat_rt_expensive )
-                    render.SetMaterial( atttbl.RTScopeNew_Pixelation and mat_pixel_lense or mat_shader_lense )
+                    render.SetMaterial( pixely and mat_pixel_lense or mat_shader_lense )
                     render.DrawScreenQuad()
                 render.PopRenderTarget()
             end
@@ -311,6 +315,8 @@ function SWEP:RenderRTCheap(atttbl)
     return rt_cheap
 end
 
+local fxaa_mat = Material("pp/pp_fxaa")
+
 function SWEP:RenderRTExpensive(atttbl, magnification)
     local viewstup = render.GetViewSetup()
     rt_viewsetup_fov, rt_viewsetup_fov_unscaled = viewstup.fov, viewstup.fov_unscaled
@@ -358,6 +364,13 @@ function SWEP:RenderRTExpensive(atttbl, magnification)
         cam.Start3D()
             self:DrawLockOnHUD(true)
         cam.End3D()
+
+        if arc9_fx_rt_fxaa:GetBool() then
+            render.UpdateScreenEffectTexture()
+            render.CopyRenderTargetToTexture(render.GetScreenEffectTexture())
+            render.SetMaterial(fxaa_mat)
+            render.DrawScreenQuad()
+        end
 
         ARC9.RTScopeRender = false
         ARC9.OverDraw = false
@@ -465,7 +478,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     model.RTScopeDrawingRN = active
 
     if active and self:ShouldDoScope() then
-        local shaderenabled = !atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool() or (atttbl.RTScopeNew_FPSLock and !atttbl.RTScopeNew_Pixelation)
+        local shaderenabled = !stupidpenguin and (!atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool() or (atttbl.RTScopeNew_FPSLock and !atttbl.RTScopeNew_Pixelation))
 
         -- if  then
             self.RenderingRTScope = true

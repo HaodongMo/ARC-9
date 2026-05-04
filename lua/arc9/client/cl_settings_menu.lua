@@ -181,6 +181,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.gameplay.toggleads.title", desc = "settings.gameplay.toggleads.desc", convar = "toggleads" },
         { type = "bool", text = "settings.gameplay.cheapscopes.title", desc = "settings.gameplay.cheapscopes.desc", convar = "cheapscopes" },
         { type = "bool", text = "settings.gameplay.fx_rtvm.title", desc = "settings.gameplay.fx_rtvm.desc", convar = "fx_rtvm", parentconvar = "cheapscopes", parentinvert = true },
+        { type = "bool", text = "settings.gameplay.fx_rt_fxaa.title", desc = "settings.gameplay.fx_rt_fxaa.desc", convar = "fx_rt_fxaa", parentconvar = "cheapscopes", parentinvert = true },
         { type = "bool", text = "settings.gameplay.fx_rt_shader.title", desc = "settings.gameplay.fx_rt_shader.desc", convar = "fx_rt_shader" },
         { type = "bool", text = "settings.gameplay.fx_rt_alwaysdraw.title", desc = "settings.gameplay.fx_rt_alwaysdraw.desc", convar = "fx_rt_alwaysdraw" },
         { type = "bool", text = "settings.gameplay.compensate_sens.title", desc = "settings.gameplay.compensate_sens.desc", convar = "compensate_sens" },
@@ -205,7 +206,7 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.blur.fx_animblur.title", desc = "settings.blur.fx_animblur.desc", convar = "fx_animblur", parentconvar = "fx_reloadblur" },
         { type = "bool", text = "settings.blur.fx_inspectblur.title", desc = "settings.blur.fx_inspectblur.desc", convar = "fx_inspectblur", parentconvar = "fx_reloadblur" },
         { type = "bool", text = "settings.blur.fx_rtblur.title", desc = "settings.blur.fx_rtblur.desc", convar = "fx_rtblur" },
-        { type = "bool", text = "settings.blur.fx_adsblur.title", desc = "settings.blur.fx_adsblur.desc", convar = "fx_adsblur", parentconvar = "fx_rtblur" },
+        { type = "bool", text = "settings.blur.fx_adsblur.title", desc = "settings.blur.fx_adsblur.desc", convar = "fx_adsblur" },
 
         { type = "label", text = "settings.tabname.effects", desc = "settings.tabname.effects.desc" },
         { type = "bool", text = "settings.effects.eject_fx.title", desc = "settings.effects.eject_fx.desc", convar = "eject_fx" },

@@ -538,6 +538,9 @@ L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Прицелы будут ото
 L["settings.gameplay.fx_rt_shader.title"] = "Красивый шейдер в прицелах"
 L["settings.gameplay.fx_rt_shader.desc"] = "Рисует хроматические абберации, искажение линз и эффекты параллакса внутри RT прицелов.\n\nБез понятия, влияет ли это на производительность или нет, это простой GPU шейдер, основанный на shadertoy.com/view/WX2cRd от science6uru2."
 
+L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA в прицелах"
+L["settings.gameplay.fx_rt_fxaa.desc"] = "Простое сглаживание (Fast approximate anti-aliasing) чтобы сделать вид в прицелах чуть мягче, потому что Сурсовский MSAA не работает на рендертаргетах (но работает в Производительных прицелах). Портировано Evgeny Akabenko, использовано с разрешением."
+
 L["settings.performance.shelleject.title"] = "Гильзы"
 L["settings.effects.eject_fx.title"] = "Эффект дыма"
 L["settings.effects.eject_fx.desc"] = "Производит эффект дыма от только что выпущенных гильз. (если возможно)"
