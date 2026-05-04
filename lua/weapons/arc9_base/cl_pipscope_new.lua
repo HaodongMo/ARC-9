@@ -579,11 +579,11 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                     local eyedistance = math.abs(dir:Dot(modelforward))
                     local lerped = Lerp(sightamt, modelpos, rt_eyepos + modelforward * eyedistance)
 
-                    if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_legacy_reticle, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end -- legacy reticle drawfunc
-
                     if newdrawfunc then newdrawfunc(self, scrh, sight, modelang, lerped) end -- new drawfunc
 
                     if reticle then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, reticle, color, !atttbl.RTScopeNew_ReticleBlackBox) end -- reticle
+                    
+                    if legacydrawfunc then drawscopequad(2 * globalscalie, 1.5, modelang, lerped, mat_legacy_reticle, color_white, !atttbl.RTScopeNew_ReticleBlackBox) end -- legacy reticle drawfunc
 
                     -- local funnynumber2 = ( 1 / math.max(0.1, mreow * 2)) - math.max(0, dott - 0.9) * 20 + 2
                     -- local funnynumber2 = ( 1 / math.max(0.1, mreow * 2)) - math.max(0, dott - 0.9) * 20 + 2
