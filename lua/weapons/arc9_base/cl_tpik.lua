@@ -1,4 +1,5 @@
 -- third person inverse kinematics
+-- some optimization by Onge.org
 
 local arc9_tpik = GetConVar("arc9_tpik")
 local arc9_tpik_others = GetConVar("arc9_tpik_others")
@@ -105,12 +106,16 @@ local function get_children(ent, bone, endbone)
     return bones
 end
 
+local ENTITY = FindMetaTable("Entity")
+local entityGetBoneMatrix = ENTITY.GetBoneMatrix
+local entitySetBoneMatrix = ENTITY.SetBoneMatrix
+
 local function bone_apply_matrix(ent, bone, new_matrix, endbone)
     local bone = isstring(bone) and ent:LookupBone(bone) or bone
 
     if not bone or isstring(bone) or bone == -1 then return end
 
-    local matrix = ent:GetBoneMatrix(bone)
+    local matrix = entityGetBoneMatrix(ent, bone)
     if not matrix then return end
     local inv_matrix = matrix:GetInverse()
     if not inv_matrix then return end
@@ -121,12 +126,47 @@ local function bone_apply_matrix(ent, bone, new_matrix, endbone)
     local id
     for i = 1,#children do
         id = children[i]
-        local mat = ent:GetBoneMatrix(id)
+        local mat = entityGetBoneMatrix(ent, id)
         if not mat then continue end
-        ent:SetBoneMatrix(id, translate * mat) -- WTF
+        entitySetBoneMatrix(ent, id, translate * mat) -- WTF
     end
 
-    ent:SetBoneMatrix(bone, new_matrix)
+    entitySetBoneMatrix(ent, bone, new_matrix)
+end
+
+
+local TPIKBoneIndexCache = setmetatable({}, { __mode = "k" })
+local TPIKHeadChildCountCache = setmetatable({}, { __mode = "k" })
+
+local function GetCachedBoneIndex(ent, boneName)
+    if not IsValid(ent) or not boneName then return nil end
+    local mdl = ent:GetModel() or ""
+    local cache = TPIKBoneIndexCache[ent]
+    if not cache or cache.mdl ~= mdl then
+        cache = { mdl = mdl, bones = {} }
+        TPIKBoneIndexCache[ent] = cache
+    end
+
+    local cached = cache.bones[boneName]
+    if cached ~= nil then
+        return cached ~= false and cached or nil
+    end
+
+    local idx = ent:LookupBone(boneName)
+    cache.bones[boneName] = idx or false
+    return idx
+end
+
+local function GetCachedHeadChildCount(ply, headIndex)
+    if not IsValid(ply) or not headIndex then return 99 end
+    local mdl = ply:GetModel() or ""
+    local cache = TPIKHeadChildCountCache[ply]
+    if not cache or cache.mdl ~= mdl or cache.headIndex ~= headIndex then
+        local children = ply:GetChildBones(headIndex)
+        cache = { mdl = mdl, headIndex = headIndex, count = children and #children or 0 }
+        TPIKHeadChildCountCache[ply] = cache
+    end
+    return cache.count or 0
 end
 
 local function SetTPIKOffset(self, wm, owner, lp)
@@ -346,10 +386,22 @@ function SWEP:DoTPIK()
         local time = self:GetSequenceCycle()
         local seq = self:GetSequenceIndex()
 
-        if self:GetSequenceProxy() != 0 then seq = wm:LookupSequence("idle") end -- lhik ubgls fix
-        
-        if self.TPIKNoSprintAnim and self:GetIsSprinting() then seq = wm:LookupSequence("idle") end -- no sprint anim in tpik (less ugly)
-        if (htype == "normal" or htype == "passive") and (seq == wm:LookupSequence("draw") or seq == wm:LookupSequence("holster")) then seq = wm:LookupSequence("idle") end -- no draw/holster with some holdtypes. bad code but whatever.
+        local seqCache = self.TPIKSequenceCache
+        local wmModel = wm:GetModel() or ""
+        if not seqCache or seqCache.model ~= wmModel then
+            seqCache = {
+                model = wmModel,
+                idle = wm:LookupSequence("idle"),
+                draw = wm:LookupSequence("draw"),
+                holster = wm:LookupSequence("holster")
+            }
+            self.TPIKSequenceCache = seqCache
+        end
+
+        if self:GetSequenceProxy() != 0 then seq = seqCache.idle end -- lhik ubgls fix
+
+        if self.TPIKNoSprintAnim and self:GetIsSprinting() then seq = seqCache.idle end -- no sprint anim in tpik (less ugly)
+        if (htype == "normal" or htype == "passive") and (seq == seqCache.draw or seq == seqCache.holster) then seq = seqCache.idle end -- no draw/holster with some holdtypes. bad code but whatever.
 
         wm:SetSequence(seq)
 
@@ -374,37 +426,37 @@ function SWEP:DoTPIK()
         bones = ARC9.LHIKHandBones
     end
 
-    local ply_spine_index = ply:LookupBone("ValveBiped.Bip01_Spine4")
+    local ply_spine_index = GetCachedBoneIndex(ply, "ValveBiped.Bip01_Spine4")
     if !ply_spine_index then return end
-    local ply_spine_matrix = ply:GetBoneMatrix(ply_spine_index)
+    local ply_spine_matrix = entityGetBoneMatrix(ply, ply_spine_index)
     local wmpos = ply_spine_matrix:GetTranslation()
 
     -- local headcam = self:GetCameraControl(wm)
     -- if IsValid(headcam) then
     --     for _, bone in ipairs(headcontrol) do
-    --         local ply_boneindex = ply:LookupBone(bone)
+    --         local ply_boneindex = GetCachedBoneIndex(ply, bone)
     --         if !ply_boneindex then continue end
-    --         local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
+    --         local ply_bonematrix = entityGetBoneMatrix(ply, ply_boneindex)
     --         if !ply_bonematrix then continue end
-    
+
     --         local boneang = ply_bonematrix:GetAngles()
     --         boneang:Add(headcam)
-    
+
     --         ply_bonematrix:SetAngles(boneang)
-    
-    --         ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+
+    --         entitySetBoneMatrix(ply, ply_boneindex, ply_bonematrix)
     --     end
     -- end
-    
+
     local sightdelta = self:GetSightAmount()
     -- local reloadprogress = math.max(0, self:GetReloadingProgress() - sightdelta)
     self.TPIKReloadProgressSmooth = Lerp(FrameTime() * 10, self.TPIKReloadProgressSmooth or 0, self:GetReloading() and 1 - sightdelta or 0)
 
     if sightdelta > 0 or self.TPIKReloadProgressSmooth > 0.12 then
-        local ply_boneindex = ply:LookupBone("ValveBiped.Bip01_Head1")
+        local ply_boneindex = GetCachedBoneIndex(ply, "ValveBiped.Bip01_Head1")
         if ply_boneindex then
-            if #ply:GetChildBones(ply_boneindex) < 2 then -- dont move if more than 1 child bone on head
-                local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
+            if GetCachedHeadChildCount(ply, ply_boneindex) < 2 then -- dont move if more than 1 child bone on head
+                local ply_bonematrix = entityGetBoneMatrix(ply, ply_boneindex)
                 if ply_bonematrix then
                     local boneang = ply_bonematrix:GetAngles()
 
@@ -412,21 +464,21 @@ function SWEP:DoTPIK()
 
                     ply_bonematrix:SetAngles(boneang)
 
-                    ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+                    entitySetBoneMatrix(ply, ply_boneindex, ply_bonematrix)
                 end
             end
         end
     end
 
     for _, bone in ipairs(bones) do
-        local wm_boneindex = wm:LookupBone(bone)
+        local wm_boneindex = GetCachedBoneIndex(wm, bone)
         if !wm_boneindex then continue end
-        local wm_bonematrix = wm:GetBoneMatrix(wm_boneindex)
+        local wm_bonematrix = entityGetBoneMatrix(wm, wm_boneindex)
         if !wm_bonematrix then continue end
 
-        local ply_boneindex = ply:LookupBone(bone)
+        local ply_boneindex = GetCachedBoneIndex(ply, bone)
         if !ply_boneindex then continue end
-        local ply_bonematrix = ply:GetBoneMatrix(ply_boneindex)
+        local ply_bonematrix = entityGetBoneMatrix(ply, ply_boneindex)
         if !ply_bonematrix then continue end
 
         local bonepos = wm_bonematrix:GetTranslation()
@@ -439,16 +491,16 @@ function SWEP:DoTPIK()
         ply_bonematrix:SetTranslation(bonepos)
         ply_bonematrix:SetAngles(boneang)
 
-        ply:SetBoneMatrix(ply_boneindex, ply_bonematrix)
+        entitySetBoneMatrix(ply, ply_boneindex, ply_bonematrix)
         ply:SetBonePosition(ply_boneindex, bonepos, boneang)
     end
 
-    local ply_l_upperarm_index = ply:LookupBone("ValveBiped.Bip01_L_UpperArm")
-    local ply_r_upperarm_index = ply:LookupBone("ValveBiped.Bip01_R_UpperArm")
-    local ply_l_forearm_index = ply:LookupBone("ValveBiped.Bip01_L_Forearm")
-    local ply_r_forearm_index = ply:LookupBone("ValveBiped.Bip01_R_Forearm")
-    local ply_l_hand_index = ply:LookupBone("ValveBiped.Bip01_L_Hand")
-    local ply_r_hand_index = ply:LookupBone("ValveBiped.Bip01_R_Hand")
+    local ply_l_upperarm_index = GetCachedBoneIndex(ply, "ValveBiped.Bip01_L_UpperArm")
+    local ply_r_upperarm_index = GetCachedBoneIndex(ply, "ValveBiped.Bip01_R_UpperArm")
+    local ply_l_forearm_index = GetCachedBoneIndex(ply, "ValveBiped.Bip01_L_Forearm")
+    local ply_r_forearm_index = GetCachedBoneIndex(ply, "ValveBiped.Bip01_R_Forearm")
+    local ply_l_hand_index = GetCachedBoneIndex(ply, "ValveBiped.Bip01_L_Hand")
+    local ply_r_hand_index = GetCachedBoneIndex(ply, "ValveBiped.Bip01_R_Hand")
 
     if !ply_l_upperarm_index then return end
     if !ply_r_upperarm_index then return end
@@ -457,9 +509,9 @@ function SWEP:DoTPIK()
     if !ply_l_hand_index then return end
     if !ply_r_hand_index then return end
 
-    local ply_r_upperarm_matrix = ply:GetBoneMatrix(ply_r_upperarm_index)
-    local ply_r_forearm_matrix = ply:GetBoneMatrix(ply_r_forearm_index)
-    local ply_r_hand_matrix = ply:GetBoneMatrix(ply_r_hand_index)
+    local ply_r_upperarm_matrix = entityGetBoneMatrix(ply, ply_r_upperarm_index)
+    local ply_r_forearm_matrix = entityGetBoneMatrix(ply, ply_r_forearm_index)
+    local ply_r_hand_matrix = entityGetBoneMatrix(ply, ply_r_hand_index)
 
     local limblength = ply:BoneLength(ply_l_forearm_index)
     if !limblength or limblength == 0 then limblength = 12 end
@@ -507,9 +559,9 @@ function SWEP:DoTPIK()
 
     if nolefthand then return end
 
-    local ply_l_upperarm_matrix = ply:GetBoneMatrix(ply_l_upperarm_index)
-    local ply_l_forearm_matrix = ply:GetBoneMatrix(ply_l_forearm_index)
-    local ply_l_hand_matrix = ply:GetBoneMatrix(ply_l_hand_index)
+    local ply_l_upperarm_matrix = entityGetBoneMatrix(ply, ply_l_upperarm_index)
+    local ply_l_forearm_matrix = entityGetBoneMatrix(ply, ply_l_forearm_index)
+    local ply_l_hand_matrix = entityGetBoneMatrix(ply, ply_l_hand_index)
 
     -- local ply_r_upperarm_pos = ply:LocalToWorld(self.TPIKCache.r_upperarm_pos)
     -- local ply_r_forearm_pos = ply:LocalToWorld(self.TPIKCache.r_forearm_pos)
