@@ -1,9 +1,10 @@
 -- third person inverse kinematics
--- some optimization by Onge.org
+-- optimizations & tweening by Onge.org
 
 local arc9_tpik = GetConVar("arc9_tpik")
 local arc9_tpik_others = GetConVar("arc9_tpik_others")
-local arc9_tpik_framerate = GetConVar("arc9_tpik_framerate")
+local arc9_tpik_framerate_you = GetConVar("arc9_tpik_framerate_local")
+local arc9_tpik_framerate_notyou = GetConVar("arc9_tpik_framerate_others")
 
 local activeposvector = Vector(-1, -1, 1)
 local peekvector = Vector(0, 2, 4)
@@ -69,71 +70,12 @@ local function GetCustomOffset(holdtype)
     return HasCustomOffset(holdtype) and HasCustomOffset(holdtype).Pos
 end
 
-
-local forcednotpik = ARC9.NoTPIK
-local Lerp = Lerp
-
-local cached_children = {}
-
-local function recursive_get_children(ent, bone, bones, endbone) -- evil recursive children hack (works only one time for each model)
-    local bone = isstring(bone) and ent:LookupBone(bone) or bone
-
-    if not bone or isstring(bone) or bone == -1 then return end
-    
-    local children = ent:GetChildBones(bone)
-    if #children > 0 then
-        local id
-        for i = 1,#children do
-            id = children[i]
-            if id == endbone then continue end
-            recursive_get_children(ent, id, bones, endbone)
-            table.insert(bones, id)
-        end
-    end
-end
-
-local function get_children(ent, bone, endbone)
-    local bones = {}
-
-    local mdl = ent:GetModel()
-    if cached_children[mdl] and cached_children[mdl][bone] then return cached_children[mdl][bone] end -- cache that shit or else...........
-
-    recursive_get_children(ent, bone, bones, endbone)
-
-    cached_children[mdl] = cached_children[mdl] or {}
-    cached_children[mdl][bone] = bones
-
-    return bones
-end
-
 local ENTITY = FindMetaTable("Entity")
 local entityGetBoneMatrix = ENTITY.GetBoneMatrix
 local entitySetBoneMatrix = ENTITY.SetBoneMatrix
 
-local function bone_apply_matrix(ent, bone, new_matrix, endbone)
-    local bone = isstring(bone) and ent:LookupBone(bone) or bone
-
-    if not bone or isstring(bone) or bone == -1 then return end
-
-    local matrix = entityGetBoneMatrix(ent, bone)
-    if not matrix then return end
-    local inv_matrix = matrix:GetInverse()
-    if not inv_matrix then return end
-
-    local children = get_children(ent, bone, endbone)
-    
-    local translate = (new_matrix * inv_matrix)
-    local id
-    for i = 1,#children do
-        id = children[i]
-        local mat = entityGetBoneMatrix(ent, id)
-        if not mat then continue end
-        entitySetBoneMatrix(ent, id, translate * mat) -- WTF
-    end
-
-    entitySetBoneMatrix(ent, bone, new_matrix)
-end
-
+local forcednotpik = ARC9.NoTPIK
+local Lerp = Lerp
 
 local TPIKBoneIndexCache = setmetatable({}, { __mode = "k" })
 local TPIKHeadChildCountCache = setmetatable({}, { __mode = "k" })
@@ -168,6 +110,70 @@ local function GetCachedHeadChildCount(ply, headIndex)
     end
     return cache.count or 0
 end
+
+
+local cached_children = {}
+
+local function recursive_get_children(ent, bone, bones, endbone) -- evil recursive children hack (works only one time for each model)
+    local bone = isstring(bone) and GetCachedBoneIndex(ent, bone) or bone
+
+    if not bone or isstring(bone) or bone == -1 then return end
+    
+    local children = ent:GetChildBones(bone)
+    if #children > 0 then
+        local id
+        for i = 1,#children do
+            id = children[i]
+            if id == endbone then continue end
+            recursive_get_children(ent, id, bones, endbone)
+            table.insert(bones, id)
+        end
+    end
+end
+
+local function get_children(ent, bone, endbone)
+    local mdl = ent:GetModel() or ""
+    local modelCache = cached_children[mdl]
+    if not modelCache then
+        modelCache = {}
+        cached_children[mdl] = modelCache
+    end
+
+    local key = tostring(bone) .. ":" .. tostring(endbone or "")
+    local cached = modelCache[key]
+    if cached then return cached end -- cache that shit or else...........
+
+    local bones = {}
+    recursive_get_children(ent, bone, bones, endbone)
+    modelCache[key] = bones
+
+    return bones
+end
+
+local function bone_apply_matrix(ent, bone, new_matrix, endbone)
+    local bone = isstring(bone) and ent:LookupBone(bone) or bone
+
+    if not bone or isstring(bone) or bone == -1 then return end
+
+    local matrix = entityGetBoneMatrix(ent, bone)
+    if not matrix then return end
+    local inv_matrix = matrix:GetInverse()
+    if not inv_matrix then return end
+
+    local children = get_children(ent, bone, endbone)
+    
+    local translate = (new_matrix * inv_matrix)
+    local id
+    for i = 1,#children do
+        id = children[i]
+        local mat = entityGetBoneMatrix(ent, id)
+        if not mat then continue end
+        entitySetBoneMatrix(ent, id, translate * mat) -- WTF
+    end
+
+    entitySetBoneMatrix(ent, bone, new_matrix)
+end
+
 
 local function SetTPIKOffset(self, wm, owner, lp)
     local pos, ang = Vector(self.WorldModelOffset.TPIKPos or self.WorldModelOffset.Pos), Angle(self.WorldModelOffset.TPIKAng or self.WorldModelOffset.Ang) -- how come you don't have tpikpos in 2025
@@ -318,6 +324,110 @@ SWEP.LastTPIKTime = 0
 
 local cachelastcycle = 0 -- probably bad
 
+local function TPIKIKTweenAlpha(speed)
+    speed = math.Clamp(speed * 1.5, 1, 60)
+    local ft = RealFrameTime()
+    return math.Clamp(1 - math.exp(-speed * ft), 0, 1)
+end
+
+local TPIK_EPS = 0.0001
+
+local function TPIKVecAlmostEqual(a, b)
+    return a and b
+        and math.abs(a.x - b.x) <= TPIK_EPS
+        and math.abs(a.y - b.y) <= TPIK_EPS
+        and math.abs(a.z - b.z) <= TPIK_EPS
+end
+
+local function TPIKAngAlmostEqual(a, b)
+    return a and b
+        and math.abs(a.p - b.p) <= TPIK_EPS
+        and math.abs(a.y - b.y) <= TPIK_EPS
+        and math.abs(a.r - b.r) <= TPIK_EPS
+end
+
+local function TPIKCopyVec(dst, src)
+    dst.x = src.x
+    dst.y = src.y
+    dst.z = src.z
+    return dst
+end
+
+local function TPIKCopyAng(dst, src)
+    dst.p = src.p
+    dst.y = src.y
+    dst.r = src.r
+    return dst
+end
+
+local function TPIKTweenVec(self, key, target, alpha)
+    if not target then return target end
+    self.TPIKIKTweenCache = self.TPIKIKTweenCache or {}
+    local cache = self.TPIKIKTweenCache
+    local current = cache[key]
+
+    if not current then
+        current = Vector(target.x, target.y, target.z)
+        cache[key] = current
+        return current
+    end
+
+    -- If the cached output is already the same as the target, do nothing.
+    -- This avoids pointless LerpVector allocations on frames where the IK target did not change.
+    if TPIKVecAlmostEqual(current, target) then return current end
+
+    if alpha >= 1 then
+        return TPIKCopyVec(current, target)
+    end
+
+    current.x = current.x + (target.x - current.x) * alpha
+    current.y = current.y + (target.y - current.y) * alpha
+    current.z = current.z + (target.z - current.z) * alpha
+
+    if TPIKVecAlmostEqual(current, target) then
+        return TPIKCopyVec(current, target)
+    end
+
+    return current
+end
+
+local function TPIKTweenAng(self, key, target, alpha)
+    if not target then return target end
+    self.TPIKIKTweenCache = self.TPIKIKTweenCache or {}
+    local cache = self.TPIKIKTweenCache
+    local current = cache[key]
+
+    if not current then
+        current = Angle(target.p, target.y, target.r)
+        cache[key] = current
+        return current
+    end
+
+    -- Same as vectors: skip smoothing work when the cached output already reached the target.
+    if TPIKAngAlmostEqual(current, target) then return current end
+
+    if alpha >= 1 then
+        return TPIKCopyAng(current, target)
+    end
+
+    if math.AngleDifference then
+        current.p = current.p + math.AngleDifference(target.p, current.p) * alpha
+        current.y = current.y + math.AngleDifference(target.y, current.y) * alpha
+        current.r = current.r + math.AngleDifference(target.r, current.r) * alpha
+    else
+        current.p = Lerp(alpha, current.p, target.p)
+        current.y = Lerp(alpha, current.y, target.y)
+        current.r = Lerp(alpha, current.r, target.r)
+    end
+
+    if TPIKAngAlmostEqual(current, target) then
+        return TPIKCopyAng(current, target)
+    end
+
+    return current
+end
+
+
 -- local headcontrol = {"ValveBiped.Bip01_Neck1", "ValveBiped.Bip01_Head1"}
 
 function SWEP:DoTPIK()
@@ -347,11 +457,12 @@ function SWEP:DoTPIK()
 
     local lod
 
-    if ply != LocalPlayer() then
+    if ply == LocalPlayer() then
+        local localtpiktime = math.Clamp(arc9_tpik_framerate_you:GetInt() or 60, 10, 150)
+        tpikdelay = 1 / localtpiktime
+    else
         local dist = EyePos():DistToSqr(ply:GetPos())
-
-        local convartpiktime = arc9_tpik_framerate:GetFloat()
-        convartpiktime = (convartpiktime == 0) and 250 or math.Clamp(convartpiktime, 5, 250)
+        local convartpiktime = math.Clamp(arc9_tpik_framerate_notyou:GetInt() or 20,  5, 150)
         tpikdelay = 1 / convartpiktime
 
         lod = self:ShouldLOD()
@@ -369,6 +480,8 @@ function SWEP:DoTPIK()
         shouldfulltpik = false
     end
 
+    local tpikTweenAlpha = TPIKIKTweenAlpha(1 / tpikdelay)
+
     local nolefthand = false
 
     local htype = self:GetHoldType()
@@ -380,7 +493,7 @@ function SWEP:DoTPIK()
     if ply:IsTyping() then nolefthand = true end
     if ply:GetNW2Int("CurrentCustomGesture", 0) > 0 then nolefthand = true end -- custom thing
 
-    if shouldfulltpik then
+    if shouldfulltpik or self:StillWaiting() then
         wm:SetupBones()
 
         local time = self:GetSequenceCycle()
@@ -513,9 +626,16 @@ function SWEP:DoTPIK()
     local ply_r_forearm_matrix = entityGetBoneMatrix(ply, ply_r_forearm_index)
     local ply_r_hand_matrix = entityGetBoneMatrix(ply, ply_r_hand_index)
 
-    local limblength = ply:BoneLength(ply_l_forearm_index)
-    if !limblength or limblength == 0 then limblength = 12 end
+    local boneLengthCache = self.TPIKBoneLengthCache
+    local plyModel = ply:GetModel() or ""
+    if not boneLengthCache or boneLengthCache.model ~= plyModel or boneLengthCache.forearmIndex ~= ply_l_forearm_index then
+        local limblength = ply:BoneLength(ply_l_forearm_index)
+        if !limblength or limblength == 0 then limblength = 12 end
+        boneLengthCache = { model = plyModel, forearmIndex = ply_l_forearm_index, length = limblength }
+        self.TPIKBoneLengthCache = boneLengthCache
+    end
 
+    local limblength = boneLengthCache.length or 12
     local r_upperarm_length = limblength
     local r_forearm_length = limblength
     local l_upperarm_length = limblength
@@ -529,16 +649,21 @@ function SWEP:DoTPIK()
         eyeahg.y = eyeahg.y - (ply:GetPoseParameter("aim_yaw") or 0) * 160 + 80 or 0
     end
 
-    if shouldfulltpik then
+    if shouldfulltpik or !(self.TPIKCache.r_upperarm_pos and self.TPIKCache.r_forearm_pos and self.TPIKCache.ply_r_upperarm_angle and self.TPIKCache.ply_r_forearm_angle) then
         ply_r_upperarm_pos, ply_r_forearm_pos, ply_r_upperarm_angle, ply_r_forearm_angle = self:Solve2PartIK(ply_r_upperarm_matrix:GetTranslation(), ply_r_hand_matrix:GetTranslation(), r_upperarm_length, r_forearm_length, -1.3, eyeahg)
         self.LastTPIKTime = CurTime()
 
         self.TPIKCache.r_upperarm_pos, self.TPIKCache.ply_r_upperarm_angle = WorldToLocal(ply_r_upperarm_pos, ply_r_upperarm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
         self.TPIKCache.r_forearm_pos, self.TPIKCache.ply_r_forearm_angle = WorldToLocal(ply_r_forearm_pos, ply_r_forearm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
-    else
-        ply_r_upperarm_pos, ply_r_upperarm_angle = LocalToWorld(self.TPIKCache.r_upperarm_pos, self.TPIKCache.ply_r_upperarm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
-        ply_r_forearm_pos, ply_r_forearm_angle = LocalToWorld(self.TPIKCache.r_forearm_pos, self.TPIKCache.ply_r_forearm_angle, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
     end
+
+    local rUpperPos = TPIKTweenVec(self, "r_upperarm_pos", self.TPIKCache.r_upperarm_pos, tpikTweenAlpha)
+    local rUpperAng = TPIKTweenAng(self, "r_upperarm_ang", self.TPIKCache.ply_r_upperarm_angle, tpikTweenAlpha)
+    local rForePos = TPIKTweenVec(self, "r_forearm_pos", self.TPIKCache.r_forearm_pos, tpikTweenAlpha)
+    local rForeAng = TPIKTweenAng(self, "r_forearm_ang", self.TPIKCache.ply_r_forearm_angle, tpikTweenAlpha)
+
+    ply_r_upperarm_pos, ply_r_upperarm_angle = LocalToWorld(rUpperPos, rUpperAng, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
+    ply_r_forearm_pos, ply_r_forearm_angle = LocalToWorld(rForePos, rForeAng, ply_r_upperarm_matrix:GetTranslation(), ply_r_upperarm_matrix:GetAngles())
 
     -- play rain world!!!
 
@@ -582,10 +707,15 @@ function SWEP:DoTPIK()
         self.LastTPIKTime = CurTime()
         self.TPIKCache.l_upperarm_pos, self.TPIKCache.ply_l_upperarm_angle = WorldToLocal(ply_l_upperarm_pos, ply_l_upperarm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
         self.TPIKCache.l_forearm_pos, self.TPIKCache.ply_l_forearm_angle = WorldToLocal(ply_l_forearm_pos, ply_l_forearm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
-    else
-        ply_l_upperarm_pos, ply_l_upperarm_angle = LocalToWorld(self.TPIKCache.l_upperarm_pos, self.TPIKCache.ply_l_upperarm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
-        ply_l_forearm_pos, ply_l_forearm_angle = LocalToWorld(self.TPIKCache.l_forearm_pos, self.TPIKCache.ply_l_forearm_angle, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
     end
+
+    local lUpperPos = TPIKTweenVec(self, "l_upperarm_pos", self.TPIKCache.l_upperarm_pos, tpikTweenAlpha)
+    local lUpperAng = TPIKTweenAng(self, "l_upperarm_ang", self.TPIKCache.ply_l_upperarm_angle, tpikTweenAlpha)
+    local lForePos = TPIKTweenVec(self, "l_forearm_pos", self.TPIKCache.l_forearm_pos, tpikTweenAlpha)
+    local lForeAng = TPIKTweenAng(self, "l_forearm_ang", self.TPIKCache.ply_l_forearm_angle, tpikTweenAlpha)
+
+    ply_l_upperarm_pos, ply_l_upperarm_angle = LocalToWorld(lUpperPos, lUpperAng, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
+    ply_l_forearm_pos, ply_l_forearm_angle = LocalToWorld(lForePos, lForeAng, ply_l_upperarm_matrix:GetTranslation(), ply_l_upperarm_matrix:GetAngles())
 
     ply_l_upperarm_matrix:SetAngles(ply_l_upperarm_angle)
     ply_l_forearm_matrix:SetTranslation(ply_l_upperarm_pos)

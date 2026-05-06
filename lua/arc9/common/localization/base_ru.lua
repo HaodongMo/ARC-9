@@ -791,6 +791,13 @@ L["settings.tpik_others.desc"] = "Включить эту систему на и
 L["settings.tpik_framerate.title"] = "Частота TPIK"
 L["settings.tpik_framerate.desc"] = "Максимальная частота на которой TPIK работает. Ставь на 0 для снятия ограничения."
 
+L["settings.tpik_framerate.title"] = "Частота обновления TPIK для других игроков"
+L["settings.tpik_framerate.desc"] = "Частота обновления TPIK для всех игроков на сервере кроме вас.\n\nВысокие значения понижают производительность."
+
+L["settings.tpik_framerate_local.title"] = "Частота обновления TPIK для локал. игрока"
+L["settings.tpik_framerate_local.desc"] = "Частота обновления TPIK для локального игрока (вас).\n\nВысокие значения понижают производительность."
+
+
 ////////////////////// Bullet Physics
 L["settings.tabname.bulletphysics"] = "Физика пуль"
 

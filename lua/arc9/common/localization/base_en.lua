@@ -607,7 +607,7 @@ L["settings.tabname.visuals"] = "Visuals"
 
 ////////// TPIK
 L["settings.tabname.tpik"] = "TPIK - Third Person Inverse Kinematics"
-L["settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions."
+L["settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions.\n\nOriginal code by AWholeCream, improved by uzelezz123, optimizations & smoothing by Onge.org."
 
 L["settings.tpik.title"] = "Enable TPIK"
 L["settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
@@ -615,8 +615,11 @@ L["settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nIm
 L["settings.tpik_others.title"] = "Other Players' TPIK"
 L["settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
 
-L["settings.tpik_framerate.title"] = "TPIK Frame Rate"
-L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK runs at.\n\nSet to 0 for unlimited.\n\nUnlimited or higher values impact performance."
+L["settings.tpik_framerate.title"] = "Other players TPIK Frame Rate"
+L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK calculations runs at anybody else on server.\n\nHigher values impact performance."
+
+L["settings.tpik_framerate_local.title"] = "Local player TPIK Frame Rate"
+L["settings.tpik_framerate_local.desc"] = "At which frame rate the TPIK calculations runs at for you specifically.\n\nHigher values impact performance."
 
 ////////// Blur
 L["settings.tabname.blur"] = "Blur"

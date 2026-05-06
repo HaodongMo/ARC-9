@@ -202,7 +202,8 @@ ARC9.SettingsTable = {
         { type = "label", text = "settings.tabname.tpik", desc = "settings.tabname.tpik.desc" },
         { type = "bool", text = "settings.tpik.title", desc = "settings.tpik.desc", convar = "tpik" },
         { type = "bool", text = "settings.tpik_others.title", desc = "settings.tpik_others.desc", convar = "tpik_others", parentconvar = "tpik" },
-        { type = "slider", text = "settings.tpik_framerate.title", desc = "settings.tpik_framerate.desc", convar = "tpik_others", parentconvar = "tpik", min = 0, max = 200 },
+        { type = "slider", text = "settings.tpik_framerate_local.title", desc = "settings.tpik_framerate_local.desc", convar = "tpik_framerate_local", parentconvar = "tpik", min = 10, max = 150 },
+        { type = "slider", text = "settings.tpik_framerate.title", desc = "settings.tpik_framerate.desc", convar = "tpik_framerate_others", parentconvar = "tpik", min = 5, max = 150 },
 
         { type = "label", text = "settings.tabname.blur", desc = "settings.tabname.blur.desc" },
         { type = "bool", text = "settings.blur.cust_blur.title", desc = "settings.blur.cust_blur.desc", convar = "cust_blur" },
