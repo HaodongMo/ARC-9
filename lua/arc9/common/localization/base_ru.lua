@@ -529,10 +529,16 @@ L["settings.blur.fx_reloadblur.title"] = "Во время перезарядки
 L["settings.blur.fx_reloadblur.desc"] = "Размытие мира во время перезарядки."
 L["settings.blur.fx_animblur.title"] = "При первом доставании"
 L["settings.blur.fx_animblur.desc"] = "Размытие мира при доставании нового оружия в первый раз."
-L["settings.blur.fx_rtblur.title"] = "В оптике"
+L["settings.blur.fx_rtblur.title"] = "Размытие мира за прицелами"
 L["settings.blur.fx_rtblur.desc"] = "Размытие мира при использовании оптических прицелов."
-L["settings.blur.fx_adsblur.title"] = "В прицелах"
-L["settings.blur.fx_adsblur.desc"] = "Размытие части оружия при использовании любых прицелов."
+
+L["settings.blur.fx_adsblur.title"] = "Глубина резкости при прицеливании"
+L["settings.blur.fx_adsblur.desc"] = "Применяет эффект глубины резкости поверх модели оружия, размывая целик и прицелы.\n\nИспользует размытие Poisson disk из github.com/spite/Wagner (возможно, также что-то из шейдера LightDoF от luluco250)."
+
+L["settings.blur.fx_adsblur_always.title"] = "Глубина резкости всегда"
+L["settings.blur.fx_adsblur_always.desc"] = "Аналогично предыдущей опции, но и вне прицеливания, делая заднюю часть оружия вне фокуса."
+
+
 L["settings.gameplay.fx_rtvm.title"] = "Отображать оружие в прицелах"
 L["settings.gameplay.fx_rtvm.desc"] = "! ЭКСПЕРЕМЕНТАЛЬНАЯ ОПЦИЯ !\nРендерит модель оружия и обвесов в RT прицелах. Необходимо отключить \"Производительные прицелы\".\nЗначительно снижает производительность."
 L["settings.blur.fx_rtblur.title2"] = "Размытие за прицелами"
@@ -543,7 +549,7 @@ L["settings.gameplay.fx_rt_shader.title"] = "Красивый шейдер в п
 L["settings.gameplay.fx_rt_shader.desc"] = "Рисует хроматические абберации, искажение линз и эффекты параллакса внутри RT прицелов.\n\nБез понятия, влияет ли это на производительность или нет, это простой GPU шейдер.\n\nОснованный на shadertoy.com/view/WX2cRd от science6uru2."
 
 L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA в прицелах"
-L["settings.gameplay.fx_rt_fxaa.desc"] = "Простое сглаживание (Fast approximate anti-aliasing) чтобы сделать вид в прицелах чуть мягче, потому что Сурсовский MSAA не работает на рендертаргетах (но работает в Производительных прицелах). Портировано Evgeny Akabenko, использовано с разрешением."
+L["settings.gameplay.fx_rt_fxaa.desc"] = "Простое сглаживание (Fast approximate anti-aliasing) чтобы сделать вид в прицелах чуть мягче, потому что Сурсовский MSAA не работает на рендертаргетах (но работает в Производительных прицелах).\n\nПортировано Evgeny Akabenko, использовано с разрешением."
 
 L["settings.performance.shelleject.title"] = "Гильзы"
 L["settings.effects.eject_fx.title"] = "Эффект дыма"
@@ -1086,11 +1092,14 @@ L["settings.blur.fx_animblur.desc"] = "Размытие мира при дост
 -- L["settings.blur.fx_inspectblur.title"] = "Blur world when Inspecting"
 -- L["settings.blur.fx_inspectblur.desc"] = "Blurs the background when inspecting a weapon."
 
-L["settings.blur.fx_rtblur.title"] = "В оптике"
+L["settings.blur.fx_rtblur.title"] = "Размытие мира за прицелами"
 L["settings.blur.fx_rtblur.desc"] = "Размытие мира при использовании оптических прицелов."
 
-L["settings.blur.fx_adsblur.title"] = "В прицелах"
-L["settings.blur.fx_adsblur.desc"] = "Размытие части оружия при использовании любых прицелов."
+L["settings.blur.fx_adsblur.title"] = "Глубина резкости при прицеливании"
+L["settings.blur.fx_adsblur.desc"] = "Применяет эффект глубины резкости поверх модели оружия, размывая целик и прицелы.\n\nИспользует размытие Poisson disk из github.com/spite/Wagner (возможно, также что-то из шейдера LightDoF от luluco250)."
+
+L["settings.blur.fx_adsblur_always.title"] = "Глубина резкости всегда"
+L["settings.blur.fx_adsblur_always.desc"] = "Аналогично предыдущей опции, но и вне прицеливания, делая заднюю часть оружия вне фокуса."
 
 ////////// Effects
 L["settings.tabname.effects"] = "Эффекты"

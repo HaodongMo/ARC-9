@@ -249,7 +249,7 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
     end
     
     if atttbl.RTScopeSubmatIndex then
-        csmodel:SetSubMaterial(atttbl.RTScopeSubmatIndex, "effects/arc9/rt")
+        csmodel:SetSubMaterial(atttbl.RTScopeSubmatIndex, wm and "vgui/black" or "effects/arc9/rt")
     end
 
     csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", true)

@@ -637,8 +637,11 @@ L["settings.blur.fx_inspectblur.desc"] = "Blurs the background when inspecting a
 L["settings.blur.fx_rtblur.title"] = "Blur world when aiming RT scopes"
 L["settings.blur.fx_rtblur.desc"] = "Blurs the background when aiming with any RT scope."
 
-L["settings.blur.fx_adsblur.title"] = "Blur weapon when aiming"
-L["settings.blur.fx_adsblur.desc"] = "Applies a blur effect on the bottom of your screen when aiming.\n\nNot all weapons support this."
+L["settings.blur.fx_adsblur.title"] = "Weapon DoF effect when aiming"
+L["settings.blur.fx_adsblur.desc"] = "Applies a Depth of Field effect on top of viewmodel, blurring rear sights and scopes.\n\nUses Poisson disk blur from github.com/spite/Wagner (maybe something from luluco250's LightDoF shader too)."
+
+L["settings.blur.fx_adsblur_always.title"] = "Weapon DoF always"
+L["settings.blur.fx_adsblur_always.desc"] = "Same as option above, but outside of ADS too, making back of weapon look like its out of focus."
 
 ////////// Effects
 L["settings.tabname.effects"] = "Effects"
@@ -781,7 +784,7 @@ L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
 L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
 
 L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
-L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on rendertargets (they do work in Cheap Scopes though). Ported by Evgeny Akabenko, used with permission."
+L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on rendertargets (they do work in Cheap Scopes though).\n\nPorted by Evgeny Akabenko, used with permission."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"

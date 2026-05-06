@@ -315,7 +315,7 @@ function SWEP:RenderRTCheap(atttbl)
     return rt_cheap
 end
 
-local fxaa_mat = Material("pp/arc9/pp_fxaa")
+local fxaa_mat = Material("effects/arc9/pp_fxaa")
 
 function SWEP:RenderRTExpensive(atttbl, magnification)
     local viewstup = render.GetViewSetup()

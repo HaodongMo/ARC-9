@@ -1,7 +1,7 @@
 screenspace_general
 {
 	$pixshader 		"arc9_fxaa_ps30"
-	$vertexshader 	"arc9_fxaa_vs30"
+	$vertexshader 	"arc9_pp_vs30"
 
 	$basetexture 		"_rt_FullFrameFB"
 

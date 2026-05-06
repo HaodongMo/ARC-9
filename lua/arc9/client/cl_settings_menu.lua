@@ -190,6 +190,10 @@ ARC9.SettingsTable = {
 
         { type = "color", text = "settings.gameplay.color.reflex.title", desc = "settings.gameplay.color.reflex.desc", convar = "reflex" },
         { type = "color", text = "settings.gameplay.color.scope.title", desc = "settings.gameplay.color.scope.desc", convar = "scope" },
+        
+        { type = "bool", text = "settings.blur.fx_rtblur.title", desc = "settings.blur.fx_rtblur.desc", convar = "fx_rtblur" },
+        { type = "bool", text = "settings.blur.fx_adsblur.title", desc = "settings.blur.fx_adsblur.desc", convar = "fx_adsblur_new" },
+        { type = "bool", text = "settings.blur.fx_adsblur_always.title", desc = "settings.blur.fx_adsblur_always.desc", convar = "fx_adsblur_always", parentconvar = "fx_adsblur_new" },
 
     },
     {
@@ -206,7 +210,8 @@ ARC9.SettingsTable = {
         { type = "bool", text = "settings.blur.fx_animblur.title", desc = "settings.blur.fx_animblur.desc", convar = "fx_animblur", parentconvar = "fx_reloadblur" },
         { type = "bool", text = "settings.blur.fx_inspectblur.title", desc = "settings.blur.fx_inspectblur.desc", convar = "fx_inspectblur", parentconvar = "fx_reloadblur" },
         { type = "bool", text = "settings.blur.fx_rtblur.title", desc = "settings.blur.fx_rtblur.desc", convar = "fx_rtblur" },
-        { type = "bool", text = "settings.blur.fx_adsblur.title", desc = "settings.blur.fx_adsblur.desc", convar = "fx_adsblur" },
+        { type = "bool", text = "settings.blur.fx_adsblur.title", desc = "settings.blur.fx_adsblur.desc", convar = "fx_adsblur_new" },
+        { type = "bool", text = "settings.blur.fx_adsblur_always.title", desc = "settings.blur.fx_adsblur_always.desc", convar = "fx_adsblur_always", parentconvar = "fx_adsblur_new" },
 
         { type = "label", text = "settings.tabname.effects", desc = "settings.tabname.effects.desc" },
         { type = "bool", text = "settings.effects.eject_fx.title", desc = "settings.effects.eject_fx.desc", convar = "eject_fx" },

@@ -624,11 +624,11 @@ local conVars = {
         default = "0",
         client = true
     },
-    {
-        name = "fx_adsblur",
-        default = "1",
-        client = true
-    },
+    -- {
+    --     name = "fx_adsblur",
+    --     default = "1",
+    --     client = true
+    -- },
     {
         name = "fx_reloadblur",
         default = "0",
@@ -989,6 +989,16 @@ local conVars = {
     {
         name = "fx_rt_fxaa",
         default = "1",
+        client = true
+    },
+    {
+        name = "fx_adsblur_new",
+        default = "1",
+        client = true
+    },
+    {
+        name = "fx_adsblur_always",
+        default = "0",
         client = true
     },
 }
