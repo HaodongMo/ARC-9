@@ -340,8 +340,8 @@ function SWEP:RenderDoFMask(clear)
     for k, v in pairs( scopemodel:GetMaterials() or {} ) do -- table.flip
         mats[ v ] = k
     end
-
-    local glassindex = mats["effects/arc9/rtglass"] or mats["effects/arc9/rtglasssquare"] or mats["effects/arc9/rt"] or 0
+    
+    local glassindex = mats["effects/arc9/rtglass"] or mats["effects/arc9/rtglasssquare"] or mats["effects/arc9/rt"] or mats["___error"] or 0
     if scopemodel.RTScope_BlurTexture then glassindex = mats[scopemodel.RTScope_BlurTexture] or 0 end
     render.PushRenderTarget(rt_dofmask)
         -- render.Clear(0, 0, 0, 255)
@@ -410,7 +410,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     if activedof then
         sigt = self:GetSight()
         sa = self:GetSightAmount()
-        notactivemask = sa < 0.01 or !(sigt.atttbl and sigt.atttbl.RTScope) or self.Peeking
+        notactivemask = sa < 0.01 or !(sigt.atttbl and (sigt.atttbl.RTScope or sigt.atttbl.RTScopeNew_BlurTexture)) or self.Peeking
     end
 
     self.RenderingHolosight = false
@@ -432,7 +432,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     cam.End3D()
 
     if activedof then
-        if arc9_fx_adsblur_always:GetBool() then sa = 1 end
+        if arc9_fx_adsblur_always:GetBool() then sa = 1 * (1 - self.CustomizeDelta) end
 
         if sa > 0.01 and sigt.Blur != false then
             self:RenderDoF(sa)   
