@@ -1,6 +1,6 @@
 screenspace_general
 {
-	$pixshader "testdofDEBUG5_ps30"
+	$pixshader "arc9_vm_dof_debug_ps30"
 	$vertexshader 	"arc9_pp_vs30"
 
 	$basetexture "_rt_FullFrameFB"
@@ -25,9 +25,5 @@ screenspace_general
 	$linearread_texture3       0
 
 	$c0_x     8
-	$c0_y     8
-	$c0_z     0.07
-
-	$c1_x     1.0/2560
-	$c1_y     1.0/1440
+	$c0_y     0.07
 }

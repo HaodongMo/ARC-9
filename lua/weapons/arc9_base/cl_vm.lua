@@ -281,10 +281,7 @@ local function shadersetstaticvalues()
     mat_dof:SetTexture("$texture1", rt_dofmask:GetName())
     mat_dof:SetFloat("$c0_x", 8)
     mat_dof:SetFloat("$c0_y", 0.07)
-    mat_dof_debug:SetFloat("$c1_x", 1 / scrw )
-    mat_dof_debug:SetFloat("$c1_y", 1 / scrh )
     mat_dof_debug:SetTexture("$texture1", rt_dofmask:GetName())
-    mat_dof_debug:SetFloat("$c0_x", 8)
     mat_dof_debug:SetFloat("$c0_y", 0.07)
 end
 

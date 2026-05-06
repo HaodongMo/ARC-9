@@ -8,6 +8,10 @@ screenspace_general
 	$vertextransform 1
 	$model 1
 	
+	"<dx90"
+	{
+		$no_draw 1
+	}
 	
 	// // c0: Lens Physics
 	// $c0_x -0.15	// x: EYE_DISTANCE (Default: 0.1)
