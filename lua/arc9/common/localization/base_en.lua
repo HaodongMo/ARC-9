@@ -615,7 +615,7 @@ L["settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nIm
 L["settings.tpik_others.title"] = "Other Players' TPIK"
 L["settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
 
-L["settings.tpik_framerate.title"] = "Other players TPIK Frame Rate"
+L["settings.tpik_framerate.title"] = "Other Players' TPIK Frame Rate"
 L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK calculations runs at anybody else on server.\n\nHigher values impact performance."
 
 L["settings.tpik_framerate_local.title"] = "Local player TPIK Frame Rate"
@@ -641,7 +641,7 @@ L["settings.blur.fx_rtblur.title"] = "Blur world when aiming RT scopes"
 L["settings.blur.fx_rtblur.desc"] = "Blurs the background when aiming with any RT scope."
 
 L["settings.blur.fx_adsblur.title"] = "Weapon DoF effect when aiming"
-L["settings.blur.fx_adsblur.desc"] = "Applies a Depth of Field effect on top of viewmodel, blurring rear sights and scopes.\n\nUses Poisson disk blur from github.com/spite/Wagner (maybe something from luluco250's LightDoF shader too)."
+L["settings.blur.fx_adsblur.desc"] = "Applies a Depth of Field effect on top of viewmodel, blurring rear sights and scopes.\n\nUses Poisson disk blur from github.com/spite/Wagner, as well as luluco250's LightDoF shader."
 
 L["settings.blur.fx_adsblur_always.title"] = "Weapon DoF always"
 L["settings.blur.fx_adsblur_always.desc"] = "Same as option above, but outside of ADS too, making back of weapon look like its out of focus."
@@ -759,11 +759,11 @@ L["settings.tabname.optics.desc"] = "Adjust settings related to optics and their
 L["settings.gameplay.toggleads.title"] = "Toggle ADS"
 L["settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
 
-L["settings.gameplay.cheapscopes.title"] = "Cheap Scopes"
-L["settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
+L["settings.gameplay.cheapscopes.title"] = "Performance RT Scopes"
+L["settings.gameplay.cheapscopes.desc"] = "Performance-friendly RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
 
 L["settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
-L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
+L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Performance RT Scopes\"."
 
 L["settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
 L["settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
@@ -787,7 +787,7 @@ L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
 L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
 
 L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
-L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on rendertargets (they do work in Cheap Scopes though).\n\nPorted by Evgeny Akabenko, used with permission."
+L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on Render Target views.\n\nPorted by Evgeny Akabenko, used with permission."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"

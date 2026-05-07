@@ -615,8 +615,11 @@ L["settings.tpik.desc"] = "Aktiverar TPIK (Third Person Inverse Kinematics).\n\n
 L["settings.tpik_others.title"] = "Andra spelares TPIK"
 L["settings.tpik_others.desc"] = "Visa andra spelares TPIK.\n\nPåverkar prestandan."
 
-L["settings.tpik_framerate.title"] = "TPIK Bildfrekvens"
-L["settings.tpik_framerate.desc"] = "Vilken bildfrekvens (FPS) TPIK använder.\n\nSätt till 0 för oändlig.\n\nOändlig eller högre värden påverkar prestandan."
+L["settings.tpik_framerate.title"] = "Andra spelares TPIK-bildfrekvens"
+L["settings.tpik_framerate.desc"] = "Vid vilken uppdateringsfrekvens som TPIK-beräkningarna ska köras i på andra spelare i servern.\n\nHögre värden påverkar prestandan."
+
+L["settings.tpik_framerate_local.title"] = "Lokala spelarens TPIK-bildfrekvens"
+L["settings.tpik_framerate_local.desc"] = "Vid vilken uppdateringsfrekvens som TPIK-beräkningarna ska köras i för specifikt dig själv.\n\nHögre värden påverkar prestandan."
 
 ////////// Blur
 L["settings.tabname.blur"] = "Oskärpa"
@@ -637,8 +640,11 @@ L["settings.blur.fx_inspectblur.desc"] = "Bakgrunden blir suddig när ett vapen 
 L["settings.blur.fx_rtblur.title"] = "Oskärpa världen i sikten med RT"
 L["settings.blur.fx_rtblur.desc"] = "Bakgrunden blir suddig när du siktar med ett RT-sikte"
 
-L["settings.blur.fx_adsblur.title"] = "Oskärpa vapnet i siktet"
-L["settings.blur.fx_adsblur.desc"] = "Tillämpar en oskärpa effekt på skärmens nedersta bit i siktet.\n\nInte alla vapen stödjer detta."
+L["settings.blur.fx_adsblur.title"] = "Skärpedjupeffekt på vapen i siktet"
+L["settings.blur.fx_adsblur.desc"] = "Tillämpar en skärpedjupeffekt ovanpå vymodellen, vilket gör bakre riktmedlet och sikten suddida.\n\nAnvänder Poisson disk blur från github.com/spite/Wagner, plus LightDoF-shader från luluco250."
+
+L["settings.blur.fx_adsblur_always.title"] = "Alltid skärpedjupeffekt"
+L["settings.blur.fx_adsblur_always.desc"] = "Samma som ovan, men ur siktet också, vilket gör att vapnet alltid verkar ur fokus."
 
 ////////// Effects
 L["settings.tabname.effects"] = "Effekter"
@@ -753,11 +759,11 @@ L["settings.tabname.optics.desc"] = "Justera inställningar relaterade till sikt
 L["settings.gameplay.toggleads.title"] = "Växla Sikte"
 L["settings.gameplay.toggleads.desc"] = "Trycker du på sikteknappen så växlar det på/av siktet."
 
-L["settings.gameplay.cheapscopes.title"] = "Billiga Sikten"
-L["settings.gameplay.cheapscopes.desc"] = "Billig RT-sikte genomförande som zoomar in hela din vy när du siktar istället för att framställa världen genom siktet.\n\nKan förbättra prestanda beroende på kartans storlek.\n\nEj kompatibel med \"Framställ Vapen Genom RT\"."
+L["settings.gameplay.cheapscopes.title"] = "Prestandavänliga RT-sikten"
+L["settings.gameplay.cheapscopes.desc"] = "Prestandavänliga RT-sikten genomförande som zoomar in hela din vy när du siktar istället för att framställa världen genom siktet.\n\nKan förbättra prestanda beroende på kartans storlek.\n\nEj kompatibel med \"Framställ Vapen Genom RT\"."
 
 L["settings.gameplay.fx_rtvm.title"] = "Framställ Vapen Genom RT"
-L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nFramställer vapnet, och dess tillbehör, genom RT-sikten.\n\nPåverkar starkt prestandan.\n\nEj kompatibel med \"Billiga Sikten\"."
+L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nFramställer vapnet, och dess tillbehör, genom RT-sikten.\n\nPåverkar starkt prestandan.\n\nEj kompatibel med \"Prestandavänliga RT-sikten\"."
 
 L["settings.gameplay.compensate_sens.title"] = "Dynamisk Känslighet i Siktet"
 L["settings.gameplay.compensate_sens.desc"] = "Justerar dynamiskt känsligheten i siktet beroende på vapnets zoom och magnifiering."
@@ -779,6 +785,9 @@ L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Sikten kommer visa en förhandsv
 
 L["settings.gameplay.fx_rt_shader.title"] = "Snygg shader i RT-sikten"
 L["settings.gameplay.fx_rt_shader.desc"] = "Skapar en häftig kromatisk aberration, distorsion i linsen, och komplexa parallaxeffekter inne i RT-sikten.\n\nIngen aning om detta påverkar prestandan, då det är en GPU-shader.\n\nBaserad på shadertoy.com/view/WX2cRd av science6uru2."
+
+L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA i RT-sikten"
+L["settings.gameplay.fx_rt_fxaa.desc"] = "En simpel \"Fast approximate anti-aliasing\" (FXAA) shader, vilket gör vyn genom sikten mjukare, då Source-motorns MSAA inte fungerar på \"render target\"-vyn.\n\nSkapad av Evgeny Akabenko, används med tillåtelse."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"

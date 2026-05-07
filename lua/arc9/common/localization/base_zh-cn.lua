@@ -1,7 +1,7 @@
 L = {}
 
 /////////////////////////////////////// Font
-////////////////////// See "font_zh-cn" file
+////////////////////// See "font_en" file
 
 /////////////////////////////////////// General
 ////////////////////// Translation
@@ -619,7 +619,10 @@ L["settings.tpik_others.title"] = "其他玩家的 TPIK"
 L["settings.tpik_others.desc"] = "在其他玩家上也启用 TPIK 系统。\n\n这个参数会影响性能。"
 
 L["settings.tpik_framerate.title"] = "TPIK 帧率"
-L["settings.tpik_framerate.desc"] = "限制 TPIK 动画的关键帧频率。\n\n设为 0 则没有上限。\n\n高帧率或无限帧率会影响性能。"
+-- L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK calculations runs at anybody else on server.\n\nHigher values impact performance."
+
+-- L["settings.tpik_framerate_local.title"] = "Local player TPIK Frame Rate"
+-- L["settings.tpik_framerate_local.desc"] = "At which frame rate the TPIK calculations runs at for you specifically.\n\nHigher values impact performance."
 
 ////////// Blur
 L["settings.tabname.blur"] = "模糊效果"
@@ -640,8 +643,11 @@ L["settings.blur.fx_inspectblur.desc"] = "检现武器时模糊背景."
 L["settings.blur.fx_rtblur.title"] = "使用准镜时模糊"
 L["settings.blur.fx_rtblur.desc"] = "有倍率的准镜会模糊准镜外的视野。"
 
-L["settings.blur.fx_adsblur.title"] = "瞄准时模糊"
-L["settings.blur.fx_adsblur.desc"] = "瞄准时在背景应用模糊效果.\n\n并非所有武器都支持此功能."
+-- L["settings.blur.fx_adsblur.title"] = "Weapon DoF effect when aiming"
+-- L["settings.blur.fx_adsblur.desc"] = "Applies a Depth of Field effect on top of viewmodel, blurring rear sights and scopes.\n\nUses Poisson disk blur from github.com/spite/Wagner, as well as luluco250's LightDoF shader."
+
+-- L["settings.blur.fx_adsblur_always.title"] = "Weapon DoF always"
+-- L["settings.blur.fx_adsblur_always.desc"] = "Same as option above, but outside of ADS too, making back of weapon look like its out of focus."
 
 ////////// Effects
 L["settings.tabname.effects"] = "效果"
@@ -756,7 +762,7 @@ L["settings.tabname.optics.desc"] = "调整与瞄具及其功能相关的设置.
 L["settings.gameplay.toggleads.title"] = "切换 ADS"
 L["settings.gameplay.toggleads.desc"] = "按下瞄准按键可切换瞄准."
 
-L["settings.gameplay.cheapscopes.title"] = "高性能准镜"
+-- L["settings.gameplay.cheapscopes.title"] = "Performance RT Scopes"
 L["settings.gameplay.cheapscopes.desc"] = "通过放大玩家视角来进行瞄具渲染，\n而不是渲染两次。\n在较大的地图上会显著提升性能.\n\n可根据地图大小提高性能.\n\n不兼容 \"通过 RT 渲染武器\"."
 
 L["settings.gameplay.fx_rtvm.title"] = "通过 RT 渲染武器"
@@ -778,10 +784,13 @@ L["settings.gameplay.color.scope.title"] = "瞄准镜视网膜颜色"
 L["settings.gameplay.color.scope.desc"] = "RT瞄准镜上使用的视网膜应是什么颜色.\n\n并非所有瞄具都支持此功能."
 
 -- L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Render RT Scope Preview"
--- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS (gimmick).\n\nDoesn't affect performance much, uses Cheap Scopes internally."
+-- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS.\n\nDoesn't affect performance much, uses Cheap Scopes internally."
 
 -- L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
 -- L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
+
+-- L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
+-- L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on Render Target views.\n\nPorted by Evgeny Akabenko, used with permission."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "游戏性"

@@ -383,23 +383,23 @@ L["incompatible.never.confirm"] = "You hawe chowwen to newew showww INCOwOMPATIB
 -- L["badconf.x64.title"] = "► Slow 32-Bit branch Detected"
 -- L["badconf.x64.desc"] = [[You are currently running Garry's Mod in 32-bit. This restricts the amount of performance you can obtain drastically.
 
--- Solution: In Garry's Mod's launch options, go to "Betas" and change to "x86-64 - Chromium + 64-bit binaries".
+Solution: In Garry's Mod's launch options, go to "Betas" and change to "x86-64 - Chromium + 64-bit binaries".
 
--- Google "gmod x64" to find a tutorial online.]]
+Google "gmod x64" to find a tutorial online.]]
 
 -- L["badconf.multicore.title"] = "► No Multicore Rendering commands"
 -- L["badconf.multicore.desc"] = [[Certain multicore rendering settings are currently disabled. This results in worsened in-game performance.
 
--- Solution: You need to put certain commands into autoexec.cfg
+Solution: You need to put certain commands into autoexec.cfg
 
--- Google "gmod multicore" to find a tutorial online.
+Google "gmod multicore" to find a tutorial online.
 
--- All commands that can increase performance:
--- gmod_mcore_test 1
--- mat_queue_mode 2
--- cl_threaded_bone_setup 1
--- r_threaded_client_shadow_manager 1
--- r_threaded_renderables 1]]
+All commands that can increase performance:
+gmod_mcore_test 1
+mat_queue_mode 2
+cl_threaded_bone_setup 1
+r_threaded_client_shadow_manager 1
+r_threaded_renderables 1]]
 
 ////////////////////// Presets
 L["customize.presets.atts"] = " awatachmenws >w<"
@@ -479,12 +479,12 @@ L["atts.filter"] = "Filtew"
 -- L["spawnmenu.supermod.selectval"] = "Write a numerical value, or \"true\" / \"false\""
 -- L["spawnmenu.supermod.result"] = "Result appears here"
 -- L["spawnmenu.supermod.examples"] = [[
--- Examples:
--- ∟ "Overheat" "true" to disable overheating
--- ∟ "BottomlessClip" "true" to enable Bottomless Clip
--- ∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
--- ∟ "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
--- ]]
+Examples:
+∟ "Overheat" "true" to disable overheating
+∟ "BottomlessClip" "true" to enable Bottomless Clip
+∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
+∟ "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
+]]
 
 /////////////////////////////////////// Settings menu
 ////////////////////// Universal
@@ -607,7 +607,7 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 
 ////////// TPIK
 -- L["settings.tabname.tpik"] = "TPIK - Third Person Inverse Kinematics"
--- L["settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions."
+-- L["settings.tabname.tpik.desc"] = "\"Third Person Inverse Kinematics\" is a system that allows most weapons to be displayed in third person using their first person animations and positions.\n\nOriginal code by AWholeCream, improved by uzelezz123, optimizations & smoothing by Onge.org."
 
 -- L["settings.tpik.title"] = "Enable TPIK"
 -- L["settings.tpik.desc"] = "Enables TPIK (Third Person Inverse Kinematics).\n\nImpacts performance."
@@ -615,8 +615,11 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.tpik_others.title"] = "Other Players' TPIK"
 -- L["settings.tpik_others.desc"] = "Show other players' TPIK.\n\nImpacts performance."
 
--- L["settings.tpik_framerate.title"] = "TPIK Frame Rate"
--- L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK runs at.\n\nSet to 0 for unlimited.\n\nUnlimited or higher values impact performance."
+-- L["settings.tpik_framerate.title"] = "Other Players' TPIK Frame Rate"
+-- L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK calculations runs at anybody else on server.\n\nHigher values impact performance."
+
+-- L["settings.tpik_framerate_local.title"] = "Local player TPIK Frame Rate"
+-- L["settings.tpik_framerate_local.desc"] = "At which frame rate the TPIK calculations runs at for you specifically.\n\nHigher values impact performance."
 
 ////////// Blur
 -- L["settings.tabname.blur"] = "Blur"
@@ -637,8 +640,11 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.blur.fx_rtblur.title"] = "Blur world when aiming RT scopes"
 -- L["settings.blur.fx_rtblur.desc"] = "Blurs the background when aiming with any RT scope."
 
--- L["settings.blur.fx_adsblur.title"] = "Blur weapon when aiming"
--- L["settings.blur.fx_adsblur.desc"] = "Applies a blur effect on the bottom of your screen when aiming.\n\nNot all weapons support this."
+-- L["settings.blur.fx_adsblur.title"] = "Weapon DoF effect when aiming"
+-- L["settings.blur.fx_adsblur.desc"] = "Applies a Depth of Field effect on top of viewmodel, blurring rear sights and scopes.\n\nUses Poisson disk blur from github.com/spite/Wagner, as well as luluco250's LightDoF shader."
+
+-- L["settings.blur.fx_adsblur_always.title"] = "Weapon DoF always"
+-- L["settings.blur.fx_adsblur_always.desc"] = "Same as option above, but outside of ADS too, making back of weapon look like its out of focus."
 
 ////////// Effects
 -- L["settings.tabname.effects"] = "Effects"
@@ -753,11 +759,11 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.gameplay.toggleads.title"] = "Toggle ADS"
 -- L["settings.gameplay.toggleads.desc"] = "Pressing your aiming button toggles aiming."
 
--- L["settings.gameplay.cheapscopes.title"] = "Cheap Scopes"
--- L["settings.gameplay.cheapscopes.desc"] = "Cheap RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
+-- L["settings.gameplay.cheapscopes.title"] = "Performance RT Scopes"
+-- L["settings.gameplay.cheapscopes.desc"] = "Performance-friendly RT scope implementation that zooms your whole view when aiming rather than rendering the world through the scope.\n\nCan improve performance depending on map size.\n\nNot compatible with \"Render Weapon Through RT\"."
 
 -- L["settings.gameplay.fx_rtvm.title"] = "Render Weapon Through RT"
--- L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Cheap Scopes\"."
+-- L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTAL !\n\nRenders the weapon, and its attachments, through RT scopes.\n\nGreatly impacts performance.\n\nNot compatible with \"Performance RT Scopes\"."
 
 -- L["settings.gameplay.compensate_sens.title"] = "Dynamic ADS Sensitivity"
 -- L["settings.gameplay.compensate_sens.desc"] = "Dynamically adjusts the aiming sensitivity depending on weapon zoom and magnification."
@@ -775,10 +781,13 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.gameplay.color.scope.desc"] = "Which color the reticle used on RT scopes should be.\n\nNot all optics support this."
 
 -- L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Render RT Scope Preview"
--- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS (gimmick).\n\nDoesn't affect performance much, uses Cheap Scopes internally."
+-- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS.\n\nDoesn't affect performance much, uses Cheap Scopes internally."
 
 -- L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
 -- L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
+
+-- L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
+-- L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on Render Target views.\n\nPorted by Evgeny Akabenko, used with permission."
 
 ////////////////////// Gameplay
 -- L["settings.tabname.gameplay"] = "Gameplay"
@@ -1141,3 +1150,93 @@ L["settings.convar_client"] = "Cwient wawiabwe"
 -- L["settings.server.printconsole.dev_getjson.desc"] = "Prints a JSON entry for the weapon."
 
 -- L["settings.server.printconsole"] = "PRINT"
+
+////////////////////// ARC9 Premium
+-- L["premium.title"] = "ARC9 Premium"
+-- L["premium.desc"] = "ARC9 Premium allows additional customization as a major thanks for supporting the addon financially."
+
+-- L["premium.requires"] = "Requires <color=255,106,0>ARC9 Premium</color>."
+-- L["premium.acquire"] = "Subscribe to <color=255,106,0>ARC9 Premium</color>"
+
+-- L["premium.ownedno"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Not owned</color>"
+-- L["premium.owned"] = "<color=255,106,0>ARC9 Premium</color>: <color=255,100,100>Owned</color>"
+
+-- L["premium.help"] = "What is ARC9 Premium?"
+-- L["premium.help.header"] = "Guide to ARC9 Premium"
+-- L["premium.help.desc"] = "Creating addons takes time and resources. ARC9 has always been available for free, and it will remain that way. However, if you wish to support the base financially, you may do so, and get rewarded for it!"
+
+-- L["premium.help.ownedbutnoaccess"] = "Have you recently purchased ARC9 Premium, but do not have automatic access to it? Contact us on the Doves International Discord Server for assistance.\nEnsure you can provide proof of purchase before contacting. Simply saying \"I buy, now give\" is not good enough."
+
+-- L["premium.content"] = "Included in <color=255,106,0>ARC9 Premium</color>:"
+-- L["premium.content.list"] = [[
+- Unlimited Customization Slots (Increased from 32)
+- Unlimited Preset Slots (Increased from 10 per weapon)
+- Access to Supermodifier settings*
+- Access to an exclusive RGB UI mode
+- Exclusive camos made available through the base
+- Exclusive support channel on Discord**
+- New, improved and exclusive Spawnmenu design**
+- Improved TPIK performance and appearance**
+
+*Requires administrator if on a server
+**Not available with the <color=255,106,0>Free Trial</color>
+]]
+
+-- L["premium.purchased"] = "<color=255,106,0>ARC9 Premium</color> Purchased!"
+-- L["premium.purchased.desc"] = [[
+Thank you for purchasing ARC9 Premium! You made the bird a very happy one!
+
+A receipt will be sent to your connected Email.
+
+If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
+
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Doves International Discord server and provide valid proof of purchase, and we will have it fixed for you.
+]]
+
+-- L["premium.freetrial"] = "You've been gifted <color=255,106,0>ARC9 Premium (Free Trial)</color>!"
+-- L["premium.freetrial.desc"] = [[
+Thank you for supporting ARC9! You've made the bird a very happy bird!
+
+As a token of our appreciation, you've been gifted ARC9 Premium for <color=255,106,0>3 Days</color>!
+
+If you have not immediately acquired access to the ARC9 Premium bonuses, please rejoin the server, or restart your game.
+
+If you are still having problems with it, or if you still have not been granted Premium, then do visit the Doves International Discord server and provide valid proof of purchase, and we will have it fixed for you.
+]]
+
+-- L["premium.payment.info"] = [[
+Purchasing ARC9 Premium grants immediate access to all the contents listed previously for the time purchased.
+Time can be extended by purchasing any of the options once more, and the time will refresh automatically once the original time has expired.
+Once the time has passed, and no additional payment has been made, access to ARC9 Premium will be removed.
+
+All customization options, including attachment slots, presets and coloured reticles made with ARC9 Premium will remain available, but you will not alter them or add any additional ones.
+]]
+
+-- L["premium.payment.free.title"] = "ARC9 Premium (Free Trial)"
+-- L["premium.payment.free.desc"] = [[
+Price: <color=100,255,100>FREE</color>
+
+Acquire ARC9 Premium for <color=255,106,0>3 Days</color>.
+]]
+
+-- L["premium.payment.month.title"] = "ARC9 Premium (1 Month)"
+-- L["premium.payment.month.desc"] = [[
+Price: <color=100,255,100>$5</color>
+
+Acquire ARC9 Premium for <color=255,106,0>1 Month</color>.
+]]
+
+-- L["premium.payment.6mon.title"] = "ARC9 Premium (3 Months)"
+-- L["premium.payment.6mon.desc"] = [[
+Price: <color=100,255,100>$15</color>
+
+Acquire ARC9 Premium for <color=255,106,0>3 Months</color>.
+]]
+
+-- L["premium.payment.6mon.title"] = "ARC9 Premium (6 + 1 Months)"
+-- L["premium.payment.6mon.desc"] = [[
+Price: <color=100,255,100>$30</color> [ HOT! ]
+
+Acquire ARC9 Premium for <color=255,106,0>6 Months</color>.
+Includes <color=100,255,100>one free month</color>!
+]]

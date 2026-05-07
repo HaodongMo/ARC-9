@@ -615,8 +615,11 @@ L["settings.tpik.desc"] = "Aktiviert TPIK (Third Person Inverse Kinematics).\n\n
 L["settings.tpik_others.title"] = "TPIK anderer Spieler"
 L["settings.tpik_others.desc"] = "Zeige TPIK anderer Spieler.\n\nBeeinflusst Performance."
 
-L["settings.tpik_framerate.title"] = "TPIK Framerate"
-L["settings.tpik_framerate.desc"] = "Bei welcher Framerate das TPIK läuft.\n\nAuf 0 setzen für unlimitiert.\n\nOhne Limitierung oder bei höheren Werten wird die Performance beeinträchtigt."
+L["settings.tpik_framerate.title"] = "TPIK Framerate anderer Spieler"
+-- L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK calculations runs at anybody else on server.\n\nHigher values impact performance."
+
+-- L["settings.tpik_framerate_local.title"] = "Local player TPIK Frame Rate"
+-- L["settings.tpik_framerate_local.desc"] = "At which frame rate the TPIK calculations runs at for you specifically.\n\nHigher values impact performance."
 
 ////////// Blur
 L["settings.tabname.blur"] = "Unschärfe"
@@ -637,8 +640,11 @@ L["settings.blur.fx_inspectblur.desc"] = "Verschwimmen des Hintergrunds, währen
 L["settings.blur.fx_rtblur.title"] = "Welt verschwimmen, beim Zielen durch RT-Scopes."
 L["settings.blur.fx_rtblur.desc"] = "Verschwimmt den Hintergrund, wenn durch jedes RT-Scope gezielt wird."
 
-L["settings.blur.fx_adsblur.title"] = "Waffe beim Zielen verschwimmen"
-L["settings.blur.fx_adsblur.desc"] = "Wendet beim Zielen einen Unschärfe-Effekt auf den unteren Bildrand an.\n\nWird nicht von allen Waffen unterstützt."
+-- L["settings.blur.fx_adsblur.title"] = "Weapon DoF effect when aiming"
+-- L["settings.blur.fx_adsblur.desc"] = "Applies a Depth of Field effect on top of viewmodel, blurring rear sights and scopes.\n\nUses Poisson disk blur from github.com/spite/Wagner, as well as luluco250's LightDoF shader."
+
+-- L["settings.blur.fx_adsblur_always.title"] = "Weapon DoF always"
+-- L["settings.blur.fx_adsblur_always.desc"] = "Same as option above, but outside of ADS too, making back of weapon look like its out of focus."
 
 ////////// Effects
 L["settings.tabname.effects"] = "Effekte"
@@ -753,11 +759,11 @@ L["settings.tabname.optics.desc"] = "Passe Einstellungen bezüglich Optiken und 
 L["settings.gameplay.toggleads.title"] = "ADS umschalten"
 L["settings.gameplay.toggleads.desc"] = "Drücken des Zielen-Knopfes schaltet das Zielen um."
 
-L["settings.gameplay.cheapscopes.title"] = "Günstige Scopes"
+-- L["settings.gameplay.cheapscopes.title"] = "Performance RT Scopes"
 L["settings.gameplay.cheapscopes.desc"] = "Günstige RT-Scope-Implementierung, deren Zoom auf die gesamte Ansicht angewandt wird, statt die Welt durch das Scope zu rendern.\n\nKann, je nach Map-Größe, die Performance verbessern.\n\nNicht kompatibel mit \"Rendere Waffe durch RT\"."
 
 L["settings.gameplay.fx_rtvm.title"] = "Waffe durch RT rendern"
-L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTELL !\n\nRendert die Waffe (und ihr Zubehör) durch RT-Scopes.\n\nBeeinträchtigt Performance erheblich.\n\nNicht kompatibel mit \"Günstige Scopes\"."
+L["settings.gameplay.fx_rtvm.desc"] = "! EXPERIMENTELL !\n\nRendert die Waffe (und ihr Zubehör) durch RT-Scopes.\n\nBeeinträchtigt Performance erheblich.\n\nNicht kompatibel mit \"Performance RT Scopes\"."
 
 L["settings.gameplay.compensate_sens.title"] = "Dynamische ADS-Empfindlichkeit"
 L["settings.gameplay.compensate_sens.desc"] = "Passt die Ziel-Empfindlichkeit dynamisch an, je nach Waffen-Zoom und -Vergrößerung."
@@ -775,10 +781,13 @@ L["settings.gameplay.color.scope.title"] = "Zielfernrohr-Fadenkreuz-Farbe"
 L["settings.gameplay.color.scope.desc"] = "Bestimmt Farbe des Fadenkreuzes, das von RT-Scopes benutzt werden soll.\n\nWird nicht von allen Optiken unterstützt."
 
 -- L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Render RT Scope Preview"
--- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS (gimmick).\n\nDoesn't affect performance much, uses Cheap Scopes internally."
+-- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS.\n\nDoesn't affect performance much, uses Cheap Scopes internally."
 
 -- L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
 -- L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
+
+-- L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
+-- L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on Render Target views.\n\nPorted by Evgeny Akabenko, used with permission."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"
