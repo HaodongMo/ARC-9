@@ -1,63 +1,49 @@
 local v0 = Vector(0, 0, 0)
 local v1 = Vector(1, 1, 1)
 
+local swepGetProcessedValue = SWEP.GetProcessedValue
+
 function SWEP:DoBodygroups(wm, cm)
-    if cm then wm = true end
+    wm = wm or cm
     local owner = self:GetOwner()
-    
-    local isnpc = owner:IsNPC() or self:ShouldLOD() > 0
+    local validowner = IsValid(owner)
+    local isnpc = (validowner and owner:IsNPC()) or self:ShouldLOD() > 0
 
-    if !wm and !IsValid(owner) then return end
+    if !wm and !validowner then return end
 
-    local dbg = self.DefaultBodygroups
-
-    local mdl
-
-    if wm then
-        mdl = self:GetWM()
-        if cm then
-            mdl = self.CModel[1]
-        end
-    else
-        mdl = self:GetVM()
-    end
+    local mdl = wm and self:GetWM() or self:GetVM()
+    if cm then mdl = self.CModel[1] end
 
     if !IsValid(mdl) then return end
 
     mdl:SetSkin(self.DefaultSkin)
-    mdl:SetBodyGroups(dbg or "")
+    mdl:SetBodyGroups(self.DefaultBodygroups or "")
 
-    local eles = self:GetAttachmentElements()
-
-    for _, ele in ipairs(eles) do
+    for _, ele in ipairs(self:GetAttachmentElements()) do
         for _, j in pairs(ele.Bodygroups or {}) do
             if !istable(j) then continue end
-            if !isnumber(j[1]) then continue end -- print("arc9: something gone horribly wrong in bodygroup code!")
-            mdl:SetBodygroup(j[1] or 0, j[2] or 0)
+
+            local id = j[1]
+            if !isnumber(id) then continue end
+
+            mdl:SetBodygroup(id, j[2] or 0)
         end
 
-        if ele.Skin then
-            mdl:SetSkin(ele.Skin)
-        end
+        if ele.Skin then mdl:SetSkin(ele.Skin)  end
     end
 
     if !isnpc then
         for i = 0, mdl:GetBoneCount() do
             mdl:ManipulateBoneScale(i, v1)
         end
-
+        
+        local swepDt = self.dt
+        local amt = swepDt.Reloading and swepDt.LoadedRounds or self:Clip1()
         local bbg = self.BulletBodygroups
 
         if bbg then
-            local amt = self:Clip1()
-
-            if self:GetReloading() then
-                amt = self:GetLoadedRounds()
-            end
-
-            for c, bgs in ipairs(bbg or {}) do
-                if !isnumber(c) then continue end
-                if amt < c then
+            for c, bgs in ipairs(bbg) do
+                if amt < c and istable(bgs) then
                     mdl:SetBodygroup(bgs[1], bgs[2])
                     break
                 end
@@ -65,120 +51,101 @@ function SWEP:DoBodygroups(wm, cm)
         end
 
         local stbg = self.SoundTableBodygroups
-        if stbg and !isnpc then
+        if stbg then
             for i, k in pairs(stbg) do
                 mdl:SetBodygroup(i, k)
             end
         end
 
         if CLIENT then
+            local poseParams = self.SoundTablePoseParams
             for i = 0, mdl:GetNumPoseParameters() - 1 do
                 mdl:SetPoseParameter(i, 0)
-                local ii = mdl:GetPoseParameterName(i)
+                local name = mdl:GetPoseParameterName(i)
 
-                if self.SoundTablePoseParams[ii] then
-                    mdl:SetPoseParameter(i, self.SoundTablePoseParams[ii])
+                if poseParams and poseParams[name] then
+                    mdl:SetPoseParameter(i, poseParams[name])
                 end
             end
         end
 
         local hidebones = self:GetHiddenBones(wm)
 
-        for bone, a in pairs(hidebones or {}) do
-            if !a then continue end
+        for bone, enabled in pairs(hidebones or {}) do
+            if !enabled then continue end
+
             local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
-
-            if !boneid then continue end
-
-            mdl:ManipulateBoneScale(boneid, v0)
+            if boneid then mdl:ManipulateBoneScale(boneid, v0) end
         end
 
-        local bulletbones = self:GetProcessedValue("BulletBones", true)
+
+        local bulletbones = swepGetProcessedValue(self, "BulletBones", true)
 
         if bulletbones then
-            for i, bone in ipairs(bulletbones or {}) do
-                local bones = bone
-                if !istable(bones) then
-                    bones = {bone}
-                end
+            local loaded = swepGetProcessedValue(self, "BottomlessClip", true) and self:Ammo1() or swepDt.LoadedRounds - (self.BulletBonesSub1 and 1 or 0)
 
-                local loaded = self:GetLoadedRounds() - (self.BulletBonesSub1 and 1 or 0)
-                if self:GetProcessedValue("BottomlessClip", true) then loaded = self:Ammo1() end
-
-                for _, bone2 in ipairs(bones) do
-                    local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
-
-                    if !boneid then continue end
-
-                    if i > loaded and !clear then
-                        mdl:ManipulateBoneScale(boneid, v0)
+            for i, bone in ipairs(bulletbones) do
+                local bones = istable(bone) and bone or {bone}
+                if i > loaded then
+                    for _, bone2 in ipairs(bones) do
+                        local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
+                        if boneid then
+                            mdl:ManipulateBoneScale(boneid, v0)
+                        end
                     end
                 end
             end
         end
 
-        local stripperbones = self:GetProcessedValue("StripperClipBones", true)
+
+        local stripperbones = swepGetProcessedValue(self, "StripperClipBones", true)
+
         if stripperbones then
-            for i, bone in ipairs(stripperbones or {}) do
-                local bones = bone
-                if !istable(bones) then
-                    bones = {bone}
-                end
-
-                for _, bone2 in ipairs(bones) do
-                    local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
-
-                    if !boneid then continue end
-
-                    if i > self:GetLoadingIntoClip() and !clear then
-                        mdl:ManipulateBoneScale(boneid, v0)
+            local loadingIntoClip = self:GetLoadingIntoClip()
+            for i, bone in ipairs(stripperbones) do
+                local bones = istable(bone) and bone or {bone}
+                if i > loadingIntoClip then
+                    for _, bone2 in ipairs(bones) do
+                        local boneid = isnumber(bone2) and bone2 or mdl:LookupBone(bone2)
+                        if boneid then
+                            mdl:ManipulateBoneScale(boneid, v0)
+                        end
                     end
                 end
             end
         end
-    else -- only hidebones for npcs for not having flying mags
+    else
         local hidebones = self:GetHiddenBones(wm)
 
-        for bone, a in pairs(hidebones or {}) do
-            if !a then continue end
+        for bone, enabled in pairs(hidebones or {}) do
+            if !enabled then continue end
+
             local boneid = isnumber(bone) and bone or mdl:LookupBone(bone)
-
-            if !boneid then continue end
-
-            mdl:ManipulateBoneScale(boneid, v0)
+            if boneid then mdl:ManipulateBoneScale(boneid, v0) end
         end
     end
 
-    mdl.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", true)
-    mdl.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", true)
-    mdl.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", true)
-
-    -- PrintTable(mdl:GetMaterials())
+    mdl.CustomCamoTexture = swepGetProcessedValue(self, "CustomCamoTexture", true)
+    mdl.CustomCamoScale = swepGetProcessedValue(self, "CustomCamoScale", true)
+    mdl.CustomBlendFactor = swepGetProcessedValue(self, "CustomBlendFactor", true)
 
     self:RunHook("Hook_ModifyBodygroups", {model = mdl, elements = self:GetElements()})
 
-    if CLIENT and !isnpc then
-        local pptables = self:GetReloadPoseParameterTable(wm)
-
-        for pp, ppv in pairs(pptables or {}) do
+    if CLIENT and not isnpc then
+        for pp, ppv in pairs(self:GetReloadPoseParameterTable(wm)) do
             if !pp then continue end
-
             mdl:SetPoseParameter(pp, ppv)
         end
     end
 end
 
 function SWEP:GetReloadPoseParameterTable(wm)
-    local hide = true
-
-    local pptables = self:GetProcessedValue("ReloadPoseParameterTables", true)
-
+    local pptables = swepGetProcessedValue(self, "ReloadPoseParameterTables", true)
+    local index = self:GetPoseParameterIndex()
     local pps = {}
 
-    local index = self:GetPoseParameterIndex()
-
-    if index != 0 then
-        for pp, ppv in pairs(pptables[index] or {}) do
+    if index ~= 0 then
+        for pp, ppv in pairs(pptables and pptables[index] or {}) do
             pps[pp] = ppv
         end
     end
@@ -187,22 +154,10 @@ function SWEP:GetReloadPoseParameterTable(wm)
 end
 
 function SWEP:GetHiddenBones(wm)
-    local hide = false
-    -- optimize this later pls
-    
-    if self.CustomizeDelta > 0 then
-        hide = true
-    end
-
-    local hidefp = self:GetProcessedValue("ReloadHideBonesFirstPerson", true)
-
-    if wm or hidefp then
-        hide = true
-    end
-
-    local hidebones = self:GetProcessedValue("HideBones", true)
-    local reloadhidebones = self:GetProcessedValue("ReloadHideBoneTables", true)
-
+    local hidefp = swepGetProcessedValue(self, "ReloadHideBonesFirstPerson", true)
+    local hide = self.CustomizeDelta > 0 or wm or hidefp
+    local hidebones = swepGetProcessedValue(self, "HideBones", true)
+    local reloadhidebones = swepGetProcessedValue(self, "ReloadHideBoneTables", true)
     local bones = {}
 
     if self:GetReloading() then
@@ -210,23 +165,17 @@ function SWEP:GetHiddenBones(wm)
     end
 
     local index = self:GetHideBoneIndex()
-
-    -- if hidefp or (self:GetAnimLockTime() >= CurTime() and reloadhidebones and self:ShouldTPIK() and wm) and index != 0 then
-    if (hidefp and !wm) or (reloadhidebones and self:ShouldTPIK() and wm) and index != 0 then
+    if index ~= 0 and ((hidefp and not wm) or (reloadhidebones and self:ShouldTPIK() and wm)) then
         for _, bone in ipairs(reloadhidebones[index] or {}) do
             bones[bone] = true
         end
-    else
-        if hidebones and hide then
-            for _, bone in ipairs(hidebones) do
-                bones[bone] = true
-            end
+    elseif hidebones and hide then
+        for _, bone in ipairs(hidebones) do
+            bones[bone] = true
         end
     end
 
-    bones = self:RunHook("Hook_HideBones", bones) or bones
-
-    return bones
+    return self:RunHook("Hook_HideBones", bones) or bones
 end
 
 -- function SWEP:GetElements()
