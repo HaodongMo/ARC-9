@@ -479,12 +479,12 @@ L["atts.filter"] = "Filtrar"
 -- L["spawnmenu.supermod.selectval"] = "Write a numerical value, or \"true\" / \"false\""
 -- L["spawnmenu.supermod.result"] = "Result appears here"
 -- L["spawnmenu.supermod.examples"] = [[
-Examples:
-∟ "Overheat" "true" to disable overheating
-∟ "BottomlessClip" "true" to enable Bottomless Clip
-∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
-∟ "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
-]]
+-- Examples:
+-- ∟ "Overheat" "true" to disable overheating
+-- ∟ "BottomlessClip" "true" to enable Bottomless Clip
+-- ∟ "RecoilMultCrouch" "0.1" to reduce recoil to 10% when crouching
+-- ∟ "RPMMultOddShot" "0.5" to make every other shot shoot at half RPM
+-- ]]
 
 /////////////////////////////////////// Settings menu
 ////////////////////// Universal
@@ -1226,8 +1226,8 @@ Precio: <color=100,255,100>€5</color>
 Consigue ARC9 Premium por <color=255,106,0>1 mes</color>.
 ]]
 
-L["premium.payment.6mon.title"] = "ARC9 Premium (3 meses)"
-L["premium.payment.6mon.desc"] = [[
+L["premium.payment.3mon.title"] = "ARC9 Premium (3 meses)"
+L["premium.payment.3mon.desc"] = [[
 Precio: <color=100,255,100>€15</color>
 
 Consigue ARC9 Premium por <color=255,106,0>3 meses</color>.

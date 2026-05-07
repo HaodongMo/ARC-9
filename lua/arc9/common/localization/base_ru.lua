@@ -1224,8 +1224,8 @@ L["premium.payment.month.desc"] = [[
 Приобретите ARC9 Premium на <color=255,106,0>1 месяц</color>.
 ]]
 
-L["premium.payment.6mon.title"] = "ARC9 Premium (3 месяца)"
-L["premium.payment.6mon.desc"] = [[
+L["premium.payment.3mon.title"] = "ARC9 Premium (3 месяца)"
+L["premium.payment.3mon.desc"] = [[
 Цена: <color=100,255,100>1,300₽</color>
 
 Приобретите ARC9 Premium на <color=255,106,0>3 месяца</color>.

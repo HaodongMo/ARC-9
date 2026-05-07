@@ -1229,8 +1229,8 @@ L["premium.payment.month.desc"] = [[
 获得 ARC9 高级版 <color=255,106,0>1 个月</color>。
 ]]
 
-L["premium.payment.6mon.title"] = "ARC9 高级版（3 个月）"
-L["premium.payment.6mon.desc"] = [[
+L["premium.payment.3mon.title"] = "ARC9 高级版（3 个月）"
+L["premium.payment.3mon.desc"] = [[
 價格：<color=100,255,100>110 RMB</color>
 
 获得 ARC9 高级版 <color=255,106,0>3 个月</color>。

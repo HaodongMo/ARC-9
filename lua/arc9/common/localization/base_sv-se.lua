@@ -1226,8 +1226,8 @@ Kostnad: <color=100,255,100>49,99 SEK</color>
 Motta ARC9 Premium i <color=255,106,0>1 Månad</color>.
 ]]
 
-L["premium.payment.6mon.title"] = "ARC9 Premium (3 Månader)"
-L["premium.payment.6mon.desc"] = [[
+L["premium.payment.3mon.title"] = "ARC9 Premium (3 Månader)"
+L["premium.payment.3mon.desc"] = [[
 Kostnad: <color=100,255,100>149,99 SEK</color>
 
 Motta ARC9 Premium i <color=255,106,0>3 Månader</color>.
