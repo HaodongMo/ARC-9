@@ -119,6 +119,8 @@ function SWEP:ClientInitialize()
         end
 
         self:CreateStandardPresets()
+    
+        self:DoFSetParams(0)
     end
 
     -- if LocalPlayer().ARC9_IncompatibilityCheck != true then

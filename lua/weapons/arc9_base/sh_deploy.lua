@@ -119,6 +119,8 @@ function SWEP:ClientDeploy()
         if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
         if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
     end
+    
+    self:DoFSetParams(0)
 
     gui.EnableScreenClicker(false)
 
@@ -331,6 +333,10 @@ function SWEP:DoDeployAnimation()
         end
         self:SetDoAFastDraw(false)
         self:SetReady(true)
+    end
+    
+    if game.SinglePlayer() then
+        self:CallOnClient("ClientDeploy")
     end
 end
 

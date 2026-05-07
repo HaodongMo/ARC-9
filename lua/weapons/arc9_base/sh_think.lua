@@ -1,6 +1,7 @@
 local ENTITY = FindMetaTable("Entity")
 local entityGetOwner = ENTITY.GetOwner
 local entityIsPlayerHolding = ENTITY.IsPlayerHolding
+local entityIsNPC = ENTITY.IsNPC
 
 local PLAYER = FindMetaTable("Player")
 local playerKeyReleased = PLAYER.KeyReleased
@@ -54,8 +55,7 @@ local cvarGetBool = FindMetaTable("ConVar").GetBool
 function SWEP:Think()
     local owner = entityGetOwner(self)
 
-    if not IsValid(owner) then return end
-    if owner:IsNPC() then return end
+    if !IsValid(owner) or entityIsNPC(owner) then return end
 
     local swepDt = self.dt
     local now = CurTime()
