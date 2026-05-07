@@ -118,7 +118,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
         local activesightadress = self:GetActiveSightSlotTable().Address
         local getpos = self:GetPos()
         local ARC9RTScopeRender = ARC9.RTScopeRender
-        local scopecondition = ARC9.PresetCam and !ARC9.RTScopeRender and !ARC9.OverDraw
+        local scopecondition = !ARC9.PresetCam and !ARC9.RTScopeRender and !ARC9.OverDraw
 
         for _, model in ipairs(mdl or {}) do
             if model.IsAnimationProxy then continue end
