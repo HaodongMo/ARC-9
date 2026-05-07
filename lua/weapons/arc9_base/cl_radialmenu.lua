@@ -5,27 +5,27 @@ ARC9.RadialMenuOpen = false
 
 ARC9.NextRadialToggleTime = 0
 
+local input = input
+
 function SWEP:ThinkRadialMenu()
 
     ARC9.RadialMenuOpen = false
 
-    if self:CanToggleAllStatsOnF() > 1 then
-        local impulse100key = input.LookupBinding("impulse 100", true)
+    local impulse100key = input.LookupBinding("impulse 100", true)
 
-        if !impulse100key then return end
+    if !impulse100key then return end
 
-        local impulse100keybutton = input.GetKeyCode(impulse100key)
+    local impulse100keybutton = input.GetKeyCode(impulse100key)
 
-        if input.WasKeyPressed(impulse100keybutton) then
-            startPressFTime = CurTime()
-        elseif input.IsKeyDown(impulse100keybutton) then
-            if CurTime() - startPressFTime >= 0.5 then
-                ARC9.RadialMenuOpen = true
-            end
-        elseif input.WasKeyReleased(impulse100keybutton) then
-            if CurTime() - startPressFTime < 0.5 then
-                ARC9.DeferToggleAtts = true
-            end
+    if input.WasKeyPressed(impulse100keybutton) then
+        startPressFTime = CurTime()
+    elseif input.IsKeyDown(impulse100keybutton) then
+        if CurTime() - startPressFTime >= 0.5 then
+            ARC9.RadialMenuOpen = self:CanToggleAllStatsOnF() > 1
+        end
+    elseif input.WasKeyReleased(impulse100keybutton) then
+        if CurTime() - startPressFTime < 0.5 then
+            ARC9.DeferToggleAtts = self:CanToggleAllStatsOnF() > 1
         end
     end
 

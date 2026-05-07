@@ -93,6 +93,8 @@ function SWEP:LockOnTargetInFOV(ent)
 end
 
 function SWEP:ThinkLockOn()
+    if !self.LockOn then return end
+    
     if !self:GetProcessedValue("LockOn", true) then
         self:SetLockOnTarget(NULL)
         return
@@ -158,6 +160,8 @@ local lockonmat = Material("arc9/lockon.png", "noclamp smooth")
 local arc9_cheapscopes = GetConVar("arc9_cheapscopes")
 
 function SWEP:DrawLockOnHUD(iam3d)
+    if !self.LockOn then return end
+
     if self:IsScoping() and !iam3d then return end
 
     if !self:GetProcessedValue("LockOn", true) then

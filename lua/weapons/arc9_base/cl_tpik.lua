@@ -361,8 +361,9 @@ local function TPIKCopyAng(dst, src)
 end
 
 local function TPIKTweenVec(self, key, target, alpha)
-    if not target then return target end
-    self.TPIKIKTweenCache = self.TPIKIKTweenCache or {}
+    local tweenCache = self.TPIKIKTweenCache or {}
+    self.TPIKIKTweenCache = tweenCache
+    local cache = tweenCache
     local cache = self.TPIKIKTweenCache
     local current = cache[key]
 
@@ -384,17 +385,18 @@ local function TPIKTweenVec(self, key, target, alpha)
     current.y = current.y + (target.y - current.y) * alpha
     current.z = current.z + (target.z - current.z) * alpha
 
-    if TPIKVecAlmostEqual(current, target) then
-        return TPIKCopyVec(current, target)
-    end
+    -- if TPIKVecAlmostEqual(current, target) then
+    --     return TPIKCopyVec(current, target)
+    -- end
 
     return current
 end
 
 local function TPIKTweenAng(self, key, target, alpha)
     if not target then return target end
-    self.TPIKIKTweenCache = self.TPIKIKTweenCache or {}
-    local cache = self.TPIKIKTweenCache
+    local tweenCache = self.TPIKIKTweenCache or {}
+    self.TPIKIKTweenCache = tweenCache
+    local cache = tweenCache
     local current = cache[key]
 
     if not current then
@@ -410,19 +412,13 @@ local function TPIKTweenAng(self, key, target, alpha)
         return TPIKCopyAng(current, target)
     end
 
-    if math.AngleDifference then
-        current.p = current.p + math.AngleDifference(target.p, current.p) * alpha
-        current.y = current.y + math.AngleDifference(target.y, current.y) * alpha
-        current.r = current.r + math.AngleDifference(target.r, current.r) * alpha
-    else
-        current.p = Lerp(alpha, current.p, target.p)
-        current.y = Lerp(alpha, current.y, target.y)
-        current.r = Lerp(alpha, current.r, target.r)
-    end
+    current.p = current.p + math.AngleDifference(target.p, current.p) * alpha
+    current.y = current.y + math.AngleDifference(target.y, current.y) * alpha
+    current.r = current.r + math.AngleDifference(target.r, current.r) * alpha
 
-    if TPIKAngAlmostEqual(current, target) then
-        return TPIKCopyAng(current, target)
-    end
+    -- if TPIKAngAlmostEqual(current, target) then
+    --     return TPIKCopyAng(current, target)
+    -- end
 
     return current
 end

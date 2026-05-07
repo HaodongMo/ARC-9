@@ -26,7 +26,7 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
     end
 end)
 
-local nextrendermeow = 0
+local mat_dof = Material( "effects/arc9/vm_dof" )
 
 hook.Add("RenderScreenspaceEffects", "ARC9_PostDrawViewModels", function()
     local lp = LocalPlayer()
@@ -35,6 +35,10 @@ hook.Add("RenderScreenspaceEffects", "ARC9_PostDrawViewModels", function()
 
     if !wpn.ARC9 then return end
     
+    if mat_dof:GetFloat("$c0_x") > 0.02 then -- thats prob cheaper than checking for all conditions, handled in cl_vm anyway
+        wpn:RenderDoF()
+    end
+
     local atttbl = wpn:IsScoping()
     
     if wpn.RTScope then wpn.RTScopeModel = wpn:GetVM() end

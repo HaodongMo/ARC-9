@@ -134,7 +134,7 @@ function SWEP:AdjustMouseSensitivity()
 
 	local gsa = self:GetSightAmount()
 	
-    local rtmagnif = self:GetRTScopeMagnification()
+    local rtmagnif = gsa > 0.01 and self:GetRTScopeMagnification() or 1
 
     if !self:GetInSights() then 
 	-- if gsa <= 0.01 then -- Active if "Sight amount" is over 1%. Experimental.

@@ -295,15 +295,17 @@ local mat_dof_mask_debug = CreateMaterial("mat_debug_arc9_dof_mask5", "UnlitGene
     ["$additive"] = 1,
 } )
 
-function SWEP:RenderDoF(strength)
-    render.UpdateScreenEffectTexture()
+function SWEP:DoFSetParams(strength)
     mat_dof:SetFloat("$c0_x", 8 * strength)
 
     if !self.DoFDepthSet then 
         mat_dof:SetFloat("$c0_y", self.DoFDepth or 0.07)
         self.DoFDepthSet = true
     end
+end
 
+function SWEP:RenderDoF()
+    render.UpdateScreenEffectTexture()
     render.SetMaterial(mat_dof)
     render.DrawScreenQuad()
 
@@ -435,7 +437,8 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
         if arc9_fx_adsblur_always:GetBool() then sa = 1 * (1 - self.CustomizeDelta) end
 
         if sa > 0.01 and sigt.Blur != false then
-            self:RenderDoF(sa)   
+            self:DoFSetParams(sa)   
+            -- self:RenderDoF()
         end
     end
 end

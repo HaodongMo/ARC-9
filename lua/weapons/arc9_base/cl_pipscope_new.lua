@@ -389,47 +389,64 @@ function SWEP:RenderRTExpensive(atttbl, magnification)
 end
 
 local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
-    local up, right, forward = ang:Up(), ang:Right(), ang:Forward()
-    up, right, forward = up * scale, right * scale, forward * range
+    local up, right, forward = ang:Up() * scale, ang:Right() * scale, ang:Forward() * range
     
-    local v1 = pos + (up / 2) - (right / 2) + forward
-    local v2 = pos + (up / 2) + (right / 2) + forward
-    local v3 = pos - (up / 2) + (right / 2) + forward
-    local v4 = pos - (up / 2) - (right / 2) + forward
-
+    local half_up = up * 0.5
+    local half_right = right * 0.5
+    
     render.SetMaterial(mat)
-    render.DrawQuad(v1, v2, v3, v4, color)
+    render.DrawQuad(
+        pos + half_up - half_right + forward,
+        pos + half_up + half_right + forward,
+        pos - half_up + half_right + forward,
+        pos - half_up - half_right + forward,
+        color
+    )
 
-        -- BLACK BOXXXX
     if !nobox then
-    -- if false  then
         render.SetMaterial(mat_black)
-        -- render.SetMaterial(mat_ahmad)
-        up, right = up * 0.999, right * 0.999 -- less scale to prevent visible pixel gaps
-
-        local v1 = pos + (up * 4) - (right * 8) + forward
-        local v2 = pos + (up * 4) - (right * 0.5) + forward
-        local v3 = pos - (up * 4) - (right * 0.5) + forward
-        local v4 = pos - (up * 4) - (right * 8) + forward
-        render.DrawQuad(v1, v2, v3, v4, color) -- LEFT
-
-        local v1 = pos + (up * 4) + (right * 0.5) + forward
-        local v2 = pos + (up * 4) + (right * 8) + forward
-        local v3 = pos - (up * 4) + (right * 8) + forward
-        local v4 = pos - (up * 4) + (right * 0.5)+ forward
-        render.DrawQuad(v1, v2, v3, v4, color) -- RIGHT
-
-        local v1 = pos + (up * 4) - (right / 2) + forward
-        local v2 = pos + (up * 4) + (right / 2) + forward
-        local v3 = pos + (up / 2) + (right / 2) + forward
-        local v4 = pos + (up / 2) - (right / 2) + forward
-        render.DrawQuad(v1, v2, v3, v4, color) -- TOP
-
-        local v1 = pos - (up / 2) - (right / 2) + forward
-        local v2 = pos - (up / 2) + (right / 2) + forward
-        local v3 = pos - (up * 4) + (right / 2) + forward
-        local v4 = pos - (up * 4) - (right / 2) + forward
-        render.DrawQuad(v1, v2, v3, v4, color) -- BOTTOM
+        
+        local up_scaled = up * 0.999
+        local right_scaled = right * 0.999
+        local up_4 = up_scaled * 4
+        local right_8 = right_scaled * 8
+        local right_half = right_scaled * 0.5
+        
+        -- LEFT
+        render.DrawQuad(
+            pos + up_4 - right_8 + forward,
+            pos + up_4 - right_half + forward,
+            pos - up_4 - right_half + forward,
+            pos - up_4 - right_8 + forward,
+            color
+        )
+        
+        -- RIGHT
+        render.DrawQuad(
+            pos + up_4 + right_half + forward,
+            pos + up_4 + right_8 + forward,
+            pos - up_4 + right_8 + forward,
+            pos - up_4 + right_half + forward,
+            color
+        )
+        
+        -- TOP
+        render.DrawQuad(
+            pos + up_4 - half_right + forward,
+            pos + up_4 + half_right + forward,
+            pos + half_up + half_right + forward,
+            pos + half_up - half_right + forward,
+            color
+        )
+        
+        -- BOTTOM
+        render.DrawQuad(
+            pos - half_up - half_right + forward,
+            pos - half_up + half_right + forward,
+            pos - up_4 + half_right + forward,
+            pos - up_4 - half_right + forward,
+            color
+        )
     end
 end
 
@@ -716,11 +733,11 @@ end
 function SWEP:DoRTScopeEffects()
     local atttbl = ((self:GetSight() or {}).atttbl or {})
 
-    render.UpdateScreenEffectTexture()
 
     if atttbl.RTScopeNoPP then return end
 
     if atttbl.RTScopeCustomPPFunc then
+        render.UpdateScreenEffectTexture()
         atttbl.RTScopeCustomPPFunc(self)
     end
 end
