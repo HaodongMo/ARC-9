@@ -757,7 +757,7 @@ L["settings.tabname.optics"] = "Оптика"
 L["settings.gameplay.toggleads.title"] = "Прицеливание по нажатию"
 L["settings.gameplay.toggleads.desc"] = "Вместо удерживания кнопки прицеливания достаточно нажать один раз."
 
--- L["settings.gameplay.cheapscopes.title"] = "Performance RT Scopes"
+L["settings.gameplay.cheapscopes.title"] = "Производительные прицелы"
 L["settings.gameplay.cheapscopes.desc"] = "Более производельный вариант рендеринга прицелов путём приближения всей камеры, вместо рендеринга второй сцены. Сильно улучшает производительность на больших картах и не только."
 
 L["settings.gameplay.fx_rtvm.title"] = "Отображать оружие в прицелах"
