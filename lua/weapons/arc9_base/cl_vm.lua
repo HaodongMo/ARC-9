@@ -175,7 +175,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 	if !isDepthPass then
     	vm:SetSubMaterial()
 
-    	for ind = 0, 31 do
+    	for ind = 0, #vm:GetMaterials() or 1 do
     	    local val = self:GetProcessedValue("SubMaterial" .. ind, true)
     	    if val then
     	        vm:SetSubMaterial(ind, val)
