@@ -73,7 +73,9 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
             if !isDepthPass and lod == 0 and mdl and mdl[1]:IsValid() then
                 mdl[1]:SetMaterial(swepGetProcessedValue(self, "Material", true))
                 
-                for ind = 0, #mdl[1]:GetMaterials() do
+                if !mdl[1].MaterialAmount then mdl[1].MaterialAmount = table.Count(mdl[1]:GetMaterials() or {}) end
+
+                for ind = 0, mdl[1].MaterialAmount do
                     local val = swepGetProcessedValue(self, "SubMaterial" .. ind, true)
                     if val then
                         mdl[1]:SetSubMaterial(ind, val)

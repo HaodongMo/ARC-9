@@ -174,8 +174,9 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
 	if !isDepthPass then
     	vm:SetSubMaterial()
+        if !vm.MaterialAmount then vm.MaterialAmount = table.Count(vm:GetMaterials() or {}) end
 
-    	for ind = 0, #vm:GetMaterials() or 1 do
+    	for ind = 0, vm.MaterialAmount do
     	    local val = self:GetProcessedValue("SubMaterial" .. ind, true)
     	    if val then
     	        vm:SetSubMaterial(ind, val)
@@ -324,6 +325,40 @@ function SWEP:RenderDoF()
     -- end
 end
 
+local retardedglassnames = {
+    "models/weapons/arc9/mw2/mw2_optics/thermal_lens2",
+    "models/weapons/arc9/mw3/mw3_optics/barrett_scope_glass",
+    "___error",
+}
+
+local function findglassmat(scopemodel)
+    local glassindex
+
+    local mats = {}
+    for k, v in pairs( scopemodel:GetMaterials() or {} ) do -- table.flip
+        mats[ v ] = k
+    end
+    
+    if scopemodel.RTScope_BlurTexture then glassindex = mats[scopemodel.RTScope_BlurTexture]
+    else
+        glassindex = mats["effects/arc9/rtglass"] or mats["effects/arc9/rtglasssquare"] or mats["effects/arc9/rt"]
+
+        if !glassindex then   
+            for _, v in ipairs(retardedglassnames) do
+                glassindex = mats[v]
+                if glassindex then break end
+            end
+        end
+
+        if !glassindex and scopemodel.atttbl and scopemodel.atttbl.RTScopeSubmatIndex then
+            glassindex = scopemodel.atttbl.RTScopeSubmatIndex + 1
+        end
+    end
+
+    scopemodel.RTlassMatIndex = glassindex or 1
+    return glassindex or 1
+end
+
 function SWEP:RenderDoFMask(clear)
     render.PushRenderTarget(rt_dofmask)
         render.Clear(0, 0, 0, 255)
@@ -336,15 +371,8 @@ function SWEP:RenderDoFMask(clear)
     if IsValid(self.RTScope_ForceBlurModel) then scopemodel = self.RTScope_ForceBlurModel end
     if !IsValid(scopemodel) then return end
     
-    local glassindex = 0
+    local glassindex = scopemodel.RTlassMatIndex or findglassmat(scopemodel)
 
-    local mats = {}
-    for k, v in pairs( scopemodel:GetMaterials() or {} ) do -- table.flip
-        mats[ v ] = k
-    end
-    
-    local glassindex = mats["effects/arc9/rtglass"] or mats["effects/arc9/rtglasssquare"] or mats["effects/arc9/rt"] or mats["___error"] or 0
-    if scopemodel.RTScope_BlurTexture then glassindex = mats[scopemodel.RTScope_BlurTexture] or 0 end
     render.PushRenderTarget(rt_dofmask)
         -- render.Clear(0, 0, 0, 255)
         local oldtune = render.GetToneMappingScaleLinear()
