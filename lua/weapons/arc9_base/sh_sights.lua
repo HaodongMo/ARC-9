@@ -290,7 +290,6 @@ do
     local cvarGetBool = FindMetaTable("ConVar").GetBool
 
     function SWEP:ThinkSights()
-        -- if self:GetSafe() then return end
         local swepDt = self.dt
 
         local sighted = swepDt.InSights
@@ -299,9 +298,12 @@ do
         end
 
         local oldamt = swepDt.SightAmount
-        local amt = math.Approach(
-            oldamt, sighted and 1 or 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
+        local amt = 0
 
+        if !(!sighted and oldamt == 0) and !(sighted and oldamt == 1) then
+            amt = math.Approach(oldamt, sighted and 1 or 0, FrameTime() / self:GetProcessedValue("AimDownSightsTime"))
+        elseif sighted and oldamt == 1 then amt = 1 end
+        
         if oldamt ~= amt then
             self:SetSightAmount(amt)
         end
@@ -314,7 +316,7 @@ do
         if toggle then
             if sighted and pratt then
                 swepExitSights(self)
-            elseif not sighted and (inatt and self:GetSprintAmount() > 0 or pratt) then
+            elseif not sighted and (inatt and swepDt.SprintAmount > 0 or pratt) then
                 self:EnterSights()
             end
 

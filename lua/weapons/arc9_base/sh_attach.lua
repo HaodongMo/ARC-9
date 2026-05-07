@@ -1,4 +1,6 @@
 SWEP.CustomizeDelta = 0
+local sp = game.SinglePlayer()
+
 
 function SWEP:Attach(addr, att, silent)
     local slottbl = self:LocateSlotFromAddress(addr)
@@ -187,7 +189,7 @@ function SWEP:PostModify(toggleonly)
         self:ToggleUBGL(false)
     end
 
-    if game.SinglePlayer() and validplayerowner then
+    if sp and validplayerowner then
         self:CallOnClient("RecalculateIKGunMotionOffset")
     end
 
@@ -200,21 +202,32 @@ function SWEP:PostModify(toggleonly)
     end
 end
 
-function SWEP:ThinkCustomize()
-    local owner = self:GetOwner()
+local mathApproach = math.Approach
+local FrameTime = FrameTime
+local IsFirstTimePredicted = IsFirstTimePredicted
+local ENTITY = FindMetaTable("Entity")
+local entityGetOwner = ENTITY.GetOwner
+local PLAYER = FindMetaTable("Player")
+local entityKeyPressed = PLAYER.KeyPressed
+local entityKeyDown = PLAYER.KeyDown
 
-    if owner:KeyPressed(ARC9.IN_CUSTOMIZE) and !owner:KeyDown(IN_USE) and !self:GetGrenadePrimed() then
-        self:ToggleCustomize(!self:GetCustomize())
+function SWEP:ThinkCustomize()
+    local owner = entityGetOwner(self)
+    local swepDt = self.dt
+
+    if entityKeyPressed(owner, ARC9.IN_CUSTOMIZE) and !entityKeyDown(owner, IN_USE) and !swepDt.GrenadePrimed then
+        self:ToggleCustomize(!swepDt.Customize)
     end
 
-    if game.SinglePlayer() or (CLIENT and IsFirstTimePredicted()) then
-        if self:GetCustomize() then
-            if self.CustomizeDelta < 1 then
-                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 1, FrameTime() * 6.666666666666667)
+    if sp or (CLIENT and IsFirstTimePredicted()) then
+        local cd = self.CustomizeDelta
+        if swepDt.Customize then
+            if cd < 1 then
+                self.CustomizeDelta = mathApproach(cd, 1, FrameTime() * 6.666666666666667)
             end
         else
-            if self.CustomizeDelta > 0 then
-                self.CustomizeDelta = math.Approach(self.CustomizeDelta, 0, FrameTime() * 6.666666666666667)
+            if cd > 0 then
+                self.CustomizeDelta = mathApproach(cd, 0, FrameTime() * 6.666666666666667)
             end
         end
     end
