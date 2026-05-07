@@ -4,7 +4,8 @@ local wwWorldToLocal = WorldToLocal
 local llLocalToWorld = LocalToWorld
 
 SWEP.AttPosCache = {}
--- SWEP.BonePosCache = {}
+
+local swepGetProcessedValue = SWEP.GetProcessedValue
 
 function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, customang, dupli)
     dupli = dupli or 0
@@ -85,17 +86,6 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     local selfpos, selfang = self:GetPos(), self:GetAngles()
 
     if parentmdl and bone then
-        -- local bonecached = false 
-
-        -- local possiblebonecache = self.BonePosCache[bone] -- bone cache
-        -- if possiblebonecache then
-        --     if (possiblebonecache[3] or 0) > CurTime() then
-        --         bpos, bang = llLocalToWorld(possiblebonecache[1], possiblebonecache[2], selfpos, selfang)
-        --         bonecached = true
-        --     end
-        -- end
-
-        -- if !bonecached then
             local boneindex = parentmdl:LookupBone(bone)
 
             if !boneindex then return v0, a0, v0 end
@@ -114,10 +104,6 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
                 bang = selfang
                 bpos = selfpos
             end
-
-            -- local xpos, xang = wwWorldToLocal(bpos, bang, selfpos, selfang) -- bone cache
-            -- self.BonePosCache[bone] = {xpos, xang, CurTime() + 1}
-        -- end
     elseif custompos then
         bpos = custompos
         bang = customang or a0
@@ -155,11 +141,11 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     aang = Angle()
     aang:Set(bang)
 
-    apos = bpos + aang:Forward() * offset_pos.x
+    local forward = aang:Forward()
+    local right = aang:Right()
+    local up = aang:Up()
 
-    apos = apos + aang:Right() * offset_pos.y
-
-    apos = apos + aang:Up() * offset_pos.z
+    apos = bpos + forward * offset_pos.x + right * offset_pos.y + up * offset_pos.z
 
     if !nomodeloffset then
         offset_ang = offset_ang + (atttbl.ModelAngleOffset or a0)
@@ -167,13 +153,13 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
 
     aang:Set(bang)
 
-    local forward = aang:Forward()
-    local right = aang:Right()
-    local up = aang:Up()
+    local forward2 = aang:Forward()
+    local right2 = aang:Right()
+    local up2 = aang:Up()
 
-    aang:RotateAroundAxis(forward, offset_ang.r)
-    aang:RotateAroundAxis(right, offset_ang.p)
-    aang:RotateAroundAxis(up, offset_ang.y)
+    aang:RotateAroundAxis(forward2, offset_ang.r)
+    aang:RotateAroundAxis(right2, offset_ang.p)
+    aang:RotateAroundAxis(up2, offset_ang.y)
 
     if !nomodeloffset then
         local moffset = (atttbl.ModelOffset or v0) * (slottbl.Scale or 1)
@@ -181,9 +167,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
             moffset = moffset * (self.WorldModelOffset.Scale or 1)
         end
 
-        apos = apos + aang:Forward() * moffset.x
-        apos = apos + aang:Right() * moffset.y
-        apos = apos + aang:Up() * moffset.z
+        apos = apos + aang:Forward() * moffset.x + aang:Right() * moffset.y + aang:Up() * moffset.z
     end
 
     if idle then
@@ -210,7 +194,7 @@ function SWEP:GetAttachmentPos(slottbl, wm, idle, nomodeloffset, custompos, cust
     return apos, aang, icon_offset
 end
 
-function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
+function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm, dupli, customCamoTexture, customCamoScale, customBlendFactor)
     ignorescale = ignorescale or false
 
     local model = atttbl.Model
@@ -252,9 +236,10 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm)
         csmodel:SetSubMaterial(atttbl.RTScopeSubmatIndex, wm and "vgui/black" or "effects/arc9/rt")
     end
 
-    csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", true)
-    csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", true)
-    csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", true)
+    if !swepGetProcessedValue then swepGetProcessedValue = self.GetProcessedValue end
+    csmodel.CustomCamoTexture = customCamoTexture or swepGetProcessedValue(self, "CustomCamoTexture", true)
+    csmodel.CustomCamoScale = customCamoScale or swepGetProcessedValue(self, "CustomCamoScale", true)
+    csmodel.CustomBlendFactor = customBlendFactor or swepGetProcessedValue(self, "CustomBlendFactor", true)
 
     if atttbl.CharmModel then
         local charmmodel = ClientsideModel(atttbl.CharmModel)
@@ -378,6 +363,11 @@ function SWEP:SetupModel(wm, lod, cm)
     self.RHIK_Priority = -1000
     self.MuzzleDevice_Priority = -1000
     self.MuzzleDeviceUBGL_Priority = -1000
+
+    if !swepGetProcessedValue then swepGetProcessedValue = self.GetProcessedValue end
+    local customCamoTexture = swepGetProcessedValue(self, "CustomCamoTexture", true)
+    local customCamoScale = swepGetProcessedValue(self, "CustomCamoScale", true)
+    local customBlendFactor = swepGetProcessedValue(self, "CustomBlendFactor", true)
 
     local basemodel = nil
 
@@ -534,9 +524,9 @@ function SWEP:SetupModel(wm, lod, cm)
                 Version = self.ModelVersion
             }
 
-            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", true)
-            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", true)
-            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", true)
+            csmodel.CustomCamoTexture = customCamoTexture
+            csmodel.CustomCamoScale = customCamoScale
+            csmodel.CustomBlendFactor = customBlendFactor
 
             table.insert(ARC9.CSModelPile, tbl)
 
@@ -603,10 +593,11 @@ function SWEP:SetupModel(wm, lod, cm)
 
         local dupli = slottbl.DuplicateModels or {}
 
-        local duplicheck = self:GetProcessedValue("Akimbo",true) or self:GetProcessedValue("DuplicateAttachments",true)
+        if !swepGetProcessedValue then swepGetProcessedValue = self.GetProcessedValue end
+        local duplicheck = swepGetProcessedValue(self, "Akimbo",true) or swepGetProcessedValue(self, "DuplicateAttachments",true)
 
         for i = 0, #dupli do
-            local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm, dupli)
+            local csmodel = self:CreateAttachmentModel(wm, atttbl, slottbl, false, cm, dupli, customCamoTexture, customCamoScale, customBlendFactor)
 
             if duplicheck  then
                 csmodel.Duplicate = i
@@ -619,10 +610,6 @@ function SWEP:SetupModel(wm, lod, cm)
             if csmodel.DrawFunc then
                 csmodel.DrawFunc(self, csmodel, wm)
             end
-
-            csmodel.CustomCamoTexture = self:GetProcessedValue("CustomCamoTexture", true)
-            csmodel.CustomCamoScale = self:GetProcessedValue("CustomCamoScale", true)
-            csmodel.CustomBlendFactor = self:GetProcessedValue("CustomBlendFactor", true)
 
             local proxmodel
 
