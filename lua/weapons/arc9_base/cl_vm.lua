@@ -406,7 +406,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
 	
     local inrt = ARC9.RTScopeRender
 
-    self:DrawTranslucentPass()
+    if !isDepthPass then self:DrawTranslucentPass() end
 
 	if !isDepthPass then
     	local newmzpcfs = {}
@@ -464,8 +464,9 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     if activedof then
         if arc9_fx_adsblur_always:GetBool() then sa = 1 * (1 - self.CustomizeDelta) end
 
-        if sa > 0.01 and sigt.Blur != false then
-            self:DoFSetParams(sa)   
+        if sa > 0 then
+            if sigt.Blur == false then sa = 0 end
+            self:DoFSetParams(sa)
             -- self:RenderDoF()
         end
     end
