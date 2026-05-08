@@ -229,7 +229,9 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm, dupli,
     end
 
     if atttbl.ModelMaterial then
-        csmodel:SetMaterial(atttbl.ModelMaterial)
+        -- csmodel:SetMaterial(atttbl.ModelMaterial)
+        csmodel:SetSubMaterial(0, atttbl.ModelMaterial)
+        csmodel:SetSubMaterial(1, atttbl.ModelMaterial)
     end
     
     if atttbl.RTScopeSubmatIndex then
@@ -366,8 +368,12 @@ function SWEP:SetupModel(wm, lod, cm)
 
     if !swepGetProcessedValue then swepGetProcessedValue = self.GetProcessedValue end
     local customCamoTexture = swepGetProcessedValue(self, "CustomCamoTexture", true)
-    local customCamoScale = swepGetProcessedValue(self, "CustomCamoScale", true)
-    local customBlendFactor = swepGetProcessedValue(self, "CustomBlendFactor", true)
+    local customBlendFactor, customCamoScale
+
+    if customCamoTexture then
+        customCamoScale = swepGetProcessedValue(self, "CustomCamoScale", true)
+        customBlendFactor = swepGetProcessedValue(self, "CustomBlendFactor", true)
+    end
 
     local basemodel = nil
 

@@ -35,7 +35,7 @@ hook.Add("RenderScreenspaceEffects", "ARC9_PostDrawViewModels", function()
 
     if !wpn.ARC9 then return end
     
-    if mat_dof:GetFloat("$c0_x") > 0.02 then -- thats prob cheaper than checking for all conditions, handled in cl_vm anyway
+    if mat_dof:GetFloat("$c0_x") > 0.4 then -- thats prob cheaper than checking for all conditions, handled in cl_vm anyway
         wpn:RenderDoF()
     end
 
