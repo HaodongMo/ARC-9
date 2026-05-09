@@ -232,7 +232,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
 
             if self.RTScopeModel == model and !model.RTScopeLength then model.RTScopeLength = getscopebound(self, model) end
 
-            if atttbl.DrawFunc then
+            if atttbl.DrawFunc and !isDepthPass then
                 atttbl.DrawFunc(self, model, wm)
             end
         end
