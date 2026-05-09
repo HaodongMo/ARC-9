@@ -78,7 +78,7 @@ end
 -- local shader_LENS_K_Base = -0.9 -- lens K
 local shader_LENS_K_Base = -0.4 -- lens K
 local shader_LENS_K = shader_LENS_K_Base
-local shader_CA_STRENGTH_Base = 2 -- CA
+local shader_CA_STRENGTH_Base = 1.25 -- CA
 local shader_CA_STRENGTH = shader_CA_STRENGTH_Base
 
 local shader_VIG_FORG_Base = 5.5 -- vignette forgiveness
@@ -408,8 +408,8 @@ local function drawscopequad(scale, range, ang, pos, mat, color, nobox)
         
         local up_scaled = up * 0.999
         local right_scaled = right * 0.999
-        local up_4 = up_scaled * 4
-        local right_8 = right_scaled * 8
+        local up_4 = up_scaled * 16
+        local right_8 = right_scaled * 32
         local right_half = right_scaled * 0.5
         
         -- LEFT
