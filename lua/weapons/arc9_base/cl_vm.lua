@@ -18,8 +18,69 @@ local arc9_dev_benchgun = GetConVar("arc9_dev_benchgun")
 local arc9_fx_adsblur_new = GetConVar("arc9_fx_adsblur_new")
 local arc9_fx_adsblur_always = GetConVar("arc9_fx_adsblur_always")
 
+
+local tune_nohdr = Vector(1, 0, 0 )
+local divisor = 2
+local lastblurtime = 0
+local lastcust = false
+
+local rt_cheapblur = GetRenderTargetEx("arc9_halfblur", scrw / divisor, scrh / divisor, 
+    RT_SIZE_LITERAL, 
+    MATERIAL_RT_DEPTH_NONE, 
+    bit.bor(2,4,8,256,512), 
+    0,
+    19 -- IMAGE_FORMAT_BGRA5551
+)
+
+local mat_cheapblurresult = CreateMaterial("arc9_mat_halfblur", "UnlitGeneric", {
+    ["$basetexture"] = rt_cheapblur:GetName(),
+    ["$translucent"] = 1,
+    ["$vertexcolor"] = 1,
+    ["$ignorez"] = 1,
+} )
+
+
+local function DrawCheapBlur(intensity, self)
+    if intensity > 0 and system.HasFocus() then
+        lastblurtime = FrameNumber()
+        lastcust = self:GetCustomize()
+
+        -- if GetConVar("meow"):GetBool() then
+            render.UpdateScreenEffectTexture()
+            render.SetToneMappingScaleLinear(tune_nohdr) -- Turns off hdr
+            render.PushRenderTarget(rt_cheapblur)
+                -- render.UpdateScreenEffectTexture()
+                -- render.Clear(0,0,0,255)
+
+                -- mat_cheapblur:SetFloat( "$c0_x", intensity )
+                -- mat_cheapblur:SetFloat( "$c0_y", 16 * intensity )
+                -- mat_cheapblur:SetFloat( "$c1_x", 1/scrw )
+                -- mat_cheapblur:SetFloat( "$c1_y", 1/scrh )
+                -- render.SetMaterial(mat_cheapblur)
+                -- render.DrawScreenQuad()
+                DrawBokehDOF(intensity, 1, 0)
+            render.PopRenderTarget()
+            
+            render.SetMaterial(mat_cheapblurresult)
+            render.DrawScreenQuad()
+            -- render.DrawScreenQuadEx( 100, 700, scrw/3, scrh/3 )
+        -- else
+        --     DrawBokehDOF(intensity * 5, 1, 0)
+        -- end
+    end
+end
+
+
+hook.Add("ShouldDrawAmbientOcclusion", "ARC9.RemoveAO", function(a)
+    -- if lastblurtime == FrameNumber() then return false end -- wanted to do it in every blur case but nah
+    if lastblurtime == FrameNumber() and lastcust then return false end
+end)
+
 function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
-    if ARC9.RTScopeRender then -- basically a copy of code in that func for rt barrels but without useless stuff and bad stuff, and also offset of cam in scope
+	flags = flags or STUDIO_RENDER
+    local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
+
+    if ARC9.RTScopeRender and !isDepthPass then -- basically a copy of code in that func for rt barrels but without useless stuff and bad stuff, and also offset of cam in scope
         self:DoBodygroups(false)
         local vm = self:GetVM()
         if self.HasSightsPoseparam then
@@ -62,9 +123,6 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
     local getsights = self:GetSight()
     local sightamount = self:GetSightAmount()
-
-	flags = flags or STUDIO_RENDER
-    local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
     local custdelta = self.CustomizeDelta
 
 	if !isDepthPass then
@@ -105,8 +163,8 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         	cam.End2D()
     	end
 
-    	if ((shouldrtblur and blurenable) or (custdelta > 0 and blurtarget > 0)) and system.HasFocus() then
-        	DrawBokehDOF(bluramt, 1, 0)
+    	if ((shouldrtblur and blurenable) or (custdelta > 0 and blurtarget > 0)) then
+        	DrawCheapBlur(bluramt, self)
     	end
 
     	bluramt = math.Approach(bluramt, blurtarget, FrameTime() * 10)
@@ -266,7 +324,6 @@ local mat_dof = Material( "effects/arc9/vm_dof" )
 local mat_dof_debug = Material( "effects/arc9/vm_dof_debug" )
 local mat_white = Material( "effects/arc9/whiteunlit" )
 local mat_black = Material( "effects/arc9/blackunlit" )
-local tune_nohdr = Vector(1, 0, 0 )
 
 local rt_dofmask = GetRenderTargetEx("arc9_optic_dof_mask2", scrw, scrh, 
     RT_SIZE_FULL_FRAME_BUFFER, 
@@ -280,7 +337,7 @@ local function shadersetstaticvalues()
     mat_dof:SetFloat("$c1_x", 1 / scrw)
     mat_dof:SetFloat("$c1_y", 1 / scrh)
     mat_dof:SetTexture("$texture1", rt_dofmask:GetName())
-    mat_dof:SetFloat("$c0_x", 8)
+    mat_dof:SetFloat("$c0_x", 0) -- 8
     mat_dof:SetFloat("$c0_y", 0.07)
     mat_dof_debug:SetTexture("$texture1", rt_dofmask:GetName())
     mat_dof_debug:SetFloat("$c0_y", 0.07)
