@@ -92,7 +92,7 @@ end
 -- touching anything here breaks everything i don't know how this works
 -- i think every second frame it draws "screen" outside of gun, but it kinda works
 
-function SWEP:DoFLIR(atttbl, cheap)
+function SWEP:DoFLIR(atttbl, cheap, force)
     if cheap then
         if screen and screen:GetName()  == "_rt_resolvedfullframedepth" then return end
         render.CopyTexture( screen, rt_spare )
@@ -100,7 +100,7 @@ function SWEP:DoFLIR(atttbl, cheap)
         render.PushRenderTarget(screen)
     end
 
-    if self:GetSightAmount() > 0.1 then
+    if force or self:GetSightAmount() > 0.1 then
         render.SetStencilEnable(true)
         render.SetStencilWriteMask(255)
         render.SetStencilTestMask(255)
