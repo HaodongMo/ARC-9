@@ -29,7 +29,8 @@ local rt_cheapblur = GetRenderTargetEx("arc9_halfblur", scrw / divisor, scrh / d
     MATERIAL_RT_DEPTH_NONE, 
     bit.bor(2,4,8,256,512), 
     0,
-    19 -- IMAGE_FORMAT_BGRA5551
+    -- 19 -- IMAGE_FORMAT_BGRA5551 -- doesn't work on nvidia lol
+    IMAGE_FORMAT_RGBA8888
 )
 
 local mat_cheapblurresult = CreateMaterial("arc9_mat_halfblur", "UnlitGeneric", {
