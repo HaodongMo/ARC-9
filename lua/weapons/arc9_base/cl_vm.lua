@@ -413,7 +413,7 @@ local function findglassmat(scopemodel)
         end
     end
 
-    scopemodel.RTlassMatIndex = glassindex or 1
+    scopemodel.RTGlassMatIndex = glassindex or 1
     return glassindex or 1
 end
 
@@ -426,11 +426,18 @@ function SWEP:RenderDoFMask(clear)
 
     local scopemodel = self.RTScopeModel
     if scopemodel == self:GetVM() then return end
-    if IsValid(self.RTScope_ForceBlurModel) then scopemodel = self.RTScope_ForceBlurModel end
-    if !IsValid(scopemodel) then return end
-    
-    local glassindex = scopemodel.RTlassMatIndex or findglassmat(scopemodel)
 
+    if IsValid(scopemodel) then
+        self:RenderDoFMaskInternal(scopemodel, findglassmat(scopemodel))
+    end
+
+    local forcedmodel = self.RTScope_ForceBlurModel
+    if IsValid(forcedmodel) then
+        self:RenderDoFMaskInternal(forcedmodel, findglassmat(forcedmodel))
+    end
+end
+
+function SWEP:RenderDoFMaskInternal(model, index)
     render.PushRenderTarget(rt_dofmask)
         -- render.Clear(0, 0, 0, 255)
         local oldtune = render.GetToneMappingScaleLinear()
@@ -441,9 +448,9 @@ function SWEP:RenderDoFMask(clear)
         render.SetColorModulation(sa, sa, sa)
         render.SuppressEngineLighting(true)
         render.MaterialOverride(mat_black)
-        render.MaterialOverrideByIndex(glassindex - 1, mat_white)
+        render.MaterialOverrideByIndex(index - 1, mat_white)
 
-        scopemodel:DrawModel()
+        model:DrawModel()
         
         -- render.SetBlend(1)
         render.SetColorModulation(1, 1, 1)
@@ -505,8 +512,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     cam.Start3D(nil, nil, self:WidescreenFix(self:GetViewModelFOV()), nil, nil, nil, nil, 1, 10000)
     if self.VModel then
         for _, model in ipairs(self.VModel) do
-            local slottbl = model.slottbl
-            local atttbl = self:GetFinalAttTable(slottbl)
+            local atttbl = model.atttbl or model.slottbl:GetFinalAttTable(slottbl)
 
             if atttbl.HoloSight then
                 self:DoHolosight(model, atttbl)
