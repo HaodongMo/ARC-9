@@ -109,6 +109,10 @@ function SWEP:DoHolosight(mdl, atttbl)
         if atttbl.HoloSightFunc then
             atttbl.HoloSightFunc(self, pos, mdl)
         end
+
+        if atttbl.HoloSightEzFunc then
+            atttbl.HoloSightEzFunc(self, v1, v2, v3, v4, col or whitecolo)
+        end
         -- cam.End3D()
 
         -- local toscreen = pos:ToScreen()
