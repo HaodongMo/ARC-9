@@ -488,6 +488,18 @@ function SWEP:CreateHUD_Stats()
             end,
             unit = ""
         },
+        {
+            title = "autostat.EFTWeight",
+            desc = "EFTWeight.desc",
+            stat = "EFTWeight",
+            fifty = 50,
+            cond = function()
+                return !self:GetValue("EFTWeight")
+            end,
+            unit = "kg",
+            eval = function() return 0 end,
+            lowerisbetter = true
+        },
     }
 
 

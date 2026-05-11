@@ -159,6 +159,8 @@ ARC9.AutoStatsMains = {
     -- ["RTScopeMagnificationMax"] = {"×", false},
     ["RTScopeNew_FPSLock"] = {" FPS", true},
     ["RTScopeNew_Pixelation"] = {"px", true},
+    ["EFTErgo"] = {false, false},
+    ["EFTWeight"] = {"kg", true, nil, function(value) return value > 0.1 end},
 }
 
 ARC9.AutoStatsOperations = {
@@ -287,6 +289,7 @@ function ARC9.GetProsAndCons(atttbl, weapon)
                 negisgood = tbl[2]
                 asmain = main
                 canautostat = true
+                if tbl[4] then canautostat = tbl[4](value) end
                 maxlen = string.len(main)
             end
         end
