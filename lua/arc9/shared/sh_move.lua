@@ -239,8 +239,8 @@ function ARC9.StartCommand(ply, cmd)
 
         local eyeang = cmd:GetViewAngles()
 
-        eyeang.p = eyeang.p + (swayang.p * FrameTime())
-        eyeang.y = eyeang.y + (swayang.y * FrameTime())
+        eyeang.p = eyeang.p + (swayang.p * 0.05) -- wait why the fuck i tied this to FrameTime before
+        eyeang.y = eyeang.y + (swayang.y * 0.05)
 
         cmd:SetViewAngles(eyeang)
     end
