@@ -427,41 +427,44 @@ function SWEP:RenderDoFMask(clear)
     local scopemodel = self.RTScopeModel
     if scopemodel == self:GetVM() then return end
 
-    if IsValid(scopemodel) then
-        self:RenderDoFMaskInternal(scopemodel, findglassmat(scopemodel))
-    end
-
     local forcedmodel = self.RTScope_ForceBlurModel
-    if IsValid(forcedmodel) then
-        self:RenderDoFMaskInternal(forcedmodel, findglassmat(forcedmodel))
+
+    if IsValid(scopemodel) or IsValid(forcedmodel) then
+        render.PushRenderTarget(rt_dofmask)
+            -- render.Clear(0, 0, 0, 255)
+            local oldtune = render.GetToneMappingScaleLinear()
+            render.SetToneMappingScaleLinear(tune_nohdr) -- Turns off hdr
+            render.ClearDepth()
+            local sa = self:GetSightAmount()
+            sa = sa * sa
+            render.SetColorModulation(sa, sa, sa)
+            render.SuppressEngineLighting(true)
+
+            if IsValid(scopemodel) then
+                render.MaterialOverride(mat_black)
+                render.MaterialOverrideByIndex(findglassmat(scopemodel) - 1, mat_white)
+
+                scopemodel:DrawModel()
+            end
+
+            if IsValid(forcedmodel) then
+                render.MaterialOverrideByIndex(nil, nil)
+                render.MaterialOverride()
+                render.MaterialOverride(mat_black)
+                render.MaterialOverrideByIndex(findglassmat(forcedmodel) - 1, mat_white)
+
+                forcedmodel:DrawModel()
+            end
+
+            render.SetColorModulation(1, 1, 1)
+            render.SuppressEngineLighting(false)
+            render.MaterialOverride()
+            render.MaterialOverrideByIndex(nil, nil)
+        render.PopRenderTarget()
+
+        render.SetToneMappingScaleLinear(oldtune) -- Resets hdr
     end
 end
-
-function SWEP:RenderDoFMaskInternal(model, index)
-    render.PushRenderTarget(rt_dofmask)
-        -- render.Clear(0, 0, 0, 255)
-        local oldtune = render.GetToneMappingScaleLinear()
-        render.SetToneMappingScaleLinear(tune_nohdr) -- Turns off hdr
-        render.ClearDepth()
-        local sa = self:GetSightAmount()
-        sa = sa * sa
-        render.SetColorModulation(sa, sa, sa)
-        render.SuppressEngineLighting(true)
-        render.MaterialOverride(mat_black)
-        render.MaterialOverrideByIndex(index - 1, mat_white)
-
-        model:DrawModel()
-        
-        -- render.SetBlend(1)
-        render.SetColorModulation(1, 1, 1)
-        render.SuppressEngineLighting(false)
-        render.MaterialOverride()
-        render.MaterialOverrideByIndex(nil, nil)
-    render.PopRenderTarget()
-
-    render.SetToneMappingScaleLinear(oldtune) -- Resets hdr
-end
-
 
 
 function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
