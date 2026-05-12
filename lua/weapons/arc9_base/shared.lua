@@ -514,6 +514,7 @@ SWEP.ExplosionEffectUBGL = false
 SWEP.UseVisualRecoil = false
 
 SWEP.PhysicalVisualRecoil = true -- Visual recoil actually affects your aim point.
+SWEP.PhysicalVisualRecoilForce = false -- set true to force no matter cvar (this should be better, but some packs rely too much on value above)
 
 SWEP.VisualRecoilUp = 0.01 -- Vertical tilt for visual recoil.F
 SWEP.VisualRecoilSide = 0.05 -- Horizontal tilt for visual recoil.
