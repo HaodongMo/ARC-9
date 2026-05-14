@@ -85,7 +85,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         self:DoBodygroups(false)
         local vm = self:GetVM()
         if self.HasSightsPoseparam then
-            vm:SetPoseParameter("sights", self:GetSightAmount())
+            vm:SetPoseParameter("sights", self:GetSightAmountCLU())
         end
         self:SetFiremodePose()
         vm:InvalidateBoneCache()
@@ -123,7 +123,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     end
 
     local getsights = self:GetSight()
-    local sightamount = self:GetSightAmount()
+    local sightamount = self:GetSightAmountCLU()
     local custdelta = self.CustomizeDelta
 
 	if !isDepthPass then
@@ -435,7 +435,7 @@ function SWEP:RenderDoFMask(clear)
             local oldtune = render.GetToneMappingScaleLinear()
             render.SetToneMappingScaleLinear(tune_nohdr) -- Turns off hdr
             render.ClearDepth()
-            local sa = self:GetSightAmount()
+            local sa = self:GetSightAmountCLU()
             sa = sa * sa
             render.SetColorModulation(sa, sa, sa)
             render.SuppressEngineLighting(true)
@@ -507,7 +507,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
 
     if activedof then
         sigt = self:GetSight()
-        sa = self:GetSightAmount()
+        sa = self:GetSightAmountCLU()
         notactivemask = sa < 0.01 or !(sigt.atttbl and (sigt.atttbl.RTScope or sigt.atttbl.RTScopeNew_BlurTexture)) or self.Peeking
     end
 

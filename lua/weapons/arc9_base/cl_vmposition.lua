@@ -298,7 +298,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         offsetpos:Add(offsetangUp)
     end
 
-    local sightdelta_original = self:GetSightDelta()
+    local sightdelta_original = self:GetSightAmountCLU()
     local sightdelta = sightdelta_original
     -- cor_val = Lerp(sightdelta, cor_val, 1)
     self.SwayScale = 0
@@ -614,7 +614,7 @@ function SWEP:GetViewModelFOV()
     self.SmoothedViewModelFOV = math.Approach(self.SmoothedViewModelFOV, target, math.max(diff / self:GetProcessedValue("AimDownSightsTime"), diff, 1) * FrameTime()* 2)
 
     
-    local sightdelta = self:GetSightDelta()
+    local sightdelta = self:GetSightAmountCLU()
     if self:GetInSights() then
         sightdelta = Lerp(0.21, math_ease.OutBack(sightdelta), math_ease.InOutSine(sightdelta))
     else

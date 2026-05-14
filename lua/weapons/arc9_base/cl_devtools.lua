@@ -555,9 +555,9 @@ function SWEP:DevStuffCrosshair()
     elseif self:GetSprintAmount() > 0 then
         state_txt = "SPRINT"
         state2_txt = string.format("%d%%", self:GetSprintAmount() * 100)
-    elseif self:GetSightAmount() > 0 then
+    elseif self:GetSightAmount() > 0 or self:GetSightAmountCLU() > 0 then
         state_txt = "SIGHT"
-        state2_txt = string.format("%d%%", self:GetSightAmount() * 100)
+        state2_txt = string.format("%d%% SV / CL %d%%", self:GetSightAmount() * 100, self:GetSightAmountCLU() * 100)
     elseif self:GetGrenadePrimed() then
         state_txt = "PRIMED"
         local pt = time - self:GetGrenadePrimedTime()

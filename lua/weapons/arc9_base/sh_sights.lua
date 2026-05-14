@@ -297,7 +297,7 @@ do
             sighted = false
         end
 
-        local oldamt = swepDt.SightAmount
+        local oldamt = self:GetSightAmountCLU() --swepDt.SightAmount
         local amt = 0
 
         if !(!sighted and oldamt == 0) and !(sighted and oldamt == 1) then
@@ -305,7 +305,7 @@ do
         elseif sighted and oldamt == 1 then amt = 1 end
         
         if oldamt ~= amt then
-            self:SetSightAmount(amt)
+            self:SetSightAmountCLU(amt)
         end
 
         local owner = entityGetOwner(self)
