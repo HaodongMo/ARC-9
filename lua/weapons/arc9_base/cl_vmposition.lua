@@ -226,7 +226,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         local bipodpos, bipodang = swepGetProcessedValue(self, "BipodPos", true), swepGetProcessedValue(self, "BipodAng", true)
 
         if bipodpos and bipodang then
-            if !self:ShouldTPIK() then LerpVectorEdit(math.Clamp(bipodamount - self:GetSightAmount(), 0, 1), pos, self:GetBipodPos()) end
+            LerpVectorEdit(math.Clamp(bipodamount - self:GetSightAmount(), 0, 1), pos, self:GetBipodPos())
             LerpVectorEdit(bipodamount, offsetpos, bipodpos)
             LerpAngleEdit(bipodamount, offsetang, bipodang)
         else
