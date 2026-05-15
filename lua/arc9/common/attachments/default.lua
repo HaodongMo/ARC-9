@@ -51,6 +51,7 @@ ATT.DrawFunc = function(swep, model, wm) end
 ATT.ModelSkin = 0
 ATT.ModelBodygroups = ""
 ATT.ModelMaterial = ""
+
 ATT.NoDraw = false
 ATT.TranslucentPass = false -- if that model has $translucent 1 in vmt, will be drawn behind c_hands otherwise
 -- ATT.TranslucentPassExtraMat = Material( "models/" ) -- extra material to apply during translucent pass, use for vertexlit + refract
@@ -60,6 +61,10 @@ ATT.Material = "material/path"
 
 -- Use SubMaterial0 through SubMaterial31 to set submaterials
 ATT.SubMaterial0 = "material/path"
+
+-- For model submats
+ATT.EnableModelSubMaterial = true
+ATT.ModelSubMaterial0 = "material/path"
 
 ATT.InvAtt = "" -- Having this other attachment will grant access to this one.
 

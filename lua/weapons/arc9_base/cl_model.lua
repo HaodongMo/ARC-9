@@ -232,6 +232,21 @@ function SWEP:CreateAttachmentModel(wm, atttbl, slottbl, ignorescale, cm, dupli,
         -- csmodel:SetMaterial(atttbl.ModelMaterial)
         csmodel:SetSubMaterial(0, atttbl.ModelMaterial)
         csmodel:SetSubMaterial(1, atttbl.ModelMaterial)
+        csmodel:SetSubMaterial(2, atttbl.ModelMaterial)
+        csmodel:SetSubMaterial(3, atttbl.ModelMaterial)
+        csmodel:SetSubMaterial(4, atttbl.ModelMaterial)
+    end
+
+    if atttbl.EnableModelSubMaterial then
+        -- csmodel:SetMaterial(atttbl.ModelMaterial)
+        if !csmodel.MaterialAmount then csmodel.MaterialAmount = table.Count(csmodel:GetMaterials() or {}) end
+
+        for ind = 0, csmodel.MaterialAmount do
+            local val = swepGetProcessedValue(self, "ModelSubMaterial" .. ind, true)
+            if val then
+                csmodel:SetSubMaterial(ind, val)
+            end
+        end
     end
     
     if atttbl.RTScopeSubmatIndex then
