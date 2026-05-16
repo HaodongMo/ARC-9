@@ -239,7 +239,7 @@ function SWEP:DropMagazine()
             data:SetEntity(self)
             data:SetAttachment(drop_qca)
 
-            util.Effect("arc9_magdropeffect", data, true)
+            util.Effect(self.DropMagazineEffect or "arc9_magdropeffect", data, true)
             -- local mag = ents.Create("ARC9_droppedmag")
 
             -- if mag then

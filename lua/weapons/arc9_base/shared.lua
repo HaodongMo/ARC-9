@@ -372,7 +372,7 @@ SWEP.AutoReload = false -- When the gun is drawn, it will automatically reload.
 SWEP.ShouldDropMag = false
 SWEP.ShouldDropMagEmpty = true
 
-SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.
+SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.  
 SWEP.DropMagazineSounds = {} -- Table of sounds a dropped magazine should play.
 SWEP.DropMagazineAmount = 1 -- Amount of mags to drop.
 SWEP.DropMagazineSkin = 0 -- Model skin of mag.
@@ -381,6 +381,7 @@ SWEP.DropMagazineQCA = nil -- QC Attachment drop mag from, would drop from shell
 SWEP.DropMagazinePos = Vector(0, 0, 0) -- offsets
 SWEP.DropMagazineAng = Angle(0, 0, 0)
 SWEP.DropMagazineVelocity = Vector(0, 0, 0) -- Put something here if your anim throws the mag with force
+SWEP.DropMagazineEffect = "arc9_magdropeffect"
 
 SWEP.BarrelLength = 0 -- Distance for nearwalling
 
