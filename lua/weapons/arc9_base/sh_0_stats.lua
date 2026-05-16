@@ -505,7 +505,7 @@ do
                         -- print("Renewing cache for - ", processedValueName)
 
 
-                        self.PV_CacheLong[processedValueName].time = upct + 60 -- idk whats number here should be
+                        self.PV_CacheLong[processedValueName].time = upct + 600 -- idk whats number here should be
                         if self.DynamicConditions[val] then self.PV_CacheLong[processedValueName].time = upct end
                         self.PV_CacheLong[processedValueName].value = self:GetProcessedValue(val, false, base, cmd)
 
