@@ -468,7 +468,7 @@ function SWEP:EndReload()
             --why was this check missing
             if entry and entry.RestoreAmmo then
                 attempt_to_restore = entry.RestoreAmmo
-                end_clipsize = self:Clip1() + attempt_to_restore
+                end_clipsize = end_clipsize + attempt_to_restore
             end
 
             local t, minprogress = self:PlayAnimation(anim, reloadtime, true, true)
