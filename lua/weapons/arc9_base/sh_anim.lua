@@ -160,8 +160,15 @@ function SWEP:PlayAnimation(anim, mult, lock, no_idle, noproxy, notranslate)
         self:SetAnimLockTime(0)
     end
 
-    if no_idle or animation.NoIdle or untranslatedanim == "idle" then
+    if no_idle or animation.NoIdle then
         self:SetNextIdle(0)
+    elseif untranslatedanim == "idle" then
+        -- brute-force idle so it loops even if the QC sequence lacks the LOOP flag.
+        if self:GetSequenceProxy() == 0 then
+            self:SetNextIdle(CurTime() + time * mult)
+        else
+            self:SetNextIdle(0)
+        end
     else
         self:SetNextIdle(CurTime() + time * mult)
     end
