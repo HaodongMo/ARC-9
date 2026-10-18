@@ -461,7 +461,16 @@ function SWEP:EndReload()
             end_clipsize = end_clipsize + attempt_to_restore
 
             local reloadtime = self:GetProcessedValue("ReloadTime", nil, 1)
-            local entry = self:GetAnimationEntry(anim)
+            local entry = self:GetAnimationEntry(self:TranslateAnimation(anim))
+
+            -- check if the animation has a restore ammo value
+            -- use it instead of the default attempt_to_restore value
+            --why was this check missing
+            if entry and entry.RestoreAmmo then
+                attempt_to_restore = entry.RestoreAmmo
+                end_clipsize = self:Clip1() + attempt_to_restore
+            end
+
             local t, minprogress = self:PlayAnimation(anim, reloadtime, true, true)
             minprogress = entry and entry.RefillProgress or minprogress
             local magswaptime = entry and entry.MagSwapTime or 0
