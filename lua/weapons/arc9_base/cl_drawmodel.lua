@@ -74,7 +74,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
                 mdl[1]:SetMaterial(swepGetProcessedValue(self, "Material", true))
                 
                 if !self.VMMaterialAmount and mdl[1]:GetMaterials() then 
-                    self.VMMaterialAmount = util.GetModelInfo(mdl[1]:GetModel()).MaterialCount
+                    local minfo = util.GetModelInfo(mdl[1]:GetModel())
+                    if minfo then
+                        self.VMMaterialAmount = minfo.MaterialCount
+                    end
                 end
 
                 for ind = 0, self.VMMaterialAmount or 31 do

@@ -245,9 +245,11 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         end
     end
 
-    if !arc9_dev_benchgun:GetBool() then
-        cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
-    end
+    -- this if block is breaking the rendering context for several guns.
+    -- disabling fixes it outright, but I have no clue why it's here so I dont wanna completely remove it for no reason.
+    -- if !arc9_dev_benchgun:GetBool() then
+    --     cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
+    -- end
 
 	self.RenderingRTScope = false 
 
@@ -538,9 +540,10 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     cam.IgnoreZ(false)
     render.SetBlend(1)
 
-    if !arc9_dev_benchgun:GetBool() then
-        cam.End3D()
-    end
+    -- had to disable this too cause it saying throws errors after removing the earlier cam.Start3D which creates the render context issue.
+    -- if !arc9_dev_benchgun:GetBool() then
+    --     cam.End3D()
+    -- end
 
 	if isDepthPass then return end
     if inrt then return end
