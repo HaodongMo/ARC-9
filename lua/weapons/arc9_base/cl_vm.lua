@@ -246,7 +246,8 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     end
 
     -- this if block is breaking the rendering context for several guns.
-    -- disabling fixes it outright, but I have no clue why it's here so I dont wanna completely remove it for no reason.
+    -- ie: guns render behind hands and also render in world context, clipping into geometry
+    -- disabling fixes that render issue outright but it's breaking Cheap RT Scopes' zooming.
     -- if !arc9_dev_benchgun:GetBool() then
     --     cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
     -- end
