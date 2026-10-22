@@ -109,7 +109,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
             local vmpos, vmang = LocalToWorld(-self.ViewModelPos, -self.ViewModelAng, worldvmpos, worldvmang)
             vmang = MainEyeAngles()
 
-            local funnyfov = self:WidescreenFix(self:GetViewModelFOV())
+            local funnyfov = self:WidescreenFix(self:GetViewModelFOV()) / self:GetRealZoom(self:GetSight())
 
             if !arc9_dev_benchgun:GetBool() then cam.Start3D(vmpos, vmang, funnyfov, nil, nil, nil, nil, 2, 16000) end
         else
@@ -246,7 +246,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     if !arc9_dev_benchgun:GetBool() then
         -- We use EyePos/EyeAngles so it doesn't inherit the zoomed world camera
         -- vmfov is whatever GetViewModelFOV() returns, it will remain static regardless of zoom
-        cam.Start3D(EyePos(), EyeAngles(), self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.1, 1000)
+        cam.Start3D(EyePos(), EyeAngles(), self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
         render.DepthRange( 0.0, 0.1 )
     end
 
