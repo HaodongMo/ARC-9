@@ -28,10 +28,10 @@ local lastcust = false
 
 local fuckopengl = system.IsLinux() or system.IsOSX()
 
-local rt_cheapblur = GetRenderTargetEx("arc9_halfblur", scrw / divisor, scrh / divisor, 
-    RT_SIZE_LITERAL, 
-    MATERIAL_RT_DEPTH_NONE, 
-    bit.bor(2,4,8,256,512), 
+local rt_cheapblur = GetRenderTargetEx("arc9_halfblur", scrw / divisor, scrh / divisor,
+    RT_SIZE_LITERAL,
+    MATERIAL_RT_DEPTH_NONE,
+    bit.bor(2,4,8,256,512),
     0,
     -- 19 -- IMAGE_FORMAT_BGRA5551 -- doesn't work on nvidia lol
     IMAGE_FORMAT_RGBA8888
@@ -65,7 +65,6 @@ local function DrawCheapBlur(intensity, self)
                 -- render.DrawScreenQuad()
                 DrawBokehDOF(intensity, 1, 0)
             render.PopRenderTarget()
-            
             render.SetMaterial(mat_cheapblurresult)
             render.DrawScreenQuad()
             -- render.DrawScreenQuadEx( 100, 700, scrw/3, scrh/3 )
@@ -75,10 +74,10 @@ local function DrawCheapBlur(intensity, self)
     end
 end
 
-local rt_prevm = GetRenderTargetEx("arc9_prevm", 1024, 1024, 
+local rt_prevm = GetRenderTargetEx("arc9_prevm", 1024, 1024,
     RT_SIZE_LITERAL,
     MATERIAL_RT_DEPTH_NONE,
-    bit.bor(2,4,8,256,512), 
+    bit.bor(2,4,8,256,512),
     0,
     IMAGE_FORMAT_RGBA8888
 )
@@ -89,12 +88,12 @@ hook.Add("ShouldDrawAmbientOcclusion", "ARC9.RemoveAO", function(a)
 end)
 
 function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
-	flags = flags or STUDIO_RENDER
+    flags = flags or STUDIO_RENDER
     local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
 
     if ARC9.RTScopeRender and !isDepthPass then -- basically a copy of code in that func for rt barrels but without useless stuff and bad stuff, and also offset of cam in scope
         self:DoBodygroups(false)
-        local vm = self:GetVM()
+        vm = self:GetVM()
         if self.HasSightsPoseparam then
             vm:SetPoseParameter("sights", self:GetSightAmount())
         end
@@ -103,15 +102,14 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
 
         if ARC9_ENABLE_NEWSCOPES_MEOW then
             local worldvmpos, worldvmang = vm:GetPos(), vm:GetAngles()
-        
             local scopelength = (IsValid(self.RTScopeModel) and self.RTScopeModel.RTScopeLength or 20) * 0.9
 
             worldvmpos = worldvmpos + worldvmang:Forward() * scopelength
 
             local vmpos, vmang = LocalToWorld(-self.ViewModelPos, -self.ViewModelAng, worldvmpos, worldvmang)
             vmang = MainEyeAngles()
-            
-            local funnyfov = self:WidescreenFix(self:GetViewModelFOV()) / self:GetRealZoom(self:GetSight())
+
+            local funnyfov = self:WidescreenFix(self:GetViewModelFOV())
 
             if !arc9_dev_benchgun:GetBool() then cam.Start3D(vmpos, vmang, funnyfov, nil, nil, nil, nil, 2, 16000) end
         else
@@ -137,7 +135,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     local sightamount = self:GetSightAmount()
     local custdelta = self.CustomizeDelta
 
-	if !isDepthPass then
+    if !isDepthPass then
     	local blurtarget = 0
 
     	local blurenable = arc9_fx_rtblur:GetBool()
@@ -201,14 +199,14 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     	-- else
     	--     render.SuppressEngineLighting(false)
     	--     render.ResetModelLighting(1,1,1)
-    	end
-	end
+        end
+    end
 
     self:DoPoseParams()
     self:DoBodygroups(false)
 
     local bipodamount = self:GetBipodAmount()
-    local vm = self:GetVM()
+    vm = self:GetVM()
     if !IsValid(vm) then return end
 
     if self.HasSightsPoseparam then
@@ -226,19 +224,16 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         vm:ManipulateBoneAngles(boneindex, k.ang or angle_zero)
         vm:ManipulateBoneScale(boneindex, k.scale or vector_origin)
     end end
-    
 
     local vmfov = self:GetViewModelFOV()
 
     self.ViewModelFOV = vmfov
 
-    
-
-	if !isDepthPass then
+    if !isDepthPass then
     	if !ARC9_ENABLE_NEWSCOPES_MEOW and self:GetHolsterTime() < CurTime() and self.RTScope and sightamount > 0 then
     	    self:DoRTScope(vm, self:GetTable(), sightamount > 0)
     	end
-        
+
         if arc9_fx_adsblur_bleeding:GetBool() then
             render.UpdateScreenEffectTexture()
             render.CopyTexture(render.GetScreenEffectTexture(), rt_prevm)
@@ -248,11 +243,14 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     -- this if block is breaking the rendering context for several guns.
     -- ie: guns render behind hands and also render in world context, clipping into geometry
     -- disabling fixes that render issue outright but it's breaking Cheap RT Scopes' zooming.
-    -- if !arc9_dev_benchgun:GetBool() then
-    --     cam.Start3D(nil, nil, self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.5, 10000)
-    -- end
+    if !arc9_dev_benchgun:GetBool() then
+        -- We use EyePos/EyeAngles so it doesn't inherit the zoomed world camera
+        -- vmfov is whatever GetViewModelFOV() returns, it will remain static regardless of zoom
+        cam.Start3D(EyePos(), EyeAngles(), self:WidescreenFix(vmfov), nil, nil, nil, nil, 0.1, 1000)
+        render.DepthRange( 0.0, 0.1 )
+    end
 
-	self.RenderingRTScope = false 
+	self.RenderingRTScope = false
 
 	if !isDepthPass and IsValid(vm) then
     	vm:SetSubMaterial()
@@ -276,13 +274,13 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     if ARC9.PresetCam or custdelta > 0 then cam.IgnoreZ(true) end
 
     self:SetFiremodePose()
-    
+
     if self.HasSightsPoseparam then
         vm:SetPoseParameter("sights", math.max(sightamount, bipodamount, custdelta))
     end
 
     vm:InvalidateBoneCache()
-    
+
     if sightamount > 0.75 and getsights.FlatScope and !getsights.FlatScopeKeepVM then
         render.SetBlend(0)
     end
@@ -291,20 +289,20 @@ end
 function SWEP:ViewModelDrawn(ent, flags)
 	flags = flags or STUDIO_RENDER
     local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
-	
+
     self.StoredVMAngles = self:GetCameraControl()
     self:DrawCustomModel(false, nil, nil, flags)
     render.DepthRange( 0.0, 0.1 )
-    
+
     self:DoRHIK()
 
-    if ARC9.RTScopeRender then 
+    if ARC9.RTScopeRender then
         if !isDepthPass then
             render.DepthRange( 0.1, 0.1 )
             self:DrawLasers(false)
             render.DepthRange( 0.0, 0.1 )
         end
-        return 
+        return
     end
 
     self:PreDrawThirdArm()
@@ -314,7 +312,7 @@ function SWEP:ViewModelDrawn(ent, flags)
 
     	self:DrawLasers(false)
 	end
-		
+
     local vm = self:GetVM()
     if !IsValid(vm) then return end
     vm:SetMaterial("")
@@ -331,7 +329,7 @@ function SWEP:ViewModelDrawn(ent, flags)
 	            table.insert(newpcfs, pcf)
 	        end
 	    end
-	
+
 	    if !inrt then self.PCFs = newpcfs end
 	end
 
@@ -356,11 +354,11 @@ local mat_dof_debug = Material( "effects/arc9/vm_dof_debug" )
 local mat_white = Material( "effects/arc9/whiteunlit" )
 local mat_black = Material( "effects/arc9/blackunlit" )
 
-local rt_dofmask = GetRenderTargetEx("arc9_optic_dof_mask2", scrw, scrh, 
-    RT_SIZE_FULL_FRAME_BUFFER, 
-    MATERIAL_RT_DEPTH_SHARED, 
-    bit.bor(4,8,256,512), 
-    0, 
+local rt_dofmask = GetRenderTargetEx("arc9_optic_dof_mask2", scrw, scrh,
+    RT_SIZE_FULL_FRAME_BUFFER,
+    MATERIAL_RT_DEPTH_SHARED,
+    bit.bor(4,8,256,512),
+    0,
     5 -- IMAGE_FORMAT_I8
 )
 
@@ -394,13 +392,13 @@ local mat_dof_mask_debug = CreateMaterial("mat_debug_arc9_dof_mask5", "UnlitGene
 
 function SWEP:DoFSetParams(strength)
     mat_dof:SetFloat("$c0_x", 8 * strength)
-    
+
     if arc9_fx_adsblur_bleeding:GetBool() then
         mat_dof2:SetFloat("$c0_x", 8 * strength)
         mat_dof2:SetFloat("$c2_w", math.Clamp(arc9_fx_adsblur_bleeding_amount:GetInt(), 1, 60) * strength)
     end
 
-    if !self.DoFDepthSet then 
+    if !self.DoFDepthSet then
         mat_dof:SetFloat("$c0_y", self.DoFDepth or 0.07)
         mat_dof2:SetFloat("$c0_y", self.DoFDepth or 0.07)
         shadersetstaticvalues()
@@ -441,12 +439,12 @@ local function findglassmat(scopemodel)
     for k, v in pairs( scopemodel:GetMaterials() or {} ) do -- table.flip
         mats[ v ] = k
     end
-    
+
     if scopemodel.RTScope_BlurTexture then glassindex = mats[scopemodel.RTScope_BlurTexture]
     else
         glassindex = mats["effects/arc9/rtglass"] or mats["effects/arc9/rtglasssquare"] or mats["effects/arc9/rt"]
 
-        if !glassindex then   
+        if !glassindex then
             for _, v in ipairs(retardedglassnames) do
                 glassindex = mats[v]
                 if glassindex then break end
@@ -517,8 +515,8 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     if !IsValid(self:GetVM()) then return end
 	flags = flags or STUDIO_RENDER
     local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
-	
-    local inrt = ARC9.RTScopeRender
+
+    inrt = ARC9.RTScopeRender
 
     if !isDepthPass then self:DrawTranslucentPass() end
 
@@ -542,11 +540,12 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     render.SetBlend(1)
 
     -- had to disable this too cause it saying throws errors after removing the earlier cam.Start3D which creates the render context issue.
-    -- if !arc9_dev_benchgun:GetBool() then
-    --     cam.End3D()
-    -- end
+    if !arc9_dev_benchgun:GetBool() then
+        render.DepthRange( 0.0, 1.0 ) -- Reset depth range
+        cam.End3D()
+    end
 
-	if isDepthPass then return end
+    if isDepthPass then return end
     if inrt then return end
 
     local sigt, sa, notactivemask

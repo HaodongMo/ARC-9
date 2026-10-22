@@ -311,7 +311,7 @@ function SWEP:GetViewModelPosition(pos, ang)
         else
             minprogress = entry.MinProgress
         end
-		
+
 		if (!shotgun and progress < (entry.PeekProgress or minprogress or 0.9)) or (shotgun and self:GetReloading()) then
 			if self.PeekPosReloading then peekp = "PeekPosReloading" end
 			if self.PeekAngReloading then peeka = "PeekAngReloading" end
@@ -362,8 +362,8 @@ function SWEP:GetViewModelPosition(pos, ang)
         fswayang = self:GetInertiaSwayAngles()
 
         local inertiaanchor
-        if self.InertiaCustomAnchor then 
-            inertiaanchor = self.InertiaCustomAnchor 
+        if self.InertiaCustomAnchor then
+            inertiaanchor = self.InertiaCustomAnchor
         else
             inertiaanchor = Vector(self.CustomizeRotateAnchor)
             -- inertiaanchor.x = inertiaanchor.x * ((self.RenderingHolosight or self.RenderingRTScope) and 0.75 or 0.4)
@@ -535,7 +535,7 @@ function SWEP:GetViewModelPosition(pos, ang)
             rotateAroundAngle[2] = self.CustomizePitchSmooth
             rotateAroundAngle[3] = self.CustomizeYawSmooth
             rotateAroundAngle[1] = self.CustomizeRollSmooth
-            
+
             local rap_pos, rap_ang = self:RotateAroundPoint2(pos, ang, swepGetProcessedValue(self, "CustomizeRotateAnchor", true), vector_origin, rotateAroundAngle)
             pos:Set(rap_pos)
             ang:Set(rap_ang)
@@ -604,9 +604,9 @@ function SWEP:GetViewModelFOV()
 
     self.SmoothedViewModelFOV = self.SmoothedViewModelFOV or target
     local diff = math.abs(target - self.SmoothedViewModelFOV)
-    self.SmoothedViewModelFOV = math.Approach(self.SmoothedViewModelFOV, target, math.max(diff / self:GetProcessedValue("AimDownSightsTime"), diff, 1) * FrameTime()* 2)
+    self.SmoothedViewModelFOV = math.Approach(self.SmoothedViewModelFOV, target, math.max(diff / self:GetProcessedValue("AimDownSightsTime"), diff, 1) * FrameTime() * 2)
 
-    
+
     local sightdelta = self:GetSightDelta()
     if self:GetInSights() then
         sightdelta = Lerp(0.21, math_ease.OutBack(sightdelta), math_ease.InOutSine(sightdelta))

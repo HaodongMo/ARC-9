@@ -652,7 +652,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
                     diffy.z = math.Clamp(diffy.z, -2, 2)
 
                     if atttbl.RTScopeAdjustable then
-                        funnynumber2 = funnynumber2 - math.ease.InCubic(1 - (sight.SmoothScrollLevel or 0)) * 1.5 * sightamt_orig
+                        funnynumber2 = funnynumber2 - math.ease.InCubic(1 - (sight.SmoothScrollLevel or 0)) * 0.5 * sightamt_orig
                     end
 
                     if atttbl.RTScopeNew_FrontShadow != false or atttbl.RTScopeBlackBoxShadow != false then
